@@ -6,3 +6,6 @@ parameters:
         - '#Strict comparison using === between int<1, max> and 0 will always evaluate to false.#'
         - '#Method .+ResponsePagination::calculateTotalPages\(\) should return int but returns float.#'
         - '#Cannot use array destructuring on callable.#'
+        - '#Instanceof between class-string<.+AbstractTransfer> and .+GlueRequestTransfer will always evaluate to false.#'
+        - '#Method .+AbstractResourcePlugin::getResource\(\) should return callable\(\): mixed but returns array{.+AbstractController, string}.#'
+        - '#Method .+AbstractResourcePlugin::createControllerInstance\(\) should return .+AbstractController but returns object.#'

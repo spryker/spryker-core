@@ -8,7 +8,9 @@
 namespace SprykerTest\Zed\Transfer\Business\Model\Generator;
 
 use Codeception\Test\Unit;
+use Spryker\Shared\Kernel\Transfer\AbstractAttributesTransfer;
 use Spryker\Shared\Transfer\TransferConstants;
+use Spryker\Zed\Transfer\Business\Exception\InvalidAbstractAttributesUsageException;
 use Spryker\Zed\Transfer\Business\Exception\InvalidAssociativeTypeException;
 use Spryker\Zed\Transfer\Business\Exception\InvalidAssociativeValueException;
 use Spryker\Zed\Transfer\Business\Exception\InvalidNameException;
@@ -337,6 +339,69 @@ class ClassDefinitionTest extends Unit
     /**
      * @return void
      */
+    public function testAbstractAttributesTransfer(): void
+    {
+        $bundles = ['Bundle1'];
+
+        $transferDefinition = [
+            'name' => 'name',
+            'property' => [$this->getProperty('property1', 'AbstractAttributes', null, null, $bundles)],
+        ];
+
+        $classDefinition = $this->createClassDefinition();
+        $classDefinition->setDefinition($transferDefinition);
+
+        $methods = $classDefinition->getMethods();
+        $givenSetter = $methods['setProperty1'];
+        $expectedSetter = $this->getMethod('setProperty1', 'property1', '\Spryker\Shared\Kernel\Transfer\AbstractTransfer', null, 'AbstractTransfer', 'PROPERTY1', ['Bundle1'], true, false, false, true);
+        $this->assertEquals($expectedSetter, $givenSetter);
+
+        $properties = $classDefinition->getProperties();
+
+        $expected = [
+            'property1' => [
+                'name' => 'property1',
+                'type' => '\Spryker\Shared\Kernel\Transfer\AbstractTransfer|\null',
+                'is_array_collection' => false,
+                'bundles' => [
+                    'Bundle1',
+                ],
+                'is_associative' => false,
+            ],
+        ];
+        $this->assertEquals($expected, $properties);
+
+        $this->assertArrayHasKey(
+            AbstractAttributesTransfer::class,
+            $classDefinition->getUseStatements(),
+        );
+        $this->assertSame(
+            AbstractAttributesTransfer::class,
+            $classDefinition->getUseStatements()[AbstractAttributesTransfer::class],
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testAbstractAttributesArrayTransfer(): void
+    {
+        $bundles = ['Bundle1'];
+
+        $transferDefinition = [
+            'name' => 'name',
+            'property' => [$this->getProperty('property1', 'AbstractAttributes[]', null, null, $bundles)],
+        ];
+
+        $this->expectException(InvalidAbstractAttributesUsageException::class);
+
+        $classDefinition = $this->createClassDefinition();
+        $classDefinition->setDefinition($transferDefinition);
+    }
+
+    /**
+     * @return void
+     */
     public function testCollectionPropertyWithSingularDefinitionShouldHaveAddWithDefinedName(): void
     {
         $property = $this->getProperty('properties', 'Type[]', 'property');
@@ -374,6 +439,7 @@ class ClassDefinitionTest extends Unit
      * @param bool|null $hasDefaultNull
      * @param bool|null $valueObject
      * @param bool $isTypeAssertionEnabled
+     * @param bool $isAbstractAttributesTransfer
      *
      * @return array
      */
@@ -387,7 +453,8 @@ class ClassDefinitionTest extends Unit
         array $bundles = [],
         ?bool $hasDefaultNull = null,
         ?bool $valueObject = null,
-        bool $isTypeAssertionEnabled = false
+        bool $isTypeAssertionEnabled = false,
+        bool $isAbstractAttributesTransfer = false
     ): array {
         $method = [
             'name' => $method,
@@ -395,7 +462,13 @@ class ClassDefinitionTest extends Unit
             'bundles' => $bundles,
             'deprecationDescription' => null,
             'isTypeAssertionEnabled' => $isTypeAssertionEnabled,
+            'isAbstractAttributesTransfer' => $isAbstractAttributesTransfer,
         ];
+
+        if ($isAbstractAttributesTransfer) {
+            $method['attributesTransfer'] = true;
+            $method['abstractAttributesTransfer'] = 'AbstractAttributesTransfer';
+        }
 
         if ($var !== null) {
             $method['var'] = $var;
@@ -478,6 +551,7 @@ class ClassDefinitionTest extends Unit
         $method['parent'] = $parent;
         $method['is_associative'] = false;
         unset($method['shimNotice']);
+        unset($method['isAbstractAttributesTransfer']);
 
         return $method;
     }

@@ -12,6 +12,9 @@ use Spryker\Glue\GlueApplication\GlueApplicationConfig;
 use Spryker\Glue\GlueApplication\Rest\ResourceRouteLoaderInterface;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class HttpRequestValidator implements HttpRequestValidatorInterface
 {
     /**

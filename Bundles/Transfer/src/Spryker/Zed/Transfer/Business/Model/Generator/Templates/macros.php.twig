@@ -103,6 +103,14 @@
         }
 
         {% endif -%}
+        {% if method.attributesTransfer -%}
+            if (${{ method.property }} !== null && !${{ method.property }} instanceof {{ method.abstractAttributesTransfer }}) {
+            ${{ method.property }} = (new {{ method.abstractAttributesTransfer }}())
+                ->setAbstractAttributesType(get_class(${{ method.property }}))
+                ->fromArray(${{ method.property }}->toArray(), true);
+        }
+
+        {% endif -%}
         {% if method.isCollectionPropertyTypeCheckNeeded -%}
         $this->{{ method.property }} = {{ method.typeHint == 'ArrayObject' ? 'new ArrayObject()' : '[]' }};
 
@@ -140,7 +148,11 @@
      */
     public function {{ method.name }}(){% if method.returnTypeHint is defined %}: {{ method.returnTypeHint }}{% endif ~%}
     {
+{% if method.isAbstractAttributesTransfer %}
+        return $this->{{ method.property }} ? $this->{{ method.property }}->getValueTransfer() : null;
+{% else %}
         return $this->{{ method.property }};
+{% endif %}
     }
 {% endmacro -%}
 
@@ -165,7 +177,11 @@
             $this->throwNullValueException(static::{{ method.propertyConst }});
         }
 
+{% if method.isAbstractAttributesTransfer %}
+        return $this->{{ method.property }} ? $this->{{ method.property }}->getValueTransfer() : null;
+{% else %}
         return $this->{{ method.property }};
+{% endif %}
     }
 {% endmacro -%}
 
@@ -284,7 +300,7 @@
 {% endmacro -%}
 
 
-{%- macro addModifiedToArray(methodName, camelCase, isRecursive, primitives, transfers, collections, valueObjects)-%}
+{%- macro addModifiedToArray(methodName, camelCase, isRecursive, primitives, attributeTransfers, transfers, collections, valueObjects)-%}
 
     /**
      * @return array<string, mixed>
@@ -319,6 +335,14 @@
 
                     break;
 {% endif %}
+{% if abstractTransfers is not empty %}
+{% for value in attributeTransfers %}
+                case '{{ value.name }}':
+{% endfor %}
+                    $values[$arrayKey] = $value instanceof AbstractAttributesTransfer ? $value->modifiedToArray({{ isRecursive ?  'true' : 'false' }}, {{ camelCase ?  'true' : 'false' }}) : $value;
+
+                    break;
+{% endif %}
 {% if transfers is not empty %}
 {% for value in transfers %}
                 case '{{ value.name }}':
@@ -346,7 +370,7 @@
 
 {%- endmacro -%}
 
-{%- macro addToArray(methodName, isRecursive, isCamelCamed, primitives, transfers, transferCollections, valueObjects)-%}
+{%- macro addToArray(methodName, isRecursive, isCamelCamed, primitives, attributeTransfers, transfers, transferCollections, valueObjects)-%}
 {%- set nameKey = isCamelCamed ? 'name' : 'name_underscore' -%}
     /**
      * @return array<string, mixed>
@@ -355,6 +379,13 @@
     {
         return [
 {% for prop in primitives %}
+            '{{ prop[nameKey] }}' => {% if isRecursive -%}
+                $this->{{ prop.name }} instanceof AbstractTransfer ? $this->{{ prop.name }}->toArray({{ isRecursive ? 'true' : 'false' }}, {{ isCamelCamed ? 'true' : 'false' }}) : $this->{{ prop.name }}
+            {%- else -%}
+                $this->{{ prop.name }}
+            {%- endif -%},
+{% endfor %}
+{% for prop in attributeTransfers %}
             '{{ prop[nameKey] }}' => {% if isRecursive -%}
                 $this->{{ prop.name }} instanceof AbstractTransfer ? $this->{{ prop.name }}->toArray({{ isRecursive ? 'true' : 'false' }}, {{ isCamelCamed ? 'true' : 'false' }}) : $this->{{ prop.name }}
             {%- else -%}

@@ -9,6 +9,9 @@ namespace Spryker\Glue\GlueApplication\Rest\Uri;
 
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 interface UriParserInterface
 {
     /**

@@ -15,6 +15,9 @@ use Spryker\Glue\GlueApplication\Rest\Serialize\DecoderMatcherInterface;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class RequestResourceExtractor implements RequestResourceExtractorInterface
 {
     /**

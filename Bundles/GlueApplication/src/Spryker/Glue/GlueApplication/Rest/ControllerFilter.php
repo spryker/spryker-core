@@ -28,6 +28,9 @@ use Spryker\Shared\Log\LoggerTrait;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class ControllerFilter implements ControllerFilterInterface
 {
     use LoggerTrait;

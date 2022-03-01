@@ -15,6 +15,9 @@ use Spryker\Glue\GlueApplication\Rest\RequestConstantsInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class RestRequestValidator implements RestRequestValidatorInterface
 {
     /**

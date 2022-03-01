@@ -14,6 +14,9 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class ResponseBuilder implements ResponseBuilderInterface
 {
     /**

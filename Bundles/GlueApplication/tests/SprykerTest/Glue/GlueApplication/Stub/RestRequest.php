@@ -15,6 +15,9 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\Version;
 use Spryker\Glue\GlueApplication\Rest\Request\RequestBuilder;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class RestRequest
 {
     /**

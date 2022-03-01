@@ -14,7 +14,7 @@ interface GlueApplicationBootstrapPluginInterface
 {
     /**
      * Specification:
-     * - Indicates if the given context can be handled by this Glue API application bootstrap
+     * - Indicates if the given context can be handled by this Glue API application bootstrap.
      *
      * @api
      *
@@ -26,7 +26,7 @@ interface GlueApplicationBootstrapPluginInterface
 
     /**
      * Specification:
-     * - Returns the Application class responsible for executing the application
+     * - Returns the Application class responsible for executing the application.
      *
      * @api
      *

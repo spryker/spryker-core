@@ -9,6 +9,9 @@ namespace Spryker\Glue\GlueApplication\Serialize\Decoder;
 
 use Spryker\Glue\GlueApplication\Dependency\Service\GlueApplicationToUtilEncodingServiceInterface;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class JsonDecoder implements DecoderInterface
 {
     /**

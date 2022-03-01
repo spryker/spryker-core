@@ -9,6 +9,9 @@ namespace SprykerTest\Glue\GlueApplication\Stub;
 
 use SprykerTest\Shared\Kernel\Transfer\Fixtures\AbstractTransfer;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class RestTestAttributesTransfer extends AbstractTransfer
 {
     /**

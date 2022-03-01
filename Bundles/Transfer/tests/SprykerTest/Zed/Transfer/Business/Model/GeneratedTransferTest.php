@@ -384,6 +384,21 @@ class GeneratedTransferTest extends Unit
     /**
      * @return void
      */
+    public function testFromArrayMethodAcceptsNullOnStrictType(): void
+    {
+        $generatedTransferData = [
+            'test_transfer_strict' => null, // the property is strict-typed and can take null.
+        ];
+
+        $generatedTransfer = new GeneratedTransfer();
+        $generatedTransfer->fromArray($generatedTransferData);
+
+        $this->assertNull($generatedTransfer->getTestTransferStrict());
+    }
+
+    /**
+     * @return void
+     */
     public function testDecimalPropertyOfDecimalType(): void
     {
         $generatedTransfer = new GeneratedTransfer();
@@ -448,6 +463,28 @@ class GeneratedTransferTest extends Unit
         // Assert
         $this->expectException(RequiredTransferPropertyException::class);
         $generatedTransfer->requireTestDecimal();
+    }
+
+    /**
+     * @return void
+     */
+    public function testAbstractAttributesPropertyTransfer(): void
+    {
+        $generatedTransfer = new GeneratedTransfer();
+        $generatedTransfer->setAbstractAttributes((new GeneratedNestedTransfer())->setName('test'));
+        $this->assertSame(GeneratedNestedTransfer::class, get_class($generatedTransfer->getAbstractAttributes()));
+
+        $modified = $generatedTransfer->modifiedToArray();
+        $this->assertSame(['abstract_attributes' => ['name' => 'test']], $modified);
+
+        $generatedTransfer->requireAbstractAttributes();
+
+        $generatedTransfer->setAbstractAttributes(null);
+        $modified = $generatedTransfer->modifiedToArray();
+        $this->assertSame([], $modified);
+
+        $this->expectException(RequiredTransferPropertyException::class);
+        $generatedTransfer->requireAbstractAttributes();
     }
 
     /**

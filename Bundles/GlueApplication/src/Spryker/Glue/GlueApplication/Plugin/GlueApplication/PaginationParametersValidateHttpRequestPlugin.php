@@ -13,6 +13,8 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * @deprecated Will be removed without replacement.
+ *
  * @method \Spryker\Glue\GlueApplication\GlueApplicationFactory getFactory()
  */
 class PaginationParametersValidateHttpRequestPlugin extends AbstractPlugin implements ValidateHttpRequestPluginInterface

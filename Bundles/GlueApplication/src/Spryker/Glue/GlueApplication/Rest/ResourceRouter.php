@@ -16,6 +16,9 @@ use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\Application\Communication\ControllerServiceBuilder;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class ResourceRouter implements ResourceRouterInterface
 {
     /**

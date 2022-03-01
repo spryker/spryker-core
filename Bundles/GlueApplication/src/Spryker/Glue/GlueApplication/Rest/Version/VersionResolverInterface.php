@@ -10,6 +10,9 @@ namespace Spryker\Glue\GlueApplication\Rest\Version;
 use Generated\Shared\Transfer\RestVersionTransfer;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 interface VersionResolverInterface
 {
     /**

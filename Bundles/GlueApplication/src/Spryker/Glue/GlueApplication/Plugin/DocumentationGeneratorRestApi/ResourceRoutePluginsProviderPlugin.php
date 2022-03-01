@@ -11,6 +11,8 @@ use Spryker\Glue\DocumentationGeneratorRestApiExtension\Dependency\Plugin\Resour
 use Spryker\Glue\Kernel\AbstractPlugin;
 
 /**
+ * @deprecated Will be removed without replacement.
+ *
  * @method \Spryker\Glue\GlueApplication\GlueApplicationFactory getFactory()
  */
 class ResourceRoutePluginsProviderPlugin extends AbstractPlugin implements ResourceRoutePluginsProviderPluginInterface

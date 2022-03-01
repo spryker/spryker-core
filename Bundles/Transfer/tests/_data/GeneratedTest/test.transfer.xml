@@ -13,6 +13,7 @@
         <property name="testTransferStrict" type="Generated" strict="true"/>
         <property name="testDecimal" type="decimal"/>
         <property name="associativeNestedTransfers" type="GeneratedNested[]" singular="associativeNestedTransfer" associative="true"/>
+        <property name="abstractAttributes" type="AbstractAttributes"/>
     </transfer>
     <transfer name="GeneratedNested">
         <property name="name" type="string"/>

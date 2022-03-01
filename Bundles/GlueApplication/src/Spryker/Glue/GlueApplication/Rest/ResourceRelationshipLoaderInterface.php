@@ -7,6 +7,9 @@
 
 namespace Spryker\Glue\GlueApplication\Rest;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 interface ResourceRelationshipLoaderInterface
 {
     /**

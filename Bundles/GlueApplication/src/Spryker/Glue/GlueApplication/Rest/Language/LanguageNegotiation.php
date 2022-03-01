@@ -11,6 +11,9 @@ use Negotiation\AcceptLanguage;
 use Negotiation\LanguageNegotiator;
 use Spryker\Glue\GlueApplication\Dependency\Client\GlueApplicationToStoreClientInterface;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class LanguageNegotiation implements LanguageNegotiationInterface
 {
     /**

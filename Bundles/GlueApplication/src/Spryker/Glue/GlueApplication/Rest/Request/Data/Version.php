@@ -7,6 +7,9 @@
 
 namespace Spryker\Glue\GlueApplication\Rest\Request\Data;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class Version implements VersionInterface
 {
     /**

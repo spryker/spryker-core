@@ -15,6 +15,9 @@ use Spryker\Glue\GlueApplication\Serialize\Encoder\EncoderInterface;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class ResponseFormatter implements ResponseFormatterInterface
 {
     /**

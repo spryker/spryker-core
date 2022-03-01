@@ -14,6 +14,8 @@ abstract class AbstractPlugin implements ModuleNameAwareInterface
     use BundleConfigResolverAwareTrait;
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getModuleName(): string

@@ -24,9 +24,9 @@ use Codeception\Actor;
  *
  * @SuppressWarnings(PHPMD)
  */
-class GlueBackendApiApplicationTester extends Actor
+class GlueStorefrontApiApplicationTester extends Actor
 {
-    use _generated\GlueBackendApiApplicationTesterActions;
+    use _generated\GlueStorefrontApiApplicationTesterActions;
 
     /**
      * Define custom actions here

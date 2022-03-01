@@ -10,6 +10,9 @@ namespace Spryker\Glue\GlueApplicationExtension\Dependency\Plugin;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 interface RestUserValidatorPluginInterface
 {
     /**

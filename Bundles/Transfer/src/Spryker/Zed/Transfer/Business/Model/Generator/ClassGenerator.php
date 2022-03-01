@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Transfer\Business\Model\Generator;
 
+use Spryker\Shared\Kernel\Transfer\AbstractAttributesTransfer;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
@@ -70,10 +71,17 @@ class ClassGenerator implements GeneratorInterface
         $collections = [];
         $primitives = [];
         $transfers = [];
+        $attributeTransfers = [];
         $valueObjects = [];
         foreach ($definition->getNormalizedProperties() as $property) {
             if ($this->isPropertyTypeCollection($property)) {
                 $collections[] = $property;
+
+                continue;
+            }
+
+            if ($this->isPropertyTypeAbstractAttributesTransfer($property)) {
+                $attributeTransfers[] = $property;
 
                 continue;
             }
@@ -97,6 +105,7 @@ class ClassGenerator implements GeneratorInterface
             'transferCollections' => $collections,
             'primitives' => $primitives,
             'transfers' => $transfers,
+            'attributeTransfers' => $attributeTransfers,
             'valueObjects' => $valueObjects,
         ];
     }
@@ -124,6 +133,16 @@ class ClassGenerator implements GeneratorInterface
         $twigVariables += $this->getPropertiesSegregatedByType($classDefinition);
 
         return $twigVariables;
+    }
+
+    /**
+     * @param array<string, mixed> $property
+     *
+     * @return bool
+     */
+    protected function isPropertyTypeAbstractAttributesTransfer(array $property): bool
+    {
+        return $property['is_transfer'] && $property['type_fully_qualified'] === AbstractAttributesTransfer::class;
     }
 
     /**

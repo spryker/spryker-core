@@ -12,6 +12,9 @@ use Spryker\Glue\GlueApplication\Rest\Exception\UserAlreadySetException;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class RestRequest implements RestRequestInterface
 {
     /**

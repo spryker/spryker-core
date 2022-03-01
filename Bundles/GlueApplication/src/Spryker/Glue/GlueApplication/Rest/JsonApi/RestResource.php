@@ -10,6 +10,9 @@ namespace Spryker\Glue\GlueApplication\Rest\JsonApi;
 use ArrayObject;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class RestResource implements RestResourceInterface
 {
     /**

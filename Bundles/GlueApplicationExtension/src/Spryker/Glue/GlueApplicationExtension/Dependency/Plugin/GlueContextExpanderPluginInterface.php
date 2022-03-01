@@ -9,11 +9,14 @@ namespace Spryker\Glue\GlueApplicationExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\GlueApiContextTransfer;
 
+/**
+ * Implement this interface to extend the `GlueApiContextTransfer` that is used to decide which API application to serve.
+ */
 interface GlueContextExpanderPluginInterface
 {
     /**
      * Specification:
-     * - Expands the context with data (e.g. HTTP host) that will be used to filter Glue API application bootstrap to serve the context
+     * - Expands the context with data (e.g. HTTP host) that will be used to filter Glue API application bootstrap to serve the context.
      *
      * @api
      *

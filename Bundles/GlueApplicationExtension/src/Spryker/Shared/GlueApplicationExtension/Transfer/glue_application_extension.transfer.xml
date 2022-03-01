@@ -15,4 +15,16 @@
 
     <transfer name="GlueApiContext">
     </transfer>
+
+    <transfer name="GlueRequest">
+    </transfer>
+
+    <transfer name="GlueResponse">
+    </transfer>
+
+    <transfer name="GlueRequestValidation">
+    </transfer>
+
+    <transfer name="GlueResourceMethodCollection">
+    </transfer>
 </transfers>

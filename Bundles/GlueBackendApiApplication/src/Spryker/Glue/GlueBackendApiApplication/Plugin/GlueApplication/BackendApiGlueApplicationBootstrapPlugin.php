@@ -20,7 +20,7 @@ class BackendApiGlueApplicationBootstrapPlugin extends AbstractPlugin implements
 {
     /**
      * {@inheritDoc}
-     * - Checks if the host if being served by Backend API application
+     * - Checks current application is GLUE_BACKEND.
      *
      * @api
      *
@@ -34,6 +34,11 @@ class BackendApiGlueApplicationBootstrapPlugin extends AbstractPlugin implements
     }
 
     /**
+     * {@inheritDoc}
+     * - Return the {@link \Spryker\Glue\GlueBackendApiApplication\Application\GlueBackendApiApplication}.
+     *
+     * @api
+     *
      * @return \Spryker\Shared\Application\ApplicationInterface
      */
     public function getApplication(): ApplicationInterface

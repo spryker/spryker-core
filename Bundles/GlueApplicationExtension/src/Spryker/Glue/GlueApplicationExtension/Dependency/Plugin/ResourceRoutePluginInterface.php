@@ -9,6 +9,9 @@ namespace Spryker\Glue\GlueApplicationExtension\Dependency\Plugin;
 
 use Spryker\Glue\Kernel\ModuleNameAwareInterface;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 interface ResourceRoutePluginInterface extends ModuleNameAwareInterface
 {
     /**

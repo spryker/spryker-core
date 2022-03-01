@@ -10,6 +10,9 @@ namespace Spryker\Glue\GlueApplication\Rest\Request;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 interface RequestFormatterInterface
 {
     /**

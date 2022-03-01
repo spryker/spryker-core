@@ -13,6 +13,8 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use SprykerTest\Glue\GlueApplication\Stub\RestTestAttributesTransfer;
 
 /**
+ * @deprecated Will be removed without replacement.
+ *
  * Auto-generated group annotations
  *
  * @group SprykerTest

@@ -14,6 +14,9 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\GlueApplication\Rest\RequestConstantsInterface;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class ResponseHeaders implements ResponseHeadersInterface
 {
     /**

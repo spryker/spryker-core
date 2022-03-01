@@ -25,11 +25,39 @@ interface GlueBackendApiApplicationConstants
 
     /**
      * Specification:
-     * - Contains the host that the Backend API serves
+     * - Contains the host that the Backend API serves.
      *
      * @api
      *
      * @var string
      */
     public const GLUE_BACKEND_API_HOST = 'GLUE_BACKEND_API_APPLICATION:GLUE_BACKEND_API_HOST';
+
+    /**
+     * @uses \Spryker\Shared\Kernel\KernelConstants::PROJECT_NAMESPACES
+     *
+     * @var string
+     */
+    public const PROJECT_NAMESPACES = 'GLUE_BACKEND_API_APPLICATION:PROJECT_NAMESPACES';
+
+    /**
+     * Specification:
+     * - If option set to true, the application will create a router cache on the first request of a route.
+     * - Defaults to true.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const GLUE_IS_CACHE_ENABLED = 'GLUE_BACKEND_API_APPLICATION:GLUE_IS_CACHE_ENABLED';
+
+    /**
+     * Specification:
+     * - Path to where the cache files should be written to.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const GLUE_CACHE_PATH = 'GLUE_BACKEND_API_APPLICATION:GLUE_CACHE_PATH';
 }

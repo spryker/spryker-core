@@ -13,6 +13,9 @@ use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginI
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceVersionableInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class TestVersionableResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface, ResourceVersionableInterface
 {
     /**

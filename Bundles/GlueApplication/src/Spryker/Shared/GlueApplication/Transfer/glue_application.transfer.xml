@@ -4,23 +4,38 @@
     </transfer>
     <transfer name="GlueRequestValidation">
         <property name="isValid" type="bool"/>
-        <property name="statusCode" type="string"/>
+        <property name="statusCode" type="string" deprecated="Use `status` property for HTTP status."/>
         <property name="validationError" type="string"/>
+        <property name="status" type="int"/>
+        <property name="errors" type="GlueError[]" singular="error"/>
+    </transfer>
+    <transfer name="GlueError">
+        <property name="status" type="int"/>
+        <property name="code" type="string"/>
+        <property name="message" type="string"/>
     </transfer>
     <transfer name="GlueRequest">
         <property name="locale" type="string"/>
         <property name="content" type="string"/>
         <property name="path" type="string"/>
         <property name="meta" type="array" associative="true" singular="meta"/>
+        <property name="convention" type="string"/>
+        <property name="application" type="string"/>
+        <property name="attributes" type="array" singular="attribute"/>
+        <property name="resource" type="GlueResource"/>
+        <property name="method" type="string"/>
+        <property name="parentResources" type="GlueResource[]" singular="parentResource" associative="true"/>
     </transfer>
     <transfer name="GlueResponse">
-        <property name="status" type="string"/>
+        <property name="status" type="string" deprecated="Use `httpStatus` property for HTTP status."/>
+        <property name="httpStatus" type="int"/>
         <property name="meta" type="array" associative="true" singular="meta"/>
         <property name="content" type="string"/>
         <property name="alternativePath" type="string"/>
         <property name="requestValidation" type="GlueRequestValidation"/>
+        <property name="errors" type="GlueError[]" singular="error"/>
     </transfer>
-    <transfer name="RestPageOffsets">
+    <transfer name="RestPageOffsets" deprecated="Will be removed without replacement.">
         <property name="limit" type="int"/>
         <property name="firstOffset" type="int"/>
         <property name="lastOffset" type="int"/>
@@ -52,4 +67,31 @@
     <transfer name="Store">
         <property name="availableLocaleIsoCodes" type="array" singular="availableLocaleCode"/>
     </transfer>
+
+    <transfer name="GlueResource">
+        <property name="type" type="string"/>
+        <property name="resourceName" type="string"/>
+        <property name="method" type="string"/>
+        <property name="controller" type="string"/>
+        <property name="action" type="string"/>
+        <property name="parameters" type="string[]" singular="parameter"/>
+        <property name="id" type="string"/>
+        <property name="attributes" type="AbstractAttributes"/>
+    </transfer>
+
+    <transfer name="GlueResourceMethodCollection">
+        <property name="get" type="GlueResourceMethodConfiguration"/>
+        <property name="getCollection" type="GlueResourceMethodConfiguration"/>
+        <property name="post" type="GlueResourceMethodConfiguration"/>
+        <property name="patch" type="GlueResourceMethodConfiguration"/>
+        <property name="delete" type="GlueResourceMethodConfiguration"/>
+        <property name="options" type="GlueResourceMethodConfiguration"/>
+    </transfer>
+
+    <transfer name="GlueResourceMethodConfiguration">
+        <property name="attributes" type="string"/>
+        <property name="controller" type="string"/>
+        <property name="action" type="string"/>
+    </transfer>
+
 </transfers>

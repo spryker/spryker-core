@@ -3,4 +3,55 @@
     <transfer name="GlueApiContext">
         <property name="host" type="string"/>
     </transfer>
+
+    <transfer name="GlueRequest">
+        <property name="application" type="string"/>
+        <property name="meta" type="array" associative="true" singular="meta"/>
+        <property name="locale" type="string"/>
+        <property name="path" type="string"/>
+        <property name="method" type="string"/>
+        <property name="host" type="string"/>
+        <property name="parametersString" type="string"/>
+        <property name="resource" type="GlueResource"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="availableLocaleIsoCodes" type="array" singular="availableLocaleCode"/>
+    </transfer>
+
+    <transfer name="GlueResourceMethodCollection">
+        <property name="options" type="GlueResourceMethodConfiguration"/>
+    </transfer>
+
+    <transfer name="GlueResourceMethodConfiguration">
+    </transfer>
+
+    <transfer name="GlueError">
+        <property name="status" type="int"/>
+        <property name="code" type="string"/>
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="GlueResponse">
+        <property name="meta" type="array" associative="true" singular="meta"/>
+        <property name="status" type="string" deprecated="Use `httpStatus` property for HTTP status."/>
+        <property name="httpStatus" type="int"/>
+        <property name="errors" type="GlueError[]" singular="error"/>
+    </transfer>
+
+    <transfer name="GlueRequestValidation">
+        <property name="isValid" type="bool"/>
+        <property name="statusCode" type="string"/>
+        <property name="validationError" type="string"/>
+        <property name="status" type="int"/>
+        <property name="errors" type="GlueError[]" singular="error"/>
+    </transfer>
+
+    <transfer name="GlueResource">
+        <property name="resourceName" type="string"/>
+        <property name="method" type="string"/>
+        <property name="controller" type="string"/>
+        <property name="action" type="string"/>
+        <property name="parameters" type="string[]" singular="parameter"/>
+    </transfer>
 </transfers>

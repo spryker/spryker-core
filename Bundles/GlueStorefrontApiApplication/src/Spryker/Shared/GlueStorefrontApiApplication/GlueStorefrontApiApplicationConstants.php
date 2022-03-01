@@ -32,4 +32,31 @@ interface GlueStorefrontApiApplicationConstants
      * @var string
      */
     public const GLUE_STOREFRONT_API_HOST = 'GLUE_STOREFRONT_API_APPLICATION:GLUE_STOREFRONT_API_HOST';
+
+    /**
+     * @uses \Spryker\Shared\Kernel\KernelConstants::PROJECT_NAMESPACES
+     *
+     * @var string
+     */
+    public const PROJECT_NAMESPACES = 'PROJECT_NAMESPACES';
+
+    /**
+     * Specification:
+     * - If option set to true, the application will create a router cache on the first request of a route.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const GLUE_IS_CACHE_ENABLED = 'GLUE_STOREFRONT_API_APPLICATION:GLUE_IS_CACHE_ENABLED';
+
+    /**
+     * Specification:
+     * - Path to where the cache files should be written to.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const GLUE_CACHE_PATH = 'GLUE_STOREFRONT_API_APPLICATION:GLUE_CACHE_PATH';
 }

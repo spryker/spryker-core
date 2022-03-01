@@ -14,7 +14,7 @@ coverage:
 suites:
     Communication:
         path: /
-        class_name: GlueBackendApiApplicationTester
+        class_name: GlueStorefrontApiApplicationTester
         modules:
             enabled:
                 - Asserts

@@ -18,8 +18,8 @@ interface ProductOfferStorageClientInterface
     /**
      * Specification:
      * - Retrieves product offer from storage by product concrete SKUs provided in the `ProductOfferStorageCriteriaTransfer`.
-     * - Executes {@link \Spryker\Client\ProductOfferStorageExtension\Dependency\Plugin\ProductOfferStorageExpanderPluginInterface } plugin stack to expand `ProductOfferStorageTransfer` with additional data.
-     * - Executes {@link \Spryker\Client\ProductOfferStorageExtension\Dependency\Plugin\ProductOfferStorageFilterPluginInterface} plugin stack to filter `ProductOfferStorageTransfer`s by criteria.
+     * - Executes {@link \Spryker\Client\ProductOfferStorageExtension\Dependency\Plugin\ProductOfferStorageExpanderPluginInterface} plugin stack to expand `ProductOfferStorageTransfer` with additional data.
+     * - Executes {@link \Spryker\Client\ProductOfferStorageExtension\Dependency\Plugin\ProductOfferStorageCollectionSorterPluginInterface} plugin to sort `ProductOfferStorageTransfer` collection.
      * - Finds and marks the default product's offer in `ProductOfferStorageTransfer.isDefault`.
      *
      * @api

@@ -9,6 +9,9 @@ namespace Spryker\Glue\GlueApplication\Rest;
 
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipCollectionInterface;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class ResourceRelationshipLoader implements ResourceRelationshipLoaderInterface
 {
     /**

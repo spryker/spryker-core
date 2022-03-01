@@ -104,6 +104,24 @@ class {{ className }} extends {{ abstractClass }}
 
                     break;
 {% endif %}
+{% if attributeTransfers is not empty %}
+    {% for value in attributeTransfers %}
+            case '{{ value.name }}':
+    {% endfor %}
+                if (is_array($value)) {
+                        $type = $this->transferMetadata[$normalizedPropertyName]['type'];
+                        /** @var \Spryker\Shared\Kernel\Transfer\AbstractAttributesTransfer $value */
+                        $value = (new $type())->fromArray($value, $ignoreMissingProperty);
+                    }
+
+                    if ($value !== null && $this->isPropertyStrict($normalizedPropertyName)) {
+                        $this->assertInstanceOfTransfer($normalizedPropertyName, $value);
+                    }
+                    $this->$normalizedPropertyName = $value;
+                    $this->modifiedProperties[$normalizedPropertyName] = true;
+
+                    break;
+{% endif %}
 {% if transfers is not empty %}
 {% for value in transfers %}
                 case '{{ value.name }}':
@@ -241,9 +259,9 @@ class {{ className }} extends {{ abstractClass }}
         return $result;
     }
 
-    {{ macro.addModifiedToArray('modifiedToArrayRecursiveCamelCased', true, true, primitives, transfers, transferCollections, valueObjects) }}
+    {{ macro.addModifiedToArray('modifiedToArrayRecursiveCamelCased', true, true, primitives, attributeTransfers, transfers, transferCollections, valueObjects) }}
 
-    {{ macro.addModifiedToArray('modifiedToArrayRecursiveNotCamelCased', false, true, primitives, transfers, transferCollections, valueObjects) }}
+    {{ macro.addModifiedToArray('modifiedToArrayRecursiveNotCamelCased', false, true, primitives, attributeTransfers, transfers, transferCollections, valueObjects) }}
 
     {{ macro.addModifiedToArray('modifiedToArrayNotRecursiveNotCamelCased', false, false) }}
 
@@ -251,11 +269,11 @@ class {{ className }} extends {{ abstractClass }}
 
     {{ macro.addInitCollections(transferCollections) }}
 
-    {{ macro.addToArray('toArrayNotRecursiveCamelCased', false, true, primitives, transfers, transferCollections, valueObjects) }}
+    {{ macro.addToArray('toArrayNotRecursiveCamelCased', false, true, primitives, attributeTransfers, transfers, transferCollections, valueObjects) }}
 
-    {{ macro.addToArray('toArrayNotRecursiveNotCamelCased', false, false, primitives, transfers, transferCollections, valueObjects) }}
+    {{ macro.addToArray('toArrayNotRecursiveNotCamelCased', false, false, primitives, attributeTransfers, transfers, transferCollections, valueObjects) }}
 
-    {{ macro.addToArray('toArrayRecursiveNotCamelCased', true, false, primitives, transfers, transferCollections, valueObjects) }}
+    {{ macro.addToArray('toArrayRecursiveNotCamelCased', true, false, primitives, attributeTransfers, transfers, transferCollections, valueObjects) }}
 
-    {{ macro.addToArray('toArrayRecursiveCamelCased', true, true, primitives, transfers, transferCollections, valueObjects) }}
+    {{ macro.addToArray('toArrayRecursiveCamelCased', true, true, primitives, attributeTransfers, transfers, transferCollections, valueObjects) }}
 }

@@ -15,6 +15,8 @@ use Symfony\Component\HttpFoundation\Session\Storage\MetadataBag;
 use Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface;
 
 /**
+ * @deprecated Will be removed without replacement.
+ *
  * This class is used as workaround for Clients which depend on session, this will provide in memory storage that means after request complected it's discarded.
  * When using SessionClient within GLUE application context, it will use this storage.
  */

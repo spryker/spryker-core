@@ -11,6 +11,9 @@ use Spryker\Glue\Kernel\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 interface ControllerFilterInterface
 {
     /**

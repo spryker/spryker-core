@@ -9,6 +9,9 @@ namespace Spryker\Glue\GlueApplication\Rest\User;
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class UserProvider implements UserProviderInterface
 {
     /**

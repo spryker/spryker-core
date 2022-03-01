@@ -34,6 +34,9 @@ class StorefrontApiGlueApplicationBootstrapPlugin extends AbstractPlugin impleme
     }
 
     /**
+     * {@inheritDoc}
+     * - Return the {@link \Spryker\Glue\GlueStorefrontApiApplication\Application\GlueStorefrontApiApplication}.
+     *
      * @return \Spryker\Shared\Application\ApplicationInterface
      */
     public function getApplication(): ApplicationInterface

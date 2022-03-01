@@ -9,6 +9,9 @@ namespace Spryker\Glue\GlueApplicationExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\RestVersionTransfer;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 interface ResourceVersionableInterface
 {
     /**

@@ -11,7 +11,10 @@ use ArrayObject;
 use Laminas\Filter\Word\CamelCaseToUnderscore;
 use Laminas\Filter\Word\UnderscoreToCamelCase;
 use Spryker\DecimalObject\Decimal;
+use Spryker\Shared\Kernel\Transfer\AbstractAttributesTransfer;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Shared\Transfer\TypeValidation\TransferTypeValidatorTrait;
+use Spryker\Zed\Transfer\Business\Exception\InvalidAbstractAttributesUsageException;
 use Spryker\Zed\Transfer\Business\Exception\InvalidAssociativeTypeException;
 use Spryker\Zed\Transfer\Business\Exception\InvalidAssociativeValueException;
 use Spryker\Zed\Transfer\Business\Exception\InvalidNameException;
@@ -130,6 +133,7 @@ class ClassDefinition implements ClassDefinitionInterface
         $this->addExtraUseStatements();
 
         if (isset($definition['property'])) {
+            $this->addAbstractAttributesTransferUseStatement($definition['property']);
             $definition = $this->shimTransferDefinitionPropertyTypes($definition);
             $properties = $this->normalizePropertyTypes($definition['property']);
             $this->addConstants($properties);
@@ -235,6 +239,7 @@ class ClassDefinition implements ClassDefinitionInterface
     protected function addProperties(array $properties): void
     {
         foreach ($properties as $property) {
+            $this->assertAbstractAttributesTransferType($property);
             $this->addProperty($property);
         }
     }
@@ -301,6 +306,9 @@ class ClassDefinition implements ClassDefinitionInterface
             if ($this->isValueObject($property)) {
                 $property = $this->buildValueObjectPropertyDefinition($property);
             }
+            if ($this->isAbstractAttributesTransfer($property['type'])) {
+                $property = $this->buildAbstractAttributesTransferPropertyDefinition($property);
+            }
 
             $property['is_associative'] = $this->isAssociativeArray($property);
             $property['is_strict'] = $this->isStrictProperty($property);
@@ -341,6 +349,19 @@ class ClassDefinition implements ClassDefinitionInterface
      *
      * @return array
      */
+    protected function buildAbstractAttributesTransferPropertyDefinition(array $property): array
+    {
+        $property['is_transfer'] = true;
+        $property[static::TYPE_FULLY_QUALIFIED] = AbstractAttributesTransfer::class;
+
+        return $property;
+    }
+
+    /**
+     * @param array<string, mixed> $property
+     *
+     * @return array
+     */
     protected function buildValueObjectPropertyDefinition(array $property): array
     {
         $property['is_value_object'] = true;
@@ -357,6 +378,16 @@ class ClassDefinition implements ClassDefinitionInterface
     protected function isTransferOrTransferArray($type): bool
     {
         return (bool)preg_match('/^[A-Z].*/', $type);
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return bool
+     */
+    protected function isAbstractAttributesTransfer(string $type): bool
+    {
+        return $type === 'AbstractAttributesTransfer';
     }
 
     /**
@@ -394,6 +425,10 @@ class ClassDefinition implements ClassDefinitionInterface
             return 'array';
         }
 
+        if ($this->isTypeAbstractAttributesTransfer($property)) {
+            return sprintf('\%s|\null', AbstractTransfer::class);
+        }
+
         if ($this->isCollection($property)) {
             return '\ArrayObject|\Generated\Shared\Transfer\\' . $property['type'];
         }
@@ -413,6 +448,16 @@ class ClassDefinition implements ClassDefinitionInterface
     protected function isTypeTransferObject(array $property): bool
     {
         return ($property['is_transfer']);
+    }
+
+    /**
+     * @param array<string, mixed> $property
+     *
+     * @return bool
+     */
+    protected function isTypeAbstractAttributesTransfer(array $property): bool
+    {
+        return ($property['is_transfer'] && $property[static::TYPE_FULLY_QUALIFIED] === AbstractAttributesTransfer::class);
     }
 
     /**
@@ -442,6 +487,10 @@ class ClassDefinition implements ClassDefinitionInterface
 
         if ($this->isArray($property)) {
             return 'array';
+        }
+
+        if ($this->isTypeAbstractAttributesTransfer($property)) {
+            return '\\' . AbstractTransfer::class;
         }
 
         if ($this->isCollection($property)) {
@@ -613,6 +662,7 @@ class ClassDefinition implements ClassDefinitionInterface
             'return' => preg_replace('/\|null$/', '', $this->getReturnType($property)),
             'bundles' => $property['bundles'],
             'deprecationDescription' => $this->getPropertyDeprecationDescription($property),
+            'isAbstractAttributesTransfer' => $this->isTypeAbstractAttributesTransfer($property),
         ];
 
         $method = $this->addGetOrFailTypeHint($method, $property);
@@ -670,6 +720,10 @@ class ClassDefinition implements ClassDefinitionInterface
 
         if ($this->isArrayCollection($property)) {
             return 'array';
+        }
+
+        if ($this->isTypeAbstractAttributesTransfer($property)) {
+            return '\\' . AbstractTransfer::class . '|null';
         }
 
         if ($this->isCollection($property)) {
@@ -770,6 +824,10 @@ class ClassDefinition implements ClassDefinitionInterface
             return 'array';
         }
 
+        if ($this->isTypeAbstractAttributesTransfer($property)) {
+            return 'AbstractTransfer';
+        }
+
         if ($this->isValueObject($property)) {
             $this->addUseStatement($this->getValueObjectFullyQualifiedClassName($property));
 
@@ -837,6 +895,7 @@ class ClassDefinition implements ClassDefinitionInterface
             'return' => $this->buildGetReturnTypeData($property),
             'bundles' => $property['bundles'],
             'deprecationDescription' => $this->getPropertyDeprecationDescription($property),
+            'isAbstractAttributesTransfer' => $this->isTypeAbstractAttributesTransfer($property),
         ];
 
         if ($this->propertyHasTypeShim($property)) {
@@ -869,6 +928,7 @@ class ClassDefinition implements ClassDefinitionInterface
             'bundles' => $property['bundles'],
             'typeHint' => null,
             'deprecationDescription' => $this->getPropertyDeprecationDescription($property),
+            'isAbstractAttributesTransfer' => $this->isTypeAbstractAttributesTransfer($property),
         ];
         $method = $this->addSetTypeHint($method, $property);
         $method = $this->addDefaultNull($method, $property);
@@ -876,6 +936,11 @@ class ClassDefinition implements ClassDefinitionInterface
 
         if ($this->isArrayCollection($property)) {
             $method['setsArrayCollection'] = true;
+        }
+
+        if ($this->isTypeAbstractAttributesTransfer($property)) {
+            $method['attributesTransfer'] = true;
+            $method['abstractAttributesTransfer'] = 'AbstractAttributesTransfer';
         }
 
         if ($this->isCollectionPropertyTypeCheckNeeded($property)) {
@@ -1558,5 +1623,35 @@ class ClassDefinition implements ClassDefinitionInterface
     protected function isCollectionPropertyTypeCheckNeeded(array $property): bool
     {
         return $this->isStrictProperty($property) && $this->isCollection($property);
+    }
+
+    /**
+     * @param array<string, mixed> $properties
+     *
+     * @return void
+     */
+    protected function addAbstractAttributesTransferUseStatement(array $properties): void
+    {
+        foreach ($properties as $property) {
+            if ($property['type'] === 'AbstractAttributes') {
+                $this->addUseStatement(AbstractAttributesTransfer::class);
+
+                return;
+            }
+        }
+    }
+
+    /**
+     * @param array<string, mixed> $property
+     *
+     * @throws \Spryker\Zed\Transfer\Business\Exception\InvalidAbstractAttributesUsageException
+     *
+     * @return void
+     */
+    protected function assertAbstractAttributesTransferType(array $property): void
+    {
+        if ($property['type'] === 'AbstractAttributesTransfer[]') {
+            throw new InvalidAbstractAttributesUsageException('AbstractAttributes type cannot be used as array.');
+        }
     }
 }

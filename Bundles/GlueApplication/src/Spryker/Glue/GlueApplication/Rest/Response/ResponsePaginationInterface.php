@@ -10,6 +10,9 @@ namespace Spryker\Glue\GlueApplication\Rest\Response;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 interface ResponsePaginationInterface
 {
     /**

@@ -10,6 +10,9 @@ namespace Spryker\Glue\GlueApplicationExtension\Dependency\Plugin;
 use Spryker\Glue\GlueApplication\Rest\Request\RequestBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 interface FormatRequestPluginInterface
 {
     /**

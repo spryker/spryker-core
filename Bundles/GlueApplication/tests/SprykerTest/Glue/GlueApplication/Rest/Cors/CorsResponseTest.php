@@ -25,6 +25,8 @@ use SprykerTest\Glue\GlueApplication\Stub\TestResourceRoutePlugin;
 use SprykerTest\Glue\GlueApplication\Stub\TestResourceWithParentRoutePlugin;
 
 /**
+ * @deprecated Will be removed without replacement.
+ *
  * Auto-generated group annotations
  *
  * @group SprykerTest

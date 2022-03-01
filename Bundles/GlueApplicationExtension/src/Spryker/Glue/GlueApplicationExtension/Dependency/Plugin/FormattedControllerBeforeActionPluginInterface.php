@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * @deprecated Will be removed without replacement.
+ *
  * Implementations are used in {@link \Spryker\Glue\GlueApplication\GlueApplicationDependencyProvider::getFormattedControllerBeforeActionTerminatePlugins()} for processing some actions before executing controllers that extend {@link \Spryker\Glue\Kernel\Controller\FormattedAbstractController}.
  */
 interface FormattedControllerBeforeActionPluginInterface

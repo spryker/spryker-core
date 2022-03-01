@@ -9,6 +9,9 @@ namespace Spryker\Glue\GlueApplicationExtension\Dependency\Plugin;
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 interface ResourceRelationshipPluginInterface
 {
     /**

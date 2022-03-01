@@ -10,6 +10,9 @@ namespace Spryker\Glue\GlueApplication\Rest\Request;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\Metadata;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 interface RequestMetaDataExtractorInterface
 {
     /**

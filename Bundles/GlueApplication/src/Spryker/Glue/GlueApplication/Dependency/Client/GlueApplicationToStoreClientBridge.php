@@ -9,6 +9,9 @@ namespace Spryker\Glue\GlueApplication\Dependency\Client;
 
 use Generated\Shared\Transfer\StoreTransfer;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class GlueApplicationToStoreClientBridge implements GlueApplicationToStoreClientInterface
 {
     /**

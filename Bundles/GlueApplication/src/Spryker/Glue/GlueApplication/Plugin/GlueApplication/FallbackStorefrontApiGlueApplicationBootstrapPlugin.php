@@ -13,6 +13,8 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 use Spryker\Shared\Application\ApplicationInterface;
 
 /**
+ * @deprecated Will be removed without replacement.
+ *
  * @method \Spryker\Glue\GlueApplication\GlueApplicationFactory getFactory()
  */
 class FallbackStorefrontApiGlueApplicationBootstrapPlugin extends AbstractPlugin implements GlueApplicationBootstrapPluginInterface

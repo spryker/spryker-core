@@ -7,6 +7,9 @@
 
 namespace Spryker\Glue\GlueApplication\Serialize\Decoder;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 interface DecoderInterface
 {
     /**

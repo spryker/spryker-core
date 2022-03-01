@@ -18,6 +18,8 @@ interface GlueApplicationConstants
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @var string
      */
     public const GLUE_APPLICATION_DOMAIN = 'GLUE_APPLICATION_DOMAIN';
@@ -27,6 +29,8 @@ interface GlueApplicationConstants
      *  - If rest debug is enabled, will show exception stack traces instead of 500 errors.
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @var string
      */
@@ -39,6 +43,8 @@ interface GlueApplicationConstants
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @var string
      */
     public const GLUE_APPLICATION_CORS_ALLOW_ORIGIN = 'GLUE_APPLICATION_CORS_ALLOW_ORIGIN';
@@ -50,6 +56,8 @@ interface GlueApplicationConstants
      * - Value can be retrieved from the Container.
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @var string
      */
