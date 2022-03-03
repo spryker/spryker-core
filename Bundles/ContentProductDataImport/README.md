@@ -12,4 +12,4 @@ composer require spryker/content-product-data-import
 
 ## Documentation
 
-[Spryker Documentation](https://documentation.spryker.com/module_guide/overview.htm)
+[Spryker Documentation](https://documentation.spryker.com)

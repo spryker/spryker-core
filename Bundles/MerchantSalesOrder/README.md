@@ -12,4 +12,4 @@ composer require spryker/merchant-sales-order
 
 ## Documentation
 
-[Spryker Documentation](https://documentation.spryker.com/module_guide/overview.htm)
+[Spryker Documentation](https://documentation.spryker.com)

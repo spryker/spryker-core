@@ -12,4 +12,4 @@ composer require spryker/cms-slot-storage
 
 ## Documentation
 
-[Spryker Documentation](https://documentation.spryker.com/module_guide/overview.htm)
+[Spryker Documentation](https://documentation.spryker.com)

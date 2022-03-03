@@ -12,4 +12,4 @@ composer require spryker/customer-access-rest-api
 
 ## Documentation
 
-[Spryker Documentation](https://documentation.spryker.com/module_guide/overview.htm)
+[Spryker Documentation](https://documentation.spryker.com)

@@ -12,4 +12,4 @@ composer require spryker/glue-backend-api-application-extension
 
 ## Documentation
 
-[Spryker Documentation](https://documentation.spryker.com/module_guide/overview.htm)
+[Spryker Documentation](https://documentation.spryker.com)

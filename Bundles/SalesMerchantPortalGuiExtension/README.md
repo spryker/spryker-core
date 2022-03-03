@@ -12,4 +12,4 @@ composer require spryker/sales-merchant-portal-gui-extension
 
 ## Documentation
 
-[Spryker Documentation](https://documentation.spryker.com/module_guide/overview.htm)
+[Spryker Documentation](https://documentation.spryker.com)
