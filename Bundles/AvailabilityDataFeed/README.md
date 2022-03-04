@@ -12,4 +12,4 @@ composer require spryker/availability-data-feed
 
 ## Documentation
 
-[Module Documentation](https://docs.spryker.com)
+[Spryker Documentation](https://docs.spryker.com)

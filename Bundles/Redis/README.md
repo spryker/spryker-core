@@ -4,7 +4,7 @@
 
 Redis is a container module for the Redis PHP library.
 Redis PHP provides a key-value storage management. This module has a central role in managing Redis 3rd party libraries and supports better decoupling between modules.
-Read more about Spryker's key-value concept [here](https://documentation.spryker.com/docs/redis-as-kv).
+Read more about Spryker's key-value concept [here](https://docs.spryker.com/docs/scos/dev/back-end-development/client/using-and-configuring-redis-as-a-key-value-storage.html).
 
 ## Installation
 
@@ -14,4 +14,4 @@ composer require spryker/redis
 
 ## Documentation
 
-[Module Documentation](https://documentation.spryker.com/docs)
+[Spryker Documentation](https://docs.spryker.com)

@@ -12,4 +12,4 @@ composer require spryker/configurable-bundle-page-search
 
 ## Documentation
 
-[Spryker Documentation](https://documentation.spryker.com)
+[Spryker Documentation](https://docs.spryker.com)

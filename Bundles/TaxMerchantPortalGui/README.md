@@ -12,4 +12,4 @@ composer require spryker/tax-merchant-portal-gui
 
 ## Documentation
 
-[Spryker Documentation](https://documentation.spryker.com)
+[Spryker Documentation](https://docs.spryker.com)

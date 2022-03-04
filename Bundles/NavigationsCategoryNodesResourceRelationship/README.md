@@ -12,4 +12,4 @@ composer require spryker/navigations-category-nodes-resource-relationship
 
 ## Documentation
 
-[Spryker Documentation](https://documentation.spryker.com)
+[Spryker Documentation](https://docs.spryker.com)

@@ -12,4 +12,4 @@ composer require spryker/glossary
 
 ## Documentation
 
-[Module Documentation](https://docs.spryker.com)
+[Spryker Documentation](https://docs.spryker.com)

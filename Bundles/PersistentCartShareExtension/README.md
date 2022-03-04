@@ -12,4 +12,4 @@ composer require spryker/persistent-cart-share-extension
 
 ## Documentation
 
-[Spryker Documentation](https://documentation.spryker.com)
+[Spryker Documentation](https://docs.spryker.com)

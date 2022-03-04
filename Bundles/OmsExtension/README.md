@@ -12,4 +12,4 @@ composer require spryker/oms-extension
 
 ## Documentation
 
-[Module Documentation](https://documentation.spryker.com/capabilities/order_management/state_machine/order-process-modelling-state-machines.htm)
+[Spryker Documentation](https://docs.spryker.com)

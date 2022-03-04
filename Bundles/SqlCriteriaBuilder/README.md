@@ -12,4 +12,4 @@ composer require spryker/sql-criteria-builder
 
 ## Documentation
 
-[Module Documentation](https://github.com/oliwierptak/everon-criteria-builder)
+[Spryker Documentation](https://github.com/oliwierptak/everon-criteria-builder)

@@ -12,4 +12,4 @@ composer require spryker/shared-carts-rest-api
 
 ## Documentation
 
-[Spryker Documentation](https://documentation.spryker.com)
+[Spryker Documentation](https://docs.spryker.com)

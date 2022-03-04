@@ -15,4 +15,4 @@ composer require spryker/discount
 
 ## Documentation
 
-[Module Documentation](https://docs.spryker.com)
+[Spryker Documentation](https://docs.spryker.com)

@@ -12,4 +12,4 @@ composer require spryker/company-business-unit-sales-connector
 
 ## Documentation
 
-[Spryker Documentation](https://documentation.spryker.com)
+[Spryker Documentation](https://docs.spryker.com)

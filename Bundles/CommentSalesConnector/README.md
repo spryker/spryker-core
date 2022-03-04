@@ -12,4 +12,4 @@ composer require spryker/comment-sales-connector
 
 ## Documentation
 
-[Module Documentation](https://docs.spryker.com)
+[Spryker Documentation](https://docs.spryker.com)
