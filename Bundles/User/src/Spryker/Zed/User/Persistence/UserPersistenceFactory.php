@@ -21,6 +21,6 @@ class UserPersistenceFactory extends AbstractPersistenceFactory
      */
     public function createUserQuery()
     {
-        return new SpyUserQuery();
+        return SpyUserQuery::create();
     }
 }

@@ -30,7 +30,7 @@ class AclPersistenceFactory extends AbstractPersistenceFactory
      */
     public function createGroupQuery()
     {
-        return new SpyAclGroupQuery();
+        return SpyAclGroupQuery::create();
     }
 
     /**
@@ -38,7 +38,7 @@ class AclPersistenceFactory extends AbstractPersistenceFactory
      */
     public function createRuleQuery()
     {
-        return new SpyAclRuleQuery();
+        return SpyAclRuleQuery::create();
     }
 
     /**
@@ -46,7 +46,7 @@ class AclPersistenceFactory extends AbstractPersistenceFactory
      */
     public function createRoleQuery()
     {
-        return new SpyAclRoleQuery();
+        return SpyAclRoleQuery::create();
     }
 
     /**
@@ -62,7 +62,7 @@ class AclPersistenceFactory extends AbstractPersistenceFactory
      */
     public function createGroupHasRoleQuery()
     {
-        return new SpyAclGroupsHasRolesQuery();
+        return SpyAclGroupsHasRolesQuery::create();
     }
 
     /**
@@ -70,7 +70,7 @@ class AclPersistenceFactory extends AbstractPersistenceFactory
      */
     public function createUserHasRoleQuery()
     {
-        return new SpyAclUserHasGroupQuery();
+        return SpyAclUserHasGroupQuery::create();
     }
 
     /**
@@ -78,7 +78,7 @@ class AclPersistenceFactory extends AbstractPersistenceFactory
      */
     public function createUserQuery()
     {
-        return new SpyUserQuery();
+        return SpyUserQuery::create();
     }
 
     /**
@@ -86,7 +86,7 @@ class AclPersistenceFactory extends AbstractPersistenceFactory
      */
     public function createUserHasGroupQuery()
     {
-        return new SpyAclUserHasGroupQuery();
+        return SpyAclUserHasGroupQuery::create();
     }
 
     /**
