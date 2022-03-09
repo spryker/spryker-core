@@ -1,1 +1,16 @@
-[]
+[
+    {
+        "fileName": "src/Spryker/Zed/ProductApproval/Dependency/Facade/ProductApprovalToProductFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `idProductAbstract` in method `Spryker\\Zed\\ProductApproval\\Dependency\\Facade\\ProductApprovalToProductFacadeBridge::findProductAbstractById()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductApproval/Dependency/Facade/ProductApprovalToProductFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `concreteSku` in method `Spryker\\Zed\\ProductApproval\\Dependency\\Facade\\ProductApprovalToProductFacadeBridge::getProductAbstractIdByConcreteSku()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

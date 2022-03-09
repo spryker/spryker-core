@@ -15,6 +15,13 @@
     },
     {
         "fileName": "src/Spryker/Zed/ProductAlternativeProductLabelConnector/Dependency/Facade/ProductAlternativeProductLabelConnectorToProductLabelBridge.php",
+        "description": "Bridges: Method removeProductAbstractRelationsForLabel must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer;` signature. https://spryker.atlassian.net/wiki/spaces/CORE/pages/478052552/Application+Namespace+Conventions#ApplicationNamespaceConventions-Facade",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductAlternativeProductLabelConnector/Dependency/Facade/ProductAlternativeProductLabelConnectorToProductLabelBridge.php",
         "description": "Bridges: Type should be defined for param `idProductLabel` in method `Spryker\\Zed\\ProductAlternativeProductLabelConnector\\Dependency\\Facade\\ProductAlternativeProductLabelConnectorToProductLabelBridge::addAbstractProductRelationsForLabel()`.",
         "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",

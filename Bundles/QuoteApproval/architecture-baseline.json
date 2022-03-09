@@ -26,5 +26,12 @@
         "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/QuoteApproval/Dependency/Facade/QuoteApprovalToSharedCartFacadeBridge.php",
+        "description": "Bridges: Method deleteShareForQuote must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer;` signature. https://spryker.atlassian.net/wiki/spaces/CORE/pages/478052552/Application+Namespace+Conventions#ApplicationNamespaceConventions-Facade",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
     }
 ]

@@ -21,6 +21,20 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/WishlistsRestApi/Dependency/Facade/WishlistsRestApiToWishlistFacadeBridge.php",
+        "description": "Bridges: Method removeWishlist must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer;` signature. https://spryker.atlassian.net/wiki/spaces/CORE/pages/478052552/Application+Namespace+Conventions#ApplicationNamespaceConventions-Facade",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/WishlistsRestApi/Dependency/Facade/WishlistsRestApiToWishlistFacadeBridge.php",
+        "description": "Bridges: Method removeItem must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer;` signature. https://spryker.atlassian.net/wiki/spaces/CORE/pages/478052552/Application+Namespace+Conventions#ApplicationNamespaceConventions-Facade",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/WishlistsRestApi/Dependency/Facade/WishlistsRestApiToWishlistFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `removeWishlist()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",

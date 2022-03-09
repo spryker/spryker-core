@@ -92,6 +92,20 @@
     },
     {
         "fileName": "src/Spryker/Zed/ProductLabelGui/Dependency/Facade/ProductLabelGuiToProductLabelBridge.php",
+        "description": "Bridges: Method removeAbstractProductRelationsForLabel must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer;` signature. https://spryker.atlassian.net/wiki/spaces/CORE/pages/478052552/Application+Namespace+Conventions#ApplicationNamespaceConventions-Facade",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductLabelGui/Dependency/Facade/ProductLabelGuiToProductLabelBridge.php",
+        "description": "Bridges: Method removeLabel must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer;` signature. https://spryker.atlassian.net/wiki/spaces/CORE/pages/478052552/Application+Namespace+Conventions#ApplicationNamespaceConventions-Facade",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductLabelGui/Dependency/Facade/ProductLabelGuiToProductLabelBridge.php",
         "description": "Bridges: Type should be defined for param `idProductLabel` in method `Spryker\\Zed\\ProductLabelGui\\Dependency\\Facade\\ProductLabelGuiToProductLabelBridge::findProductAbstractRelationsByIdProductLabel()`.",
         "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",

@@ -5,5 +5,12 @@
         "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductListGui/Dependency/Facade/ProductListGuiToProductListFacadeBridge.php",
+        "description": "Bridges: Method removeProductList must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer;` signature. https://spryker.atlassian.net/wiki/spaces/CORE/pages/478052552/Application+Namespace+Conventions#ApplicationNamespaceConventions-Facade",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
     }
 ]

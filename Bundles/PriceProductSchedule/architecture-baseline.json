@@ -1,6 +1,13 @@
 [
     {
         "fileName": "src/Spryker/Zed/PriceProductSchedule/Dependency/Facade/PriceProductScheduleToPriceProductFacadeBridge.php",
+        "description": "Bridges: Method removePriceProductDefaultForPriceProduct must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer;` signature. https://spryker.atlassian.net/wiki/spaces/CORE/pages/478052552/Application+Namespace+Conventions#ApplicationNamespaceConventions-Facade",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/PriceProductSchedule/Dependency/Facade/PriceProductScheduleToPriceProductFacadeBridge.php",
         "description": "Prefix `is` must not be used with postfix `Exist`. Method: Spryker\\Zed\\PriceProductSchedule\\Dependency\\Facade\\PriceProductScheduleToPriceProductFacadeBridge::isPriceProductByProductIdentifierAndPriceTypeExists().",
         "rule": "ExistsPostfixRule",
         "ruleset": "Spryker",

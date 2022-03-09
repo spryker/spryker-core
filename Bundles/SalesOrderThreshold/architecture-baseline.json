@@ -22,6 +22,13 @@
     },
     {
         "fileName": "src/Spryker/Zed/SalesOrderThreshold/Dependency/Facade/SalesOrderThresholdToGlossaryFacadeBridge.php",
+        "description": "Bridges: Method deleteKey must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer;` signature. https://spryker.atlassian.net/wiki/spaces/CORE/pages/478052552/Application+Namespace+Conventions#ApplicationNamespaceConventions-Facade",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/SalesOrderThreshold/Dependency/Facade/SalesOrderThresholdToGlossaryFacadeBridge.php",
         "description": "Bridges: Type should be defined for param `keyName` in method `Spryker\\Zed\\SalesOrderThreshold\\Dependency\\Facade\\SalesOrderThresholdToGlossaryFacadeBridge::translate()`.",
         "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",

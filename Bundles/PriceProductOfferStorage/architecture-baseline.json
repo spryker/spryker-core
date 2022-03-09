@@ -7,23 +7,9 @@
         "priority": "2"
     },
     {
-        "fileName": "src/Spryker/Client/PriceProductOfferStorage/Dependency/Client/PriceProductOfferStorageToStoreClientInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `getCurrentStore()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
         "fileName": "src/Spryker/Client/PriceProductOfferStorage/Dependency/Service/PriceProductOfferStorageToSynchronizationServiceBridge.php",
         "description": "Bridges: Type should be defined for param `resourceName` in method `Spryker\\Client\\PriceProductOfferStorage\\Dependency\\Service\\PriceProductOfferStorageToSynchronizationServiceBridge::getStorageKeyBuilder()`.",
         "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Client/PriceProductOfferStorage/Dependency/Service/PriceProductOfferStorageToSynchronizationServiceInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `getStorageKeyBuilder()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -35,37 +21,9 @@
         "priority": "2"
     },
     {
-        "fileName": "src/Spryker/Zed/PriceProductOfferStorage/Dependency/Facade/PriceProductOfferStorageToEventBehaviorFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `getEventTransferIds()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/PriceProductOfferStorage/Dependency/Facade/PriceProductOfferStorageToEventBehaviorFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `getEventTransferForeignKeys()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/PriceProductOfferStorage/Dependency/Facade/PriceProductOfferStorageToEventBehaviorFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `getEventTransfersByModifiedColumns()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
         "fileName": "src/Spryker/Zed/PriceProductOfferStorage/Dependency/Facade/PriceProductOfferStorageToEventFacadeBridge.php",
         "description": "Bridges: Type should be defined for param `eventName` in method `Spryker\\Zed\\PriceProductOfferStorage\\Dependency\\Facade\\PriceProductOfferStorageToEventFacadeBridge::trigger()`.",
         "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/PriceProductOfferStorage/Dependency/Facade/PriceProductOfferStorageToEventFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `trigger()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
     }

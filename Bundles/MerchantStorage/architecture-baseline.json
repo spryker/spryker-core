@@ -7,30 +7,9 @@
         "priority": "2"
     },
     {
-        "fileName": "src/Spryker/Client/MerchantStorage/Dependency/Client/MerchantStorageToStorageClientInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `getMulti()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Client/MerchantStorage/Dependency/Client/MerchantStorageToStoreClientInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `getCurrentStore()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
         "fileName": "src/Spryker/Client/MerchantStorage/Dependency/Service/MerchantStorageToSynchronizationServiceBridge.php",
         "description": "Bridges: Type should be defined for param `resourceName` in method `Spryker\\Client\\MerchantStorage\\Dependency\\Service\\MerchantStorageToSynchronizationServiceBridge::getStorageKeyBuilder()`.",
         "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Client/MerchantStorage/Dependency/Service/MerchantStorageToSynchronizationServiceInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `getStorageKeyBuilder()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -63,37 +42,9 @@
         "priority": "2"
     },
     {
-        "fileName": "src/Spryker/Client/MerchantStorage/Dependency/Service/MerchantStorageToUtilEncodingServiceInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `decodeJson()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
         "fileName": "src/Spryker/Zed/MerchantStorage/Dependency/Facade/MerchantStorageToEventBehaviorFacadeBridge.php",
         "description": "Bridges: Type should be defined for param `foreignKeyColumnName` in method `Spryker\\Zed\\MerchantStorage\\Dependency\\Facade\\MerchantStorageToEventBehaviorFacadeBridge::getEventTransferForeignKeys()`.",
         "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/MerchantStorage/Dependency/Facade/MerchantStorageToEventBehaviorFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `getEventTransferIds()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/MerchantStorage/Dependency/Facade/MerchantStorageToEventBehaviorFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `getEventTransferForeignKeys()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/MerchantStorage/Dependency/Facade/MerchantStorageToStoreFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `getAllStores()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
     }

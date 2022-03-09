@@ -98,6 +98,13 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/ProductMerchantPortalGui/Dependency/Facade/ProductMerchantPortalGuiToPriceProductFacadeBridge.php",
+        "description": "Bridges: Method removePriceProductDefaultForPriceProduct must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer;` signature. https://spryker.atlassian.net/wiki/spaces/CORE/pages/478052552/Application+Namespace+Conventions#ApplicationNamespaceConventions-Facade",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/ProductMerchantPortalGui/Dependency/Facade/ProductMerchantPortalGuiToPriceProductFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getPriceTypeValues()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -129,6 +136,13 @@
         "fileName": "src/Spryker/Zed/ProductMerchantPortalGui/Dependency/Facade/ProductMerchantPortalGuiToProductCategoryFacadeBridge.php",
         "description": "Bridges: Type should be defined for param `idCategory` in method `Spryker\\Zed\\ProductMerchantPortalGui\\Dependency\\Facade\\ProductMerchantPortalGuiToProductCategoryFacadeBridge::removeProductCategoryMappings()`.",
         "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductMerchantPortalGui/Dependency/Facade/ProductMerchantPortalGuiToProductCategoryFacadeBridge.php",
+        "description": "Bridges: Method removeProductCategoryMappings must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer;` signature. https://spryker.atlassian.net/wiki/spaces/CORE/pages/478052552/Application+Namespace+Conventions#ApplicationNamespaceConventions-Facade",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

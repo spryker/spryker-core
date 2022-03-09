@@ -8,6 +8,13 @@
     },
     {
         "fileName": "src/Spryker/Zed/FileManagerGui/Dependency/Facade/FileManagerGuiToFileManagerFacadeBridge.php",
+        "description": "Bridges: Method deleteFile must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer;` signature. https://spryker.atlassian.net/wiki/spaces/CORE/pages/478052552/Application+Namespace+Conventions#ApplicationNamespaceConventions-Facade",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/FileManagerGui/Dependency/Facade/FileManagerGuiToFileManagerFacadeBridge.php",
         "description": "Bridges: Type should be defined for param `idFileInfo` in method `Spryker\\Zed\\FileManagerGui\\Dependency\\Facade\\FileManagerGuiToFileManagerFacadeBridge::deleteFileInfo()`.",
         "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
@@ -15,8 +22,22 @@
     },
     {
         "fileName": "src/Spryker/Zed/FileManagerGui/Dependency/Facade/FileManagerGuiToFileManagerFacadeBridge.php",
+        "description": "Bridges: Method deleteFileInfo must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer;` signature. https://spryker.atlassian.net/wiki/spaces/CORE/pages/478052552/Application+Namespace+Conventions#ApplicationNamespaceConventions-Facade",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/FileManagerGui/Dependency/Facade/FileManagerGuiToFileManagerFacadeBridge.php",
         "description": "Bridges: Type should be defined for param `idFileDirectory` in method `Spryker\\Zed\\FileManagerGui\\Dependency\\Facade\\FileManagerGuiToFileManagerFacadeBridge::deleteFileDirectory()`.",
         "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/FileManagerGui/Dependency/Facade/FileManagerGuiToFileManagerFacadeBridge.php",
+        "description": "Bridges: Method deleteFileDirectory must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer;` signature. https://spryker.atlassian.net/wiki/spaces/CORE/pages/478052552/Application+Namespace+Conventions#ApplicationNamespaceConventions-Facade",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -45,6 +66,13 @@
         "fileName": "src/Spryker/Zed/FileManagerGui/Dependency/Facade/FileManagerGuiToFileManagerFacadeBridge.php",
         "description": "Bridges: Type should be defined for param `idMimeType` in method `Spryker\\Zed\\FileManagerGui\\Dependency\\Facade\\FileManagerGuiToFileManagerFacadeBridge::findMimeType()`.",
         "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/FileManagerGui/Dependency/Facade/FileManagerGuiToFileManagerFacadeBridge.php",
+        "description": "Bridges: Method deleteMimeType must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer;` signature. https://spryker.atlassian.net/wiki/spaces/CORE/pages/478052552/Application+Namespace+Conventions#ApplicationNamespaceConventions-Facade",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

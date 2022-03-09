@@ -49,6 +49,20 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/PriceProductScheduleGui/Dependency/Facade/PriceProductScheduleGuiToPriceProductScheduleFacadeBridge.php",
+        "description": "Bridges: Method removeAndApplyPriceProductSchedule must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer;` signature. https://spryker.atlassian.net/wiki/spaces/CORE/pages/478052552/Application+Namespace+Conventions#ApplicationNamespaceConventions-Facade",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/PriceProductScheduleGui/Dependency/Facade/PriceProductScheduleGuiToPriceProductScheduleFacadeBridge.php",
+        "description": "Bridges: Method removePriceProductScheduleList must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer;` signature. https://spryker.atlassian.net/wiki/spaces/CORE/pages/478052552/Application+Namespace+Conventions#ApplicationNamespaceConventions-Facade",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/PriceProductScheduleGui/Dependency/Facade/PriceProductScheduleGuiToStoreFacadeBridge.php",
         "description": "Bridges: Type should be defined for param `idStore` in method `Spryker\\Zed\\PriceProductScheduleGui\\Dependency\\Facade\\PriceProductScheduleGuiToStoreFacadeBridge::getStoreById()`.",
         "rule": "BridgeMethodsRule",
