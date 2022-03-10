@@ -1,5 +1,12 @@
 [
     {
+        "fileName": "src/Spryker/Zed/OfferGui/Communication/Form/Address/AddressType.php",
+        "description": "Method `Spryker\\Zed\\OfferGui\\Communication\\Form\\Address\\AddressType::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
         "fileName": "src/Spryker/Zed/OfferGui/Dependency/Client/OfferGuiToSessionClientBridge.php",
         "description": "Bridges: Type should be defined for param `name` in method `Spryker\\Zed\\OfferGui\\Dependency\\Client\\OfferGuiToSessionClientBridge::set()`.",
         "rule": "BridgeMethodsRule",

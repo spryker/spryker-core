@@ -56,6 +56,20 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/Money/Communication/Form/Type/MoneyCollectionType.php",
+        "description": "Method `Spryker\\Zed\\Money\\Communication\\Form\\Type\\MoneyCollectionType::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Money/Communication/Form/Type/SimpleMoneyType.php",
+        "description": "Method `Spryker\\Zed\\Money\\Communication\\Form\\Type\\SimpleMoneyType::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
         "fileName": "src/Spryker/Zed/Money/Dependency/Facade/MoneyToCurrencyBridge.php",
         "description": "Bridges: Type should be defined for param `isoCode` in method `Spryker\\Zed\\Money\\Dependency\\Facade\\MoneyToCurrencyBridge::fromIsoCode()`.",
         "rule": "BridgeMethodsRule",

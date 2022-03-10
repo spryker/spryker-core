@@ -15,9 +15,11 @@ use PHP_CodeSniffer\Runner;
 use Spryker\Zed\Development\Business\DependencyTree\DependencyTree;
 use Symfony\Component\Finder\SplFileInfo;
 
-$manualAutoload = APPLICATION_VENDOR_DIR . '/squizlabs/php_codesniffer/autoload.php';
-if (!class_exists(Config::class) && file_exists($manualAutoload)) {
-    require $manualAutoload;
+if (defined('APPLICATION_VENDOR_DIR')) {
+    $manualAutoload = APPLICATION_VENDOR_DIR . '/squizlabs/php_codesniffer/autoload.php';
+    if (!class_exists(Config::class) && file_exists($manualAutoload)) {
+        require $manualAutoload;
+    }
 }
 
 class ExternalDependency extends AbstractDependencyFinder

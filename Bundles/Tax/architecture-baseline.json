@@ -1,5 +1,19 @@
 [
     {
+        "fileName": "src/Spryker/Zed/Tax/Communication/Form/TaxRateForm.php",
+        "description": "Method `Spryker\\Zed\\Tax\\Communication\\Form\\TaxRateForm::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Tax/Communication/Form/TaxSetForm.php",
+        "description": "Method `Spryker\\Zed\\Tax\\Communication\\Form\\TaxSetForm::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
         "fileName": "src/Spryker/Zed/Tax/Dependency/Facade/TaxToCountryBridgeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getAvailableCountries()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",

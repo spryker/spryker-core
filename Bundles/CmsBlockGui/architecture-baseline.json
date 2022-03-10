@@ -1,5 +1,26 @@
 [
     {
+        "fileName": "src/Spryker/Zed/CmsBlockGui/Communication/Form/Block/CmsBlockForm.php",
+        "description": "Method `Spryker\\Zed\\CmsBlockGui\\Communication\\Form\\Block\\CmsBlockForm::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsBlockGui/Communication/Form/Glossary/CmsBlockGlossaryForm.php",
+        "description": "Method `Spryker\\Zed\\CmsBlockGui\\Communication\\Form\\Glossary\\CmsBlockGlossaryForm::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsBlockGui/Communication/Form/Glossary/CmsBlockGlossaryPlaceholderForm.php",
+        "description": "Method `Spryker\\Zed\\CmsBlockGui\\Communication\\Form\\Glossary\\CmsBlockGlossaryPlaceholderForm::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
         "fileName": "src/Spryker/Zed/CmsBlockGui/Dependency/Facade/CmsBlockGuiToCmsBlockBridge.php",
         "description": "Bridges: Type should be defined for param `idCmsBlock` in method `Spryker\\Zed\\CmsBlockGui\\Dependency\\Facade\\CmsBlockGuiToCmsBlockBridge::findCmsBlockById()`.",
         "rule": "BridgeMethodsRule",

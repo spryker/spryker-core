@@ -1,5 +1,61 @@
 [
     {
+        "fileName": "src/Spryker/Zed/SecurityMerchantPortalGui/Communication/Plugin/Security/Handler/MerchantUserAuthenticationFailureHandler.php",
+        "description": "Method `Spryker\\Zed\\SecurityMerchantPortalGui\\Communication\\Plugin\\Security\\Handler\\MerchantUserAuthenticationFailureHandler::onAuthenticationFailure()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/SecurityMerchantPortalGui/Communication/Plugin/Security/Provider/MerchantUserProvider.php",
+        "description": "Method `Spryker\\Zed\\SecurityMerchantPortalGui\\Communication\\Plugin\\Security\\Provider\\MerchantUserProvider::loadUserByUsername()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/SecurityMerchantPortalGui/Communication/Plugin/Security/Provider/MerchantUserProvider.php",
+        "description": "Method `Spryker\\Zed\\SecurityMerchantPortalGui\\Communication\\Plugin\\Security\\Provider\\MerchantUserProvider::refreshUser()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/SecurityMerchantPortalGui/Communication/Plugin/Security/Provider/MerchantUserProvider.php",
+        "description": "Method `Spryker\\Zed\\SecurityMerchantPortalGui\\Communication\\Plugin\\Security\\Provider\\MerchantUserProvider::supportsClass()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/SecurityMerchantPortalGui/Communication/Security/MerchantUser.php",
+        "description": "Method `Spryker\\Zed\\SecurityMerchantPortalGui\\Communication\\Security\\MerchantUser::getRoles()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/SecurityMerchantPortalGui/Communication/Security/MerchantUser.php",
+        "description": "Method `Spryker\\Zed\\SecurityMerchantPortalGui\\Communication\\Security\\MerchantUser::getSalt()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/SecurityMerchantPortalGui/Communication/Security/MerchantUser.php",
+        "description": "Method `Spryker\\Zed\\SecurityMerchantPortalGui\\Communication\\Security\\MerchantUser::getUsername()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/SecurityMerchantPortalGui/Communication/Security/MerchantUser.php",
+        "description": "Method `Spryker\\Zed\\SecurityMerchantPortalGui\\Communication\\Security\\MerchantUser::getPassword()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
         "fileName": "src/Spryker/Zed/SecurityMerchantPortalGui/Dependency/Facade/SecurityMerchantPortalGuiToMerchantUserFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `authorizeMerchantUser()`. Method does not exist in parent. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",

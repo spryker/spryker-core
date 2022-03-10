@@ -1,5 +1,12 @@
 [
     {
+        "fileName": "src/Spryker/Zed/CmsBlockProductConnector/Communication/Form/CmsBlockProductAbstractType.php",
+        "description": "Method `Spryker\\Zed\\CmsBlockProductConnector\\Communication\\Form\\CmsBlockProductAbstractType::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
         "fileName": "src/Spryker/Zed/CmsBlockProductConnector/Dependency/Facade/CmsBlockProductConnectorToCollectorInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `runCollector()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",

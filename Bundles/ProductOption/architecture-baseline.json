@@ -28,6 +28,27 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/ProductOption/Communication/Form/ProductOptionGroupForm.php",
+        "description": "Method `Spryker\\Zed\\ProductOption\\Communication\\Form\\ProductOptionGroupForm::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOption/Communication/Form/ProductOptionTranslationForm.php",
+        "description": "Method `Spryker\\Zed\\ProductOption\\Communication\\Form\\ProductOptionTranslationForm::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOption/Communication/Form/ProductOptionValueForm.php",
+        "description": "Method `Spryker\\Zed\\ProductOption\\Communication\\Form\\ProductOptionValueForm::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
         "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToCurrencyFacadeBridge.php",
         "description": "Bridges: Type should be defined for param `idCurrency` in method `Spryker\\Zed\\ProductOption\\Dependency\\Facade\\ProductOptionToCurrencyFacadeBridge::getByIdCurrency()`.",
         "rule": "BridgeMethodsRule",

@@ -1,5 +1,117 @@
 [
     {
+        "fileName": "src/Spryker/Zed/SecurityOauthUser/Communication/Plugin/Security/Authenticator/OauthUserTokenAuthenticator.php",
+        "description": "Method `Spryker\\Zed\\SecurityOauthUser\\Communication\\Plugin\\Security\\Authenticator\\OauthUserTokenAuthenticator::createAuthenticatedToken()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/SecurityOauthUser/Communication/Plugin/Security/Authenticator/OauthUserTokenAuthenticator.php",
+        "description": "Method `Spryker\\Zed\\SecurityOauthUser\\Communication\\Plugin\\Security\\Authenticator\\OauthUserTokenAuthenticator::supports()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/SecurityOauthUser/Communication/Plugin/Security/Authenticator/OauthUserTokenAuthenticator.php",
+        "description": "Method `Spryker\\Zed\\SecurityOauthUser\\Communication\\Plugin\\Security\\Authenticator\\OauthUserTokenAuthenticator::getUser()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/SecurityOauthUser/Communication/Plugin/Security/Authenticator/OauthUserTokenAuthenticator.php",
+        "description": "Method `Spryker\\Zed\\SecurityOauthUser\\Communication\\Plugin\\Security\\Authenticator\\OauthUserTokenAuthenticator::checkCredentials()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/SecurityOauthUser/Communication/Plugin/Security/Authenticator/OauthUserTokenAuthenticator.php",
+        "description": "Method `Spryker\\Zed\\SecurityOauthUser\\Communication\\Plugin\\Security\\Authenticator\\OauthUserTokenAuthenticator::onAuthenticationSuccess()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/SecurityOauthUser/Communication/Plugin/Security/Authenticator/OauthUserTokenAuthenticator.php",
+        "description": "Method `Spryker\\Zed\\SecurityOauthUser\\Communication\\Plugin\\Security\\Authenticator\\OauthUserTokenAuthenticator::onAuthenticationFailure()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/SecurityOauthUser/Communication/Plugin/Security/Authenticator/OauthUserTokenAuthenticator.php",
+        "description": "Method `Spryker\\Zed\\SecurityOauthUser\\Communication\\Plugin\\Security\\Authenticator\\OauthUserTokenAuthenticator::start()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/SecurityOauthUser/Communication/Plugin/Security/Authenticator/OauthUserTokenAuthenticator.php",
+        "description": "Method `Spryker\\Zed\\SecurityOauthUser\\Communication\\Plugin\\Security\\Authenticator\\OauthUserTokenAuthenticator::supportsRememberMe()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/SecurityOauthUser/Communication/Plugin/Security/Provider/OauthUserProvider.php",
+        "description": "Method `Spryker\\Zed\\SecurityOauthUser\\Communication\\Plugin\\Security\\Provider\\OauthUserProvider::loadUserByUsername()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/SecurityOauthUser/Communication/Plugin/Security/Provider/OauthUserProvider.php",
+        "description": "Method `Spryker\\Zed\\SecurityOauthUser\\Communication\\Plugin\\Security\\Provider\\OauthUserProvider::refreshUser()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/SecurityOauthUser/Communication/Plugin/Security/Provider/OauthUserProvider.php",
+        "description": "Method `Spryker\\Zed\\SecurityOauthUser\\Communication\\Plugin\\Security\\Provider\\OauthUserProvider::supportsClass()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/SecurityOauthUser/Communication/Security/Handler/OauthUserAuthenticationFailureHandler.php",
+        "description": "Method `Spryker\\Zed\\SecurityOauthUser\\Communication\\Security\\Handler\\OauthUserAuthenticationFailureHandler::onAuthenticationFailure()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/SecurityOauthUser/Communication/Security/SecurityOauthUser.php",
+        "description": "Method `Spryker\\Zed\\SecurityOauthUser\\Communication\\Security\\SecurityOauthUser::getRoles()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/SecurityOauthUser/Communication/Security/SecurityOauthUser.php",
+        "description": "Method `Spryker\\Zed\\SecurityOauthUser\\Communication\\Security\\SecurityOauthUser::getSalt()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/SecurityOauthUser/Communication/Security/SecurityOauthUser.php",
+        "description": "Method `Spryker\\Zed\\SecurityOauthUser\\Communication\\Security\\SecurityOauthUser::getUsername()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/SecurityOauthUser/Communication/Security/SecurityOauthUser.php",
+        "description": "Method `Spryker\\Zed\\SecurityOauthUser\\Communication\\Security\\SecurityOauthUser::getPassword()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
         "fileName": "src/Spryker/Zed/SecurityOauthUser/Dependency/Facade/SecurityOauthUserToAclFacadeBridge.php",
         "description": "Bridges: Type should be defined for param `idUser` in method `Spryker\\Zed\\SecurityOauthUser\\Dependency\\Facade\\SecurityOauthUserToAclFacadeBridge::addUserToGroup()`.",
         "rule": "BridgeMethodsRule",

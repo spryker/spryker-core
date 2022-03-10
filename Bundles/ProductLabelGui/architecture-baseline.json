@@ -1,5 +1,33 @@
 [
     {
+        "fileName": "src/Spryker/Zed/ProductLabelGui/Communication/Form/ProductLabelAggregateFormType.php",
+        "description": "Method `Spryker\\Zed\\ProductLabelGui\\Communication\\Form\\ProductLabelAggregateFormType::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductLabelGui/Communication/Form/ProductLabelFormType.php",
+        "description": "Method `Spryker\\Zed\\ProductLabelGui\\Communication\\Form\\ProductLabelFormType::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductLabelGui/Communication/Form/ProductLabelLocalizedAttributesFormType.php",
+        "description": "Method `Spryker\\Zed\\ProductLabelGui\\Communication\\Form\\ProductLabelLocalizedAttributesFormType::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductLabelGui/Communication/Form/RelatedProductFormType.php",
+        "description": "Method `Spryker\\Zed\\ProductLabelGui\\Communication\\Form\\RelatedProductFormType::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
         "fileName": "src/Spryker/Zed/ProductLabelGui/Dependency/Facade/ProductLabelGuiToLocaleBridge.php",
         "description": "Bridges: Type should be defined for param `idLocale` in method `Spryker\\Zed\\ProductLabelGui\\Dependency\\Facade\\ProductLabelGuiToLocaleBridge::getLocaleById()`.",
         "rule": "BridgeMethodsRule",

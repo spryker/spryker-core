@@ -26,5 +26,12 @@
         "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Yves/Redis/WebProfiler/RedisDataCollector.php",
+        "description": "Method `Spryker\\Yves\\Redis\\WebProfiler\\RedisDataCollector::getName()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
     }
 ]

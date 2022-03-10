@@ -661,7 +661,7 @@ class DevelopmentConfig extends AbstractBundleConfig
      */
     public function getPhpMdCommand()
     {
-        return 'vendor/bin/phpmd';
+        return 'php -d error_reporting=E_ALL&~E_DEPRECATED vendor/bin/phpmd';
     }
 
     /**

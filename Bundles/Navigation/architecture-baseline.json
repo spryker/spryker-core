@@ -1,5 +1,12 @@
 [
     {
+        "fileName": "src/Spryker/Yves/Navigation/Twig/NavigationTwigExtension.php",
+        "description": "Method `Spryker\\Yves\\Navigation\\Twig\\NavigationTwigExtension::getFunctions()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
         "fileName": "src/Spryker/Zed/Navigation/Dependency/Facade/NavigationToTouchBridge.php",
         "description": "Bridges: Type should be defined for param `itemType` in method `Spryker\\Zed\\Navigation\\Dependency\\Facade\\NavigationToTouchBridge::touchActive()`.",
         "rule": "BridgeMethodsRule",

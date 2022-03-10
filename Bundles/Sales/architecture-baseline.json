@@ -7,6 +7,27 @@
         "priority": "1"
     },
     {
+        "fileName": "src/Spryker/Zed/Sales/Communication/Form/AddressForm.php",
+        "description": "Method `Spryker\\Zed\\Sales\\Communication\\Form\\AddressForm::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Sales/Communication/Form/CommentForm.php",
+        "description": "Method `Spryker\\Zed\\Sales\\Communication\\Form\\CommentForm::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Sales/Communication/Form/CustomerForm.php",
+        "description": "Method `Spryker\\Zed\\Sales\\Communication\\Form\\CustomerForm::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
         "fileName": "src/Spryker/Zed/Sales/Communication/SalesCommunicationFactory.php",
         "description": "Factories: The method `Spryker\\Zed\\Sales\\Communication\\SalesCommunicationFactory::createOrderItemSplitFormCollection()()` contains a `foreach` statement which violates rule \"Factory methods should not contain loops.\"",
         "rule": "FactoryNoLoopsRule",

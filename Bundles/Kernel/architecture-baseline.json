@@ -1,5 +1,12 @@
 [
     {
+        "fileName": "src/Spryker/Glue/Kernel/ControllerResolver/GlueFragmentControllerResolver.php",
+        "description": "Method `Spryker\\Glue\\Kernel\\ControllerResolver\\GlueFragmentControllerResolver::createController()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
         "fileName": "src/Spryker/Service/Kernel/AbstractServiceFactory.php",
         "description": "Factories: The factory method `setContainer()` violates rule \"Factories should only contain get*() and create*() methods.\"",
         "rule": "FactoryOnlyGetAndCreateRule",
@@ -192,6 +199,13 @@
         "fileName": "src/Spryker/Zed/Kernel/Persistence/AbstractPersistenceFactory.php",
         "description": "Factories: The factory method `injectExternalDependencies()` violates rule \"Factories should only contain get*() and create*() methods.\"",
         "rule": "FactoryOnlyGetAndCreateRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Kernel/Persistence/Repository/TransferObjectFormatter.php",
+        "description": "Method `Spryker\\Zed\\Kernel\\Persistence\\Repository\\TransferObjectFormatter::isObjectFormatter()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
         "ruleset": "Spryker",
         "priority": "1"
     }

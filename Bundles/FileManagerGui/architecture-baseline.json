@@ -1,5 +1,19 @@
 [
     {
+        "fileName": "src/Spryker/Zed/FileManagerGui/Communication/Form/FileDirectoryForm.php",
+        "description": "Method `Spryker\\Zed\\FileManagerGui\\Communication\\Form\\FileDirectoryForm::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/FileManagerGui/Communication/Form/FileDirectoryLocalizedAttributesForm.php",
+        "description": "Method `Spryker\\Zed\\FileManagerGui\\Communication\\Form\\FileDirectoryLocalizedAttributesForm::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
         "fileName": "src/Spryker/Zed/FileManagerGui/Dependency/Facade/FileManagerGuiToFileManagerFacadeBridge.php",
         "description": "Bridges: Type should be defined for param `idFile` in method `Spryker\\Zed\\FileManagerGui\\Dependency\\Facade\\FileManagerGuiToFileManagerFacadeBridge::deleteFile()`.",
         "rule": "BridgeMethodsRule",

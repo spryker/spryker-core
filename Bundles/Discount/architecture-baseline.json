@@ -14,6 +14,41 @@
         "priority": "1"
     },
     {
+        "fileName": "src/Spryker/Zed/Discount/Communication/Form/CalculatorForm.php",
+        "description": "Method `Spryker\\Zed\\Discount\\Communication\\Form\\CalculatorForm::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Discount/Communication/Form/ConditionsForm.php",
+        "description": "Method `Spryker\\Zed\\Discount\\Communication\\Form\\ConditionsForm::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Discount/Communication/Form/DiscountForm.php",
+        "description": "Method `Spryker\\Zed\\Discount\\Communication\\Form\\DiscountForm::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Discount/Communication/Form/GeneralForm.php",
+        "description": "Method `Spryker\\Zed\\Discount\\Communication\\Form\\GeneralForm::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Discount/Communication/Form/VoucherForm.php",
+        "description": "Method `Spryker\\Zed\\Discount\\Communication\\Form\\VoucherForm::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
         "fileName": "src/Spryker/Zed/Discount/Dependency/Facade/DiscountToCurrencyBridge.php",
         "description": "Bridges: Type should be defined for param `idCurrency` in method `Spryker\\Zed\\Discount\\Dependency\\Facade\\DiscountToCurrencyBridge::getByIdCurrency()`.",
         "rule": "BridgeMethodsRule",

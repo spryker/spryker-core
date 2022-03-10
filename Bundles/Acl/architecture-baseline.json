@@ -1,5 +1,26 @@
 [
     {
+        "fileName": "src/Spryker/Zed/Acl/Communication/Form/GroupForm.php",
+        "description": "Method `Spryker\\Zed\\Acl\\Communication\\Form\\GroupForm::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Acl/Communication/Form/RoleForm.php",
+        "description": "Method `Spryker\\Zed\\Acl\\Communication\\Form\\RoleForm::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Acl/Communication/Form/RuleForm.php",
+        "description": "Method `Spryker\\Zed\\Acl\\Communication\\Form\\RuleForm::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
         "fileName": "src/Spryker/Zed/Acl/Dependency/Facade/AclToUserBridge.php",
         "description": "Bridges: Type should be defined for param `username` in method `Spryker\\Zed\\Acl\\Dependency\\Facade\\AclToUserBridge::getUserByUsername()`.",
         "rule": "BridgeMethodsRule",

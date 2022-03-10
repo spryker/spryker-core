@@ -1,1 +1,9 @@
-[]
+[
+    {
+        "fileName": "src/Spryker/Zed/ProductAlternativeGui/Communication/Form/AddProductAlternativeForm.php",
+        "description": "Method `Spryker\\Zed\\ProductAlternativeGui\\Communication\\Form\\AddProductAlternativeForm::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    }
+]
