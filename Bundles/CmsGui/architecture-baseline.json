@@ -64,7 +64,7 @@
     },
     {
         "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsBridge.php",
-        "description": "Bridges: Method saveCmsGlossary() must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "description": "Bridges: Method saveCmsGlossary() must have `public function update(create)<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -73,6 +73,13 @@
         "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsBridge.php",
         "description": "Bridges: Type should be defined for param `idCmsPage` in method `Spryker\\Zed\\CmsGui\\Dependency\\Facade\\CmsGuiToCmsBridge::findCmsPageById()`.",
         "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsBridge.php",
+        "description": "Bridges: Method updatePage() must have `public function update<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

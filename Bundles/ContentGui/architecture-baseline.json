@@ -7,6 +7,13 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/ContentGui/Dependency/Facade/ContentGuiToContentFacadeBridge.php",
+        "description": "Bridges: Method update() must have `public function update<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/ContentGui/Dependency/Facade/ContentGuiToTranslatorFacadeBridge.php",
         "description": "Bridges: Type should be defined for param `id` in method `Spryker\\Zed\\ContentGui\\Dependency\\Facade\\ContentGuiToTranslatorFacadeBridge::trans()`.",
         "rule": "BridgeMethodsRule",

@@ -7,6 +7,13 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/CompanyUser/Dependency/Facade/CompanyUserToCustomerFacadeBridge.php",
+        "description": "Bridges: Method updateCustomer() must have `public function update<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/CompanyUser/Persistence/CompanyUserRepository.php",
         "description": "Prefix `is` must not be used with postfix `Exist`. Method: Spryker\\Zed\\CompanyUser\\Persistence\\CompanyUserRepository::isActiveCompanyUserExists().",
         "rule": "ExistsPostfixRule",

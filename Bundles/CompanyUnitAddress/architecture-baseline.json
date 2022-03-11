@@ -14,6 +14,13 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/CompanyUnitAddress/Dependency/Facade/CompanyUnitAddressToCompanyBusinessUnitFacadeBridge.php",
+        "description": "Bridges: Method update() must have `public function update<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/CompanyUnitAddress/Dependency/Facade/CompanyUnitAddressToCountryFacadeBridge.php",
         "description": "Bridges: Type should be defined for param `iso2Code` in method `Spryker\\Zed\\CompanyUnitAddress\\Dependency\\Facade\\CompanyUnitAddressToCountryFacadeBridge::getCountryByIso2Code()`.",
         "rule": "BridgeMethodsRule",

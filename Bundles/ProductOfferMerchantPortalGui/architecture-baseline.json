@@ -64,7 +64,7 @@
     },
     {
         "fileName": "src/Spryker/Zed/ProductOfferMerchantPortalGui/Dependency/Facade/ProductOfferMerchantPortalGuiToPriceProductOfferFacadeBridge.php",
-        "description": "Bridges: Method saveProductOfferPrices() must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "description": "Bridges: Method saveProductOfferPrices() must have `public function update(create)<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -128,6 +128,13 @@
     {
         "fileName": "src/Spryker/Zed/ProductOfferMerchantPortalGui/Dependency/Facade/ProductOfferMerchantPortalGuiToProductOfferFacadeBridge.php",
         "description": "Bridges: Method create() must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOfferMerchantPortalGui/Dependency/Facade/ProductOfferMerchantPortalGuiToProductOfferFacadeBridge.php",
+        "description": "Bridges: Method update() must have `public function update<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"

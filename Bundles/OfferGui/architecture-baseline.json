@@ -155,6 +155,13 @@
     },
     {
         "fileName": "src/Spryker/Zed/OfferGui/Dependency/Facade/OfferGuiToOfferFacadeBridge.php",
+        "description": "Bridges: Method updateOffer() must have `public function update<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/OfferGui/Dependency/Facade/OfferGuiToOfferFacadeBridge.php",
         "description": "Bridges: Method createOffer() must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",

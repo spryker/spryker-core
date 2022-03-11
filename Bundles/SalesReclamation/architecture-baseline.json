@@ -8,7 +8,7 @@
     },
     {
         "fileName": "src/Spryker/Zed/SalesReclamation/Dependency/Facade/SalesReclamationToSalesFacadeBridge.php",
-        "description": "Bridges: Method saveSalesOrder() must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "description": "Bridges: Method saveSalesOrder() must have `public function update(create)<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -17,6 +17,13 @@
         "fileName": "src/Spryker/Zed/SalesReclamation/Dependency/Facade/SalesReclamationToSalesFacadeBridge.php",
         "description": "Bridges: Type should be defined for param `idSalesOrder` in method `Spryker\\Zed\\SalesReclamation\\Dependency\\Facade\\SalesReclamationToSalesFacadeBridge::updateOrder()`.",
         "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/SalesReclamation/Dependency/Facade/SalesReclamationToSalesFacadeBridge.php",
+        "description": "Bridges: Method updateOrder() must have `public function update<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

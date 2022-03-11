@@ -29,7 +29,7 @@
     },
     {
         "fileName": "src/Spryker/Zed/MerchantRelationshipSalesOrderThreshold/Dependency/Facade/MerchantRelationshipSalesOrderThresholdToGlossaryFacadeBridge.php",
-        "description": "Bridges: Method saveGlossaryKeyTranslations() must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "description": "Bridges: Method saveGlossaryKeyTranslations() must have `public function update(create)<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"

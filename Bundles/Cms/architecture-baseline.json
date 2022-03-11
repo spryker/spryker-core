@@ -162,7 +162,7 @@
     },
     {
         "fileName": "src/Spryker/Zed/Cms/Dependency/Facade/CmsToGlossaryFacadeBridge.php",
-        "description": "Bridges: Method saveGlossaryKeyTranslations() must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "description": "Bridges: Method saveGlossaryKeyTranslations() must have `public function update(create)<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -400,6 +400,13 @@
     },
     {
         "fileName": "src/Spryker/Zed/Cms/Dependency/Facade/CmsToUrlFacadeBridge.php",
+        "description": "Bridges: Method updateUrl() must have `public function update<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Cms/Dependency/Facade/CmsToUrlFacadeBridge.php",
         "description": "Bridges: Method deleteUrlRedirect() must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
@@ -408,6 +415,13 @@
     {
         "fileName": "src/Spryker/Zed/Cms/Dependency/Facade/CmsToUrlFacadeBridge.php",
         "description": "Bridges: Method createUrlRedirect() must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Cms/Dependency/Facade/CmsToUrlFacadeBridge.php",
+        "description": "Bridges: Method updateUrlRedirect() must have `public function update<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"

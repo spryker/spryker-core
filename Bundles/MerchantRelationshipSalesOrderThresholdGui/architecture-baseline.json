@@ -36,7 +36,7 @@
     },
     {
         "fileName": "src/Spryker/Zed/MerchantRelationshipSalesOrderThresholdGui/Dependency/Facade/MerchantRelationshipSalesOrderThresholdGuiToMerchantRelationshipSalesOrderThresholdFacadeBridge.php",
-        "description": "Bridges: Method saveMerchantRelationshipSalesOrderThreshold() must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "description": "Bridges: Method saveMerchantRelationshipSalesOrderThreshold() must have `public function update(create)<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"

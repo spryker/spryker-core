@@ -1,5 +1,12 @@
 [
     {
+        "fileName": "src/Spryker/Zed/MerchantOms/Dependency/Facade/MerchantOmsToMerchantSalesOrderFacadeBridge.php",
+        "description": "Bridges: Method updateMerchantOrderItem() must have `public function update<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/MerchantOms/Dependency/Facade/MerchantOmsToStateMachineFacadeBridge.php",
         "description": "Bridges: Type should be defined for param `identifier` in method `Spryker\\Zed\\MerchantOms\\Dependency\\Facade\\MerchantOmsToStateMachineFacadeBridge::triggerForNewStateMachineItem()`.",
         "rule": "BridgeMethodsRule",
