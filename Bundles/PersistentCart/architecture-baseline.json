@@ -71,14 +71,35 @@
     },
     {
         "fileName": "src/Spryker/Zed/PersistentCart/Dependency/Facade/PersistentCartToCartFacadeBridge.php",
-        "description": "Bridges: Method remove must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer;` signature. https://spryker.atlassian.net/wiki/spaces/CORE/pages/478052552/Application+Namespace+Conventions#ApplicationNamespaceConventions-Facade",
+        "description": "Bridges: Method add() must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
         "fileName": "src/Spryker/Zed/PersistentCart/Dependency/Facade/PersistentCartToCartFacadeBridge.php",
-        "description": "Bridges: Method removeFromCart must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer;` signature. https://spryker.atlassian.net/wiki/spaces/CORE/pages/478052552/Application+Namespace+Conventions#ApplicationNamespaceConventions-Facade",
+        "description": "Bridges: Method addToCart() must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/PersistentCart/Dependency/Facade/PersistentCartToCartFacadeBridge.php",
+        "description": "Bridges: Method addValid() must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/PersistentCart/Dependency/Facade/PersistentCartToCartFacadeBridge.php",
+        "description": "Bridges: Method remove() must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/PersistentCart/Dependency/Facade/PersistentCartToCartFacadeBridge.php",
+        "description": "Bridges: Method removeFromCart() must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -112,6 +133,20 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/PersistentCart/Dependency/Facade/PersistentCartToMessengerFacadeBridge.php",
+        "description": "Bridges: Method addErrorMessage() must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/PersistentCart/Dependency/Facade/PersistentCartToMessengerFacadeBridge.php",
+        "description": "Bridges: Method addSuccessMessage() must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/PersistentCart/Dependency/Facade/PersistentCartToMessengerFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `addErrorMessage()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -127,6 +162,13 @@
     },
     {
         "fileName": "src/Spryker/Zed/PersistentCart/Dependency/Facade/PersistentCartToQuoteFacadeBridge.php",
+        "description": "Bridges: Method createQuote() must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/PersistentCart/Dependency/Facade/PersistentCartToQuoteFacadeBridge.php",
         "description": "Bridges: Type should be defined for param `idQuote` in method `Spryker\\Zed\\PersistentCart\\Dependency\\Facade\\PersistentCartToQuoteFacadeBridge::findQuoteById()`.",
         "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
@@ -134,7 +176,7 @@
     },
     {
         "fileName": "src/Spryker/Zed/PersistentCart/Dependency/Facade/PersistentCartToQuoteFacadeBridge.php",
-        "description": "Bridges: Method deleteQuote must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer;` signature. https://spryker.atlassian.net/wiki/spaces/CORE/pages/478052552/Application+Namespace+Conventions#ApplicationNamespaceConventions-Facade",
+        "description": "Bridges: Method deleteQuote() must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"

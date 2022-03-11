@@ -1,5 +1,12 @@
 [
     {
+        "fileName": "src/Spryker/Zed/OauthAgentConnector/Dependency/Facade/OauthAgentConnectorToOauthFacadeBridge.php",
+        "description": "Bridges: Method saveScope() must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/OauthAgentConnector/Dependency/Service/OauthAgentConnectorToUtilEncodingServiceBridge.php",
         "description": "Bridges: Type should be defined for param `value` in method `Spryker\\Zed\\OauthAgentConnector\\Dependency\\Service\\OauthAgentConnectorToUtilEncodingServiceBridge::encodeJson()`.",
         "rule": "BridgeMethodsRule",

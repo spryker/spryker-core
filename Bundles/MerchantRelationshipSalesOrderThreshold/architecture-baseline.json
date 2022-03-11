@@ -22,7 +22,14 @@
     },
     {
         "fileName": "src/Spryker/Zed/MerchantRelationshipSalesOrderThreshold/Dependency/Facade/MerchantRelationshipSalesOrderThresholdToGlossaryFacadeBridge.php",
-        "description": "Bridges: Method deleteKey must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer;` signature. https://spryker.atlassian.net/wiki/spaces/CORE/pages/478052552/Application+Namespace+Conventions#ApplicationNamespaceConventions-Facade",
+        "description": "Bridges: Method deleteKey() must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MerchantRelationshipSalesOrderThreshold/Dependency/Facade/MerchantRelationshipSalesOrderThresholdToGlossaryFacadeBridge.php",
+        "description": "Bridges: Method saveGlossaryKeyTranslations() must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"

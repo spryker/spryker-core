@@ -1,5 +1,12 @@
 [
     {
+        "fileName": "src/Spryker/Zed/ProductCartConnector/Dependency/Facade/ProductCartConnectorToMessengerFacadeBridge.php",
+        "description": "Bridges: Method addInfoMessage() must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/ProductCartConnector/Dependency/Facade/ProductCartConnectorToProductBridge.php",
         "description": "Bridges: Type should be defined for param `concreteSku` in method `Spryker\\Zed\\ProductCartConnector\\Dependency\\Facade\\ProductCartConnectorToProductBridge::getProductConcrete()`.",
         "rule": "BridgeMethodsRule",

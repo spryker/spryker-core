@@ -22,6 +22,13 @@
     },
     {
         "fileName": "src/Spryker/Zed/AvailabilityGui/Dependency/Facade/AvailabilityGuiToStockBridge.php",
+        "description": "Bridges: Method createStockProduct() must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/AvailabilityGui/Dependency/Facade/AvailabilityGuiToStockBridge.php",
         "description": "Bridges: Type should be defined for param `idProductConcrete` in method `Spryker\\Zed\\AvailabilityGui\\Dependency\\Facade\\AvailabilityGuiToStockBridge::findStockProductsByIdProductForStore()`.",
         "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",

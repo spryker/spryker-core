@@ -1,5 +1,40 @@
 [
     {
+        "fileName": "src/Spryker/Zed/AclMerchantPortal/Dependency/Facade/AclMerchantPortalToAclEntityFacadeBridge.php",
+        "description": "Bridges: Method createAclEntitySegment() must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/AclMerchantPortal/Dependency/Facade/AclMerchantPortalToAclEntityFacadeBridge.php",
+        "description": "Bridges: Method saveAclEntityRules() must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/AclMerchantPortal/Dependency/Facade/AclMerchantPortalToAclFacadeBridge.php",
+        "description": "Bridges: Method addRule() must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/AclMerchantPortal/Dependency/Facade/AclMerchantPortalToAclFacadeBridge.php",
+        "description": "Bridges: Method createGroup() must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/AclMerchantPortal/Dependency/Facade/AclMerchantPortalToAclFacadeBridge.php",
+        "description": "Bridges: Method createRole() must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/AclMerchantPortal/Dependency/Facade/AclMerchantPortalToAclFacadeBridge.php",
         "description": "Bridges: Type should be defined for param `idUser` in method `Spryker\\Zed\\AclMerchantPortal\\Dependency\\Facade\\AclMerchantPortalToAclFacadeBridge::addUserToGroup()`.",
         "rule": "BridgeMethodsRule",
@@ -10,6 +45,13 @@
         "fileName": "src/Spryker/Zed/AclMerchantPortal/Dependency/Facade/AclMerchantPortalToAclFacadeBridge.php",
         "description": "Bridges: Type should be defined for param `idGroup` in method `Spryker\\Zed\\AclMerchantPortal\\Dependency\\Facade\\AclMerchantPortalToAclFacadeBridge::addUserToGroup()`.",
         "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/AclMerchantPortal/Dependency/Facade/AclMerchantPortalToAclFacadeBridge.php",
+        "description": "Bridges: Method addUserToGroup() must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

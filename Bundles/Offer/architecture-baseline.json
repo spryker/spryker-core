@@ -42,6 +42,13 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/Offer/Dependency/Facade/OfferToCartFacadeBridge.php",
+        "description": "Bridges: Method add() must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/Offer/Dependency/Facade/OfferToCustomerFacadeBridge.php",
         "description": "Bridges: Type should be defined for param `customerReference` in method `Spryker\\Zed\\Offer\\Dependency\\Facade\\OfferToCustomerFacadeBridge::findCustomerByReference()`.",
         "rule": "BridgeMethodsRule",

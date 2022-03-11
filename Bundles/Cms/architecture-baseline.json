@@ -57,6 +57,13 @@
     },
     {
         "fileName": "src/Spryker/Zed/Cms/Dependency/Facade/CmsToGlossaryFacadeBridge.php",
+        "description": "Bridges: Method createTranslationForCurrentLocale() must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Cms/Dependency/Facade/CmsToGlossaryFacadeBridge.php",
         "description": "Bridges: Type should be defined for param `keyName` in method `Spryker\\Zed\\Cms\\Dependency\\Facade\\CmsToGlossaryFacadeBridge::createTranslation()`.",
         "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
@@ -73,6 +80,13 @@
         "fileName": "src/Spryker/Zed/Cms/Dependency/Facade/CmsToGlossaryFacadeBridge.php",
         "description": "Bridges: Type should be defined for param `isActive` in method `Spryker\\Zed\\Cms\\Dependency\\Facade\\CmsToGlossaryFacadeBridge::createTranslation()`.",
         "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Cms/Dependency/Facade/CmsToGlossaryFacadeBridge.php",
+        "description": "Bridges: Method createTranslation() must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -99,8 +113,22 @@
     },
     {
         "fileName": "src/Spryker/Zed/Cms/Dependency/Facade/CmsToGlossaryFacadeBridge.php",
+        "description": "Bridges: Method createAndTouchTranslation() must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Cms/Dependency/Facade/CmsToGlossaryFacadeBridge.php",
         "description": "Bridges: Type should be defined for param `keyName` in method `Spryker\\Zed\\Cms\\Dependency\\Facade\\CmsToGlossaryFacadeBridge::createKey()`.",
         "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Cms/Dependency/Facade/CmsToGlossaryFacadeBridge.php",
+        "description": "Bridges: Method createKey() must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -134,6 +162,13 @@
     },
     {
         "fileName": "src/Spryker/Zed/Cms/Dependency/Facade/CmsToGlossaryFacadeBridge.php",
+        "description": "Bridges: Method saveGlossaryKeyTranslations() must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Cms/Dependency/Facade/CmsToGlossaryFacadeBridge.php",
         "description": "Bridges: Type should be defined for param `idKey` in method `Spryker\\Zed\\Cms\\Dependency\\Facade\\CmsToGlossaryFacadeBridge::touchTranslationForKeyId()`.",
         "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
@@ -141,14 +176,14 @@
     },
     {
         "fileName": "src/Spryker/Zed/Cms/Dependency/Facade/CmsToGlossaryFacadeBridge.php",
-        "description": "Bridges: Method deleteTranslationsByFkKeys must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer;` signature. https://spryker.atlassian.net/wiki/spaces/CORE/pages/478052552/Application+Namespace+Conventions#ApplicationNamespaceConventions-Facade",
+        "description": "Bridges: Method deleteTranslationsByFkKeys() must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
         "fileName": "src/Spryker/Zed/Cms/Dependency/Facade/CmsToGlossaryFacadeBridge.php",
-        "description": "Bridges: Method deleteKeys must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer;` signature. https://spryker.atlassian.net/wiki/spaces/CORE/pages/478052552/Application+Namespace+Conventions#ApplicationNamespaceConventions-Facade",
+        "description": "Bridges: Method deleteKeys() must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -358,7 +393,21 @@
     },
     {
         "fileName": "src/Spryker/Zed/Cms/Dependency/Facade/CmsToUrlFacadeBridge.php",
-        "description": "Bridges: Method deleteUrlRedirect must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer;` signature. https://spryker.atlassian.net/wiki/spaces/CORE/pages/478052552/Application+Namespace+Conventions#ApplicationNamespaceConventions-Facade",
+        "description": "Bridges: Method createUrl() must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Cms/Dependency/Facade/CmsToUrlFacadeBridge.php",
+        "description": "Bridges: Method deleteUrlRedirect() must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Cms/Dependency/Facade/CmsToUrlFacadeBridge.php",
+        "description": "Bridges: Method createUrlRedirect() must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"

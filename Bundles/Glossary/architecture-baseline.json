@@ -35,6 +35,13 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/Glossary/Dependency/Facade/GlossaryToLocaleBridge.php",
+        "description": "Bridges: Method createLocale() must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/Glossary/Dependency/Facade/GlossaryToLocaleInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getLocale()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -59,6 +66,13 @@
         "fileName": "src/Spryker/Zed/Glossary/Dependency/Facade/GlossaryToLocaleInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `createLocale()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Glossary/Dependency/Facade/GlossaryToMessengerBridge.php",
+        "description": "Bridges: Method addErrorMessage() must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

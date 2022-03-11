@@ -14,6 +14,20 @@
         "priority": "1"
     },
     {
+        "fileName": "src/Spryker/Zed/OauthCustomerConnector/Dependency/Facade/OauthCustomerConnectorToOauthFacadeBridge.php",
+        "description": "Bridges: Method saveScope() must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/OauthCustomerConnector/Dependency/Facade/OauthCustomerConnectorToOauthFacadeBridge.php",
+        "description": "Bridges: Method saveClient() must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/OauthCustomerConnector/Dependency/Service/OauthCustomerConnectorToUtilEncodingServiceBridge.php",
         "description": "Bridges: Type should be defined for param `value` in method `Spryker\\Zed\\OauthCustomerConnector\\Dependency\\Service\\OauthCustomerConnectorToUtilEncodingServiceBridge::encodeJson()`.",
         "rule": "BridgeMethodsRule",

@@ -1,5 +1,12 @@
 [
     {
+        "fileName": "src/Spryker/Zed/ProductList/Dependency/Facade/ProductListToMessengerFacadeBridge.php",
+        "description": "Bridges: Method addInfoMessage() must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/ProductList/Dependency/Service/ProductListToUtilTextServiceBridge.php",
         "description": "Bridges: Type should be defined for param `value` in method `Spryker\\Zed\\ProductList\\Dependency\\Service\\ProductListToUtilTextServiceBridge::generateSlug()`.",
         "rule": "BridgeMethodsRule",

@@ -77,6 +77,20 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/Shipment/Dependency/Facade/ShipmentToSalesFacadeBridge.php",
+        "description": "Bridges: Method createOrderAddress() must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Shipment/Dependency/Facade/ShipmentToSalesFacadeBridge.php",
+        "description": "Bridges: Method createSalesExpense() must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/Shipment/Dependency/Facade/ShipmentToSalesFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getOrderByIdSalesOrder()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
