@@ -12,4 +12,4 @@ composer require spryker/product-configuration-wishlists-rest-api-extension
 
 ## Documentation
 
-[Spryker Documentation](https://documentation.spryker.com)
+[Spryker Documentation](https://docs.spryker.com)

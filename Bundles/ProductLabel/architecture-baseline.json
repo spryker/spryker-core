@@ -14,6 +14,13 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Yves/ProductLabel/Twig/ProductLabelTwigExtension.php",
+        "description": "Method `Spryker\\Yves\\ProductLabel\\Twig\\ProductLabelTwigExtension::getFunctions()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
         "fileName": "src/Spryker/Zed/ProductLabel/Dependency/Facade/ProductLabelToProductBridge.php",
         "description": "Bridges: Type should be defined for param `idProductAbstract` in method `Spryker\\Zed\\ProductLabel\\Dependency\\Facade\\ProductLabelToProductBridge::touchProductAbstract()`.",
         "rule": "BridgeMethodsRule",

@@ -425,6 +425,7 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
      *
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return $this->$offset;

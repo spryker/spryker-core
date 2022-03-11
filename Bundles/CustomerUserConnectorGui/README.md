@@ -12,4 +12,4 @@ composer require spryker/customer-user-connector-gui
 
 ## Documentation
 
-[Module Documentation](https://docs.spryker.com)
+[Spryker Documentation](https://docs.spryker.com)

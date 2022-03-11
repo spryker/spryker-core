@@ -1,5 +1,47 @@
 [
     {
+        "fileName": "src/Spryker/Zed/ProductAttributeGui/Communication/Form/AttributeCsrfForm.php",
+        "description": "Method `Spryker\\Zed\\ProductAttributeGui\\Communication\\Form\\AttributeCsrfForm::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductAttributeGui/Communication/Form/AttributeForm.php",
+        "description": "Method `Spryker\\Zed\\ProductAttributeGui\\Communication\\Form\\AttributeForm::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductAttributeGui/Communication/Form/AttributeKeyForm.php",
+        "description": "Method `Spryker\\Zed\\ProductAttributeGui\\Communication\\Form\\AttributeKeyForm::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductAttributeGui/Communication/Form/AttributeTranslationCollectionForm.php",
+        "description": "Method `Spryker\\Zed\\ProductAttributeGui\\Communication\\Form\\AttributeTranslationCollectionForm::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductAttributeGui/Communication/Form/AttributeTranslationForm.php",
+        "description": "Method `Spryker\\Zed\\ProductAttributeGui\\Communication\\Form\\AttributeTranslationForm::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductAttributeGui/Communication/Form/AttributeValueTranslationForm.php",
+        "description": "Method `Spryker\\Zed\\ProductAttributeGui\\Communication\\Form\\AttributeValueTranslationForm::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
         "fileName": "src/Spryker/Zed/ProductAttributeGui/Dependency/Facade/ProductAttributeGuiToLocaleBridge.php",
         "description": "Bridges: Type should be defined for param `localeName` in method `Spryker\\Zed\\ProductAttributeGui\\Dependency\\Facade\\ProductAttributeGuiToLocaleBridge::getLocale()`.",
         "rule": "BridgeMethodsRule",

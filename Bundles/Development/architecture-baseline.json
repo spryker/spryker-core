@@ -1,1 +1,177 @@
-[]
+[
+    {
+        "fileName": "src/Spryker/Zed/Development/Business/PhpMd/Rules/Controversial/CamelCaseMethodName.php",
+        "description": "Method `Spryker\\Zed\\Development\\Business\\PhpMd\\Rules\\Controversial\\CamelCaseMethodName::apply()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Development/Business/PhpMd/Rules/Design/CouplingBetweenObjects.php",
+        "description": "Method `Spryker\\Zed\\Development\\Business\\PhpMd\\Rules\\Design\\CouplingBetweenObjects::apply()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Development/Business/PhpMd/Rules/Design/NumberOfChildren.php",
+        "description": "Method `Spryker\\Zed\\Development\\Business\\PhpMd\\Rules\\Design\\NumberOfChildren::apply()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Development/Business/PhpMd/Rules/Design/TooManyMethods.php",
+        "description": "Method `Spryker\\Zed\\Development\\Business\\PhpMd\\Rules\\Design\\TooManyMethods::apply()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Development/Business/PhpMd/Rules/Design/TooManyPublicMethods.php",
+        "description": "Method `Spryker\\Zed\\Development\\Business\\PhpMd\\Rules\\Design\\TooManyPublicMethods::apply()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Development/Business/PhpMd/Rules/Naming/ShortVariable.php",
+        "description": "Method `Spryker\\Zed\\Development\\Business\\PhpMd\\Rules\\Naming\\ShortVariable::checkMinimumLength()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Development/Business/PhpMd/Rules/Naming/ShortVariable.php",
+        "description": "Method `Spryker\\Zed\\Development\\Business\\PhpMd\\Rules\\Naming\\ShortVariable::getExceptionsList()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Development/Business/PhpMd/Rules/Naming/ShortVariable.php",
+        "description": "Method `Spryker\\Zed\\Development\\Business\\PhpMd\\Rules\\Naming\\ShortVariable::isNameAllowedInContext()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Development/Business/PhpMd/Rules/Naming/ShortVariable.php",
+        "description": "Method `Spryker\\Zed\\Development\\Business\\PhpMd\\Rules\\Naming\\ShortVariable::isChildOf()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Development/Communication/Console/CodeArchitectureSnifferConsole.php",
+        "description": "Method `Spryker\\Zed\\Development\\Communication\\Console\\CodeArchitectureSnifferConsole::execute()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Development/Communication/Console/CodePhpMessDetectorConsole.php",
+        "description": "Method `Spryker\\Zed\\Development\\Communication\\Console\\CodePhpMessDetectorConsole::execute()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Development/Communication/Console/CodePhpstanConsole.php",
+        "description": "Method `Spryker\\Zed\\Development\\Communication\\Console\\CodePhpstanConsole::execute()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Development/Communication/Console/CodeStyleSnifferConsole.php",
+        "description": "Method `Spryker\\Zed\\Development\\Communication\\Console\\CodeStyleSnifferConsole::execute()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Development/Communication/Console/ComposerJsonUpdaterConsole.php",
+        "description": "Method `Spryker\\Zed\\Development\\Communication\\Console\\ComposerJsonUpdaterConsole::execute()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Development/Communication/Console/DependencyTreeBuilderConsole.php",
+        "description": "Method `Spryker\\Zed\\Development\\Communication\\Console\\DependencyTreeBuilderConsole::execute()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Development/Communication/Console/DependencyViolationFixConsole.php",
+        "description": "Method `Spryker\\Zed\\Development\\Communication\\Console\\DependencyViolationFixConsole::execute()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Development/Communication/Console/GenerateClientIdeAutoCompletionConsole.php",
+        "description": "Method `Spryker\\Zed\\Development\\Communication\\Console\\GenerateClientIdeAutoCompletionConsole::execute()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Development/Communication/Console/GenerateGlueIdeAutoCompletionConsole.php",
+        "description": "Method `Spryker\\Zed\\Development\\Communication\\Console\\GenerateGlueIdeAutoCompletionConsole::execute()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Development/Communication/Console/GenerateIdeAutoCompletionConsole.php",
+        "description": "Method `Spryker\\Zed\\Development\\Communication\\Console\\GenerateIdeAutoCompletionConsole::execute()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Development/Communication/Console/GenerateServiceIdeAutoCompletionConsole.php",
+        "description": "Method `Spryker\\Zed\\Development\\Communication\\Console\\GenerateServiceIdeAutoCompletionConsole::execute()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Development/Communication/Console/GenerateYvesIdeAutoCompletionConsole.php",
+        "description": "Method `Spryker\\Zed\\Development\\Communication\\Console\\GenerateYvesIdeAutoCompletionConsole::execute()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Development/Communication/Console/GenerateZedIdeAutoCompletionConsole.php",
+        "description": "Method `Spryker\\Zed\\Development\\Communication\\Console\\GenerateZedIdeAutoCompletionConsole::execute()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Development/Communication/Console/PluginUsageFinderConsole.php",
+        "description": "Method `Spryker\\Zed\\Development\\Communication\\Console\\PluginUsageFinderConsole::execute()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Development/Communication/Console/PropelAbstractValidateConsole.php",
+        "description": "Method `Spryker\\Zed\\Development\\Communication\\Console\\PropelAbstractValidateConsole::execute()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Development/Communication/Form/BundlesFormType.php",
+        "description": "Method `Spryker\\Zed\\Development\\Communication\\Form\\BundlesFormType::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    }
+]

@@ -12,4 +12,4 @@ composer require spryker/product-attributes-rest-api
 
 ## Documentation
 
-[Spryker Documentation](https://documentation.spryker.com)
+[Spryker Documentation](https://docs.spryker.com)

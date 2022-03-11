@@ -1,5 +1,19 @@
 [
     {
+        "fileName": "src/Spryker/Zed/CustomerGroup/Communication/Form/CustomerAssignmentForm.php",
+        "description": "Method `Spryker\\Zed\\CustomerGroup\\Communication\\Form\\CustomerAssignmentForm::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CustomerGroup/Communication/Form/CustomerGroupForm.php",
+        "description": "Method `Spryker\\Zed\\CustomerGroup\\Communication\\Form\\CustomerGroupForm::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
         "fileName": "src/Spryker/Zed/CustomerGroup/Dependency/QueryContainer/CustomerGroupToCustomerQueryContainerInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `queryCustomers()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",

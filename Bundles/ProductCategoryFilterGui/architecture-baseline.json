@@ -1,5 +1,12 @@
 [
     {
+        "fileName": "src/Spryker/Zed/ProductCategoryFilterGui/Communication/Form/ProductCategoryFilterForm.php",
+        "description": "Method `Spryker\\Zed\\ProductCategoryFilterGui\\Communication\\Form\\ProductCategoryFilterForm::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
         "fileName": "src/Spryker/Zed/ProductCategoryFilterGui/Dependency/Client/ProductCategoryFilterGuiToCatalogClientBridge.php",
         "description": "Bridges: Type should be defined for param `searchString` in method `Spryker\\Zed\\ProductCategoryFilterGui\\Dependency\\Client\\ProductCategoryFilterGuiToCatalogClientBridge::catalogSearch()`.",
         "rule": "BridgeMethodsRule",

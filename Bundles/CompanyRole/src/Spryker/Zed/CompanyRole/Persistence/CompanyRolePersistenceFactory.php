@@ -71,7 +71,7 @@ class CompanyRolePersistenceFactory extends AbstractPersistenceFactory
      */
     public function createCompanyRoleToCompanyUserQuery(): SpyCompanyRoleToCompanyUserQuery
     {
-        return new SpyCompanyRoleToCompanyUserQuery();
+        return SpyCompanyRoleToCompanyUserQuery::create();
     }
 
     /**

@@ -13,6 +13,6 @@ composer require spryker/price
 
 ## Documentation
 
-[Module Documentation](https://docs.spryker.com)
+[Spryker Documentation](https://docs.spryker.com)
 
 Old price module code moved to `spryker/price-product`.

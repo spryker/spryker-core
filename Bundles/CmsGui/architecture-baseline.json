@@ -1,5 +1,40 @@
 [
     {
+        "fileName": "src/Spryker/Zed/CmsGui/Communication/Form/Glossary/CmsGlossaryAttributesFormType.php",
+        "description": "Method `Spryker\\Zed\\CmsGui\\Communication\\Form\\Glossary\\CmsGlossaryAttributesFormType::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsGui/Communication/Form/Glossary/CmsGlossaryFormType.php",
+        "description": "Method `Spryker\\Zed\\CmsGui\\Communication\\Form\\Glossary\\CmsGlossaryFormType::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsGui/Communication/Form/Page/CmsPageAttributesFormType.php",
+        "description": "Method `Spryker\\Zed\\CmsGui\\Communication\\Form\\Page\\CmsPageAttributesFormType::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsGui/Communication/Form/Page/CmsPageFormType.php",
+        "description": "Method `Spryker\\Zed\\CmsGui\\Communication\\Form\\Page\\CmsPageFormType::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsGui/Communication/Form/Version/CmsVersionFormType.php",
+        "description": "Method `Spryker\\Zed\\CmsGui\\Communication\\Form\\Version\\CmsVersionFormType::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
         "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsBridge.php",
         "description": "Bridges: Type should be defined for param `idPage` in method `Spryker\\Zed\\CmsGui\\Dependency\\Facade\\CmsGuiToCmsBridge::hasPagePlaceholderMapping()`.",
         "rule": "BridgeMethodsRule",

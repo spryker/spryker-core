@@ -12,4 +12,4 @@ composer require spryker/discount-promotions-rest-api
 
 ## Documentation
 
-[Module Documentation](https://documentation.spryker.com/docs/cart-rules-discounts)
+[Spryker Documentation](https://docs.spryker.com)

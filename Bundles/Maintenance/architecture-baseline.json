@@ -1,1 +1,16 @@
-[]
+[
+    {
+        "fileName": "src/Spryker/Zed/Maintenance/Communication/Console/MaintenanceDisableConsole.php",
+        "description": "Method `Spryker\\Zed\\Maintenance\\Communication\\Console\\MaintenanceDisableConsole::execute()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Maintenance/Communication/Console/MaintenanceEnableConsole.php",
+        "description": "Method `Spryker\\Zed\\Maintenance\\Communication\\Console\\MaintenanceEnableConsole::execute()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    }
+]

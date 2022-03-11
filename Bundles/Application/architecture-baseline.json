@@ -1,1 +1,79 @@
-[]
+[
+    {
+        "fileName": "src/Spryker/Shared/Application/Business/Routing/SilexRouter.php",
+        "description": "Method `Spryker\\Shared\\Application\\Business\\Routing\\SilexRouter::getContext()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Shared/Application/Business/Routing/SilexRouter.php",
+        "description": "Method `Spryker\\Shared\\Application\\Business\\Routing\\SilexRouter::getRouteCollection()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Shared/Application/Business/Routing/SilexRouter.php",
+        "description": "Method `Spryker\\Shared\\Application\\Business\\Routing\\SilexRouter::generate()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Shared/Application/Business/Routing/SilexRouter.php",
+        "description": "Method `Spryker\\Shared\\Application\\Business\\Routing\\SilexRouter::match()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Shared/Application/EventListener/KernelLogListener.php",
+        "description": "Method `Spryker\\Shared\\Application\\EventListener\\KernelLogListener::getSubscribedEvents()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Shared/Application/Routing/AbstractRouter.php",
+        "description": "Method `Spryker\\Shared\\Application\\Routing\\AbstractRouter::getContext()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Shared/Application/Routing/AbstractRouter.php",
+        "description": "Method `Spryker\\Shared\\Application\\Routing\\AbstractRouter::getRouteCollection()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Application/Business/Model/Router/MvcRouter.php",
+        "description": "Method `Spryker\\Zed\\Application\\Business\\Model\\Router\\MvcRouter::getContext()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Application/Business/Model/Router/MvcRouter.php",
+        "description": "Method `Spryker\\Zed\\Application\\Business\\Model\\Router\\MvcRouter::getRouteCollection()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Application/Business/Model/Router/MvcRouter.php",
+        "description": "Method `Spryker\\Zed\\Application\\Business\\Model\\Router\\MvcRouter::generate()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Application/Business/Model/Router/MvcRouter.php",
+        "description": "Method `Spryker\\Zed\\Application\\Business\\Model\\Router\\MvcRouter::match()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    }
+]

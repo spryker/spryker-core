@@ -12,4 +12,4 @@ composer require spryker/content-product-set-gui
 
 ## Documentation
 
-[Spryker Documentation](https://documentation.spryker.com)
+[Spryker Documentation](https://docs.spryker.com)

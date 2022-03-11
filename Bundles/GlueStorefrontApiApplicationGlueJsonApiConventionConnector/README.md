@@ -13,4 +13,4 @@ composer require spryker/glue-storefront-api-application-glue-json-api-conventio
 
 ## Documentation
 
-[Spryker Documentation](https://documentation.spryker.com)
+[Spryker Documentation](https://docs.spryker.com)

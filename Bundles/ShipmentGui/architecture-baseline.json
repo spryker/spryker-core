@@ -1,5 +1,12 @@
 [
     {
+        "fileName": "src/Spryker/Zed/ShipmentGui/Communication/Form/Item/ItemFormType.php",
+        "description": "Method `Spryker\\Zed\\ShipmentGui\\Communication\\Form\\Item\\ItemFormType::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
         "fileName": "src/Spryker/Zed/ShipmentGui/Dependency/Facade/ShipmentGuiToShipmentFacadeBridge.php",
         "description": "Bridges: Type should be defined for param `idShipmentMethod` in method `Spryker\\Zed\\ShipmentGui\\Dependency\\Facade\\ShipmentGuiToShipmentFacadeBridge::findMethodById()`.",
         "rule": "BridgeMethodsRule",

@@ -310,7 +310,14 @@ class ArchitectureSniffer implements ArchitectureSnifferInterface
         $process->run();
 
         if (substr($process->getOutput(), 0, 5) !== '<?xml') {
-            throw new Exception('Sniffer run was not successful: ' . $process->getExitCodeText());
+            throw new Exception(
+                sprintf(
+                    "Sniffer run was not successful: %s\n\nOutput: %s\n\nError: %s",
+                    $process->getExitCodeText(),
+                    $process->getOutput(),
+                    $process->getErrorOutput(),
+                ),
+            );
         }
 
         $output = $process->getOutput();

@@ -1,4 +1,2 @@
 parameters:
     level: 8
-    ignoreErrors:
-        - '#has parameter \$generator with no value type specified in iterable type Generator#'

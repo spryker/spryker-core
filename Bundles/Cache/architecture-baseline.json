@@ -1,1 +1,9 @@
-[]
+[
+    {
+        "fileName": "src/Spryker/Zed/Cache/Communication/Console/EmptyAllCachesConsole.php",
+        "description": "Method `Spryker\\Zed\\Cache\\Communication\\Console\\EmptyAllCachesConsole::execute()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    }
+]

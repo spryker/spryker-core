@@ -28,6 +28,27 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/Customer/Communication/Form/AddressForm.php",
+        "description": "Method `Spryker\\Zed\\Customer\\Communication\\Form\\AddressForm::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Customer/Communication/Form/CustomerForm.php",
+        "description": "Method `Spryker\\Zed\\Customer\\Communication\\Form\\CustomerForm::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Customer/Communication/Form/CustomerUpdateForm.php",
+        "description": "Method `Spryker\\Zed\\Customer\\Communication\\Form\\CustomerUpdateForm::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
         "fileName": "src/Spryker/Zed/Customer/Dependency/Facade/CustomerToCountryBridge.php",
         "description": "Bridges: Type should be defined for param `countryName` in method `Spryker\\Zed\\Customer\\Dependency\\Facade\\CustomerToCountryBridge::getPreferredCountryByName()`.",
         "rule": "BridgeMethodsRule",

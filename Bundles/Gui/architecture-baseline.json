@@ -1,1 +1,51 @@
-[]
+[
+    {
+        "fileName": "src/Spryker/Zed/Gui/Communication/Form/Type/AutosuggestType.php",
+        "description": "Method `Spryker\\Zed\\Gui\\Communication\\Form\\Type\\AutosuggestType::getParent()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Gui/Communication/Form/Type/AutosuggestType.php",
+        "description": "Method `Spryker\\Zed\\Gui\\Communication\\Form\\Type\\AutosuggestType::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Gui/Communication/Form/Type/ImageType.php",
+        "description": "Method `Spryker\\Zed\\Gui\\Communication\\Form\\Type\\ImageType::getParent()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Gui/Communication/Form/Type/ParagraphType.php",
+        "description": "Method `Spryker\\Zed\\Gui\\Communication\\Form\\Type\\ParagraphType::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Gui/Communication/Form/Type/Select2ComboBoxType.php",
+        "description": "Method `Spryker\\Zed\\Gui\\Communication\\Form\\Type\\Select2ComboBoxType::getParent()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Gui/Communication/Form/Type/Select2ComboBoxType.php",
+        "description": "Method `Spryker\\Zed\\Gui\\Communication\\Form\\Type\\Select2ComboBoxType::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Gui/Communication/Form/Type/SelectType.php",
+        "description": "Method `Spryker\\Zed\\Gui\\Communication\\Form\\Type\\SelectType::getParent()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    }
+]

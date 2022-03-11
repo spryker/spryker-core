@@ -1,1 +1,30 @@
-[]
+[
+    {
+        "fileName": "src/Spryker/Zed/Console/Communication/Bootstrap/ConsoleBootstrap.php",
+        "description": "Method `Spryker\\Zed\\Console\\Communication\\Bootstrap\\ConsoleBootstrap::getDefaultCommands()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Console/Communication/Bootstrap/ConsoleBootstrap.php",
+        "description": "Method `Spryker\\Zed\\Console\\Communication\\Bootstrap\\ConsoleBootstrap::getDefaultInputDefinition()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Console/Communication/Bootstrap/ConsoleBootstrap.php",
+        "description": "Method `Spryker\\Zed\\Console\\Communication\\Bootstrap\\ConsoleBootstrap::doRun()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Console/Communication/Plugin/ConsoleLogPlugin.php",
+        "description": "Method `Spryker\\Zed\\Console\\Communication\\Plugin\\ConsoleLogPlugin::getSubscribedEvents()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    }
+]

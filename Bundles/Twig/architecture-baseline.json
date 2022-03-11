@@ -47,5 +47,89 @@
         "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Yves/Twig/Plugin/AbstractTwigExtensionPlugin.php",
+        "description": "Method `Spryker\\Yves\\Twig\\Plugin\\AbstractTwigExtensionPlugin::getTokenParsers()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Yves/Twig/Plugin/AbstractTwigExtensionPlugin.php",
+        "description": "Method `Spryker\\Yves\\Twig\\Plugin\\AbstractTwigExtensionPlugin::getNodeVisitors()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Yves/Twig/Plugin/AbstractTwigExtensionPlugin.php",
+        "description": "Method `Spryker\\Yves\\Twig\\Plugin\\AbstractTwigExtensionPlugin::getFilters()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Yves/Twig/Plugin/AbstractTwigExtensionPlugin.php",
+        "description": "Method `Spryker\\Yves\\Twig\\Plugin\\AbstractTwigExtensionPlugin::getTests()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Yves/Twig/Plugin/AbstractTwigExtensionPlugin.php",
+        "description": "Method `Spryker\\Yves\\Twig\\Plugin\\AbstractTwigExtensionPlugin::getFunctions()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Yves/Twig/Plugin/AbstractTwigExtensionPlugin.php",
+        "description": "Method `Spryker\\Yves\\Twig\\Plugin\\AbstractTwigExtensionPlugin::getOperators()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Twig/Communication/Plugin/AbstractTwigExtensionPlugin.php",
+        "description": "Method `Spryker\\Zed\\Twig\\Communication\\Plugin\\AbstractTwigExtensionPlugin::getTokenParsers()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Twig/Communication/Plugin/AbstractTwigExtensionPlugin.php",
+        "description": "Method `Spryker\\Zed\\Twig\\Communication\\Plugin\\AbstractTwigExtensionPlugin::getNodeVisitors()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Twig/Communication/Plugin/AbstractTwigExtensionPlugin.php",
+        "description": "Method `Spryker\\Zed\\Twig\\Communication\\Plugin\\AbstractTwigExtensionPlugin::getFilters()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Twig/Communication/Plugin/AbstractTwigExtensionPlugin.php",
+        "description": "Method `Spryker\\Zed\\Twig\\Communication\\Plugin\\AbstractTwigExtensionPlugin::getTests()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Twig/Communication/Plugin/AbstractTwigExtensionPlugin.php",
+        "description": "Method `Spryker\\Zed\\Twig\\Communication\\Plugin\\AbstractTwigExtensionPlugin::getFunctions()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Twig/Communication/Plugin/AbstractTwigExtensionPlugin.php",
+        "description": "Method `Spryker\\Zed\\Twig\\Communication\\Plugin\\AbstractTwigExtensionPlugin::getOperators()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
     }
 ]

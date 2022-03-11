@@ -1,1 +1,16 @@
-[]
+[
+    {
+        "fileName": "src/Spryker/Zed/Transfer/Communication/Console/DataBuilderGeneratorConsole.php",
+        "description": "Method `Spryker\\Zed\\Transfer\\Communication\\Console\\DataBuilderGeneratorConsole::execute()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Transfer/Communication/Console/ValidatorConsole.php",
+        "description": "Method `Spryker\\Zed\\Transfer\\Communication\\Console\\ValidatorConsole::execute()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    }
+]

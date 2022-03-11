@@ -1,1 +1,16 @@
-[]
+[
+    {
+        "fileName": "src/Spryker/Zed/CategoryImageGui/Communication/Form/ImageCollectionForm.php",
+        "description": "Method `Spryker\\Zed\\CategoryImageGui\\Communication\\Form\\ImageCollectionForm::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CategoryImageGui/Communication/Form/ImageSetForm.php",
+        "description": "Method `Spryker\\Zed\\CategoryImageGui\\Communication\\Form\\ImageSetForm::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    }
+]

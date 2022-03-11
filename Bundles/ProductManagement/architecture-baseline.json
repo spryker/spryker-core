@@ -1,5 +1,47 @@
 [
     {
+        "fileName": "src/Spryker/Zed/ProductManagement/Communication/Form/BundledProductForm.php",
+        "description": "Method `Spryker\\Zed\\ProductManagement\\Communication\\Form\\BundledProductForm::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductManagement/Communication/Form/Product/AttributeAbstractForm.php",
+        "description": "Method `Spryker\\Zed\\ProductManagement\\Communication\\Form\\Product\\AttributeAbstractForm::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductManagement/Communication/Form/Product/AttributeSuperForm.php",
+        "description": "Method `Spryker\\Zed\\ProductManagement\\Communication\\Form\\Product\\AttributeSuperForm::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductManagement/Communication/Form/Product/ImageCollectionForm.php",
+        "description": "Method `Spryker\\Zed\\ProductManagement\\Communication\\Form\\Product\\ImageCollectionForm::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductManagement/Communication/Form/Product/ImageSetForm.php",
+        "description": "Method `Spryker\\Zed\\ProductManagement\\Communication\\Form\\Product\\ImageSetForm::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductManagement/Communication/Form/Product/Price/ProductMoneyCollectionType.php",
+        "description": "Method `Spryker\\Zed\\ProductManagement\\Communication\\Form\\Product\\Price\\ProductMoneyCollectionType::getBlockPrefix()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
         "fileName": "src/Spryker/Zed/ProductManagement/Communication/ProductManagementCommunicationFactory.php",
         "description": "Factories: The method `Spryker\\Zed\\ProductManagement\\Communication\\ProductManagementCommunicationFactory::getProductTaxCollection()()` contains a `foreach` statement which violates rule \"Factory methods should not contain loops.\"",
         "rule": "FactoryNoLoopsRule",

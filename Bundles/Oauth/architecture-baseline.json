@@ -7,6 +7,27 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Client/Oauth/ResourceServer/Repository/AccessTokenRepository.php",
+        "description": "Method `Spryker\\Client\\Oauth\\ResourceServer\\Repository\\AccessTokenRepository::getNewToken()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Client/Oauth/ResourceServer/Repository/AccessTokenRepository.php",
+        "description": "Method `Spryker\\Client\\Oauth\\ResourceServer\\Repository\\AccessTokenRepository::isAccessTokenRevoked()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Client/Oauth/ResourceServer/ResourceServer.php",
+        "description": "Method `Spryker\\Client\\Oauth\\ResourceServer\\ResourceServer::validateAuthenticatedRequest()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
         "fileName": "src/Spryker/Service/Oauth/Dependency/Service/OauthToUtilEncodingServiceBridge.php",
         "description": "Bridges: Type should be defined for param `jsonValue` in method `Spryker\\Service\\Oauth\\Dependency\\Service\\OauthToUtilEncodingServiceBridge::decodeJson()`.",
         "rule": "BridgeMethodsRule",
@@ -40,6 +61,104 @@
         "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Oauth/Business/Model/League/Grant/PasswordGrantType.php",
+        "description": "Method `Spryker\\Zed\\Oauth\\Business\\Model\\League\\Grant\\PasswordGrantType::respondToAccessTokenRequest()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Oauth/Business/Model/League/Grant/PasswordGrantType.php",
+        "description": "Method `Spryker\\Zed\\Oauth\\Business\\Model\\League\\Grant\\PasswordGrantType::getIdentifier()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Oauth/Business/Model/League/Grant/RefreshTokenGrantType.php",
+        "description": "Method `Spryker\\Zed\\Oauth\\Business\\Model\\League\\Grant\\RefreshTokenGrantType::respondToAccessTokenRequest()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Oauth/Business/Model/League/Grant/RefreshTokenGrantType.php",
+        "description": "Method `Spryker\\Zed\\Oauth\\Business\\Model\\League\\Grant\\RefreshTokenGrantType::getIdentifier()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Oauth/Business/Model/League/Repositories/AccessTokenRepository.php",
+        "description": "Method `Spryker\\Zed\\Oauth\\Business\\Model\\League\\Repositories\\AccessTokenRepository::getNewToken()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Oauth/Business/Model/League/Repositories/AccessTokenRepository.php",
+        "description": "Method `Spryker\\Zed\\Oauth\\Business\\Model\\League\\Repositories\\AccessTokenRepository::isAccessTokenRevoked()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Oauth/Business/Model/League/Repositories/ClientRepository.php",
+        "description": "Method `Spryker\\Zed\\Oauth\\Business\\Model\\League\\Repositories\\ClientRepository::getClientEntity()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Oauth/Business/Model/League/Repositories/ClientRepository.php",
+        "description": "Method `Spryker\\Zed\\Oauth\\Business\\Model\\League\\Repositories\\ClientRepository::validateClient()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Oauth/Business/Model/League/Repositories/RefreshTokenRepository.php",
+        "description": "Method `Spryker\\Zed\\Oauth\\Business\\Model\\League\\Repositories\\RefreshTokenRepository::getNewRefreshToken()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Oauth/Business/Model/League/Repositories/RefreshTokenRepository.php",
+        "description": "Method `Spryker\\Zed\\Oauth\\Business\\Model\\League\\Repositories\\RefreshTokenRepository::isRefreshTokenRevoked()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Oauth/Business/Model/League/Repositories/ScopeRepository.php",
+        "description": "Method `Spryker\\Zed\\Oauth\\Business\\Model\\League\\Repositories\\ScopeRepository::getScopeEntityByIdentifier()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Oauth/Business/Model/League/Repositories/ScopeRepository.php",
+        "description": "Method `Spryker\\Zed\\Oauth\\Business\\Model\\League\\Repositories\\ScopeRepository::finalizeScopes()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Oauth/Business/Model/League/Repositories/UserRepository.php",
+        "description": "Method `Spryker\\Zed\\Oauth\\Business\\Model\\League\\Repositories\\UserRepository::getUserEntityByUserCredentials()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Oauth/Communication/Console/OauthTokenConsole.php",
+        "description": "Method `Spryker\\Zed\\Oauth\\Communication\\Console\\OauthTokenConsole::execute()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
     },
     {
         "fileName": "src/Spryker/Zed/Oauth/Dependency/Service/OauthToUtilEncodingServiceBridge.php",

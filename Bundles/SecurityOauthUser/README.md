@@ -12,4 +12,4 @@ composer require spryker/security-oauth-user
 
 ## Documentation
 
-[Spryker Documentation](https://documentation.spryker.com)
+[Spryker Documentation](https://docs.spryker.com)

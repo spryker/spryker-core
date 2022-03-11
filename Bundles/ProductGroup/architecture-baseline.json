@@ -28,6 +28,13 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Yves/ProductGroup/Twig/ProductGroupTwigExtension.php",
+        "description": "Method `Spryker\\Yves\\ProductGroup\\Twig\\ProductGroupTwigExtension::getFunctions()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
         "fileName": "src/Spryker/Zed/ProductGroup/Dependency/Facade/ProductGroupToTouchBridge.php",
         "description": "Bridges: Type should be defined for param `itemType` in method `Spryker\\Zed\\ProductGroup\\Dependency\\Facade\\ProductGroupToTouchBridge::touchActive()`.",
         "rule": "BridgeMethodsRule",
