@@ -9,7 +9,6 @@ namespace Spryker\Zed\Customer;
 
 use Spryker\Service\Customer\CustomerServiceInterface;
 use Spryker\Shared\Kernel\ContainerInterface;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryBridge;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleBridge;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailBridge;
@@ -89,11 +88,6 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const QUERY_CONTAINER_LOCALE = 'QUERY_CONTAINER_LOCALE';
-
-    /**
-     * @var string
-     */
-    public const STORE = 'STORE';
 
     /**
      * @var string
@@ -195,20 +189,6 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     protected function getCustomerAnonymizerPlugins()
     {
         return [];
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addStore(Container $container)
-    {
-        $container->set(static::STORE, function (Container $container) {
-            return Store::getInstance();
-        });
-
-        return $container;
     }
 
     /**
