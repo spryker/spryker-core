@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\Customer\Communication\Form\DataProvider;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Customer\Communication\Form\AddressForm;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryInterface;
+use Spryker\Zed\Customer\Dependency\Facade\CustomerToStoreFacadeInterface;
 use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 
 class AddressFormDataProvider extends AbstractCustomerDataProvider
@@ -25,20 +25,23 @@ class AddressFormDataProvider extends AbstractCustomerDataProvider
     protected $customerQueryContainer;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
+     * @var \Spryker\Zed\Customer\Dependency\Facade\CustomerToStoreFacadeInterface
      */
-    protected $store;
+    protected $storeFacade;
 
     /**
      * @param \Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryInterface $countryFacade
      * @param \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface $customerQueryContainer
-     * @param \Spryker\Shared\Kernel\Store $store
+     * @param \Spryker\Zed\Customer\Dependency\Facade\CustomerToStoreFacadeInterface $storeFacade
      */
-    public function __construct(CustomerToCountryInterface $countryFacade, CustomerQueryContainerInterface $customerQueryContainer, Store $store)
-    {
+    public function __construct(
+        CustomerToCountryInterface $countryFacade,
+        CustomerQueryContainerInterface $customerQueryContainer,
+        CustomerToStoreFacadeInterface $storeFacade
+    ) {
         $this->countryFacade = $countryFacade;
         $this->customerQueryContainer = $customerQueryContainer;
-        $this->store = $store;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -74,7 +77,7 @@ class AddressFormDataProvider extends AbstractCustomerDataProvider
     protected function getCountryChoices()
     {
         $result = [];
-        foreach ($this->store->getCountries() as $iso2Code) {
+        foreach ($this->storeFacade->getCurrentStore()->getCountries() as $iso2Code) {
             $countryTransfer = $this->countryFacade->getCountryByIso2Code($iso2Code);
             $result[$countryTransfer->getIdCountry()] = $countryTransfer->getName();
         }

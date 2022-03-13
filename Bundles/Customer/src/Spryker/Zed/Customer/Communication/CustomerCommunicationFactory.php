@@ -19,6 +19,7 @@ use Spryker\Zed\Customer\Communication\Table\CustomerTable;
 use Spryker\Zed\Customer\Communication\Table\PluginExecutor\CustomerTableExpanderPluginExecutor;
 use Spryker\Zed\Customer\Communication\Table\PluginExecutor\CustomerTableExpanderPluginExecutorInterface;
 use Spryker\Zed\Customer\CustomerDependencyProvider;
+use Spryker\Zed\Customer\Dependency\Facade\CustomerToStoreFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\Form\FormInterface;
 
@@ -118,16 +119,16 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
         return new AddressFormDataProvider(
             $this->getProvidedDependency(CustomerDependencyProvider::FACADE_COUNTRY),
             $this->getQueryContainer(),
-            $this->getStore(),
+            $this->getStoreFacade(),
         );
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Store
+     * @return \Spryker\Zed\Customer\Dependency\Facade\CustomerToStoreFacadeInterface
      */
-    protected function getStore()
+    protected function getStoreFacade(): CustomerToStoreFacadeInterface
     {
-        return $this->getProvidedDependency(CustomerDependencyProvider::STORE);
+        return $this->getProvidedDependency(CustomerDependencyProvider::FACADE_STORE);
     }
 
     /**
