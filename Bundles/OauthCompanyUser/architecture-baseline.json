@@ -21,6 +21,27 @@
         "priority": "1"
     },
     {
+        "fileName": "src/Spryker/Zed/OauthCompanyUser/Dependency/Facade/OauthCompanyUserToCompanyUserFacadeBridge.php",
+        "description": "Bridges: Method findActiveCompanyUserByUuid() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/OauthCompanyUser/Dependency/Facade/OauthCompanyUserToCompanyUserFacadeBridge.php",
+        "description": "Bridges: Method findActiveCompanyUsersByIds() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/OauthCompanyUser/Dependency/Facade/OauthCompanyUserToCustomerFacadeBridge.php",
+        "description": "Bridges: Method getCustomer() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/OauthCompanyUser/Dependency/Facade/OauthCompanyUserToCustomerFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getCustomer()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -30,6 +51,13 @@
     {
         "fileName": "src/Spryker/Zed/OauthCompanyUser/Dependency/Facade/OauthCompanyUserToOauthFacadeBridge.php",
         "description": "Bridges: Method saveScope() must have `public function update(create)<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/OauthCompanyUser/Dependency/Facade/OauthCompanyUserToOauthFacadeBridge.php",
+        "description": "Bridges: Method getScopesByIdentifiers() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"

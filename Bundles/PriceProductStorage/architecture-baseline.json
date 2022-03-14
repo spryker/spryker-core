@@ -36,8 +36,22 @@
     },
     {
         "fileName": "src/Spryker/Zed/PriceProductStorage/Dependency/Facade/PriceProductStorageToEventBehaviorFacadeBridge.php",
+        "description": "Bridges: Method getEventTransferIds() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/PriceProductStorage/Dependency/Facade/PriceProductStorageToEventBehaviorFacadeBridge.php",
         "description": "Bridges: Type should be defined for param `foreignKeyColumnName` in method `Spryker\\Zed\\PriceProductStorage\\Dependency\\Facade\\PriceProductStorageToEventBehaviorFacadeBridge::getEventTransferForeignKeys()`.",
         "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/PriceProductStorage/Dependency/Facade/PriceProductStorageToEventBehaviorFacadeBridge.php",
+        "description": "Bridges: Method getEventTransferForeignKeys() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -64,6 +78,13 @@
     },
     {
         "fileName": "src/Spryker/Zed/PriceProductStorage/Dependency/Facade/PriceProductStorageToPriceProductFacadeBridge.php",
+        "description": "Bridges: Method findProductAbstractPrices() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/PriceProductStorage/Dependency/Facade/PriceProductStorageToPriceProductFacadeBridge.php",
         "description": "Bridges: Type should be defined for param `idProductConcrete` in method `Spryker\\Zed\\PriceProductStorage\\Dependency\\Facade\\PriceProductStorageToPriceProductFacadeBridge::findProductConcretePrices()`.",
         "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
@@ -78,8 +99,22 @@
     },
     {
         "fileName": "src/Spryker/Zed/PriceProductStorage/Dependency/Facade/PriceProductStorageToPriceProductFacadeBridge.php",
+        "description": "Bridges: Method findProductConcretePrices() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/PriceProductStorage/Dependency/Facade/PriceProductStorageToPriceProductFacadeBridge.php",
         "description": "Bridges: Type should be defined for param `idProductAbstract` in method `Spryker\\Zed\\PriceProductStorage\\Dependency\\Facade\\PriceProductStorageToPriceProductFacadeBridge::findProductAbstractPricesWithoutPriceExtraction()`.",
         "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/PriceProductStorage/Dependency/Facade/PriceProductStorageToPriceProductFacadeBridge.php",
+        "description": "Bridges: Method findProductAbstractPricesWithoutPriceExtraction() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -94,6 +129,20 @@
         "fileName": "src/Spryker/Zed/PriceProductStorage/Dependency/Facade/PriceProductStorageToPriceProductFacadeBridge.php",
         "description": "Bridges: Type should be defined for param `idProductAbstract` in method `Spryker\\Zed\\PriceProductStorage\\Dependency\\Facade\\PriceProductStorageToPriceProductFacadeBridge::findProductConcretePricesWithoutPriceExtraction()`.",
         "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/PriceProductStorage/Dependency/Facade/PriceProductStorageToPriceProductFacadeBridge.php",
+        "description": "Bridges: Method findProductConcretePricesWithoutPriceExtraction() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/PriceProductStorage/Dependency/Facade/PriceProductStorageToPriceProductFacadeBridge.php",
+        "description": "Bridges: Method findProductAbstractPricesWithoutPriceExtractionByProductAbstractIdsAndCriteria() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -136,6 +185,13 @@
         "fileName": "src/Spryker/Zed/PriceProductStorage/Dependency/Facade/PriceProductStorageToPriceProductFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `findProductAbstractPricesWithoutPriceExtractionByProductAbstractIdsAndCriteria()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/PriceProductStorage/Dependency/Facade/PriceProductStorageToStoreFacadeBridge.php",
+        "description": "Bridges: Method getAllStores() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

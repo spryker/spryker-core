@@ -1,7 +1,21 @@
 [
     {
+        "fileName": "src/Spryker/Zed/OauthAgentConnector/Dependency/Facade/OauthAgentConnectorToAgentFacadeBridge.php",
+        "description": "Bridges: Method findAgentByUsername() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/OauthAgentConnector/Dependency/Facade/OauthAgentConnectorToOauthFacadeBridge.php",
         "description": "Bridges: Method saveScope() must have `public function update(create)<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/OauthAgentConnector/Dependency/Facade/OauthAgentConnectorToOauthFacadeBridge.php",
+        "description": "Bridges: Method getScopesByIdentifiers() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"

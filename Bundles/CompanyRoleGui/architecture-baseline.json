@@ -1,7 +1,28 @@
 [
     {
+        "fileName": "src/Spryker/Zed/CompanyRoleGui/Dependency/Facade/CompanyRoleGuiToCompanyFacadeBridge.php",
+        "description": "Bridges: Method getCompanies() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CompanyRoleGui/Dependency/Facade/CompanyRoleGuiToCompanyRoleFacadeBridge.php",
+        "description": "Bridges: Method findDefaultCompanyRoleByIdCompany() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/CompanyRoleGui/Dependency/Facade/CompanyRoleGuiToCompanyRoleFacadeBridge.php",
         "description": "Bridges: Method delete() must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CompanyRoleGui/Dependency/Facade/CompanyRoleGuiToCompanyRoleFacadeBridge.php",
+        "description": "Bridges: Method getCompanyRoleById() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -21,6 +42,20 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/CompanyRoleGui/Dependency/Facade/CompanyRoleGuiToCompanyRoleFacadeBridge.php",
+        "description": "Bridges: Method getCompanyRoleCollection() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CompanyRoleGui/Dependency/Facade/CompanyRoleGuiToCompanyRoleFacadeBridge.php",
+        "description": "Bridges: Method findCompanyRoleById() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/CompanyRoleGui/Dependency/Facade/CompanyRoleGuiToGlossaryFacadeBridge.php",
         "description": "Bridges: Type should be defined for param `keyName` in method `Spryker\\Zed\\CompanyRoleGui\\Dependency\\Facade\\CompanyRoleGuiToGlossaryFacadeBridge::translate()`.",
         "rule": "BridgeMethodsRule",
@@ -31,6 +66,13 @@
         "fileName": "src/Spryker/Zed/CompanyRoleGui/Dependency/Facade/CompanyRoleGuiToGlossaryFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `translate()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CompanyRoleGui/Dependency/Facade/CompanyRoleGuiToPermissionFacadeBridge.php",
+        "description": "Bridges: Method findMergedRegisteredNonInfrastructuralPermissions() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     }

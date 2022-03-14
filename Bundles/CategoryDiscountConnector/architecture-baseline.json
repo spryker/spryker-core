@@ -1,5 +1,12 @@
 [
     {
+        "fileName": "src/Spryker/Zed/CategoryDiscountConnector/Dependency/Facade/CategoryDiscountConnectorToCategoryFacadeBridge.php",
+        "description": "Bridges: Method getAscendantCategoryKeysGroupedByIdCategoryNode() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/CategoryDiscountConnector/Dependency/Facade/CategoryDiscountConnectorToDiscountFacadeBridge.php",
         "description": "Bridges: Type should be defined for param `compareWith` in method `Spryker\\Zed\\CategoryDiscountConnector\\Dependency\\Facade\\CategoryDiscountConnectorToDiscountFacadeBridge::queryStringCompare()`.",
         "rule": "BridgeMethodsRule",
@@ -10,6 +17,13 @@
         "fileName": "src/Spryker/Zed/CategoryDiscountConnector/Dependency/Facade/CategoryDiscountConnectorToDiscountFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `queryStringCompare()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CategoryDiscountConnector/Dependency/Facade/CategoryDiscountConnectorToLocaleFacadeBridge.php",
+        "description": "Bridges: Method getCurrentLocale() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

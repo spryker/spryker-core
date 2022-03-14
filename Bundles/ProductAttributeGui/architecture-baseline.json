@@ -43,8 +43,22 @@
     },
     {
         "fileName": "src/Spryker/Zed/ProductAttributeGui/Dependency/Facade/ProductAttributeGuiToLocaleBridge.php",
+        "description": "Bridges: Method getCurrentLocale() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductAttributeGui/Dependency/Facade/ProductAttributeGuiToLocaleBridge.php",
         "description": "Bridges: Type should be defined for param `localeName` in method `Spryker\\Zed\\ProductAttributeGui\\Dependency\\Facade\\ProductAttributeGuiToLocaleBridge::getLocale()`.",
         "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductAttributeGui/Dependency/Facade/ProductAttributeGuiToLocaleBridge.php",
+        "description": "Bridges: Method getLocale() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -57,8 +71,22 @@
     },
     {
         "fileName": "src/Spryker/Zed/ProductAttributeGui/Dependency/Facade/ProductAttributeGuiToLocaleBridge.php",
+        "description": "Bridges: Method getLocaleCollection() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductAttributeGui/Dependency/Facade/ProductAttributeGuiToLocaleBridge.php",
         "description": "Bridges: Type should be defined for param `idLocale` in method `Spryker\\Zed\\ProductAttributeGui\\Dependency\\Facade\\ProductAttributeGuiToLocaleBridge::getLocaleById()`.",
         "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductAttributeGui/Dependency/Facade/ProductAttributeGuiToLocaleBridge.php",
+        "description": "Bridges: Method getLocaleById() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -106,8 +134,22 @@
     },
     {
         "fileName": "src/Spryker/Zed/ProductAttributeGui/Dependency/Facade/ProductAttributeGuiToProductAttributeBridge.php",
+        "description": "Bridges: Method getProductAbstractAttributes() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductAttributeGui/Dependency/Facade/ProductAttributeGuiToProductAttributeBridge.php",
         "description": "Bridges: Type should be defined for param `idProduct` in method `Spryker\\Zed\\ProductAttributeGui\\Dependency\\Facade\\ProductAttributeGuiToProductAttributeBridge::getProductAttributeValues()`.",
         "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductAttributeGui/Dependency/Facade/ProductAttributeGuiToProductAttributeBridge.php",
+        "description": "Bridges: Method getProductAttributeValues() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -120,8 +162,22 @@
     },
     {
         "fileName": "src/Spryker/Zed/ProductAttributeGui/Dependency/Facade/ProductAttributeGuiToProductAttributeBridge.php",
+        "description": "Bridges: Method getMetaAttributesForProductAbstract() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductAttributeGui/Dependency/Facade/ProductAttributeGuiToProductAttributeBridge.php",
         "description": "Bridges: Type should be defined for param `idProduct` in method `Spryker\\Zed\\ProductAttributeGui\\Dependency\\Facade\\ProductAttributeGuiToProductAttributeBridge::getMetaAttributesForProduct()`.",
         "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductAttributeGui/Dependency/Facade/ProductAttributeGuiToProductAttributeBridge.php",
+        "description": "Bridges: Method getMetaAttributesForProduct() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -190,6 +246,13 @@
     },
     {
         "fileName": "src/Spryker/Zed/ProductAttributeGui/Dependency/Facade/ProductAttributeGuiToProductAttributeBridge.php",
+        "description": "Bridges: Method getAttributeValueSuggestionsCount() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductAttributeGui/Dependency/Facade/ProductAttributeGuiToProductAttributeBridge.php",
         "description": "Bridges: Type should be defined for param `idProductManagementAttribute` in method `Spryker\\Zed\\ProductAttributeGui\\Dependency\\Facade\\ProductAttributeGuiToProductAttributeBridge::getAttributeValueSuggestions()`.",
         "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
@@ -225,8 +288,29 @@
     },
     {
         "fileName": "src/Spryker/Zed/ProductAttributeGui/Dependency/Facade/ProductAttributeGuiToProductAttributeBridge.php",
+        "description": "Bridges: Method getAttributeValueSuggestions() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductAttributeGui/Dependency/Facade/ProductAttributeGuiToProductAttributeBridge.php",
         "description": "Bridges: Type should be defined for param `idProductManagementAttribute` in method `Spryker\\Zed\\ProductAttributeGui\\Dependency\\Facade\\ProductAttributeGuiToProductAttributeBridge::getProductManagementAttribute()`.",
         "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductAttributeGui/Dependency/Facade/ProductAttributeGuiToProductAttributeBridge.php",
+        "description": "Bridges: Method getProductManagementAttribute() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductAttributeGui/Dependency/Facade/ProductAttributeGuiToProductAttributeBridge.php",
+        "description": "Bridges: Method getAttributeAvailableTypes() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -241,6 +325,13 @@
         "fileName": "src/Spryker/Zed/ProductAttributeGui/Dependency/Facade/ProductAttributeGuiToProductAttributeBridge.php",
         "description": "Bridges: Type should be defined for param `attributeKey` in method `Spryker\\Zed\\ProductAttributeGui\\Dependency\\Facade\\ProductAttributeGuiToProductAttributeBridge::findAttributeTranslationByKey()`.",
         "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductAttributeGui/Dependency/Facade/ProductAttributeGuiToProductAttributeBridge.php",
+        "description": "Bridges: Method findAttributeTranslationByKey() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

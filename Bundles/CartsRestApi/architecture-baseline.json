@@ -78,7 +78,28 @@
     },
     {
         "fileName": "src/Spryker/Zed/CartsRestApi/Dependency/Facade/CartsRestApiToQuoteFacadeBridge.php",
+        "description": "Bridges: Method findQuoteByUuid() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CartsRestApi/Dependency/Facade/CartsRestApiToQuoteFacadeBridge.php",
+        "description": "Bridges: Method getQuoteCollection() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CartsRestApi/Dependency/Facade/CartsRestApiToQuoteFacadeBridge.php",
         "description": "Bridges: Method deleteQuote() must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CartsRestApi/Dependency/Facade/CartsRestApiToStoreFacadeBridge.php",
+        "description": "Bridges: Method getCurrentStore() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"

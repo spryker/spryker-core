@@ -1,5 +1,12 @@
 [
     {
+        "fileName": "src/Spryker/Zed/ZedNavigation/Dependency/Facade/ZedNavigationToRouterFacadeBridge.php",
+        "description": "Bridges: Method getBackofficeRouter() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/ZedNavigation/Dependency/Util/ZedNavigationToUtilEncodingBridge.php",
         "description": "Bridges: Type should be defined for param `value` in method `Spryker\\Zed\\ZedNavigation\\Dependency\\Util\\ZedNavigationToUtilEncodingBridge::encodeJson()`.",
         "rule": "BridgeMethodsRule",

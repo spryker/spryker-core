@@ -7,9 +7,65 @@
         "priority": "1"
     },
     {
+        "fileName": "src/Spryker/Zed/ShipmentGui/Dependency/Facade/ShipmentGuiToCustomerFacadeBridge.php",
+        "description": "Bridges: Method getAddresses() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ShipmentGui/Dependency/Facade/ShipmentGuiToCustomerFacadeBridge.php",
+        "description": "Bridges: Method findCustomerAddressById() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ShipmentGui/Dependency/Facade/ShipmentGuiToCustomerFacadeBridge.php",
+        "description": "Bridges: Method findCustomerAddressByAddressData() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ShipmentGui/Dependency/Facade/ShipmentGuiToCustomerFacadeBridge.php",
+        "description": "Bridges: Method getAllSalutations() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ShipmentGui/Dependency/Facade/ShipmentGuiToSalesFacadeBridge.php",
+        "description": "Bridges: Method findOrderByIdSalesOrder() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ShipmentGui/Dependency/Facade/ShipmentGuiToShipmentFacadeBridge.php",
+        "description": "Bridges: Method getMethods() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/ShipmentGui/Dependency/Facade/ShipmentGuiToShipmentFacadeBridge.php",
         "description": "Bridges: Type should be defined for param `idShipmentMethod` in method `Spryker\\Zed\\ShipmentGui\\Dependency\\Facade\\ShipmentGuiToShipmentFacadeBridge::findMethodById()`.",
         "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ShipmentGui/Dependency/Facade/ShipmentGuiToShipmentFacadeBridge.php",
+        "description": "Bridges: Method findMethodById() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ShipmentGui/Dependency/Facade/ShipmentGuiToShipmentFacadeBridge.php",
+        "description": "Bridges: Method findShipmentById() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -29,7 +85,35 @@
     },
     {
         "fileName": "src/Spryker/Zed/ShipmentGui/Dependency/Facade/ShipmentGuiToShipmentFacadeBridge.php",
+        "description": "Bridges: Method findSalesOrderItemsIdsBySalesShipmentId() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ShipmentGui/Dependency/Facade/ShipmentGuiToShipmentFacadeBridge.php",
+        "description": "Bridges: Method findShipmentCarrier() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ShipmentGui/Dependency/Facade/ShipmentGuiToShipmentFacadeBridge.php",
         "description": "Bridges: Method createCarrier() must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ShipmentGui/Dependency/Facade/ShipmentGuiToShipmentFacadeBridge.php",
+        "description": "Bridges: Method findShipmentMethodByName() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ShipmentGui/Dependency/Facade/ShipmentGuiToShipmentFacadeBridge.php",
+        "description": "Bridges: Method findShipmentMethodByKey() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -63,6 +147,20 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/ShipmentGui/Dependency/Facade/ShipmentGuiToShipmentFacadeBridge.php",
+        "description": "Bridges: Method getShipmentMethodPlugins() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ShipmentGui/Dependency/Facade/ShipmentGuiToShipmentFacadeBridge.php",
+        "description": "Bridges: Method getActiveShipmentCarriers() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/ShipmentGui/Dependency/Facade/ShipmentGuiToShipmentFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getMethods()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -80,6 +178,13 @@
         "fileName": "src/Spryker/Zed/ShipmentGui/Dependency/Facade/ShipmentGuiToShipmentFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `deleteMethod()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ShipmentGui/Dependency/Facade/ShipmentGuiToTaxFacadeBridge.php",
+        "description": "Bridges: Method getTaxSets() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

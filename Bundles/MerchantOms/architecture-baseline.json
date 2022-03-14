@@ -1,7 +1,28 @@
 [
     {
+        "fileName": "src/Spryker/Zed/MerchantOms/Dependency/Facade/MerchantOmsToMerchantFacadeBridge.php",
+        "description": "Bridges: Method findOne() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MerchantOms/Dependency/Facade/MerchantOmsToMerchantSalesOrderFacadeBridge.php",
+        "description": "Bridges: Method findMerchantOrderItem() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/MerchantOms/Dependency/Facade/MerchantOmsToMerchantSalesOrderFacadeBridge.php",
         "description": "Bridges: Method updateMerchantOrderItem() must have `public function update<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MerchantOms/Dependency/Facade/MerchantOmsToMerchantSalesOrderFacadeBridge.php",
+        "description": "Bridges: Method findMerchantOrder() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -17,6 +38,34 @@
         "fileName": "src/Spryker/Zed/MerchantOms/Dependency/Facade/MerchantOmsToStateMachineFacadeBridge.php",
         "description": "Bridges: Type should be defined for param `eventName` in method `Spryker\\Zed\\MerchantOms\\Dependency\\Facade\\MerchantOmsToStateMachineFacadeBridge::triggerEventForItems()`.",
         "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MerchantOms/Dependency/Facade/MerchantOmsToStateMachineFacadeBridge.php",
+        "description": "Bridges: Method findStateMachineProcess() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MerchantOms/Dependency/Facade/MerchantOmsToStateMachineFacadeBridge.php",
+        "description": "Bridges: Method getProcessStateNames() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MerchantOms/Dependency/Facade/MerchantOmsToStateMachineFacadeBridge.php",
+        "description": "Bridges: Method getManualEventsForStateMachineItems() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MerchantOms/Dependency/Facade/MerchantOmsToStateMachineFacadeBridge.php",
+        "description": "Bridges: Method getManualEventsForStateMachineItem() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

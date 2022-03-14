@@ -19,5 +19,26 @@
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MerchantUserGui/Dependency/Facade/MerchantUserGuiToMerchantUserFacadeBridge.php",
+        "description": "Bridges: Method findMerchantUser() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MerchantUserGui/Dependency/Facade/MerchantUserGuiToMerchantUserFacadeBridge.php",
+        "description": "Bridges: Method findUser() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MerchantUserGui/Dependency/Facade/MerchantUserGuiToRouterFacadeBridge.php",
+        "description": "Bridges: Method getBackofficeChainRouter() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
     }
 ]

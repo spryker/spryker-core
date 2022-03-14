@@ -1,6 +1,20 @@
 [
     {
         "fileName": "src/Spryker/Zed/ContentGui/Dependency/Facade/ContentGuiToContentFacadeBridge.php",
+        "description": "Bridges: Method findContentById() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ContentGui/Dependency/Facade/ContentGuiToContentFacadeBridge.php",
+        "description": "Bridges: Method findContentByKey() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ContentGui/Dependency/Facade/ContentGuiToContentFacadeBridge.php",
         "description": "Bridges: Method create() must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
@@ -9,6 +23,27 @@
     {
         "fileName": "src/Spryker/Zed/ContentGui/Dependency/Facade/ContentGuiToContentFacadeBridge.php",
         "description": "Bridges: Method update() must have `public function update<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ContentGui/Dependency/Facade/ContentGuiToLocaleFacadeBridge.php",
+        "description": "Bridges: Method getCurrentLocale() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ContentGui/Dependency/Facade/ContentGuiToLocaleFacadeBridge.php",
+        "description": "Bridges: Method getLocaleCollection() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ContentGui/Dependency/Facade/ContentGuiToLocaleFacadeBridge.php",
+        "description": "Bridges: Method getAvailableLocales() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"

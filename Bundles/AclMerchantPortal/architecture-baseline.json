@@ -36,6 +36,13 @@
     },
     {
         "fileName": "src/Spryker/Zed/AclMerchantPortal/Dependency/Facade/AclMerchantPortalToAclFacadeBridge.php",
+        "description": "Bridges: Method findGroup() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/AclMerchantPortal/Dependency/Facade/AclMerchantPortalToAclFacadeBridge.php",
         "description": "Bridges: Type should be defined for param `idUser` in method `Spryker\\Zed\\AclMerchantPortal\\Dependency\\Facade\\AclMerchantPortalToAclFacadeBridge::addUserToGroup()`.",
         "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
@@ -59,6 +66,13 @@
         "fileName": "src/Spryker/Zed/AclMerchantPortal/Dependency/Facade/AclMerchantPortalToAclFacadeBridge.php",
         "description": "Bridges: Type should be defined for param `idUser` in method `Spryker\\Zed\\AclMerchantPortal\\Dependency\\Facade\\AclMerchantPortalToAclFacadeBridge::getUserGroups()`.",
         "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/AclMerchantPortal/Dependency/Facade/AclMerchantPortalToAclFacadeBridge.php",
+        "description": "Bridges: Method getUserGroups() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

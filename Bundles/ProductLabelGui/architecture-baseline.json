@@ -29,8 +29,29 @@
     },
     {
         "fileName": "src/Spryker/Zed/ProductLabelGui/Dependency/Facade/ProductLabelGuiToLocaleBridge.php",
+        "description": "Bridges: Method getLocaleCollection() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductLabelGui/Dependency/Facade/ProductLabelGuiToLocaleBridge.php",
         "description": "Bridges: Type should be defined for param `idLocale` in method `Spryker\\Zed\\ProductLabelGui\\Dependency\\Facade\\ProductLabelGuiToLocaleBridge::getLocaleById()`.",
         "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductLabelGui/Dependency/Facade/ProductLabelGuiToLocaleBridge.php",
+        "description": "Bridges: Method getLocaleById() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductLabelGui/Dependency/Facade/ProductLabelGuiToLocaleBridge.php",
+        "description": "Bridges: Method getCurrentLocale() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -91,6 +112,13 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/ProductLabelGui/Dependency/Facade/ProductLabelGuiToPriceProductFacadeBridge.php",
+        "description": "Bridges: Method findPriceBySku() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/ProductLabelGui/Dependency/Facade/ProductLabelGuiToPriceProductFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `findPriceBySku()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -101,6 +129,20 @@
         "fileName": "src/Spryker/Zed/ProductLabelGui/Dependency/Facade/ProductLabelGuiToProductLabelBridge.php",
         "description": "Bridges: Type should be defined for param `idProductLabel` in method `Spryker\\Zed\\ProductLabelGui\\Dependency\\Facade\\ProductLabelGuiToProductLabelBridge::findLabelById()`.",
         "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductLabelGui/Dependency/Facade/ProductLabelGuiToProductLabelBridge.php",
+        "description": "Bridges: Method findLabelById() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductLabelGui/Dependency/Facade/ProductLabelGuiToProductLabelBridge.php",
+        "description": "Bridges: Method findAllLabels() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -157,6 +199,13 @@
         "fileName": "src/Spryker/Zed/ProductLabelGui/Dependency/Facade/ProductLabelGuiToProductLabelBridge.php",
         "description": "Bridges: Type should be defined for param `idProductLabel` in method `Spryker\\Zed\\ProductLabelGui\\Dependency\\Facade\\ProductLabelGuiToProductLabelBridge::findProductAbstractRelationsByIdProductLabel()`.",
         "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductLabelGui/Dependency/Facade/ProductLabelGuiToProductLabelBridge.php",
+        "description": "Bridges: Method findProductAbstractRelationsByIdProductLabel() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

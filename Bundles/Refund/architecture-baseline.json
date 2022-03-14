@@ -50,6 +50,13 @@
     },
     {
         "fileName": "src/Spryker/Zed/Refund/Dependency/Facade/RefundToSalesBridge.php",
+        "description": "Bridges: Method getOrderByIdSalesOrder() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Refund/Dependency/Facade/RefundToSalesBridge.php",
         "description": "Bridges: Type should be defined for param `idSalesOrder` in method `Spryker\\Zed\\Refund\\Dependency\\Facade\\RefundToSalesBridge::updateOrder()`.",
         "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",

@@ -29,6 +29,13 @@
     },
     {
         "fileName": "src/Spryker/Zed/CmsBlockGui/Dependency/Facade/CmsBlockGuiToCmsBlockBridge.php",
+        "description": "Bridges: Method findCmsBlockById() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsBlockGui/Dependency/Facade/CmsBlockGuiToCmsBlockBridge.php",
         "description": "Bridges: Type should be defined for param `idCmsBlock` in method `Spryker\\Zed\\CmsBlockGui\\Dependency\\Facade\\CmsBlockGuiToCmsBlockBridge::activateById()`.",
         "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
@@ -66,6 +73,13 @@
         "fileName": "src/Spryker/Zed/CmsBlockGui/Dependency/Facade/CmsBlockGuiToCmsBlockBridge.php",
         "description": "Bridges: Type should be defined for param `idCmsBlock` in method `Spryker\\Zed\\CmsBlockGui\\Dependency\\Facade\\CmsBlockGuiToCmsBlockBridge::findGlossary()`.",
         "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsBlockGui/Dependency/Facade/CmsBlockGuiToCmsBlockBridge.php",
+        "description": "Bridges: Method findGlossary() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -122,6 +136,20 @@
         "fileName": "src/Spryker/Zed/CmsBlockGui/Dependency/Facade/CmsBlockGuiToCmsBlockInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `hasTemplateFileById()`. Got `$idCmsBlockTemplate` but expected to be `int $idCmsBlockTemplate`. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsBlockGui/Dependency/Facade/CmsBlockGuiToLocaleBridge.php",
+        "description": "Bridges: Method getLocaleCollection() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsBlockGui/Dependency/Facade/CmsBlockGuiToLocaleBridge.php",
+        "description": "Bridges: Method getCurrentLocale() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

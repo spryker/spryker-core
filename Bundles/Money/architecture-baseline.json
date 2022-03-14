@@ -77,6 +77,27 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/Money/Dependency/Facade/MoneyToCurrencyBridge.php",
+        "description": "Bridges: Method getStoreWithCurrencies() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Money/Dependency/Facade/MoneyToCurrencyBridge.php",
+        "description": "Bridges: Method getAllStoresWithCurrencies() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Money/Dependency/Facade/MoneyToCurrencyBridge.php",
+        "description": "Bridges: Method getCurrent() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/Money/Dependency/Facade/MoneyToCurrencyInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `fromIsoCode()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -105,6 +126,13 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/Money/Dependency/Facade/MoneyToLocaleFacadeBridge.php",
+        "description": "Bridges: Method getCurrentLocale() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/Money/Dependency/Facade/MoneyToLocaleFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getCurrentLocale()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -115,6 +143,13 @@
         "fileName": "src/Spryker/Zed/Money/Dependency/Facade/MoneyToStoreBridge.php",
         "description": "Bridges: Type should be defined for param `idStore` in method `Spryker\\Zed\\Money\\Dependency\\Facade\\MoneyToStoreBridge::getStoreById()`.",
         "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Money/Dependency/Facade/MoneyToStoreBridge.php",
+        "description": "Bridges: Method getStoreById() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

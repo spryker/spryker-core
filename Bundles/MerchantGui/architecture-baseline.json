@@ -1,5 +1,12 @@
 [
     {
+        "fileName": "src/Spryker/Zed/MerchantGui/Dependency/Facade/MerchantGuiToLocaleFacadeBridge.php",
+        "description": "Bridges: Method getLocaleCollection() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/MerchantGui/Dependency/Facade/MerchantGuiToLocaleFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getLocaleCollection()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -16,6 +23,34 @@
     {
         "fileName": "src/Spryker/Zed/MerchantGui/Dependency/Facade/MerchantGuiToMerchantFacadeBridge.php",
         "description": "Bridges: Method updateMerchant() must have `public function update<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MerchantGui/Dependency/Facade/MerchantGuiToMerchantFacadeBridge.php",
+        "description": "Bridges: Method findOne() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MerchantGui/Dependency/Facade/MerchantGuiToMerchantFacadeBridge.php",
+        "description": "Bridges: Method getApplicableMerchantStatuses() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MerchantGui/Dependency/Facade/MerchantGuiToMerchantFacadeBridge.php",
+        "description": "Bridges: Method get() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MerchantGui/Dependency/Facade/MerchantGuiToUrlFacadeBridge.php",
+        "description": "Bridges: Method findUrlCaseInsensitive() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"

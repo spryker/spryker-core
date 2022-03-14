@@ -22,6 +22,13 @@
     },
     {
         "fileName": "src/Spryker/Zed/WishlistsRestApi/Dependency/Facade/WishlistsRestApiToWishlistFacadeBridge.php",
+        "description": "Bridges: Method getWishlistByFilter() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/WishlistsRestApi/Dependency/Facade/WishlistsRestApiToWishlistFacadeBridge.php",
         "description": "Bridges: Method removeWishlist() must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",

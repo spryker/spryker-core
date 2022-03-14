@@ -7,6 +7,34 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/MerchantSalesOrderMerchantUserGui/Dependency/Facade/MerchantSalesOrderMerchantUserGuiToCustomerFacadeBridge.php",
+        "description": "Bridges: Method findByReference() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MerchantSalesOrderMerchantUserGui/Dependency/Facade/MerchantSalesOrderMerchantUserGuiToCustomerFacadeBridge.php",
+        "description": "Bridges: Method findCustomerAddressByAddressData() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MerchantSalesOrderMerchantUserGui/Dependency/Facade/MerchantSalesOrderMerchantUserGuiToCustomerFacadeBridge.php",
+        "description": "Bridges: Method getAddresses() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MerchantSalesOrderMerchantUserGui/Dependency/Facade/MerchantSalesOrderMerchantUserGuiToCustomerFacadeBridge.php",
+        "description": "Bridges: Method getAllSalutations() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/MerchantSalesOrderMerchantUserGui/Dependency/Facade/MerchantSalesOrderMerchantUserGuiToCustomerFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `findByReference()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -17,6 +45,41 @@
         "fileName": "src/Spryker/Zed/MerchantSalesOrderMerchantUserGui/Dependency/Facade/MerchantSalesOrderMerchantUserGuiToCustomerFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getAddresses()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MerchantSalesOrderMerchantUserGui/Dependency/Facade/MerchantSalesOrderMerchantUserGuiToMerchantOmsFacadeBridge.php",
+        "description": "Bridges: Method getMerchantOrderItemsStateHistory() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MerchantSalesOrderMerchantUserGui/Dependency/Facade/MerchantSalesOrderMerchantUserGuiToMerchantSalesOrderFacadeBridge.php",
+        "description": "Bridges: Method findMerchantOrder() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MerchantSalesOrderMerchantUserGui/Dependency/Facade/MerchantSalesOrderMerchantUserGuiToMerchantSalesOrderFacadeBridge.php",
+        "description": "Bridges: Method getMerchantOrdersCount() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MerchantSalesOrderMerchantUserGui/Dependency/Facade/MerchantSalesOrderMerchantUserGuiToMerchantShipmentFacadeBridge.php",
+        "description": "Bridges: Method findShipment() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MerchantSalesOrderMerchantUserGui/Dependency/Facade/MerchantSalesOrderMerchantUserGuiToMerchantUserFacadeBridge.php",
+        "description": "Bridges: Method getCurrentMerchantUser() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -52,6 +115,13 @@
         "fileName": "src/Spryker/Zed/MerchantSalesOrderMerchantUserGui/Dependency/Facade/MerchantSalesOrderMerchantUserGuiToMoneyFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `formatWithoutSymbol()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MerchantSalesOrderMerchantUserGui/Dependency/Facade/MerchantSalesOrderMerchantUserGuiToShipmentFacadeBridge.php",
+        "description": "Bridges: Method getMethods() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

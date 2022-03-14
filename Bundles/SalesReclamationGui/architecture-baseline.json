@@ -7,6 +7,13 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/SalesReclamationGui/Dependency/Facade/SalesReclamationGuiToOmsFacadeBridge.php",
+        "description": "Bridges: Method getManualEventsByIdSalesOrder() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/SalesReclamationGui/Dependency/Facade/SalesReclamationGuiToOmsFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getManualEventsByIdSalesOrder()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -21,6 +28,13 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/SalesReclamationGui/Dependency/Facade/SalesReclamationGuiToSalesFacadeBridge.php",
+        "description": "Bridges: Method getOrderByIdSalesOrder() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/SalesReclamationGui/Dependency/Facade/SalesReclamationGuiToSalesFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getOrderByIdSalesOrder()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -30,6 +44,13 @@
     {
         "fileName": "src/Spryker/Zed/SalesReclamationGui/Dependency/Facade/SalesReclamationGuiToSalesReclamationFacadeBridge.php",
         "description": "Bridges: Method createReclamation() must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/SalesReclamationGui/Dependency/Facade/SalesReclamationGuiToSalesReclamationFacadeBridge.php",
+        "description": "Bridges: Method getReclamationById() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"

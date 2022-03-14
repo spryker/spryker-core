@@ -1,7 +1,42 @@
 [
     {
+        "fileName": "src/Spryker/Zed/PriceProductSchedule/Dependency/Facade/PriceProductScheduleToCurrencyFacadeBridge.php",
+        "description": "Bridges: Method findCurrencyByIsoCode() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/PriceProductSchedule/Dependency/Facade/PriceProductScheduleToPriceProductFacadeBridge.php",
+        "description": "Bridges: Method findPriceProductFor() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/PriceProductSchedule/Dependency/Facade/PriceProductScheduleToPriceProductFacadeBridge.php",
         "description": "Bridges: Method removePriceProductDefaultForPriceProduct() must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/PriceProductSchedule/Dependency/Facade/PriceProductScheduleToPriceProductFacadeBridge.php",
+        "description": "Bridges: Method findProductAbstractPricesWithoutPriceExtraction() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/PriceProductSchedule/Dependency/Facade/PriceProductScheduleToPriceProductFacadeBridge.php",
+        "description": "Bridges: Method findProductConcretePricesWithoutPriceExtraction() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/PriceProductSchedule/Dependency/Facade/PriceProductScheduleToPriceProductFacadeBridge.php",
+        "description": "Bridges: Method findPriceTypeByName() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -36,8 +71,22 @@
     },
     {
         "fileName": "src/Spryker/Zed/PriceProductSchedule/Dependency/Facade/PriceProductScheduleToProductFacadeBridge.php",
+        "description": "Bridges: Method findProductAbstractIdBySku() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/PriceProductSchedule/Dependency/Facade/PriceProductScheduleToProductFacadeBridge.php",
         "description": "Bridges: Type should be defined for param `sku` in method `Spryker\\Zed\\PriceProductSchedule\\Dependency\\Facade\\PriceProductScheduleToProductFacadeBridge::findProductConcreteIdBySku()`.",
         "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/PriceProductSchedule/Dependency/Facade/PriceProductScheduleToProductFacadeBridge.php",
+        "description": "Bridges: Method findProductConcreteIdBySku() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -56,9 +105,37 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/PriceProductSchedule/Dependency/Facade/PriceProductScheduleToPropelFacadeBridge.php",
+        "description": "Bridges: Method getCurrentDatabaseEngine() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/PriceProductSchedule/Dependency/Facade/PriceProductScheduleToPropelFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getCurrentDatabaseEngine()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/PriceProductSchedule/Dependency/Facade/PriceProductScheduleToStoreFacadeBridge.php",
+        "description": "Bridges: Method getCurrentStore() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/PriceProductSchedule/Dependency/Facade/PriceProductScheduleToStoreFacadeBridge.php",
+        "description": "Bridges: Method findStoreByName() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/PriceProductSchedule/Dependency/Facade/PriceProductScheduleToUserFacadeBridge.php",
+        "description": "Bridges: Method getCurrentUser() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

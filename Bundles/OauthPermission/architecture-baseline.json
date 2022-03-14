@@ -33,5 +33,19 @@
         "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/OauthPermission/Dependency/Facade/OauthPermissionToCompanyUserFacadeBridge.php",
+        "description": "Bridges: Method findActiveCompanyUserByUuid() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/OauthPermission/Dependency/Facade/OauthPermissionToPermissionFacadeBridge.php",
+        "description": "Bridges: Method getPermissionsByIdentifier() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
     }
 ]

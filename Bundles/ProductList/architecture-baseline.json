@@ -7,6 +7,13 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/ProductList/Dependency/Facade/ProductListToProductFacadeBridge.php",
+        "description": "Bridges: Method getProductAbstractIdsByProductConcreteIds() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/ProductList/Dependency/Service/ProductListToUtilTextServiceBridge.php",
         "description": "Bridges: Type should be defined for param `value` in method `Spryker\\Zed\\ProductList\\Dependency\\Service\\ProductListToUtilTextServiceBridge::generateSlug()`.",
         "rule": "BridgeMethodsRule",

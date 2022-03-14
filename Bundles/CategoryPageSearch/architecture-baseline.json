@@ -1,8 +1,29 @@
 [
     {
+        "fileName": "src/Spryker/Zed/CategoryPageSearch/Dependency/Facade/CategoryPageSearchToCategoryFacadeBridge.php",
+        "description": "Bridges: Method getCategoryNodes() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CategoryPageSearch/Dependency/Facade/CategoryPageSearchToEventBehaviorFacadeBridge.php",
+        "description": "Bridges: Method getEventTransferIds() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/CategoryPageSearch/Dependency/Facade/CategoryPageSearchToEventBehaviorFacadeBridge.php",
         "description": "Bridges: Type should be defined for param `foreignKeyColumnName` in method `Spryker\\Zed\\CategoryPageSearch\\Dependency\\Facade\\CategoryPageSearchToEventBehaviorFacadeBridge::getEventTransferForeignKeys()`.",
         "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CategoryPageSearch/Dependency/Facade/CategoryPageSearchToEventBehaviorFacadeBridge.php",
+        "description": "Bridges: Method getEventTransferForeignKeys() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -17,6 +38,13 @@
         "fileName": "src/Spryker/Zed/CategoryPageSearch/Dependency/Facade/CategoryPageSearchToEventBehaviorFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getEventTransferForeignKeys()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CategoryPageSearch/Dependency/Facade/CategoryPageSearchToStoreFacadeBridge.php",
+        "description": "Bridges: Method getAllStores() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

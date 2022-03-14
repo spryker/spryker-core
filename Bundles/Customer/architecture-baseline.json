@@ -57,8 +57,29 @@
     },
     {
         "fileName": "src/Spryker/Zed/Customer/Dependency/Facade/CustomerToCountryBridge.php",
+        "description": "Bridges: Method getPreferredCountryByName() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Customer/Dependency/Facade/CustomerToCountryBridge.php",
+        "description": "Bridges: Method getAvailableCountries() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Customer/Dependency/Facade/CustomerToCountryBridge.php",
         "description": "Bridges: Type should be defined for param `iso2Code` in method `Spryker\\Zed\\Customer\\Dependency\\Facade\\CustomerToCountryBridge::getCountryByIso2Code()`.",
         "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Customer/Dependency/Facade/CustomerToCountryBridge.php",
+        "description": "Bridges: Method getCountryByIso2Code() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -85,8 +106,36 @@
     },
     {
         "fileName": "src/Spryker/Zed/Customer/Dependency/Facade/CustomerToLocaleBridge.php",
+        "description": "Bridges: Method getCurrentLocale() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Customer/Dependency/Facade/CustomerToLocaleBridge.php",
+        "description": "Bridges: Method getLocaleCollection() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Customer/Dependency/Facade/CustomerToLocaleBridge.php",
         "description": "Bridges: Type should be defined for param `idLocale` in method `Spryker\\Zed\\Customer\\Dependency\\Facade\\CustomerToLocaleBridge::getLocaleById()`.",
         "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Customer/Dependency/Facade/CustomerToLocaleBridge.php",
+        "description": "Bridges: Method getLocaleById() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Customer/Dependency/Facade/CustomerToLocaleBridge.php",
+        "description": "Bridges: Method getCurrentLocaleName() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -129,6 +178,20 @@
         "fileName": "src/Spryker/Zed/Customer/Dependency/Facade/CustomerToSequenceNumberInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `generate()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Customer/Dependency/Facade/CustomerToStoreFacadeBridge.php",
+        "description": "Bridges: Method getCurrentStore() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Customer/Dependency/Facade/CustomerToStoreFacadeBridge.php",
+        "description": "Bridges: Method getAllStores() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

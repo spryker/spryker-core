@@ -1,5 +1,26 @@
 [
     {
+        "fileName": "src/Spryker/Zed/MerchantRelationshipSalesOrderThresholdGui/Dependency/Facade/MerchantRelationshipSalesOrderThresholdGuiToCompanyFacadeBridge.php",
+        "description": "Bridges: Method getCompanyById() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MerchantRelationshipSalesOrderThresholdGui/Dependency/Facade/MerchantRelationshipSalesOrderThresholdGuiToCurrencyFacadeBridge.php",
+        "description": "Bridges: Method getAllStoresWithCurrencies() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MerchantRelationshipSalesOrderThresholdGui/Dependency/Facade/MerchantRelationshipSalesOrderThresholdGuiToCurrencyFacadeBridge.php",
+        "description": "Bridges: Method getCurrent() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/MerchantRelationshipSalesOrderThresholdGui/Dependency/Facade/MerchantRelationshipSalesOrderThresholdGuiToCurrencyFacadeBridge.php",
         "description": "Bridges: Type should be defined for param `isoCode` in method `Spryker\\Zed\\MerchantRelationshipSalesOrderThresholdGui\\Dependency\\Facade\\MerchantRelationshipSalesOrderThresholdGuiToCurrencyFacadeBridge::fromIsoCode()`.",
         "rule": "BridgeMethodsRule",
@@ -28,9 +49,23 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/MerchantRelationshipSalesOrderThresholdGui/Dependency/Facade/MerchantRelationshipSalesOrderThresholdGuiToLocaleFacadeBridge.php",
+        "description": "Bridges: Method getLocaleCollection() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/MerchantRelationshipSalesOrderThresholdGui/Dependency/Facade/MerchantRelationshipSalesOrderThresholdGuiToLocaleFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getLocaleCollection()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MerchantRelationshipSalesOrderThresholdGui/Dependency/Facade/MerchantRelationshipSalesOrderThresholdGuiToMerchantRelationshipFacadeBridge.php",
+        "description": "Bridges: Method getMerchantRelationshipById() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -44,6 +79,13 @@
     {
         "fileName": "src/Spryker/Zed/MerchantRelationshipSalesOrderThresholdGui/Dependency/Facade/MerchantRelationshipSalesOrderThresholdGuiToMerchantRelationshipSalesOrderThresholdFacadeBridge.php",
         "description": "Bridges: Method deleteMerchantRelationshipSalesOrderThreshold() must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MerchantRelationshipSalesOrderThresholdGui/Dependency/Facade/MerchantRelationshipSalesOrderThresholdGuiToMerchantRelationshipSalesOrderThresholdFacadeBridge.php",
+        "description": "Bridges: Method getMerchantRelationshipSalesOrderThresholds() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -78,8 +120,22 @@
     },
     {
         "fileName": "src/Spryker/Zed/MerchantRelationshipSalesOrderThresholdGui/Dependency/Facade/MerchantRelationshipSalesOrderThresholdGuiToStoreFacadeBridge.php",
+        "description": "Bridges: Method getCurrentStore() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MerchantRelationshipSalesOrderThresholdGui/Dependency/Facade/MerchantRelationshipSalesOrderThresholdGuiToStoreFacadeBridge.php",
         "description": "Bridges: Type should be defined for param `storeName` in method `Spryker\\Zed\\MerchantRelationshipSalesOrderThresholdGui\\Dependency\\Facade\\MerchantRelationshipSalesOrderThresholdGuiToStoreFacadeBridge::getStoreByName()`.",
         "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MerchantRelationshipSalesOrderThresholdGui/Dependency/Facade/MerchantRelationshipSalesOrderThresholdGuiToStoreFacadeBridge.php",
+        "description": "Bridges: Method getStoreByName() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

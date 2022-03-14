@@ -26,5 +26,19 @@
         "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CompanyUnitAddress/Dependency/Facade/CompanyUnitAddressToCountryFacadeBridge.php",
+        "description": "Bridges: Method getCountryByIso2Code() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CompanyUnitAddress/Dependency/Facade/CompanyUnitAddressToLocaleFacadeBridge.php",
+        "description": "Bridges: Method getCurrentLocale() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
     }
 ]

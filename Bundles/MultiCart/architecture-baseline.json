@@ -162,6 +162,13 @@
     },
     {
         "fileName": "src/Spryker/Zed/MultiCart/Dependency/Facade/MultiCartToQuoteFacadeBridge.php",
+        "description": "Bridges: Method getQuoteCollection() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MultiCart/Dependency/Facade/MultiCartToQuoteFacadeBridge.php",
         "description": "Bridges: Method updateQuote() must have `public function update<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
@@ -171,6 +178,20 @@
         "fileName": "src/Spryker/Zed/MultiCart/Dependency/Facade/MultiCartToQuoteFacadeBridge.php",
         "description": "Bridges: Type should be defined for param `idQuote` in method `Spryker\\Zed\\MultiCart\\Dependency\\Facade\\MultiCartToQuoteFacadeBridge::findQuoteById()`.",
         "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MultiCart/Dependency/Facade/MultiCartToQuoteFacadeBridge.php",
+        "description": "Bridges: Method findQuoteById() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MultiCart/Dependency/Facade/MultiCartToStoreFacadeBridge.php",
+        "description": "Bridges: Method getCurrentStore() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

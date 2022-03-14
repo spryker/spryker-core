@@ -99,8 +99,22 @@
     },
     {
         "fileName": "src/Spryker/Zed/ProductOptionStorage/Dependency/Facade/ProductOptionStorageToEventBehaviorFacadeBridge.php",
+        "description": "Bridges: Method getEventTransferIds() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOptionStorage/Dependency/Facade/ProductOptionStorageToEventBehaviorFacadeBridge.php",
         "description": "Bridges: Type should be defined for param `foreignKeyColumnName` in method `Spryker\\Zed\\ProductOptionStorage\\Dependency\\Facade\\ProductOptionStorageToEventBehaviorFacadeBridge::getEventTransferForeignKeys()`.",
         "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOptionStorage/Dependency/Facade/ProductOptionStorageToEventBehaviorFacadeBridge.php",
+        "description": "Bridges: Method getEventTransferForeignKeys() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -119,6 +133,20 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/ProductOptionStorage/Dependency/Facade/ProductOptionStorageToProductOptionFacadeBridge.php",
+        "description": "Bridges: Method getProductOptionValueStorePrices() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOptionStorage/Dependency/Facade/ProductOptionStorageToProductOptionFacadeBridge.php",
+        "description": "Bridges: Method getAllProductOptionValuePrices() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/ProductOptionStorage/Dependency/Facade/ProductOptionStorageToProductOptionFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getProductOptionValueStorePrices()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -129,6 +157,13 @@
         "fileName": "src/Spryker/Zed/ProductOptionStorage/Dependency/Facade/ProductOptionStorageToProductOptionFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getAllProductOptionValuePrices()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOptionStorage/Dependency/Facade/ProductOptionStorageToStoreFacadeBridge.php",
+        "description": "Bridges: Method getAllStores() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

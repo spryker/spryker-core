@@ -28,6 +28,20 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/ProductCategoryFilterGui/Dependency/Facade/ProductCategoryFilterGuiToCategoryFacadeBridge.php",
+        "description": "Bridges: Method findCategory() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductCategoryFilterGui/Dependency/Facade/ProductCategoryFilterGuiToLocaleFacadeBridge.php",
+        "description": "Bridges: Method getCurrentLocale() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/ProductCategoryFilterGui/Dependency/Facade/ProductCategoryFilterGuiToLocaleFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getCurrentLocale()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -70,6 +84,20 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/ProductCategoryFilterGui/Dependency/Facade/ProductCategoryFilterGuiToProductCategoryFilterFacadeBridge.php",
+        "description": "Bridges: Method findProductCategoryFilterByCategoryId() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductCategoryFilterGui/Dependency/Facade/ProductCategoryFilterGuiToProductCategoryFilterFacadeBridge.php",
+        "description": "Bridges: Method getAllProductCategoriesWithFilters() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/ProductCategoryFilterGui/Dependency/Facade/ProductCategoryFilterGuiToProductCategoryFilterFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `createProductCategoryFilter()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -108,6 +136,13 @@
         "fileName": "src/Spryker/Zed/ProductCategoryFilterGui/Dependency/Facade/ProductCategoryFilterGuiToProductFacadeBridge.php",
         "description": "Bridges: Type should be defined for param `productIds` in method `Spryker\\Zed\\ProductCategoryFilterGui\\Dependency\\Facade\\ProductCategoryFilterGuiToProductFacadeBridge::getCombinedAbstractAttributeKeysForProductIds()`.",
         "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductCategoryFilterGui/Dependency/Facade/ProductCategoryFilterGuiToProductFacadeBridge.php",
+        "description": "Bridges: Method getCombinedAbstractAttributeKeysForProductIds() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

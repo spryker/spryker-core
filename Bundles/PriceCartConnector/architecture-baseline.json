@@ -1,5 +1,12 @@
 [
     {
+        "fileName": "src/Spryker/Zed/PriceCartConnector/Dependency/Facade/PriceCartConnectorToCurrencyFacadeBridge.php",
+        "description": "Bridges: Method getCurrent() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/PriceCartConnector/Dependency/Facade/PriceCartConnectorToCurrencyFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getCurrent()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -17,6 +24,27 @@
         "fileName": "src/Spryker/Zed/PriceCartConnector/Dependency/Facade/PriceCartToMessengerInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `addInfoMessage()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/PriceCartConnector/Dependency/Facade/PriceCartToPriceBridge.php",
+        "description": "Bridges: Method getNetPriceModeIdentifier() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/PriceCartConnector/Dependency/Facade/PriceCartToPriceBridge.php",
+        "description": "Bridges: Method getGrossPriceModeIdentifier() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/PriceCartConnector/Dependency/Facade/PriceCartToPriceBridge.php",
+        "description": "Bridges: Method getDefaultPriceMode() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

@@ -113,8 +113,22 @@
     },
     {
         "fileName": "src/Spryker/Zed/ConfigurableBundle/Dependency/Facade/ConfigurableBundleToGlossaryFacadeBridge.php",
+        "description": "Bridges: Method getTranslationsByGlossaryKeyAndLocales() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ConfigurableBundle/Dependency/Facade/ConfigurableBundleToGlossaryFacadeBridge.php",
         "description": "Bridges: Type should be defined for param `keyName` in method `Spryker\\Zed\\ConfigurableBundle\\Dependency\\Facade\\ConfigurableBundleToGlossaryFacadeBridge::getTranslation()`.",
         "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ConfigurableBundle/Dependency/Facade/ConfigurableBundleToGlossaryFacadeBridge.php",
+        "description": "Bridges: Method getTranslation() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -168,6 +182,20 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/ConfigurableBundle/Dependency/Facade/ConfigurableBundleToLocaleFacadeBridge.php",
+        "description": "Bridges: Method getLocaleCollection() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ConfigurableBundle/Dependency/Facade/ConfigurableBundleToLocaleFacadeBridge.php",
+        "description": "Bridges: Method getCurrentLocale() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/ConfigurableBundle/Dependency/Facade/ConfigurableBundleToLocaleFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getLocaleCollection()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -205,6 +233,13 @@
     {
         "fileName": "src/Spryker/Zed/ConfigurableBundle/Dependency/Facade/ConfigurableBundleToProductListFacadeBridge.php",
         "description": "Bridges: Method updateProductList() must have `public function update<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ConfigurableBundle/Dependency/Facade/ConfigurableBundleToProductListFacadeBridge.php",
+        "description": "Bridges: Method getProductListById() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"

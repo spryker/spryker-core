@@ -49,6 +49,13 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/ShoppingList/Dependency/Facade/ShoppingListToCompanyUserFacadeBridge.php",
+        "description": "Bridges: Method getCompanyUserById() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/ShoppingList/Dependency/Facade/ShoppingListToEventFacadeBridge.php",
         "description": "Bridges: Type should be defined for param `eventName` in method `Spryker\\Zed\\ShoppingList\\Dependency\\Facade\\ShoppingListToEventFacadeBridge::trigger()`.",
         "rule": "BridgeMethodsRule",
@@ -91,9 +98,30 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/ShoppingList/Dependency/Facade/ShoppingListToPermissionFacadeBridge.php",
+        "description": "Bridges: Method findPermissionByKey() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ShoppingList/Dependency/Facade/ShoppingListToPersistentCartFacadeBridge.php",
+        "description": "Bridges: Method findQuote() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/ShoppingList/Dependency/Facade/ShoppingListToProductFacadeBridge.php",
         "description": "Bridges: Type should be defined for param `sku` in method `Spryker\\Zed\\ShoppingList\\Dependency\\Facade\\ShoppingListToProductFacadeBridge::hasProductConcrete()`.",
         "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ShoppingList/Dependency/Facade/ShoppingListToProductFacadeBridge.php",
+        "description": "Bridges: Method findProductConcretesBySkus() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     }

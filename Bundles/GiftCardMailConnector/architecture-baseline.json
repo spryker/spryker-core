@@ -7,6 +7,13 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/GiftCardMailConnector/Dependency/Facade/GiftCardMailConnectorToCustomerFacadeBridge.php",
+        "description": "Bridges: Method findByReference() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/GiftCardMailConnector/Dependency/Facade/GiftCardMailConnectorToCustomerFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `findByReference()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -22,8 +29,22 @@
     },
     {
         "fileName": "src/Spryker/Zed/GiftCardMailConnector/Dependency/Facade/GiftCardMailConnectorToGiftCardFacadeBridge.php",
+        "description": "Bridges: Method findGiftCardByIdSalesOrderItem() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/GiftCardMailConnector/Dependency/Facade/GiftCardMailConnectorToGiftCardFacadeBridge.php",
         "description": "Bridges: Type should be defined for param `idGiftCard` in method `Spryker\\Zed\\GiftCardMailConnector\\Dependency\\Facade\\GiftCardMailConnectorToGiftCardFacadeBridge::findById()`.",
         "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/GiftCardMailConnector/Dependency/Facade/GiftCardMailConnectorToGiftCardFacadeBridge.php",
+        "description": "Bridges: Method findById() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -52,6 +73,13 @@
         "fileName": "src/Spryker/Zed/GiftCardMailConnector/Dependency/Facade/GiftCardMailConnectorToSalesFacadeBridge.php",
         "description": "Bridges: Type should be defined for param `idSalesOrderItem` in method `Spryker\\Zed\\GiftCardMailConnector\\Dependency\\Facade\\GiftCardMailConnectorToSalesFacadeBridge::findOrderByIdSalesOrderItem()`.",
         "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/GiftCardMailConnector/Dependency/Facade/GiftCardMailConnectorToSalesFacadeBridge.php",
+        "description": "Bridges: Method findOrderByIdSalesOrderItem() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

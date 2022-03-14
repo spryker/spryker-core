@@ -1,5 +1,12 @@
 [
     {
+        "fileName": "src/Spryker/Zed/PriceProductOfferVolumeGui/Dependency/Facade/PriceProductOfferVolumeGuiToProductOfferFacadeBridge.php",
+        "description": "Bridges: Method findOne() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/PriceProductOfferVolumeGui/Dependency/Service/PriceProductOfferVolumeGuiToUtilEncodingServiceBridge.php",
         "description": "Bridges: Type should be defined for param `jsonValue` in method `Spryker\\Zed\\PriceProductOfferVolumeGui\\Dependency\\Service\\PriceProductOfferVolumeGuiToUtilEncodingServiceBridge::decodeJson()`.",
         "rule": "BridgeMethodsRule",

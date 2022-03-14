@@ -29,8 +29,29 @@
     },
     {
         "fileName": "src/Spryker/Zed/ShipmentDiscountConnector/Dependency/Facade/ShipmentDiscountConnectorToShipmentBridge.php",
+        "description": "Bridges: Method getCarriers() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ShipmentDiscountConnector/Dependency/Facade/ShipmentDiscountConnectorToShipmentBridge.php",
+        "description": "Bridges: Method getMethods() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ShipmentDiscountConnector/Dependency/Facade/ShipmentDiscountConnectorToShipmentBridge.php",
         "description": "Bridges: Type should be defined for param `idShipmentMethod` in method `Spryker\\Zed\\ShipmentDiscountConnector\\Dependency\\Facade\\ShipmentDiscountConnectorToShipmentBridge::findMethodById()`.",
         "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ShipmentDiscountConnector/Dependency/Facade/ShipmentDiscountConnectorToShipmentBridge.php",
+        "description": "Bridges: Method findMethodById() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

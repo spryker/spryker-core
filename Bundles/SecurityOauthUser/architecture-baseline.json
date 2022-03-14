@@ -133,6 +133,13 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/SecurityOauthUser/Dependency/Facade/SecurityOauthUserToAclFacadeBridge.php",
+        "description": "Bridges: Method findGroup() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/SecurityOauthUser/Dependency/Facade/SecurityOauthUserToAclFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `addUserToGroup()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -150,6 +157,13 @@
         "fileName": "src/Spryker/Zed/SecurityOauthUser/Dependency/Facade/SecurityOauthUserToMessengerFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `addErrorMessage()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/SecurityOauthUser/Dependency/Facade/SecurityOauthUserToUserFacadeBridge.php",
+        "description": "Bridges: Method findUser() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
