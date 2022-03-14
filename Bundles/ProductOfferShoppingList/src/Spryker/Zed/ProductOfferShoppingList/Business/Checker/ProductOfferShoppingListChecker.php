@@ -9,9 +9,11 @@ namespace Spryker\Zed\ProductOfferShoppingList\Business\Checker;
 
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
+use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListPreAddItemCheckResponseTransfer;
 use Spryker\Zed\ProductOfferShoppingList\Dependency\Facade\ProductOfferShoppingListToProductOfferFacadeInterface;
+use Spryker\Zed\ProductOfferShoppingList\Dependency\Facade\ProductOfferShoppingListToStoreFacadeInterface;
 
 class ProductOfferShoppingListChecker implements ProductOfferShoppingListCheckerInterface
 {
@@ -48,16 +50,30 @@ class ProductOfferShoppingListChecker implements ProductOfferShoppingListChecker
     protected const ERROR_SHOPPING_LIST_PRE_CHECK_PRODUCT_OFFER_APPROVED = 'shopping_list.pre.check.product_offer.approved';
 
     /**
+     * @var string
+     */
+    protected const GLOSSARY_KEY_PRODUCT_OFFER_STORE_INVALID = 'shopping_list.pre.check.product_offer.store_invalid';
+
+    /**
      * @var \Spryker\Zed\ProductOfferShoppingList\Dependency\Facade\ProductOfferShoppingListToProductOfferFacadeInterface
      */
     protected $productOfferFacade;
 
     /**
-     * @param \Spryker\Zed\ProductOfferShoppingList\Dependency\Facade\ProductOfferShoppingListToProductOfferFacadeInterface $productOfferFacade
+     * @var \Spryker\Zed\ProductOfferShoppingList\Dependency\Facade\ProductOfferShoppingListToStoreFacadeInterface
      */
-    public function __construct(ProductOfferShoppingListToProductOfferFacadeInterface $productOfferFacade)
-    {
+    protected $storeFacade;
+
+    /**
+     * @param \Spryker\Zed\ProductOfferShoppingList\Dependency\Facade\ProductOfferShoppingListToProductOfferFacadeInterface $productOfferFacade
+     * @param \Spryker\Zed\ProductOfferShoppingList\Dependency\Facade\ProductOfferShoppingListToStoreFacadeInterface $storeFacade
+     */
+    public function __construct(
+        ProductOfferShoppingListToProductOfferFacadeInterface $productOfferFacade,
+        ProductOfferShoppingListToStoreFacadeInterface $storeFacade
+    ) {
         $this->productOfferFacade = $productOfferFacade;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -95,6 +111,16 @@ class ProductOfferShoppingListChecker implements ProductOfferShoppingListChecker
                 );
         }
 
+        if (!$this->isProductOfferBelongsToCurrentStore($productOfferTransfer)) {
+            $shoppingListPreAddItemCheckResponseTransfer->addMessage(
+                $this->createMessage(
+                    static::GLOSSARY_KEY_PRODUCT_OFFER_STORE_INVALID,
+                    $sku,
+                    $productOfferReference,
+                ),
+            );
+        }
+
         if (!$productOfferTransfer->getIsActive()) {
             $shoppingListPreAddItemCheckResponseTransfer->addMessage(
                 $this->createMessage(
@@ -129,13 +155,33 @@ class ProductOfferShoppingListChecker implements ProductOfferShoppingListChecker
      *
      * @return \Generated\Shared\Transfer\MessageTransfer
      */
-    protected function createMessage(string $message, string $translationSku, string $translationProductOfferReference): MessageTransfer
-    {
+    protected function createMessage(
+        string $message,
+        string $translationSku,
+        string $translationProductOfferReference
+    ): MessageTransfer {
         return (new MessageTransfer())
             ->setValue($message)
             ->setParameters([
                 static::TRANSLATION_PARAMETER_SKU => $translationSku,
                 static::TRANSLATION_PARAMETER_PRODUCT_OFFER_REFERENCE => $translationProductOfferReference,
             ]);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
+     *
+     * @return bool
+     */
+    protected function isProductOfferBelongsToCurrentStore(ProductOfferTransfer $productOfferTransfer): bool
+    {
+        $currentStoreTransfer = $this->storeFacade->getCurrentStore();
+        $productOfferStores = $productOfferTransfer->getStores();
+        $productOfferStoresArray = [];
+        foreach ($productOfferStores as $offerStore) {
+            $productOfferStoresArray[] = $offerStore->getIdStore();
+        }
+
+        return in_array($currentStoreTransfer->getIdStore(), $productOfferStoresArray, true);
     }
 }

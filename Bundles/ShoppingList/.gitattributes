@@ -23,7 +23,6 @@
 
 # Remove files for archives generated using `git archive`
 dependency.json export-ignore
-phpstan.json export-ignore
 phpstan.neon export-ignore
 psalm-report.json export-ignore linguist-generated=true
 tooling.yml export-ignore
@@ -32,6 +31,6 @@ tooling.yml export-ignore
 .editorconfig export-ignore
 .gitattributes export-ignore
 .gitignore export-ignore
+.github export-ignore
 architecture-baseline.json export-ignore
-
 .github/ export-ignore

@@ -10,6 +10,8 @@ namespace Spryker\Zed\MerchantProductOffer\Business;
 use Generated\Shared\Transfer\MerchantProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListItemTransfer;
+use Generated\Shared\Transfer\ShoppingListPreAddItemCheckResponseTransfer;
 
 interface MerchantProductOfferFacadeInterface
 {
@@ -40,4 +42,20 @@ interface MerchantProductOfferFacadeInterface
     public function expandShoppingListItemCollection(
         ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
     ): ShoppingListItemCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Validates that merchant of product offer is active.
+     * - Validates that merchant of product offer is approved.
+     * - Uses `ShoppingListItemTransfer.productOfferReference` to find corresponding product offer.
+     * - Skips validation if `ShoppingListItemTransfer.productOfferReference` is not provided.
+     * - Skips validation if product offer is not found by `ShoppingListItemTransfer.productOfferReference` provided.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListPreAddItemCheckResponseTransfer
+     */
+    public function checkShoppingListItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListPreAddItemCheckResponseTransfer;
 }

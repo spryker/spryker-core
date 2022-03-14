@@ -10,6 +10,7 @@ namespace Spryker\Zed\MerchantProductOffer;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\MerchantProductOffer\Dependency\Facade\MerchantProductOfferToMerchantFacadeBridge;
 use Spryker\Zed\MerchantProductOffer\Dependency\Facade\MerchantProductOfferToProductOfferFacadeBridge;
 
 /**
@@ -28,6 +29,11 @@ class MerchantProductOfferDependencyProvider extends AbstractBundleDependencyPro
     public const FACADE_PRODUCT_OFFER = 'FACADE_PRODUCT_OFFER';
 
     /**
+     * @var string
+     */
+    public const FACADE_MERCHANT = 'FACADE_MERCHANT';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -37,6 +43,7 @@ class MerchantProductOfferDependencyProvider extends AbstractBundleDependencyPro
         $container = parent::provideBusinessLayerDependencies($container);
 
         $container = $this->addProductOfferFacade($container);
+        $container = $this->addMerchantFacade($container);
 
         return $container;
     }
@@ -77,7 +84,25 @@ class MerchantProductOfferDependencyProvider extends AbstractBundleDependencyPro
     protected function addProductOfferFacade(Container $container): Container
     {
         $container->set(static::FACADE_PRODUCT_OFFER, function (Container $container) {
-            return new MerchantProductOfferToProductOfferFacadeBridge($container->getLocator()->productOffer()->facade());
+            return new MerchantProductOfferToProductOfferFacadeBridge(
+                $container->getLocator()->productOffer()->facade(),
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMerchantFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_MERCHANT, function (Container $container) {
+            return new MerchantProductOfferToMerchantFacadeBridge(
+                $container->getLocator()->merchant()->facade(),
+            );
         });
 
         return $container;

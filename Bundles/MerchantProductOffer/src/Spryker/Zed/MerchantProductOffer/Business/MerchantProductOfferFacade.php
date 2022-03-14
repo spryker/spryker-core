@@ -10,6 +10,8 @@ namespace Spryker\Zed\MerchantProductOffer\Business;
 use Generated\Shared\Transfer\MerchantProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListItemTransfer;
+use Generated\Shared\Transfer\ShoppingListPreAddItemCheckResponseTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -50,5 +52,21 @@ class MerchantProductOfferFacade extends AbstractFacade implements MerchantProdu
         return $this->getFactory()
             ->createShoppingListItemExpander()
             ->expandShoppingListItemCollectionWithMerchantReference($shoppingListItemCollectionTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListPreAddItemCheckResponseTransfer
+     */
+    public function checkShoppingListItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListPreAddItemCheckResponseTransfer
+    {
+        return $this->getFactory()
+            ->createMerchantProductOfferChecker()
+            ->check($shoppingListItemTransfer);
     }
 }

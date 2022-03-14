@@ -9,12 +9,16 @@ namespace SprykerTest\Zed\ShoppingList\Business\ShoppingList;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ShoppingListCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListCompanyUserTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListShareRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Shared\ShoppingList\ShoppingListConfig;
 use Spryker\Zed\Permission\PermissionDependencyProvider;
 use Spryker\Zed\ShoppingList\Communication\Plugin\ReadShoppingListPermissionPlugin;
@@ -68,6 +72,13 @@ class ShoppingListItemTest extends Unit
      * @var \Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer
      */
     protected $readOnlyPermissionGroup;
+
+    /**
+     * @uses \Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemChecker::GLOSSARY_KEY_PRODUCT_STORE_INVALID
+     *
+     * @var string
+     */
+    protected const GLOSSARY_KEY_PRODUCT_STORE_INVALID = 'shopping_list.pre.check.product.store_invalid';
 
     /**
      * @return void
@@ -776,5 +787,78 @@ class ShoppingListItemTest extends Unit
 
         // Assert
         $this->assertFalse($isActive);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckShoppingListItemWithValidStoreSucceeds(): void
+    {
+        // Arrange
+        $shoppingListItemTransfer = new ShoppingListItemTransfer();
+
+        $storeTransfer = $this->tester->haveStore([
+            StoreTransfer::NAME => $this->tester->getLocator()->store()->facade()->getCurrentStore()->getName(),
+        ]);
+        $storeRelationTransfer = (new StoreRelationTransfer())
+            ->addIdStores($storeTransfer->getIdStore())
+            ->addStores($storeTransfer);
+
+        $productAbstractTransfer = $this->tester->haveProductAbstract([
+            ProductAbstractTransfer::STORE_RELATION => $storeRelationTransfer,
+            ProductAbstractTransfer::STORE_NAMES => $this->tester->getLocator()->store()->facade()->getCurrentStore()->getName(),
+        ]);
+
+        $productConcreteTransfer = $this->tester->haveProductConcrete([
+            ProductConcreteTransfer::IS_ACTIVE => true,
+            ProductConcreteTransfer::FK_PRODUCT_ABSTRACT => $productAbstractTransfer->getIdProductAbstract(),
+            ProductConcreteTransfer::STORES => [$storeTransfer->getIdStore()],
+        ]);
+
+        $shoppingListItemTransfer->setSku($productConcreteTransfer->getSku());
+
+        // Act
+        $shoppingListPreAddItemCheckResponseTransfer = $this->tester->getFacade()
+            ->checkShoppingListItemProductHasValidStore($shoppingListItemTransfer);
+
+        // Assert
+        $this->assertTrue($shoppingListPreAddItemCheckResponseTransfer->getIsSuccess());
+        $this->assertEmpty($shoppingListPreAddItemCheckResponseTransfer->getMessages());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckShoppingListItemWithInvalidStoreFails(): void
+    {
+        // Arrange
+        $shoppingListItemTransfer = new ShoppingListItemTransfer();
+
+        $storeTransfer = $this->tester->haveStore([
+            StoreTransfer::NAME => 'AU',
+        ]);
+        $storeRelationTransfer = (new StoreRelationTransfer())
+            ->addIdStores($storeTransfer->getIdStore())
+            ->addStores($storeTransfer);
+
+        $productAbstractTransfer = $this->tester->haveProductAbstract([
+            ProductAbstractTransfer::STORE_RELATION => $storeRelationTransfer,
+            ProductAbstractTransfer::STORE_NAMES => $this->tester->getLocator()->store()->facade()->getCurrentStore()->getName(),
+        ]);
+
+        $productConcreteTransfer = $this->tester->haveProductConcrete([
+            ProductConcreteTransfer::IS_ACTIVE => true,
+            ProductConcreteTransfer::FK_PRODUCT_ABSTRACT => $productAbstractTransfer->getIdProductAbstract(),
+        ]);
+
+        $shoppingListItemTransfer->setSku($productConcreteTransfer->getSku());
+
+        // Act
+        $shoppingListPreAddItemCheckResponseTransfer = $this->tester->getFacade()
+            ->checkShoppingListItemProductHasValidStore($shoppingListItemTransfer);
+
+        // Assert
+        $this->assertFalse($shoppingListPreAddItemCheckResponseTransfer->getIsSuccess());
+        $this->assertCount(1, $shoppingListPreAddItemCheckResponseTransfer->getMessages());
     }
 }

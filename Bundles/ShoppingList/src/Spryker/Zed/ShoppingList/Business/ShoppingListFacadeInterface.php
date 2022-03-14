@@ -401,4 +401,21 @@ interface ShoppingListFacadeInterface
     public function checkShoppingListItemProductIsActive(
         ShoppingListItemTransfer $shoppingListItemTransfer
     ): ShoppingListPreAddItemCheckResponseTransfer;
+
+    /**
+     * Specification:
+     * - Checks if shopping list product belongs to the current store.
+     * - Searches for product by `ShoppingListItemTransfer.sku` parameter.
+     * - Skips validation if `ShoppingListItemTransfer.sku` is not set.
+     * - Skips validation if abstract product is not found by `ShoppingListItemTransfer.sku`.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListPreAddItemCheckResponseTransfer
+     */
+    public function checkShoppingListItemProductHasValidStore(
+        ShoppingListItemTransfer $shoppingListItemTransfer
+    ): ShoppingListPreAddItemCheckResponseTransfer;
 }

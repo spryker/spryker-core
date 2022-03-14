@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductOfferShoppingList;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductOfferShoppingList\Dependency\Facade\ProductOfferShoppingListToProductOfferFacadeBridge;
+use Spryker\Zed\ProductOfferShoppingList\Dependency\Facade\ProductOfferShoppingListToStoreFacadeBridge;
 
 /**
  * @method \Spryker\Zed\ProductOfferShoppingList\ProductOfferShoppingListConfig getConfig()
@@ -22,6 +23,11 @@ class ProductOfferShoppingListDependencyProvider extends AbstractBundleDependenc
     public const FACADE_PRODUCT_OFFER = 'FACADE_PRODUCT_OFFER';
 
     /**
+     * @var string
+     */
+    public const FACADE_STORE = 'FACADE_STORE';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -31,6 +37,7 @@ class ProductOfferShoppingListDependencyProvider extends AbstractBundleDependenc
         $container = parent::provideBusinessLayerDependencies($container);
 
         $container = $this->addProductOfferFacade($container);
+        $container = $this->addStoreFacade($container);
 
         return $container;
     }
@@ -45,6 +52,22 @@ class ProductOfferShoppingListDependencyProvider extends AbstractBundleDependenc
         $container->set(static::FACADE_PRODUCT_OFFER, function (Container $container) {
             return new ProductOfferShoppingListToProductOfferFacadeBridge(
                 $container->getLocator()->productOffer()->facade(),
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_STORE, function (Container $container) {
+            return new ProductOfferShoppingListToStoreFacadeBridge(
+                $container->getLocator()->store()->facade(),
             );
         });
 

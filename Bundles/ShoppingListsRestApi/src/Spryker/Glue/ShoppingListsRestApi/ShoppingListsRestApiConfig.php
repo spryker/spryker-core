@@ -130,6 +130,86 @@ class ShoppingListsRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_DETAIL_LIST_ITEM_PRODUCT_NOT_ACTIVE = 'Product is not active.';
 
     /**
+     * @var string
+     */
+    protected const RESPONSE_CODE_SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_MERCHANT_NOT_ACTIVE = '1512';
+
+    /**
+     * @var string
+     */
+    protected const RESPONSE_DETAIL_SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_MERCHANT_NOT_ACTIVE = 'Merchant is inactive.';
+
+    /**
+     * @var string
+     */
+    protected const RESPONSE_CODE_SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_MERCHANT_NOT_APPROVED = '1513';
+
+    /**
+     * @var string
+     */
+    protected const RESPONSE_DETAIL_SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_MERCHANT_NOT_APPROVED = 'Merchant is not approved.';
+
+    /**
+     * @var string
+     */
+    protected const RESPONSE_CODE_SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_OFFER_NOT_APPROVED = '1514';
+
+    /**
+     * @var string
+     */
+    protected const RESPONSE_DETAIL_SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_OFFER_NOT_APPROVED = 'Product Offer is not approved.';
+
+    /**
+     * @var string
+     */
+    protected const RESPONSE_CODE_SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_NOT_APPROVED = '1515';
+
+    /**
+     * @var string
+     */
+    protected const RESPONSE_DETAIL_SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_NOT_APPROVED = 'Product is not approved.';
+
+    /**
+     * @var string
+     */
+    protected const RESPONSE_CODE_SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_OFFER_NOT_ACTIVE = '1516';
+
+    /**
+     * @var string
+     */
+    protected const RESPONSE_DETAIL_SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_OFFER_NOT_ACTIVE = 'Product Offer is not active.';
+
+    /**
+     * @var string
+     */
+    protected const RESPONSE_CODE_SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_OFFER_NOT_FOUND = '1517';
+
+    /**
+     * @var string
+     */
+    protected const RESPONSE_DETAIL_SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_OFFER_NOT_FOUND = 'Product Offer is not found.';
+
+    /**
+     * @var string
+     */
+    protected const RESPONSE_CODE_SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_STORE_INVALID = '1518';
+
+    /**
+     * @var string
+     */
+    protected const RESPONSE_DETAIL_SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_STORE_INVALID = 'Product is not equal to the current Store.';
+
+    /**
+     * @var string
+     */
+    protected const RESPONSE_CODE_SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_OFFER_STORE_INVALID = '1519';
+
+    /**
+     * @var string
+     */
+    protected const RESPONSE_DETAIL_SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_OFFER_STORE_INVALID = 'Product Offer is not equal to the current Store.';
+
+    /**
      * @api
      *
      * @return array<string, array<string, mixed>>
@@ -182,10 +262,60 @@ class ShoppingListsRestApiConfig extends AbstractBundleConfig
                 RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
                 RestErrorMessageTransfer::DETAIL => static::RESPONSE_DETAIL_LIST_ITEM_PRODUCT_NOT_ACTIVE,
             ],
+            SharedShoppingListsRestApiConfig::ERROR_IDENTIFIER_SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_NOT_APPROVED => [
+                RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_NOT_APPROVED,
+                RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
+                RestErrorMessageTransfer::DETAIL => static::RESPONSE_DETAIL_SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_NOT_APPROVED,
+            ],
             SharedShoppingListsRestApiConfig::ERROR_IDENTIFIER_SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_DISCONTINUED => [
                 RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_DISCONTINUED,
                 RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
                 RestErrorMessageTransfer::DETAIL => static::RESPONSE_DETAIL_SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_DISCONTINUED,
+            ],
+            SharedShoppingListsRestApiConfig::ERROR_IDENTIFIER_SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_MERCHANT_INACTIVE => [
+                RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_MERCHANT_NOT_ACTIVE,
+                RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
+                RestErrorMessageTransfer::DETAIL => static::RESPONSE_DETAIL_SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_MERCHANT_NOT_ACTIVE,
+            ],
+            SharedShoppingListsRestApiConfig::ERROR_IDENTIFIER_SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_MERCHANT_NOT_APPROVED => [
+                RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_MERCHANT_NOT_APPROVED,
+                RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
+                RestErrorMessageTransfer::DETAIL => static::RESPONSE_DETAIL_SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_MERCHANT_NOT_APPROVED,
+            ],
+            SharedShoppingListsRestApiConfig::ERROR_IDENTIFIER_SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_OFFER_MERCHANT_INACTIVE => [
+                RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_MERCHANT_NOT_ACTIVE,
+                RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
+                RestErrorMessageTransfer::DETAIL => static::RESPONSE_DETAIL_SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_MERCHANT_NOT_ACTIVE,
+            ],
+            SharedShoppingListsRestApiConfig::ERROR_IDENTIFIER_SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_OFFER_MERCHANT_NOT_APPROVED => [
+                RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_MERCHANT_NOT_APPROVED,
+                RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
+                RestErrorMessageTransfer::DETAIL => static::RESPONSE_DETAIL_SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_MERCHANT_NOT_APPROVED,
+            ],
+            SharedShoppingListsRestApiConfig::ERROR_IDENTIFIER_SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_OFFER_NOT_APPROVED => [
+                RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_OFFER_NOT_APPROVED,
+                RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
+                RestErrorMessageTransfer::DETAIL => static::RESPONSE_DETAIL_SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_OFFER_NOT_APPROVED,
+            ],
+            SharedShoppingListsRestApiConfig::ERROR_IDENTIFIER_SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_OFFER_NOT_ACTIVE => [
+                RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_OFFER_NOT_ACTIVE,
+                RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
+                RestErrorMessageTransfer::DETAIL => static::RESPONSE_DETAIL_SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_OFFER_NOT_ACTIVE,
+            ],
+            SharedShoppingListsRestApiConfig::ERROR_IDENTIFIER_SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_OFFER_NOT_FOUND => [
+                RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_OFFER_NOT_FOUND,
+                RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
+                RestErrorMessageTransfer::DETAIL => static::RESPONSE_DETAIL_SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_OFFER_NOT_FOUND,
+            ],
+            SharedShoppingListsRestApiConfig::ERROR_IDENTIFIER_SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_STORE_INVALID => [
+                RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_STORE_INVALID,
+                RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
+                RestErrorMessageTransfer::DETAIL => static::RESPONSE_DETAIL_SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_STORE_INVALID,
+            ],
+            SharedShoppingListsRestApiConfig::ERROR_IDENTIFIER_SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_OFFER_STORE_INVALID => [
+                RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_OFFER_STORE_INVALID,
+                RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
+                RestErrorMessageTransfer::DETAIL => static::RESPONSE_DETAIL_SHOPPING_LIST_PRE_ADD_CHECK_PRODUCT_OFFER_STORE_INVALID,
             ],
         ];
     }

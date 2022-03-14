@@ -9,7 +9,9 @@ namespace SprykerTest\Zed\MerchantProductOffer\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\MerchantProductOfferCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
+use Generated\Shared\Transfer\ShoppingListItemTransfer;
 
 /**
  * Auto-generated group annotations
@@ -51,5 +53,89 @@ class MerchantProductOfferFacadeTest extends Unit
 
         // Assert
         $this->assertNotEmpty($productOfferCollectionTransfer->getProductOffers());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckingShoppingListItemWithActiveAndApprovedMerchantSucceeds(): void
+    {
+        // Arrange
+        $shoppingListItemTransfer = $this->createShoppingListItem(true, 'approved');
+
+        // Act
+        $shoppingListPreAddItemCheckResponseTransfer = $this->tester->getFacade()->checkShoppingListItem($shoppingListItemTransfer);
+
+        // Assert
+        $this->assertTrue($shoppingListPreAddItemCheckResponseTransfer->getIsSuccess());
+        $this->assertEmpty($shoppingListPreAddItemCheckResponseTransfer->getMessages());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckingShoppingListItemWithInactiveAndApprovedMerchantFails(): void
+    {
+        // Arrange
+        $shoppingListItemTransfer = $this->createShoppingListItem(false, 'approved');
+
+        // Act
+        $shoppingListPreAddItemCheckResponseTransfer = $this->tester->getFacade()->checkShoppingListItem($shoppingListItemTransfer);
+
+        // Assert
+        $this->assertFalse($shoppingListPreAddItemCheckResponseTransfer->getIsSuccess());
+        $this->assertCount(1, $shoppingListPreAddItemCheckResponseTransfer->getMessages());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckingShoppingListItemWithActiveAndUnapprovedMerchantFails(): void
+    {
+        // Arrange
+        $shoppingListItemTransfer = $this->createShoppingListItem(false, 'declined');
+
+        // Act
+        $shoppingListPreAddItemCheckResponseTransfer = $this->tester->getFacade()->checkShoppingListItem($shoppingListItemTransfer);
+
+        // Assert
+        $this->assertFalse($shoppingListPreAddItemCheckResponseTransfer->getIsSuccess());
+        $this->assertCount(2, $shoppingListPreAddItemCheckResponseTransfer->getMessages());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckingShoppingListItemWithInactiveAndUnapprovedMerchantFails(): void
+    {
+        // Arrange
+        $shoppingListItemTransfer = $this->createShoppingListItem(false, 'declined');
+
+        // Act
+        $shoppingListPreAddItemCheckResponseTransfer = $this->tester->getFacade()->checkShoppingListItem($shoppingListItemTransfer);
+
+        // Assert
+        $this->assertFalse($shoppingListPreAddItemCheckResponseTransfer->getIsSuccess());
+        $this->assertCount(2, $shoppingListPreAddItemCheckResponseTransfer->getMessages());
+    }
+
+    /**
+     * @param bool $isActiveStatus
+     * @param string $merchantStatus
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
+     */
+    protected function createShoppingListItem(bool $isActiveStatus, string $merchantStatus): ShoppingListItemTransfer
+    {
+        $merchantTransfer = $this->tester->haveMerchant([
+            MerchantTransfer::IS_ACTIVE => $isActiveStatus,
+            MerchantTransfer::STATUS => $merchantStatus,
+        ]);
+        $productOfferTransfer = $this->tester->haveProductOffer([
+            ProductOfferTransfer::MERCHANT_REFERENCE => $merchantTransfer->getMerchantReference(),
+        ]);
+
+        return (new ShoppingListItemTransfer())
+            ->setProductOfferReference($productOfferTransfer->getProductOfferReference());
     }
 }

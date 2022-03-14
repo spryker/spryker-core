@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedNoteTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedTransfer;
 use Generated\Shared\Transfer\ProductDiscontinueRequestTransfer;
+use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Spryker\Zed\ProductDiscontinued\Persistence\ProductDiscontinuedEntityManager;
 
 /**
@@ -178,6 +179,43 @@ class ProductDiscontinuedFacadeTest extends Unit
         // Assert
         $this->assertCount(1, $productDiscontinuedResponseTransfer->getProductDiscontinued()->getProductDiscontinuedNotes());
         $this->assertInstanceOf(ProductDiscontinuedNoteTransfer::class, $productDiscontinuedNoteTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function checkShoppingListItemProductIsNotDiscontinuedSuccessful(): void
+    {
+        // Arrange
+        $shoppingListItemTransfer = (new ShoppingListItemTransfer())
+            ->setIdProduct($this->productConcrete->getIdProductConcrete());
+
+        // Act
+        $shoppingListPreAddItemCheckResponseTransfer = $this->tester->getFacade()->checkShoppingListItemProductIsNotDiscontinued($shoppingListItemTransfer);
+
+        // Assert
+        $this->assertTrue($shoppingListPreAddItemCheckResponseTransfer->getIsSuccessOrFail());
+        $this->assertCount(0, $shoppingListPreAddItemCheckResponseTransfer->getMessages());
+    }
+
+    /**
+     * @return void
+     */
+    public function checkShoppingListItemProductIsNotDiscontinuedFail(): void
+    {
+        // Arrange
+        $shoppingListItemTransfer = (new ShoppingListItemTransfer())
+            ->setIdProduct($this->productConcrete->getIdProductConcrete());
+        $productDiscontinueRequestTransfer = (new ProductDiscontinueRequestTransfer())
+            ->setIdProduct($this->productConcrete->getIdProductConcrete());
+        $this->tester->getFacade()->markProductAsDiscontinued($productDiscontinueRequestTransfer);
+
+        // Act
+        $shoppingListPreAddItemCheckResponseTransfer = $this->tester->getFacade()->checkShoppingListItemProductIsNotDiscontinued($shoppingListItemTransfer);
+
+        // Assert
+        $this->assertFalse($shoppingListPreAddItemCheckResponseTransfer->getIsSuccessOrFail());
+        $this->assertCount(1, $shoppingListPreAddItemCheckResponseTransfer->getMessages());
     }
 
     /**

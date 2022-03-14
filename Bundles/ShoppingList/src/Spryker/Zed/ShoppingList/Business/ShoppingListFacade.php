@@ -449,4 +449,20 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
             ->createProductConcreteIsActiveChecker()
             ->checkShoppingListItemProductIsActive($shoppingListItemTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListPreAddItemCheckResponseTransfer
+     */
+    public function checkShoppingListItemProductHasValidStore(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListPreAddItemCheckResponseTransfer
+    {
+        return $this->getFactory()
+            ->createShoppingListItemChecker()
+            ->checkShoppingListItemProductHasValidStore($shoppingListItemTransfer);
+    }
 }
