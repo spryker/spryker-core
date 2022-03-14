@@ -1,14 +1,14 @@
 [
     {
         "fileName": "src/Spryker/Zed/CompanyBusinessUnitAddressesRestApi/Dependency/Facade/CompanyBusinessUnitAddressesRestApiToCompanyUnitAddressFacadeBridge.php",
-        "description": "Bridges: Method getCompanyUnitAddressCollection() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getCompanyUnitAddressCollection()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
         "fileName": "src/Spryker/Zed/CompanyBusinessUnitAddressesRestApi/Dependency/Facade/CompanyBusinessUnitAddressesRestApiToCompanyUnitAddressFacadeBridge.php",
-        "description": "Bridges: Method findCompanyBusinessUnitAddressByUuid() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `findCompanyBusinessUnitAddressByUuid()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"

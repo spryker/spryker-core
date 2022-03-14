@@ -8,14 +8,14 @@
     },
     {
         "fileName": "src/Spryker/Zed/ProductAlternativeGui/Dependency/Facade/ProductAlternativeGuiToProductAlternativeFacadeBridge.php",
-        "description": "Bridges: Method getProductAlternativeListByIdProductConcrete() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getProductAlternativeListByIdProductConcrete()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
         "fileName": "src/Spryker/Zed/ProductAlternativeGui/Dependency/Facade/ProductAlternativeGuiToProductAlternativeFacadeBridge.php",
-        "description": "Bridges: Method deleteProductAlternativeByIdProductAlternative() must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "description": "Bridges: Method `deleteProductAlternativeByIdProductAlternative()` must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"

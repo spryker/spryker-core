@@ -50,7 +50,7 @@
     },
     {
         "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsBridge.php",
-        "description": "Bridges: Method createPage() must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "description": "Bridges: Method `createPage()` must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -64,14 +64,14 @@
     },
     {
         "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsBridge.php",
-        "description": "Bridges: Method findPageGlossaryAttributes() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `findPageGlossaryAttributes()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
         "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsBridge.php",
-        "description": "Bridges: Method saveCmsGlossary() must have `public function update(create)<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "description": "Bridges: Method `saveCmsGlossary()` must have `public function update(create)<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -85,14 +85,14 @@
     },
     {
         "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsBridge.php",
-        "description": "Bridges: Method findCmsPageById() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `findCmsPageById()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
         "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsBridge.php",
-        "description": "Bridges: Method updatePage() must have `public function update<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "description": "Bridges: Method `updatePage()` must have `public function update<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -113,7 +113,7 @@
     },
     {
         "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsBridge.php",
-        "description": "Bridges: Method getPageUrlPrefix() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getPageUrlPrefix()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -162,7 +162,7 @@
     },
     {
         "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsBridge.php",
-        "description": "Bridges: Method findLatestCmsVersionByIdCmsPage() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `findLatestCmsVersionByIdCmsPage()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -176,7 +176,7 @@
     },
     {
         "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsBridge.php",
-        "description": "Bridges: Method findAllCmsVersionByIdCmsPage() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `findAllCmsVersionByIdCmsPage()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -197,7 +197,7 @@
     },
     {
         "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsBridge.php",
-        "description": "Bridges: Method findCmsVersionByIdCmsPageAndVersion() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `findCmsVersionByIdCmsPageAndVersion()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -211,7 +211,7 @@
     },
     {
         "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsBridge.php",
-        "description": "Bridges: Method getCmsVersionData() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getCmsVersionData()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -232,7 +232,7 @@
     },
     {
         "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsGlossaryFacadeBridge.php",
-        "description": "Bridges: Method getKeyIdentifier() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getKeyIdentifier()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -372,14 +372,14 @@
     },
     {
         "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToLocaleBridge.php",
-        "description": "Bridges: Method getLocaleCollection() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getLocaleCollection()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
         "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToLocaleBridge.php",
-        "description": "Bridges: Method getCurrentLocale() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getCurrentLocale()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -400,7 +400,7 @@
     },
     {
         "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToUrlBridge.php",
-        "description": "Bridges: Method findUrlCaseInsensitive() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `findUrlCaseInsensitive()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"

@@ -1,7 +1,7 @@
 [
     {
         "fileName": "src/Spryker/Zed/MerchantProductGui/Dependency/Facade/MerchantProductGuiToMerchantProductFacadeBridge.php",
-        "description": "Bridges: Method findMerchant() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `findMerchant()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"

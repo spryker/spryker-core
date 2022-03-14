@@ -1,28 +1,28 @@
 [
     {
         "fileName": "src/Spryker/Zed/MerchantRelationshipProductListGui/Dependency/Facade/MerchantRelationshipProductListGuiToMerchantRelationshipFacadeBridge.php",
-        "description": "Bridges: Method getMerchantRelationshipCollection() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getMerchantRelationshipCollection()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
         "fileName": "src/Spryker/Zed/MerchantRelationshipProductListGui/Dependency/Facade/MerchantRelationshipProductListGuiToMerchantRelationshipFacadeBridge.php",
-        "description": "Bridges: Method getMerchantRelationshipById() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getMerchantRelationshipById()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
         "fileName": "src/Spryker/Zed/MerchantRelationshipProductListGui/Dependency/Facade/MerchantRelationshipProductListGuiToMerchantRelationshipProductListFacadeBridge.php",
-        "description": "Bridges: Method getAvailableProductListsForMerchantRelationship() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getAvailableProductListsForMerchantRelationship()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
         "fileName": "src/Spryker/Zed/MerchantRelationshipProductListGui/Dependency/Facade/MerchantRelationshipProductListGuiToMerchantRelationshipProductListFacadeBridge.php",
-        "description": "Bridges: Method getMerchantRelationshipIdsByProductListId() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getMerchantRelationshipIdsByProductListId()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"

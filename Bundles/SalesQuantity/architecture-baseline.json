@@ -8,7 +8,7 @@
     },
     {
         "fileName": "src/Spryker/Zed/SalesQuantity/Dependency/Facade/SalesQuantityToProductFacadeBridge.php",
-        "description": "Bridges: Method getProductConcrete() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getProductConcrete()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"

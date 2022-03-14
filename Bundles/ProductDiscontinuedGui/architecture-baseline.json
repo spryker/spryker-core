@@ -8,14 +8,14 @@
     },
     {
         "fileName": "src/Spryker/Zed/ProductDiscontinuedGui/Dependency/Facade/ProductDiscontinuedGuiToLocaleFacadeBridge.php",
-        "description": "Bridges: Method getLocale() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getLocale()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
         "fileName": "src/Spryker/Zed/ProductDiscontinuedGui/Dependency/Facade/ProductDiscontinuedGuiToLocaleFacadeBridge.php",
-        "description": "Bridges: Method getAvailableLocales() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getAvailableLocales()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -36,7 +36,7 @@
     },
     {
         "fileName": "src/Spryker/Zed/ProductDiscontinuedGui/Dependency/Facade/ProductDiscontinuedGuiToProductDiscontinuedFacadeBridge.php",
-        "description": "Bridges: Method findProductDiscontinuedByProductId() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `findProductDiscontinuedByProductId()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"

@@ -29,21 +29,21 @@
     },
     {
         "fileName": "src/Spryker/Zed/MerchantRelationship/Dependency/Facade/MerchantRelationshipToCompanyBusinessUnitFacadeBridge.php",
-        "description": "Bridges: Method findCompanyBusinessUnitById() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `findCompanyBusinessUnitById()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
         "fileName": "src/Spryker/Zed/MerchantRelationship/Dependency/Facade/MerchantRelationshipToCompanyBusinessUnitFacadeBridge.php",
-        "description": "Bridges: Method getCompanyBusinessUnitCollection() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getCompanyBusinessUnitCollection()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
         "fileName": "src/Spryker/Zed/MerchantRelationship/Dependency/Facade/MerchantRelationshipToMerchantFacadeBridge.php",
-        "description": "Bridges: Method findOne() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `findOne()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"

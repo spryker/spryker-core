@@ -15,7 +15,7 @@
     },
     {
         "fileName": "src/Spryker/Zed/SalesOrderThreshold/Dependency/Facade/SalesOrderThresholdToGlossaryFacadeBridge.php",
-        "description": "Bridges: Method getTranslation() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getTranslation()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -29,28 +29,28 @@
     },
     {
         "fileName": "src/Spryker/Zed/SalesOrderThreshold/Dependency/Facade/SalesOrderThresholdToGlossaryFacadeBridge.php",
-        "description": "Bridges: Method deleteKey() must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "description": "Bridges: Method `deleteKey()` must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
         "fileName": "src/Spryker/Zed/SalesOrderThreshold/Dependency/Facade/SalesOrderThresholdToGlossaryFacadeBridge.php",
-        "description": "Bridges: Method saveGlossaryKeyTranslations() must have `public function update(create)<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "description": "Bridges: Method `saveGlossaryKeyTranslations()` must have `public function update(create)<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
         "fileName": "src/Spryker/Zed/SalesOrderThreshold/Dependency/Facade/SalesOrderThresholdToGlossaryFacadeBridge.php",
-        "description": "Bridges: Method getTranslationsByGlossaryKeyAndLocales() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getTranslationsByGlossaryKeyAndLocales()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
         "fileName": "src/Spryker/Zed/SalesOrderThreshold/Dependency/Facade/SalesOrderThresholdToGlossaryFacadeBridge.php",
-        "description": "Bridges: Method getTranslationsByGlossaryKeysAndLocaleTransfers() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getTranslationsByGlossaryKeysAndLocaleTransfers()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -99,14 +99,14 @@
     },
     {
         "fileName": "src/Spryker/Zed/SalesOrderThreshold/Dependency/Facade/SalesOrderThresholdToLocaleFacadeBridge.php",
-        "description": "Bridges: Method getLocaleCollection() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getLocaleCollection()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
         "fileName": "src/Spryker/Zed/SalesOrderThreshold/Dependency/Facade/SalesOrderThresholdToLocaleFacadeBridge.php",
-        "description": "Bridges: Method getCurrentLocale() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getCurrentLocale()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -127,7 +127,7 @@
     },
     {
         "fileName": "src/Spryker/Zed/SalesOrderThreshold/Dependency/Facade/SalesOrderThresholdToMessengerFacadeBridge.php",
-        "description": "Bridges: Method addInfoMessage() must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "description": "Bridges: Method `addInfoMessage()` must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -148,7 +148,7 @@
     },
     {
         "fileName": "src/Spryker/Zed/SalesOrderThreshold/Dependency/Facade/SalesOrderThresholdToSalesFacadeBridge.php",
-        "description": "Bridges: Method createSalesExpense() must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "description": "Bridges: Method `createSalesExpense()` must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -162,7 +162,7 @@
     },
     {
         "fileName": "src/Spryker/Zed/SalesOrderThreshold/Dependency/Facade/SalesOrderThresholdToStoreFacadeBridge.php",
-        "description": "Bridges: Method getStoreByName() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getStoreByName()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -176,14 +176,14 @@
     },
     {
         "fileName": "src/Spryker/Zed/SalesOrderThreshold/Dependency/Facade/SalesOrderThresholdToTaxFacadeBridge.php",
-        "description": "Bridges: Method getDefaultTaxRate() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getDefaultTaxRate()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
         "fileName": "src/Spryker/Zed/SalesOrderThreshold/Dependency/Facade/SalesOrderThresholdToTaxFacadeBridge.php",
-        "description": "Bridges: Method getDefaultTaxCountryIso2Code() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getDefaultTaxCountryIso2Code()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"

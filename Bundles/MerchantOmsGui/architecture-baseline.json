@@ -1,7 +1,7 @@
 [
     {
         "fileName": "src/Spryker/Zed/MerchantOmsGui/Dependency/Facade/MerchantOmsGuiToMerchantOmsFacadeBridge.php",
-        "description": "Bridges: Method findCurrentStateByIdSalesOrderItem() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `findCurrentStateByIdSalesOrderItem()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"

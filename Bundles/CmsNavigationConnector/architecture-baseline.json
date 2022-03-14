@@ -1,14 +1,14 @@
 [
     {
         "fileName": "src/Spryker/Zed/CmsNavigationConnector/Dependency/Facade/CmsNavigationConnectorToNavigationFacadeBridge.php",
-        "description": "Bridges: Method updateNavigationNode() must have `public function update<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "description": "Bridges: Method `updateNavigationNode()` must have `public function update<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
         "fileName": "src/Spryker/Zed/CmsNavigationConnector/Dependency/Facade/CmsNavigationConnectorToNavigationFacadeBridge.php",
-        "description": "Bridges: Method deleteNavigationNode() must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "description": "Bridges: Method `deleteNavigationNode()` must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"

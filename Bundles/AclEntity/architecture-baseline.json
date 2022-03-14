@@ -8,7 +8,7 @@
     },
     {
         "fileName": "src/Spryker/Zed/AclEntity/Dependency/Facade/AclEntityToAclFacadeBridge.php",
-        "description": "Bridges: Method getUserRoles() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getUserRoles()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -22,7 +22,7 @@
     },
     {
         "fileName": "src/Spryker/Zed/AclEntity/Dependency/Facade/AclEntityToUserFacadeBridge.php",
-        "description": "Bridges: Method getCurrentUser() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getCurrentUser()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"

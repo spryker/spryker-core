@@ -1,7 +1,7 @@
 [
     {
         "fileName": "src/Spryker/Zed/ProductBundleProductListConnector/Dependency/Facade/ProductBundleProductListConnectorToProductBundleFacadeBridge.php",
-        "description": "Bridges: Method getProductBundleCollectionByCriteriaFilter() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getProductBundleCollectionByCriteriaFilter()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -15,7 +15,7 @@
     },
     {
         "fileName": "src/Spryker/Zed/ProductBundleProductListConnector/Dependency/Facade/ProductBundleProductListConnectorToProductBundleFacadeBridge.php",
-        "description": "Bridges: Method findBundledProductsByIdProductConcrete() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `findBundledProductsByIdProductConcrete()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -29,7 +29,7 @@
     },
     {
         "fileName": "src/Spryker/Zed/ProductBundleProductListConnector/Dependency/Facade/ProductBundleProductListConnectorToProductFacadeBridge.php",
-        "description": "Bridges: Method getProductConcreteSkusByConcreteIds() must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getProductConcreteSkusByConcreteIds()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
