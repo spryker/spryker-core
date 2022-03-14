@@ -170,7 +170,6 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addStoreFacade($container);
         $container = $this->addSequenceNumberFacade($container);
         $container = $this->addOmsFacade($container);
-        $container = $this->addStoreFacade($container);
         $container = $this->addLocaleQueryContainer($container);
         $container = $this->addOrderExpanderPreSavePlugins($container);
         $container = $this->addHydrateOrderPlugins($container);
