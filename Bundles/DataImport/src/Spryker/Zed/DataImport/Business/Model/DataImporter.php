@@ -176,7 +176,7 @@ class DataImporter implements
      *
      * @throws \Spryker\Zed\DataImport\Business\Exception\DataImportException
      *
-     * @return \Generator
+     * @return \Generator<\Generated\Shared\Transfer\DataImporterReportTransfer|null>
      */
     protected function createDataImportGenerator(
         DataReaderInterface $dataReader,

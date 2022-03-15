@@ -39,11 +39,13 @@ class DataSetWriterCollection implements DataSetWriterInterface
              * `\Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetWriterPluginInterface` is removed.
              */
             if ($dataSetWriter instanceof DataSetWriterPluginInterface) {
+                /** @phpstan-var \Generated\Shared\Transfer\DataSetItemTransfer $dataSet */
                 $dataSetWriter->write($dataSet);
 
                 continue;
             }
 
+            /** @phpstan-var \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet */
             $dataSetItemTransfer = $this->mapDataSetToDataSetItemTransfer($dataSet);
             $dataSetWriter->write($dataSetItemTransfer);
         }
@@ -74,7 +76,7 @@ class DataSetWriterCollection implements DataSetWriterInterface
     /**
      * Generates DatasetWritersPlugins that are matching conditions.
      *
-     * @return \Generator
+     * @return \Generator<\Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetItemWriterPluginInterface|null>
      */
     protected function getDatasetWriters()
     {
@@ -86,6 +88,7 @@ class DataSetWriterCollection implements DataSetWriterInterface
                 !$dataSetWriter instanceof DataSetWriterPluginApplicableAwareInterface
                 || $dataSetWriter->isApplicable()
             ) {
+                /** @phpstan-var \Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetItemWriterPluginInterface $dataSetWriter */
                 yield $dataSetWriter;
             }
         }

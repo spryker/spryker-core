@@ -28,7 +28,7 @@ class RequestRequestValueResolver implements ArgumentValueResolverInterface
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata $argument
      *
-     * @return \Generator
+     * @return \Generator<array|string|int|bool|float|null>
      */
     public function resolve(Request $request, ArgumentMetadata $argument)
     {
