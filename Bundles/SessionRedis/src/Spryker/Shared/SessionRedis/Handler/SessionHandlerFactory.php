@@ -14,6 +14,8 @@ use Spryker\Shared\SessionRedis\Handler\KeyBuilder\SessionKeyBuilderInterface;
 use Spryker\Shared\SessionRedis\Handler\LifeTime\SessionRedisLifeTimeCalculatorInterface;
 use Spryker\Shared\SessionRedis\Handler\Lock\SessionLockerInterface;
 use Spryker\Shared\SessionRedis\Handler\Lock\SessionSpinLockLocker;
+use Spryker\Shared\SessionRedis\Hasher\BcryptHasher;
+use Spryker\Shared\SessionRedis\Hasher\HasherInterface;
 use Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface;
 
 class SessionHandlerFactory implements SessionHandlerFactoryInterface
@@ -82,6 +84,36 @@ class SessionHandlerFactory implements SessionHandlerFactoryInterface
     /**
      * @param \Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface $redisClient
      *
+     * @return \Spryker\Shared\SessionRedis\Handler\SessionAccountHandlerRedisInterface
+     */
+    public function createSessionCustomerRedisHandler(SessionRedisWrapperInterface $redisClient): SessionAccountHandlerRedisInterface
+    {
+        return new SessionCustomerHandlerRedis(
+            $redisClient,
+            $this->sessionRedisLifeTimeCalculator,
+            $this->createHasher(),
+            $this->createSessionKeyBuilder(),
+        );
+    }
+
+    /**
+     * @param \Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface $redisClient
+     *
+     * @return \Spryker\Shared\SessionRedis\Handler\SessionAccountHandlerRedisInterface
+     */
+    public function createSessionUserRedisHandler(SessionRedisWrapperInterface $redisClient): SessionAccountHandlerRedisInterface
+    {
+        return new SessionUserHandlerRedis(
+            $redisClient,
+            $this->sessionRedisLifeTimeCalculator,
+            $this->createHasher(),
+            $this->createSessionKeyBuilder(),
+        );
+    }
+
+    /**
+     * @param \Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface $redisClient
+     *
      * @return \SessionHandlerInterface
      */
     public function createSessionHandlerRedisLocking(SessionRedisWrapperInterface $redisClient): SessionHandlerInterface
@@ -116,5 +148,13 @@ class SessionHandlerFactory implements SessionHandlerFactoryInterface
     public function createSessionKeyBuilder(): SessionKeyBuilderInterface
     {
         return new SessionKeyBuilder();
+    }
+
+    /**
+     * @return \Spryker\Shared\SessionRedis\Hasher\HasherInterface
+     */
+    public function createHasher(): HasherInterface
+    {
+        return new BcryptHasher();
     }
 }

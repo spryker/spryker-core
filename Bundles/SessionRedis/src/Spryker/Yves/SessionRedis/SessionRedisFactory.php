@@ -12,6 +12,7 @@ use Spryker\Shared\SessionRedis\Dependency\Client\SessionRedisToRedisClientInter
 use Spryker\Shared\SessionRedis\Dependency\Service\SessionRedisToMonitoringServiceInterface;
 use Spryker\Shared\SessionRedis\Handler\LifeTime\SessionRedisLifeTimeCalculator;
 use Spryker\Shared\SessionRedis\Handler\LifeTime\SessionRedisLifeTimeCalculatorInterface;
+use Spryker\Shared\SessionRedis\Handler\SessionAccountHandlerRedisInterface;
 use Spryker\Shared\SessionRedis\Handler\SessionHandlerFactory;
 use Spryker\Shared\SessionRedis\Handler\SessionHandlerFactoryInterface;
 use Spryker\Shared\SessionRedis\Redis\SessionRedisWrapper;
@@ -30,6 +31,16 @@ class SessionRedisFactory extends AbstractFactory
     public function createSessionRedisHandler(): SessionHandlerInterface
     {
         return $this->createSessionHandlerFactory()->createSessionRedisHandler(
+            $this->createSessionRedisWrapper(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Shared\SessionRedis\Handler\SessionAccountHandlerRedisInterface
+     */
+    public function createSessionCustomerRedisHandler(): SessionAccountHandlerRedisInterface
+    {
+        return $this->createSessionHandlerFactory()->createSessionCustomerRedisHandler(
             $this->createSessionRedisWrapper(),
         );
     }

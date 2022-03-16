@@ -20,4 +20,14 @@
         <property name="headers" type="array" singular="header" associative="true"/>
     </transfer>
 
+    <transfer name="SessionCustomer">
+        <property name="idCustomer" type="int"/>
+        <property name="idSession" type="string"/>
+    </transfer>
+
+    <transfer name="SessionUser">
+        <property name="idUser" type="int"/>
+        <property name="idSession" type="string"/>
+    </transfer>
+
 </transfers>

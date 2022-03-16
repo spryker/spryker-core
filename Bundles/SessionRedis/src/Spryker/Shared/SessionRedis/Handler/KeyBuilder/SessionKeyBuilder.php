@@ -20,6 +20,11 @@ class SessionKeyBuilder implements SessionKeyBuilderInterface
     protected const SESSION_LOCK_KEY_SUFFIX = 'lock';
 
     /**
+     * @var string
+     */
+    protected const SESSION_ACCOUNT_KEY_SUFFIX = 'account';
+
+    /**
      * By default generated session key has length = 32 symbols, if this const will be less than 32 there can be session collision.
      *
      * @var int
@@ -48,5 +53,16 @@ class SessionKeyBuilder implements SessionKeyBuilderInterface
     public function buildLockKey(string $sessionId): string
     {
         return sprintf('%s:%s', $this->buildSessionKey($sessionId), static::SESSION_LOCK_KEY_SUFFIX);
+    }
+
+    /**
+     * @param string $accountType
+     * @param string $idAccount
+     *
+     * @return string
+     */
+    public function buildAccountKey(string $accountType, string $idAccount): string
+    {
+        return sprintf('%s:%s:%s', $idAccount, $accountType, static::SESSION_ACCOUNT_KEY_SUFFIX);
     }
 }

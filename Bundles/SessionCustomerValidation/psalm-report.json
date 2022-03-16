@@ -1,0 +1,18 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 72,
+            "line_to": 72,
+            "type": "LessSpecificImplementedReturnType",
+            "message": "The inherited return type 'array<string, array<int, array{0: string, 1?: int}|int|string>|string>' for Symfony\\Component\\EventDispatcher\\EventSubscriberInterface::getSubscribedEvents is more specific than the implemented return type for Spryker\\Yves\\SessionCustomerValidation\\EventListener\\SaveSessionCustomerListener::getsubscribedevents 'array<string, array<array-key, mixed>>'",
+            "file_name": "vendor/spryker/spryker/Bundles/SessionCustomerValidation/src/Spryker/Yves/SessionCustomerValidation/EventListener/SaveSessionCustomerListener.php",
+            "snippet": "     * @return array<string, array<mixed>>",
+            "selected_text": "array<string, array<mixed>>",
+            "error_level": 5,
+            "shortcode": 166
+        }
+    ],
+    "deprecation": []
+}

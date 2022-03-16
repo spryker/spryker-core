@@ -22,4 +22,12 @@ interface SessionKeyBuilderInterface
      * @return string
      */
     public function buildLockKey(string $sessionId): string;
+
+    /**
+     * @param string $accountType
+     * @param string $idAccount
+     *
+     * @return string
+     */
+    public function buildAccountKey(string $accountType, string $idAccount): string;
 }

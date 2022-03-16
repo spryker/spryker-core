@@ -1,0 +1,56 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 69,
+            "line_to": 69,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<string, array<array-key, mixed>>' for Spryker\\Zed\\SessionUserValidation\\Communication\\EventListener\\SaveSessionUserListener::getSubscribedEvents is incorrect, got 'array{'security.interactive_login': \"onInteractiveLogin\"}'",
+            "file_name": "vendor/spryker/spryker/Bundles/SessionUserValidation/src/Spryker/Zed/SessionUserValidation/Communication/EventListener/SaveSessionUserListener.php",
+            "snippet": "     * @return array<string, array<mixed>>",
+            "selected_text": "array<string, array<mixed>>",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 73,
+            "line_to": 75,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'array{'security.interactive_login': \"onInteractiveLogin\"}' does not match the declared return type 'array<string, array<array-key, mixed>>' for Spryker\\Zed\\SessionUserValidation\\Communication\\EventListener\\SaveSessionUserListener::getSubscribedEvents",
+            "file_name": "vendor/spryker/spryker/Bundles/SessionUserValidation/src/Spryker/Zed/SessionUserValidation/Communication/EventListener/SaveSessionUserListener.php",
+            "snippet": "        return [\n            SecurityEvents::INTERACTIVE_LOGIN => 'onInteractiveLogin',\n        ];",
+            "selected_text": "[\n            SecurityEvents::INTERACTIVE_LOGIN => 'onInteractiveLogin',\n        ]",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 69,
+            "line_to": 69,
+            "type": "LessSpecificImplementedReturnType",
+            "message": "The inherited return type 'array<string, array<int, array{0: string, 1?: int}|int|string>|string>' for Symfony\\Component\\EventDispatcher\\EventSubscriberInterface::getSubscribedEvents is more specific than the implemented return type for Spryker\\Zed\\SessionUserValidation\\Communication\\EventListener\\SaveSessionUserListener::getsubscribedevents 'array<string, array<array-key, mixed>>'",
+            "file_name": "vendor/spryker/spryker/Bundles/SessionUserValidation/src/Spryker/Zed/SessionUserValidation/Communication/EventListener/SaveSessionUserListener.php",
+            "snippet": "     * @return array<string, array<mixed>>",
+            "selected_text": "array<string, array<mixed>>",
+            "error_level": 5,
+            "shortcode": 166
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 59,
+            "line_to": 59,
+            "type": "DeprecatedMethod",
+            "message": "The method Symfony\\Component\\Security\\Core\\User\\UserInterface::getUsername has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/SessionUserValidation/src/Spryker/Zed/SessionUserValidation/Communication/EventListener/SaveSessionUserListener.php",
+            "snippet": "        $userTransfer = $this->userFacade->getUserByUsername($user->getUsername());",
+            "selected_text": "getUsername",
+            "error_level": 2,
+            "shortcode": 1
+        }
+    ]
+}
