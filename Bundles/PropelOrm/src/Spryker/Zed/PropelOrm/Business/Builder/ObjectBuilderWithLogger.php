@@ -11,6 +11,7 @@
 
 namespace Spryker\Zed\PropelOrm\Business\Builder;
 
+use Propel\Generator\Builder\Om\ClassTools;
 use Propel\Generator\Builder\Om\ObjectBuilder as PropelObjectBuilder;
 use Propel\Generator\Model\Column;
 use Propel\Generator\Model\IdMethod;
@@ -18,9 +19,15 @@ use Propel\Generator\Model\Table;
 use Propel\Generator\Platform\MssqlPlatform;
 use Spryker\Shared\Config\Application\Environment;
 use Spryker\Shared\ErrorHandler\ErrorHandlerEnvironment;
+use Spryker\Zed\Kernel\Business\FactoryResolverAwareTrait as BusinessFactoryResolverAwareTrait;
 
+/**
+ * @method \Spryker\Zed\PropelOrm\Business\PropelOrmBusinessFactory getFactory()
+ */
 class ObjectBuilderWithLogger extends PropelObjectBuilder
 {
+    use BusinessFactoryResolverAwareTrait;
+
     /**
      * @param \Propel\Generator\Model\Table $table
      */
@@ -85,6 +92,29 @@ class ObjectBuilderWithLogger extends PropelObjectBuilder
         }
 ";
         $this->addMutatorClose($script, $col);
+    }
+
+    /**
+     * Specifies the methods that are added as part of the basic OM class.
+     * This can be overridden by subclasses that wish to add more methods.
+     *
+     * @see ObjectBuilder::addClassBody()
+     *
+     * @param string $script
+     *
+     * @return void
+     */
+    protected function addClassBody(&$script)
+    {
+        $classes = $this->getFactory()
+            ->createtPostSaveClassNamespacesCollector()
+            ->extractClassesToDeclare();
+
+        foreach ($classes as $class) {
+            $this->declareClass($class);
+        }
+
+        parent::addClassBody($script);
     }
 
     /**
@@ -175,5 +205,72 @@ class ObjectBuilderWithLogger extends PropelObjectBuilder
         \\Spryker\\Shared\\Log\\LoggerFactory::getInstance()->info('Entity delete', ['entity' => \$this->toArray('fieldName', false)]);
     }
 ";
+    }
+
+    /**
+     * Adds the base object hook functions.
+     *
+     * @param string $script
+     *
+     * @return void
+     */
+    protected function addHookMethods(&$script)
+    {
+        $hooks = [];
+        foreach (['pre', 'post'] as $hook) {
+            foreach (['Insert', 'Update', 'Save', 'Delete'] as $action) {
+                $hooks[$hook . $action] = strpos($script, 'function ' . $hook . $action . '(') === false;
+            }
+        }
+
+        /** @var string|null $className */
+        $className = ClassTools::classname($this->getBaseClass());
+        $hooks['hasBaseClass'] = $this->getBehaviorContent('parentClass') !== null || $className !== null;
+
+        $script .= $this->renderTemplate('baseObjectMethodHook', $hooks);
+    }
+
+    /**
+     * Adds the function close for the save method
+     *
+     * @see addSave()
+     *
+     * @param string $script The script will be modified in this method.
+     *
+     * @return void
+     */
+    protected function addSaveClose(&$script)
+    {
+        $script .= "
+    }
+    ";
+        $this->addPostSaveMethodProcess($script);
+    }
+
+    /**
+     * Adds custom postSave hook to Propel instance
+     *
+     * @param string $script
+     *
+     * @return void
+     */
+    protected function addPostSaveMethodProcess(string &$script): void
+    {
+        $script .= "
+     /**
+     * Code to be run after persisting the object
+     * @param \\Propel\\Runtime\\Connection\\ConnectionInterface \$con
+     */
+     public function postSave(?ConnectionInterface \$con = null)
+     {";
+
+        $extensionPlugins = $this->getFactory()->getPostSaveExtensionPlugins();
+        foreach ($extensionPlugins as $plugin) {
+            $script = $plugin->extend($script);
+        }
+
+        $script .= "
+     }
+     ";
     }
 }

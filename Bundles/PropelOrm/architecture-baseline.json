@@ -14,8 +14,36 @@
         "priority": "1"
     },
     {
+        "fileName": "src/Spryker/Zed/PropelOrm/Business/Builder/ObjectBuilder.php",
+        "description": "Method `Spryker\\Zed\\PropelOrm\\Business\\Builder\\ObjectBuilder::addClassBody()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/PropelOrm/Business/Builder/ObjectBuilder.php",
+        "description": "Method `Spryker\\Zed\\PropelOrm\\Business\\Builder\\ObjectBuilder::addHookMethods()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/PropelOrm/Business/Builder/ObjectBuilder.php",
+        "description": "Method `Spryker\\Zed\\PropelOrm\\Business\\Builder\\ObjectBuilder::addSaveClose()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
         "fileName": "src/Spryker/Zed/PropelOrm/Business/Builder/ObjectBuilderWithLogger.php",
         "description": "Method `Spryker\\Zed\\PropelOrm\\Business\\Builder\\ObjectBuilderWithLogger::addBooleanMutator()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/PropelOrm/Business/Builder/ObjectBuilderWithLogger.php",
+        "description": "Method `Spryker\\Zed\\PropelOrm\\Business\\Builder\\ObjectBuilderWithLogger::addClassBody()` must have return type.",
         "rule": "ExternalMethodExtensionReturnTypeRule",
         "ruleset": "Spryker",
         "priority": "1"
@@ -42,6 +70,20 @@
         "priority": "1"
     },
     {
+        "fileName": "src/Spryker/Zed/PropelOrm/Business/Builder/ObjectBuilderWithLogger.php",
+        "description": "Method `Spryker\\Zed\\PropelOrm\\Business\\Builder\\ObjectBuilderWithLogger::addHookMethods()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/PropelOrm/Business/Builder/ObjectBuilderWithLogger.php",
+        "description": "Method `Spryker\\Zed\\PropelOrm\\Business\\Builder\\ObjectBuilderWithLogger::addSaveClose()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
         "fileName": "src/Spryker/Zed/PropelOrm/Business/Builder/QueryBuilder.php",
         "description": "Method `Spryker\\Zed\\PropelOrm\\Business\\Builder\\QueryBuilder::addFilterByCol()` must have return type.",
         "rule": "ExternalMethodExtensionReturnTypeRule",
@@ -51,6 +93,20 @@
     {
         "fileName": "src/Spryker/Zed/PropelOrm/Business/Builder/QueryBuilder.php",
         "description": "Method `Spryker\\Zed\\PropelOrm\\Business\\Builder\\QueryBuilder::addClassBody()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/PropelOrm/Business/Builder/QueryBuilder.php",
+        "description": "Method `Spryker\\Zed\\PropelOrm\\Business\\Builder\\QueryBuilder::addFindPk()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/PropelOrm/Business/Builder/QueryBuilder.php",
+        "description": "Method `Spryker\\Zed\\PropelOrm\\Business\\Builder\\QueryBuilder::addFindPks()` must have return type.",
         "rule": "ExternalMethodExtensionReturnTypeRule",
         "ruleset": "Spryker",
         "priority": "1"
