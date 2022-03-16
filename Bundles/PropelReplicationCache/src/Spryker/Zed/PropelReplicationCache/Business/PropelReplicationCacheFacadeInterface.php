@@ -12,8 +12,8 @@ interface PropelReplicationCacheFacadeInterface
     /**
      * Specification:
      * - Sets key to the storage.
-     * - Called after Propel`s save() method was executed when Replication is enabled.
-     * - Key contains Propel`s model class name.
+     * - Called after Propel save() method was executed when replication is enabled.
+     * - Key contains Propel model class name.
      *
      * @api
      *
@@ -27,8 +27,8 @@ interface PropelReplicationCacheFacadeInterface
     /**
      * Specification:
      * - Verifies that given key exists in storage.
-     * - Called before Propel`s query will be executed.
-     * - Used to decide what connection to use for query when Replication is enabled.
+     * - Called before Propel query will be executed.
+     * - Used to decide what connection to use for query when replication is enabled.
      *
      * @api
      *
