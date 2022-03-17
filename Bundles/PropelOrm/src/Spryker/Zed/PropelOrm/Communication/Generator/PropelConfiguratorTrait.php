@@ -8,7 +8,6 @@
 namespace Spryker\Zed\PropelOrm\Communication\Generator;
 
 use Propel\Generator\Config\GeneratorConfig;
-use Propel\Generator\Config\GeneratorConfigInterface;
 use Symfony\Component\Console\Input\InputInterface;
 
 trait PropelConfiguratorTrait
@@ -36,7 +35,7 @@ trait PropelConfiguratorTrait
      *
      * @return \Propel\Generator\Config\GeneratorConfig
      */
-    protected function getGeneratorConfig(?array $properties = null, ?InputInterface $input = null): GeneratorConfigInterface
+    protected function getGeneratorConfig(?array $properties = null, ?InputInterface $input = null): GeneratorConfig
     {
         return new GeneratorConfig(null, [
             'propel' => $this->propelConfig,

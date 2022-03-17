@@ -39,16 +39,15 @@ class PropelApplicationPlugin extends AbstractPlugin implements ApplicationPlugi
      */
     public function provide(ContainerInterface $container): ContainerInterface
     {
-        $manager = new ConnectionManagerMasterSlave();
-        $manager->setName(static::DATA_SOURCE_NAME);
+        $manager = new ConnectionManagerMasterSlave(static::DATA_SOURCE_NAME);
         $manager->setWriteConfiguration($this->getPropelWriteConfiguration());
-        $manager->setReadConfiguration($this->getPropelReadConfiguration());
+        $manager->setReadConfiguration($this->getPropelReadConfiguration() ?? []);
 
         $this->getFacade()->loadPropelTableMap();
 
         $serviceContainer = $this->getServiceContainer();
         $serviceContainer->setAdapterClass(static::DATA_SOURCE_NAME, $this->getConfig()->getCurrentDatabaseEngine());
-        $serviceContainer->setConnectionManager(static::DATA_SOURCE_NAME, $manager);
+        $serviceContainer->setConnectionManager($manager);
         $serviceContainer->setDefaultDatasource(static::DATA_SOURCE_NAME);
 
         $this->addLogger($serviceContainer);

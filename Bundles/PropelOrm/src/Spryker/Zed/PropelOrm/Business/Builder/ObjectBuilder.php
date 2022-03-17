@@ -51,7 +51,7 @@ class ObjectBuilder extends PropelObjectBuilder
      *
      * @return void
      */
-    protected function addBooleanMutator(&$script, Column $col)
+    protected function addBooleanMutator(string &$script, Column $col): void
     {
         $clo = $col->getLowercasedName();
 
@@ -102,7 +102,7 @@ class ObjectBuilder extends PropelObjectBuilder
      *
      * @return void
      */
-    protected function addDefaultMutator(&$script, Column $col)
+    protected function addDefaultMutator(string &$script, Column $col): void
     {
         $clo = $col->getLowercasedName();
 
@@ -145,7 +145,7 @@ class ObjectBuilder extends PropelObjectBuilder
      *
      * @return void
      */
-    protected function addClassBody(&$script)
+    protected function addClassBody(string &$script): void
     {
         $classes = $this->getFactory()
             ->createtPostSaveClassNamespacesCollector()
@@ -165,7 +165,7 @@ class ObjectBuilder extends PropelObjectBuilder
      *
      * @return void
      */
-    protected function addHookMethods(&$script)
+    protected function addHookMethods(string &$script): void
     {
         $hooks = [];
         foreach (['pre', 'post'] as $hook) {
@@ -190,7 +190,7 @@ class ObjectBuilder extends PropelObjectBuilder
      *
      * @return void
      */
-    protected function addSaveClose(&$script)
+    protected function addSaveClose(string &$script): void
     {
         $script .= "
     }

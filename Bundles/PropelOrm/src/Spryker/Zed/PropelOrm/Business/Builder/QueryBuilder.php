@@ -155,7 +155,7 @@ SCRIPT;
      *
      * @return void
      */
-    protected function addFilterByCol(&$script, Column $col)
+    protected function addFilterByCol(string &$script, Column $col): void
     {
         $allowedArrayFilters = $this->getAllowedArrayFilters();
         $implodedArrayComparisons = implode(', ', $allowedArrayFilters);
@@ -413,7 +413,7 @@ SCRIPT;
      *
      * @return void
      */
-    protected function addClassBody(&$script)
+    protected function addClassBody(string &$script): void
     {
         $classes = $this->getFactory()
             ->createFindClassNamespacesCollector()
@@ -461,7 +461,7 @@ SCRIPT;
      *
      * @return string
      */
-    public function createSelectSql(&\$params)
+    public function createSelectSql(&\$params): string
     {
         \$sql = parent::createSelectSql(\$params);
         if (\$this->isForUpdateEnabled) {
@@ -494,7 +494,7 @@ SCRIPT;
      *
      * @return void
      */
-    protected function addFindPk(&$script)
+    protected function addFindPk(string &$script): void
     {
         $class = $this->getObjectClassName();
         $tableMapClassName = $this->getTableMapClassName();
@@ -594,7 +594,7 @@ SCRIPT;
      *
      * @return void
      */
-    protected function addFindPks(&$script)
+    protected function addFindPks(string &$script): void
     {
         $this->declareClasses(
             '\Propel\Runtime\Collection\ObjectCollection',
@@ -741,7 +741,7 @@ SCRIPT;
      *
      * @return bool column existence
      */
-    public function exists(?ConnectionInterface \$con = null)
+    public function exists(?ConnectionInterface \$con = null): bool
     {";
 
         $extensionPlugins = $this->getFactory()->getFindExtensionPlugins();

@@ -53,7 +53,7 @@ class ObjectBuilderWithLogger extends PropelObjectBuilder
      *
      * @return void
      */
-    protected function addBooleanMutator(&$script, Column $col)
+    protected function addBooleanMutator(string &$script, Column $col): void
     {
         $clo = $col->getLowercasedName();
 
@@ -104,7 +104,7 @@ class ObjectBuilderWithLogger extends PropelObjectBuilder
      *
      * @return void
      */
-    protected function addClassBody(&$script)
+    protected function addClassBody(string &$script): void
     {
         $classes = $this->getFactory()
             ->createtPostSaveClassNamespacesCollector()
@@ -122,7 +122,7 @@ class ObjectBuilderWithLogger extends PropelObjectBuilder
      *
      * @return string the doInsert() method code
      */
-    protected function addDoInsert()
+    protected function addDoInsert(): string
     {
         $table = $this->getTable();
         $script = "
@@ -167,7 +167,7 @@ class ObjectBuilderWithLogger extends PropelObjectBuilder
      *
      * @return string the doUpdate() method code
      */
-    protected function addDoUpdate()
+    protected function addDoUpdate(): string
     {
         return "
     /**
@@ -199,7 +199,7 @@ class ObjectBuilderWithLogger extends PropelObjectBuilder
      *
      * @return void
      */
-    protected function addDeleteClose(&$script)
+    protected function addDeleteClose(string &$script): void
     {
         $script .= "
         \\Spryker\\Shared\\Log\\LoggerFactory::getInstance()->info('Entity delete', ['entity' => \$this->toArray('fieldName', false)]);
@@ -214,7 +214,7 @@ class ObjectBuilderWithLogger extends PropelObjectBuilder
      *
      * @return void
      */
-    protected function addHookMethods(&$script)
+    protected function addHookMethods(string &$script): void
     {
         $hooks = [];
         foreach (['pre', 'post'] as $hook) {
@@ -239,7 +239,7 @@ class ObjectBuilderWithLogger extends PropelObjectBuilder
      *
      * @return void
      */
-    protected function addSaveClose(&$script)
+    protected function addSaveClose(string &$script): void
     {
         $script .= "
     }
