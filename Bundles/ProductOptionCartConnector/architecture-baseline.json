@@ -1,14 +1,14 @@
 [
     {
         "fileName": "src/Spryker/Zed/ProductOptionCartConnector/Dependency/Facade/ProductOptionCartConnectorToPriceFacadeBridge.php",
-        "description": "Bridges: Method `getGrossPriceModeIdentifier()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getGrossPriceModeIdentifier()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
         "fileName": "src/Spryker/Zed/ProductOptionCartConnector/Dependency/Facade/ProductOptionCartConnectorToPriceFacadeBridge.php",
-        "description": "Bridges: Method `getDefaultPriceMode()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getDefaultPriceMode()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -36,7 +36,7 @@
     },
     {
         "fileName": "src/Spryker/Zed/ProductOptionCartConnector/Dependency/Facade/ProductOptionCartConnectorToProductOptionFacadeBridge.php",
-        "description": "Bridges: Method `getProductOptionValue()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getProductOptionValue()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -50,7 +50,7 @@
     },
     {
         "fileName": "src/Spryker/Zed/ProductOptionCartConnector/Dependency/Facade/ProductOptionCartConnectorToProductOptionFacadeBridge.php",
-        "description": "Bridges: Method `getProductOptionValueById()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getProductOptionValueById()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"

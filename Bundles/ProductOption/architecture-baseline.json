@@ -57,14 +57,14 @@
     },
     {
         "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToCurrencyFacadeBridge.php",
-        "description": "Bridges: Method `getByIdCurrency()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getByIdCurrency()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
         "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToCurrencyFacadeBridge.php",
-        "description": "Bridges: Method `getCurrent()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getCurrent()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -148,7 +148,7 @@
     },
     {
         "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToGlossaryFacadeBridge.php",
-        "description": "Bridges: Method `createAndTouchTranslation()` must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "description": "Bridges: Method `createAndTouchTranslation()` must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -176,7 +176,7 @@
     },
     {
         "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToGlossaryFacadeBridge.php",
-        "description": "Bridges: Method `updateAndTouchTranslation()` must have `public function update<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "description": "Bridges: Method `updateAndTouchTranslation()` must have `public function update<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -197,7 +197,7 @@
     },
     {
         "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToGlossaryFacadeBridge.php",
-        "description": "Bridges: Method `createKey()` must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "description": "Bridges: Method `createKey()` must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -211,7 +211,7 @@
     },
     {
         "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToGlossaryFacadeBridge.php",
-        "description": "Bridges: Method `getTranslation()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getTranslation()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -225,7 +225,7 @@
     },
     {
         "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToGlossaryFacadeBridge.php",
-        "description": "Bridges: Method `deleteKey()` must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "description": "Bridges: Method `deleteKey()` must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -302,7 +302,7 @@
     },
     {
         "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToLocaleFacadeBridge.php",
-        "description": "Bridges: Method `getLocale()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getLocale()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -316,21 +316,21 @@
     },
     {
         "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToLocaleFacadeBridge.php",
-        "description": "Bridges: Method `getLocaleByCode()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getLocaleByCode()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
         "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToLocaleFacadeBridge.php",
-        "description": "Bridges: Method `getLocaleCollection()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getLocaleCollection()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
         "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToLocaleFacadeBridge.php",
-        "description": "Bridges: Method `getCurrentLocale()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getCurrentLocale()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -463,21 +463,21 @@
     },
     {
         "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToPriceFacadeBridge.php",
-        "description": "Bridges: Method `getGrossPriceModeIdentifier()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getGrossPriceModeIdentifier()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
         "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToPriceFacadeBridge.php",
-        "description": "Bridges: Method `getNetPriceModeIdentifier()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getNetPriceModeIdentifier()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
         "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToPriceFacadeBridge.php",
-        "description": "Bridges: Method `getDefaultPriceMode()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getDefaultPriceMode()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -505,7 +505,7 @@
     },
     {
         "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToStoreFacadeBridge.php",
-        "description": "Bridges: Method `getCurrentStore()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getCurrentStore()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -533,28 +533,28 @@
     },
     {
         "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToTaxFacadeBridge.php",
-        "description": "Bridges: Method `getTaxAmountFromGrossPrice()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getTaxAmountFromGrossPrice()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
         "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToTaxFacadeBridge.php",
-        "description": "Bridges: Method `getDefaultTaxCountryIso2Code()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getDefaultTaxCountryIso2Code()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
         "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToTaxFacadeBridge.php",
-        "description": "Bridges: Method `getDefaultTaxRate()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getDefaultTaxRate()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
         "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToTaxFacadeBridge.php",
-        "description": "Bridges: Method `getTaxSets()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getTaxSets()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -568,7 +568,7 @@
     },
     {
         "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToTaxFacadeBridge.php",
-        "description": "Bridges: Method `getTaxSet()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getTaxSet()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"

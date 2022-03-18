@@ -8,7 +8,7 @@
     },
     {
         "fileName": "src/Spryker/Zed/ProductRelationGui/Dependency/Facade/ProductRelationGuiToLocaleFacadeBridge.php",
-        "description": "Bridges: Method `getCurrentLocale()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getCurrentLocale()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -22,7 +22,7 @@
     },
     {
         "fileName": "src/Spryker/Zed/ProductRelationGui/Dependency/Facade/ProductRelationGuiToProductAttributeFacadeBridge.php",
-        "description": "Bridges: Method `getProductAttributeCollection()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getProductAttributeCollection()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -36,7 +36,7 @@
     },
     {
         "fileName": "src/Spryker/Zed/ProductRelationGui/Dependency/Facade/ProductRelationGuiToProductFacadeBridge.php",
-        "description": "Bridges: Method `getProductUrl()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getProductUrl()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -50,7 +50,7 @@
     },
     {
         "fileName": "src/Spryker/Zed/ProductRelationGui/Dependency/Facade/ProductRelationGuiToProductFacadeBridge.php",
-        "description": "Bridges: Method `findProductAbstractById()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `findProductAbstractById()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -78,49 +78,49 @@
     },
     {
         "fileName": "src/Spryker/Zed/ProductRelationGui/Dependency/Facade/ProductRelationGuiToProductRelationFacadeBridge.php",
-        "description": "Bridges: Method `findProductRelationById()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `findProductRelationById()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
         "fileName": "src/Spryker/Zed/ProductRelationGui/Dependency/Facade/ProductRelationGuiToProductRelationFacadeBridge.php",
-        "description": "Bridges: Method `findProductRelationByCriteria()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `findProductRelationByCriteria()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
         "fileName": "src/Spryker/Zed/ProductRelationGui/Dependency/Facade/ProductRelationGuiToProductRelationFacadeBridge.php",
-        "description": "Bridges: Method `createProductRelation()` must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "description": "Bridges: Method `createProductRelation()` must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
         "fileName": "src/Spryker/Zed/ProductRelationGui/Dependency/Facade/ProductRelationGuiToProductRelationFacadeBridge.php",
-        "description": "Bridges: Method `deleteProductRelation()` must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "description": "Bridges: Method `deleteProductRelation()` must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
         "fileName": "src/Spryker/Zed/ProductRelationGui/Dependency/Facade/ProductRelationGuiToProductRelationFacadeBridge.php",
-        "description": "Bridges: Method `updateProductRelation()` must have `public function update<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "description": "Bridges: Method `updateProductRelation()` must have `public function update<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
         "fileName": "src/Spryker/Zed/ProductRelationGui/Dependency/Facade/ProductRelationGuiToProductRelationFacadeBridge.php",
-        "description": "Bridges: Method `getProductAbstractDataById()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getProductAbstractDataById()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
         "fileName": "src/Spryker/Zed/ProductRelationGui/Dependency/Facade/ProductRelationGuiToProductRelationFacadeBridge.php",
-        "description": "Bridges: Method `getStoresByProductRelationCriteria()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getStoresByProductRelationCriteria()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"

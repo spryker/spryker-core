@@ -1,7 +1,7 @@
 [
     {
         "fileName": "src/Spryker/Zed/CartPermissionConnector/Dependency/Facade/CartPermissionConnectorToMessengerFacadeBridge.php",
-        "description": "Bridges: Method `addErrorMessage()` must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "description": "Bridges: Method `addErrorMessage()` must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"

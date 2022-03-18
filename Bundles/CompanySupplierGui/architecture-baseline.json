@@ -1,14 +1,14 @@
 [
     {
         "fileName": "src/Spryker/Zed/CompanySupplierGui/Dependency/Facade/CompanySupplierGuiToCompanySupplierFacadeBridge.php",
-        "description": "Bridges: Method `getAllSuppliers()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getAllSuppliers()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
         "fileName": "src/Spryker/Zed/CompanySupplierGui/Dependency/Facade/CompanySupplierGuiToCompanySupplierFacadeBridge.php",
-        "description": "Bridges: Method `getSuppliersByIdProduct()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getSuppliersByIdProduct()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -22,14 +22,14 @@
     },
     {
         "fileName": "src/Spryker/Zed/CompanySupplierGui/Dependency/Facade/CompanySupplierGuiToCompanySupplierFacadeBridge.php",
-        "description": "Bridges: Method `getCompanyTypes()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getCompanyTypes()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
         "fileName": "src/Spryker/Zed/CompanySupplierGui/Dependency/Facade/CompanySupplierGuiToCompanySupplierFacadeBridge.php",
-        "description": "Bridges: Method `getCompanyTypeByIdCompanyType()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getCompanyTypeByIdCompanyType()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -50,7 +50,7 @@
     },
     {
         "fileName": "src/Spryker/Zed/CompanySupplierGui/Dependency/Facade/CompanySupplierGuiToCurrencyFacadeBridge.php",
-        "description": "Bridges: Method `getByIdCurrency()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getByIdCurrency()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -71,7 +71,7 @@
     },
     {
         "fileName": "src/Spryker/Zed/CompanySupplierGui/Dependency/Facade/CompanySupplierGuiToStoreFacadeBridge.php",
-        "description": "Bridges: Method `getStoreById()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getStoreById()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"

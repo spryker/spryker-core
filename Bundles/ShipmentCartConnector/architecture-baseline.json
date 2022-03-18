@@ -1,14 +1,14 @@
 [
     {
         "fileName": "src/Spryker/Zed/ShipmentCartConnector/Dependency/Facade/ShipmentCartConnectorToPriceFacadeBridge.php",
-        "description": "Bridges: Method `getNetPriceModeIdentifier()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getNetPriceModeIdentifier()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
         "fileName": "src/Spryker/Zed/ShipmentCartConnector/Dependency/Facade/ShipmentCartConnectorToPriceFacadeBridge.php",
-        "description": "Bridges: Method `getGrossPriceModeIdentifier()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getGrossPriceModeIdentifier()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -29,7 +29,7 @@
     },
     {
         "fileName": "src/Spryker/Zed/ShipmentCartConnector/Dependency/Facade/ShipmentCartConnectorToShipmentFacadeBridge.php",
-        "description": "Bridges: Method `getAvailableMethodsByShipment()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getAvailableMethodsByShipment()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -43,7 +43,7 @@
     },
     {
         "fileName": "src/Spryker/Zed/ShipmentCartConnector/Dependency/Facade/ShipmentCartConnectorToShipmentFacadeBridge.php",
-        "description": "Bridges: Method `findAvailableMethodById()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `findAvailableMethodById()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"

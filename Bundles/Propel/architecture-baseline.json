@@ -8,7 +8,7 @@
     },
     {
         "fileName": "src/Spryker/Zed/Propel/Dependency/Facade/PropelToTransferFacadeBridge.php",
-        "description": "Bridges: Method `deleteGeneratedEntityTransferObjects()` must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "description": "Bridges: Method `deleteGeneratedEntityTransferObjects()` must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"

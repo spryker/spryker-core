@@ -8,7 +8,7 @@
     },
     {
         "fileName": "src/Spryker/Zed/ProductListStorage/Dependency/Facade/ProductListStorageToEventBehaviorFacadeBridge.php",
-        "description": "Bridges: Method `getEventTransferIds()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getEventTransferIds()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -22,63 +22,63 @@
     },
     {
         "fileName": "src/Spryker/Zed/ProductListStorage/Dependency/Facade/ProductListStorageToEventBehaviorFacadeBridge.php",
-        "description": "Bridges: Method `getEventTransferForeignKeys()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getEventTransferForeignKeys()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
         "fileName": "src/Spryker/Zed/ProductListStorage/Dependency/Facade/ProductListStorageToProductListFacadeBridge.php",
-        "description": "Bridges: Method `getProductBlacklistIdsByIdProductAbstract()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getProductBlacklistIdsByIdProductAbstract()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
         "fileName": "src/Spryker/Zed/ProductListStorage/Dependency/Facade/ProductListStorageToProductListFacadeBridge.php",
-        "description": "Bridges: Method `getProductWhitelistIdsByIdProductAbstract()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getProductWhitelistIdsByIdProductAbstract()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
         "fileName": "src/Spryker/Zed/ProductListStorage/Dependency/Facade/ProductListStorageToProductListFacadeBridge.php",
-        "description": "Bridges: Method `getCategoryWhitelistIdsByIdProductAbstract()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getCategoryWhitelistIdsByIdProductAbstract()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
         "fileName": "src/Spryker/Zed/ProductListStorage/Dependency/Facade/ProductListStorageToProductListFacadeBridge.php",
-        "description": "Bridges: Method `getProductBlacklistIdsByIdProduct()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getProductBlacklistIdsByIdProduct()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
         "fileName": "src/Spryker/Zed/ProductListStorage/Dependency/Facade/ProductListStorageToProductListFacadeBridge.php",
-        "description": "Bridges: Method `getProductWhitelistIdsByIdProduct()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getProductWhitelistIdsByIdProduct()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
         "fileName": "src/Spryker/Zed/ProductListStorage/Dependency/Facade/ProductListStorageToProductListFacadeBridge.php",
-        "description": "Bridges: Method `getProductAbstractIdsByProductListIds()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getProductAbstractIdsByProductListIds()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
         "fileName": "src/Spryker/Zed/ProductListStorage/Dependency/Facade/ProductListStorageToProductListFacadeBridge.php",
-        "description": "Bridges: Method `getProductAbstractListIdsByProductAbstractIds()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getProductAbstractListIdsByProductAbstractIds()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
         "fileName": "src/Spryker/Zed/ProductListStorage/Dependency/Facade/ProductListStorageToProductListFacadeBridge.php",
-        "description": "Bridges: Method `getProductListsIdsByProductIds()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getProductListsIdsByProductIds()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"

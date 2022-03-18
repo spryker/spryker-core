@@ -50,21 +50,21 @@
     },
     {
         "fileName": "src/Spryker/Zed/CategoryStorage/Dependency/Facade/CategoryStorageToCategoryFacadeBridge.php",
-        "description": "Bridges: Method `getCategoryNodesWithRelativeNodes()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getCategoryNodesWithRelativeNodes()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
         "fileName": "src/Spryker/Zed/CategoryStorage/Dependency/Facade/CategoryStorageToCategoryFacadeBridge.php",
-        "description": "Bridges: Method `getCategoryNodes()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getCategoryNodes()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
         "fileName": "src/Spryker/Zed/CategoryStorage/Dependency/Facade/CategoryStorageToEventBehaviorFacadeBridge.php",
-        "description": "Bridges: Method `getEventTransferIds()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getEventTransferIds()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -78,14 +78,14 @@
     },
     {
         "fileName": "src/Spryker/Zed/CategoryStorage/Dependency/Facade/CategoryStorageToEventBehaviorFacadeBridge.php",
-        "description": "Bridges: Method `getEventTransferForeignKeys()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getEventTransferForeignKeys()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
         "fileName": "src/Spryker/Zed/CategoryStorage/Dependency/Facade/CategoryStorageToEventBehaviorFacadeBridge.php",
-        "description": "Bridges: Method `getEventTransfersOriginalValues()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getEventTransfersOriginalValues()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -106,7 +106,7 @@
     },
     {
         "fileName": "src/Spryker/Zed/CategoryStorage/Dependency/Facade/CategoryStorageToStoreFacadeBridge.php",
-        "description": "Bridges: Method `getStoresAvailableForCurrentPersistence()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getStoresAvailableForCurrentPersistence()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"

@@ -1,7 +1,7 @@
 [
     {
         "fileName": "src/Spryker/Zed/ContentProductGui/Dependency/Facade/ContentProductGuiToLocaleBridge.php",
-        "description": "Bridges: Method `getCurrentLocale()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getCurrentLocale()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -22,7 +22,7 @@
     },
     {
         "fileName": "src/Spryker/Zed/ContentProductGui/Dependency/Facade/ContentProductGuiToProductImageBridge.php",
-        "description": "Bridges: Method `getProductImagesSetCollectionByProductAbstractId()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getProductImagesSetCollectionByProductAbstractId()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"

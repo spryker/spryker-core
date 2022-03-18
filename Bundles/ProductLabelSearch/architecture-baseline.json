@@ -1,7 +1,7 @@
 [
     {
         "fileName": "src/Spryker/Zed/ProductLabelSearch/Dependency/Facade/ProductLabelSearchToEventBehaviorFacadeBridge.php",
-        "description": "Bridges: Method `getEventTransferIds()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getEventTransferIds()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -15,7 +15,7 @@
     },
     {
         "fileName": "src/Spryker/Zed/ProductLabelSearch/Dependency/Facade/ProductLabelSearchToEventBehaviorFacadeBridge.php",
-        "description": "Bridges: Method `getEventTransferForeignKeys()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getEventTransferForeignKeys()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -43,14 +43,14 @@
     },
     {
         "fileName": "src/Spryker/Zed/ProductLabelSearch/Dependency/Facade/ProductLabelSearchToProductLabelBridge.php",
-        "description": "Bridges: Method `findLabelIdsByIdProductAbstract()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `findLabelIdsByIdProductAbstract()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
         "fileName": "src/Spryker/Zed/ProductLabelSearch/Dependency/Facade/ProductLabelSearchToProductLabelBridge.php",
-        "description": "Bridges: Method `getActiveLabelsByCriteria()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getActiveLabelsByCriteria()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"

@@ -8,21 +8,21 @@
     },
     {
         "fileName": "src/Spryker/Zed/ProductImageCartConnector/Dependency/Facade/ProductImageCartConnectorToProductImageBridge.php",
-        "description": "Bridges: Method `getProductImagesSetCollectionByProductId()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getProductImagesSetCollectionByProductId()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
         "fileName": "src/Spryker/Zed/ProductImageCartConnector/Dependency/Facade/ProductImageCartConnectorToProductImageBridge.php",
-        "description": "Bridges: Method `getProductImagesSetCollectionByProductIdForCurrentLocale()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getProductImagesSetCollectionByProductIdForCurrentLocale()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
         "fileName": "src/Spryker/Zed/ProductImageCartConnector/Dependency/Facade/ProductImageCartConnectorToProductImageBridge.php",
-        "description": "Bridges: Method `getProductImagesByProductIdsAndProductImageSetName()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getProductImagesByProductIdsAndProductImageSetName()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"

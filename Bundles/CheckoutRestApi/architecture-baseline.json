@@ -50,7 +50,7 @@
     },
     {
         "fileName": "src/Spryker/Zed/CheckoutRestApi/Dependency/Facade/CheckoutRestApiToCartsRestApiFacadeBridge.php",
-        "description": "Bridges: Method `findQuoteByUuid()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `findQuoteByUuid()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -64,21 +64,21 @@
     },
     {
         "fileName": "src/Spryker/Zed/CheckoutRestApi/Dependency/Facade/CheckoutRestApiToCustomerFacadeBridge.php",
-        "description": "Bridges: Method `findCustomerByReference()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `findCustomerByReference()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
         "fileName": "src/Spryker/Zed/CheckoutRestApi/Dependency/Facade/CheckoutRestApiToPaymentFacadeBridge.php",
-        "description": "Bridges: Method `getAvailableMethods()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getAvailableMethods()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
         "fileName": "src/Spryker/Zed/CheckoutRestApi/Dependency/Facade/CheckoutRestApiToPaymentFacadeBridge.php",
-        "description": "Bridges: Method `getAvailablePaymentProvidersForStore()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getAvailablePaymentProvidersForStore()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -92,14 +92,14 @@
     },
     {
         "fileName": "src/Spryker/Zed/CheckoutRestApi/Dependency/Facade/CheckoutRestApiToQuoteFacadeBridge.php",
-        "description": "Bridges: Method `deleteQuote()` must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "description": "Bridges: Method `deleteQuote()` must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
         "fileName": "src/Spryker/Zed/CheckoutRestApi/Dependency/Facade/CheckoutRestApiToShipmentFacadeBridge.php",
-        "description": "Bridges: Method `getAvailableMethodsByShipment()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getAvailableMethodsByShipment()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"

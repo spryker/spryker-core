@@ -1,7 +1,7 @@
 [
     {
         "fileName": "src/Spryker/Zed/MerchantStock/Dependency/Facade/MerchantStockToStockFacadeBridge.php",
-        "description": "Bridges: Method `createStock()` must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "description": "Bridges: Method `createStock()` must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"

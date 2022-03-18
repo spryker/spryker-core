@@ -1,7 +1,7 @@
 [
     {
         "fileName": "src/Spryker/Zed/IndexGenerator/Dependency/Facade/IndexGeneratorToPropelFacadeBridge.php",
-        "description": "Bridges: Method `getSchemaDirectory()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `getSchemaDirectory()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"

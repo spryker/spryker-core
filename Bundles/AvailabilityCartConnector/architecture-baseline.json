@@ -1,7 +1,7 @@
 [
     {
         "fileName": "src/Spryker/Zed/AvailabilityCartConnector/Dependency/Facade/AvailabilityCartConnectorToAvailabilityBridge.php",
-        "description": "Bridges: Method `findOrCreateProductConcreteAvailabilityBySkuForStore()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer;` signature.",
+        "description": "Bridges: Method `findOrCreateProductConcreteAvailabilityBySkuForStore()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
