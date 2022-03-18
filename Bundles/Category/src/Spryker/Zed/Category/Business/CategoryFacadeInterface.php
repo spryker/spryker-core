@@ -58,12 +58,14 @@ interface CategoryFacadeInterface
 
     /**
      * Specification:
+     *  - Requires `CategoryTransfer.idCategory`, `CategoryTransfer.categoryNode` and `CategoryTransfer.categoryNode.idCategoryNode` transfer properties to be set.
      *  - Finds category entity, hydrates it from CategoryTransfer, and persists it
      *  - Finds category-node entity, hydrates it from CategoryTransfer, and persists it
      *  - Finds category-attribute entities (for all given locals), hydrates them from CategoryTransfer, and persists them
      *  - Finds or creates extra-parent category-node entities, hydrates them from CategoryTransfer, and persists them
      *  - Generates urls from category names for all given locales (names are part of the attributes)
      *  - Finds url entities, hydrates them with generated URLs, and persists them
+     *  - Creates new url entity for provided locale while none is found.
      *  - Updates the relationships between category and store if data is provided.
      *  - Cleanups store relations in case empty `StoreRelationTransfer.idStores` property.
      *  - Touches modified category-node entities active (via TouchFacade)

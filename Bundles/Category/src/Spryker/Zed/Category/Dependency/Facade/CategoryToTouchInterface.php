@@ -15,7 +15,7 @@ interface CategoryToTouchInterface
      *
      * @return bool
      */
-    public function touchActive($itemType, $itemId);
+    public function touchActive(string $itemType, int $itemId): bool;
 
     /**
      * @param string $itemType
@@ -23,7 +23,7 @@ interface CategoryToTouchInterface
      *
      * @return bool
      */
-    public function touchDeleted($itemType, $itemId);
+    public function touchDeleted(string $itemType, int $itemId): bool;
 
     /**
      * @return bool

@@ -28,7 +28,7 @@ class CategoryToTouchBridge implements CategoryToTouchInterface
      *
      * @return bool
      */
-    public function touchActive($itemType, $itemId)
+    public function touchActive(string $itemType, int $itemId): bool
     {
         return $this->touchFacade->touchActive($itemType, $itemId);
     }
@@ -39,7 +39,7 @@ class CategoryToTouchBridge implements CategoryToTouchInterface
      *
      * @return bool
      */
-    public function touchDeleted($itemType, $itemId)
+    public function touchDeleted(string $itemType, int $itemId): bool
     {
         return $this->touchFacade->touchDeleted($itemType, $itemId);
     }

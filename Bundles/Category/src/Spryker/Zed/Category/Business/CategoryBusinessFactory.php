@@ -256,6 +256,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
             $this->createUrlPathGenerator(),
             $this->getUrlFacade(),
             $this->getConfig(),
+            $this->createCategoryUrlCreator(),
         );
     }
 
