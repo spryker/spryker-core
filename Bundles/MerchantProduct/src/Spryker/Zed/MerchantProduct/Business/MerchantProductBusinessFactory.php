@@ -8,6 +8,8 @@
 namespace Spryker\Zed\MerchantProduct\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\MerchantProduct\Business\Checker\MerchantProductShoppingListItemChecker;
+use Spryker\Zed\MerchantProduct\Business\Checker\MerchantProductShoppingListItemCheckerInterface;
 use Spryker\Zed\MerchantProduct\Business\Expander\ShoppingListItemExpander;
 use Spryker\Zed\MerchantProduct\Business\Expander\ShoppingListItemExpanderInterface;
 use Spryker\Zed\MerchantProduct\Business\Reader\MerchantProductReader;
@@ -20,6 +22,7 @@ use Spryker\Zed\MerchantProduct\Business\Validator\MerchantProductValidatorInter
 use Spryker\Zed\MerchantProduct\Business\Writer\MerchantProductWriter;
 use Spryker\Zed\MerchantProduct\Business\Writer\MerchantProductWriterInterface;
 use Spryker\Zed\MerchantProduct\Dependency\External\MerchantProductToValidationAdapterInterface;
+use Spryker\Zed\MerchantProduct\Dependency\Facade\MerchantProductToMerchantFacadeInterface;
 use Spryker\Zed\MerchantProduct\Dependency\Facade\MerchantProductToProductFacadeInterface;
 use Spryker\Zed\MerchantProduct\MerchantProductDependencyProvider;
 use Symfony\Component\Validator\Constraint;
@@ -116,5 +119,23 @@ class MerchantProductBusinessFactory extends AbstractBusinessFactory
     public function getValidationAdapter(): MerchantProductToValidationAdapterInterface
     {
         return $this->getProvidedDependency(MerchantProductDependencyProvider::EXTERNAL_ADAPTER_VALIDATION);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProduct\Business\Checker\MerchantProductShoppingListItemCheckerInterface
+     */
+    public function createMerchantProductShoppingListItemChecker(): MerchantProductShoppingListItemCheckerInterface
+    {
+        return new MerchantProductShoppingListItemChecker(
+            $this->getMerchantFacade(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProduct\Dependency\Facade\MerchantProductToMerchantFacadeInterface
+     */
+    public function getMerchantFacade(): MerchantProductToMerchantFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantProductDependencyProvider::FACADE_MERCHANT);
     }
 }

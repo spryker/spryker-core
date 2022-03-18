@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ShoppingList\Dependency\Facade;
 
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 interface ShoppingListToProductFacadeInterface
@@ -31,4 +32,18 @@ interface ShoppingListToProductFacadeInterface
      * @return bool
      */
     public function isProductConcreteActive(ProductConcreteTransfer $productConcreteTransfer): bool;
+
+    /**
+     * @param string $concreteSku
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function getProductConcrete(string $concreteSku): ProductConcreteTransfer;
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
+     */
+    public function findProductAbstractById(int $idProductAbstract): ?ProductAbstractTransfer;
 }

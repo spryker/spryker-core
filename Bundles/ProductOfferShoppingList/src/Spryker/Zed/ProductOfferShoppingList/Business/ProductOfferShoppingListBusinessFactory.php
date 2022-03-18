@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductOfferShoppingList\Business\Checker\ProductOfferShoppingListChecker;
 use Spryker\Zed\ProductOfferShoppingList\Business\Checker\ProductOfferShoppingListCheckerInterface;
 use Spryker\Zed\ProductOfferShoppingList\Dependency\Facade\ProductOfferShoppingListToProductOfferFacadeInterface;
+use Spryker\Zed\ProductOfferShoppingList\Dependency\Facade\ProductOfferShoppingListToStoreFacadeInterface;
 use Spryker\Zed\ProductOfferShoppingList\ProductOfferShoppingListDependencyProvider;
 
 /**
@@ -25,6 +26,7 @@ class ProductOfferShoppingListBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductOfferShoppingListChecker(
             $this->getProductOfferFacade(),
+            $this->getStoreFacade(),
         );
     }
 
@@ -34,5 +36,13 @@ class ProductOfferShoppingListBusinessFactory extends AbstractBusinessFactory
     public function getProductOfferFacade(): ProductOfferShoppingListToProductOfferFacadeInterface
     {
         return $this->getProvidedDependency(ProductOfferShoppingListDependencyProvider::FACADE_PRODUCT_OFFER);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferShoppingList\Dependency\Facade\ProductOfferShoppingListToStoreFacadeInterface
+     */
+    public function getStoreFacade(): ProductOfferShoppingListToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductOfferShoppingListDependencyProvider::FACADE_STORE);
     }
 }

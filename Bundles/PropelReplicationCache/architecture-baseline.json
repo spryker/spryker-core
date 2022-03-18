@@ -1,0 +1,30 @@
+[
+    {
+        "fileName": "src/Spryker/Zed/PropelReplicationCache/Business/PropelReplicationCacheFacade.php",
+        "description": "Zed Business Layer - Facade: There are properties in class `Spryker\\Zed\\PropelReplicationCache\\Business\\PropelReplicationCacheFacade` which violates rule \"A facade must not have properties. It must also not contain any instantiations, only delegation.\"",
+        "rule": "FacadeRule",
+        "ruleset": "Spryker Zed",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/PropelReplicationCache/Business/PropelReplicationCacheFacade.php",
+        "description": "Zed Business Layer - Facade: The method `Spryker\\Zed\\PropelReplicationCache\\Business\\PropelReplicationCacheFacade::getInstance()()` contains a `if` statement which violates the rule \"A Facade must not contain logic and only delegate.\"",
+        "rule": "FacadeNoLogicRule",
+        "ruleset": "Spryker Zed",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/PropelReplicationCache/Business/PropelReplicationCacheFacade.php",
+        "description": "Zed Business Layer - Facade: The method `Spryker\\Zed\\PropelReplicationCache\\Business\\PropelReplicationCacheFacade::getInstance()()` uses `new` to instantiate an object which violates rule \"No instantiations with 'new'\"",
+        "rule": "FacadeRule",
+        "ruleset": "Spryker Zed",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/PropelReplicationCache/Business/PropelReplicationCacheFacade.php",
+        "description": "Zed Business Layer - Facade: The method `Spryker\\Zed\\PropelReplicationCache\\Business\\PropelReplicationCacheFacade::getInstance()()` is using an invalid return type `self` which violates the rule \"Every Facade should only return native types or transfer objects.\"",
+        "rule": "FacadeReturnValueRule",
+        "ruleset": "Spryker Zed",
+        "priority": "1"
+    }
+]

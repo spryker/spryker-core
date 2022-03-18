@@ -232,4 +232,15 @@
     <transfer name="EventEntity">
     </transfer>
 
+    <transfer name="StoreRelation">
+        <property name="stores" type="Store[]" singular="stores"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="ProductAbstract">
+    </transfer>
+
 </transfers>

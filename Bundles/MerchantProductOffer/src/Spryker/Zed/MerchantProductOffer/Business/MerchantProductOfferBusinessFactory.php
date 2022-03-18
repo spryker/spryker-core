@@ -8,10 +8,13 @@
 namespace Spryker\Zed\MerchantProductOffer\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\MerchantProductOffer\Business\Checker\MerchantProductOfferChecker;
+use Spryker\Zed\MerchantProductOffer\Business\Checker\MerchantProductOfferCheckerInterface;
 use Spryker\Zed\MerchantProductOffer\Business\Expander\ShoppingListItemExpander;
 use Spryker\Zed\MerchantProductOffer\Business\Expander\ShoppingListItemExpanderInterface;
 use Spryker\Zed\MerchantProductOffer\Business\MerchantProductOfferReader\MerchantProductOfferReader;
 use Spryker\Zed\MerchantProductOffer\Business\MerchantProductOfferReader\MerchantProductOfferReaderInterface;
+use Spryker\Zed\MerchantProductOffer\Dependency\Facade\MerchantProductOfferToMerchantFacadeInterface;
 use Spryker\Zed\MerchantProductOffer\Dependency\Facade\MerchantProductOfferToProductOfferFacadeInterface;
 use Spryker\Zed\MerchantProductOffer\MerchantProductOfferDependencyProvider;
 
@@ -47,6 +50,25 @@ class MerchantProductOfferBusinessFactory extends AbstractBusinessFactory
     {
         return new ShoppingListItemExpander(
             $this->getProductOfferFacade(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProductOffer\Dependency\Facade\MerchantProductOfferToMerchantFacadeInterface
+     */
+    public function getMerchantFacade(): MerchantProductOfferToMerchantFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantProductOfferDependencyProvider::FACADE_MERCHANT);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProductOffer\Business\Checker\MerchantProductOfferCheckerInterface
+     */
+    public function createMerchantProductOfferChecker(): MerchantProductOfferCheckerInterface
+    {
+        return new MerchantProductOfferChecker(
+            $this->getProductOfferFacade(),
+            $this->getMerchantFacade(),
         );
     }
 }

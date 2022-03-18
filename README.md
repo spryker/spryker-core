@@ -6,7 +6,7 @@
 [![Minimum PHP Version](http://img.shields.io/badge/php-%3E%3D%207.4-8892BF.svg)](https://php.net/)
 
 ### Links
-- **[Spryker Documentation](https://academy.spryker.com/)**
+- **[Spryker Documentation](https://docs.spryker.com/)**
 - [Spryker Architecture-Sniffer](https://github.com/spryker/architecture-sniffer)
 - [Spryker Code-Sniffer](https://github.com/spryker/code-sniffer)
 - [Spryker Code-Generator](https://github.com/spryker/code-generator)

@@ -10,6 +10,7 @@ namespace Spryker\Zed\MerchantProduct;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\MerchantProduct\Dependency\External\MerchantProductToValidationAdapter;
+use Spryker\Zed\MerchantProduct\Dependency\Facade\MerchantProductToMerchantFacadeBridge;
 use Spryker\Zed\MerchantProduct\Dependency\Facade\MerchantProductToProductFacadeBridge;
 use Spryker\Zed\MerchantProduct\Dependency\Service\MerchantProductToUtilEncodingServiceBridge;
 
@@ -22,6 +23,11 @@ class MerchantProductDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
+
+    /**
+     * @var string
+     */
+    public const FACADE_MERCHANT = 'FACADE_MERCHANT';
 
     /**
      * @var string
@@ -42,6 +48,7 @@ class MerchantProductDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addProductFacade($container);
         $container = $this->addValidationAdapter($container);
+        $container = $this->addMerchantFacade($container);
 
         return $container;
     }
@@ -95,6 +102,20 @@ class MerchantProductDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::EXTERNAL_ADAPTER_VALIDATION, function () {
             return new MerchantProductToValidationAdapter();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMerchantFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_MERCHANT, function (Container $container) {
+            return new MerchantProductToMerchantFacadeBridge($container->getLocator()->merchant()->facade());
         });
 
         return $container;

@@ -39,7 +39,7 @@ class GracefulRunnerHelper extends Module
      * @param int|null $breakAfter
      * @param bool $catch
      *
-     * @return \Generator
+     * @return \Generator<mixed>
      */
     public function getGenerator(?int $breakAfter = null, bool $catch = false): Generator
     {

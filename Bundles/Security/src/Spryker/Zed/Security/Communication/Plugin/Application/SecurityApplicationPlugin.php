@@ -222,6 +222,11 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
     /**
      * @var string
      */
+    protected const SERVICE_SECURITY_AUTHENTICATION_LISTENER_USER_SESSION_VALIDATOR_PROTO = 'security.authentication_listener.user_session_validator._proto';
+
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_AUTHENTICATION_LISTENER_USER_SESSION_HANDLER_PROTO = 'security.authentication_listener.user_session_handler._proto';
 
     /**
@@ -297,7 +302,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
     /**
      * @var array
      */
-    protected const POSITIONS = ['logout', 'pre_auth', 'guard', 'form', 'http', 'remember_me', 'anonymous', 'user_session_handler'];
+    protected const POSITIONS = ['logout', 'pre_auth', 'guard', 'form', 'http', 'remember_me', 'anonymous', 'user_session_validator', 'user_session_handler'];
 
     /**
      * @var array<array<string>>
@@ -736,7 +741,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
      */
     protected function addAuthenticationListenerFactories(ContainerInterface $container): ContainerInterface
     {
-        foreach (['logout', 'pre_auth', 'guard', 'form', 'http', 'remember_me', 'anonymous', 'user_session_handler'] as $type) {
+        foreach (static::POSITIONS as $type) {
             $entryPoint = $this->getEntryPoint($type);
 
             $container->set('security.authentication_listener.factory.' . $type, $container->protect(function ($firewallName, $options) use ($type, $container, $entryPoint) {
@@ -744,7 +749,11 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
                     $container->set('security.entry_point.' . $firewallName . '.' . $entryPoint, $container->get('security.entry_point.' . $entryPoint . '._proto')($firewallName, $options));
                 }
                 if (!$container->has('security.authentication_listener.' . $firewallName . '.' . $type)) {
-                    $container->set('security.authentication_listener.' . $firewallName . '.' . $type, $container->get('security.authentication_listener.' . $type . '._proto')($firewallName, $options));
+                    $service = $container->get('security.authentication_listener.' . $type . '._proto')(
+                        $firewallName,
+                        $options,
+                    );
+                    $container->set('security.authentication_listener.' . $firewallName . '.' . $type, $service);
                 }
                 $provider = $this->getProvider($type);
 
@@ -1066,6 +1075,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         $container = $this->addAuthenticationListenerAnonymousPrototype($container);
         $container = $this->addAuthenticationListenerSwitchUserPrototype($container);
         $container = $this->addAuthenticationListenerLogoutPrototype($container);
+        $container = $this->addUserSessionValidatorListenerPrototype($container);
         $container = $this->addUserSessionHandlerListenerPrototype($container);
 
         return $container;
@@ -1306,6 +1316,23 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
     protected function addUserSessionHandlerListenerPrototype(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_AUTHENTICATION_LISTENER_USER_SESSION_HANDLER_PROTO, $container->protect(function ($firewallName, $options) {
+            return function () {
+                return function () {
+                };
+            };
+        }));
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Service\Container\ContainerInterface $container
+     *
+     * @return \Spryker\Service\Container\ContainerInterface
+     */
+    protected function addUserSessionValidatorListenerPrototype(ContainerInterface $container): ContainerInterface
+    {
+        $container->set(static::SERVICE_SECURITY_AUTHENTICATION_LISTENER_USER_SESSION_VALIDATOR_PROTO, $container->protect(function ($firewallName, $options) {
             return function () {
                 return function () {
                 };

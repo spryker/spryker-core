@@ -98,7 +98,7 @@ class DataExportExecutor
      * @param \Generated\Shared\Transfer\DataExportConfigurationsTransfer $dataExportConfigurationsTransfer
      * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportDefaultsConfigurationTransfer
      *
-     * @return \Generator
+     * @return \Generator<\Generated\Shared\Transfer\DataExportReportTransfer|null>
      */
     protected function createDataExportGenerator(
         DataExportConfigurationsTransfer $dataExportConfigurationsTransfer,

@@ -15,12 +15,18 @@ use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToMessengerFacadeBrid
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToPermissionFacadeBridge;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToPersistentCartFacadeBridge;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToProductFacadeBridge;
+use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToStoreFacadeBridge;
 
 /**
  * @method \Spryker\Zed\ShoppingList\ShoppingListConfig getConfig()
  */
 class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
+    public const FACADE_STORE = 'FACADE_STORE';
+
     /**
      * @var string
      */
@@ -113,6 +119,21 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addShoppingListItemBulkPostSavePlugins($container);
         $container = $this->addBeforeDeleteShoppingListItemPlugins($container);
         $container = $this->addItemToShoppingListItemMapperPlugins($container);
+        $container = $this->addStoreFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_STORE, function (Container $container) {
+            return new ShoppingListToStoreFacadeBridge($container->getLocator()->store()->facade());
+        });
 
         return $container;
     }

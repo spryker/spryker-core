@@ -1,0 +1,6 @@
+{
+    "include": {
+        "spryker/glue-application": "Added for forward compatibility.",
+        "spryker/product-offer-shopping-list": "Added for forward compatibility."
+    }
+}

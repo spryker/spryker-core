@@ -23,11 +23,6 @@ class ProductDiscontinuedRepository extends AbstractRepository implements Produc
     use InstancePoolingTrait;
 
     /**
-     * @var string
-     */
-    protected const FIELD_SKU = 'sku';
-
-    /**
      * @uses Product
      *
      * @param \Generated\Shared\Transfer\ProductDiscontinuedTransfer $productDiscontinuedTransfer
@@ -160,8 +155,9 @@ class ProductDiscontinuedRepository extends AbstractRepository implements Produc
     {
         return $this->getFactory()
             ->createProductDiscontinuedQuery()
+            ->joinWithProduct()
+                ->select(SpyProductTableMap::COL_SKU)
             ->useProductQuery()
-                ->select(static::FIELD_SKU)
                 ->filterBySku_In($skus)
             ->endUse()
             ->find()

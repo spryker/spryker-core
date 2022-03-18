@@ -16,11 +16,17 @@ use Propel\Common\Util\SetColumnConverter;
 use Propel\Generator\Builder\Om\QueryBuilder as PropelQueryBuilder;
 use Propel\Generator\Model\Column;
 use Propel\Generator\Model\PropelTypes;
+use Spryker\Zed\Kernel\Business\FactoryResolverAwareTrait as BusinessFactoryResolverAwareTrait;
 use Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
+/**
+ * @method \Spryker\Zed\PropelOrm\Business\PropelOrmBusinessFactory getFactory()
+ */
 class QueryBuilder extends PropelQueryBuilder
 {
+    use BusinessFactoryResolverAwareTrait;
+
     /**
      * @var string
      */
@@ -409,7 +415,18 @@ SCRIPT;
      */
     protected function addClassBody(&$script)
     {
+        $classes = $this->getFactory()
+            ->createFindClassNamespacesCollector()
+            ->extractClassesToDeclare();
+
+        foreach ($classes as $class) {
+            $this->declareClass($class);
+        }
+
         $this->addForUpdate($script);
+        $this->addFind($script);
+        $this->addFindOne($script);
+        $this->addExists($script);
 
         parent::addClassBody($script);
     }
@@ -469,6 +486,264 @@ SCRIPT;
 
         return \$this;
     }\n
+    ";
+    }
+
+    /**
+     * @param string $script
+     *
+     * @return void
+     */
+    protected function addFindPk(&$script)
+    {
+        $class = $this->getObjectClassName();
+        $tableMapClassName = $this->getTableMapClassName();
+        $table = $this->getTable();
+
+        $script .= "
+    /**
+     * Find object by primary key.
+     * Propel uses the instance pool to skip the database if the object exists.
+     * Go fast if the query is untouched.
+     *";
+        if ($table->hasCompositePrimaryKey()) {
+            $pks = $table->getPrimaryKey();
+            $examplePk = array_slice([12, 34, 56, 78, 91], 0, count($pks));
+            $colNames = [];
+            foreach ($pks as $col) {
+                $colNames[] = '$' . $col->getName();
+            }
+            $pkType = 'array[' . implode(', ', $colNames) . ']';
+            $script .= "
+     * <code>
+     * \$obj = \$c->findPk(array(" . implode(', ', $examplePk) . '), $con);';
+        } else {
+            $pkType = 'mixed';
+            $script .= "
+     * <code>
+     * \$obj  = \$c->findPk(12, \$con);";
+        }
+        $script .= "
+     * </code>
+     *
+     * @param " . $pkType . " \$key Primary key to use for the query
+     * @param ConnectionInterface \$con an optional connection object
+     *
+     * @return $class|array|mixed the result, formatted by the current formatter
+     */
+    public function findPk(\$key, ConnectionInterface \$con = null)
+    {";
+        if (!$table->hasPrimaryKey()) {
+            $this->declareClass('Propel\\Runtime\\Exception\\LogicException');
+            $script .= "
+        throw new LogicException('The {$this->getObjectName()} object has no primary key');
+    }
+";
+
+            return;
+        }
+
+        $script .= "
+        if (\$key === null) {
+            return null;
+        }";
+        if ($table->hasCompositePrimaryKey()) {
+            $numberOfPks = count($table->getPrimaryKey());
+            $pkIndexes = range(0, $numberOfPks - 1);
+            $pks = preg_filter('/(\d+)/', '$key[${1}]', $pkIndexes); // put ids into "$key[]"
+        } else {
+            $pks = '$key';
+        }
+        $pkHash = $this->getTableMapBuilder()->getInstancePoolKeySnippet($pks);
+
+        $extensionPlugins = $this->getFactory()->getFindExtensionPlugins();
+        foreach ($extensionPlugins as $plugin) {
+            $script = $plugin->extend($script);
+        }
+
+        $script .= "
+
+        \$this->basePreSelect(\$con);
+
+        if (
+            \$this->formatter || \$this->modelAlias || \$this->with || \$this->select
+            || \$this->selectColumns || \$this->asColumns || \$this->selectModifiers
+            || \$this->map || \$this->having || \$this->joins
+        ) {
+            return \$this->findPkComplex(\$key, \$con);
+        }
+
+        if ((null !== (\$obj = {$tableMapClassName}::getInstanceFromPool({$pkHash})))) {
+            // the object is already in the instance pool
+            return \$obj;
+        }
+
+        return \$this->findPkSimple(\$key, \$con);
+    }
+";
+    }
+
+    /**
+     * Adds the findPks method for this object.
+     *
+     * @param string $script The script will be modified in this method.
+     *
+     * @return void
+     */
+    protected function addFindPks(&$script)
+    {
+        $this->declareClasses(
+            '\Propel\Runtime\Collection\ObjectCollection',
+            '\Propel\Runtime\Connection\ConnectionInterface',
+            '\Propel\Runtime\Propel',
+        );
+        $table = $this->getTable();
+        $pks = $table->getPrimaryKey();
+        $count = count($pks);
+        $script .= "
+    /**
+     * Find objects by primary key
+     * <code>";
+        if ($count === 1) {
+            $script .= "
+     * \$objs = \$c->findPks(array(12, 56, 832), \$con);";
+        } else {
+            $script .= "
+     * \$objs = \$c->findPks(array(array(12, 56), array(832, 123), array(123, 456)), \$con);";
+        }
+        $script .= "
+     * </code>
+     * @param     array \$keys Primary keys to use for the query
+     * @param     ConnectionInterface \$con an optional connection object
+     *
+     * @return ObjectCollection|array|mixed the list of results, formatted by the current formatter
+     */
+    public function findPks(\$keys, ConnectionInterface \$con = null)
+    {";
+        if (!$table->hasPrimaryKey()) {
+            $this->declareClass('Propel\\Runtime\\Exception\\LogicException');
+            $script .= "
+        throw new LogicException('The {$this->getObjectName()} object has no primary key');
+    }
+";
+
+            return;
+        }
+
+        $extensionPlugins = $this->getFactory()->getFindExtensionPlugins();
+        foreach ($extensionPlugins as $plugin) {
+            $script = $plugin->extend($script);
+        }
+
+        $script .= "
+
+        \$this->basePreSelect(\$con);
+        \$criteria = \$this->isKeepQuery() ? clone \$this : \$this;
+        \$dataFetcher = \$criteria
+            ->filterByPrimaryKeys(\$keys)
+            ->doSelect(\$con);
+
+        return \$criteria->getFormatter()->init(\$criteria)->format(\$dataFetcher);
+    }
+";
+    }
+
+    /**
+     * Adds the find method for this object.
+     *
+     * @param string $script The script will be modified in this method.
+     *
+     * @return void
+     */
+    protected function addFind(&$script)
+    {
+        $script .= "
+    /**
+     * Issue a SELECT query based on the current ModelCriteria
+     * and format the list of results with the current formatter
+     * By default, returns an array of model objects
+     *
+     * @param \\Propel\\Runtime\\Connection\\ConnectionInterface|null \$con an optional connection object
+     *
+     * @return \\Propel\\Runtime\\Collection\\ObjectCollection|\\Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface[]|mixed the list of results, formatted by the current formatter
+     */
+    public function find(?ConnectionInterface \$con = null)
+    {";
+
+        $extensionPlugins = $this->getFactory()->getFindExtensionPlugins();
+        foreach ($extensionPlugins as $plugin) {
+            $script = $plugin->extend($script);
+        }
+
+        $script .= "
+        return parent::find(\$con);
+    }
+    ";
+    }
+
+    /**
+     * Adds the findOne method for this object.
+     *
+     * @param string $script The script will be modified in this method.
+     *
+     * @return void
+     */
+    protected function addFindOne(&$script)
+    {
+        $script .= "
+    /**
+     * Issue a SELECT ... LIMIT 1 query based on the current ModelCriteria
+     * and format the result with the current formatter
+     * By default, returns a model object.
+     *
+     * Does not work with ->with()s containing one-to-many relations.
+     *
+     * @param \\Propel\\Runtime\\Connection\\ConnectionInterface|null \$con an optional connection object
+     *
+     * @return mixed the result, formatted by the current formatter
+     */
+    public function findOne(?ConnectionInterface \$con = null)
+    {";
+
+        $extensionPlugins = $this->getFactory()->getFindExtensionPlugins();
+        foreach ($extensionPlugins as $plugin) {
+            $script = $plugin->extend($script);
+        }
+
+        $script .= "
+        return parent::findOne(\$con);
+    }
+    ";
+    }
+
+    /**
+     * Adds the exists method for this object.
+     *
+     * @param string $script The script will be modified in this method.
+     *
+     * @return void
+     */
+    protected function addExists(&$script)
+    {
+        $script .= "
+    /**
+     * Issue an existence check on the current ModelCriteria
+     *
+     * @param \\Propel\\Runtime\\Connection\\ConnectionInterface|null \$con an optional connection object
+     *
+     * @return bool column existence
+     */
+    public function exists(?ConnectionInterface \$con = null)
+    {";
+
+        $extensionPlugins = $this->getFactory()->getFindExtensionPlugins();
+        foreach ($extensionPlugins as $plugin) {
+            $script = $plugin->extend($script);
+        }
+
+        $script .= "
+        return parent::exists(\$con);
+    }
     ";
     }
 }

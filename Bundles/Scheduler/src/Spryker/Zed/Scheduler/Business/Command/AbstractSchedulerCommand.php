@@ -67,7 +67,7 @@ abstract class AbstractSchedulerCommand implements SchedulerCommandInterface
     /**
      * @param \Generated\Shared\Transfer\SchedulerFilterTransfer $filterTransfer
      *
-     * @return \Generator
+     * @return \Generator<\Generated\Shared\Transfer\SchedulerResponseCollectionTransfer|null>
      */
     protected function createSchedulerGenerator(
         SchedulerFilterTransfer $filterTransfer

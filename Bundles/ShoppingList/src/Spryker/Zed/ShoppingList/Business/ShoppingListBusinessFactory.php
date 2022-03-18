@@ -28,6 +28,8 @@ use Spryker\Zed\ShoppingList\Business\ShoppingList\ShoppingListShareDeleter;
 use Spryker\Zed\ShoppingList\Business\ShoppingList\ShoppingListShareDeleterInterface;
 use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Messenger\ShoppingListItemMessageAdder;
 use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Messenger\ShoppingListItemMessageAdderInterface;
+use Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemChecker;
+use Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemCheckerInterface;
 use Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemPluginExecutor;
 use Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemPluginExecutorInterface;
 use Spryker\Zed\ShoppingList\Business\ShoppingListItem\Validator\ShoppingListItemAddOperationValidator;
@@ -48,6 +50,7 @@ use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToMessengerFacadeInte
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToPermissionFacadeInterface;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToPersistentCartFacadeInterface;
 use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToProductFacadeInterface;
+use Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToStoreFacadeInterface;
 use Spryker\Zed\ShoppingList\ShoppingListDependencyProvider;
 
 /**
@@ -364,5 +367,24 @@ class ShoppingListBusinessFactory extends AbstractBusinessFactory
     public function getItemToShoppingListItemMapperPlugins(): array
     {
         return $this->getProvidedDependency(ShoppingListDependencyProvider::PLUGINS_ITEM_TO_SHOPPING_LIST_ITEM_MAPPER);
+    }
+
+    /**
+     * @return \Spryker\Zed\ShoppingList\Business\ShoppingListItem\ShoppingListItemCheckerInterface
+     */
+    public function createShoppingListItemChecker(): ShoppingListItemCheckerInterface
+    {
+        return new ShoppingListItemChecker(
+            $this->getStoreFacade(),
+            $this->getProductFacade(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ShoppingList\Dependency\Facade\ShoppingListToStoreFacadeInterface
+     */
+    public function getStoreFacade(): ShoppingListToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(ShoppingListDependencyProvider::FACADE_STORE);
     }
 }

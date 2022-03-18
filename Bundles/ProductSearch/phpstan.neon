@@ -2,5 +2,3 @@ parameters:
     level: 7
     checkMissingIterableValueType: false
     ignoreErrors:
-        - '#Method .+AttributeReader::suggestUnusedKeys\(\) should return array but returns .+ObjectCollection\.#'
-        - '#Method .+AttributeReader::suggestKeys\(\) should return array but returns .+ObjectCollection\.#'

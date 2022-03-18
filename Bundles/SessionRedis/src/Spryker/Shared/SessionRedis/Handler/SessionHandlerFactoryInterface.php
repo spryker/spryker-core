@@ -24,6 +24,20 @@ interface SessionHandlerFactoryInterface
     /**
      * @param \Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface $redisClient
      *
+     * @return \Spryker\Shared\SessionRedis\Handler\SessionAccountHandlerRedisInterface
+     */
+    public function createSessionCustomerRedisHandler(SessionRedisWrapperInterface $redisClient): SessionAccountHandlerRedisInterface;
+
+    /**
+     * @param \Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface $redisClient
+     *
+     * @return \Spryker\Shared\SessionRedis\Handler\SessionAccountHandlerRedisInterface
+     */
+    public function createSessionUserRedisHandler(SessionRedisWrapperInterface $redisClient): SessionAccountHandlerRedisInterface;
+
+    /**
+     * @param \Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface $redisClient
+     *
      * @return \SessionHandlerInterface
      */
     public function createSessionHandlerRedisLocking(SessionRedisWrapperInterface $redisClient): SessionHandlerInterface;

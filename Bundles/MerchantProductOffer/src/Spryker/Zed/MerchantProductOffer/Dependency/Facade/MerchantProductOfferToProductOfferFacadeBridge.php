@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantProductOffer\Dependency\Facade;
 
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
+use Generated\Shared\Transfer\ProductOfferTransfer;
 
 class MerchantProductOfferToProductOfferFacadeBridge implements MerchantProductOfferToProductOfferFacadeInterface
 {
@@ -33,5 +34,15 @@ class MerchantProductOfferToProductOfferFacadeBridge implements MerchantProductO
     public function get(ProductOfferCriteriaTransfer $productOfferCriteria): ProductOfferCollectionTransfer
     {
         return $this->productOfferFacade->get($productOfferCriteria);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferCriteriaTransfer $productOfferCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferTransfer|null
+     */
+    public function findOne(ProductOfferCriteriaTransfer $productOfferCriteriaTransfer): ?ProductOfferTransfer
+    {
+        return $this->productOfferFacade->findOne($productOfferCriteriaTransfer);
     }
 }

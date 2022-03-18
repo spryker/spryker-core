@@ -234,6 +234,11 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
     /**
      * @var string
      */
+    protected const SERVICE_SECURITY_AUTHENTICATION_LISTENER_CUSTOMER_SESSION_VALIDATOR_PROTO = 'security.authentication_listener.customer_session_validator._proto';
+
+    /**
+     * @var string
+     */
     protected const SERVICE_SECURITY_ENTRY_POINT_FORM_PROTO = 'security.entry_point.form._proto';
 
     /**
@@ -311,7 +316,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
     /**
      * @var array
      */
-    protected const POSITIONS = ['logout', 'pre_auth', 'guard', 'form', 'http', 'remember_me', 'anonymous'];
+    protected const POSITIONS = ['logout', 'pre_auth', 'guard', 'form', 'http', 'remember_me', 'anonymous', 'customer_session_validator'];
 
     /**
      * @var array
@@ -1107,6 +1112,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         $container = $this->addAuthenticationListenerAnonymousPrototype($container);
         $container = $this->addAuthenticationListenerSwitchUserPrototype($container);
         $container = $this->addAuthenticationListenerLogoutPrototype($container);
+        $container = $this->addCustomerSessionValidatorListenerPrototype($container);
 
         return $container;
     }
@@ -1168,6 +1174,23 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
                     $container->get(static::SERVICE_DISPATCHER),
                     $this->getCsrfTokenManager($container, $options),
                 );
+            };
+        }));
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Service\Container\ContainerInterface $container
+     *
+     * @return \Spryker\Service\Container\ContainerInterface
+     */
+    protected function addCustomerSessionValidatorListenerPrototype(ContainerInterface $container): ContainerInterface
+    {
+        $container->set(static::SERVICE_SECURITY_AUTHENTICATION_LISTENER_CUSTOMER_SESSION_VALIDATOR_PROTO, $container->protect(function ($firewallName, $options) {
+            return function () {
+                return function () {
+                };
             };
         }));
 
