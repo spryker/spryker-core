@@ -7,12 +7,15 @@
 
 namespace Spryker\Zed\Category\Business\Updater;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
+use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\CategoryNodeUrlCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
+use Spryker\Zed\Category\Business\Creator\CategoryUrlCreatorInterface;
 use Spryker\Zed\Category\Business\Generator\UrlPathGeneratorInterface;
 use Spryker\Zed\Category\CategoryConfig;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToUrlInterface;
@@ -22,11 +25,6 @@ use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 class CategoryUrlUpdater implements CategoryUrlUpdaterInterface
 {
     use TransactionTrait;
-
-    /**
-     * @var \Spryker\Zed\Category\CategoryConfig;
-     */
-    protected $categoryConfig;
 
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface
@@ -44,21 +42,34 @@ class CategoryUrlUpdater implements CategoryUrlUpdaterInterface
     protected $urlFacade;
 
     /**
+     * @var \Spryker\Zed\Category\CategoryConfig;
+     */
+    protected $categoryConfig;
+
+    /**
+     * @var \Spryker\Zed\Category\Business\Creator\CategoryUrlCreatorInterface
+     */
+    protected $categoryUrlCreator;
+
+    /**
      * @param \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface $categoryRepository
      * @param \Spryker\Zed\Category\Business\Generator\UrlPathGeneratorInterface $urlPathGenerator
      * @param \Spryker\Zed\Category\Dependency\Facade\CategoryToUrlInterface $urlFacade
      * @param \Spryker\Zed\Category\CategoryConfig $categoryConfig
+     * @param \Spryker\Zed\Category\Business\Creator\CategoryUrlCreatorInterface $categoryUrlCreator
      */
     public function __construct(
         CategoryRepositoryInterface $categoryRepository,
         UrlPathGeneratorInterface $urlPathGenerator,
         CategoryToUrlInterface $urlFacade,
-        CategoryConfig $categoryConfig
+        CategoryConfig $categoryConfig,
+        CategoryUrlCreatorInterface $categoryUrlCreator
     ) {
         $this->categoryRepository = $categoryRepository;
         $this->urlPathGenerator = $urlPathGenerator;
         $this->urlFacade = $urlFacade;
         $this->categoryConfig = $categoryConfig;
+        $this->categoryUrlCreator = $categoryUrlCreator;
     }
 
     /**
@@ -98,11 +109,10 @@ class CategoryUrlUpdater implements CategoryUrlUpdaterInterface
      */
     public function updateCategoryNodeUrls(CategoryTransfer $categoryTransfer): void
     {
-        $nodeTransfer = (new NodeTransfer())
-            ->setIdCategoryNode($categoryTransfer->getIdCategoryOrFail());
+        $nodeTransfer = $categoryTransfer->getCategoryNodeOrFail();
 
         $categoryNodeUrlCriteriaTransfer = (new CategoryNodeUrlCriteriaTransfer())
-            ->addIdCategoryNode($categoryTransfer->getIdCategoryOrFail());
+            ->addIdCategoryNode($nodeTransfer->getIdCategoryNodeOrFail());
 
         $urlTransfers = $this->categoryRepository->getCategoryNodeUrls($categoryNodeUrlCriteriaTransfer);
 
@@ -113,6 +123,8 @@ class CategoryUrlUpdater implements CategoryUrlUpdaterInterface
                 $categoryLocalizedAttributesTransfer->getLocaleOrFail(),
             );
         }
+
+        $this->createCategoryNodeUrlsForNewLocalizedAttributes($categoryTransfer, $urlTransfers, $nodeTransfer);
     }
 
     /**
@@ -141,6 +153,12 @@ class CategoryUrlUpdater implements CategoryUrlUpdaterInterface
 
             $this->bulkUpdateCategoryNodeUrlsForLocale($categoryNodeIds, $urlTransfers, $categoryTransfer);
         }
+
+        $categoryNodeUrlCriteriaTransfer = (new CategoryNodeUrlCriteriaTransfer())
+            ->addIdCategoryNode($categoryTransfer->getIdCategoryOrFail());
+        $urlTransfers = $this->categoryRepository->getCategoryNodeUrls($categoryNodeUrlCriteriaTransfer);
+
+        $this->createCategoryNodeUrlsForNewLocalizedAttributes($categoryTransfer, $urlTransfers, $categoryTransfer->getCategoryNodeOrFail());
     }
 
     /**
@@ -223,6 +241,62 @@ class CategoryUrlUpdater implements CategoryUrlUpdaterInterface
             $urlTransfer->setUrl($categoryUrlPath);
             $this->urlFacade->updateUrl($urlTransfer);
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param array<\Generated\Shared\Transfer\UrlTransfer> $urlTransfers
+     * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
+     *
+     * @return void
+     */
+    protected function createCategoryNodeUrlsForNewLocalizedAttributes(
+        CategoryTransfer $categoryTransfer,
+        array $urlTransfers,
+        NodeTransfer $nodeTransfer
+    ): void {
+        $categoryLocalizedAttributesTransfersWithoutUrl = $this->extractCategoryLocalizedAttributesTransfersWithoutUrl($categoryTransfer, $urlTransfers);
+
+        if ($categoryLocalizedAttributesTransfersWithoutUrl->count()) {
+            $this->categoryUrlCreator->createLocalizedCategoryUrlsForNode($nodeTransfer, $categoryLocalizedAttributesTransfersWithoutUrl);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param array<\Generated\Shared\Transfer\UrlTransfer> $urlTransfers
+     *
+     * @return \ArrayObject<array-key, \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer>
+     */
+    protected function extractCategoryLocalizedAttributesTransfersWithoutUrl(CategoryTransfer $categoryTransfer, array $urlTransfers): ArrayObject
+    {
+        $categoryLocalizedAttributesTransfersWithoutUrl = new ArrayObject();
+        foreach ($categoryTransfer->getLocalizedAttributes() as $categoryLocalizedAttributesTransfer) {
+            if (!$this->urlForCategoryLocalizedAttributesTransferExists($categoryLocalizedAttributesTransfer, $urlTransfers)) {
+                $categoryLocalizedAttributesTransfersWithoutUrl->append($categoryLocalizedAttributesTransfer);
+            }
+        }
+
+        return $categoryLocalizedAttributesTransfersWithoutUrl;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer $categoryLocalizedAttributesTransfer
+     * @param array<\Generated\Shared\Transfer\UrlTransfer> $urlTransfers
+     *
+     * @return bool
+     */
+    protected function urlForCategoryLocalizedAttributesTransferExists(
+        CategoryLocalizedAttributesTransfer $categoryLocalizedAttributesTransfer,
+        array $urlTransfers
+    ): bool {
+        foreach ($urlTransfers as $urlTransfer) {
+            if ($this->checkUrlLocale($urlTransfer, $categoryLocalizedAttributesTransfer->getLocaleOrFail())) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

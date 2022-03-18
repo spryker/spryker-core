@@ -728,6 +728,63 @@ class CategoryFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testUpdateCategoryWithNewLocalizedAttributeWillGenerateUrlForNewProvidedLocale(): void
+    {
+        // Arrange
+        $this->tester->setDependency(CategoryDependencyProvider::PLUGINS_CATEGORY_URL_PATH, [
+            new CategoryUrlPathPrefixUpdaterPlugin(),
+        ]);
+
+        $localeTransfer = $this->tester->haveLocale([LocaleTransfer::LOCALE_NAME => static::TEST_LOCALE]);
+        $categoryLocalizedAttributes = $this->createCategoryLocalizedAttributesTransferForLocale($localeTransfer);
+
+        $categoryTransfer = $this->tester->haveCategory();
+        $categoryTransfer->addLocalizedAttributes($categoryLocalizedAttributes);
+
+        // Act
+        $this->getFacade()->update($categoryTransfer);
+
+        // Assert
+        $urlEntity = SpyUrlQuery::create()
+            ->filterByFkResourceCategorynode($categoryTransfer->getCategoryNodeOrFail()->getIdCategoryNodeOrFail())
+            ->filterByFkLocale($localeTransfer->getIdLocaleOrFail())
+            ->findOne();
+        $this->assertNotNull($urlEntity, 'Category URL should be successfully created.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateCategoryWithChildNodesWithNewLocalizedAttributeWillGenerateUrlForNewProvidedLocale(): void
+    {
+        // Arrange
+        $this->tester->setDependency(CategoryDependencyProvider::PLUGINS_CATEGORY_URL_PATH, [
+            new CategoryUrlPathPrefixUpdaterPlugin(),
+        ]);
+
+        $localeTransfer = $this->tester->haveLocale([LocaleTransfer::LOCALE_NAME => static::TEST_LOCALE]);
+        $categoryLocalizedAttributes = $this->createCategoryLocalizedAttributesTransferForLocale($localeTransfer);
+
+        $categoryTransfer = $this->tester->haveCategory();
+        $categoryTransfer->addLocalizedAttributes($categoryLocalizedAttributes);
+        $this->tester->haveCategory([
+            CategoryTransfer::PARENT_CATEGORY_NODE => $categoryTransfer->getCategoryNode(),
+        ]);
+
+        // Act
+        $this->getFacade()->update($categoryTransfer);
+
+        // Assert
+        $urlEntity = SpyUrlQuery::create()
+            ->filterByFkResourceCategorynode($categoryTransfer->getCategoryNodeOrFail()->getIdCategoryNodeOrFail())
+            ->filterByFkLocale($localeTransfer->getIdLocaleOrFail())
+            ->findOne();
+        $this->assertNotNull($urlEntity, 'Category URL should be successfully created.');
+    }
+
+    /**
+     * @return void
+     */
     public function testGetCategoryNodesWithFilterWillReturnCategoryNodesData(): void
     {
         // Arrange

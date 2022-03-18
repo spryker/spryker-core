@@ -30,7 +30,7 @@ class CategoryToEventFacadeBridge implements CategoryToEventFacadeInterface
      *
      * @return void
      */
-    public function trigger($eventName, TransferInterface $transfer)
+    public function trigger(string $eventName, TransferInterface $transfer): void
     {
         $this->eventFacade->trigger($eventName, $transfer);
     }
@@ -41,7 +41,7 @@ class CategoryToEventFacadeBridge implements CategoryToEventFacadeInterface
      *
      * @return void
      */
-    public function triggerBulk($eventName, array $transfers): void
+    public function triggerBulk(string $eventName, array $transfers): void
     {
         $this->eventFacade->triggerBulk($eventName, $transfers);
     }
