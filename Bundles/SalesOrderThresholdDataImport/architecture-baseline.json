@@ -15,7 +15,7 @@
     },
     {
         "fileName": "src/Spryker/Zed/SalesOrderThresholdDataImport/Dependency/Facade/SalesOrderThresholdDataImportToSalesOrderThresholdFacadeBridge.php",
-        "description": "Bridges: Method `saveSalesOrderThreshold()` must have `public function update(create)<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer;` signature.",
+        "description": "Bridges: Method `saveSalesOrderThreshold()` must have `public function update(create)<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
