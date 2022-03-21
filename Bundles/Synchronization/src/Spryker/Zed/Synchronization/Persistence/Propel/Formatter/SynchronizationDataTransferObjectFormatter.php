@@ -118,7 +118,7 @@ class SynchronizationDataTransferObjectFormatter extends ArrayFormatter
     /**
      * @return bool
      */
-    public function isObjectFormatter()
+    public function isObjectFormatter(): bool
     {
         return false;
     }
