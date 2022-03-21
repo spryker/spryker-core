@@ -37,7 +37,7 @@ class QueryBuilder extends PropelQueryBuilder
      *
      * @return string
      */
-    protected function addFilterByColIn(Column $col)
+    protected function addFilterByColIn(Column $col): string
     {
         $script = '';
 
@@ -70,7 +70,7 @@ SCRIPT;
      *
      * @return string
      */
-    protected function addFilterByColBetween(Column $col)
+    protected function addFilterByColBetween(Column $col): string
     {
         $script = '';
 
@@ -139,7 +139,7 @@ SCRIPT;
     /**
      * @return array<string>
      */
-    protected function getAllowedArrayFilters()
+    protected function getAllowedArrayFilters(): array
     {
         return [
             'Criteria::IN',
@@ -436,7 +436,7 @@ SCRIPT;
      *
      * @return void
      */
-    protected function addForUpdate(&$script)
+    protected function addForUpdate(string &$script): void
     {
         $script .= "
     /**
@@ -663,7 +663,7 @@ SCRIPT;
      *
      * @return void
      */
-    protected function addFind(&$script)
+    protected function addFind(string &$script): void
     {
         $script .= "
     /**
@@ -696,7 +696,7 @@ SCRIPT;
      *
      * @return void
      */
-    protected function addFindOne(&$script)
+    protected function addFindOne(string &$script): void
     {
         $script .= "
     /**
@@ -731,7 +731,7 @@ SCRIPT;
      *
      * @return void
      */
-    protected function addExists(&$script)
+    protected function addExists(string &$script): void
     {
         $script .= "
     /**

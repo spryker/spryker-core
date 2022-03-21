@@ -70,7 +70,7 @@ class ObjectBuilderWithLogger extends PropelObjectBuilder
             if (is_string(\$v)) {
                 \$v = in_array(strtolower(\$v), array('false', 'off', '-', 'no', 'n', '0', '')) ? false : true;
             } else {
-                \$v = (bool) \$v;
+                \$v = (bool)\$v;
             }
         }
 
@@ -129,12 +129,12 @@ class ObjectBuilderWithLogger extends PropelObjectBuilder
     /**
      * Insert the row in the database.
      *
-     * @param      ConnectionInterface \$con
-     *
+     * @param ConnectionInterface \$con
      * @throws PropelException
+     * @return void
      * @see doSave()
      */
-    protected function doInsert(ConnectionInterface \$con)
+    protected function doInsert(ConnectionInterface \$con): void
     {";
         if ($this->getPlatform() instanceof MssqlPlatform) {
             if ($table->hasAutoIncrementPrimaryKey()) {
@@ -175,10 +175,10 @@ class ObjectBuilderWithLogger extends PropelObjectBuilder
      *
      * @param      ConnectionInterface \$con
      *
-     * @return Integer Number of updated rows
+     * @return int Number of updated rows
      * @see doSave()
      */
-    protected function doUpdate(ConnectionInterface \$con)
+    protected function doUpdate(ConnectionInterface \$con): int
     {
         \$selectCriteria = \$this->buildPkeyCriteria();
         \$valuesCriteria = \$this->buildCriteria();
@@ -261,7 +261,7 @@ class ObjectBuilderWithLogger extends PropelObjectBuilder
      * Code to be run after persisting the object
      * @param \\Propel\\Runtime\\Connection\\ConnectionInterface \$con
      */
-     public function postSave(?ConnectionInterface \$con = null)
+     public function postSave(?ConnectionInterface \$con = null): void
      {";
 
         $extensionPlugins = $this->getFactory()->getPostSaveExtensionPlugins();

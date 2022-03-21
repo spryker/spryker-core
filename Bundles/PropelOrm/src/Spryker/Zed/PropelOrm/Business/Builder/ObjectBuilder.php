@@ -212,7 +212,7 @@ class ObjectBuilder extends PropelObjectBuilder
      * Code to be run after persisting the object
      * @param \\Propel\\Runtime\\Connection\\ConnectionInterface \$con
      */
-     public function postSave(?ConnectionInterface \$con = null)
+     public function postSave(?ConnectionInterface \$con = null): void
      {";
 
         $extensionPlugins = $this->getFactory()->getPostSaveExtensionPlugins();

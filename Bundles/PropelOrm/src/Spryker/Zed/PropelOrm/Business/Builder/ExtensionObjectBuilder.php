@@ -30,7 +30,7 @@ class ExtensionObjectBuilder extends PropelExtensionObjectBuilder
      *
      * @return string
      */
-    public function getUseStatements($ignoredNamespace = null): string
+    public function getUseStatements(?string $ignoredNamespace = null): string
     {
         $script = '';
         $declaredClasses = $this->declaredClasses;
@@ -47,7 +47,7 @@ class ExtensionObjectBuilder extends PropelExtensionObjectBuilder
     }
 
     /**
-     * @param array<string> $classes
+     * @param array<string, string> $classes
      * @param string $namespace
      * @param string $script
      *
