@@ -128,9 +128,9 @@ class ConnectorTableBuilder implements ConnectorTableBuilderInterface
             $this->aclEntityService->generateSegmentConnectorTableIdColumnName($connectorTableName),
         );
         $idColumn->setPrimaryKey(true);
-        $idColumn->setNotNull();
+        $idColumn->setNotNull(true);
         $idColumn->setType(static::ID_COLUMN_TYPE);
-        $idColumn->setAutoIncrement();
+        $idColumn->setAutoIncrement(true);
         $idColumn->getDomain()->setSqlType(static::ID_COLUMN_TYPE);
 
         return $idColumn;
@@ -221,7 +221,7 @@ class ConnectorTableBuilder implements ConnectorTableBuilderInterface
         /** @var \Propel\Generator\Model\Column $primaryKeyColumn */
         $primaryKeyColumn = $this->baseTable->getAutoIncrementPrimaryKey();
         $column->setType($primaryKeyColumn->getType());
-        $column->setNotNull();
+        $column->setNotNull(true);
         $column->getDomain()->setSqlType(
             $primaryKeyColumn->getType(),
         );
@@ -260,7 +260,7 @@ class ConnectorTableBuilder implements ConnectorTableBuilderInterface
 
         $column = new Column($columnName);
         $column->setType($autoIncrementPrimaryKey->getType());
-        $column->setNotNull();
+        $column->setNotNull(true);
         $column->getDomain()->setSqlType($autoIncrementPrimaryKey->getType());
 
         return $column;
