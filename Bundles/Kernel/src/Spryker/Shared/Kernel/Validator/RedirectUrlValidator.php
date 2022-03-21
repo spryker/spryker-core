@@ -5,11 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Yves\Kernel\Validator;
+namespace Spryker\Shared\Kernel\Validator;
 
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\Kernel\KernelConstants;
-use Spryker\Yves\Kernel\Exception\ForbiddenExternalRedirectException;
+use Spryker\Shared\Kernel\Exception\ForbiddenExternalRedirectException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
@@ -21,9 +19,29 @@ class RedirectUrlValidator implements RedirectUrlValidatorInterface
     protected const HTTP_HEADER_LOCATION = 'Location';
 
     /**
+     * @var array<string>
+     */
+    protected $allowedDomains;
+
+    /**
+     * @var bool
+     */
+    protected $isStrictDomainRedirectEnabled;
+
+    /**
+     * @param array<string> $allowedDomains
+     * @param bool $isStrictDomainRedirectEnabled
+     */
+    public function __construct(array $allowedDomains, bool $isStrictDomainRedirectEnabled)
+    {
+        $this->allowedDomains = $allowedDomains;
+        $this->isStrictDomainRedirectEnabled = $isStrictDomainRedirectEnabled;
+    }
+
+    /**
      * @param \Symfony\Component\HttpKernel\Event\ResponseEvent $event
      *
-     * @throws \Spryker\Yves\Kernel\Exception\ForbiddenExternalRedirectException
+     * @throws \Spryker\Shared\Kernel\Exception\ForbiddenExternalRedirectException
      *
      * @return void
      */
@@ -56,16 +74,10 @@ class RedirectUrlValidator implements RedirectUrlValidatorInterface
      */
     protected function isAllowedDomain(string $domain, Request $currentRequest): bool
     {
-        if (!$domain || $domain === $currentRequest->getHost() || !Config::get(KernelConstants::STRICT_DOMAIN_REDIRECT, true)) {
+        if (!$domain || $domain === $currentRequest->getHost() || !$this->isStrictDomainRedirectEnabled) {
             return true;
         }
 
-        $allowedDomains = Config::get(KernelConstants::DOMAIN_WHITELIST, []);
-
-        if (!$allowedDomains) {
-            return !Config::get(KernelConstants::STRICT_DOMAIN_REDIRECT, false);
-        }
-
-        return in_array($domain, $allowedDomains, true);
+        return in_array($domain, $this->allowedDomains, true);
     }
 }

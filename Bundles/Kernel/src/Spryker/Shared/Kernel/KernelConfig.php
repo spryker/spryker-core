@@ -148,4 +148,31 @@ class KernelConfig extends AbstractSharedConfig implements ClassNameCandidatesBu
 
         return APPLICATION_ROOT_DIR . '/src/Generated/Shared/Kernel/' . $projectNamespaces . '/resolvableClassCache%s.php';
     }
+
+    /**
+     * Specification:
+     * - Checks if strict domain redirect is enabled.
+     * - When enabled, only the domains from the list returned by {@link \Spryker\Shared\Kernel\KernelConfig::getDomainsAllowedForRedirect()} are allowed for redirects.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isStrictDomainRedirectEnabled(): bool
+    {
+        return $this->get(KernelConstants::STRICT_DOMAIN_REDIRECT, false);
+    }
+
+    /**
+     * Specification:
+     * - Gets the list of domains/subdomains allowed for redirects.
+     *
+     * @api
+     *
+     * @return array<string>
+     */
+    public function getDomainsAllowedForRedirect(): array
+    {
+        return $this->get(KernelConstants::DOMAIN_WHITELIST, []);
+    }
 }

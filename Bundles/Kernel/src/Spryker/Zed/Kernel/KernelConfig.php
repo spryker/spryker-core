@@ -129,4 +129,31 @@ class KernelConfig extends AbstractBundleConfig implements ClassNameCandidatesBu
     {
         return $this->getSharedConfig()->getResolvableCacheFilePathPattern();
     }
+
+    /**
+     * Specification:
+     * - Checks if strict domain redirect is enabled.
+     * - When enabled, only the domains from the list returned by {@link \Spryker\Zed\Kernel\KernelConfig::getDomainsAllowedForRedirect()} are allowed for redirects.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isStrictDomainRedirectEnabled(): bool
+    {
+        return $this->getSharedConfig()->isStrictDomainRedirectEnabled();
+    }
+
+    /**
+     * Specification:
+     * - Gets the list of domains/subdomains allowed for redirects.
+     *
+     * @api
+     *
+     * @return array<string>
+     */
+    public function getDomainsAllowedForRedirect(): array
+    {
+        return $this->getSharedConfig()->getDomainsAllowedForRedirect();
+    }
 }

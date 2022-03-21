@@ -9,6 +9,8 @@ namespace Spryker\Zed\Kernel\Communication;
 
 use Spryker\Shared\Kernel\ClassResolver\ResolverCacheFactoryInterface;
 use Spryker\Shared\Kernel\ClassResolver\ResolverCacheManager;
+use Spryker\Shared\Kernel\Validator\RedirectUrlValidator;
+use Spryker\Shared\Kernel\Validator\RedirectUrlValidatorInterface;
 
 /**
  * @method \Spryker\Zed\Kernel\KernelConfig getConfig()
@@ -22,5 +24,16 @@ class KernelCommunicationFactory extends AbstractCommunicationFactory
     public function createResolverCacheManager(): ResolverCacheFactoryInterface
     {
         return new ResolverCacheManager();
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\Validator\RedirectUrlValidatorInterface
+     */
+    public function createRedirectUrlValidator(): RedirectUrlValidatorInterface
+    {
+        return new RedirectUrlValidator(
+            $this->getConfig()->getDomainsAllowedForRedirect(),
+            $this->getConfig()->isStrictDomainRedirectEnabled(),
+        );
     }
 }

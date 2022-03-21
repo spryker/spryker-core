@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Yves\Kernel\Validator;
+namespace Spryker\Shared\Kernel\Validator;
 
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
@@ -14,7 +14,7 @@ interface RedirectUrlValidatorInterface
     /**
      * @param \Symfony\Component\HttpKernel\Event\ResponseEvent $event
      *
-     * @throws \Spryker\Yves\Kernel\Exception\ForbiddenExternalRedirectException
+     * @throws \Spryker\Shared\Kernel\Exception\ForbiddenExternalRedirectException
      *
      * @return void
      */

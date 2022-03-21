@@ -42,6 +42,15 @@ abstract class AbstractController
     protected const SERVICE_TWIG = 'twig';
 
     /**
+     * @deprecated For BC only. Use {@link \Spryker\Zed\Kernel\Communication\Plugin\EventDispatcher\RedirectUrlValidationEventDispatcherPlugin} instead.
+     *
+     * @uses {@link \Spryker\Zed\Kernel\Communication\Plugin\EventDispatcher\RedirectUrlValidationEventDispatcherPlugin::FLAG_EVENT_BASED_REDIRECT_URL_VALIDATION_ENABLED}
+     *
+     * @var string
+     */
+    protected const FLAG_EVENT_BASED_REDIRECT_URL_VALIDATION_ENABLED = 'FLAG_EVENT_BASED_REDIRECT_URL_VALIDATION_ENABLED';
+
+    /**
      * @var \Silex\Application|\Spryker\Service\Container\ContainerInterface
      */
     protected $application;
@@ -194,6 +203,8 @@ abstract class AbstractController
      */
     protected function redirectResponse($url, $status = 302, $headers = [])
     {
+        $this->assertRedirectIsAllowed($url);
+
         return new RedirectResponse($url, $status, $headers);
     }
 
@@ -205,16 +216,10 @@ abstract class AbstractController
      * @param int $code
      * @param array $headers
      *
-     * @throws \Spryker\Zed\Kernel\Communication\Exception\ForbiddenRedirectException
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function redirectResponseExternal(string $url, int $code = 302, array $headers = []): RedirectResponse
     {
-        if (strpos($url, '/') !== 0 && !$this->isUrlDomainWhitelisted($url)) {
-            throw new ForbiddenRedirectException(sprintf('URL %s is not a part of a whitelisted domain', $url));
-        }
-
         return $this->redirectResponse($url, $code, $headers);
     }
 
@@ -399,5 +404,33 @@ abstract class AbstractController
     protected function getTwig()
     {
         return $this->getApplication()->get(static::SERVICE_TWIG);
+    }
+
+    /**
+     * @deprecated For BC only. Use {@link \Spryker\Zed\Kernel\Communication\Plugin\EventDispatcher\RedirectUrlValidationEventDispatcherPlugin} instead.
+     *
+     * @param string $redirectUrl
+     *
+     * @throws \Spryker\Zed\Kernel\Communication\Exception\ForbiddenRedirectException
+     *
+     * @return void
+     */
+    protected function assertRedirectIsAllowed(string $redirectUrl): void
+    {
+        if (
+            $this->getApplication()->has(static::FLAG_EVENT_BASED_REDIRECT_URL_VALIDATION_ENABLED) &&
+            $this->getApplication()->get(static::FLAG_EVENT_BASED_REDIRECT_URL_VALIDATION_ENABLED)
+        ) {
+            return;
+        }
+
+        trigger_error(
+            'Use `\Spryker\Zed\Kernel\Communication\Plugin\EventDispatcher\RedirectUrlValidationEventDispatcherPlugin` instead.',
+            E_USER_DEPRECATED,
+        );
+
+        if (parse_url($redirectUrl, PHP_URL_HOST) && !$this->isUrlDomainWhitelisted($redirectUrl)) {
+            throw new ForbiddenRedirectException(sprintf('URL %s is not a part of a whitelisted domain', $redirectUrl));
+        }
     }
 }

@@ -7,16 +7,22 @@
 
 namespace Spryker\Yves\Kernel;
 
-use Spryker\Yves\Kernel\Validator\RedirectUrlValidator;
-use Spryker\Yves\Kernel\Validator\RedirectUrlValidatorInterface;
+use Spryker\Shared\Kernel\Validator\RedirectUrlValidator;
+use Spryker\Shared\Kernel\Validator\RedirectUrlValidatorInterface;
 
+/**
+ * @method \Spryker\Yves\Kernel\KernelConfig getConfig()
+ */
 class KernelFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Yves\Kernel\Validator\RedirectUrlValidatorInterface
+     * @return \Spryker\Shared\Kernel\Validator\RedirectUrlValidatorInterface
      */
     public function createRedirectUrlValidator(): RedirectUrlValidatorInterface
     {
-        return new RedirectUrlValidator();
+        return new RedirectUrlValidator(
+            $this->getConfig()->getDomainsAllowedForRedirect(),
+            $this->getConfig()->isStrictDomainRedirectEnabled(),
+        );
     }
 }
