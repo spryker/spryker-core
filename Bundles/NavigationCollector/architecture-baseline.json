@@ -7,6 +7,13 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/NavigationCollector/Dependency/Facade/NavigationCollectorToNavigationBridge.php",
+        "description": "Bridges: Method `findNavigationTree()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/NavigationCollector/Dependency/Facade/NavigationCollectorToNavigationInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `findNavigationTree()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",

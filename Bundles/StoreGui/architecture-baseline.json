@@ -1,5 +1,12 @@
 [
     {
+        "fileName": "src/Spryker/Zed/StoreGui/Dependency/Facade/StoreGuiToStoreFacadeBridge.php",
+        "description": "Bridges: Method `getStoresAvailableForCurrentPersistence()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/StoreGui/Dependency/Service/StoreGuiToUtilEncodingServiceBridge.php",
         "description": "Bridges: Type should be defined for param `value` in method `Spryker\\Zed\\StoreGui\\Dependency\\Service\\StoreGuiToUtilEncodingServiceBridge::encodeJson()`.",
         "rule": "BridgeMethodsRule",

@@ -1,1 +1,16 @@
-[]
+[
+    {
+        "fileName": "src/Spryker/Zed/ProductOfferAvailability/Dependency/Facade/ProductOfferAvailabilityToOmsFacadeBridge.php",
+        "description": "Bridges: Method `getOmsReservedProductQuantity()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductOfferAvailability/Dependency/Facade/ProductOfferAvailabilityToProductOfferStockFacadeBridge.php",
+        "description": "Bridges: Method `getProductOfferStockResult()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

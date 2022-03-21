@@ -1,8 +1,22 @@
 [
     {
+        "fileName": "src/Spryker/Zed/MerchantProductWishlist/Dependency/Facade/MerchantProductWishlistToMerchantProductFacadeBridge.php",
+        "description": "Bridges: Method `findMerchant()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/MerchantProductWishlist/Dependency/Facade/MerchantProductWishlistToProductFacadeBridge.php",
         "description": "Bridges: Type should be defined for param `concreteSku` in method `Spryker\\Zed\\MerchantProductWishlist\\Dependency\\Facade\\MerchantProductWishlistToProductFacadeBridge::getProductAbstractIdByConcreteSku()`.",
         "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MerchantProductWishlist/Dependency/Facade/MerchantProductWishlistToProductFacadeBridge.php",
+        "description": "Bridges: Method `getProductAbstractIdByConcreteSku()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

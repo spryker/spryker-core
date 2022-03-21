@@ -29,8 +29,22 @@
     },
     {
         "fileName": "src/Spryker/Zed/Stock/Dependency/Facade/StockToProductBridge.php",
+        "description": "Bridges: Method `findProductAbstractIdBySku()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Stock/Dependency/Facade/StockToProductBridge.php",
         "description": "Bridges: Type should be defined for param `sku` in method `Spryker\\Zed\\Stock\\Dependency\\Facade\\StockToProductBridge::findProductConcreteIdBySku()`.",
         "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Stock/Dependency/Facade/StockToProductBridge.php",
+        "description": "Bridges: Method `findProductConcreteIdBySku()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -59,6 +73,20 @@
         "fileName": "src/Spryker/Zed/Stock/Dependency/Facade/StockToProductInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `hasProductConcrete()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Stock/Dependency/Facade/StockToStoreFacadeBridge.php",
+        "description": "Bridges: Method `getAllStores()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Stock/Dependency/Facade/StockToStoreFacadeBridge.php",
+        "description": "Bridges: Method `getCurrentStore()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

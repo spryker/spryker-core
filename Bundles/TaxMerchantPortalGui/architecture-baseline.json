@@ -1,5 +1,12 @@
 [
     {
+        "fileName": "src/Spryker/Zed/TaxMerchantPortalGui/Dependency/Facade/TaxMerchantPortalGuiToTaxFacadeBridge.php",
+        "description": "Bridges: Method `getTaxSets()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/TaxMerchantPortalGui/Dependency/Facade/TaxMerchantPortalGuiToTaxFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getTaxSets()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",

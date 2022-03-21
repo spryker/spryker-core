@@ -78,6 +78,13 @@
     },
     {
         "fileName": "src/Spryker/Zed/ProductSearch/Dependency/Facade/ProductSearchToGlossaryBridge.php",
+        "description": "Bridges: Method `createAndTouchTranslation()` must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductSearch/Dependency/Facade/ProductSearchToGlossaryBridge.php",
         "description": "Bridges: Type should be defined for param `keyName` in method `Spryker\\Zed\\ProductSearch\\Dependency\\Facade\\ProductSearchToGlossaryBridge::updateAndTouchTranslation()`.",
         "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
@@ -106,6 +113,13 @@
     },
     {
         "fileName": "src/Spryker/Zed/ProductSearch/Dependency/Facade/ProductSearchToGlossaryBridge.php",
+        "description": "Bridges: Method `updateAndTouchTranslation()` must have `public function update<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductSearch/Dependency/Facade/ProductSearchToGlossaryBridge.php",
         "description": "Bridges: Type should be defined for param `keyName` in method `Spryker\\Zed\\ProductSearch\\Dependency\\Facade\\ProductSearchToGlossaryBridge::hasTranslation()`.",
         "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
@@ -115,6 +129,13 @@
         "fileName": "src/Spryker/Zed/ProductSearch/Dependency/Facade/ProductSearchToGlossaryBridge.php",
         "description": "Bridges: Type should be defined for param `keyName` in method `Spryker\\Zed\\ProductSearch\\Dependency\\Facade\\ProductSearchToGlossaryBridge::getTranslation()`.",
         "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductSearch/Dependency/Facade/ProductSearchToGlossaryBridge.php",
+        "description": "Bridges: Method `getTranslation()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -141,8 +162,22 @@
     },
     {
         "fileName": "src/Spryker/Zed/ProductSearch/Dependency/Facade/ProductSearchToGlossaryBridge.php",
+        "description": "Bridges: Method `updateKey()` must have `public function update<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductSearch/Dependency/Facade/ProductSearchToGlossaryBridge.php",
         "description": "Bridges: Type should be defined for param `keyName` in method `Spryker\\Zed\\ProductSearch\\Dependency\\Facade\\ProductSearchToGlossaryBridge::createKey()`.",
         "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductSearch/Dependency/Facade/ProductSearchToGlossaryBridge.php",
+        "description": "Bridges: Method `createKey()` must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -197,8 +232,29 @@
     },
     {
         "fileName": "src/Spryker/Zed/ProductSearch/Dependency/Facade/ProductSearchToLocaleBridge.php",
+        "description": "Bridges: Method `getCurrentLocale()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductSearch/Dependency/Facade/ProductSearchToLocaleBridge.php",
+        "description": "Bridges: Method `getLocaleCollection()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductSearch/Dependency/Facade/ProductSearchToLocaleBridge.php",
         "description": "Bridges: Type should be defined for param `localeName` in method `Spryker\\Zed\\ProductSearch\\Dependency\\Facade\\ProductSearchToLocaleBridge::getLocale()`.",
         "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductSearch/Dependency/Facade/ProductSearchToLocaleBridge.php",
+        "description": "Bridges: Method `getLocale()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -234,6 +290,27 @@
         "fileName": "src/Spryker/Zed/ProductSearch/Dependency/Facade/ProductSearchToProductBridge.php",
         "description": "Bridges: Type should be defined for param `key` in method `Spryker\\Zed\\ProductSearch\\Dependency\\Facade\\ProductSearchToProductBridge::findProductAttributeKey()`.",
         "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductSearch/Dependency/Facade/ProductSearchToProductBridge.php",
+        "description": "Bridges: Method `findProductAttributeKey()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductSearch/Dependency/Facade/ProductSearchToProductBridge.php",
+        "description": "Bridges: Method `createProductAttributeKey()` must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductSearch/Dependency/Facade/ProductSearchToProductBridge.php",
+        "description": "Bridges: Method `updateProductAttributeKey()` must have `public function update<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

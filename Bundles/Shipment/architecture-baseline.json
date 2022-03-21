@@ -49,6 +49,13 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/Shipment/Dependency/Facade/ShipmentToCurrencyBridge.php",
+        "description": "Bridges: Method `getByIdCurrency()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/Shipment/Dependency/Facade/ShipmentToCurrencyInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `fromIsoCode()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -59,6 +66,13 @@
         "fileName": "src/Spryker/Zed/Shipment/Dependency/Facade/ShipmentToCurrencyInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getByIdCurrency()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Shipment/Dependency/Facade/ShipmentToPriceFacadeBridge.php",
+        "description": "Bridges: Method `getNetPriceModeIdentifier()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -77,6 +91,41 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/Shipment/Dependency/Facade/ShipmentToSalesFacadeBridge.php",
+        "description": "Bridges: Method `getOrderByIdSalesOrder()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Shipment/Dependency/Facade/ShipmentToSalesFacadeBridge.php",
+        "description": "Bridges: Method `getOrder()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Shipment/Dependency/Facade/ShipmentToSalesFacadeBridge.php",
+        "description": "Bridges: Method `createOrderAddress()` must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Shipment/Dependency/Facade/ShipmentToSalesFacadeBridge.php",
+        "description": "Bridges: Method `createSalesExpense()` must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Shipment/Dependency/Facade/ShipmentToSalesFacadeBridge.php",
+        "description": "Bridges: Method `updateSalesExpense()` must have `public function update<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/Shipment/Dependency/Facade/ShipmentToSalesFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getOrderByIdSalesOrder()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -85,8 +134,29 @@
     },
     {
         "fileName": "src/Spryker/Zed/Shipment/Dependency/Facade/ShipmentToStoreBridge.php",
+        "description": "Bridges: Method `getCurrentStore()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Shipment/Dependency/Facade/ShipmentToStoreBridge.php",
+        "description": "Bridges: Method `getAllStores()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Shipment/Dependency/Facade/ShipmentToStoreBridge.php",
         "description": "Bridges: Type should be defined for param `storeName` in method `Spryker\\Zed\\Shipment\\Dependency\\Facade\\ShipmentToStoreBridge::getStoreByName()`.",
         "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Shipment/Dependency/Facade/ShipmentToStoreBridge.php",
+        "description": "Bridges: Method `getStoreByName()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

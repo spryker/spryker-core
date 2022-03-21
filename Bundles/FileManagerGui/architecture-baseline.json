@@ -15,8 +15,29 @@
     },
     {
         "fileName": "src/Spryker/Zed/FileManagerGui/Dependency/Facade/FileManagerGuiToFileManagerFacadeBridge.php",
+        "description": "Bridges: Method `saveFile()` must have `public function [update|create]<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/FileManagerGui/Dependency/Facade/FileManagerGuiToFileManagerFacadeBridge.php",
+        "description": "Bridges: Method `saveDirectory()` must have `public function [update|create]<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/FileManagerGui/Dependency/Facade/FileManagerGuiToFileManagerFacadeBridge.php",
         "description": "Bridges: Type should be defined for param `idFile` in method `Spryker\\Zed\\FileManagerGui\\Dependency\\Facade\\FileManagerGuiToFileManagerFacadeBridge::deleteFile()`.",
         "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/FileManagerGui/Dependency/Facade/FileManagerGuiToFileManagerFacadeBridge.php",
+        "description": "Bridges: Method `deleteFile()` must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -29,8 +50,22 @@
     },
     {
         "fileName": "src/Spryker/Zed/FileManagerGui/Dependency/Facade/FileManagerGuiToFileManagerFacadeBridge.php",
+        "description": "Bridges: Method `deleteFileInfo()` must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/FileManagerGui/Dependency/Facade/FileManagerGuiToFileManagerFacadeBridge.php",
         "description": "Bridges: Type should be defined for param `idFileDirectory` in method `Spryker\\Zed\\FileManagerGui\\Dependency\\Facade\\FileManagerGuiToFileManagerFacadeBridge::deleteFileDirectory()`.",
         "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/FileManagerGui/Dependency/Facade/FileManagerGuiToFileManagerFacadeBridge.php",
+        "description": "Bridges: Method `deleteFileDirectory()` must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -43,8 +78,22 @@
     },
     {
         "fileName": "src/Spryker/Zed/FileManagerGui/Dependency/Facade/FileManagerGuiToFileManagerFacadeBridge.php",
+        "description": "Bridges: Method `findFileByIdFile()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/FileManagerGui/Dependency/Facade/FileManagerGuiToFileManagerFacadeBridge.php",
         "description": "Bridges: Type should be defined for param `idFileInfo` in method `Spryker\\Zed\\FileManagerGui\\Dependency\\Facade\\FileManagerGuiToFileManagerFacadeBridge::findFileByIdFileInfo()`.",
         "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/FileManagerGui/Dependency/Facade/FileManagerGuiToFileManagerFacadeBridge.php",
+        "description": "Bridges: Method `findFileByIdFileInfo()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -57,8 +106,71 @@
     },
     {
         "fileName": "src/Spryker/Zed/FileManagerGui/Dependency/Facade/FileManagerGuiToFileManagerFacadeBridge.php",
+        "description": "Bridges: Method `findFileDirectory()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/FileManagerGui/Dependency/Facade/FileManagerGuiToFileManagerFacadeBridge.php",
+        "description": "Bridges: Method `findFileDirectoryTree()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/FileManagerGui/Dependency/Facade/FileManagerGuiToFileManagerFacadeBridge.php",
+        "description": "Bridges: Method `updateFileDirectoryTreeHierarchy()` must have `public function update<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/FileManagerGui/Dependency/Facade/FileManagerGuiToFileManagerFacadeBridge.php",
+        "description": "Bridges: Method `updateMimeTypeSettings()` must have `public function update<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/FileManagerGui/Dependency/Facade/FileManagerGuiToFileManagerFacadeBridge.php",
         "description": "Bridges: Type should be defined for param `idMimeType` in method `Spryker\\Zed\\FileManagerGui\\Dependency\\Facade\\FileManagerGuiToFileManagerFacadeBridge::findMimeType()`.",
         "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/FileManagerGui/Dependency/Facade/FileManagerGuiToFileManagerFacadeBridge.php",
+        "description": "Bridges: Method `findMimeType()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/FileManagerGui/Dependency/Facade/FileManagerGuiToFileManagerFacadeBridge.php",
+        "description": "Bridges: Method `saveMimeType()` must have `public function [update|create]<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/FileManagerGui/Dependency/Facade/FileManagerGuiToFileManagerFacadeBridge.php",
+        "description": "Bridges: Method `deleteMimeType()` must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/FileManagerGui/Dependency/Facade/FileManagerGuiToFileManagerFacadeBridge.php",
+        "description": "Bridges: Method `findAllowedMimeTypes()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/FileManagerGui/Dependency/Facade/FileManagerGuiToFileManagerFacadeBridge.php",
+        "description": "Bridges: Method `getFileInfoVersionsCount()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -164,6 +276,20 @@
         "fileName": "src/Spryker/Zed/FileManagerGui/Dependency/Facade/FileManagerGuiToFileManagerFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `findAllowedMimeTypes()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/FileManagerGui/Dependency/Facade/FileManagerGuiToLocaleFacadeBridge.php",
+        "description": "Bridges: Method `getCurrentLocale()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/FileManagerGui/Dependency/Facade/FileManagerGuiToLocaleFacadeBridge.php",
+        "description": "Bridges: Method `getLocaleCollection()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

@@ -1,5 +1,19 @@
 [
     {
+        "fileName": "src/Spryker/Zed/PriceProductOfferGui/Dependency/Facade/PriceProductOfferGuiToPriceFacadeBridge.php",
+        "description": "Bridges: Method `getNetPriceModeIdentifier()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/PriceProductOfferGui/Dependency/Facade/PriceProductOfferGuiToPriceFacadeBridge.php",
+        "description": "Bridges: Method `getGrossPriceModeIdentifier()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/PriceProductOfferGui/Dependency/Facade/PriceProductOfferGuiToPriceFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getNetPriceModeIdentifier()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
@@ -10,6 +24,13 @@
         "fileName": "src/Spryker/Zed/PriceProductOfferGui/Dependency/Facade/PriceProductOfferGuiToPriceFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getGrossPriceModeIdentifier()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/PriceProductOfferGui/Dependency/Facade/PriceProductOfferGuiToPriceProductFacadeBridge.php",
+        "description": "Bridges: Method `getPriceModeIdentifierForBothType()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

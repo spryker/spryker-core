@@ -21,9 +21,79 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/QuoteApproval/Dependency/Facade/QuoteApprovalToCompanyRoleFacadeBridge.php",
+        "description": "Bridges: Method `getCompanyUserIdsByPermissionKey()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/QuoteApproval/Dependency/Facade/QuoteApprovalToCompanyRoleFacadeBridge.php",
+        "description": "Bridges: Method `findPermissionsByIdCompanyUser()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/QuoteApproval/Dependency/Facade/QuoteApprovalToCompanyUserFacadeBridge.php",
+        "description": "Bridges: Method `getCompanyUserCollection()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/QuoteApproval/Dependency/Facade/QuoteApprovalToCompanyUserFacadeBridge.php",
+        "description": "Bridges: Method `getCompanyUserById()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/QuoteApproval/Dependency/Facade/QuoteApprovalToCustomerFacadeBridge.php",
+        "description": "Bridges: Method `findCustomerByReference()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/QuoteApproval/Dependency/Facade/QuoteApprovalToQuoteFacadeBridge.php",
         "description": "Bridges: Type should be defined for param `idQuote` in method `Spryker\\Zed\\QuoteApproval\\Dependency\\Facade\\QuoteApprovalToQuoteFacadeBridge::findQuoteById()`.",
         "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/QuoteApproval/Dependency/Facade/QuoteApprovalToQuoteFacadeBridge.php",
+        "description": "Bridges: Method `findQuoteById()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/QuoteApproval/Dependency/Facade/QuoteApprovalToQuoteFacadeBridge.php",
+        "description": "Bridges: Method `updateQuote()` must have `public function update<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/QuoteApproval/Dependency/Facade/QuoteApprovalToSharedCartFacadeBridge.php",
+        "description": "Bridges: Method `deleteShareForQuote()` must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/QuoteApproval/Dependency/Facade/QuoteApprovalToSharedCartFacadeBridge.php",
+        "description": "Bridges: Method `addQuoteCompanyUser()` must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/QuoteApproval/Dependency/Facade/QuoteApprovalToSharedCartFacadeBridge.php",
+        "description": "Bridges: Method `getQuotePermissionGroupList()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     }
