@@ -563,6 +563,10 @@ SCRIPT;
 
         $script .= "
 
+        if (\$con === null) {
+            \$con = Propel::getServiceContainer()->getReadConnection(\$this->getDbName());
+        }
+
         \$this->basePreSelect(\$con);
 
         if (
@@ -636,6 +640,10 @@ SCRIPT;
         }
 
         $script .= "
+
+        if (\$con === null) {
+            \$con = Propel::getServiceContainer()->getReadConnection(\$this->getDbName());
+        }
 
         \$this->basePreSelect(\$con);
         \$criteria = \$this->isKeepQuery() ? clone \$this : \$this;
