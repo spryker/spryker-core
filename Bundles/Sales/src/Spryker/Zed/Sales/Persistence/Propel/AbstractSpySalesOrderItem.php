@@ -45,7 +45,7 @@ class AbstractSpySalesOrderItem extends BaseSpySalesOrderItem
      *
      * @return void
      */
-    public function postSave(?ConnectionInterface $con = null)
+    public function postSave(?ConnectionInterface $con = null): void
     {
         if ($this->statusChanged) {
             /** @var \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItemEntity */
