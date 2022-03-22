@@ -5,6 +5,7 @@
     "license": "proprietary",
     "require": {
         "php": ">=7.4",
+        "spryker/decimal-object": "^1.0.0",
         "spryker/kernel": "^3.33.0",
         "spryker/oms-product-offer-reservation": "^1.0.0",
         "spryker/product-offer-stock-gui-extension": "^1.0.0",

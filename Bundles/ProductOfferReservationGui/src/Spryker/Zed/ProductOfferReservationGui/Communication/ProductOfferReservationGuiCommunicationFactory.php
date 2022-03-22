@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ProductOfferReservationGui\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\ProductOfferReservationGui\Communication\Transformer\ProductOfferReservationQuantityTransformer;
+use Spryker\Zed\ProductOfferReservationGui\Communication\Transformer\ProductOfferReservationQuantityTransformerInterface;
 use Spryker\Zed\ProductOfferReservationGui\Dependency\Facade\ProductOfferReservationGuiToOmsProductOfferReservationFacadeInterface;
 use Spryker\Zed\ProductOfferReservationGui\ProductOfferReservationGuiDependencyProvider;
 
@@ -22,5 +24,15 @@ class ProductOfferReservationGuiCommunicationFactory extends AbstractCommunicati
     public function getOmsProductOfferReservationFacade(): ProductOfferReservationGuiToOmsProductOfferReservationFacadeInterface
     {
         return $this->getProvidedDependency(ProductOfferReservationGuiDependencyProvider::FACADE_OMS_PRODUCT_OFFER_RESERVATION);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferReservationGui\Communication\Transformer\ProductOfferReservationQuantityTransformerInterface
+     */
+    public function createProductOfferReservationQuantityTransformer(): ProductOfferReservationQuantityTransformerInterface
+    {
+        return new ProductOfferReservationQuantityTransformer(
+            $this->getOmsProductOfferReservationFacade(),
+        );
     }
 }

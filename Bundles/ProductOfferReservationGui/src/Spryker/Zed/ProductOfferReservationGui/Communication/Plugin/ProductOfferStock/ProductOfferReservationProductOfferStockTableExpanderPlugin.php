@@ -50,8 +50,7 @@ class ProductOfferReservationProductOfferStockTableExpanderPlugin extends Abstra
             ->setStore($storeTransfer);
 
         return $this->getFactory()
-            ->getOmsProductOfferReservationFacade()
-            ->getQuantity($omsProductOfferReservationCriteriaTransfer)
-            ->getReservationQuantity();
+            ->createProductOfferReservationQuantityTransformer()
+            ->getReservationQuantity($omsProductOfferReservationCriteriaTransfer);
     }
 }
