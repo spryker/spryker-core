@@ -9,6 +9,8 @@ namespace Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Type\ThresholdGr
 
 use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\GlobalThresholdType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
@@ -28,6 +30,7 @@ class GlobalSoftThresholdType extends AbstractGlobalThresholdType
         $this->addStrategyField($builder, $options[GlobalThresholdType::OPTION_SOFT_TYPES_ARRAY]);
         $this->addThresholdValueField($builder, $options);
         $this->addLocalizedForms($builder);
+        $this->setPlaceholderForEmptySoftThreshold($builder);
     }
 
     /**
@@ -40,5 +43,23 @@ class GlobalSoftThresholdType extends AbstractGlobalThresholdType
         parent::configureOptions($resolver);
 
         $resolver->setRequired(GlobalThresholdType::OPTION_SOFT_TYPES_ARRAY);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return void
+     */
+    protected function setPlaceholderForEmptySoftThreshold(FormBuilderInterface $builder): void
+    {
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+            /** @var array<string, mixed> $softThreshold */
+            $softThreshold = $event->getData();
+            $idThreshold = $softThreshold[static::FIELD_ID_THRESHOLD] ?? null;
+
+            if ($idThreshold === null) {
+                $event->setData([]);
+            }
+        });
     }
 }
