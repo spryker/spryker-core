@@ -20,9 +20,11 @@
     <div class="hr-line-dashed"></div>
 {% endif %}
 
-{% include '@ProductApprovalGui/Partials/approval_status_label.twig' ignore missing with {
-    product: currentProduct,
-} only %}
+{% if currentProduct is defined %}
+    {% include '@ProductApprovalGui/Partials/approval_status_label.twig' ignore missing with {
+        product: currentProduct,
+    } only %}
+{% endif %}
 
 {% if form.store_relation is defined %}
    {{ form_widget(form.store_relation) }}
