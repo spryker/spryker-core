@@ -1,3 +1,6 @@
+{# @var item \Generated\Shared\Transfer\ItemTransfer #}
+{# @var bundle \Generated\Shared\Transfer\SalesOrderConfiguredBundleTransfer #}
+{# @var order \Generated\Shared\Transfer\OrderTransfer #}
 {% set items = (items ?? order.items) | filter(item => item.salesOrderConfiguredBundle) %}
 {% set mappedItems = [] %}
 {% set configuredBundles = [] %}

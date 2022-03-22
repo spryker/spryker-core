@@ -192,6 +192,8 @@
         <property name="createdAt" type="string"/>
         <property name="isReturnable" type="bool"/>
         <property name="currencyIsoCode" type="string"/>
+        <property name="salesOrderConfiguredBundle" type="SalesOrderConfiguredBundle"/>
+        <property name="metadata" type="ItemMetadata"/>
     </transfer>
 
     <transfer name="ItemCollection">
@@ -414,6 +416,11 @@
     </transfer>
 
     <transfer name="SalesOrderConfiguredBundle">
+        <property name="idSalesOrderConfiguredBundle" type="int"/>
+        <property name="configurableBundleTemplateUuid" type="string"/>
+        <property name="name" type="string"/>
+        <property name="translations" type="SalesOrderConfiguredBundleTranslation[]" singular="translation"/>
+        <property name="note" type="string"/>
     </transfer>
 
     <transfer name="ProductBundleGroup">
@@ -429,4 +436,11 @@
         <property name="filter" type="Filter"/>
     </transfer>
 
+    <transfer name="SalesOrderConfiguredBundleTranslation">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="ItemMetadata">
+        <property name="image" type="string"/>
+    </transfer>
 </transfers>
