@@ -105,6 +105,7 @@ class ConfiguredBundleCartAdder implements ConfiguredBundleCartAdderInterface
             ->setQuantity($configuredBundleTransfer->getQuantity())
             ->setTemplate(
                 (new ConfigurableBundleTemplateTransfer())
+                    ->setIdConfigurableBundleTemplate($configuredBundleTransfer->getTemplate()->getIdConfigurableBundleTemplate())
                     ->setUuid($configuredBundleTransfer->getTemplate()->getUuid())
                     ->setName($configuredBundleTransfer->getTemplate()->getName()),
             );

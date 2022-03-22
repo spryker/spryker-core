@@ -51,6 +51,7 @@
     </transfer>
 
     <transfer name="ConfigurableBundleTemplate">
+        <property name="idConfigurableBundleTemplate" type="int"/>
         <property name="uuid" type="string"/>
         <property name="name" type="string"/>
     </transfer>
