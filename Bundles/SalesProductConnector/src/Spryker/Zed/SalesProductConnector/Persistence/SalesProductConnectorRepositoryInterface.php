@@ -49,7 +49,7 @@ interface SalesProductConnectorRepositoryInterface
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return array<int, array>
+     * @return array<int, array<string, mixed>>
      */
     public function getSupperAttributesGroupedByIdItem(QuoteTransfer $quoteTransfer): array;
 }

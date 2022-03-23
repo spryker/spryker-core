@@ -114,36 +114,6 @@ class SalesProductConnectorRepository extends AbstractRepository implements Sale
     }
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery $query
-     *
-     * @return void
-     */
-    protected function addJoinByColSku(SpySalesOrderItemQuery $query)
-    {
-        $query
-            ->addJoin(SpySalesOrderItemTableMap::COL_SKU, SpyProductTableMap::COL_SKU, Criteria::LEFT_JOIN)
-            ->withColumn(SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT, static::FIELD_FK_PRODUCT_ABSTRACT);
-    }
-
-    /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery $query
-     * @param int $interval
-     *
-     * @return void
-     */
-    protected function addWhereByInterval(SpySalesOrderItemQuery $query, int $interval)
-    {
-        $dateNow = new DateTimeImmutable();
-        $dateFrom = $dateNow->sub(new DateInterval('P' . $interval . 'D'));
-
-        $query->where(sprintf(
-            "%s >= '%s'",
-            SpySalesOrderItemTableMap::COL_CREATED_AT,
-            $dateFrom->format('Y-m-d H:i:s'),
-        ));
-    }
-
-    /**
      * Result format:
      * [
      *     $idSalesOrderItem => ['attribute', ...],
@@ -152,7 +122,7 @@ class SalesProductConnectorRepository extends AbstractRepository implements Sale
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return array<int, array>
+     * @return array<int, array<string, mixed>>
      */
     public function getSupperAttributesGroupedByIdItem(QuoteTransfer $quoteTransfer): array
     {
@@ -168,12 +138,19 @@ class SalesProductConnectorRepository extends AbstractRepository implements Sale
         }
 
         $matchingSuperAttributesIndexedByKeys = $this->getMatchingSuperAttributesIndexedByKeys(array_keys($allConcreteAttributes));
+        $filteredMatchingSuperAttributes = $this->filterMatchingSuperAttributes(
+            $allConcreteAttributes,
+            $matchingSuperAttributesIndexedByKeys,
+        );
 
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $filteredSuperAttributes = [];
 
             foreach ($itemTransfer->getConcreteAttributes() as $key => $value) {
-                $filteredSuperAttributes[$key] = $matchingSuperAttributesIndexedByKeys[$key];
+                if (!array_key_exists($key, $filteredMatchingSuperAttributes)) {
+                    continue;
+                }
+                $filteredSuperAttributes[$key] = $value;
             }
 
             $supperAttributesGroupedByIdItem[$itemTransfer->getIdSalesOrderItemOrFail()] = $filteredSuperAttributes;
@@ -183,10 +160,43 @@ class SalesProductConnectorRepository extends AbstractRepository implements Sale
     }
 
     /**
-     * @param array $concreteAttributes
-     * @param array<\Orm\Zed\Product\Persistence\SpyProductAttributeKey> $matchingAttributes
+     * @module Product
+     * @module Sales
      *
-     * @return array
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery $query
+     *
+     * @return void
+     */
+    protected function addJoinByColSku(SpySalesOrderItemQuery $query): void
+    {
+        $query
+            ->addJoin(SpySalesOrderItemTableMap::COL_SKU, SpyProductTableMap::COL_SKU, Criteria::LEFT_JOIN)
+            ->withColumn(SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT, static::FIELD_FK_PRODUCT_ABSTRACT);
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery $query
+     * @param int $interval
+     *
+     * @return void
+     */
+    protected function addWhereByInterval(SpySalesOrderItemQuery $query, int $interval): void
+    {
+        $dateNow = new DateTimeImmutable();
+        $dateFrom = $dateNow->sub(new DateInterval('P' . $interval . 'D'));
+
+        $query->where(sprintf(
+            "%s >= '%s'",
+            SpySalesOrderItemTableMap::COL_CREATED_AT,
+            $dateFrom->format('Y-m-d H:i:s'),
+        ));
+    }
+
+    /**
+     * @param array<string, mixed> $concreteAttributes
+     * @param array<string, array<int, \Orm\Zed\Product\Persistence\SpyProductAttributeKey>> $matchingAttributes
+     *
+     * @return array<string, mixed>
      */
     protected function filterMatchingSuperAttributes(array $concreteAttributes, array $matchingAttributes): array
     {
@@ -196,10 +206,10 @@ class SalesProductConnectorRepository extends AbstractRepository implements Sale
 
         $result = [];
 
-        foreach ($concreteAttributes as $key => $value) {
-            foreach ($matchingAttributes as $matchingAttribute) {
-                if ($matchingAttribute->getKey() === $key) {
-                    $result[$key] = $value;
+        foreach ($concreteAttributes as $concreteAttributeKey => $concreteAttributeValue) {
+            foreach ($matchingAttributes as $matchingAttributeKey => $matchingAttributeValue) {
+                if ($matchingAttributeKey === $concreteAttributeKey) {
+                    $result[$concreteAttributeKey] = $concreteAttributeValue;
                 }
             }
         }
@@ -212,7 +222,7 @@ class SalesProductConnectorRepository extends AbstractRepository implements Sale
      *
      * @return array<string, array<int, \Orm\Zed\Product\Persistence\SpyProductAttributeKey>>
      */
-    protected function getMatchingSuperAttributesIndexedByKeys(array $concreteAttributes)
+    protected function getMatchingSuperAttributesIndexedByKeys(array $concreteAttributes): array
     {
         $result = [];
 

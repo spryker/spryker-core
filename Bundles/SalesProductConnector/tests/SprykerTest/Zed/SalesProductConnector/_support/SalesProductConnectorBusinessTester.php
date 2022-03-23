@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Spryker\Zed\SalesProductConnector\Communication\Plugin\Checkout\ItemMetadataSaverPlugin;
@@ -66,6 +67,28 @@ class SalesProductConnectorBusinessTester extends Actor
     public function ensureSalesOrderDatabaseTableIsEmpty(): void
     {
         $this->ensureDatabaseTableIsEmpty($this->getSalesOrderQuery());
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function createQuote(): QuoteTransfer
+    {
+        return $this->buildFakeQuote(
+            $this->haveCustomer(),
+            $this->haveStore([StoreTransfer::NAME => 'DE']),
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $stateMachineProcessName
+     *
+     * @return \Generated\Shared\Transfer\SaveOrderTransfer
+     */
+    public function createSaveOrder(QuoteTransfer $quoteTransfer, string $stateMachineProcessName): SaveOrderTransfer
+    {
+        return $this->haveOrderFromQuote($quoteTransfer, $stateMachineProcessName, [new ItemMetadataSaverPlugin()]);
     }
 
     /**
