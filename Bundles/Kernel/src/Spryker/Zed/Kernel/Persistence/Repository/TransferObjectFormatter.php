@@ -68,7 +68,7 @@ class TransferObjectFormatter extends ArrayFormatter
      *
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|null
      */
-    public function formatOne(?DataFetcherInterface $dataFetcher = null)
+    public function formatOne(?DataFetcherInterface $dataFetcher = null): ?array
     {
         $this->checkInit();
         $result = null;
@@ -100,7 +100,7 @@ class TransferObjectFormatter extends ArrayFormatter
         $this->alreadyHydratedObjects = [];
         $dataFetcher->close();
 
-        return $result;
+        return $result->toArray();
     }
 
     /**
