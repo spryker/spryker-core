@@ -197,8 +197,8 @@ class ConnectorTableBuilder implements ConnectorTableBuilderInterface
         $unique->setName(
             $this->aclEntityService->generateSegmentConnectorTableUniqueConstraintName(
                 $table->getName(),
-                $fkTargetEntityColumn->getNameOrFail()
-            )
+                $fkTargetEntityColumn->getNameOrFail(),
+            ),
         );
 
         /** @var \Propel\Generator\Model\Table $aclEntitySegmentTable */

@@ -53,6 +53,7 @@ class ProductNewQueryContainer extends AbstractQueryContainer implements Product
             SpyProductAbstractTableMap::COL_NEW_FROM,
             SpyProductAbstractTableMap::COL_NEW_TO,
         );
+
         /** @phpstan-var \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery */
         return $this->getFactory()
             ->getProductLabelQueryContainer()

@@ -48,6 +48,7 @@ class CmsStorageQueryContainer extends AbstractQueryContainer implements CmsStor
     {
         /** @var literal-string $where */
         $where = sprintf('%s = (%s)', SpyCmsVersionTableMap::COL_VERSION, $this->getMaxVersionSubQuery());
+
         /** @phpstan-var \Orm\Zed\Cms\Persistence\SpyCmsPageQuery */
         return $this->getFactory()
             ->getCmsQueryContainer()

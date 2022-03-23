@@ -177,8 +177,11 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
     protected function createProductStoresSubquery(): string
     {
         /** @var literal-string $where */
-        $where = sprintf('%s = %s', SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
-            SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT);
+        $where = sprintf(
+            '%s = %s',
+            SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
+            SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT,
+        );
         $productStoresSubquery = $this->getFactory()->getStorePropelQuery()
             ->joinSpyProductAbstractStore()
             ->useSpyProductAbstractStoreQuery()
@@ -252,6 +255,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
             SpyProductOfferTableMap::COL_MERCHANT_REFERENCE,
             $merchantReference,
         );
+
         return $productOffersSubquery->where($where);
     }
 

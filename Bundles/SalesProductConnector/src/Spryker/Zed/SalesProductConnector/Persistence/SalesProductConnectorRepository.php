@@ -87,6 +87,7 @@ class SalesProductConnectorRepository extends AbstractRepository implements Sale
             SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT,
             $productAbstractIds,
         );
+
         return $salesOrderQuery
             ->withColumn(sprintf('SUM(%s)', SpySalesOrderItemTableMap::COL_QUANTITY), static::FIELD_POPULARITY)
             ->where($where)

@@ -47,6 +47,7 @@ class CmsPageSearchQueryContainer extends AbstractQueryContainer implements CmsP
     {
         /** @var literal-string $whee */
         $whee = sprintf('%s = (%s)', SpyCmsVersionTableMap::COL_VERSION, $this->getMaxVersionSubQuery());
+
         /** @phpstan-var \Orm\Zed\Cms\Persistence\SpyCmsPageQuery */
         return $this->getFactory()
             ->getCmsQueryContainer()

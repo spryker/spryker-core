@@ -87,6 +87,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     {
         /** @var literal-string $stateNameCondition */
         $stateNameCondition = "State.name IN ('" . implode("', '", $states) . "')";
+
         return $this->getFactory()
             ->getSalesQueryContainer()
             ->querySalesOrderItem()

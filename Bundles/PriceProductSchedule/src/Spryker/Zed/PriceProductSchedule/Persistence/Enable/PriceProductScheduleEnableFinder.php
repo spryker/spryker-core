@@ -205,8 +205,9 @@ class PriceProductScheduleEnableFinder implements PriceProductScheduleEnableFind
     ): SpyPriceProductScheduleQuery {
         /** @var literal-string $activeFromCondition */
         $activeFromCondition = sprintf('%s <= now()', SpyPriceProductScheduleTableMap::COL_ACTIVE_FROM);
-        /** @var literal-string $activeTCondition */
+        /** @var literal-string $activeToCondition */
         $activeToCondition = sprintf('%s >= now()', SpyPriceProductScheduleTableMap::COL_ACTIVE_TO);
+
         /** @phpstan-var \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery */
         return $priceProductScheduleQuery
             ->filterByFkStore($storeTransfer->getIdStore())
@@ -288,7 +289,7 @@ class PriceProductScheduleEnableFinder implements PriceProductScheduleEnableFind
     ): array {
         /** @var literal-string $activeFromCondition */
         $activeFromCondition = sprintf('%s <= now()', SpyPriceProductScheduleTableMap::COL_ACTIVE_FROM);
-        /** @var literal-string $activeTCondition */
+        /** @var literal-string $activeToCondition */
         $activeToCondition = sprintf('%s >= now()', SpyPriceProductScheduleTableMap::COL_ACTIVE_TO);
 
         $priceProductScheduleEntities = $this->factory->createPriceProductScheduleQuery()
@@ -410,7 +411,7 @@ class PriceProductScheduleEnableFinder implements PriceProductScheduleEnableFind
     ): array {
         /** @var literal-string $activeFromCondition */
         $activeFromCondition = sprintf('%s <= now()', SpyPriceProductScheduleTableMap::COL_ACTIVE_FROM);
-        /** @var literal-string $activeTCondition */
+        /** @var literal-string $activeToCondition */
         $activeToCondition = sprintf('%s >= now()', SpyPriceProductScheduleTableMap::COL_ACTIVE_TO);
 
         $priceProductScheduleEntities = $this->factory->createPriceProductScheduleQuery()

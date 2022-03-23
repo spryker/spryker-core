@@ -597,12 +597,15 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         $fkCategoryNodeDescendantCondition = sprintf(
             '%s IN (%s)',
             SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE_DESCENDANT,
-            $categoryNodeIdsImploded
+            $categoryNodeIdsImploded,
         );
 
-        /** @var literal-string $sprintf */
-        $fkCategoryNodeCondition = sprintf('%s IN (%s)', SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE,
-            $categoryNodeIdsImploded);
+        /** @var literal-string $fkCategoryNodeCondition */
+        $fkCategoryNodeCondition = sprintf(
+            '%s IN (%s)',
+            SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE,
+            $categoryNodeIdsImploded,
+        );
         /** @var \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery $categoryNodeQuery */
         $categoryNodeQuery = $this->getFactory()
             ->createCategoryNodeQuery()
