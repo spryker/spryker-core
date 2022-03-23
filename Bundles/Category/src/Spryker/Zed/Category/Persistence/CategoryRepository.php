@@ -593,7 +593,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
 
         $categoryNodeIdsImploded = implode(', ', $categoryNodeIds);
 
-        /** @var literal-string $fkCategoryNodeDescendant */
+        /** @var literal-string $fkCategoryNodeDescendantCondition */
         $fkCategoryNodeDescendantCondition = sprintf(
             '%s IN (%s)',
             SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE_DESCENDANT,
