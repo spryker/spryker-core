@@ -194,7 +194,12 @@ class ConnectorTableBuilder implements ConnectorTableBuilderInterface
         /** @var \Propel\Generator\Model\Column $fkTargetEntityColumn */
         $fkTargetEntityColumn = $table->getColumn($fkTargetEntityColumnName);
         $unique = new Unique();
-        $unique->setName($this->aclEntityService->generateSegmentConnectorTableUniqueConstraintName($table->getName(), $fkTargetEntityColumn->getName()));
+        $unique->setName(
+            $this->aclEntityService->generateSegmentConnectorTableUniqueConstraintName(
+                $table->getName(),
+                $fkTargetEntityColumn->getNameOrFail()
+            )
+        );
 
         /** @var \Propel\Generator\Model\Table $aclEntitySegmentTable */
         $aclEntitySegmentTable = $this->database->getTable(static::ACL_ENTITY_SEGMENT_TABLE_NAME);
@@ -238,7 +243,7 @@ class ConnectorTableBuilder implements ConnectorTableBuilderInterface
     protected function addTargetTableConstraint(string $tableName, string $columnName): ForeignKey
     {
         $constraint = new ForeignKey(sprintf(static::FOREIGN_KEY_TEMPLATE, $tableName, $columnName));
-        $constraint->setForeignTableCommonName($this->baseTable->getCommonName());
+        $constraint->setForeignTableCommonName($this->baseTable->getCommonNameOrFail());
         $constraint->setForeignSchemaName($this->baseTable->getSchema());
         /** @var \Propel\Generator\Model\Column $primaryKeyColumn */
         $primaryKeyColumn = $this->baseTable->getAutoIncrementPrimaryKey();
@@ -281,7 +286,7 @@ class ConnectorTableBuilder implements ConnectorTableBuilderInterface
         /** @var \Propel\Generator\Model\Column $autoIncrementPrimaryKey */
         $autoIncrementPrimaryKey = $aclEntitySegmentTable->getAutoIncrementPrimaryKey();
         $constraint = new ForeignKey(sprintf(static::FOREIGN_KEY_TEMPLATE, $tableName, $columnName));
-        $constraint->setForeignTableCommonName($aclEntitySegmentTable->getCommonName());
+        $constraint->setForeignTableCommonName($aclEntitySegmentTable->getCommonNameOrFail());
         $constraint->setForeignSchemaName($aclEntitySegmentTable->getSchema());
         $constraint->addReference($columnName, $autoIncrementPrimaryKey->getName());
 

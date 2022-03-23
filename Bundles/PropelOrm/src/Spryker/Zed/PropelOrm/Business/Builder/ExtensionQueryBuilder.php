@@ -163,7 +163,7 @@ class ExtensionQueryBuilder extends PropelExtensionQueryObjectBuilder
      */
     protected function getSprykerNamespace(): string
     {
-        $namespaceFragments = explode('\\', $this->getNamespace());
+        $namespaceFragments = explode('\\', $this->getNamespaceOrFail());
         $namespaceFragments[static::POSITION_OF_ORM] = 'Spryker';
         $namespaceFragments[static::POSITION_OF_BASE] = 'Propel';
 

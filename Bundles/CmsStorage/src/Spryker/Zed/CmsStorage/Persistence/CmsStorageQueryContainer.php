@@ -46,6 +46,8 @@ class CmsStorageQueryContainer extends AbstractQueryContainer implements CmsStor
      */
     public function queryCmsPageVersionByIds(array $cmsPageIds)
     {
+        /** @var literal-string $where */
+        $where = sprintf('%s = (%s)', SpyCmsVersionTableMap::COL_VERSION, $this->getMaxVersionSubQuery());
         /** @phpstan-var \Orm\Zed\Cms\Persistence\SpyCmsPageQuery */
         return $this->getFactory()
             ->getCmsQueryContainer()
@@ -54,7 +56,7 @@ class CmsStorageQueryContainer extends AbstractQueryContainer implements CmsStor
             ->joinWithSpyUrl()
             ->joinWith('SpyUrl.SpyLocale')
             ->joinWithSpyCmsVersion()
-            ->where(sprintf('%s = (%s)', SpyCmsVersionTableMap::COL_VERSION, $this->getMaxVersionSubQuery()))
+            ->where($where)
             ->joinWithSpyCmsPageStore(Criteria::LEFT_JOIN)
             ->useSpyCmsPageStoreQuery()
                 ->joinWithSpyStore()

@@ -16,6 +16,8 @@ use Spryker\Zed\AclEntity\Persistence\Reader\AclEntityMetadataReaderInterface;
 class DefaultAclQueryScope implements AclQueryScopeInterface
 {
     /**
+     * @phpstan-var literal-string
+     *
      * @var string
      */
     protected const CONDITION_EMPTY_COLLECTION = '0=1';
@@ -60,9 +62,9 @@ class DefaultAclQueryScope implements AclQueryScopeInterface
         }
 
         /** @var \Propel\Runtime\Map\ColumnMap $primaryKeyColumn */
-        $primaryKeyColumn = current($query->getTableMap()->getPrimaryKeys());
+        $primaryKeyColumn = current($query->getTableMapOrFail()->getPrimaryKeys());
 
-        return $query->filterBy($primaryKeyColumn->getPhpName(), null, Criteria::ISNULL);
+        return $query->filterBy($primaryKeyColumn->getPhpNameOrFail(), null, Criteria::ISNULL);
     }
 
     /**
@@ -101,9 +103,9 @@ class DefaultAclQueryScope implements AclQueryScopeInterface
         }
 
         /** @var \Propel\Runtime\Map\ColumnMap $primaryKeyColumn */
-        $primaryKeyColumn = current($query->getTableMap()->getPrimaryKeys());
+        $primaryKeyColumn = current($query->getTableMapOrFail()->getPrimaryKeys());
 
-        return $query->filterBy($primaryKeyColumn->getPhpName(), null, Criteria::ISNULL);
+        return $query->filterBy($primaryKeyColumn->getPhpNameOrFail(), null, Criteria::ISNULL);
     }
 
     /**
@@ -116,7 +118,7 @@ class DefaultAclQueryScope implements AclQueryScopeInterface
     public function isReadableQuery(ModelCriteria $query): bool
     {
         $entityDefaultOperationMask = $this->aclEntityMetadataReader->getDefaultOperationMaskForEntityClass(
-            $query->getModelName(),
+            $query->getModelNameOrFail(),
         );
 
         return ($entityDefaultOperationMask & AclEntityConstants::OPERATION_MASK_READ) > 0;
@@ -132,7 +134,7 @@ class DefaultAclQueryScope implements AclQueryScopeInterface
     public function isUpdatableQuery(ModelCriteria $query): bool
     {
         $entityDefaultOperationMask = $this->aclEntityMetadataReader->getDefaultOperationMaskForEntityClass(
-            $query->getModelName(),
+            $query->getModelNameOrFail(),
         );
 
         return ($entityDefaultOperationMask & AclEntityConstants::OPERATION_MASK_UPDATE) > 0;
@@ -148,7 +150,7 @@ class DefaultAclQueryScope implements AclQueryScopeInterface
     public function isDeletableQuery(ModelCriteria $query): bool
     {
         $entityDefaultOperationMask = $this->aclEntityMetadataReader->getDefaultOperationMaskForEntityClass(
-            $query->getModelName(),
+            $query->getModelNameOrFail(),
         );
 
         return ($entityDefaultOperationMask & AclEntityConstants::OPERATION_MASK_DELETE) > 0;

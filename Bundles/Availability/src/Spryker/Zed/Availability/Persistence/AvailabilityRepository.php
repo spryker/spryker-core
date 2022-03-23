@@ -43,11 +43,13 @@ class AvailabilityRepository extends AbstractRepository implements AvailabilityR
     ): ?ProductConcreteAvailabilityTransfer {
         $storeTransfer->requireIdStore();
 
+        /** @var literal-string $where */
+        $where = sprintf('%s = %d', SpyProductTableMap::COL_ID_PRODUCT, $idProductConcrete);
         $availabilityEntity = $this->getFactory()
             ->createSpyAvailabilityQuery()
             ->filterByFkStore($storeTransfer->getIdStore())
             ->addJoin(SpyAvailabilityTableMap::COL_SKU, SpyProductTableMap::COL_SKU, Criteria::INNER_JOIN)
-            ->where(sprintf('%s = %d', SpyProductTableMap::COL_ID_PRODUCT, $idProductConcrete))
+            ->where($where)
             ->findOne();
 
         if ($availabilityEntity === null) {
@@ -74,11 +76,13 @@ class AvailabilityRepository extends AbstractRepository implements AvailabilityR
     ): array {
         $storeTransfer->requireIdStore();
 
+        /** @var literal-string $where */
+        $where = sprintf('%s IN (%s)', SpyProductTableMap::COL_ID_PRODUCT, implode(',', $productConcreteIds));
         $availabilityEntities = $this->getFactory()
             ->createSpyAvailabilityQuery()
             ->filterByFkStore($storeTransfer->getIdStore())
             ->addJoin(SpyAvailabilityTableMap::COL_SKU, SpyProductTableMap::COL_SKU, Criteria::INNER_JOIN)
-            ->where(sprintf('%s IN (%s)', SpyProductTableMap::COL_ID_PRODUCT, implode(',', $productConcreteIds)))
+            ->where($where)
             ->withColumn(SpyProductTableMap::COL_ID_PRODUCT, static::COL_ID_PRODUCT)
             ->find()
             ->toKeyIndex(static::COL_ID_PRODUCT);

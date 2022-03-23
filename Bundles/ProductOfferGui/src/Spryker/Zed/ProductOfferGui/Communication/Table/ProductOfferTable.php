@@ -205,6 +205,9 @@ class ProductOfferTable extends AbstractTable
 
         $this->total = $this->productOfferQuery->count();
 
+        /** @var literal-string $where */
+        $where = sprintf('%s = (%s)', SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE,
+            $this->localeFacade->getCurrentLocale()->getIdLocale());
         $this->productOfferQuery
             ->groupByIdProductOffer()
             ->useSpyProductOfferStoreQuery(null, Criteria::LEFT_JOIN)
@@ -216,7 +219,7 @@ class ProductOfferTable extends AbstractTable
             ->endUse()
             ->addJoin(SpyProductOfferTableMap::COL_CONCRETE_SKU, SpyProductTableMap::COL_SKU, Criteria::INNER_JOIN)
             ->addJoin(SpyProductTableMap::COL_ID_PRODUCT, SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT, Criteria::INNER_JOIN)
-            ->where(sprintf('%s = (%s)', SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE, $this->localeFacade->getCurrentLocale()->getIdLocale()))
+            ->where($where)
             ->withColumn(SpyProductLocalizedAttributesTableMap::COL_NAME, static::COL_PRODUCT_NAME)
             ->withColumn(
                 SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT,

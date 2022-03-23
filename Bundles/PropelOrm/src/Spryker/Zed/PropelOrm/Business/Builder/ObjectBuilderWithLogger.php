@@ -139,7 +139,7 @@ class ObjectBuilderWithLogger extends PropelObjectBuilder
         if ($this->getPlatform() instanceof MssqlPlatform) {
             if ($table->hasAutoIncrementPrimaryKey()) {
                 $script .= "
-        \$this->modifiedColumns[" . $this->getColumnConstant($table->getAutoIncrementPrimaryKey()) . '] = true;';
+        \$this->modifiedColumns[" . $this->getColumnConstant($table->getAutoIncrementPrimaryKeyOrFail()) . '] = true;';
             }
             $script .= "
         \$criteria = \$this->buildCriteria();";

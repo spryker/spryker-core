@@ -44,7 +44,7 @@ class AbstractAclEntityRelation
             $aclEntityMetadataTransfer->getParentOrFail()->getEntityNameOrFail(),
         );
         foreach ($entityTableMap->getRelations() as $relationMap) {
-            if ($relationMap->getRightTable()->getPhpName() === $parentShortClass) {
+            if ($relationMap->getRightTableOrFail()->getPhpName() === $parentShortClass) {
                 return $relationMap;
             }
         }

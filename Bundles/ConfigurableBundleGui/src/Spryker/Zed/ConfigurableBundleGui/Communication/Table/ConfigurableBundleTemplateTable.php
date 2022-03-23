@@ -183,6 +183,13 @@ class ConfigurableBundleTemplateTable extends AbstractTable
      */
     protected function prepareQuery(SpyConfigurableBundleTemplateQuery $configurableBundleTemplatePropelQuery): SpyConfigurableBundleTemplateQuery
     {
+        /** @var literal-string $where */
+        $where = sprintf(
+            '%s = %s',
+            SpyGlossaryTranslationTableMap::COL_FK_LOCALE,
+            $this->localeFacade->getCurrentLocale()
+                ->getIdLocale(),
+        );
         $configurableBundleTemplatePropelQuery
             ->leftJoinSpyConfigurableBundleTemplateSlot()
             ->addJoin(SpyConfigurableBundleTemplateTableMap::COL_NAME, SpyGlossaryKeyTableMap::COL_KEY, Criteria::LEFT_JOIN)
@@ -193,12 +200,7 @@ class ConfigurableBundleTemplateTable extends AbstractTable
             )
             ->withColumn(SpyGlossaryTranslationTableMap::COL_VALUE, static::COL_NAME_TRANSLATION)
             ->where(
-                sprintf(
-                    '%s = %s',
-                    SpyGlossaryTranslationTableMap::COL_FK_LOCALE,
-                    $this->localeFacade->getCurrentLocale()
-                        ->getIdLocale(),
-                ),
+                $where,
             )
             ->groupByIdConfigurableBundleTemplate();
 

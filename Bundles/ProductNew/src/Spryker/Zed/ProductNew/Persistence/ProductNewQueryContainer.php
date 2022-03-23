@@ -47,6 +47,12 @@ class ProductNewQueryContainer extends AbstractQueryContainer implements Product
     {
         $timeRangeCriteria = $this->createValidTimeRangeCriteria(true);
 
+        /** @var literal-string $where */
+        $where = sprintf(
+            '%s IS NULL AND %s IS NULL',
+            SpyProductAbstractTableMap::COL_NEW_FROM,
+            SpyProductAbstractTableMap::COL_NEW_TO,
+        );
         /** @phpstan-var \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery */
         return $this->getFactory()
             ->getProductLabelQueryContainer()
@@ -54,11 +60,7 @@ class ProductNewQueryContainer extends AbstractQueryContainer implements Product
             ->useSpyProductAbstractQuery()
                 ->mergeWith($timeRangeCriteria)
                 ->_or()
-                ->where(sprintf(
-                    '%s IS NULL AND %s IS NULL',
-                    SpyProductAbstractTableMap::COL_NEW_FROM,
-                    SpyProductAbstractTableMap::COL_NEW_TO,
-                ))
+                ->where($where)
             ->endUse();
     }
 

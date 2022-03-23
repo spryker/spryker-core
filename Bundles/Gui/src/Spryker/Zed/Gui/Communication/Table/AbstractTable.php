@@ -1047,6 +1047,7 @@ abstract class AbstractTable
             $conditions,
         );
 
+        /** @var literal-string $gluedCondition */
         $gluedCondition = '(' . $gluedCondition . ')';
 
         if ($config->getHasSearchableFieldsWithAggregateFunctions()) {
@@ -1529,15 +1530,15 @@ abstract class AbstractTable
     {
         $search = $column->getSearch();
         if (preg_match('/created_at|updated_at/', $searchColumns[$column->getData()])) {
-            $query->where(
-                sprintf(
-                    '(%s >= %s AND %s <= %s)',
-                    $searchColumns[$column->getData()],
-                    Propel::getConnection()->quote($this->filterSearchValue($search[static::PARAMETER_VALUE]) . ' 00:00:00'),
-                    $searchColumns[$column->getData()],
-                    Propel::getConnection()->quote($this->filterSearchValue($search[static::PARAMETER_VALUE]) . ' 23:59:59'),
-                ),
+            /** @var literal-string $where */
+            $where = sprintf(
+                '(%s >= %s AND %s <= %s)',
+                $searchColumns[$column->getData()],
+                Propel::getConnection()->quote($this->filterSearchValue($search[static::PARAMETER_VALUE]) . ' 00:00:00'),
+                $searchColumns[$column->getData()],
+                Propel::getConnection()->quote($this->filterSearchValue($search[static::PARAMETER_VALUE]) . ' 23:59:59'),
             );
+            $query->where($where);
 
             return;
         }
@@ -1547,11 +1548,13 @@ abstract class AbstractTable
             return;
         }
 
-        $query->where(sprintf(
+        /** @var literal-string $where */
+        $where = sprintf(
             '%s = %s',
             $searchColumns[$column->getData()],
             Propel::getConnection()->quote($value),
-        ));
+        );
+        $query->where($where);
     }
 
     /**

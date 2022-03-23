@@ -359,13 +359,15 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
             ->setLeftTableName(SpyCategoryClosureTableTableMap::TABLE_NAME)
             ->setLeftTableAlias('descendants');
 
+        /** @var literal-string $where */
+        $where = sprintf('descendants.fk_category_node = %d', $idCategoryNode);
         $categoryClosureTableQuery->addJoinObject($joinCategoryNodeDescendant)
             ->addJoinObject($joinCategoryNodeAscendant, 'ascendantsJoin')
             ->addJoinCondition(
                 'ascendantsJoin',
                 'ascendants.fk_category_node_descendant = node.fk_category_node',
             )
-            ->where(sprintf('descendants.fk_category_node = %d', $idCategoryNode))
+            ->where($where)
             ->where('ascendants.fk_category_node IS NULL')
             ->find()
             ->delete();

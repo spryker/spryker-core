@@ -203,11 +203,15 @@ class PriceProductScheduleEnableFinder implements PriceProductScheduleEnableFind
         SpyPriceProductScheduleQuery $priceProductScheduleQuery,
         StoreTransfer $storeTransfer
     ): SpyPriceProductScheduleQuery {
+        /** @var literal-string $activeFromCondition */
+        $activeFromCondition = sprintf('%s <= now()', SpyPriceProductScheduleTableMap::COL_ACTIVE_FROM);
+        /** @var literal-string $activeTCondition */
+        $activeToCondition = sprintf('%s >= now()', SpyPriceProductScheduleTableMap::COL_ACTIVE_TO);
         /** @phpstan-var \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery */
         return $priceProductScheduleQuery
             ->filterByFkStore($storeTransfer->getIdStore())
-            ->where(sprintf('%s <= now()', SpyPriceProductScheduleTableMap::COL_ACTIVE_FROM))
-            ->where(sprintf('%s >= now()', SpyPriceProductScheduleTableMap::COL_ACTIVE_TO))
+            ->where($activeFromCondition)
+            ->where($activeToCondition)
             ->usePriceProductScheduleListQuery()
                 ->filterByIsActive(true)
             ->endUse();
@@ -282,6 +286,11 @@ class PriceProductScheduleEnableFinder implements PriceProductScheduleEnableFind
         StoreTransfer $storeTransfer,
         string $dbEngineName
     ): array {
+        /** @var literal-string $activeFromCondition */
+        $activeFromCondition = sprintf('%s <= now()', SpyPriceProductScheduleTableMap::COL_ACTIVE_FROM);
+        /** @var literal-string $activeTCondition */
+        $activeToCondition = sprintf('%s >= now()', SpyPriceProductScheduleTableMap::COL_ACTIVE_TO);
+
         $priceProductScheduleEntities = $this->factory->createPriceProductScheduleQuery()
             ->addSelectQuery($subQuery, static::ALIAS_FILTERED, false)
             ->joinWithCurrency()
@@ -292,8 +301,8 @@ class PriceProductScheduleEnableFinder implements PriceProductScheduleEnableFind
             ->filterByFkStore($storeTransfer->getIdStore())
             ->where($this->getFilterByConcatenatedProductIdExpression())
             ->where($this->getFilterByConcatenatedResultExpression($dbEngineName))
-            ->where(sprintf('%s <= now()', SpyPriceProductScheduleTableMap::COL_ACTIVE_FROM))
-            ->where(sprintf('%s >= now()', SpyPriceProductScheduleTableMap::COL_ACTIVE_TO))
+            ->where($activeFromCondition)
+            ->where($activeToCondition)
             ->limit($this->config->getApplyBatchSize())
             ->find()
             ->getData();
@@ -399,6 +408,11 @@ class PriceProductScheduleEnableFinder implements PriceProductScheduleEnableFind
         string $dbEngineName,
         int $idProductConcrete
     ): array {
+        /** @var literal-string $activeFromCondition */
+        $activeFromCondition = sprintf('%s <= now()', SpyPriceProductScheduleTableMap::COL_ACTIVE_FROM);
+        /** @var literal-string $activeTCondition */
+        $activeToCondition = sprintf('%s >= now()', SpyPriceProductScheduleTableMap::COL_ACTIVE_TO);
+
         $priceProductScheduleEntities = $this->factory->createPriceProductScheduleQuery()
             ->addSelectQuery($subQuery, static::ALIAS_FILTERED, false)
             ->joinWithCurrency()
@@ -410,8 +424,8 @@ class PriceProductScheduleEnableFinder implements PriceProductScheduleEnableFind
             ->filterByFkProduct($idProductConcrete)
             ->where($this->getFilterByConcatenatedProductIdExpression())
             ->where($this->getFilterByConcatenatedResultExpression($dbEngineName))
-            ->where(sprintf('%s <= now()', SpyPriceProductScheduleTableMap::COL_ACTIVE_FROM))
-            ->where(sprintf('%s >= now()', SpyPriceProductScheduleTableMap::COL_ACTIVE_TO))
+            ->where($activeFromCondition)
+            ->where($activeToCondition)
             ->find()
             ->getData();
 

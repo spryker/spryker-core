@@ -81,7 +81,7 @@ class RightAclJoin extends AbstractAclJoin
     protected function extendQueryWithSegmentConditions(ModelCriteria $query): ModelCriteria
     {
         /** @var \Propel\Runtime\Map\ColumnMap $queryPrimaryKey */
-        $queryPrimaryKey = current($this->getPrimaryKeys($query->getTableMap()->getName()));
+        $queryPrimaryKey = current($this->getPrimaryKeys($query->getTableMapOrFail()->getNameOrFail()));
 
         $aclEntitySegmentJoin = $this->getAclEntitySegmentJoin($query);
 
@@ -91,13 +91,13 @@ class RightAclJoin extends AbstractAclJoin
         /** @var \Propel\Runtime\Map\ColumnMap $aclEntitySegmentPrimaryKey */
         $aclEntitySegmentPrimaryKey = current($this->getPrimaryKeys($rightTableName));
 
-        $query->where(
-            sprintf(
-                '%s IS NULL OR %s IS NOT NULL',
-                $queryPrimaryKey->getFullyQualifiedName(),
-                $aclEntitySegmentPrimaryKey->getFullyQualifiedName(),
-            ),
+        /** @var literal-string $where */
+        $where = sprintf(
+            '%s IS NULL OR %s IS NOT NULL',
+            $queryPrimaryKey->getFullyQualifiedName(),
+            $aclEntitySegmentPrimaryKey->getFullyQualifiedName(),
         );
+        $query->where($where);
 
         return $query;
     }

@@ -84,8 +84,11 @@ class ProductOptionGroupQueryExpander implements ProductOptionGroupQueryExpander
 
             if ($queryJoinTransfer->getWhereConditions()->count()) {
                 foreach ($queryJoinTransfer->getWhereConditions() as $whereConditionTransfer) {
+                    /** @var literal-string $where */
+                    $where = sprintf('%s=%d', $whereConditionTransfer->getColumn(),
+                        $whereConditionTransfer->getValue());
                     $query->where(
-                        sprintf('%s=%d', $whereConditionTransfer->getColumn(), $whereConditionTransfer->getValue()),
+                        $where,
                     );
                 }
             }

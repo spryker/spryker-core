@@ -81,13 +81,15 @@ class SalesProductConnectorRepository extends AbstractRepository implements Sale
         $this->addJoinByColSku($salesOrderQuery);
         $this->addWhereByInterval($salesOrderQuery, $interval);
 
+        /** @var literal-string $where */
+        $where = sprintf(
+            '%s IN (%s)',
+            SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT,
+            $productAbstractIds,
+        );
         return $salesOrderQuery
             ->withColumn(sprintf('SUM(%s)', SpySalesOrderItemTableMap::COL_QUANTITY), static::FIELD_POPULARITY)
-            ->where(sprintf(
-                '%s IN (%s)',
-                SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT,
-                $productAbstractIds,
-            ))
+            ->where($where)
             ->select([static::FIELD_POPULARITY])
             ->groupBy(SpySalesOrderItemTableMap::COL_SKU)
             ->find()
@@ -185,11 +187,13 @@ class SalesProductConnectorRepository extends AbstractRepository implements Sale
         $dateNow = new DateTimeImmutable();
         $dateFrom = $dateNow->sub(new DateInterval('P' . $interval . 'D'));
 
-        $query->where(sprintf(
+        /** @var literal-string $where */
+        $where = sprintf(
             "%s >= '%s'",
             SpySalesOrderItemTableMap::COL_CREATED_AT,
             $dateFrom->format('Y-m-d H:i:s'),
-        ));
+        );
+        $query->where($where);
     }
 
     /**

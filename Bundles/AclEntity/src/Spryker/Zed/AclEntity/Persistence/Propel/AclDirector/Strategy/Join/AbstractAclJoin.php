@@ -80,7 +80,7 @@ abstract class AbstractAclJoin implements AclJoinInterface
      */
     protected function getModelClass(string $tableName): string
     {
-        $class = $this->propelServiceContainer->getDatabaseMap()->getTable($tableName)->getClassName();
+        $class = $this->propelServiceContainer->getDatabaseMap()->getTable($tableName)->getClassNameOrFail();
 
         return strpos($class, '\\') === 0 ? substr($class, 1) : $class;
     }

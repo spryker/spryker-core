@@ -85,13 +85,15 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      */
     public function querySalesOrderItemsByState(array $states, $processName)
     {
+        /** @var literal-string $stateNameCondition */
+        $stateNameCondition = "State.name IN ('" . implode("', '", $states) . "')";
         return $this->getFactory()
             ->getSalesQueryContainer()
             ->querySalesOrderItem()
             ->joinProcess(null, Criteria::INNER_JOIN)
             ->joinState(null, Criteria::INNER_JOIN)
             ->where('Process.name = ?', $processName)
-            ->where("State.name IN ('" . implode("', '", $states) . "')");
+            ->where($stateNameCondition);
     }
 
     /**

@@ -34,7 +34,7 @@ class TargetEntityReferenceToFkEntityStep implements DataImportStepInterface
         $dataEntity = $dataSet[AclEntitySegmentConnectorDataSetInterface::DATA_ENTITY];
 
         $targetEntity = PropelQuery::from($dataEntity);
-        $referenceFieldColumnName = $targetEntity->getTableMap()->getColumn($referenceField)->getPhpName();
+        $referenceFieldColumnName = $targetEntity->getTableMapOrFail()->getColumn($referenceField)->getPhpNameOrFail();
         $targetEntity = $targetEntity
             ->filterBy($referenceFieldColumnName, $entityReference)
             ->findOne();

@@ -75,7 +75,7 @@ class AclQueryExpander implements AclQueryExpanderInterface
         string $joinType = Criteria::INNER_JOIN
     ): ModelCriteria {
         $aclEntityMetadataTransfer = $this->aclEntityMetadataReader->getAclEntityMetadataTransferForEntityClass(
-            $query->getModelName(),
+            $query->getModelNameOrFail(),
         );
         while ($aclEntityMetadataTransfer->getEntityNameOrFail() !== $parentAclEntityMetadataTransfer->getEntityNameOrFail()) {
             $query = $this->joinRelation($query, $aclEntityMetadataTransfer, $joinType);

@@ -99,7 +99,7 @@ class InheritedAclQueryScope implements AclQueryScopeInterface
     public function applyAclRuleOnSelectQuery(ModelCriteria $query, AclEntityRuleCollectionTransfer $aclEntityRuleCollectionTransfer): ModelCriteria
     {
         $aclEntityMetadataTransfer = $this->aclEntityMetadataReader->getAclEntityMetadataTransferForEntityClass(
-            $query->getModelName(),
+            $query->getModelNameOrFail(),
         );
         $parentAclEntityRules = [];
         foreach ($this->getGroupedAclEntityRulesByAclGroupId($aclEntityRuleCollectionTransfer) as $aclEntityRuleCollectionTransfer) {
@@ -286,7 +286,7 @@ class InheritedAclQueryScope implements AclQueryScopeInterface
     public function applyAclRuleOnUpdateQuery(ModelCriteria $query, AclEntityRuleCollectionTransfer $aclEntityRuleCollectionTransfer): ModelCriteria
     {
         $aclEntityMetadataTransfer = $this->aclEntityMetadataReader->getRootAclEntityMetadataTransferForEntitySubClass(
-            $query->getModelName(),
+            $query->getModelNameOrFail(),
         );
 
         $queryScope = $this->getAclQueryScope(

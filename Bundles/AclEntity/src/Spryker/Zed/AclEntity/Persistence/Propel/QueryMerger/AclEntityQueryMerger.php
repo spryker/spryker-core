@@ -79,7 +79,7 @@ class AclEntityQueryMerger implements AclEntityQueryMergerInterface
             }
 
             $rightTableName = (string)$srcJoin->getRightTableName();
-            if ($dstQuery->getTableMap()->getName() === $rightTableName) {
+            if ($dstQuery->getTableMapOrFail()->getName() === $rightTableName) {
                 continue;
             }
 
@@ -150,10 +150,10 @@ class AclEntityQueryMerger implements AclEntityQueryMergerInterface
      */
     protected function rebuildJoinCondition(Join $join): Join
     {
-        $clauses = $join->getJoinCondition()->getClauses();
+        $clauses = $join->getJoinConditionOrFail()->getClauses();
         $join->buildJoinCondition(new Criteria());
         foreach ($clauses as $clause) {
-            $join->getJoinCondition()->addAnd($clause);
+            $join->getJoinConditionOrFail()->addAnd($clause);
         }
 
         return $join;

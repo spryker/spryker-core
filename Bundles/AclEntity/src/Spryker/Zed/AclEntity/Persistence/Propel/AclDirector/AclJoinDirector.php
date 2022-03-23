@@ -89,7 +89,7 @@ class AclJoinDirector implements AclJoinDirectorInterface
      */
     protected function getModelClass(string $table): string
     {
-        $class = $this->propelServiceContainer->getDatabaseMap()->getTable($table)->getClassName();
+        $class = $this->propelServiceContainer->getDatabaseMap()->getTable($table)->getClassNameOrFail();
 
         return strpos($class, '\\') === 0 ? substr($class, 1) : $class;
     }

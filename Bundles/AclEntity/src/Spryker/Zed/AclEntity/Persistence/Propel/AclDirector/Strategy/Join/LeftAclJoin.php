@@ -85,7 +85,9 @@ class LeftAclJoin extends AbstractAclJoin
         $aclEntitySegmentPrimaryKey = current($this->getPrimaryKeys($rightTableName));
 
         $primaryKeyColumn = $aclEntitySegmentPrimaryKey ? $aclEntitySegmentPrimaryKey->getFullyQualifiedName() : '';
-        $query->where(sprintf('%s IS NOT NULL', $primaryKeyColumn));
+        /** @var literal-string $where */
+        $where = sprintf('%s IS NOT NULL', $primaryKeyColumn);
+        $query->where($where);
 
         return $query;
     }

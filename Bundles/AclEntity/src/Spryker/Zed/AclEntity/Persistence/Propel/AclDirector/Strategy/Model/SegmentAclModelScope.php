@@ -169,17 +169,17 @@ class SegmentAclModelScope implements AclModelScopeInterface
         $segmentQuery = PropelQuery::from($segmentClass);
 
         $entityForeignKeyColumn = $this->aclEntityService->generateSegmentConnectorReferenceColumnName(
-            PropelQuery::from(get_class($entity))->getTableMap()->getName(),
+            PropelQuery::from(get_class($entity))->getTableMapOrFail()->getNameOrFail(),
         );
 
         $segmentQuery
             ->filterBy(
-                $segmentQuery->getTableMap()->getColumn(static::FK_ACL_ENTITY_SEGMENT)->getPhpName(),
+                $segmentQuery->getTableMapOrFail()->getColumn(static::FK_ACL_ENTITY_SEGMENT)->getPhpNameOrFail(),
                 $segmentIds,
                 Criteria::IN,
             )
             ->filterBy(
-                $segmentQuery->getTableMap()->getColumn($entityForeignKeyColumn)->getPhpName(),
+                $segmentQuery->getTableMapOrFail()->getColumn($entityForeignKeyColumn)->getPhpNameOrFail(),
                 $entity->getPrimaryKey(),
             );
 

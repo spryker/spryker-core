@@ -49,7 +49,7 @@ class TransferObjectFormatter extends ArrayFormatter
         }
 
         foreach ($items as $item) {
-            $entityName = $this->getTableMap()->getPhpName();
+            $entityName = $this->getTableMap()->getPhpNameOrFail();
             $entityTransfer = $this->mapArrayToEntityTransfer($entityName, $item);
             $collection[] = $entityTransfer;
         }
@@ -92,7 +92,7 @@ class TransferObjectFormatter extends ArrayFormatter
         }
 
         if ($item) {
-            $entityName = $this->getTableMap()->getPhpName();
+            $entityName = $this->getTableMap()->getPhpNameOrFail();
             $result = $this->mapArrayToEntityTransfer($entityName, $item);
         }
 

@@ -593,6 +593,16 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
 
         $categoryNodeIdsImploded = implode(', ', $categoryNodeIds);
 
+        /** @var literal-string $fkCategoryNodeDescendant */
+        $fkCategoryNodeDescendantCondition = sprintf(
+            '%s IN (%s)',
+            SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE_DESCENDANT,
+            $categoryNodeIdsImploded
+        );
+
+        /** @var literal-string $sprintf */
+        $fkCategoryNodeCondition = sprintf('%s IN (%s)', SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE,
+            $categoryNodeIdsImploded);
         /** @var \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery $categoryNodeQuery */
         $categoryNodeQuery = $this->getFactory()
             ->createCategoryNodeQuery()
@@ -616,9 +626,9 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
                     ->leftJoinWithSpyStore()
                 ->endUse()
             ->endUse()
-            ->where(sprintf('%s IN (%s)', SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE_DESCENDANT, $categoryNodeIdsImploded))
+            ->where($fkCategoryNodeDescendantCondition)
             ->_or()
-            ->where(sprintf('%s IN (%s)', SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE, $categoryNodeIdsImploded));
+            ->where($fkCategoryNodeCondition);
 
         $categoryNodeQuery
             ->orderByNodeOrder(Criteria::DESC)
