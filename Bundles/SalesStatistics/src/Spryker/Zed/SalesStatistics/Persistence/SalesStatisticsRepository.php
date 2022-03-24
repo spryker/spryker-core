@@ -156,6 +156,7 @@ class SalesStatisticsRepository extends AbstractRepository implements SalesStati
     {
         /** @var literal-string $where */
         $where = sprintf("%s>='%s'", SpySalesOrderTableMap::COL_CREATED_AT, $date);
+
         return $this->getFactory()->createSalesOrderQuery()
             ->select([static::DATE, static::COUNT])
             ->withColumn('COUNT(' . SpySalesOrderTableMap::COL_ID_SALES_ORDER . ')', static::COUNT)
