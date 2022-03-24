@@ -42,7 +42,7 @@ class TransferObjectFormatter extends ArrayFormatter
 
         $items = [];
         foreach ($dataFetcher as $row) {
-            $rowArray = &$this->getStructuredArrayFromRow($row);
+            $rowArray = &$this->hydratePropelObjectCollection($row);
             if ($rowArray) {
                 $items[] = &$rowArray;
             }
@@ -85,7 +85,7 @@ class TransferObjectFormatter extends ArrayFormatter
 
         $item = [];
         foreach ($dataFetcher as $row) {
-            $rowArray = &$this->getStructuredArrayFromRow($row);
+            $rowArray = &$this->hydratePropelObjectCollection($row);
             if ($rowArray) {
                 $item = &$rowArray;
             }
