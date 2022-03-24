@@ -21,11 +21,6 @@ class TransferObjectFormatter extends AbstractFormatter
     protected $objects = [];
 
     /**
-     * @var array
-     */
-    protected $alreadyHydratedObjects = [];
-
-    /**
      * @param \Propel\Runtime\DataFetcher\DataFetcherInterface|null $dataFetcher
      *
      * @throws \Propel\Runtime\Exception\LogicException
