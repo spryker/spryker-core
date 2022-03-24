@@ -8,11 +8,12 @@
 namespace Spryker\Zed\Synchronization\Persistence\Propel\Formatter;
 
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
+use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use Propel\Runtime\DataFetcher\DataFetcherInterface;
 use Propel\Runtime\Exception\LogicException;
-use Propel\Runtime\Formatter\ArrayFormatter;
+use Propel\Runtime\Formatter\AbstractFormatter;
 
-class SynchronizationDataTransferObjectFormatter extends ArrayFormatter
+class SynchronizationDataTransferObjectFormatter extends AbstractFormatter
 {
     /**
      * @var array
@@ -26,7 +27,7 @@ class SynchronizationDataTransferObjectFormatter extends ArrayFormatter
      *
      * @return array<\Spryker\Shared\Kernel\Transfer\TransferInterface>
      */
-    public function format(?DataFetcherInterface $dataFetcher = null)
+    public function format(?DataFetcherInterface $dataFetcher = null): array
     {
         $this->checkInit();
 
@@ -85,7 +86,7 @@ class SynchronizationDataTransferObjectFormatter extends ArrayFormatter
 
         $item = [];
         foreach ($dataFetcher as $row) {
-            $rowArray = &$this->getStructuredArrayFromRow($row);
+            $rowArray = &$this->hydratePropelObjectCollection($row);
             if ($rowArray) {
                 $item = &$rowArray;
             }
@@ -113,6 +114,24 @@ class SynchronizationDataTransferObjectFormatter extends ArrayFormatter
         $synchronizationDataTransfer->fromArray($rowArray, true);
 
         return $synchronizationDataTransfer;
+    }
+
+    /**
+     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface|null $record
+     *
+     * @return array The original record turned into an array
+     */
+    public function formatRecord(?ActiveRecordInterface $record = null): array
+    {
+        return $record ? $record->toArray() : [];
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCollectionClassName(): ?string
+    {
+        return '\Propel\Runtime\Collection\ArrayCollection';
     }
 
     /**
