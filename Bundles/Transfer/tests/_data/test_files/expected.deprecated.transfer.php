@@ -161,6 +161,26 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
     /**
      * @module Test
      *
+     * @deprecated scalarField is deprecated.
+     *
+     * @param string|null $scalarField
+     *
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
+     *
+     * @return $this
+     */
+    public function setScalarFieldOrFail($scalarField)
+    {
+        if ($scalarField === null) {
+            $this->throwNullValueException(static::SCALAR_FIELD);
+        }
+
+        return $this->setScalarField($scalarField);
+    }
+
+    /**
+     * @module Test
+     *
      * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
      *
      * @deprecated scalarField is deprecated.
@@ -285,6 +305,22 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
     public function getTransferField()
     {
         return $this->transferField;
+    }
+
+    /**
+     * @module Test
+     *
+     * @deprecated transferField is deprecated.
+     *
+     * @param \Generated\Shared\Transfer\DeprecatedFooBarTransfer $transferField
+     *
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
+     *
+     * @return $this
+     */
+    public function setTransferFieldOrFail(DeprecatedFooBarTransfer $transferField)
+    {
+        return $this->setTransferField($transferField);
     }
 
     /**
@@ -439,7 +475,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
      *
      * @return array<string, mixed>
      */
-    public function modifiedToArray($isRecursive = true, $camelCasedKeys = false)
+    public function modifiedToArray($isRecursive = true, $camelCasedKeys = false): array
     {
         if ($isRecursive && !$camelCasedKeys) {
             return $this->modifiedToArrayRecursiveNotCamelCased();
@@ -461,7 +497,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
      *
      * @return array<string, mixed>
      */
-    public function toArray($isRecursive = true, $camelCasedKeys = false)
+    public function toArray($isRecursive = true, $camelCasedKeys = false): array
     {
         if ($isRecursive && !$camelCasedKeys) {
             return $this->toArrayRecursiveNotCamelCased();
@@ -484,7 +520,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
      *
      * @return array<string, mixed>
      */
-    protected function addValuesToCollectionModified($value, $isRecursive, $camelCasedKeys)
+    protected function addValuesToCollectionModified($value, $isRecursive, $camelCasedKeys): array
     {
         $result = [];
         foreach ($value as $elementKey => $arrayElement) {
@@ -506,7 +542,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
      *
      * @return array<string, mixed>
      */
-    protected function addValuesToCollection($value, $isRecursive, $camelCasedKeys)
+    protected function addValuesToCollection($value, $isRecursive, $camelCasedKeys): array
     {
         $result = [];
         foreach ($value as $elementKey => $arrayElement) {
@@ -524,7 +560,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
     /**
      * @return array<string, mixed>
      */
-    public function modifiedToArrayRecursiveCamelCased()
+    public function modifiedToArrayRecursiveCamelCased(): array
     {
         $values = [];
         foreach ($this->modifiedProperties as $property => $_) {
@@ -560,7 +596,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
     /**
      * @return array<string, mixed>
      */
-    public function modifiedToArrayRecursiveNotCamelCased()
+    public function modifiedToArrayRecursiveNotCamelCased(): array
     {
         $values = [];
         foreach ($this->modifiedProperties as $property => $_) {
@@ -596,7 +632,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
     /**
      * @return array<string, mixed>
      */
-    public function modifiedToArrayNotRecursiveNotCamelCased()
+    public function modifiedToArrayNotRecursiveNotCamelCased(): array
     {
         $values = [];
         foreach ($this->modifiedProperties as $property => $_) {
@@ -613,7 +649,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
     /**
      * @return array<string, mixed>
      */
-    public function modifiedToArrayNotRecursiveCamelCased()
+    public function modifiedToArrayNotRecursiveCamelCased(): array
     {
         $values = [];
         foreach ($this->modifiedProperties as $property => $_) {
@@ -630,7 +666,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
     /**
      * @return void
      */
-    protected function initCollectionProperties()
+    protected function initCollectionProperties(): void
     {
         $this->transferCollectionField = $this->transferCollectionField ?: new ArrayObject();
     }
@@ -638,7 +674,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
     /**
      * @return array<string, mixed>
      */
-    public function toArrayNotRecursiveCamelCased()
+    public function toArrayNotRecursiveCamelCased(): array
     {
         return [
             'scalarField' => $this->scalarField,
@@ -651,7 +687,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
     /**
      * @return array<string, mixed>
      */
-    public function toArrayNotRecursiveNotCamelCased()
+    public function toArrayNotRecursiveNotCamelCased(): array
     {
         return [
             'scalar_field' => $this->scalarField,
@@ -664,7 +700,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
     /**
      * @return array<string, mixed>
      */
-    public function toArrayRecursiveNotCamelCased()
+    public function toArrayRecursiveNotCamelCased(): array
     {
         return [
             'scalar_field' => $this->scalarField instanceof AbstractTransfer ? $this->scalarField->toArray(true, false) : $this->scalarField,
@@ -677,7 +713,7 @@ class DeprecatedFooBarTransfer extends AbstractTransfer
     /**
      * @return array<string, mixed>
      */
-    public function toArrayRecursiveCamelCased()
+    public function toArrayRecursiveCamelCased(): array
     {
         return [
             'scalarField' => $this->scalarField instanceof AbstractTransfer ? $this->scalarField->toArray(true, true) : $this->scalarField,

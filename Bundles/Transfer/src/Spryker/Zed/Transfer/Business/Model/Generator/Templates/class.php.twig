@@ -51,7 +51,11 @@ class {{ className }} extends {{ abstractClass }}
 {% for methodName, method  in methods %}
 
 {% if methodName starts with 'set' %}
+{% if methodName ends with 'OrFail' %}
+{{ macro.addSetOrFail(method) -}}
+{% else %}
 {{ macro.addSet(method) -}}
+{% endif %}
 {% endif %}
 {% if methodName starts with 'get' and not method.isItemGetter|default %}
 {% if methodName ends with 'OrFail' %}
@@ -177,7 +181,7 @@ class {{ className }} extends {{ abstractClass }}
      *
      * @return array<string, mixed>
      */
-    public function modifiedToArray($isRecursive = true, $camelCasedKeys = false)
+    public function modifiedToArray($isRecursive = true, $camelCasedKeys = false): array
     {
         if ($isRecursive && !$camelCasedKeys) {
             return $this->modifiedToArrayRecursiveNotCamelCased();
@@ -199,7 +203,7 @@ class {{ className }} extends {{ abstractClass }}
      *
      * @return array<string, mixed>
      */
-    public function toArray($isRecursive = true, $camelCasedKeys = false)
+    public function toArray($isRecursive = true, $camelCasedKeys = false): array
     {
         if ($isRecursive && !$camelCasedKeys) {
             return $this->toArrayRecursiveNotCamelCased();
@@ -222,7 +226,7 @@ class {{ className }} extends {{ abstractClass }}
      *
      * @return array<string, mixed>
      */
-    protected function addValuesToCollectionModified($value, $isRecursive, $camelCasedKeys)
+    protected function addValuesToCollectionModified($value, $isRecursive, $camelCasedKeys): array
     {
         $result = [];
         foreach ($value as $elementKey => $arrayElement) {
@@ -244,7 +248,7 @@ class {{ className }} extends {{ abstractClass }}
      *
      * @return array<string, mixed>
      */
-    protected function addValuesToCollection($value, $isRecursive, $camelCasedKeys)
+    protected function addValuesToCollection($value, $isRecursive, $camelCasedKeys): array
     {
         $result = [];
         foreach ($value as $elementKey => $arrayElement) {

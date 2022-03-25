@@ -37,7 +37,7 @@ class DataBuilderDefinitionFinder implements FinderInterface
     /**
      * @return array<\Symfony\Component\Finder\SplFileInfo>
      */
-    public function getXmlTransferDefinitionFiles()
+    public function getXmlTransferDefinitionFiles(): array
     {
         $finder = new Finder();
 
@@ -54,7 +54,7 @@ class DataBuilderDefinitionFinder implements FinderInterface
     /**
      * @return array<string>
      */
-    protected function getExistingSourceDirectories()
+    protected function getExistingSourceDirectories(): array
     {
         $existingDirectories = [];
 

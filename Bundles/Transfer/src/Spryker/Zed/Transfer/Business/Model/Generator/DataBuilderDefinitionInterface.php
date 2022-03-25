@@ -16,10 +16,10 @@ interface DataBuilderDefinitionInterface extends DefinitionInterface
     /**
      * @return array
      */
-    public function getRules();
+    public function getRules(): array;
 
     /**
      * @return array
      */
-    public function getDependencies();
+    public function getDependencies(): array;
 }

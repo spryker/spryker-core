@@ -29,7 +29,7 @@ class TransferDefinitionMerger implements MergerInterface
      *
      * @return array<string, array>
      */
-    public function merge(array $transferDefinitions)
+    public function merge(array $transferDefinitions): array
     {
         $this->mergedTransferDefinitions = [];
 
@@ -56,7 +56,7 @@ class TransferDefinitionMerger implements MergerInterface
      *
      * @return array<string, mixed>
      */
-    protected function mergeDefinitions(array $existingDefinition, array $definitionToMerge, $transferName)
+    protected function mergeDefinitions(array $existingDefinition, array $definitionToMerge, $transferName): array
     {
         $this->assertTransferStrictModeIsConsistent($existingDefinition, $definitionToMerge);
 
@@ -80,7 +80,7 @@ class TransferDefinitionMerger implements MergerInterface
      *
      * @return string|null
      */
-    protected function mergeDeprecatedClassDefinition(array $existingDefinition, array $definitionToMerge)
+    protected function mergeDeprecatedClassDefinition(array $existingDefinition, array $definitionToMerge): ?string
     {
         if (!isset($existingDefinition['deprecated'])) {
             $existingDefinition['deprecated'] = null;
@@ -99,7 +99,7 @@ class TransferDefinitionMerger implements MergerInterface
      *
      * @return array<string, array>
      */
-    protected function mergeProperty(array $existingProperties, array $propertiesToMerge, $transferName)
+    protected function mergeProperty(array $existingProperties, array $propertiesToMerge, $transferName): array
     {
         $mergedProperties = [];
 
@@ -135,7 +135,7 @@ class TransferDefinitionMerger implements MergerInterface
      *
      * @return array<string, mixed>
      */
-    protected function mergeProperties(array $property, array $propertyToMerge, $transferName)
+    protected function mergeProperties(array $property, array $propertyToMerge, $transferName): array
     {
         foreach ($propertyToMerge as $propertyName => $propertyValue) {
             $this->assertTransferPropertyStrictModeIsConsistent($property, $propertyToMerge, $transferName);
@@ -179,7 +179,7 @@ class TransferDefinitionMerger implements MergerInterface
      *
      * @return array<string>
      */
-    protected function mergePropertyBundles(array $bundles1, array $bundles2)
+    protected function mergePropertyBundles(array $bundles1, array $bundles2): array
     {
         $mergedPropertyBundles = array_merge($bundles1, $bundles2);
 
@@ -192,7 +192,7 @@ class TransferDefinitionMerger implements MergerInterface
      *
      * @return string|null
      */
-    protected function mergeDeprecatedAttributes($deprecated1, $deprecated2)
+    protected function mergeDeprecatedAttributes($deprecated1, $deprecated2): ?string
     {
         if ($deprecated1 === null && $deprecated2 === null) {
             return null;

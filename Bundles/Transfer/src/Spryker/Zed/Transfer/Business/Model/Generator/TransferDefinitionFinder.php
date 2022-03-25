@@ -67,7 +67,7 @@ class TransferDefinitionFinder implements FinderInterface
     /**
      * @return array<\Symfony\Component\Finder\SplFileInfo>
      */
-    public function getXmlTransferDefinitionFiles()
+    public function getXmlTransferDefinitionFiles(): array
     {
         $finder = new Finder();
 
@@ -84,7 +84,7 @@ class TransferDefinitionFinder implements FinderInterface
     /**
      * @return array<string>
      */
-    protected function getExistingSourceDirectories()
+    protected function getExistingSourceDirectories(): array
     {
         return array_filter($this->sourceDirectories, function ($directory) {
             return (bool)glob($directory, GLOB_ONLYDIR | GLOB_NOSORT);

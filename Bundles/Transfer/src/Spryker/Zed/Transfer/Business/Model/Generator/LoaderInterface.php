@@ -12,5 +12,5 @@ interface LoaderInterface
     /**
      * @return array
      */
-    public function getDefinitions();
+    public function getDefinitions(): array;
 }

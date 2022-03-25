@@ -69,7 +69,7 @@ class TransferDefinitionLoader implements LoaderInterface
     /**
      * @return array
      */
-    public function getDefinitions()
+    public function getDefinitions(): array
     {
         $this->loadDefinitions();
         $this->transferDefinitions = $this->definitionNormalizer->normalizeDefinitions(
@@ -82,7 +82,7 @@ class TransferDefinitionLoader implements LoaderInterface
     /**
      * @return void
      */
-    protected function loadDefinitions()
+    protected function loadDefinitions(): void
     {
         $xmlTransferDefinitions = $this->finder->getXmlTransferDefinitionFiles();
         foreach ($xmlTransferDefinitions as $xmlTransferDefinition) {
@@ -100,7 +100,7 @@ class TransferDefinitionLoader implements LoaderInterface
      *
      * @return string
      */
-    protected function getBundleFromPathName($fileName)
+    protected function getBundleFromPathName(string $fileName): string
     {
         $filterChain = new FilterChain();
         $filterChain
@@ -115,7 +115,7 @@ class TransferDefinitionLoader implements LoaderInterface
      *
      * @return string
      */
-    protected function getContainingBundleFromPathName($filePath)
+    protected function getContainingBundleFromPathName(string $filePath): string
     {
         $pathParts = explode(DIRECTORY_SEPARATOR, $filePath);
         $sharedDirectoryPosition = array_search('Shared', array_values($pathParts));
@@ -132,7 +132,7 @@ class TransferDefinitionLoader implements LoaderInterface
      *
      * @return void
      */
-    protected function addDefinition(array $definition, $module, $containingModule)
+    protected function addDefinition(array $definition, string $module, string $containingModule): void
     {
         if (isset($definition[static::KEY_TRANSFER][0])) {
             foreach ($definition[static::KEY_TRANSFER] as $transfer) {
@@ -164,7 +164,7 @@ class TransferDefinitionLoader implements LoaderInterface
      *
      * @return void
      */
-    protected function assertCasing(array $transfer, $bundle)
+    protected function assertCasing(array $transfer, string $bundle): void
     {
         $name = $transfer['name'];
 
@@ -185,7 +185,7 @@ class TransferDefinitionLoader implements LoaderInterface
     /**
      * @return \Laminas\Filter\FilterChain
      */
-    protected function getFilter()
+    protected function getFilter(): FilterChain
     {
         if (static::$filter === null) {
             $filter = new FilterChain();

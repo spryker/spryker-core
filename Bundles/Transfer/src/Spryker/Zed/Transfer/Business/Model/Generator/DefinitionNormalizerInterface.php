@@ -14,5 +14,5 @@ interface DefinitionNormalizerInterface
      *
      * @return array<array>
      */
-    public function normalizeDefinitions(array $transferDefinitions);
+    public function normalizeDefinitions(array $transferDefinitions): array;
 }

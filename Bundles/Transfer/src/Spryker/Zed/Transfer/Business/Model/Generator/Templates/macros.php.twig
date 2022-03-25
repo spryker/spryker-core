@@ -133,6 +133,35 @@
     }
 {% endmacro -%}
 
+{# set or fail method #}
+{%- macro addSetOrFail(method) %}
+    /**
+     {% if method.bundles is defined -%}
+     * @module {{ method.bundles|join('|') }}
+     *
+     {% endif -%}
+     {% if method.deprecationDescription is not null -%}
+     * @deprecated {{ method.deprecationDescription }}
+     *
+     {% endif -%}
+     * @param {{ method.var }} ${{ method.property }}{% if method.typeShimNotice %} {{ method.typeShimNotice }}{% endif ~%}
+     *
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
+     *
+     * @return $this
+     */
+    public function {{ method.name }}({% if method.typeHint %}{{ method.typeHint }} {% endif %}${{ method.property }})
+    {
+        {% if method.typeHint is null -%}
+        if (${{ method.property }} === null) {
+            $this->throwNullValueException(static::{{ method.propertyConst }});
+        }
+
+        {% endif -%}
+        return $this->{{ method.defaultSetMethodName }}(${{ method.property }});
+    }
+{% endmacro -%}
+
 {# get method #}
 {%- macro addGet(method) %}
     /**
@@ -305,7 +334,7 @@
     /**
      * @return array<string, mixed>
      */
-    public function {{ methodName }}()
+    public function {{ methodName }}(): array
     {
         $values = [];
         foreach ($this->modifiedProperties as $property => $_) {
@@ -375,7 +404,7 @@
     /**
      * @return array<string, mixed>
      */
-    public function {{ methodName }}()
+    public function {{ methodName }}(): array
     {
         return [
 {% for prop in primitives %}
@@ -417,7 +446,7 @@
     /**
      * @return void
      */
-    protected function initCollectionProperties()
+    protected function initCollectionProperties(): void
     {
 {% for collection in collections %}
         $this->{{ collection.name }} = $this->{{ collection.name }} ?: new ArrayObject();

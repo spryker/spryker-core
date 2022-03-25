@@ -124,7 +124,7 @@ class StandardEnglishPluralizer implements PluralizerInterface
      *
      * @return string The plural form of $root (e.g. Authors).
      */
-    public function getPluralForm($root)
+    public function getPluralForm($root): string
     {
         // save some time in the case that singular and plural are the same
         if (in_array(strtolower($root), $this->uncountable)) {

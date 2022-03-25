@@ -43,7 +43,7 @@ class DataBuilderClassGenerator implements GeneratorInterface
      *
      * @return string
      */
-    public function generate(DefinitionInterface $definition)
+    public function generate(DefinitionInterface $definition): string
     {
         $twigData = $this->getTwigData($definition);
         $fileName = $definition->getName() . '.php';
@@ -63,7 +63,7 @@ class DataBuilderClassGenerator implements GeneratorInterface
      *
      * @return array
      */
-    public function getTwigData(DataBuilderDefinitionInterface $dataBuilderDefinition)
+    public function getTwigData(DataBuilderDefinitionInterface $dataBuilderDefinition): array
     {
         return [
             'className' => $dataBuilderDefinition->getName(),

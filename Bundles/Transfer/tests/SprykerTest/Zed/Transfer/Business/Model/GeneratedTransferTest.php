@@ -668,6 +668,104 @@ class GeneratedTransferTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testSetStringPropertyOrFail(): void
+    {
+        // Arrange
+        $generatedTransfer = new GeneratedTransfer();
+
+        // Act
+        $generatedTransfer->setTestStringOrFail('string');
+
+        // Assert
+        $this->assertSame('string', $generatedTransfer->getTestString());
+        $this->assertIsString($generatedTransfer->getTestString());
+    }
+
+    /**
+     * @return void
+     */
+    public function testSetIntPropertyOrFail(): void
+    {
+        // Arrange
+        $generatedTransfer = new GeneratedTransfer();
+
+        // Act
+        $generatedTransfer->setTestIntOrFail(100);
+
+        // Assert
+        $this->assertIsInt($generatedTransfer->getTestInt());
+        $this->assertSame(100, $generatedTransfer->getTestInt());
+    }
+
+    /**
+     * @return void
+     */
+    public function testSetBoolPropertyOrFail(): void
+    {
+        // Arrange
+        $generatedTransfer = new GeneratedTransfer();
+
+        // Act
+        $generatedTransfer->setTestBoolOrFail(true);
+
+        // Assert
+        $this->assertIsBool($generatedTransfer->getTestBool());
+        $this->assertTrue($generatedTransfer->getTestBool());
+    }
+
+    /**
+     * @return void
+     */
+    public function testSetTransferPropertyOrFail(): void
+    {
+        // Arrange
+        $generatedTransfer = new GeneratedTransfer();
+        $innerGeneratedTransfer = new GeneratedTransfer();
+
+        // Act
+        $generatedTransfer->setTestTransferOrFail($innerGeneratedTransfer);
+
+        // Assert
+        $this->assertInstanceOf(TransferInterface::class, $generatedTransfer->getTestTransfer());
+        $this->assertSame($innerGeneratedTransfer, $generatedTransfer->getTestTransfer());
+    }
+
+    /**
+     * @return void
+     */
+    public function testSetTransferStrictPropertyOrFail(): void
+    {
+        // Arrange
+        $generatedTransfer = new GeneratedTransfer();
+        $innerGeneratedTransfer = new GeneratedTransfer();
+
+        // Act
+        $generatedTransfer->setTestTransferStrictOrFail($innerGeneratedTransfer);
+
+        // Assert
+        $this->assertInstanceOf(TransferInterface::class, $generatedTransfer->getTestTransferStrict());
+        $this->assertSame($innerGeneratedTransfer, $generatedTransfer->getTestTransferStrict());
+    }
+
+    /**
+     * @return void
+     */
+    public function testSetOrFailMethodThrowsExceptionWhenValueIsNull(): void
+    {
+        // Assert
+        $this->expectException(NullValueException::class);
+        $this->expectExceptionMessage('Property "testInt" of transfer `Generated\Shared\Transfer\GeneratedTransfer` is null.');
+
+        // Arrange
+        $generatedTransfer = new GeneratedTransfer();
+
+        // Act
+        $generatedTransfer->setTestIntOrFail(null);
+    }
+
+    /**
      * @return array
      */
     public function associativeCollectionFromArrayProvider(): array

@@ -12,7 +12,7 @@ interface DefinitionInterface
     /**
      * @return string
      */
-    public function getName();
+    public function getName(): string;
 
     /**
      * @param array<string, mixed> $definition

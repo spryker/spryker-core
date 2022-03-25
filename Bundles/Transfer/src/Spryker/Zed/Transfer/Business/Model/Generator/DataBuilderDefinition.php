@@ -34,7 +34,7 @@ class DataBuilderDefinition implements DataBuilderDefinitionInterface
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -62,7 +62,7 @@ class DataBuilderDefinition implements DataBuilderDefinitionInterface
      *
      * @return void
      */
-    protected function getGeneratorRules(array $properties)
+    protected function getGeneratorRules(array $properties): void
     {
         foreach ($properties as $property) {
             if (!isset($property['type'])) {
@@ -112,7 +112,7 @@ class DataBuilderDefinition implements DataBuilderDefinitionInterface
     /**
      * @return string
      */
-    public function getTransferName()
+    public function getTransferName(): string
     {
         return $this->transferName;
     }
@@ -120,7 +120,7 @@ class DataBuilderDefinition implements DataBuilderDefinitionInterface
     /**
      * @return array
      */
-    public function getRules()
+    public function getRules(): array
     {
         return $this->rules;
     }
@@ -128,7 +128,7 @@ class DataBuilderDefinition implements DataBuilderDefinitionInterface
     /**
      * @return array
      */
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return $this->dependencies;
     }

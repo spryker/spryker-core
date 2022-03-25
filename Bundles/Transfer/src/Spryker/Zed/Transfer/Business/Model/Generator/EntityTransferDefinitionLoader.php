@@ -55,7 +55,7 @@ class EntityTransferDefinitionLoader extends TransferDefinitionLoader
     /**
      * @return void
      */
-    protected function loadDefinitions()
+    protected function loadDefinitions(): void
     {
         $xmlTransferDefinitions = $this->finder->getXmlTransferDefinitionFiles();
         foreach ($xmlTransferDefinitions as $xmlTransferDefinition) {
@@ -82,7 +82,7 @@ class EntityTransferDefinitionLoader extends TransferDefinitionLoader
      *
      * @return void
      */
-    protected function addDefinition(array $definition, $module, $containingModule)
+    protected function addDefinition(array $definition, string $module, string $containingModule): void
     {
         if (isset($definition[static::KEY_TABLE][0])) {
             foreach ($definition[static::KEY_TABLE] as $table) {

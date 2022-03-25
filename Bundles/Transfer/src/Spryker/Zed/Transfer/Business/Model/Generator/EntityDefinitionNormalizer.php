@@ -72,7 +72,7 @@ class EntityDefinitionNormalizer extends DefinitionNormalizer
      *
      * @return array<array>
      */
-    public function normalizeDefinitions(array $transferDefinitions)
+    public function normalizeDefinitions(array $transferDefinitions): array
     {
         $normalizedDefinitions = [];
         $filter = new UnderscoreToCamelCase();
@@ -106,7 +106,7 @@ class EntityDefinitionNormalizer extends DefinitionNormalizer
      *
      * @return array
      */
-    protected function normalizeAttributes(array $attributes, $module)
+    protected function normalizeAttributes(array $attributes, string $module): array
     {
         if (isset($attributes[0])) {
             $attributes = $this->addBundleToAttributes($attributes, $module);

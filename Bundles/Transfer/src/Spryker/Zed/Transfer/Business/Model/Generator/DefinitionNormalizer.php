@@ -49,7 +49,7 @@ class DefinitionNormalizer implements DefinitionNormalizerInterface
      *
      * @return array<array>
      */
-    public function normalizeDefinitions(array $transferDefinitions)
+    public function normalizeDefinitions(array $transferDefinitions): array
     {
         $normalizedDefinitions = [];
         foreach ($transferDefinitions as $transferDefinition) {
@@ -74,7 +74,7 @@ class DefinitionNormalizer implements DefinitionNormalizerInterface
      *
      * @return array
      */
-    protected function normalizeAttributes(array $attributes, $module)
+    protected function normalizeAttributes(array $attributes, string $module): array
     {
         if ($attributes === []) {
             return [];
@@ -93,7 +93,7 @@ class DefinitionNormalizer implements DefinitionNormalizerInterface
      *
      * @return array<array>
      */
-    protected function addBundleToAttributes(array $attributes, $bundle)
+    protected function addBundleToAttributes(array $attributes, string $bundle): array
     {
         foreach ($attributes as &$attribute) {
             $attribute[static::KEY_BUNDLES] = [$bundle];
