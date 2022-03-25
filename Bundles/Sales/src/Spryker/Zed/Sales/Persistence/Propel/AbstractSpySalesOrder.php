@@ -140,9 +140,9 @@ abstract class AbstractSpySalesOrder extends BaseSpySalesOrder
         $includeLazyLoadColumns = true,
         $alreadyDumpedObjects = [],
         $includeForeignObjects = false
-    ) {
+    ): array {
         if (isset($alreadyDumpedObjects['SpySalesOrder'][$this->hashCode()])) {
-            return '*RECURSION*';
+            return ['*RECURSION*'];
         }
 
         $array = parent::toArray($keyType, $includeLazyLoadColumns, $alreadyDumpedObjects, $includeForeignObjects);
