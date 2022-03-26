@@ -381,6 +381,11 @@ class PriceProductScheduleEnableFinder implements PriceProductScheduleEnableFind
         /** @var literal-string $activeToCondition */
         $activeToCondition = sprintf('%s >= now()', SpyPriceProductScheduleTableMap::COL_ACTIVE_TO);
 
+        /** @var literal-string $filterByConcatenatedProductIdExpression */
+        $filterByConcatenatedProductIdExpression = $this->getFilterByConcatenatedProductIdExpression();
+        /** @var literal-string $filterByConcatenatedResultExpression */
+        $filterByConcatenatedResultExpression = $this->getFilterByConcatenatedResultExpression($dbEngineName);
+
         $priceProductScheduleEntities = $this->factory->createPriceProductScheduleQuery()
             ->addSelectQuery($subQuery, static::ALIAS_FILTERED, false)
             ->joinWithCurrency()
@@ -390,8 +395,8 @@ class PriceProductScheduleEnableFinder implements PriceProductScheduleEnableFind
             ->filterByIsCurrent(false)
             ->filterByFkStore($storeTransfer->getIdStore())
             ->filterByFkProductAbstract($idProductAbstract)
-            ->where($this->getFilterByConcatenatedProductIdExpression())
-            ->where($this->getFilterByConcatenatedResultExpression($dbEngineName))
+            ->where($filterByConcatenatedProductIdExpression)
+            ->where($filterByConcatenatedResultExpression)
             ->where($activeFromCondition)
             ->where($activeToCondition)
             ->find()

@@ -275,7 +275,6 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
                 ->joinAttribute()
             ->endUse();
 
-
         /** @var literal-string $where */
         $where = sprintf(
             '%s = %s AND %s = %s',

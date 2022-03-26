@@ -31,4 +31,12 @@ class ActiveRecord implements ActiveRecordInterface
     {
         return $this->data;
     }
+
+    /**
+     * @return bool
+     */
+    public function isPrimaryKeyNull(): bool
+    {
+        return false;
+    }
 }
