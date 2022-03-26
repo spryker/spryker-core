@@ -106,6 +106,7 @@ class ProductOptionGroupReaderTest extends MockProvider
     {
         $groupCollection = $this->getMockBuilder(ObjectCollection::class)->getMock();
         $groupCollection->expects($this->any())->method('getFirst')->willReturn($productOptionGroupEntity);
+        $groupCollection->expects($this->any())->method('count')->willReturn(1);
 
         $groupQuery = $this->getMockBuilder(SpyProductOptionGroupQuery::class)->getMock();
         $groupQuery->expects($this->any())->method('find')->willReturn($groupCollection);
