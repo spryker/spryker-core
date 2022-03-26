@@ -136,10 +136,10 @@ abstract class AbstractSpySalesOrder extends BaseSpySalesOrder
      * @return array An associative array containing the field names (as keys) and field values
      */
     public function toArray(
-        $keyType = TableMap::TYPE_FIELDNAME,
-        $includeLazyLoadColumns = true,
-        $alreadyDumpedObjects = [],
-        $includeForeignObjects = false
+        string $keyType = TableMap::TYPE_FIELDNAME,
+        bool $includeLazyLoadColumns = true,
+        array $alreadyDumpedObjects = [],
+        bool $includeForeignObjects = false
     ): array {
         if (isset($alreadyDumpedObjects['SpySalesOrder'][$this->hashCode()])) {
             return ['*RECURSION*'];

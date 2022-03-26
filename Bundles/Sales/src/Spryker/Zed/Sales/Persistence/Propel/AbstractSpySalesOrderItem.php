@@ -60,13 +60,15 @@ class AbstractSpySalesOrderItem extends BaseSpySalesOrderItem
     }
 
     /**
-     * @return void
+     * @return $this
      */
     public function clear()
     {
         parent::clear();
 
         $this->statusChanged = false;
+
+        return $this;
     }
 
     /**

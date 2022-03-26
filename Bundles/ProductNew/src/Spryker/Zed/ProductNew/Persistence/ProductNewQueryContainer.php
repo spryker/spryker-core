@@ -96,6 +96,7 @@ class ProductNewQueryContainer extends AbstractQueryContainer implements Product
      */
     protected function createValidTimeRangeCriteria($isNegative)
     {
+        /** @var literal-string $clause */
         $clause = sprintf(
             '%3$s (
                 (%1$s <= ? OR (

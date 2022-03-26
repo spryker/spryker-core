@@ -44,7 +44,7 @@ class SynchronizationDataTransferObjectFormatter extends AbstractFormatter
 
         $items = [];
         foreach ($dataFetcher as $row) {
-            $rowArray = &$this->getStructuredArrayFromRow($row);
+            $rowArray = &$this->hydratePropelObjectCollection($row);
             if ($rowArray) {
                 $items[] = &$rowArray;
             }

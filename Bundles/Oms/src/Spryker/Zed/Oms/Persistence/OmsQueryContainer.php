@@ -803,6 +803,11 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      */
     public function queryReservationChangeVersion($lastExportedVersion, $maxVisibleVersion)
     {
+        /** @var literal-string $versionGreaterCondition */
+        $versionGreaterCondition = static::VERSION . ' > ' . $this->getConnection()->quote($lastExportedVersion);
+        /** @var literal-string $versionLessOrEqualCondition */
+        $versionLessOrEqualCondition = static::VERSION . ' <= ' . $this->getConnection()->quote($maxVisibleVersion);
+
         /** @var \Orm\Zed\Oms\Persistence\SpyOmsProductReservationChangeVersionQuery $query */
         $query = $this->getFactory()
             ->createOmsProductReservationQuery()
@@ -822,8 +827,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
                 static::VERSION,
             ])
             ->groupBy(static::ID_OMS_PRODUCT_RESERVATION)
-            ->where(static::VERSION . ' > ' . $this->getConnection()->quote($lastExportedVersion))
-            ->where(static::VERSION . ' <= ' . $this->getConnection()->quote($maxVisibleVersion));
+            ->where($versionGreaterCondition)
+            ->where($versionLessOrEqualCondition);
 
         return $query;
     }
