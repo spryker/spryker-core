@@ -386,9 +386,9 @@ describe('ConcreteProductsPreviewComponent', () => {
                 By.css('cdk-virtual-scroll-viewport .mp-concrete-products-preview__table-row-sku spy-input'),
             );
             const componentElem = fixture.debugElement.query(By.directive(ConcreteProductsPreviewComponent));
-            const skuGeneratorFactory = (componentElem.injector.get(
+            const skuGeneratorFactory = componentElem.injector.get(
                 ConcreteProductSkuGeneratorFactoryService,
-            ) as any) as MockGeneratorFactory;
+            ) as any as MockGeneratorFactory;
 
             headerCheckboxes[0].triggerEventHandler('checkedChange', true);
             fixture.detectChanges();
@@ -427,9 +427,9 @@ describe('ConcreteProductsPreviewComponent', () => {
                 By.css('cdk-virtual-scroll-viewport .mp-concrete-products-preview__table-row-name spy-input'),
             );
             const componentElem = fixture.debugElement.query(By.directive(ConcreteProductsPreviewComponent));
-            const nameGeneratorFactory = (componentElem.injector.get(
+            const nameGeneratorFactory = componentElem.injector.get(
                 ConcreteProductNameGeneratorFactoryService,
-            ) as any) as MockGeneratorFactory;
+            ) as any as MockGeneratorFactory;
 
             headerCheckboxes[1].triggerEventHandler('checkedChange', true);
             fixture.detectChanges();

@@ -12,13 +12,9 @@ describe('MyAccountComponent', () => {
         template: `
             <mp-my-account>
                 <h1 title class="test-title">Title</h1>
-                <spy-button action type="submit" class="test-action">
-                    Button
-                </spy-button>
+                <spy-button action type="submit" class="test-action"> Button </spy-button>
 
-                <div class="test-content">
-                    Page Content
-                </div>
+                <div class="test-content">Page Content</div>
             </mp-my-account>
         `,
     })

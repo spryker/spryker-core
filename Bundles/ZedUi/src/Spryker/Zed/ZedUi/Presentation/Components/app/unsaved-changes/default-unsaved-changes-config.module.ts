@@ -14,6 +14,5 @@ import {
         UnsavedChangesGuardNavigationModule.forRoot(),
         UnsavedChangesBrowserGuardModule.forRoot(),
     ],
-    providers: [UnsavedChangesNavigationGuard],
 })
 export class DefaultUnsavedChangesConfigModule {}

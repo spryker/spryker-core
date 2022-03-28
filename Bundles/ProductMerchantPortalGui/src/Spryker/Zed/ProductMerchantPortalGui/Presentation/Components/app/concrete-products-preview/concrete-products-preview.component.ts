@@ -192,9 +192,8 @@ export class ConcreteProductsPreviewComponent implements OnChanges {
 
         this.generatedProducts.map((product) => {
             product.superAttributes.map((productAttr) => {
-                generatedProductsHashedObject[
-                    this.computeAttrsHash(productAttr.value, productAttr.attribute.value)
-                ] = true;
+                generatedProductsHashedObject[this.computeAttrsHash(productAttr.value, productAttr.attribute.value)] =
+                    true;
             });
         });
 
