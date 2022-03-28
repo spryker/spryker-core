@@ -104,7 +104,7 @@ class ReferenceColumnEntityRelation extends AbstractAclEntityRelation implements
             ->getDatabaseMap()
             ->getTableByPhpName($entityClass)
             ->getColumn($columnName)
-            ->getPhpNameOrFail();
+            ->getPhpName();
     }
 
     /**

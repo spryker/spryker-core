@@ -8,12 +8,11 @@
 namespace Spryker\Zed\Synchronization\Persistence\Propel\Formatter;
 
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
-use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use Propel\Runtime\DataFetcher\DataFetcherInterface;
 use Propel\Runtime\Exception\LogicException;
-use Propel\Runtime\Formatter\AbstractFormatter;
+use Propel\Runtime\Formatter\AbstractFormatterWithHydration;
 
-class SynchronizationDataTransferObjectFormatter extends AbstractFormatter
+class SynchronizationDataTransferObjectFormatter extends AbstractFormatterWithHydration
 {
     /**
      * @var array
@@ -114,24 +113,6 @@ class SynchronizationDataTransferObjectFormatter extends AbstractFormatter
         $synchronizationDataTransfer->fromArray($rowArray, true);
 
         return $synchronizationDataTransfer;
-    }
-
-    /**
-     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface|null $record
-     *
-     * @return array The original record turned into an array
-     */
-    public function formatRecord(?ActiveRecordInterface $record = null): array
-    {
-        return $record ? $record->toArray() : [];
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getCollectionClassName(): ?string
-    {
-        return '\Propel\Runtime\Collection\ArrayCollection';
     }
 
     /**

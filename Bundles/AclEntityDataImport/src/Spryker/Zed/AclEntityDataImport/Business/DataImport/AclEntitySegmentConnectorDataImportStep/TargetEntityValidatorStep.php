@@ -40,7 +40,7 @@ class TargetEntityValidatorStep implements DataImportStepInterface
         $columnName = $dataSet[AclEntitySegmentConnectorDataSetInterface::REFERENCE_FIELD];
         $entityCount = $query
             ->filterBy(
-                $query->getTableMapOrFail()->getColumn($columnName)->getPhpNameOrFail(),
+                $query->getTableMapOrFail()->getColumn($columnName)->getPhpName(),
                 $dataSet[AclEntitySegmentConnectorDataSetInterface::ENTITY_REFERENCE],
             )
             ->count();

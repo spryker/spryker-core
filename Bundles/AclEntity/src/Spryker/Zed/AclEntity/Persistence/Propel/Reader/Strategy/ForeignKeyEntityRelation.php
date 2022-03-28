@@ -41,7 +41,7 @@ class ForeignKeyEntityRelation extends AbstractAclEntityRelation implements AclE
         if ($parentRelationMap->getType() === RelationMap::ONE_TO_MANY) {
             /** @var \Propel\Runtime\Map\ColumnMap $columnMap */
             $columnMap = current($parentRelationMap->getRightColumns());
-            $foreignKeyColumnName = $columnMap->getPhpNameOrFail();
+            $foreignKeyColumnName = $columnMap->getPhpName();
             $query->filterBy($foreignKeyColumnName, $entity->getPrimaryKey());
 
             return $query->find();

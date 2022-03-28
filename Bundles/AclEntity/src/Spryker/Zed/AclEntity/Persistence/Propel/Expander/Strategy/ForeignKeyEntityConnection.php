@@ -46,7 +46,7 @@ class ForeignKeyEntityConnection extends AbstractAclEntityConnection implements 
             $joinType,
         );
 
-        $join->setTableMap($relationMap->getRightTableOrFail());
+        $join->setTableMap($relationMap->getRightTable());
 
         return $this->updateJoinAliases($query, $join);
     }

@@ -64,7 +64,7 @@ class DefaultAclQueryScope implements AclQueryScopeInterface
         /** @var \Propel\Runtime\Map\ColumnMap $primaryKeyColumn */
         $primaryKeyColumn = current($query->getTableMapOrFail()->getPrimaryKeys());
 
-        return $query->filterBy($primaryKeyColumn->getPhpNameOrFail(), null, Criteria::ISNULL);
+        return $query->filterBy($primaryKeyColumn->getPhpName(), null, Criteria::ISNULL);
     }
 
     /**
@@ -105,7 +105,7 @@ class DefaultAclQueryScope implements AclQueryScopeInterface
         /** @var \Propel\Runtime\Map\ColumnMap $primaryKeyColumn */
         $primaryKeyColumn = current($query->getTableMapOrFail()->getPrimaryKeys());
 
-        return $query->filterBy($primaryKeyColumn->getPhpNameOrFail(), null, Criteria::ISNULL);
+        return $query->filterBy($primaryKeyColumn->getPhpName(), null, Criteria::ISNULL);
     }
 
     /**

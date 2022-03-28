@@ -174,12 +174,12 @@ class SegmentAclModelScope implements AclModelScopeInterface
 
         $segmentQuery
             ->filterBy(
-                $segmentQuery->getTableMapOrFail()->getColumn(static::FK_ACL_ENTITY_SEGMENT)->getPhpNameOrFail(),
+                $segmentQuery->getTableMapOrFail()->getColumn(static::FK_ACL_ENTITY_SEGMENT)->getPhpName(),
                 $segmentIds,
                 Criteria::IN,
             )
             ->filterBy(
-                $segmentQuery->getTableMapOrFail()->getColumn($entityForeignKeyColumn)->getPhpNameOrFail(),
+                $segmentQuery->getTableMapOrFail()->getColumn($entityForeignKeyColumn)->getPhpName(),
                 $entity->getPrimaryKey(),
             );
 

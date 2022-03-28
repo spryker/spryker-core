@@ -133,12 +133,12 @@ class SegmentAclQueryScope implements AclQueryScopeInterface
         /** @var \Propel\Runtime\Map\ColumnMap $primaryKey */
         $primaryKey = current($query->getTableMapOrFail()->getPrimaryKeys());
         if (!$updatePermissionAclEntityRuleSegmentIds) {
-            return $query->filterBy($primaryKey->getPhpNameOrFail(), null, Criteria::ISNULL);
+            return $query->filterBy($primaryKey->getPhpName(), null, Criteria::ISNULL);
         }
 
         $targetEntityIds = $this->getAccessibleTargetEntityIds($query, $updatePermissionAclEntityRuleSegmentIds);
 
-        return $query->filterBy($primaryKey->getPhpNameOrFail(), $targetEntityIds, Criteria::IN);
+        return $query->filterBy($primaryKey->getPhpName(), $targetEntityIds, Criteria::IN);
     }
 
     /**
@@ -169,14 +169,14 @@ class SegmentAclQueryScope implements AclQueryScopeInterface
         /** @var \Propel\Runtime\Map\ColumnMap $primaryKey */
         $primaryKey = current($query->getTableMapOrFail()->getPrimaryKeys());
         if (!$deletePermissionAclEntityRuleSegmentIds) {
-            return $query->filterBy($primaryKey->getPhpNameOrFail(), null, Criteria::ISNULL);
+            return $query->filterBy($primaryKey->getPhpName(), null, Criteria::ISNULL);
         }
         $targetEntityIds = $this->getAccessibleTargetEntityIds($query, $deletePermissionAclEntityRuleSegmentIds);
         if (!$targetEntityIds) {
-            return $query->filterBy($primaryKey->getPhpNameOrFail(), null, Criteria::ISNULL);
+            return $query->filterBy($primaryKey->getPhpName(), null, Criteria::ISNULL);
         }
 
-        return $query->filterBy($primaryKey->getPhpNameOrFail(), $targetEntityIds, Criteria::IN);
+        return $query->filterBy($primaryKey->getPhpName(), $targetEntityIds, Criteria::IN);
     }
 
     /**
@@ -194,7 +194,7 @@ class SegmentAclQueryScope implements AclQueryScopeInterface
         );
         $segmentEntities = $segmentTableQuery
             ->filterBy(
-                $segmentTableQuery->getTableMapOrFail()->getColumn(static::FK_ACL_ENTITY_SEGMENT)->getPhpNameOrFail(),
+                $segmentTableQuery->getTableMapOrFail()->getColumn(static::FK_ACL_ENTITY_SEGMENT)->getPhpName(),
                 $segmentIds,
                 Criteria::IN,
             )

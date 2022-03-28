@@ -140,7 +140,7 @@ class PivotTableEntityConnection extends AbstractAclEntityConnection implements 
         }
 
         foreach ($tableMap->getRelations() as $relationMap) {
-            if ($relationMap->getRightTableOrFail()->getPhpName() === $relationName) {
+            if ($relationMap->getRightTable()->getPhpName() === $relationName) {
                 return $relationMap->getName();
             }
         }
@@ -193,7 +193,7 @@ class PivotTableEntityConnection extends AbstractAclEntityConnection implements 
             return $relationName;
         }
         foreach ($pivotTableMap->getRelations() as $relationMap) {
-            if ($relationMap->getRightTableOrFail()->getPhpName() === $relationName) {
+            if ($relationMap->getRightTable()->getPhpName() === $relationName) {
                 return $relationMap->getName();
             }
         }

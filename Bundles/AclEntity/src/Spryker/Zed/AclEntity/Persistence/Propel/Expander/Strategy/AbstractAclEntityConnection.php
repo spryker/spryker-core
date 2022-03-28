@@ -149,7 +149,7 @@ abstract class AbstractAclEntityConnection
         }
 
         foreach ($tableMap->getRelations() as $relationMap) {
-            if ($relationMap->getRightTableOrFail()->getPhpName() === $relationName) {
+            if ($relationMap->getRightTable()->getPhpName() === $relationName) {
                 return $relationMap->getName();
             }
         }
@@ -283,7 +283,7 @@ abstract class AbstractAclEntityConnection
     {
         $relations = Propel::getServiceContainer()->getDatabaseMap()->getTableByPhpName($class)->getRelations();
         foreach ($relations as $relation) {
-            $rightTableClass = ltrim($relation->getRightTableOrFail()->getClassNameOrFail(), '\\');
+            $rightTableClass = ltrim($relation->getRightTable()->getClassNameOrFail(), '\\');
             if ($rightTableClass === $relationClass) {
                 return $relation;
             }
