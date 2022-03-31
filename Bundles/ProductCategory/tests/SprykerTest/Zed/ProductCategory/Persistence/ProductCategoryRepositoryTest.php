@@ -108,7 +108,7 @@ class ProductCategoryRepositoryTest extends Unit
                         static::CATEGORY_ATTRIBUTE_3,
                     ],
                 ],
-                3,
+                2,
             ],
             [
                 [
@@ -120,7 +120,7 @@ class ProductCategoryRepositoryTest extends Unit
                         static::CATEGORY_ATTRIBUTE_2,
                     ],
                 ],
-                3,
+                2,
             ],
             [
                 [

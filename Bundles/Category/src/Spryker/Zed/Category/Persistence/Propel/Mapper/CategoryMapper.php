@@ -139,7 +139,7 @@ class CategoryMapper implements CategoryMapperInterface
         $categoryEntity = $nodeEntity->getCategory();
 
         $categoryTransfer = $this->mapCategory($categoryEntity, new CategoryTransfer());
-        $categoryTransfer = $this->mapLocalizedAttributes($categoryEntity->getAttributesJoinLocale(), $categoryTransfer, $nodeEntity->getSpyUrls());
+        $categoryTransfer = $this->mapLocalizedAttributes($categoryEntity->getAttributes(), $categoryTransfer, $nodeEntity->getSpyUrls());
         $storeRelationTransfer = $this->categoryStoreRelationMapper->mapCategoryStoreEntitiesToStoreRelationTransfer(
             $categoryEntity->getSpyCategoryStores(),
             (new StoreRelationTransfer())->setIdEntity($categoryEntity->getIdCategory()),

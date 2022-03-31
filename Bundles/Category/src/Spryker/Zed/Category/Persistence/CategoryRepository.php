@@ -23,9 +23,11 @@ use Orm\Zed\Category\Persistence\Map\SpyCategoryClosureTableTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
 use Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery;
+use Orm\Zed\Category\Persistence\SpyCategoryNode;
 use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryQuery;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\PropelOrm\Business\Model\Formatter\PropelArraySetFormatter;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
@@ -607,10 +609,6 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
             ->leftJoinWithCategory()
             ->useCategoryQuery(null, Criteria::LEFT_JOIN)
                 ->leftJoinWithCategoryTemplate()
-                ->leftJoinWithAttribute()
-                ->useAttributeQuery(null, Criteria::LEFT_JOIN)
-                    ->leftJoinWithLocale()
-                ->endUse()
                 ->leftJoinSpyCategoryStore()
                 ->useSpyCategoryStoreQuery(null, Criteria::LEFT_JOIN)
                     ->leftJoinWithSpyStore()
@@ -641,6 +639,8 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         if ($categoryNodeEntities === []) {
             return $nodeCollectionTransfer;
         }
+
+        $categoryNodeEntities = $this->addCategoryAttributesToCategoryNodeEntities($categoryNodeEntities);
 
         return $this->getFactory()
             ->createCategoryMapper()
@@ -978,5 +978,68 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         }
 
         return $categoryNodeQuery;
+    }
+
+    /**
+     * @param array<int, \Orm\Zed\Category\Persistence\SpyCategoryNode> $categoryNodeEntities
+     *
+     * @return array<int, \Orm\Zed\Category\Persistence\SpyCategoryNode>
+     */
+    protected function addCategoryAttributesToCategoryNodeEntities(array $categoryNodeEntities): array
+    {
+        $categoryIds = $this->extreactCategoryIdsFromCategoryNodeEntities($categoryNodeEntities);
+
+        $categoryAttributeEntities = $this->getCategoryAttributeEntitiesByCategoryIds($categoryIds);
+        $groupedCategoryAttributeEntities = $this->getCategoryAttributeEntitiesGroupedByIdCategory($categoryAttributeEntities);
+
+        foreach ($categoryNodeEntities as $categoryNodeEntity) {
+            if (isset($groupedCategoryAttributeEntities[$categoryNodeEntity->getFkCategory()])) {
+                $categoryNodeEntity->getCategory()->setAttributes(
+                    new ObjectCollection($groupedCategoryAttributeEntities[$categoryNodeEntity->getFkCategory()]),
+                );
+            }
+        }
+
+        return $categoryNodeEntities;
+    }
+
+    /**
+     * @param array<\Orm\Zed\Category\Persistence\SpyCategoryNode> $categoryNodeEntities
+     *
+     * @return array<int>
+     */
+    protected function extreactCategoryIdsFromCategoryNodeEntities(array $categoryNodeEntities): array
+    {
+        return array_map(function (SpyCategoryNode $categoryNodeEntity) {
+            return $categoryNodeEntity->getFkCategory();
+        }, $categoryNodeEntities);
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Category\Persistence\SpyCategoryAttribute[] $categoryAttributeEntities
+     *
+     * @return array<int, array<\Orm\Zed\Category\Persistence\SpyCategoryAttribute>>
+     */
+    protected function getCategoryAttributeEntitiesGroupedByIdCategory(ObjectCollection $categoryAttributeEntities): array
+    {
+        $groupedCategoryAttributeEntities = [];
+        foreach ($categoryAttributeEntities as $categoryAttributeEntity) {
+            $groupedCategoryAttributeEntities[$categoryAttributeEntity->getFkCategory()][] = $categoryAttributeEntity;
+        }
+
+        return $groupedCategoryAttributeEntities;
+    }
+
+    /**
+     * @param array<int> $categoryIds
+     *
+     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Category\Persistence\SpyCategoryAttribute[]
+     */
+    protected function getCategoryAttributeEntitiesByCategoryIds(array $categoryIds): ObjectCollection
+    {
+        return $this->getFactory()
+            ->createCategoryAttributeQuery()
+            ->filterByFkCategory_In($categoryIds)
+            ->find();
     }
 }
