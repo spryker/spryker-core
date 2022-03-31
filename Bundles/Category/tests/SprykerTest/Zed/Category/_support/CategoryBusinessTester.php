@@ -8,6 +8,10 @@
 namespace SprykerTest\Zed\Category;
 
 use Codeception\Actor;
+use Generated\Shared\DataBuilder\CategoryLocalizedAttributesBuilder;
+use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Orm\Zed\Category\Persistence\SpyCategoryStoreQuery;
 
 /**
@@ -39,5 +43,23 @@ class CategoryBusinessTester extends Actor
         return SpyCategoryStoreQuery::create()
             ->filterByFkCategory($idCategory)
             ->count();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param int $idCategory
+     * @param array $seedData
+     *
+     * @return \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer
+     */
+    public function createCategoryLocalizedAttributesForLocale(
+        LocaleTransfer $localeTransfer,
+        int $idCategory,
+        array $seedData = []
+    ): CategoryLocalizedAttributesTransfer {
+        $categoryLocalizedAttributesData = (new CategoryLocalizedAttributesBuilder($seedData))->build()->toArray();
+        $categoryLocalizedAttributesData[LocalizedAttributesTransfer::LOCALE] = $localeTransfer;
+
+        return $this->haveCategoryLocalizedAttributeForCategory($idCategory, $categoryLocalizedAttributesData);
     }
 }

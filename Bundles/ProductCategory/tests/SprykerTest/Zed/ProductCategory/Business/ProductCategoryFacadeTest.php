@@ -8,6 +8,9 @@
 namespace SprykerTest\Zed\ProductCategory\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\CategoryLocalizedAttributesBuilder;
+use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Spryker\Zed\ProductCategory\Business\ProductCategoryFacadeInterface;
 
 /**
@@ -23,6 +26,16 @@ use Spryker\Zed\ProductCategory\Business\ProductCategoryFacadeInterface;
  */
 class ProductCategoryFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
+    protected const LOCALE_EN = 'en_US';
+
+    /**
+     * @var string
+     */
+    protected const LOCALE_DE = 'de_DE';
+
     /**
      * @var \SprykerTest\Zed\ProductCategory\ProductCategoryBusinessTester
      */
@@ -89,6 +102,53 @@ class ProductCategoryFacadeTest extends Unit
 
         // Arrange
         $this->assertTrue(in_array($expectedProductName, $productNames), 'Localized product name should be found.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCategoryTransferCollectionByIdProductAbstractWillReturnCategoriesWithLocalizedAttributesForProvidedLocaleOnly(): void
+    {
+        // Arrange
+        $localeTransferEn = $this->tester->haveLocale([LocaleTransfer::LOCALE_NAME => static::LOCALE_EN]);
+        $localeTransferDe = $this->tester->haveLocale([LocaleTransfer::LOCALE_NAME => static::LOCALE_DE]);
+
+        $categoryTransfer = $this->tester->haveCategory();
+
+        $categoryLocalizedAttributesDataEn = (new CategoryLocalizedAttributesBuilder())->build()->toArray();
+        $categoryLocalizedAttributesDataEn[LocalizedAttributesTransfer::LOCALE] = $localeTransferEn;
+        $categoryLocalizedAttributesTransferEn = $this->tester->haveCategoryLocalizedAttributeForCategory(
+            $categoryTransfer->getIdCategory(),
+            $categoryLocalizedAttributesDataEn,
+        );
+
+        $categoryLocalizedAttributesDataDe = (new CategoryLocalizedAttributesBuilder())->build()->toArray();
+        $categoryLocalizedAttributesDataDe[LocalizedAttributesTransfer::LOCALE] = $localeTransferDe;
+        $this->tester->haveCategoryLocalizedAttributeForCategory(
+            $categoryTransfer->getIdCategory(),
+            $categoryLocalizedAttributesDataDe,
+        );
+
+        $productAbstractTransfer = $this->tester->haveProductAbstract();
+        $this->tester->assignProductToCategory($categoryTransfer->getIdCategory(), $productAbstractTransfer->getIdProductAbstract());
+
+        // Act
+        $categoryCollectionTransfer = $this->getProductCategoryFacade()->getCategoryTransferCollectionByIdProductAbstract(
+            $productAbstractTransfer->getIdProductAbstract(),
+            $localeTransferEn,
+        );
+
+        // Assert
+        $this->assertCount(1, $categoryCollectionTransfer->getCategories());
+
+        /** @var \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer */
+        $categoryTransfer = $categoryCollectionTransfer->getCategories()->offsetGet(0);
+        $this->assertCount(1, $categoryTransfer->getLocalizedAttributes());
+
+        /** @var \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer $categoryLocalizedAttributesTransfer */
+        $categoryLocalizedAttributesTransfer = $categoryTransfer->getLocalizedAttributes()->offsetGet(0);
+        $this->assertSame($localeTransferEn->getIdLocale(), $categoryLocalizedAttributesTransfer->getLocale()->getIdLocale());
+        $this->assertSame($categoryLocalizedAttributesTransferEn->getName(), $categoryLocalizedAttributesTransfer->getName());
     }
 
     /**

@@ -5,6 +5,15 @@ import { DatasourceInlineModule, DatasourceInlineService } from '@spryker/dataso
 import { TableDatasourceInlineModule, TableDatasourceInlineService } from '@spryker/datasource.inline.table';
 import { TableDatasourceDependableService } from '@spryker/table.feature.editable';
 
+declare module '@spryker/datasource' {
+    interface DatasourceRegistry {
+        http: DatasourceHttpService;
+        inline: DatasourceInlineService;
+        'inline.table': TableDatasourceInlineService;
+        dependable: TableDatasourceDependableService;
+    }
+}
+
 @NgModule({
     imports: [
         DatasourceModule.withDatasources({

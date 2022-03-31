@@ -3,7 +3,9 @@ import { ExistingConcreteProductGeneratorData, ConcreteProductPreview } from './
 import { ConcreteProductGeneratorDataService } from './concrete-product-generator-data.service';
 
 @Injectable()
-export abstract class ExistingConcreteProductGeneratorDataService extends ConcreteProductGeneratorDataService
-    implements ExistingConcreteProductGeneratorData {
+export abstract class ExistingConcreteProductGeneratorDataService
+    extends ConcreteProductGeneratorDataService
+    implements ExistingConcreteProductGeneratorData
+{
     abstract getExistingProducts(): ConcreteProductPreview[];
 }

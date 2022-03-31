@@ -24,4 +24,8 @@
         <property name="localeName" type="string"/>
     </transfer>
 
+    <transfer name="LocaleCmsPageData">
+        <property name="contentWidgetParameterMap" type="array" singular="contentWidgetParameterMap"/>
+    </transfer>
+
 </transfers>

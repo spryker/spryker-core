@@ -1,6 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CacheModule } from '@spryker/cache';
-import { StaticCacheStrategy, StaticCacheStrategyModule } from '@spryker/cache.static';
+import { StaticCacheStrategy, StaticCacheStrategyModule, StaticCacheStrategyConfig } from '@spryker/cache.static';
+
+declare module '@spryker/cache' {
+    interface CacheStrategyRegistry {
+        static: StaticCacheStrategyConfig;
+    }
+}
 
 @NgModule({
     imports: [

@@ -4,8 +4,10 @@ import { ExistingConcreteProductGeneratorDataService } from './existing-concrete
 import { ConcreteProductSkuGeneratorService } from './concrete-product-sku-generator.service';
 
 @Injectable()
-export class ExistingConcreteProductSkuGeneratorService extends ConcreteProductSkuGeneratorService
-    implements IdGenerator {
+export class ExistingConcreteProductSkuGeneratorService
+    extends ConcreteProductSkuGeneratorService
+    implements IdGenerator
+{
     constructor(private existingConcreteProductGeneratorDataService: ExistingConcreteProductGeneratorDataService) {
         super(existingConcreteProductGeneratorDataService);
     }

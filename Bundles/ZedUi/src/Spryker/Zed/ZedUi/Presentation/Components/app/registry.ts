@@ -9,10 +9,12 @@ const knownNgModules: ComponentsNgModule[] = [];
 
 const addToKnownModules: NgModuleReceiver = (ngModule) => knownNgModules.push(ngModule);
 
-const createCustomAddToKnownModules = (moduleReceiver: NgModuleReceiver): NgModuleReceiver => (ngModule) => {
-    addToKnownModules(ngModule);
-    moduleReceiver(ngModule);
-};
+const createCustomAddToKnownModules =
+    (moduleReceiver: NgModuleReceiver): NgModuleReceiver =>
+    (ngModule) => {
+        addToKnownModules(ngModule);
+        moduleReceiver(ngModule);
+    };
 
 let ngModuleReceiver: NgModuleReceiver = addToKnownModules;
 

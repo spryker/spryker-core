@@ -12,13 +12,9 @@ describe('ChangePasswordOverlayComponent', () => {
         template: `
             <mp-change-password-overlay>
                 <h3 title class="test-title">Title</h3>
-                <spy-button action type="submit" class="test-action">
-                    Button
-                </spy-button>
+                <spy-button action type="submit" class="test-action"> Button </spy-button>
 
-                <div class="test-content">
-                    Content
-                </div>
+                <div class="test-content">Content</div>
             </mp-change-password-overlay>
         `,
     })
