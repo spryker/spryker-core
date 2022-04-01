@@ -36,10 +36,15 @@ use Spryker\Zed\DataImport\Business\Model\DataReader\FileResolver\FileResolver;
 use Spryker\Zed\DataImport\Business\Model\DataReader\FileResolver\FileResolverInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSet;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBroker;
+use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerElasticBatchTransactionAware;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerTransactionAware;
 use Spryker\Zed\DataImport\Business\Model\Dump\DataImporterAccessFactoryInterface;
 use Spryker\Zed\DataImport\Business\Model\Dump\ImporterDumper;
 use Spryker\Zed\DataImport\Business\Model\Dump\ImporterDumperInterface;
+use Spryker\Zed\DataImport\Business\Model\ElasticBatch\ElasticBatchInterface;
+use Spryker\Zed\DataImport\Business\Model\ElasticBatch\MemoryAllocatedElasticBatch;
+use Spryker\Zed\DataImport\Business\Model\Memory\PhpSystemMemory;
+use Spryker\Zed\DataImport\Business\Model\Memory\SystemMemoryInterface;
 use Spryker\Zed\DataImport\Business\Model\Publisher\DataImporterPublisher;
 use Spryker\Zed\DataImport\DataImportDependencyProvider;
 use Spryker\Zed\DataImport\Dependency\Client\DataImportToQueueClientInterface;
@@ -306,6 +311,36 @@ class DataImportBusinessFactory extends AbstractBusinessFactory implements DataI
     public function createTransactionAwareDataSetStepBroker($bulkSize = null)
     {
         return new DataSetStepBrokerTransactionAware($this->getPropelConnection(), $bulkSize);
+    }
+
+    /**
+     * @return \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerInterface|\Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepAwareInterface
+     */
+    public function createElasticBatchTransactionAwareDataSetStepBroker()
+    {
+        return new DataSetStepBrokerElasticBatchTransactionAware(
+            $this->getPropelConnection(),
+            $this->createMemoryAllocatedElasticBatch(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\DataImport\Business\Model\ElasticBatch\ElasticBatchInterface
+     */
+    public function createMemoryAllocatedElasticBatch(): ElasticBatchInterface
+    {
+        return new MemoryAllocatedElasticBatch(
+            $this->createMemoryModel(),
+            $this->getConfig(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\DataImport\Business\Model\Memory\SystemMemoryInterface
+     */
+    public function createMemoryModel(): SystemMemoryInterface
+    {
+        return new PhpSystemMemory();
     }
 
     /**

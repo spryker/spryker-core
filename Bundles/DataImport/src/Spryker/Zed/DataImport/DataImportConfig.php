@@ -53,6 +53,16 @@ class DataImportConfig extends AbstractBundleConfig
     protected const DEFAULT_BULK_MODE = false;
 
     /**
+     * @var int
+     */
+    protected const BULK_MODE_GRADUALITY_FACTOR = 5;
+
+    /**
+     * @var int
+     */
+    protected const BULK_MODE_MEMORY_THESHOLD_PERCENT = 30;
+
+    /**
      * @api
      *
      * @return string
@@ -125,6 +135,32 @@ class DataImportConfig extends AbstractBundleConfig
     public function isBulkEnabled(): bool
     {
         return $this->get(DataImportConstants::IS_BULK_MODE_ENABLED, static::DEFAULT_BULK_MODE);
+    }
+
+    /**
+     * Specification:
+     * - Returns graduality factor for increasing memory quota in bulk mode.
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getBulkWriteGradualityFactor(): int
+    {
+        return $this->get(DataImportConstants::BULK_MODE_GRADUALITY_FACTOR, static::BULK_MODE_GRADUALITY_FACTOR);
+    }
+
+    /**
+     * Specification:
+     * - Returns memory threshold limit in percentage of total allowed memory.
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getBulkWriteMemoryThesoldPercent(): int
+    {
+        return $this->get(DataImportConstants::BULK_MODE_MEMORY_THESHOLD_PERCENT, static::BULK_MODE_MEMORY_THESHOLD_PERCENT);
     }
 
     /**

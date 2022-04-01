@@ -24,6 +24,27 @@ interface DataImportConstants
 
     /**
      * Specification:
+     * - Defines graduality factor for memory usage during bulk import.
+     * - Graduality factor affects how many iteration we will need to fill in allowed memory.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const BULK_MODE_GRADUALITY_FACTOR = 'DATA_IMPORT:BULK_MODE_GRADUALITY_FACTOR';
+
+    /**
+     * Specification:
+     * - Defines a percent from memory could be used for bulk import.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const BULK_MODE_MEMORY_THESHOLD_PERCENT = 'DATA_IMPORT:BULK_MODE_MEMORY_THESHOLD_PERCENT';
+
+    /**
+     * Specification:
      * - Root path to the import files.
      * - Can be used to have a small set of import data for e.g. testing or development.
      *
