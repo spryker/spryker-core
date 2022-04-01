@@ -7,17 +7,8 @@
 
 namespace Spryker\Zed\SalesOrderThreshold\Business\Translation\Hydrator;
 
-use Generated\Shared\Transfer\SalesOrderThresholdTransfer;
-
 interface SalesOrderThresholdTranslationHydratorInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\SalesOrderThresholdTransfer $salesOrderThresholdTransfer
-     *
-     * @return \Generated\Shared\Transfer\SalesOrderThresholdTransfer
-     */
-    public function hydrateLocalizedMessages(SalesOrderThresholdTransfer $salesOrderThresholdTransfer): SalesOrderThresholdTransfer;
-
     /**
      * @param array<\Generated\Shared\Transfer\SalesOrderThresholdTransfer> $salesOrderThresholdTransfers
      *

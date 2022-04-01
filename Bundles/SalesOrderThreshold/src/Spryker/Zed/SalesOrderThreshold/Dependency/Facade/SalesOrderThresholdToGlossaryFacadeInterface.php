@@ -68,4 +68,11 @@ interface SalesOrderThresholdToGlossaryFacadeInterface
      * @return string
      */
     public function translate($keyName, array $data = [], ?LocaleTransfer $localeTransfer = null);
+
+    /**
+     * @param array<string> $glossaryKeys
+     *
+     * @return array<\Generated\Shared\Transfer\GlossaryKeyTransfer>
+     */
+    public function getGlossaryKeyTransfersByGlossaryKeys(array $glossaryKeys): array;
 }

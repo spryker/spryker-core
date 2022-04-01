@@ -40,27 +40,6 @@ class SalesOrderThresholdTranslationHydrator implements SalesOrderThresholdTrans
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SalesOrderThresholdTransfer $salesOrderThresholdTransfer
-     *
-     * @return \Generated\Shared\Transfer\SalesOrderThresholdTransfer
-     */
-    public function hydrateLocalizedMessages(SalesOrderThresholdTransfer $salesOrderThresholdTransfer): SalesOrderThresholdTransfer
-    {
-        $glossaryKey = $this->getGlossaryKey($salesOrderThresholdTransfer);
-        if (!$glossaryKey) {
-            return $salesOrderThresholdTransfer;
-        }
-
-        $availableLocaleTransfers = $this->localeFacade->getLocaleCollection();
-        $translationTransfers = $this->glossaryFacade->getTranslationsByGlossaryKeyAndLocales($glossaryKey, $availableLocaleTransfers);
-
-        $salesOrderThresholdTransfer = $this
-            ->extendSalesOrderThresholdTransferWithLocalizedMessages($salesOrderThresholdTransfer, $translationTransfers, $availableLocaleTransfers);
-
-        return $salesOrderThresholdTransfer;
-    }
-
-    /**
      * @param array<\Generated\Shared\Transfer\SalesOrderThresholdTransfer> $salesOrderThresholdTransfers
      *
      * @return array<\Generated\Shared\Transfer\SalesOrderThresholdTransfer>
@@ -68,12 +47,15 @@ class SalesOrderThresholdTranslationHydrator implements SalesOrderThresholdTrans
     public function expandWithLocalizedMessagesCollection(array $salesOrderThresholdTransfers): array
     {
         $glossaryKeys = $this->getGlossaryKeys($salesOrderThresholdTransfers);
+
         if (!$glossaryKeys) {
             return $salesOrderThresholdTransfers;
         }
 
+        $glossaryKeyTransfers = $this->glossaryFacade->getGlossaryKeyTransfersByGlossaryKeys($glossaryKeys);
         $availableLocaleTransfers = $this->localeFacade->getLocaleCollection();
         $translationTransfers = $this->glossaryFacade->getTranslationsByGlossaryKeysAndLocaleTransfers($glossaryKeys, $availableLocaleTransfers);
+        $translationTransfers = $this->getTranslationTransfersGroupedByIdLocale($translationTransfers, $glossaryKeyTransfers);
 
         $salesOrderThresholdTransfers = $this->expandSalesOrderThresholdTransferWithLocalizedMessagesCollection(
             $salesOrderThresholdTransfers,
@@ -86,7 +68,7 @@ class SalesOrderThresholdTranslationHydrator implements SalesOrderThresholdTrans
 
     /**
      * @param \Generated\Shared\Transfer\SalesOrderThresholdTransfer $salesOrderThresholdTransfer
-     * @param array<\Generated\Shared\Transfer\TranslationTransfer> $translationTransfers
+     * @param array<int|string, array<string, \Generated\Shared\Transfer\TranslationTransfer>> $translationTransfers
      * @param array<\Generated\Shared\Transfer\LocaleTransfer> $availableLocaleTransfers
      *
      * @return \Generated\Shared\Transfer\SalesOrderThresholdTransfer
@@ -97,10 +79,10 @@ class SalesOrderThresholdTranslationHydrator implements SalesOrderThresholdTrans
         array $availableLocaleTransfers
     ): SalesOrderThresholdTransfer {
         $localizedMessages = new ArrayObject();
+        $messageGlossaryKey = $salesOrderThresholdTransfer->getSalesOrderThresholdValueOrFail()->getMessageGlossaryKeyOrFail();
 
-        $indexedTranslationTransfers = $this->indexTranslationTransfersByLocaleId($translationTransfers);
         foreach ($availableLocaleTransfers as $localeTransfer) {
-            $translationTransfer = $indexedTranslationTransfers[$localeTransfer->getIdLocale()] ?? null;
+            $translationTransfer = $translationTransfers[$localeTransfer->getIdLocale()][$messageGlossaryKey] ?? null;
             $salesOrderThresholdLocalizedMessageTransfer = $this->createLocalizedMessage($localeTransfer, $translationTransfer);
 
             $localizedMessages->append($salesOrderThresholdLocalizedMessageTransfer);
@@ -112,7 +94,7 @@ class SalesOrderThresholdTranslationHydrator implements SalesOrderThresholdTrans
 
     /**
      * @param array<\Generated\Shared\Transfer\SalesOrderThresholdTransfer> $salesOrderThresholdTransfers
-     * @param array<\Generated\Shared\Transfer\TranslationTransfer> $translationTransfers
+     * @param array<int|string, array<string, \Generated\Shared\Transfer\TranslationTransfer>> $translationTransfers
      * @param array<\Generated\Shared\Transfer\LocaleTransfer> $availableLocaleTransfers
      *
      * @return array<\Generated\Shared\Transfer\SalesOrderThresholdTransfer>
@@ -131,17 +113,39 @@ class SalesOrderThresholdTranslationHydrator implements SalesOrderThresholdTrans
 
     /**
      * @param array<\Generated\Shared\Transfer\TranslationTransfer> $translationTransfers
+     * @param array<\Generated\Shared\Transfer\GlossaryKeyTransfer> $glossaryKeyTransfers
      *
-     * @return array<\Generated\Shared\Transfer\TranslationTransfer>
+     * @return array<int|string, array<string, \Generated\Shared\Transfer\TranslationTransfer>>
      */
-    protected function indexTranslationTransfersByLocaleId(array $translationTransfers): array
-    {
-        $indexedTranslationTransfers = [];
+    protected function getTranslationTransfersGroupedByIdLocale(
+        array $translationTransfers,
+        array $glossaryKeyTransfers
+    ): array {
+        $groupedTranslationTransfers = [];
+        $glossaryKeyTransfers = $this->getGlossaryKeyTransfersIndexedByIdGlossaryKey($glossaryKeyTransfers);
+
         foreach ($translationTransfers as $translationTransfer) {
-            $indexedTranslationTransfers[$translationTransfer->getFkLocale()] = $translationTransfer;
+            $key = $glossaryKeyTransfers[$translationTransfer->getFkGlossaryKeyOrFail()]->getKeyOrFail();
+            $groupedTranslationTransfers[$translationTransfer->getFkLocaleOrFail()][$key] = $translationTransfer;
         }
 
-        return $indexedTranslationTransfers;
+        return $groupedTranslationTransfers;
+    }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\GlossaryKeyTransfer> $glossaryKeyTransfers
+     *
+     * @return array<int, \Generated\Shared\Transfer\GlossaryKeyTransfer>
+     */
+    protected function getGlossaryKeyTransfersIndexedByIdGlossaryKey(array $glossaryKeyTransfers): array
+    {
+        $indexedGlossaryKeyTransfers = [];
+
+        foreach ($glossaryKeyTransfers as $glossaryKeyTransfer) {
+            $indexedGlossaryKeyTransfers[$glossaryKeyTransfer->getIdGlossaryKeyOrFail()] = $glossaryKeyTransfer;
+        }
+
+        return $indexedGlossaryKeyTransfers;
     }
 
     /**
