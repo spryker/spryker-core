@@ -32,6 +32,7 @@ interface ProductReviewTableConstants
      * @var string
      */
     public const COL_ID_PRODUCT_REVIEW = 'id_product_review';
+
     public const COL_CREATED = ProductReviewGuiQueryContainer::FIELD_CREATED;
 
     /**
@@ -43,6 +44,7 @@ interface ProductReviewTableConstants
      * @var string
      */
     public const COL_NICK_NAME = 'nickname';
+
     public const COL_PRODUCT_NAME = ProductReviewGuiQueryContainer::FIELD_PRODUCT_NAME;
 
     /**
@@ -64,14 +66,23 @@ interface ProductReviewTableConstants
      * @var string
      */
     public const COL_SHOW_DETAILS = 'show_details';
+
     public const COL_PRODUCT_ABSTRACT_LOCALIZED_ATTRIBUTES_NAME = SpyProductAbstractLocalizedAttributesTableMap::COL_NAME;
+
     public const COL_CUSTOMER_FIRST_NAME = SpyCustomerTableMap::COL_FIRST_NAME;
+
     public const COL_CUSTOMER_LAST_NAME = SpyCustomerTableMap::COL_LAST_NAME;
+
     public const COL_PRODUCT_REVIEW_STATUS_REJECTED = SpyProductReviewTableMap::COL_STATUS_REJECTED;
+
     public const COL_PRODUCT_REVIEW_STATUS_APPROVED = SpyProductReviewTableMap::COL_STATUS_APPROVED;
+
     public const COL_PRODUCT_REVIEW_STATUS_PENDING = SpyProductReviewTableMap::COL_STATUS_PENDING;
+
     public const COL_PRODUCT_REVIEW_GUI_ID_CUSTOMER = ProductReviewGuiQueryContainer::FIELD_ID_CUSTOMER;
+
     public const COL_PRODUCT_REVIEW_GUI_FIRST_NAME = ProductReviewGuiQueryContainer::FIELD_CUSTOMER_FIRST_NAME;
+
     public const COL_PRODUCT_REVIEW_GUI_LAST_NAME = ProductReviewGuiQueryContainer::FIELD_CUSTOMER_LAST_NAME;
 
     /**

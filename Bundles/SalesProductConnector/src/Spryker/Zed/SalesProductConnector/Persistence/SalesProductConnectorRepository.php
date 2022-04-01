@@ -23,6 +23,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class SalesProductConnectorRepository extends AbstractRepository implements SalesProductConnectorRepositoryInterface
 {
     protected const FIELD_FK_PRODUCT_ABSTRACT = ProductPayloadTransfer::ID_PRODUCT_ABSTRACT;
+
     protected const FIELD_POPULARITY = ProductPayloadTransfer::POPULARITY;
 
     /**

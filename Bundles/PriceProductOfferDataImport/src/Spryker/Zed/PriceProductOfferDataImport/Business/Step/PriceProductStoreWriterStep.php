@@ -16,6 +16,7 @@ use Spryker\Zed\PriceProductOfferDataImport\Business\DataSet\PriceProductOfferDa
 class PriceProductStoreWriterStep implements DataImportStepInterface
 {
     protected const VALUE_NET = PriceProductOfferDataSetInterface::VALUE_NET;
+
     protected const VALUE_GROSS = PriceProductOfferDataSetInterface::VALUE_GROSS;
 
     /**

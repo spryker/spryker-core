@@ -32,6 +32,7 @@ class CsvReaderConfiguration implements CsvReaderConfigurationInterface
      * @var string
      */
     public const DEFAULT_ESCAPE = '\\';
+
     public const DEFAULT_FLAGS = SplFileObject::READ_CSV | SplFileObject::SKIP_EMPTY | SplFileObject::READ_AHEAD | SplFileObject::DROP_NEW_LINE;
 
     /**

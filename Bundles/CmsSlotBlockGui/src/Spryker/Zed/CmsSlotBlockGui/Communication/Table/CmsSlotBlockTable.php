@@ -23,9 +23,13 @@ class CmsSlotBlockTable extends AbstractTable
     public const TABLE_CLASS = 'js-cms-slot-block-table';
 
     protected const COL_ID_CMS_BLOCK = SpyCmsBlockTableMap::COL_ID_CMS_BLOCK;
+
     protected const COL_NAME = SpyCmsBlockTableMap::COL_NAME;
+
     protected const COL_VALID_FROM = SpyCmsBlockTableMap::COL_VALID_FROM;
+
     protected const COL_VALID_TO = SpyCmsBlockTableMap::COL_VALID_TO;
+
     protected const COL_IS_ACTIVE = SpyCmsBlockTableMap::COL_IS_ACTIVE;
 
     /**

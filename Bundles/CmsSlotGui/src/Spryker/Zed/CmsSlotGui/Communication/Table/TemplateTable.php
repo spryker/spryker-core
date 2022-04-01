@@ -16,7 +16,9 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 class TemplateTable extends AbstractTable
 {
     protected const COL_ID = SpyCmsSlotTemplateTableMap::COL_ID_CMS_SLOT_TEMPLATE;
+
     protected const COL_NAME = SpyCmsSlotTemplateTableMap::COL_NAME;
+
     protected const COL_DESCRIPTION = SpyCmsSlotTemplateTableMap::COL_DESCRIPTION;
 
     /**

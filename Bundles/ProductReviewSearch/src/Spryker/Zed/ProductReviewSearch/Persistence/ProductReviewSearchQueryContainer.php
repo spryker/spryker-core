@@ -17,7 +17,9 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class ProductReviewSearchQueryContainer extends AbstractQueryContainer implements ProductReviewSearchQueryContainerInterface
 {
     public const FIELD_FK_PRODUCT_ABSTRACT = ProductPageSearchTransfer::ID_PRODUCT_ABSTRACT;
+
     public const FIELD_AVERAGE_RATING = ProductPageSearchTransfer::AVERAGE_RATING;
+
     public const FIELD_COUNT = ProductPageSearchTransfer::REVIEW_COUNT;
 
     /**

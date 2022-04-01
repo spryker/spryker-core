@@ -24,11 +24,17 @@ use Spryker\Zed\ProductLabelGui\Persistence\ProductLabelGuiQueryContainerInterfa
 class ProductLabelTable extends AbstractTable
 {
     public const COL_ID_PRODUCT_LABEL = SpyProductLabelTableMap::COL_ID_PRODUCT_LABEL;
+
     public const COL_NAME = SpyProductLabelTableMap::COL_NAME;
+
     public const COL_IS_EXCLUSIVE = SpyProductLabelTableMap::COL_IS_EXCLUSIVE;
+
     public const COL_IS_DYNAMIC = SpyProductLabelTableMap::COL_IS_DYNAMIC;
+
     public const COL_STATUS = SpyProductLabelTableMap::COL_IS_ACTIVE;
+
     public const COL_STORES = SpyStoreTableMap::COL_NAME;
+
     public const COL_PRIORITY = SpyProductLabelTableMap::COL_POSITION;
 
     /**

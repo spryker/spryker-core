@@ -18,6 +18,7 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 class FileTable extends AbstractTable
 {
     protected const COL_ID_FILE = SpyFileTableMap::COL_ID_FILE;
+
     protected const COL_FILE_NAME = SpyFileTableMap::COL_FILE_NAME;
 
     /**

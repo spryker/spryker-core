@@ -31,6 +31,7 @@ use Twig\Loader\LoaderInterface;
 class TwigFilesystemLoaderTest extends Unit
 {
     public const PATH_TO_ZED_PROJECT = __DIR__ . '/Fixtures/src/ProjectNamespace/Zed/Bundle/Presentation';
+
     public const PATH_TO_ZED_CORE = __DIR__ . '/Fixtures/vendor/spryker/spryker/Bundles/*/src/CoreNamespace/Zed/%s/Presentation';
 
     /**

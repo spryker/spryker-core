@@ -20,12 +20,19 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 class CompanyUnitAddressTable extends AbstractTable
 {
     protected const COL_ID_COMPANY_UNIT_ADDRESS = SpyCompanyUnitAddressTableMap::COL_ID_COMPANY_UNIT_ADDRESS;
+
     protected const COL_ADDRESS1 = SpyCompanyUnitAddressTableMap::COL_ADDRESS1;
+
     protected const COL_ADDRESS2 = SpyCompanyUnitAddressTableMap::COL_ADDRESS2;
+
     protected const COL_ADDRESS3 = SpyCompanyUnitAddressTableMap::COL_ADDRESS3;
+
     protected const COL_CITY = SpyCompanyUnitAddressTableMap::COL_CITY;
+
     protected const COL_ZIPCODE = SpyCompanyUnitAddressTableMap::COL_ZIP_CODE;
+
     protected const COL_COUNTRY_NAME = SpyCountryTableMap::COL_NAME;
+
     protected const COL_COMPANY_NAME = SpyCompanyTableMap::COL_NAME;
 
     /**

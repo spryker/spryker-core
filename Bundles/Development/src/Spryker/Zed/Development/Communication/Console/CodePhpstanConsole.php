@@ -23,9 +23,13 @@ class CodePhpstanConsole extends Console
      * @var string
      */
     protected const COMMAND_NAME = 'code:phpstan';
+
     protected const OPTION_MODULE = PhpstanRunner::OPTION_MODULE;
+
     protected const OPTION_DRY_RUN = PhpstanRunner::OPTION_DRY_RUN;
+
     protected const OPTION_LEVEL = PhpstanRunner::OPTION_LEVEL;
+
     protected const OPTION_OFFSET = PhpstanRunner::OPTION_OFFSET;
 
     /**

@@ -36,6 +36,7 @@ class JenkinsController extends AbstractController
      * @var string
      */
     public const ROLE_EMPTY = 'empty';
+
     public const DEFAULT_ROLE = self::ROLE_ADMIN;
 
     /**

@@ -89,6 +89,7 @@ class DistributorTest extends Unit
      * @var int
      */
     public const DISCOUNT_AMOUNT_13334 = 134;
+
     public const DISCOUNT_AMOUNT_NEGATIVE = -100;
 
     /**

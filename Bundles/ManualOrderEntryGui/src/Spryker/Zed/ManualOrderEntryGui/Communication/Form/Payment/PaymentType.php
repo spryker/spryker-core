@@ -30,7 +30,9 @@ class PaymentType extends AbstractType
     public const TYPE_NAME = 'payments';
 
     public const PAYMENT_PROPERTY_PATH = QuoteTransfer::PAYMENT;
+
     public const PAYMENT_SELECTION = PaymentTransfer::PAYMENT_SELECTION;
+
     public const PAYMENT_SELECTION_PROPERTY_PATH = self::PAYMENT_PROPERTY_PATH . '.' . self::PAYMENT_SELECTION;
 
     /**
