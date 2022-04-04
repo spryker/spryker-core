@@ -10,7 +10,7 @@ namespace Spryker\Client\Search\Model\Elasticsearch\Aggregation;
 use Elastica\Aggregation\AbstractTermsAggregation;
 
 /**
- * @deprecated Use {@link \Spryker\Client\SearchElasticsearch\Aggregation\AbstractTermsFacetAggregation} instead.
+ * @deprecated Use {@link \Spryker\Client\SearchElasticsearch\Aggregation\AbstractFacetAggregation} instead.
  */
 abstract class AbstractTermsFacetAggregation extends AbstractFacetAggregation
 {
