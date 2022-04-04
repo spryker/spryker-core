@@ -140,6 +140,27 @@ class MerchantProductOfferSearchRepository extends AbstractRepository implements
     }
 
     /**
+     * @param array<int> $productOfferIds
+     *
+     * @return array<int>
+     */
+    public function getProductConcreteIdsByProductOfferIds(array $productOfferIds): array
+    {
+        $productAbstractPropelQuery = $this->getFactory()->getProductAbstractPropelQuery();
+        $productAbstractPropelQuery
+            ->innerJoinSpyProduct()
+            ->addJoin(SpyProductTableMap::COL_SKU, SpyProductOfferTableMap::COL_CONCRETE_SKU, Criteria::INNER_JOIN)
+            ->addJoin(SpyProductOfferTableMap::COL_MERCHANT_REFERENCE, SpyMerchantTableMap::COL_MERCHANT_REFERENCE, Criteria::INNER_JOIN)
+            ->addAnd($productAbstractPropelQuery->getNewCriterion(SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER, $productOfferIds, Criteria::IN));
+
+        return $productAbstractPropelQuery
+            ->where(SpyMerchantTableMap::COL_IS_ACTIVE, true)
+            ->select([SpyProductTableMap::COL_ID_PRODUCT])
+            ->find()
+            ->getData();
+    }
+
+    /**
      * @param array $merchantData
      *
      * @return array

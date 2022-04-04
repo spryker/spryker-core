@@ -8,12 +8,16 @@
 namespace Spryker\Zed\MerchantProductOfferSearch\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\MerchantProductOfferSearch\Business\Expander\MerchantProductOfferSearchExpander;
+use Spryker\Zed\MerchantProductOfferSearch\Business\Expander\MerchantProductOfferSearchExpanderInterface;
 use Spryker\Zed\MerchantProductOfferSearch\Business\Reader\MerchantProductOfferSearchReader;
 use Spryker\Zed\MerchantProductOfferSearch\Business\Reader\MerchantProductOfferSearchReaderInterface;
 use Spryker\Zed\MerchantProductOfferSearch\Business\Writer\MerchantProductOfferSearchWriter;
 use Spryker\Zed\MerchantProductOfferSearch\Business\Writer\MerchantProductOfferSearchWriterInterface;
 use Spryker\Zed\MerchantProductOfferSearch\Dependency\Facade\MerchantProductOfferSearchToEventBehaviorFacadeInterface;
+use Spryker\Zed\MerchantProductOfferSearch\Dependency\Facade\MerchantProductOfferSearchToMerchantProductOfferFacadeInterface;
 use Spryker\Zed\MerchantProductOfferSearch\Dependency\Facade\MerchantProductOfferSearchToProductPageSearchFacadeInterface;
+use Spryker\Zed\MerchantProductOfferSearch\Dependency\Facade\MerchantProductOfferSearchToStoreFacadeInterface;
 use Spryker\Zed\MerchantProductOfferSearch\MerchantProductOfferSearchDependencyProvider;
 
 /**
@@ -31,6 +35,17 @@ class MerchantProductOfferSearchBusinessFactory extends AbstractBusinessFactory
             $this->getEventBehaviorFacade(),
             $this->getProductPageSearchFacade(),
             $this->getRepository(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProductOfferSearch\Business\Expander\MerchantProductOfferSearchExpanderInterface
+     */
+    public function createMerchantProductOfferSearchExpander(): MerchantProductOfferSearchExpanderInterface
+    {
+        return new MerchantProductOfferSearchExpander(
+            $this->getMerchantProductOfferFacade(),
+            $this->getStoreFacade(),
         );
     }
 
@@ -56,5 +71,21 @@ class MerchantProductOfferSearchBusinessFactory extends AbstractBusinessFactory
     public function getProductPageSearchFacade(): MerchantProductOfferSearchToProductPageSearchFacadeInterface
     {
         return $this->getProvidedDependency(MerchantProductOfferSearchDependencyProvider::FACADE_PRODUCT_PAGE_SEARCH);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProductOfferSearch\Dependency\Facade\MerchantProductOfferSearchToMerchantProductOfferFacadeInterface
+     */
+    public function getMerchantProductOfferFacade(): MerchantProductOfferSearchToMerchantProductOfferFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantProductOfferSearchDependencyProvider::FACADE_MERCHANT_PRODUCT_OFFER);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProductOfferSearch\Dependency\Facade\MerchantProductOfferSearchToStoreFacadeInterface
+     */
+    public function getStoreFacade(): MerchantProductOfferSearchToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantProductOfferSearchDependencyProvider::FACADE_STORE);
     }
 }

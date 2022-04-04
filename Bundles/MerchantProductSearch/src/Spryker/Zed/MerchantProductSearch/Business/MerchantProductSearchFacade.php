@@ -7,7 +7,10 @@
 
 namespace Spryker\Zed\MerchantProductSearch\Business;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\PageMapTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface;
 
 /**
  * @method \Spryker\Zed\MerchantProductSearch\Business\MerchantProductSearchBusinessFactory getFactory()
@@ -60,5 +63,33 @@ class MerchantProductSearchFacade extends AbstractFacade implements MerchantProd
     {
         return $this->getRepository()
             ->getMerchantDataByProductAbstractIds($productAbstractIds);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
+     * @param \Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface $pageMapBuilder
+     * @param array $productData
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\PageMapTransfer
+     */
+    public function expandProductConcretePageMap(
+        PageMapTransfer $pageMapTransfer,
+        PageMapBuilderInterface $pageMapBuilder,
+        array $productData,
+        LocaleTransfer $localeTransfer
+    ): PageMapTransfer {
+        return $this->getFactory()
+            ->createMerchantProductSearchExpander()
+            ->expandProductConcretePageMap(
+                $pageMapTransfer,
+                $pageMapBuilder,
+                $productData,
+                $localeTransfer,
+            );
     }
 }

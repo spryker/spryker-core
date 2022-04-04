@@ -7,6 +7,10 @@
 
 namespace Spryker\Zed\MerchantProductSearch\Business;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\PageMapTransfer;
+use Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface;
+
 interface MerchantProductSearchFacadeInterface
 {
     /**
@@ -49,4 +53,24 @@ interface MerchantProductSearchFacadeInterface
      * @return array<\Generated\Shared\Transfer\ProductAbstractMerchantTransfer>
      */
     public function getMerchantDataByProductAbstractIds(array $productAbstractIds): array;
+
+    /**
+     * Specification:
+     * - Expands the provided PageMap transfer with merchant product data.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
+     * @param \Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface $pageMapBuilder
+     * @param array $productData
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\PageMapTransfer
+     */
+    public function expandProductConcretePageMap(
+        PageMapTransfer $pageMapTransfer,
+        PageMapBuilderInterface $pageMapBuilder,
+        array $productData,
+        LocaleTransfer $localeTransfer
+    ): PageMapTransfer;
 }

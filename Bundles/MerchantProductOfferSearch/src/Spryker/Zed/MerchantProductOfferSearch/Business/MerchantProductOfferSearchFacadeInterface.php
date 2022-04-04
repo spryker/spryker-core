@@ -7,6 +7,10 @@
 
 namespace Spryker\Zed\MerchantProductOfferSearch\Business;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\PageMapTransfer;
+use Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface;
+
 interface MerchantProductOfferSearchFacadeInterface
 {
     /**
@@ -43,6 +47,34 @@ interface MerchantProductOfferSearchFacadeInterface
 
     /**
      * Specification:
+     * - Gets merchant product offer ids from eventTransfers.
+     * - Retrieves a list of product ids by product offer ids.
+     * - Publishes concrete products with given ids.
+     *
+     * @api
+     *
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
+     *
+     * @return void
+     */
+    public function writeProductConcreteCollectionByProductOfferEvents(array $eventTransfers): void;
+
+    /**
+     * Specification:
+     * - Gets merchant product offer ids from eventTransfers.
+     * - Retrieves a list of product ids by product offer ids.
+     * - Publishes concrete products with given ids.
+     *
+     * @api
+     *
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
+     *
+     * @return void
+     */
+    public function writeProductConcreteCollectionByProductOfferStoreEvents(array $eventTransfers): void;
+
+    /**
+     * Specification:
      * - Returns a list of ProductAbstractMerchantTransfers with data about merchant by product abstract ids.
      *
      * @api
@@ -52,4 +84,25 @@ interface MerchantProductOfferSearchFacadeInterface
      * @return array<\Generated\Shared\Transfer\ProductAbstractMerchantTransfer>
      */
     public function getProductAbstractMerchantDataByProductAbstractIds(array $productAbstractIds): array;
+
+    /**
+     * Specification:
+     * - Expands the provided `PageMap.fullTextBoosted` transfer property with merchant names and references from related product offers.
+     * - Expands the provided `PageMap` transfer object with related merchant references.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
+     * @param \Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface $pageMapBuilder
+     * @param array $productData
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\PageMapTransfer
+     */
+    public function expandProductConcretePageMap(
+        PageMapTransfer $pageMapTransfer,
+        PageMapBuilderInterface $pageMapBuilder,
+        array $productData,
+        LocaleTransfer $localeTransfer
+    ): PageMapTransfer;
 }

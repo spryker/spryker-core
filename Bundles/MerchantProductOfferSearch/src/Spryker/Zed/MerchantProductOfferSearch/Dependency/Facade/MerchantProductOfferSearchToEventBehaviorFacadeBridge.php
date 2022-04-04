@@ -31,4 +31,15 @@ class MerchantProductOfferSearchToEventBehaviorFacadeBridge implements MerchantP
     {
         return $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
     }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
+     * @param string $foreignKeyColumnName
+     *
+     * @return array
+     */
+    public function getEventTransferForeignKeys(array $eventTransfers, string $foreignKeyColumnName): array
+    {
+        return $this->eventBehaviorFacade->getEventTransferForeignKeys($eventTransfers, $foreignKeyColumnName);
+    }
 }
