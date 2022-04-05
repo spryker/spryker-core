@@ -59,7 +59,7 @@ class JenkinsController extends AbstractController
      *
      * @throws \ErrorException
      *
-     * @return string
+     * @return int
      */
     private function callJenkins($url, $body = '')
     {
