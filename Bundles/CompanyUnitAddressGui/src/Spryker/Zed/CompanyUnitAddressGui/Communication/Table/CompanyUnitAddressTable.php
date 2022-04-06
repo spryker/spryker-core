@@ -244,7 +244,7 @@ class CompanyUnitAddressTable extends AbstractTable
     protected function getCompanyName(SpyCompanyUnitAddress $companyUnitAddressEntity): string
     {
         if ($companyUnitAddressEntity->getFkCompany()) {
-            return $companyUnitAddressEntity->getCompany()->getName();
+            return htmlspecialchars($companyUnitAddressEntity->getCompany()->getName());
         }
 
         return '';
