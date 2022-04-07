@@ -7,7 +7,7 @@
         "@spryker/nestable": "~1.1.1",
         "animate.css": "~3.5.1",
         "bootstrap-sass": "~3.4.1",
-        "codemirror": "~5.12.0",
+        "codemirror": "~5.63.0",
         "datatables.net": "~1.10.13",
         "datatables.net-bs": "~1.10.10",
         "datatables.net-buttons": "~1.2.3",
@@ -25,7 +25,7 @@
         "metismenu": "~2.0.2",
         "pace": "npm:pace-js@~1.0.2",
         "select2": "~4.0.13",
-        "summernote": "^0.8.11",
+        "summernote": "~0.8.18",
         "sweetalert": "~1.1.3"
     }
 }
