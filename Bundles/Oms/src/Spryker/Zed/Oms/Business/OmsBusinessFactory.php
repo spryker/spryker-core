@@ -164,9 +164,12 @@ class OmsBusinessFactory extends AbstractBusinessFactory
      */
     public function createUtilTransitionLog(array $logContext)
     {
-        $queryContainer = $this->getQueryContainer();
-
-        return new TransitionLog($queryContainer, $logContext, $this->getUtilNetworkService());
+        return new TransitionLog(
+            $this->getQueryContainer(),
+            $logContext,
+            $this->getUtilNetworkService(),
+            $this->getConfig(),
+        );
     }
 
     /**

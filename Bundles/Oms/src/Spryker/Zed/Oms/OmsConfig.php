@@ -42,6 +42,16 @@ class OmsConfig extends AbstractBundleConfig
     /**
      * @api
      *
+     * @return bool
+     */
+    public function isOmsTransitionLogEnabled(): bool
+    {
+        return $this->get(OmsConstants::ENABLE_OMS_TRANSITION_LOG, true);
+    }
+
+    /**
+     * @api
+     *
      * @return array<string, mixed>
      */
     public function getGraphDefaults()
