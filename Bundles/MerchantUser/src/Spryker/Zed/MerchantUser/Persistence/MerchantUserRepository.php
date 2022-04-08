@@ -83,7 +83,7 @@ class MerchantUserRepository extends AbstractRepository implements MerchantUserR
      * @param \Orm\Zed\MerchantUser\Persistence\SpyMerchantUserQuery<\Orm\Zed\MerchantUser\Persistence\SpyMerchantUser> $merchantUserQuery
      * @param \Generated\Shared\Transfer\MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer
      *
-     * @return \Orm\Zed\MerchantUser\Persistence\SpyMerchantUserQuery<\Orm\Zed\MerchantUser\Persistence\SpyMerchantUser> $merchantUserQuery
+     * @return \Orm\Zed\MerchantUser\Persistence\SpyMerchantUserQuery<\Orm\Zed\MerchantUser\Persistence\SpyMerchantUser>
      */
     protected function applyCriteria(
         SpyMerchantUserQuery $merchantUserQuery,

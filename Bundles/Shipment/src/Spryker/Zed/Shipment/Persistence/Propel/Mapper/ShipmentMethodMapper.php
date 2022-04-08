@@ -146,7 +146,7 @@ class ShipmentMethodMapper implements ShipmentMethodMapperInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Shipment\Persistence\SpyShipmentMethod> $shipmentMethodsEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Shipment\Persistence\SpyShipmentMethod>|iterable $shipmentMethodsEntities
      * @param array<\Generated\Shared\Transfer\ShipmentMethodTransfer> $shipmentMethodTransfers
      *
      * @return array<\Generated\Shared\Transfer\ShipmentMethodTransfer>
