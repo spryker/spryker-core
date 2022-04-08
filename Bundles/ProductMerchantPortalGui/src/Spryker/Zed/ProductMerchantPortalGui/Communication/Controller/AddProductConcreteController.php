@@ -188,9 +188,7 @@ class AddProductConcreteController extends AbstractController
     }
 
     /**
-     * @phpstan-param \Symfony\Component\Form\FormInterface<mixed> $addProductConcreteForm
-     *
-     * @param \Symfony\Component\Form\FormInterface $addProductConcreteForm
+     * @param \Symfony\Component\Form\FormInterface<mixed> $addProductConcreteForm
      * @param \Generated\Shared\Transfer\MerchantProductTransfer $merchantProductTransfer
      * @param \Generated\Shared\Transfer\ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $defaultStoreDefaultLocaleTransfer
@@ -329,9 +327,7 @@ class AddProductConcreteController extends AbstractController
     }
 
     /**
-     * @phpstan-param \Symfony\Component\Form\FormInterface<mixed> $addProductConcreteForm
-     *
-     * @param \Symfony\Component\Form\FormInterface $addProductConcreteForm
+     * @param \Symfony\Component\Form\FormInterface<mixed> $addProductConcreteForm
      *
      * @return array<mixed>
      */

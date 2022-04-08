@@ -106,10 +106,8 @@ class ProductsConcreteController extends AbstractController
     }
 
     /**
-     * @phpstan-param \Symfony\Component\Form\FormInterface<mixed> $productConcreteBulkForm
-     *
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Symfony\Component\Form\FormInterface $productConcreteBulkForm
+     * @param \Symfony\Component\Form\FormInterface<mixed> $productConcreteBulkForm
      * @param \Generated\Shared\Transfer\ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
      *
      * @return void

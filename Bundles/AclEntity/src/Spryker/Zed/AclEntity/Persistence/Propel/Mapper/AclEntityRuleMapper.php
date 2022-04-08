@@ -50,7 +50,7 @@ class AclEntityRuleMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\Collection|\Orm\Zed\AclEntity\Persistence\SpyAclEntityRule[] $aclEntityRuleEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\AclEntity\Persistence\SpyAclEntityRule> $aclEntityRuleEntities
      * @param \Generated\Shared\Transfer\AclEntityRuleCollectionTransfer $aclEntityRuleCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\AclEntityRuleCollectionTransfer

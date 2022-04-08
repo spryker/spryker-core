@@ -41,7 +41,7 @@ class ReferenceColumnEntityRelation extends AbstractAclEntityRelation implements
      *
      * @throws \InvalidArgumentException
      *
-     * @return \Propel\Runtime\Collection\Collection|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]
+     * @return \Propel\Runtime\Collection\Collection<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
      */
     public function getRelations(
         ActiveRecordInterface $entity,

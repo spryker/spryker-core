@@ -143,7 +143,7 @@ class Reader implements ReaderInterface
 
         $itemPaginationModel = $this->getWishlistOverviewPaginationModel($wishlistOverviewRequestTransfer);
         $wishlistPaginationTransfer = $this->updatePaginationTransfer($wishlistPaginationTransfer, $itemPaginationModel);
-        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Wishlist\Persistence\SpyWishlistItem[] $wishlistItemCollection */
+        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Wishlist\Persistence\SpyWishlistItem> $wishlistItemCollection */
         $wishlistItemCollection = $itemPaginationModel->getResults();
         $wishlistItems = $this->transferMapper->convertWishlistItemCollection($wishlistItemCollection);
 
@@ -261,10 +261,8 @@ class Reader implements ReaderInterface
     }
 
     /**
-     * @phpstan-param \Propel\Runtime\Util\PropelModelPager<mixed> $itemPaginationModel
-     *
      * @param \Generated\Shared\Transfer\WishlistPaginationTransfer $paginationTransfer
-     * @param \Propel\Runtime\Util\PropelModelPager $itemPaginationModel
+     * @param \Propel\Runtime\Util\PropelModelPager<mixed> $itemPaginationModel
      *
      * @return \Generated\Shared\Transfer\WishlistPaginationTransfer
      */
@@ -289,7 +287,7 @@ class Reader implements ReaderInterface
     /**
      * @param \Generated\Shared\Transfer\WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer
      *
-     * @return \Propel\Runtime\Util\PropelModelPager|\Orm\Zed\Wishlist\Persistence\SpyWishlistItem[]
+     * @return \Propel\Runtime\Util\PropelModelPager<\Orm\Zed\Wishlist\Persistence\SpyWishlistItem>
      */
     protected function getWishlistOverviewPaginationModel(WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer)
     {
@@ -336,7 +334,7 @@ class Reader implements ReaderInterface
      */
     protected function createWishlistItemMetaCollection($idWishlist)
     {
-        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Wishlist\Persistence\SpyWishlistItem[] $wishlistItemEntities */
+        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Wishlist\Persistence\SpyWishlistItem> $wishlistItemEntities */
         $wishlistItemEntities = $this->queryContainer
             ->queryItemsByWishlistId($idWishlist)
             ->find();
@@ -377,7 +375,7 @@ class Reader implements ReaderInterface
     /**
      * @param array<\Generated\Shared\Transfer\WishlistItemTransfer> $itemCollection
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Product\Persistence\SpyProduct[]
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\SpyProduct>
      */
     protected function getProductCollection(array $itemCollection)
     {

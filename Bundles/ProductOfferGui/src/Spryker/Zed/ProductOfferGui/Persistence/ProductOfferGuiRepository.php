@@ -17,14 +17,10 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class ProductOfferGuiRepository extends AbstractRepository implements ProductOfferGuiRepositoryInterface
 {
     /**
-     * @phpstan-param \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery<mixed> $query
-     *
-     * @phpstan-return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery<mixed>
-     *
-     * @param \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery $query
+     * @param \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery<mixed> $query
      * @param \Generated\Shared\Transfer\QueryCriteriaTransfer $queryCriteriaTransfer
      *
-     * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery
+     * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery<mixed>
      */
     public function mapQueryCriteriaTransferToModelCriteria(
         SpyProductOfferQuery $query,

@@ -59,9 +59,7 @@ class MerchantOrderTable extends AbstractTable
     protected const ROUTE_REDIRECT = '/merchant-sales-order-merchant-user-gui/detail';
 
     /**
-     * @phpstan-var \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery<mixed>
-     *
-     * @var \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery
+     * @var \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery<mixed>
      */
     protected $merchantSalesOrderQuery;
 
@@ -91,9 +89,7 @@ class MerchantOrderTable extends AbstractTable
     protected $merchantUserFacade;
 
     /**
-     * @phpstan-param \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery<mixed> $merchantSalesOrderQuery
-     *
-     * @param \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery $merchantSalesOrderQuery
+     * @param \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery<mixed> $merchantSalesOrderQuery
      * @param \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Facade\MerchantSalesOrderMerchantUserGuiToMoneyFacadeInterface $moneyFacade
      * @param \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Service\MerchantSalesOrderMerchantUserGuiToUtilSanitizeInterface $sanitizeService
      * @param \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Service\MerchantSalesOrderMerchantUserGuiToUtilDateTimeServiceInterface $utilDateTimeService

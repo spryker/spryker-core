@@ -15,12 +15,10 @@ use Propel\Runtime\Map\RelationMap;
 interface AclRelationReaderInterface
 {
     /**
-     * @phpstan-return \Propel\Runtime\Collection\ObjectCollection<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
-     *
      * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $entity
      * @param \Generated\Shared\Transfer\AclEntityMetadataTransfer $aclEntityMetadataTransfer
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
      */
     public function getRelationsByAclEntityMetadata(
         ActiveRecordInterface $entity,
@@ -28,12 +26,10 @@ interface AclRelationReaderInterface
     ): Collection;
 
     /**
-     * @phpstan-return \Propel\Runtime\Collection\ObjectCollection<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
-     *
      * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $entity
      * @param \Generated\Shared\Transfer\AclEntityMetadataTransfer $aclEntityMetadataTransfer
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
      */
     public function getRootRelationsByAclEntityMetadata(
         ActiveRecordInterface $entity,

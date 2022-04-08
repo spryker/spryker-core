@@ -70,11 +70,9 @@ class MerchantSalesOrderMerchantUserGuiCommunicationFactory extends AbstractComm
     }
 
     /**
-     * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
-     *
      * @param array<string, mixed> $options
      *
-     * @return \Symfony\Component\Form\FormInterface
+     * @return \Symfony\Component\Form\FormInterface<mixed>
      */
     public function createEventTriggerForm(array $options = []): FormInterface
     {
@@ -82,11 +80,9 @@ class MerchantSalesOrderMerchantUserGuiCommunicationFactory extends AbstractComm
     }
 
     /**
-     * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
-     *
      * @param array<string, mixed> $options
      *
-     * @return \Symfony\Component\Form\FormInterface
+     * @return \Symfony\Component\Form\FormInterface<mixed>
      */
     public function createEventItemTriggerForm(array $options = []): FormInterface
     {
@@ -113,12 +109,10 @@ class MerchantSalesOrderMerchantUserGuiCommunicationFactory extends AbstractComm
     }
 
     /**
-     * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
-     *
      * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
      * @param array<string, mixed> $formOptions
      *
-     * @return \Symfony\Component\Form\FormInterface
+     * @return \Symfony\Component\Form\FormInterface<mixed>
      */
     public function createMerchantShipmentGroupForm(
         ShipmentGroupTransfer $shipmentGroupTransfer,
@@ -128,9 +122,7 @@ class MerchantSalesOrderMerchantUserGuiCommunicationFactory extends AbstractComm
     }
 
     /**
-     * @phpstan-return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery<mixed>
-     *
-     * @return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery
+     * @return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery<mixed>
      */
     public function getMerchantSalesOrderPropelQuery(): SpyMerchantSalesOrderQuery
     {

@@ -27,13 +27,9 @@ class ProductOptionGroupQueryExpander implements ProductOptionGroupQueryExpander
     }
 
     /**
-     * @phpstan-param \Propel\Runtime\ActiveQuery\ModelCriteria<mixed> $query
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria<mixed> $query
      *
-     * @phpstan-return \Propel\Runtime\ActiveQuery\ModelCriteria<mixed>
-     *
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
-     *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria<mixed>
      */
     public function expandQuery(ModelCriteria $query): ModelCriteria
     {
@@ -57,14 +53,10 @@ class ProductOptionGroupQueryExpander implements ProductOptionGroupQueryExpander
     }
 
     /**
-     * @phpstan-param \Propel\Runtime\ActiveQuery\ModelCriteria<mixed> $query
-     *
-     * @phpstan-return \Propel\Runtime\ActiveQuery\ModelCriteria<mixed>
-     *
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria<mixed> $query
      * @param \Generated\Shared\Transfer\QueryCriteriaTransfer $queryCriteriaTransfer
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria<mixed>
      */
     protected function addJoin(
         ModelCriteria $query,

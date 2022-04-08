@@ -190,7 +190,7 @@ class ShipmentMapper implements ShipmentMapperInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Sales\Persistence\SpySalesShipment[] $salesOrderShipments
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Sales\Persistence\SpySalesShipment> $salesOrderShipments
      * @param array<\Generated\Shared\Transfer\ShipmentTransfer> $shipmentTransfers
      *
      * @return array<\Generated\Shared\Transfer\ShipmentTransfer>

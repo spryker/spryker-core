@@ -58,9 +58,7 @@ class MerchantSalesOrderDataExportPersistenceFactory extends AbstractPersistence
     }
 
     /**
-     * @phpstan-return \Orm\Zed\Merchant\Persistence\Base\SpyMerchantQuery<\Orm\Zed\Merchant\Persistence\SpyMerchant>
-     *
-     * @return \Orm\Zed\Merchant\Persistence\Base\SpyMerchantQuery
+     * @return \Orm\Zed\Merchant\Persistence\Base\SpyMerchantQuery<\Orm\Zed\Merchant\Persistence\SpyMerchant>
      */
     public function getMerchantPropelQuery(): SpyMerchantQuery
     {
@@ -68,9 +66,7 @@ class MerchantSalesOrderDataExportPersistenceFactory extends AbstractPersistence
     }
 
     /**
-     * @phpstan-return \Orm\Zed\MerchantSalesOrder\Persistence\Base\SpyMerchantSalesOrderQuery<\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrder>
-     *
-     * @return \Orm\Zed\MerchantSalesOrder\Persistence\Base\SpyMerchantSalesOrderQuery
+     * @return \Orm\Zed\MerchantSalesOrder\Persistence\Base\SpyMerchantSalesOrderQuery<\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrder>
      */
     public function getMerchantSalesOrderPropelQuery(): SpyMerchantSalesOrderQuery
     {
@@ -78,9 +74,7 @@ class MerchantSalesOrderDataExportPersistenceFactory extends AbstractPersistence
     }
 
     /**
-     * @phpstan-return \Orm\Zed\MerchantSalesOrder\Persistence\Base\SpyMerchantSalesOrderItemQuery<\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem>
-     *
-     * @return \Orm\Zed\MerchantSalesOrder\Persistence\Base\SpyMerchantSalesOrderItemQuery
+     * @return \Orm\Zed\MerchantSalesOrder\Persistence\Base\SpyMerchantSalesOrderItemQuery<\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem>
      */
     public function getMerchantSalesOrderItemPropelQuery(): SpyMerchantSalesOrderItemQuery
     {
@@ -88,9 +82,7 @@ class MerchantSalesOrderDataExportPersistenceFactory extends AbstractPersistence
     }
 
     /**
-     * @phpstan-return \Orm\Zed\Sales\Persistence\Base\SpySalesOrderCommentQuery<\Orm\Zed\Sales\Persistence\SpySalesOrderComment>
-     *
-     * @return \Orm\Zed\Sales\Persistence\Base\SpySalesOrderCommentQuery
+     * @return \Orm\Zed\Sales\Persistence\Base\SpySalesOrderCommentQuery<\Orm\Zed\Sales\Persistence\SpySalesOrderComment>
      */
     public function getSalesOrderCommentPropelQuery(): SpySalesOrderCommentQuery
     {

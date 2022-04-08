@@ -184,7 +184,7 @@ abstract class AbstractAssignmentTable extends AbstractTable
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Customer\Persistence\SpyCustomer[] $customerEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Customer\Persistence\SpyCustomer> $customerEntities
      *
      * @return array
      */
@@ -208,7 +208,7 @@ abstract class AbstractAssignmentTable extends AbstractTable
     {
         $query = $this->getQuery();
 
-        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Customer\Persistence\SpyCustomer[] $customerEntities */
+        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Customer\Persistence\SpyCustomer> $customerEntities */
         $customerEntities = $this->runQuery($query, $config, true);
         $rows = $this->buildResultData($customerEntities);
 

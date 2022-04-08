@@ -40,7 +40,7 @@ class ObjectSpecification implements IteratorAggregate, ArrayAccess, Countable
     }
 
     /**
-     * @return \ArrayIterator|\Spryker\Glue\Testify\OpenApi3\Property\PropertyDefinition[]
+     * @return \ArrayIterator<\Spryker\Glue\Testify\OpenApi3\Property\PropertyDefinition>
      */
     public function getIterator()
     {

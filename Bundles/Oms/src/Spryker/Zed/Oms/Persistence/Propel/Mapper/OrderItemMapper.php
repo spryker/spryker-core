@@ -36,7 +36,7 @@ class OrderItemMapper implements OrderItemMapperInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateHistory[] $omsOrderItemStateHistoryEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateHistory> $omsOrderItemStateHistoryEntities
      *
      * @return array<\Generated\Shared\Transfer\ItemStateTransfer>
      */
@@ -57,7 +57,7 @@ class OrderItemMapper implements OrderItemMapperInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $salesOrderItemEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $salesOrderItemEntityCollection
      *
      * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */

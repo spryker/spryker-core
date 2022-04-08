@@ -23,9 +23,7 @@ class ProductOptionGroupKeyToIdProductOptionGroupStep implements DataImportStepI
     protected $idProductOptionGroupCache = [];
 
     /**
-     * @phpstan-param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface<mixed> $dataSet
-     *
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
+     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface<mixed> $dataSet
      *
      * @throws \Spryker\Zed\DataImport\Business\Exception\InvalidDataException
      *

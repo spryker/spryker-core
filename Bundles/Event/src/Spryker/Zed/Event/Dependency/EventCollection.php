@@ -92,7 +92,7 @@ class EventCollection implements EventCollectionInterface
      *
      * @throws \Spryker\Zed\Event\Business\Exception\EventListenerNotFoundException
      *
-     * @return \SplPriorityQueue|\Spryker\Zed\Event\Business\Dispatcher\EventListenerContextInterface[]
+     * @return \SplPriorityQueue<\Spryker\Zed\Event\Business\Dispatcher\EventListenerContextInterface>
      */
     public function get($eventName)
     {

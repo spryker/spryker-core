@@ -35,9 +35,7 @@ class SuperAttributeForm extends AbstractType
     protected const FIELD_ATTRIBUTE = 'attribute';
 
     /**
-     * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
-     *
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      * @param array<mixed> $options
      *
      * @return void

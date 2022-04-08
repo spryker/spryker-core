@@ -395,7 +395,7 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementUnit[] $productMeasurementUnitEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementUnit> $productMeasurementUnitEntityCollection
      *
      * @return array<\Generated\Shared\Transfer\ProductMeasurementUnitTransfer>
      */
@@ -415,7 +415,7 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementSalesUnit[] $productMeasurementSalesUnitEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductMeasurementUnit\Persistence\SpyProductMeasurementSalesUnit> $productMeasurementSalesUnitEntityCollection
      *
      * @return array<\Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer>
      */

@@ -30,7 +30,7 @@ class ForeignKeyEntityRelation extends AbstractAclEntityRelation implements AclE
      * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $entity
      * @param \Generated\Shared\Transfer\AclEntityMetadataTransfer $aclEntityMetadataTransfer
      *
-     * @return \Propel\Runtime\Collection\Collection|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]
+     * @return \Propel\Runtime\Collection\Collection<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
      */
     public function getRelations(
         ActiveRecordInterface $entity,

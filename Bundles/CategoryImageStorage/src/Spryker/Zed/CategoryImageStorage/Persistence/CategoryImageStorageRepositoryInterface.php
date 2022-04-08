@@ -17,7 +17,7 @@ interface CategoryImageStorageRepositoryInterface
     /**
      * @param array $categoryImageSetIds
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
      */
     public function getCategoryIdsByCategoryImageSetIds(array $categoryImageSetIds);
 
@@ -38,7 +38,7 @@ interface CategoryImageStorageRepositoryInterface
     /**
      * @param array $categoryImageIds
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
      */
     public function getCategoryIdsByCategoryImageIds(array $categoryImageIds);
 

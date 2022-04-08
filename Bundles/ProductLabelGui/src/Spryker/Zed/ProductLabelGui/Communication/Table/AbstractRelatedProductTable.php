@@ -104,7 +104,7 @@ abstract class AbstractRelatedProductTable extends AbstractTable
     {
         $query = $this->getQuery();
 
-        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Product\Persistence\SpyProductAbstract[] $productAbstractEntities */
+        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\SpyProductAbstract> $productAbstractEntities */
         $productAbstractEntities = $this->runQuery($query, $config, true);
 
         $productAbstractIds = $productAbstractEntities->getPrimaryKeys();

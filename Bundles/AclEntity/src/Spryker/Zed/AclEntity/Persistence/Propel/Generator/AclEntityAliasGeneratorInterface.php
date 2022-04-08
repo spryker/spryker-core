@@ -12,9 +12,7 @@ use Propel\Runtime\ActiveQuery\ModelCriteria;
 interface AclEntityAliasGeneratorInterface
 {
     /**
-     * @phpstan-param \Propel\Runtime\ActiveQuery\ModelCriteria<\Propel\Runtime\ActiveRecord\ActiveRecordInterface> $query
-     *
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria<\Propel\Runtime\ActiveRecord\ActiveRecordInterface> $query
      * @param string $aliasToExtend
      *
      * @return string
@@ -22,9 +20,7 @@ interface AclEntityAliasGeneratorInterface
     public function generateTableAlias(ModelCriteria $query, string $aliasToExtend): string;
 
     /**
-     * @phpstan-param \Propel\Runtime\ActiveQuery\ModelCriteria<\Propel\Runtime\ActiveRecord\ActiveRecordInterface> $query
-     *
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria<\Propel\Runtime\ActiveRecord\ActiveRecordInterface> $query
      * @param string $joinModel
      *
      * @return string

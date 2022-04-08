@@ -94,16 +94,12 @@ class WishlistEntityManager extends AbstractEntityManager implements WishlistEnt
     }
 
     /**
-     * @phpstan-param \Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery<mixed> $wishlistItemQuery
-     *
-     * @phpstan-return \Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery<mixed>
-     *
-     * @param \Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery $wishlistItemQuery
+     * @param \Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery<mixed> $wishlistItemQuery
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
      * @throws \Spryker\Zed\Wishlist\Business\Exception\MissingWishlistItemException
      *
-     * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery
+     * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery<mixed>
      */
     protected function applyRemoveFilters(
         SpyWishlistItemQuery $wishlistItemQuery,

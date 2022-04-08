@@ -45,14 +45,10 @@ class MerchantShipmentRepository extends AbstractRepository implements MerchantS
     }
 
     /**
-     * @phpstan-param \Orm\Zed\Sales\Persistence\SpySalesShipmentQuery<mixed> $salesShipmentQuery
-     *
-     * @phpstan-return \Orm\Zed\Sales\Persistence\SpySalesShipmentQuery<mixed>
-     *
-     * @param \Orm\Zed\Sales\Persistence\SpySalesShipmentQuery $salesShipmentQuery
+     * @param \Orm\Zed\Sales\Persistence\SpySalesShipmentQuery<mixed> $salesShipmentQuery
      * @param \Generated\Shared\Transfer\MerchantShipmentCriteriaTransfer $merchantShipmentCriteriaTransfer
      *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesShipmentQuery
+     * @return \Orm\Zed\Sales\Persistence\SpySalesShipmentQuery<mixed>
      */
     protected function filterSalesShipmentQuery(
         SpySalesShipmentQuery $salesShipmentQuery,

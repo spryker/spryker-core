@@ -193,7 +193,7 @@ class CmsGlossaryReader implements CmsGlossaryReaderInterface
      * @param array $placeholders
      * @param int $idCmsPage
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping[]
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping>
      */
     protected function getGlossaryMappingCollection(array $placeholders, int $idCmsPage)
     {

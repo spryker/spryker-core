@@ -38,7 +38,7 @@ class ProductDiscontinuedStorageRepository extends AbstractRepository implements
      */
     public function findAllProductDiscontinuedStorageEntities(): array
     {
-        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductDiscontinuedStorage\Persistence\SpyProductDiscontinuedStorage[] $productDiscontinuedStorageEntities */
+        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductDiscontinuedStorage\Persistence\SpyProductDiscontinuedStorage> $productDiscontinuedStorageEntities */
         $productDiscontinuedStorageEntities = $this->getFactory()
             ->createProductDiscontinuedStoragePropelQuery()
             ->find();

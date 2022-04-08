@@ -114,14 +114,10 @@ class WishlistRepository extends AbstractRepository implements WishlistRepositor
     }
 
     /**
-     * @phpstan-param \Orm\Zed\Wishlist\Persistence\SpyWishlistQuery<mixed> $wishlistQuery
-     *
-     * @phpstan-return \Orm\Zed\Wishlist\Persistence\SpyWishlistQuery<mixed>
-     *
-     * @param \Orm\Zed\Wishlist\Persistence\SpyWishlistQuery $wishlistQuery
+     * @param \Orm\Zed\Wishlist\Persistence\SpyWishlistQuery<mixed> $wishlistQuery
      * @param \Generated\Shared\Transfer\WishlistFilterTransfer $wishlistFilterTransfer
      *
-     * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistQuery
+     * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistQuery<mixed>
      */
     protected function applyFilters(SpyWishlistQuery $wishlistQuery, WishlistFilterTransfer $wishlistFilterTransfer): SpyWishlistQuery
     {
@@ -139,14 +135,10 @@ class WishlistRepository extends AbstractRepository implements WishlistRepositor
     }
 
     /**
-     * @phpstan-param \Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery<mixed> $wishlistItemQuery
-     *
-     * @phpstan-return \Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery<mixed>
-     *
      * @param \Generated\Shared\Transfer\WishlistItemCriteriaTransfer $wishlistItemCriteriaTransfer
-     * @param \Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery $wishlistItemQuery
+     * @param \Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery<mixed> $wishlistItemQuery
      *
-     * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery
+     * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery<mixed>
      */
     protected function applyWishlistItemFilters(
         WishlistItemCriteriaTransfer $wishlistItemCriteriaTransfer,

@@ -29,14 +29,10 @@ class MerchantCategoryEntityManager extends AbstractEntityManager implements Mer
     }
 
     /**
-     * @phpstan-param \Orm\Zed\MerchantCategory\Persistence\SpyMerchantCategoryQuery<\Orm\Zed\MerchantCategory\Persistence\SpyMerchantCategory> $merchantCategoryQuery
-     *
-     * @phpstan-return \Orm\Zed\MerchantCategory\Persistence\SpyMerchantCategoryQuery<\Orm\Zed\MerchantCategory\Persistence\SpyMerchantCategory>
-     *
-     * @param \Orm\Zed\MerchantCategory\Persistence\SpyMerchantCategoryQuery $merchantCategoryQuery
+     * @param \Orm\Zed\MerchantCategory\Persistence\SpyMerchantCategoryQuery<\Orm\Zed\MerchantCategory\Persistence\SpyMerchantCategory> $merchantCategoryQuery
      * @param \Generated\Shared\Transfer\MerchantCategoryCriteriaTransfer $merchantCategoryCriteriaTransfer
      *
-     * @return \Orm\Zed\MerchantCategory\Persistence\SpyMerchantCategoryQuery
+     * @return \Orm\Zed\MerchantCategory\Persistence\SpyMerchantCategoryQuery<\Orm\Zed\MerchantCategory\Persistence\SpyMerchantCategory>
      */
     protected function applyCriteria(
         SpyMerchantCategoryQuery $merchantCategoryQuery,

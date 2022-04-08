@@ -23,7 +23,7 @@ class MerchantOmsRepository extends AbstractRepository implements MerchantOmsRep
      */
     public function getStateMachineItemsByStateIds(array $stateIds): array
     {
-        /** @var \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItemQuery|\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem[] $merchantSalesOrderItemQuery */
+        /** @var \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItemQuery<\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem> $merchantSalesOrderItemQuery */
         $merchantSalesOrderItemQuery = $this->getFactory()
             ->getMerchantSalesOrderItemPropelQuery()
             ->joinWithStateMachineItemState()
@@ -31,7 +31,7 @@ class MerchantOmsRepository extends AbstractRepository implements MerchantOmsRep
                 ->joinWithProcess()
             ->endUse();
 
-        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem[] $merchantSalesOrderItemEntities */
+        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem> $merchantSalesOrderItemEntities */
         $merchantSalesOrderItemEntities = $merchantSalesOrderItemQuery
             ->filterByFkStateMachineItemState_In($stateIds)
             ->find();

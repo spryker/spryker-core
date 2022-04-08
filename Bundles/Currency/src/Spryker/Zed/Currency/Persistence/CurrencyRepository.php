@@ -68,7 +68,7 @@ class CurrencyRepository extends AbstractRepository implements CurrencyRepositor
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Currency\Persistence\SpyCurrency[] $currencyEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Currency\Persistence\SpyCurrency> $currencyEntities
      *
      * @return array
      */

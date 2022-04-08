@@ -61,14 +61,10 @@ class AclEntityRepository extends AbstractRepository implements AclEntityReposit
     }
 
     /**
-     * @phpstan-param \Orm\Zed\AclEntity\Persistence\SpyAclEntityRuleQuery<\Orm\Zed\AclEntity\Persistence\SpyAclEntityRule> $aclEntityRuleQuery
-     *
-     * @phpstan-return \Orm\Zed\AclEntity\Persistence\SpyAclEntityRuleQuery<\Orm\Zed\AclEntity\Persistence\SpyAclEntityRule>
-     *
-     * @param \Orm\Zed\AclEntity\Persistence\SpyAclEntityRuleQuery $aclEntityRuleQuery
+     * @param \Orm\Zed\AclEntity\Persistence\SpyAclEntityRuleQuery<\Orm\Zed\AclEntity\Persistence\SpyAclEntityRule> $aclEntityRuleQuery
      * @param \Generated\Shared\Transfer\AclEntityRuleCriteriaTransfer $aclEntityRuleCriteriaTransfer
      *
-     * @return \Orm\Zed\AclEntity\Persistence\SpyAclEntityRuleQuery
+     * @return \Orm\Zed\AclEntity\Persistence\SpyAclEntityRuleQuery<\Orm\Zed\AclEntity\Persistence\SpyAclEntityRule>
      */
     protected function applyFilters(
         SpyAclEntityRuleQuery $aclEntityRuleQuery,

@@ -200,7 +200,7 @@ class CommentRepository extends AbstractRepository implements CommentRepositoryI
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Comment\Persistence\SpyCommentThread[] $commentThreadEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Comment\Persistence\SpyCommentThread> $commentThreadEntities
      *
      * @return array<\Generated\Shared\Transfer\CommentThreadTransfer>
      */

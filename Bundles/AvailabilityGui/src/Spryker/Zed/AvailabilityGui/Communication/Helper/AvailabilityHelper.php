@@ -279,7 +279,7 @@ class AvailabilityHelper implements AvailabilityHelperInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Product\Persistence\SpyProductAbstract[] $availabilityAbstractEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\SpyProductAbstract> $availabilityAbstractEntities
      * @param array<int> $productAbstractIds
      *
      * @return array<\Orm\Zed\Product\Persistence\SpyProductAbstract>

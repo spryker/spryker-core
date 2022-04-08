@@ -227,7 +227,7 @@ class ProductOptionListTable extends AbstractTable
      *   third level keys are simple numerical indexes for each price,
      *   values are formatted prices with symbol.
      *
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductOption\Persistence\SpyProductOptionValue[] $productOptionValueCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductOption\Persistence\SpyProductOptionValue> $productOptionValueCollection
      *
      * @return array
      */

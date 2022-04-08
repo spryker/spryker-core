@@ -64,7 +64,7 @@ class ProductRelationMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductRelation\Persistence\SpyProductRelation[] $productRelationEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductRelation\Persistence\SpyProductRelation> $productRelationEntities
      * @param array<\Generated\Shared\Transfer\ProductRelationTransfer> $productRelationTransfers
      *
      * @return array<\Generated\Shared\Transfer\ProductRelationTransfer>

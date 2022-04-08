@@ -32,7 +32,7 @@ class QuoteShareDetailMapper implements QuoteShareDetailMapperInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\SharedCart\Persistence\SpyQuoteCompanyUser[] $quoteCompanyUserEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\SharedCart\Persistence\SpyQuoteCompanyUser> $quoteCompanyUserEntities
      * @param array<\Generated\Shared\Transfer\QuotePermissionGroupTransfer> $quotePermissionGroupTransfers
      *
      * @return \Generated\Shared\Transfer\ShareDetailCollectionTransfer
@@ -50,7 +50,7 @@ class QuoteShareDetailMapper implements QuoteShareDetailMapperInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\SharedCart\Persistence\SpyQuoteCompanyUser[] $quoteCompanyUserEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\SharedCart\Persistence\SpyQuoteCompanyUser> $quoteCompanyUserEntities
      * @param array<\Generated\Shared\Transfer\QuotePermissionGroupTransfer> $quotePermissionGroupTransfers
      *
      * @return array<\Generated\Shared\Transfer\ShareDetailCollectionTransfer>

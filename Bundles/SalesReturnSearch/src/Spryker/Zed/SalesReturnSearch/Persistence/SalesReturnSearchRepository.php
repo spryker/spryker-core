@@ -82,7 +82,7 @@ class SalesReturnSearchRepository extends AbstractRepository implements SalesRet
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param array $returnReasonIds
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\SalesReturnSearch\Persistence\SpySalesReturnReasonSearch[]
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\SalesReturnSearch\Persistence\SpySalesReturnReasonSearch>
      */
     protected function getReturnReasonSearchEntityCollection(
         FilterTransfer $filterTransfer,

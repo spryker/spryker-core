@@ -202,12 +202,10 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     }
 
     /**
-     * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
-     *
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer|null $data
      * @param array<mixed> $options
      *
-     * @return \Symfony\Component\Form\FormInterface
+     * @return \Symfony\Component\Form\FormInterface<mixed>
      */
     public function createProductAbstractForm(?ProductAbstractTransfer $data = null, array $options = []): FormInterface
     {
@@ -215,12 +213,10 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     }
 
     /**
-     * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
-     *
      * @param array<mixed>|null $data
      * @param array<mixed> $options
      *
-     * @return \Symfony\Component\Form\FormInterface
+     * @return \Symfony\Component\Form\FormInterface<mixed>
      */
     public function createCreateProductAbstractForm(?array $data = null, array $options = []): FormInterface
     {
@@ -228,12 +224,10 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     }
 
     /**
-     * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
-     *
      * @param array<mixed>|null $data
      * @param array<mixed> $options
      *
-     * @return \Symfony\Component\Form\FormInterface
+     * @return \Symfony\Component\Form\FormInterface<mixed>
      */
     public function createCreateProductAbstractWithSingleConcreteForm(?array $data = null, array $options = []): FormInterface
     {
@@ -241,12 +235,10 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     }
 
     /**
-     * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
-     *
      * @param array<mixed>|null $data
      * @param array<mixed> $options
      *
-     * @return \Symfony\Component\Form\FormInterface
+     * @return \Symfony\Component\Form\FormInterface<mixed>
      */
     public function createCreateProductAbstractWithMultiConcreteForm(?array $data = null, array $options = []): FormInterface
     {
@@ -777,12 +769,10 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     }
 
     /**
-     * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
-     *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer|null $data
      * @param array<mixed> $options
      *
-     * @return \Symfony\Component\Form\FormInterface
+     * @return \Symfony\Component\Form\FormInterface<mixed>
      */
     public function createProductConcreteBulkForm(?ProductConcreteTransfer $data = null, array $options = []): FormInterface
     {
@@ -790,12 +780,10 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     }
 
     /**
-     * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
-     *
      * @param array<mixed>|null $data
      * @param array<mixed> $options
      *
-     * @return \Symfony\Component\Form\FormInterface
+     * @return \Symfony\Component\Form\FormInterface<mixed>
      */
     public function createProductConcreteEditForm(?array $data = null, array $options = []): FormInterface
     {
@@ -882,12 +870,10 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     }
 
     /**
-     * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
-     *
      * @param array<mixed>|null $data
      * @param array<mixed> $options
      *
-     * @return \Symfony\Component\Form\FormInterface
+     * @return \Symfony\Component\Form\FormInterface<mixed>
      */
     public function createAddProductConcreteForm(?array $data = null, array $options = []): FormInterface
     {

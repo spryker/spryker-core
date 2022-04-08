@@ -127,11 +127,9 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
      * @module ProductCategory
      * @module Category
      *
-     * @phpstan-return \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery<\Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract>
-     *
      * @param \Generated\Shared\Transfer\MerchantProductTableCriteriaTransfer $merchantProductTableCriteriaTransfer
      *
-     * @return \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery
+     * @return \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery<\Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract>
      */
     protected function buildProductAbstractTableBaseQuery(
         MerchantProductTableCriteriaTransfer $merchantProductTableCriteriaTransfer
@@ -306,14 +304,10 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
     }
 
     /**
-     * @phpstan-param \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery<\Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract> $merchantProductAbstractQuery
-     *
-     * @phpstan-return \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery<\Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract>
-     *
-     * @param \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery $merchantProductAbstractQuery
+     * @param \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery<\Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract> $merchantProductAbstractQuery
      * @param \Generated\Shared\Transfer\MerchantProductTableCriteriaTransfer $merchantProductTableCriteriaTransfer
      *
-     * @return \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery
+     * @return \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery<\Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract>
      */
     protected function applyProductAbstractSearch(
         SpyMerchantProductAbstractQuery $merchantProductAbstractQuery,
@@ -372,14 +366,10 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
     }
 
     /**
-     * @phpstan-param \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery<\Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract> $merchantProductAbstractQuery
-     *
-     * @phpstan-return \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery<\Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract>
-     *
-     * @param \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery $merchantProductAbstractQuery
+     * @param \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery<\Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract> $merchantProductAbstractQuery
      * @param \Generated\Shared\Transfer\MerchantProductTableCriteriaTransfer $merchantProductTableCriteriaTransfer
      *
-     * @return \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery
+     * @return \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery<\Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract>
      */
     protected function addProductAbstractSorting(
         SpyMerchantProductAbstractQuery $merchantProductAbstractQuery,
@@ -395,7 +385,7 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
         $orderColumn = ProductAbstractTableDataMapper::PRODUCT_ABSTRACT_DATA_COLUMN_MAP[$orderColumn] ?? $orderColumn;
 
         if ($orderColumn === SpyProductAbstractTableMap::COL_SKU) {
-            /** @var \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery|\Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract[] $merchantProductAbstractQuery */
+            /** @var \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery<\Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract> $merchantProductAbstractQuery */
             $merchantProductAbstractQuery = $this->addNaturalSorting($merchantProductAbstractQuery, $orderColumn, $orderDirection);
         }
 
@@ -405,15 +395,11 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
     }
 
     /**
-     * @phpstan-param \Propel\Runtime\ActiveQuery\ModelCriteria<mixed> $query
-     *
-     * @phpstan-return \Propel\Runtime\ActiveQuery\ModelCriteria<mixed>
-     *
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria<mixed> $query
      * @param string $orderColumn
      * @param string $orderDirection
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria<mixed>
      */
     protected function addNaturalSorting(
         ModelCriteria $query,
@@ -434,14 +420,10 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
     }
 
     /**
-     * @phpstan-param \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery<\Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract> $merchantProductAbstractQuery
-     *
-     * @phpstan-return \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery<\Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract>
-     *
-     * @param \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery $merchantProductAbstractQuery
+     * @param \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery<\Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract> $merchantProductAbstractQuery
      * @param \Generated\Shared\Transfer\MerchantProductTableCriteriaTransfer $merchantProductTableCriteriaTransfer
      *
-     * @return \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery
+     * @return \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery<\Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract>
      */
     protected function addProductAbstractFilters(
         SpyMerchantProductAbstractQuery $merchantProductAbstractQuery,
@@ -470,14 +452,10 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
     }
 
     /**
-     * @phpstan-param \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery<\Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract> $merchantProductAbstractQuery
-     *
-     * @phpstan-return \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery<\Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract>
-     *
-     * @param \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery $merchantProductAbstractQuery
+     * @param \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery<\Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract> $merchantProductAbstractQuery
      * @param \Generated\Shared\Transfer\MerchantProductTableCriteriaTransfer $merchantProductTableCriteriaTransfer
      *
-     * @return \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery
+     * @return \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery<\Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract>
      */
     protected function addIsVisibleProductAbstractFilter(
         SpyMerchantProductAbstractQuery $merchantProductAbstractQuery,
@@ -501,14 +479,10 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
     }
 
     /**
-     * @phpstan-param \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery<\Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract> $merchantProductAbstractQuery
-     *
-     * @phpstan-return \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery<\Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract>
-     *
-     * @param \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery $merchantProductAbstractQuery
+     * @param \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery<\Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract> $merchantProductAbstractQuery
      * @param \Generated\Shared\Transfer\MerchantProductTableCriteriaTransfer $merchantProductTableCriteriaTransfer
      *
-     * @return \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery
+     * @return \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery<\Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract>
      */
     protected function addInStoresProductAbstractFilter(
         SpyMerchantProductAbstractQuery $merchantProductAbstractQuery,
@@ -529,14 +503,10 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
     }
 
     /**
-     * @phpstan-param \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery<\Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract> $merchantProductAbstractQuery
-     *
-     * @phpstan-return \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery<\Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract>
-     *
-     * @param \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery $merchantProductAbstractQuery
+     * @param \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery<\Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract> $merchantProductAbstractQuery
      * @param \Generated\Shared\Transfer\MerchantProductTableCriteriaTransfer $merchantProductTableCriteriaTransfer
      *
-     * @return \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery
+     * @return \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery<\Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract>
      */
     protected function addInCategoriesProductAbstractFilter(
         SpyMerchantProductAbstractQuery $merchantProductAbstractQuery,
@@ -556,14 +526,10 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
     }
 
     /**
-     * @phpstan-param \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery<\Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract> $merchantProductAbstractQuery
-     *
-     * @phpstan-return \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery<\Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract>
-     *
-     * @param \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery $merchantProductAbstractQuery
+     * @param \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery<\Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract> $merchantProductAbstractQuery
      * @param \Generated\Shared\Transfer\MerchantProductTableCriteriaTransfer $merchantProductTableCriteriaTransfer
      *
-     * @return \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery
+     * @return \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery<\Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract>
      */
     protected function addInApprovalStatusesProductAbstractFilter(
         SpyMerchantProductAbstractQuery $merchantProductAbstractQuery,
@@ -621,12 +587,10 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
      * @module ProductValidity
      * @module MerchantProduct
      *
-     * @phpstan-return \Orm\Zed\Product\Persistence\SpyProductQuery<\Orm\Zed\Product\Persistence\SpyProduct>
-     *
      * @param \Generated\Shared\Transfer\ProductTableCriteriaTransfer $productTableCriteriaTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery<\Orm\Zed\Product\Persistence\SpyProduct>
      */
     protected function buildProductTableBaseQuery(
         ProductTableCriteriaTransfer $productTableCriteriaTransfer,
@@ -677,14 +641,10 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
     }
 
     /**
-     * @phpstan-param \Orm\Zed\Product\Persistence\SpyProductQuery<\Orm\Zed\Product\Persistence\SpyProduct> $productConcreteQuery
-     *
-     * @phpstan-return \Orm\Zed\Product\Persistence\SpyProductQuery<\Orm\Zed\Product\Persistence\SpyProduct>
-     *
-     * @param \Orm\Zed\Product\Persistence\SpyProductQuery $productConcreteQuery
+     * @param \Orm\Zed\Product\Persistence\SpyProductQuery<\Orm\Zed\Product\Persistence\SpyProduct> $productConcreteQuery
      * @param \Generated\Shared\Transfer\ProductTableCriteriaTransfer $productTableCriteriaTransfer
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery<\Orm\Zed\Product\Persistence\SpyProduct>
      */
     protected function applyProductConcreteSearch(
         SpyProductQuery $productConcreteQuery,
@@ -741,14 +701,10 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
     }
 
     /**
-     * @phpstan-param \Orm\Zed\Product\Persistence\SpyProductQuery<\Orm\Zed\Product\Persistence\SpyProduct> $productConcreteQuery
-     *
-     * @phpstan-return \Orm\Zed\Product\Persistence\SpyProductQuery<\Orm\Zed\Product\Persistence\SpyProduct>
-     *
-     * @param \Orm\Zed\Product\Persistence\SpyProductQuery $productConcreteQuery
+     * @param \Orm\Zed\Product\Persistence\SpyProductQuery<\Orm\Zed\Product\Persistence\SpyProduct> $productConcreteQuery
      * @param \Generated\Shared\Transfer\ProductTableCriteriaTransfer $productTableCriteriaTransfer
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery<\Orm\Zed\Product\Persistence\SpyProduct>
      */
     protected function applyProductConcreteSorting(
         SpyProductQuery $productConcreteQuery,
@@ -764,7 +720,7 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
         $orderColumn = ProductTableDataMapper::PRODUCT_DATA_COLUMN_MAP[$orderColumn] ?? $orderColumn;
 
         if ($orderColumn === SpyProductTableMap::COL_SKU) {
-            /** @var \Orm\Zed\Product\Persistence\SpyProductQuery|\Orm\Zed\Product\Persistence\SpyProduct[] $productConcreteQuery */
+            /** @var \Orm\Zed\Product\Persistence\SpyProductQuery<\Orm\Zed\Product\Persistence\SpyProduct> $productConcreteQuery */
             $productConcreteQuery = $this->addNaturalSorting($productConcreteQuery, $orderColumn, $orderDirection);
         }
 
@@ -774,14 +730,10 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
     }
 
     /**
-     * @phpstan-param \Orm\Zed\Product\Persistence\SpyProductQuery<\Orm\Zed\Product\Persistence\SpyProduct> $productConcreteQuery
-     *
-     * @phpstan-return \Orm\Zed\Product\Persistence\SpyProductQuery<\Orm\Zed\Product\Persistence\SpyProduct>
-     *
-     * @param \Orm\Zed\Product\Persistence\SpyProductQuery $productConcreteQuery
+     * @param \Orm\Zed\Product\Persistence\SpyProductQuery<\Orm\Zed\Product\Persistence\SpyProduct> $productConcreteQuery
      * @param \Generated\Shared\Transfer\ProductTableCriteriaTransfer $productTableCriteriaTransfer
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery<\Orm\Zed\Product\Persistence\SpyProduct>
      */
     protected function applyProductConcreteFilters(
         SpyProductQuery $productConcreteQuery,
@@ -794,14 +746,10 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
     }
 
     /**
-     * @phpstan-param \Orm\Zed\Product\Persistence\SpyProductQuery<\Orm\Zed\Product\Persistence\SpyProduct> $productConcreteQuery
-     *
-     * @phpstan-return \Orm\Zed\Product\Persistence\SpyProductQuery<\Orm\Zed\Product\Persistence\SpyProduct>
-     *
-     * @param \Orm\Zed\Product\Persistence\SpyProductQuery $productConcreteQuery
+     * @param \Orm\Zed\Product\Persistence\SpyProductQuery<\Orm\Zed\Product\Persistence\SpyProduct> $productConcreteQuery
      * @param \Generated\Shared\Transfer\ProductTableCriteriaTransfer $productTableCriteriaTransfer
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery<\Orm\Zed\Product\Persistence\SpyProduct>
      */
     protected function addIsActiveProductFilter(
         SpyProductQuery $productConcreteQuery,
@@ -817,14 +765,10 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
     }
 
     /**
-     * @phpstan-param \Orm\Zed\Product\Persistence\SpyProductQuery<\Orm\Zed\Product\Persistence\SpyProduct> $productConcreteQuery
-     *
-     * @phpstan-return \Orm\Zed\Product\Persistence\SpyProductQuery<\Orm\Zed\Product\Persistence\SpyProduct>
-     *
-     * @param \Orm\Zed\Product\Persistence\SpyProductQuery $productConcreteQuery
+     * @param \Orm\Zed\Product\Persistence\SpyProductQuery<\Orm\Zed\Product\Persistence\SpyProduct> $productConcreteQuery
      * @param \Generated\Shared\Transfer\ProductTableCriteriaTransfer $productTableCriteriaTransfer
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery<\Orm\Zed\Product\Persistence\SpyProduct>
      */
     protected function addValidityProductFilter(
         SpyProductQuery $productConcreteQuery,

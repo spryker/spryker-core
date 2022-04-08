@@ -161,9 +161,7 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
     }
 
     /**
-     * @phpstan-param \Symfony\Component\Form\FormInterface<mixed> $productConcreteEditForm
-     *
-     * @param \Symfony\Component\Form\FormInterface $productConcreteEditForm
+     * @param \Symfony\Component\Form\FormInterface<mixed> $productConcreteEditForm
      * @param array $pricesInitialData
      * @param array $attributesInitialData
      *
@@ -359,12 +357,10 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
     }
 
     /**
-     * @phpstan-return \SplObjectStorage<object, mixed>
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductImageSetTransfer> $imageSets
      * @param array<int, mixed> $imageSetsErrors
      *
-     * @return \SplObjectStorage
+     * @return \SplObjectStorage<object, mixed>
      */
     protected function getImageSetMetaDataGroupedByImageSet(ArrayObject $imageSets, array $imageSetsErrors): SplObjectStorage
     {

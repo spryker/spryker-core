@@ -15,7 +15,7 @@ use Propel\Runtime\Collection\ObjectCollection;
 class CategoryLocalizedAttributesUrlMapper
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Url\Persistence\SpyUrl[] $urlEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Url\Persistence\SpyUrl> $urlEntities
      * @param \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer $categoryLocalizedAttributesTransfer
      *
      * @return \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer
@@ -33,7 +33,7 @@ class CategoryLocalizedAttributesUrlMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Url\Persistence\SpyUrl[] $urlEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Url\Persistence\SpyUrl> $urlEntities
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrl|null

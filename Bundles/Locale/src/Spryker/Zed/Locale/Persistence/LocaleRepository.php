@@ -71,7 +71,7 @@ class LocaleRepository extends AbstractRepository implements LocaleRepositoryInt
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Locale\Persistence\SpyLocale[] $localeEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Locale\Persistence\SpyLocale> $localeEntities
      *
      * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */

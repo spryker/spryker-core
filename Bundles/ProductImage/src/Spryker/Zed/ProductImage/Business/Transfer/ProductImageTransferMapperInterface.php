@@ -28,7 +28,7 @@ interface ProductImageTransferMapperInterface
     public function mapProductImageSet(SpyProductImageSet $productImageSetEntity);
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductImage\Persistence\SpyProductImage[] $productImageEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductImage\Persistence\SpyProductImage> $productImageEntityCollection
      * @param \Orm\Zed\ProductImage\Persistence\SpyProductImageSet $productImageSetEntity
      *
      * @return array<\Generated\Shared\Transfer\ProductImageTransfer>

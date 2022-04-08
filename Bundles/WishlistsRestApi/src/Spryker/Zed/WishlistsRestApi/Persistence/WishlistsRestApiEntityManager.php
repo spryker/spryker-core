@@ -28,7 +28,7 @@ class WishlistsRestApiEntityManager extends AbstractEntityManager implements Wis
         $wishlistQuery = $this->getFactory()->getWishlistPropelQuery();
 
         do {
-            /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Wishlist\Persistence\SpyWishlist[] $wishlistEntities */
+            /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Wishlist\Persistence\SpyWishlist> $wishlistEntities */
             $wishlistEntities = $wishlistQuery
                 ->filterByUuid(null, Criteria::ISNULL)
                 ->limit(static::BATCH_SIZE)

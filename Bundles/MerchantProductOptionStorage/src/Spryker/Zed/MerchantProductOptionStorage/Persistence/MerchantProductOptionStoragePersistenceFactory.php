@@ -18,9 +18,7 @@ use Spryker\Zed\MerchantProductOptionStorage\MerchantProductOptionStorageDepende
 class MerchantProductOptionStoragePersistenceFactory extends AbstractPersistenceFactory
 {
     /**
-     * @phpstan-return \Orm\Zed\MerchantProductOption\Persistence\SpyMerchantProductOptionGroupQuery<mixed>
-     *
-     * @return \Orm\Zed\MerchantProductOption\Persistence\SpyMerchantProductOptionGroupQuery
+     * @return \Orm\Zed\MerchantProductOption\Persistence\SpyMerchantProductOptionGroupQuery<mixed>
      */
     public function getMerchantProductOptionGroupPropelQuery(): SpyMerchantProductOptionGroupQuery
     {

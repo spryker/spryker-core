@@ -145,7 +145,7 @@ class TransferGenerateHelper extends Module
      * @param array $schemaDirectories
      * @param string $filenamePattern
      *
-     * @return \Symfony\Component\Finder\Finder|\Symfony\Component\Finder\SplFileInfo[]
+     * @return \Symfony\Component\Finder\Finder<\Symfony\Component\Finder\SplFileInfo>
      */
     protected function createTransferSchemaFinder(array $schemaDirectories, string $filenamePattern)
     {

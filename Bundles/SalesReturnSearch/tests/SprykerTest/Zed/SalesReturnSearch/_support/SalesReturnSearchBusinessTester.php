@@ -68,7 +68,7 @@ class SalesReturnSearchBusinessTester extends Actor
     /**
      * @param array<int> $returnReasonIds
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\SalesReturnSearch\Persistence\SpySalesReturnReasonSearch[]
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\SalesReturnSearch\Persistence\SpySalesReturnReasonSearch>
      */
     public function getSalesReturnSearchEntitiesByReturnReasonIds(array $returnReasonIds = []): ObjectCollection
     {

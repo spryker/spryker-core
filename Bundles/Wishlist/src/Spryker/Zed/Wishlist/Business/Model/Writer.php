@@ -443,9 +443,7 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @phpstan-param \Orm\Zed\Wishlist\Persistence\SpyWishlistQuery<mixed> $query
-     *
-     * @param \Orm\Zed\Wishlist\Persistence\SpyWishlistQuery $query
+     * @param \Orm\Zed\Wishlist\Persistence\SpyWishlistQuery<mixed> $query
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
      * @throws \Spryker\Zed\Wishlist\Business\Exception\WishlistExistsException
