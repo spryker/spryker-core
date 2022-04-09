@@ -23,9 +23,7 @@ class MerchantProductOptionStorageRepository extends AbstractRepository implemen
     public function getAbstractProductIdsByMerchantProductOptionGroupIds(array $merchantProductOptionGroupIds): array
     {
         /**
-         * @phpstan-var \Orm\Zed\MerchantProductOption\Persistence\SpyMerchantProductOptionGroupQuery<mixed> $merchantProductOptionGroupQuery
-         *
-         * @var \Orm\Zed\MerchantProductOption\Persistence\SpyMerchantProductOptionGroupQuery $merchantProductOptionGroupQuery
+         * @var \Orm\Zed\MerchantProductOption\Persistence\SpyMerchantProductOptionGroupQuery<mixed> $merchantProductOptionGroupQuery
          */
         $merchantProductOptionGroupQuery = $this->getFactory()
             ->getMerchantProductOptionGroupPropelQuery()

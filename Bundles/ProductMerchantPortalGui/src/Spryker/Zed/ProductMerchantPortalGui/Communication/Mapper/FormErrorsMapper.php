@@ -24,9 +24,7 @@ class FormErrorsMapper implements FormErrorsMapperInterface
     protected const FIELD_ATTRIBUTES = 'attributes';
 
     /**
-     * @phpstan-param \Symfony\Component\Form\FormInterface<mixed> $addProductConcreteForm
-     *
-     * @param \Symfony\Component\Form\FormInterface $addProductConcreteForm
+     * @param \Symfony\Component\Form\FormInterface<mixed> $addProductConcreteForm
      * @param array<mixed> $errors
      *
      * @return array<mixed>
@@ -60,9 +58,7 @@ class FormErrorsMapper implements FormErrorsMapperInterface
     }
 
     /**
-     * @phpstan-param \Symfony\Component\Form\FormInterface<mixed> $addProductConcreteForm
-     *
-     * @param \Symfony\Component\Form\FormInterface $addProductConcreteForm
+     * @param \Symfony\Component\Form\FormInterface<mixed> $addProductConcreteForm
      * @param array<mixed> $errors
      *
      * @return array<mixed>

@@ -26,9 +26,7 @@ class MerchantProductOptionPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @phpstan-return \Orm\Zed\MerchantProductOption\Persistence\SpyMerchantProductOptionGroupQuery<mixed>
-     *
-     * @return \Orm\Zed\MerchantProductOption\Persistence\SpyMerchantProductOptionGroupQuery
+     * @return \Orm\Zed\MerchantProductOption\Persistence\SpyMerchantProductOptionGroupQuery<mixed>
      */
     public function getMerchantProductOptionGroupQuery(): SpyMerchantProductOptionGroupQuery
     {

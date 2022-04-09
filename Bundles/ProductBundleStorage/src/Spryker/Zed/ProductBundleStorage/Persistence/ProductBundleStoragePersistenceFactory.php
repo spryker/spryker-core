@@ -18,9 +18,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 class ProductBundleStoragePersistenceFactory extends AbstractPersistenceFactory
 {
     /**
-     * @phpstan-return \Orm\Zed\ProductBundleStorage\Persistence\SpyProductBundleStorageQuery<mixed>
-     *
-     * @return \Orm\Zed\ProductBundleStorage\Persistence\SpyProductBundleStorageQuery
+     * @return \Orm\Zed\ProductBundleStorage\Persistence\SpyProductBundleStorageQuery<mixed>
      */
     public function getProductBundleStoragePropelQuery(): SpyProductBundleStorageQuery
     {

@@ -95,14 +95,10 @@ class MerchantProductOptionRepository extends AbstractRepository implements Merc
     }
 
     /**
-     * @phpstan-param \Orm\Zed\MerchantProductOption\Persistence\SpyMerchantProductOptionGroupQuery<mixed> $merchantProductOptionGroupQuery
-     *
-     * @phpstan-return \Orm\Zed\MerchantProductOption\Persistence\SpyMerchantProductOptionGroupQuery<mixed>
-     *
      * @param \Generated\Shared\Transfer\MerchantProductOptionGroupCriteriaTransfer $merchantProductOptionGroupCriteriaTransfer
-     * @param \Orm\Zed\MerchantProductOption\Persistence\SpyMerchantProductOptionGroupQuery $merchantProductOptionGroupQuery
+     * @param \Orm\Zed\MerchantProductOption\Persistence\SpyMerchantProductOptionGroupQuery<mixed> $merchantProductOptionGroupQuery
      *
-     * @return \Orm\Zed\MerchantProductOption\Persistence\SpyMerchantProductOptionGroupQuery
+     * @return \Orm\Zed\MerchantProductOption\Persistence\SpyMerchantProductOptionGroupQuery<mixed>
      */
     protected function applyCriteria(
         MerchantProductOptionGroupCriteriaTransfer $merchantProductOptionGroupCriteriaTransfer,

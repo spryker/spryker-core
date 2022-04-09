@@ -71,9 +71,7 @@ class ProductOfferTable extends AbstractTable
     ];
 
     /**
-     * @phpstan-var \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery<mixed>
-     *
-     * @var \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery
+     * @var \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery<mixed>
      */
     protected $productOfferQuery;
 
@@ -98,9 +96,7 @@ class ProductOfferTable extends AbstractTable
     protected $productOfferTableExpanderPlugins;
 
     /**
-     * @phpstan-param \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery<mixed> $productOfferQuery
-     *
-     * @param \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery $productOfferQuery
+     * @param \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery<mixed> $productOfferQuery
      * @param \Spryker\Zed\ProductOfferGui\Dependency\Facade\ProductOfferGuiToLocaleFacadeInterface $localeFacade
      * @param \Spryker\Zed\ProductOfferGui\Dependency\Facade\ProductOfferGuiToProductOfferFacadeInterface $productOfferFacade
      * @param \Spryker\Zed\ProductOfferGui\Persistence\ProductOfferGuiRepositoryInterface $repository
@@ -192,9 +188,7 @@ class ProductOfferTable extends AbstractTable
     }
 
     /**
-     * @phpstan-return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery<mixed>
-     *
-     * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery
+     * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery<mixed>
      */
     protected function prepareQuery(): SpyProductOfferQuery
     {
@@ -372,9 +366,7 @@ class ProductOfferTable extends AbstractTable
     }
 
     /**
-     * @phpstan-param \Propel\Runtime\ActiveQuery\ModelCriteria<mixed> $query
-     *
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria<mixed> $query
      *
      * @return int
      */

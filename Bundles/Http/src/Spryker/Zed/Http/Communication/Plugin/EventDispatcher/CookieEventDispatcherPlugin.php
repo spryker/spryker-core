@@ -27,6 +27,7 @@ class CookieEventDispatcherPlugin extends AbstractPlugin implements EventDispatc
      * @var string
      */
     protected const SERVICE_COOKIES = 'cookies';
+
     protected const EVENT_PRIORITY = -255;
 
     /**

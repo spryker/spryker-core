@@ -144,7 +144,7 @@ class PriceProductMerchantRelationshipEntityManager extends AbstractEntityManage
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationship[] $priceProductMerchantRelationshipEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationship> $priceProductMerchantRelationshipEntities
      *
      * @return void
      */

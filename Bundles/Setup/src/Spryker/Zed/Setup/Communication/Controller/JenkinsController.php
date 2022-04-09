@@ -36,6 +36,7 @@ class JenkinsController extends AbstractController
      * @var string
      */
     public const ROLE_EMPTY = 'empty';
+
     public const DEFAULT_ROLE = self::ROLE_ADMIN;
 
     /**
@@ -58,7 +59,7 @@ class JenkinsController extends AbstractController
      *
      * @throws \ErrorException
      *
-     * @return string
+     * @return int
      */
     private function callJenkins($url, $body = '')
     {

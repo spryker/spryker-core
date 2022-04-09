@@ -15,6 +15,7 @@ class AssignedProductConcreteTable extends AbstractProductConcreteTable
      * @var string
      */
     protected const DEFAULT_URL = 'assigned-product-concrete-table';
+
     protected const TABLE_IDENTIFIER = self::DEFAULT_URL;
 
     /**

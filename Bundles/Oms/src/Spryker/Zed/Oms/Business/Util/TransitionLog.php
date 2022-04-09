@@ -14,6 +14,7 @@ use Spryker\Zed\Oms\Business\Process\EventInterface;
 use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface;
 use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface;
 use Spryker\Zed\Oms\Dependency\Service\OmsToUtilNetworkInterface;
+use Spryker\Zed\Oms\OmsConfig;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 
 class TransitionLog implements TransitionLogInterface
@@ -64,18 +65,26 @@ class TransitionLog implements TransitionLogInterface
     protected $utilNetworkService;
 
     /**
+     * @var \Spryker\Zed\Oms\OmsConfig
+     */
+    protected $omsConfig;
+
+    /**
      * @param \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface $queryContainer
      * @param array $logContext
      * @param \Spryker\Zed\Oms\Dependency\Service\OmsToUtilNetworkInterface $utilNetworkService
+     * @param \Spryker\Zed\Oms\OmsConfig $omsConfig
      */
     public function __construct(
         OmsQueryContainerInterface $queryContainer,
         array $logContext,
-        OmsToUtilNetworkInterface $utilNetworkService
+        OmsToUtilNetworkInterface $utilNetworkService,
+        OmsConfig $omsConfig
     ) {
         $this->queryContainer = $queryContainer;
         $this->logContext = $logContext;
         $this->utilNetworkService = $utilNetworkService;
+        $this->omsConfig = $omsConfig;
     }
 
     /**
@@ -105,6 +114,10 @@ class TransitionLog implements TransitionLogInterface
     {
         $this->logEntities = [];
 
+        if (!$this->omsConfig->isOmsTransitionLogEnabled()) {
+            return;
+        }
+
         foreach ($salesOrderItems as $salesOrderItem) {
             $logEntity = $this->initEntity($salesOrderItem);
             $this->logEntities[$salesOrderItem->getIdSalesOrderItem()] = $logEntity;
@@ -119,6 +132,10 @@ class TransitionLog implements TransitionLogInterface
      */
     public function addCommand(SpySalesOrderItem $item, CommandInterface $command)
     {
+        if (!$this->omsConfig->isOmsTransitionLogEnabled()) {
+            return;
+        }
+
         $this->logEntities[$item->getIdSalesOrderItem()]->setCommand(get_class($command));
     }
 
@@ -130,6 +147,10 @@ class TransitionLog implements TransitionLogInterface
      */
     public function addCondition(SpySalesOrderItem $item, ConditionInterface $condition)
     {
+        if (!$this->omsConfig->isOmsTransitionLogEnabled()) {
+            return;
+        }
+
         $this->logEntities[$item->getIdSalesOrderItem()]->setCondition(get_class($condition));
     }
 
@@ -141,6 +162,10 @@ class TransitionLog implements TransitionLogInterface
      */
     public function addSourceState(SpySalesOrderItem $item, $stateName)
     {
+        if (!$this->omsConfig->isOmsTransitionLogEnabled()) {
+            return;
+        }
+
         $this->logEntities[$item->getIdSalesOrderItem()]->setSourceState($stateName);
     }
 
@@ -152,6 +177,10 @@ class TransitionLog implements TransitionLogInterface
      */
     public function addTargetState(SpySalesOrderItem $item, $stateName)
     {
+        if (!$this->omsConfig->isOmsTransitionLogEnabled()) {
+            return;
+        }
+
         $this->logEntities[$item->getIdSalesOrderItem()]->setTargetState($stateName);
     }
 
@@ -223,6 +252,10 @@ class TransitionLog implements TransitionLogInterface
      */
     public function save(SpySalesOrderItem $salesOrderItem)
     {
+        if (!$this->omsConfig->isOmsTransitionLogEnabled()) {
+            return;
+        }
+
         $this->logEntities[$salesOrderItem->getIdSalesOrderItem()]->save();
     }
 
@@ -266,7 +299,7 @@ class TransitionLog implements TransitionLogInterface
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Oms\Persistence\SpyOmsTransitionLog[]
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Oms\Persistence\SpyOmsTransitionLog>
      */
     public function getLogForOrder(SpySalesOrder $order)
     {

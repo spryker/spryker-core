@@ -28,8 +28,11 @@ use SprykerTest\Shared\Twig\Stub\CacheStub;
 class TwigFilesystemLoaderZedTest extends Unit
 {
     public const PATH_TO_PROJECT = __DIR__ . '/Fixtures/src/ProjectNamespace/Zed/Bundle/Presentation';
+
     public const PATH_TO_CORE = __DIR__ . '/Fixtures/vendor/spryker/bundle/src/CoreNamespace/Zed/Bundle/Presentation';
+
     public const PATH_TO_CORE_NON_SPLIT = __DIR__ . '/Fixtures/vendor/spryker/spryker/Bundles/%s/src/CoreNamespace/Zed/Bundle/Presentation';
+
     public const PATH_TO_CORE_3RD_PARTY = __DIR__ . '/Fixtures/vendor/spryker/3rd-party/src/CoreNamespace/Zed/Bundle/Presentation';
 
     /**

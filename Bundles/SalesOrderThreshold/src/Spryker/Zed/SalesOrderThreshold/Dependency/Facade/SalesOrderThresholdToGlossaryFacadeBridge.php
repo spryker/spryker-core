@@ -103,4 +103,14 @@ class SalesOrderThresholdToGlossaryFacadeBridge implements SalesOrderThresholdTo
     {
         return $this->glossaryFacade->translate($keyName, $data, $localeTransfer);
     }
+
+    /**
+     * @param array<string> $glossaryKeys
+     *
+     * @return array<\Generated\Shared\Transfer\GlossaryKeyTransfer>
+     */
+    public function getGlossaryKeyTransfersByGlossaryKeys(array $glossaryKeys): array
+    {
+        return $this->glossaryFacade->getGlossaryKeyTransfersByGlossaryKeys($glossaryKeys);
+    }
 }

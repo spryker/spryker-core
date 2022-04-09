@@ -75,7 +75,7 @@ class MerchantProductMapper
 
     /**
      * @param \Generated\Shared\Transfer\MerchantProductTransfer $merchantProductTransfer
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Product\Persistence\SpyProduct[] $productEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\SpyProduct> $productEntities
      *
      * @return \Generated\Shared\Transfer\MerchantProductTransfer
      */

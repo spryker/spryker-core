@@ -41,7 +41,7 @@ class ConfigInit extends Module
     }
 
     /**
-     * @return \Symfony\Component\Finder\Finder|\Symfony\Component\Finder\SplFileInfo[]
+     * @return \Symfony\Component\Finder\Finder<\Symfony\Component\Finder\SplFileInfo>
      */
     private function getConfigFiles()
     {
@@ -139,7 +139,7 @@ class ConfigInit extends Module
     }
 
     /**
-     * @return \Symfony\Component\Finder\Finder|\Symfony\Component\Finder\SplFileInfo[]
+     * @return \Symfony\Component\Finder\Finder<\Symfony\Component\Finder\SplFileInfo>
      */
     private function getConfigDefaultFiles()
     {

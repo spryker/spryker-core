@@ -22,7 +22,9 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 class CompanyBusinessUnitTable extends AbstractTable
 {
     protected const COL_ID_COMPANY_BUSINESS_UNIT = SpyCompanyBusinessUnitTableMap::COL_ID_COMPANY_BUSINESS_UNIT;
+
     protected const COL_COMPANY_NAME = SpyCompanyTableMap::COL_NAME;
+
     protected const COL_NAME = SpyCompanyBusinessUnitTableMap::COL_NAME;
 
     /**
@@ -34,7 +36,9 @@ class CompanyBusinessUnitTable extends AbstractTable
      * @var string
      */
     protected const COL_ADDRESS = 'address';
+
     protected const COL_IBAN = SpyCompanyBusinessUnitTableMap::COL_IBAN;
+
     protected const COL_BIC = SpyCompanyBusinessUnitTableMap::COL_BIC;
 
     /**

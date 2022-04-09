@@ -16,7 +16,9 @@ use Spryker\Zed\ProductOfferValidityDataImport\Business\DataSet\ProductOfferVali
 class ProductOfferValidityWriterStep implements DataImportStepInterface
 {
     protected const PRODUCT_VALID_FROM = ProductOfferValidityDataSetInterface::PRODUCT_VALID_FROM;
+
     protected const PRODUCT_VALID_TO = ProductOfferValidityDataSetInterface::PRODUCT_VALID_TO;
+
     protected const FK_PRODUCT_OFFER = ProductOfferValidityDataSetInterface::FK_PRODUCT_OFFER;
 
     /**

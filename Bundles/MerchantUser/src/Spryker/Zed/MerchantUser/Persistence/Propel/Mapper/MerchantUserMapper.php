@@ -63,9 +63,7 @@ class MerchantUserMapper
     }
 
     /**
-     * @phpstan-param \Propel\Runtime\Collection\Collection<\Orm\Zed\MerchantUser\Persistence\SpyMerchantUser> $merchantUserEntities
-     *
-     * @param \Propel\Runtime\Collection\Collection $merchantUserEntities
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\MerchantUser\Persistence\SpyMerchantUser> $merchantUserEntities
      *
      * @return array<\Generated\Shared\Transfer\MerchantUserTransfer>
      */

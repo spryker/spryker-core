@@ -24,7 +24,7 @@ interface ProductCategoryManagerInterface
      * @param int $idCategory
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductCategory\Persistence\SpyProductCategory[]
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductCategory\Persistence\SpyProductCategory>
      */
     public function getProductsByCategory($idCategory, LocaleTransfer $localeTransfer);
 

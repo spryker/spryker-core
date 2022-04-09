@@ -142,9 +142,7 @@ abstract class AbstractMerchantShipmentController extends AbstractController
     }
 
     /**
-     * @phpstan-param \Symfony\Component\Form\FormInterface<mixed> $form
-     *
-     * @param \Symfony\Component\Form\FormInterface $form
+     * @param \Symfony\Component\Form\FormInterface<mixed> $form
      *
      * @return array<bool>
      */
@@ -166,9 +164,7 @@ abstract class AbstractMerchantShipmentController extends AbstractController
     }
 
     /**
-     * @phpstan-param \Symfony\Component\Form\FormInterface<mixed> $form
-     *
-     * @param \Symfony\Component\Form\FormInterface $form
+     * @param \Symfony\Component\Form\FormInterface<mixed> $form
      * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
      *
      * @return \Generated\Shared\Transfer\ShipmentGroupResponseTransfer

@@ -77,9 +77,7 @@ class CreateProductAbstractForm extends AbstractType
     protected const ERROR_MESSAGE_IS_SINGLE_CONCRETE = 'The value cannot be empty. Please select one.';
 
     /**
-     * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
-     *
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      * @param array<mixed> $options
      *
      * @return void

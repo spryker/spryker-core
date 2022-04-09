@@ -15,7 +15,7 @@ use Propel\Runtime\Collection\ObjectCollection;
 class ShoppingListProductOptionMapper
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ShoppingListProductOptionConnector\Persistence\SpyShoppingListProductOption[] $shoppingListProductOptionEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ShoppingListProductOptionConnector\Persistence\SpyShoppingListProductOption> $shoppingListProductOptionEntityCollection
      * @param \Generated\Shared\Transfer\ShoppingListProductOptionCollectionTransfer $shoppingListProductOptionCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListProductOptionCollectionTransfer

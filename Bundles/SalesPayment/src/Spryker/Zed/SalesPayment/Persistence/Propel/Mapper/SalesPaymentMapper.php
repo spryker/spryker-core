@@ -46,9 +46,7 @@ class SalesPaymentMapper
     }
 
     /**
-     * @phpstan-param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Payment\Persistence\SpySalesPayment> $spySalesPaymentCollection
-     *
-     * @param \Propel\Runtime\Collection\ObjectCollection $spySalesPaymentCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Payment\Persistence\SpySalesPayment> $spySalesPaymentCollection
      *
      * @return array<\Generated\Shared\Transfer\SalesPaymentTransfer>
      */

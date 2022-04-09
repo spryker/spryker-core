@@ -27,7 +27,7 @@ class SalesOrderCommentMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Sales\Persistence\Base\SpySalesOrderComment[] $salesOrderCommentEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Sales\Persistence\Base\SpySalesOrderComment> $salesOrderCommentEntities
      * @param array<\Generated\Shared\Transfer\CommentTransfer> $commentTransfers
      *
      * @return array<\Generated\Shared\Transfer\CommentTransfer>

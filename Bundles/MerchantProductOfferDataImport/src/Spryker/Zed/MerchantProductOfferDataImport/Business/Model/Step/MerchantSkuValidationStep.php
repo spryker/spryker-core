@@ -17,7 +17,9 @@ use Spryker\Zed\MerchantProductOfferDataImport\Business\Model\DataSet\MerchantPr
 class MerchantSkuValidationStep implements DataImportStepInterface
 {
     protected const MERCHANT_SKU = MerchantProductOfferDataSetInterface::MERCHANT_SKU;
+
     protected const ID_MERCHANT = MerchantProductOfferDataSetInterface::ID_MERCHANT;
+
     protected const MERCHANT_REFERENCE = MerchantProductOfferDataSetInterface::MERCHANT_REFERENCE;
 
     /**

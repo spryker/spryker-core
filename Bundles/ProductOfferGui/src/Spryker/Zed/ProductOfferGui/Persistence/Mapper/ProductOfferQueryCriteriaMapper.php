@@ -14,14 +14,10 @@ use Propel\Runtime\ActiveQuery\Criteria;
 class ProductOfferQueryCriteriaMapper implements ProductOfferQueryCriteriaMapperInterface
 {
     /**
-     * @phpstan-param \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery<mixed> $query
-     *
-     * @phpstan-return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery<mixed>
-     *
-     * @param \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery $query
+     * @param \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery<mixed> $query
      * @param \Generated\Shared\Transfer\QueryCriteriaTransfer $queryCriteriaTransfer
      *
-     * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery
+     * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery<mixed>
      */
     public function mapQueryCriteriaTransferToModelCriteria(
         SpyProductOfferQuery $query,
@@ -34,14 +30,10 @@ class ProductOfferQueryCriteriaMapper implements ProductOfferQueryCriteriaMapper
     }
 
     /**
-     * @phpstan-param \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery<mixed> $query
-     *
-     * @phpstan-return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery<mixed>
-     *
-     * @param \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery $query
+     * @param \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery<mixed> $query
      * @param \Generated\Shared\Transfer\QueryCriteriaTransfer $queryCriteriaTransfer
      *
-     * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery
+     * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery<mixed>
      */
     protected function addJoin(
         SpyProductOfferQuery $query,
@@ -65,14 +57,10 @@ class ProductOfferQueryCriteriaMapper implements ProductOfferQueryCriteriaMapper
     }
 
     /**
-     * @phpstan-param \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery<mixed> $query
-     *
-     * @phpstan-return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery<mixed>
-     *
-     * @param \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery $query
+     * @param \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery<mixed> $query
      * @param \Generated\Shared\Transfer\QueryCriteriaTransfer $queryCriteriaTransfer
      *
-     * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery
+     * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery<mixed>
      */
     protected function addWithColumns(
         SpyProductOfferQuery $query,

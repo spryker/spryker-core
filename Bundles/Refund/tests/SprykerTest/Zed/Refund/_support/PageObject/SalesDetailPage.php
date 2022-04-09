@@ -15,6 +15,7 @@ class SalesDetailPage extends BaseSalesDetailPage
      * @var string
      */
     public const SELECTOR_REFUND_ROW = '//table[@data-qa="refund-list"]/tbody/tr[@data-qa="refund-row"]';
+
     public const REFUND_TOTAL_AMOUNT_SELECTOR = self::SELECTOR_REFUND_ROW . '/td[@data-qa="refund-amount-raw"]';
 
     /**

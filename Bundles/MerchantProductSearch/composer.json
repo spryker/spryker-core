@@ -18,6 +18,7 @@
     "require-dev": {
         "spryker/category": "*",
         "spryker/code-sniffer": "*",
+        "spryker/elastica": "*",
         "spryker/product": "*",
         "spryker/product-attribute": "*",
         "spryker/propel": "*",
@@ -26,6 +27,7 @@
         "spryker/testify": "*"
     },
     "suggest": {
+        "spryker/elastica": "If you want to use Elastica plugins.",
         "spryker/search": "If you want to use Search plugins."
     },
     "autoload": {

@@ -24,14 +24,10 @@ class GlobalAclQueryScope implements AclQueryScopeInterface
     }
 
     /**
-     * @phpstan-param \Propel\Runtime\ActiveQuery\ModelCriteria<\Propel\Runtime\ActiveRecord\ActiveRecordInterface> $query
-     *
-     * @phpstan-return \Propel\Runtime\ActiveQuery\ModelCriteria<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
-     *
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria<\Propel\Runtime\ActiveRecord\ActiveRecordInterface> $query
      * @param \Generated\Shared\Transfer\AclEntityRuleCollectionTransfer $aclEntityRuleCollectionTransfer
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
      */
     public function applyAclRuleOnSelectQuery(
         ModelCriteria $query,
@@ -41,14 +37,10 @@ class GlobalAclQueryScope implements AclQueryScopeInterface
     }
 
     /**
-     * @phpstan-param \Propel\Runtime\ActiveQuery\ModelCriteria<\Propel\Runtime\ActiveRecord\ActiveRecordInterface> $query
-     *
-     * @phpstan-return \Propel\Runtime\ActiveQuery\ModelCriteria<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
-     *
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria<\Propel\Runtime\ActiveRecord\ActiveRecordInterface> $query
      * @param \Generated\Shared\Transfer\AclEntityRuleCollectionTransfer $aclEntityRuleCollectionTransfer
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
      */
     public function applyAclRuleOnUpdateQuery(
         ModelCriteria $query,
@@ -58,14 +50,10 @@ class GlobalAclQueryScope implements AclQueryScopeInterface
     }
 
     /**
-     * @phpstan-param \Propel\Runtime\ActiveQuery\ModelCriteria<\Propel\Runtime\ActiveRecord\ActiveRecordInterface> $query
-     *
-     * @phpstan-return \Propel\Runtime\ActiveQuery\ModelCriteria<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
-     *
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria<\Propel\Runtime\ActiveRecord\ActiveRecordInterface> $query
      * @param \Generated\Shared\Transfer\AclEntityRuleCollectionTransfer $aclEntityRuleCollectionTransfer
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
      */
     public function applyAclRuleOnDeleteQuery(
         ModelCriteria $query,

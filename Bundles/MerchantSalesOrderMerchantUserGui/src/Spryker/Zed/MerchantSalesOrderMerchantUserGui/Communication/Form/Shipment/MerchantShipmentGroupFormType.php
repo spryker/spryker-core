@@ -86,9 +86,7 @@ class MerchantShipmentGroupFormType extends AbstractType
     }
 
     /**
-     * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
-     *
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      * @param array<string, mixed> $options
      *
      * @return void
@@ -101,9 +99,7 @@ class MerchantShipmentGroupFormType extends AbstractType
     }
 
     /**
-     * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
-     *
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      * @param array<string, mixed> $options
      *
      * @return $this
@@ -131,9 +127,7 @@ class MerchantShipmentGroupFormType extends AbstractType
     }
 
     /**
-     * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
-     *
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      * @param array<string, mixed> $options
      *
      * @return $this

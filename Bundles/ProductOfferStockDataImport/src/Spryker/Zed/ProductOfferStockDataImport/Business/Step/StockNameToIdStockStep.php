@@ -17,6 +17,7 @@ use Spryker\Zed\ProductOfferStockDataImport\Business\DataSet\ProductOfferStockDa
 class StockNameToIdStockStep implements DataImportStepInterface
 {
     protected const FK_STOCK = ProductOfferStockDataSetInterface::FK_STOCK;
+
     protected const PRODUCT_STOCK_NAME = ProductOfferStockDataSetInterface::PRODUCT_STOCK_NAME;
 
     /**

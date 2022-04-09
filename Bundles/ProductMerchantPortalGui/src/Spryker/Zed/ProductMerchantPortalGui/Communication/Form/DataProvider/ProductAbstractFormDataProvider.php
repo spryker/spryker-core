@@ -188,7 +188,7 @@ class ProductAbstractFormDataProvider implements ProductAbstractFormDataProvider
         $categoryTreeArray = [];
         foreach ($nodeCollectionTransfer->getNodes() as $nodeTransfer) {
             $categoryTreeArray[] = [
-                'value' => $nodeTransfer->getIdCategoryNode(),
+                'value' => (string)$nodeTransfer->getIdCategoryNode(),
                 'title' => $nodeTransfer->getCategoryOrFail()->getLocalizedAttributes()->offsetGet(0)->getName(),
                 'children' => $this->getCategoryTreeArray($nodeTransfer->getChildrenNodesOrFail()),
             ];

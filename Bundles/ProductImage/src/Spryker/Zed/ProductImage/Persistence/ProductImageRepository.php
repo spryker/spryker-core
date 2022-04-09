@@ -49,7 +49,7 @@ class ProductImageRepository extends AbstractRepository implements ProductImageR
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductImage\Persistence\SpyProductImageSet[] $productImageSetEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductImage\Persistence\SpyProductImageSet> $productImageSetEntities
      *
      * @return array<\Generated\Shared\Transfer\ProductImageSetTransfer>
      */
@@ -90,7 +90,7 @@ class ProductImageRepository extends AbstractRepository implements ProductImageR
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImage[] $productImageSetToProductImageEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImage> $productImageSetToProductImageEntities
      *
      * @return array<array<\Generated\Shared\Transfer\ProductImageTransfer>>
      */

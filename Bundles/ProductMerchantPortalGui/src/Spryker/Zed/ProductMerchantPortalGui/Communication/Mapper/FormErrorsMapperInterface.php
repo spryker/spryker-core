@@ -12,9 +12,7 @@ use Symfony\Component\Form\FormInterface;
 interface FormErrorsMapperInterface
 {
     /**
-     * @phpstan-param \Symfony\Component\Form\FormInterface<mixed> $addProductConcreteForm
-     *
-     * @param \Symfony\Component\Form\FormInterface $addProductConcreteForm
+     * @param \Symfony\Component\Form\FormInterface<mixed> $addProductConcreteForm
      * @param array<mixed> $errors
      *
      * @return array<mixed>
@@ -25,9 +23,7 @@ interface FormErrorsMapperInterface
     ): array;
 
     /**
-     * @phpstan-param \Symfony\Component\Form\FormInterface<mixed> $addProductConcreteForm
-     *
-     * @param \Symfony\Component\Form\FormInterface $addProductConcreteForm
+     * @param \Symfony\Component\Form\FormInterface<mixed> $addProductConcreteForm
      * @param array<mixed> $errors
      *
      * @return array<mixed>

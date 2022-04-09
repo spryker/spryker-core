@@ -29,7 +29,9 @@ abstract class AbstractProductConcreteTable extends AbstractTable
     protected const TABLE_IDENTIFIER = 'table';
 
     protected const COLUMN_ID = SpyProductTableMap::COL_ID_PRODUCT;
+
     protected const COLUMN_SKU = SpyProductTableMap::COL_SKU;
+
     protected const COLUMN_NAME = SpyProductLocalizedAttributesTableMap::COL_NAME;
 
     /**

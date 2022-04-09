@@ -19,8 +19,11 @@ use Spryker\Zed\ProductOfferStockDataImport\Business\DataSet\ProductOfferStockDa
 class ProductOfferStockWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
     protected const FK_STOCK = ProductOfferStockDataSetInterface::FK_STOCK;
+
     protected const FK_PRODUCT_OFFER = ProductOfferStockDataSetInterface::FK_PRODUCT_OFFER;
+
     protected const QUANTITY = ProductOfferStockDataSetInterface::QUANTITY;
+
     protected const IS_NEVER_OUT_OF_STOCK = ProductOfferStockDataSetInterface::IS_NEVER_OUT_OF_STOCK;
 
     /**

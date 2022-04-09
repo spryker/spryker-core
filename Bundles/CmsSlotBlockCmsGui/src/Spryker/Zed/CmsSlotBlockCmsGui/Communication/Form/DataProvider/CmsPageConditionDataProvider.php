@@ -97,7 +97,7 @@ class CmsPageConditionDataProvider implements CmsPageConditionDataProviderInterf
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Cms\Persistence\SpyCmsPage[] $cmsPageEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Cms\Persistence\SpyCmsPage> $cmsPageEntityCollection
      *
      * @return array<int>
      */

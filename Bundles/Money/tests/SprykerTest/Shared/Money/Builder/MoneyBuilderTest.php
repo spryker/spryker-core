@@ -38,6 +38,7 @@ class MoneyBuilderTest extends Unit
      * @var int
      */
     public const AMOUNT_INTEGER = 1000;
+
     public const AMOUNT_FLOAT = 10.00;
 
     /**

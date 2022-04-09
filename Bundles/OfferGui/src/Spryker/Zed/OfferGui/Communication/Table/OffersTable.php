@@ -52,7 +52,9 @@ class OffersTable extends AbstractTable
     protected const URL_PARAM_ID_OFFER = 'id-offer';
 
     protected const COL_ID_OFFER = SpyOfferTableMap::COL_ID_OFFER;
+
     protected const COL_CREATED_AT = SpyOfferTableMap::COL_CREATED_AT;
+
     protected const COL_CUSTOMER_REFERENCE = SpyOfferTableMap::COL_CUSTOMER_REFERENCE;
 
     /**
@@ -64,8 +66,11 @@ class OffersTable extends AbstractTable
      * @var string
      */
     protected const COL_GRAND_TOTAL = 'grand_total';
+
     protected const COL_CONTACT_DATE = SpyOfferTableMap::COL_CONTACT_DATE;
+
     protected const COL_CONTACT_PERSON = SpyOfferTableMap::COL_CONTACT_PERSON;
+
     protected const COL_NOTE = SpyOfferTableMap::COL_NOTE;
 
     /**

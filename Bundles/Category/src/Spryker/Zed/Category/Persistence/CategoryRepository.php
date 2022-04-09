@@ -766,7 +766,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     {
         $storeRelationTransfer = new StoreRelationTransfer();
 
-        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Category\Persistence\SpyCategoryStore[] $categoryStoreEntities */
+        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Category\Persistence\SpyCategoryStore> $categoryStoreEntities */
         $categoryStoreEntities = $this->getFactory()
             ->createCategoryStoreQuery()
             ->joinWithSpyCategory()
@@ -1029,7 +1029,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Category\Persistence\SpyCategoryAttribute[] $categoryAttributeEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Category\Persistence\SpyCategoryAttribute> $categoryAttributeEntities
      *
      * @return array<int, array<\Orm\Zed\Category\Persistence\SpyCategoryAttribute>>
      */
@@ -1046,7 +1046,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     /**
      * @param array<int> $categoryIds
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Category\Persistence\SpyCategoryAttribute[]
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Category\Persistence\SpyCategoryAttribute>
      */
     protected function getCategoryAttributeEntitiesByCategoryIds(array $categoryIds): ObjectCollection
     {

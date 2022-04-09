@@ -41,6 +41,7 @@ class PriceProductScheduleFallbackTest extends Unit
      * @var int
      */
     public const PRICE_TYPE_ID = 2;
+
     public const PRICE_TYPE_NAME_ORIGINAL = PriceProductScheduleConfig::PRICE_TYPE_ORIGINAL;
 
     /**

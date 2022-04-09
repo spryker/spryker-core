@@ -31,4 +31,14 @@ interface OmsConstants
      * @var string
      */
     public const ACTIVE_PROCESSES = 'ACTIVE_PROCESSES';
+
+    /**
+     * Specification:
+     * - Defines if OMS transition log is enabled.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const ENABLE_OMS_TRANSITION_LOG = 'OMS:ENABLE_OMS_TRANSITION_LOG';
 }

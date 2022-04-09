@@ -37,7 +37,7 @@ class SalesOrderMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\Collection|\Orm\Zed\Sales\Persistence\SpySalesOrder[] $salesOrderEntityCollection
+     * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Sales\Persistence\SpySalesOrder> $salesOrderEntityCollection
      *
      * @return array<\Generated\Shared\Transfer\OrderTransfer>
      */
@@ -53,7 +53,7 @@ class SalesOrderMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Sales\Persistence\SpySalesOrderTotals[] $salesOrderTotalsEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Sales\Persistence\SpySalesOrderTotals> $salesOrderTotalsEntityCollection
      *
      * @return array<\Generated\Shared\Transfer\TotalsTransfer>
      */

@@ -47,9 +47,7 @@ class EventTriggerForm extends AbstractType
     protected const ACTION_ROUTE = '/merchant-sales-return-merchant-user-gui/oms-trigger/submit-trigger-event';
 
     /**
-     * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
-     *
-     * @param \Symfony\Component\Form\FormBuilderInterface|mixed[] $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      * @param array<string, mixed> $options
      *
      * @return void
@@ -75,9 +73,7 @@ class EventTriggerForm extends AbstractType
     }
 
     /**
-     * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
-     *
-     * @param \Symfony\Component\Form\FormBuilderInterface|mixed[] $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      * @param array<string, mixed> $options
      *
      * @return $this
@@ -100,9 +96,7 @@ class EventTriggerForm extends AbstractType
     }
 
     /**
-     * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
-     *
-     * @param \Symfony\Component\Form\FormBuilderInterface|mixed[] $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      * @param array<string, mixed> $options
      *
      * @return $this

@@ -1,5 +1,3 @@
 parameters:
     level: 7
     checkMissingIterableValueType: false
-    ignoreErrors:
-        - '#Parameter \#1 \$statusKey of method .+Query::filterByStatusKey\(\) expects array\<string\>\|string\|null, array given.#'

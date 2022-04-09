@@ -399,7 +399,7 @@ class Finder implements FinderInterface
      * @param array $statesByFlag
      * @param string $historySortDirection
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\StateMachine\Persistence\SpyStateMachineItemState[]
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\StateMachine\Persistence\SpyStateMachineItemState>
      */
     protected function getFlaggedStateMachineItems(StateMachineProcessTransfer $stateMachineProcessTransfer, array $statesByFlag, string $historySortDirection)
     {

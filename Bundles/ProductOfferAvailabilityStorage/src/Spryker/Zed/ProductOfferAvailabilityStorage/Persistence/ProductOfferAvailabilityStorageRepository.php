@@ -151,13 +151,9 @@ class ProductOfferAvailabilityStorageRepository extends AbstractRepository imple
     }
 
     /**
-     * @phpstan-param \Propel\Runtime\ActiveQuery\ModelCriteria<mixed> $query
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria<mixed> $query
      *
-     * @phpstan-return \Propel\Runtime\ActiveQuery\ModelCriteria<mixed>
-     *
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
-     *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria<mixed>
      */
     protected function addProductOfferAvailabilityRequestSelectColumns(ModelCriteria $query): ModelCriteria
     {

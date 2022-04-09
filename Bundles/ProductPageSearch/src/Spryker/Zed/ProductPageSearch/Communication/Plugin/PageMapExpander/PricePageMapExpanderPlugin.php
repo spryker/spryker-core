@@ -15,7 +15,7 @@ use Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageMapExpanderInterf
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\ProductPageSearch\Communication\Plugin\ProductPageSearch\Elasticsearch\PricePageMapExpanderPlugin} instead.
+ * @deprecated Use {@link \Spryker\Zed\ProductPageSearch\Communication\Plugin\ProductPageSearch\Elasticsearch\ProductPriceMapExpanderPlugin} instead.
  *
  * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductPageSearch\Communication\ProductPageSearchCommunicationFactory getFactory()

@@ -37,6 +37,7 @@ class ProductTable extends AbstractTable
      * @var string
      */
     public const COL_SKU = 'sku';
+
     public const COL_NAME = ProductSetGuiQueryContainer::COL_ALIAS_NAME;
 
     /**

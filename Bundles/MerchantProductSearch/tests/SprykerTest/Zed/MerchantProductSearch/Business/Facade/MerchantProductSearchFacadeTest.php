@@ -9,11 +9,16 @@ namespace SprykerTest\Zed\MerchantProductSearch\Business\Facade;
 
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\StoreRelationBuilder;
+use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\MerchantProductTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\PageMapTransfer;
 use Generated\Shared\Transfer\ProductAbstractMerchantTransfer;
+use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Zed\ProductPageSearch\Business\DataMapper\PageMapBuilder;
 
 /**
  * Auto-generated group annotations
@@ -100,5 +105,64 @@ class MerchantProductSearchFacadeTest extends Unit
 
         // Assert
         $this->assertEquals($expectedProductAbstractMerchantTransfers, $productAbstractMerchantTransfers);
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandProductConcretePageMapSuccess(): void
+    {
+        // Arrange
+        $productConcreteTransfer = $this->tester->haveProduct([
+            ProductConcreteTransfer::IS_ACTIVE => true,
+        ]);
+        $merchantTransfer = $this->tester->haveMerchant([
+            MerchantTransfer::IS_ACTIVE => true,
+        ]);
+        $this->tester->haveMerchantProduct([
+            MerchantProductTransfer::ID_MERCHANT => $merchantTransfer->getIdMerchant(),
+            MerchantProductTransfer::ID_PRODUCT_ABSTRACT => $productConcreteTransfer->getFkProductAbstract(),
+        ]);
+        $productData = [
+            ProductConcretePageSearchTransfer::FK_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
+        ];
+
+        // Act
+        $pageMapTransfer = $this->tester->getFacade()->expandProductConcretePageMap(
+            new PageMapTransfer(),
+            new PageMapBuilder(),
+            $productData,
+            new LocaleTransfer(),
+        );
+
+        // Assert
+        $this->assertContains($merchantTransfer->getMerchantReference(), $pageMapTransfer->getMerchantReferences());
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandProductConcretePageMapFailed(): void
+    {
+        // Arrange
+        $productConcreteTransfer = $this->tester->haveProduct([
+            ProductConcreteTransfer::IS_ACTIVE => true,
+        ]);
+
+        $productData = [
+            ProductConcretePageSearchTransfer::FK_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
+        ];
+
+        // Act
+        $pageMapTransfer = $this->tester->getFacade()->expandProductConcretePageMap(
+            new PageMapTransfer(),
+            new PageMapBuilder(),
+            $productData,
+            new LocaleTransfer(),
+        );
+
+        // Assert
+        $this->assertCount(0, $pageMapTransfer->getMerchantReferences());
+        $this->assertCount(0, $pageMapTransfer->getFullTextBoosted());
     }
 }

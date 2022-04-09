@@ -32,4 +32,14 @@ class MerchantProductOfferSearchToProductPageSearchFacadeBridge implements Merch
     {
         $this->productPageSearchFacade->refresh($productAbstractIds, $pageDataExpanderPluginNames);
     }
+
+    /**
+     * @param array<int> $productIds
+     *
+     * @return void
+     */
+    public function publishProductConcretes(array $productIds): void
+    {
+        $this->productPageSearchFacade->publishProductConcretes($productIds);
+    }
 }

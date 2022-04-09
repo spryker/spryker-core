@@ -350,36 +350,6 @@ $(document).ready(function () {
             $(this).unbind('ajaxStop');
         });
     });
-
-    $('.gui-table-data').on('draw.dt', function () {
-        const $toggleWrap = $(this).find('.dropdown');
-        let $toggleDropdown;
-
-        $toggleWrap.on('show.bs.dropdown', function () {
-            const $button = $(this).find('.dropdown-toggle'),
-                buttonLeftOffset = $button.offset().left,
-                buttonTopOffset = $button.offset().top,
-                buttonHeight = $button.height();
-
-            $toggleDropdown = $(this).find('.dropdown-menu');
-
-            $('body').append(
-                $toggleDropdown
-                    .css({
-                        position: 'absolute',
-                        left: buttonLeftOffset + 'px',
-                        top: buttonTopOffset + buttonHeight + 5 + 'px',
-                        display: 'block',
-                        zIndex: '10000',
-                    })
-                    .detach(),
-            );
-        });
-
-        $toggleWrap.on('hidden.bs.dropdown', function () {
-            $(this).append($toggleDropdown.removeAttr('style').detach());
-        });
-    });
 });
 
 $(document).on('click', function (e) {

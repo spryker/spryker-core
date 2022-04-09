@@ -28,9 +28,13 @@ use SprykerTest\Shared\Twig\Stub\CacheStub;
 class TwigFilesystemLoaderYvesTest extends Unit
 {
     public const PATH_TO_PROJECT = __DIR__ . '/Fixtures/src/ProjectNamespace/Yves/Bundle/Theme/default';
+
     public const PATH_TO_PROJECT_CUSTOM_THEME = __DIR__ . '/Fixtures/src/ProjectNamespace/Yves/Bundle/Theme/custom';
+
     public const PATH_TO_CORE = __DIR__ . '/Fixtures/vendor/spryker/bundle/src/CoreNamespace/Yves/Bundle/Theme/default';
+
     public const PATH_TO_CORE_NON_SPLIT = __DIR__ . '/Fixtures/vendor/spryker/spryker/Bundles/*/src/CoreNamespace/Yves/Bundle/Theme/default';
+
     public const PATH_TO_CORE_3RD_PARTY = __DIR__ . '/Fixtures/vendor/spryker/3rd-party/src/CoreNamespace/Yves/Bundle/Theme/default';
 
     /**

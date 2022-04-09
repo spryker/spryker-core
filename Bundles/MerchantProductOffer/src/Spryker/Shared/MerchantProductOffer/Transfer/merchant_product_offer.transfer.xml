@@ -10,6 +10,7 @@
     <transfer name="MerchantProductOfferCriteria">
         <property name="merchantReference" type="string"/>
         <property name="skus" type="array" singular="sku"/>
+        <property name="storeIds" type="int[]" singular="idStore"/>
         <property name="isActive" type="bool"/>
     </transfer>
 

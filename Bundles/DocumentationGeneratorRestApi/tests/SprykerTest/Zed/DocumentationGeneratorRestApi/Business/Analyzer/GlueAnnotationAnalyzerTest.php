@@ -60,6 +60,7 @@ class GlueAnnotationAnalyzerTest extends Unit
      * @var string
      */
     protected const SUMMARY = 'Summary example';
+
     protected const ALTERNATIVE_RESPONSE_CLASS = RestTestAlternativeAttributesTransfer::class;
 
     /**

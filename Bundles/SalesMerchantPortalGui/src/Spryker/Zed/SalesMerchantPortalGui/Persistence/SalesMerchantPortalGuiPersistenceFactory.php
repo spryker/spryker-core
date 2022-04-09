@@ -38,9 +38,7 @@ class SalesMerchantPortalGuiPersistenceFactory extends AbstractPersistenceFactor
     }
 
     /**
-     * @phpstan-return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery<mixed>
-     *
-     * @return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery
+     * @return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery<mixed>
      */
     public function getMerchantSalesOrderPropelQuery(): SpyMerchantSalesOrderQuery
     {

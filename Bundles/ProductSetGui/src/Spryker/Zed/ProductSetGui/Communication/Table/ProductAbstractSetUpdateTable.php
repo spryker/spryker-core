@@ -37,6 +37,7 @@ class ProductAbstractSetUpdateTable extends AbstractTable
      * @var string
      */
     public const COL_SKU = 'sku';
+
     public const COL_NAME = ProductSetGuiQueryContainer::COL_ALIAS_NAME;
 
     /**
@@ -48,6 +49,7 @@ class ProductAbstractSetUpdateTable extends AbstractTable
      * @var string
      */
     public const COL_STATUS = 'status';
+
     public const COL_POSITION = ProductSetGuiQueryContainer::COL_ALIAS_POSITION;
 
     /**

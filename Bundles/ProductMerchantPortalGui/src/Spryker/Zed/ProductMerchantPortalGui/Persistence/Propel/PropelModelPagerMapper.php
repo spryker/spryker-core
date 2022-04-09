@@ -13,9 +13,7 @@ use Propel\Runtime\Util\PropelModelPager;
 class PropelModelPagerMapper
 {
     /**
-     * @phpstan-param \Propel\Runtime\Util\PropelModelPager<mixed> $propelPager
-     *
-     * @param \Propel\Runtime\Util\PropelModelPager $propelPager
+     * @param \Propel\Runtime\Util\PropelModelPager<mixed> $propelPager
      * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
      *
      * @return \Generated\Shared\Transfer\PaginationTransfer

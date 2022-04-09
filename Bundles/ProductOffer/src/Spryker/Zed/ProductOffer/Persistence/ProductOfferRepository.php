@@ -118,14 +118,10 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
     /**
      * @module Product
      *
-     * @phpstan-param \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery<mixed> $productOfferQuery
-     *
-     * @phpstan-return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery<mixed>
-     *
-     * @param \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery $productOfferQuery
+     * @param \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery<mixed> $productOfferQuery
      * @param \Generated\Shared\Transfer\ProductOfferCriteriaTransfer $productOfferCriteria
      *
-     * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery
+     * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery<mixed>
      */
     protected function applyFilters(
         SpyProductOfferQuery $productOfferQuery,
@@ -186,9 +182,7 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
     }
 
     /**
-     * @phpstan-param \Propel\Runtime\ActiveQuery\ModelCriteria<mixed> $query
-     *
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria<mixed> $query
      * @param \Generated\Shared\Transfer\PaginationTransfer|null $paginationTransfer
      *
      * @return \Propel\Runtime\Collection\Collection|\Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductOffer\Persistence\SpyProductOffer[]

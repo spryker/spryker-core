@@ -12,7 +12,7 @@ use Symfony\Component\Finder\Finder;
 interface SchemaDefinitionFinderInterface
 {
     /**
-     * @return \Symfony\Component\Finder\Finder|\Symfony\Component\Finder\SplFileInfo[]
+     * @return \Symfony\Component\Finder\Finder<\Symfony\Component\Finder\SplFileInfo>
      */
     public function find(): Finder;
 }

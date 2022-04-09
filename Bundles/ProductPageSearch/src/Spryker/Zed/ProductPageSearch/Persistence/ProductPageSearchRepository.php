@@ -153,7 +153,7 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearch[] $productConcretePageSearchEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearch> $productConcretePageSearchEntities
      *
      * @return array<\Generated\Shared\Transfer\ProductConcretePageSearchTransfer>
      */
@@ -176,7 +176,7 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
      *
      * @param array $productAbstractStoreMap Keys are product abstract IDs, values are store IDs.
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearch[]
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearch>
      */
     protected function getProductConcretePageSearchEntitiesByAbstractProductsAndStores(array $productAbstractStoreMap)
     {

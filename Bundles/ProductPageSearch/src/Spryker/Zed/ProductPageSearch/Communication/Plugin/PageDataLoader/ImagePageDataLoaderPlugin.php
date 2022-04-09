@@ -67,7 +67,7 @@ class ImagePageDataLoaderPlugin extends AbstractPlugin implements ProductPageDat
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductImage\Persistence\SpyProductImageSet[] $productImageSetCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductImage\Persistence\SpyProductImageSet> $productImageSetCollection
      *
      * @return array
      */
@@ -83,7 +83,7 @@ class ImagePageDataLoaderPlugin extends AbstractPlugin implements ProductPageDat
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductImage\Persistence\SpyProductImageSet[] $productImageSetCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductImage\Persistence\SpyProductImageSet> $productImageSetCollection
      *
      * @return array
      */

@@ -26,6 +26,7 @@
     <transfer name="PageMap">
         <property name="store" type="string"/>
         <property name="stringFacet" type="StringFacetMap[]" singular="stringFacet"/>
+        <property name="merchantReferences" type="array" singular="merchantReference"/>
     </transfer>
 
     <transfer name="FacetConfig">
@@ -43,6 +44,18 @@
     <transfer name="ProductAbstractMerchant">
         <property name="merchantNames" type="array" singular="merchantName"/>
         <property name="idProductAbstract" type="int"/>
+    </transfer>
+
+    <transfer name="ProductConcretePageSearch">
+        <property name="fkProduct" type="int"/>
+    </transfer>
+
+    <transfer name="MerchantProductCriteria">
+        <property name="productConcreteIds" type="int[]" singular="idProductConcrete"/>
+    </transfer>
+
+    <transfer name="Merchant">
+        <property name="merchantReference" type="string"/>
     </transfer>
 
 </transfers>

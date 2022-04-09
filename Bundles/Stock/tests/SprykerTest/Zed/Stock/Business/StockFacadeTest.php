@@ -122,6 +122,7 @@ class StockFacadeTest extends Unit
      * @var int
      */
     public const STOCK_QUANTITY_1 = 92;
+
     public const STOCK_QUANTITY_2 = 8.2;
 
     /**

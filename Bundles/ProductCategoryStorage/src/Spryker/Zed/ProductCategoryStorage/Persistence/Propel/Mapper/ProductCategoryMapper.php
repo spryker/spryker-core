@@ -19,7 +19,7 @@ use Propel\Runtime\Collection\ObjectCollection;
 class ProductCategoryMapper
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductCategory\Persistence\SpyProductCategory[] $productCategoryEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductCategory\Persistence\SpyProductCategory> $productCategoryEntities
      * @param array<\Generated\Shared\Transfer\ProductCategoryTransfer> $productCategoryTransfers
      *
      * @return array<\Generated\Shared\Transfer\ProductCategoryTransfer>

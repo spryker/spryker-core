@@ -31,7 +31,7 @@ class GlossaryRepository extends AbstractRepository implements GlossaryRepositor
                 ->filterByKey($glossaryKey)
             ->endUse();
 
-        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Glossary\Persistence\SpyGlossaryTranslation[] $glossaryTranslationEntities */
+        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Glossary\Persistence\SpyGlossaryTranslation> $glossaryTranslationEntities */
         $glossaryTranslationEntities = $glossaryTranslationQuery
             ->useLocaleQuery()
                 ->filterByLocaleName_In($localeIsoCodes)
@@ -59,7 +59,7 @@ class GlossaryRepository extends AbstractRepository implements GlossaryRepositor
                 ->filterByKey_In($glossaryKeys)
             ->endUse();
 
-        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Glossary\Persistence\SpyGlossaryTranslation[] $glossaryTranslationEntities */
+        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Glossary\Persistence\SpyGlossaryTranslation> $glossaryTranslationEntities */
         $glossaryTranslationEntities = $glossaryTranslationQuery
             ->useLocaleQuery()
                 ->filterByLocaleName_In($localeIsoCodes)
@@ -74,7 +74,7 @@ class GlossaryRepository extends AbstractRepository implements GlossaryRepositor
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Glossary\Persistence\SpyGlossaryTranslation[] $glossaryTranslationEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Glossary\Persistence\SpyGlossaryTranslation> $glossaryTranslationEntities
      *
      * @return array<\Generated\Shared\Transfer\TranslationTransfer>
      */
@@ -114,7 +114,7 @@ class GlossaryRepository extends AbstractRepository implements GlossaryRepositor
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Glossary\Persistence\SpyGlossaryKey[] $glossaryKeyEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Glossary\Persistence\SpyGlossaryKey> $glossaryKeyEntities
      *
      * @return array<\Generated\Shared\Transfer\GlossaryKeyTransfer>
      */

@@ -17,9 +17,7 @@ class JoinNotFoundException extends AclEntityException
     protected const MESSAGE_TEMPLATE = 'Failed to find "%s" table join in the query object: %s';
 
     /**
-     * @phpstan-param \Propel\Runtime\ActiveQuery\ModelCriteria<\Propel\Runtime\ActiveRecord\ActiveRecordInterface> $query
-     *
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria<\Propel\Runtime\ActiveRecord\ActiveRecordInterface> $query
      * @param string $tableName
      */
     public function __construct(ModelCriteria $query, string $tableName)

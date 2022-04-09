@@ -102,7 +102,7 @@ class ShoppingListProductOptionConnectorEntityManager extends AbstractEntityMana
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ShoppingListProductOptionConnector\Persistence\SpyShoppingListProductOption[] $shoppingListProductOptionEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ShoppingListProductOptionConnector\Persistence\SpyShoppingListProductOption> $shoppingListProductOptionEntities
      *
      * @return void
      */

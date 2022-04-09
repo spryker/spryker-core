@@ -17,14 +17,10 @@ interface ProductAbstractFormExpanderPluginInterface
      *
      * @api
      *
-     * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
-     *
-     * @phpstan-return \Symfony\Component\Form\FormBuilderInterface<mixed>
-     *
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      * @param array<string, mixed> $options
      *
-     * @return \Symfony\Component\Form\FormBuilderInterface
+     * @return \Symfony\Component\Form\FormBuilderInterface<mixed>
      */
     public function expand(FormBuilderInterface $builder, array $options): FormBuilderInterface;
 }

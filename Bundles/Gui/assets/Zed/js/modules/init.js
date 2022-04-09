@@ -60,6 +60,47 @@ $(document).ready(function () {
     /* Draw data tables */
     $('.gui-table-data').on('error.dt', dataTable.onError).dataTable(dataTable.defaultConfiguration);
 
+    $('.gui-table-data').on('draw.dt', function () {
+        var windowWidth = $(document).width(),
+            windowHeight = $(document).height(),
+            $toggleWrap = $(this).find('.dropdown'),
+            $toggleDropdown;
+
+        $toggleWrap.on('show.bs.dropdown', function () {
+            $toggleDropdown = $(this).find('.dropdown-menu');
+
+            var $button = $(this).find('.dropdown-toggle'),
+                buttonWidth = $button.width(),
+                buttonHeight = $button.height(),
+                buttonTopOffset = $button.offset().top,
+                buttonLeftOffset = $button.offset().left,
+                dropdownWidth = $toggleDropdown.width(),
+                dropdownHeight = $toggleDropdown.height(),
+                requiredWidth = buttonLeftOffset + dropdownWidth,
+                requiredHeight = buttonTopOffset + buttonHeight + dropdownHeight,
+                dropdownPositionStyles = {
+                    top: buttonTopOffset + buttonHeight + 5 + 'px',
+                    left: buttonLeftOffset + 'px',
+                    display: 'block',
+                    zIndex: '10000',
+                };
+
+            if (requiredWidth >= windowWidth) {
+                dropdownPositionStyles.left = buttonLeftOffset + buttonWidth - dropdownWidth + 'px';
+            }
+
+            if (requiredHeight >= windowHeight) {
+                dropdownPositionStyles.top = buttonTopOffset - dropdownHeight - 11 + 'px';
+            }
+
+            $('body').append($toggleDropdown.css(dropdownPositionStyles).detach());
+        });
+
+        $toggleWrap.on('hidden.bs.dropdown', function () {
+            $(this).append($toggleDropdown.removeAttr('style').detach());
+        });
+    });
+
     /* Draw data tables without search */
     $('.gui-table-data-no-search').on('error.dt', dataTable.onError).dataTable(dataTable.noSearchConfiguration);
 

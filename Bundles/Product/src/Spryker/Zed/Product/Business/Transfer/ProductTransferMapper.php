@@ -53,7 +53,7 @@ class ProductTransferMapper implements ProductTransferMapperInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Product\Persistence\SpyProductAbstract[] $productAbstractEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\SpyProductAbstract> $productAbstractEntityCollection
      *
      * @return array<\Generated\Shared\Transfer\ProductAbstractTransfer>
      */
@@ -111,7 +111,7 @@ class ProductTransferMapper implements ProductTransferMapperInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Product\Persistence\SpyProduct[] $productCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\SpyProduct> $productCollection
      *
      * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */

@@ -45,12 +45,10 @@ class AclRelationReader implements AclRelationReaderInterface
     }
 
     /**
-     * @phpstan-return \Propel\Runtime\Collection\Collection<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
-     *
      * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $entity
      * @param \Generated\Shared\Transfer\AclEntityMetadataTransfer $aclEntityMetadataTransfer
      *
-     * @return \Propel\Runtime\Collection\Collection
+     * @return \Propel\Runtime\Collection\Collection<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
      */
     public function getRelationsByAclEntityMetadata(
         ActiveRecordInterface $entity,
@@ -62,12 +60,10 @@ class AclRelationReader implements AclRelationReaderInterface
     }
 
     /**
-     * @phpstan-return \Propel\Runtime\Collection\Collection<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
-     *
      * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $entity
      * @param \Generated\Shared\Transfer\AclEntityMetadataTransfer $aclEntityMetadataTransfer
      *
-     * @return \Propel\Runtime\Collection\Collection
+     * @return \Propel\Runtime\Collection\Collection<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
      */
     public function getRootRelationsByAclEntityMetadata(
         ActiveRecordInterface $entity,
@@ -94,14 +90,12 @@ class AclRelationReader implements AclRelationReaderInterface
     }
 
     /**
-     * @phpstan-return \Propel\Runtime\Collection\Collection<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
-     *
      * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $entity
      * @param \Propel\Runtime\Map\RelationMap $relationMap
      *
      * @throws \InvalidArgumentException
      *
-     * @return \Propel\Runtime\Collection\Collection
+     * @return \Propel\Runtime\Collection\Collection<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
      */
     public function getRelationsByRelationMap(ActiveRecordInterface $entity, RelationMap $relationMap): Collection
     {

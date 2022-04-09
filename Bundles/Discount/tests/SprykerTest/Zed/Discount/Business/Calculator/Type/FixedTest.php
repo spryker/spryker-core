@@ -37,6 +37,7 @@ class FixedTest extends Unit
      * @var int
      */
     public const DISCOUNT_AMOUNT_FIXED_100 = 100;
+
     public const DISCOUNT_AMOUNT_FIXED_MINUS_100 = -100;
 
     /**

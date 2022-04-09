@@ -272,7 +272,7 @@ interface OmsFacadeInterface
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
      * @param array $logContext
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Oms\Persistence\SpyOmsTransitionLog[]
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Oms\Persistence\SpyOmsTransitionLog>
      */
     public function getLogForOrder(SpySalesOrder $order, array $logContext = []);
 

@@ -165,7 +165,7 @@ class AvailabilityAbstractTable extends AbstractTable
 
         $this->expandPropelQuery();
 
-        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Product\Persistence\Base\SpyProductAbstract[] $productAbstractEntities */
+        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\Base\SpyProductAbstract> $productAbstractEntities */
         $productAbstractEntities = $this->runQuery($this->queryProductAbstractAvailability, $config, true);
 
         $productAbstractIds = $this->getProductAbstractIds($productAbstractEntities);
@@ -197,7 +197,7 @@ class AvailabilityAbstractTable extends AbstractTable
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Product\Persistence\Base\SpyProductAbstract[] $productAbstractEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\Base\SpyProductAbstract> $productAbstractEntities
      *
      * @return array<int>
      */

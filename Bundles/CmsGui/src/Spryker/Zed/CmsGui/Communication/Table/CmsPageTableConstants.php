@@ -32,6 +32,7 @@ interface CmsPageTableConstants
     public const URL_CMS_PAGE_DEACTIVATE = '/cms-gui/edit-page/deactivate';
 
     public const COL_ID_CMS_PAGE = SpyCmsPageTableMap::COL_ID_CMS_PAGE;
+
     public const COL_IS_ACTIVE = SpyCmsPageTableMap::COL_IS_ACTIVE;
 
     /**
@@ -70,11 +71,13 @@ interface CmsPageTableConstants
     public const COL_STORE_RELATION = 'Store';
 
     public const VERSION_PAGE_URL_PARAM_ID_CMS_PAGE = VersionPageController::URL_PARAM_ID_CMS_PAGE;
+
     public const VERSION_PAGE_URL_PARAM_REDIRECT_URL = VersionPageController::URL_PARAM_REDIRECT_URL;
 
     public const LIST_PAGE_URL_PARAM_ID_CMS_PAGE = ListPageController::URL_PARAM_ID_CMS_PAGE;
 
     public const EDIT_PAGE_URL_PARAM_ID_CMS_PAGE = EditPageController::URL_PARAM_ID_CMS_PAGE;
+
     public const EDIT_PAGE_URL_PARAM_REDIRECT_URL = EditPageController::URL_PARAM_REDIRECT_URL;
 
     public const CREATE_GLOSSARY_URL_PARAM_ID_CMS_PAGE = CreateGlossaryController::URL_PARAM_ID_CMS_PAGE;

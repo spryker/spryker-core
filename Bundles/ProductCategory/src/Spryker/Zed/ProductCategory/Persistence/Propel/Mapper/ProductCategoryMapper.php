@@ -28,7 +28,7 @@ class ProductCategoryMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductCategory\Persistence\SpyProductCategory[] $productCategoryEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductCategory\Persistence\SpyProductCategory> $productCategoryEntities
      * @param \Generated\Shared\Transfer\ProductCategoryCollectionTransfer $productCategoryCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ProductCategoryCollectionTransfer

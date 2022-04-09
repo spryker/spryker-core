@@ -16,8 +16,11 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 class MimeTypeSettingsTable extends AbstractTable
 {
     protected const COL_ID_MIME_TYPE = SpyMimeTypeTableMap::COL_ID_MIME_TYPE;
+
     protected const COL_NAME = SpyMimeTypeTableMap::COL_NAME;
+
     protected const COL_COMMENT = SpyMimeTypeTableMap::COL_COMMENT;
+
     protected const COL_IS_ALLOWED = SpyMimeTypeTableMap::COL_IS_ALLOWED;
 
     /**

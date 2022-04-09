@@ -43,6 +43,7 @@ class SessionEventDispatcherPlugin extends AbstractPlugin implements EventDispat
      * @var int
      */
     protected const EVENT_PRIORITY_KERNEL_REQUEST = 192;
+
     protected const EVENT_PRIORITY_KERNEL_RESPONSE = -128;
 
     /**

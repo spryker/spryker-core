@@ -109,6 +109,7 @@
     <transfer name="Translation">
         <property name="fkLocale" type="int"/>
         <property name="value" type="string"/>
+        <property name="fkGlossaryKey" type="int"/>
     </transfer>
 
     <transfer name="Locale">
@@ -137,6 +138,11 @@
     </transfer>
 
     <transfer name="CartChange">
+    </transfer>
+
+    <transfer name="GlossaryKey">
+        <property name="key" type="string"/>
+        <property name="idGlossaryKey" type="int"/>
     </transfer>
 
 </transfers>

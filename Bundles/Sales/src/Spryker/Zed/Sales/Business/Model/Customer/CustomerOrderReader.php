@@ -76,7 +76,7 @@ class CustomerOrderReader implements CustomerOrderReaderInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Sales\Persistence\SpySalesOrder[] $orderCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Sales\Persistence\SpySalesOrder> $orderCollection
      *
      * @return \ArrayObject<int, \Generated\Shared\Transfer\OrderTransfer>
      */

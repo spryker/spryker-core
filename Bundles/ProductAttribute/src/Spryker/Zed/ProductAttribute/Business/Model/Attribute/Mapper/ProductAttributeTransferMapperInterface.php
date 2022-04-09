@@ -21,7 +21,7 @@ interface ProductAttributeTransferMapperInterface
     public function convertProductAttribute(SpyProductManagementAttribute $productAttributeEntity);
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttribute[] $productAttributeEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttribute> $productAttributeEntityCollection
      *
      * @return array<\Generated\Shared\Transfer\ProductManagementAttributeTransfer>
      */
@@ -35,7 +35,7 @@ interface ProductAttributeTransferMapperInterface
     public function convertProductAttributeValue(SpyProductManagementAttributeValue $productAttributeValueEntity);
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValue[] $productAttributeValueEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValue> $productAttributeValueEntityCollection
      *
      * @return array<\Generated\Shared\Transfer\ProductManagementAttributeValueTransfer>
      */

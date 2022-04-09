@@ -36,9 +36,7 @@ class ProductOfferGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @phpstan-return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery<mixed>
-     *
-     * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery
+     * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery<mixed>
      */
     public function getProductOfferPropelQuery(): SpyProductOfferQuery
     {

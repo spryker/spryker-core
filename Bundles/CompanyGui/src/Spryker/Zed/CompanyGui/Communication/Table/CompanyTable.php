@@ -21,8 +21,11 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 class CompanyTable extends AbstractTable
 {
     public const COL_ID_COMPANY = SpyCompanyTableMap::COL_ID_COMPANY;
+
     public const COL_NAME = SpyCompanyTableMap::COL_NAME;
+
     public const COL_IS_ACTIVE = SpyCompanyTableMap::COL_IS_ACTIVE;
+
     public const COL_STATUS = SpyCompanyTableMap::COL_STATUS;
 
     /**

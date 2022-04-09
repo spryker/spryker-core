@@ -22,8 +22,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class ProductListProductConcreteRelationFormType extends AbstractType
 {
     public const FIELD_ID_PRODUCT_LIST = ProductListProductConcreteRelationTransfer::ID_PRODUCT_LIST;
+
     public const FIELD_ASSIGNED_PRODUCT_IDS = ProductListAggregateFormTransfer::ASSIGNED_PRODUCT_IDS;
+
     public const FIELD_PRODUCT_IDS_TO_BE_ASSIGNED = ProductListAggregateFormTransfer::PRODUCT_IDS_TO_BE_ASSIGNED;
+
     public const FIELD_PRODUCT_IDS_TO_BE_DEASSIGNED = ProductListAggregateFormTransfer::PRODUCT_IDS_TO_BE_DE_ASSIGNED;
 
     /**

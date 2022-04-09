@@ -141,7 +141,7 @@ class NavigationTreeReader implements NavigationTreeReaderInterface
     /**
      * @param \Orm\Zed\Navigation\Persistence\SpyNavigation $navigationEntity
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Navigation\Persistence\SpyNavigationNode[]
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Navigation\Persistence\SpyNavigationNode>
      */
     protected function findRootNavigationNodes(SpyNavigation $navigationEntity)
     {
@@ -196,7 +196,7 @@ class NavigationTreeReader implements NavigationTreeReaderInterface
      * @param \Orm\Zed\Navigation\Persistence\SpyNavigationNode $navigationNodeEntity
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Navigation\Persistence\SpyNavigationNodeLocalizedAttributes[]
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Navigation\Persistence\SpyNavigationNodeLocalizedAttributes>
      */
     protected function findLocalizedAttributes(SpyNavigationNode $navigationNodeEntity, ?LocaleTransfer $localeTransfer = null)
     {
@@ -241,7 +241,7 @@ class NavigationTreeReader implements NavigationTreeReaderInterface
     /**
      * @param \Generated\Shared\Transfer\NavigationNodeTransfer $navigationNodeTransfer
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Navigation\Persistence\SpyNavigationNode[]
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Navigation\Persistence\SpyNavigationNode>
      */
     protected function findChildrenNavigationNodes(NavigationNodeTransfer $navigationNodeTransfer)
     {

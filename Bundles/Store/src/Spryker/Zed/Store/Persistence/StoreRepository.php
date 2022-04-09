@@ -48,7 +48,7 @@ class StoreRepository extends AbstractRepository implements StoreRepositoryInter
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Store\Persistence\SpyStore[] $storeEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Store\Persistence\SpyStore> $storeEntities
      *
      * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */

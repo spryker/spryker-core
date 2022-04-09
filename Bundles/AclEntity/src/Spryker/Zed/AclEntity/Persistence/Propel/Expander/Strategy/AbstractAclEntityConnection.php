@@ -54,9 +54,7 @@ abstract class AbstractAclEntityConnection
     }
 
     /**
-     * @phpstan-param \Propel\Runtime\ActiveQuery\ModelCriteria<\Propel\Runtime\ActiveRecord\ActiveRecordInterface> $query
-     *
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria<\Propel\Runtime\ActiveRecord\ActiveRecordInterface> $query
      * @param \Generated\Shared\Transfer\AclEntityMetadataTransfer $aclEntityMetadataTransfer
      * @param string $joinType
      *
@@ -69,15 +67,11 @@ abstract class AbstractAclEntityConnection
     ): Join;
 
     /**
-     * @phpstan-param \Propel\Runtime\ActiveQuery\ModelCriteria<\Propel\Runtime\ActiveRecord\ActiveRecordInterface> $query
-     *
-     * @phpstan-return \Propel\Runtime\ActiveQuery\ModelCriteria<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
-     *
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria<\Propel\Runtime\ActiveRecord\ActiveRecordInterface> $query
      * @param \Generated\Shared\Transfer\AclEntityMetadataTransfer $aclEntityMetadataTransfer
      * @param string $joinType
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
      */
     public function joinRelation(
         ModelCriteria $query,
@@ -113,14 +107,10 @@ abstract class AbstractAclEntityConnection
     }
 
     /**
-     * @phpstan-param \Propel\Runtime\ActiveQuery\ModelCriteria<\Propel\Runtime\ActiveRecord\ActiveRecordInterface> $query
-     *
-     * @phpstan-return \Propel\Runtime\ActiveQuery\ModelCriteria<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
-     *
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria<\Propel\Runtime\ActiveRecord\ActiveRecordInterface> $query
      * @param \Propel\Runtime\ActiveQuery\Join $aclEntityJoin
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
      */
     protected function extendQueryAliases(ModelCriteria $query, Join $aclEntityJoin): ModelCriteria
     {
@@ -158,9 +148,7 @@ abstract class AbstractAclEntityConnection
     }
 
     /**
-     * @phpstan-param \Propel\Runtime\ActiveQuery\ModelCriteria<\Propel\Runtime\ActiveRecord\ActiveRecordInterface> $query
-     *
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria<\Propel\Runtime\ActiveRecord\ActiveRecordInterface> $query
      * @param string $tableName
      *
      * @throws \Spryker\Zed\AclEntity\Persistence\Exception\JoinNotFoundException
@@ -179,9 +167,7 @@ abstract class AbstractAclEntityConnection
     }
 
     /**
-     * @phpstan-param \Propel\Runtime\ActiveQuery\ModelCriteria<\Propel\Runtime\ActiveRecord\ActiveRecordInterface> $query
-     *
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria<\Propel\Runtime\ActiveRecord\ActiveRecordInterface> $query
      * @param string $alias
      *
      * @return bool
@@ -293,9 +279,7 @@ abstract class AbstractAclEntityConnection
     }
 
     /**
-     * @phpstan-param \Propel\Runtime\ActiveQuery\ModelCriteria<\Propel\Runtime\ActiveRecord\ActiveRecordInterface> $query
-     *
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria<\Propel\Runtime\ActiveRecord\ActiveRecordInterface> $query
      * @param \Propel\Runtime\ActiveQuery\Join $join
      *
      * @throws \Spryker\Zed\AclEntity\Persistence\Exception\QueryMergerJoinMalfunctionException

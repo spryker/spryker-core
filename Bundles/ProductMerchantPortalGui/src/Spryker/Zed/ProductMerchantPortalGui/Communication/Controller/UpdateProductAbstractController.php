@@ -351,12 +351,10 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
     }
 
     /**
-     * @phpstan-return \SplObjectStorage<object, mixed>
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductImageSetTransfer> $imageSets
      * @param array<int, mixed> $imageSetsErrors
      *
-     * @return \SplObjectStorage
+     * @return \SplObjectStorage<object, mixed>
      */
     protected function getImageSetMetaDataGroupedByImageSet(ArrayObject $imageSets, array $imageSetsErrors): SplObjectStorage
     {

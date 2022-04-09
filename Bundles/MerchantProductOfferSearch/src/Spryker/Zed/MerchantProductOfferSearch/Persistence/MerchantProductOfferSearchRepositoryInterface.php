@@ -29,4 +29,11 @@ interface MerchantProductOfferSearchRepositoryInterface
      * @return array<int>
      */
     public function getProductAbstractIdsByProductOfferIds(array $productOfferIds): array;
+
+    /**
+     * @param array<int> $productOfferIds
+     *
+     * @return array<int>
+     */
+    public function getProductConcreteIdsByProductOfferIds(array $productOfferIds): array;
 }
