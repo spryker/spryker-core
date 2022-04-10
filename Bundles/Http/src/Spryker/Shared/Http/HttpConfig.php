@@ -26,7 +26,7 @@ class HttpConfig extends AbstractSharedConfig
      */
     public function getUriSignerSecret(): string
     {
-        return md5(__DIR__);
+        return $this->get(HttpConstants::URI_SIGNER_SECRET_KEY, md5(__DIR__));
     }
 
     /**

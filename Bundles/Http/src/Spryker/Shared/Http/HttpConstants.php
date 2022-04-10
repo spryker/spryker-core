@@ -204,4 +204,14 @@ interface HttpConstants
      * @var string
      */
     public const GLUE_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG = 'HTTP:GLUE_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG';
+
+    /**
+     * Specification:
+     * - Secret key for URL signer.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const URI_SIGNER_SECRET_KEY = 'HTTP:URI_SIGNER_SECRET_KEY';
 }
