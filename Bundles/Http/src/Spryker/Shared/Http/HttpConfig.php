@@ -20,13 +20,36 @@ class HttpConfig extends AbstractSharedConfig
     protected const REQUEST_TRUSTED_HEADER_SET = Request::HEADER_X_FORWARDED_FOR | Request::HEADER_X_FORWARDED_HOST | Request::HEADER_X_FORWARDED_PORT | Request::HEADER_X_FORWARDED_PROTO;
 
     /**
+     * Specification:
+     * - Provides secret key for Symfony URI Signer.
+     * - `SPRYKER_ZED_REQUEST_TOKEN` used as a fallback to decrease migration effort and will be removed in next releases.
+     *
      * @api
      *
      * @return string
      */
     public function getUriSignerSecret(): string
     {
-        return $this->get(HttpConstants::URI_SIGNER_SECRET_KEY, md5(__DIR__));
+        $uriSignerSecret = null;
+        if (getenv('SPRYKER_ZED_REQUEST_TOKEN')) {
+            $uriSignerSecret = getenv('SPRYKER_ZED_REQUEST_TOKEN');
+        }
+
+        $uriSignerSecret = $this->get(
+            HttpConstants::URI_SIGNER_SECRET_KEY,
+            $uriSignerSecret,
+        );
+
+        if (!$uriSignerSecret) {
+            trigger_error(
+                'Environment configuration `HttpConstants::URI_SIGNER_SECRET_KEY` must be set.'
+                . ' Please, define `$config[HttpConstants::URI_SIGNER_SECRET_KEY] = getenv(\'SPRYKER_ZED_REQUEST_TOKEN\') ?: null;`'
+                . ' in your `config_default.php` file.',
+                E_USER_ERROR,
+            );
+        }
+
+        return $uriSignerSecret;
     }
 
     /**
