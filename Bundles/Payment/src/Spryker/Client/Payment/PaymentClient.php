@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\Payment;
 
+use Generated\Shared\Transfer\PaymentAuthorizeRequestTransfer;
+use Generated\Shared\Transfer\PaymentAuthorizeResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
@@ -15,6 +17,23 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class PaymentClient extends AbstractClient implements PaymentClientInterface
 {
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PaymentAuthorizeRequestTransfer $paymentAuthorizeRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\PaymentAuthorizeResponseTransfer
+     */
+    public function authorizeForeignPayment(
+        PaymentAuthorizeRequestTransfer $paymentAuthorizeRequestTransfer
+    ): PaymentAuthorizeResponseTransfer {
+        return $this->getFactory()
+            ->createPaymentRequestExecutor()
+            ->authorizeForeignPayment($paymentAuthorizeRequestTransfer);
+    }
+
     /**
      * {@inheritDoc}
      *

@@ -1,0 +1,30 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% block head_css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ assetsPath('css/spryker-zed-application-catalog-main.css') }}">
+    <base href="/app-catalog-gui/" />
+{% endblock %}
+
+{% block content %}
+    <app-root></app-root>
+
+    {% if appCatalogScriptUrl is empty or storeReference is empty %}
+        <h3>{{ 'Error: AOP Catalog configuration is incomplete' | trans }}</h3>
+        <p>{{ 'The AOP Catalog, can not be displayed, because its technical configuration is incomplete. Please contact your Administrator!' | trans }}</p>
+    {% endif %}
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script>
+        window['catalogSpaOptions'] = {
+            authTokenUrl: '/app-catalog-gui/api-login'
+        }
+    </script>
+
+    <script src="{{ url(appCatalogScriptUrl, {
+        storeReference: storeReference,
+        language: localeName,
+    }) }}"></script>
+{% endblock %}

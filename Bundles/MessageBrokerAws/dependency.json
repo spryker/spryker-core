@@ -1,0 +1,6 @@
+{
+    "include": {
+        "spryker/transfer": "Provides transfer objects definition with `::get*OrFail()` functionality.",
+        "symfony/amazon-sqs-messenger": "Provides Amazon SQS integration for Symfony Messenger."
+    }
+}

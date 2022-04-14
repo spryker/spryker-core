@@ -1,0 +1,40 @@
+{
+    "name": "spryker/message-broker-extension",
+    "type": "library",
+    "description": "MessageBrokerExtension module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=7.4"
+    },
+    "require-dev": {
+        "spryker/code-sniffer": "*",
+        "spryker/kernel": "*",
+        "spryker/symfony": "*"
+    },
+    "suggest": {
+        "spryker/kernel": "If you want to use the MessageValidatorPluginInterface.",
+        "spryker/symfony": "If you want to use MessageSenderPluginInterface or MessageReceiverPluginInterface."
+    },
+    "autoload": {
+        "psr-4": {
+            "Spryker\\": "src/Spryker/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
+}

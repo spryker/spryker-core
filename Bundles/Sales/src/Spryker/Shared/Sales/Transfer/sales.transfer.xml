@@ -44,6 +44,7 @@
         <property name="store" type="Store"/>
         <property name="orderReference" type="string"/>
         <property name="isOrderPlacedSuccessfully" type="bool"/>
+        <property name="payment" type="Payment" deprecated="Use payments property instead."/>
     </transfer>
 
     <transfer name="Totals">
@@ -442,5 +443,9 @@
 
     <transfer name="ItemMetadata">
         <property name="image" type="string"/>
+    </transfer>
+
+    <transfer name="Payment">
+        <property name="paymentSelection" type="string"/>
     </transfer>
 </transfers>

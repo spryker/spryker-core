@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Service\Payment\PaymentServiceInterface;
 
 class PaymentMethodValidator implements PaymentMethodValidatorInterface
 {
@@ -25,11 +26,20 @@ class PaymentMethodValidator implements PaymentMethodValidatorInterface
     protected $paymentMethodReader;
 
     /**
-     * @param \Spryker\Zed\Payment\Business\Method\PaymentMethodReaderInterface $paymentMethodReader
+     * @var \Spryker\Service\Payment\PaymentServiceInterface
      */
-    public function __construct(PaymentMethodReaderInterface $paymentMethodReader)
-    {
+    protected $paymentService;
+
+    /**
+     * @param \Spryker\Zed\Payment\Business\Method\PaymentMethodReaderInterface $paymentMethodReader
+     * @param \Spryker\Service\Payment\PaymentServiceInterface $paymentService
+     */
+    public function __construct(
+        PaymentMethodReaderInterface $paymentMethodReader,
+        PaymentServiceInterface $paymentService
+    ) {
         $this->paymentMethodReader = $paymentMethodReader;
+        $this->paymentService = $paymentService;
     }
 
     /**
@@ -68,11 +78,11 @@ class PaymentMethodValidator implements PaymentMethodValidatorInterface
     {
         $paymentMethodsKeys = [];
         if ($quoteTransfer->getPayment()) {
-            $paymentMethodsKeys[] = $quoteTransfer->getPayment()->getPaymentSelection();
+            $paymentMethodsKeys[] = $this->paymentService->getPaymentMethodKey($quoteTransfer->getPayment());
         }
 
-        foreach ($quoteTransfer->getPayments() as $payment) {
-            $paymentMethodsKeys[] = $payment->getPaymentSelection();
+        foreach ($quoteTransfer->getPayments() as $paymentTransfer) {
+            $paymentMethodsKeys[] = $this->paymentService->getPaymentMethodKey($paymentTransfer);
         }
 
         return $paymentMethodsKeys;

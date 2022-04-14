@@ -135,7 +135,7 @@ class SprykerSdkDependencyFinder extends AbstractFileDependencyFinder
             }
             $foreignModule = $useStatementFragments[1];
             if ($foreignModule !== $module) {
-                $dependentModules[] = $foreignModule;
+                $dependentModules[] = $this->buildComposerName($useStatementFragments[0], $useStatementFragments[1]);
             }
         }
 

@@ -18,6 +18,10 @@
         <column name="payment_method_key" required="true" size="255" type="VARCHAR"/>
         <column name="name" required="true" size="255" type="VARCHAR"/>
         <column name="is_active" type="BOOLEAN" default="true" required="true"/>
+        <column name="label_name" type="VARCHAR" size="255" required="false" description="Optional field, used only for AOP."/>
+        <column name="group_name" type="VARCHAR" size="255" required="false" description="Optional field, used only for AOP."/>
+        <column name="is_hidden" type="BOOLEAN" default="false" required="true" description="Optional field, used only for AOP."/>
+        <column name="payment_authorization_endpoint" type="VARCHAR" size="1000" required="false" description="Optional field, used only for AOP."/>
 
         <unique name="spy_payment_method-unique-payment_method_key">
             <unique-column name="payment_method_key"/>

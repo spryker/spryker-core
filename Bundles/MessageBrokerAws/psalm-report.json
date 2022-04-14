@@ -1,0 +1,175 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 74,
+            "line_to": 74,
+            "type": "UndefinedDocblockClass",
+            "message": "Docblock-defined class, interface or enum named Spryker\\Zed\\MessageBrokerAws\\Business\\Exception\\ConfigDecodingFailedException does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/MessageBrokerAws/src/Spryker/Zed/MessageBrokerAws/Business/Config/JsonToArrayConfigFormatter.php",
+            "snippet": "     * @throws \\Spryker\\Zed\\MessageBrokerAws\\Business\\Exception\\ConfigDecodingFailedException",
+            "selected_text": "\\Spryker\\Zed\\MessageBrokerAws\\Business\\Exception\\ConfigDecodingFailedException",
+            "error_level": -1,
+            "shortcode": 200
+        },
+        {
+            "severity": "error",
+            "line_from": 86,
+            "line_to": 86,
+            "type": "UndefinedClass",
+            "message": "Class, interface or enum named Spryker\\Zed\\MessageBrokerAws\\Business\\Exception\\ConfigDecodingFailedException does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/MessageBrokerAws/src/Spryker/Zed/MessageBrokerAws/Business/Config/JsonToArrayConfigFormatter.php",
+            "snippet": "            throw new ConfigDecodingFailedException();",
+            "selected_text": "ConfigDecodingFailedException",
+            "error_level": -1,
+            "shortcode": 19
+        },
+        {
+            "severity": "error",
+            "line_from": 61,
+            "line_to": 61,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<array-key, Symfony\\Component\\Messenger\\Envelope>' for Spryker\\Zed\\MessageBrokerAws\\Business\\Receiver\\Client\\SqsReceiverClient::get is incorrect, got 'Generator<int, Symfony\\Component\\Messenger\\Envelope, mixed, void>'",
+            "file_name": "vendor/spryker/spryker/Bundles/MessageBrokerAws/src/Spryker/Zed/MessageBrokerAws/Business/Receiver/Client/SqsReceiverClient.php",
+            "snippet": "     * @return array<\\Symfony\\Component\\Messenger\\Envelope>",
+            "selected_text": "array<\\Symfony\\Component\\Messenger\\Envelope>",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 42,
+            "line_to": 42,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<array-key, Symfony\\Component\\Messenger\\Envelope>' for Spryker\\Zed\\MessageBrokerAws\\Communication\\Plugin\\MessageBroker\\Receiver\\AwsSqsMessageReceiverPlugin::getFromQueues is incorrect, got 'Generator<array-key, Symfony\\Component\\Messenger\\Envelope, mixed, void>'",
+            "file_name": "vendor/spryker/spryker/Bundles/MessageBrokerAws/src/Spryker/Zed/MessageBrokerAws/Communication/Plugin/MessageBroker/Receiver/AwsSqsMessageReceiverPlugin.php",
+            "snippet": "     * @return array<\\Symfony\\Component\\Messenger\\Envelope>",
+            "selected_text": "array<\\Symfony\\Component\\Messenger\\Envelope>",
+            "error_level": 6,
+            "shortcode": 11
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 22,
+            "line_to": 22,
+            "type": "LessSpecificImplementedReturnType",
+            "message": "The inherited return type 'array<string, string>' for Spryker\\Zed\\MessageBrokerAws\\Business\\Sender\\Client\\Formatter\\HttpHeaderFormatterInterface::formatHeaders is more specific than the implemented return type for Spryker\\Zed\\MessageBrokerAws\\Business\\Sender\\Client\\Formatter\\HttpHeaderFormatter::formatheaders 'array<string, mixed>'",
+            "file_name": "vendor/spryker/spryker/Bundles/MessageBrokerAws/src/Spryker/Zed/MessageBrokerAws/Business/Sender/Client/Formatter/HttpHeaderFormatter.php",
+            "snippet": "     * @return array<string, mixed>",
+            "selected_text": "array<string, mixed>",
+            "error_level": 5,
+            "shortcode": 166
+        },
+        {
+            "severity": "info",
+            "line_from": 182,
+            "line_to": 182,
+            "type": "RedundantCondition",
+            "message": "Type string for $value is always string",
+            "file_name": "vendor/spryker/spryker/Bundles/MessageBrokerAws/src/Spryker/Zed/MessageBrokerAws/Business/Sender/Client/SnsSenderClient.php",
+            "snippet": "        return is_string($value) && is_array(json_decode($value, true)) ? true : false;",
+            "selected_text": "is_string($value)",
+            "error_level": 4,
+            "shortcode": 122
+        },
+        {
+            "severity": "info",
+            "line_from": 156,
+            "line_to": 156,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method modifiedToArray on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/MessageBrokerAws/src/Spryker/Zed/MessageBrokerAws/Business/Serializer/TransferSerializer.php",
+            "snippet": "                $messageAttributesTransfer->getPublisher()->modifiedToArray(true, true),",
+            "selected_text": "modifiedToArray",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 38,
+            "line_to": 38,
+            "type": "FalsableReturnStatement",
+            "message": "The declared return type 'array<string, mixed>|string' for Spryker\\Zed\\MessageBrokerAws\\MessageBrokerAwsConfig::getSnsSenderConfig does not allow false, but the function returns 'false|string'",
+            "file_name": "vendor/spryker/spryker/Bundles/MessageBrokerAws/src/Spryker/Zed/MessageBrokerAws/MessageBrokerAwsConfig.php",
+            "snippet": "            return getenv('SPRYKER_MESSAGE_BROKER_SNS_SENDER_CONFIG');",
+            "selected_text": "getenv('SPRYKER_MESSAGE_BROKER_SNS_SENDER_CONFIG')",
+            "error_level": 5,
+            "shortcode": 137
+        },
+        {
+            "severity": "info",
+            "line_from": 58,
+            "line_to": 58,
+            "type": "FalsableReturnStatement",
+            "message": "The declared return type 'array<string, mixed>|string' for Spryker\\Zed\\MessageBrokerAws\\MessageBrokerAwsConfig::getSqsSenderConfig does not allow false, but the function returns 'false|string'",
+            "file_name": "vendor/spryker/spryker/Bundles/MessageBrokerAws/src/Spryker/Zed/MessageBrokerAws/MessageBrokerAwsConfig.php",
+            "snippet": "            return getenv('SPRYKER_MESSAGE_BROKER_SQS_SENDER_CONFIG');",
+            "selected_text": "getenv('SPRYKER_MESSAGE_BROKER_SQS_SENDER_CONFIG')",
+            "error_level": 5,
+            "shortcode": 137
+        },
+        {
+            "severity": "info",
+            "line_from": 78,
+            "line_to": 78,
+            "type": "FalsableReturnStatement",
+            "message": "The declared return type 'array<string, mixed>|string' for Spryker\\Zed\\MessageBrokerAws\\MessageBrokerAwsConfig::getHttpSenderConfig does not allow false, but the function returns 'false|string'",
+            "file_name": "vendor/spryker/spryker/Bundles/MessageBrokerAws/src/Spryker/Zed/MessageBrokerAws/MessageBrokerAwsConfig.php",
+            "snippet": "            return getenv('SPRYKER_MESSAGE_BROKER_HTTP_SENDER_CONFIG');",
+            "selected_text": "getenv('SPRYKER_MESSAGE_BROKER_HTTP_SENDER_CONFIG')",
+            "error_level": 5,
+            "shortcode": 137
+        },
+        {
+            "severity": "info",
+            "line_from": 98,
+            "line_to": 98,
+            "type": "FalsableReturnStatement",
+            "message": "The declared return type 'array<string, mixed>|string' for Spryker\\Zed\\MessageBrokerAws\\MessageBrokerAwsConfig::getSqsReceiverConfig does not allow false, but the function returns 'false|string'",
+            "file_name": "vendor/spryker/spryker/Bundles/MessageBrokerAws/src/Spryker/Zed/MessageBrokerAws/MessageBrokerAwsConfig.php",
+            "snippet": "            return getenv('SPRYKER_MESSAGE_BROKER_SQS_RECEIVER_CONFIG');",
+            "selected_text": "getenv('SPRYKER_MESSAGE_BROKER_SQS_RECEIVER_CONFIG')",
+            "error_level": 5,
+            "shortcode": 137
+        },
+        {
+            "severity": "info",
+            "line_from": 138,
+            "line_to": 138,
+            "type": "FalsableReturnStatement",
+            "message": "The declared return type 'array<string, string>|string' for Spryker\\Zed\\MessageBrokerAws\\MessageBrokerAwsConfig::getChannelToSenderTransportMap does not allow false, but the function returns 'false|string'",
+            "file_name": "vendor/spryker/spryker/Bundles/MessageBrokerAws/src/Spryker/Zed/MessageBrokerAws/MessageBrokerAwsConfig.php",
+            "snippet": "            return getenv('SPRYKER_CHANNEL_TO_SENDER_TRANSPORT_MAP');",
+            "selected_text": "getenv('SPRYKER_CHANNEL_TO_SENDER_TRANSPORT_MAP')",
+            "error_level": 5,
+            "shortcode": 137
+        },
+        {
+            "severity": "info",
+            "line_from": 158,
+            "line_to": 158,
+            "type": "FalsableReturnStatement",
+            "message": "The declared return type 'array<string, string>|string' for Spryker\\Zed\\MessageBrokerAws\\MessageBrokerAwsConfig::getChannelToReceiverTransportMap does not allow false, but the function returns 'false|string'",
+            "file_name": "vendor/spryker/spryker/Bundles/MessageBrokerAws/src/Spryker/Zed/MessageBrokerAws/MessageBrokerAwsConfig.php",
+            "snippet": "            return getenv('SPRYKER_CHANNEL_TO_RECEIVER_TRANSPORT_MAP');",
+            "selected_text": "getenv('SPRYKER_CHANNEL_TO_RECEIVER_TRANSPORT_MAP')",
+            "error_level": 5,
+            "shortcode": 137
+        },
+        {
+            "severity": "info",
+            "line_from": 178,
+            "line_to": 178,
+            "type": "FalsableReturnStatement",
+            "message": "The declared return type 'array<string, string>|string' for Spryker\\Zed\\MessageBrokerAws\\MessageBrokerAwsConfig::getMessageToChannelMap does not allow false, but the function returns 'false|string'",
+            "file_name": "vendor/spryker/spryker/Bundles/MessageBrokerAws/src/Spryker/Zed/MessageBrokerAws/MessageBrokerAwsConfig.php",
+            "snippet": "            return getenv('SPRYKER_MESSAGE_TO_CHANNEL_MAP');",
+            "selected_text": "getenv('SPRYKER_MESSAGE_TO_CHANNEL_MAP')",
+            "error_level": 5,
+            "shortcode": 137
+        }
+    ],
+    "deprecation": []
+}

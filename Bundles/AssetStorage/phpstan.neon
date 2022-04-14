@@ -1,0 +1,5 @@
+parameters:
+    level: 8
+    checkMissingIterableValueType: false
+    ignoreErrors:
+        - '#Parameter .* of method .* expects .* given\.#'

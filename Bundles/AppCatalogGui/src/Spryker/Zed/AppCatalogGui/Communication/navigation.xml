@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <app-catalog-gui>
+        <label>Apps</label>
+        <title>Apps</title>
+        <icon>fa-archive</icon>
+        <bundle>app-catalog-gui</bundle>
+        <controller>index</controller>
+        <action>index</action>
+    </app-catalog-gui>
+</config>

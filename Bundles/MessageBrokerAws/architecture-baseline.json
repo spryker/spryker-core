@@ -1,0 +1,16 @@
+[
+    {
+        "fileName": "src/Spryker/Zed/MessageBrokerAws/Business/MessageBrokerAwsFacade.php",
+        "description": "Zed Business Layer - Facade: The method `Spryker\\Zed\\MessageBrokerAws\\Business\\MessageBrokerAwsFacade::send()()` is using an invalid return type `\\Symfony\\Component\\Messenger\\Envelope` which violates the rule \"Every Facade should only return native types or transfer objects.\"",
+        "rule": "FacadeReturnValueRule",
+        "ruleset": "Spryker Zed",
+        "priority": "1"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MessageBrokerAws/Dependency/Facade/MessageBrokerAwsToStoreBridge.php",
+        "description": "Bridges: Method `getCurrentStore()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]
