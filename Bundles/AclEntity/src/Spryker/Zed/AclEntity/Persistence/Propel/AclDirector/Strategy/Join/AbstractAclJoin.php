@@ -12,6 +12,7 @@ use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\ActiveQuery\PropelQuery;
 use Propel\Runtime\ServiceContainer\ServiceContainerInterface;
 use Spryker\Zed\AclEntity\Persistence\Exception\SegmentTableJoinNotFoundException;
+use Spryker\Zed\AclEntity\Persistence\Exception\TablePrimaryKeyNotFoundException;
 use Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\Strategy\Query\AclQueryScopeInterface;
 use Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\Strategy\Query\DefaultAclQueryScope;
 use Spryker\Zed\AclEntity\Persistence\Propel\AclDirector\StrategyResolver\AclQueryScopeResolverInterface;
@@ -252,5 +253,37 @@ abstract class AbstractAclJoin implements AclJoinInterface
         }
 
         return '';
+    }
+
+    /**
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria<\Propel\Runtime\ActiveRecord\ActiveRecordInterface> $query
+     * @param string $joinType
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
+     */
+    protected function updateJoinTypes(ModelCriteria $query, string $joinType): ModelCriteria
+    {
+        foreach ($query->getJoins() as $join) {
+            $join->setJoinType($joinType);
+        }
+
+        return $query;
+    }
+
+    /**
+     * @param string $table
+     *
+     * @throws \Spryker\Zed\AclEntity\Persistence\Exception\TablePrimaryKeyNotFoundException
+     *
+     * @return string
+     */
+    protected function getPrimaryKeyColumn(string $table): string
+    {
+        $primaryKey = current($this->getPrimaryKeys($table));
+        if (!$primaryKey) {
+            throw new TablePrimaryKeyNotFoundException($table);
+        }
+
+        return $primaryKey->getFullyQualifiedName() ?: '';
     }
 }

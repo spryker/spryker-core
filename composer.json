@@ -518,6 +518,7 @@
         "spryker/price-product-merchant-relationship": "*",
         "spryker/price-product-merchant-relationship-data-import": "*",
         "spryker/price-product-merchant-relationship-gui": "*",
+        "spryker/price-product-merchant-relationship-merchant-portal-gui": "*",
         "spryker/price-product-merchant-relationship-storage": "*",
         "spryker/price-product-merchant-relationship-storage-extension": "*",
         "spryker/price-product-offer": "*",

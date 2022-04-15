@@ -58,26 +58,32 @@ class LeftAclJoin extends AbstractAclJoin
         }
 
         $relationQuery = $aclQueryScope->applyAclRuleOnSelectQuery($relationQuery, $aclEntityRuleCollectionTransfer);
-        if ($this->hasSegmentJoin($relationQuery)) {
-            $relationQuery = $this->extendQueryWithSegmentConditions($relationQuery);
-        }
+        $relationQuery = $this->updateJoinTypes($relationQuery, Criteria::LEFT_JOIN);
+        $query = $this->aclEntityQueryMerger->mergeQueries($query, $relationQuery);
 
-        return $this->aclEntityQueryMerger->mergeQueries($query, $relationQuery);
+        return $this->hasSegmentJoin($relationQuery) ? $this->extendQueryWithSegmentConditions($query, $join) : $query;
     }
 
     /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria<\Propel\Runtime\ActiveRecord\ActiveRecordInterface> $query
+     * @param \Propel\Runtime\ActiveQuery\Join $join
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
      */
-    protected function extendQueryWithSegmentConditions(ModelCriteria $query): ModelCriteria
+    protected function extendQueryWithSegmentConditions(ModelCriteria $query, Join $join): ModelCriteria
     {
         $aclEntitySegmentJoin = $this->getAclEntitySegmentJoin($query);
-        $rightTableName = $aclEntitySegmentJoin->getRightTableName() ?: '';
-        $aclEntitySegmentPrimaryKey = current($this->getPrimaryKeys($rightTableName));
 
-        $primaryKeyColumn = $aclEntitySegmentPrimaryKey ? $aclEntitySegmentPrimaryKey->getFullyQualifiedName() : '';
-        $query->where(sprintf('%s IS NOT NULL', $primaryKeyColumn));
+        $aclEntitySegmentPrimaryKeyColumn = $this->getPrimaryKeyColumn($aclEntitySegmentJoin->getRightTableName() ?: '');
+        $joinPrimaryKeyColumn = $this->getPrimaryKeyColumn($join->getRightTableName() ?: '');
+
+        $query->where(
+            sprintf(
+                '(%s IS NOT NULL OR %s IS NULL)',
+                $aclEntitySegmentPrimaryKeyColumn,
+                $joinPrimaryKeyColumn,
+            ),
+        );
 
         return $query;
     }

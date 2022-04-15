@@ -7,4 +7,19 @@
     <transfer name="GuiTableDataResponse">
     </transfer>
 
+    <transfer name="PriceProductCollectionDeleteCriteria">
+    </transfer>
+
+    <transfer name="PriceProductCriteria">
+    </transfer>
+
+    <transfer name="PriceProductTableView">
+    </transfer>
+
+    <transfer name="PriceProduct">
+    </transfer>
+
+    <transfer name="PriceProductTableCriteria">
+    </transfer>
+
 </transfers>

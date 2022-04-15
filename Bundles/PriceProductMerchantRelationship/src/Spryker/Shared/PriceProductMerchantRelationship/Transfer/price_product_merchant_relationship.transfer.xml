@@ -55,6 +55,7 @@
     <transfer name="PriceProductCriteria">
         <property name="priceDimension" type="PriceProductDimension"/>
         <property name="quote" type="Quote"/>
+        <property name="withAllMerchantPrices" type="bool"/>
     </transfer>
 
     <transfer name="MoneyValue">
@@ -71,5 +72,21 @@
 
     <transfer name="CompanyBusinessUnit">
         <property name="merchantRelationships" type="MerchantRelationship[]" singular="merchantRelationship"/>
+    </transfer>
+
+    <transfer name="PriceProductCollectionDeleteCriteria">
+        <property name="merchantRelationshipIds" type="int[]" singular="idMerchantRelationship"/>
+        <property name="priceProductStoreIds" type="int[]" singular="idPriceProductStore"/>
+    </transfer>
+
+    <transfer name="PriceProductMerchantRelationshipCollectionDeleteCriteria">
+        <property name="priceProductStoreIds" type="int[]" singular="priceProductStoreId"/>
+        <property name="merchantRelationshipIds" type="int[]" singular="merchantRelationshipId"/>
+    </transfer>
+
+    <transfer name="PriceProductMerchantRelationshipCollectionResponse">
+    </transfer>
+
+    <transfer name="PriceProductCollectionResponse">
     </transfer>
 </transfers>

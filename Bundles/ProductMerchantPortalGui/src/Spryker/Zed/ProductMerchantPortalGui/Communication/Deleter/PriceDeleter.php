@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Deleter;
 
+use Generated\Shared\Transfer\PriceProductCollectionDeleteCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ValidationErrorTransfer;
 use Generated\Shared\Transfer\ValidationResponseTransfer;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\PriceProductMapperInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToPriceProductVolumeServiceInterface;
 
@@ -38,15 +40,23 @@ class PriceDeleter implements PriceDeleterInterface
     protected $priceProductVolumeService;
 
     /**
+     * @var \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\PriceProductMapperInterface
+     */
+    protected $priceProductMapper;
+
+    /**
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToPriceProductVolumeServiceInterface $priceProductVolumeService
+     * @param \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\PriceProductMapperInterface $priceProductMapper
      */
     public function __construct(
         ProductMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade,
-        ProductMerchantPortalGuiToPriceProductVolumeServiceInterface $priceProductVolumeService
+        ProductMerchantPortalGuiToPriceProductVolumeServiceInterface $priceProductVolumeService,
+        PriceProductMapperInterface $priceProductMapper
     ) {
         $this->priceProductFacade = $priceProductFacade;
         $this->priceProductVolumeService = $priceProductVolumeService;
+        $this->priceProductMapper = $priceProductMapper;
     }
 
     /**
@@ -61,6 +71,7 @@ class PriceDeleter implements PriceDeleterInterface
             ->setIsSuccess(true);
 
         if ($volumeQuantity === 1) {
+            $priceProductsToRemove = [];
             foreach ($priceProductTransfers as $priceProductTransfer) {
                 $validationResponseTransfer = $this->validatePriceProduct(
                     $priceProductTransfer,
@@ -71,9 +82,16 @@ class PriceDeleter implements PriceDeleterInterface
                     return $validationResponseTransfer;
                 }
 
-                $this->priceProductFacade
-                    ->removePriceProductDefaultForPriceProduct($priceProductTransfer);
+                $priceProductsToRemove[] = $priceProductTransfer;
             }
+
+            $priceProductCollectionDeleteCriteriaTransfer = $this->priceProductMapper->mapPriceProductTransfersToPriceProductCollectionDeleteCriteriaTransfer(
+                $priceProductsToRemove,
+                new PriceProductCollectionDeleteCriteriaTransfer(),
+            );
+            $this->priceProductFacade->deletePriceProductCollection(
+                $priceProductCollectionDeleteCriteriaTransfer,
+            );
 
             return $validationResponseTransfer;
         }

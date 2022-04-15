@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\PriceProductSchedule\Dependency\Facade;
 
+use Generated\Shared\Transfer\PriceProductCollectionDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductCollectionResponseTransfer;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
@@ -48,13 +50,14 @@ class PriceProductScheduleToPriceProductFacadeBridge implements PriceProductSche
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     * @param \Generated\Shared\Transfer\PriceProductCollectionDeleteCriteriaTransfer $priceProductCollectionDeleteCriteriaTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\PriceProductCollectionResponseTransfer
      */
-    public function removePriceProductDefaultForPriceProduct(PriceProductTransfer $priceProductTransfer): void
-    {
-        $this->priceProductFacade->removePriceProductDefaultForPriceProduct($priceProductTransfer);
+    public function deletePriceProductCollection(
+        PriceProductCollectionDeleteCriteriaTransfer $priceProductCollectionDeleteCriteriaTransfer
+    ): PriceProductCollectionResponseTransfer {
+        return $this->priceProductFacade->deletePriceProductCollection($priceProductCollectionDeleteCriteriaTransfer);
     }
 
     /**

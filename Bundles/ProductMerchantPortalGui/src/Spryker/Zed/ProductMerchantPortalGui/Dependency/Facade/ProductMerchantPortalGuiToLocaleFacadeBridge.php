@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+
 class ProductMerchantPortalGuiToLocaleFacadeBridge implements ProductMerchantPortalGuiToLocaleFacadeInterface
 {
     /**
@@ -25,7 +27,7 @@ class ProductMerchantPortalGuiToLocaleFacadeBridge implements ProductMerchantPor
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getCurrentLocale()
+    public function getCurrentLocale(): LocaleTransfer
     {
         return $this->localeFacade->getCurrentLocale();
     }
@@ -33,7 +35,7 @@ class ProductMerchantPortalGuiToLocaleFacadeBridge implements ProductMerchantPor
     /**
      * @return array<string>
      */
-    public function getAvailableLocales()
+    public function getAvailableLocales(): array
     {
         return $this->localeFacade->getAvailableLocales();
     }
@@ -43,7 +45,7 @@ class ProductMerchantPortalGuiToLocaleFacadeBridge implements ProductMerchantPor
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getLocale($localeName)
+    public function getLocale(string $localeName): LocaleTransfer
     {
         return $this->localeFacade->getLocale($localeName);
     }
@@ -51,7 +53,7 @@ class ProductMerchantPortalGuiToLocaleFacadeBridge implements ProductMerchantPor
     /**
      * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
-    public function getLocaleCollection()
+    public function getLocaleCollection(): array
     {
         return $this->localeFacade->getLocaleCollection();
     }
@@ -61,7 +63,7 @@ class ProductMerchantPortalGuiToLocaleFacadeBridge implements ProductMerchantPor
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getLocaleById($idLocale)
+    public function getLocaleById(int $idLocale): LocaleTransfer
     {
         return $this->localeFacade->getLocaleById($idLocale);
     }

@@ -46,12 +46,8 @@ class ValidUniqueStoreCurrencyCollectionConstraintValidator extends AbstractCons
                 continue;
             }
 
-            $key = sprintf(
-                '%s-%s-%s',
-                $moneyValueTransfer->getFkCurrencyOrFail(),
-                $moneyValueTransfer->getFkStoreOrFail(),
-                $priceProductTransfer->getPriceTypeOrFail()->getIdPriceTypeOrFail(),
-            );
+            $key = $this->createPriceProductGroupKey($constraint, $priceProductTransfer);
+
             if (in_array($key, $existingKeys, true)) {
                 $this->context->buildViolation($constraint->getMessage())
                     ->atPath("[$position]")
@@ -60,5 +56,24 @@ class ValidUniqueStoreCurrencyCollectionConstraintValidator extends AbstractCons
 
             $existingKeys[] = $key;
         }
+    }
+
+    /**
+     * @param \Spryker\Zed\PriceProduct\Business\Validator\Constraint\ValidUniqueStoreCurrencyCollectionConstraint $constraint
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return string
+     */
+    protected function createPriceProductGroupKey(Constraint $constraint, PriceProductTransfer $priceProductTransfer): string
+    {
+        $priceProductDimensionTransfer = $priceProductTransfer->getPriceDimensionOrFail();
+
+        $clonePriceProductDimensionTransfer = clone $priceProductDimensionTransfer;
+
+        $clonedPriceProductTransfer = (clone $priceProductTransfer)
+            ->setPriceTypeName($priceProductTransfer->getPriceTypeOrFail()->getName())
+            ->setPriceDimension($clonePriceProductDimensionTransfer->setName(null));
+
+        return $constraint->getPriceProductService()->buildPriceProductGroupKey($clonedPriceProductTransfer);
     }
 }

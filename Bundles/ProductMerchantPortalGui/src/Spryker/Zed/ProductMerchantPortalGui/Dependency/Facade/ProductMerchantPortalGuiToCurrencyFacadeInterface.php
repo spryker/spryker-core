@@ -7,17 +7,19 @@
 
 namespace Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
+
 interface ProductMerchantPortalGuiToCurrencyFacadeInterface
 {
     /**
      * @return array<\Generated\Shared\Transfer\StoreWithCurrencyTransfer>
      */
-    public function getAllStoresWithCurrencies();
+    public function getAllStoresWithCurrencies(): array;
 
     /**
      * @param int $idCurrency
      *
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function getByIdCurrency($idCurrency);
+    public function getByIdCurrency(int $idCurrency): CurrencyTransfer;
 }

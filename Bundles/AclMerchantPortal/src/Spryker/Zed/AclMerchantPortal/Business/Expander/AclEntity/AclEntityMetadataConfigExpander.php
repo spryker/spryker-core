@@ -163,7 +163,7 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                     (new AclEntityParentMetadataTransfer())
                         ->setEntityName('Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrder'),
                 )
-            ->setIsSubEntity(false),
+                ->setIsSubEntity(false),
         );
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
             'Orm\Zed\Sales\Persistence\SpySalesOrderItemOption',
@@ -703,6 +703,46 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                                 ->setReferencedColumn('product_offer_reference'),
                         ),
                 ),
+        );
+        $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
+            'Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationship',
+            (new AclEntityMetadataTransfer())
+                ->setEntityName('Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationship')
+                ->setParent(
+                    (new AclEntityParentMetadataTransfer())
+                        ->setEntityName('Orm\Zed\Merchant\Persistence\SpyMerchant'),
+                )
+                ->setIsSubEntity(true),
+        );
+        $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
+            'Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationship',
+            (new AclEntityMetadataTransfer())
+                ->setEntityName('Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationship')
+                ->setParent(
+                    (new AclEntityParentMetadataTransfer())
+                        ->setEntityName('Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationship'),
+                )
+                ->setIsSubEntity(true),
+        );
+        $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
+            'Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnit',
+            (new AclEntityMetadataTransfer())
+                ->setEntityName('Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnit')
+                ->setParent(
+                    (new AclEntityParentMetadataTransfer())
+                        ->setEntityName('Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationship'),
+                )
+                ->setIsSubEntity(true),
+        );
+        $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
+            'Orm\Zed\Company\Persistence\SpyCompany',
+            (new AclEntityMetadataTransfer())
+                ->setEntityName('Orm\Zed\Company\Persistence\SpyCompany')
+                ->setParent(
+                    (new AclEntityParentMetadataTransfer())
+                        ->setEntityName('Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnit'),
+                )
+                ->setIsSubEntity(true),
         );
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
             'Orm\Zed\Store\Persistence\SpyStore',

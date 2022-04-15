@@ -97,10 +97,9 @@ abstract class AbstractFieldMapperStrategy implements FieldMapperStrategyInterfa
             $priceProductTransfers[] = (new PriceProductTransfer())
                 ->setFkPriceType($priceTypeTransfer->getIdPriceType())
                 ->setPriceType($priceTypeTransfer)
-                ->setPriceDimension(
-                    (new PriceProductDimensionTransfer())->setType(static::PRICE_DIMENSION_TYPE_DEFAULT),
-                )
-                ->setMoneyValue($this->recreateMoneyValueTransfer($moneyValueTransfer));
+                ->setPriceDimension($priceProductTransfer->getPriceDimensionOrFail())
+                ->setMoneyValue($this->recreateMoneyValueTransfer($moneyValueTransfer))
+                ->setPriceTypeName($priceTypeTransfer->getNameOrFail());
         }
 
         return $priceProductTransfers;

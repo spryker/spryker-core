@@ -236,6 +236,7 @@
         <property name="idProduct" type="int"/>
         <property name="volumeQuantity" type="int"/>
         <property name="idPriceProduct" type="int"/>
+        <property name="priceTypeName" type="string"/>
     </transfer>
 
     <transfer name="MoneyValue">
@@ -281,6 +282,7 @@
         <property name="idCurrency" type="int"/>
         <property name="idStore" type="int"/>
         <property name="priceType" type="string"/>
+        <property name="withAllMerchantPrices" type="bool"/>
     </transfer>
 
     <transfer name="ValidationResponse">
@@ -308,6 +310,7 @@
     <transfer name="PriceProductDimension">
         <property name="idPriceProductDefault" type="int"/>
         <property name="type" type="string"/>
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="GuiTableEditableButton">
@@ -434,5 +437,13 @@
 
     <transfer name="GuiTableDataSourceConfiguration">
         <property name="type" type="string"/>
+    </transfer>
+
+    <transfer name="PriceProductCollectionDeleteCriteria">
+        <property name="priceProductDefaultIds" type="int[]" singular="idPriceProductDefault"/>
+        <property name="priceProductStoreIds" type="int[]" singular="idPriceProductStore"/>
+    </transfer>
+
+    <transfer name="PriceProductCollectionResponse">
     </transfer>
 </transfers>

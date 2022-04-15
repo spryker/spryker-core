@@ -32,7 +32,7 @@ class ProductMerchantPortalGuiToProductFacadeBridge implements ProductMerchantPo
      *
      * @return int
      */
-    public function saveProductAbstract(ProductAbstractTransfer $productAbstractTransfer)
+    public function saveProductAbstract(ProductAbstractTransfer $productAbstractTransfer): int
     {
         return $this->productFacade->saveProductAbstract($productAbstractTransfer);
     }
@@ -42,7 +42,7 @@ class ProductMerchantPortalGuiToProductFacadeBridge implements ProductMerchantPo
      *
      * @return int
      */
-    public function saveProductConcrete(ProductConcreteTransfer $productConcreteTransfer)
+    public function saveProductConcrete(ProductConcreteTransfer $productConcreteTransfer): int
     {
         return $this->productFacade->saveProductConcrete($productConcreteTransfer);
     }
@@ -52,7 +52,7 @@ class ProductMerchantPortalGuiToProductFacadeBridge implements ProductMerchantPo
      *
      * @return void
      */
-    public function activateProductConcrete($idProductConcrete)
+    public function activateProductConcrete(int $idProductConcrete): void
     {
         $this->productFacade->activateProductConcrete($idProductConcrete);
     }
@@ -62,7 +62,7 @@ class ProductMerchantPortalGuiToProductFacadeBridge implements ProductMerchantPo
      *
      * @return void
      */
-    public function deactivateProductConcrete($idProductConcrete)
+    public function deactivateProductConcrete(int $idProductConcrete): void
     {
         $this->productFacade->deactivateProductConcrete($idProductConcrete);
     }
@@ -82,7 +82,7 @@ class ProductMerchantPortalGuiToProductFacadeBridge implements ProductMerchantPo
      *
      * @return bool
      */
-    public function hasProductAbstract($sku)
+    public function hasProductAbstract(string $sku): bool
     {
         return $this->productFacade->hasProductAbstract($sku);
     }
@@ -92,7 +92,7 @@ class ProductMerchantPortalGuiToProductFacadeBridge implements ProductMerchantPo
      *
      * @return bool
      */
-    public function hasProductConcrete($sku)
+    public function hasProductConcrete(string $sku): bool
     {
         return $this->productFacade->hasProductConcrete($sku);
     }
@@ -103,7 +103,7 @@ class ProductMerchantPortalGuiToProductFacadeBridge implements ProductMerchantPo
      *
      * @return int
      */
-    public function addProduct(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteCollection)
+    public function addProduct(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteCollection): int
     {
         return $this->productFacade->addProduct($productAbstractTransfer, $productConcreteCollection);
     }
@@ -113,7 +113,7 @@ class ProductMerchantPortalGuiToProductFacadeBridge implements ProductMerchantPo
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
      */
-    public function findProductAbstractById($idProductAbstract)
+    public function findProductAbstractById(int $idProductAbstract): ?ProductAbstractTransfer
     {
         return $this->productFacade->findProductAbstractById($idProductAbstract);
     }
@@ -123,7 +123,7 @@ class ProductMerchantPortalGuiToProductFacadeBridge implements ProductMerchantPo
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
      */
-    public function findProductConcreteById($idProduct)
+    public function findProductConcreteById(int $idProduct): ?ProductConcreteTransfer
     {
         return $this->productFacade->findProductConcreteById($idProduct);
     }

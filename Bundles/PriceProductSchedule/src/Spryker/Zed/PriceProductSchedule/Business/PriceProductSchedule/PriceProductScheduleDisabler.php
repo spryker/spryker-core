@@ -8,6 +8,7 @@
 namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule;
 
 use DateTime;
+use Generated\Shared\Transfer\PriceProductCollectionDeleteCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
@@ -196,7 +197,12 @@ class PriceProductScheduleDisabler implements PriceProductScheduleDisablerInterf
             return;
         }
 
-        $this->priceProductFacade->removePriceProductDefaultForPriceProduct($currentPriceProductTransfer);
+        $this->priceProductFacade->deletePriceProductCollection(
+            (new PriceProductCollectionDeleteCriteriaTransfer())
+                ->addIdPriceProductDefault(
+                    $currentPriceProductTransfer->getPriceDimensionOrFail()->getIdPriceProductDefaultOrFail(),
+                ),
+        );
     }
 
     /**

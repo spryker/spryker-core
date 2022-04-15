@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PriceProduct\Business\Validator\Constraint;
 
+use Spryker\Service\PriceProduct\PriceProductServiceInterface;
 use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 
 class ValidUniqueStoreCurrencyCollectionConstraint extends SymfonyConstraint
@@ -15,6 +16,22 @@ class ValidUniqueStoreCurrencyCollectionConstraint extends SymfonyConstraint
      * @var string
      */
     protected const MESSAGE = 'The set of inputs Store and Currency needs to be unique.';
+
+    /**
+     * @var \Spryker\Service\PriceProduct\PriceProductServiceInterface
+     */
+    protected $priceProductService;
+
+    /**
+     * @param \Spryker\Service\PriceProduct\PriceProductServiceInterface $priceProductService
+     * @param mixed $options
+     */
+    public function __construct(PriceProductServiceInterface $priceProductService, $options = null)
+    {
+        $this->priceProductService = $priceProductService;
+
+        parent::__construct($options);
+    }
 
     /**
      * @return string
@@ -30,5 +47,13 @@ class ValidUniqueStoreCurrencyCollectionConstraint extends SymfonyConstraint
     public function getTargets(): string
     {
         return static::CLASS_CONSTRAINT;
+    }
+
+    /**
+     * @return \Spryker\Service\PriceProduct\PriceProductServiceInterface
+     */
+    public function getPriceProductService(): PriceProductServiceInterface
+    {
+        return $this->priceProductService;
     }
 }

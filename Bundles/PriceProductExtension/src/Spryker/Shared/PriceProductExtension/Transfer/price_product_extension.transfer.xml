@@ -22,4 +22,10 @@
     <transfer name="ValidationResponse">
     </transfer>
 
+    <transfer name="PriceProductCollectionDeleteCriteria">
+    </transfer>
+
+    <transfer name="PriceProductCollectionResponse">
+    </transfer>
+
 </transfers>

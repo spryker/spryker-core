@@ -1323,6 +1323,7 @@ class PriceProductFacadeTest extends Unit
         $currencyTransfer = $this->tester->haveCurrencyTransfer();
         $priceProductTransfer = (new PriceProductTransfer())
             ->setPriceType($this->tester->havePriceType())
+            ->setPriceDimension(new PriceProductDimensionTransfer())
             ->setMoneyValue(
                 (new MoneyValueTransfer())
                     ->setStore($storeTransfer)

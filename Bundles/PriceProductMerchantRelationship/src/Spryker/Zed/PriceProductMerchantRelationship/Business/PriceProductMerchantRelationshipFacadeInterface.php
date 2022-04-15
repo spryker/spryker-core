@@ -8,6 +8,8 @@
 namespace Spryker\Zed\PriceProductMerchantRelationship\Business;
 
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
+use Generated\Shared\Transfer\PriceProductMerchantRelationshipCollectionDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductMerchantRelationshipCollectionResponseTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 
 /**
@@ -64,6 +66,21 @@ interface PriceProductMerchantRelationshipFacadeInterface
      * @return void
      */
     public function deleteAllPriceProductMerchantRelationship(): void;
+
+    /**
+     * Specification:
+     * - Removes price product merchant relationships by provided criteria transfer.
+     * - In the case if `PriceProductCollectionDeleteCriteriaTransfer.priceProductStoreIds` or `PriceProductCollectionDeleteCriteriaTransfer.merchantRelationshipIds` is empty, nothing will be deleted.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipCollectionDeleteCriteriaTransfer $priceProductMerchantRelationshipCollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipCollectionResponseTransfer
+     */
+    public function deletePriceProductMerchantRelationshipCollection(
+        PriceProductMerchantRelationshipCollectionDeleteCriteriaTransfer $priceProductMerchantRelationshipCollectionDeleteCriteriaTransfer
+    ): PriceProductMerchantRelationshipCollectionResponseTransfer;
 
     /**
      * Specification:

@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Shared\PriceProduct\PriceProductConfig;
+use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToCurrencyFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToPriceProductVolumeServiceInterface;
 
@@ -25,16 +26,24 @@ class CurrencyAndStoreFieldMapperStrategy extends AbstractFieldMapperStrategy
     protected $priceProductVolumeService;
 
     /**
+     * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToCurrencyFacadeInterface
+     */
+    protected $currencyFacade;
+
+    /**
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToPriceProductVolumeServiceInterface $priceProductVolumeService
+     * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToCurrencyFacadeInterface $currencyFacade
      */
     public function __construct(
         ProductMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade,
-        ProductMerchantPortalGuiToPriceProductVolumeServiceInterface $priceProductVolumeService
+        ProductMerchantPortalGuiToPriceProductVolumeServiceInterface $priceProductVolumeService,
+        ProductMerchantPortalGuiToCurrencyFacadeInterface $currencyFacade
     ) {
         parent::__construct($priceProductFacade);
 
         $this->priceProductVolumeService = $priceProductVolumeService;
+        $this->currencyFacade = $currencyFacade;
     }
 
     /**
@@ -184,6 +193,9 @@ class CurrencyAndStoreFieldMapperStrategy extends AbstractFieldMapperStrategy
         if ($key === MoneyValueTransfer::CURRENCY) {
             $value = (int)$value;
             $moneyValueTransfer->setFkCurrency($value);
+            $moneyValueTransfer->setCurrency(
+                $this->currencyFacade->getByIdCurrency($value),
+            );
 
             return $moneyValueTransfer;
         }

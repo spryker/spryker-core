@@ -21,7 +21,7 @@ interface ProductMerchantPortalGuiToProductFacadeInterface
      *
      * @return int
      */
-    public function saveProductAbstract(ProductAbstractTransfer $productAbstractTransfer);
+    public function saveProductAbstract(ProductAbstractTransfer $productAbstractTransfer): int;
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
@@ -30,35 +30,35 @@ interface ProductMerchantPortalGuiToProductFacadeInterface
      *
      * @return int
      */
-    public function saveProductConcrete(ProductConcreteTransfer $productConcreteTransfer);
+    public function saveProductConcrete(ProductConcreteTransfer $productConcreteTransfer): int;
 
     /**
      * @param int $idProductConcrete
      *
      * @return void
      */
-    public function activateProductConcrete($idProductConcrete);
+    public function activateProductConcrete(int $idProductConcrete): void;
 
     /**
      * @param int $idProductConcrete
      *
      * @return void
      */
-    public function deactivateProductConcrete($idProductConcrete);
+    public function deactivateProductConcrete(int $idProductConcrete): void;
 
     /**
      * @param string $sku
      *
      * @return bool
      */
-    public function hasProductAbstract($sku);
+    public function hasProductAbstract(string $sku): bool;
 
     /**
      * @param string $sku
      *
      * @return bool
      */
-    public function hasProductConcrete($sku);
+    public function hasProductConcrete(string $sku): bool;
 
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
@@ -69,7 +69,7 @@ interface ProductMerchantPortalGuiToProductFacadeInterface
      *
      * @return int
      */
-    public function addProduct(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteCollection);
+    public function addProduct(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteCollection): int;
 
     /**
      * @param int $idConcrete
@@ -83,14 +83,14 @@ interface ProductMerchantPortalGuiToProductFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
      */
-    public function findProductAbstractById($idProductAbstract);
+    public function findProductAbstractById(int $idProductAbstract): ?ProductAbstractTransfer;
 
     /**
      * @param int $idProduct
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
      */
-    public function findProductConcreteById($idProduct);
+    public function findProductConcreteById(int $idProduct): ?ProductConcreteTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ProductCriteriaTransfer $productCriteriaTransfer

@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableEditableButtonTransfer;
 use Generated\Shared\Transfer\PriceProductTableViewTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ConfigurationBuilderProvider\PriceProductGuiTableConfigurationBuilderProviderInterface;
 
 class PriceProductConcreteGuiTableConfigurationProvider implements PriceProductConcreteGuiTableConfigurationProviderInterface
@@ -91,11 +92,20 @@ class PriceProductConcreteGuiTableConfigurationProvider implements PriceProductC
     protected $priceProductGuiTableConfigurationBuilderProvider;
 
     /**
-     * @param \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ConfigurationBuilderProvider\PriceProductGuiTableConfigurationBuilderProviderInterface $priceProductGuiTableConfigurationBuilderProvider
+     * @var array<int, \Spryker\Zed\ProductMerchantPortalGuiExtension\Dependency\Plugin\PriceProductConcreteTableConfigurationExpanderPluginInterface>
      */
-    public function __construct(PriceProductGuiTableConfigurationBuilderProviderInterface $priceProductGuiTableConfigurationBuilderProvider)
-    {
+    protected $priceProductConcreteTableConfigurationExpanderPlugins;
+
+    /**
+     * @param \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ConfigurationBuilderProvider\PriceProductGuiTableConfigurationBuilderProviderInterface $priceProductGuiTableConfigurationBuilderProvider
+     * @param array<int, \Spryker\Zed\ProductMerchantPortalGuiExtension\Dependency\Plugin\PriceProductConcreteTableConfigurationExpanderPluginInterface> $priceProductConcreteTableConfigurationExpanderPlugins
+     */
+    public function __construct(
+        PriceProductGuiTableConfigurationBuilderProviderInterface $priceProductGuiTableConfigurationBuilderProvider,
+        array $priceProductConcreteTableConfigurationExpanderPlugins
+    ) {
         $this->priceProductGuiTableConfigurationBuilderProvider = $priceProductGuiTableConfigurationBuilderProvider;
+        $this->priceProductConcreteTableConfigurationExpanderPlugins = $priceProductConcreteTableConfigurationExpanderPlugins;
     }
 
     /**
@@ -154,6 +164,26 @@ class PriceProductConcreteGuiTableConfigurationProvider implements PriceProductC
                 ],
             );
 
+        $guiTableConfigurationBuilder = $this->executePriceProductConcreteTableConfigurationExpanderPlugins(
+            $guiTableConfigurationBuilder,
+        );
+
         return $guiTableConfigurationBuilder->createConfiguration();
+    }
+
+    /**
+     * @param \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder
+     *
+     * @return \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface
+     */
+    protected function executePriceProductConcreteTableConfigurationExpanderPlugins(
+        GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder
+    ): GuiTableConfigurationBuilderInterface {
+        foreach ($this->priceProductConcreteTableConfigurationExpanderPlugins as $priceProductConcreteTableConfigurationExpanderPlugin) {
+            $guiTableConfigurationBuilder = $priceProductConcreteTableConfigurationExpanderPlugin
+                ->expand($guiTableConfigurationBuilder);
+        }
+
+        return $guiTableConfigurationBuilder;
     }
 }

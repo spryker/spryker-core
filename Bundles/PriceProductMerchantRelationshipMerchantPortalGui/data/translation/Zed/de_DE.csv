@@ -1,0 +1,3 @@
+"Default Customer",Standardpreise
+"The set of inputs Customer, Store and Currency need to be unique.","Die Kombination aus Kunde, Store und Währung wird bereits verwendet."
+"The set of inputs Customer, Store, Currency and Quantity needs to be unique.","Die Kombination aus Kunde, Store, Währung und Anzahl wird bereits verwendet."

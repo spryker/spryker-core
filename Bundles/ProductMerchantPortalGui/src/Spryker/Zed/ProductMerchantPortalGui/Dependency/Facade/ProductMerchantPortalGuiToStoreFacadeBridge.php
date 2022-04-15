@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\StoreTransfer;
+
 class ProductMerchantPortalGuiToStoreFacadeBridge implements ProductMerchantPortalGuiToStoreFacadeInterface
 {
     /**
@@ -25,7 +27,7 @@ class ProductMerchantPortalGuiToStoreFacadeBridge implements ProductMerchantPort
     /**
      * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
-    public function getAllStores()
+    public function getAllStores(): array
     {
         return $this->storeFacade->getAllStores();
     }
@@ -33,7 +35,7 @@ class ProductMerchantPortalGuiToStoreFacadeBridge implements ProductMerchantPort
     /**
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getCurrentStore()
+    public function getCurrentStore(): StoreTransfer
     {
         return $this->storeFacade->getCurrentStore();
     }

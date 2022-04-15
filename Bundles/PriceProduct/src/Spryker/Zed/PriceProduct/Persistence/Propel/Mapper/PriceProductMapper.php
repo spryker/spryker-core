@@ -12,9 +12,10 @@ use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceTypeTransfer;
+use Generated\Shared\Transfer\SpyPriceProductDefaultEntityTransfer;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProduct;
+use Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefault;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore;
-use Propel\Runtime\Collection\ObjectCollection;
 
 class PriceProductMapper
 {
@@ -46,19 +47,19 @@ class PriceProductMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore> $priceProductStoreEntities
-     * @param array<string> $allowedProductSkus
+     * @param array<\Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore> $priceProductStoreEntities
+     * @param array<string>|null $allowedProductSkus
      *
      * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
-    public function mapPriceProductStoreEntitiesToPriceProductTransfers(ObjectCollection $priceProductStoreEntities, array $allowedProductSkus): array
+    public function mapPriceProductStoreEntitiesToPriceProductTransfers(array $priceProductStoreEntities, ?array $allowedProductSkus = null): array
     {
         $priceProductTransfers = [];
 
         foreach ($priceProductStoreEntities as $priceProductStoreEntity) {
             $priceProductTransfer = $this->mapPriceProductStoreEntityToPriceProductTransfer($priceProductStoreEntity, new PriceProductTransfer());
 
-            if (!$this->hasSeveralConcretesInSameAbstract($priceProductStoreEntity)) {
+            if ($allowedProductSkus === null || !$this->hasSeveralConcretesInSameAbstract($priceProductStoreEntity)) {
                 $priceProductTransfers[] = $priceProductTransfer;
 
                 continue;
@@ -127,6 +128,37 @@ class PriceProductMapper
         }
 
         return $priceProductTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyPriceProductDefaultEntityTransfer $priceProductDefaultTransfer
+     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefault $priceProductDefaultEntity
+     *
+     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefault
+     */
+    public function mapPriceProductDefaultTransferToPriceProductEntity(
+        SpyPriceProductDefaultEntityTransfer $priceProductDefaultTransfer,
+        SpyPriceProductDefault $priceProductDefaultEntity
+    ): SpyPriceProductDefault {
+        $priceProductDefaultEntity->fromArray($priceProductDefaultTransfer->toArray());
+        if ($priceProductDefaultEntity->getPrimaryKey()) {
+            $priceProductDefaultEntity->setNew(false);
+        }
+
+        return $priceProductDefaultEntity;
+    }
+
+    /**
+     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefault $priceProductDefaultEntity
+     * @param \Generated\Shared\Transfer\SpyPriceProductDefaultEntityTransfer $priceProductDefaultTransfer
+     *
+     * @return \Generated\Shared\Transfer\SpyPriceProductDefaultEntityTransfer
+     */
+    public function mapPriceProductDefaultEntityToPriceProductDefaultTransfer(
+        SpyPriceProductDefault $priceProductDefaultEntity,
+        SpyPriceProductDefaultEntityTransfer $priceProductDefaultTransfer
+    ): SpyPriceProductDefaultEntityTransfer {
+        return $priceProductDefaultTransfer->fromArray($priceProductDefaultEntity->toArray());
     }
 
     /**
@@ -204,9 +236,12 @@ class PriceProductMapper
     ): PriceProductTransfer {
         /** @var \Orm\Zed\Product\Persistence\SpyProduct $productEntity */
         $productEntity = $priceProductEntity->getProduct();
-        $sku = $priceProductEntity->getProduct() ? $productEntity->getSku() : $priceProductStoreEntityData['product_sku'];
+        $productSku = array_key_exists('product_sku', $priceProductStoreEntityData) ? $priceProductStoreEntityData['product_sku'] : null;
+
+        $sku = $priceProductEntity->getProduct() ? $productEntity->getSku() : $productSku;
 
         return $priceProductTransfer
+            ->fromArray($priceProductEntity->toArray(), true)
             ->fromArray($priceProductStoreEntityData, true)
             ->setSkuProduct($sku)
             ->setIdProduct($priceProductEntity->getFkProduct())

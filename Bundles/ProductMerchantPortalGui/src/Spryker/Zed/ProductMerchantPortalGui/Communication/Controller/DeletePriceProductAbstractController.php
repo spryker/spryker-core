@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Controller;
 
 use Generated\Shared\Transfer\MerchantProductCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductTableViewTransfer;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -43,13 +44,10 @@ class DeletePriceProductAbstractController extends AbstractDeletePriceProductCon
             return $this->createErrorResponse();
         }
 
-        $priceProductTransfers = $merchantProductTransfer
-            ->getProductAbstractOrFail()
-            ->getPrices();
+        $priceProductTransfersToRemove = $this->getPriceProductTransfers($request);
 
-        $validationResponseTransfer = $this->deletePrices(
-            $priceProductTransfers,
-            $this->getDefaultPriceProductIds($request),
+        $validationResponseTransfer = $this->getFactory()->createPriceDeleter()->deletePrices(
+            $priceProductTransfersToRemove,
             $volumeQuantity,
         );
 
@@ -61,5 +59,24 @@ class DeletePriceProductAbstractController extends AbstractDeletePriceProductCon
         }
 
         return $this->createSuccessResponse();
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
+     */
+    protected function getPriceProductTransfers(Request $request): array
+    {
+        $priceProductCriteriaTransfer = $this->getFactory()
+            ->createPriceProductMapper()
+            ->mapRequestDataToPriceProductCriteriaTransfer($request->query->all(), new PriceProductCriteriaTransfer());
+
+        return $this->getFactory()
+            ->getPriceProductFacade()
+            ->findProductAbstractPricesWithoutPriceExtraction(
+                $this->castId($request->get(PriceProductTableViewTransfer::ID_PRODUCT_ABSTRACT)),
+                $priceProductCriteriaTransfer,
+            );
     }
 }

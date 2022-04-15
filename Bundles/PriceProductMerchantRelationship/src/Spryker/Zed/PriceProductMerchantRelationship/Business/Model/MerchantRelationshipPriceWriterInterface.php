@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\PriceProductMerchantRelationship\Business\Model;
 
+use Generated\Shared\Transfer\PriceProductMerchantRelationshipCollectionDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductMerchantRelationshipCollectionResponseTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 
 interface MerchantRelationshipPriceWriterInterface
@@ -36,4 +38,13 @@ interface MerchantRelationshipPriceWriterInterface
      * @return void
      */
     public function deleteByIdPriceProductStore(int $idPriceProductStore): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipCollectionDeleteCriteriaTransfer $priceProductMerchantRelationshipCollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipCollectionResponseTransfer
+     */
+    public function deleteCollection(
+        PriceProductMerchantRelationshipCollectionDeleteCriteriaTransfer $priceProductMerchantRelationshipCollectionDeleteCriteriaTransfer
+    ): PriceProductMerchantRelationshipCollectionResponseTransfer;
 }
