@@ -71,6 +71,7 @@ class MessageBrokerDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->provideMessageReceiverAdapterPlugins($container);
         $container = $this->provideMessageHandlerPlugins($container);
         $container = $this->provideMessageAttributeProviderPlugins($container);
+        $container = $this->provideExternalValidatorPlugins($container);
         $container = $this->provideMiddlewarePlugins($container);
         $container = $this->addUtilEncodingService($container);
 

@@ -19,9 +19,9 @@ use Spryker\Zed\MessageBrokerAws\Communication\Plugin\MessageBroker\Receiver\Aws
 use Spryker\Zed\MessageBrokerAws\Communication\Plugin\MessageBroker\Sender\AwsSnsMessageSenderPlugin;
 use Spryker\Zed\MessageBrokerExtension\Dependency\Plugin\MessageReceiverPluginInterface;
 use Spryker\Zed\MessageBrokerExtension\Dependency\Plugin\MessageSenderPluginInterface;
-use SprykerTest\Zed\MessageBroker\_support\Subscriber\StopWorkerWhenMessagesAreHandledEventDispatcherSubscriberPlugin;
+use SprykerTest\Zed\MessageBroker\Helper\Plugin\InMemoryMessageTransportPlugin;
+use SprykerTest\Zed\MessageBroker\Helper\Subscriber\StopWorkerWhenMessagesAreHandledEventDispatcherSubscriberPlugin;
 use SprykerTest\Zed\MessageBroker\MessageBrokerBusinessTester;
-use SprykerTest\Zed\MessageBroker\Plugin\InMemoryMessageTransportPlugin;
 use SprykerTest\Zed\Testify\Helper\Business\BusinessHelperTrait;
 use SprykerTest\Zed\Testify\Helper\Business\DependencyProviderHelperTrait;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -65,7 +65,7 @@ class MessageBrokerHelper extends Module
     protected ?TransportInterface $transport = null;
 
     /**
-     * @var \SprykerTest\Zed\MessageBroker\Plugin\InMemoryMessageTransportPlugin|null
+     * @var \SprykerTest\Zed\MessageBroker\Helper\Plugin\InMemoryMessageTransportPlugin|null
      */
     protected ?InMemoryMessageTransportPlugin $transportPlugin = null;
 
@@ -273,7 +273,7 @@ class MessageBrokerHelper extends Module
     }
 
     /**
-     * @return \SprykerTest\Zed\MessageBroker\Plugin\InMemoryMessageTransportPlugin
+     * @return \SprykerTest\Zed\MessageBroker\Helper\Plugin\InMemoryMessageTransportPlugin
      */
     public function getInMemoryMessageTransportPlugin(): InMemoryMessageTransportPlugin
     {

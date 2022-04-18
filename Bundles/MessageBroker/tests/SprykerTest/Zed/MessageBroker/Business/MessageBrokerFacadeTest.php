@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\MessageBrokerTestMessageTransfer;
 use Spryker\Zed\MessageBroker\Business\Exception\CouldNotMapMessageToChannelNameException;
 use Spryker\Zed\MessageBroker\Communication\Plugin\MessageBroker\CorrelationIdMessageAttributeProviderPlugin;
 use Spryker\Zed\MessageBroker\Communication\Plugin\MessageBroker\TimestampMessageAttributeProviderPlugin;
-use SprykerTest\Zed\MessageBroker\Plugin\SomethingHappenedMessageHandlerPlugin;
+use SprykerTest\Zed\MessageBroker\Helper\Plugin\SomethingHappenedMessageHandlerPlugin;
 use Symfony\Component\Messenger\Exception\NoHandlerForMessageException;
 
 /**

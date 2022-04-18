@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\MessageBroker\_support\Subscriber;
+namespace SprykerTest\Zed\MessageBroker\Helper\Subscriber;
 
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;

@@ -14,9 +14,9 @@ use Generated\Shared\Transfer\OutgoingMessageTransfer;
 use Spryker\Zed\MessageBroker\Business\Exception\AsyncApiFileNotFoundException;
 use Spryker\Zed\MessageBroker\Communication\Plugin\Console\MessageBrokerDebugConsole;
 use Spryker\Zed\MessageBroker\MessageBrokerDependencyProvider;
+use SprykerTest\Zed\MessageBroker\Helper\Plugin\IncomingMessageHandlerPlugin;
+use SprykerTest\Zed\MessageBroker\Helper\Plugin\SomethingHappenedMessageHandlerPlugin;
 use SprykerTest\Zed\MessageBroker\MessageBrokerCommunicationTester;
-use SprykerTest\Zed\MessageBroker\Plugin\IncomingMessageHandlerPlugin;
-use SprykerTest\Zed\MessageBroker\Plugin\SomethingHappenedMessageHandlerPlugin;
 
 /**
  * Auto-generated group annotations
@@ -87,7 +87,7 @@ class MessageBrokerDebugConsoleTest extends Unit
         $this->assertStringContainsString('test-channel', $commandTester->getDisplay());
         $this->assertStringContainsString('Generated\Shared\Transfer\MessageBrokerTestMessageTransfer', $commandTester->getDisplay());
         $this->assertStringContainsString('sqs', $commandTester->getDisplay());
-        $this->assertStringContainsString('SprykerTest\Zed\MessageBroker\Plugin\SomethingHappenedMessageHandlerPlugin', $commandTester->getDisplay());
+        $this->assertStringContainsString('SprykerTest\Zed\MessageBroker\Helper\Plugin\SomethingHappenedMessageHandlerPlugin', $commandTester->getDisplay());
     }
 
     /**
@@ -215,6 +215,6 @@ class MessageBrokerDebugConsoleTest extends Unit
         $this->assertStringContainsString('This application can receive the following messages', $commandTester->getDisplay());
         $this->assertStringContainsString('channelNameA', $commandTester->getDisplay());
         $this->assertStringContainsString('sqs', $commandTester->getDisplay());
-        $this->assertStringContainsString('SprykerTest\Zed\MessageBroker\Plugin\IncomingMessageHandlerPlugin', $commandTester->getDisplay());
+        $this->assertStringContainsString('SprykerTest\Zed\MessageBroker\Helper\Plugin\IncomingMessageHandlerPlugin', $commandTester->getDisplay());
     }
 }

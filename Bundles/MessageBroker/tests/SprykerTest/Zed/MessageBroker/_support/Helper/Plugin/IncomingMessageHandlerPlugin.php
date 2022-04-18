@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\MessageBroker\Plugin;
+namespace SprykerTest\Zed\MessageBroker\Helper\Plugin;
 
 use Generated\Shared\Transfer\IncomingMessageTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;

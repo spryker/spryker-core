@@ -10,8 +10,8 @@ namespace SprykerTest\Zed\MessageBroker\Helper;
 use Codeception\Module;
 use Codeception\TestInterface;
 use Spryker\Zed\MessageBroker\MessageBrokerDependencyProvider;
+use SprykerTest\Zed\MessageBroker\Helper\Plugin\InMemoryMessageTransportPlugin;
 use SprykerTest\Zed\MessageBroker\MessageBrokerBusinessTester;
-use SprykerTest\Zed\MessageBroker\Plugin\InMemoryMessageTransportPlugin;
 use SprykerTest\Zed\Testify\Helper\Business\BusinessHelperTrait;
 use SprykerTest\Zed\Testify\Helper\Business\DependencyProviderHelperTrait;
 use Symfony\Component\Messenger\Envelope;
@@ -29,7 +29,7 @@ class InMemoryMessageBrokerHelper extends Module
     protected ?InMemoryTransport $transport;
 
     /**
-     * @var \SprykerTest\Zed\MessageBroker\Plugin\InMemoryMessageTransportPlugin|null
+     * @var \SprykerTest\Zed\MessageBroker\Helper\Plugin\InMemoryMessageTransportPlugin|null
      */
     protected ?InMemoryMessageTransportPlugin $transportPlugin;
 
@@ -95,7 +95,7 @@ class InMemoryMessageBrokerHelper extends Module
     }
 
     /**
-     * @return \SprykerTest\Zed\MessageBroker\Plugin\InMemoryMessageTransportPlugin
+     * @return \SprykerTest\Zed\MessageBroker\Helper\Plugin\InMemoryMessageTransportPlugin
      */
     protected function getInMemoryMessageTransportPlugin(): InMemoryMessageTransportPlugin
     {

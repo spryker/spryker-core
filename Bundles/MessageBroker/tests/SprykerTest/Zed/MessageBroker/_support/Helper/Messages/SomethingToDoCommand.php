@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\MessageBroker\Messages;
+namespace SprykerTest\Zed\MessageBroker\Helper\Messages;
 
-class SomethingHappenedEvent
+class SomethingToDoCommand
 {
     protected array $payload = [];
 
