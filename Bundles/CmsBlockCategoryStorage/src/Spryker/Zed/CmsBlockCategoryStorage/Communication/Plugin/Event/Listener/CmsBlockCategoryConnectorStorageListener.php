@@ -11,7 +11,6 @@ use Orm\Zed\CmsBlockCategoryConnector\Persistence\Map\SpyCmsBlockCategoryConnect
 use Spryker\Zed\CmsBlockCategoryConnector\Dependency\CmsBlockCategoryConnectorEvents;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @deprecated Use {@link \Spryker\Zed\CmsBlockCategoryStorage\Communication\Plugin\Event\Listener\CmsBlockCategoryConnectorEntityStoragePublishListener}
@@ -24,8 +23,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  */
 class CmsBlockCategoryConnectorStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
-    use DatabaseTransactionHandlerTrait;
-
     /**
      * {@inheritDoc}
      *
@@ -38,7 +35,6 @@ class CmsBlockCategoryConnectorStorageListener extends AbstractPlugin implements
      */
     public function handleBulk(array $eventEntityTransfers, $eventName)
     {
-        $this->preventTransaction();
         $idCategories = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventEntityTransfers, SpyCmsBlockCategoryConnectorTableMap::COL_FK_CATEGORY);
 
         if ($eventName === CmsBlockCategoryConnectorEvents::ENTITY_SPY_CMS_BLOCK_CATEGORY_CONNECTOR_DELETE) {

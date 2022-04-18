@@ -27,7 +27,6 @@ class FileListener extends AbstractFileManagerListener
      */
     public function handleBulk(array $eventEntityTransfers, $eventName)
     {
-        $this->preventTransaction();
         $fileIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventEntityTransfers);
 
         if ($eventName === FileManagerEvents::ENTITY_FILE_DELETE) {

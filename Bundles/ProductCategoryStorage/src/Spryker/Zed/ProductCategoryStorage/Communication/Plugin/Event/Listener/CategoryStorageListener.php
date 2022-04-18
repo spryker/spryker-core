@@ -11,7 +11,6 @@ use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
 use Spryker\Zed\Category\Dependency\CategoryEvents;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @deprecated Use {@link \Spryker\Zed\ProductCategoryStorage\Communication\Plugin\Publisher\Category\CategoryWritePublisherPlugin},
@@ -25,8 +24,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  */
 class CategoryStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
-    use DatabaseTransactionHandlerTrait;
-
     /**
      * @api
      *
@@ -37,8 +34,6 @@ class CategoryStorageListener extends AbstractPlugin implements EventBulkHandler
      */
     public function handleBulk(array $eventEntityTransfers, $eventName)
     {
-        $this->preventTransaction();
-
         $categoryIds = $this->getCategoryIds($eventEntityTransfers, $eventName);
         if (!$categoryIds) {
             return;

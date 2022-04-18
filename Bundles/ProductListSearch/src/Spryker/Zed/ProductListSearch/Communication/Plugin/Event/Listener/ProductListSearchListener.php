@@ -10,7 +10,6 @@ namespace Spryker\Zed\ProductListSearch\Communication\Plugin\Event\Listener;
 use Spryker\Shared\ProductListSearch\ProductListSearchConfig;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @method \Spryker\Zed\ProductListSearch\Communication\ProductListSearchCommunicationFactory getFactory()
@@ -19,8 +18,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  */
 class ProductListSearchListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
-    use DatabaseTransactionHandlerTrait;
-
     /**
      * {@inheritDoc}
      *
@@ -33,7 +30,6 @@ class ProductListSearchListener extends AbstractPlugin implements EventBulkHandl
      */
     public function handleBulk(array $eventEntityTransfers, $eventName)
     {
-        $this->preventTransaction();
         $productListIds = $this->getFactory()
             ->getEventBehaviorFacade()->getEventTransferIds($eventEntityTransfers);
 

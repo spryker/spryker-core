@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener;
 
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface getQueryContainer()
@@ -16,8 +15,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  */
 class ProductPagePriceTypeSearchListener extends AbstractProductPageSearchListener implements EventBulkHandlerInterface
 {
-    use DatabaseTransactionHandlerTrait;
-
     /**
      * @api
      *
@@ -28,7 +25,6 @@ class ProductPagePriceTypeSearchListener extends AbstractProductPageSearchListen
      */
     public function handleBulk(array $eventEntityTransfers, $eventName)
     {
-        $this->preventTransaction();
         $priceTypeIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventEntityTransfers);
         $productAbstractIds = $this->getQueryContainer()->queryAllProductAbstractIdsByPriceTypeIds($priceTypeIds)->find()->getData();
 

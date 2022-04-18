@@ -25,8 +25,6 @@ class ProductAbstractStoreProductConcretePageSearchPublishListener extends Abstr
      */
     public function handleBulk(array $eventEntityTransfers, $eventName): void
     {
-        $this->preventTransaction();
-
         $productAbstractIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys(
             $eventEntityTransfers,
             SpyProductAbstractStoreTableMap::COL_FK_PRODUCT_ABSTRACT,

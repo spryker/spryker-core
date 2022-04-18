@@ -24,7 +24,6 @@ class ProductConcretePageSearchProductListener extends AbstractProductConcretePa
      */
     public function handleBulk(array $eventEntityTransfers, $eventName): void
     {
-        $this->preventTransaction();
         $productConcreteIds = $this->getFactory()
             ->getEventBehaviorFacade()
             ->getEventTransferIds($eventEntityTransfers);

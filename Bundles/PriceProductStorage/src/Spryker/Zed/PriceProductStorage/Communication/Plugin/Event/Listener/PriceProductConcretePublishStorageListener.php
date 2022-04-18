@@ -10,7 +10,6 @@ namespace Spryker\Zed\PriceProductStorage\Communication\Plugin\Event\Listener;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PriceProduct\Dependency\PriceProductEvents;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @deprecated Use {@link \Spryker\Zed\PriceProductStorage\Communication\Plugin\Event\Listener\PriceProductConcreteStoragePublishListener}
@@ -23,8 +22,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  */
 class PriceProductConcretePublishStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
-    use DatabaseTransactionHandlerTrait;
-
     /**
      * @api
      *
@@ -35,7 +32,6 @@ class PriceProductConcretePublishStorageListener extends AbstractPlugin implemen
      */
     public function handleBulk(array $eventEntityTransfers, $eventName)
     {
-        $this->preventTransaction();
         $concreteIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventEntityTransfers);
 
         if (

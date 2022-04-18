@@ -10,7 +10,6 @@ namespace Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @method \Spryker\Zed\ProductSetPageSearch\Persistence\ProductSetPageSearchQueryContainerInterface getQueryContainer()
@@ -20,8 +19,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  */
 class ProductSetPageUrlSearchListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
-    use DatabaseTransactionHandlerTrait;
-
     /**
      * @api
      *
@@ -32,7 +29,6 @@ class ProductSetPageUrlSearchListener extends AbstractPlugin implements EventBul
      */
     public function handleBulk(array $eventEntityTransfers, $eventName)
     {
-        $this->preventTransaction();
         $productSetIds = $this->getValidProductSetIds($eventEntityTransfers);
 
         if (!$productSetIds) {

@@ -10,7 +10,6 @@ namespace Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @deprecated use {@link \Spryker\Zed\CategoryStorage\Communication\Plugin\Publisher\ParentWritePublisherPlugin} instead.
@@ -22,8 +21,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  */
 class CategoryNodeStorageParentPublishListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
-    use DatabaseTransactionHandlerTrait;
-
     /**
      * {@inheritDoc}
      *
@@ -36,8 +33,6 @@ class CategoryNodeStorageParentPublishListener extends AbstractPlugin implements
      */
     public function handleBulk(array $eventEntityTransfers, $eventName)
     {
-        $this->preventTransaction();
-
         $parentCategoryNodeIds = $this->getFactory()
             ->getEventBehaviorFacade()
             ->getEventTransferForeignKeys($eventEntityTransfers, SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE);

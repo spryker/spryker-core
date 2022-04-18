@@ -9,7 +9,6 @@ namespace Spryker\Zed\UrlStorage\Communication\Plugin\Event\Listener;
 
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @method \Spryker\Zed\UrlStorage\Persistence\UrlStorageQueryContainerInterface getQueryContainer()
@@ -19,8 +18,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  */
 class UrlStorageUnpublishListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
-    use DatabaseTransactionHandlerTrait;
-
     /**
      * {@inheritDoc}
      *
@@ -33,7 +30,6 @@ class UrlStorageUnpublishListener extends AbstractPlugin implements EventBulkHan
      */
     public function handleBulk(array $eventEntityTransfers, $eventName)
     {
-        $this->preventTransaction();
         $urlIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventEntityTransfers);
 
         $this->getFacade()->unpublishUrl($urlIds);

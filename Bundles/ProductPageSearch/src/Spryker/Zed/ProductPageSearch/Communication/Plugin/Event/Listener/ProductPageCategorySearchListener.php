@@ -10,7 +10,6 @@ namespace Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
 use Spryker\Zed\Category\Dependency\CategoryEvents;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface getQueryContainer()
@@ -18,8 +17,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  */
 class ProductPageCategorySearchListener extends AbstractProductPageSearchListener implements EventBulkHandlerInterface
 {
-    use DatabaseTransactionHandlerTrait;
-
     /**
      * @uses \Spryker\Zed\Category\Dependency\CategoryEvents::ENTITY_CATEGORY_PUBLISH
      *
@@ -37,7 +34,6 @@ class ProductPageCategorySearchListener extends AbstractProductPageSearchListene
      */
     public function handleBulk(array $eventEntityTransfers, $eventName)
     {
-        $this->preventTransaction();
         if ($eventName === CategoryEvents::ENTITY_SPY_CATEGORY_DELETE || $eventName === static::ENTITY_CATEGORY_PUBLISH) {
             $categoryIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventEntityTransfers);
         } else {

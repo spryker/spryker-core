@@ -25,7 +25,6 @@ class ProductConcretePageSearchProductLocalizedAttributesListener extends Abstra
      */
     public function handleBulk(array $eventEntityTransfers, $eventName): void
     {
-        $this->preventTransaction();
         $productIds = $this->getFactory()
             ->getEventBehaviorFacade()
             ->getEventTransferForeignKeys($eventEntityTransfers, SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT);

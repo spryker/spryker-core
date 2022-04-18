@@ -11,7 +11,6 @@ use Orm\Zed\CmsBlockProductConnector\Persistence\Map\SpyCmsBlockProductConnector
 use Spryker\Zed\CmsBlockProductConnector\Dependency\CmsBlockProductConnectorEvents;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @deprecated Use {@link \Spryker\Zed\CmsBlockProductStorage\Communication\Plugin\Event\Listener\CmsBlockProductConnectorStoragePublishListener}
@@ -24,8 +23,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  */
 class CmsBlockProductConnectorStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
-    use DatabaseTransactionHandlerTrait;
-
     /**
      * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
      * @param string $eventName
@@ -34,7 +31,6 @@ class CmsBlockProductConnectorStorageListener extends AbstractPlugin implements 
      */
     public function handleBulk(array $eventEntityTransfers, $eventName)
     {
-        $this->preventTransaction();
         $idProductAbstracts = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventEntityTransfers, SpyCmsBlockProductConnectorTableMap::COL_FK_PRODUCT_ABSTRACT);
 
         if ($eventName === CmsBlockProductConnectorEvents::ENTITY_SPY_CMS_BLOCK_PRODUCT_CONNECTOR_DELETE) {

@@ -11,7 +11,6 @@ use Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductLabel\Dependency\ProductLabelEvents;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @deprecated Use {@link \Spryker\Zed\ProductLabelStorage\Communication\Plugin\Publisher\ProductLabelDictionary\ProductLabelDictionaryWritePublisherPlugin}
@@ -24,8 +23,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  */
 class ProductLabelDictionaryStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
-    use DatabaseTransactionHandlerTrait;
-
     /**
      * @api
      *
@@ -36,7 +33,6 @@ class ProductLabelDictionaryStorageListener extends AbstractPlugin implements Ev
      */
     public function handleBulk(array $eventEntityTransfers, $eventName)
     {
-        $this->preventTransaction();
         $productLabelsCount = SpyProductLabelQuery::create()->count();
 
         if (

@@ -10,7 +10,6 @@ namespace Spryker\Zed\NavigationStorage\Communication\Plugin\Event\Listener;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Navigation\Dependency\NavigationEvents;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @deprecated Use {@link \Spryker\Zed\NavigationStorage\Communication\Plugin\Event\Listener\NavigationStoragePublishListener}
@@ -23,8 +22,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  */
 class NavigationStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
-    use DatabaseTransactionHandlerTrait;
-
     /**
      * @api
      *
@@ -35,7 +32,6 @@ class NavigationStorageListener extends AbstractPlugin implements EventBulkHandl
      */
     public function handleBulk(array $eventEntityTransfers, $eventName)
     {
-        $this->preventTransaction();
         $navigationIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventEntityTransfers);
 
         if (

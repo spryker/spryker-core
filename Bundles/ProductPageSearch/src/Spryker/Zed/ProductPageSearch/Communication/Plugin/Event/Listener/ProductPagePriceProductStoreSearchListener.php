@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener;
 
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductStoreTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @deprecated Use {@link \Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\PriceProductDefaultProductPagePublishListener} instead.
@@ -19,8 +18,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  */
 class ProductPagePriceProductStoreSearchListener extends AbstractProductPageSearchListener implements EventBulkHandlerInterface
 {
-    use DatabaseTransactionHandlerTrait;
-
     /**
      * @api
      *
@@ -31,7 +28,6 @@ class ProductPagePriceProductStoreSearchListener extends AbstractProductPageSear
      */
     public function handleBulk(array $eventEntityTransfers, $eventName)
     {
-        $this->preventTransaction();
         $priceProductIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventEntityTransfers, SpyPriceProductStoreTableMap::COL_FK_PRICE_PRODUCT);
         $productAbstractIds = $this->getQueryContainer()->queryAllProductAbstractIdsByPriceProductIds($priceProductIds)->find()->getData();
 

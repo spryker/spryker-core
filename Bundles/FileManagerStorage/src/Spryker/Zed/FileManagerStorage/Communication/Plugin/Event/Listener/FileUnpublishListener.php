@@ -24,7 +24,6 @@ class FileUnpublishListener extends AbstractFileManagerListener
      */
     public function handleBulk(array $eventEntityTransfers, $eventName)
     {
-        $this->preventTransaction();
         $fileIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventEntityTransfers);
 
         $this->unpublish($fileIds);

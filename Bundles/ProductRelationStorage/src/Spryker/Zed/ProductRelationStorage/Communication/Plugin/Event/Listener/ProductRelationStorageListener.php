@@ -10,7 +10,6 @@ namespace Spryker\Zed\ProductRelationStorage\Communication\Plugin\Event\Listener
 use Orm\Zed\ProductRelation\Persistence\Map\SpyProductRelationTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @deprecated Use {@link \Spryker\Zed\ProductRelationStorage\Communication\Plugin\Publisher\ProductRelation\ProductRelationWritePublisherPlugin} instead.
@@ -24,8 +23,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  */
 class ProductRelationStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
-    use DatabaseTransactionHandlerTrait;
-
     /**
      * @api
      *
@@ -36,7 +33,6 @@ class ProductRelationStorageListener extends AbstractPlugin implements EventBulk
      */
     public function handleBulk(array $eventEntityTransfers, $eventName)
     {
-        $this->preventTransaction();
         $productAbstractIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventEntityTransfers, SpyProductRelationTableMap::COL_FK_PRODUCT_ABSTRACT);
 
         $this->getFacade()->publish($productAbstractIds);

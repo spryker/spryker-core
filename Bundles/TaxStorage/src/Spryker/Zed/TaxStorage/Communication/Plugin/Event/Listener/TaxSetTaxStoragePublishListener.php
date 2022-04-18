@@ -10,7 +10,6 @@ namespace Spryker\Zed\TaxStorage\Communication\Plugin\Event\Listener;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTaxTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @method \Spryker\Zed\TaxStorage\TaxStorageConfig getConfig()
@@ -19,8 +18,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  */
 class TaxSetTaxStoragePublishListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
-    use DatabaseTransactionHandlerTrait;
-
     /**
      * {@inheritDoc}
      *
@@ -33,7 +30,6 @@ class TaxSetTaxStoragePublishListener extends AbstractPlugin implements EventBul
      */
     public function handleBulk(array $eventEntityTransfers, $eventName)
     {
-        $this->preventTransaction();
         $taxSetIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventEntityTransfers, SpyTaxSetTaxTableMap::COL_FK_TAX_SET);
 
         $this->getFacade()->publishByTaxSetIds($taxSetIds);

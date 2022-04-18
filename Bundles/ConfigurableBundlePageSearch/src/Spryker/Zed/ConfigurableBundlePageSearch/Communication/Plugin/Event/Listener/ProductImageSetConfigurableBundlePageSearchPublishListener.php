@@ -10,7 +10,6 @@ namespace Spryker\Zed\ConfigurableBundlePageSearch\Communication\Plugin\Event\Li
 use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @method \Spryker\Zed\ConfigurableBundlePageSearch\Business\ConfigurableBundlePageSearchFacadeInterface getFacade()
@@ -19,8 +18,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  */
 class ProductImageSetConfigurableBundlePageSearchPublishListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
-    use DatabaseTransactionHandlerTrait;
-
     /**
      * {@inheritDoc}
      * - Publishes configurable bundle templates.
@@ -34,8 +31,6 @@ class ProductImageSetConfigurableBundlePageSearchPublishListener extends Abstrac
      */
     public function handleBulk(array $eventEntityTransfers, $eventName): void
     {
-        $this->preventTransaction();
-
         $configurableBundleTemplateIds = $this->getFactory()
             ->getEventBehaviorFacade()
             ->getEventTransferForeignKeys($eventEntityTransfers, SpyProductImageSetTableMap::COL_FK_RESOURCE_CONFIGURABLE_BUNDLE_TEMPLATE);

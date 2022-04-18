@@ -11,7 +11,6 @@ use Orm\Zed\ProductList\Persistence\Map\SpyProductListCategoryTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductList\Dependency\ProductListEvents;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @method \Spryker\Zed\ProductListStorage\Communication\ProductListStorageCommunicationFactory getFactory()
@@ -20,8 +19,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  */
 class ProductListProductCategoryConcreteStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
-    use DatabaseTransactionHandlerTrait;
-
     /**
      * {@inheritDoc}
      *
@@ -34,8 +31,6 @@ class ProductListProductCategoryConcreteStorageListener extends AbstractPlugin i
      */
     public function handleBulk(array $eventEntityTransfers, $eventName): void
     {
-        $this->preventTransaction();
-
         $productAbstractIds = $this->getFacade()->getProductAbstractIdsByCategoryIds(
             $this->getProductListCategoryIds($eventEntityTransfers, $eventName),
         );

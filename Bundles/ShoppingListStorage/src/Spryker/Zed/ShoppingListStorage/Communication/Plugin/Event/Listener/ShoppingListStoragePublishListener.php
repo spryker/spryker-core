@@ -10,7 +10,6 @@ namespace Spryker\Zed\ShoppingListStorage\Communication\Plugin\Event\Listener;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @method \Spryker\Zed\ShoppingListStorage\Business\ShoppingListStorageFacadeInterface getFacade()
@@ -20,8 +19,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  */
 class ShoppingListStoragePublishListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
-    use DatabaseTransactionHandlerTrait;
-
     /**
      * {@inheritDoc}
      *  - Handles unpublish shipping list event.
@@ -35,7 +32,6 @@ class ShoppingListStoragePublishListener extends AbstractPlugin implements Event
      */
     public function handleBulk(array $eventEntityTransfers, $eventName): void
     {
-        $this->preventTransaction();
         $customerReferences = [];
 
         $validEventTransfers = $this->getFactory()

@@ -25,7 +25,6 @@ class FileLocalizedAttributesListener extends AbstractFileManagerListener
      */
     public function handleBulk(array $eventEntityTransfers, $eventName)
     {
-        $this->preventTransaction();
         $fileIds = $this->getFactory()
             ->getEventBehaviorFacade()
             ->getEventTransferForeignKeys($eventEntityTransfers, SpyFileLocalizedAttributesTableMap::COL_FK_FILE);
