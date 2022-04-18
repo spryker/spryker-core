@@ -6,7 +6,7 @@
     "require": {
         "php": ">=7.4",
         "spryker/glue-application": "^1.0.0",
-        "spryker/product-offer-shopping-list": "^0.1.0"
+        "spryker/product-offer-shopping-list": "^1.0.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*"

@@ -38,6 +38,8 @@ class ProductApprovalGuiDependencyProvider extends AbstractBundleDependencyProvi
      */
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
+        parent::provideCommunicationLayerDependencies($container);
+
         $container = $this->addProductFacade($container);
         $container = $this->addProductApprovalFacade($container);
         $container = $this->addTwig($container);

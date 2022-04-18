@@ -32,14 +32,6 @@
         <property name="stores" type="Store[]" singular="store"/>
     </transfer>
 
-    <transfer name="ShoppingListItemCollection">
-        <property name="items" type="ShoppingListItem[]" singular="item"/>
-    </transfer>
-
-    <transfer name="ProductOfferCollection">
-        <property name="productOffers" type="ProductOffer[]" singular="productOffer"/>
-    </transfer>
-
     <transfer name="Store">
         <property name="idStore" type="int"/>
     </transfer>
