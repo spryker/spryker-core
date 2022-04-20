@@ -10,6 +10,9 @@ namespace Spryker\Service\UtilDataReader\Model\BatchIterator;
 use Countable;
 use Iterator;
 
+/**
+ * @extends \Iterator<mixed>
+ */
 interface CountableIteratorInterface extends Iterator, Countable
 {
 }

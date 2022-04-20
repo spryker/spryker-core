@@ -13,6 +13,9 @@ use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface as NewCommandInte
 use Spryker\Zed\Oms\Dependency\Plugin\Condition\HasAwareCollectionInterface;
 use Spryker\Zed\Oms\Exception\CommandNotFoundException;
 
+/**
+ * @implements \ArrayAccess<string, \Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface|\Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface>
+ */
 class CommandCollection implements CommandCollectionInterface, HasAwareCollectionInterface, ArrayAccess
 {
     /**

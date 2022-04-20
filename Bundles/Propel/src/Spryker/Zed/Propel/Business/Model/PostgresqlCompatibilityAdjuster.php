@@ -113,7 +113,7 @@ class PostgresqlCompatibilityAdjuster implements PostgresqlCompatibilityAdjuster
         $domChanged = 0;
         /** @var \DOMElement $column */
         foreach ($nodeList as $column) {
-            /** @var \DOMNodeList $domNodeList */
+            /** @var \DOMNodeList<\DOMNode> $domNodeList */
             $domNodeList = $xpath->query('id-method-parameter', $column->parentNode);
             if ($domNodeList->length > 0) {
                 continue;

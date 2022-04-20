@@ -42,7 +42,6 @@ class MerchantProductOfferStorageFilter implements MerchantProductOfferStorageFi
     public function filterProductOfferStorages(
         ProductOfferCollectionTransfer $productOfferCollectionTransfer
     ): ProductOfferCollectionTransfer {
-        /** @var \ArrayObject $productOfferTransfers */
         $productOfferTransfers = $productOfferCollectionTransfer->getProductOffers();
 
         if ($productOfferTransfers->count() < 1) {
@@ -57,7 +56,6 @@ class MerchantProductOfferStorageFilter implements MerchantProductOfferStorageFi
             ->setMerchantReferences($productOfferMerchantReferences);
         $merchantCollectionTransfer = $this->merchantFacade->get($merchantCriteriaTransfer);
 
-        /** @var \ArrayObject $merchantTransfers */
         $merchantTransfers = $merchantCollectionTransfer->getMerchants();
         $activeMerchantReferences = $this->getMerchantReferences($merchantTransfers);
 
@@ -70,7 +68,7 @@ class MerchantProductOfferStorageFilter implements MerchantProductOfferStorageFi
     }
 
     /**
-     * @param \ArrayObject $productOfferTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductOfferTransfer> $productOfferTransfers
      *
      * @return array<string>
      */
@@ -92,7 +90,7 @@ class MerchantProductOfferStorageFilter implements MerchantProductOfferStorageFi
     }
 
     /**
-     * @param \ArrayObject $merchantTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\MerchantTransfer> $merchantTransfers
      *
      * @return array<string>
      */
@@ -107,10 +105,10 @@ class MerchantProductOfferStorageFilter implements MerchantProductOfferStorageFi
     }
 
     /**
-     * @param \ArrayObject $productOfferTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductOfferTransfer> $productOfferTransfers
      * @param array<string> $activeMerchantReferences
      *
-     * @return \ArrayObject
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ProductOfferTransfer>
      */
     protected function filterProductOfferStorageTransfersByActiveMerchantReferences(
         ArrayObject $productOfferTransfers,

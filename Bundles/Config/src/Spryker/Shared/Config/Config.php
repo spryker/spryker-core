@@ -23,7 +23,7 @@ class Config
     public const CONFIG_FILE_SUFFIX = '.php';
 
     /**
-     * @var \ArrayObject|null
+     * @var \ArrayObject<string, mixed>|null
      */
     protected static $config;
 
@@ -202,9 +202,9 @@ class Config
 
     /**
      * @param string $type
-     * @param \ArrayObject $config
+     * @param \ArrayObject<string, mixed> $config
      *
-     * @return \ArrayObject
+     * @return \ArrayObject<string, mixed>
      */
     protected static function buildConfig($type, ArrayObject $config)
     {

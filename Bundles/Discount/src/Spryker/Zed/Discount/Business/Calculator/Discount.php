@@ -407,9 +407,9 @@ class Discount implements DiscountInterface
     }
 
     /**
-     * @param \ArrayObject<\Generated\Shared\Transfer\ItemTransfer> $quoteItemsCollection
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $quoteItemsCollection
      *
-     * @return \ArrayObject<\Generated\Shared\Transfer\ItemTransfer>
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer>
      */
     protected function cloneQuoteOriginalItems(ArrayObject $quoteItemsCollection): ArrayObject
     {

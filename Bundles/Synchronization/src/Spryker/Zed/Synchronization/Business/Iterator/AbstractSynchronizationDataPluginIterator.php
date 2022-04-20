@@ -10,6 +10,9 @@ namespace Spryker\Zed\Synchronization\Business\Iterator;
 use Iterator;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface;
 
+/**
+ * @implements \Iterator<int, array>
+ */
 abstract class AbstractSynchronizationDataPluginIterator implements Iterator
 {
     /**

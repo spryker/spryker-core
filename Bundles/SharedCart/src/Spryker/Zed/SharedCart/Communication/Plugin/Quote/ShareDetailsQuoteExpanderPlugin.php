@@ -27,7 +27,7 @@ class ShareDetailsQuoteExpanderPlugin extends AbstractPlugin implements QuoteExp
     protected $quoteIds = [];
 
     /**
-     * @var array<\ArrayObject>
+     * @var array<\ArrayObject<int|string, \Generated\Shared\Transfer\ShareDetailTransfer>>
      */
     protected $quoteShareDetailsByIdQuote = [];
 

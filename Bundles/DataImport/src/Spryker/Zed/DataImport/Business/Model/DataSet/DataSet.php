@@ -13,7 +13,7 @@ use Spryker\Zed\DataImport\Business\Exception\DataKeyNotFoundInDataSetException;
 class DataSet implements DataSetInterface
 {
     /**
-     * @var \ArrayObject
+     * @var \ArrayObject<int|string, mixed>
      */
     protected $dataSet;
 

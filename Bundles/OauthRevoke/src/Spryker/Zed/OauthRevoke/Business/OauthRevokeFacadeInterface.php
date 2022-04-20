@@ -79,7 +79,7 @@ interface OauthRevokeFacadeInterface
      *
      * @api
      *
-     * @param \ArrayObject $oauthRefreshTokenTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\OauthRefreshTokenTransfer> $oauthRefreshTokenTransfers
      *
      * @return void
      */

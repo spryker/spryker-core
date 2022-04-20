@@ -162,7 +162,7 @@ class StabilityCalculator implements StabilityCalculatorInterface
 
     /**
      * @param string $bundleName
-     * @param \ArrayObject $indirectOutgoingDependencies
+     * @param \ArrayObject<int|string, mixed> $indirectOutgoingDependencies
      *
      * @return void
      */
@@ -181,7 +181,7 @@ class StabilityCalculator implements StabilityCalculatorInterface
 
     /**
      * @param string $bundleName
-     * @param \ArrayObject $indirectIncomingDependencies
+     * @param \ArrayObject<int|string, mixed> $indirectIncomingDependencies
      *
      * @return void
      */

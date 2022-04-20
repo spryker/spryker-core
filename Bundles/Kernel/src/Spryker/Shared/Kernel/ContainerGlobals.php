@@ -36,6 +36,9 @@ namespace Spryker\Shared\Kernel;
 use ArrayAccess;
 use InvalidArgumentException;
 
+/**
+ * @implements \ArrayAccess<string, mixed>
+ */
 class ContainerGlobals implements ArrayAccess
 {
     /**

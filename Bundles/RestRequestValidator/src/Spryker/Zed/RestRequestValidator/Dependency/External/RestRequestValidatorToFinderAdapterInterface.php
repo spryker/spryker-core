@@ -10,6 +10,9 @@ namespace Spryker\Zed\RestRequestValidator\Dependency\External;
 use Countable;
 use IteratorAggregate;
 
+/**
+ * @extends \IteratorAggregate<\SplFileInfo>
+ */
 interface RestRequestValidatorToFinderAdapterInterface extends IteratorAggregate, Countable
 {
     /**

@@ -76,9 +76,9 @@ class ProductLabelDictionaryStorageMapper
 
     /**
      * @param array $productLabelDictionaryItems
-     * @param \ArrayObject $productLabelDictionaryCollection
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer> $productLabelDictionaryCollection
      *
-     * @return \ArrayObject
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer>
      */
     protected function mapProductLabelDictionaryItemsToProductLabelDictionaryCollection(
         array $productLabelDictionaryItems,

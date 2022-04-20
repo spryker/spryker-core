@@ -463,7 +463,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
 
     /**
      * @param \DOMElement $dom
-     * @param array $elementHierarchy
+     * @param array<string> $elementHierarchy
      *
      * @return array
      */
@@ -489,7 +489,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
     }
 
     /**
-     * @param \DOMNodeList $nodeList
+     * @param \DOMNodeList<\DOMNode> $nodeList
      *
      * @return array
      */

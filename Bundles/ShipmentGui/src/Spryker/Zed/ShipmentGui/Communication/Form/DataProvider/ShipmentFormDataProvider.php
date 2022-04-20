@@ -235,7 +235,7 @@ class ShipmentFormDataProvider
     }
 
     /**
-     * @param \ArrayObject|iterable<\Generated\Shared\Transfer\AddressTransfer> $customerAddressesCollection
+     * @param iterable<int, \Generated\Shared\Transfer\AddressTransfer> $customerAddressesCollection
      *
      * @return array<string>
      */

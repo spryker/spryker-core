@@ -11,6 +11,10 @@ use ArrayAccess;
 use Countable;
 use Iterator;
 
+/**
+ * @implements \ArrayAccess<int, \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginInterface>
+ * @implements \Iterator<int, \Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginInterface>
+ */
 class SubFormPluginCollection implements Iterator, Countable, ArrayAccess
 {
     /**

@@ -11,6 +11,10 @@ use ArrayAccess;
 use IteratorAggregate;
 use Spryker\Zed\Event\Dependency\Plugin\EventBaseHandlerInterface;
 
+/**
+ * @extends \ArrayAccess<string, \SplPriorityQueue<mixed, \Spryker\Zed\Event\Business\Dispatcher\EventListenerContextInterface>>
+ * @extends \IteratorAggregate<\SplPriorityQueue<mixed, \Spryker\Zed\Event\Business\Dispatcher\EventListenerContextInterface>>
+ */
 interface EventCollectionInterface extends ArrayAccess, IteratorAggregate
 {
     /**
@@ -47,7 +51,7 @@ interface EventCollectionInterface extends ArrayAccess, IteratorAggregate
      *
      * @throws \Spryker\Zed\Event\Business\Exception\EventListenerNotFoundException
      *
-     * @return \SplPriorityQueue<\Spryker\Zed\Event\Business\Dispatcher\EventListenerContextInterface>
+     * @return \SplPriorityQueue<mixed, \Spryker\Zed\Event\Business\Dispatcher\EventListenerContextInterface>
      */
     public function get($eventName);
 }

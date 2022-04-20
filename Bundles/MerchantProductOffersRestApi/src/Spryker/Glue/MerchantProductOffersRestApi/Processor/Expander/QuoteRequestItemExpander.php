@@ -41,14 +41,14 @@ class QuoteRequestItemExpander implements QuoteRequestItemExpanderInterface
             $quoteRequestVersionTransfer = $quoteRequestTransfer->getLatestVersion();
             /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */
             $quoteTransfer = $quoteRequestVersionTransfer->getQuote();
-            /** @var \ArrayObject<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers */
+            /** @var \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers */
             $itemTransfers = $quoteTransfer->getItems();
 
             /** @var \Generated\Shared\Transfer\RestQuoteRequestVersionTransfer $restQuoteRequestVersionTransfer */
             $restQuoteRequestVersionTransfer = $restQuoteRequestsAttributesTransfer->getShownVersion();
             /** @var \Generated\Shared\Transfer\RestQuoteRequestsCartTransfer $restQuoteRequestsCartTransfer */
             $restQuoteRequestsCartTransfer = $restQuoteRequestVersionTransfer->getCart();
-            /** @var \ArrayObject<\Generated\Shared\Transfer\RestQuoteRequestItemTransfer> $restQuoteRequestItemTransfers */
+            /** @var \ArrayObject<int, \Generated\Shared\Transfer\RestQuoteRequestItemTransfer> $restQuoteRequestItemTransfers */
             $restQuoteRequestItemTransfers = $restQuoteRequestsCartTransfer->getItems();
             $restQuoteRequestItemsByGroupKey = $this->getRestQuoteRequestItemsIndexedByGroupKey($restQuoteRequestItemTransfers->getArrayCopy());
 

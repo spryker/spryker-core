@@ -9,6 +9,9 @@ namespace Spryker\Shared\Kernel;
 
 use ArrayAccess;
 
+/**
+ * @extends \ArrayAccess<string, \Closure|object>
+ */
 interface ContainerInterface extends ArrayAccess
 {
     /**

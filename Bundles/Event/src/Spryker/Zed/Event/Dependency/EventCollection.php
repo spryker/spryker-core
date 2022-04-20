@@ -16,7 +16,7 @@ use Spryker\Zed\Event\Dependency\Plugin\EventBaseHandlerInterface;
 class EventCollection implements EventCollectionInterface
 {
     /**
-     * @var array<\SplPriorityQueue>
+     * @var array<\SplPriorityQueue<mixed, \Spryker\Zed\Event\Business\Dispatcher\EventListenerContextInterface>>
      */
     protected $eventListeners = [];
 
@@ -92,7 +92,7 @@ class EventCollection implements EventCollectionInterface
      *
      * @throws \Spryker\Zed\Event\Business\Exception\EventListenerNotFoundException
      *
-     * @return \SplPriorityQueue<\Spryker\Zed\Event\Business\Dispatcher\EventListenerContextInterface>
+     * @return \SplPriorityQueue<mixed, \Spryker\Zed\Event\Business\Dispatcher\EventListenerContextInterface>
      */
     public function get($eventName)
     {
@@ -130,7 +130,7 @@ class EventCollection implements EventCollectionInterface
      *
      * @param mixed $offset
      *
-     * @return \SplPriorityQueue|array
+     * @return \SplPriorityQueue<mixed, \Spryker\Zed\Event\Business\Dispatcher\EventListenerContextInterface>|array
      */
     #[\ReturnTypeWillChange]
     public function offsetGet($offset)

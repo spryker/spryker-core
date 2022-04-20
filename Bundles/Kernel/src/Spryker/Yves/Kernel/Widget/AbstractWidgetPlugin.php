@@ -15,6 +15,8 @@ use Spryker\Yves\Kernel\Exception\ReadOnlyException;
 
 /**
  * @deprecated Use {@link \Spryker\Yves\Kernel\Widget\AbstractWidget} instead.
+ *
+ * @implements \ArrayAccess<int|string, mixed>
  */
 abstract class AbstractWidgetPlugin extends AbstractPlugin implements WidgetPluginInterface, ArrayAccess
 {

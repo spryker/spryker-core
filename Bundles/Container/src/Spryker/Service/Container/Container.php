@@ -16,6 +16,9 @@ use Spryker\Service\Container\Exception\NotFoundException;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @implements \ArrayAccess<string, mixed>
+ */
 class Container implements ContainerInterface, ArrayAccess
 {
     /**
@@ -59,12 +62,12 @@ class Container implements ContainerInterface, ArrayAccess
     protected static $globalFrozenServices = [];
 
     /**
-     * @var \SplObjectStorage
+     * @var \SplObjectStorage<object, mixed>
      */
     protected $factoryServices;
 
     /**
-     * @var \SplObjectStorage
+     * @var \SplObjectStorage<object, mixed>
      */
     protected $protectedServices;
 
