@@ -13,6 +13,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 /**
  * @method \Spryker\Zed\NavigationGui\Communication\NavigationGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\NavigationGui\Persistence\NavigationGuiQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\NavigationGui\NavigationGuiConfig getConfig()
  */
 class UpdateNavigationFormType extends NavigationFormType
 {

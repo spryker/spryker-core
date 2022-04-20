@@ -14,6 +14,7 @@ use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
  * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductPageSearch\Communication\ProductPageSearchCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacade getFacade()
+ * @method \Spryker\Zed\ProductPageSearch\ProductPageSearchConfig getConfig()
  */
 class PriceProductDefaultProductPagePublishListener extends AbstractProductPageSearchListener implements EventBulkHandlerInterface
 {

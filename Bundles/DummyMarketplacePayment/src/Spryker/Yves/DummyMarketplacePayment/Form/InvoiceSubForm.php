@@ -19,6 +19,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * @method \Spryker\Yves\DummyMarketplacePayment\DummyMarketplacePaymentFactory getFactory()
+ * @method \Spryker\Yves\DummyMarketplacePayment\DummyMarketplacePaymentConfig getConfig()
  */
 class InvoiceSubForm extends AbstractSubFormType implements SubFormInterface, SubFormProviderNameInterface
 {

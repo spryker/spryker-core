@@ -12,6 +12,8 @@ use Spryker\Zed\FileManager\Dependency\FileManagerEvents;
 
 /**
  * @method \Spryker\Zed\FileManagerStorage\Communication\FileManagerStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\FileManagerStorage\FileManagerStorageConfig getConfig()
+ * @method \Spryker\Zed\FileManagerStorage\Business\FileManagerStorageFacadeInterface getFacade()
  */
 class FileLocalizedAttributesListener extends AbstractFileManagerListener
 {

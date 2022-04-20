@@ -10,6 +10,10 @@ namespace Spryker\Zed\SalesOrderThreshold\Communication\Plugin\Strategy;
 use Generated\Shared\Transfer\SalesOrderThresholdValueTransfer;
 use Spryker\Shared\SalesOrderThreshold\SalesOrderThresholdConfig;
 
+/**
+ * @method \Spryker\Zed\SalesOrderThreshold\SalesOrderThresholdConfig getConfig()
+ * @method \Spryker\Zed\SalesOrderThreshold\Business\SalesOrderThresholdFacadeInterface getFacade()
+ */
 class SoftMinimumThresholdWithFixedFeeStrategyPlugin extends AbstractSalesOrderThresholdStrategyPlugin
 {
     /**

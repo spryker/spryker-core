@@ -16,6 +16,7 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 /**
  * @method \Spryker\Zed\AvailabilityNotification\Business\AvailabilityNotificationFacadeInterface getFacade()
  * @method \Spryker\Zed\AvailabilityNotification\Business\AvailabilityNotificationBusinessFactory getFactory()
+ * @method \Spryker\Zed\AvailabilityNotification\Persistence\AvailabilityNotificationRepositoryInterface getRepository()
  */
 class GatewayController extends AbstractGatewayController
 {

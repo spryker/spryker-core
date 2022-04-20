@@ -15,6 +15,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotCompromisedPassword;
 
+/**
+ * @method \Spryker\Zed\User\Persistence\UserQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\User\UserConfig getConfig()
+ * @method \Spryker\Zed\User\Communication\UserCommunicationFactory getFactory()
+ * @method \Spryker\Zed\User\Business\UserFacadeInterface getFacade()
+ */
 class UserUpdateForm extends UserForm
 {
     /**

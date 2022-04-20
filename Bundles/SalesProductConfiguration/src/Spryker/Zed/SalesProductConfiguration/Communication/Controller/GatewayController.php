@@ -11,6 +11,8 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
  * @method \Spryker\Zed\SalesProductConfiguration\Business\SalesProductConfigurationFacadeInterface getFacade()
+ * @method \Spryker\Zed\SalesProductConfiguration\Persistence\SalesProductConfigurationRepositoryInterface getRepository()
+ * @method \Spryker\Zed\SalesProductConfiguration\Communication\SalesProductConfigurationCommunicationFactory getFactory()
  */
 class GatewayController extends AbstractGatewayController
 {

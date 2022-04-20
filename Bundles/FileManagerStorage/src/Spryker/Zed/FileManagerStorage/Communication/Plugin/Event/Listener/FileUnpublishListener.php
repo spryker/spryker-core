@@ -9,6 +9,8 @@ namespace Spryker\Zed\FileManagerStorage\Communication\Plugin\Event\Listener;
 
 /**
  * @method \Spryker\Zed\FileManagerStorage\Communication\FileManagerStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\FileManagerStorage\FileManagerStorageConfig getConfig()
+ * @method \Spryker\Zed\FileManagerStorage\Business\FileManagerStorageFacadeInterface getFacade()
  */
 class FileUnpublishListener extends AbstractFileManagerListener
 {

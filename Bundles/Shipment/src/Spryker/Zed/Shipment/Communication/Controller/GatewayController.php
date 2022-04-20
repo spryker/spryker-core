@@ -13,6 +13,9 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
  * @method \Spryker\Zed\Shipment\Business\ShipmentFacadeInterface getFacade()
+ * @method \Spryker\Zed\Shipment\Persistence\ShipmentQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Shipment\Communication\ShipmentCommunicationFactory getFactory()
  */
 class GatewayController extends AbstractGatewayController
 {

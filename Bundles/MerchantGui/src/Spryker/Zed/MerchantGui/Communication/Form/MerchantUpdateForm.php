@@ -14,6 +14,7 @@ use Symfony\Component\Form\FormView;
 
 /**
  * @method \Spryker\Zed\MerchantGui\Communication\MerchantGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\MerchantGui\MerchantGuiConfig getConfig()
  */
 class MerchantUpdateForm extends MerchantCreateForm
 {

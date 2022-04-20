@@ -17,6 +17,7 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
  * @method \Spryker\Zed\Oauth\Business\OauthFacadeInterface getFacade()
+ * @method \Spryker\Zed\Oauth\Persistence\OauthRepositoryInterface getRepository()
  */
 class GatewayController extends AbstractGatewayController
 {

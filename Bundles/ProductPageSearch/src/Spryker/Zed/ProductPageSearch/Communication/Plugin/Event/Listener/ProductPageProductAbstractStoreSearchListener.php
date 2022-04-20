@@ -13,6 +13,8 @@ use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 /**
  * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductPageSearch\Communication\ProductPageSearchCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductPageSearch\ProductPageSearchConfig getConfig()
+ * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface getFacade()
  */
 class ProductPageProductAbstractStoreSearchListener extends AbstractProductPageSearchListener implements EventBulkHandlerInterface
 {

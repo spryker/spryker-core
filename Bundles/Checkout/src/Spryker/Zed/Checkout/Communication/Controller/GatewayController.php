@@ -18,6 +18,7 @@ use Throwable;
 
 /**
  * @method \Spryker\Zed\Checkout\Business\CheckoutFacadeInterface getFacade()
+ * @method \Spryker\Zed\Checkout\Communication\CheckoutCommunicationFactory getFactory()
  */
 class GatewayController extends AbstractGatewayController
 {

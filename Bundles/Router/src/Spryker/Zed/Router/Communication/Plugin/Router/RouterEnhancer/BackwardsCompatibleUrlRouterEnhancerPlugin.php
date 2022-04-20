@@ -14,6 +14,9 @@ use Symfony\Component\Routing\RequestContext;
 
 /**
  * @deprecated Will be removed without replacement. This plugin only exists to support a backwards compatibility to old camelCased URL's which are not supported anymore.
+ * @method \Spryker\Zed\Router\RouterConfig getConfig()
+ * @method \Spryker\Zed\Router\Communication\RouterCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Router\Business\RouterFacadeInterface getFacade()
  */
 class BackwardsCompatibleUrlRouterEnhancerPlugin extends AbstractRouterEnhancerPlugin
 {

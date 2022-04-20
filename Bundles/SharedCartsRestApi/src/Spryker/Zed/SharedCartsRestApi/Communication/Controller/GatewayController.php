@@ -15,6 +15,7 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
  * @method \Spryker\Zed\SharedCartsRestApi\Business\SharedCartsRestApiFacade getFacade()
+ * @method \Spryker\Zed\SharedCartsRestApi\Communication\SharedCartsRestApiCommunicationFactory getFactory()
  */
 class GatewayController extends AbstractGatewayController
 {

@@ -10,6 +10,10 @@ namespace Spryker\Zed\ZedRequest\Communication\Controller;
 use Generated\Shared\Transfer\HealthCheckServiceResponseTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
+/**
+ * @method \Spryker\Zed\ZedRequest\Communication\ZedRequestCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ZedRequest\Business\ZedRequestFacadeInterface getFacade()
+ */
 class GatewayController extends AbstractGatewayController
 {
     /**

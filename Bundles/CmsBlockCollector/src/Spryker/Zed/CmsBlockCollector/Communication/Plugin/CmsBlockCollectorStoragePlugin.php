@@ -18,6 +18,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\CmsBlockCollector\Business\CmsBlockCollectorFacadeInterface getFacade()
+ * @method \Spryker\Zed\CmsBlockCollector\CmsBlockCollectorConfig getConfig()
  */
 class CmsBlockCollectorStoragePlugin extends AbstractCollectorPlugin
 {

@@ -25,6 +25,8 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
  * @method \Spryker\Zed\ShoppingList\Business\ShoppingListFacadeInterface getFacade()
+ * @method \Spryker\Zed\ShoppingList\Persistence\ShoppingListRepositoryInterface getRepository()
+ * @method \Spryker\Zed\ShoppingList\Communication\ShoppingListCommunicationFactory getFactory()
  */
 class GatewayController extends AbstractGatewayController
 {

@@ -15,6 +15,8 @@ use Symfony\Component\Form\FormBuilderInterface;
  * @method \Spryker\Zed\Glossary\Business\GlossaryFacadeInterface getFacade()
  * @method \Spryker\Zed\Glossary\Communication\GlossaryCommunicationFactory getFactory()
  * @method \Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Glossary\GlossaryConfig getConfig()
+ * @method \Spryker\Zed\Glossary\Persistence\GlossaryRepositoryInterface getRepository()
  */
 class UpdateTranslationForm extends TranslationForm
 {

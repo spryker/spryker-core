@@ -10,6 +10,10 @@ namespace Spryker\Zed\CompanyRoleGui\Communication\Form;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 
+/**
+ * @method \Spryker\Zed\CompanyRoleGui\CompanyRoleGuiConfig getConfig()
+ * @method \Spryker\Zed\CompanyRoleGui\Communication\CompanyRoleGuiCommunicationFactory getFactory()
+ */
 class CompanyRoleEditForm extends CompanyRoleCreateForm
 {
     /**

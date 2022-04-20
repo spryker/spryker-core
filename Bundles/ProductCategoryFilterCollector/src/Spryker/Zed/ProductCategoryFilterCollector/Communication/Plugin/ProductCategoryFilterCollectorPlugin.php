@@ -18,6 +18,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\ProductCategoryFilterCollector\Business\ProductCategoryFilterCollectorFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductCategoryFilterCollector\ProductCategoryFilterCollectorConfig getConfig()
  */
 class ProductCategoryFilterCollectorPlugin extends AbstractCollectorPlugin
 {

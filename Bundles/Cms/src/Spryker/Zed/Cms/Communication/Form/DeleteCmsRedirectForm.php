@@ -12,6 +12,12 @@ use Spryker\Zed\Gui\Communication\Form\DeleteForm;
 /**
  * This class is empty because this form needs to implement CSRF protection and all options and form content
  * will be defined in Twig templates.
+ *
+ * @method \Spryker\Zed\Cms\Persistence\CmsQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Cms\CmsConfig getConfig()
+ * @method \Spryker\Zed\Cms\Persistence\CmsRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Cms\Communication\CmsCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Cms\Business\CmsFacadeInterface getFacade()
  */
 class DeleteCmsRedirectForm extends DeleteForm
 {
