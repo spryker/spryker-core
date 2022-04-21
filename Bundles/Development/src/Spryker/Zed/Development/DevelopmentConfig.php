@@ -352,7 +352,6 @@ class DevelopmentConfig extends AbstractBundleConfig
     {
         return [
             'Codeception\\' => 'spryker/testify',
-            'CodeItNow\\BarcodeBundle' => 'spryker/code-it-now',
             'Doctrine\\Common\\Inflector' => 'spryker/doctrine-inflector',
             'Doctrine\\Inflector\\InflectorFactory' => 'spryker/doctrine-inflector',
             'DMS\\PHPUnitExtensions\\' => 'spryker/testify',
@@ -399,7 +398,6 @@ class DevelopmentConfig extends AbstractBundleConfig
     {
         return [
             'codeception/codeception' => 'spryker/testify',
-            'codeitnowin/barcode' => 'spryker/code-it-now',
             'dms/phpunit-arraysubset-asserts' => 'spryker/testify',
             'doctrine/inflector' => 'spryker/doctrine-inflector',
             'egulias/email-validator' => 'spryker/egulias',
