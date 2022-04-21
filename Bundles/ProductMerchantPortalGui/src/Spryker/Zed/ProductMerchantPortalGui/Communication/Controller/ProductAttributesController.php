@@ -416,11 +416,11 @@ class ProductAttributesController extends AbstractController
     /**
      * @param array $attributes
      * @param string $attributeName
-     * @param string $attributeValue
+     * @param string|null $attributeValue
      *
      * @return array
      */
-    protected function updateAttribute(array $attributes, string $attributeName, string $attributeValue): array
+    protected function updateAttribute(array $attributes, string $attributeName, ?string $attributeValue): array
     {
         unset($attributes[$attributeName]);
 
@@ -504,7 +504,7 @@ class ProductAttributesController extends AbstractController
             return false;
         }
 
-        return empty($attributes[static::PARAM_ATTRIBUTE_NAME]);
+        return empty($attributes[$attributeName]);
     }
 
     /**
