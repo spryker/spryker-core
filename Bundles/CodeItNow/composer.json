@@ -4,7 +4,6 @@
     "description": "CodeItNow module",
     "license": "proprietary",
     "require": {
-        "codeitnowin/barcode": "^3.0.0",
         "php": ">=7.4",
         "spryker/barcode-extension": "^1.0.0"
     },
