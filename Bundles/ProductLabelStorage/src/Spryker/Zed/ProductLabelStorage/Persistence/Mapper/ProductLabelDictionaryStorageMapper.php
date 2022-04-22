@@ -16,7 +16,7 @@ use Propel\Runtime\Collection\ObjectCollection;
 class ProductLabelDictionaryStorageMapper
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductLabelStorage\Persistence\SpyProductLabelDictionaryStorage[] $productLabelDictionaryStorageEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductLabelStorage\Persistence\SpyProductLabelDictionaryStorage> $productLabelDictionaryStorageEntities
      * @param array<\Generated\Shared\Transfer\ProductLabelDictionaryStorageTransfer> $productLabelDictionaryStorageTransfers
      *
      * @return array
@@ -76,9 +76,9 @@ class ProductLabelDictionaryStorageMapper
 
     /**
      * @param array $productLabelDictionaryItems
-     * @param \ArrayObject $productLabelDictionaryCollection
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer> $productLabelDictionaryCollection
      *
-     * @return \ArrayObject
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer>
      */
     protected function mapProductLabelDictionaryItemsToProductLabelDictionaryCollection(
         array $productLabelDictionaryItems,

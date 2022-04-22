@@ -546,8 +546,8 @@ class BridgeBuilder
     }
 
     /**
-     * @param \ReflectionClass $reflectionClass
-     * @param array $methodNames
+     * @param \ReflectionClass<object> $reflectionClass
+     * @param array<string> $methodNames
      * @param string $methodTemplate
      * @param string $templateContent
      *

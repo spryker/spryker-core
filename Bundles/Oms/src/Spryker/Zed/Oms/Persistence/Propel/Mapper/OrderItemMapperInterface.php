@@ -19,7 +19,7 @@ interface OrderItemMapperInterface
     public function mapOrderItemMatrix(array $orderItemsMatrixResult): array;
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateHistory[] $omsOrderItemStateHistoryEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateHistory> $omsOrderItemStateHistoryEntities
      *
      * @return array<\Generated\Shared\Transfer\ItemStateTransfer>
      */
@@ -28,7 +28,7 @@ interface OrderItemMapperInterface
     ): array;
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $salesOrderItemEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $salesOrderItemEntityCollection
      *
      * @return array<\Generated\Shared\Transfer\ItemTransfer>
      */

@@ -30,7 +30,7 @@ class ProductOfferRestResponseBuilder implements ProductOfferRestResponseBuilder
     }
 
     /**
-     * @param \ArrayObject $productOfferStorageTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductOfferStorageTransfer> $productOfferStorageTransfers
      *
      * @return array<array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>>
      */

@@ -26,9 +26,13 @@ abstract class AbstractAssignmentTable extends AbstractTable
      * @var string
      */
     public const COL_SELECT_CHECKBOX = 'select-checkbox';
+
     public const COL_CUSTOMER_ID = SpyCustomerTableMap::COL_ID_CUSTOMER;
+
     public const COL_CUSTOMER_EMAIL = SpyCustomerTableMap::COL_EMAIL;
+
     public const COL_CUSTOMER_FIRST_NAME = SpyCustomerTableMap::COL_FIRST_NAME;
+
     public const COL_CUSTOMER_LAST_NAME = SpyCustomerTableMap::COL_LAST_NAME;
 
     /**
@@ -180,7 +184,7 @@ abstract class AbstractAssignmentTable extends AbstractTable
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Customer\Persistence\SpyCustomer[] $customerEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Customer\Persistence\SpyCustomer> $customerEntities
      *
      * @return array
      */
@@ -204,7 +208,7 @@ abstract class AbstractAssignmentTable extends AbstractTable
     {
         $query = $this->getQuery();
 
-        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Customer\Persistence\SpyCustomer[] $customerEntities */
+        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Customer\Persistence\SpyCustomer> $customerEntities */
         $customerEntities = $this->runQuery($query, $config, true);
         $rows = $this->buildResultData($customerEntities);
 

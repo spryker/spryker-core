@@ -21,7 +21,7 @@ interface ContentMapperInterface
     public function mapContentEntityToTransfer(SpyContent $contentEntity): ContentTransfer;
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Content\Persistence\SpyContent[] $contentEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Content\Persistence\SpyContent> $contentEntities
      * @param array<\Generated\Shared\Transfer\ContentTransfer> $contentTransfers
      *
      * @return array<\Generated\Shared\Transfer\ContentTransfer>

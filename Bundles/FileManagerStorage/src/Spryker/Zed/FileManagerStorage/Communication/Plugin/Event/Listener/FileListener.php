@@ -14,6 +14,8 @@ use Spryker\Zed\FileManager\Dependency\FileManagerEvents;
  *   and {@link \Spryker\Zed\FileManagerStorage\Communication\Plugin\Event\Listener\FileUnpublishListener} instead.
  *
  * @method \Spryker\Zed\FileManagerStorage\Communication\FileManagerStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\FileManagerStorage\FileManagerStorageConfig getConfig()
+ * @method \Spryker\Zed\FileManagerStorage\Business\FileManagerStorageFacadeInterface getFacade()
  */
 class FileListener extends AbstractFileManagerListener
 {
@@ -27,7 +29,6 @@ class FileListener extends AbstractFileManagerListener
      */
     public function handleBulk(array $eventEntityTransfers, $eventName)
     {
-        $this->preventTransaction();
         $fileIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventEntityTransfers);
 
         if ($eventName === FileManagerEvents::ENTITY_FILE_DELETE) {

@@ -46,7 +46,7 @@ class WishlistTransferMapper implements WishlistTransferMapperInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Wishlist\Persistence\SpyWishlist[] $wishlistEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Wishlist\Persistence\SpyWishlist> $wishlistEntityCollection
      *
      * @return array<\Generated\Shared\Transfer\WishlistTransfer>
      */
@@ -78,7 +78,7 @@ class WishlistTransferMapper implements WishlistTransferMapperInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Wishlist\Persistence\SpyWishlistItem[] $wishlistItemEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Wishlist\Persistence\SpyWishlistItem> $wishlistItemEntityCollection
      *
      * @return array<\Generated\Shared\Transfer\WishlistItemTransfer>
      */

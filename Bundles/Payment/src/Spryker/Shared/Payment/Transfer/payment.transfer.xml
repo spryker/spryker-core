@@ -9,12 +9,18 @@
         <property name="amount" type="int"/>
         <property name="isLimitedAmount" type="bool"/>
         <property name="availableAmount" type="int" description="Maximum amount available for a payment by the payment method"/>
+        <property name="foreignPayments" type="array" associative="true" singular="foreignPayment"/>
     </transfer>
 
     <transfer name="Quote">
         <property name="payment" type="Payment" deprecated="Use payments property instead."/>
         <property name="payments" type="Payment[]" singular="payment"/>
         <property name="store" type="Store"/>
+        <property name="orderReference" type="string"/>
+        <property name="customer" type="Customer"/>
+        <property name="billingAddress" type="Address"/>
+        <property name="currency" type="Currency"/>
+        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
     <transfer name="Order">
@@ -22,6 +28,7 @@
         <property name="currencyIsoCode" type="string"/>
         <property name="idSalesOrder" type="int"/>
         <property name="totals" type="Totals"/>
+        <property name="orderReference" type="string"/>
     </transfer>
 
     <transfer name="SalesPayment">
@@ -38,6 +45,17 @@
 
     <transfer name="SalesPaymentMethodTypeCollection" deprecated="Will be removed without replacement.">
         <property name="salesPaymentMethodTypes" singular="salesPaymentMethodType" type="SalesPaymentMethodType[]"/>
+    </transfer>
+
+    <transfer name="PaymentAuthorizeResponse">
+        <property name="redirectUrl" type="string"/>
+        <property name="isSuccessful" type="bool"/>
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="PaymentAuthorizeRequest">
+        <property name="requestUrl" type="string"/>
+        <property name="postData" type="array" associative="true" singular="postValue"/>
     </transfer>
 
     <transfer name="PaymentMethods">
@@ -64,6 +82,10 @@
         <property name="isActive" type="bool"/>
         <property name="paymentProvider" type="PaymentProvider"/>
         <property name="storeRelation" type="StoreRelation"/>
+        <property name="labelName" type="string"/>
+        <property name="groupName" type="string"/>
+        <property name="isHidden" type="bool"/>
+        <property name="paymentAuthorizationEndpoint" type="string"/>
     </transfer>
 
     <transfer name="StoreRelation">
@@ -75,6 +97,7 @@
     <transfer name="Store">
         <property name="idStore" type="int"/>
         <property name="name" type="string"/>
+        <property name="storeReference" type="string"/>
     </transfer>
 
     <transfer name="PaymentMethodResponse">
@@ -108,14 +131,199 @@
         <property name="errors" type="CheckoutError[]" singular="error"/>
         <property name="saveOrder" type="SaveOrder"/>
         <property name="isSuccess" type="bool"/>
+        <property name="isExternalRedirect" type="bool"/>
+        <property name="redirectUrl" type="string"/>
     </transfer>
 
     <transfer name="SaveOrder">
         <property name="idSalesOrder" type="int"/>
+        <property name="orderReference" type="string"/>
     </transfer>
 
     <transfer name="CheckoutError">
         <property name="message" type="string"/>
+        <property name="errorCode" type="int"/>
+    </transfer>
+
+    <transfer name="PaymentMethodAdded">
+        <property name="name" type="string"/>
+        <property name="providerName" type="string"/>
+        <property name="paymentAuthorizationEndpoint" type="string"/>
+        <property name="messageAttributes" type="MessageAttributes"/>
+    </transfer>
+
+    <transfer name="MessageAttributes">
+        <property name="storeReference" type="string"/>
+        <property name="publisher" type="Publisher"/>
+    </transfer>
+
+    <transfer name="Publisher">
+        <property name="storeReference" type="string"/>
+        <property name="appIdentifier" type="string"/>
+    </transfer>
+
+    <transfer name="PaymentMethodDeleted">
+        <property name="name" type="string"/>
+        <property name="providerName" type="string"/>
+        <property name="paymentAuthorizationEndpoint" type="string"/>
+        <property name="messageAttributes" type="MessageAttributes"/>
+    </transfer>
+
+    <transfer name="PaymentCancelReservationRequested">
+        <property name="orderReference" type="string"/>
+        <property name="orderItemIds" type="array" singular="orderItemId"/>
+        <property name="currencyIsoCode" type="string"/>
+        <property name="amount" type="int"/>
+        <property name="idPaymentPayoneOrderCancel" type="int"/>
+        <property name="idPaymentPayoneOrderCapture" type="int"/>
+        <property name="idPaymentPayoneOrderRefund" type="int"/>
+        <property name="attemptNumber" type="int"/>
+        <property name="messageAttributes" type="MessageAttributes"/>
+    </transfer>
+
+    <transfer name="PaymentConfirmationRequested">
+        <property name="orderReference" type="string"/>
+        <property name="orderItemIds" type="array" singular="orderItemId"/>
+        <property name="currencyIsoCode" type="string"/>
+        <property name="amount" type="int"/>
+        <property name="idPaymentPayoneOrderCancel" type="int"/>
+        <property name="idPaymentPayoneOrderCapture" type="int"/>
+        <property name="idPaymentPayoneOrderRefund" type="int"/>
+        <property name="attemptNumber" type="int"/>
+        <property name="messageAttributes" type="MessageAttributes"/>
+    </transfer>
+
+    <transfer name="PaymentRefundRequested">
+        <property name="orderReference" type="string"/>
+        <property name="orderItemIds" type="array" singular="orderItemId"/>
+        <property name="currencyIsoCode" type="string"/>
+        <property name="amount" type="int"/>
+        <property name="idPaymentPayoneOrderCancel" type="int"/>
+        <property name="idPaymentPayoneOrderCapture" type="int"/>
+        <property name="idPaymentPayoneOrderRefund" type="int"/>
+        <property name="attemptNumber" type="int"/>
+        <property name="messageAttributes" type="MessageAttributes"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="locale" type="Locale"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="localeName" type="string"/>
+    </transfer>
+
+    <transfer name="Address">
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
+    </transfer>
+
+    <transfer name="Currency">
+        <property name="code" type="string"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="idSalesOrderItem" type="int"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="MessageResponse">
+    </transfer>
+
+    <transfer name="PaymentPreauthorized">
+        <property name="orderReference" type="string"/>
+        <property name="orderItemIds" type="array" singular="orderItemId"/>
+        <property name="amount" type="int"/>
+        <property name="currencyIsoCode" type="string"/>
+        <property name="idPaymentPayoneOrderCancel" type="int"/>
+        <property name="idPaymentPayoneOrderCapture" type="int"/>
+        <property name="idPaymentPayoneOrderRefund" type="int"/>
+        <property name="attemptNumber" type="int"/>
+        <property name="messageAttributes" type="MessageAttributes"/>
+    </transfer>
+
+    <transfer name="PaymentPreauthorizationFailed">
+        <property name="orderReference" type="string"/>
+        <property name="orderItemIds" type="array" singular="orderItemId"/>
+        <property name="amount" type="int"/>
+        <property name="currencyIsoCode" type="string"/>
+        <property name="idPaymentPayoneOrderCancel" type="int"/>
+        <property name="idPaymentPayoneOrderCapture" type="int"/>
+        <property name="idPaymentPayoneOrderRefund" type="int"/>
+        <property name="attemptNumber" type="int"/>
+        <property name="messageAttributes" type="MessageAttributes"/>
+    </transfer>
+
+    <transfer name="PaymentConfirmed">
+        <property name="orderReference" type="string"/>
+        <property name="orderItemIds" type="array" singular="orderItemId"/>
+        <property name="amount" type="int"/>
+        <property name="currencyIsoCode" type="string"/>
+        <property name="idPaymentPayoneOrderCancel" type="int"/>
+        <property name="idPaymentPayoneOrderCapture" type="int"/>
+        <property name="idPaymentPayoneOrderRefund" type="int"/>
+        <property name="attemptNumber" type="int"/>
+        <property name="messageAttributes" type="MessageAttributes"/>
+    </transfer>
+
+    <transfer name="PaymentConfirmationFailed">
+        <property name="orderReference" type="string"/>
+        <property name="orderItemIds" type="array" singular="orderItemId"/>
+        <property name="amount" type="int"/>
+        <property name="currencyIsoCode" type="string"/>
+        <property name="idPaymentPayoneOrderCancel" type="int"/>
+        <property name="idPaymentPayoneOrderCapture" type="int"/>
+        <property name="idPaymentPayoneOrderRefund" type="int"/>
+        <property name="attemptNumber" type="int"/>
+        <property name="messageAttributes" type="MessageAttributes"/>
+    </transfer>
+
+    <transfer name="PaymentRefunded">
+        <property name="orderReference" type="string"/>
+        <property name="orderItemIds" type="array" singular="orderItemId"/>
+        <property name="amount" type="int"/>
+        <property name="currencyIsoCode" type="string"/>
+        <property name="idPaymentPayoneOrderCancel" type="int"/>
+        <property name="idPaymentPayoneOrderCapture" type="int"/>
+        <property name="idPaymentPayoneOrderRefund" type="int"/>
+        <property name="attemptNumber" type="int"/>
+        <property name="messageAttributes" type="MessageAttributes"/>
+    </transfer>
+
+    <transfer name="PaymentRefundFailed">
+        <property name="orderReference" type="string"/>
+        <property name="orderItemIds" type="array" singular="orderItemId"/>
+        <property name="amount" type="int"/>
+        <property name="currencyIsoCode" type="string"/>
+        <property name="idPaymentPayoneOrderCancel" type="int"/>
+        <property name="idPaymentPayoneOrderCapture" type="int"/>
+        <property name="idPaymentPayoneOrderRefund" type="int"/>
+        <property name="attemptNumber" type="int"/>
+        <property name="messageAttributes" type="MessageAttributes"/>
+    </transfer>
+
+    <transfer name="PaymentReservationCanceled">
+        <property name="orderReference" type="string"/>
+        <property name="orderItemIds" type="array" singular="orderItemId"/>
+        <property name="amount" type="int"/>
+        <property name="currencyIsoCode" type="string"/>
+        <property name="idPaymentPayoneOrderCancel" type="int"/>
+        <property name="idPaymentPayoneOrderCapture" type="int"/>
+        <property name="idPaymentPayoneOrderRefund" type="int"/>
+        <property name="attemptNumber" type="int"/>
+        <property name="messageAttributes" type="MessageAttributes"/>
+    </transfer>
+
+    <transfer name="PaymentCancelReservationFailed">
+        <property name="orderReference" type="string"/>
+        <property name="orderItemIds" type="array" singular="orderItemId"/>
+        <property name="amount" type="int"/>
+        <property name="currencyIsoCode" type="string"/>
+        <property name="idPaymentPayoneOrderCancel" type="int"/>
+        <property name="idPaymentPayoneOrderCapture" type="int"/>
+        <property name="idPaymentPayoneOrderRefund" type="int"/>
+        <property name="attemptNumber" type="int"/>
+        <property name="messageAttributes" type="MessageAttributes"/>
     </transfer>
 
 </transfers>

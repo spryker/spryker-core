@@ -1,6 +1,5 @@
 parameters:
     level: 8
-    checkGenericClassInNonGenericObjectType: false
     checkMissingIterableValueType: false
     ignoreErrors:
         - '#Call to an undefined method Spryker\\Zed\\DataImport\\Business\\Model\\DataImportStep\\DataImportStepAwareInterface\|Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerInterface::[a-zA-Z]*\(\)#'

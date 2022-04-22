@@ -14,6 +14,9 @@ use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface as Dependency
 use Spryker\Zed\Oms\Dependency\Plugin\Condition\HasAwareCollectionInterface;
 use Spryker\Zed\Oms\Exception\ConditionNotFoundException;
 
+/**
+ * @implements \ArrayAccess<string, \Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface|\Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface>
+ */
 class ConditionCollection implements ConditionCollectionInterface, HasAwareCollectionInterface, ArrayAccess
 {
     /**

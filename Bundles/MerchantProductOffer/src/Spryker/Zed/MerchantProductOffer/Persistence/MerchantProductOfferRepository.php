@@ -62,6 +62,13 @@ class MerchantProductOfferRepository extends AbstractRepository implements Merch
                 );
         }
 
+        if ($merchantProductOfferCriteriaTransfer->getStoreIds()) {
+            $productOfferQuery
+                ->useSpyProductOfferStoreQuery()
+                    ->filterByFkStore_In($merchantProductOfferCriteriaTransfer->getStoreIds())
+                ->endUse();
+        }
+
         return $productOfferQuery;
     }
 }

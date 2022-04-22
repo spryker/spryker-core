@@ -12,6 +12,12 @@ use Spryker\Zed\Gui\Communication\Form\DeleteForm;
 /**
  * This class is empty because this form needs to implement CSRF protection and all options and form content
  * will be defined in Twig templates.
+ *
+ * @method \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductSearch\ProductSearchConfig getConfig()
+ * @method \Spryker\Zed\ProductSearch\Persistence\ProductSearchRepositoryInterface getRepository()
+ * @method \Spryker\Zed\ProductSearch\Communication\ProductSearchCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductSearch\Business\ProductSearchFacadeInterface getFacade()
  */
 class DeleteFilterPreferencesForm extends DeleteForm
 {

@@ -15,7 +15,7 @@ interface ProductMerchantPortalGuiToProductAttributeFacadeInterface
     /**
      * @return array<\Generated\Shared\Transfer\ProductManagementAttributeTransfer>
      */
-    public function getProductAttributeCollection();
+    public function getProductAttributeCollection(): array;
 
     /**
      * @param \Generated\Shared\Transfer\ProductManagementAttributeFilterTransfer $productManagementAttributeFilterTransfer
@@ -31,7 +31,7 @@ interface ProductMerchantPortalGuiToProductAttributeFacadeInterface
      *
      * @return array
      */
-    public function getProductAbstractAttributeValues(int $idProductAbstract);
+    public function getProductAbstractAttributeValues(int $idProductAbstract): array;
 
     /**
      * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers

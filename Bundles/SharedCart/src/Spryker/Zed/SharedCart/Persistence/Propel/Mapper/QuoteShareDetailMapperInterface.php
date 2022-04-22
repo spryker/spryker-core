@@ -22,7 +22,7 @@ interface QuoteShareDetailMapperInterface
     public function mapQuoteCompanyUserToShareDetailTransfer(SpyQuoteCompanyUser $quoteCompanyUserEntity): ShareDetailTransfer;
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\SharedCart\Persistence\SpyQuoteCompanyUser[] $quoteCompanyUserEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\SharedCart\Persistence\SpyQuoteCompanyUser> $quoteCompanyUserEntities
      * @param array<\Generated\Shared\Transfer\QuotePermissionGroupTransfer> $quotePermissionGroupTransfers
      *
      * @return \Generated\Shared\Transfer\ShareDetailCollectionTransfer
@@ -30,7 +30,7 @@ interface QuoteShareDetailMapperInterface
     public function mapShareDetailCollection(ObjectCollection $quoteCompanyUserEntities, array $quotePermissionGroupTransfers): ShareDetailCollectionTransfer;
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\SharedCart\Persistence\SpyQuoteCompanyUser[] $quoteCompanyUserEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\SharedCart\Persistence\SpyQuoteCompanyUser> $quoteCompanyUserEntities
      * @param array<\Generated\Shared\Transfer\QuotePermissionGroupTransfer> $quotePermissionGroupTransfers
      *
      * @return array<\Generated\Shared\Transfer\ShareDetailCollectionTransfer>

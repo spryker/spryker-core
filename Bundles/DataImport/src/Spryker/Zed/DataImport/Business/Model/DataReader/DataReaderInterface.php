@@ -9,6 +9,9 @@ namespace Spryker\Zed\DataImport\Business\Model\DataReader;
 
 use Iterator;
 
+/**
+ * @extends \Iterator<\Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface>
+ */
 interface DataReaderInterface extends Iterator
 {
     /**

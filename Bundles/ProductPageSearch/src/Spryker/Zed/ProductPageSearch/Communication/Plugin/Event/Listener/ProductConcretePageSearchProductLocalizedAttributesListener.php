@@ -12,6 +12,9 @@ use Spryker\Zed\Product\Dependency\ProductEvents;
 
 /**
  * @method \Spryker\Zed\ProductPageSearch\Communication\ProductPageSearchCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductPageSearch\ProductPageSearchConfig getConfig()
+ * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface getFacade()
  */
 class ProductConcretePageSearchProductLocalizedAttributesListener extends AbstractProductConcretePageSearchListener
 {
@@ -25,7 +28,6 @@ class ProductConcretePageSearchProductLocalizedAttributesListener extends Abstra
      */
     public function handleBulk(array $eventEntityTransfers, $eventName): void
     {
-        $this->preventTransaction();
         $productIds = $this->getFactory()
             ->getEventBehaviorFacade()
             ->getEventTransferForeignKeys($eventEntityTransfers, SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT);

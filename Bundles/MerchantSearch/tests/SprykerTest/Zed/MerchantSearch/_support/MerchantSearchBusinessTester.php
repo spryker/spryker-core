@@ -145,7 +145,7 @@ class MerchantSearchBusinessTester extends Actor
     /**
      * @param array<int> $merchantIds
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\MerchantSearch\Persistence\SpyMerchantSearch[]
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\MerchantSearch\Persistence\SpyMerchantSearch>
      */
     public function getSynchronizationDataTransfersByMerchantIds(array $merchantIds): ObjectCollection
     {

@@ -47,7 +47,7 @@ class CategoryImageRepository extends AbstractRepository implements CategoryImag
      */
     public function getCategoryImagesByCategoryImageSetId(int $idCategoryImageSet, array $excludeIdCategoryImage = []): array
     {
-        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\CategoryImage\Persistence\SpyCategoryImage[] $categoryImageCollection */
+        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\CategoryImage\Persistence\SpyCategoryImage> $categoryImageCollection */
         $categoryImageCollection = SpyCategoryImageQuery::create()
             ->useSpyCategoryImageSetToCategoryImageQuery()
                 ->filterByFkCategoryImageSet($idCategoryImageSet)

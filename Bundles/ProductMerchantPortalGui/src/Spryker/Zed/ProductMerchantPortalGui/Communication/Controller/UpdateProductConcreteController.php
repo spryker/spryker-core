@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Controller;
 
 use ArrayObject;
 use Generated\Shared\Transfer\MerchantProductTransfer;
+use Generated\Shared\Transfer\PriceProductCollectionDeleteCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductTableViewTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
@@ -161,9 +162,7 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
     }
 
     /**
-     * @phpstan-param \Symfony\Component\Form\FormInterface<mixed> $productConcreteEditForm
-     *
-     * @param \Symfony\Component\Form\FormInterface $productConcreteEditForm
+     * @param \Symfony\Component\Form\FormInterface<mixed> $productConcreteEditForm
      * @param array $pricesInitialData
      * @param array $attributesInitialData
      *
@@ -229,17 +228,19 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
                 $this->saveProductConcreteData($productConcreteEditForm, $productConcreteTransfer, $productAbstractTransfer);
             }
         } else {
-            $errors = $productConcreteEditForm->getErrors(true, false);
-
+            /** @var \Symfony\Component\Form\FormErrorIterator<\Symfony\Component\Form\FormError> $formErrors */
+            $formErrors = $productConcreteEditForm->getErrors(true, true);
             $imageSetsErrors = $this->getFactory()
                 ->createImageSetMapper()
                 ->mapErrorsToImageSetValidationData(
-                    $productConcreteEditForm->getErrors(true, true),
+                    $formErrors,
                 );
 
+            /** @var \Symfony\Component\Form\FormErrorIterator<\Symfony\Component\Form\FormError> $nestedFormErrors */
+            $nestedFormErrors = $productConcreteEditForm->getErrors(true, false);
             $attributesInitialData = $this->getFactory()
                 ->createProductAttributesMapper()
-                ->mapErrorsToAttributesData($errors, $attributesInitialData);
+                ->mapErrorsToAttributesData($nestedFormErrors, $attributesInitialData);
         }
 
         $merchantProductValidationResponseTransfer->setIsSuccess(
@@ -359,12 +360,10 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
     }
 
     /**
-     * @phpstan-return \SplObjectStorage<object, mixed>
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductImageSetTransfer> $imageSets
      * @param array<int, mixed> $imageSetsErrors
      *
-     * @return \SplObjectStorage
+     * @return \SplObjectStorage<object, mixed>
      */
     protected function getImageSetMetaDataGroupedByImageSet(ArrayObject $imageSets, array $imageSetsErrors): SplObjectStorage
     {
@@ -436,11 +435,16 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
                     $priceProductCriteriaTransfer,
                 );
 
-            foreach ($priceProductTransfers as $priceProductTransfer) {
-                $this->getFactory()
-                    ->getPriceProductFacade()
-                    ->removePriceProductDefaultForPriceProduct($priceProductTransfer);
-            }
+            $priceProductCollectionDeleteCriteriaTransfer = $this->getFactory()
+                ->createPriceProductMapper()
+                ->mapPriceProductTransfersToPriceProductCollectionDeleteCriteriaTransfer(
+                    $priceProductTransfers,
+                    new PriceProductCollectionDeleteCriteriaTransfer(),
+                );
+
+            $this->getFactory()
+                ->getPriceProductFacade()
+                ->deletePriceProductCollection($priceProductCollectionDeleteCriteriaTransfer);
 
             $productConcreteTransfer->setPrices(new ArrayObject());
         }

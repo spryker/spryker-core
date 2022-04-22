@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\ApiRequestTransfer;
 
 /**
  * @method \Spryker\Zed\Api\ApiConfig getConfig()
+ * @method \Spryker\Zed\Api\Communication\ApiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Api\Business\ApiFacadeInterface getFacade()
  */
 class ApiRequestTransferFilterHeaderDataPlugin extends ApiRequestTransferFilterAbstractPlugin
 {

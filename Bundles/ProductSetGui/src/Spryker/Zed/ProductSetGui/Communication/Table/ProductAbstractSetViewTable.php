@@ -38,7 +38,9 @@ class ProductAbstractSetViewTable extends AbstractTable
      * @var string
      */
     public const COL_DETAILS = 'details';
+
     public const COL_NAME = ProductSetGuiQueryContainer::COL_ALIAS_NAME;
+
     public const COL_POSITION = ProductSetGuiQueryContainer::COL_ALIAS_POSITION;
 
     /**

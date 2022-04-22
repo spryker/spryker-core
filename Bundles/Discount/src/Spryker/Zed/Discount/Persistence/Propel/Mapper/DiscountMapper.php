@@ -101,7 +101,7 @@ class DiscountMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Discount\Persistence\SpyDiscountAmount[] $discountAmountEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Discount\Persistence\SpyDiscountAmount> $discountAmountEntities
      * @param array<\Generated\Shared\Transfer\MoneyValueTransfer> $moneyValueTransfers
      *
      * @return array<\Generated\Shared\Transfer\MoneyValueTransfer>
@@ -118,7 +118,7 @@ class DiscountMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Discount\Persistence\SpyDiscountStore[] $discountStoreEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Discount\Persistence\SpyDiscountStore> $discountStoreEntities
      * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
      *
      * @return \Generated\Shared\Transfer\StoreRelationTransfer

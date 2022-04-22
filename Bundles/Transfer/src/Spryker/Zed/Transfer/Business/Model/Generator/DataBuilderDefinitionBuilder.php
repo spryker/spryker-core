@@ -39,7 +39,7 @@ class DataBuilderDefinitionBuilder extends AbstractDefinitionBuilder
     /**
      * @return array<\Spryker\Zed\Transfer\Business\Model\Generator\DefinitionInterface>
      */
-    public function getDefinitions()
+    public function getDefinitions(): array
     {
         $definitions = $this->loader->getDefinitions();
         $definitions = $this->merger->merge($definitions);

@@ -39,7 +39,7 @@ class ProductOfferPackagingUnitRepository extends AbstractRepository implements 
             ->groupByAmountSku()
             ->groupByProductOfferReference()
             ->useStateQuery()
-                ->filterByName_In(array_keys($reservationRequestTransfer->getReservedStates()->getStates()->getArrayCopy()))
+                ->filterByName_In(array_keys($reservationRequestTransfer->getReservedStatesOrFail()->getStates()->getArrayCopy()))
             ->endUse()
             ->groupByFkOmsOrderItemState()
             ->innerJoinProcess()

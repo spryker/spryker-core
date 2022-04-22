@@ -52,9 +52,7 @@ class ProductMerchantPortalGuiPersistenceFactory extends AbstractPersistenceFact
     }
 
     /**
-     * @phpstan-return \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery<\Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract>
-     *
-     * @return \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery
+     * @return \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery<\Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract>
      */
     public function getMerchantProductAbstractPropelQuery(): SpyMerchantProductAbstractQuery
     {
@@ -62,9 +60,7 @@ class ProductMerchantPortalGuiPersistenceFactory extends AbstractPersistenceFact
     }
 
     /**
-     * @phpstan-return \Orm\Zed\ProductImage\Persistence\SpyProductImageQuery<\Orm\Zed\ProductImage\Persistence\SpyProductImage>
-     *
-     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageQuery
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageQuery<\Orm\Zed\ProductImage\Persistence\SpyProductImage>
      */
     public function getProductImagePropelQuery(): SpyProductImageQuery
     {
@@ -72,9 +68,7 @@ class ProductMerchantPortalGuiPersistenceFactory extends AbstractPersistenceFact
     }
 
     /**
-     * @phpstan-return \Orm\Zed\Product\Persistence\SpyProductQuery<\Orm\Zed\Product\Persistence\SpyProduct>
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery<\Orm\Zed\Product\Persistence\SpyProduct>
      */
     public function getProductConcretePropelQuery(): SpyProductQuery
     {
@@ -82,9 +76,7 @@ class ProductMerchantPortalGuiPersistenceFactory extends AbstractPersistenceFact
     }
 
     /**
-     * @phpstan-return \Orm\Zed\Store\Persistence\SpyStoreQuery<\Orm\Zed\Store\Persistence\SpyStore>
-     *
-     * @return \Orm\Zed\Store\Persistence\SpyStoreQuery
+     * @return \Orm\Zed\Store\Persistence\SpyStoreQuery<\Orm\Zed\Store\Persistence\SpyStore>
      */
     public function getStorePropelQuery(): SpyStoreQuery
     {
@@ -92,9 +84,7 @@ class ProductMerchantPortalGuiPersistenceFactory extends AbstractPersistenceFact
     }
 
     /**
-     * @phpstan-return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery<\Orm\Zed\ProductCategory\Persistence\SpyProductCategory>
-     *
-     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
+     * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery<\Orm\Zed\ProductCategory\Persistence\SpyProductCategory>
      */
     public function getProductCategoryPropelQuery(): SpyProductCategoryQuery
     {
@@ -102,9 +92,7 @@ class ProductMerchantPortalGuiPersistenceFactory extends AbstractPersistenceFact
     }
 
     /**
-     * @phpstan-return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery<\Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery>
-     *
-     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery
+     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery<\Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery>
      */
     public function getPriceProductDefaultPropelQuery(): SpyPriceProductDefaultQuery
     {

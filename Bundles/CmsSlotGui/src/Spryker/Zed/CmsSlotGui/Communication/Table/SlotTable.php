@@ -24,9 +24,13 @@ class SlotTable extends AbstractTable
     public const TABLE_CLASS = 'js-cms-slot-list-table';
 
     protected const COL_ID_CMS_SLOT = SpyCmsSlotTableMap::COL_ID_CMS_SLOT;
+
     protected const COL_NAME = SpyCmsSlotTableMap::COL_NAME;
+
     protected const COL_DESCRIPTION = SpyCmsSlotTableMap::COL_DESCRIPTION;
+
     protected const COL_CONTENT_PROVIDER = SpyCmsSlotTableMap::COL_CONTENT_PROVIDER_TYPE;
+
     protected const COL_STATUS = SpyCmsSlotTableMap::COL_IS_ACTIVE;
 
     /**

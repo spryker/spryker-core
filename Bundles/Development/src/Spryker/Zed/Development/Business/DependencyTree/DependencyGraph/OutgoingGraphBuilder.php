@@ -123,7 +123,7 @@ class OutgoingGraphBuilder
 
     /**
      * @param string $moduleName
-     * @param \ArrayObject $allDependencies
+     * @param \ArrayObject<string, array> $allDependencies
      *
      * @return void
      */

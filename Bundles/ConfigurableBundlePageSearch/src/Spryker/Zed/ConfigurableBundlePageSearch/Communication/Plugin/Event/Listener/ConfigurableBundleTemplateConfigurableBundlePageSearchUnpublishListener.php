@@ -9,7 +9,6 @@ namespace Spryker\Zed\ConfigurableBundlePageSearch\Communication\Plugin\Event\Li
 
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @method \Spryker\Zed\ConfigurableBundlePageSearch\Business\ConfigurableBundlePageSearchFacadeInterface getFacade()
@@ -18,8 +17,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  */
 class ConfigurableBundleTemplateConfigurableBundlePageSearchUnpublishListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
-    use DatabaseTransactionHandlerTrait;
-
     /**
      * {@inheritDoc}
      * - Unublishes configurable bundle templates.
@@ -33,7 +30,6 @@ class ConfigurableBundleTemplateConfigurableBundlePageSearchUnpublishListener ex
      */
     public function handleBulk(array $eventEntityTransfers, $eventName): void
     {
-        $this->preventTransaction();
         $configurableBundleTemplateIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventEntityTransfers);
 
         $this->getFacade()->unpublishConfigurableBundleTemplates($configurableBundleTemplateIds);

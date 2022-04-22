@@ -184,8 +184,8 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 137,
-            "line_to": 137,
+            "line_from": 180,
+            "line_to": 180,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ValidationErrorTransfer> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/ProductMerchantPortalGui/src/Spryker/Zed/ProductMerchantPortalGui/Communication/Controller/AbstractSavePriceProductController.php",
@@ -256,20 +256,8 @@
         },
         {
             "severity": "info",
-            "line_from": 51,
-            "line_to": 51,
-            "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of Spryker\\Zed\\ProductMerchantPortalGui\\Communication\\Controller\\DeletePriceProductAbstractController::deletePrices expects ArrayObject<int, Generated\\Shared\\Transfer\\PriceProductTransfer>, possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\PriceProductTransfer> provided",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductMerchantPortalGui/src/Spryker/Zed/ProductMerchantPortalGui/Communication/Controller/DeletePriceProductAbstractController.php",
-            "snippet": "            $priceProductTransfers,",
-            "selected_text": "$priceProductTransfers",
-            "error_level": 3,
-            "shortcode": 92
-        },
-        {
-            "severity": "info",
-            "line_from": 58,
-            "line_to": 58,
+            "line_from": 56,
+            "line_to": 56,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ValidationErrorTransfer> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/ProductMerchantPortalGui/src/Spryker/Zed/ProductMerchantPortalGui/Communication/Controller/DeletePriceProductAbstractController.php",
@@ -280,20 +268,8 @@
         },
         {
             "severity": "info",
-            "line_from": 47,
-            "line_to": 47,
-            "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of Spryker\\Zed\\ProductMerchantPortalGui\\Communication\\Controller\\DeletePriceProductConcreteController::deletePrices expects ArrayObject<int, Generated\\Shared\\Transfer\\PriceProductTransfer>, possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\PriceProductTransfer> provided",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductMerchantPortalGui/src/Spryker/Zed/ProductMerchantPortalGui/Communication/Controller/DeletePriceProductConcreteController.php",
-            "snippet": "            $productConcreteTransfer->getPrices(),",
-            "selected_text": "$productConcreteTransfer->getPrices()",
-            "error_level": 3,
-            "shortcode": 92
-        },
-        {
-            "severity": "info",
-            "line_from": 54,
-            "line_to": 54,
+            "line_from": 56,
+            "line_to": 56,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ValidationErrorTransfer> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/ProductMerchantPortalGui/src/Spryker/Zed/ProductMerchantPortalGui/Communication/Controller/DeletePriceProductConcreteController.php",
@@ -1060,8 +1036,8 @@
         },
         {
             "severity": "info",
-            "line_from": 136,
-            "line_to": 136,
+            "line_from": 147,
+            "line_to": 147,
             "type": "RedundantCondition",
             "message": "Type non-empty-string for $inner_type is never null",
             "file_name": "vendor/spryker/spryker/Bundles/ProductMerchantPortalGui/src/Spryker/Zed/ProductMerchantPortalGui/Communication/Mapper/PriceProductValidationMapper.php",
@@ -1072,8 +1048,8 @@
         },
         {
             "severity": "info",
-            "line_from": 139,
-            "line_to": 139,
+            "line_from": 150,
+            "line_to": 150,
             "type": "TypeDoesNotContainType",
             "message": "Type array<int, non-empty-string> for $propertyPathValues is always array",
             "file_name": "vendor/spryker/spryker/Bundles/ProductMerchantPortalGui/src/Spryker/Zed/ProductMerchantPortalGui/Communication/Mapper/PriceProductValidationMapper.php",

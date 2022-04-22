@@ -12,6 +12,9 @@ use Spryker\Zed\Twig\Communication\Plugin\AbstractTwigExtensionPlugin;
 /**
  * @method \Spryker\Zed\CmsBlock\Persistence\CmsBlockRepositoryInterface getRepository()
  * @method \Spryker\Zed\CmsBlock\Communication\CmsBlockCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CmsBlock\Persistence\CmsBlockQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\CmsBlock\CmsBlockConfig getConfig()
+ * @method \Spryker\Zed\CmsBlock\Business\CmsBlockFacadeInterface getFacade()
  */
 class CmsBlockTwigExtensionPlugin extends AbstractTwigExtensionPlugin
 {

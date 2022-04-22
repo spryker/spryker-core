@@ -31,9 +31,7 @@ class StateMachineProcessWriterStep extends PublishAwareStep implements DataImpo
     ];
 
     /**
-     * @phpstan-param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface<mixed> $dataSet
-     *
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
+     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface<mixed> $dataSet
      *
      * @return void
      */
@@ -56,9 +54,7 @@ class StateMachineProcessWriterStep extends PublishAwareStep implements DataImpo
     }
 
     /**
-     * @phpstan-return \Orm\Zed\StateMachine\Persistence\Base\SpyStateMachineProcessQuery<\Orm\Zed\StateMachine\Persistence\Base\SpyStateMachineProcess>
-     *
-     * @return \Orm\Zed\StateMachine\Persistence\Base\SpyStateMachineProcessQuery
+     * @return \Orm\Zed\StateMachine\Persistence\Base\SpyStateMachineProcessQuery<\Orm\Zed\StateMachine\Persistence\Base\SpyStateMachineProcess>
      */
     protected function createStateMachineProcessPropelQuery(): SpyStateMachineProcessQuery
     {
@@ -66,9 +62,7 @@ class StateMachineProcessWriterStep extends PublishAwareStep implements DataImpo
     }
 
     /**
-     * @phpstan-param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface<mixed> $dataSet
-     *
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
+     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface<mixed> $dataSet
      *
      * @throws \Spryker\Zed\DataImport\Business\Exception\InvalidDataException
      *

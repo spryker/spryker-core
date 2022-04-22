@@ -50,7 +50,7 @@ class TransferSanitizerProcessor
      *
      * @return array<string, array>
      */
-    public function __invoke(array $record)
+    public function __invoke(array $record): array
     {
         $transfer = $this->findTransfer((array)$record[static::RECORD_CONTEXT]);
         if (!($transfer instanceof TransferInterface)) {
@@ -71,7 +71,7 @@ class TransferSanitizerProcessor
      *
      * @return array
      */
-    protected function transferToArray(TransferInterface $transfer)
+    protected function transferToArray(TransferInterface $transfer): array
     {
         $transferArray = $transfer->toArray();
 
@@ -91,7 +91,7 @@ class TransferSanitizerProcessor
      *
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|null
      */
-    protected function findTransfer(array $context)
+    protected function findTransfer(array $context): ?TransferInterface
     {
         if (!empty($context[static::CONTEXT_KEY])) {
             return $context[static::CONTEXT_KEY];

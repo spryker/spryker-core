@@ -112,6 +112,31 @@ class PaymentEntityManager extends AbstractEntityManager implements PaymentEntit
     /**
      * @param \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer
      *
+     * @return void
+     */
+    public function hidePaymentMethod(PaymentMethodTransfer $paymentMethodTransfer): void
+    {
+        /** @var \Orm\Zed\Payment\Persistence\SpyPaymentMethod|null $paymentMethodEntity */
+        $paymentMethodEntity = $this->getFactory()
+            ->createPaymentMethodQuery()
+            ->filterByPaymentMethodKey($paymentMethodTransfer->getPaymentMethodKey())
+            ->findOne();
+
+        if ($paymentMethodEntity === null) {
+            return;
+        }
+
+        if (method_exists($paymentMethodEntity, 'getIsHidden')) {
+            $paymentMethodEntity->setIsHidden(true);
+            $paymentMethodTransfer->setIsHidden(true);
+        }
+
+        $paymentMethodEntity->save();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer
+     *
      * @return \Generated\Shared\Transfer\PaymentMethodTransfer
      */
     public function createPaymentMethod(PaymentMethodTransfer $paymentMethodTransfer): PaymentMethodTransfer

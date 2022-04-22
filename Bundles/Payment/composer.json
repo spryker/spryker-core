@@ -5,14 +5,23 @@
     "license": "proprietary",
     "require": {
         "php": ">=7.4",
+        "psr/http-message": "^1.0.0",
         "spryker/checkout-extension": "^1.2.0",
+        "spryker/guzzle": "^2.2.0",
         "spryker/kernel": "^3.30.0",
+        "spryker/locale": "^3.0.0",
+        "spryker/message-broker": "^1.0.0",
+        "spryker/message-broker-extension": "^1.0.0",
+        "spryker/oms": "^7.0.0 || ^8.0.0 || ^10.0.0 || ^11.0.0",
         "spryker/payment-extension": "^1.0.0",
         "spryker/propel-orm": "^1.0.0",
         "spryker/sales": "^8.0.0 || ^10.0.0 || ^11.0.0",
         "spryker/store": "^1.4.0",
+        "spryker/store-reference": "^1.0.0",
         "spryker/symfony": "^3.0.0",
         "spryker/transfer": "^3.27.0",
+        "spryker/util-encoding": "^1.0.0 || ^2.0.0",
+        "spryker/util-text": "^1.0.0",
         "spryker/zed-request": "^3.0.0"
     },
     "require-dev": {

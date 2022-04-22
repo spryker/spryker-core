@@ -44,6 +44,13 @@ interface PaymentEntityManagerInterface
     ): void;
 
     /**
+     * @param \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer
+     *
+     * @return void
+     */
+    public function hidePaymentMethod(PaymentMethodTransfer $paymentMethodTransfer): void;
+
+    /**
      * @param \Generated\Shared\Transfer\PaymentProviderTransfer $paymentProviderTransfer
      *
      * @return \Generated\Shared\Transfer\PaymentProviderTransfer

@@ -37,15 +37,15 @@ class SavePriceProductAbstractController extends AbstractSavePriceProductControl
     }
 
     /**
-     * @param array<int> $priceProductStoreIds
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
-    protected function findPriceProductTransfers(array $priceProductStoreIds, Request $request): array
+    protected function findPriceProductTransfers(Request $request): array
     {
-        $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())
-            ->setPriceProductStoreIds($priceProductStoreIds);
+        $priceProductCriteriaTransfer = $this->getFactory()
+            ->createPriceProductMapper()
+            ->mapRequestDataToPriceProductCriteriaTransfer($request->query->all(), new PriceProductCriteriaTransfer());
 
         return $this->getFactory()
             ->getPriceProductFacade()

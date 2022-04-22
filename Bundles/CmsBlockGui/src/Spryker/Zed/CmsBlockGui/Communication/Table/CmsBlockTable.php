@@ -19,12 +19,14 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 class CmsBlockTable extends AbstractTable
 {
     public const COL_ID_CMS_BLOCK = SpyCmsBlockTableMap::COL_ID_CMS_BLOCK;
+
     public const COL_NAME = SpyCmsBlockTableMap::COL_NAME;
 
     /**
      * @var string
      */
     public const COL_ACTIONS = 'Actions';
+
     public const COL_IS_ACTIVE = SpyCmsBlockTableMap::COL_IS_ACTIVE;
 
     /**

@@ -38,6 +38,7 @@ class MerchantSalesOrderFacadeTest extends Unit
      * @var int
      */
     protected const TEST_MERCHANT_ORDER_ITEM_ID = 1;
+
     protected const TEST_INVALID_MERCHANT_ORDER_ITEM_ID = -1;
 
     /**

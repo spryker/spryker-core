@@ -71,12 +71,14 @@ function CompanyRoleFieldHandler() {
             ajaxRequest.abort();
         }
 
-        ajaxRequest = $.get(roleSuggestUrl, { idCompany: getCompanyId(), idCompanyUser: getCompanyUserId() }, function (
-            companyRolesView,
-        ) {
-            $roleField.html(companyRolesView);
-            setRoleNames();
-        });
+        ajaxRequest = $.get(
+            roleSuggestUrl,
+            { idCompany: getCompanyId(), idCompanyUser: getCompanyUserId() },
+            function (companyRolesView) {
+                $roleField.html(companyRolesView);
+                setRoleNames();
+            },
+        );
     }
 
     /**

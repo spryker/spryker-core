@@ -15,7 +15,7 @@ abstract class AbstractDefinitionBuilder implements DefinitionBuilderInterface
      *
      * @return array<\Spryker\Zed\Transfer\Business\Model\Generator\DefinitionInterface>
      */
-    protected function buildDefinitions(array $definitions, DefinitionInterface $definitionClass)
+    protected function buildDefinitions(array $definitions, DefinitionInterface $definitionClass): array
     {
         $definitionInstances = [];
         foreach ($definitions as $definition) {

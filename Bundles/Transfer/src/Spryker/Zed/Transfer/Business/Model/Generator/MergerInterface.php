@@ -14,5 +14,5 @@ interface MergerInterface
      *
      * @return array<string, array>
      */
-    public function merge(array $transferDefinitions);
+    public function merge(array $transferDefinitions): array;
 }

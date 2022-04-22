@@ -37,18 +37,22 @@ class SavePriceProductConcreteController extends AbstractSavePriceProductControl
     }
 
     /**
-     * @param array<int> $priceProductStoreIds
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
-    protected function findPriceProductTransfers(array $priceProductStoreIds, Request $request): array
+    protected function findPriceProductTransfers(Request $request): array
     {
         $idProductConcrete = $this->castId($request->get(PriceProductTableViewTransfer::ID_PRODUCT_CONCRETE));
         $idProductAbstract = $this->castId(
             $this->getFactory()->getProductFacade()->findProductAbstractIdByConcreteId($idProductConcrete),
         );
-        $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())->setPriceProductStoreIds($priceProductStoreIds);
+        $priceProductCriteriaTransfer = $this->getFactory()
+            ->createPriceProductMapper()
+            ->mapRequestDataToPriceProductCriteriaTransfer(
+                $request->query->all(),
+                (new PriceProductCriteriaTransfer())->setOnlyConcretePrices(true),
+            );
 
         return array_values($this->getFactory()
             ->getPriceProductFacade()

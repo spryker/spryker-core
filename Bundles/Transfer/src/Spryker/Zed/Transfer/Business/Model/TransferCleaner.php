@@ -31,7 +31,7 @@ class TransferCleaner implements TransferCleanerInterface
     /**
      * @return void
      */
-    public function cleanDirectory()
+    public function cleanDirectory(): void
     {
         if (is_dir($this->directory)) {
             $fileSystem = new Filesystem();
@@ -42,7 +42,7 @@ class TransferCleaner implements TransferCleanerInterface
     /**
      * @return \Symfony\Component\Finder\Finder
      */
-    protected function findFiles()
+    protected function findFiles(): Finder
     {
         $finder = new Finder();
         $finder

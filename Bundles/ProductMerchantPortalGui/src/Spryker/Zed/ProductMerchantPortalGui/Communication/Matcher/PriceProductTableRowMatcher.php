@@ -188,7 +188,7 @@ class PriceProductTableRowMatcher implements PriceProductTableRowMatcherInterfac
         PriceProductTransfer $priceProductTransfer,
         array $propertyPath
     ): bool {
-        $initialVolumeQuantity = $initialDataRow[PriceProductTableViewTransfer::VOLUME_QUANTITY];
+        $initialVolumeQuantity = $initialDataRow[PriceProductTableViewTransfer::VOLUME_QUANTITY] ?: 1;
 
         $volumePriceProductTransfer = $this->getVolumePriceProductTransfer(
             $initialDataRow,

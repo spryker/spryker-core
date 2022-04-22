@@ -49,4 +49,28 @@
         <property name="idProductAbstract" type="int"/>
     </transfer>
 
+    <transfer name="MerchantProductOfferCriteria">
+        <property name="skus" type="array" singular="sku"/>
+        <property name="storeIds" type="int[]" singular="idStore"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="idStore" type="int"/>
+    </transfer>
+
+    <transfer name="ProductConcretePageSearch">
+        <property name="sku" type="string"/>
+        <property name="store" type="string"/>
+    </transfer>
+
+    <transfer name="ProductOfferCollection">
+        <property name="productOffers" type="ProductOffer[]" singular="productOffer"/>
+    </transfer>
+
+    <transfer name="ProductOffer">
+        <property name="approvalStatus" type="string"/>
+        <property name="isActive" type="bool"/>
+        <property name="merchantReference" type="string"/>
+    </transfer>
+
 </transfers>

@@ -482,7 +482,7 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
      */
     protected function loadSuperAttributes()
     {
-        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Product\Persistence\SpyProductAttributeKey[] $superAttributes */
+        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\SpyProductAttributeKey> $superAttributes */
         $superAttributes = $this->queryContainer
             ->queryProductAttributeKey()
             ->find();

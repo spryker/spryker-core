@@ -18,9 +18,7 @@ use Spryker\Zed\MerchantShipment\Persistence\Mapper\MerchantShipmentMapper;
 class MerchantShipmentPersistenceFactory extends AbstractPersistenceFactory
 {
     /**
-     * @phpstan-return \Orm\Zed\Sales\Persistence\SpySalesShipmentQuery<mixed>
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesShipmentQuery
+     * @return \Orm\Zed\Sales\Persistence\SpySalesShipmentQuery<mixed>
      */
     public function createSalesShipmentPropelQuery(): SpySalesShipmentQuery
     {

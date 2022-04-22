@@ -54,9 +54,7 @@ class ProfileController extends AbstractController
     }
 
     /**
-     * @phpstan-param \Symfony\Component\Form\FormInterface<mixed> $merchantForm
-     *
-     * @param \Symfony\Component\Form\FormInterface $merchantForm
+     * @param \Symfony\Component\Form\FormInterface<mixed> $merchantForm
      *
      * @return void
      */

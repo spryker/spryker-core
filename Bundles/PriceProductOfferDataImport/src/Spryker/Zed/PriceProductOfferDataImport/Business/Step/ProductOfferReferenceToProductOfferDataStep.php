@@ -17,7 +17,9 @@ use Spryker\Zed\PriceProductOfferDataImport\Business\DataSet\PriceProductOfferDa
 class ProductOfferReferenceToProductOfferDataStep implements DataImportStepInterface
 {
     protected const PRODUCT_OFFER_REFERENCE = PriceProductOfferDataSetInterface::PRODUCT_OFFER_REFERENCE;
+
     protected const CONCRETE_SKU = PriceProductOfferDataSetInterface::CONCRETE_SKU;
+
     protected const FK_PRODUCT_OFFER = PriceProductOfferDataSetInterface::FK_PRODUCT_OFFER;
 
     /**

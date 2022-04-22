@@ -11,6 +11,7 @@ namespace Spryker\Zed\Development\Communication\Console;
  * @deprecated Use {@link \Spryker\Zed\Development\Communication\Console\DependencyViolationFinderConsole} instead.
  *
  * @method \Spryker\Zed\Development\Business\DevelopmentFacadeInterface getFacade()
+ * @method \Spryker\Zed\Development\Communication\DevelopmentCommunicationFactory getFactory()
  */
 class DependencyTreeDependencyViolationConsole extends DependencyViolationFinderConsole
 {

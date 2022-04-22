@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PriceProductMerchantRelationship\Persistence;
 
+use Generated\Shared\Transfer\PriceProductMerchantRelationshipCollectionDeleteCriteriaTransfer;
 use Generated\Shared\Transfer\SpyPriceProductMerchantRelationshipEntityTransfer;
 use Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationship;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -144,7 +145,34 @@ class PriceProductMerchantRelationshipEntityManager extends AbstractEntityManage
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationship[] $priceProductMerchantRelationshipEntities
+     * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipCollectionDeleteCriteriaTransfer $priceProductMerchantRelationshipCollectionDeleteCriteriaTransfer
+     *
+     * @return void
+     */
+    public function deleteCollection(
+        PriceProductMerchantRelationshipCollectionDeleteCriteriaTransfer $priceProductMerchantRelationshipCollectionDeleteCriteriaTransfer
+    ): void {
+        if (
+            !$priceProductMerchantRelationshipCollectionDeleteCriteriaTransfer->getMerchantRelationshipIds()
+            || !$priceProductMerchantRelationshipCollectionDeleteCriteriaTransfer->getPriceProductStoreIds()
+        ) {
+            return;
+        }
+        $priceProductMerchantRelationshipCollection = $this->getFactory()
+            ->createPriceProductMerchantRelationshipQuery()
+            ->filterByFkMerchantRelationship_In(
+                $priceProductMerchantRelationshipCollectionDeleteCriteriaTransfer->getMerchantRelationshipIds(),
+            )
+            ->filterByFkPriceProductStore_In(
+                $priceProductMerchantRelationshipCollectionDeleteCriteriaTransfer->getPriceProductStoreIds(),
+            )
+            ->find();
+
+        $priceProductMerchantRelationshipCollection->delete();
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationship> $priceProductMerchantRelationshipEntities
      *
      * @return void
      */

@@ -76,7 +76,7 @@ class UrlRedirectUpdateObserver implements UrlUpdaterAfterSaveObserverInterface
     /**
      * @param string $targetUrl
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Url\Persistence\SpyUrlRedirect[]
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Url\Persistence\SpyUrlRedirect>
      */
     protected function findUrlRedirectEntitiesByTargetUrl($targetUrl)
     {

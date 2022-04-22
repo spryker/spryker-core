@@ -9,6 +9,9 @@ namespace Spryker\Yves\Kernel\View;
 
 use ArrayAccess;
 
+/**
+ * @extends \ArrayAccess<int|string, mixed>
+ */
 interface ViewInterface extends ArrayAccess
 {
     /**

@@ -48,7 +48,7 @@ class AclModelDirector implements AclModelDirectorInterface
     protected $propelServiceContainer;
 
     /**
-     * @var \Propel\Runtime\Collection\ObjectCollection|\Propel\Runtime\ActiveRecord\ActiveRecordInterface[]
+     * @var \Propel\Runtime\Collection\ObjectCollection<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
      */
     protected $relationCache;
 

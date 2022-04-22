@@ -10,7 +10,6 @@ namespace Spryker\Zed\ProductSearchConfigStorage\Communication\Plugin\Event\List
 use Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeQuery;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @method \Spryker\Zed\ProductSearchConfigStorage\Persistence\ProductSearchConfigStorageQueryContainerInterface getQueryContainer()
@@ -20,8 +19,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  */
 class ProductSearchConfigStorageUnpublishListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
-    use DatabaseTransactionHandlerTrait;
-
     /**
      * {@inheritDoc}
      *
@@ -34,7 +31,6 @@ class ProductSearchConfigStorageUnpublishListener extends AbstractPlugin impleme
      */
     public function handleBulk(array $eventEntityTransfers, $eventName)
     {
-        $this->preventTransaction();
         $productSearchAttributesCount = SpyProductSearchAttributeQuery::create()->count();
 
         if ($productSearchAttributesCount === 0) {

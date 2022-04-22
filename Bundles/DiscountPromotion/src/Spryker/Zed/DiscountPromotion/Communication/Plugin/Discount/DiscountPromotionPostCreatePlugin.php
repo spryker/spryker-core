@@ -13,6 +13,8 @@ use Spryker\Zed\Discount\Dependency\Plugin\DiscountPostCreatePluginInterface;
 /**
  * @method \Spryker\Zed\DiscountPromotion\Business\DiscountPromotionFacadeInterface getFacade()
  * @method \Spryker\Zed\DiscountPromotion\Communication\DiscountPromotionCommunicationFactory getFactory()
+ * @method \Spryker\Zed\DiscountPromotion\Persistence\DiscountPromotionQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\DiscountPromotion\DiscountPromotionConfig getConfig()
  */
 class DiscountPromotionPostCreatePlugin extends BaseDiscountPromotionSaverPlugin implements DiscountPostCreatePluginInterface
 {

@@ -9,6 +9,11 @@ namespace Spryker\Zed\Money\Communication\Form\Type;
 
 use Symfony\Component\Form\Extension\Core\Type\MoneyType as SymfonyMoneyType;
 
+/**
+ * @method \Spryker\Zed\Money\MoneyConfig getConfig()
+ * @method \Spryker\Zed\Money\Communication\MoneyCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Money\Business\MoneyFacadeInterface getFacade()
+ */
 class SimpleMoneyType extends SymfonyMoneyType
 {
     /**

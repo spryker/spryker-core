@@ -52,6 +52,7 @@ class AddressCollectionType extends AbstractType
     public const OPTION_COUNTRY_CHOICES = 'country_choices';
 
     public const GROUP_SHIPPING_ADDRESS = self::FIELD_SHIPPING_ADDRESS;
+
     public const GROUP_BILLING_ADDRESS = self::FIELD_BILLING_ADDRESS;
 
     /**

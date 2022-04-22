@@ -17,7 +17,9 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class ProductReviewSearchRepository extends AbstractRepository implements ProductReviewSearchRepositoryInterface
 {
     protected const FIELD_FK_PRODUCT_ABSTRACT = ProductPayloadTransfer::ID_PRODUCT_ABSTRACT;
+
     protected const FIELD_AVERAGE_RATING = ProductPayloadTransfer::AVERAGE_RATING;
+
     protected const FIELD_REVIEW_COUNT = ProductPayloadTransfer::REVIEW_COUNT;
 
     /**

@@ -8,6 +8,8 @@
 namespace Spryker\Zed\PriceProduct\Business;
 
 use ArrayObject;
+use Generated\Shared\Transfer\PriceProductCollectionDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductCollectionResponseTransfer;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
@@ -560,6 +562,8 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\PriceProduct\Business\PriceProductFacade::deletePriceProductCollection()} instead.
+     *
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
      * @return void
@@ -569,6 +573,23 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
         $this->getFactory()
             ->createPriceProductDefaultRemover()
             ->removePriceProductDefaultsForPriceProduct($priceProductTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductCollectionDeleteCriteriaTransfer $priceProductCollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductCollectionResponseTransfer
+     */
+    public function deletePriceProductCollection(
+        PriceProductCollectionDeleteCriteriaTransfer $priceProductCollectionDeleteCriteriaTransfer
+    ): PriceProductCollectionResponseTransfer {
+        return $this->getFactory()
+            ->createPriceProductDeleter()
+            ->deletePriceProductCollection($priceProductCollectionDeleteCriteriaTransfer);
     }
 
     /**

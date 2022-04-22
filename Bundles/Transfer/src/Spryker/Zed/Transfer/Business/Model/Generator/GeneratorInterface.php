@@ -14,5 +14,5 @@ interface GeneratorInterface
      *
      * @return string
      */
-    public function generate(DefinitionInterface $definition);
+    public function generate(DefinitionInterface $definition): string;
 }

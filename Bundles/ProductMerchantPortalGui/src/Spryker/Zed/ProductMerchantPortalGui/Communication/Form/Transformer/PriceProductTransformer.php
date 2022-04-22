@@ -151,7 +151,10 @@ class PriceProductTransformer implements DataTransformerInterface
 
         if ($this->idProductAbstract !== null) {
             return $this->priceProductFacade
-                ->findProductAbstractPricesWithoutPriceExtraction($this->idProductAbstract);
+                ->findProductAbstractPricesWithoutPriceExtraction(
+                    $this->idProductAbstract,
+                    (new PriceProductCriteriaTransfer())->setWithAllMerchantPrices(true),
+                );
         }
 
         return [];

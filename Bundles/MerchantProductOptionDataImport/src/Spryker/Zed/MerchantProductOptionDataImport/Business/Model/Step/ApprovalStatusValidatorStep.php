@@ -41,9 +41,7 @@ class ApprovalStatusValidatorStep implements DataImportStepInterface
     protected const DEFAULT_APPROVAL_STATUS = 'waiting_for_approval';
 
     /**
-     * @phpstan-param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface<mixed> $dataSet
-     *
-     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
+     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface<mixed> $dataSet
      *
      * @throws \Spryker\Zed\DataImport\Business\Exception\InvalidDataException
      *

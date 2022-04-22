@@ -10,6 +10,7 @@ namespace Spryker\Zed\Payment\Persistence;
 use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\PaymentMethodTransfer;
 use Generated\Shared\Transfer\PaymentProviderCollectionTransfer;
+use Generated\Shared\Transfer\PaymentProviderTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -31,6 +32,34 @@ class PaymentRepository extends AbstractRepository implements PaymentRepositoryI
             ->findOne();
 
         if ($paymentMethodEntity === null) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createPaymentMapper()
+            ->mapPaymentMethodEntityToPaymentMethodTransfer($paymentMethodEntity, new PaymentMethodTransfer());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer
+     *
+     * @return \Generated\Shared\Transfer\PaymentMethodTransfer|null
+     */
+    public function findPaymentMethod(PaymentMethodTransfer $paymentMethodTransfer): ?PaymentMethodTransfer
+    {
+        $paymentMethodQuery = $this->getFactory()->createPaymentMethodQuery();
+
+        if ($paymentMethodTransfer->getIdPaymentMethod() !== null) {
+            $paymentMethodQuery->filterByIdPaymentMethod($paymentMethodTransfer->getIdPaymentMethod());
+        }
+
+        if ($paymentMethodTransfer->getPaymentMethodKey() !== null) {
+            $paymentMethodQuery->filterByPaymentMethodKey($paymentMethodTransfer->getPaymentMethodKey());
+        }
+
+        $paymentMethodEntity = $paymentMethodQuery->findOne();
+
+        if (!$paymentMethodEntity) {
             return null;
         }
 
@@ -100,10 +129,14 @@ class PaymentRepository extends AbstractRepository implements PaymentRepositoryI
     public function getPaymentMethodsWithStoreRelation(): PaymentMethodsTransfer
     {
         $paymentMethodsTransfer = new PaymentMethodsTransfer();
-        $paymentMethodEntities = $this->getFactory()
+        $paymentMethodQuery = $this->getFactory()
             ->createPaymentMethodQuery()
-            ->leftJoinWithSpyPaymentMethodStore()
-            ->find();
+            ->leftJoinWithSpyPaymentMethodStore();
+
+        if ($this->getFactory()->createPaymentMethodQuery()->getTableMap()->hasColumn('is_hidden')) {
+            $paymentMethodQuery->filterByIsHidden(false);
+        }
+        $paymentMethodEntities = $paymentMethodQuery->find();
 
         if (!$paymentMethodEntities->getData()) {
             return $paymentMethodsTransfer;
@@ -114,6 +147,30 @@ class PaymentRepository extends AbstractRepository implements PaymentRepositoryI
             ->mapPaymentMethodEntityCollectionToPaymentMethodsTransfer(
                 $paymentMethodEntities,
                 $paymentMethodsTransfer,
+            );
+    }
+
+    /**
+     * @param string $paymentProviderKey
+     *
+     * @return \Generated\Shared\Transfer\PaymentProviderTransfer|null
+     */
+    public function findPaymentProviderByKey(string $paymentProviderKey): ?PaymentProviderTransfer
+    {
+        $paymentProviderEntity = $this->getFactory()
+            ->createPaymentProviderQuery()
+            ->filterByPaymentProviderKey($paymentProviderKey)
+            ->findOne();
+
+        if ($paymentProviderEntity === null) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createPaymentProviderMapper()
+            ->mapPaymentProviderEntityToPaymentProviderTransfer(
+                $paymentProviderEntity,
+                new PaymentProviderTransfer(),
             );
     }
 }

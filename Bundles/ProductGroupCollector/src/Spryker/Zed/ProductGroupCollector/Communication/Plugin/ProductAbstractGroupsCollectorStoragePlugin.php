@@ -18,6 +18,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\ProductGroupCollector\Business\ProductGroupCollectorFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductGroupCollector\ProductGroupCollectorConfig getConfig()
  */
 class ProductAbstractGroupsCollectorStoragePlugin extends AbstractCollectorPlugin
 {

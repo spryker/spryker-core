@@ -12,7 +12,7 @@ use Symfony\Component\Form\FormErrorIterator;
 interface ImageSetMapperInterface
 {
     /**
-     * @param \Symfony\Component\Form\FormErrorIterator $errors
+     * @param \Symfony\Component\Form\FormErrorIterator<\Symfony\Component\Form\FormError> $errors
      *
      * @return array<array<string>>
      */

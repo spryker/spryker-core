@@ -59,6 +59,8 @@ use Spryker\Zed\Sales\Business\Reader\OrderReader as SalesOrderReader;
 use Spryker\Zed\Sales\Business\Reader\OrderReaderInterface as SalesOrderReaderInterface;
 use Spryker\Zed\Sales\Business\SearchReader\OrderSearchReader;
 use Spryker\Zed\Sales\Business\SearchReader\OrderSearchReaderInterface;
+use Spryker\Zed\Sales\Business\StateMachineResolver\OrderStateMachineResolver;
+use Spryker\Zed\Sales\Business\StateMachineResolver\OrderStateMachineResolverInterface;
 use Spryker\Zed\Sales\Business\StrategyResolver\OrderHydratorStrategyResolver;
 use Spryker\Zed\Sales\Business\StrategyResolver\OrderHydratorStrategyResolverInterface;
 use Spryker\Zed\Sales\Business\Triggerer\OmsEventTriggerer;
@@ -159,6 +161,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->getOrderPostSavePlugins(),
             $this->getStoreFacade(),
             $this->getLocaleFacade(),
+            $this->createOrderStateMachineResolver(),
         );
     }
 
@@ -179,6 +182,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->getOrderPostSavePlugins(),
             $this->getStoreFacade(),
             $this->getLocaleFacade(),
+            $this->createOrderStateMachineResolver(),
         );
     }
 
@@ -206,10 +210,10 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     {
         return new OrderItemsSaver(
             $this->getOmsFacade(),
-            $this->getConfig(),
             $this->createSalesOrderSaverPluginExecutor(),
             $this->getEntityManager(),
             $this->getOrderItemsPostSavePlugins(),
+            $this->createOrderStateMachineResolver(),
         );
     }
 
@@ -671,5 +675,13 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     public function getOrderItemsPostSavePlugins(): array
     {
         return $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_ORDER_ITEMS_POST_SAVE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\StateMachineResolver\OrderStateMachineResolverInterface
+     */
+    public function createOrderStateMachineResolver(): OrderStateMachineResolverInterface
+    {
+        return new OrderStateMachineResolver($this->getConfig());
     }
 }

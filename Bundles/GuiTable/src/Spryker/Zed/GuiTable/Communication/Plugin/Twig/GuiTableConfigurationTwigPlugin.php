@@ -12,6 +12,7 @@ use Twig\TwigFunction;
 
 /**
  * @method \Spryker\Zed\GuiTable\Communication\GuiTableCommunicationFactory getFactory()
+ * @method \Spryker\Zed\GuiTable\GuiTableConfig getConfig()
  */
 class GuiTableConfigurationTwigPlugin extends AbstractTwigExtensionPlugin
 {

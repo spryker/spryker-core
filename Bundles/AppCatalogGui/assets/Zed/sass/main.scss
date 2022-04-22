@@ -1,0 +1,12 @@
+/**
+ * Copyright (c) 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+.page-heading {
+    display: none;
+}
+
+.cdk-overlay-container.spy-drawer-container-overlay {
+    z-index: 1000;
+}

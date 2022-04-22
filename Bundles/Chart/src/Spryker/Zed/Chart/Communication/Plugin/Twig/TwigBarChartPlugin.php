@@ -9,6 +9,9 @@ namespace Spryker\Zed\Chart\Communication\Plugin\Twig;
 
 /**
  * @deprecated Use {@link \Spryker\Zed\ChartGui\Communication\Plugin\Twig\Chart\BarChartTwigPlugin} instead.
+ * @method \Spryker\Zed\Chart\ChartConfig getConfig()
+ * @method \Spryker\Zed\Chart\Communication\ChartCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Chart\Business\ChartFacadeInterface getFacade()
  */
 class TwigBarChartPlugin extends AbstractTwigChartPlugin
 {

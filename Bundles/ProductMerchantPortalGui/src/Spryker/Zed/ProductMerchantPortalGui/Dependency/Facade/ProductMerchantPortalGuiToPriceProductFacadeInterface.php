@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade;
 
 use ArrayObject;
+use Generated\Shared\Transfer\PriceProductCollectionDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductCollectionResponseTransfer;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ValidationResponseTransfer;
@@ -17,7 +19,7 @@ interface ProductMerchantPortalGuiToPriceProductFacadeInterface
     /**
      * @return array<\Generated\Shared\Transfer\PriceTypeTransfer>
      */
-    public function getPriceTypeValues();
+    public function getPriceTypeValues(): array;
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
@@ -34,10 +36,6 @@ interface ProductMerchantPortalGuiToPriceProductFacadeInterface
     public function validatePrices(ArrayObject $priceProductTransfers): ValidationResponseTransfer;
 
     /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
@@ -86,9 +84,11 @@ interface ProductMerchantPortalGuiToPriceProductFacadeInterface
     ): array;
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     * @param \Generated\Shared\Transfer\PriceProductCollectionDeleteCriteriaTransfer $priceProductCollectionDeleteCriteriaTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\PriceProductCollectionResponseTransfer
      */
-    public function removePriceProductDefaultForPriceProduct(PriceProductTransfer $priceProductTransfer): void;
+    public function deletePriceProductCollection(
+        PriceProductCollectionDeleteCriteriaTransfer $priceProductCollectionDeleteCriteriaTransfer
+    ): PriceProductCollectionResponseTransfer;
 }

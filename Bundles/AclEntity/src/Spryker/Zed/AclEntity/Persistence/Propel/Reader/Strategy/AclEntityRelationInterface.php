@@ -21,12 +21,10 @@ interface AclEntityRelationInterface
     public function isSupported(AclEntityMetadataTransfer $aclEntityMetadataTransfer): bool;
 
     /**
-     * @phpstan-return \Propel\Runtime\Collection\Collection<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
-     *
      * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $entity
      * @param \Generated\Shared\Transfer\AclEntityMetadataTransfer $aclEntityMetadataTransfer
      *
-     * @return \Propel\Runtime\Collection\Collection
+     * @return \Propel\Runtime\Collection\Collection<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
      */
     public function getRelations(
         ActiveRecordInterface $entity,

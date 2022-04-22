@@ -14,6 +14,7 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\Event\TerminateEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
@@ -45,6 +46,11 @@ class SessionEventDispatcherPlugin extends AbstractPlugin implements EventDispat
     protected const EVENT_PRIORITY_KERNEL_REQUEST = 192;
 
     /**
+     * @var int
+     */
+    protected const EVENT_PRIORITY_KERNEL_RESPONSE = -128;
+
+    /**
      * {@inheritDoc}
      * - Adds early request event listener that adds session to request.
      * - Adds kernel request event listener that gets session id from cookie or migrate old one. Works only with `session.test` service enabled.
@@ -60,6 +66,7 @@ class SessionEventDispatcherPlugin extends AbstractPlugin implements EventDispat
     public function extend(EventDispatcherInterface $eventDispatcher, ContainerInterface $container): EventDispatcherInterface
     {
         $eventDispatcher = $this->addEarlyKernelRequestEventListener($eventDispatcher, $container);
+        $eventDispatcher = $this->addKernelResponseEventListener($eventDispatcher);
         $eventDispatcher = $this->addKernelTerminateEventListener($eventDispatcher);
 
         if ($this->isSessionTestEnabled($container)) {
@@ -119,6 +126,28 @@ class SessionEventDispatcherPlugin extends AbstractPlugin implements EventDispat
      *
      * @return \Spryker\Shared\EventDispatcher\EventDispatcherInterface
      */
+    protected function addKernelResponseEventListener(
+        EventDispatcherInterface $eventDispatcher
+    ): EventDispatcherInterface {
+        $eventDispatcher->addListener(KernelEvents::RESPONSE, function (ResponseEvent $event) {
+            if (!$event->isMasterRequest()) {
+                return;
+            }
+
+            $session = $event->getRequest()->getSession();
+            if ($session->isStarted()) {
+                $event->getResponse()->headers->setCookie($this->createSessionCookie($session->getName(), $session->getId(), session_get_cookie_params()));
+            }
+        }, static::EVENT_PRIORITY_KERNEL_RESPONSE);
+
+        return $eventDispatcher;
+    }
+
+    /**
+     * @param \Spryker\Shared\EventDispatcher\EventDispatcherInterface $eventDispatcher
+     *
+     * @return \Spryker\Shared\EventDispatcher\EventDispatcherInterface
+     */
     protected function addKernelTerminateEventListener(
         EventDispatcherInterface $eventDispatcher
     ): EventDispatcherInterface {
@@ -130,10 +159,6 @@ class SessionEventDispatcherPlugin extends AbstractPlugin implements EventDispat
             $session = $event->getRequest()->getSession();
             if ($session->isStarted()) {
                 $session->save();
-
-                if (!$this->isSessionCookieSet($session)) {
-                    $event->getResponse()->headers->setCookie($this->createSessionCookie($session->getName(), $session->getId(), session_get_cookie_params()));
-                }
             }
         });
 

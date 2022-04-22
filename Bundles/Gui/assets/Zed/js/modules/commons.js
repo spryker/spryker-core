@@ -38,7 +38,8 @@ require('metismenu');
 require('pace');
 require('@spryker/nestable');
 require('select2');
-require('codemirror');
+window.CodeMirror = require('codemirror');
+require('codemirror/mode/htmlmixed/htmlmixed.js');
 require('summernote');
 require('sweetalert');
 

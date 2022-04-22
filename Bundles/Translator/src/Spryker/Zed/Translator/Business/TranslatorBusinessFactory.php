@@ -35,6 +35,11 @@ use Spryker\Zed\Translator\TranslatorDependencyProvider;
 class TranslatorBusinessFactory extends AbstractBusinessFactory
 {
     /**
+     * @var array<\Spryker\Zed\Translator\Business\Translator\Translator>
+     */
+    protected array $translators = [];
+
+    /**
      * @return \Spryker\Zed\Translator\Business\TranslationFinder\TranslationFileFinderInterface
      */
     public function createTranslationFileFinder(): TranslationFileFinderInterface
@@ -117,13 +122,18 @@ class TranslatorBusinessFactory extends AbstractBusinessFactory
     public function createTranslator(?string $localeName = null)
     {
         $localeName = $localeName ?? $this->getLocaleFacade()->getCurrentLocaleName();
-        $translator = new Translator(
-            $this->createTranslationBuilder(),
-            $localeName,
-            $this->getConfig(),
-        );
 
-        return $translator;
+        if (!isset($this->translators[$localeName])) {
+            $translator = new Translator(
+                $this->createTranslationBuilder(),
+                $localeName,
+                $this->getConfig(),
+            );
+
+            $this->translators[$localeName] = $translator;
+        }
+
+        return $this->translators[$localeName];
     }
 
     /**

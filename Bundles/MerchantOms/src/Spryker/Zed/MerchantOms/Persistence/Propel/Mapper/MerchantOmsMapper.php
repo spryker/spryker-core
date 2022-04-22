@@ -14,9 +14,7 @@ use Propel\Runtime\Collection\ObjectCollection;
 class MerchantOmsMapper
 {
     /**
-     * @phpstan-param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem> $merchantSalesOrderItemEntities
-     *
-     * @param \Propel\Runtime\Collection\ObjectCollection $merchantSalesOrderItemEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem> $merchantSalesOrderItemEntities
      *
      * @return array<\Generated\Shared\Transfer\StateMachineItemTransfer>
      */

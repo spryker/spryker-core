@@ -55,7 +55,7 @@ class ProductCategoryRepository extends AbstractRepository implements ProductCat
             ->createProductCategoryQuery()
             ->innerJoinWithSpyCategory()
             ->useSpyCategoryQuery()
-                ->joinAttribute()
+                ->joinWithAttribute()
                 ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, 'name')
                 ->addAnd(
                     SpyCategoryAttributeTableMap::COL_FK_LOCALE,

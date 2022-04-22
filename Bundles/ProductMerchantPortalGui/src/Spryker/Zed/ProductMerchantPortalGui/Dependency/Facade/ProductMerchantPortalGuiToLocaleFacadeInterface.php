@@ -7,17 +7,19 @@
 
 namespace Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+
 interface ProductMerchantPortalGuiToLocaleFacadeInterface
 {
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getCurrentLocale();
+    public function getCurrentLocale(): LocaleTransfer;
 
     /**
      * @return array<string>
      */
-    public function getAvailableLocales();
+    public function getAvailableLocales(): array;
 
     /**
      * @param string $localeName
@@ -26,12 +28,12 @@ interface ProductMerchantPortalGuiToLocaleFacadeInterface
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getLocale($localeName);
+    public function getLocale(string $localeName): LocaleTransfer;
 
     /**
      * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
-    public function getLocaleCollection();
+    public function getLocaleCollection(): array;
 
     /**
      * @param int $idLocale
@@ -40,5 +42,5 @@ interface ProductMerchantPortalGuiToLocaleFacadeInterface
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getLocaleById($idLocale);
+    public function getLocaleById(int $idLocale): LocaleTransfer;
 }

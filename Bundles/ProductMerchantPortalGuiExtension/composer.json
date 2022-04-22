@@ -8,9 +8,11 @@
     },
     "require-dev": {
         "spryker/code-sniffer": "*",
+        "spryker/gui-table": "*",
         "spryker/symfony": "*"
     },
     "suggest": {
+        "spryker/gui-table": "If you want to use GuiTableConfigurationBuilderInterface for expander plugins.",
         "spryker/symfony": "If you want to use ProductMerchantPortalGui form expander plugins."
     },
     "autoload": {

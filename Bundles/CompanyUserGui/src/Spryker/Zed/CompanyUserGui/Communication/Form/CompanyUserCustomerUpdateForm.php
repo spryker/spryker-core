@@ -10,6 +10,10 @@ namespace Spryker\Zed\CompanyUserGui\Communication\Form;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormBuilderInterface;
 
+/**
+ * @method \Spryker\Zed\CompanyUserGui\CompanyUserGuiConfig getConfig()
+ * @method \Spryker\Zed\CompanyUserGui\Communication\CompanyUserGuiCommunicationFactory getFactory()
+ */
 class CompanyUserCustomerUpdateForm extends CompanyUserCustomerForm
 {
     /**

@@ -8,6 +8,8 @@
 namespace Spryker\Zed\PriceProduct\Business;
 
 use ArrayObject;
+use Generated\Shared\Transfer\PriceProductCollectionDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductCollectionResponseTransfer;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
@@ -551,11 +553,29 @@ interface PriceProductFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface::deletePriceProductCollection()} instead.
+     *
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
      * @return void
      */
     public function removePriceProductDefaultForPriceProduct(PriceProductTransfer $priceProductTransfer): void;
+
+    /**
+     * Specification:
+     * - Removes price products by provided criteria transfer.
+     * - Executes {@link \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductCollectionDeletePluginInterface} plugin stack.
+     * - In the case if PriceProductCollectionDeleteCriteriaTransfer.priceProductDefaultIds is empty, nothing will be deleted.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductCollectionDeleteCriteriaTransfer $priceProductCollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductCollectionResponseTransfer
+     */
+    public function deletePriceProductCollection(
+        PriceProductCollectionDeleteCriteriaTransfer $priceProductCollectionDeleteCriteriaTransfer
+    ): PriceProductCollectionResponseTransfer;
 
     /**
      * Specification:

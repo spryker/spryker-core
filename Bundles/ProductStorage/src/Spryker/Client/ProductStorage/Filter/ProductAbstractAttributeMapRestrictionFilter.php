@@ -169,7 +169,7 @@ class ProductAbstractAttributeMapRestrictionFilter implements ProductAbstractAtt
     }
 
     /**
-     * @param \RecursiveIteratorIterator $iterator
+     * @param \RecursiveIteratorIterator<\RecursiveArrayIterator<int|string, mixed>> $iterator
      * @param string $attributeVariantKey
      * @param array $attributeVariantValue
      *
@@ -206,7 +206,7 @@ class ProductAbstractAttributeMapRestrictionFilter implements ProductAbstractAtt
     /**
      * @param array $attributeVariants
      *
-     * @return \RecursiveIteratorIterator
+     * @return \RecursiveIteratorIterator<\RecursiveArrayIterator<int|string, mixed>>
      */
     protected function createRecursiveIterator(array $attributeVariants): RecursiveIteratorIterator
     {

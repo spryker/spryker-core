@@ -30,6 +30,10 @@ class MerchantRelationshipPriceQueryExpander implements MerchantRelationshipPric
      */
     public function buildMerchantRelationshipPriceDimensionQueryCriteria(PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?QueryCriteriaTransfer
     {
+        if ($priceProductCriteriaTransfer->getWithAllMerchantPrices()) {
+            return $this->createQueryCriteriaTransferForAllMerchantPrices();
+        }
+
         $idMerchantRelationship = null;
         if ($priceProductCriteriaTransfer->getPriceDimension()) {
             $idMerchantRelationship = $priceProductCriteriaTransfer->getPriceDimension()->getIdMerchantRelationship();
@@ -114,6 +118,22 @@ class MerchantRelationshipPriceQueryExpander implements MerchantRelationshipPric
                     ->setRelation('PriceProductMerchantRelationship')
                     ->setCondition(SpyPriceProductMerchantRelationshipTableMap::COL_FK_MERCHANT_RELATIONSHIP
                         . ' IN (' . implode(',', $merchantRelationshipIds) . ')')
+                    ->setJoinType(Criteria::LEFT_JOIN),
+            );
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QueryCriteriaTransfer
+     */
+    protected function createQueryCriteriaTransferForAllMerchantPrices(): QueryCriteriaTransfer
+    {
+        return (new QueryCriteriaTransfer())
+            ->setWithColumns([
+                SpyPriceProductMerchantRelationshipTableMap::COL_FK_MERCHANT_RELATIONSHIP => PriceProductDimensionTransfer::ID_MERCHANT_RELATIONSHIP,
+            ])
+            ->addJoin(
+                (new QueryJoinTransfer())
+                    ->setRelation('PriceProductMerchantRelationship')
                     ->setJoinType(Criteria::LEFT_JOIN),
             );
     }

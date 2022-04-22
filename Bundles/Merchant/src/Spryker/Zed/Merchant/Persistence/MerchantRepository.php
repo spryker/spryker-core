@@ -105,7 +105,7 @@ class MerchantRepository extends AbstractRepository implements MerchantRepositor
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Merchant\Persistence\Base\SpyMerchantStore[] $merchantStoreEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Merchant\Persistence\Base\SpyMerchantStore> $merchantStoreEntities
      * @param int $idMerchant
      *
      * @return array<\Orm\Zed\Merchant\Persistence\Base\SpyMerchantStore>

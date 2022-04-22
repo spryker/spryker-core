@@ -8,9 +8,12 @@
 namespace Spryker\Zed\MerchantProductSearch\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\MerchantProductSearch\Business\Expander\MerchantProductSearchExpander;
+use Spryker\Zed\MerchantProductSearch\Business\Expander\MerchantProductSearchExpanderInterface;
 use Spryker\Zed\MerchantProductSearch\Business\Writer\MerchantProductSearchWriter;
 use Spryker\Zed\MerchantProductSearch\Business\Writer\MerchantProductSearchWriterInterface;
 use Spryker\Zed\MerchantProductSearch\Dependency\Facade\MerchantProductSearchToEventBehaviorFacadeInterface;
+use Spryker\Zed\MerchantProductSearch\Dependency\Facade\MerchantProductSearchToMerchantProductFacadeInterface;
 use Spryker\Zed\MerchantProductSearch\Dependency\Facade\MerchantProductSearchToProductPageSearchFacadeInterface;
 use Spryker\Zed\MerchantProductSearch\MerchantProductSearchDependencyProvider;
 
@@ -33,6 +36,16 @@ class MerchantProductSearchBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\MerchantProductSearch\Business\Expander\MerchantProductSearchExpanderInterface
+     */
+    public function createMerchantProductSearchExpander(): MerchantProductSearchExpanderInterface
+    {
+        return new MerchantProductSearchExpander(
+            $this->getMerchantProductFacade(),
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\MerchantProductSearch\Dependency\Facade\MerchantProductSearchToEventBehaviorFacadeInterface
      */
     public function getEventBehaviorFacade(): MerchantProductSearchToEventBehaviorFacadeInterface
@@ -46,5 +59,13 @@ class MerchantProductSearchBusinessFactory extends AbstractBusinessFactory
     public function getProductPageSearchFacade(): MerchantProductSearchToProductPageSearchFacadeInterface
     {
         return $this->getProvidedDependency(MerchantProductSearchDependencyProvider::FACADE_PRODUCT_PAGE_SEARCH);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProductSearch\Dependency\Facade\MerchantProductSearchToMerchantProductFacadeInterface
+     */
+    public function getMerchantProductFacade(): MerchantProductSearchToMerchantProductFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantProductSearchDependencyProvider::FACADE_MERCHANT_PRODUCT);
     }
 }

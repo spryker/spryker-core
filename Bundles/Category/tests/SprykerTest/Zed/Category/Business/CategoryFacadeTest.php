@@ -53,7 +53,12 @@ class CategoryFacadeTest extends Unit
     /**
      * @var string
      */
-    protected const TEST_LOCALE = 'en_US';
+    protected const TEST_LOCALE_EN = 'en_US';
+
+    /**
+     * @var string
+     */
+    protected const TEST_LOCALE_DE = 'de_DE';
 
     /**
      * @var string
@@ -349,7 +354,7 @@ class CategoryFacadeTest extends Unit
     {
         // Arrange
         $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::TEST_STORE_DE]);
-        $localeTransfer = $this->tester->haveLocale([LocaleTransfer::LOCALE_NAME => static::TEST_LOCALE]);
+        $localeTransfer = $this->tester->haveLocale([LocaleTransfer::LOCALE_NAME => static::TEST_LOCALE_EN]);
 
         $parentCategoryTransfer = $this->tester->haveCategory();
         $this->tester->haveCategoryStoreRelation($parentCategoryTransfer->getIdCategory(), $storeTransfer->getIdStore());
@@ -398,7 +403,7 @@ class CategoryFacadeTest extends Unit
 
         $parentCategoryTransfer = $this->tester->haveCategory();
 
-        $localeTransfer = $this->tester->haveLocale([LocaleTransfer::LOCALE_NAME => static::TEST_LOCALE]);
+        $localeTransfer = $this->tester->haveLocale([LocaleTransfer::LOCALE_NAME => static::TEST_LOCALE_EN]);
         $categoryTemplateTransfer = $this->tester->haveCategoryTemplate();
         $categoryLocalizedAttributesTransfer = $this->createCategoryLocalizedAttributesTransferForLocale($localeTransfer);
 
@@ -735,7 +740,7 @@ class CategoryFacadeTest extends Unit
             new CategoryUrlPathPrefixUpdaterPlugin(),
         ]);
 
-        $localeTransfer = $this->tester->haveLocale([LocaleTransfer::LOCALE_NAME => static::TEST_LOCALE]);
+        $localeTransfer = $this->tester->haveLocale([LocaleTransfer::LOCALE_NAME => static::TEST_LOCALE_EN]);
         $categoryLocalizedAttributes = $this->createCategoryLocalizedAttributesTransferForLocale($localeTransfer);
 
         $categoryTransfer = $this->tester->haveCategory();
@@ -762,7 +767,7 @@ class CategoryFacadeTest extends Unit
             new CategoryUrlPathPrefixUpdaterPlugin(),
         ]);
 
-        $localeTransfer = $this->tester->haveLocale([LocaleTransfer::LOCALE_NAME => static::TEST_LOCALE]);
+        $localeTransfer = $this->tester->haveLocale([LocaleTransfer::LOCALE_NAME => static::TEST_LOCALE_EN]);
         $categoryLocalizedAttributes = $this->createCategoryLocalizedAttributesTransferForLocale($localeTransfer);
 
         $categoryTransfer = $this->tester->haveCategory();
@@ -812,6 +817,64 @@ class CategoryFacadeTest extends Unit
 
         // Assert
         $this->assertCount($expectedCount, $nodeCollectionTransfer->getNodes(), sprintf('Exactly %d category nodes should be found.', $expectedCount));
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindCategoryWillFilterCategoryAttributesByProvidedLocale(): void
+    {
+        // Arrange
+        $localeTransferEn = $this->tester->haveLocale([LocaleTransfer::LOCALE_NAME => static::TEST_LOCALE_EN]);
+        $localeTransferDe = $this->tester->haveLocale([LocaleTransfer::LOCALE_NAME => static::TEST_LOCALE_DE]);
+
+        $parentCategoryTransfer = $this->tester->haveCategory();
+        $parentCategoryLocalizedAttributesTransferEn = $this->tester->createCategoryLocalizedAttributesForLocale(
+            $localeTransferEn,
+            $parentCategoryTransfer->getIdCategory(),
+        );
+        $this->tester->createCategoryLocalizedAttributesForLocale($localeTransferDe, $parentCategoryTransfer->getIdCategory());
+
+        $childCategoryTransfer = $this->tester->haveCategory([
+            CategoryTransfer::PARENT_CATEGORY_NODE => $parentCategoryTransfer->getCategoryNode(),
+        ]);
+        $childCategoryLocalizedAttributesTransferEn = $this->tester->createCategoryLocalizedAttributesForLocale(
+            $localeTransferEn,
+            $childCategoryTransfer->getIdCategory(),
+        );
+        $this->tester->createCategoryLocalizedAttributesForLocale($localeTransferDe, $childCategoryTransfer->getIdCategory());
+
+        $categoryCriteriaTransfer = (new CategoryCriteriaTransfer())
+            ->setIdCategory($parentCategoryTransfer->getIdCategory())
+            ->setLocaleName($localeTransferEn->getLocaleName())
+            ->setWithChildren(true);
+
+        // Act
+        $categoryTransfer = $this->getFacade()->findCategory($categoryCriteriaTransfer);
+
+        // Assert
+        $this->assertNotNull($categoryTransfer);
+        $this->assertCount(1, $categoryTransfer->getNodeCollection()->getNodes());
+
+        /** @var \Generated\Shared\Transfer\NodeTransfer $parentNodeTransfer */
+        $parentNodeTransfer = $categoryTransfer->getNodeCollection()->getNodes()->offsetGet(0);
+        $this->assertCount(1, $parentNodeTransfer->getCategory()->getLocalizedAttributes());
+
+        /** @var \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer $parentCategoryLocalizedAttributesTransfer */
+        $parentCategoryLocalizedAttributesTransfer = $parentNodeTransfer->getCategory()->getLocalizedAttributes()->offsetGet(0);
+        $this->assertSame($localeTransferEn->getIdLocale(), $parentCategoryLocalizedAttributesTransfer->getLocale()->getIdLocale());
+        $this->assertSame($parentCategoryLocalizedAttributesTransferEn->getName(), $parentCategoryLocalizedAttributesTransfer->getName());
+
+        $this->assertCount(1, $parentNodeTransfer->getChildrenNodes()->getNodes());
+
+        /** @var \Generated\Shared\Transfer\NodeTransfer $childNodeTransfer */
+        $childNodeTransfer = $parentNodeTransfer->getChildrenNodes()->getNodes()->offsetGet(0);
+        $this->assertCount(1, $childNodeTransfer->getCategory()->getLocalizedAttributes());
+
+        /** @var \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer $childCategoryLocalizedAttributesTransfer */
+        $childCategoryLocalizedAttributesTransfer = $childNodeTransfer->getCategory()->getLocalizedAttributes()->offsetGet(0);
+        $this->assertSame($localeTransferEn->getIdLocale(), $childCategoryLocalizedAttributesTransfer->getLocale()->getIdLocale());
+        $this->assertSame($childCategoryLocalizedAttributesTransferEn->getName(), $childCategoryLocalizedAttributesTransfer->getName());
     }
 
     /**

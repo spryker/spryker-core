@@ -24,9 +24,10 @@ class PriceProductMerger implements PriceProductMergerInterface
         $abstractPriceProductTransfers = $this->groupPriceProductTransfers($abstractPriceProductTransfers);
         $concretePriceProductTransfers = $this->groupPriceProductTransfers($concretePriceProductTransfers);
 
-        if (!$this->isAllProductPricesMergeable($concretePriceProductTransfers)) {
-            $abstractPriceProductTransfers = $this->filterNotMergeableProductPrices($abstractPriceProductTransfers);
-        }
+        $abstractPriceProductTransfers = $this->filterNotMergeableProductAbstractPrices(
+            $abstractPriceProductTransfers,
+            $concretePriceProductTransfers,
+        );
 
         $priceProductTransfers = [];
 
@@ -102,29 +103,36 @@ class PriceProductMerger implements PriceProductMergerInterface
 
     /**
      * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
-     *
-     * @return bool
-     */
-    protected function isAllProductPricesMergeable(array $priceProductTransfers): bool
-    {
-        foreach ($priceProductTransfers as $priceProductTransfer) {
-            if (!$priceProductTransfer->getIsMergeable()) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    /**
-     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     * @param string $priceType
      *
      * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
-    protected function filterNotMergeableProductPrices(array $priceProductTransfers): array
+    protected function filterNotMergeableProductPricesByPriceType(array $priceProductTransfers, string $priceType): array
     {
-        return array_filter($priceProductTransfers, function (PriceProductTransfer $priceProductTransfer) {
-            return (bool)$priceProductTransfer->getIsMergeable();
+        return array_filter($priceProductTransfers, function (PriceProductTransfer $priceProductTransfer) use ($priceType) {
+            return $priceProductTransfer->getIsMergeable() === true || $priceProductTransfer->getPriceDimensionOrFail()->getTypeOrFail() !== $priceType;
         });
+    }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $abstractPriceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $concretePriceProductTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
+     */
+    protected function filterNotMergeableProductAbstractPrices(
+        array $abstractPriceProductTransfers,
+        array $concretePriceProductTransfers
+    ): array {
+        foreach ($concretePriceProductTransfers as $concretePriceProductTransfer) {
+            if (!$concretePriceProductTransfer->getIsMergeable()) {
+                $abstractPriceProductTransfers = $this->filterNotMergeableProductPricesByPriceType(
+                    $abstractPriceProductTransfers,
+                    $concretePriceProductTransfer->getPriceDimensionOrFail()->getTypeOrFail(),
+                );
+            }
+        }
+
+        return $abstractPriceProductTransfers;
     }
 }

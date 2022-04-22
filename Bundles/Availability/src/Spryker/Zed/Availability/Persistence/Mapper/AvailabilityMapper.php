@@ -63,7 +63,7 @@ class AvailabilityMapper implements AvailabilityMapperInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Availability\Persistence\SpyAvailability[] $availabilityEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Availability\Persistence\SpyAvailability> $availabilityEntities
      * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityCollectionTransfer $productConcreteAvailabilityCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityCollectionTransfer

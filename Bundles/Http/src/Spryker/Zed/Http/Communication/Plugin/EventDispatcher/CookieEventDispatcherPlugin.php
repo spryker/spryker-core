@@ -27,6 +27,7 @@ class CookieEventDispatcherPlugin extends AbstractPlugin implements EventDispatc
      * @var string
      */
     protected const SERVICE_COOKIES = 'cookies';
+
     protected const EVENT_PRIORITY = -255;
 
     /**
@@ -55,7 +56,7 @@ class CookieEventDispatcherPlugin extends AbstractPlugin implements EventDispatc
     /**
      * @param \Spryker\Service\Container\ContainerInterface $container
      *
-     * @return \ArrayObject
+     * @return \ArrayObject<int|string, \Symfony\Component\HttpFoundation\Cookie>
      */
     protected function getCookies(ContainerInterface $container): ArrayObject
     {

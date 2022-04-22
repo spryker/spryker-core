@@ -18,6 +18,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\CmsCollector\Business\CmsCollectorFacadeInterface getFacade()
+ * @method \Spryker\Zed\CmsCollector\CmsCollectorConfig getConfig()
  */
 class CmsVersionPageCollectorSearchPlugin extends AbstractCollectorPlugin
 {

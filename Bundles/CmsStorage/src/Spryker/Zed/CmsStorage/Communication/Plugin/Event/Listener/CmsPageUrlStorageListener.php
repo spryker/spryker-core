@@ -10,7 +10,6 @@ namespace Spryker\Zed\CmsStorage\Communication\Plugin\Event\Listener;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 use Spryker\Zed\Url\Dependency\UrlEvents;
 
 /**
@@ -24,8 +23,6 @@ use Spryker\Zed\Url\Dependency\UrlEvents;
  */
 class CmsPageUrlStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
-    use DatabaseTransactionHandlerTrait;
-
     /**
      * @param array $eventEntityTransfers
      * @param string $eventName
@@ -34,7 +31,6 @@ class CmsPageUrlStorageListener extends AbstractPlugin implements EventBulkHandl
      */
     public function handleBulk(array $eventEntityTransfers, $eventName)
     {
-        $this->preventTransaction();
         $cmsPageIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventEntityTransfers, SpyUrlTableMap::COL_FK_RESOURCE_PAGE);
 
         if (!$cmsPageIds) {

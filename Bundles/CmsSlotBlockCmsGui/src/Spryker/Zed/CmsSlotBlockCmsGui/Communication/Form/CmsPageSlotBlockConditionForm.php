@@ -29,6 +29,7 @@ class CmsPageSlotBlockConditionForm extends AbstractType
     public const OPTION_ALL_ARRAY = 'option-all-array';
 
     public const FIELD_ALL = CmsSlotBlockConditionTransfer::ALL;
+
     public const FIELD_CMS_PAGE_IDS = CmsSlotBlockConditionTransfer::CMS_PAGE_IDS;
 
     /**

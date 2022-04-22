@@ -124,10 +124,10 @@
         },
         {
             "severity": "info",
-            "line_from": 32,
-            "line_to": 32,
+            "line_from": 47,
+            "line_to": 47,
             "type": "InvalidDocblock",
-            "message": "\\Spryker\\Zed\\Category\\CategoryConfig; is not a valid type (from /data/vendor/spryker/spryker/Bundles/Category/src/Spryker/Zed/Category/Business/Updater/CategoryUrlUpdater.php:29)",
+            "message": "\\Spryker\\Zed\\Category\\CategoryConfig; is not a valid type (from /data/vendor/spryker/spryker/Bundles/Category/src/Spryker/Zed/Category/Business/Updater/CategoryUrlUpdater.php:44)",
             "file_name": "vendor/spryker/spryker/Bundles/Category/src/Spryker/Zed/Category/Business/Updater/CategoryUrlUpdater.php",
             "snippet": "    /**\n     * @var \\Spryker\\Zed\\Category\\CategoryConfig;\n     */\n    protected $categoryConfig;",
             "selected_text": "protected $categoryConfig;",

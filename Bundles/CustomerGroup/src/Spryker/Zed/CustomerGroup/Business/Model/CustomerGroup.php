@@ -55,7 +55,7 @@ class CustomerGroup implements CustomerGroupInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupToCustomer[] $customerGroupToCustomerCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupToCustomer> $customerGroupToCustomerCollection
      *
      * @return \ArrayObject<int, \Generated\Shared\Transfer\CustomerGroupToCustomerTransfer>
      */

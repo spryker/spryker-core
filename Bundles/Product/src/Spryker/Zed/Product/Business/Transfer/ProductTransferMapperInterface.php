@@ -23,7 +23,7 @@ interface ProductTransferMapperInterface
     public function convertProductAbstract(SpyProductAbstract $productAbstractEntity);
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Product\Persistence\SpyProductAbstract[] $productAbstractEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\SpyProductAbstract> $productAbstractEntityCollection
      *
      * @return array<\Generated\Shared\Transfer\ProductAbstractTransfer>
      */
@@ -44,7 +44,7 @@ interface ProductTransferMapperInterface
     public function mapSpyProductEntityTransferToProductConcreteTransfer(SpyProductEntityTransfer $productEntityTransfer): ProductConcreteTransfer;
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Product\Persistence\SpyProduct[] $productCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\SpyProduct> $productCollection
      *
      * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */

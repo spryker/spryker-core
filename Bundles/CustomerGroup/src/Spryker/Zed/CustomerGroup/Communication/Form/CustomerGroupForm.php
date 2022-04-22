@@ -39,6 +39,7 @@ class CustomerGroupForm extends AbstractType
      * @var string
      */
     public const FIELD_DESCRIPTION = 'description';
+
     public const FIELD_ID_CUSTOMER_GROUP = self::ID_CUSTOMER_GROUP;
 
     /**

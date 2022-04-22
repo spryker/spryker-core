@@ -20,6 +20,9 @@ use Spryker\Shared\Kernel\Transfer\Exception\NullValueException;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Shared\Kernel\Transfer\Exception\TransferUnserializationException;
 
+/**
+ * @implements \ArrayAccess<int|string, mixed>
+ */
 abstract class AbstractTransfer implements TransferInterface, Serializable, ArrayAccess
 {
     /**
@@ -228,7 +231,7 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
 
     /**
      * @param string $elementType
-     * @param \ArrayObject|array $arrayObject
+     * @param \ArrayObject<int|string, mixed>|array $arrayObject
      * @param bool $ignoreMissingProperty
      *
      * @return \ArrayObject<int, \Spryker\Shared\Kernel\Transfer\TransferInterface>
@@ -281,7 +284,7 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
      */
     protected function assertCollectionPropertyIsSet($property): void
     {
-        /** @var \ArrayObject $collection */
+        /** @var \ArrayObject<int, mixed> $collection */
         $collection = $this->$property;
         if ($collection->count() === 0) {
             throw new RequiredTransferPropertyException(sprintf(

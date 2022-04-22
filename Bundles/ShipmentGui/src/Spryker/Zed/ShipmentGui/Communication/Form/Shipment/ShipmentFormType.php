@@ -53,9 +53,13 @@ class ShipmentFormType extends AbstractType
      * @var string
      */
     public const FIELD_SHIPMENT_METHOD_FORM = 'method';
+
     public const OPTION_SALUTATION_CHOICES = AddressFormType::OPTION_SALUTATION_CHOICES;
+
     public const FIELD_ID_SHIPMENT_METHOD = ShipmentMethodFormType::FIELD_ID_SHIPMENT_METHOD;
+
     public const OPTION_SHIPMENT_METHOD_CHOICES = ShipmentMethodFormType::OPTION_SHIPMENT_METHOD_CHOICES;
+
     public const OPTION_ID_SHIPMENT_METHOD = ShipmentMethodFormType::FIELD_ID_SHIPMENT_METHOD;
 
     /**

@@ -48,6 +48,7 @@ class PdoBatchIteratorTest extends Unit
      * @var string
      */
     protected const TESTING_COLUMN_NAME = 'id_foo';
+
     protected const TESTING_COLUMN_TYPE = PropelTypes::INTEGER;
 
     /**

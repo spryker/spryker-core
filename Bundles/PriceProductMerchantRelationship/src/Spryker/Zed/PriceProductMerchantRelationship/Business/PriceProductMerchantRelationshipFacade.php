@@ -8,6 +8,8 @@
 namespace Spryker\Zed\PriceProductMerchantRelationship\Business;
 
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
+use Generated\Shared\Transfer\PriceProductMerchantRelationshipCollectionDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductMerchantRelationshipCollectionResponseTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -62,6 +64,23 @@ class PriceProductMerchantRelationshipFacade extends AbstractFacade implements P
         $this->getFactory()
             ->createMerchantRelationshipPriceWriter()
             ->deleteAll();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipCollectionDeleteCriteriaTransfer $priceProductMerchantRelationshipCollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipCollectionResponseTransfer
+     */
+    public function deletePriceProductMerchantRelationshipCollection(
+        PriceProductMerchantRelationshipCollectionDeleteCriteriaTransfer $priceProductMerchantRelationshipCollectionDeleteCriteriaTransfer
+    ): PriceProductMerchantRelationshipCollectionResponseTransfer {
+        return $this->getFactory()
+            ->createMerchantRelationshipPriceWriter()
+            ->deleteCollection($priceProductMerchantRelationshipCollectionDeleteCriteriaTransfer);
     }
 
     /**

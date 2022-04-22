@@ -8,6 +8,7 @@
 namespace Spryker\Zed\PriceProduct\Persistence;
 
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\QueryCriteriaTransfer;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
@@ -30,14 +31,10 @@ class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryEx
     }
 
     /**
-     * @phpstan-param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery<mixed> $priceProductStoreQuery
-     *
-     * @phpstan-return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery<mixed>
-     *
-     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery $priceProductStoreQuery
+     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery<mixed> $priceProductStoreQuery
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery
+     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery<mixed>
      */
     public function expandPriceProductStoreQueryWithPriceDimension(
         SpyPriceProductStoreQuery $priceProductStoreQuery,
@@ -55,14 +52,47 @@ class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryEx
     }
 
     /**
-     * @phpstan-param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery<mixed> $priceProductStoreQuery
-     *
-     * @phpstan-return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery<mixed>
-     *
      * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery $priceProductStoreQuery
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     * @param string $dimensionName
      *
-     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery
+     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery|null
+     */
+    public function expandPriceProductStoreQueryWithPriceDimensionByDimensionName(
+        SpyPriceProductStoreQuery $priceProductStoreQuery,
+        PriceProductCriteriaTransfer $priceProductCriteriaTransfer,
+        string $dimensionName
+    ): ?SpyPriceProductStoreQuery {
+        $priceDimensionQueryCriteriaPlugin = $this->findPriceDimensionCriteriaPluginByName(
+            $dimensionName,
+        );
+        if (!$priceDimensionQueryCriteriaPlugin) {
+            return $priceProductStoreQuery;
+        }
+
+        $queryCriteriaTransfer = $this->runPlugin(
+            $priceProductStoreQuery,
+            (clone $priceProductCriteriaTransfer)
+                ->setPriceDimension(
+                    (new PriceProductDimensionTransfer())
+                        ->setType($dimensionName),
+                ),
+            $priceDimensionQueryCriteriaPlugin,
+            Criteria::INNER_JOIN,
+        );
+
+        if (!$queryCriteriaTransfer) {
+            return null;
+        }
+
+        return $priceProductStoreQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery<mixed> $priceProductStoreQuery
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     *
+     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery<mixed>
      */
     public function expandPriceProductStoreQueryWithPriceDimensionForDelete(
         SpyPriceProductStoreQuery $priceProductStoreQuery,
@@ -91,11 +121,9 @@ class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryEx
     }
 
     /**
-     * @phpstan-param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery<mixed> $priceProductStoreQuery
-     *
      * @deprecated this method exists for BC reasons only.
      *
-     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery $priceProductStoreQuery
+     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery<mixed> $priceProductStoreQuery
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      * @param \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionQueryCriteriaPluginInterface $priceDimensionQueryCriteriaPlugin
      *
@@ -136,9 +164,7 @@ class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryEx
     }
 
     /**
-     * @phpstan-param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery<mixed> $priceProductStoreQuery
-     *
-     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery $priceProductStoreQuery
+     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery<mixed> $priceProductStoreQuery
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
      * @return void
@@ -170,9 +196,7 @@ class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryEx
     }
 
     /**
-     * @phpstan-param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery<mixed> $priceProductStoreQuery
-     *
-     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery $priceProductStoreQuery
+     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery<mixed> $priceProductStoreQuery
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
      * @return void
@@ -200,9 +224,7 @@ class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryEx
     }
 
     /**
-     * @phpstan-param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery<mixed> $priceProductStoreQuery
-     *
-     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery $priceProductStoreQuery
+     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery<mixed> $priceProductStoreQuery
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      * @param \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionQueryCriteriaPluginInterface $priceProductDimensionQueryExpanderPlugin
      * @param string|null $joinType
@@ -228,9 +250,7 @@ class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryEx
     }
 
     /**
-     * @phpstan-param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery<mixed> $priceProductStoreQuery
-     *
-     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery $priceProductStoreQuery
+     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery<mixed> $priceProductStoreQuery
      * @param \Generated\Shared\Transfer\QueryCriteriaTransfer $queryCriteriaTransfer
      * @param string|null $joinType
      *
@@ -266,9 +286,7 @@ class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryEx
     }
 
     /**
-     * @phpstan-param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery<mixed> $priceProductStoreQuery
-     *
-     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery $priceProductStoreQuery
+     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery<mixed> $priceProductStoreQuery
      * @param \Generated\Shared\Transfer\QueryCriteriaTransfer $queryCriteriaTransfer
      *
      * @return void
@@ -283,9 +301,7 @@ class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryEx
     }
 
     /**
-     * @phpstan-param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery<mixed> $priceProductStoreQuery
-     *
-     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery $priceProductStoreQuery
+     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery<mixed> $priceProductStoreQuery
      * @param \Generated\Shared\Transfer\QueryCriteriaTransfer $queryCriteriaTransfer
      *
      * @return void
@@ -300,9 +316,7 @@ class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryEx
     }
 
     /**
-     * @phpstan-param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery<mixed> $priceProductStoreQuery
-     *
-     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery $priceProductStoreQuery
+     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery<mixed> $priceProductStoreQuery
      * @param \Generated\Shared\Transfer\QueryCriteriaTransfer $queryCriteriaTransfer
      * @param string $dimensionName
      *

@@ -16,9 +16,9 @@ use Generated\Shared\Transfer\SpyOmsOrderProcessEntityTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 use Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverPluginExecutorInterface;
+use Spryker\Zed\Sales\Business\StateMachineResolver\OrderStateMachineResolverInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use Spryker\Zed\Sales\Persistence\SalesEntityManagerInterface;
-use Spryker\Zed\Sales\SalesConfig;
 
 class OrderItemsSaver implements OrderItemsSaverInterface
 {
@@ -28,11 +28,6 @@ class OrderItemsSaver implements OrderItemsSaverInterface
      * @var \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface
      */
     protected $omsFacade;
-
-    /**
-     * @var \Spryker\Zed\Sales\SalesConfig
-     */
-    protected $salesConfiguration;
 
     /**
      * @var \Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverPluginExecutorInterface
@@ -60,24 +55,29 @@ class OrderItemsSaver implements OrderItemsSaverInterface
     protected $orderItemExpanderPlugins;
 
     /**
+     * @var \Spryker\Zed\Sales\Business\StateMachineResolver\OrderStateMachineResolverInterface
+     */
+    protected $orderStateMachineResolver;
+
+    /**
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface $omsFacade
-     * @param \Spryker\Zed\Sales\SalesConfig $salesConfiguration
      * @param \Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverPluginExecutorInterface $salesOrderSaverPluginExecutor
      * @param \Spryker\Zed\Sales\Persistence\SalesEntityManagerInterface $entityManager
      * @param array<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemsPostSavePluginInterface> $orderItemsPostSavePlugins
+     * @param \Spryker\Zed\Sales\Business\StateMachineResolver\OrderStateMachineResolverInterface $orderStateMachineResolver
      */
     public function __construct(
         SalesToOmsInterface $omsFacade,
-        SalesConfig $salesConfiguration,
         SalesOrderSaverPluginExecutorInterface $salesOrderSaverPluginExecutor,
         SalesEntityManagerInterface $entityManager,
-        array $orderItemsPostSavePlugins
+        array $orderItemsPostSavePlugins,
+        OrderStateMachineResolverInterface $orderStateMachineResolver
     ) {
         $this->omsFacade = $omsFacade;
-        $this->salesConfiguration = $salesConfiguration;
         $this->salesOrderSaverPluginExecutor = $salesOrderSaverPluginExecutor;
         $this->entityManager = $entityManager;
         $this->orderItemsPostSavePlugins = $orderItemsPostSavePlugins;
+        $this->orderStateMachineResolver = $orderStateMachineResolver;
     }
 
     /**
@@ -242,7 +242,7 @@ class OrderItemsSaver implements OrderItemsSaverInterface
      */
     protected function getProcessEntityTransfer(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer): SpyOmsOrderProcessEntityTransfer
     {
-        $processName = $this->salesConfiguration->determineProcessForOrderItem($quoteTransfer, $itemTransfer);
+        $processName = $this->orderStateMachineResolver->resolve($quoteTransfer, $itemTransfer);
         if (isset($this->processEntityTransferCache[$processName])) {
             return $this->processEntityTransferCache[$processName];
         }

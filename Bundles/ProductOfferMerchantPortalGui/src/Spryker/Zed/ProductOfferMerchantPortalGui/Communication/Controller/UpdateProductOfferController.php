@@ -149,9 +149,7 @@ class UpdateProductOfferController extends AbstractProductOfferController
     }
 
     /**
-     * @phpstan-param \Symfony\Component\Form\FormInterface<mixed> $productOfferForm
-     *
-     * @param \Symfony\Component\Form\FormInterface $productOfferForm
+     * @param \Symfony\Component\Form\FormInterface<mixed> $productOfferForm
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param \Generated\Shared\Transfer\ProductOfferResponseTransfer $productOfferResponseTransfer

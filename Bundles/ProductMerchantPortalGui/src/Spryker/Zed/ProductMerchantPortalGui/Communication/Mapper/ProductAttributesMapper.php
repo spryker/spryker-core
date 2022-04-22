@@ -31,14 +31,13 @@ class ProductAttributesMapper implements ProductAttributesMapperInterface
     }
 
     /**
-     * @param \Symfony\Component\Form\FormErrorIterator $errors
+     * @param \Symfony\Component\Form\FormErrorIterator<\Symfony\Component\Form\FormError> $errors
      * @param array $attributesInitialData
      *
      * @return array<array<string>>
      */
     public function mapErrorsToAttributesData(FormErrorIterator $errors, array $attributesInitialData): array
     {
-        /** @var \Symfony\Component\Form\FormError $error */
         foreach ($errors as $error) {
             if (!method_exists($error, 'getMessageParameters')) {
                 continue;

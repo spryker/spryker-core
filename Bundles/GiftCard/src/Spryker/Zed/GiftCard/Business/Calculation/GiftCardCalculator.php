@@ -118,7 +118,7 @@ class GiftCardCalculator implements GiftCardCalculatorInterface
      * @param \ArrayObject<int, \Generated\Shared\Transfer\GiftCardTransfer> $giftCardTransfers
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
      *
-     * @return array<\ArrayObject>
+     * @return array<int, \ArrayObject<int, \Generated\Shared\Transfer\GiftCardTransfer>>
      */
     protected function partitionGiftCardsByApplicability(ArrayObject $giftCardTransfers, CalculableObjectTransfer $calculableObjectTransfer)
     {

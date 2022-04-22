@@ -11,6 +11,10 @@ use ArrayAccess;
 use IteratorAggregate;
 use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 
+/**
+ * @extends \ArrayAccess<int|string, \Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface>
+ * @extends \IteratorAggregate<\Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface>
+ */
 interface EventSubscriberCollectionInterface extends ArrayAccess, IteratorAggregate
 {
     /**

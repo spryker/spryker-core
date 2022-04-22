@@ -188,15 +188,19 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
 
             $this->updateProductCategories($productAbstractTransfer, $initialCategoryIds);
         } else {
+            /** @var \Symfony\Component\Form\FormErrorIterator<\Symfony\Component\Form\FormError> $formErrors */
+            $formErrors = $productAbstractForm->getErrors(true, true);
             $imageSetsErrors = $this->getFactory()
                 ->createImageSetMapper()
                 ->mapErrorsToImageSetValidationData(
-                    $productAbstractForm->getErrors(true, true),
+                    $formErrors,
                 );
 
+            /** @var \Symfony\Component\Form\FormErrorIterator<\Symfony\Component\Form\FormError> $nestedFormErrors */
+            $nestedFormErrors = $productAbstractForm->getErrors(true, false);
             $attributesInitialData = $this->getFactory()
                 ->createProductAttributesMapper()
-                ->mapErrorsToAttributesData($productAbstractForm->getErrors(true, false), $attributesInitialData);
+                ->mapErrorsToAttributesData($nestedFormErrors, $attributesInitialData);
         }
 
         $priceInitialData = $this->getFactory()
@@ -351,12 +355,10 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
     }
 
     /**
-     * @phpstan-return \SplObjectStorage<object, mixed>
-     *
      * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductImageSetTransfer> $imageSets
      * @param array<int, mixed> $imageSetsErrors
      *
-     * @return \SplObjectStorage
+     * @return \SplObjectStorage<object, mixed>
      */
     protected function getImageSetMetaDataGroupedByImageSet(ArrayObject $imageSets, array $imageSetsErrors): SplObjectStorage
     {

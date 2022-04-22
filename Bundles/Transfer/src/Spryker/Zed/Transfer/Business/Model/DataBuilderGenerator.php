@@ -43,7 +43,7 @@ class DataBuilderGenerator
     /**
      * @return void
      */
-    public function execute()
+    public function execute(): void
     {
         $definitions = $this->definitionBuilder->getDefinitions();
 

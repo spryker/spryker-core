@@ -255,7 +255,7 @@
                                                 name="{{ form.categoryIds.vars.full_name }}"
                                                 items="{{ productCategoryTree | json_encode }}"
                                                 placeholder="{{ 'Select Categories' | trans }}"
-                                                value="{{ productAbstract.categoryIds | json_encode}}"
+                                                value="{{ productAbstract.categoryIds | map(value => value|trim) | json_encode}}"
                                             >
                                             </web-spy-tree-select>
 

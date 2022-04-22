@@ -1,0 +1,30 @@
+[
+    {
+        "fileName": "src/Spryker/Zed/AppCatalogGui/Dependency/Facade/AppCatalogGuiToLocaleFacadeBridge.php",
+        "description": "Bridges: Method `getCurrentLocale()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/AppCatalogGui/Dependency/Facade/AppCatalogGuiToStoreFacadeBridge.php",
+        "description": "Bridges: Method `getCurrentStore()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/AppCatalogGui/Dependency/Facade/AppCatalogGuiToStoreReferenceFacadeBridge.php",
+        "description": "Bridges: Method `getStoreByStoreReference()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/AppCatalogGui/Dependency/Facade/AppCatalogGuiToStoreReferenceFacadeBridge.php",
+        "description": "Bridges: Method `getStoreByStoreName()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

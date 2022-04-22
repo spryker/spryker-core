@@ -14,6 +14,9 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
  * @deprecated Will be removed without replacement.
  *
  * @method \Spryker\Zed\Availability\Business\AvailabilityFacadeInterface getFacade()
+ * @method \Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Availability\Persistence\AvailabilityRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Availability\Communication\AvailabilityCommunicationFactory getFactory()
  */
 class GatewayController extends AbstractGatewayController
 {

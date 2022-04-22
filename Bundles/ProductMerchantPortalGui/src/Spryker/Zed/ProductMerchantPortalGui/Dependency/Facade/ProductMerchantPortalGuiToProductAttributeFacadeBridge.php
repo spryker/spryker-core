@@ -39,7 +39,7 @@ class ProductMerchantPortalGuiToProductAttributeFacadeBridge implements ProductM
     /**
      * @return array<\Generated\Shared\Transfer\ProductManagementAttributeTransfer>
      */
-    public function getProductAttributeCollection()
+    public function getProductAttributeCollection(): array
     {
         return $this->productAttributeFacade->getProductAttributeCollection();
     }
@@ -49,9 +49,9 @@ class ProductMerchantPortalGuiToProductAttributeFacadeBridge implements ProductM
      *
      * @return array
      */
-    public function getProductAbstractAttributeValues(int $idProductAbstract)
+    public function getProductAbstractAttributeValues(int $idProductAbstract): array
     {
-        return $this->productAttributeFacade->getProductAbstractAttributeValues((int)$idProductAbstract);
+        return $this->productAttributeFacade->getProductAbstractAttributeValues($idProductAbstract);
     }
 
     /**

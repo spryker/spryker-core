@@ -22,21 +22,21 @@ interface ShoppingListStorageRepositoryInterface
     /**
      * @param array<string> $customerReferences
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorage[]
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorage>
      */
     public function findShoppingListCustomerStorageEntitiesByCustomerReferences(array $customerReferences): ObjectCollection;
 
     /**
      * @param array<string> $customerReferences
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ShoppingList\Persistence\SpyShoppingList[]
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ShoppingList\Persistence\SpyShoppingList>
      */
     public function findShoppingListEntitiesByCustomerReferences(array $customerReferences): ObjectCollection;
 
     /**
      * @param array $shoppingListCustomerStorageIds
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorage[]
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ShoppingListStorage\Persistence\SpyShoppingListCustomerStorage>
      */
     public function findShoppingListCustomerStorageEntitiesByIds(array $shoppingListCustomerStorageIds): ObjectCollection;
 

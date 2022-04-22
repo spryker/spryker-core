@@ -25,7 +25,7 @@ class FormatTypeByPathPreProcessor implements PreProcessorInterface
         $formatType = null;
         $position = strrpos($path, '.');
         if ($position !== false) {
-            $formatType = substr($path, $position + 1);
+            $formatType = (string)substr($path, $position + 1);
             $path = substr($path, 0, -strlen($formatType) - 1);
         }
         $apiRequestTransfer->setFormatType($formatType);

@@ -641,9 +641,43 @@ class ClassDefinition implements ClassDefinitionInterface
         $this->buildSetMethod($property);
         $this->buildGetMethod($property);
 
-        if (!$this->isArrayCollection($property) && !$this->isCollection($property)) {
+        if ($this->isPropertyCollection($property)) {
+            $this->buildSetOrFailMethod($property);
             $this->buildGetOrFailMethod($property);
         }
+    }
+
+    /**
+     * @param array<string, mixed> $property
+     *
+     * @return void
+     */
+    protected function buildSetOrFailMethod(array $property): void
+    {
+        $propertyName = $this->getPropertyName($property);
+        $defaultSetMethodName = 'set' . ucfirst($propertyName);
+        $methodName = sprintf('%sOrFail', $defaultSetMethodName);
+
+        $method = [
+            'name' => $methodName,
+            'defaultSetMethodName' => $defaultSetMethodName,
+            'property' => $propertyName,
+            'propertyConst' => $this->getPropertyConstantName($property),
+            'var' => $this->buildSetArgumentType($property),
+            'bundles' => $property['bundles'],
+            'typeHint' => null,
+            'deprecationDescription' => $this->getPropertyDeprecationDescription($property),
+        ];
+        $method = $this->addSetOrFailTypeHint($method, $property);
+
+        if ($this->propertyHasTypeShim($property)) {
+            $method['typeShimNotice'] = $this->buildTypeShimNotice(
+                $property['type'],
+                $this->getPropertyTypeShim($property),
+            );
+        }
+
+        $this->methods[$methodName] = $method;
     }
 
     /**
@@ -745,6 +779,16 @@ class ClassDefinition implements ClassDefinitionInterface
     protected function isCollection(array $property): bool
     {
         return (bool)preg_match('/((.*?)\[\])/', $property['type']);
+    }
+
+    /**
+     * @param array<string, mixed> $property
+     *
+     * @return bool
+     */
+    protected function isPropertyCollection(array $property): bool
+    {
+        return !$this->isArrayCollection($property) && !$this->isCollection($property);
     }
 
     /**
@@ -1488,6 +1532,23 @@ class ClassDefinition implements ClassDefinitionInterface
         }
 
         return sprintf('?%s', $type);
+    }
+
+    /**
+     * @param array<string, mixed> $method
+     * @param array<string, mixed> $property
+     *
+     * @return array<string, mixed>
+     */
+    protected function addSetOrFailTypeHint(array $method, array $property): array
+    {
+        $typeHint = $this->getSetTypeHint($property);
+
+        if ($typeHint && is_string($typeHint)) {
+            $method['typeHint'] = ltrim($typeHint, '?');
+        }
+
+        return $method;
     }
 
     /**

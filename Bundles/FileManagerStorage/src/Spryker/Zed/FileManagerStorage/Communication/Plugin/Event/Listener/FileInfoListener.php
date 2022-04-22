@@ -12,6 +12,8 @@ use Spryker\Zed\FileManager\Dependency\FileManagerEvents;
 
 /**
  * @method \Spryker\Zed\FileManagerStorage\Communication\FileManagerStorageCommunicationFactory getFactory()
+ * @method \Spryker\Zed\FileManagerStorage\FileManagerStorageConfig getConfig()
+ * @method \Spryker\Zed\FileManagerStorage\Business\FileManagerStorageFacadeInterface getFacade()
  */
 class FileInfoListener extends AbstractFileManagerListener
 {
@@ -25,7 +27,6 @@ class FileInfoListener extends AbstractFileManagerListener
      */
     public function handleBulk(array $eventEntityTransfers, $eventName)
     {
-        $this->preventTransaction();
         $fileIds = $this->getFactory()
             ->getEventBehaviorFacade()
             ->getEventTransferForeignKeys($eventEntityTransfers, SpyFileInfoTableMap::COL_FK_FILE);

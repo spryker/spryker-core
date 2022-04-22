@@ -40,9 +40,13 @@ class MerchantRelationshipTableExpanderPlugin extends AbstractPlugin implements 
     protected const HEADER_BUSINESS_UNIT_OWNER_NAME = 'Business Unit Owner Name';
 
     protected const COL_MERCHANT_NAME_ALIAS = MerchantRelationshipProductListGuiRepositoryInterface::COL_MERCHANT_NAME_ALIAS;
+
     protected const COL_BUSINESS_UNIT_OWNER_NAME_ALIAS = MerchantRelationshipProductListGuiRepositoryInterface::COL_BUSINESS_UNIT_OWNER_NAME_ALIAS;
+
     protected const COL_FK_MERCHANT_RELATIONSHIP = MerchantRelationshipProductListGuiRepositoryInterface::COL_FK_MERCHANT_RELATIONSHIP;
+
     protected const COL_MERCHANT_NAME = MerchantRelationshipProductListGuiRepositoryInterface::COL_MERCHANT_NAME;
+
     protected const COL_COMPANY_BUSINESS_UNIT_NAME = MerchantRelationshipProductListGuiRepositoryInterface::COL_COMPANY_BUSINESS_UNIT_NAME;
 
     /**

@@ -148,7 +148,7 @@ abstract class AbstractRelatedProductRelationTable extends AbstractRelatedProduc
     /**
      * @deprecated Will be removed without replacement.
      *
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Product\Persistence\SpyProductAbstract[] $productAbstractEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\SpyProductAbstract> $productAbstractEntities
      *
      * @return array
      */

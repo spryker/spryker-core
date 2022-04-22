@@ -13,6 +13,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 
 /**
  * @method \Spryker\Zed\CompanyUserGui\Communication\CompanyUserGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CompanyUserGui\CompanyUserGuiConfig getConfig()
  */
 class CompanyUserEditForm extends CompanyUserForm
 {

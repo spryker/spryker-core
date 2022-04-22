@@ -1,6 +1,5 @@
 parameters:
     level: 8
-    checkGenericClassInNonGenericObjectType: false
     checkMissingIterableValueType: false
     ignoreErrors:
         - '#Cannot call method (\w+)\(\) on .+Transfer\|null.#'

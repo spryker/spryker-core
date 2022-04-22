@@ -25,7 +25,9 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class ProductListFormType extends AbstractType
 {
     public const FIELD_ID_PRODUCT_LIST = ProductListTransfer::ID_PRODUCT_LIST;
+
     public const FIELD_TITLE = ProductListTransfer::TITLE;
+
     public const FIELD_TYPE = ProductListTransfer::TYPE;
 
     /**

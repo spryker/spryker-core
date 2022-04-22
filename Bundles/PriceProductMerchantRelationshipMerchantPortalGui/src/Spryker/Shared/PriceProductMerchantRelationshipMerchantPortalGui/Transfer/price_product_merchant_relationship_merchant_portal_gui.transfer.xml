@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="PriceProductTableView">
+        <property name="idMerchantRelationship" type="int"/>
+        <property name="merchantRelationshipName" type="string"/>
+        <property name="volumeQuantity" type="int"/>
+        <property name="typePriceProductStoreIds" type="string"/>
+        <property name="idProductAbstract" type="int"/>
+        <property name="idProductConcrete" type="int"/>
+        <property name="priceProductDefaultIds" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantUser">
+        <property name="idMerchant" type="int"/>
+    </transfer>
+
+    <transfer name="MerchantRelationshipFilter">
+        <property name="merchantIds" type="int[]" singular="idMerchant"/>
+    </transfer>
+
+    <transfer name="PriceProductDimension">
+        <property name="idMerchantRelationship" type="int"/>
+        <property name="type" type="string"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantRelationship">
+        <property name="idMerchantRelationship" type="int"/>
+        <property name="name" type="string"/>
+        <property name="ownerCompanyBusinessUnit" type="CompanyBusinessUnit"/>
+    </transfer>
+
+    <transfer name="MerchantRelationshipCollection">
+        <property name="merchantRelationships" type="MerchantRelationship[]" singular="merchantRelationship"/>
+    </transfer>
+
+    <transfer name="CompanyBusinessUnit">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="GuiTableEditableConfiguration">
+        <property name="columns" type="GuiTableColumnConfiguration[]" singular="column"/>
+    </transfer>
+
+    <transfer name="GuiTableRowAction">
+        <property name="url" type="string"/>
+    </transfer>
+
+    <transfer name="PriceProduct">
+        <property name="priceDimension" type="PriceProductDimension"/>
+        <property name="moneyValue" type="MoneyValue"/>
+    </transfer>
+
+    <transfer name="PriceProductCriteria">
+        <property name="priceDimension" type="PriceProductDimension"/>
+    </transfer>
+
+    <transfer name="PriceProductCollectionDeleteCriteria">
+        <property name="merchantRelationshipIds" type="int[]" singular="idMerchantRelationship"/>
+        <property name="priceProductStoreIds" type="int[]" singular="idPriceProductStore"/>
+    </transfer>
+
+    <transfer name="MerchantRelationshipCriteria">
+        <property name="merchantRelationshipConditions" type="MerchantRelationshipConditions"/>
+    </transfer>
+
+    <transfer name="MerchantRelationshipConditions">
+        <property name="merchantIds" type="int[]" singular="idMerchant"/>
+
+    </transfer>
+
+    <transfer name="GuiTableColumnConfiguration">
+        <property name="id" type="string"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="MoneyValue">
+        <property name="idEntity" type="int"/>
+        <property name="priceData" type="string"/>
+    </transfer>
+
+    <transfer name="PriceProductTableCriteria">
+        <property name="filterInMerchantRelationships" type="int[]" singular="inMerchantRelationship"/>
+    </transfer>
+
+    <transfer name="ValidationResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="validationErrors" type="ValidationError[]" singular="validationError"/>
+    </transfer>
+
+    <transfer name="ValidationError">
+        <property name="message" type="string"/>
+    </transfer>
+
+</transfers>

@@ -26,7 +26,7 @@ interface ProductMerchantPortalGuiToProductCategoryFacadeInterface
      *
      * @return void
      */
-    public function createProductCategoryMappings($idCategory, array $productIdsToAssign);
+    public function createProductCategoryMappings(int $idCategory, array $productIdsToAssign): void;
 
     /**
      * @param int $idCategory
@@ -34,5 +34,5 @@ interface ProductMerchantPortalGuiToProductCategoryFacadeInterface
      *
      * @return void
      */
-    public function removeProductCategoryMappings($idCategory, array $productIdsToUnAssign);
+    public function removeProductCategoryMappings(int $idCategory, array $productIdsToUnAssign): void;
 }

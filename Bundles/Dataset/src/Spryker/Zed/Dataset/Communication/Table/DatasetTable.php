@@ -20,14 +20,18 @@ class DatasetTable extends AbstractTable
      * @var string
      */
     public const REQUEST_ID_DATASET = 'id-dataset';
+
     public const COL_ID_DATASET = SpyDatasetTableMap::COL_ID_DATASET;
+
     public const COL_DATASET_NAME = SpyDatasetTableMap::COL_NAME;
 
     /**
      * @var string
      */
     public const COL_ACTIONS = 'Actions';
+
     public const SORT_DESC = TableConfiguration::SORT_DESC;
+
     public const COL_IS_ACTIVE = SpyDatasetTableMap::COL_IS_ACTIVE;
 
     /**

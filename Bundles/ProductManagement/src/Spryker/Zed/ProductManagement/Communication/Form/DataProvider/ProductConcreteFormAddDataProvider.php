@@ -111,7 +111,7 @@ class ProductConcreteFormAddDataProvider
     protected $productAttributeFacade;
 
     /**
-     * @var \Everon\Component\Collection\CollectionInterface|\Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
+     * @var \Everon\Component\Collection\CollectionInterface<\Generated\Shared\Transfer\ProductManagementAttributeTransfer>
      */
     protected $attributeTransferCollection;
 

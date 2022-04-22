@@ -111,7 +111,7 @@ class CategoryMapper implements CategoryMapperInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Category\Persistence\SpyCategoryNode[] $nodeEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Category\Persistence\SpyCategoryNode> $nodeEntities
      * @param \Generated\Shared\Transfer\NodeCollectionTransfer $nodeCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\NodeCollectionTransfer
@@ -139,7 +139,7 @@ class CategoryMapper implements CategoryMapperInterface
         $categoryEntity = $nodeEntity->getCategory();
 
         $categoryTransfer = $this->mapCategory($categoryEntity, new CategoryTransfer());
-        $categoryTransfer = $this->mapLocalizedAttributes($categoryEntity->getAttributesJoinLocale(), $categoryTransfer, $nodeEntity->getSpyUrls());
+        $categoryTransfer = $this->mapLocalizedAttributes($categoryEntity->getAttributes(), $categoryTransfer, $nodeEntity->getSpyUrls());
         $storeRelationTransfer = $this->categoryStoreRelationMapper->mapCategoryStoreEntitiesToStoreRelationTransfer(
             $categoryEntity->getSpyCategoryStores(),
             (new StoreRelationTransfer())->setIdEntity($categoryEntity->getIdCategory()),
@@ -156,7 +156,7 @@ class CategoryMapper implements CategoryMapperInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Category\Persistence\SpyCategory[] $categoryEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Category\Persistence\SpyCategory> $categoryEntities
      * @param \Generated\Shared\Transfer\CategoryCollectionTransfer $categoryCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
@@ -232,9 +232,9 @@ class CategoryMapper implements CategoryMapperInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Category\Persistence\SpyCategoryAttribute[] $attributeCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Category\Persistence\SpyCategoryAttribute> $attributeCollection
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Url\Persistence\SpyUrl[]|null $urlEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Url\Persistence\SpyUrl>|null $urlEntities
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer
      */

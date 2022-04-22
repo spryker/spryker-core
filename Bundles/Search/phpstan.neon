@@ -1,6 +1,5 @@
 parameters:
     level: 7
-    checkGenericClassInNonGenericObjectType: false
     checkMissingIterableValueType: false
     excludePaths:
         - '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Model/Elasticsearch/Query/QueryBuilder.php'

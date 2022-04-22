@@ -281,6 +281,20 @@ class FullyStrictTransfer extends AbstractTransfer
     /**
      * @module Test
      *
+     * @param int $propScalar
+     *
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
+     *
+     * @return $this
+     */
+    public function setPropScalarOrFail(int $propScalar)
+    {
+        return $this->setPropScalar($propScalar);
+    }
+
+    /**
+     * @module Test
+     *
      * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
      *
      * @return int
@@ -340,6 +354,24 @@ class FullyStrictTransfer extends AbstractTransfer
     /**
      * @module Test
      *
+     * @param string|int|float|\Spryker\DecimalObject\Decimal $propDecimal
+     *
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
+     *
+     * @return $this
+     */
+    public function setPropDecimalOrFail($propDecimal)
+    {
+        if ($propDecimal === null) {
+            $this->throwNullValueException(static::PROP_DECIMAL);
+        }
+
+        return $this->setPropDecimal($propDecimal);
+    }
+
+    /**
+     * @module Test
+     *
      * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
      *
      * @return \Spryker\DecimalObject\Decimal
@@ -390,6 +422,20 @@ class FullyStrictTransfer extends AbstractTransfer
     public function getPropSimpleArray(): ?array
     {
         return $this->propSimpleArray;
+    }
+
+    /**
+     * @module Test
+     *
+     * @param array $propSimpleArray
+     *
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
+     *
+     * @return $this
+     */
+    public function setPropSimpleArrayOrFail(array $propSimpleArray)
+    {
+        return $this->setPropSimpleArray($propSimpleArray);
     }
 
     /**
@@ -518,6 +564,20 @@ class FullyStrictTransfer extends AbstractTransfer
     public function getPropDummyItem(): ?DummyItemTransfer
     {
         return $this->propDummyItem;
+    }
+
+    /**
+     * @module Test
+     *
+     * @param \Generated\Shared\Transfer\DummyItemTransfer $propDummyItem
+     *
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
+     *
+     * @return $this
+     */
+    public function setPropDummyItemOrFail(DummyItemTransfer $propDummyItem)
+    {
+        return $this->setPropDummyItem($propDummyItem);
     }
 
     /**
@@ -910,7 +970,7 @@ class FullyStrictTransfer extends AbstractTransfer
      *
      * @return array<string, mixed>
      */
-    public function modifiedToArray($isRecursive = true, $camelCasedKeys = false)
+    public function modifiedToArray($isRecursive = true, $camelCasedKeys = false): array
     {
         if ($isRecursive && !$camelCasedKeys) {
             return $this->modifiedToArrayRecursiveNotCamelCased();
@@ -932,7 +992,7 @@ class FullyStrictTransfer extends AbstractTransfer
      *
      * @return array<string, mixed>
      */
-    public function toArray($isRecursive = true, $camelCasedKeys = false)
+    public function toArray($isRecursive = true, $camelCasedKeys = false): array
     {
         if ($isRecursive && !$camelCasedKeys) {
             return $this->toArrayRecursiveNotCamelCased();
@@ -955,7 +1015,7 @@ class FullyStrictTransfer extends AbstractTransfer
      *
      * @return array<string, mixed>
      */
-    protected function addValuesToCollectionModified($value, $isRecursive, $camelCasedKeys)
+    protected function addValuesToCollectionModified($value, $isRecursive, $camelCasedKeys): array
     {
         $result = [];
         foreach ($value as $elementKey => $arrayElement) {
@@ -977,7 +1037,7 @@ class FullyStrictTransfer extends AbstractTransfer
      *
      * @return array<string, mixed>
      */
-    protected function addValuesToCollection($value, $isRecursive, $camelCasedKeys)
+    protected function addValuesToCollection($value, $isRecursive, $camelCasedKeys): array
     {
         $result = [];
         foreach ($value as $elementKey => $arrayElement) {
@@ -995,7 +1055,7 @@ class FullyStrictTransfer extends AbstractTransfer
     /**
      * @return array<string, mixed>
      */
-    public function modifiedToArrayRecursiveCamelCased()
+    public function modifiedToArrayRecursiveCamelCased(): array
     {
         $values = [];
         foreach ($this->modifiedProperties as $property => $_) {
@@ -1036,7 +1096,7 @@ class FullyStrictTransfer extends AbstractTransfer
     /**
      * @return array<string, mixed>
      */
-    public function modifiedToArrayRecursiveNotCamelCased()
+    public function modifiedToArrayRecursiveNotCamelCased(): array
     {
         $values = [];
         foreach ($this->modifiedProperties as $property => $_) {
@@ -1077,7 +1137,7 @@ class FullyStrictTransfer extends AbstractTransfer
     /**
      * @return array<string, mixed>
      */
-    public function modifiedToArrayNotRecursiveNotCamelCased()
+    public function modifiedToArrayNotRecursiveNotCamelCased(): array
     {
         $values = [];
         foreach ($this->modifiedProperties as $property => $_) {
@@ -1094,7 +1154,7 @@ class FullyStrictTransfer extends AbstractTransfer
     /**
      * @return array<string, mixed>
      */
-    public function modifiedToArrayNotRecursiveCamelCased()
+    public function modifiedToArrayNotRecursiveCamelCased(): array
     {
         $values = [];
         foreach ($this->modifiedProperties as $property => $_) {
@@ -1111,7 +1171,7 @@ class FullyStrictTransfer extends AbstractTransfer
     /**
      * @return void
      */
-    protected function initCollectionProperties()
+    protected function initCollectionProperties(): void
     {
         $this->propDummyItemCollection = $this->propDummyItemCollection ?: new ArrayObject();
         $this->propDummyItemCollectionAssoc = $this->propDummyItemCollectionAssoc ?: new ArrayObject();
@@ -1120,7 +1180,7 @@ class FullyStrictTransfer extends AbstractTransfer
     /**
      * @return array<string, mixed>
      */
-    public function toArrayNotRecursiveCamelCased()
+    public function toArrayNotRecursiveCamelCased(): array
     {
         return [
             'propScalar' => $this->propScalar,
@@ -1138,7 +1198,7 @@ class FullyStrictTransfer extends AbstractTransfer
     /**
      * @return array<string, mixed>
      */
-    public function toArrayNotRecursiveNotCamelCased()
+    public function toArrayNotRecursiveNotCamelCased(): array
     {
         return [
             'prop_scalar' => $this->propScalar,
@@ -1156,7 +1216,7 @@ class FullyStrictTransfer extends AbstractTransfer
     /**
      * @return array<string, mixed>
      */
-    public function toArrayRecursiveNotCamelCased()
+    public function toArrayRecursiveNotCamelCased(): array
     {
         return [
             'prop_scalar' => $this->propScalar instanceof AbstractTransfer ? $this->propScalar->toArray(true, false) : $this->propScalar,
@@ -1174,7 +1234,7 @@ class FullyStrictTransfer extends AbstractTransfer
     /**
      * @return array<string, mixed>
      */
-    public function toArrayRecursiveCamelCased()
+    public function toArrayRecursiveCamelCased(): array
     {
         return [
             'propScalar' => $this->propScalar instanceof AbstractTransfer ? $this->propScalar->toArray(true, true) : $this->propScalar,

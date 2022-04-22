@@ -1,0 +1,59 @@
+{
+    "name": "spryker/message-broker",
+    "type": "library",
+    "description": "MessageBroker module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=7.4",
+        "spryker-sdk/async-api": "^0.1.0",
+        "spryker/kernel": "^3.30.0",
+        "spryker/log": "^3.0.0",
+        "spryker/message-broker-extension": "^1.0.0",
+        "spryker/monolog": "^2.0.0",
+        "spryker/symfony": "^3.7.0",
+        "spryker/transfer": "^3.25.0",
+        "spryker/util-encoding": "^1.0.0 || ^2.0.0",
+        "symfony/messenger": "^5.0.0 || ^6.0.0"
+    },
+    "require-dev": {
+        "spryker/application": "*",
+        "spryker/code-sniffer": "*",
+        "spryker/console": "*",
+        "spryker/container": "*",
+        "spryker/event-dispatcher": "*",
+        "spryker/message-broker-aws": "*",
+        "spryker/ramsey-uuid": "*",
+        "spryker/testify": "*"
+    },
+    "suggest": {
+        "spryker/ramsey-uuid": "When the CorrelationIdMessageAttributeProviderPlugin is used you need to install this."
+    },
+    "autoload": {
+        "psr-4": {
+            "Spryker\\": "src/Spryker/",
+            "SprykerTest\\Zed\\MessageBroker\\Helper\\": "tests/SprykerTest/Zed/MessageBroker/_support/Helper"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SprykerTest\\": "tests/SprykerTest/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
+}

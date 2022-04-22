@@ -16,9 +16,7 @@ describe('ProfileComponent', () => {
 
                 Page Content
 
-                <spy-button action type="submit" class="test-action">
-                    Button
-                </spy-button>
+                <spy-button action type="submit" class="test-action"> Button </spy-button>
             </mp-profile>
         `,
     })

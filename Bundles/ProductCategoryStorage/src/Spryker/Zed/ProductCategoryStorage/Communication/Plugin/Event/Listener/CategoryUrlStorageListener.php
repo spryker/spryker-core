@@ -10,7 +10,6 @@ namespace Spryker\Zed\ProductCategoryStorage\Communication\Plugin\Event\Listener
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 use Spryker\Zed\Url\Dependency\UrlEvents;
 
 /**
@@ -25,8 +24,6 @@ use Spryker\Zed\Url\Dependency\UrlEvents;
  */
 class CategoryUrlStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
-    use DatabaseTransactionHandlerTrait;
-
     /**
      * @api
      *
@@ -37,8 +34,6 @@ class CategoryUrlStorageListener extends AbstractPlugin implements EventBulkHand
      */
     public function handleBulk(array $eventEntityTransfers, $eventName)
     {
-        $this->preventTransaction();
-
         if ($eventName === UrlEvents::ENTITY_SPY_URL_DELETE) {
             $categoryNodeIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventEntityTransfers, SpyUrlTableMap::COL_FK_RESOURCE_CATEGORYNODE);
         } else {

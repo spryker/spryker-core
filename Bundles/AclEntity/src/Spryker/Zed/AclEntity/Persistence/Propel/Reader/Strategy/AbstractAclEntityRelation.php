@@ -53,11 +53,9 @@ class AbstractAclEntityRelation
     }
 
     /**
-     * @phpstan-return \Propel\Runtime\ActiveQuery\ModelCriteria<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
-     *
      * @param string $entityClass
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria<\Propel\Runtime\ActiveRecord\ActiveRecordInterface>
      */
     protected function getQueryByEntityClass(string $entityClass): ModelCriteria
     {

@@ -22,4 +22,18 @@ interface MerchantProductOfferSearchWriterInterface
      * @return void
      */
     public function writeCollectionByIdProductOfferEvents(array $eventTransfers): void;
+
+    /**
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
+     *
+     * @return void
+     */
+    public function writeProductConcreteCollectionByIdProductOfferEvents(array $eventTransfers): void;
+
+    /**
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
+     *
+     * @return void
+     */
+    public function writeProductConcreteCollectionByIdProductOfferStoreEvents(array $eventTransfers): void;
 }

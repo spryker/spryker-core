@@ -55,7 +55,9 @@ class FilesystemCacheWriter implements CacheWriterInterface
             }
         }
 
-        file_put_contents($this->cacheFilePath, $cacheFileContent);
+        $temporaryFilePath = sprintf('%s/%s', $directory, uniqid('', true));
+        file_put_contents($temporaryFilePath, $cacheFileContent);
+        rename($temporaryFilePath, $this->cacheFilePath);
 
         if (function_exists('opcache_invalidate')) {
             opcache_invalidate($this->cacheFilePath, true);

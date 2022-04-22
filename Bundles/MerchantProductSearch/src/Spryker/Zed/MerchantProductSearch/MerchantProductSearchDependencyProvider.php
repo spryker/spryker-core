@@ -11,6 +11,7 @@ use Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\MerchantProductSearch\Dependency\Facade\MerchantProductSearchToEventBehaviorFacadeBridge;
+use Spryker\Zed\MerchantProductSearch\Dependency\Facade\MerchantProductSearchToMerchantProductFacadeBridge;
 use Spryker\Zed\MerchantProductSearch\Dependency\Facade\MerchantProductSearchToProductPageSearchFacadeBridge;
 
 /**
@@ -31,6 +32,11 @@ class MerchantProductSearchDependencyProvider extends AbstractBundleDependencyPr
     /**
      * @var string
      */
+    public const FACADE_MERCHANT_PRODUCT = 'FACADE_MERCHANT_PRODUCT';
+
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_MERCHANT_PRODUCT_ABSTRACT = 'PROPEL_QUERY_MERCHANT_PRODUCT_ABSTRACT';
 
     /**
@@ -44,6 +50,7 @@ class MerchantProductSearchDependencyProvider extends AbstractBundleDependencyPr
 
         $container = $this->addEventBehaviorFacade($container);
         $container = $this->addProductPageSearchFacade($container);
+        $container = $this->addMerchantProductFacade($container);
 
         return $container;
     }
@@ -88,6 +95,22 @@ class MerchantProductSearchDependencyProvider extends AbstractBundleDependencyPr
         $container->set(static::FACADE_PRODUCT_PAGE_SEARCH, function (Container $container) {
             return new MerchantProductSearchToProductPageSearchFacadeBridge(
                 $container->getLocator()->productPageSearch()->facade(),
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMerchantProductFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_MERCHANT_PRODUCT, function (Container $container) {
+            return new MerchantProductSearchToMerchantProductFacadeBridge(
+                $container->getLocator()->merchantProduct()->facade(),
             );
         });
 

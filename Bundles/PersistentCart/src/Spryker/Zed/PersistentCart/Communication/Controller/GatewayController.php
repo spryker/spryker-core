@@ -18,6 +18,7 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
  * @method \Spryker\Zed\PersistentCart\Business\PersistentCartFacadeInterface getFacade()
+ * @method \Spryker\Zed\PersistentCart\Communication\PersistentCartCommunicationFactory getFactory()
  */
 class GatewayController extends AbstractGatewayController
 {

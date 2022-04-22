@@ -12,6 +12,9 @@ use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\StepEngine\Dependency\Step\StepInterface;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @extends \IteratorAggregate<int, \Spryker\Yves\StepEngine\Dependency\Step\StepInterface>
+ */
 interface StepCollectionInterface extends IteratorAggregate
 {
     /**

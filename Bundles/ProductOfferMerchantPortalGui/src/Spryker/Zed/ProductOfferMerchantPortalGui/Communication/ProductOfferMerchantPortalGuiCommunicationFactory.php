@@ -211,12 +211,10 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
     }
 
     /**
-     * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
-     *
      * @param \Generated\Shared\Transfer\ProductOfferTransfer|null $data
      * @param array<mixed> $options
      *
-     * @return \Symfony\Component\Form\FormInterface
+     * @return \Symfony\Component\Form\FormInterface<mixed>
      */
     public function createProductOfferForm(?ProductOfferTransfer $data = null, array $options = []): FormInterface
     {

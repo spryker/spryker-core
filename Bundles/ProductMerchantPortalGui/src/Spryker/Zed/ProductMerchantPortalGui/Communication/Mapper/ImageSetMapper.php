@@ -60,7 +60,7 @@ class ImageSetMapper implements ImageSetMapperInterface
     ];
 
     /**
-     * @param \Symfony\Component\Form\FormErrorIterator $errors
+     * @param \Symfony\Component\Form\FormErrorIterator<\Symfony\Component\Form\FormError> $errors
      *
      * @return array<array<string>>
      */
@@ -68,7 +68,6 @@ class ImageSetMapper implements ImageSetMapperInterface
     {
         $result = [];
 
-        /** @var \Symfony\Component\Form\FormError $error */
         foreach ($errors as $error) {
             $propertyPath = $this->getPropertyPath($error);
 

@@ -19,6 +19,7 @@ class ErrorHandler
      * @var string
      */
     public const ZED = 'ZED';
+
     public const EXIT_CODE_ERROR = -1;
 
     /**

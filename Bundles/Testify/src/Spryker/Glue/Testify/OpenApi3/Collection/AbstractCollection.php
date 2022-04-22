@@ -15,6 +15,10 @@ use Spryker\Glue\Testify\OpenApi3\Property\PropertyDefinition;
 use Spryker\Glue\Testify\OpenApi3\Property\PropertyValueInterface;
 use Spryker\Glue\Testify\OpenApi3\SchemaFieldInterface;
 
+/**
+ * @implements \ArrayAccess<int|string, \Spryker\Glue\Testify\OpenApi3\Property\PropertyValueInterface>
+ * @implements \IteratorAggregate<\Spryker\Glue\Testify\OpenApi3\Property\PropertyValueInterface>
+ */
 abstract class AbstractCollection implements CollectionInterface, IteratorAggregate, ArrayAccess, Countable
 {
     /**

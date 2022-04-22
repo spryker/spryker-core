@@ -10,12 +10,16 @@ namespace SprykerTest\Zed\MerchantProductOfferSearch\Business\Facade;
 use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\StoreRelationBuilder;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\PageMapTransfer;
 use Generated\Shared\Transfer\ProductAbstractMerchantTransfer;
+use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Zed\ProductPageSearch\Business\DataMapper\PageMapBuilder;
 
 /**
  * Auto-generated group annotations
@@ -110,5 +114,88 @@ class MerchantProductOfferSearchFacadeTest extends Unit
         // Assert
         $this->assertIsArray($productAbstractMerchantTransfers);
         $this->assertEquals($productAbstractMerchantTransfers, $expectedResult);
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandProductConcretePageMapSuccess(): void
+    {
+        // Arrange
+        $storeTransfer = $this->tester->haveStore([
+            StoreTransfer::NAME => 'DE',
+        ]);
+        $productConcreteTransfer = $this->tester->haveProduct([
+            ProductConcreteTransfer::IS_ACTIVE => true,
+        ]);
+        $merchantTransfer = $this->tester->haveMerchant([
+            MerchantTransfer::IS_ACTIVE => true,
+        ]);
+
+        $this->tester->haveProductOffer([
+            ProductOfferTransfer::ID_PRODUCT_CONCRETE => $productConcreteTransfer->getIdProductConcrete(),
+            ProductOfferTransfer::CONCRETE_SKU => $productConcreteTransfer->getSku(),
+            ProductOfferTransfer::MERCHANT_REFERENCE => $merchantTransfer->getMerchantReference(),
+            ProductOfferTransfer::FK_MERCHANT => $merchantTransfer->getIdMerchant(),
+            ProductOfferTransfer::STORES => new ArrayObject([$storeTransfer]),
+        ]);
+
+        $productData = [
+            ProductConcretePageSearchTransfer::SKU => $productConcreteTransfer->getSku(),
+            ProductConcretePageSearchTransfer::STORE => $storeTransfer->getName(),
+        ];
+
+        // Act
+        $pageMapTransfer = $this->tester->getFacade()->expandProductConcretePageMap(
+            new PageMapTransfer(),
+            new PageMapBuilder(),
+            $productData,
+            new LocaleTransfer(),
+        );
+
+        // Assert
+        $this->assertContains($merchantTransfer->getMerchantReference(), $pageMapTransfer->getMerchantReferences());
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandProductConcretePageMapFailed(): void
+    {
+        // Arrange
+        $productConcreteTransfer = $this->tester->haveProduct([
+            ProductConcreteTransfer::IS_ACTIVE => true,
+        ]);
+        $merchantTransfer = $this->tester->haveMerchant([
+            MerchantTransfer::IS_ACTIVE => true,
+        ]);
+        $storeTransfer = $this->tester->haveStore([
+            StoreTransfer::NAME => 'DE',
+        ]);
+        $productOfferTransfer = $this->tester->haveProductOffer([
+            ProductOfferTransfer::ID_PRODUCT_CONCRETE => $productConcreteTransfer->getIdProductConcrete(),
+            ProductOfferTransfer::CONCRETE_SKU => $productConcreteTransfer->getSku(),
+            ProductOfferTransfer::MERCHANT_REFERENCE => $merchantTransfer->getMerchantReference(),
+            ProductOfferTransfer::FK_MERCHANT => $merchantTransfer->getIdMerchant(),
+        ]);
+
+        $productOfferStoreTransfer = $this->tester->haveProductOfferStore($productOfferTransfer, $storeTransfer);
+
+        $productData = [
+            ProductConcretePageSearchTransfer::SKU => $productConcreteTransfer->getIdProductConcrete(),
+            ProductConcretePageSearchTransfer::STORE => $storeTransfer->getName(),
+        ];
+
+        // Act
+        $pageMapTransfer = $this->tester->getFacade()->expandProductConcretePageMap(
+            new PageMapTransfer(),
+            new PageMapBuilder(),
+            $productData,
+            new LocaleTransfer(),
+        );
+
+        // Assert
+        $this->assertCount(0, $pageMapTransfer->getMerchantReferences());
+        $this->assertCount(0, $pageMapTransfer->getFullTextBoosted());
     }
 }

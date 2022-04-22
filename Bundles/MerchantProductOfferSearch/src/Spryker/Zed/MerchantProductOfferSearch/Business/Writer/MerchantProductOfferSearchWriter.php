@@ -14,6 +14,13 @@ use Spryker\Zed\MerchantProductOfferSearch\Persistence\MerchantProductOfferSearc
 class MerchantProductOfferSearchWriter implements MerchantProductOfferSearchWriterInterface
 {
     /**
+     * @uses \Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferStoreTableMap::COL_FK_PRODUCT_OFFER
+     *
+     * @var string
+     */
+    protected const FK_PRODUCT_OFFER = 'spy_product_offer_store.fk_product_offer';
+
+    /**
      * @var \Spryker\Zed\MerchantProductOfferSearch\Dependency\Facade\MerchantProductOfferSearchToEventBehaviorFacadeInterface
      */
     protected $eventBehaviorFacade;
@@ -69,5 +76,36 @@ class MerchantProductOfferSearchWriter implements MerchantProductOfferSearchWrit
         $productAbstractIds = $this->merchantProductOfferSearchRepository->getProductAbstractIdsByProductOfferIds($productOfferIds);
 
         $this->pageSearchFacade->refresh($productAbstractIds);
+    }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
+     *
+     * @return void
+     */
+    public function writeProductConcreteCollectionByIdProductOfferEvents(array $eventTransfers): void
+    {
+        $productOfferIds = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
+
+        $productIds = $this->merchantProductOfferSearchRepository->getProductConcreteIdsByProductOfferIds($productOfferIds);
+
+        $this->pageSearchFacade->publishProductConcretes($productIds);
+    }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
+     *
+     * @return void
+     */
+    public function writeProductConcreteCollectionByIdProductOfferStoreEvents(array $eventTransfers): void
+    {
+        $productOfferIds = $this->eventBehaviorFacade->getEventTransferForeignKeys(
+            $eventTransfers,
+            static::FK_PRODUCT_OFFER,
+        );
+
+        $productIds = $this->merchantProductOfferSearchRepository->getProductConcreteIdsByProductOfferIds($productOfferIds);
+
+        $this->pageSearchFacade->publishProductConcretes($productIds);
     }
 }

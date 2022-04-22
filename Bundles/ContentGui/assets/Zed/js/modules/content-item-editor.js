@@ -59,6 +59,10 @@ var ContentItemEditor = function (options) {
                 },
             },
             dialogsInBody: true,
+            styleWithCSS: true,
+            codemirror: {
+                lineWrapping: true,
+            },
         };
 
         return editorConfig.mergeConfigs(baseConfig, contentGuiConfig);

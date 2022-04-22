@@ -10,6 +10,9 @@ namespace Spryker\Zed\PaymentGui\Communication\Form\PaymentMethod;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 
+/**
+ * @method \Spryker\Zed\PaymentGui\Communication\PaymentGuiCommunicationFactory getFactory()
+ */
 class PaymentMethodForm extends ViewPaymentMethodForm
 {
     /**

@@ -33,6 +33,7 @@ use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortal
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductValidityFacadeBridge;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToStoreFacadeBridge;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToTranslatorFacadeBridge;
+use Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToPriceProductServiceBridge;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToPriceProductVolumeServiceBridge;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToUtilEncodingServiceBridge;
 
@@ -137,6 +138,11 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
     public const SERVICE_PRICE_PRODUCT_VOLUME = 'SERVICE_PRICE_PRODUCT_VOLUME';
 
     /**
+     * @var string
+     */
+    public const SERVICE_PRICE_PRODUCT = 'SERVICE_PRICE_PRODUCT';
+
+    /**
      * @uses \Spryker\Zed\GuiTable\Communication\Plugin\Application\GuiTableApplicationPlugin::SERVICE_GUI_TABLE_HTTP_DATA_REQUEST_EXECUTOR
      *
      * @var string
@@ -200,7 +206,27 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
     /**
      * @var string
      */
+    public const PLUGINS_PRICE_PRODUCT_ABSTRACT_TABLE_CONFIGURATION_EXPANDER = 'PLUGINS_PRICE_PRODUCT_ABSTRACT_TABLE_CONFIGURATION_EXPANDER';
+
+    /**
+     * @var string
+     */
+    public const PLUGINS_PRICE_PRODUCT_CONCRETE_TABLE_CONFIGURATION_EXPANDER = 'PLUGINS_PRICE_PRODUCT_CONCRETE_TABLE_CONFIGURATION_EXPANDER';
+
+    /**
+     * @var string
+     */
+    public const PLUGINS_PRICE_PRODUCT_MAPPER = 'PLUGINS_PRICE_PRODUCT_MAPPER';
+
+    /**
+     * @var string
+     */
     public const ADAPTER_VALIDATION = 'ADAPTER_VALIDATION';
+
+    /**
+     * @var string
+     */
+    public const PLUGINS_PRICE_PRODUCT_TABLE_FILTER = 'PLUGINS_PRICE_PRODUCT_TABLE_FILTER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -230,9 +256,15 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
         $container = $this->addOmsFacade($container);
         $container = $this->addMerchantStockFacade($container);
         $container = $this->addPriceProductVolumeService($container);
+        $container = $this->addPriceProductService($container);
 
         $container = $this->addProductAbstractFormExpanderPlugins($container);
         $container = $this->addProductConcreteTableExpanderPlugins($container);
+        $container = $this->addPriceProductAbstractTableConfigurationExpanderPlugins($container);
+        $container = $this->addPriceProductConcreteTableConfigurationExpanderPlugins($container);
+        $container = $this->addPriceProductMapperPlugins($container);
+        $container = $this->addPriceProductTableFilterPlugins($container);
+
         $container = $this->addProductAttributeFacade($container);
         $container = $this->addProductApprovalFacade($container);
 
@@ -350,6 +382,22 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
         $container->set(static::SERVICE_PRICE_PRODUCT_VOLUME, function (Container $container) {
             return new ProductMerchantPortalGuiToPriceProductVolumeServiceBridge(
                 $container->getLocator()->priceProductVolume()->service(),
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPriceProductService(Container $container): Container
+    {
+        $container->set(static::SERVICE_PRICE_PRODUCT, function (Container $container) {
+            return new ProductMerchantPortalGuiToPriceProductServiceBridge(
+                $container->getLocator()->priceProduct()->service(),
             );
         });
 
@@ -717,9 +765,97 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPriceProductMapperPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRICE_PRODUCT_MAPPER, function () {
+            return $this->getPriceProductMapperPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPriceProductTableFilterPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRICE_PRODUCT_TABLE_FILTER, function () {
+            return $this->getPriceProductTableFilterPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<int, \Spryker\Zed\ProductMerchantPortalGuiExtension\Dependency\Plugin\PriceProductMapperPluginInterface>
+     */
+    protected function getPriceProductMapperPlugins(): array
+    {
+        return [];
+    }
+
+    /**
      * @return array<\Spryker\Zed\ProductMerchantPortalGuiExtension\Dependency\Plugin\ProductConcreteTableExpanderPluginInterface>
      */
     protected function getProductConcreteTableExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return array<\Spryker\Zed\ProductMerchantPortalGuiExtension\Dependency\Plugin\PriceProductTableFilterPluginInterface>
+     */
+    protected function getPriceProductTableFilterPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPriceProductAbstractTableConfigurationExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRICE_PRODUCT_ABSTRACT_TABLE_CONFIGURATION_EXPANDER, function () {
+            return $this->getPriceProductAbstractTableConfigurationExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Zed\ProductMerchantPortalGuiExtension\Dependency\Plugin\PriceProductAbstractTableConfigurationExpanderPluginInterface>
+     */
+    protected function getPriceProductAbstractTableConfigurationExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPriceProductConcreteTableConfigurationExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRICE_PRODUCT_CONCRETE_TABLE_CONFIGURATION_EXPANDER, function () {
+            return $this->getPriceProductConcreteTableConfigurationExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Zed\ProductMerchantPortalGuiExtension\Dependency\Plugin\PriceProductConcreteTableConfigurationExpanderPluginInterface>
+     */
+    protected function getPriceProductConcreteTableConfigurationExpanderPlugins(): array
     {
         return [];
     }

@@ -74,6 +74,7 @@ class AclMerchantPortalConfig extends AbstractBundleConfig
             'product-merchant-portal-gui',
             'sales-merchant-portal-gui',
             'dummy-merchant-portal-gui',
+            'price-product-merchant-relationship-merchant-portal-gui',
         ];
 
         $ruleTransfers = [];

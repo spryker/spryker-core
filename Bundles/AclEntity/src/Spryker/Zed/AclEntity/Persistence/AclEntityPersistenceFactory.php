@@ -348,9 +348,7 @@ class AclEntityPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @phpstan-return \Orm\Zed\AclEntity\Persistence\SpyAclEntitySegmentQuery<\Orm\Zed\AclEntity\Persistence\SpyAclEntitySegment>
-     *
-     * @return \Orm\Zed\AclEntity\Persistence\SpyAclEntitySegmentQuery
+     * @return \Orm\Zed\AclEntity\Persistence\SpyAclEntitySegmentQuery<\Orm\Zed\AclEntity\Persistence\SpyAclEntitySegment>
      */
     public function createAclEntitySegmentQuery(): SpyAclEntitySegmentQuery
     {
@@ -358,9 +356,7 @@ class AclEntityPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @phpstan-return \Orm\Zed\AclEntity\Persistence\SpyAclEntityRuleQuery<\Orm\Zed\AclEntity\Persistence\SpyAclEntityRule>
-     *
-     * @return \Orm\Zed\AclEntity\Persistence\SpyAclEntityRuleQuery
+     * @return \Orm\Zed\AclEntity\Persistence\SpyAclEntityRuleQuery<\Orm\Zed\AclEntity\Persistence\SpyAclEntityRule>
      */
     public function createAclEntityRuleQuery(): SpyAclEntityRuleQuery
     {

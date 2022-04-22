@@ -80,14 +80,10 @@ class MerchantUserRepository extends AbstractRepository implements MerchantUserR
     }
 
     /**
-     * @phpstan-param \Orm\Zed\MerchantUser\Persistence\SpyMerchantUserQuery<\Orm\Zed\MerchantUser\Persistence\SpyMerchantUser> $merchantUserQuery
-     *
-     * @phpstan-return \Orm\Zed\MerchantUser\Persistence\SpyMerchantUserQuery<\Orm\Zed\MerchantUser\Persistence\SpyMerchantUser> $merchantUserQuery
-     *
-     * @param \Orm\Zed\MerchantUser\Persistence\SpyMerchantUserQuery $merchantUserQuery
+     * @param \Orm\Zed\MerchantUser\Persistence\SpyMerchantUserQuery<\Orm\Zed\MerchantUser\Persistence\SpyMerchantUser> $merchantUserQuery
      * @param \Generated\Shared\Transfer\MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer
      *
-     * @return \Orm\Zed\MerchantUser\Persistence\SpyMerchantUserQuery
+     * @return \Orm\Zed\MerchantUser\Persistence\SpyMerchantUserQuery<\Orm\Zed\MerchantUser\Persistence\SpyMerchantUser>
      */
     protected function applyCriteria(
         SpyMerchantUserQuery $merchantUserQuery,

@@ -101,6 +101,11 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
+    public const PLUGINS_PRICE_PRODUCT_COLLECTION_DELETE = 'PLUGINS_PRICE_PRODUCT_COLLECTION_DELETE';
+
+    /**
+     * @var string
+     */
     public const EXTERNAL_ADAPTER_VALIDATION = 'EXTERNAL_ADAPTER_VALIDATION';
 
     /**
@@ -125,6 +130,7 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addUtilEncodingService($container);
         $container = $this->addValidationAdapter($container);
         $container = $this->addPriceProductValidatorPlugins($container);
+        $container = $this->addPriceProductCollectionDeletePlugins($container);
 
         return $container;
     }
@@ -436,9 +442,31 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPriceProductCollectionDeletePlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRICE_PRODUCT_COLLECTION_DELETE, function () {
+            return $this->getPriceProductCollectionDeletePlugins();
+        });
+
+        return $container;
+    }
+
+    /**
      * @return array<\Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductValidatorPluginInterface>
      */
     protected function getPriceProductValidatorPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return array<\Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductCollectionDeletePluginInterface>
+     */
+    protected function getPriceProductCollectionDeletePlugins(): array
     {
         return [];
     }

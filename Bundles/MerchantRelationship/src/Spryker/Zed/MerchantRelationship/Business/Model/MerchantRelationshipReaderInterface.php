@@ -38,7 +38,7 @@ interface MerchantRelationshipReaderInterface
      * @param \Generated\Shared\Transfer\MerchantRelationshipFilterTransfer|null $merchantRelationshipFilterTransfer
      * @param \Generated\Shared\Transfer\MerchantRelationshipCriteriaTransfer|null $merchantRelationshipCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantRelationshipCollectionTransfer|\Generated\Shared\Transfer\MerchantRelationshipTransfer[]
+     * @return \Generated\Shared\Transfer\MerchantRelationshipCollectionTransfer|array<\Generated\Shared\Transfer\MerchantRelationshipTransfer>
      */
     public function getMerchantRelationshipCollection(
         ?MerchantRelationshipFilterTransfer $merchantRelationshipFilterTransfer = null,

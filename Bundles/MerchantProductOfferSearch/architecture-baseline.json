@@ -7,9 +7,30 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/MerchantProductOfferSearch/Dependency/Facade/MerchantProductOfferSearchToEventBehaviorFacadeBridge.php",
+        "description": "Bridges: Method `getEventTransferForeignKeys()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MerchantProductOfferSearch/Dependency/Facade/MerchantProductOfferSearchToMerchantProductOfferFacadeBridge.php",
+        "description": "Bridges: Method `getProductOfferCollection()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/MerchantProductOfferSearch/Dependency/Facade/MerchantProductOfferSearchToProductPageSearchFacadeBridge.php",
         "description": "Bridges: Type should be defined for param `pageDataExpanderPluginNames` in method `Spryker\\Zed\\MerchantProductOfferSearch\\Dependency\\Facade\\MerchantProductOfferSearchToProductPageSearchFacadeBridge::refresh()`.",
         "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MerchantProductOfferSearch/Dependency/Facade/MerchantProductOfferSearchToStoreFacadeBridge.php",
+        "description": "Bridges: Method `getStoreByName()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     }

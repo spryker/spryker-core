@@ -39,7 +39,9 @@ class ProductCategorySlotBlockConditionForm extends AbstractType
     public const OPTION_ALL_ARRAY = 'option-all-array';
 
     public const FIELD_ALL = CmsSlotBlockConditionTransfer::ALL;
+
     public const FIELD_CATEGORY_IDS = CmsSlotBlockConditionTransfer::CATEGORY_IDS;
+
     public const FIELD_PRODUCT_IDS = CmsSlotBlockConditionTransfer::PRODUCT_IDS;
 
     /**

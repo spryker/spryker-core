@@ -10,6 +10,9 @@ namespace Spryker\Zed\Oms\Business\Util;
 use ArrayObject;
 use LogicException;
 
+/**
+ * @extends \ArrayObject<int|string, mixed>
+ */
 class ReadOnlyArrayObject extends ArrayObject
 {
     /**

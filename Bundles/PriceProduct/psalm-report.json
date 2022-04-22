@@ -5,7 +5,7 @@
             "line_from": 171,
             "line_to": 171,
             "type": "InvalidReturnStatement",
-            "message": "The inferred type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed' does not match the declared return type 'array<array-key, Generated\\Shared\\Transfer\\SpyPriceProductStoreEntityTransfer>' for Spryker\\Zed\\PriceProduct\\Persistence\\PriceProductRepository::findOrphanPriceProductStoreEntities",
+            "message": "The inferred type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed' does not match the declared return type 'array<array-key, Generated\\Shared\\Transfer\\SpyPriceProductStoreEntityTransfer>' for Spryker\\Zed\\PriceProduct\\Persistence\\PriceProductRepository::findPriceProductTransfersWithOrphanPriceProductStore",
             "file_name": "vendor/spryker/spryker/Bundles/PriceProduct/src/Spryker/Zed/PriceProduct/Persistence/PriceProductRepository.php",
             "snippet": "        return $this->buildQueryFromCriteria($priceProductStoreQuery)->find();",
             "selected_text": "$this->buildQueryFromCriteria($priceProductStoreQuery)->find()",

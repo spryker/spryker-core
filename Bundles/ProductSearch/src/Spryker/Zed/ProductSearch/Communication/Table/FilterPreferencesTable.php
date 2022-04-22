@@ -21,7 +21,9 @@ class FilterPreferencesTable extends AbstractTable
      * @var string
      */
     public const COL_NAME = 'attribute_key';
+
     public const COL_POSITION = SpyProductSearchAttributeTableMap::COL_POSITION;
+
     public const COL_FILTER_TYPE = SpyProductSearchAttributeTableMap::COL_FILTER_TYPE;
 
     /**

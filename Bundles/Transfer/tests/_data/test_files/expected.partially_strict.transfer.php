@@ -406,6 +406,24 @@ class PartiallyStrictTransfer extends AbstractTransfer
     /**
      * @module Test
      *
+     * @param int|null $propScalar
+     *
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
+     *
+     * @return $this
+     */
+    public function setPropScalarOrFail($propScalar)
+    {
+        if ($propScalar === null) {
+            $this->throwNullValueException(static::PROP_SCALAR);
+        }
+
+        return $this->setPropScalar($propScalar);
+    }
+
+    /**
+     * @module Test
+     *
      * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
      *
      * @return int
@@ -456,6 +474,20 @@ class PartiallyStrictTransfer extends AbstractTransfer
     public function getPropScalarStrict(): ?int
     {
         return $this->propScalarStrict;
+    }
+
+    /**
+     * @module Test
+     *
+     * @param int $propScalarStrict
+     *
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
+     *
+     * @return $this
+     */
+    public function setPropScalarStrictOrFail(int $propScalarStrict)
+    {
+        return $this->setPropScalarStrict($propScalarStrict);
     }
 
     /**
@@ -520,6 +552,24 @@ class PartiallyStrictTransfer extends AbstractTransfer
     /**
      * @module Test
      *
+     * @param string|int|float|\Spryker\DecimalObject\Decimal $propDecimal
+     *
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
+     *
+     * @return $this
+     */
+    public function setPropDecimalOrFail($propDecimal)
+    {
+        if ($propDecimal === null) {
+            $this->throwNullValueException(static::PROP_DECIMAL);
+        }
+
+        return $this->setPropDecimal($propDecimal);
+    }
+
+    /**
+     * @module Test
+     *
      * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
      *
      * @return \Spryker\DecimalObject\Decimal
@@ -574,6 +624,24 @@ class PartiallyStrictTransfer extends AbstractTransfer
     public function getPropDecimalStrict(): ?Decimal
     {
         return $this->propDecimalStrict;
+    }
+
+    /**
+     * @module Test
+     *
+     * @param string|int|float|\Spryker\DecimalObject\Decimal $propDecimalStrict
+     *
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
+     *
+     * @return $this
+     */
+    public function setPropDecimalStrictOrFail($propDecimalStrict)
+    {
+        if ($propDecimalStrict === null) {
+            $this->throwNullValueException(static::PROP_DECIMAL_STRICT);
+        }
+
+        return $this->setPropDecimalStrict($propDecimalStrict);
     }
 
     /**
@@ -692,6 +760,20 @@ class PartiallyStrictTransfer extends AbstractTransfer
     /**
      * @module Test
      *
+     * @param array $propSimpleArrayStrict
+     *
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
+     *
+     * @return $this
+     */
+    public function setPropSimpleArrayStrictOrFail(array $propSimpleArrayStrict)
+    {
+        return $this->setPropSimpleArrayStrict($propSimpleArrayStrict);
+    }
+
+    /**
+     * @module Test
+     *
      * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
      *
      * @return array
@@ -762,6 +844,20 @@ class PartiallyStrictTransfer extends AbstractTransfer
     /**
      * @module Test
      *
+     * @param \Generated\Shared\Transfer\DummyItemTransfer $propDummyItem
+     *
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
+     *
+     * @return $this
+     */
+    public function setPropDummyItemOrFail(DummyItemTransfer $propDummyItem)
+    {
+        return $this->setPropDummyItem($propDummyItem);
+    }
+
+    /**
+     * @module Test
+     *
      * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
      *
      * @return \Generated\Shared\Transfer\DummyItemTransfer
@@ -812,6 +908,20 @@ class PartiallyStrictTransfer extends AbstractTransfer
     public function getPropDummyItemStrict(): ?DummyItemTransfer
     {
         return $this->propDummyItemStrict;
+    }
+
+    /**
+     * @module Test
+     *
+     * @param \Generated\Shared\Transfer\DummyItemTransfer $propDummyItemStrict
+     *
+     * @throws \Spryker\Shared\Kernel\Transfer\Exception\NullValueException
+     *
+     * @return $this
+     */
+    public function setPropDummyItemStrictOrFail(DummyItemTransfer $propDummyItemStrict)
+    {
+        return $this->setPropDummyItemStrict($propDummyItemStrict);
     }
 
     /**
@@ -1301,7 +1411,7 @@ class PartiallyStrictTransfer extends AbstractTransfer
      *
      * @return array<string, mixed>
      */
-    public function modifiedToArray($isRecursive = true, $camelCasedKeys = false)
+    public function modifiedToArray($isRecursive = true, $camelCasedKeys = false): array
     {
         if ($isRecursive && !$camelCasedKeys) {
             return $this->modifiedToArrayRecursiveNotCamelCased();
@@ -1323,7 +1433,7 @@ class PartiallyStrictTransfer extends AbstractTransfer
      *
      * @return array<string, mixed>
      */
-    public function toArray($isRecursive = true, $camelCasedKeys = false)
+    public function toArray($isRecursive = true, $camelCasedKeys = false): array
     {
         if ($isRecursive && !$camelCasedKeys) {
             return $this->toArrayRecursiveNotCamelCased();
@@ -1346,7 +1456,7 @@ class PartiallyStrictTransfer extends AbstractTransfer
      *
      * @return array<string, mixed>
      */
-    protected function addValuesToCollectionModified($value, $isRecursive, $camelCasedKeys)
+    protected function addValuesToCollectionModified($value, $isRecursive, $camelCasedKeys): array
     {
         $result = [];
         foreach ($value as $elementKey => $arrayElement) {
@@ -1368,7 +1478,7 @@ class PartiallyStrictTransfer extends AbstractTransfer
      *
      * @return array<string, mixed>
      */
-    protected function addValuesToCollection($value, $isRecursive, $camelCasedKeys)
+    protected function addValuesToCollection($value, $isRecursive, $camelCasedKeys): array
     {
         $result = [];
         foreach ($value as $elementKey => $arrayElement) {
@@ -1386,7 +1496,7 @@ class PartiallyStrictTransfer extends AbstractTransfer
     /**
      * @return array<string, mixed>
      */
-    public function modifiedToArrayRecursiveCamelCased()
+    public function modifiedToArrayRecursiveCamelCased(): array
     {
         $values = [];
         foreach ($this->modifiedProperties as $property => $_) {
@@ -1432,7 +1542,7 @@ class PartiallyStrictTransfer extends AbstractTransfer
     /**
      * @return array<string, mixed>
      */
-    public function modifiedToArrayRecursiveNotCamelCased()
+    public function modifiedToArrayRecursiveNotCamelCased(): array
     {
         $values = [];
         foreach ($this->modifiedProperties as $property => $_) {
@@ -1478,7 +1588,7 @@ class PartiallyStrictTransfer extends AbstractTransfer
     /**
      * @return array<string, mixed>
      */
-    public function modifiedToArrayNotRecursiveNotCamelCased()
+    public function modifiedToArrayNotRecursiveNotCamelCased(): array
     {
         $values = [];
         foreach ($this->modifiedProperties as $property => $_) {
@@ -1495,7 +1605,7 @@ class PartiallyStrictTransfer extends AbstractTransfer
     /**
      * @return array<string, mixed>
      */
-    public function modifiedToArrayNotRecursiveCamelCased()
+    public function modifiedToArrayNotRecursiveCamelCased(): array
     {
         $values = [];
         foreach ($this->modifiedProperties as $property => $_) {
@@ -1512,7 +1622,7 @@ class PartiallyStrictTransfer extends AbstractTransfer
     /**
      * @return void
      */
-    protected function initCollectionProperties()
+    protected function initCollectionProperties(): void
     {
         $this->propDummyItemCollection = $this->propDummyItemCollection ?: new ArrayObject();
         $this->propDummyItemCollectionStrict = $this->propDummyItemCollectionStrict ?: new ArrayObject();
@@ -1521,7 +1631,7 @@ class PartiallyStrictTransfer extends AbstractTransfer
     /**
      * @return array<string, mixed>
      */
-    public function toArrayNotRecursiveCamelCased()
+    public function toArrayNotRecursiveCamelCased(): array
     {
         return [
             'propScalar' => $this->propScalar,
@@ -1544,7 +1654,7 @@ class PartiallyStrictTransfer extends AbstractTransfer
     /**
      * @return array<string, mixed>
      */
-    public function toArrayNotRecursiveNotCamelCased()
+    public function toArrayNotRecursiveNotCamelCased(): array
     {
         return [
             'prop_scalar' => $this->propScalar,
@@ -1567,7 +1677,7 @@ class PartiallyStrictTransfer extends AbstractTransfer
     /**
      * @return array<string, mixed>
      */
-    public function toArrayRecursiveNotCamelCased()
+    public function toArrayRecursiveNotCamelCased(): array
     {
         return [
             'prop_scalar' => $this->propScalar instanceof AbstractTransfer ? $this->propScalar->toArray(true, false) : $this->propScalar,
@@ -1590,7 +1700,7 @@ class PartiallyStrictTransfer extends AbstractTransfer
     /**
      * @return array<string, mixed>
      */
-    public function toArrayRecursiveCamelCased()
+    public function toArrayRecursiveCamelCased(): array
     {
         return [
             'propScalar' => $this->propScalar instanceof AbstractTransfer ? $this->propScalar->toArray(true, true) : $this->propScalar,

@@ -20,9 +20,7 @@ use Spryker\Zed\SalesPayment\Persistence\Propel\Mapper\SalesPaymentMapper;
 class SalesPaymentPersistenceFactory extends AbstractPersistenceFactory
 {
     /**
-     * @phpstan-return \Orm\Zed\Payment\Persistence\SpySalesPaymentQuery<\Orm\Zed\Payment\Persistence\SpySalesPayment>
-     *
-     * @return \Orm\Zed\Payment\Persistence\SpySalesPaymentQuery
+     * @return \Orm\Zed\Payment\Persistence\SpySalesPaymentQuery<\Orm\Zed\Payment\Persistence\SpySalesPayment>
      */
     public function createSalesPaymentQuery(): SpySalesPaymentQuery
     {
@@ -30,9 +28,7 @@ class SalesPaymentPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @phpstan-return \Orm\Zed\Payment\Persistence\SpySalesPaymentMethodTypeQuery<\Orm\Zed\Payment\Persistence\SpySalesPaymentMethodType>
-     *
-     * @return \Orm\Zed\Payment\Persistence\SpySalesPaymentMethodTypeQuery
+     * @return \Orm\Zed\Payment\Persistence\SpySalesPaymentMethodTypeQuery<\Orm\Zed\Payment\Persistence\SpySalesPaymentMethodType>
      */
     public function createSalesPaymentMethodTypeQuery(): SpySalesPaymentMethodTypeQuery
     {

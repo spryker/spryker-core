@@ -13,7 +13,7 @@ use Propel\Runtime\Collection\ObjectCollection;
 class ProductCategoryMapper
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductCategory\Persistence\SpyProductCategory[] $productCategoryEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductCategory\Persistence\SpyProductCategory> $productCategoryEntities
      * @param array<array<\Orm\Zed\ProductCategory\Persistence\SpyProductCategory>> $mappedProductCategoryEntities
      *
      * @return array<array<\Orm\Zed\ProductCategory\Persistence\SpyProductCategory>>

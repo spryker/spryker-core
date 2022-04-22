@@ -28,6 +28,7 @@ class CompanyTableCompanyTypePlugin extends AbstractPlugin implements CompanyTab
      * @var string
      */
     protected const COL_COMPANY_TYPE_LABEL = 'Company Type';
+
     protected const FK_COMPANY_TYPE = SpyCompanyTableMap::COL_FK_COMPANY_TYPE;
 
     /**

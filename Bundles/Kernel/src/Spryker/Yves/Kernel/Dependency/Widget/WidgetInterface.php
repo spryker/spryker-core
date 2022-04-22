@@ -10,6 +10,9 @@ namespace Spryker\Yves\Kernel\Dependency\Widget;
 use ArrayAccess;
 use Spryker\Yves\Kernel\Widget\WidgetContainerInterface;
 
+/**
+ * @extends \ArrayAccess<int|string, mixed>
+ */
 interface WidgetInterface extends WidgetContainerInterface, ArrayAccess
 {
     /**

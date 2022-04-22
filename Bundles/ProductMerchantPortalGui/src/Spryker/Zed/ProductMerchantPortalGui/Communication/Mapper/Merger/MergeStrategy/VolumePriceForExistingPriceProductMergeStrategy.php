@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\Merger\Merge
 
 use ArrayObject;
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToPriceProductServiceInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToPriceProductVolumeServiceInterface;
 
 class VolumePriceForExistingPriceProductMergeStrategy extends AbstractPriceProductMergeStrategy
@@ -20,10 +21,15 @@ class VolumePriceForExistingPriceProductMergeStrategy extends AbstractPriceProdu
 
     /**
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToPriceProductVolumeServiceInterface $priceProductVolumeService
+     * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToPriceProductServiceInterface $priceProductService
      */
-    public function __construct(ProductMerchantPortalGuiToPriceProductVolumeServiceInterface $priceProductVolumeService)
-    {
+    public function __construct(
+        ProductMerchantPortalGuiToPriceProductVolumeServiceInterface $priceProductVolumeService,
+        ProductMerchantPortalGuiToPriceProductServiceInterface $priceProductService
+    ) {
         $this->priceProductVolumeService = $priceProductVolumeService;
+
+        parent::__construct($priceProductService);
     }
 
     /**

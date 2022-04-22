@@ -48,7 +48,7 @@ class EntityTransferDefinitionFinder implements FinderInterface
     /**
      * @return array<\Symfony\Component\Finder\SplFileInfo>
      */
-    public function getXmlTransferDefinitionFiles()
+    public function getXmlTransferDefinitionFiles(): array
     {
         $finder = new Finder();
 

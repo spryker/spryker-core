@@ -8,9 +8,23 @@
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\Merger\MergeStrategy;
 
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToPriceProductServiceInterface;
 
 abstract class AbstractPriceProductMergeStrategy implements PriceProductMergeStrategyInterface
 {
+    /**
+     * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToPriceProductServiceInterface
+     */
+    protected $priceProductService;
+
+    /**
+     * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToPriceProductServiceInterface $priceProductService
+     */
+    public function __construct(ProductMerchantPortalGuiToPriceProductServiceInterface $priceProductService)
+    {
+        $this->priceProductService = $priceProductService;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
@@ -51,11 +65,9 @@ abstract class AbstractPriceProductMergeStrategy implements PriceProductMergeStr
         PriceProductTransfer $priceProductTransfer,
         PriceProductTransfer $priceProductTransferToCompare
     ): bool {
-        $moneyValueTransfer = $priceProductTransfer->getMoneyValueOrFail();
-        $moneyValueTransferToCompare = $priceProductTransferToCompare->getMoneyValueOrFail();
+        $priceProductGroupKey = $this->priceProductService->buildPriceProductGroupKey($priceProductTransfer);
+        $priceProductToCompareGroupKey = $this->priceProductService->buildPriceProductGroupKey($priceProductTransferToCompare);
 
-        return $priceProductTransfer->getFkPriceTypeOrFail() === $priceProductTransferToCompare->getFkPriceTypeOrFail()
-            && $moneyValueTransfer->getFkCurrencyOrFail() === $moneyValueTransferToCompare->getFkCurrencyOrFail()
-            && $moneyValueTransfer->getFkStoreOrFail() === $moneyValueTransferToCompare->getFkStoreOrFail();
+        return $priceProductGroupKey === $priceProductToCompareGroupKey;
     }
 }

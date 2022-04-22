@@ -18,5 +18,6 @@ interface CmsBlockProductConnectorConstants
      * @var string
      */
     public const OPTION_NAME = 'product_abstract';
+
     public const RESOURCE_TYPE_CMS_BLOCK_PRODUCT_CONNECTOR = CmsBlockConfig::RESOURCE_TYPE_CMS_BLOCK . '.' . self::OPTION_NAME;
 }
