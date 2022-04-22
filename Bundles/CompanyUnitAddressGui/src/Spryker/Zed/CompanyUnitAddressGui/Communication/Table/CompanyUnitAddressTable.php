@@ -111,7 +111,6 @@ class CompanyUnitAddressTable extends AbstractTable
 
         $config->addRawColumn(static::COL_ACTIONS);
         $config->addRawColumn(static::COL_COUNTRY_RELATION);
-        $config->addRawColumn(static::COL_COMPANY_RELATION);
 
         $config->setSortable([
             static::COL_ID_COMPANY_UNIT_ADDRESS,
@@ -251,7 +250,7 @@ class CompanyUnitAddressTable extends AbstractTable
     protected function getCompanyName(SpyCompanyUnitAddress $companyUnitAddressEntity): string
     {
         if ($companyUnitAddressEntity->getFkCompany()) {
-            return htmlspecialchars($companyUnitAddressEntity->getCompany()->getName());
+            return $companyUnitAddressEntity->getCompany()->getName();
         }
 
         return '';
