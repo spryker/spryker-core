@@ -12,6 +12,7 @@ use Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductTableDataBul
 
 /**
  * @method \Spryker\Zed\ProductApprovalGui\Communication\ProductApprovalGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductApprovalGui\ProductApprovalGuiConfig getConfig()
  */
 class ProductApprovalProductTableDataBulkExpanderPlugin extends AbstractPlugin implements ProductTableDataBulkExpanderPluginInterface
 {

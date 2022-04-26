@@ -16,6 +16,10 @@ waiting_for_approval,"Warten auf Genehmigung"
 approved,Genehmigt
 denied,Abgelehnt
 draft,Entwurf
+approval_status_action.approved,Genehmigen
+approval_status_action.denied,Ablehnen
+approval_status_action.draft,"Zurück zum Entwurf"
+approval_status_action.waiting_for_approval,"Zur Genehmigung senden"
 "Product successfully created!","Artikel erfolgreich hinzugefügt."
 "Please resolve all errors.","Bitte alle Fehler beheben."
 Price,Preis

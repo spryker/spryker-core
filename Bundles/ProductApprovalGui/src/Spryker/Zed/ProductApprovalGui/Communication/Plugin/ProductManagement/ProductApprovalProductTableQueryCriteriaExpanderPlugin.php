@@ -14,6 +14,7 @@ use Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductTableQueryCr
 /**
  * @method \Spryker\Zed\ProductApprovalGui\Communication\ProductApprovalGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductApprovalGui\Persistence\ProductApprovalGuiRepositoryInterface getRepository()
+ * @method \Spryker\Zed\ProductApprovalGui\ProductApprovalGuiConfig getConfig()
  */
 class ProductApprovalProductTableQueryCriteriaExpanderPlugin extends AbstractPlugin implements ProductTableQueryCriteriaExpanderPluginInterface
 {

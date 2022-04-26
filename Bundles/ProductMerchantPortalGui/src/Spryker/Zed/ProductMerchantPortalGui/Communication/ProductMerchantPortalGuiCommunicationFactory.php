@@ -127,6 +127,8 @@ use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\SingleFieldPricePr
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\SingleFieldPriceProductMapperInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Matcher\PriceProductTableRowMatcher;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Matcher\PriceProductTableRowMatcherInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Reader\ApplicableApprovalStatusReader;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Reader\ApplicableApprovalStatusReaderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Reader\PriceProductReader;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Reader\PriceProductReaderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Validator\ProductConcreteValidator;
@@ -913,6 +915,14 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
             $this->getMerchantStockFacade(),
             $this->getMerchantUserFacade(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Reader\ApplicableApprovalStatusReaderInterface
+     */
+    public function createApplicableApprovalStatusReader(): ApplicableApprovalStatusReaderInterface
+    {
+        return new ApplicableApprovalStatusReader($this->getConfig());
     }
 
     /**
