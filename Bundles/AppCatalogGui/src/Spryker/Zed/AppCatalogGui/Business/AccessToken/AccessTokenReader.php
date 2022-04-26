@@ -8,9 +8,12 @@
 namespace Spryker\Zed\AppCatalogGui\Business\AccessToken;
 
 use Generated\Shared\Transfer\AccessTokenErrorTransfer;
+use Generated\Shared\Transfer\AccessTokenRequestOptionsTransfer;
+use Generated\Shared\Transfer\AccessTokenRequestTransfer;
 use Generated\Shared\Transfer\AccessTokenResponseTransfer;
-use Spryker\Client\AppCatalogGui\AppCatalogGuiClientInterface;
 use Spryker\Shared\Log\LoggerTrait;
+use Spryker\Zed\AppCatalogGui\AppCatalogGuiConfig;
+use Spryker\Zed\AppCatalogGui\Dependency\Facade\AppCatalogGuiToOauthClientFacadeInterface;
 use Spryker\Zed\AppCatalogGui\Dependency\Facade\AppCatalogGuiToTranslatorFacadeInterface;
 
 class AccessTokenReader implements AccessTokenReaderInterface
@@ -18,25 +21,33 @@ class AccessTokenReader implements AccessTokenReaderInterface
     use LoggerTrait;
 
     /**
-     * @var \Spryker\Client\AppCatalogGui\AppCatalogGuiClientInterface
-     */
-    protected $appCatalogGuiClient;
-
-    /**
      * @var \Spryker\Zed\AppCatalogGui\Dependency\Facade\AppCatalogGuiToTranslatorFacadeInterface
      */
     protected $translatorFacade;
 
     /**
-     * @param \Spryker\Client\AppCatalogGui\AppCatalogGuiClientInterface $appCatalogGuiClient
+     * @var \Spryker\Zed\AppCatalogGui\Dependency\Facade\AppCatalogGuiToOauthClientFacadeInterface
+     */
+    protected $oauthClientFacade;
+
+    /**
+     * @var \Spryker\Zed\AppCatalogGui\AppCatalogGuiConfig
+     */
+    protected $applicationCatalogGuiConfig;
+
+    /**
      * @param \Spryker\Zed\AppCatalogGui\Dependency\Facade\AppCatalogGuiToTranslatorFacadeInterface $translatorFacade
+     * @param \Spryker\Zed\AppCatalogGui\Dependency\Facade\AppCatalogGuiToOauthClientFacadeInterface $oauthClientFacade
+     * @param \Spryker\Zed\AppCatalogGui\AppCatalogGuiConfig $applicationCatalogGuiConfig
      */
     public function __construct(
-        AppCatalogGuiClientInterface $appCatalogGuiClient,
-        AppCatalogGuiToTranslatorFacadeInterface $translatorFacade
+        AppCatalogGuiToTranslatorFacadeInterface $translatorFacade,
+        AppCatalogGuiToOauthClientFacadeInterface $oauthClientFacade,
+        AppCatalogGuiConfig $applicationCatalogGuiConfig
     ) {
-        $this->appCatalogGuiClient = $appCatalogGuiClient;
         $this->translatorFacade = $translatorFacade;
+        $this->oauthClientFacade = $oauthClientFacade;
+        $this->applicationCatalogGuiConfig = $applicationCatalogGuiConfig;
     }
 
     /**
@@ -44,22 +55,30 @@ class AccessTokenReader implements AccessTokenReaderInterface
      */
     public function requestAccessToken(): AccessTokenResponseTransfer
     {
-        $accessTokenResponseTransfer = $this->appCatalogGuiClient->requestAccessToken();
+        $accessTokenRequestOptions = (new AccessTokenRequestOptionsTransfer())
+            ->setAudience($this->applicationCatalogGuiConfig->getOauthAudience());
 
-        if (!$accessTokenResponseTransfer->getIsSuccessful()) {
+        $accessTokenRequestTransfer = (new AccessTokenRequestTransfer())
+            ->setGrantType($this->applicationCatalogGuiConfig->getOauthGrantType())
+            ->setProviderName($this->applicationCatalogGuiConfig->getOauthProviderName())
+            ->setAccessTokenRequestOptions($accessTokenRequestOptions);
+
+        $oauthClientResponseTransfer = $this->oauthClientFacade->getAccessToken($accessTokenRequestTransfer);
+
+        if (!$oauthClientResponseTransfer->getIsSuccessful()) {
             $this->getLogger()->error(sprintf(
                 'Reason: %s; Description: %s.',
-                $accessTokenResponseTransfer->getAccessTokenErrorOrFail()->getError(),
-                $accessTokenResponseTransfer->getAccessTokenErrorOrFail()->getErrorDescription(),
+                $oauthClientResponseTransfer->getAccessTokenErrorOrFail()->getError(),
+                $oauthClientResponseTransfer->getAccessTokenErrorOrFail()->getErrorDescription(),
             ));
 
-            $accessTokenResponseTransfer->setAccessTokenError(
+            $oauthClientResponseTransfer->setAccessTokenError(
                 (new AccessTokenErrorTransfer())
-                    ->setError($accessTokenResponseTransfer->getAccessTokenErrorOrFail()->getError())
+                    ->setError($oauthClientResponseTransfer->getAccessTokenErrorOrFail()->getError())
                     ->setErrorDescription($this->translatorFacade->trans('Authentication failed.')),
             );
         }
 
-        return $accessTokenResponseTransfer;
+        return $oauthClientResponseTransfer;
     }
 }

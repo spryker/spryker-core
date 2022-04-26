@@ -9,7 +9,7 @@
         <property name="isSuccessful" type="bool"/>
         <property name="accessTokenError" type="AccessTokenError"/>
         <property name="accessToken" type="string"/>
-        <property name="expiresIn" type="string"/>
+        <property name="expiresAt" type="string"/>
     </transfer>
 
     <transfer name="AccessTokenError" strict="true">
@@ -19,6 +19,17 @@
 
     <transfer name="Store">
         <property name="name" type="string"/>
+        <property name="storeReference" type="string"/>
+    </transfer>
+
+    <transfer name="AccessTokenRequest">
+        <property name="grantType" type="string"/>
+        <property name="accessTokenRequestOptions" type="AccessTokenRequestOptions"/>
+        <property name="providerName" type="string"/>
+    </transfer>
+
+    <transfer name="AccessTokenRequestOptions">
+        <property name="audience" type="string"/>
         <property name="storeReference" type="string"/>
     </transfer>
 

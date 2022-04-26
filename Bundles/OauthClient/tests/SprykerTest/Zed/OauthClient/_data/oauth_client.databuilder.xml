@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<transfers
+    xmlns="spryker:databuilder-01"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="spryker:databuilder-01 http://static.spryker.com/databuilder-01.xsd"
+>
+
+    <transfer name="AccessTokenRequest">
+        <property name="grantType" dataBuilderRule="=client_credentials"/>
+        <property name="accessTokenRequestOptions" dataBuilderRule="AccessTokenRequestOptions"/>
+        <property name="providerName" dataBuilderRule="=auth0"/>
+        <property name="ignoreCache" dataBuilderRule="=false"/>
+    </transfer>
+
+    <transfer name="AccessTokenRequestOptions">
+        <property name="audience" dataBuilderRule="=test_audience"/>
+        <property name="storeReference" dataBuilderRule="=test_store_reference"/>
+    </transfer>
+
+    <transfer name="AccessTokenResponse" strict="true">
+        <property name="isSuccessful" dataBuilderRule="=true"/>
+        <property name="accessTokenError" dataBuilderRule="AccessTokenError"/>
+        <property name="accessToken" dataBuilderRule="word(20)"/>
+        <property name="expiresAt" dataBuilderRule="numberBetween(100, 9999)"/>
+    </transfer>
+
+    <transfer name="AccessTokenError" strict="true">
+        <property name="error" dataBuilderRule="word(10)"/>
+        <property name="errorDescription" dataBuilderRule="word(20)"/>
+    </transfer>
+
+</transfers>

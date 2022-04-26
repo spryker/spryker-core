@@ -59,6 +59,7 @@ class PaymentRequestExecutor implements PaymentRequestExecutorInterface
                 $paymentAuthorizeRequestTransfer->getRequestUrlOrFail(),
                 [
                     RequestOptions::FORM_PARAMS => $paymentAuthorizeRequestTransfer->getPostData(),
+                    RequestOptions::HEADERS => $this->getRequestHeaders($paymentAuthorizeRequestTransfer),
                 ],
             );
         } catch (PaymentHttpRequestException $e) {
@@ -76,5 +77,21 @@ class PaymentRequestExecutor implements PaymentRequestExecutorInterface
         $responseData = $this->utilEncodingService->decodeJson($response->getBody()->getContents(), true);
 
         return (new PaymentAuthorizeResponseTransfer())->fromArray($responseData, true);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PaymentAuthorizeRequestTransfer $paymentAuthorizeRequestTransfer
+     *
+     * @return array<string, string>
+     */
+    protected function getRequestHeaders(PaymentAuthorizeRequestTransfer $paymentAuthorizeRequestTransfer): array
+    {
+        $requestHeaders = [];
+
+        if ($paymentAuthorizeRequestTransfer->getAuthorization()) {
+            $requestHeaders['Authorization'] = $paymentAuthorizeRequestTransfer->getAuthorizationOrFail();
+        }
+
+        return $requestHeaders;
     }
 }

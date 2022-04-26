@@ -77,19 +77,13 @@ class HttpSenderClient implements SenderClientInterface
 
         $encodedMessage = $this->serializer->encode($envelope);
 
-        $payload = [
-            'payload' => $encodedMessage['bodyRaw'],
-        ];
-
         $headers = $this->httpHeaderFormatter->formatHeaders($encodedMessage['headers'] ?? []);
-
-        $encodedBody = (string)json_encode($payload);
 
         $request = new Request(
             'POST',
             $configuration['endpoint'],
             ['Content-Type' => 'application/json'] + $headers,
-            $encodedBody,
+            (string)json_encode($encodedMessage['bodyRaw']),
         );
 
         try {

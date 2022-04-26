@@ -8,13 +8,27 @@
 namespace Spryker\Zed\MessageBrokerAws\Business\Sender\Client\Formatter;
 
 use Generated\Shared\Transfer\MessageAttributesTransfer;
+use Spryker\Zed\MessageBrokerAws\MessageBrokerAwsConfig;
 
 class HttpHeaderFormatter implements HttpHeaderFormatterInterface
 {
     /**
      * @var string
      */
-    protected const HEADER_NAME_SUFFIX = 'X-';
+    protected const HEADER_NAME_PREFIX = 'X-';
+
+    /**
+     * @var \Spryker\Zed\MessageBrokerAws\MessageBrokerAwsConfig
+     */
+    protected $messageBrokerAwsConfig;
+
+    /**
+     * @param \Spryker\Zed\MessageBrokerAws\MessageBrokerAwsConfig $messageBrokerAwsConfig
+     */
+    public function __construct(MessageBrokerAwsConfig $messageBrokerAwsConfig)
+    {
+        $this->messageBrokerAwsConfig = $messageBrokerAwsConfig;
+    }
 
     /**
      * @param array<string, mixed> $headers
@@ -24,18 +38,16 @@ class HttpHeaderFormatter implements HttpHeaderFormatterInterface
     public function formatHeaders(array $headers): array
     {
         $formattedHeaders = [];
+
+        /** @var array<int, string> $standardHttpHeaders */
+        $standardHttpHeaders = array_map('mb_strtolower', $this->messageBrokerAwsConfig->getStandardHttpHeaders());
+        $allowedHeaders = $this->getAllowedHeaders();
+
         foreach ($headers as $header => $value) {
-            if (!property_exists(MessageAttributesTransfer::class, $header)) {
+            $headerName = $this->prepareHeader($standardHttpHeaders, $allowedHeaders, $header);
+            if (!$headerName) {
                 continue;
             }
-
-            $header = preg_replace('/(?<=[a-z])(?=[A-Z])/', '-', $header);
-
-            if (!$header) {
-                continue;
-            }
-
-            $headerName = sprintf('%s%s', static::HEADER_NAME_SUFFIX, ucfirst($header));
 
             if (is_array($value)) {
                 $value = json_encode($value);
@@ -45,5 +57,43 @@ class HttpHeaderFormatter implements HttpHeaderFormatterInterface
         }
 
         return $formattedHeaders;
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    protected function getAllowedHeaders(): array
+    {
+        $allowedHeaders = (new MessageAttributesTransfer())->toArrayNotRecursiveCamelCased();
+        $allowedHeaders['publisher'] = null;
+
+        return array_keys($allowedHeaders);
+    }
+
+    /**
+     * @param array<int, string> $standardHttpHeaders
+     * @param array<int, string> $allowedHeaders
+     * @param string $header
+     *
+     * @return string|null
+     */
+    protected function prepareHeader(array $standardHttpHeaders, array $allowedHeaders, string $header): ?string
+    {
+        if (!in_array($header, $allowedHeaders, true)) {
+            return null;
+        }
+
+        $header = preg_replace('/(?<=[a-z])(?=[A-Z])/', '-', ucfirst($header));
+        if (!$header) {
+            return null;
+        }
+
+        $lowerCasedHeader = mb_strtolower($header);
+
+        if (in_array($lowerCasedHeader, $standardHttpHeaders, true)) {
+            return $header;
+        }
+
+        return sprintf('%s%s', static::HEADER_NAME_PREFIX, $header);
     }
 }

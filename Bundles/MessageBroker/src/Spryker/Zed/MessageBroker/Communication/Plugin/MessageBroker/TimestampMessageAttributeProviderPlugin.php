@@ -28,7 +28,7 @@ class TimestampMessageAttributeProviderPlugin extends AbstractPlugin implements 
      */
     public function provideMessageAttributes(MessageAttributesTransfer $messageAttributesTransfer): MessageAttributesTransfer
     {
-        $messageAttributesTransfer->setTimestamp(microtime());
+        $messageAttributesTransfer->setTimestamp(gmdate("Y-m-d\TH:i:s"));
 
         return $messageAttributesTransfer;
     }

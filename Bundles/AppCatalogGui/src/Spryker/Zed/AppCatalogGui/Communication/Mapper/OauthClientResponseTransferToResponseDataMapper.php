@@ -77,7 +77,7 @@ class OauthClientResponseTransferToResponseDataMapper implements OauthClientResp
         array $data
     ): array {
         $data[static::RESPONSE_KEY_ACCESS_TOKEN] = $accessTokenResponseTransfer->getAccessToken();
-        $data[static::RESPONSE_KEY_EXPIRES_IN] = $accessTokenResponseTransfer->getExpiresIn();
+        $data[static::RESPONSE_KEY_EXPIRES_IN] = (int)$accessTokenResponseTransfer->getExpiresAt() - time();
 
         return $data;
     }

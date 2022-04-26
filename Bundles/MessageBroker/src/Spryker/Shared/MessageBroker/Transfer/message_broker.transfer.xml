@@ -5,13 +5,14 @@
         <property name="transferName" type="string"/>
         <property name="event" type="string"/>
         <property name="storeReference" type="string"/>
-        <property name="publisher" type="Publisher"/>
+        <property name="emitter" type="string"/>
+        <property name="publisher" type="Publisher" deprecated="Use emitter property instead."/>
         <property name="timestamp" type="string"/>
         <property name="correlationId" type="string"/>
         <property name="tenantIdentifier" type="string"/>
     </transfer>
 
-    <transfer name="Publisher">
+    <transfer name="Publisher" deprecated="Will be removed in next major.">
         <property name="storeReference" type="string"/>
         <property name="appIdentifier" type="string"/>
     </transfer>

@@ -7,15 +7,15 @@
         "priority": "2"
     },
     {
-        "fileName": "src/Spryker/Zed/AppCatalogGui/Dependency/Facade/AppCatalogGuiToStoreFacadeBridge.php",
-        "description": "Bridges: Method `getCurrentStore()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "fileName": "src/Spryker/Zed/AppCatalogGui/Dependency/Facade/AppCatalogGuiToOauthClientFacadeBridge.php",
+        "description": "Bridges: Method `getAccessToken()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
-        "fileName": "src/Spryker/Zed/AppCatalogGui/Dependency/Facade/AppCatalogGuiToStoreReferenceFacadeBridge.php",
-        "description": "Bridges: Method `getStoreByStoreReference()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "fileName": "src/Spryker/Zed/AppCatalogGui/Dependency/Facade/AppCatalogGuiToStoreFacadeBridge.php",
+        "description": "Bridges: Method `getCurrentStore()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"

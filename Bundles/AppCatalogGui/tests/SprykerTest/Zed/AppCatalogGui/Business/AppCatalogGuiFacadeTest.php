@@ -10,8 +10,8 @@ namespace SprykerTest\Zed\AppCatalogGui\Business;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\AccessTokenErrorTransfer;
 use Generated\Shared\Transfer\AccessTokenResponseTransfer;
-use Spryker\Client\AppCatalogGui\AppCatalogGuiClientInterface;
 use Spryker\Zed\AppCatalogGui\AppCatalogGuiDependencyProvider;
+use Spryker\Zed\AppCatalogGui\Dependency\Facade\AppCatalogGuiToOauthClientFacadeBridge;
 
 /**
  * Auto-generated group annotations
@@ -62,6 +62,21 @@ class AppCatalogGuiFacadeTest extends Unit
     protected $tester;
 
     /**
+     * @var string
+     */
+    protected $expiresAt;
+
+    /**
+     * @return void
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->expiresAt = (string)(time() + static::TEST_EXPIRES_IN);
+    }
+
+    /**
      * @return void
      */
     public function testRequestAccessTokenReturnsValidToken(): void
@@ -70,10 +85,10 @@ class AppCatalogGuiFacadeTest extends Unit
         $accessTokenResponseTransfer = (new AccessTokenResponseTransfer())
             ->setIsSuccessful(true)
             ->setAccessToken(static::TEST_ACCESS_TOKEN)
-            ->setExpiresIn(static::TEST_EXPIRES_IN);
+            ->setExpiresAt($this->expiresAt);
 
-        $appCatalogGuiClientMock = $this->getAppCatalogGuiClientMock();
-        $appCatalogGuiClientMock->method('requestAccessToken')->willReturn($accessTokenResponseTransfer);
+        $oauthClientFacadeBridgeMock = $this->getOauthClientFacadeBridgeMock();
+        $oauthClientFacadeBridgeMock->method('getAccessToken')->willReturn($accessTokenResponseTransfer);
 
         // Act
         $accessTokenResponseTransfer = $this->tester->getFacade()->requestAccessToken();
@@ -81,7 +96,7 @@ class AppCatalogGuiFacadeTest extends Unit
         // Assert
         $this->assertTrue($accessTokenResponseTransfer->getIsSuccessful());
         $this->assertEquals(static::TEST_ACCESS_TOKEN, $accessTokenResponseTransfer->getAccessToken());
-        $this->assertEquals(static::TEST_EXPIRES_IN, $accessTokenResponseTransfer->getExpiresIn());
+        $this->assertEquals($this->expiresAt, $accessTokenResponseTransfer->getExpiresAt());
     }
 
     /**
@@ -97,8 +112,8 @@ class AppCatalogGuiFacadeTest extends Unit
             ->setIsSuccessful(false)
             ->setAccessTokenError($accessTokenErrorTransfer);
 
-        $appCatalogGuiClientMock = $this->getAppCatalogGuiClientMock();
-        $appCatalogGuiClientMock->method('requestAccessToken')->willReturn($accessTokenResponseTransfer);
+        $oauthClientFacadeBridgeMock = $this->getOauthClientFacadeBridgeMock();
+        $oauthClientFacadeBridgeMock->method('getAccessToken')->willReturn($accessTokenResponseTransfer);
 
         // Act
         $accessTokenResponseTransfer = $this->tester->getFacade()->requestAccessToken();
@@ -110,17 +125,17 @@ class AppCatalogGuiFacadeTest extends Unit
     }
 
     /**
-     * @return \Spryker\Client\AppCatalogGui\AppCatalogGuiClientInterface|\PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\AppCatalogGui\Dependency\Facade\AppCatalogGuiToOauthClientFacadeBridge|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getAppCatalogGuiClientMock(): AppCatalogGuiClientInterface
+    protected function getOauthClientFacadeBridgeMock(): AppCatalogGuiToOauthClientFacadeBridge
     {
-        $appCatalogGuiClientMock = $this->createMock(AppCatalogGuiClientInterface::class);
+        $oauthClientFacadeBridgeMock = $this->createMock(AppCatalogGuiToOauthClientFacadeBridge::class);
 
         $this->tester->setDependency(
-            AppCatalogGuiDependencyProvider::CLIENT_APP_CATALOG_GUI,
-            $appCatalogGuiClientMock,
+            AppCatalogGuiDependencyProvider::FACADE_OAUTH_CLIENT,
+            $oauthClientFacadeBridgeMock,
         );
 
-        return $appCatalogGuiClientMock;
+        return $oauthClientFacadeBridgeMock;
     }
 }

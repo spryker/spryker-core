@@ -56,6 +56,7 @@
     <transfer name="PaymentAuthorizeRequest">
         <property name="requestUrl" type="string"/>
         <property name="postData" type="array" associative="true" singular="postValue"/>
+        <property name="authorization" type="string"/>
     </transfer>
 
     <transfer name="PaymentMethods">

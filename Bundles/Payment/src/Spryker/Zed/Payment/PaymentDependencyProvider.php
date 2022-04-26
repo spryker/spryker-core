@@ -78,6 +78,11 @@ class PaymentDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
+    public const PLUGINS_PAYMENT_AUTHORIZE_REQUEST_EXPANDER = 'PLUGINS_PAYMENT_AUTHORIZE_REQUEST_EXPANDER';
+
+    /**
+     * @var string
+     */
     public const SERVICE_PAYMENT = 'SERVICE_PAYMENT';
 
     /**
@@ -124,6 +129,7 @@ class PaymentDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addStoreReferenceFacade($container);
         $container = $this->addOmsFacade($container);
         $container = $this->addMessageBrokerFacade($container);
+        $container = $this->addPaymentAuthorizeRequestExpanderPlugins($container);
 
         return $container;
     }
@@ -278,6 +284,28 @@ class PaymentDependencyProvider extends AbstractBundleDependencyProvider
     protected function getPaymentHydrationPlugins()
     {
         return new PaymentHydratorPluginCollection();
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPaymentAuthorizeRequestExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PAYMENT_AUTHORIZE_REQUEST_EXPANDER, function () {
+            return $this->getPaymentAuthorizeRequestExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<int, \Spryker\Zed\PaymentExtension\Dependency\Plugin\PaymentAuthorizeRequestExpanderPluginInterface>
+     */
+    protected function getPaymentAuthorizeRequestExpanderPlugins(): array
+    {
+        return [];
     }
 
     /**

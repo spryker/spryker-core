@@ -1,0 +1,18 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 32,
+            "line_to": 32,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of DateTime::createFromFormat cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/OauthClient/src/Spryker/Zed/OauthClient/Mapper/OauthClientMapper.php",
+            "snippet": "                $spyOauthClientAccessTokenCacheEntityTransfer->getExpiresAt(),",
+            "selected_text": "$spyOauthClientAccessTokenCacheEntityTransfer->getExpiresAt()",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": []
+}

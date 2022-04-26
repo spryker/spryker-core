@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="AccessTokenCache">
+        <property name="cacheKey" type="string"/>
+        <property name="accessToken" type="string"/>
+        <property name="expiresAt" type="string"/>
+    </transfer>
+
+    <transfer name="AccessTokenRequest">
+        <property name="grantType" type="string"/>
+        <property name="accessTokenRequestOptions" type="AccessTokenRequestOptions"/>
+        <property name="providerName" type="string"/>
+        <property name="ignoreCache" type="bool"/>
+    </transfer>
+
+    <transfer name="AccessTokenRequestOptions">
+        <property name="audience" type="string"/>
+        <property name="storeReference" type="string"/>
+    </transfer>
+
+    <transfer name="AccessTokenResponse" strict="true">
+        <property name="isSuccessful" type="bool"/>
+        <property name="accessTokenError" type="AccessTokenError"/>
+        <property name="accessToken" type="string"/>
+        <property name="expiresAt" type="string"/>
+    </transfer>
+
+    <transfer name="AccessTokenError" strict="true">
+        <property name="error" type="string"/>
+        <property name="errorDescription" type="string"/>
+    </transfer>
+
+    <transfer name="MessageAttributes">
+        <property name="authorization" type="string"/>
+    </transfer>
+
+    <transfer name="PaymentAuthorizeRequest">
+        <property name="authorization" type="string"/>
+    </transfer>
+</transfers>

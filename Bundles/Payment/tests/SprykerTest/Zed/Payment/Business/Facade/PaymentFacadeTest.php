@@ -714,7 +714,7 @@ class PaymentFacadeTest extends Unit
             (new PaymentMethodsTransfer())
                 ->addMethod(
                     (new PaymentMethodTransfer())->setMethodName('dummyPaymentInvoice')
-                    ->setPaymentMethodKey('dummyPaymentInvoice'),
+                        ->setPaymentMethodKey('dummyPaymentInvoice'),
                 ),
         );
 

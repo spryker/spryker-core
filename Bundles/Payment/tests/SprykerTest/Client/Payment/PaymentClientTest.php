@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Client\Payment;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\PaymentAuthorizeRequestTransfer;
 use GuzzleHttp\Psr7\Response as GuzzleHttpResponse;
 use Psr\Http\Message\StreamInterface;
@@ -24,7 +24,7 @@ use Symfony\Component\HttpFoundation\Response as SymfonyHttpResponse;
  * @group PaymentClientTest
  * Add your own group annotations below this line
  */
-class PaymentClientTest extends Test
+class PaymentClientTest extends Unit
 {
     /**
      * @var \SprykerTest\Client\Payment\PaymentClientTester

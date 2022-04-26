@@ -266,4 +266,16 @@ class MessageBrokerAwsConfig extends AbstractBundleConfig
     {
         return static::SQS_AWS_API_VERSION;
     }
+
+    /**
+     * @api
+     *
+     * @return array<string>
+     */
+    public function getStandardHttpHeaders(): array
+    {
+        return [
+            'Authorization',
+        ];
+    }
 }

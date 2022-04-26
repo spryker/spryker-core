@@ -25,16 +25,6 @@ class AppCatalogGuiToStoreReferenceFacadeBridge implements AppCatalogGuiToStoreR
     }
 
     /**
-     * @param string $storeReference
-     *
-     * @return \Generated\Shared\Transfer\StoreTransfer
-     */
-    public function getStoreByStoreReference(string $storeReference): StoreTransfer
-    {
-        return $this->storeReferenceFacade->getStoreByStoreReference($storeReference);
-    }
-
-    /**
      * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\StoreTransfer

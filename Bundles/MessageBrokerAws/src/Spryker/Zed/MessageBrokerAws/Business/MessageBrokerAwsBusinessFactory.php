@@ -300,7 +300,7 @@ class MessageBrokerAwsBusinessFactory extends AbstractBusinessFactory
      */
     public function createHttpHeaderFormatter(): HttpHeaderFormatterInterface
     {
-        return new HttpHeaderFormatter();
+        return new HttpHeaderFormatter($this->getConfig());
     }
 
     /**

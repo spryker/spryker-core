@@ -36,10 +36,11 @@
 
     <transfer name="MessageAttributes">
         <property name="storeReference" type="string"/>
-        <property name="publisher" type="Publisher"/>
+        <property name="emitter" type="string"/>
+        <property name="publisher" type="Publisher" deprecated="Use emitter property instead."/>
     </transfer>
 
-    <transfer name="Publisher">
+    <transfer name="Publisher" deprecated="Will be removed in next major.">
         <property name="appIdentifier" type="string"/>
     </transfer>
 

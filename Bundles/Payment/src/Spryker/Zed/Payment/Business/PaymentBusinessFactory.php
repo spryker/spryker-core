@@ -82,6 +82,7 @@ class PaymentBusinessFactory extends AbstractBusinessFactory
             $this->getConfig(),
             $this->getStoreReferenceFacade(),
             $this->getPaymentService(),
+            $this->getPaymentAuthorizeRequestExpanderPlugins(),
         );
     }
 
@@ -333,5 +334,13 @@ class PaymentBusinessFactory extends AbstractBusinessFactory
             $this->getOmsFacade(),
             $this->getConfig(),
         );
+    }
+
+    /**
+     * @return array<int, \Spryker\Zed\PaymentExtension\Dependency\Plugin\PaymentAuthorizeRequestExpanderPluginInterface>
+     */
+    public function getPaymentAuthorizeRequestExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(PaymentDependencyProvider::PLUGINS_PAYMENT_AUTHORIZE_REQUEST_EXPANDER);
     }
 }

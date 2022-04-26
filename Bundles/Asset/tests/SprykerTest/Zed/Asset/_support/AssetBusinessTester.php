@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\AssetDeletedTransfer;
 use Generated\Shared\Transfer\AssetTransfer;
 use Generated\Shared\Transfer\AssetUpdatedTransfer;
 use Generated\Shared\Transfer\MessageAttributesTransfer;
-use Generated\Shared\Transfer\PublisherTransfer;
 use Ramsey\Uuid\Uuid;
 
 /**
@@ -57,7 +56,7 @@ class AssetBusinessTester extends Actor
             ->setAssetSlot($assetSlot)
             ->setMessageAttributes(
                 (new MessageAttributesTransfer())
-                    ->setPublisher($this->havePublisherTransfer())
+                    ->setEmitter($this->getUuid())
                     ->setStoreReference($storeReference),
             );
     }
@@ -84,7 +83,7 @@ class AssetBusinessTester extends Actor
             ->setAssetSlot($assetSlot)
             ->setMessageAttributes(
                 (new MessageAttributesTransfer())
-                    ->setPublisher($this->havePublisherTransfer())
+                    ->setEmitter($this->getUuid())
                     ->setStoreReference($storeReference),
             );
     }
@@ -105,7 +104,7 @@ class AssetBusinessTester extends Actor
             ->setAssetIdentifier($assetUuid)
             ->setMessageAttributes(
                 (new MessageAttributesTransfer())
-                    ->setPublisher($this->havePublisherTransfer())
+                    ->setEmitter($this->getUuid())
                     ->setStoreReference($storeReference),
             );
     }
@@ -116,14 +115,6 @@ class AssetBusinessTester extends Actor
     public function getUuid(): string
     {
         return Uuid::uuid4()->toString();
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\PublisherTransfer
-     */
-    public function havePublisherTransfer(): PublisherTransfer
-    {
-        return (new PublisherTransfer())->setAppIdentifier($this->getUuid());
     }
 
     /**

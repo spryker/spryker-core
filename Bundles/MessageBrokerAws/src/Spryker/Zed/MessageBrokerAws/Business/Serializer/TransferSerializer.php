@@ -8,7 +8,6 @@
 namespace Spryker\Zed\MessageBrokerAws\Business\Serializer;
 
 use Generated\Shared\Transfer\MessageAttributesTransfer;
-use Generated\Shared\Transfer\PublisherTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Zed\MessageBrokerAws\Business\Exception\EnvelopDecodingFailedException;
 use Spryker\Zed\MessageBrokerAws\Dependency\Service\MessageBrokerAwsToUtilEncodingServiceInterface;
@@ -21,6 +20,16 @@ use Symfony\Component\Serializer\SerializerInterface as SymfonySerializerInterfa
 
 class TransferSerializer implements SerializerInterface
 {
+    /**
+     * @var string
+     */
+    protected const HEADER_KEY_EMITTER = 'emitter';
+
+    /**
+     * @var string
+     */
+    protected const HEADER_KEY_PUBLISHER = 'publisher';
+
     /**
      * @var \Symfony\Component\Serializer\SerializerInterface
      */
@@ -76,18 +85,9 @@ class TransferSerializer implements SerializerInterface
         }
 
         $messageAttributesTransfer = new MessageAttributesTransfer();
-
-        if (!empty($encodedEnvelope['headers']['publisher'])) {
-            $publisherData = (array)$this->utilEncodingService->decodeJson($encodedEnvelope['headers']['publisher'], true);
-
-            $messageAttributesTransfer->setPublisher(
-                (new PublisherTransfer())
-                    ->fromArray($publisherData, true),
-            );
-            unset($encodedEnvelope['headers']['publisher']);
-        }
-
-        $messageAttributesTransfer->fromArray($encodedEnvelope['headers'], true);
+        $messageAttributesTransfer->fromArray($encodedEnvelope['headers'], true)
+            ->setPublisher(null)
+            ->setEmitter($encodedEnvelope['headers'][static::HEADER_KEY_PUBLISHER] ?? null);
 
         // TODO check with security manager if this could be an issue.
         $messageTransferClassName = sprintf('\\Generated\\Shared\\Transfer\\%sTransfer', $messageAttributesTransfer->getTransferNameOrFail());
@@ -149,13 +149,13 @@ class TransferSerializer implements SerializerInterface
         unset($messageData['messageAttributes']);
 
         $headers = $messageAttributesTransfer->modifiedToArray(true, true);
-        $headers += ['Content-Type' => 'application/json'];
 
-        if ($messageAttributesTransfer->getPublisher()) {
-            $headers['publisher'] = $this->utilEncodingService->encodeJson(
-                $messageAttributesTransfer->getPublisher()->modifiedToArray(true, true),
-            );
+        if (isset($headers[static::HEADER_KEY_EMITTER])) {
+            $headers[static::HEADER_KEY_PUBLISHER] = $headers[static::HEADER_KEY_EMITTER];
+            unset($headers[static::HEADER_KEY_EMITTER]);
         }
+
+        $headers += ['Content-Type' => 'application/json'];
 
         return [
             'body' => $this->serializer->serialize($messageData, $this->format, $this->context),

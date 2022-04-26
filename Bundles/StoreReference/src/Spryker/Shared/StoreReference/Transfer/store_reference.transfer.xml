@@ -3,15 +3,24 @@
 
     <transfer name="MessageAttributes">
         <property name="storeReference" type="string"/>
-        <property name="publisher" type="Publisher"/>
+        <property name="emitter" type="string"/>
+        <property name="publisher" type="Publisher" deprecated="Use emitter property instead."/>
     </transfer>
 
-    <transfer name="Publisher">
+    <transfer name="Publisher" deprecated="Will be removed in next major.">
         <property name="storeReference" type="string"/>
     </transfer>
 
     <transfer name="Store">
         <property name="name" type="string"/>
+        <property name="storeReference" type="string"/>
+    </transfer>
+
+    <transfer name="AccessTokenRequest">
+        <property name="accessTokenRequestOptions" type="AccessTokenRequestOptions"/>
+    </transfer>
+
+    <transfer name="AccessTokenRequestOptions">
         <property name="storeReference" type="string"/>
     </transfer>
 
