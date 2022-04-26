@@ -13,6 +13,8 @@ use Generated\Shared\Transfer\AclEntityMetadataConfigTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\AclEntity\AclEntityDependencyProvider;
+use Spryker\Zed\AclMerchantPortal\AclMerchantPortalConfig;
+use Spryker\Zed\AclMerchantPortal\Business\AclMerchantPortalBusinessFactory;
 use Spryker\Zed\AclMerchantPortal\Communication\Plugin\AclEntity\MerchantPortalAclEntityMetadataConfigExpanderPlugin;
 
 /**
@@ -78,6 +80,7 @@ class AclMerchantPortalFacadeTest extends Unit
     protected function setUp(): void
     {
         parent::setUp();
+
         $this->tester->setDependency(
             AclEntityDependencyProvider::PLUGINS_ACL_ENTITY_METADATA_COLLECTION_EXPANDER,
             [new MerchantPortalAclEntityMetadataConfigExpanderPlugin()],
@@ -198,13 +201,23 @@ class AclMerchantPortalFacadeTest extends Unit
     public function testCheckUserRoleFilterConditionForRootGroupAndProperRole(): void
     {
         //Arrange
-        $groupTransfer = $this->tester->haveGroup(['name' => 'test_group', 'reference' => 'root_group']);
+        $groupTransfer = $this->tester->haveGroup(['name' => 'test_group', 'reference' => 'root_group_reference']);
         $userTransfer = $this->tester->haveUser();
+
         $aclFacade = $this->tester->getLocator()->acl()->facade();
+        $aclMerchantPortalFacade = $this->tester->getFacade();
+
+        $configMock = $this->createMock(AclMerchantPortalConfig::class);
+        $configMock->method('getBackofficeAllowedAclGroupReferences')->willReturn(['root_group_reference']);
+        $configMock->method('getRolesWithBackofficeAccess')->willReturn(['role_back_office_user']);
+
+        $factory = new AclMerchantPortalBusinessFactory();
+        $factory->setConfig($configMock);
+        $aclMerchantPortalFacade->setFactory($factory);
 
         // Act
         $aclFacade->addUserToGroup($userTransfer->getIdUser(), $groupTransfer->getIdAclGroup());
-        $boolCondition = $this->tester->getFacade()->checkUserRoleFilterCondition($userTransfer, 'ROLE_BACK_OFFICE_USER');
+        $boolCondition = $aclMerchantPortalFacade->checkUserRoleFilterCondition($userTransfer, 'role_back_office_user');
 
         // Assert
         $this->assertFalse($boolCondition);
@@ -216,7 +229,7 @@ class AclMerchantPortalFacadeTest extends Unit
     public function testCheckUserRoleFilterConditionForRootGroupAndWrongRole(): void
     {
         //Arrange
-        $groupTransfer = $this->tester->haveGroup(['name' => 'test_group', 'reference' => 'root_group']);
+        $groupTransfer = $this->tester->haveGroup(['name' => 'test_group', 'reference' => 'root_group_reference']);
         $userTransfer = $this->tester->haveUser();
         $aclFacade = $this->tester->getLocator()->acl()->facade();
 

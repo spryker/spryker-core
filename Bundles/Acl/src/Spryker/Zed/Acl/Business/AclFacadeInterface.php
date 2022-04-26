@@ -20,6 +20,7 @@ interface AclFacadeInterface
     /**
      * Specification:
      * - Main Installer Method
+     * - Executes stack of {@link \Spryker\Zed\AclExtension\Dependency\Plugin\AclInstallerPluginInterface} plugins.
      *
      * @api
      *

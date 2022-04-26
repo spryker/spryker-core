@@ -4,6 +4,7 @@
     <transfer name="Group">
         <property name="idAclGroup" type="int"/>
         <property name="name" type="string"/>
+        <property name="reference" type="string"/>
     </transfer>
 
     <transfer name="Groups">

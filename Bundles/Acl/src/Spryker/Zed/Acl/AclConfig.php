@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Acl;
 
+use Generated\Shared\Transfer\GroupTransfer;
 use Spryker\Shared\Acl\AclConstants;
 use Spryker\Shared\Config\Config;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
@@ -114,7 +115,8 @@ class AclConfig extends AbstractBundleConfig
     {
         return [
             [
-                'name' => AclConstants::ROOT_GROUP,
+                GroupTransfer::NAME => AclConstants::ROOT_GROUP,
+                GroupTransfer::REFERENCE => AclConstants::ROOT_GROUP,
             ],
         ];
     }
