@@ -11,7 +11,7 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
 /**
- * @method \Spryker\Zed\Application\ApplicationConfig getConfig()
+ * @method \Spryker\Zed\MerchantPortalApplication\MerchantPortalApplicationConfig getConfig()
  */
 class MerchantPortalApplicationDependencyProvider extends AbstractBundleDependencyProvider
 {

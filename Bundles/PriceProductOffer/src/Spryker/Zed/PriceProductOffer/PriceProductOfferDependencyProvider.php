@@ -15,7 +15,7 @@ use Spryker\Zed\PriceProductOffer\Dependency\Facade\PriceProductOfferToStoreFaca
 use Spryker\Zed\PriceProductOffer\Dependency\Facade\PriceProductOfferToTranslatorFacadeBridge;
 
 /**
- * @method \Spryker\Zed\Product\ProductConfig getConfig()
+ * @method \Spryker\Zed\PriceProductOffer\PriceProductOfferConfig getConfig()
  */
 class PriceProductOfferDependencyProvider extends AbstractBundleDependencyProvider
 {

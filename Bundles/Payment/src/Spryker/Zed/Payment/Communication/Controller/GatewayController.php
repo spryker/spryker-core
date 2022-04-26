@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
  * @method \Spryker\Zed\Payment\Business\PaymentFacadeInterface getFacade()
  * @method \Spryker\Zed\Payment\Persistence\PaymentQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Payment\Persistence\PaymentRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Payment\Communication\PaymentCommunicationFactory getFactory()
  */
 class GatewayController extends AbstractGatewayController
 {

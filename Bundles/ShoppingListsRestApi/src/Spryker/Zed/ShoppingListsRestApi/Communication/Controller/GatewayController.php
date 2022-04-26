@@ -16,7 +16,7 @@ use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
- * @method \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListsRestApiFacade getFacade()
+ * @method \Spryker\Zed\ShoppingListsRestApi\Business\ShoppingListsRestApiFacadeInterface getFacade()
  */
 class GatewayController extends AbstractGatewayController
 {

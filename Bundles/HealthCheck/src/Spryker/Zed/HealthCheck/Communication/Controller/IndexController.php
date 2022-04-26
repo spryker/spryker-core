@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method \Spryker\Zed\HealthCheck\Business\HealthCheckFacade getFacade()
+ * @method \Spryker\Zed\HealthCheck\Business\HealthCheckFacadeInterface getFacade()
  * @method \Spryker\Zed\HealthCheck\Communication\HealthCheckCommunicationFactory getFactory()
  */
 class IndexController extends AbstractController

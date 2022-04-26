@@ -13,9 +13,9 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteValidatorPluginInterface;
 
 /**
- * @method \Spryker\Zed\Currency\Business\CurrencyFacade getFacade()
+ * @method \Spryker\Zed\Currency\Business\CurrencyFacadeInterface getFacade()
  * @method \Spryker\Zed\Currency\CurrencyConfig getConfig()
- * @method \Spryker\Zed\Currency\Persistence\CurrencyQueryContainer getQueryContainer()()
+ * @method \Spryker\Zed\Currency\Persistence\CurrencyQueryContainerInterface getQueryContainer()
  */
 class QuoteCurrencyValidatorPlugin extends AbstractPlugin implements QuoteValidatorPluginInterface
 {

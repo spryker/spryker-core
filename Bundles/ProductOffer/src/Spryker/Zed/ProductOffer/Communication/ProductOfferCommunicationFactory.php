@@ -10,8 +10,8 @@ namespace Spryker\Zed\ProductOffer\Communication;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
- * @method \Spryker\Zed\ProductOffer\Business\ProductOfferFacade getFacade()
- * @method \Spryker\Zed\ProductOfferGui\ProductOfferGuiConfig getConfig()
+ * @method \Spryker\Zed\ProductOffer\Business\ProductOfferFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductOffer\ProductOfferConfig getConfig()
  * @method \Spryker\Zed\ProductOffer\Persistence\ProductOfferEntityManagerInterface getEntityManager()
  * @method \Spryker\Zed\ProductOffer\Persistence\ProductOfferRepositoryInterface getRepository()
  */

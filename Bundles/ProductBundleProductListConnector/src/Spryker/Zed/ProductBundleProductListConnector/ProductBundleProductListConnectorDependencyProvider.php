@@ -13,7 +13,7 @@ use Spryker\Zed\ProductBundleProductListConnector\Dependency\Facade\ProductBundl
 use Spryker\Zed\ProductBundleProductListConnector\Dependency\Facade\ProductBundleProductListConnectorToProductFacadeBridge;
 
 /**
- * @method \Spryker\Zed\ProductBundle\ProductBundleConfig getConfig()
+ * @method \Spryker\Zed\ProductBundleProductListConnector\ProductBundleProductListConnectorConfig getConfig()
  */
 class ProductBundleProductListConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {

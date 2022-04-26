@@ -14,7 +14,7 @@ use Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnCreateRequestValida
 
 /**
  * @method \Spryker\Zed\MerchantSalesReturn\MerchantSalesReturnConfig getConfig()
- * @method \Spryker\Zed\MerchantSalesReturn\Business\MerchantSalesReturnFacade getFacade()
+ * @method \Spryker\Zed\MerchantSalesReturn\Business\MerchantSalesReturnFacadeInterface getFacade()
  * @method \Spryker\Zed\MerchantSalesReturn\Communication\MerchantSalesReturnCommunicationFactory getFactory()
  */
 class MerchantReturnCreateRequestValidatorPlugin extends AbstractPlugin implements ReturnCreateRequestValidatorPluginInterface

@@ -17,8 +17,8 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
- * @method \Spryker\Zed\Http\HttpConfig getConfig()
- * @method \Spryker\Zed\Http\Communication\HttpCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Router\RouterConfig getConfig()
+ * @method \Spryker\Zed\Router\Communication\RouterCommunicationFactory getFactory()
  * @method \Spryker\Zed\Router\Business\RouterFacadeInterface getFacade()
  */
 class RequestAttributesEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface

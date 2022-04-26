@@ -16,7 +16,7 @@ use Symfony\Component\HttpKernel\Controller\ArgumentResolver;
 /**
  * @deprecated Use {@link \Spryker\Zed\Router\Communication\Plugin\Application\BackofficeRouterApplicationPlugin} instead.
  *
- * @method \Spryker\Zed\Router\Business\RouterFacade getFacade()
+ * @method \Spryker\Zed\Router\Business\RouterFacadeInterface getFacade()
  * @method \Spryker\Zed\Router\RouterConfig getConfig()
  * @method \Spryker\Zed\Router\Communication\RouterCommunicationFactory getFactory()
  */

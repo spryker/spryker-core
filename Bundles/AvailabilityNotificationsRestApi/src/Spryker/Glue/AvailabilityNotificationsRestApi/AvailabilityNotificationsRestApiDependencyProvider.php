@@ -13,7 +13,7 @@ use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
 
 /**
- * @method \Spryker\Glue\ProductBundlesRestApi\ProductBundlesRestApiConfig getConfig()
+ * @method \Spryker\Glue\AvailabilityNotificationsRestApi\AvailabilityNotificationsRestApiConfig getConfig()
  */
 class AvailabilityNotificationsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {

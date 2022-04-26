@@ -14,8 +14,8 @@ use Spryker\Zed\Merchant\Communication\Plugin\Checkout\Validator\MerchantCheckou
 use Spryker\Zed\Merchant\Communication\Plugin\Checkout\Validator\MerchantCheckoutValidatorInterface;
 
 /**
- * @method \Spryker\Zed\Merchant\Business\MerchantFacade getFacade()
- * @method \Spryker\Zed\MerchantGui\MerchantGuiConfig getConfig()
+ * @method \Spryker\Zed\Merchant\Business\MerchantFacadeInterface getFacade()
+ * @method \Spryker\Zed\Merchant\MerchantConfig getConfig()
  * @method \Spryker\Zed\Merchant\Persistence\MerchantEntityManagerInterface getEntityManager()
  * @method \Spryker\Zed\Merchant\Persistence\MerchantRepositoryInterface getRepository()
  */
