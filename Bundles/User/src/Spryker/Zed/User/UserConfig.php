@@ -47,7 +47,7 @@ class UserConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array<array>
+     * @return array<array<string, mixed>>
      */
     public function getInstallerUsers()
     {
