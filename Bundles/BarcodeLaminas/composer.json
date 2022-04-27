@@ -1,7 +1,7 @@
 {
-    "name": "spryker/code-it-now",
+    "name": "spryker/barcode-laminas",
     "type": "library",
-    "description": "CodeItNow module",
+    "description": "BarcodeLaminas module",
     "license": "proprietary",
     "require": {
         "php": ">=7.4",
@@ -9,12 +9,12 @@
     },
     "require-dev": {
         "spryker/code-sniffer": "*",
-        "spryker/kernel": "^3.1.0",
+        "spryker/kernel": "*",
         "spryker/laminas": "*",
         "spryker/testify": "*"
     },
     "suggest": {
-        "spryker/kernel": "for testing",
+        "spryker/kernel": "If you want to use Code128BarcodeGeneratorPlugin.",
         "spryker/laminas": "If you want to use Code128BarcodeGeneratorPlugin."
     },
     "autoload": {
@@ -30,8 +30,8 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "scripts": {
-        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
-        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/"
     },
     "extra": {
         "branch-alias": {
@@ -43,6 +43,5 @@
         "allow-plugins": {
             "dealerdirect/phpcodesniffer-composer-installer": true
         }
-    },
-    "abandoned": "spryker/barcode-laminas"
+    }
 }

@@ -67,6 +67,7 @@
         "spryker/availability-storage-extension": "*",
         "spryker/barcode": "*",
         "spryker/barcode-extension": "*",
+        "spryker/barcode-laminas": "*",
         "spryker/business-on-behalf": "*",
         "spryker/business-on-behalf-data-import": "*",
         "spryker/business-on-behalf-extension": "*",

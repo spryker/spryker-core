@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\CodeItNow\Plugin;
+namespace Spryker\Service\BarcodeLaminas\Plugin;
 
 use Generated\Shared\Transfer\BarcodeResponseTransfer;
 use Laminas\Barcode\Barcode;
@@ -13,15 +13,12 @@ use Laminas\Barcode\Renderer\RendererInterface;
 use Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInterface;
 use Spryker\Service\Kernel\AbstractPlugin;
 
-/**
- * @deprecated Use {@link \Spryker\Service\BarcodeLaminas\Plugin\Code128BarcodeGeneratorPlugin} instead.
- */
 class Code128BarcodeGeneratorPlugin extends AbstractPlugin implements BarcodeGeneratorPluginInterface
 {
     /**
      * @var string
      */
-    public const ENCODING = 'data:image/png;base64';
+    protected const ENCODING = 'data:image/png;base64';
 
     /**
      * @var string
