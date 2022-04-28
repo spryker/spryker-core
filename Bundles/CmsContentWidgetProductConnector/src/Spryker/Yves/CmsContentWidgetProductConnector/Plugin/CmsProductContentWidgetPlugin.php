@@ -72,10 +72,10 @@ class CmsProductContentWidgetPlugin extends AbstractPlugin implements CmsContent
     }
 
     /**
-     * @param array $context
-     * @param array|string $productAbstractSkuList
+     * @param array<string, mixed> $context
+     * @param array<string>|string $productAbstractSkuList
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function getContent(array $context, $productAbstractSkuList)
     {
@@ -112,7 +112,7 @@ class CmsProductContentWidgetPlugin extends AbstractPlugin implements CmsContent
     }
 
     /**
-     * @param array $context
+     * @param array<string, mixed> $context
      *
      * @return array
      */
@@ -122,9 +122,9 @@ class CmsProductContentWidgetPlugin extends AbstractPlugin implements CmsContent
     }
 
     /**
-     * @param array $cmsContent
+     * @param array<string, mixed> $cmsContent
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function getProductAbstractSkuMap(array $cmsContent)
     {
@@ -132,8 +132,8 @@ class CmsProductContentWidgetPlugin extends AbstractPlugin implements CmsContent
     }
 
     /**
-     * @param array $concreteProductSkuList
-     * @param array $skuToProductAbstractIdMap
+     * @param array<string> $concreteProductSkuList
+     * @param array<string, mixed> $skuToProductAbstractIdMap
      *
      * @return array
      */
@@ -162,7 +162,7 @@ class CmsProductContentWidgetPlugin extends AbstractPlugin implements CmsContent
     }
 
     /**
-     * @param array $productData
+     * @param array<string, mixed> $productData
      *
      * @return \Generated\Shared\Transfer\StorageProductTransfer
      */

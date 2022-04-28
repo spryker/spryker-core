@@ -36,7 +36,7 @@ interface SearchClientInterface
      *
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
      * @param array<\Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface> $searchQueryExpanders
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
      */
@@ -52,7 +52,7 @@ interface SearchClientInterface
      *
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
      * @param array<\Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface> $resultFormatters
-     * @param array $requestParameters
+     * @param array<mixed> $requestParameters
      *
      * @return \Elastica\ResultSet|mixed|array Deprecated: Only `mixed` will be supported with the next major.
      */

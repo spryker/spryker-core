@@ -19,7 +19,7 @@ class ProductNewClient extends AbstractClient implements ProductNewClientInterfa
      *
      * @api
      *
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return array
      */

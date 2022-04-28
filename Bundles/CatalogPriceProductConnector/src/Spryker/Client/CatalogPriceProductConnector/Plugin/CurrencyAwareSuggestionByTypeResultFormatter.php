@@ -31,7 +31,7 @@ class CurrencyAwareSuggestionByTypeResultFormatter extends AbstractElasticsearch
 
     /**
      * @param \Elastica\ResultSet $searchResult
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return array
      */

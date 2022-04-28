@@ -23,7 +23,7 @@ class CatalogClient extends AbstractClient implements CatalogClientInterface
      * @api
      *
      * @param string $searchString
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return array
      */
@@ -54,7 +54,7 @@ class CatalogClient extends AbstractClient implements CatalogClientInterface
      * @api
      *
      * @param string $searchString
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return array<string, mixed>
      */
@@ -118,7 +118,7 @@ class CatalogClient extends AbstractClient implements CatalogClientInterface
      * @api
      *
      * @param string $searchString
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return int
      */

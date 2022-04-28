@@ -26,7 +26,7 @@ class ProductLabelDataLoaderExpanderPlugin extends AbstractPlugin implements Pro
      *
      * @api
      *
-     * @param array $productData
+     * @param array<string, mixed> $productData
      * @param \Generated\Shared\Transfer\ProductPageSearchTransfer $productAbstractPageSearchTransfer
      *
      * @return void
@@ -39,7 +39,7 @@ class ProductLabelDataLoaderExpanderPlugin extends AbstractPlugin implements Pro
     }
 
     /**
-     * @param array $productData
+     * @param array<string, mixed> $productData
      * @param \Generated\Shared\Transfer\ProductPageSearchTransfer $productAbstractPageSearchTransfer
      *
      * @return array
@@ -52,7 +52,7 @@ class ProductLabelDataLoaderExpanderPlugin extends AbstractPlugin implements Pro
     }
 
     /**
-     * @param array $productData
+     * @param array<string, mixed> $productData
      *
      * @return \Generated\Shared\Transfer\ProductPayloadTransfer
      */

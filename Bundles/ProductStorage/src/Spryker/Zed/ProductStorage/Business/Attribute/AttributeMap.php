@@ -83,11 +83,11 @@ class AttributeMap implements AttributeMapInterface
 
     /**
      * @param array<int> $productAbstractIds
-     * @param array $localeIds
+     * @param array<int> $localeIds
      *
      * @throws \Spryker\Zed\ProductStorage\Exception\InvalidArgumentException
      *
-     * @return array
+     * @return array<string, \Generated\Shared\Transfer\AttributeMapStorageTransfer>
      */
     public function generateAttributeMapBulk(array $productAbstractIds, array $localeIds): array
     {
@@ -184,7 +184,7 @@ class AttributeMap implements AttributeMapInterface
     /**
      * @param int $idProductAbstract
      * @param int $idLocale
-     * @param array $attributeMapBulk
+     * @param array<string, \Generated\Shared\Transfer\AttributeMapStorageTransfer> $attributeMapBulk
      *
      * @return \Generated\Shared\Transfer\AttributeMapStorageTransfer
      */

@@ -30,7 +30,7 @@ interface AttributeMapInterface
     /**
      * @param int $idProductAbstract
      * @param int $idLocale
-     * @param array $attributeMapBulk
+     * @param array<string, \Generated\Shared\Transfer\AttributeMapStorageTransfer> $attributeMapBulk
      *
      * @return \Generated\Shared\Transfer\AttributeMapStorageTransfer
      */

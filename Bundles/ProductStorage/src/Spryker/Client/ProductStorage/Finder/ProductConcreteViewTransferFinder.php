@@ -73,7 +73,7 @@ class ProductConcreteViewTransferFinder extends AbstractProductViewTransferFinde
     }
 
     /**
-     * @param array $productData
+     * @param array<string, mixed> $productData
      *
      * @return int
      */

@@ -33,7 +33,7 @@ class PaginatedResultFormatterPluginTest extends AbstractResultFormatterPluginTe
      *
      * @param \Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface $searchConfig
      * @param int $totalHits
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      * @param \Generated\Shared\Transfer\PaginationSearchResultTransfer $expectedResult
      *
      * @return void

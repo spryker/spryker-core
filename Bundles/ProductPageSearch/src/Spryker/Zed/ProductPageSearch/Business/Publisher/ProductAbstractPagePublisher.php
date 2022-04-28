@@ -240,7 +240,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
     }
 
     /**
-     * @param array $productAbstractLocalizedEntities
+     * @param array<array<string, mixed>> $productAbstractLocalizedEntities
      * @param array<\Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch> $productAbstractPageSearchEntities
      * @param array<\Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInterface> $pageDataExpanderPlugins
      * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $productPageLoadTransfer
@@ -443,7 +443,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
 
     /**
      * @param array<\Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInterface> $pageDataExpanderPlugins
-     * @param array $productAbstractLocalizedEntity
+     * @param array<string, mixed> $productAbstractLocalizedEntity
      * @param \Generated\Shared\Transfer\ProductPageSearchTransfer $productPageSearchTransfer
      *
      * @return void
@@ -464,7 +464,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
      * - ProductAbstractPageSearchEntity without ProductAbstractLocalizedEntities (left outs) are paired with NULL.
      * - ProductAbstractLocalizedEntities are paired multiple times per store.
      *
-     * @param array $productAbstractLocalizedEntities
+     * @param array<array<string, mixed>> $productAbstractLocalizedEntities
      * @param array<\Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch> $productAbstractPageSearchEntities
      * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $productPageLoadTransfer
      *

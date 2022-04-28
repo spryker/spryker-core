@@ -221,7 +221,7 @@ class ProductPageSearchFacadeTest extends Unit
     /**
      * @dataProvider expandProductPageMapWithCategoryDataDataProvider
      *
-     * @param array $productData
+     * @param array<string, mixed> $productData
      * @param \Generated\Shared\Transfer\PageMapTransfer $expectedPageMapTransfer
      * @param string $localeName
      *

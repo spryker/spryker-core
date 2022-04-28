@@ -31,7 +31,7 @@ class RawCmsPageSearchResultFormatterPlugin extends AbstractElasticsearchResultF
 
     /**
      * @param \Elastica\ResultSet $searchResult
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return array
      */

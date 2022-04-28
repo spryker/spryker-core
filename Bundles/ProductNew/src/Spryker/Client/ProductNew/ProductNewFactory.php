@@ -14,7 +14,7 @@ use Spryker\Client\ProductNew\Dependency\Client\ProductNewToStoreClientInterface
 class ProductNewFactory extends AbstractFactory
 {
     /**
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
      */

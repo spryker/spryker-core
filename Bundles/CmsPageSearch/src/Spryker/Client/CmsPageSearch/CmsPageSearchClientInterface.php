@@ -18,7 +18,7 @@ interface CmsPageSearchClientInterface
      * @api
      *
      * @param string $searchString
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return array
      */
@@ -32,7 +32,7 @@ interface CmsPageSearchClientInterface
      * @api
      *
      * @param string $searchString
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return int
      */

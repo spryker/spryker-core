@@ -219,7 +219,7 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
      * - ProductConcreteLocalizedEntities without ProductConcreteStorageEntity are paired with a newly created ProductConcreteStorageEntity.
      * - ProductConcreteStorageEntities without ProductConcreteLocalizedEntity (left outs) are paired with NULL.
      *
-     * @param array $productConcreteLocalizedEntities
+     * @param array<array<string, mixed>> $productConcreteLocalizedEntities
      * @param array<\Orm\Zed\ProductStorage\Persistence\SpyProductConcreteStorage> $productConcreteStorageEntities
      *
      * @return array

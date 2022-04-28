@@ -5,5 +5,5 @@ parameters:
     ignoreErrors:
         - '#If condition is always true.#'
         - '#SimpleXMLElement.+does not accept string.#'
-        - '#Parameter \#1 \$createdAt of method .+StateMachineItemTransfer::setCreatedAt\(\) expects string\|null, DateTime\|string\|null given.#'
+        - '#Parameter \#1 \$createdAt of method .+StateMachineItemTransfer::setCreatedAt\(\) expects string\|null, DateTime\|null given.#'
         - '#Call to an undefined method Orm\\.+Query::useStateHistoryQuery\(\).#'

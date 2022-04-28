@@ -33,7 +33,7 @@ interface PaginationConfigBuilderInterface
     /**
      * @api
      *
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return int
      */
@@ -42,7 +42,7 @@ interface PaginationConfigBuilderInterface
     /**
      * @api
      *
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return int
      */

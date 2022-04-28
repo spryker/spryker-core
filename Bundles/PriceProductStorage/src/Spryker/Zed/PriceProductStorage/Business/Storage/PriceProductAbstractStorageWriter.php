@@ -95,8 +95,8 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
     }
 
     /**
-     * @param array $priceGroups First level keys are product abstract ids, second level keys are store names, values are grouped prices
-     * @param array $priceProductAbstractStorageMap First level keys are product abstract ids, second level keys are store names, values are SpyPriceProductAbstractStorage objects
+     * @param array<int, array<string, array<mixed>>> $priceGroups First level keys are product abstract ids, second level keys are store names, values are grouped prices.
+     * @param array<int, array<string, \Orm\Zed\PriceProductStorage\Persistence\SpyPriceProductAbstractStorage>> $priceProductAbstractStorageMap First level keys are product abstract ids, second level keys are store names.
      *
      * @return void
      */
@@ -133,7 +133,7 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
     }
 
     /**
-     * @param array $priceProductAbstractStorageMap
+     * @param array<int, array<string, \Orm\Zed\PriceProductStorage\Persistence\SpyPriceProductAbstractStorage>> $priceProductAbstractStorageMap
      * @param int $idProductAbstract
      * @param string $storeName
      *
@@ -149,7 +149,7 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
     }
 
     /**
-     * @param array $priceGroup
+     * @param array<mixed> $priceGroup
      *
      * @return bool
      */
@@ -165,7 +165,7 @@ class PriceProductAbstractStorageWriter implements PriceProductAbstractStorageWr
     /**
      * @param int $idProductAbstract
      * @param string $storeName
-     * @param array $priceGroup
+     * @param array<mixed> $priceGroup
      * @param \Orm\Zed\PriceProductStorage\Persistence\SpyPriceProductAbstractStorage $priceProductAbstractStorageEntity
      *
      * @return void

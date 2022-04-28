@@ -33,7 +33,7 @@ class SortedResultFormatterPluginTest extends AbstractResultFormatterPluginTest
      * @dataProvider resultFormatterDataProvider
      *
      * @param \Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface $searchConfig
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      * @param \Generated\Shared\Transfer\SortSearchResultTransfer $expectedResult
      *
      * @return void

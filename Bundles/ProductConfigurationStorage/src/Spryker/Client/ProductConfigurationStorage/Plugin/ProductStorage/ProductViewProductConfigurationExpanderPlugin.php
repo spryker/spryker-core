@@ -23,7 +23,7 @@ class ProductViewProductConfigurationExpanderPlugin extends AbstractPlugin imple
      * - Expands the product view with the product configuration instance according to provided criteria.
      *
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     * @param array $productData
+     * @param array<string, mixed> $productData
      * @param string $localeName
      * @param \Generated\Shared\Transfer\ProductStorageCriteriaTransfer|null $productStorageCriteriaTransfer
      *

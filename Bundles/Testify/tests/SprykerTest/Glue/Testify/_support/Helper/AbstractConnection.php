@@ -93,7 +93,7 @@ abstract class AbstractConnection implements Connection
     }
 
     /**
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return static
      */

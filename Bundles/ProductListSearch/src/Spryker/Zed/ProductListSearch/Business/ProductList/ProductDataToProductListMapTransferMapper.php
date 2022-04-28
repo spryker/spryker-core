@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\ProductPageSearchTransfer;
 class ProductDataToProductListMapTransferMapper implements ProductDataToProductListMapTransferMapperInterface
 {
     /**
-     * @param array $productData
+     * @param array<string, mixed> $productData
      * @param \Generated\Shared\Transfer\ProductListMapTransfer $productListMapTransfer
      *
      * @return \Generated\Shared\Transfer\ProductListMapTransfer

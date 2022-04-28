@@ -31,7 +31,7 @@ class ProductListDataExpanderPlugin extends AbstractPlugin implements ProductPag
      *
      * @api
      *
-     * @param array $productData
+     * @param array<string, mixed> $productData
      * @param \Generated\Shared\Transfer\ProductPageSearchTransfer $productAbstractPageSearchTransfer
      *
      * @return void
@@ -49,7 +49,7 @@ class ProductListDataExpanderPlugin extends AbstractPlugin implements ProductPag
     }
 
     /**
-     * @param array $productData
+     * @param array<string, mixed> $productData
      *
      * @return int
      */

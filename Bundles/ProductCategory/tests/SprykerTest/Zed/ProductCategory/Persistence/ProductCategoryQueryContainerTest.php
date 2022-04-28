@@ -66,7 +66,7 @@ class ProductCategoryQueryContainerTest extends Unit
     /**
      * @dataProvider getQueryProductsAbstractBySearchTermData
      *
-     * @param array $productData
+     * @param array<string, mixed> $productData
      * @param string $term
      * @param int $expectedCount
      *

@@ -19,7 +19,7 @@ interface ProductViewExpanderByCriteriaPluginInterface extends ProductViewExpand
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     * @param array $productData
+     * @param array<string, mixed> $productData
      * @param string $localeName
      * @param \Generated\Shared\Transfer\ProductStorageCriteriaTransfer|null $productStorageCriteriaTransfer
      *

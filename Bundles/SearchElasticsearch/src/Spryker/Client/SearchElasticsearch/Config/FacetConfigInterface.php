@@ -36,14 +36,14 @@ interface FacetConfigInterface
     public function getParamNames(): array;
 
     /**
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return array<\Generated\Shared\Transfer\FacetConfigTransfer>
      */
     public function getActive(array $requestParameters): array;
 
     /**
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return array
      */

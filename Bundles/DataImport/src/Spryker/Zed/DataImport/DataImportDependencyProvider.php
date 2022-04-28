@@ -198,7 +198,7 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return array
+     * @return array<\Spryker\Zed\DataImport\Dependency\Plugin\DataImportPluginInterface>
      */
     protected function getDataImporterPlugins(): array
     {
@@ -220,7 +220,7 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return array
+     * @return array<\Spryker\Zed\DataImport\Business\Model\DataImporterPluginCollectionInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterCollectionInterface>
      */
     protected function getDataImportBeforeImportHookPlugins(): array
     {
@@ -242,7 +242,7 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return array
+     * @return array<\Spryker\Zed\DataImport\Business\Model\DataImporterPluginCollectionInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterCollectionInterface>
      */
     protected function getDataImportAfterImportHookPlugins(): array
     {

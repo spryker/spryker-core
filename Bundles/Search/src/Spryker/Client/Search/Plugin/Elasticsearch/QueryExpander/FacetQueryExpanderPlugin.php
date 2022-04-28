@@ -42,7 +42,7 @@ class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
      * @api
      *
      * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface $searchQuery
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
      */
@@ -62,7 +62,7 @@ class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
 
     /**
      * @param \Spryker\Client\Search\Dependency\Plugin\FacetConfigBuilderInterface $facetConfig
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return array<\Elastica\Query\AbstractQuery>
      */
@@ -154,7 +154,7 @@ class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
      * @param \Elastica\Query $query
      * @param \Spryker\Client\Search\Dependency\Plugin\FacetConfigBuilderInterface $facetConfig
      * @param array<\Elastica\Query\AbstractQuery> $facetFilters
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return void
      */

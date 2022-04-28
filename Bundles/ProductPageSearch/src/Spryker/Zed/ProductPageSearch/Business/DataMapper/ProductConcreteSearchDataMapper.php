@@ -99,7 +99,7 @@ class ProductConcreteSearchDataMapper extends AbstractProductSearchDataMapper
 
     /**
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
-     * @param array $productData
+     * @param array<string, mixed> $productData
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Generated\Shared\Transfer\PageMapTransfer

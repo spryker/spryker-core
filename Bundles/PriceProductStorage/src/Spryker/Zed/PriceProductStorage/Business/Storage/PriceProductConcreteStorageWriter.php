@@ -94,8 +94,8 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
     }
 
     /**
-     * @param array $priceGroups First level keys are product concrete ids, second level keys are store names, values are grouped prices.
-     * @param array $priceProductConcreteStorageMap First level keys are product concrete ids, second level keys are store names, values are SpyPriceProductConcreteStorage objects
+     * @param array<int, array<string, array<mixed>>> $priceGroups First level keys are product concrete ids, second level keys are store names, values are grouped prices.
+     * @param array<int, array<string, \Orm\Zed\PriceProductStorage\Persistence\SpyPriceProductConcreteStorage>> $priceProductConcreteStorageMap First level keys are product concrete ids, second level keys are store names.
      *
      * @return void
      */
@@ -132,7 +132,7 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
     }
 
     /**
-     * @param array $priceProductConcreteStorageMap
+     * @param array<int, array<string, \Orm\Zed\PriceProductStorage\Persistence\SpyPriceProductConcreteStorage>> $priceProductConcreteStorageMap
      * @param int $idProductConcrete
      * @param string $storeName
      *
@@ -148,7 +148,7 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
     }
 
     /**
-     * @param array $priceGroup
+     * @param array<mixed> $priceGroup
      *
      * @return bool
      */
@@ -164,7 +164,7 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
     /**
      * @param int $idProductConcrete
      * @param string $storeName
-     * @param array $priceGroup
+     * @param array<mixed> $priceGroup
      * @param \Orm\Zed\PriceProductStorage\Persistence\SpyPriceProductConcreteStorage $priceProductConcreteStorageEntity
      *
      * @return void

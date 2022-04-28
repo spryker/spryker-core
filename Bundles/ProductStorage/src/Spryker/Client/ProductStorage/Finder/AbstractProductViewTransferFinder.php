@@ -183,7 +183,7 @@ abstract class AbstractProductViewTransferFinder implements ProductViewTransferF
     }
 
     /**
-     * @param array $productData
+     * @param array<string, mixed> $productData
      * @param array $selectedAttributes
      *
      * @return array
@@ -214,7 +214,7 @@ abstract class AbstractProductViewTransferFinder implements ProductViewTransferF
     abstract protected function getProductId(ProductViewTransfer $productViewTransfer): int;
 
     /**
-     * @param array $productData
+     * @param array<string, mixed> $productData
      *
      * @return int
      */

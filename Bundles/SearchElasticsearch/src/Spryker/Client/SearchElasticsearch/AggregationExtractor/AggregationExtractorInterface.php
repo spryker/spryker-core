@@ -12,8 +12,8 @@ use Spryker\Shared\Kernel\Transfer\TransferInterface;
 interface AggregationExtractorInterface
 {
     /**
-     * @param array $aggregations
-     * @param array $requestParameters
+     * @param array<string, mixed> $aggregations
+     * @param array<string, mixed> $requestParameters
      *
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
