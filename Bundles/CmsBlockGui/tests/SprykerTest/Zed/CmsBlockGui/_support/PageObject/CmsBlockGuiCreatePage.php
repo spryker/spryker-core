@@ -13,4 +13,24 @@ class CmsBlockGuiCreatePage
      * @var string
      */
     public const URL = '/cms-block-gui/create-block';
+
+    /**
+     * @var string
+     */
+    public const FORM_SUBMIT_BUTTON = 'Save';
+
+    /**
+     * @var string
+     */
+    public const SUCCESS_MESSAGE = 'CMS Block was created successfully.';
+
+    /**
+     * @var string
+     */
+    public const FORM_FIELD_NAME_KEY = 'cms_block[name]';
+
+    /**
+     * @var string
+     */
+    public const FORM_FIELD_NAME_VALUE = 'CMS block name';
 }
