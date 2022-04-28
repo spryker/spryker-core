@@ -24,7 +24,7 @@ interface ProductMerchantPortalGuiToUtilEncodingServiceInterface
      * @param int|null $depth
      * @param int|null $options
      *
-     * @return array<mixed>|null
+     * @return mixed|null
      */
-    public function decodeJson(string $jsonValue, bool $assoc = false, ?int $depth = null, ?int $options = null): ?array;
+    public function decodeJson(string $jsonValue, bool $assoc = false, ?int $depth = null, ?int $options = null);
 }
