@@ -10,7 +10,7 @@ namespace Spryker\Zed\CmsSlotBlockCategoryGui\Communication\DataProvider;
 interface CategorySlotBlockDataProviderInterface
 {
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions(): array;
 }

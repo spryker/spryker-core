@@ -27,7 +27,7 @@ interface ProductConfigurationClientInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer $productConfiguratorResponseProcessorResponseTransfer
-     * @param array $configuratorResponseData
+     * @param array<string, mixed> $configuratorResponseData
      *
      * @return \Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer
      */
@@ -78,7 +78,7 @@ interface ProductConfigurationClientInterface
      *
      * @api
      *
-     * @param array $configuratorResponseData
+     * @param array<string, mixed> $configuratorResponseData
      * @param \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer

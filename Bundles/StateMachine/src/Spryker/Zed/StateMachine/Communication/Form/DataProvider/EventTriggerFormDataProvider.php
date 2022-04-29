@@ -42,7 +42,7 @@ class EventTriggerFormDataProvider
      * @param int $idState
      * @param string $event
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions(
         int $identifier,

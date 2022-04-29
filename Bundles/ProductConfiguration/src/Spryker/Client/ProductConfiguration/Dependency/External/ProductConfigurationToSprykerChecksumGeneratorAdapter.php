@@ -23,7 +23,7 @@ class ProductConfigurationToSprykerChecksumGeneratorAdapter implements ProductCo
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param string $encryptionKey
      *
      * @return string

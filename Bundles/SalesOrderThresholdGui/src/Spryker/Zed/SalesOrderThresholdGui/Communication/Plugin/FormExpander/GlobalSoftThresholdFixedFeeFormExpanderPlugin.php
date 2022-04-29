@@ -87,7 +87,7 @@ class GlobalSoftThresholdFixedFeeFormExpanderPlugin extends AbstractPlugin imple
      * @api
      *
      * @param \Generated\Shared\Transfer\SalesOrderThresholdValueTransfer $salesOrderThresholdValueTransfer
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */
@@ -103,7 +103,7 @@ class GlobalSoftThresholdFixedFeeFormExpanderPlugin extends AbstractPlugin imple
      *
      * @api
      *
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param \Generated\Shared\Transfer\SalesOrderThresholdValueTransfer $salesOrderThresholdValueTransfer
      *
      * @return \Generated\Shared\Transfer\SalesOrderThresholdValueTransfer

@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\CustomerUserConnectionUpdateTransfer;
 class CustomerUserConnectorFormDataProvider
 {
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions()
     {

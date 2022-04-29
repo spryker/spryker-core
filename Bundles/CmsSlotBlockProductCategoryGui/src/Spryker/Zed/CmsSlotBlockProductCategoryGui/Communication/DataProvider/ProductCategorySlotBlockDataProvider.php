@@ -57,7 +57,7 @@ class ProductCategorySlotBlockDataProvider implements ProductCategorySlotBlockDa
     /**
      * @param array<int>|null $productAbstractIds
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions(?array $productAbstractIds = []): array
     {

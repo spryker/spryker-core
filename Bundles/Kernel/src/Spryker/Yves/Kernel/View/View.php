@@ -29,7 +29,7 @@ class View implements ViewInterface, WidgetContainerInterface
     protected $data;
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param array<string> $widgetPlugins
      * @param string|null $template
      */

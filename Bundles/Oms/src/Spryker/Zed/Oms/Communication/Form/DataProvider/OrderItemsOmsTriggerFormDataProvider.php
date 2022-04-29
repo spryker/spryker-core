@@ -21,7 +21,7 @@ class OrderItemsOmsTriggerFormDataProvider
      * @param string $event
      * @param array<int> $salesOrderItemIds
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions(string $redirectUrl, string $event, array $salesOrderItemIds): array
     {

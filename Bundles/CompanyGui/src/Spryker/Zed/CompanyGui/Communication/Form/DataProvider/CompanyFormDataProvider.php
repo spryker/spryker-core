@@ -44,7 +44,7 @@ class CompanyFormDataProvider
     /**
      * @param int|null $idCompany
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions(?int $idCompany = null): array
     {

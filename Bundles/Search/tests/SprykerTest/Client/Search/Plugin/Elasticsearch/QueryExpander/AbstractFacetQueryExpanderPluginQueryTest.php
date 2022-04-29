@@ -31,7 +31,7 @@ abstract class AbstractFacetQueryExpanderPluginQueryTest extends AbstractQueryEx
      *
      * @param \Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface $searchConfig
      * @param \Elastica\Query\BoolQuery $expectedQuery
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return void
      */

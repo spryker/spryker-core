@@ -37,7 +37,7 @@ class ProductSetSearchDataMapper implements ProductSetSearchDataMapperInterface
     ];
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return array
@@ -54,7 +54,7 @@ class ProductSetSearchDataMapper implements ProductSetSearchDataMapperInterface
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */
@@ -66,7 +66,7 @@ class ProductSetSearchDataMapper implements ProductSetSearchDataMapperInterface
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */

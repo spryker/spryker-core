@@ -34,7 +34,7 @@ class ContentProductSetDataImportHelper extends Module
 
     /**
      * @param int $idLocale
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return void
      */

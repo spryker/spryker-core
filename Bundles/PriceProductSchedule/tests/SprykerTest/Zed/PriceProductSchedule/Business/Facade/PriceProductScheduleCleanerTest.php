@@ -58,7 +58,7 @@ class PriceProductScheduleCleanerTest extends Unit
     /**
      * @dataProvider priceProductScheduleCleanerShouldRemoveAllEntitiesBeforeDaysRetainedDataProvider
      *
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param int $daysRetained
      * @param int $expectedCount
      *

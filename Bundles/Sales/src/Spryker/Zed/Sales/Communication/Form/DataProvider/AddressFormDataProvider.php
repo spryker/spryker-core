@@ -61,7 +61,7 @@ class AddressFormDataProvider extends AbstractSalesFormDataProvider
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions()
     {

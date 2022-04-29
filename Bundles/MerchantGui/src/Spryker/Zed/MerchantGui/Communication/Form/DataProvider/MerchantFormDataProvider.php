@@ -123,7 +123,7 @@ class MerchantFormDataProvider
     /**
      * @param int|null $idMerchant
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions(?int $idMerchant = null): array
     {

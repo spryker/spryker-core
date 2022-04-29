@@ -79,7 +79,7 @@ class ContentFormDataProvider implements ContentFormDataProviderInterface
      * @param string $termKey
      * @param \Generated\Shared\Transfer\ContentTransfer|null $contentTransfer
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions(string $termKey, ?ContentTransfer $contentTransfer = null): array
     {

@@ -200,7 +200,7 @@ class UrlCollector extends AbstractStoragePropelCollector
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @throws \RuntimeException
      *
@@ -236,7 +236,7 @@ class UrlCollector extends AbstractStoragePropelCollector
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param string $localeName
      *
      * @return string
@@ -358,7 +358,7 @@ class UrlCollector extends AbstractStoragePropelCollector
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param \Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface $storeReader
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $storeWriter
      * @param string $localeName

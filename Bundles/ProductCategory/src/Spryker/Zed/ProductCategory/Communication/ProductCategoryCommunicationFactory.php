@@ -79,7 +79,7 @@ class ProductCategoryCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \Symfony\Component\Form\FormInterface
      */

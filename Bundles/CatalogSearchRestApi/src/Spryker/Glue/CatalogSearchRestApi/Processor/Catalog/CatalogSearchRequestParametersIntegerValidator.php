@@ -102,7 +102,7 @@ class CatalogSearchRequestParametersIntegerValidator implements CatalogSearchReq
 
     /**
      * @param string $key
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param mixed $default
      *
      * @return mixed|null

@@ -10,7 +10,7 @@ namespace Spryker\Shared\Log\Sanitizer;
 interface SanitizerInterface
 {
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */

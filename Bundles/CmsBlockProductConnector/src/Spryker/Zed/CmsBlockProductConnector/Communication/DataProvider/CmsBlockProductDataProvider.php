@@ -53,7 +53,7 @@ class CmsBlockProductDataProvider
     /**
      * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions(CmsBlockTransfer $cmsBlockTransfer)
     {

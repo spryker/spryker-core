@@ -50,7 +50,7 @@ class ConfigurableBundleTemplatePageSearchResultFormatterPlugin extends Abstract
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer
      */

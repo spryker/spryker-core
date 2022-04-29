@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 interface ReturnReasonSearchDataMapperInterface
 {
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return array

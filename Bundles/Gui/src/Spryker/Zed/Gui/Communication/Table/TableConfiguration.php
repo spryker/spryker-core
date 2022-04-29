@@ -35,7 +35,7 @@ class TableConfiguration
     protected $footer = [];
 
     /**
-     * @var array
+     * @var array<string>
      */
     protected $extraColumns = [];
 
@@ -47,17 +47,17 @@ class TableConfiguration
     /**
      * If null it will use all fields defined in $header.
      *
-     * @var array|null
+     * @var array<string>|null
      */
     protected $searchableFields;
 
     /**
-     * @var array
+     * @var array<string>
      */
     protected $sortableFields = [];
 
     /**
-     * @var array|null
+     * @var array<string, string>|null
      */
     protected $defaultSortField;
 
@@ -217,7 +217,7 @@ class TableConfiguration
     }
 
     /**
-     * @param array $extraColumns
+     * @param array<string> $extraColumns
      *
      * @return $this
      */
@@ -229,7 +229,7 @@ class TableConfiguration
     }
 
     /**
-     * @return array
+     * @return array<string>
      */
     public function getExtraColumns()
     {
@@ -237,7 +237,7 @@ class TableConfiguration
     }
 
     /**
-     * @return array
+     * @return array<string>
      */
     public function getSortable()
     {
@@ -245,7 +245,7 @@ class TableConfiguration
     }
 
     /**
-     * @param array $sortable
+     * @param array<string> $sortable
      *
      * @return void
      */
@@ -255,7 +255,7 @@ class TableConfiguration
     }
 
     /**
-     * @return array
+     * @return array<string>
      */
     public function getSearchable()
     {
@@ -263,7 +263,7 @@ class TableConfiguration
     }
 
     /**
-     * @param array $searchable
+     * @param array<string> $searchable
      *
      * @return void
      */
@@ -320,7 +320,7 @@ class TableConfiguration
     }
 
     /**
-     * @return array
+     * @return array<string, string>
      */
     public function getDefaultSortField()
     {

@@ -40,7 +40,7 @@ class ZedRequestClientTester extends Actor
     }
 
     /**
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return void
      */

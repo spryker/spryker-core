@@ -18,7 +18,7 @@ interface OptionsForItemInterface
      *
      * @api
      *
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return array
      */

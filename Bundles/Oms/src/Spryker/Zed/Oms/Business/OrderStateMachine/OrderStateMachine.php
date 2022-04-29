@@ -251,7 +251,7 @@ class OrderStateMachine implements OrderStateMachineInterface
     /**
      * @param string $eventId
      * @param array $orderItemIds
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */
@@ -268,7 +268,7 @@ class OrderStateMachine implements OrderStateMachineInterface
     /**
      * @param string $eventId
      * @param int $orderItemId
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array|null
      */
@@ -284,7 +284,7 @@ class OrderStateMachine implements OrderStateMachineInterface
 
     /**
      * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */
@@ -305,7 +305,7 @@ class OrderStateMachine implements OrderStateMachineInterface
 
     /**
      * @param array<int> $orderItemIds
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */

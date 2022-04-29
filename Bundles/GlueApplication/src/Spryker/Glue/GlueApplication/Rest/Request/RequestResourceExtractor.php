@@ -96,7 +96,7 @@ class RequestResourceExtractor implements RequestResourceExtractorInterface
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null
      */

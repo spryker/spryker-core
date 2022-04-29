@@ -59,7 +59,7 @@ class ProductGroupStorageReader implements ProductGroupStorageReaderInterface
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \Generated\Shared\Transfer\ProductGroupTransfer
      */

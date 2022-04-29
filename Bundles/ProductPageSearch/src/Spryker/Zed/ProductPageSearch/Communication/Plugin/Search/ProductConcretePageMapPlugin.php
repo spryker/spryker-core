@@ -36,7 +36,7 @@ class ProductConcretePageMapPlugin extends AbstractPlugin implements NamedPageMa
      * @api
      *
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Generated\Shared\Transfer\PageMapTransfer

@@ -22,7 +22,7 @@ class MerchantStorageClient extends AbstractClient implements MerchantStorageCli
      *
      * @api
      *
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \Generated\Shared\Transfer\MerchantStorageTransfer
      */

@@ -33,7 +33,7 @@ class MessageTranslator implements MessageTranslatorInterface
 
     /**
      * @param string $keyName
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return string
      */

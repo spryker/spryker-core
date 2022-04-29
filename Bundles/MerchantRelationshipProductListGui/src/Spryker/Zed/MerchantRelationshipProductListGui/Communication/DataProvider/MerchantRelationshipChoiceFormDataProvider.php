@@ -32,7 +32,7 @@ class MerchantRelationshipChoiceFormDataProvider
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions(): array
     {

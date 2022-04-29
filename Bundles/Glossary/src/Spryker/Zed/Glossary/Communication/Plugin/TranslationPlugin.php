@@ -38,7 +38,7 @@ class TranslationPlugin extends AbstractPlugin implements TranslationPluginInter
      * @api
      *
      * @param string $keyName
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return string
      */

@@ -16,7 +16,7 @@ use Spryker\Shared\Log\Dependency\Plugin\LogProcessorPluginInterface;
 class PsrLogMessageProcessorPlugin extends AbstractPlugin implements LogProcessorPluginInterface
 {
     /**
-     * @param array $data
+     * @param array<mixed> $data
      *
      * @return array
      */

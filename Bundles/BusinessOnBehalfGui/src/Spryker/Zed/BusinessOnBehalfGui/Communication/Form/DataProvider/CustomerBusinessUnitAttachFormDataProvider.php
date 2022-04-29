@@ -83,7 +83,7 @@ class CustomerBusinessUnitAttachFormDataProvider
     /**
      * @param int $idCompany
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions(int $idCompany): array
     {

@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 abstract class ApiRequestTransferFilterAbstractPlugin extends AbstractPlugin implements ApiRequestTransferFilterPluginInterface
 {
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param array $allowedKeys
      *
      * @return array

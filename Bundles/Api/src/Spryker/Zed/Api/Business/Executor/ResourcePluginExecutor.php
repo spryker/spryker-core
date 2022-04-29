@@ -40,7 +40,7 @@ class ResourcePluginExecutor implements ResourcePluginExecutorInterface
      * @param string $resource
      * @param string $method
      * @param int|null $id
-     * @param array $params
+     * @param array<mixed> $params
      *
      * @throws \Spryker\Zed\Api\Business\Exception\ApiDispatchingException
      *
@@ -77,7 +77,7 @@ class ResourcePluginExecutor implements ResourcePluginExecutorInterface
     /**
      * @param \Spryker\Zed\Api\Dependency\Plugin\ApiResourcePluginInterface $plugin
      * @param int|null $resourceId
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return \Generated\Shared\Transfer\ApiOptionsTransfer
      */
@@ -97,7 +97,7 @@ class ResourcePluginExecutor implements ResourcePluginExecutorInterface
 
     /**
      * @param \Spryker\Zed\Api\Dependency\Plugin\ApiResourcePluginInterface $plugin
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return array
      */
@@ -118,7 +118,7 @@ class ResourcePluginExecutor implements ResourcePluginExecutorInterface
 
     /**
      * @param \Spryker\Zed\Api\Dependency\Plugin\ApiResourcePluginInterface $plugin
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return array
      */

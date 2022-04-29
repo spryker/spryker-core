@@ -242,7 +242,7 @@ class SearchClient extends AbstractClient implements SearchClientInterface
      *
      * @deprecated Use {@link \Spryker\Client\Search\SearchClient::writeDocument()} instead.
      *
-     * @param array $dataSet
+     * @param array<string, mixed> $dataSet
      * @param string|null $typeName
      * @param string|null $indexName
      *
@@ -282,7 +282,7 @@ class SearchClient extends AbstractClient implements SearchClientInterface
      *
      * @deprecated Use {@link \Spryker\Client\Search\SearchClient::deleteDocument()} instead.
      *
-     * @param array $dataSet
+     * @param array<string, mixed> $dataSet
      * @param string|null $typeName
      * @param string|null $indexName
      *

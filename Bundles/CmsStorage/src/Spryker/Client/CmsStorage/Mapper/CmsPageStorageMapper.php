@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\LocaleCmsPageDataTransfer;
 class CmsPageStorageMapper implements CmsPageStorageMapperInterface
 {
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \Generated\Shared\Transfer\LocaleCmsPageDataTransfer
      */

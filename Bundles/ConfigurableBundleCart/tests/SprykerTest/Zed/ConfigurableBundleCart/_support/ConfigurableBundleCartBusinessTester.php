@@ -33,7 +33,7 @@ class ConfigurableBundleCartBusinessTester extends Actor
     use _generated\ConfigurableBundleCartBusinessTesterActions;
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer
      */
@@ -50,7 +50,7 @@ class ConfigurableBundleCartBusinessTester extends Actor
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer
      */
@@ -66,7 +66,7 @@ class ConfigurableBundleCartBusinessTester extends Actor
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */
@@ -92,7 +92,7 @@ class ConfigurableBundleCartBusinessTester extends Actor
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */

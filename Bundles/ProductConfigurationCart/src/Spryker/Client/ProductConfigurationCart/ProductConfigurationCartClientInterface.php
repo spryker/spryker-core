@@ -25,7 +25,7 @@ interface ProductConfigurationCartClientInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
@@ -64,7 +64,7 @@ interface ProductConfigurationCartClientInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer
-     * @param array $configuratorResponseData
+     * @param array<string, mixed> $configuratorResponseData
      *
      * @return \Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer
      */

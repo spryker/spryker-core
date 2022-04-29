@@ -17,7 +17,7 @@ use Spryker\Shared\MerchantSearch\MerchantSearchConfig;
 class MerchantSearchDataMapper implements MerchantSearchDataMapperInterface
 {
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */
@@ -35,7 +35,7 @@ class MerchantSearchDataMapper implements MerchantSearchDataMapperInterface
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */
@@ -93,7 +93,7 @@ class MerchantSearchDataMapper implements MerchantSearchDataMapperInterface
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */

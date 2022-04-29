@@ -10,7 +10,7 @@ namespace Spryker\Zed\Propel\Dependency\Facade;
 interface PropelToLogInterface
 {
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */

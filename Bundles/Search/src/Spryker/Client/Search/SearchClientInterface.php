@@ -189,7 +189,7 @@ interface SearchClientInterface
      *
      * @deprecated Use {@link \Spryker\Client\Search\SearchClientInterface::writeDocument()} instead.
      *
-     * @param array $dataSet
+     * @param array<string, mixed> $dataSet
      * @param string|null $typeName
      * @param string|null $indexName
      *
@@ -219,7 +219,7 @@ interface SearchClientInterface
      *
      * @deprecated Use {@link \Spryker\Client\Search\SearchClientInterface::deleteDocument()} instead.
      *
-     * @param array $dataSet
+     * @param array<string, mixed> $dataSet
      * @param string|null $typeName
      * @param string|null $indexName
      *

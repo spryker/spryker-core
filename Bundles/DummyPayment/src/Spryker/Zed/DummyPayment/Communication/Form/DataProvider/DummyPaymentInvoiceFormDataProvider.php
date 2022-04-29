@@ -15,7 +15,7 @@ class DummyPaymentInvoiceFormDataProvider
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions($quoteTransfer)
     {

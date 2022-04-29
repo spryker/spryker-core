@@ -28,7 +28,7 @@ abstract class AbstractMerchantRelationshipThresholdDataProvider
 
     /**
      * @param \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */
@@ -48,7 +48,7 @@ abstract class AbstractMerchantRelationshipThresholdDataProvider
 
     /**
      * @param \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */

@@ -76,7 +76,7 @@ class ProductAttributeGuiCommunicationFactory extends AbstractCommunicationFacto
     /**
      * @deprecated Use {@link getAttributeForm()} instead.
      *
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
@@ -87,7 +87,7 @@ class ProductAttributeGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
@@ -98,7 +98,7 @@ class ProductAttributeGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
@@ -152,7 +152,7 @@ class ProductAttributeGuiCommunicationFactory extends AbstractCommunicationFacto
     /**
      * @deprecated Use {@link getAttributeTranslationFormCollection()} instead.
      *
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
@@ -163,7 +163,7 @@ class ProductAttributeGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface

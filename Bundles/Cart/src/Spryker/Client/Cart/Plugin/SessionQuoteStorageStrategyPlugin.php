@@ -44,7 +44,7 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
      *  - Adds messenger error message and returns unchanged QuoteTransfer if quote is locked.
      *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
@@ -70,7 +70,7 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
      *  - Returns update quote.
      *
      * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
@@ -101,7 +101,7 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
      *  - Adds messenger error message and returns unchanged QuoteTransfer if quote is locked.
      *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */

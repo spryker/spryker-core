@@ -47,7 +47,7 @@ class ProductRelationTypeDataProvider
     /**
      * @param bool $isProductRelationKeyDisabled
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions(bool $isProductRelationKeyDisabled = false): array
     {

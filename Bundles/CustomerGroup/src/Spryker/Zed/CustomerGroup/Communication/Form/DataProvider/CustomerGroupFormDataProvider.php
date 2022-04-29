@@ -55,7 +55,7 @@ class CustomerGroupFormDataProvider
     /**
      * @param int|null $idCustomerGroup
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions($idCustomerGroup = null)
     {

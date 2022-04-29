@@ -38,7 +38,7 @@ class SortedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
      *
      * @param \Spryker\Client\SearchElasticsearch\Config\SearchConfigInterface $searchConfigMock
      * @param \Elastica\Query $expectedQuery
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return void
      */

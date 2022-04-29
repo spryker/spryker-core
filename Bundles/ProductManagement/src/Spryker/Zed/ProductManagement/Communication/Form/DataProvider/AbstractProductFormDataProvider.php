@@ -500,7 +500,7 @@ class AbstractProductFormDataProvider
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param array $values
      * @param bool $defaultValue
      *

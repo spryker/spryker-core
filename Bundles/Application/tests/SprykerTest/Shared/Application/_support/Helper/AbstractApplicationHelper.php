@@ -124,7 +124,7 @@ abstract class AbstractApplicationHelper extends Framework
 
     /**
      * @param string $uri
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return void
      */

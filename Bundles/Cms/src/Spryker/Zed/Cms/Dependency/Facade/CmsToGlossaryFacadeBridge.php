@@ -27,7 +27,7 @@ class CmsToGlossaryFacadeBridge implements CmsToGlossaryFacadeInterface
 
     /**
      * @param int $idKey
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return string
      */

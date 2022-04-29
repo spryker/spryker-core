@@ -10,7 +10,7 @@ namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Writer;
 interface DocumentationWriterInterface
 {
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return void
      */

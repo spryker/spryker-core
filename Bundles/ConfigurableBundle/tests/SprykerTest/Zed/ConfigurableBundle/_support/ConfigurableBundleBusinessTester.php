@@ -36,7 +36,7 @@ class ConfigurableBundleBusinessTester extends Actor
     use _generated\ConfigurableBundleBusinessTesterActions;
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer
      */
@@ -53,7 +53,7 @@ class ConfigurableBundleBusinessTester extends Actor
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer
      */
@@ -82,7 +82,7 @@ class ConfigurableBundleBusinessTester extends Actor
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */
@@ -108,7 +108,7 @@ class ConfigurableBundleBusinessTester extends Actor
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */
@@ -154,7 +154,7 @@ class ConfigurableBundleBusinessTester extends Actor
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \ArrayObject<int, \Generated\Shared\Transfer\ConfigurableBundleTemplateTranslationTransfer>
      */
@@ -173,7 +173,7 @@ class ConfigurableBundleBusinessTester extends Actor
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \ArrayObject<int, \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTranslationTransfer>
      */

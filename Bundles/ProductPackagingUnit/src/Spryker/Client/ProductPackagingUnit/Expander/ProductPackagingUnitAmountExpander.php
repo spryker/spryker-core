@@ -26,7 +26,7 @@ class ProductPackagingUnitAmountExpander implements ProductPackagingUnitAmountEx
 
     /**
      * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return \Generated\Shared\Transfer\PersistentCartChangeTransfer
      */
@@ -49,7 +49,7 @@ class ProductPackagingUnitAmountExpander implements ProductPackagingUnitAmountEx
 
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
@@ -70,7 +70,7 @@ class ProductPackagingUnitAmountExpander implements ProductPackagingUnitAmountEx
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return void
      */
@@ -96,7 +96,7 @@ class ProductPackagingUnitAmountExpander implements ProductPackagingUnitAmountEx
     }
 
     /**
-     * @param array $params
+     * @param array<string, mixed> $params
      * @param string $sku
      *
      * @return string|null
@@ -111,7 +111,7 @@ class ProductPackagingUnitAmountExpander implements ProductPackagingUnitAmountEx
     }
 
     /**
-     * @param array $params
+     * @param array<string, mixed> $params
      * @param string $sku
      *
      * @return int|null

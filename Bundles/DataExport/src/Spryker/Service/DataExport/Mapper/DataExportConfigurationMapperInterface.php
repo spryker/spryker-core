@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\DataExportConfigurationsTransfer;
 interface DataExportConfigurationMapperInterface
 {
     /**
-     * @param array $dataExportConfigurationData
+     * @param array<string, mixed> $dataExportConfigurationData
      * @param \Generated\Shared\Transfer\DataExportConfigurationsTransfer $dataExportConfigurationsTransfer
      *
      * @return \Generated\Shared\Transfer\DataExportConfigurationsTransfer

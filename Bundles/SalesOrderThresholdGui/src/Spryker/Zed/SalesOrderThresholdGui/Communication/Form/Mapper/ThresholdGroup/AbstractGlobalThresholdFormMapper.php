@@ -37,7 +37,7 @@ abstract class AbstractGlobalThresholdFormMapper
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param \Generated\Shared\Transfer\SalesOrderThresholdTransfer $salesOrderThresholdTransfer
      *
      * @return \Generated\Shared\Transfer\SalesOrderThresholdTransfer

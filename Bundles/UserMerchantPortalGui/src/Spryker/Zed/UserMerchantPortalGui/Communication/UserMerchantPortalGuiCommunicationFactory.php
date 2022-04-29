@@ -27,7 +27,7 @@ use Symfony\Component\Validator\Constraint;
 class UserMerchantPortalGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface

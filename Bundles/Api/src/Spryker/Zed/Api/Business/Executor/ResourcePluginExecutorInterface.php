@@ -13,7 +13,7 @@ interface ResourcePluginExecutorInterface
      * @param string $resource
      * @param string $method
      * @param int|null $id
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return \Generated\Shared\Transfer\ApiOptionsTransfer|\Generated\Shared\Transfer\ApiItemTransfer|\Generated\Shared\Transfer\ApiCollectionTransfer
      */

@@ -157,7 +157,7 @@ class ConfigurableBundleCartsRestApiBusinessTester extends Actor
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer
      */
@@ -174,7 +174,7 @@ class ConfigurableBundleCartsRestApiBusinessTester extends Actor
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer
      */
@@ -190,7 +190,7 @@ class ConfigurableBundleCartsRestApiBusinessTester extends Actor
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */
@@ -216,7 +216,7 @@ class ConfigurableBundleCartsRestApiBusinessTester extends Actor
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */

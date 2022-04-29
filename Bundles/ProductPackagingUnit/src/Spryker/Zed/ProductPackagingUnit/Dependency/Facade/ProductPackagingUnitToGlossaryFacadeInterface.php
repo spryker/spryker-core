@@ -72,7 +72,7 @@ interface ProductPackagingUnitToGlossaryFacadeInterface
 
     /**
      * @param string $keyName
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException

@@ -81,8 +81,8 @@ class CsvReader implements CsvReaderInterface
     }
 
     /**
-     * @param array $columns
-     * @param array $data
+     * @param array<string> $columns
+     * @param array<mixed> $data
      *
      * @return array
      */
@@ -101,7 +101,7 @@ class CsvReader implements CsvReaderInterface
 
     /**
      * @param array $columns
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param string $filename
      * @param int $lineNumber
      *

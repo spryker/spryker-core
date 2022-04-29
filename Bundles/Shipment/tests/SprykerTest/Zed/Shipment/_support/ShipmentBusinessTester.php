@@ -111,7 +111,7 @@ class ShipmentBusinessTester extends Actor
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param array|null $idFilter
      *
      * @return void

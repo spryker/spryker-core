@@ -169,7 +169,7 @@ class UrlStorageWriter implements UrlStorageWriterInterface
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array|null
      */

@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductApi\Business\Mapper;
 interface EntityMapperInterface
 {
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstract
      */

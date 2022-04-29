@@ -164,7 +164,7 @@ class ProductAttributesMapper implements ProductAttributesMapperInterface
 
     /**
      * @param array $attributesTableInitialData
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */

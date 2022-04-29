@@ -32,7 +32,7 @@ class TableHelper extends Module
 
     /**
      * @param string $uri
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return void
      */

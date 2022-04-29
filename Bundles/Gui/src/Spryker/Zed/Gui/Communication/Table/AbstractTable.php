@@ -473,7 +473,7 @@ abstract class AbstractTable
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return void
      */
@@ -550,9 +550,9 @@ abstract class AbstractTable
     }
 
     /**
-     * @param array $row
-     * @param array $originalRow
-     * @param array $extraColumns
+     * @param array<mixed> $row
+     * @param array<mixed> $originalRow
+     * @param array<string> $extraColumns
      *
      * @return array
      */
@@ -569,7 +569,7 @@ abstract class AbstractTable
     }
 
     /**
-     * @param array $data
+     * @param array<mixed> $data
      *
      * @return void
      */
@@ -579,7 +579,7 @@ abstract class AbstractTable
     }
 
     /**
-     * @return array
+     * @return array<mixed>
      */
     public function getData()
     {
@@ -794,7 +794,7 @@ abstract class AbstractTable
     }
 
     /**
-     * @param array $dataArray
+     * @param array<string, mixed> $dataArray
      * @param string $key
      * @param string $defaultValue
      *

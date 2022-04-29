@@ -23,7 +23,7 @@ class SessionStorageOptions implements SessionStorageOptionsInterface
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions()
     {

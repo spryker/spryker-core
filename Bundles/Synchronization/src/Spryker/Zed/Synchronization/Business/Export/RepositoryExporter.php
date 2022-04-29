@@ -203,7 +203,7 @@ class RepositoryExporter implements ExporterInterface
     /**
      * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface $plugin
      * @param string $synchronizationKey
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \Generated\Shared\Transfer\SynchronizationQueueMessageTransfer
      */

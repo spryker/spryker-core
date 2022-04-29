@@ -47,7 +47,7 @@ abstract class AbstractProductSearchDataMapper
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return array
@@ -55,7 +55,7 @@ abstract class AbstractProductSearchDataMapper
     abstract public function mapProductDataToSearchData(array $data, LocaleTransfer $localeTransfer): array;
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return array
@@ -285,7 +285,7 @@ abstract class AbstractProductSearchDataMapper
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Generated\Shared\Transfer\PageMapTransfer

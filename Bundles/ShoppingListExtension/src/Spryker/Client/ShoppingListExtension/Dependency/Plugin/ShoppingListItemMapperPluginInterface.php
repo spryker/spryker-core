@@ -17,7 +17,7 @@ interface ShoppingListItemMapperPluginInterface
      *
      * @api
      *
-     * @param array $params
+     * @param array<string, mixed> $params
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer

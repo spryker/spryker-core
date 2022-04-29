@@ -41,7 +41,7 @@ class ReadSharedCartPermissionPlugin extends AbstractPlugin implements Executabl
      *
      * @api
      *
-     * @param array $configuration
+     * @param array<string, mixed> $configuration
      * @param int|null $context ID quote.
      *
      * @return bool

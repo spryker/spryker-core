@@ -298,7 +298,7 @@ class ProductAbstractStorageReader implements ProductAbstractStorageReaderInterf
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */

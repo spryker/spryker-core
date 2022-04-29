@@ -15,7 +15,7 @@ interface FormatEncoderInterface
     public function getFormatName(): string;
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return string|null
      */

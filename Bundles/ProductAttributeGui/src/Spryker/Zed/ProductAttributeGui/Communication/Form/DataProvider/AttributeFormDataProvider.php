@@ -64,7 +64,7 @@ class AttributeFormDataProvider
     /**
      * @param int|null $idProductManagementAttribute
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions($idProductManagementAttribute = null)
     {

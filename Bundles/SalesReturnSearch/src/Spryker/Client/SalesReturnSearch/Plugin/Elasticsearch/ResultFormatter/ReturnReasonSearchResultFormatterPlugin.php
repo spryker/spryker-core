@@ -50,7 +50,7 @@ class ReturnReasonSearchResultFormatterPlugin extends AbstractElasticsearchResul
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \Generated\Shared\Transfer\ReturnReasonSearchTransfer
      */

@@ -57,7 +57,7 @@ class ProductConcreteCatalogSearchResultFormatterPlugin extends AbstractElastics
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer
      */

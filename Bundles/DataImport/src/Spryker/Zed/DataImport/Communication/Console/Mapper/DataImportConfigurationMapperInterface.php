@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\DataImportConfigurationTransfer;
 interface DataImportConfigurationMapperInterface
 {
     /**
-     * @param array $dataImportConfigurationData
+     * @param array<string, mixed> $dataImportConfigurationData
      * @param \Generated\Shared\Transfer\DataImportConfigurationTransfer $dataImportConfigurationTransfer
      *
      * @return \Generated\Shared\Transfer\DataImportConfigurationTransfer

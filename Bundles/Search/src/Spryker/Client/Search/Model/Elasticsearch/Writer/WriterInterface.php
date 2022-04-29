@@ -10,7 +10,7 @@ namespace Spryker\Client\Search\Model\Elasticsearch\Writer;
 interface WriterInterface
 {
     /**
-     * @param array $dataSet
+     * @param array<string, mixed> $dataSet
      * @param string|null $typeName
      * @param string|null $indexName
      *
@@ -26,7 +26,7 @@ interface WriterInterface
     public function writeBulk(array $searchDocumentTransfers): bool;
 
     /**
-     * @param array $dataSet
+     * @param array<string, mixed> $dataSet
      * @param string|null $typeName
      * @param string|null $indexName
      *

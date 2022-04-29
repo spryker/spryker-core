@@ -10,7 +10,7 @@ namespace Spryker\Shared\Session\Model;
 interface SessionStorageInterface
 {
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions();
 

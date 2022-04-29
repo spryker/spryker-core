@@ -22,7 +22,7 @@ class OrderDataProvider implements FormDataProviderInterface
     /**
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $transfer
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions($transfer)
     {

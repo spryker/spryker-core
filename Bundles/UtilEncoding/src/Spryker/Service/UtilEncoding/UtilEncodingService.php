@@ -56,7 +56,7 @@ class UtilEncodingService extends AbstractService implements UtilEncodingService
      *
      * @api
      *
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param string $format
      *
      * @throws \Spryker\Service\UtilEncoding\Exception\FormatNotSupportedException

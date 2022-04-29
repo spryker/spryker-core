@@ -168,7 +168,7 @@ class AssetStorageEntityManager extends AbstractEntityManager implements AssetSt
     /**
      * @param \Generated\Shared\Transfer\AssetTransfer $assetTransfer
      * @param string $storeName
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return void
      */

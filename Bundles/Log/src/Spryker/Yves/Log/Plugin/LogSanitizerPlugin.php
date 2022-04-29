@@ -15,7 +15,7 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 class LogSanitizerPlugin extends AbstractPlugin
 {
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */

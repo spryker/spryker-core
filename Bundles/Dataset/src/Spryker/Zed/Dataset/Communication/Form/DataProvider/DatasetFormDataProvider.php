@@ -62,7 +62,7 @@ class DatasetFormDataProvider
     /**
      * @param int|null $idDataset
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions(?int $idDataset = null): array
     {

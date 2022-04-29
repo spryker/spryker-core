@@ -44,7 +44,7 @@ class ProductConfiguratorCheckSumResponseValidator implements ProductConfigurato
 
     /**
      * @param \Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer $productConfiguratorResponseProcessorResponseTransfer
-     * @param array $configuratorResponseData
+     * @param array<string, mixed> $configuratorResponseData
      *
      * @return \Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer
      */
@@ -75,7 +75,7 @@ class ProductConfiguratorCheckSumResponseValidator implements ProductConfigurato
     }
 
     /**
-     * @param array $configuratorResponseData
+     * @param array<string, mixed> $configuratorResponseData
      *
      * @return array
      */

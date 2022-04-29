@@ -30,7 +30,7 @@ class ProductConfigurationResponseMapper implements ProductConfigurationResponse
     }
 
     /**
-     * @param array $configuratorResponseData
+     * @param array<string, mixed> $configuratorResponseData
      * @param \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer

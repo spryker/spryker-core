@@ -25,7 +25,7 @@ class Encoder implements EncoderInterface
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param string $formatName
      *
      * @throws \Spryker\Service\UtilEncoding\Exception\FormatNotSupportedException
