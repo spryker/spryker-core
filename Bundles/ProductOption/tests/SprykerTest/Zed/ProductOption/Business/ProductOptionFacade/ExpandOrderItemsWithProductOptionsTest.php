@@ -76,6 +76,29 @@ class ExpandOrderItemsWithProductOptionsTest extends Unit
     /**
      * @return void
      */
+    public function testExpandOrderItemsWithProductOptionsExpandOrderItemsWithProdcutOptionValue(): void
+    {
+        // Arrange
+        $orderTransfer = $this->tester->createOrderWithProductOptions(static::DEFAULT_OMS_PROCESS_NAME);
+        /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
+        $itemTransfer = $orderTransfer->getItems()->getIterator()->current();
+
+        $itemTransfer->setProductOptions(new ArrayObject())
+            ->setUnitPriceToPayAggregation(null)
+            ->setSumProductOptionPriceAggregation(null);
+
+        // Act
+        $itemTransfers = $this->tester
+            ->getFacade()
+            ->expandOrderItemsWithProductOptions($orderTransfer->getItems()->getArrayCopy());
+
+        // Assert
+        $this->assertNotEmpty($itemTransfers[0]->getProductOptions()->offsetGet(0)->getIdProductOptionValue());
+    }
+
+    /**
+     * @return void
+     */
     public function testExpandOrderItemsWithProductOptionsWithoutSalesOrderItemId(): void
     {
         // Act
