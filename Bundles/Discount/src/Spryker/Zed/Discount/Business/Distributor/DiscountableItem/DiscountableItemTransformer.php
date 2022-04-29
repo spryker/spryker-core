@@ -138,9 +138,14 @@ class DiscountableItemTransformer implements DiscountableItemTransformerInterfac
         DiscountTransfer $discountTransfer,
         int $iterationUnitPrice
     ): int {
+        $usedCalculatedDiscounts = [];
         foreach ($discountableItemTransfer->getOriginalItemCalculatedDiscounts() as $calculatedDiscountTransfer) {
-            if ($calculatedDiscountTransfer->getPriority() < $discountTransfer->getPriority()) {
+            if (
+                $calculatedDiscountTransfer->getPriority() < $discountTransfer->getPriority()
+                && !in_array($calculatedDiscountTransfer->getIdDiscount(), $usedCalculatedDiscounts, true)
+            ) {
                 $iterationUnitPrice -= $calculatedDiscountTransfer->getUnitAmount();
+                $usedCalculatedDiscounts[] = $calculatedDiscountTransfer->getIdDiscount();
             }
         }
 
