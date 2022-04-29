@@ -24,8 +24,8 @@
         "spryker/form": "*",
         "spryker/propel": "*",
         "spryker/router": "*",
-        "spryker/store": "*",
         "spryker/silex": "*",
+        "spryker/store": "*",
         "spryker/testify": "*",
         "spryker/validator": "*",
         "spryker/zed-navigation": "*"
