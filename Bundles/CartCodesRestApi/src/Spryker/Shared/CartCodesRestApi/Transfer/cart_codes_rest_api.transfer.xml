@@ -80,7 +80,7 @@
     </transfer>
 
     <transfer name="RestCartCodeRequestAttributes">
-        <property name="code" type="string"/>
+        <property name="code" type="string" restRequestParameter="yes"/>
     </transfer>
 
 </transfers>
