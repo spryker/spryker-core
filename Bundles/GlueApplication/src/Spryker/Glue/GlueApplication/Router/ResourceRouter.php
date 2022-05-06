@@ -58,6 +58,7 @@ class ResourceRouter implements ResourceRouterInterface
         $mainResource = array_pop($resources);
         $mainGlueResourceTransfer = (new GlueResourceTransfer())
             ->setResourceName($mainResource['type'])
+            ->setType($mainResource['type'])
             ->setId($mainResource['id'])
             ->setMethod(strtolower($glueRequestTransfer->getMethod()));
         if ($mainGlueResourceTransfer->getMethod() === strtolower(Request::METHOD_GET) && !$mainGlueResourceTransfer->getId()) {
@@ -70,6 +71,7 @@ class ResourceRouter implements ResourceRouterInterface
                 $resource['type'],
                 (new GlueResourceTransfer())
                     ->setResourceName($resource['type'])
+                    ->setType($resource['type'])
                     ->setId($resource['id'])
                     ->setMethod(strtolower($glueRequestTransfer->getMethod())),
             );

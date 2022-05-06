@@ -9,6 +9,9 @@ namespace Spryker\Zed\OauthExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\OauthGrantTypeConfigurationTransfer;
 
+/**
+ * @deprecated Use {@link \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRequestGrantTypeConfigurationProviderPluginInterface} instead.
+ */
 interface OauthGrantTypeConfigurationProviderPluginInterface
 {
     /**

@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\OauthGrantTypeConfigurationTransfer;
 use Generated\Shared\Transfer\OauthRequestTransfer;
 use Generated\Shared\Transfer\OauthScopeTransfer;
 use Generated\Shared\Transfer\OauthUserTransfer;
+use Generated\Shared\Transfer\UserIdentifierTransfer;
 use Orm\Zed\Oauth\Persistence\SpyOauthClient;
 use Orm\Zed\Oauth\Persistence\SpyOauthClientQuery;
 use Orm\Zed\OauthRevoke\Persistence\SpyOauthRefreshToken;
@@ -23,10 +24,13 @@ use Spryker\Shared\Config\Config;
 use Spryker\Shared\Oauth\OauthConstants;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Oauth\Business\Model\League\Grant\PasswordGrantType;
+use Spryker\Zed\Oauth\Business\Model\League\Grant\PasswordGrantTypeBuilder;
+use Spryker\Zed\Oauth\Business\Model\League\Grant\UserPasswordGrantTypeBuilder;
 use Spryker\Zed\Oauth\Business\OauthBusinessFactory;
 use Spryker\Zed\Oauth\OauthConfig;
 use Spryker\Zed\Oauth\OauthDependencyProvider;
 use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthGrantTypeConfigurationProviderPluginInterface;
+use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRequestGrantTypeConfigurationProviderPluginInterface;
 use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserProviderPluginInterface;
 use Spryker\Zed\OauthRevoke\Communication\Plugin\Oauth\OauthExpiredRefreshTokenRemoverPlugin;
 use Spryker\Zed\OauthRevoke\Communication\Plugin\Oauth\OauthRefreshTokenPersistencePlugin;
@@ -65,6 +69,36 @@ class OauthFacadeTest extends Unit
      * @var string
      */
     protected const CLIENT_SECRET = 'abc123';
+
+    /**
+     * @var string
+     */
+    protected const FAKE_USERNAME_BACKEND_API = 'harald@spryker.com';
+
+    /**
+     * @var string
+     */
+    protected const FAKE_USERNAME_STOREFRONT_API = 'spencor.hopkin@spryker.com';
+
+    /**
+     * @var string
+     */
+    protected const FAKE_USERNAME_INVALID = 'fake@spryker.com';
+
+    /**
+     * @var string
+     */
+    protected const GLUE_STOREFRONT_API_APPLICATION = 'GLUE_STOREFRONT_API_APPLICATION';
+
+    /**
+     * @var string
+     */
+    protected const GLUE_BACKEND_API_APPLICATION = 'GLUE_BACKEND_API_APPLICATION';
+
+    /**
+     * @var string
+     */
+    protected const IDENTIFIER_PASSWORD = 'password';
 
     /**
      * @return void
@@ -359,16 +393,104 @@ class OauthFacadeTest extends Unit
     /**
      * @return void
      */
-    protected function setUserProviderPluginMock(): void
+    public function testAccessTokenShouldReturnSuccessWhenValidForBackendApi(): void
+    {
+        //Arrange
+        $this->createTestClient();
+        $this->setOauthUserProviderPluginMock(true);
+        $this->setOauthRequestGrantTypeConfigurationProviderPluginMock(UserPasswordGrantTypeBuilder::class);
+        $oauthRequestTransfer = $this->tester->createOauthRequestTransfer(
+            static::FAKE_USERNAME_BACKEND_API,
+            static::GLUE_BACKEND_API_APPLICATION,
+        );
+
+        //Act
+        $oauthResponseTransfer = $this->getOauthFacade()->processAccessTokenRequest($oauthRequestTransfer);
+
+        //Assert
+        $this->assertTrue($oauthResponseTransfer->getIsValid());
+    }
+
+    /**
+     * @return void
+     */
+    public function testAccessTokenShouldReturnFailedWhenInvalidForBackendApi(): void
+    {
+        //Arrange
+        $this->createTestClient();
+        $this->setOauthUserProviderPluginMock(false);
+        $this->setOauthRequestGrantTypeConfigurationProviderPluginMock(UserPasswordGrantTypeBuilder::class);
+        $oauthRequestTransfer = $this->tester->createOauthRequestTransfer(
+            static::FAKE_USERNAME_INVALID,
+            static::GLUE_BACKEND_API_APPLICATION,
+        );
+
+        //Act
+        $oauthResponseTransfer = $this->getOauthFacade()->processAccessTokenRequest($oauthRequestTransfer);
+
+        //Assert
+        $this->assertFalse($oauthResponseTransfer->getIsValid());
+    }
+
+    /**
+     * @return void
+     */
+    public function testAccessTokenShouldReturnSuccessWhenValidForStorefrontApi(): void
+    {
+        //Arrange
+        $this->createTestClient();
+        $this->setUserProviderPluginMock(true);
+        $this->setOauthRequestGrantTypeConfigurationProviderPluginMock(PasswordGrantTypeBuilder::class);
+        $oauthRequestTransfer = $this->tester->createOauthRequestTransfer(
+            static::FAKE_USERNAME_STOREFRONT_API,
+            static::GLUE_STOREFRONT_API_APPLICATION,
+        );
+
+        //Act
+        $oauthResponseTransfer = $this->getOauthFacade()->processAccessTokenRequest($oauthRequestTransfer);
+
+        //Assert
+        $this->assertTrue($oauthResponseTransfer->getIsValid());
+    }
+
+    /**
+     * @return void
+     */
+    public function testAccessTokenShouldReturnFailedWhenInalidForStorefrontApi(): void
+    {
+        //Arrange
+        $this->createTestClient();
+        $this->setUserProviderPluginMock(false);
+        $this->setOauthRequestGrantTypeConfigurationProviderPluginMock(PasswordGrantTypeBuilder::class);
+        $oauthRequestTransfer = $this->tester->createOauthRequestTransfer(
+            static::FAKE_USERNAME_INVALID,
+            static::GLUE_STOREFRONT_API_APPLICATION,
+        );
+
+        //Act
+        $oauthResponseTransfer = $this->getOauthFacade()->processAccessTokenRequest($oauthRequestTransfer);
+
+        //Assert
+        $this->assertFalse($oauthResponseTransfer->getIsValid());
+    }
+
+    /**
+     * @param bool|null $isSuccess
+     *
+     * @return void
+     */
+    protected function setUserProviderPluginMock(?bool $isSuccess = true): void
     {
         $userProviderPluginMock = $this->getMockBuilder(OauthUserProviderPluginInterface::class)
             ->setMethods(['getUser', 'accept'])
             ->getMock();
 
         $userProviderPluginMock->method('getUser')->willReturnCallback(
-            function (OauthUserTransfer $oauthUserTransfer) {
-                $oauthUserTransfer->setIsSuccess(true)
-                    ->setUserIdentifier(
+            function (OauthUserTransfer $oauthUserTransfer) use ($isSuccess) {
+                $oauthUserTransfer->setIsSuccess($isSuccess);
+
+                if ($isSuccess) {
+                    $oauthUserTransfer->setUserIdentifier(
                         json_encode(
                             (new CustomerIdentifierTransfer())
                                 ->setCustomerReference('DE--test')
@@ -376,6 +498,7 @@ class OauthFacadeTest extends Unit
                                 ->toArray(),
                         ),
                     );
+                }
 
                 return $oauthUserTransfer;
             },
@@ -437,6 +560,8 @@ class OauthFacadeTest extends Unit
     }
 
     /**
+     * @deprecated Use {@link \SprykerTest\Zed\Oauth\OauthBusinessTester::createOauthRequestTransfer()} instead.
+     *
      * @return \Generated\Shared\Transfer\OauthRequestTransfer
      */
     protected function createOauthRequestTransfer(): OauthRequestTransfer
@@ -505,5 +630,81 @@ class OauthFacadeTest extends Unit
 
         return $this->tester->getFacade()
             ->setFactory($oauthBusinessFactory);
+    }
+
+    /**
+     * @param string $grantTypeBuilderClass
+     *
+     * return void
+     *
+     * @return void
+     */
+    protected function setOauthRequestGrantTypeConfigurationProviderPluginMock(string $grantTypeBuilderClass): void
+    {
+        $oauthRequestGrantTypeConfigurationProviderPluginMock = $this->getMockBuilder(OauthRequestGrantTypeConfigurationProviderPluginInterface::class)
+            ->setMethods(['isApplicable', 'getGrantTypeConfiguration'])
+            ->getMock();
+
+        $oauthRequestGrantTypeConfigurationProviderPluginMock
+            ->method('isApplicable')
+            ->willReturn(true);
+
+        $oauthRequestGrantTypeConfigurationProviderPluginMock
+            ->method('getGrantTypeConfiguration')
+            ->willReturnCallback(
+                function () use ($grantTypeBuilderClass) {
+                    $oauthGrantTypeConfigurationTransfer = (new OauthGrantTypeConfigurationTransfer())
+                        ->setIdentifier(static::IDENTIFIER_PASSWORD)
+                        ->setBuilderFullyQualifiedClassName($grantTypeBuilderClass);
+
+                    return $oauthGrantTypeConfigurationTransfer;
+                },
+            );
+
+        $this->tester->setDependency(
+            OauthDependencyProvider::PLUGINS_OAUTH_REQUEST_GRANT_TYPE_CONFIGURATION_PROVIDER,
+            [$oauthRequestGrantTypeConfigurationProviderPluginMock],
+        );
+    }
+
+    /**
+     * @param bool|null $isSuccess
+     *
+     * @return void
+     */
+    protected function setOauthUserProviderPluginMock(?bool $isSuccess = true): void
+    {
+        $userProviderPluginMock = $this->getMockBuilder(OauthUserProviderPluginInterface::class)
+            ->setMethods(['getUser', 'accept'])
+            ->getMock();
+
+        $userProviderPluginMock->method('getUser')->willReturnCallback(
+            function (OauthUserTransfer $oauthUserTransfer) use ($isSuccess) {
+                $oauthUserTransfer
+                    ->setIsSuccess($isSuccess);
+
+                if ($isSuccess) {
+                    $oauthUserTransfer->setUserIdentifier(
+                        json_encode(
+                            (new UserIdentifierTransfer())
+                                    ->toArray(),
+                        ),
+                    );
+                }
+
+                return $oauthUserTransfer;
+            },
+        );
+
+        $userProviderPluginMock
+            ->method('accept')
+            ->willReturn(true);
+
+        $this->tester->setDependency(
+            OauthDependencyProvider::PLUGINS_OAUTH_USER_PROVIDER,
+            [
+                $userProviderPluginMock,
+            ],
+        );
     }
 }

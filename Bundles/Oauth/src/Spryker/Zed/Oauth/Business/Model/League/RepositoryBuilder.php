@@ -50,6 +50,11 @@ class RepositoryBuilder implements RepositoryBuilderInterface
     protected $userProviderPlugins;
 
     /**
+     * @var array<\Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserProviderPluginInterface>
+     */
+    protected $oauthUserProviderPlugins;
+
+    /**
      * @var array<\Spryker\Zed\OauthExtension\Dependency\Plugin\OauthScopeProviderPluginInterface>
      */
     protected $scopeProviderPlugins;
@@ -97,6 +102,7 @@ class RepositoryBuilder implements RepositoryBuilderInterface
      * @param array<\Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenCheckerPluginInterface> $oauthRefreshTokenCheckerPlugins
      * @param array<\Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenSaverPluginInterface> $oauthRefreshTokenSaverPlugins
      * @param array<\Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenPersistencePluginInterface> $oauthRefreshTokenPersistencePlugins
+     * @param array<\Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserProviderPluginInterface> $oauthUserProviderPlugins
      */
     public function __construct(
         OauthRepositoryInterface $oauthRepository,
@@ -110,7 +116,8 @@ class RepositoryBuilder implements RepositoryBuilderInterface
         array $oauthRefreshTokensRevokePlugins = [],
         array $oauthRefreshTokenCheckerPlugins = [],
         array $oauthRefreshTokenSaverPlugins = [],
-        array $oauthRefreshTokenPersistencePlugins = []
+        array $oauthRefreshTokenPersistencePlugins = [],
+        array $oauthUserProviderPlugins = []
     ) {
         $this->oauthRepository = $oauthRepository;
         $this->oauthEntityManager = $oauthEntityManager;
@@ -124,6 +131,7 @@ class RepositoryBuilder implements RepositoryBuilderInterface
         $this->oauthRefreshTokenCheckerPlugins = $oauthRefreshTokenCheckerPlugins;
         $this->oauthRefreshTokenSaverPlugins = $oauthRefreshTokenSaverPlugins;
         $this->oauthRefreshTokenPersistencePlugins = $oauthRefreshTokenPersistencePlugins;
+        $this->oauthUserProviderPlugins = $oauthUserProviderPlugins;
     }
 
     /**
@@ -161,6 +169,14 @@ class RepositoryBuilder implements RepositoryBuilderInterface
     public function createUserRepository(): UserRepositoryInterface
     {
         return new UserRepository($this->userProviderPlugins);
+    }
+
+    /**
+     * @return \League\OAuth2\Server\Repositories\UserRepositoryInterface
+     */
+    public function createOauthUserRepository(): UserRepositoryInterface
+    {
+        return new UserRepository($this->oauthUserProviderPlugins);
     }
 
     /**

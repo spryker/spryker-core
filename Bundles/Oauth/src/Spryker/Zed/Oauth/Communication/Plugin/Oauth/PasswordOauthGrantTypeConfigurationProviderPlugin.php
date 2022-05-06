@@ -14,6 +14,9 @@ use Spryker\Zed\Oauth\OauthConfig;
 use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthGrantTypeConfigurationProviderPluginInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\Oauth\Communication\Plugin\Oauth\CustomerPasswordOauthRequestGrantTypeConfigurationProviderPlugin}
+ * or {@link \Spryker\Zed\Oauth\Communication\Plugin\Oauth\UserPasswordOauthRequestGrantTypeConfigurationProviderPlugin} instead.
+
  * @method \Spryker\Zed\Oauth\OauthConfig getConfig()
  * @method \Spryker\Zed\Oauth\Business\OauthFacadeInterface getFacade()
  */

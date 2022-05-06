@@ -44,6 +44,14 @@ class RequestBuilder implements RequestBuilderInterface
             $glueRequestTransfer->setQueryFields($this->request->query->all());
         }
 
+        if ($this->request->attributes->all()) {
+            $glueRequestTransfer->setHttpRequestAttributes($this->request->attributes->all());
+        }
+
+        if ($this->request->request->all()) {
+            $glueRequestTransfer->setAttributes($this->request->request->all());
+        }
+
         $glueRequestTransfer->setHost($this->request->getHost());
         $glueRequestTransfer->setPath($this->request->getPathInfo());
         $glueRequestTransfer->setMethod($this->request->getMethod());

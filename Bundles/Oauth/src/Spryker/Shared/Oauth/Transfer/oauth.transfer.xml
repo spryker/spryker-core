@@ -9,6 +9,7 @@
         <property name="username" type="string"/>
         <property name="password" type="string"/>
         <property name="refreshToken" type="string"/>
+        <property name="glueAuthenticationRequestContext" type="GlueAuthenticationRequestContext"/>
     </transfer>
 
     <transfer name="OauthResponse">
@@ -122,6 +123,10 @@
         <property name="customerReference" type="string"/>
         <property name="isRevoked" type="bool"/>
         <property name="expiresAt" type="string"/>
+    </transfer>
+
+    <transfer name="GlueAuthenticationRequestContext">
+        <property name="requestApplication" type="string"/>
     </transfer>
 
 </transfers>
