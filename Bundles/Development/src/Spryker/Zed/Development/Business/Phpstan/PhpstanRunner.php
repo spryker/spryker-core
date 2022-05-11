@@ -156,10 +156,12 @@ class PhpstanRunner implements PhpstanRunnerInterface
                 continue;
             }
 
+            $time = time();
             $resultCode |= $this->runCommand($path, $configFilePath, $input, $output);
+            $passedTime = time() - $time;
 
             if ($input->getOption(static::OPTION_VERBOSE)) {
-                $output->writeln(sprintf('Finished %s/%s.', $count, $total));
+                $output->writeln(sprintf('Finished %s/%s (%s).', $count, $total, $passedTime . 's'));
             }
         }
 
