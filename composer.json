@@ -171,7 +171,6 @@
         "spryker/cms-slot-store-connector": "*",
         "spryker/cms-storage": "*",
         "spryker/cms-user-connector": "*",
-        "spryker/code-it-now": "*",
         "spryker/collector": "*",
         "spryker/collector-search-connector": "*",
         "spryker/collector-storage-connector": "*",
