@@ -1,0 +1,5 @@
+{
+    "include": {
+        "laminas/laminas-barcode": "Provides barcode generation functionality."
+    }
+}

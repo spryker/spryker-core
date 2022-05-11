@@ -7,19 +7,18 @@
 
 namespace Spryker\Service\BarcodeLaminas\Plugin;
 
+use Generated\Shared\Transfer\BarcodeRequestTransfer;
 use Generated\Shared\Transfer\BarcodeResponseTransfer;
-use Laminas\Barcode\Barcode;
-use Laminas\Barcode\Renderer\RendererInterface;
 use Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInterface;
 use Spryker\Service\Kernel\AbstractPlugin;
 
+/**
+ * Provides ability to generate barcodes using Laminas barcode library.
+ *
+ * @method \Spryker\Service\BarcodeLaminas\BarcodeLaminasServiceInterface getService()
+ */
 class Code128BarcodeGeneratorPlugin extends AbstractPlugin implements BarcodeGeneratorPluginInterface
 {
-    /**
-     * @var string
-     */
-    protected const ENCODING = 'data:image/png;base64';
-
     /**
      * @var string
      */
@@ -31,48 +30,23 @@ class Code128BarcodeGeneratorPlugin extends AbstractPlugin implements BarcodeGen
     protected const RENDERER_IMAGE = 'image';
 
     /**
+     * {@inheritDoc}
+     * - Generates a barcode based on the given text using Laminas barcode library.
+     * - Returns BarcodeResponseTransfer with encoding (like base64) and encoded string that represents the barcode.
+     *
+     * @api
+     *
      * @param string $text
      *
      * @return \Generated\Shared\Transfer\BarcodeResponseTransfer
      */
     public function generate(string $text): BarcodeResponseTransfer
     {
-        $renderer = $this->createRenderer($text);
+        $barcodeRequestTransfer = (new BarcodeRequestTransfer())
+            ->setText($text)
+            ->setBarcodeType(static::BARCODE_TYPE)
+            ->setRenderer(static::RENDERER_IMAGE);
 
-        ob_start();
-        $renderer->render();
-
-        /** @var string $contents */
-        $contents = ob_get_clean();
-
-        return $this->createBarcodeResponseTransfer(base64_encode($contents));
-    }
-
-    /**
-     * @param string $text
-     *
-     * @return \Laminas\Barcode\Renderer\RendererInterface
-     */
-    protected function createRenderer(string $text): RendererInterface
-    {
-        $barcodeOptions = ['text' => $text];
-
-        return Barcode::factory(
-            static::BARCODE_TYPE,
-            static::RENDERER_IMAGE,
-            $barcodeOptions,
-        );
-    }
-
-    /**
-     * @param string $text
-     *
-     * @return \Generated\Shared\Transfer\BarcodeResponseTransfer
-     */
-    protected function createBarcodeResponseTransfer(string $text): BarcodeResponseTransfer
-    {
-        return (new BarcodeResponseTransfer())
-            ->setCode($text)
-            ->setEncoding(static::ENCODING);
+        return $this->getService()->generateBarcode($barcodeRequestTransfer);
     }
 }

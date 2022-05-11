@@ -6,4 +6,11 @@
         <property name="encoding" type="string"/>
     </transfer>
 
+    <transfer name="BarcodeRequest">
+        <property name="text" type="string"/>
+        <property name="barcodeType" type="string"/>
+        <property name="renderer" type="string"/>
+        <property name="barcodeOptions" type="array" singular="barcodeOption"/>
+    </transfer>
+
 </transfers>
