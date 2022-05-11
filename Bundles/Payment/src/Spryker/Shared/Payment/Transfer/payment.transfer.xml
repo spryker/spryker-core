@@ -57,6 +57,7 @@
         <property name="requestUrl" type="string"/>
         <property name="postData" type="array" associative="true" singular="postValue"/>
         <property name="authorization" type="string"/>
+        <property name="storeReference" type="string"/>
     </transfer>
 
     <transfer name="PaymentMethods">

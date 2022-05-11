@@ -16,6 +16,8 @@ interface PaymentClientInterface
     /**
      * Specification:
      * - Makes a request from given PaymentAuthorizeRequestTransfer.
+     * - Adds `Authorization` header to request using `PaymentAuthorizeRequest.authorizaton` if exists.
+     * - Adds `X-Store-Reference` header to request using `PaymentAuthorizeRequest.storeReference` if exists.
      * - Sends a request to a foreign payment service.
      * - Returns a PaymentAuthorizeResponseTransfer with the received data.
      *

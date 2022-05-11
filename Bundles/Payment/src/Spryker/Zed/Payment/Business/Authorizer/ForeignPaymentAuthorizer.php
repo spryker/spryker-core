@@ -173,11 +173,11 @@ class ForeignPaymentAuthorizer implements ForeignPaymentAuthorizerInterface
                 $language,
                 $this->paymentConfig->getCheckoutSummaryPageRoute(),
             ),
-            'storeReference' => $this->getCurrentStoreReference($quoteTransfer),
         ];
 
         $paymentAuthorizeRequestTransfer = (new PaymentAuthorizeRequestTransfer())
             ->setRequestUrl($paymentMethodTransfer->getPaymentAuthorizationEndpoint())
+            ->setStoreReference($this->getCurrentStoreReference($quoteTransfer))
             ->setPostData($postData);
 
         $paymentAuthorizeRequestTransfer = $this->executePaymentAuthorizeRequestExpanderPlugins($paymentAuthorizeRequestTransfer);
