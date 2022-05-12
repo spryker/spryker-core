@@ -665,4 +665,17 @@ interface GuiTableConfigurationBuilderInterface
      * @return $this
      */
     public function addEditableColumnDynamic(string $id, string $title, string $dependableColumn, string $dependableUrl);
+
+    /**
+     * Specification:
+     *  - Sets the display key for specified column by column ID.
+     *
+     * @api
+     *
+     * @param string $columnId
+     * @param string $displayKey
+     *
+     * @return $this
+     */
+    public function setColumnDisplayKey(string $columnId, string $displayKey);
 }

@@ -1435,4 +1435,21 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
 
         return $this;
     }
+
+    /**
+     * @api
+     *
+     * @param string $columnId
+     * @param string $displayKey
+     *
+     * @return $this
+     */
+    public function setColumnDisplayKey(string $columnId, string $displayKey)
+    {
+        $guiTableColumnConfigurationTransfer = $this->columns[$columnId];
+        $guiTableColumnConfigurationTransfer->setDisplayKey($displayKey);
+        $this->columns[$columnId] = $guiTableColumnConfigurationTransfer;
+
+        return $this;
+    }
 }

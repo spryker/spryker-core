@@ -7,7 +7,8 @@
 
 namespace Spryker\Zed\PriceProductMerchantRelationshipMerchantPortalGui\Communication\Expander;
 
-use Generated\Shared\Transfer\MerchantRelationshipFilterTransfer;
+use Generated\Shared\Transfer\MerchantRelationshipConditionsTransfer;
+use Generated\Shared\Transfer\MerchantRelationshipCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductTableViewTransfer;
 use Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface;
 use Spryker\Zed\PriceProductMerchantRelationshipMerchantPortalGui\Dependency\Facade\PriceProductMerchantRelationshipMerchantPortalGuiToMerchantRelationshipFacadeInterface;
@@ -65,11 +66,6 @@ class PriceProductAbstractTableConfigurationExpander implements PriceProductAbst
      * @var string
      */
     protected const TITLE_COLUMN_QUANTITY = 'Quantity';
-
-    /**
-     * @var string
-     */
-    protected const COL_KEY_ID_MERCHANT_RELATIONSHIP = 'idMerchantRelationship';
 
     /**
      * @uses \Spryker\Zed\PriceProductMerchantRelationshipMerchantPortalGui\Communication\Controller\PriceProductMerchantRelationshipController::volumePriceDataAction()
@@ -180,9 +176,14 @@ class PriceProductAbstractTableConfigurationExpander implements PriceProductAbst
                 $this->getMerchantRelationshipChoices($guiTableConfigurationBuilder),
             );
 
-        $columns = $this->reorderTableColumns($guiTableConfigurationBuilder->getColumns());
+        $guiTableConfigurationBuilder = $guiTableConfigurationBuilder->setColumnDisplayKey(
+            PriceProductTableViewTransfer::ID_MERCHANT_RELATIONSHIP,
+            PriceProductTableViewTransfer::MERCHANT_RELATIONSHIP_NAME,
+        );
 
-        return $guiTableConfigurationBuilder->setColumns($columns);
+        $guiTableColumnConfigurationTransfers = $this->reorderTableColumns($guiTableConfigurationBuilder->getColumns());
+
+        return $guiTableConfigurationBuilder->setColumns($guiTableColumnConfigurationTransfers);
     }
 
     /**
@@ -222,21 +223,24 @@ class PriceProductAbstractTableConfigurationExpander implements PriceProductAbst
      */
     protected function getMerchantRelationshipChoices(GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder): array
     {
-        $merchantRelationshipFilterTransfer = new MerchantRelationshipFilterTransfer();
+        $merchantRelationshipCriteriaTransfer = new MerchantRelationshipCriteriaTransfer();
         $idMerchant = $this->merchantUserFacade->getCurrentMerchantUser()->getIdMerchant();
         if ($idMerchant) {
-            $merchantRelationshipFilterTransfer->addIdMerchant($idMerchant);
+            $merchantRelationshipCriteriaTransfer->setMerchantRelationshipConditions(
+                (new MerchantRelationshipConditionsTransfer())->addIdMerchant($idMerchant),
+            );
         }
-        /** @var array<\Generated\Shared\Transfer\MerchantRelationshipTransfer> $merchantRelationshipTransfers */
-        $merchantRelationshipTransfers = $this->merchantRelationshipFacade->getMerchantRelationshipCollection(
-            $merchantRelationshipFilterTransfer,
+        /** @var \Generated\Shared\Transfer\MerchantRelationshipCollectionTransfer $merchantRelationshipCollectionTransfer */
+        $merchantRelationshipCollectionTransfer = $this->merchantRelationshipFacade->getMerchantRelationshipCollection(
+            null,
+            $merchantRelationshipCriteriaTransfer,
         );
 
         $merchantRelationshipChoices = [
             null => $this->translatorFacade->trans(static::MERCHANT_RELATIONSHIP_CHOICE_DEFAULT),
         ];
 
-        foreach ($merchantRelationshipTransfers as $merchantRelationshipTransfer) {
+        foreach ($merchantRelationshipCollectionTransfer->getMerchantRelationships() as $merchantRelationshipTransfer) {
             /** @var \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer */
             $merchantRelationshipChoices[$merchantRelationshipTransfer->getIdMerchantRelationshipOrFail()] = $merchantRelationshipTransfer->getNameOrFail();
         }
