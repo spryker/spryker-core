@@ -13,8 +13,6 @@ import { CheckboxModule, CheckboxComponent } from '@spryker/checkbox';
 import { UserMenuLinkComponent, UserMenuModule } from '@spryker/user-menu';
 import { LogoComponent, LogoModule } from '@spryker/logo';
 
-import { HeaderComponent } from './header/header.component';
-import { HeaderModule } from './header/header.module';
 import { HeaderMenuComponent } from './header-menu/header-menu.component';
 import { HeaderMenuModule } from './header-menu/header-menu.module';
 import { LayoutCenteredComponent } from './layout-centered/layout-centered.component';
@@ -40,7 +38,6 @@ import { RootComponent } from './app.component';
             LayoutMainComponent,
             MerchantLayoutCenteredComponent,
             MerchantLayoutMainComponent,
-            HeaderComponent,
             HeaderMenuComponent,
             NotificationComponent,
             LocaleSwitcherComponent,
@@ -60,7 +57,6 @@ import { RootComponent } from './app.component';
         MerchantLayoutCenteredModule,
         MerchantLayoutMainModule,
         LayoutMainModule,
-        HeaderModule,
         HeaderMenuModule,
         NotificationModule,
         LocaleModule,
