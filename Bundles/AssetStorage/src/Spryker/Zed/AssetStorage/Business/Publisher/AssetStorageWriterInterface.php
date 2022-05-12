@@ -10,6 +10,22 @@ namespace Spryker\Zed\AssetStorage\Business\Publisher;
 interface AssetStorageWriterInterface
 {
     /**
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeAssetCollectionByAssetEvents(array $eventEntityTransfers): void;
+
+    /**
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function deleteAssetCollectionByAssetEvents(array $eventEntityTransfers): void;
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param int $idAsset
      *
      * @return void
@@ -17,6 +33,8 @@ interface AssetStorageWriterInterface
     public function publish(int $idAsset): void;
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param int $idAsset
      * @param int $idStore
      *
@@ -25,6 +43,8 @@ interface AssetStorageWriterInterface
     public function publishStoreRelation(int $idAsset, int $idStore): void;
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param int $idAsset
      *
      * @return void
@@ -32,6 +52,8 @@ interface AssetStorageWriterInterface
     public function unpublish(int $idAsset): void;
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param int $idAsset
      * @param int $idStore
      *

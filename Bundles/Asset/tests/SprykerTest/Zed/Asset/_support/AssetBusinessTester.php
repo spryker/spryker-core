@@ -120,16 +120,18 @@ class AssetBusinessTester extends Actor
     /**
      * @param string $assetContent
      * @param string $assetUuid
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\AssetTransfer
      */
-    public function buildAssetTransfer(string $assetContent, string $assetUuid): AssetTransfer
+    public function buildAssetTransfer(string $assetContent, string $assetUuid, string $storeName): AssetTransfer
     {
         return (new AssetTransfer())
             ->setAssetSlot('slt-footer')
             ->setAssetName('test')
             ->setAssetContent($assetContent)
             ->setIdAsset(1)
-            ->setAssetUuid($assetUuid);
+            ->setAssetUuid($assetUuid)
+            ->addStore($storeName);
     }
 }

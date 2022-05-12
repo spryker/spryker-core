@@ -15,6 +15,8 @@ class AssetEvents
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @var string
      */
     public const ENTITY_SPY_ASSET_CREATE = 'Entity.spy_asset.create';
@@ -24,6 +26,8 @@ class AssetEvents
      * - This events will be used for spy_asset entity changes.
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @var string
      */
@@ -35,6 +39,8 @@ class AssetEvents
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @var string
      */
     public const ENTITY_SPY_ASSET_DELETE = 'Entity.spy_asset.delete';
@@ -45,6 +51,8 @@ class AssetEvents
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @var string
      */
     public const ENTITY_SPY_ASSET_STORE_CREATE = 'Entity.spy_asset_store.create';
@@ -54,6 +62,8 @@ class AssetEvents
      * - This events will be used for spy_asset_store entity deletion.
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @var string
      */

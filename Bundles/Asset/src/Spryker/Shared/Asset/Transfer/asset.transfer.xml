@@ -49,4 +49,9 @@
         <property name="name" type="string"/>
         <property name="storeReference" type="string"/>
     </transfer>
+
+    <transfer name="EventEntity">
+        <property name="id" type="int"/>
+        <property name="additionalValues" type="array" singular="additionalValue"/>
+    </transfer>
 </transfers>

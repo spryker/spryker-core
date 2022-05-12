@@ -9,7 +9,10 @@ namespace Spryker\Zed\Asset\Business\Updater;
 
 use Generated\Shared\Transfer\AssetTransfer;
 use Generated\Shared\Transfer\AssetUpdatedTransfer;
+use Generated\Shared\Transfer\EventEntityTransfer;
+use Spryker\Shared\Asset\AssetConfig;
 use Spryker\Zed\Asset\Business\Exception\InvalidAssetException;
+use Spryker\Zed\Asset\Dependency\Facade\AssetToEventFacadeInterface;
 use Spryker\Zed\Asset\Dependency\Facade\AssetToStoreReferenceInterface;
 use Spryker\Zed\Asset\Persistence\AssetEntityManagerInterface;
 use Spryker\Zed\Asset\Persistence\AssetRepositoryInterface;
@@ -29,21 +32,29 @@ class AssetUpdater implements AssetUpdaterInterface
     /**
      * @var \Spryker\Zed\Asset\Dependency\Facade\AssetToStoreReferenceInterface
      */
-    private $storeReferenceFacade;
+    protected $storeReferenceFacade;
+
+    /**
+     * @var \Spryker\Zed\Asset\Dependency\Facade\AssetToEventFacadeInterface
+     */
+    protected $eventFacade;
 
     /**
      * @param \Spryker\Zed\Asset\Persistence\AssetRepositoryInterface $assetRepository
      * @param \Spryker\Zed\Asset\Persistence\AssetEntityManagerInterface $assetEntityManager
      * @param \Spryker\Zed\Asset\Dependency\Facade\AssetToStoreReferenceInterface $storeReferenceFacade
+     * @param \Spryker\Zed\Asset\Dependency\Facade\AssetToEventFacadeInterface $eventFacade
      */
     public function __construct(
         AssetRepositoryInterface $assetRepository,
         AssetEntityManagerInterface $assetEntityManager,
-        AssetToStoreReferenceInterface $storeReferenceFacade
+        AssetToStoreReferenceInterface $storeReferenceFacade,
+        AssetToEventFacadeInterface $eventFacade
     ) {
         $this->assetRepository = $assetRepository;
         $this->assetEntityManager = $assetEntityManager;
         $this->storeReferenceFacade = $storeReferenceFacade;
+        $this->eventFacade = $eventFacade;
     }
 
     /**
@@ -70,10 +81,42 @@ class AssetUpdater implements AssetUpdaterInterface
             throw new InvalidAssetException('This asset doesn\'t exist in DB.');
         }
 
-        $assetTransfer
-            ->setAssetContent($assetUpdatedTransfer->getAssetView())
+        $previousStateAssetTransfer = clone $assetTransfer;
+        $assetTransfer->setAssetContent($assetUpdatedTransfer->getAssetView())
             ->setAssetSlot($assetUpdatedTransfer->getAssetSlot());
 
-        return $this->assetEntityManager->saveAssetWithStores($assetTransfer, [$storeTransfer]);
+        $assetTransfer = $this->assetEntityManager->saveAssetWithStores($assetTransfer, [$storeTransfer]);
+
+        $assetTransfer->setStores([$storeTransfer->getNameOrFail()]);
+
+        $this->sendEvents($assetTransfer, $previousStateAssetTransfer);
+
+        return $assetTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AssetTransfer $assetTransfer
+     * @param \Generated\Shared\Transfer\AssetTransfer $previousStateAssetTransfer
+     *
+     * @return void
+     */
+    protected function sendEvents(AssetTransfer $assetTransfer, AssetTransfer $previousStateAssetTransfer): void
+    {
+        if (
+            array_diff($previousStateAssetTransfer->getStores(), $assetTransfer->getStores())
+            || $previousStateAssetTransfer->getAssetSlot() !== $assetTransfer->getAssetSlot()
+        ) {
+            $unpublishEventEntityTransfer = (new EventEntityTransfer())
+                ->setId($previousStateAssetTransfer->getIdAsset())
+                ->setAdditionalValues($previousStateAssetTransfer->toArray());
+
+            $this->eventFacade->trigger(AssetConfig::ASSET_UNPUBLISH, $unpublishEventEntityTransfer);
+        }
+
+        $publishEventEntityTransfer = (new EventEntityTransfer())
+            ->setId($assetTransfer->getIdAsset())
+            ->setAdditionalValues($assetTransfer->toArray());
+
+        $this->eventFacade->trigger(AssetConfig::ASSET_PUBLISH, $publishEventEntityTransfer);
     }
 }

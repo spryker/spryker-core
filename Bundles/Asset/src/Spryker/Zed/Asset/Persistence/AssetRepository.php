@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Asset\Persistence;
 
 use Generated\Shared\Transfer\AssetTransfer;
-use Orm\Zed\Asset\Persistence\SpyAsset;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
@@ -24,55 +23,40 @@ class AssetRepository extends AbstractRepository implements AssetRepositoryInter
      */
     public function findAssetByAssetUuid(string $assetUuid): ?AssetTransfer
     {
-        $assetEntity = $this->getFactory()
-            ->createAssetQuery()
+        $assetEntity = $this->getFactory()->createAssetQuery()
             ->filterByAssetUuid($assetUuid)
-            ->findOne();
+            ->leftJoinWithSpyAssetStore()
+            ->useSpyAssetStoreQuery(null, Criteria::LEFT_JOIN)
+                ->leftJoinWithSpyStore()
+            ->endUse()
+            ->find()
+            ->getFirst();
 
         if ($assetEntity === null) {
             return null;
         }
 
-        return $this->getAssetTransfer($assetEntity);
+        return $this->getFactory()->createAssetMapper()
+            ->mapAssetEntityToAssetTransfer($assetEntity, new AssetTransfer());
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param int $idAsset
      *
      * @return \Generated\Shared\Transfer\AssetTransfer|null
      */
     public function findAssetById(int $idAsset): ?AssetTransfer
     {
-        $assetEntity = $this->getFactory()
-            ->createAssetQuery()
-            ->filterByIdAsset($idAsset)
-            ->findOne();
+        $assetEntity = $this->getFactory()->createAssetQuery()
+            ->findOneByIdAsset($idAsset);
 
         if ($assetEntity === null) {
             return null;
         }
 
-        return $this->getAssetTransfer($assetEntity);
-    }
-
-    /**
-     * @param \Orm\Zed\Asset\Persistence\SpyAsset $assetEntity
-     *
-     * @return \Generated\Shared\Transfer\AssetTransfer
-     */
-    protected function getAssetTransfer(SpyAsset $assetEntity): AssetTransfer
-    {
-        /** @var \Generated\Shared\Transfer\AssetTransfer $assetTransfer */
-        $assetTransfer = $this->getFactory()
-            ->createAssetMapper()
-            ->mapAssetEntityToAssetTransfer($assetEntity);
-
-        $assetStoreEntities = $this->getFactory()
-            ->createAssetStoreQuery()
-            ->joinWithSpyStore(Criteria::LEFT_JOIN)
-            ->filterByFkAsset($assetEntity->getIdAsset())
-            ->find();
-
-        return $assetTransfer;
+        return $this->getFactory()->createAssetMapper()
+            ->mapAssetEntityToAssetTransfer($assetEntity, new AssetTransfer());
     }
 }

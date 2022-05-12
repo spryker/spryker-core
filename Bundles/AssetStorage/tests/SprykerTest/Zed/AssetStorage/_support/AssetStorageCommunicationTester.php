@@ -101,20 +101,21 @@ class AssetStorageCommunicationTester extends Actor
                 'findAssetById' => $assetTransfer,
             ],
         );
-        $this->mockFactoryMethod('getFacadeAsset', $assetFacadeMock);
+        $this->mockFactoryMethod('getAssetFacade', $assetFacadeMock);
         $this->mockFactoryMethod('getEntityManager', new AssetStorageEntityManager());
         $this->mockFactoryMethod('getRepository', new AssetStorageRepository());
     }
 
     /**
      * @param array $expectedStorageData
+     * @param string $accessSlot
      *
      * @return void
      */
-    public function assertAssetStorage(array $expectedStorageData): void
+    public function assertAssetStorage(array $expectedStorageData, string $accessSlot = self::ASSET_SLOT_DEFAULT): void
     {
         $count = (new SpyAssetSlotStorageQuery())
-            ->filterByAssetSlot(static::ASSET_SLOT_DEFAULT)
+            ->filterByAssetSlot($accessSlot)
             ->count();
         $this->assertSame(count($expectedStorageData), $count, 'qty of storage records is different from expected');
 
@@ -141,15 +142,12 @@ class AssetStorageCommunicationTester extends Actor
                 ->filterByStore($storeName)
                 ->findOneOrCreate();
 
-            $data = [
-                static::ASSET_SLOT_DATA_KEY => $assetTransfer->getAssetSlot(),
-                static::ASSETS_DATA_KEY => [
-                    [
-                        static::ASSET_ID_DATA_KEY => $assetTransfer->getIdAsset(),
-                        static::ASSET_UUID_DATA_KEY => $assetTransfer->getAssetUuid(),
-                        static::ASSET_CONTENT_DATA_KEY => $assetTransfer->getAssetContent(),
-                    ],
-                ],
+            $data = $assetSlotStorage->getData();
+            $data[static::ASSET_SLOT_DATA_KEY] = $assetTransfer->getAssetSlot();
+            $data[static::ASSETS_DATA_KEY][] = [
+                static::ASSET_ID_DATA_KEY => $assetTransfer->getIdAsset(),
+                static::ASSET_UUID_DATA_KEY => $assetTransfer->getAssetUuid(),
+                static::ASSET_CONTENT_DATA_KEY => $assetTransfer->getAssetContent(),
             ];
 
             $assetSlotStorage->setStore($storeName)

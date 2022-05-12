@@ -12,6 +12,8 @@ use Spryker\Zed\Event\Dependency\Plugin\EventHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\AssetStorage\Communication\Plugin\Publisher\Asset\AssetWritePublisherPlugin} instead.
+ *
  * @method \Spryker\Zed\AssetStorage\Business\AssetStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\AssetStorage\AssetStorageConfig getConfig()
  * @method \Spryker\Zed\AssetStorage\Communication\AssetStorageCommunicationFactory getFactory()

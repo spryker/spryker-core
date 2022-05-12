@@ -5,6 +5,7 @@
     "license": "proprietary",
     "require": {
         "php": ">=7.4",
+        "spryker/event": "^2.1.0",
         "spryker/event-behavior": "^1.23.0",
         "spryker/kernel": "^3.30.0",
         "spryker/message-broker-extension": "^1.0.0",
@@ -18,9 +19,6 @@
         "spryker/propel": "*",
         "spryker/ramsey-uuid": "*",
         "spryker/testify": "*"
-    },
-    "suggest": {
-        "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0"
     },
     "autoload": {
         "psr-4": {

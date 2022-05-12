@@ -27,8 +27,8 @@ class AssetStorageBusinessFactory extends AbstractBusinessFactory
     public function createAssetStorageWriter(): AssetStorageWriterInterface
     {
         return new AssetStorageWriter(
-            $this->getFacadeStore(),
-            $this->getFacadeAsset(),
+            $this->getStoreFacade(),
+            $this->getAssetFacade(),
             $this->getEntityManager(),
             $this->getRepository(),
         );
@@ -37,7 +37,7 @@ class AssetStorageBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\AssetStorage\Dependency\Facade\AssetStorageToStoreFacadeInterface
      */
-    public function getFacadeStore(): AssetStorageToStoreFacadeInterface
+    public function getStoreFacade(): AssetStorageToStoreFacadeInterface
     {
         return $this->getProvidedDependency(AssetStorageDependencyProvider::FACADE_STORE);
     }
@@ -45,7 +45,7 @@ class AssetStorageBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\AssetStorage\Dependency\Facade\AssetStorageToAssetInterface
      */
-    public function getFacadeAsset(): AssetStorageToAssetInterface
+    public function getAssetFacade(): AssetStorageToAssetInterface
     {
         return $this->getProvidedDependency(AssetStorageDependencyProvider::FACADE_ASSET);
     }

@@ -9,6 +9,9 @@ namespace Spryker\Zed\AssetStorage\Dependency\Facade;
 
 use Generated\Shared\Transfer\AssetTransfer;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class AssetStorageToAssetBridge implements AssetStorageToAssetInterface
 {
     /**

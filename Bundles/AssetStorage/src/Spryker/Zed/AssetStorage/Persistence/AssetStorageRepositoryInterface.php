@@ -7,40 +7,26 @@
 
 namespace Spryker\Zed\AssetStorage\Persistence;
 
+use Generated\Shared\Transfer\FilterTransfer;
+
 interface AssetStorageRepositoryInterface
 {
     /**
-     * @return array<\Generated\Shared\Transfer\SpyAssetSlotStorageEntityTransfer>
-     */
-    public function findAssetStorages(): array;
-
-    /**
-     * @param array<int> $ids
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param array<int> $assetSlotStorageIds
      *
-     * @return array<\Generated\Shared\Transfer\SpyAssetSlotStorageEntityTransfer>
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
-    public function findAssetStoragesByAssetIds(array $ids): array;
-
-    /**
-     * @param string $assetSlot
-     *
-     * @return array<\Generated\Shared\Transfer\SpyAssetSlotStorageEntityTransfer>
-     */
-    public function findAssetStoragesByAssetSlot(string $assetSlot): array;
+    public function getSynchronizationTransferCollection(
+        FilterTransfer $filterTransfer,
+        array $assetSlotStorageIds
+    ): array;
 
     /**
      * @param string $assetSlot
      * @param array<string> $storeNames
      *
-     * @return array<\Generated\Shared\Transfer\SpyAssetSlotStorageEntityTransfer>
-     */
-    public function findAssetStoragesWithAssetSlotNotEqualAndByStores(string $assetSlot, array $storeNames): array;
-
-    /**
-     * @param string $assetSlot
-     * @param array<string> $storeNames
-     *
-     * @return array<\Generated\Shared\Transfer\SpyAssetSlotStorageEntityTransfer>
+     * @return array<\Generated\Shared\Transfer\AssetSlotStorageTransfer>
      */
     public function findAssetStoragesByAssetSlotAndStores(string $assetSlot, array $storeNames): array;
 }

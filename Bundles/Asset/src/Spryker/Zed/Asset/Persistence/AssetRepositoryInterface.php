@@ -19,6 +19,8 @@ interface AssetRepositoryInterface
     public function findAssetByAssetUuid(string $assetUuid): ?AssetTransfer;
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param int $idAsset
      *
      * @return \Generated\Shared\Transfer\AssetTransfer|null

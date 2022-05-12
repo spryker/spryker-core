@@ -7,44 +7,21 @@
 
 namespace Spryker\Zed\AssetStorage\Persistence;
 
-use Generated\Shared\Transfer\AssetTransfer;
+use Generated\Shared\Transfer\AssetSlotStorageTransfer;
 
 interface AssetStorageEntityManagerInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\AssetTransfer $assetTransfer
-     * @param string $storeName
-     * @param array $assetSlotStorageToDelete
-     *
-     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
-     * @throws \Propel\Runtime\Exception\PropelException
+     * @param \Generated\Shared\Transfer\AssetSlotStorageTransfer $assetSlotStorageTransfer
      *
      * @return void
      */
-    public function createAssetStorage(
-        AssetTransfer $assetTransfer,
-        string $storeName,
-        array $assetSlotStorageToDelete
-    ): void;
+    public function saveAssetSlotStorage(AssetSlotStorageTransfer $assetSlotStorageTransfer): void;
 
     /**
-     * @param \Generated\Shared\Transfer\AssetTransfer $assetTransfer
-     * @param array<\Generated\Shared\Transfer\SpyAssetSlotStorageEntityTransfer> $assetSlotStorageToUpdate
-     * @param array<\Generated\Shared\Transfer\SpyAssetSlotStorageEntityTransfer> $assetSlotStorageToDelete
+     * @param \Generated\Shared\Transfer\AssetSlotStorageTransfer $assetSlotStorageTransfer
      *
      * @return void
      */
-    public function updateAssetStorage(
-        AssetTransfer $assetTransfer,
-        array $assetSlotStorageToUpdate,
-        array $assetSlotStorageToDelete
-    ): void;
-
-    /**
-     * @param array<\Generated\Shared\Transfer\SpyAssetSlotStorageEntityTransfer> $assetSlotsStorageEntityTransfers
-     * @param int $idAsset
-     *
-     * @return void
-     */
-    public function removeAssetStorageByIdAsset(array $assetSlotsStorageEntityTransfers, int $idAsset): void;
+    public function deleteAssetSlotStorage(AssetSlotStorageTransfer $assetSlotStorageTransfer): void;
 }
