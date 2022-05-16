@@ -169,7 +169,9 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
      */
     public function createVoucherCartCodeOperationMessageFinder(): VoucherCartCodeOperationMessageFinderInterface
     {
-        return new VoucherCartCodeOperationMessageFinder();
+        return new VoucherCartCodeOperationMessageFinder(
+            $this->getDiscountVoucherApplyCheckerStrategyPlugins(),
+        );
     }
 
     /**
@@ -948,5 +950,13 @@ class DiscountBusinessFactory extends AbstractBusinessFactory
     public function getTranslatorFacade(): DiscountToTranslatorFacadeInterface
     {
         return $this->getProvidedDependency(DiscountDependencyProvider::FACADE_TRANSLATOR);
+    }
+
+    /**
+     * @return array<\Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountVoucherApplyCheckerStrategyPluginInterface>
+     */
+    public function getDiscountVoucherApplyCheckerStrategyPlugins(): array
+    {
+        return $this->getProvidedDependency(DiscountDependencyProvider::PLUGINS_DISCOUNT_VOUCHER_APPLY_CHECKER_STRATEGY);
     }
 }

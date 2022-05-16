@@ -11,6 +11,8 @@ use Spryker\Zed\DiscountPromotion\Business\Cart\CartValidator;
 use Spryker\Zed\DiscountPromotion\Business\Cart\CartValidatorInterface;
 use Spryker\Zed\DiscountPromotion\Business\Checker\DiscountPromotionItemChecker;
 use Spryker\Zed\DiscountPromotion\Business\Checker\DiscountPromotionItemCheckerInterface;
+use Spryker\Zed\DiscountPromotion\Business\Checker\DiscountPromotionVoucherCodeApplicationChecker;
+use Spryker\Zed\DiscountPromotion\Business\Checker\DiscountPromotionVoucherCodeApplicationCheckerInterface;
 use Spryker\Zed\DiscountPromotion\Business\CollectorStrategy\DiscountPromotionCollectorStrategyComposite;
 use Spryker\Zed\DiscountPromotion\Business\CollectorStrategy\DiscountPromotionCollectorStrategyCompositeInterface;
 use Spryker\Zed\DiscountPromotion\Business\CollectorStrategy\DiscountPromotionCollectorStrategyInterface;
@@ -175,6 +177,14 @@ class DiscountPromotionBusinessFactory extends AbstractBusinessFactory
             $this->createDiscountableItemCreator(),
             $this->getRepository(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\DiscountPromotion\Business\Checker\DiscountPromotionVoucherCodeApplicationCheckerInterface
+     */
+    public function createDiscountPromotionVoucherCodeApplicationChecker(): DiscountPromotionVoucherCodeApplicationCheckerInterface
+    {
+        return new DiscountPromotionVoucherCodeApplicationChecker();
     }
 
     /**

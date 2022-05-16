@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\DiscountPromotionCollectionTransfer;
 use Generated\Shared\Transfer\DiscountPromotionCriteriaTransfer;
 use Generated\Shared\Transfer\DiscountPromotionTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
+use Generated\Shared\Transfer\DiscountVoucherCheckResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -217,5 +218,22 @@ class DiscountPromotionFacade extends AbstractFacade implements DiscountPromotio
         return $this->getFactory()
             ->createDiscountPromotionItemFilter()
             ->filterDiscountPromotionItems($cartChangeTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $voucherCode
+     *
+     * @return \Generated\Shared\Transfer\DiscountVoucherCheckResponseTransfer
+     */
+    public function checkVoucherCodeApplied(QuoteTransfer $quoteTransfer, string $voucherCode): DiscountVoucherCheckResponseTransfer
+    {
+        return $this->getFactory()
+            ->createDiscountPromotionVoucherCodeApplicationChecker()
+            ->check($quoteTransfer, $voucherCode);
     }
 }

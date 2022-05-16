@@ -37,6 +37,19 @@ class VoucherCartCodeOperationMessageFinder implements VoucherCartCodeOperationM
     protected const MESSAGE_TYPE_ERROR = 'error';
 
     /**
+     * @var array<\Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountVoucherApplyCheckerStrategyPluginInterface>
+     */
+    protected $discountVoucherApplyCheckerStrategyPlugins;
+
+    /**
+     * @param array<\Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountVoucherApplyCheckerStrategyPluginInterface> $discountVoucherApplyCheckerStrategyPlugins
+     */
+    public function __construct(array $discountVoucherApplyCheckerStrategyPlugins)
+    {
+        $this->discountVoucherApplyCheckerStrategyPlugins = $discountVoucherApplyCheckerStrategyPlugins;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $cartCode
      *
@@ -44,6 +57,11 @@ class VoucherCartCodeOperationMessageFinder implements VoucherCartCodeOperationM
      */
     public function findOperationResponseMessage(QuoteTransfer $quoteTransfer, string $cartCode): ?MessageTransfer
     {
+        $messageTransfer = $this->executeDiscountVoucherApplyCheckerStrategyPlugins($quoteTransfer, $cartCode);
+        if ($messageTransfer) {
+            return $messageTransfer;
+        }
+
         $voucherApplySuccessMessageTransfer = $this->findVoucherApplySuccessMessage($quoteTransfer, $cartCode);
         if ($voucherApplySuccessMessageTransfer) {
             return $voucherApplySuccessMessageTransfer;
@@ -108,6 +126,27 @@ class VoucherCartCodeOperationMessageFinder implements VoucherCartCodeOperationM
             $messageTransfer->setType(static::MESSAGE_TYPE_ERROR);
 
             return $messageTransfer;
+        }
+
+        return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $cartCode
+     *
+     * @return \Generated\Shared\Transfer\MessageTransfer|null
+     */
+    protected function executeDiscountVoucherApplyCheckerStrategyPlugins(
+        QuoteTransfer $quoteTransfer,
+        string $cartCode
+    ): ?MessageTransfer {
+        foreach ($this->discountVoucherApplyCheckerStrategyPlugins as $discountVoucherApplyCheckerStrategyPlugin) {
+            if (!$discountVoucherApplyCheckerStrategyPlugin->isApplicable($quoteTransfer, $cartCode)) {
+                continue;
+            }
+
+            return $discountVoucherApplyCheckerStrategyPlugin->check($quoteTransfer, $cartCode)->getMessage();
         }
 
         return null;

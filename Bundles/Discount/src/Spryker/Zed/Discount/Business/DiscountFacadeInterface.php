@@ -623,6 +623,7 @@ interface DiscountFacadeInterface
 
     /**
      * Specification:
+     * - Executes {@link \Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountVoucherApplyCheckerStrategyPluginInterface} plugin stack.
      * - Returns voucher apply success message in case the given voucher code has been applied successfully.
      * - Returns voucher apply failed message in case the given voucher code hasn't been applied successfully.
      * - Returns an empty failed message if code is not relevant.
