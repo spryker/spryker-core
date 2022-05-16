@@ -10,7 +10,7 @@ namespace Spryker\Zed\DummyPayment\Dependency\Facade;
 use Generated\Shared\Transfer\RefundTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 
-class DummyPaymentToRefundBridge implements DummyPaymentToRefundInterface
+class DummyPaymentToRefundFacadeBridge implements DummyPaymentToRefundFacadeInterface
 {
     /**
      * @var \Spryker\Zed\Refund\Business\RefundFacadeInterface
@@ -31,7 +31,7 @@ class DummyPaymentToRefundBridge implements DummyPaymentToRefundInterface
      *
      * @return \Generated\Shared\Transfer\RefundTransfer
      */
-    public function calculateRefund(array $salesOrderItems, SpySalesOrder $salesOrderEntity)
+    public function calculateRefund(array $salesOrderItems, SpySalesOrder $salesOrderEntity): RefundTransfer
     {
         return $this->refundFacade->calculateRefund($salesOrderItems, $salesOrderEntity);
     }
@@ -41,7 +41,7 @@ class DummyPaymentToRefundBridge implements DummyPaymentToRefundInterface
      *
      * @return bool
      */
-    public function saveRefund(RefundTransfer $refundTransfer)
+    public function saveRefund(RefundTransfer $refundTransfer): bool
     {
         return $this->refundFacade->saveRefund($refundTransfer);
     }

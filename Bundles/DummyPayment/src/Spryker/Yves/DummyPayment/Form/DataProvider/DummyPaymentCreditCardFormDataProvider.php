@@ -9,6 +9,7 @@ namespace Spryker\Yves\DummyPayment\Form\DataProvider;
 
 use Generated\Shared\Transfer\DummyPaymentTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\DummyPayment\Form\CreditCardSubForm;
 use Spryker\Yves\StepEngine\Dependency\Form\StepEngineFormDataProviderInterface;
@@ -20,7 +21,7 @@ class DummyPaymentCreditCardFormDataProvider implements StepEngineFormDataProvid
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getData(AbstractTransfer $quoteTransfer)
+    public function getData(AbstractTransfer $quoteTransfer): QuoteTransfer
     {
         if ($quoteTransfer->getPayment() === null) {
             $paymentTransfer = new PaymentTransfer();
@@ -36,9 +37,9 @@ class DummyPaymentCreditCardFormDataProvider implements StepEngineFormDataProvid
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return array<string, mixed>
+     * @return array<string, array<int|string, string>>
      */
-    public function getOptions(AbstractTransfer $quoteTransfer)
+    public function getOptions(AbstractTransfer $quoteTransfer): array
     {
         return [
             CreditCardSubForm::OPTION_CARD_EXPIRES_CHOICES_MONTH => $this->getMonthChoices(),
@@ -47,9 +48,9 @@ class DummyPaymentCreditCardFormDataProvider implements StepEngineFormDataProvid
     }
 
     /**
-     * @return array
+     * @return array<int|string, string>
      */
-    protected function getMonthChoices()
+    protected function getMonthChoices(): array
     {
         return [
             '01' => '01',
@@ -68,9 +69,9 @@ class DummyPaymentCreditCardFormDataProvider implements StepEngineFormDataProvid
     }
 
     /**
-     * @return array
+     * @return array<int|string, string>
      */
-    protected function getYearChoices()
+    protected function getYearChoices(): array
     {
         $currentYear = date('Y');
 

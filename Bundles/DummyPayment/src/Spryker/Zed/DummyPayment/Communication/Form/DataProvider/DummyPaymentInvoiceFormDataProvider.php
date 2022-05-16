@@ -9,6 +9,7 @@ namespace Spryker\Zed\DummyPayment\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\DummyPaymentTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 class DummyPaymentInvoiceFormDataProvider
 {
@@ -17,7 +18,7 @@ class DummyPaymentInvoiceFormDataProvider
      *
      * @return array<string, mixed>
      */
-    public function getOptions($quoteTransfer)
+    public function getOptions($quoteTransfer): array
     {
         return [];
     }
@@ -27,7 +28,7 @@ class DummyPaymentInvoiceFormDataProvider
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getData($quoteTransfer)
+    public function getData($quoteTransfer): QuoteTransfer
     {
         if ($quoteTransfer->getPayment() === null) {
             $paymentTransfer = new PaymentTransfer();

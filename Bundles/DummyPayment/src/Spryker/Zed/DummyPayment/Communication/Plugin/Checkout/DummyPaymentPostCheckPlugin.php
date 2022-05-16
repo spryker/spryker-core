@@ -36,9 +36,9 @@ class DummyPaymentPostCheckPlugin extends AbstractPlugin implements CheckoutPost
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
      *
-     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     * @return void
      */
-    public function execute(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
+    public function execute(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): void
     {
         if (!$this->isAuthorizationApproved($quoteTransfer)) {
             $checkoutErrorTransfer = new CheckoutErrorTransfer();
@@ -49,8 +49,6 @@ class DummyPaymentPostCheckPlugin extends AbstractPlugin implements CheckoutPost
             $checkoutResponseTransfer->addError($checkoutErrorTransfer);
             $checkoutResponseTransfer->setIsSuccess(false);
         }
-
-        return $checkoutResponseTransfer;
     }
 
     /**
@@ -58,7 +56,7 @@ class DummyPaymentPostCheckPlugin extends AbstractPlugin implements CheckoutPost
      *
      * @return bool
      */
-    protected function isAuthorizationApproved(QuoteTransfer $quoteTransfer)
+    protected function isAuthorizationApproved(QuoteTransfer $quoteTransfer): bool
     {
         $quoteTransfer->requireBillingAddress();
 

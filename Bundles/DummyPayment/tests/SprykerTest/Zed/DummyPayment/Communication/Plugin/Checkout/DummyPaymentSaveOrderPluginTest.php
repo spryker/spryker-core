@@ -34,7 +34,7 @@ class DummyPaymentSaveOrderPluginTest extends Unit
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
 
         $plugin = new DummyPaymentSaveOrderPlugin();
-        $checkoutResponseTransfer = $plugin->execute(new QuoteTransfer(), $checkoutResponseTransfer);
+        $plugin->execute(new QuoteTransfer(), $checkoutResponseTransfer);
 
         $this->assertInstanceOf(CheckoutResponseTransfer::class, $checkoutResponseTransfer);
     }

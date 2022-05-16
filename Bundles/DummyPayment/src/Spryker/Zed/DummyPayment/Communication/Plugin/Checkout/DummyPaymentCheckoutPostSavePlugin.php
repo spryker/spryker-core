@@ -39,7 +39,7 @@ class DummyPaymentCheckoutPostSavePlugin extends AbstractPlugin implements Check
      *
      * @return void
      */
-    public function executeHook(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
+    public function executeHook(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): void
     {
         if ($quoteTransfer->getPayment()->getPaymentProvider() !== DummyPaymentConfig::PROVIDER_NAME) {
             return;

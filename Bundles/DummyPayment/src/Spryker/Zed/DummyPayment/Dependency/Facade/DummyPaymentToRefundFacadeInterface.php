@@ -10,7 +10,7 @@ namespace Spryker\Zed\DummyPayment\Dependency\Facade;
 use Generated\Shared\Transfer\RefundTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 
-interface DummyPaymentToRefundInterface
+interface DummyPaymentToRefundFacadeInterface
 {
     /**
      * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $salesOrderItems
@@ -25,5 +25,5 @@ interface DummyPaymentToRefundInterface
      *
      * @return bool
      */
-    public function saveRefund(RefundTransfer $refundTransfer);
+    public function saveRefund(RefundTransfer $refundTransfer): bool;
 }

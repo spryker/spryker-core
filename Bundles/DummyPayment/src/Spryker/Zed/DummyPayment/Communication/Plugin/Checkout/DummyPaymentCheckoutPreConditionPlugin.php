@@ -30,7 +30,7 @@ class DummyPaymentCheckoutPreConditionPlugin extends AbstractPlugin implements C
      *
      * @return bool
      */
-    public function checkCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
+    public function checkCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
     {
         if ($quoteTransfer->getPayment()->getPaymentProvider() === DummyPaymentConfig::PROVIDER_NAME) {
             $checkoutResponseTransfer->setIsSuccess(true);

@@ -37,7 +37,7 @@ class CheckoutDependencyInjector implements DependencyInjectorInterface
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function injectPaymentSubForms(Container $container)
+    protected function injectPaymentSubForms(Container $container): Container
     {
         $container->extend(CheckoutDependencyProvider::PAYMENT_SUB_FORMS, function (SubFormPluginCollection $paymentSubForms) {
             $paymentSubForms->add(new DummyPaymentCreditCardSubFormPlugin());
@@ -54,7 +54,7 @@ class CheckoutDependencyInjector implements DependencyInjectorInterface
      *
      * @return \Spryker\Yves\Kernel\Container
      */
-    protected function injectPaymentMethodHandler(Container $container)
+    protected function injectPaymentMethodHandler(Container $container): Container
     {
         $container->extend(CheckoutDependencyProvider::PAYMENT_METHOD_HANDLER, function (StepHandlerPluginCollection $paymentMethodHandler) {
             $dummyPaymentHandlerPlugin = new DummyPaymentHandlerPlugin();

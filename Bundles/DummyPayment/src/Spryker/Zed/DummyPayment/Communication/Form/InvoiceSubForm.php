@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
@@ -50,7 +51,7 @@ class InvoiceSubForm extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addDateOfBirth($builder);
     }
@@ -60,7 +61,7 @@ class InvoiceSubForm extends AbstractType
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => DummyPaymentTransfer::class,
@@ -99,7 +100,7 @@ class InvoiceSubForm extends AbstractType
     /**
      * @return \Symfony\Component\Validator\Constraint
      */
-    protected function createNotBlankConstraint()
+    protected function createNotBlankConstraint(): Constraint
     {
         return new NotBlank(['groups' => $this->getPropertyPath()]);
     }
@@ -107,7 +108,7 @@ class InvoiceSubForm extends AbstractType
     /**
      * @return \Symfony\Component\Validator\Constraint
      */
-    protected function createBirthdayConstraint()
+    protected function createBirthdayConstraint(): Constraint
     {
         return new Callback([
             'callback' => function ($date, ExecutionContextInterface $context) {
@@ -122,7 +123,7 @@ class InvoiceSubForm extends AbstractType
     /**
      * @return string
      */
-    protected function getName()
+    protected function getName(): string
     {
         return DummyPaymentConfig::PAYMENT_METHOD_INVOICE;
     }
@@ -130,7 +131,7 @@ class InvoiceSubForm extends AbstractType
     /**
      * @return string
      */
-    protected function getPropertyPath()
+    protected function getPropertyPath(): string
     {
         return DummyPaymentConfig::PAYMENT_METHOD_INVOICE;
     }

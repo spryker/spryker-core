@@ -24,7 +24,7 @@ class OmsDependencyInjector extends AbstractDependencyInjector
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function injectBusinessLayerDependencies(Container $container)
+    public function injectBusinessLayerDependencies(Container $container): Container
     {
         $container = $this->injectCommands($container);
         $container = $this->injectConditions($container);
@@ -37,7 +37,7 @@ class OmsDependencyInjector extends AbstractDependencyInjector
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function injectCommands(Container $container)
+    protected function injectCommands(Container $container): Container
     {
         $container->extend(OmsDependencyProvider::COMMAND_PLUGINS, function (CommandCollectionInterface $commandCollection) {
             $commandCollection->add(new RefundPlugin(), 'DummyPayment/Refund');
@@ -54,7 +54,7 @@ class OmsDependencyInjector extends AbstractDependencyInjector
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function injectConditions(Container $container)
+    protected function injectConditions(Container $container): Container
     {
         $container->extend(OmsDependencyProvider::CONDITION_PLUGINS, function (ConditionCollectionInterface $conditionCollection) {
             $conditionCollection->add(new IsAuthorizedPlugin(), 'DummyPayment/IsAuthorized');
