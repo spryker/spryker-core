@@ -88,16 +88,21 @@ class ItemsWithoutPriceFilter implements ItemFilterInterface
      */
     protected function removeItemsWithoutPrice(QuoteTransfer $quoteTransfer, array $priceProductTransfers): QuoteTransfer
     {
-        foreach ($quoteTransfer->getItems() as $key => $itemTransfer) {
+        $validItemTransfers = [];
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $priceProductFilterTransfer = $this->createPriceProductFilter($itemTransfer, $quoteTransfer);
             $priceProductTransfer = $this->priceProductService->resolveProductPriceByPriceProductFilter($priceProductTransfers, $priceProductFilterTransfer);
 
             if (!$priceProductTransfer) {
                 $this->addFilterMessage($itemTransfer->getSku());
 
-                $quoteTransfer->getItems()->offsetUnset($key);
+                continue;
             }
+
+            $validItemTransfers[] = $itemTransfer;
         }
+
+        $quoteTransfer->setItems((new ArrayObject($validItemTransfers)));
 
         return $quoteTransfer;
     }
