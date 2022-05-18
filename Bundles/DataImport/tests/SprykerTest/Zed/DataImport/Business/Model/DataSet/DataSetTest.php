@@ -58,4 +58,42 @@ class DataSetTest extends Unit
         $this->assertSame($oldData, $return);
         $this->assertSame($newData, $dataSet->getArrayCopy());
     }
+
+    /**
+     * @return void
+     */
+    public function testCheckIsSetValue(): void
+    {
+        $dataSet = $this->tester->getFactory()->createDataSet([]);
+        $dataSet['null'] = null;
+        $dataSet['true'] = true;
+        $dataSet['false'] = false;
+        $dataSet['emptystring'] = '';
+        $dataSet['int'] = 0;
+
+        $this->assertFalse(isset($dataSet['null']));
+        $this->assertTrue(isset($dataSet['true']));
+        $this->assertTrue(isset($dataSet['false']));
+        $this->assertTrue(isset($dataSet['emptystring']));
+        $this->assertTrue(isset($dataSet['int']));
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckEmptyValue(): void
+    {
+        $dataSet = $this->tester->getFactory()->createDataSet([]);
+        $dataSet['null'] = null;
+        $dataSet['true'] = true;
+        $dataSet['false'] = false;
+        $dataSet['emptystring'] = '';
+        $dataSet['int'] = 0;
+
+        $this->assertTrue(empty($dataSet['null']));
+        $this->assertFalse(empty($dataSet['true']));
+        $this->assertTrue(empty($dataSet['false']));
+        $this->assertTrue(empty($dataSet['emptystring']));
+        $this->assertTrue(empty($dataSet['int']));
+    }
 }

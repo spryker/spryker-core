@@ -34,7 +34,7 @@ class DataSet implements DataSetInterface
      */
     public function offsetGet($index)
     {
-        if (!$this->offsetExists($index)) {
+        if (!$this->dataSet->offsetExists($index)) {
             throw new DataKeyNotFoundInDataSetException(sprintf('The key "%s" was not found in data set. Available keys: "%s"', $index, implode(', ', array_keys($this->getArrayCopy()))));
         }
 
@@ -50,7 +50,7 @@ class DataSet implements DataSetInterface
      */
     public function offsetUnset($index)
     {
-        if (!$this->offsetExists($index)) {
+        if (!$this->dataSet->offsetExists($index)) {
             throw new DataKeyNotFoundInDataSetException(sprintf('The key "%s" was not found in data set. Available keys: "%s"', $index, implode(', ', array_keys($this->getArrayCopy()))));
         }
 
@@ -72,7 +72,7 @@ class DataSet implements DataSetInterface
      */
     public function offsetExists($offset)
     {
-        return $this->dataSet->offsetExists($offset);
+        return $this->dataSet->offsetExists($offset) && $this->dataSet->offsetGet($offset) !== null;
     }
 
     /**
