@@ -1,10 +1,16 @@
 @import '~@spryker/styles/src/lib/themes/default/variables/index.less';
 
-@edit-concrete-product-image-sets-padding: 20px;
-@edit-concrete-product-image-sets-radius: 10px;
-@edit-concrete-product-image-sets-title-padding-bottom: 20px;
-@edit-concrete-product-image-sets-images-padding: 5px;
-@edit-concrete-product-image-sets-images-size: 60px + @edit-concrete-product-image-sets-images-padding * 2;
+@edit-concrete-product-image-sets-padding: var(--spy-edit-concrete-product-image-sets-padding, 20px);
+@edit-concrete-product-image-sets-radius: var(--spy-edit-concrete-product-image-sets-radius, 10px);
+@edit-concrete-product-image-sets-title-padding-bottom: var(
+    --spy-edit-concrete-product-image-sets-title-padding-bottom,
+    20px
+);
+@edit-concrete-product-image-sets-images-padding: var(--spy-edit-concrete-product-image-sets-images-padding, 5px);
+@edit-concrete-product-image-sets-images-size: var(
+    --spy-edit-concrete-product-image-sets-images-size,
+    calc(60px + @edit-concrete-product-image-sets-images-padding * 2)
+);
 
 .mp-edit-concrete-product-image-sets {
     display: block;
@@ -26,7 +32,7 @@
     &__images {
         display: flex;
         flex-wrap: wrap;
-        margin: -@edit-concrete-product-image-sets-images-padding;
+        margin: calc(@edit-concrete-product-image-sets-images-padding * -1);
     }
 
     &__image-container {

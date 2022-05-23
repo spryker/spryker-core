@@ -6,5 +6,8 @@ import { Component, ChangeDetectionStrategy, ViewEncapsulation } from '@angular/
     styleUrls: ['./layout-footer.component.less'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
+    host: {
+        class: 'mp-layout-footer',
+    },
 })
 export class LayoutFooterComponent {}

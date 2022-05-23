@@ -1,8 +1,11 @@
 @import '~@spryker/styles/src/lib/themes/default/variables/index.less';
 
-@create-concrete-products-overlay-padding: 30px;
-@create-concrete-products-overlay-header-padding: 15px 30px;
-@create-concrete-products-overlay-title-margin-bottom: 7px;
+@create-concrete-products-overlay-padding: var(--spy-create-concrete-products-overlay-padding, 30px);
+@create-concrete-products-overlay-header-padding: var(--spy-create-concrete-products-overlay-header-padding, 17px 30px);
+@create-concrete-products-overlay-title-margin-bottom: var(
+    --spy-create-concrete-products-overlay-title-margin-bottom,
+    7px
+);
 
 .@{ajax-form-prefix-cls}-container {
     overflow-y: auto;

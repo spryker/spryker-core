@@ -1,11 +1,15 @@
 @import '~@spryker/styles/src/lib/themes/default/variables/index.less';
 
-mp-layout-footer .footer {
-    text-align: center;
-    padding: 20px;
-    font: @font-default;
-    color: @gray-dark;
-    background: none;
-    border: none;
-    position: static;
+@layout-footer-padding: var(--spy-layout-footer-padding, 20px);
+
+.mp-layout-footer {
+    &__content {
+        text-align: center;
+        padding: @layout-footer-padding;
+        font: @font-default;
+        color: @gray-dark;
+        background: none;
+        border: none;
+        position: static;
+    }
 }

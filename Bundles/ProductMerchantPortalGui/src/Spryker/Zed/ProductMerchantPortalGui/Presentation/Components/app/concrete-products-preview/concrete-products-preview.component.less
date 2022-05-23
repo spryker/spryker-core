@@ -1,24 +1,39 @@
 @import '~@spryker/styles/src/lib/themes/default/variables/index.less';
 
 @concrete-products-preview-class: mp-concrete-products-preview;
-@concrete-products-preview-main-border-radius: @border-radius-base;
-@concrete-products-preview-header-border-radius: @border-radius-small;
-@concrete-products-preview-header-padding: 12px 15px;
-@concrete-products-preview-header-margin-bottom: 5px;
-@concrete-products-preview-header-checkbox-padding: 3px 15px 3px 0;
-@concrete-products-preview-table-padding: 5px;
-@concrete-products-preview-table-min-width: 500px;
-@concrete-products-preview-table-list-height: 400px;
-@concrete-products-preview-table-row-padding: 15px 0 15px 10px;
-@concrete-products-preview-table-row-item-padding: 0 10px;
-@concrete-products-preview-table-row-attr-padding: 11px 0 11px 10px;
-@concrete-products-preview-table-row-margin-bottom: 5px;
-@concrete-products-preview-table-row-attr-width: 30%;
-@concrete-products-preview-table-row-sku-width: 25%;
-@concrete-products-preview-table-row-name-width: 45%;
-@concrete-products-preview-table-row-button-margin-left: 10px;
-@concrete-products-preview-no-data-icon-size: 110px;
-@concrete-products-preview-no-data-padding: 20px;
+@concrete-products-preview-main-border-radius: var(
+    --spy-concrete-products-preview-main-border-radius,
+    @border-radius-base
+);
+@concrete-products-preview-header-border-radius: var(
+    --spy-concrete-products-preview-header-border-radius,
+    @border-radius-small
+);
+@concrete-products-preview-header-padding: var(--spy-concrete-products-preview-header-padding, 12px 15px);
+@concrete-products-preview-header-margin-bottom: var(--spy-concrete-products-preview-header-margin-bottom, 5px);
+@concrete-products-preview-header-checkbox-padding: var(
+    --spy-concrete-products-preview-header-checkbox-padding,
+    3px 15px 3px 0
+);
+@concrete-products-preview-table-padding: var(--spy-concrete-products-preview-table-padding, 5px);
+@concrete-products-preview-table-min-width: var(--spy-concrete-products-preview-table-min-width, 500px);
+@concrete-products-preview-table-list-height: var(--spy-concrete-products-preview-table-list-height, 400px);
+@concrete-products-preview-table-row-padding: var(--spy-concrete-products-preview-table-row-padding, 15px 0 15px 10px);
+@concrete-products-preview-table-row-item-padding: var(--spy-concrete-products-preview-table-row-item-padding, 0 10px);
+@concrete-products-preview-table-row-attr-padding: var(
+    --spy-concrete-products-preview-table-row-attr-padding,
+    11px 0 11px 10px
+);
+@concrete-products-preview-table-row-margin-bottom: var(--spy-concrete-products-preview-table-row-margin-bottom, 5px);
+@concrete-products-preview-table-row-attr-width: var(--spy-concrete-products-preview-table-row-attr-width, 30%);
+@concrete-products-preview-table-row-sku-width: var(--spy-concrete-products-preview-table-row-sku-width, 25%);
+@concrete-products-preview-table-row-name-width: var(--spy-concrete-products-preview-table-row-name-width, 45%);
+@concrete-products-preview-table-row-button-margin-left: var(
+    --spy-concrete-products-preview-table-row-button-margin-left,
+    10px
+);
+@concrete-products-preview-no-data-icon-size: var(--spy-concrete-products-preview-no-data-icon-size, 110px);
+@concrete-products-preview-no-data-padding: var(--spy-concrete-products-preview-no-data-padding, 20px);
 
 .@{concrete-products-preview-class} {
     &__header {

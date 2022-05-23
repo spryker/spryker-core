@@ -1,34 +1,80 @@
 @import '~@spryker/styles/src/lib/themes/default/variables/index.less';
 
-@edit-offer-content-padding: 30px;
-@edit-offer-common-blocks-indent: 7px;
-@edit-offer-header-padding: 15px 30px;
-@edit-offer-header-title-line-height: 2;
-@edit-offer-card-padding-bottom: 20px;
-@edit-offer-approval-status-margin-left: 20px;
-@edit-offer-product-margin: 0 -10px 30px;
-@edit-offer-product-col-padding: 0 10px;
-@edit-offer-product-sku-padding: 5px 0 10px;
-@edit-offer-product-dates-margin: 0 -@edit-offer-common-blocks-indent @edit-offer-common-blocks-indent;
-@edit-offer-product-dates-base-width: 190px;
-@edit-offer-product-dates-value-margin-left: 5px;
-@edit-offer-product-details-flex-basis: 200px;
-@edit-offer-product-details-margin: -@edit-offer-common-blocks-indent -10px;
-@edit-offer-product-details-padding: 20px 0;
-@edit-offer-product-details-col-padding: @edit-offer-common-blocks-indent 10px;
-@edit-offer-collapsible-title-line-height: 1.7;
-@edit-offer-collapsible-text-padding: 5px 0;
-@edit-offer-input-prefix-width: 73px;
-@edit-offer-form-row-padding: 17px;
-@edit-offer-form-row-col-min-height: @input-height-base + @edit-offer-form-row-padding * 2;
-@edit-offer-form-row-col-checkbox-min-height: @input-height-base + @edit-offer-form-row-padding * 1.5;
-@edit-offer-form-row-base-width: 275px;
-@edit-offer-form-row-date-range-base-width: 444px;
-@edit-offer-form-item-width: 130px;
-@edit-offer-stock-reserved-margin-bottom: 17px;
-@edit-offer-stock-margin: 0 -17px;
-@edit-offer-stock-row-padding: 0 17px;
-@edit-offer-table-padding-inside-card: 3px 5px;
+@edit-offer-indent-small: var(--spy-edit-offer-indent-small, 10px);
+@edit-offer-indent-medium: var(--spy-edit-offer-indent-medium, 17px);
+@edit-offer-indent-big: var(--spy-edit-offer-indent-big, 30px);
+@edit-offer-content-padding: var(--spy-edit-offer-content-padding, @edit-offer-indent-big);
+@edit-offer-common-blocks-indent: var(--spy-edit-offer-common-blocks-indent, 7px);
+@edit-offer-header-padding: var(--spy-edit-offer-header-padding, @edit-offer-indent-medium @edit-offer-indent-big);
+@edit-offer-header-title-line-height: var(--spy-edit-offer-header-title-line-height, 2);
+@edit-offer-card-padding-bottom: var(
+    --spy-edit-offer-card-padding-bottom,
+    calc(@edit-offer-indent-big - @edit-offer-indent-small)
+);
+@edit-offer-approval-status-margin-left: var(
+    --spy-edit-offer-approval-status-margin-left,
+    calc(@edit-offer-indent-big - @edit-offer-indent-small)
+);
+@edit-offer-product-margin: var(
+    --spy-edit-offer-product-margin,
+    0 calc(@edit-offer-indent-small * -1) @edit-offer-indent-big
+);
+@edit-offer-product-col-padding: var(--spy-edit-offer-product-col-padding, 0 @edit-offer-indent-small);
+@edit-offer-product-sku-padding: var(
+    --spy-edit-offer-product-sku-padding,
+    calc(@edit-offer-indent-small / 2) 0 @edit-offer-indent-small
+);
+@edit-offer-product-dates-margin: var(
+    --spy-edit-offer-product-dates-margin,
+    0 calc(@edit-offer-common-blocks-indent * -1) @edit-offer-common-blocks-indent
+);
+@edit-offer-product-dates-base-width: var(--spy-edit-offer-product-dates-base-width, 190px);
+@edit-offer-product-dates-value-margin-left: var(
+    --spy-edit-offer-product-dates-value-margin-left,
+    calc(@edit-offer-indent-small / 2)
+);
+@edit-offer-product-details-flex-basis: var(--spy-edit-offer-product-details-flex-basis, 200px);
+@edit-offer-product-details-margin: var(
+    --spy-edit-offer-product-details-margin,
+    calc(@edit-offer-common-blocks-indent * -1) calc(@edit-offer-indent-small * -1)
+);
+@edit-offer-product-details-padding: var(
+    --spy-edit-offer-product-details-padding,
+    calc(@edit-offer-indent-big - @edit-offer-indent-small) 0
+);
+@edit-offer-product-details-col-padding: var(
+    --spy-edit-offer-product-details-col-padding,
+    @edit-offer-common-blocks-indent @edit-offer-indent-small
+);
+@edit-offer-collapsible-title-line-height: var(--spy-edit-offer-collapsible-title-line-height, 1.7);
+@edit-offer-collapsible-text-padding: var(
+    --spy-edit-offer-collapsible-text-padding,
+    calc(@edit-offer-indent-small / 2) 0
+);
+@edit-offer-input-prefix-width: var(--spy-edit-offer-input-prefix-width, 73px);
+@edit-offer-form-row-padding: var(--spy-edit-offer-form-row-padding, @edit-offer-indent-medium);
+@edit-offer-form-row-col-min-height: var(
+    --spy-edit-offer-form-row-col-min-height,
+    calc(@input-height-base + @edit-offer-form-row-padding * 2)
+);
+@edit-offer-form-row-col-checkbox-min-height: var(
+    --spy-edit-offer-form-row-col-checkbox-min-height,
+    calc(@input-height-base + @edit-offer-form-row-padding * 1.5)
+);
+@edit-offer-form-row-base-width: var(--spy-edit-offer-form-row-base-width, 275px);
+@edit-offer-form-row-date-range-base-width: var(--spy-edit-offer-form-row-date-range-base-width, 444px);
+@edit-offer-form-item-width: var(--spy-edit-offer-form-item-width, 130px);
+@edit-offer-stock-form-label-margin-bottom: var(
+    --spy-edit-offer-stock-form-label-margin-bottom,
+    calc(@edit-offer-indent-small / 2)
+);
+@edit-offer-stock-reserved-margin-bottom: var(--spy-edit-offer-stock-reserved-margin-bottom, @edit-offer-indent-medium);
+@edit-offer-stock-margin: var(--spy-edit-offer-stock-margin, 0 calc(@edit-offer-indent-medium * -1));
+@edit-offer-stock-row-padding: var(--spy-edit-offer-stock-row-padding, 0 @edit-offer-indent-medium);
+@edit-offer-table-padding-inside-card: var(
+    --spy-edit-offer-table-padding-inside-card,
+    3px calc(@edit-offer-indent-small / 2)
+);
 
 .@{ajax-form-prefix-cls}-container {
     overflow-y: auto;
@@ -172,7 +218,7 @@
         display: flex;
         flex-wrap: wrap;
         align-items: flex-end;
-        margin: -@edit-offer-form-row-padding;
+        margin: calc(@edit-offer-form-row-padding * -1);
 
         &-col {
             flex-basis: @edit-offer-form-row-base-width;
@@ -218,7 +264,7 @@
             padding: 0;
 
             label {
-                margin: 0;
+                margin-bottom: @edit-offer-stock-form-label-margin-bottom;
             }
         }
     }

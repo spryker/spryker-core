@@ -284,7 +284,7 @@
                                                         >
                                                             {{ form_row(localizedAttributeForm.children.metaTitle) }}
                                                             {{ form_row(localizedAttributeForm.children.metaKeywords) }}
-                                                            {{ form_row(localizedAttributeForm.children.metaDescription) }}
+                                                            {{ form_row(localizedAttributeForm.children.metaDescription, { row_attr: { 'no-spaces': 'true' } }) }}
                                                         </web-spy-tab>
                                                     {% endblock %}
                                                 {% endfor %}
