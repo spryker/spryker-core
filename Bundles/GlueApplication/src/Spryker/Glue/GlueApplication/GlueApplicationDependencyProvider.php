@@ -173,6 +173,11 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_RESOURCE_FILTER = 'PLUGINS_RESOURCE_FILTER';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_GLUE_APPLICATION_ROUTER_PROVIDER = 'PLUGINS_GLUE_APPLICATION_ROUTER_PROVIDER';
+
+    /**
      * @param \Spryker\Glue\Kernel\Container $container
      *
      * @return \Spryker\Glue\Kernel\Container
@@ -205,6 +210,7 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCommunicationProtocolPlugins($container);
         $container = $this->addApiConventionPlugins($container);
         $container = $this->addResourceFilterPlugins($container);
+        $container = $this->addGlueApplicationRouterProviderPlugins($container);
 
         return $container;
     }
@@ -776,6 +782,28 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
      * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceFilterPluginInterface>
      */
     public function getResourceFilterPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addGlueApplicationRouterProviderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_GLUE_APPLICATION_ROUTER_PROVIDER, function () {
+            return $this->getGlueApplicationRouterProviderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ApiApplicationEndpointProviderPluginInterface>
+     */
+    protected function getGlueApplicationRouterProviderPlugins(): array
     {
         return [];
     }

@@ -18,6 +18,7 @@ use Spryker\Glue\GlueApplication\Dependency\Client\GlueApplicationToStoreClientI
 use Spryker\Glue\GlueApplication\Dependency\Service\GlueApplicationToUtilEncodingServiceInterface;
 use Spryker\Glue\GlueApplication\Executor\ResourceExecutor;
 use Spryker\Glue\GlueApplication\Executor\ResourceExecutorInterface;
+use Spryker\Glue\GlueApplication\Plugin\Console\Helper\DescriptorHelper;
 use Spryker\Glue\GlueApplication\Plugin\Rest\GlueControllerListenerPlugin;
 use Spryker\Glue\GlueApplication\Rest\ContentType\ContentTypeResolver;
 use Spryker\Glue\GlueApplication\Rest\ContentType\ContentTypeResolverInterface;
@@ -93,6 +94,9 @@ use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\Application\ApplicationInterface;
 use Spryker\Shared\Kernel\Container\ContainerProxy;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
  * @method \Spryker\Glue\GlueApplication\GlueApplicationConfig getConfig()
@@ -782,6 +786,25 @@ class GlueApplicationFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Glue\GlueApplication\Plugin\Console\Helper\DescriptorHelper
+     */
+    public function createDescriptorHelper(): DescriptorHelper
+    {
+        return new DescriptorHelper();
+    }
+
+    /**
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     *
+     * @return \Symfony\Component\Console\Style\SymfonyStyle
+     */
+    public function createConsoleOutputStyle(InputInterface $input, OutputInterface $output): SymfonyStyle
+    {
+        return new SymfonyStyle($input, $output);
+    }
+
+    /**
      * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceFilterPluginInterface>
      */
     public function getResourceFilterPlugins(): array
@@ -795,5 +818,13 @@ class GlueApplicationFactory extends AbstractFactory
     public function createUriParser(): UriParserInterface
     {
         return new UriParser();
+    }
+
+    /**
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ApiApplicationEndpointProviderPluginInterface>
+     */
+    public function getGlueApplicationRouterProviderPlugins(): array
+    {
+        return $this->getProvidedDependency(GlueApplicationDependencyProvider::PLUGINS_GLUE_APPLICATION_ROUTER_PROVIDER);
     }
 }

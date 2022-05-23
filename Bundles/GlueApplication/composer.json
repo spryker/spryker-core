@@ -10,7 +10,7 @@
         "spryker/container": "^1.0.0",
         "spryker/documentation-generator-rest-api-extension": "^1.0.0",
         "spryker/event-dispatcher-extension": "^1.0.0",
-        "spryker/glue-application-extension": "^1.7.0",
+        "spryker/glue-application-extension": "^1.8.0",
         "spryker/glue-backend-api-application-extension": "^1.0.0",
         "spryker/glue-storefront-api-application-extension": "^1.0.0",
         "spryker/kernel": "^3.58.0",
