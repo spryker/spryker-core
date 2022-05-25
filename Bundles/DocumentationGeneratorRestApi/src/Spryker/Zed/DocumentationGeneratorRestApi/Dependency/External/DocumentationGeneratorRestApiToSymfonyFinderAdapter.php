@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\DocumentationGeneratorRestApi\Dependency\External;
 
+use Iterator;
 use Symfony\Component\Finder\Finder;
 
 /**
@@ -69,7 +70,7 @@ class DocumentationGeneratorRestApiToSymfonyFinderAdapter implements Documentati
     /**
      * @return \Iterator<\SplFileInfo>
      */
-    public function getIterator()
+    public function getIterator(): Iterator
     {
         return $this->finder->getIterator();
     }

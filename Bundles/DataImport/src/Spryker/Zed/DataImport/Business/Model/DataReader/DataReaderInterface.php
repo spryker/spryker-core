@@ -17,5 +17,6 @@ interface DataReaderInterface extends Iterator
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface
      */
+    #[\ReturnTypeWillChange]
     public function current();
 }

@@ -418,7 +418,7 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
      *
      * @return bool
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->transferMetadata[$offset]);
     }
@@ -440,7 +440,7 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         $this->$offset = $value;
     }
@@ -452,7 +452,7 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         throw new ArrayAccessReadyOnlyException('Transfer object as an array is available only for read');
     }

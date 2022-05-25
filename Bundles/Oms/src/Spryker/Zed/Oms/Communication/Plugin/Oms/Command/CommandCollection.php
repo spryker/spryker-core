@@ -82,7 +82,7 @@ class CommandCollection implements CommandCollectionInterface, HasAwareCollectio
      *
      * @return bool
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return $this->has($offset);
     }
@@ -92,6 +92,7 @@ class CommandCollection implements CommandCollectionInterface, HasAwareCollectio
      *
      * @return \Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface|\Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return $this->get($offset);
@@ -103,7 +104,7 @@ class CommandCollection implements CommandCollectionInterface, HasAwareCollectio
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         $this->add($value, $offset);
     }
@@ -113,7 +114,7 @@ class CommandCollection implements CommandCollectionInterface, HasAwareCollectio
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->commands[$offset]);
     }

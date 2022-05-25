@@ -60,7 +60,7 @@ class ContainerGlobals implements ArrayAccess
      *
      * @return void
      */
-    public function offsetSet($id, $value)
+    public function offsetSet($id, $value): void
     {
         static::$containerGlobals[$id] = $value;
     }
@@ -72,6 +72,7 @@ class ContainerGlobals implements ArrayAccess
      *
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($id)
     {
         if (!array_key_exists($id, static::$containerGlobals)) {
@@ -88,7 +89,7 @@ class ContainerGlobals implements ArrayAccess
      *
      * @return bool
      */
-    public function offsetExists($id)
+    public function offsetExists($id): bool
     {
         return array_key_exists($id, static::$containerGlobals);
     }
@@ -98,7 +99,7 @@ class ContainerGlobals implements ArrayAccess
      *
      * @return void
      */
-    public function offsetUnset($id)
+    public function offsetUnset($id): void
     {
         unset(static::$containerGlobals[$id]);
     }

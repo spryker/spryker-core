@@ -9,6 +9,7 @@ namespace Spryker\Zed\DataImport\Business\Model\DataSet;
 
 use ArrayObject;
 use Spryker\Zed\DataImport\Business\Exception\DataKeyNotFoundInDataSetException;
+use Traversable;
 
 class DataSet implements DataSetInterface
 {
@@ -32,6 +33,7 @@ class DataSet implements DataSetInterface
      *
      * @return array|string|float|int|bool
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($index)
     {
         if (!$this->dataSet->offsetExists($index)) {
@@ -48,7 +50,7 @@ class DataSet implements DataSetInterface
      *
      * @return void
      */
-    public function offsetUnset($index)
+    public function offsetUnset($index): void
     {
         if (!$this->dataSet->offsetExists($index)) {
             throw new DataKeyNotFoundInDataSetException(sprintf('The key "%s" was not found in data set. Available keys: "%s"', $index, implode(', ', array_keys($this->getArrayCopy()))));
@@ -60,7 +62,7 @@ class DataSet implements DataSetInterface
     /**
      * @return \ArrayIterator|\Traversable
      */
-    public function getIterator()
+    public function getIterator(): Traversable
     {
         return $this->dataSet->getIterator();
     }
@@ -70,7 +72,7 @@ class DataSet implements DataSetInterface
      *
      * @return bool
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return $this->dataSet->offsetExists($offset) && $this->dataSet->offsetGet($offset) !== null;
     }
@@ -81,7 +83,7 @@ class DataSet implements DataSetInterface
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         $this->dataSet->offsetSet($offset, $value);
     }
@@ -89,7 +91,7 @@ class DataSet implements DataSetInterface
     /**
      * @return string|null
      */
-    public function serialize()
+    public function serialize(): ?string
     {
         return $this->dataSet->serialize();
     }
@@ -99,7 +101,7 @@ class DataSet implements DataSetInterface
      *
      * @return void
      */
-    public function unserialize($serialized)
+    public function unserialize($serialized): void
     {
         $this->dataSet->unserialize($serialized);
     }
@@ -107,7 +109,7 @@ class DataSet implements DataSetInterface
     /**
      * @return int
      */
-    public function count()
+    public function count(): int
     {
         return $this->dataSet->count();
     }
