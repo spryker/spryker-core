@@ -113,7 +113,7 @@ class ResetPassword implements ResetPasswordInterface
 
         $userTransfer = $this->userFacade->findUser((new UserCriteriaTransfer())->setEmail($userPasswordResetRequestTransfer->getEmail()));
 
-        if (!$userTransfer) {
+        if (!$userTransfer || $userTransfer->getStatus() !== $this->resetConfig->getUserStatusActive()) {
             return false;
         }
 
