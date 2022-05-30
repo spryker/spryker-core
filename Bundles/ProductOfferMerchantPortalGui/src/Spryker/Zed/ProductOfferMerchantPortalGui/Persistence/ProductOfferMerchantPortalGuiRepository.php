@@ -461,7 +461,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
     protected function buildProductOfferTableBaseQuery(
         ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer
     ): SpyProductOfferQuery {
-        $productOfferQuery = $this->getFactory()->getProductOfferPropelQuery()->distinct();
+        $productOfferQuery = $this->getFactory()->getProductOfferPropelQuery();
         $merchantReference = $productOfferTableCriteriaTransfer->getMerchantReferenceOrFail();
         $idLocale = $productOfferTableCriteriaTransfer->getLocaleOrFail()->getIdLocaleOrFail();
 
