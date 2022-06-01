@@ -15,6 +15,8 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\CompanyGui\Communication\Form\CompanyToCompanyUserForm} instead.
+ *
  * @method \Spryker\Zed\CompanyGui\Communication\CompanyGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\CompanyGui\CompanyGuiConfig getConfig()
  */

@@ -22,6 +22,19 @@ class CompanyGuiFormatter implements CompanyGuiFormatterInterface
     protected const KEY_TEXT = 'text';
 
     /**
+     * @var \Spryker\Zed\CompanyGui\Communication\Formatter\CompanyNameFormatterInterface
+     */
+    protected $companyNameFormatter;
+
+    /**
+     * @param \Spryker\Zed\CompanyGui\Communication\Formatter\CompanyNameFormatterInterface $companyNameFormatter
+     */
+    public function __construct(CompanyNameFormatterInterface $companyNameFormatter)
+    {
+        $this->companyNameFormatter = $companyNameFormatter;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\CompanyCollectionTransfer $companyCollectionTransfer
      *
      * @return array<array<string, mixed>>
@@ -33,11 +46,7 @@ class CompanyGuiFormatter implements CompanyGuiFormatterInterface
         foreach ($companyCollectionTransfer->getCompanies() as $companyTransfer) {
             $formattedSuggestCompanyList[] = [
                 static::KEY_ID => $companyTransfer->getIdCompany(),
-                static::KEY_TEXT => sprintf(
-                    '%s (ID: %d)',
-                    $companyTransfer->getName(),
-                    $companyTransfer->getIdCompany(),
-                ),
+                static::KEY_TEXT => $this->companyNameFormatter->formatName($companyTransfer),
             ];
         }
 

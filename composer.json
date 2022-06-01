@@ -197,6 +197,7 @@
         "spryker/company-role": "*",
         "spryker/company-role-data-import": "*",
         "spryker/company-role-gui": "*",
+        "spryker/company-role-gui-extension": "*",
         "spryker/company-roles-rest-api": "*",
         "spryker/company-sales-connector": "*",
         "spryker/company-supplier": "*",

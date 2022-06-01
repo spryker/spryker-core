@@ -12,6 +12,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\CompanyGui\Communication\Plugin\CompanyUserGui\CompanyFieldToCompanyUserFormExpanderPlugin} instead.
+ *
  * @method \Spryker\Zed\CompanyGui\Communication\CompanyGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\CompanyGui\CompanyGuiConfig getConfig()
  */

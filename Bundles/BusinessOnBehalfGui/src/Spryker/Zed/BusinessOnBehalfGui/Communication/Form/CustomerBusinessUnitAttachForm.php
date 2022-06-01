@@ -9,6 +9,7 @@ namespace Spryker\Zed\BusinessOnBehalfGui\Communication\Form;
 
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\ChoiceList\Loader\CallbackChoiceLoader;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -22,12 +23,7 @@ class CustomerBusinessUnitAttachForm extends AbstractType
     /**
      * @var string
      */
-    public const OPTION_COMPANY_BUSINESS_UNIT_CHOICES = 'company_business_unit_choices';
-
-    /**
-     * @var string
-     */
-    public const FIELD_FK_COMPANY_BUSINESS_UNIT = 'fk_company_business_unit';
+    protected const FIELD_FK_COMPANY_BUSINESS_UNIT = 'fk_company_business_unit';
 
     /**
      * @return string
@@ -46,7 +42,6 @@ class CustomerBusinessUnitAttachForm extends AbstractType
     {
         parent::configureOptions($resolver);
 
-        $resolver->setRequired(static::OPTION_COMPANY_BUSINESS_UNIT_CHOICES);
         $resolver->setDefaults([
             'data_class' => CompanyUserTransfer::class,
         ]);
@@ -60,22 +55,25 @@ class CustomerBusinessUnitAttachForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addCompanyBusinessUnitCollectionField($builder, $options);
+        $this->addCompanyBusinessUnitCollectionField($builder);
         $this->executeCustomerBusinessUnitAttachFormExpanderPlugins($builder);
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array<string, mixed> $options
      *
      * @return $this
      */
-    protected function addCompanyBusinessUnitCollectionField(FormBuilderInterface $builder, array $options)
+    protected function addCompanyBusinessUnitCollectionField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_FK_COMPANY_BUSINESS_UNIT, ChoiceType::class, [
             'label' => 'Business Unit',
             'placeholder' => 'Business Unit name',
-            'choices' => $options[static::OPTION_COMPANY_BUSINESS_UNIT_CHOICES],
+            'choice_loader' => new CallbackChoiceLoader(function () use ($builder) {
+                return $this->getFactory()
+                    ->createCustomerCompanyAttachFormDataProvider()
+                    ->getCompanyBusinessUnitChoices($builder->getData()->getFkCompany());
+            }),
             'required' => true,
         ]);
 

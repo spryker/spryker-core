@@ -7,12 +7,16 @@
 
 namespace Spryker\Zed\CompanyBusinessUnitGui\Communication\Form;
 
+use Closure;
+use Spryker\Zed\Gui\Communication\Form\Type\SelectType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\ChoiceList\Loader\CallbackChoiceLoader;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -23,11 +27,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class CompanyBusinessUnitForm extends AbstractType
 {
-    /**
-     * @var string
-     */
-    public const OPTION_COMPANY_CHOICES = 'company_choices';
-
     /**
      * @var string
      */
@@ -77,18 +76,6 @@ class CompanyBusinessUnitForm extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
-     *
-     * @return void
-     */
-    public function configureOptions(OptionsResolver $resolver): void
-    {
-        $resolver->setRequired(static::OPTION_COMPANY_CHOICES);
-        $resolver->setRequired(static::OPTION_PARENT_CHOICES_VALUES);
-        $resolver->setRequired(static::OPTION_PARENT_CHOICES_ATTRIBUTES);
-    }
-
-    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array<string, mixed> $options
      *
@@ -97,17 +84,18 @@ class CompanyBusinessUnitForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this
-            ->addCompanyField($builder, $options[static::OPTION_COMPANY_CHOICES])
+            ->addCompanyField($builder)
             ->addIdCompanyBusinessUnitField($builder)
-            ->addParentNameField(
-                $builder,
-                $options[static::OPTION_PARENT_CHOICES_VALUES],
-                $options[static::OPTION_PARENT_CHOICES_ATTRIBUTES],
-            )
+            ->addFkParentCompanyBusinessUnitField($builder)
             ->addNameField($builder)
             ->addIbanField($builder)
             ->addBicField($builder)
             ->addPluginForms($builder);
+
+        $builder->addEventListener(
+            FormEvents::PRE_SUBMIT,
+            $this->getParentCompanyBusinessUnitFieldPreSubmitCallback(),
+        );
     }
 
     /**
@@ -124,25 +112,43 @@ class CompanyBusinessUnitForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array<string> $choicesValues [unitKey => idUnit]
-     * @param array<array> $choicesAttributes [unitKey => ['data-id_company' => idCompany]
      *
      * @return $this
      */
-    protected function addParentNameField(
-        FormBuilderInterface $builder,
-        array $choicesValues,
-        array $choicesAttributes
+    protected function addFkParentCompanyBusinessUnitField(
+        FormBuilderInterface $builder
     ) {
-        $builder->add(static::FIELD_FK_PARENT_COMPANY_BUSINESS_UNIT, ChoiceType::class, [
+        $builder->add(static::FIELD_FK_PARENT_COMPANY_BUSINESS_UNIT, SelectType::class, [
             'label' => 'Parent',
+            'choices' => [],
             'placeholder' => 'No parent',
-            'choices' => $choicesValues,
             'required' => false,
-            'choice_attr' => $choicesAttributes,
+            'attr' => ['disabled' => 'disabled'],
         ]);
 
         return $this;
+    }
+
+    /**
+     * @return \Closure
+     */
+    protected function getParentCompanyBusinessUnitFieldPreSubmitCallback(): Closure
+    {
+        return function (FormEvent $formEvent) {
+            $data = $formEvent->getData();
+            $form = $formEvent->getForm();
+            $fkParentCompanyBusinessUnitFieldData = $data[static::FIELD_FK_PARENT_COMPANY_BUSINESS_UNIT];
+            if (!$fkParentCompanyBusinessUnitFieldData) {
+                return;
+            }
+            $form->add(static::FIELD_FK_PARENT_COMPANY_BUSINESS_UNIT, ChoiceType::class, [
+                'label' => 'Parent',
+                'choices' => [$fkParentCompanyBusinessUnitFieldData => $fkParentCompanyBusinessUnitFieldData],
+                'placeholder' => 'No parent',
+                'required' => false,
+                'attr' => ['disabled' => 'disabled'],
+            ]);
+        };
     }
 
     /**
@@ -200,16 +206,19 @@ class CompanyBusinessUnitForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $choices
      *
      * @return $this
      */
-    protected function addCompanyField(FormBuilderInterface $builder, array $choices)
+    protected function addCompanyField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_FK_COMPANY, ChoiceType::class, [
             'label' => 'Company',
             'placeholder' => 'Select one',
-            'choices' => $choices,
+            'choice_loader' => new CallbackChoiceLoader(function () {
+                return $this->getFactory()
+                    ->createCompanyBusinessUnitFormDataProvider()
+                    ->prepareCompanyChoices();
+            }),
             'constraints' => [
                 new NotBlank(),
             ],

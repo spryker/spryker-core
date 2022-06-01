@@ -60,6 +60,20 @@ class CompanyUserFormDataProvider
     }
 
     /**
+     * @return array<string, int>
+     */
+    public function prepareCompanyChoices(): array
+    {
+        $companyChoices = [];
+
+        foreach ($this->companyFacade->getCompanies()->getCompanies() as $companyTransfer) {
+            $companyChoices[$companyTransfer->getName()] = $companyTransfer->getIdCompany();
+        }
+
+        return $companyChoices;
+    }
+
+    /**
      * @param int|null $idCompanyUser
      *
      * @return \Generated\Shared\Transfer\CompanyUserTransfer

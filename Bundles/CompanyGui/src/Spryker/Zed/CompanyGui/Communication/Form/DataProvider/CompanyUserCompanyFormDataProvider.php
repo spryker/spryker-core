@@ -37,10 +37,10 @@ class CompanyUserCompanyFormDataProvider
 
         $companyTransfer = $this->companyFacade->findCompanyById($idCompany);
 
-        if ($companyTransfer) {
-            return [$companyTransfer->getName() => $idCompany];
+        if (!$companyTransfer) {
+            return [];
         }
 
-        return [];
+        return [$companyTransfer->getNameOrFail() => $idCompany];
     }
 }

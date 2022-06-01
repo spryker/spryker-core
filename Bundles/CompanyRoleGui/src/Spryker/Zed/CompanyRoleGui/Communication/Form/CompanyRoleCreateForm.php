@@ -11,8 +11,9 @@ use Closure;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
+use Symfony\Component\Form\ChoiceList\Loader\CallbackChoiceLoader;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -28,11 +29,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class CompanyRoleCreateForm extends AbstractType
 {
-    /**
-     * @var string
-     */
-    public const OPTION_COMPANY_CHOICES = 'company_choices';
-
     /**
      * @var string
      */
@@ -81,7 +77,6 @@ class CompanyRoleCreateForm extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired([
-            static::OPTION_COMPANY_CHOICES,
             static::OPTION_PERMISSION_CHOICES,
         ]);
         $resolver->setDefaults([
@@ -99,11 +94,13 @@ class CompanyRoleCreateForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addIdCompanyRoleField($builder)
-            ->addFkCompanyField($builder, $options)
+            ->addFkCompanyField($builder)
             ->addNameField($builder)
             ->addIsDefaultField($builder)
             ->addPermissionCollectionField($builder, $options)
             ->addCompanyUserCollectionField($builder);
+
+        $this->executeCompanyRoleCreateFormExpanderPlugins($builder);
     }
 
     /**
@@ -120,14 +117,17 @@ class CompanyRoleCreateForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array<string, mixed> $options
      *
      * @return $this
      */
-    protected function addFkCompanyField(FormBuilderInterface $builder, array $options)
+    protected function addFkCompanyField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_FK_COMPANY, ChoiceType::class, [
-            'choices' => $options[static::OPTION_COMPANY_CHOICES],
+            'choice_loader' => new CallbackChoiceLoader(function () {
+                return $this->getFactory()
+                    ->createCompanyRoleCreateFormDataProvider()
+                    ->prepareAvailableCompanies();
+            }),
             'expanded' => false,
             'placeholder' => 'Select company',
             'label' => 'Company',
@@ -270,5 +270,19 @@ class CompanyRoleCreateForm extends AbstractType
     protected function getTemplatePath(): string
     {
         return static::TEMPLATE_PATH;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     *
+     * @return $this
+     */
+    protected function executeCompanyRoleCreateFormExpanderPlugins(FormBuilderInterface $builder)
+    {
+        foreach ($this->getFactory()->getCompanyRoleCreateFormExpanderPlugins() as $companyRoleCreateFormExpanderPlugin) {
+            $builder = $companyRoleCreateFormExpanderPlugin->expand($builder);
+        }
+
+        return $this;
     }
 }

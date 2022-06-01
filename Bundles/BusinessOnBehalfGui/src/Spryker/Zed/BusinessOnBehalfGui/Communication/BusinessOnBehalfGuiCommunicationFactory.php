@@ -84,7 +84,7 @@ class BusinessOnBehalfGuiCommunicationFactory extends AbstractCommunicationFacto
         return $this->getFormFactory()->create(
             CustomerBusinessUnitAttachForm::class,
             $dataProvider->getData($idCustomer, $idCompany),
-            $dataProvider->getOptions($idCompany),
+            $dataProvider->getOptions(),
         );
     }
 

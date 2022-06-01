@@ -6,20 +6,20 @@
 'use strict';
 
 function DependentSelectBox(options) {
-    $.extend(this, options);
-
+    var _self = this;
     this.data = {};
+    this.requestMethod = 'POST';
+
+    $.extend(this, options);
 
     this.init = function () {
         this.mapEvents();
     };
 
     this.mapEvents = function () {
-        var self = this;
-
         this.$trigger.on('change', function () {
-            self.getData($(this));
-            self.requestData();
+            _self.getData($(this));
+            _self.requestData();
         });
     };
 
@@ -34,15 +34,15 @@ function DependentSelectBox(options) {
     };
 
     this.requestData = function () {
-        var self = this;
+        this.$target.attr('disabled', true);
 
         $.ajax({
             url: this.requestUrl,
-            type: 'POST',
+            type: this.requestMethod,
             data: this.data,
             success: function (data) {
-                self.updateTargetSelectBox(data);
-                self.successCallback ? self.successCallback(data) : null;
+                _self.updateTargetSelectBox(data);
+                _self.successCallback ? _self.successCallback(data) : null;
             },
         });
     };
@@ -64,15 +64,13 @@ function DependentSelectBox(options) {
     };
 
     this.fillTargetSelectBox = function (data) {
-        var self = this;
-
         $.each(data[this.responseData.response], function (index, element) {
-            self.$target.append(
+            _self.$target.append(
                 $(
                     '<option value="' +
-                        element[self.responseData.value] +
+                        element[_self.responseData.value] +
                         '">' +
-                        element[self.responseData.text] +
+                        element[_self.responseData.text] +
                         '</option>',
                 ),
             );

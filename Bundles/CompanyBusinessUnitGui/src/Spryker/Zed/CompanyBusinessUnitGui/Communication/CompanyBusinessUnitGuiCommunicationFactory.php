@@ -10,12 +10,24 @@ namespace Spryker\Zed\CompanyBusinessUnitGui\Communication;
 use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
 use Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyBusinessUnitEditForm;
 use Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyBusinessUnitForm;
+use Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyBusinessUnitToCompanyUserForm;
+use Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyBusinessUnitToCustomerBusinessUnitAttachForm;
+use Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyBusinessUnitToCustomerCompanyAttachForm;
 use Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyUserBusinessUnitForm;
 use Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\DataProvider\CompanyBusinessUnitFormDataProvider;
+use Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\DataProvider\CompanyBusinessUnitToCompanyUserFormDataProvider;
+use Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\DataProvider\CompanyBusinessUnitToCustomerBusinessUnitAttachFormDataProvider;
+use Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\DataProvider\CompanyBusinessUnitToCustomerCompanyAttachFormDataProvider;
 use Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\DataProvider\CompanyUserBusinessUnitFormDataProvider;
 use Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\DeleteCompanyBusinessUnitForm;
 use Spryker\Zed\CompanyBusinessUnitGui\Communication\Formatter\CompanyBusinessUnitGuiFormatter;
 use Spryker\Zed\CompanyBusinessUnitGui\Communication\Formatter\CompanyBusinessUnitGuiFormatterInterface;
+use Spryker\Zed\CompanyBusinessUnitGui\Communication\FormExpander\CompanyBusinessUnitToCompanyUserFormExpander;
+use Spryker\Zed\CompanyBusinessUnitGui\Communication\FormExpander\CompanyBusinessUnitToCompanyUserFormExpanderInterface;
+use Spryker\Zed\CompanyBusinessUnitGui\Communication\FormExpander\CompanyBusinessUnitToCustomerBusinessUnitAttachFormExpander;
+use Spryker\Zed\CompanyBusinessUnitGui\Communication\FormExpander\CompanyBusinessUnitToCustomerBusinessUnitAttachFormExpanderInterface;
+use Spryker\Zed\CompanyBusinessUnitGui\Communication\FormExpander\CompanyBusinessUnitToCustomerCompanyAttachFormExpander;
+use Spryker\Zed\CompanyBusinessUnitGui\Communication\FormExpander\CompanyBusinessUnitToCustomerCompanyAttachFormExpanderInterface;
 use Spryker\Zed\CompanyBusinessUnitGui\Communication\Generator\CompanyBusinessUnitNameGenerator;
 use Spryker\Zed\CompanyBusinessUnitGui\Communication\Generator\CompanyBusinessUnitNameGeneratorInterface;
 use Spryker\Zed\CompanyBusinessUnitGui\Communication\Table\CompanyBusinessUnitTable;
@@ -158,5 +170,95 @@ class CompanyBusinessUnitGuiCommunicationFactory extends AbstractCommunicationFa
     public function createCompanyBusinessUnitNameGenerator(): CompanyBusinessUnitNameGeneratorInterface
     {
         return new CompanyBusinessUnitNameGenerator();
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyBusinessUnitGui\Communication\FormExpander\CompanyBusinessUnitToCustomerBusinessUnitAttachFormExpanderInterface
+     */
+    public function createCompanyBusinessUnitToCustomerBusinessUnitAttachFormExpander(): CompanyBusinessUnitToCustomerBusinessUnitAttachFormExpanderInterface
+    {
+        return new CompanyBusinessUnitToCustomerBusinessUnitAttachFormExpander(
+            $this->createCompanyBusinessUnitToCustomerBusinessUnitAttachForm(),
+            $this->createCompanyBusinessUnitToCustomerBusinessUnitAttachFormDataProvider(),
+        );
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormTypeInterface
+     */
+    public function createCompanyBusinessUnitToCustomerBusinessUnitAttachForm(): FormTypeInterface
+    {
+        return new CompanyBusinessUnitToCustomerBusinessUnitAttachForm();
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\DataProvider\CompanyBusinessUnitToCustomerBusinessUnitAttachFormDataProvider
+     */
+    public function createCompanyBusinessUnitToCustomerBusinessUnitAttachFormDataProvider(): CompanyBusinessUnitToCustomerBusinessUnitAttachFormDataProvider
+    {
+        return new CompanyBusinessUnitToCustomerBusinessUnitAttachFormDataProvider(
+            $this->getCompanyBusinessUnitFacade(),
+            $this->createCompanyBusinessUnitNameGenerator(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyBusinessUnitGui\Communication\FormExpander\CompanyBusinessUnitToCustomerCompanyAttachFormExpanderInterface
+     */
+    public function createCompanyBusinessUnitToCustomerCompanyAttachFormExpander(): CompanyBusinessUnitToCustomerCompanyAttachFormExpanderInterface
+    {
+        return new CompanyBusinessUnitToCustomerCompanyAttachFormExpander(
+            $this->createCompanyBusinessUnitToCustomerCompanyAttachForm(),
+            $this->createCompanyBusinessUnitToCustomerCompanyAttachFormDataProvider(),
+        );
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormTypeInterface
+     */
+    public function createCompanyBusinessUnitToCustomerCompanyAttachForm(): FormTypeInterface
+    {
+        return new CompanyBusinessUnitToCustomerCompanyAttachForm();
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\DataProvider\CompanyBusinessUnitToCustomerCompanyAttachFormDataProvider
+     */
+    public function createCompanyBusinessUnitToCustomerCompanyAttachFormDataProvider(): CompanyBusinessUnitToCustomerCompanyAttachFormDataProvider
+    {
+        return new CompanyBusinessUnitToCustomerCompanyAttachFormDataProvider(
+            $this->getCompanyBusinessUnitFacade(),
+            $this->createCompanyBusinessUnitNameGenerator(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyBusinessUnitGui\Communication\FormExpander\CompanyBusinessUnitToCompanyUserFormExpanderInterface
+     */
+    public function createCompanyBusinessUnitToCompanyUserFormExpander(): CompanyBusinessUnitToCompanyUserFormExpanderInterface
+    {
+        return new CompanyBusinessUnitToCompanyUserFormExpander(
+            $this->createCompanyBusinessUnitToCompanyUserForm(),
+            $this->createCompanyBusinessUnitToCompanyUserFormDataProvider(),
+        );
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormTypeInterface
+     */
+    public function createCompanyBusinessUnitToCompanyUserForm(): FormTypeInterface
+    {
+        return new CompanyBusinessUnitToCompanyUserForm();
+    }
+
+    /**
+     * @return \Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\DataProvider\CompanyBusinessUnitToCompanyUserFormDataProvider
+     */
+    public function createCompanyBusinessUnitToCompanyUserFormDataProvider(): CompanyBusinessUnitToCompanyUserFormDataProvider
+    {
+        return new CompanyBusinessUnitToCompanyUserFormDataProvider(
+            $this->getCompanyBusinessUnitFacade(),
+            $this->createCompanyBusinessUnitNameGenerator(),
+        );
     }
 }

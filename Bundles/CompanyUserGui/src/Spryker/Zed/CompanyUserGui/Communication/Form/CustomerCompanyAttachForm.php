@@ -9,6 +9,7 @@ namespace Spryker\Zed\CompanyUserGui\Communication\Form;
 
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\ChoiceList\Loader\CallbackChoiceLoader;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -21,11 +22,6 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class CustomerCompanyAttachForm extends AbstractType
 {
-    /**
-     * @var string
-     */
-    public const OPTION_COMPANY_CHOICES = 'company_choices';
-
     /**
      * @var string
      */
@@ -46,7 +42,6 @@ class CustomerCompanyAttachForm extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefined(static::OPTION_COMPANY_CHOICES);
         $resolver->setDefaults([
             'data_class' => CompanyUserTransfer::class,
         ]);
@@ -60,27 +55,30 @@ class CustomerCompanyAttachForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addCompanyField($builder, $options[static::OPTION_COMPANY_CHOICES])
+        $this->addFkCompanyField($builder)
             ->executeAttachCustomerFormExpanderPlugins($builder);
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $choices
      *
      * @return $this
      */
-    protected function addCompanyField(FormBuilderInterface $builder, array $choices)
+    protected function addFkCompanyField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_FK_COMPANY, ChoiceType::class, [
             'label' => 'Company',
             'placeholder' => 'Company name',
-            'choices' => $choices,
+            'choice_loader' => new CallbackChoiceLoader(function () {
+                return $this->getFactory()
+                    ->createCustomerCompanyAttachFormDataProvider()
+                    ->createCompanyList();
+            }),
             'constraints' => [
                 new NotBlank(),
                 new GreaterThan([
                     'value' => 0,
-                    'message' => 'Select company.',
+                    'message' => 'Select company',
                 ]),
             ],
         ]);

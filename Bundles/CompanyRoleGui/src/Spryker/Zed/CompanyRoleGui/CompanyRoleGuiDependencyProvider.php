@@ -46,6 +46,11 @@ class CompanyRoleGuiDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_PERMISSION = 'FACADE_PERMISSION';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_COMPANY_ROLE_CREATE_FORM_EXPANDER = 'PLUGINS_COMPANY_ROLE_CREATE_FORM_EXPANDER';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -59,6 +64,7 @@ class CompanyRoleGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCompanyRoleFacade($container);
         $container = $this->addGlossaryFacade($container);
         $container = $this->addPermissionFacade($container);
+        $container = $this->addCompanyRoleCreateFormExpanderPlugins($container);
 
         return $container;
     }
@@ -139,5 +145,27 @@ class CompanyRoleGuiDependencyProvider extends AbstractBundleDependencyProvider
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCompanyRoleCreateFormExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_COMPANY_ROLE_CREATE_FORM_EXPANDER, function () {
+            return $this->getCompanyRoleCreateFormExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Zed\CompanyRoleGuiExtension\Communication\Plugin\CompanyRoleCreateFormExpanderPluginInterface>
+     */
+    protected function getCompanyRoleCreateFormExpanderPlugins(): array
+    {
+        return [];
     }
 }
