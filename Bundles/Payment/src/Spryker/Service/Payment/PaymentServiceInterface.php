@@ -14,6 +14,7 @@ interface PaymentServiceInterface
     /**
      * Specification:
      * - Uses `Payment.paymentSelection`.
+     * - Returns empty string if `PaymentTransfer.paymentSelection` is `null`.
      * - Returns only the first matching string for the pattern `[a-zA-Z0-9_]+`.
      * - Returns the unchanged value if there is no match.
      *
@@ -30,6 +31,7 @@ interface PaymentServiceInterface
     /**
      * Specification:
      * - Uses `Payment.paymentSelection`.
+     * - Returns empty string if `PaymentTransfer.paymentSelection` is `null`.
      * - Returns only the first matching string for the provided pattern in square brackets.
      * - Returns the specified value if there is no match.
      *

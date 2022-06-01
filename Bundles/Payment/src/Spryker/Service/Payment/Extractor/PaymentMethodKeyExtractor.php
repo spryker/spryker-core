@@ -18,7 +18,11 @@ class PaymentMethodKeyExtractor implements PaymentMethodKeyExtractorInterface
      */
     public function getPaymentSelectionKey(PaymentTransfer $paymentTransfer): string
     {
-        preg_match('/^([\w]+)/', $paymentTransfer->getPaymentSelectionOrFail(), $matches);
+        if (!$paymentTransfer->getPaymentSelection()) {
+            return '';
+        }
+
+        preg_match('/^([\w]+)/', $paymentTransfer->getPaymentSelection(), $matches);
 
         if (isset($matches[0])) {
             return $matches[0];
@@ -34,7 +38,11 @@ class PaymentMethodKeyExtractor implements PaymentMethodKeyExtractorInterface
      */
     public function getPaymentMethodKey(PaymentTransfer $paymentTransfer): string
     {
-        preg_match('/\[([a-zA-Z0-9_-]+)\]/', $paymentTransfer->getPaymentSelectionOrFail(), $matches);
+        if (!$paymentTransfer->getPaymentSelection()) {
+            return '';
+        }
+
+        preg_match('/\[([a-zA-Z0-9_-]+)\]/', $paymentTransfer->getPaymentSelection(), $matches);
 
         if (isset($matches[1])) {
             return $matches[1];
