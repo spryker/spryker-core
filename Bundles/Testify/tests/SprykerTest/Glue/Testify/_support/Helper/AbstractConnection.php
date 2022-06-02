@@ -20,7 +20,7 @@ abstract class AbstractConnection implements Connection
     protected $requestMethod = '';
 
     /**
-     * @var array
+     * @var object|array<string, mixed>|string
      */
     protected $requestParameters = [];
 
@@ -87,17 +87,19 @@ abstract class AbstractConnection implements Connection
     /**
      * @inheritDoc
      */
-    public function getRequestParameters(): array
+    public function getRequestParameters()
     {
         return $this->requestParameters;
     }
 
     /**
-     * @param array<string, mixed> $requestParameters
+     * The request parameters comes from the Codeception\Module\REST:execute
+     *
+     * @param object|array<string, mixed>|string $requestParameters
      *
      * @return static
      */
-    public function setRequestParameters(array $requestParameters): self
+    public function setRequestParameters($requestParameters): self
     {
         $this->requestParameters = $requestParameters;
 
