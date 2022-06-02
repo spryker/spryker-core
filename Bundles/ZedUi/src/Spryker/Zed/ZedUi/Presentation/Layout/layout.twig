@@ -24,9 +24,11 @@
 
 {% import _self as view %}
 
+{% set langAttr = app.locale | replace({'_': '-'}) %}
+
 {% block template %}
     <!DOCTYPE html>
-    <html lang="{{ app.locale }}">
+    <html lang="{{ langAttr }}">
         <head>
             <meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
