@@ -22,7 +22,7 @@
         "@spryker/table.feature.search": "^0.2.0",
         "@spryker/table.feature.selectable": "^0.2.0",
         "@spryker/table.feature.settings": "^0.2.0",
-        "@spryker/table.feature.sync-state": "^0.1.0",
+        "@spryker/table.feature.sync-state": "^0.1.4",
         "@spryker/table.feature.title": "^0.2.0",
         "@spryker/table.feature.total": "^0.2.0",
         "@spryker/table.filter.date-range": "^0.2.0",
