@@ -328,4 +328,53 @@
         <property name="messageAttributes" type="MessageAttributes"/>
     </transfer>
 
+    <transfer name="PaymentProviderCollectionRequest">
+        <property name="isTransactional" type="bool"/>
+        <property name="paymentProviders" type="PaymentProvider[]" singular="paymentProvider"/>
+    </transfer>
+
+    <transfer name="PaymentProviderCollectionResponse">
+        <property name="errors" type="Error[]" singular="error"/>
+        <property name="paymentProviders" type="PaymentProvider[]" singular="paymentProvider"/>
+    </transfer>
+
+    <transfer name="PaymentProviderCriteria">
+        <property name="paymentProviderConditions" type="PaymentProviderConditions"/>
+    </transfer>
+
+    <transfer name="PaymentProviderConditions">
+        <property name="names" type="string[]" singular="name"/>
+        <property name="paymentProviderIds" type="int[]" singular="idPaymentProvider"/>
+        <property name="paymentProviderKeys" type="string[]" singular="paymentProviderKey"/>
+    </transfer>
+
+    <transfer name="PaymentMethodCollection">
+        <property name="paymentMethods" singular="paymentMethod" type="PaymentMethod[]"/>
+    </transfer>
+
+    <transfer name="PaymentMethodCollectionRequest">
+        <property name="isTransactional" type="bool"/>
+        <property name="paymentMethods" type="PaymentMethod[]" singular="paymentMethod"/>
+    </transfer>
+
+    <transfer name="PaymentMethodCollectionResponse">
+        <property name="errors" type="Error[]" singular="error"/>
+        <property name="paymentMethods" type="PaymentMethod[]" singular="paymentMethod"/>
+    </transfer>
+
+    <transfer name="PaymentMethodCriteria">
+        <property name="paymentMethodConditions" type="PaymentMethodConditions"/>
+    </transfer>
+
+    <transfer name="PaymentMethodConditions">
+        <property name="names" type="string[]" singular="name"/>
+        <property name="paymentMethodIds" type="int[]" singular="idPaymentMethod"/>
+        <property name="paymentMethodKeys" type="string[]" singular="paymentMethodKey"/>
+    </transfer>
+
+    <transfer name="Error">
+        <property name="message" type="string"/>
+        <property name="entityIdentifier" type="string"/>
+        <property name="parameters" type="array" singular="parameter"/>
+    </transfer>
 </transfers>

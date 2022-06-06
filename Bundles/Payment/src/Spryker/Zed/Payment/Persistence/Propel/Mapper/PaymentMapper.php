@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Payment\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\PaymentMethodCollectionTransfer;
 use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\PaymentMethodTransfer;
 use Generated\Shared\Transfer\PaymentProviderTransfer;
@@ -109,5 +110,27 @@ class PaymentMapper
         $paymentMethodEntity->setPaymentMethodKey($paymentMethodTransfer->getPaymentMethodKey() ?? $paymentMethodTransfer->getMethodName());
 
         return $paymentMethodEntity;
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Payment\Persistence\SpyPaymentMethod> $paymentMethodEntityCollection
+     * @param \Generated\Shared\Transfer\PaymentMethodCollectionTransfer $paymentMethodCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\PaymentMethodCollectionTransfer
+     */
+    public function mapPaymentMethodEntityCollectionToPaymentMethodCollectionTransfer(
+        ObjectCollection $paymentMethodEntityCollection,
+        PaymentMethodCollectionTransfer $paymentMethodCollectionTransfer
+    ): PaymentMethodCollectionTransfer {
+        foreach ($paymentMethodEntityCollection as $paymentMethodEntity) {
+            $paymentMethodTransfer = $this->mapPaymentMethodEntityToPaymentMethodTransfer(
+                $paymentMethodEntity,
+                new PaymentMethodTransfer(),
+            );
+
+            $paymentMethodCollectionTransfer->addPaymentMethod($paymentMethodTransfer);
+        }
+
+        return $paymentMethodCollectionTransfer;
     }
 }

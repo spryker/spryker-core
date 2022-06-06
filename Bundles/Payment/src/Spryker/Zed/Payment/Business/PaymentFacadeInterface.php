@@ -11,10 +11,17 @@ use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaymentMethodAddedTransfer;
+use Generated\Shared\Transfer\PaymentMethodCollectionRequestTransfer;
+use Generated\Shared\Transfer\PaymentMethodCollectionResponseTransfer;
+use Generated\Shared\Transfer\PaymentMethodCollectionTransfer;
+use Generated\Shared\Transfer\PaymentMethodCriteriaTransfer;
 use Generated\Shared\Transfer\PaymentMethodDeletedTransfer;
 use Generated\Shared\Transfer\PaymentMethodResponseTransfer;
 use Generated\Shared\Transfer\PaymentMethodTransfer;
+use Generated\Shared\Transfer\PaymentProviderCollectionRequestTransfer;
+use Generated\Shared\Transfer\PaymentProviderCollectionResponseTransfer;
 use Generated\Shared\Transfer\PaymentProviderCollectionTransfer;
+use Generated\Shared\Transfer\PaymentProviderCriteriaTransfer;
 use Generated\Shared\Transfer\PaymentProviderResponseTransfer;
 use Generated\Shared\Transfer\PaymentProviderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -128,6 +135,8 @@ interface PaymentFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\Payment\Business\PaymentFacadeInterface::getPaymentMethodCollection()} instead.
+     *
      * @param int $idPaymentMethod
      *
      * @return \Generated\Shared\Transfer\PaymentMethodResponseTransfer
@@ -181,6 +190,8 @@ interface PaymentFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\Payment\Business\PaymentFacadeInterface::createPaymentProviderCollection()} instead.
+     *
      * @param \Generated\Shared\Transfer\PaymentProviderTransfer $paymentProviderTransfer
      *
      * @return \Generated\Shared\Transfer\PaymentProviderResponseTransfer
@@ -196,6 +207,8 @@ interface PaymentFacadeInterface
      * - Creates payment method store relations if PaymentMethodTransfer.storeRelation is provided.
      *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\Payment\Business\PaymentFacadeInterface::createPaymentMethodCollection()} instead.
      *
      * @param \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer
      *
@@ -295,6 +308,8 @@ interface PaymentFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\Payment\Business\PaymentFacadeInterface::getPaymentProviderCollection()} instead.
+     *
      * @param \Generated\Shared\Transfer\PaymentProviderTransfer $paymentProviderTransfer
      *
      * @return \Generated\Shared\Transfer\PaymentProviderTransfer|null
@@ -307,7 +322,7 @@ interface PaymentFacadeInterface
      *
      * @api
      *
-     * @deprecated Use {@link \Spryker\Zed\SalesPayment\Business\SalesPaymentFacadeInterface::saveOrderPayments} instead.
+     * @deprecated Use {@link \Spryker\Zed\SalesPayment\Business\SalesPaymentFacadeInterface::saveOrderPayments()} instead.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
@@ -382,4 +397,70 @@ interface PaymentFacadeInterface
      * @return void
      */
     public function triggerPaymentMessageOmsEvent(TransferInterface $orderPaymentEventTransfer): void;
+
+    /**
+     * Specification:
+     * - Returns a collection of payment providers by specified criteria.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PaymentProviderCriteriaTransfer $paymentProviderCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PaymentProviderCollectionTransfer
+     */
+    public function getPaymentProviderCollection(PaymentProviderCriteriaTransfer $paymentProviderCriteriaTransfer): PaymentProviderCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Returns a collection of payment methods by specified criteria.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PaymentMethodCriteriaTransfer $paymentMethodCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PaymentMethodCollectionTransfer
+     */
+    public function getPaymentMethodCollection(PaymentMethodCriteriaTransfer $paymentMethodCriteriaTransfer): PaymentMethodCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Requires `PaymentMethodCollectionRequestTransfer.paymentProviders` to be set.
+     * - Requires `PaymentProviderCollectionRequestTransfer.isTransactional` to be set.
+     * - Requires `PaymentProviderTransfer.paymentProviderKey` to be set for each element of `PaymentProviderCollectionRequestTransfer.paymentProviders`.
+     * - Requires `PaymentProviderTransfer.name` to be set for each element of `PaymentProviderCollectionRequestTransfer.paymentProviders`.
+     * - Requires `PaymentMethodTransfer.paymentMethodKey` to be set for each element of `PaymentProviderCollectionRequestTransfer.paymentProvider.paymentMethods`.
+     * - Requires `PaymentMethodTransfer.name` to be set for each element of `PaymentProviderCollectionRequestTransfer.paymentProvider.paymentMethods`.
+     * - Creates a collection of payment providers.
+     * - Creates a collection of payment methods if `PaymentProviderCollectionRequestTransfer.paymentProvider.paymentMethods` is provided.
+     * - Payment provider key is used as identifier at `ErrorTransfer.entityIdentifier`.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PaymentProviderCollectionRequestTransfer $paymentProviderCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\PaymentProviderCollectionResponseTransfer
+     */
+    public function createPaymentProviderCollection(
+        PaymentProviderCollectionRequestTransfer $paymentProviderCollectionRequestTransfer
+    ): PaymentProviderCollectionResponseTransfer;
+
+    /**
+     * Specification:
+     * - Requires `PaymentMethodCollectionRequestTransfer.paymentMethods` to be set.
+     * - Requires `PaymentMethodCollectionRequestTransfer.isTransactional` to be set.
+     * - Requires `PaymentMethodTransfer.paymentMethodKey` to be set for each element of `PaymentMethodCollectionRequestTransfer.paymentMethods`.
+     * - Requires `PaymentMethodTransfer.name` to be set for each element of `PaymentMethodCollectionRequestTransfer.paymentMethods`.
+     * - Requires `PaymentMethodTransfer.idPaymentProvider` to be set for each element of `PaymentMethodCollectionRequestTransfer.paymentMethods`.
+     * - Creates a collection of payment methods.
+     * - Payment method key is used as identifier at `ErrorTransfer.entityIdentifier`.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PaymentMethodCollectionRequestTransfer $paymentMethodCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\PaymentMethodCollectionResponseTransfer
+     */
+    public function createPaymentMethodCollection(
+        PaymentMethodCollectionRequestTransfer $paymentMethodCollectionRequestTransfer
+    ): PaymentMethodCollectionResponseTransfer;
 }

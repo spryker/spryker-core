@@ -14,6 +14,14 @@ use Spryker\Zed\Payment\Business\Authorizer\ForeignPaymentAuthorizer;
 use Spryker\Zed\Payment\Business\Authorizer\ForeignPaymentAuthorizerInterface;
 use Spryker\Zed\Payment\Business\Calculation\PaymentCalculator;
 use Spryker\Zed\Payment\Business\Checkout\PaymentPluginExecutor;
+use Spryker\Zed\Payment\Business\Creator\PaymentMethodCreator;
+use Spryker\Zed\Payment\Business\Creator\PaymentMethodCreatorInterface;
+use Spryker\Zed\Payment\Business\Creator\PaymentProviderCreator;
+use Spryker\Zed\Payment\Business\Creator\PaymentProviderCreatorInterface;
+use Spryker\Zed\Payment\Business\EntityIdentifierBuilder\PaymentMethodEntityIdentifierBuilder;
+use Spryker\Zed\Payment\Business\EntityIdentifierBuilder\PaymentMethodEntityIdentifierBuilderInterface;
+use Spryker\Zed\Payment\Business\EntityIdentifierBuilder\PaymentProviderEntityIdentifierBuilder;
+use Spryker\Zed\Payment\Business\EntityIdentifierBuilder\PaymentProviderEntityIdentifierBuilderInterface;
 use Spryker\Zed\Payment\Business\EventEmitter\PaymentMessageOmsEventEmitter;
 use Spryker\Zed\Payment\Business\EventEmitter\PaymentMessageOmsEventEmitterInterface;
 use Spryker\Zed\Payment\Business\Generator\PaymentMethodKeyGenerator;
@@ -32,12 +40,23 @@ use Spryker\Zed\Payment\Business\Method\PaymentMethodStoreRelationUpdaterInterfa
 use Spryker\Zed\Payment\Business\Method\PaymentMethodUpdater;
 use Spryker\Zed\Payment\Business\Method\PaymentMethodUpdaterInterface;
 use Spryker\Zed\Payment\Business\Method\PaymentMethodValidator;
-use Spryker\Zed\Payment\Business\Method\PaymentMethodValidatorInterface;
+use Spryker\Zed\Payment\Business\Method\PaymentMethodValidatorInterface as DeprecatedPaymentMethodValidatorInterface;
 use Spryker\Zed\Payment\Business\Order\SalesPaymentHydrator;
 use Spryker\Zed\Payment\Business\Order\SalesPaymentReader;
 use Spryker\Zed\Payment\Business\Order\SalesPaymentSaver;
+use Spryker\Zed\Payment\Business\PaymentProviderValidator\PaymentProviderExistsValidator;
+use Spryker\Zed\Payment\Business\PaymentProviderValidator\PaymentProviderPaymentMethodExistsValidator;
+use Spryker\Zed\Payment\Business\PaymentProviderValidator\PaymentProviderPaymentMethodUniqueValidator;
+use Spryker\Zed\Payment\Business\PaymentProviderValidator\PaymentProviderUniqueValidator;
+use Spryker\Zed\Payment\Business\PaymentProviderValidator\PaymentProviderValidatorComposite;
+use Spryker\Zed\Payment\Business\PaymentProviderValidator\PaymentProviderValidatorInterface;
 use Spryker\Zed\Payment\Business\Provider\PaymentProviderReader;
 use Spryker\Zed\Payment\Business\Provider\PaymentProviderReaderInterface;
+use Spryker\Zed\Payment\Business\Validator\PaymentMethod\PaymentMethodExistsValidator;
+use Spryker\Zed\Payment\Business\Validator\PaymentMethod\PaymentMethodProviderExistsValidator;
+use Spryker\Zed\Payment\Business\Validator\PaymentMethod\PaymentMethodUniqueValidator;
+use Spryker\Zed\Payment\Business\Validator\PaymentMethod\PaymentMethodValidatorComposite;
+use Spryker\Zed\Payment\Business\Validator\PaymentMethod\PaymentMethodValidatorInterface;
 use Spryker\Zed\Payment\Business\Writer\PaymentWriter;
 use Spryker\Zed\Payment\Business\Writer\PaymentWriterInterface;
 use Spryker\Zed\Payment\Dependency\Facade\PaymentToLocaleFacadeInterface;
@@ -129,7 +148,7 @@ class PaymentBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Payment\Business\Method\PaymentMethodValidatorInterface
      */
-    public function createPaymentMethodValidator(): PaymentMethodValidatorInterface
+    public function createPaymentMethodValidator(): DeprecatedPaymentMethodValidatorInterface
     {
         return new PaymentMethodValidator(
             $this->createPaymentMethodReader(),
@@ -342,5 +361,145 @@ class PaymentBusinessFactory extends AbstractBusinessFactory
     public function getPaymentAuthorizeRequestExpanderPlugins(): array
     {
         return $this->getProvidedDependency(PaymentDependencyProvider::PLUGINS_PAYMENT_AUTHORIZE_REQUEST_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\Payment\Business\Creator\PaymentProviderCreatorInterface
+     */
+    public function createPaymentProviderCreator(): PaymentProviderCreatorInterface
+    {
+        return new PaymentProviderCreator(
+            $this->getEntityManager(),
+            $this->createPaymentProviderCreateValidator(),
+            $this->createPaymentProviderEntityIdentifierBuilder(),
+            $this->createPaymentMethodEntityIdentifierBuilder(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Payment\Business\PaymentProviderValidator\PaymentProviderValidatorInterface
+     */
+    public function createPaymentProviderCreateValidator(): PaymentProviderValidatorInterface
+    {
+        return new PaymentProviderValidatorComposite([
+            $this->createPaymentProviderUniqueValidator(),
+            $this->createPaymentProviderPaymentMethodUniqueValidator(),
+            $this->createPaymentProviderExistsValidator(),
+            $this->createPaymentProviderPaymentMethodExistsValidator(),
+        ]);
+    }
+
+    /**
+     * @return \Spryker\Zed\Payment\Business\PaymentProviderValidator\PaymentProviderValidatorInterface
+     */
+    public function createPaymentProviderExistsValidator(): PaymentProviderValidatorInterface
+    {
+        return new PaymentProviderExistsValidator(
+            $this->getRepository(),
+            $this->createPaymentProviderEntityIdentifierBuilder(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Payment\Business\PaymentProviderValidator\PaymentProviderValidatorInterface
+     */
+    public function createPaymentProviderUniqueValidator(): PaymentProviderValidatorInterface
+    {
+        return new PaymentProviderUniqueValidator(
+            $this->createPaymentProviderEntityIdentifierBuilder(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Payment\Business\PaymentProviderValidator\PaymentProviderValidatorInterface
+     */
+    public function createPaymentProviderPaymentMethodExistsValidator(): PaymentProviderValidatorInterface
+    {
+        return new PaymentProviderPaymentMethodExistsValidator(
+            $this->getRepository(),
+            $this->createPaymentProviderEntityIdentifierBuilder(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Payment\Business\PaymentProviderValidator\PaymentProviderValidatorInterface
+     */
+    public function createPaymentProviderPaymentMethodUniqueValidator(): PaymentProviderValidatorInterface
+    {
+        return new PaymentProviderPaymentMethodUniqueValidator(
+            $this->createPaymentMethodEntityIdentifierBuilder(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Payment\Business\EntityIdentifierBuilder\PaymentProviderEntityIdentifierBuilderInterface
+     */
+    public function createPaymentProviderEntityIdentifierBuilder(): PaymentProviderEntityIdentifierBuilderInterface
+    {
+        return new PaymentProviderEntityIdentifierBuilder();
+    }
+
+    /**
+     * @return \Spryker\Zed\Payment\Business\Creator\PaymentMethodCreatorInterface
+     */
+    public function createPaymentMethodCreator(): PaymentMethodCreatorInterface
+    {
+        return new PaymentMethodCreator(
+            $this->getEntityManager(),
+            $this->createPaymentMethodCreateValidator(),
+            $this->createPaymentMethodEntityIdentifierBuilder(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Payment\Business\Validator\PaymentMethod\PaymentMethodValidatorInterface
+     */
+    public function createPaymentMethodCreateValidator(): PaymentMethodValidatorInterface
+    {
+        return new PaymentMethodValidatorComposite([
+            $this->createPaymentMethodExistsValidator(),
+            $this->createPaymentMethodUniqueValidator(),
+            $this->createPaymentMethodProviderExistsValidator(),
+        ]);
+    }
+
+    /**
+     * @return \Spryker\Zed\Payment\Business\Validator\PaymentMethod\PaymentMethodValidatorInterface
+     */
+    public function createPaymentMethodExistsValidator(): PaymentMethodValidatorInterface
+    {
+        return new PaymentMethodExistsValidator(
+            $this->getRepository(),
+            $this->createPaymentMethodEntityIdentifierBuilder(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Payment\Business\Validator\PaymentMethod\PaymentMethodValidatorInterface
+     */
+    public function createPaymentMethodProviderExistsValidator(): PaymentMethodValidatorInterface
+    {
+        return new PaymentMethodProviderExistsValidator(
+            $this->getRepository(),
+            $this->createPaymentMethodEntityIdentifierBuilder(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Payment\Business\Validator\PaymentMethod\PaymentMethodValidatorInterface
+     */
+    public function createPaymentMethodUniqueValidator(): PaymentMethodValidatorInterface
+    {
+        return new PaymentMethodUniqueValidator(
+            $this->createPaymentMethodEntityIdentifierBuilder(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Payment\Business\EntityIdentifierBuilder\PaymentMethodEntityIdentifierBuilderInterface
+     */
+    public function createPaymentMethodEntityIdentifierBuilder(): PaymentMethodEntityIdentifierBuilderInterface
+    {
+        return new PaymentMethodEntityIdentifierBuilder();
     }
 }

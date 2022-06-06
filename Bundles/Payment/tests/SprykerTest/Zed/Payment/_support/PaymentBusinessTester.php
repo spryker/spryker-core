@@ -16,6 +16,8 @@ use Generated\Shared\Transfer\PaymentMethodAddedTransfer;
 use Generated\Shared\Transfer\PaymentMethodDeletedTransfer;
 use Generated\Shared\Transfer\PaymentMethodTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Orm\Zed\Payment\Persistence\SpyPaymentMethodQuery;
+use Orm\Zed\Payment\Persistence\SpyPaymentProviderQuery;
 
 /**
  * @method void wantToTest($text)
@@ -111,5 +113,21 @@ class PaymentBusinessTester extends Actor
             ->setPaymentAuthorizationEndpoint($paymentMethodTransfer->getPaymentAuthorizationEndpoint());
 
         return $paymentMethodAddedTransfer;
+    }
+
+    /**
+     * @return int
+     */
+    public function getNumberOfPersistentPaymentMethods(): int
+    {
+        return SpyPaymentMethodQuery::create()->count();
+    }
+
+    /**
+     * @return int
+     */
+    public function getNumberOfPersistentPaymentProviders(): int
+    {
+        return SpyPaymentProviderQuery::create()->count();
     }
 }
