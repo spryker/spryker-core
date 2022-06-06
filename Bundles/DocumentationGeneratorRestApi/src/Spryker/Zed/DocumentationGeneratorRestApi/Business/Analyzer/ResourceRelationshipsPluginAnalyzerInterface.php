@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer;
 
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 
 interface ResourceRelationshipsPluginAnalyzerInterface
@@ -14,7 +15,23 @@ interface ResourceRelationshipsPluginAnalyzerInterface
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
      *
-     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface>
+     * @return array<string, \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface>
      */
     public function getResourceRelationshipsForResourceRoutePlugin(ResourceRoutePluginInterface $plugin): array;
+
+    /**
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $resourceRoutePlugin
+     *
+     * @return array<string, \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface>
+     */
+    public function getNestedResourceRelationshipsForResourceRoutePlugin(ResourceRoutePluginInterface $resourceRoutePlugin): array;
+
+    /**
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface $resourceRelationshipPlugin
+     *
+     * @return array<string, \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface>
+     */
+    public function getResourceRelationshipsForResourceRelationshipPlugin(
+        ResourceRelationshipPluginInterface $resourceRelationshipPlugin
+    ): array;
 }

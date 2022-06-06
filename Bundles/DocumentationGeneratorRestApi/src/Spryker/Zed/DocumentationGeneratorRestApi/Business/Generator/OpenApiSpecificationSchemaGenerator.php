@@ -12,13 +12,17 @@ use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Generated\Shared\Transfer\SchemaComponentTransfer;
 use Generated\Shared\Transfer\SchemaDataTransfer;
 use Generated\Shared\Transfer\SchemaItemsComponentTransfer;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceRelationshipsPluginAnnotationAnalyzerInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceTransferAnalyzerInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Builder\SchemaBuilderInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Exception\InvalidTransferClassException;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\ResourceRelationshipProcessorInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\SchemaRendererInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Storage\ResourceTransferClassNameStorageInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\DocumentationGeneratorRestApiConfig;
 
 class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
 {
@@ -83,21 +87,45 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
     protected $resourceRelationshipProcessor;
 
     /**
+     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceRelationshipsPluginAnnotationAnalyzerInterface
+     */
+    protected ResourceRelationshipsPluginAnnotationAnalyzerInterface $resourceRelationshipsPluginAnnotationAnalyzer;
+
+    /**
+     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Storage\ResourceTransferClassNameStorageInterface
+     */
+    protected ResourceTransferClassNameStorageInterface $resourceTransferClassNameStorage;
+
+    /**
+     * @var \Spryker\Zed\DocumentationGeneratorRestApi\DocumentationGeneratorRestApiConfig
+     */
+    protected DocumentationGeneratorRestApiConfig $documentationGeneratorRestApiConfig;
+
+    /**
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceTransferAnalyzerInterface $resourceTransferAnalyzer
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Builder\SchemaBuilderInterface $schemaBuilder
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\SchemaRendererInterface $schemaRenderer
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor\ResourceRelationshipProcessorInterface $resourceRelationshipProcessor
+     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceRelationshipsPluginAnnotationAnalyzerInterface $resourceRelationshipsPluginAnnotationAnalyzer
+     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Storage\ResourceTransferClassNameStorageInterface $resourceTransferClassNameStorage
+     * @param \Spryker\Zed\DocumentationGeneratorRestApi\DocumentationGeneratorRestApiConfig $documentationGeneratorRestApiConfig
      */
     public function __construct(
         ResourceTransferAnalyzerInterface $resourceTransferAnalyzer,
         SchemaBuilderInterface $schemaBuilder,
         SchemaRendererInterface $schemaRenderer,
-        ResourceRelationshipProcessorInterface $resourceRelationshipProcessor
+        ResourceRelationshipProcessorInterface $resourceRelationshipProcessor,
+        ResourceRelationshipsPluginAnnotationAnalyzerInterface $resourceRelationshipsPluginAnnotationAnalyzer,
+        ResourceTransferClassNameStorageInterface $resourceTransferClassNameStorage,
+        DocumentationGeneratorRestApiConfig $documentationGeneratorRestApiConfig
     ) {
         $this->resourceTransferAnalyzer = $resourceTransferAnalyzer;
         $this->schemaBuilder = $schemaBuilder;
         $this->schemaRenderer = $schemaRenderer;
         $this->resourceRelationshipProcessor = $resourceRelationshipProcessor;
+        $this->resourceRelationshipsPluginAnnotationAnalyzer = $resourceRelationshipsPluginAnnotationAnalyzer;
+        $this->resourceTransferClassNameStorage = $resourceTransferClassNameStorage;
+        $this->documentationGeneratorRestApiConfig = $documentationGeneratorRestApiConfig;
 
         $this->addDefaultSchemas();
     }
@@ -163,6 +191,7 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
         $this->addSchemaData($this->schemaBuilder->createResponseBaseSchema($responseSchemaName, $responseDataSchemaName));
         $this->addSchemaData($this->schemaBuilder->createResponseDataSchema($responseDataSchemaName, $responseAttributesSchemaName, $isIdNullable));
         $this->addResponseDataAttributesSchemaFromTransfer(new $transferClassName(), $responseAttributesSchemaName);
+
         $this->addAttributesSchemasFromResourceRelationshipAnnotations($plugin);
         $this->addRelationshipSchemas($plugin, $transferClassName, $responseDataSchemaName);
         $this->addIncludeSchemas($plugin, $transferClassName, $responseSchemaName);
@@ -339,7 +368,7 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
                 $this->schemas[$key][SchemaComponentTransfer::ITEMS][SchemaItemsComponentTransfer::ONE_OF],
                 $item[SchemaComponentTransfer::ITEMS][SchemaItemsComponentTransfer::ONE_OF],
             );
-            $this->schemas[$key][SchemaComponentTransfer::ITEMS][SchemaItemsComponentTransfer::ONE_OF] = array_unique($oneOfs, SORT_REGULAR);
+            $this->schemas[$key][SchemaComponentTransfer::ITEMS][SchemaItemsComponentTransfer::ONE_OF] = array_values(array_unique($oneOfs, SORT_REGULAR));
         }
     }
 
@@ -416,6 +445,90 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
         foreach ($relationshipSchemaDataTransfers as $relationshipSchemaDataTransfer) {
             $this->addSchemaData($relationshipSchemaDataTransfer);
         }
+
+        $this->addRelationshipSchemasForNestedRelationships($plugin);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $resourceRoutePlugin
+     *
+     * @return void
+     */
+    protected function addRelationshipSchemasForNestedRelationships(ResourceRoutePluginInterface $resourceRoutePlugin): void
+    {
+        if (!$this->documentationGeneratorRestApiConfig->isNestedRelationshipsEnabled()) {
+            return;
+        }
+
+        $resourceRelationshipPlugins = $this
+            ->resourceRelationshipProcessor
+            ->getResourceRelationshipsForResourceRoutePlugin($resourceRoutePlugin);
+
+        foreach ($resourceRelationshipPlugins as $resourceRelationshipPlugin) {
+            $this->addRelationshipSchemasForNestedRelationship($resourceRelationshipPlugin, []);
+        }
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface $resourceRelationshipPlugin
+     * @param array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface> $mappedResourceRelationshipPlugins
+     *
+     * @return void
+     */
+    protected function addRelationshipSchemasForNestedRelationship(
+        ResourceRelationshipPluginInterface $resourceRelationshipPlugin,
+        array $mappedResourceRelationshipPlugins
+    ): void {
+        if (isset($mappedResourceRelationshipPlugins[$resourceRelationshipPlugin->getRelationshipResourceType()])) {
+            return;
+        }
+
+        $transferClassName = $this->findTransferClassNameByResourceRelationshipPlugin($resourceRelationshipPlugin);
+
+        if (!$transferClassName) {
+            return;
+        }
+
+        $responseDataSchemaName = $this->resourceTransferAnalyzer->createResponseResourceDataSchemaNameFromTransferClassName($transferClassName);
+        $mappedResourceRelationshipPlugins[$resourceRelationshipPlugin->getRelationshipResourceType()] = $resourceRelationshipPlugin;
+
+        $relationshipSchemaDataTransfers = $this
+            ->resourceRelationshipProcessor
+            ->getRelationshipSchemaDataTransfersForRelationshipPlugin($resourceRelationshipPlugin, $transferClassName, $responseDataSchemaName);
+
+        foreach ($relationshipSchemaDataTransfers as $relationshipSchemaDataTransfer) {
+            $this->addSchemaData($relationshipSchemaDataTransfer);
+        }
+
+        $resourceRelationshipPlugins = $this
+            ->resourceRelationshipProcessor
+            ->getResourceRelationshipsForResourceRelationshipPlugin($resourceRelationshipPlugin);
+
+        foreach ($resourceRelationshipPlugins as $resourceRelationship) {
+            $this->addRelationshipSchemasForNestedRelationship($resourceRelationship, $mappedResourceRelationshipPlugins);
+        }
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface $resourceRelationshipPlugin
+     *
+     * @return string|null
+     */
+    protected function findTransferClassNameByResourceRelationshipPlugin(ResourceRelationshipPluginInterface $resourceRelationshipPlugin): ?string
+    {
+        $transferClassName = $this->resourceTransferClassNameStorage->getResourceTransferClassName(
+            $resourceRelationshipPlugin->getRelationshipResourceType(),
+        );
+
+        if ($transferClassName) {
+            return $transferClassName;
+        }
+
+        $pluginAnnotationsTransfer = $this
+            ->resourceRelationshipsPluginAnnotationAnalyzer
+            ->getResourceAttributesFromResourceRelationshipPlugin($resourceRelationshipPlugin);
+
+        return $pluginAnnotationsTransfer->getResourceAttributesClassName();
     }
 
     /**
@@ -432,7 +545,7 @@ class OpenApiSpecificationSchemaGenerator implements SchemaGeneratorInterface
     ): void {
         $resourceRelationships = $this
             ->resourceRelationshipProcessor
-            ->getResourceRelationshipsForResourceRoutePlugin($plugin);
+            ->getNestedResourceRelationshipsForResourceRoutePlugin($plugin);
 
         if (!$resourceRelationships) {
             return;
