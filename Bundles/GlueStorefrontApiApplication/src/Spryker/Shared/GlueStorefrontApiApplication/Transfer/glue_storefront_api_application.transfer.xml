@@ -57,4 +57,11 @@
     <transfer name="GlueResourceMethodConfiguration">
     </transfer>
 
+    <transfer name="ApiControllerConfiguration">
+        <property name="apiApplication" type="string"/>
+        <property name="path" type="string"/>
+        <property name="method" type="string"/>
+        <property name="controller" type="string"/>
+        <property name="parameters" type="string[]" singular="parameter"/>
+    </transfer>
 </transfers>

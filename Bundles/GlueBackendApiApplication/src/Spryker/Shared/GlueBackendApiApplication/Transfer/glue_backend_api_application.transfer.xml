@@ -54,4 +54,12 @@
         <property name="action" type="string"/>
         <property name="parameters" type="string[]" singular="parameter"/>
     </transfer>
+
+    <transfer name="ApiControllerConfiguration">
+        <property name="path" type="string"/>
+        <property name="controller" type="string"/>
+        <property name="method" type="string"/>
+        <property name="apiApplication" type="string"/>
+        <property name="parameters" type="string[]" singular="parameter"/>
+    </transfer>
 </transfers>

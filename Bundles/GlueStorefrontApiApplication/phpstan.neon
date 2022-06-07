@@ -1,3 +1,5 @@
 parameters:
     level: 8
     checkMissingIterableValueType: false
+    ignoreErrors:
+        - '#Method .+RequestRoutingMatcher::createControllerInstance\(\) should return .+AbstractController but returns object.#'

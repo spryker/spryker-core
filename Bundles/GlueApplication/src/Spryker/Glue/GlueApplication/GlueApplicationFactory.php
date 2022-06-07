@@ -14,7 +14,12 @@ use Spryker\Glue\GlueApplication\ApiApplication\ApiApplicationProxy;
 use Spryker\Glue\GlueApplication\ApiApplication\GlueStorefrontFallbackApiApplication;
 use Spryker\Glue\GlueApplication\ApiApplication\RequestFlowExecutor;
 use Spryker\Glue\GlueApplication\ApiApplication\RequestFlowExecutorInterface;
+use Spryker\Glue\GlueApplication\Cache\Reader\ControllerCacheReader;
+use Spryker\Glue\GlueApplication\Cache\Reader\ControllerCacheReaderInterface;
+use Spryker\Glue\GlueApplication\Cache\Writer\ControllerCacheWriter;
+use Spryker\Glue\GlueApplication\Cache\Writer\ControllerCacheWriterInterface;
 use Spryker\Glue\GlueApplication\Dependency\Client\GlueApplicationToStoreClientInterface;
+use Spryker\Glue\GlueApplication\Dependency\External\GlueApplicationToSymfonyFilesystemInterface;
 use Spryker\Glue\GlueApplication\Dependency\Service\GlueApplicationToUtilEncodingServiceInterface;
 use Spryker\Glue\GlueApplication\Executor\ResourceExecutor;
 use Spryker\Glue\GlueApplication\Executor\ResourceExecutorInterface;
@@ -763,7 +768,9 @@ class GlueApplicationFactory extends AbstractFactory
      */
     public function createResourceExecutor(): ResourceExecutorInterface
     {
-        return new ResourceExecutor();
+        return new ResourceExecutor(
+            $this->createControllerCacheReader(),
+        );
     }
 
     /**
@@ -818,6 +825,45 @@ class GlueApplicationFactory extends AbstractFactory
     public function createUriParser(): UriParserInterface
     {
         return new UriParser();
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Cache\Writer\ControllerCacheWriterInterface
+     */
+    public function createControllerCacheWriter(): ControllerCacheWriterInterface
+    {
+        return new ControllerCacheWriter(
+            $this->getControllerCacheCollectorPlugins(),
+            $this->getConfig(),
+            $this->getFilesystem(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Cache\Reader\ControllerCacheReaderInterface
+     */
+    public function createControllerCacheReader(): ControllerCacheReaderInterface
+    {
+        return new ControllerCacheReader(
+            $this->createControllerCacheWriter(),
+            $this->getConfig(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Dependency\External\GlueApplicationToSymfonyFilesystemInterface
+     */
+    public function getFilesystem(): GlueApplicationToSymfonyFilesystemInterface
+    {
+        return $this->getProvidedDependency(GlueApplicationDependencyProvider::FILESYSTEM);
+    }
+
+    /**
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ControllerCacheCollectorPluginInterface>
+     */
+    public function getControllerCacheCollectorPlugins(): array
+    {
+        return $this->getProvidedDependency(GlueApplicationDependencyProvider::PLUGINS_CONTROLLER_CACHE_COLLECTOR);
     }
 
     /**

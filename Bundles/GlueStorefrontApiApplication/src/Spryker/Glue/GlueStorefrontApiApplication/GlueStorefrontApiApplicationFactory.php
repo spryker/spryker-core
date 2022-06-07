@@ -9,6 +9,8 @@ namespace Spryker\Glue\GlueStorefrontApiApplication;
 
 use Negotiation\LanguageNegotiator;
 use Spryker\Glue\GlueStorefrontApiApplication\Application\GlueStorefrontApiApplication;
+use Spryker\Glue\GlueStorefrontApiApplication\Cache\ControllerCacheCollector;
+use Spryker\Glue\GlueStorefrontApiApplication\Cache\ControllerCacheCollectorInterface;
 use Spryker\Glue\GlueStorefrontApiApplication\Dependency\Client\GlueStorefrontApiApplicationToStoreClientInterface;
 use Spryker\Glue\GlueStorefrontApiApplication\Language\LanguageNegotiation;
 use Spryker\Glue\GlueStorefrontApiApplication\Language\LanguageNegotiationInterface;
@@ -169,6 +171,17 @@ class GlueStorefrontApiApplicationFactory extends AbstractFactory
     public function createCache(): CacheInterface
     {
         return new Cache($this->createChainRouter(), $this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueStorefrontApiApplication\Cache\ControllerCacheCollectorInterface
+     */
+    public function createControllerCacheCollector(): ControllerCacheCollectorInterface
+    {
+        return new ControllerCacheCollector(
+            $this->getResourcePlugins(),
+            $this->getRouterPlugins(),
+        );
     }
 
     /**

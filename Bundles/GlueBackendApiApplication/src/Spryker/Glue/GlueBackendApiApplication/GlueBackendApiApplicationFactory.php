@@ -9,6 +9,8 @@ namespace Spryker\Glue\GlueBackendApiApplication;
 
 use Negotiation\LanguageNegotiator;
 use Spryker\Glue\GlueBackendApiApplication\Application\GlueBackendApiApplication;
+use Spryker\Glue\GlueBackendApiApplication\Cache\ControllerCacheCollector;
+use Spryker\Glue\GlueBackendApiApplication\Cache\ControllerCacheCollectorInterface;
 use Spryker\Glue\GlueBackendApiApplication\Dependency\Facade\GlueBackendApiApplicationToStoreFacadeInterface;
 use Spryker\Glue\GlueBackendApiApplication\Language\LanguageNegotiation;
 use Spryker\Glue\GlueBackendApiApplication\Language\LanguageNegotiationInterface;
@@ -249,5 +251,16 @@ class GlueBackendApiApplicationFactory extends AbstractFactory
     public function createRequestCorsValidator(): RequestCorsValidatorInterface
     {
         return new RequestCorsValidator($this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueBackendApiApplication\Cache\ControllerCacheCollectorInterface
+     */
+    public function createControllerCacheCollector(): ControllerCacheCollectorInterface
+    {
+        return new ControllerCacheCollector(
+            $this->getResourcePlugins(),
+            $this->getRouterPlugins(),
+        );
     }
 }

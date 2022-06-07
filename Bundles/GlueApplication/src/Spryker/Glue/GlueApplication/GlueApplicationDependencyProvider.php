@@ -8,6 +8,7 @@
 namespace Spryker\Glue\GlueApplication;
 
 use Spryker\Glue\GlueApplication\Dependency\Client\GlueApplicationToStoreClientBridge;
+use Spryker\Glue\GlueApplication\Dependency\External\GlueApplicationToSymfonyFilesystemAdapter;
 use Spryker\Glue\GlueApplication\Dependency\Service\GlueApplicationToUtilEncodingServiceBridge;
 use Spryker\Glue\GlueApplication\Plugin\GlueApplication\FallbackStorefrontApiGlueApplicationBootstrapPlugin;
 use Spryker\Glue\GlueApplication\Rest\Collection\ResourceRelationshipCollection;
@@ -175,6 +176,16 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
+    public const PLUGINS_CONTROLLER_CACHE_COLLECTOR = 'PLUGINS_CONTROLLER_CACHE_COLLECTOR';
+
+    /**
+     * @var string
+     */
+    public const FILESYSTEM = 'FILESYSTEM';
+
+    /**
+     * @var string
+     */
     public const PLUGINS_GLUE_APPLICATION_ROUTER_PROVIDER = 'PLUGINS_GLUE_APPLICATION_ROUTER_PROVIDER';
 
     /**
@@ -210,6 +221,8 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCommunicationProtocolPlugins($container);
         $container = $this->addApiConventionPlugins($container);
         $container = $this->addResourceFilterPlugins($container);
+        $container = $this->addControllerCacheCollectorPlugins($container);
+        $container = $this->addFilesystem($container);
         $container = $this->addGlueApplicationRouterProviderPlugins($container);
 
         return $container;
@@ -784,6 +797,42 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
     public function getResourceFilterPlugins(): array
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addControllerCacheCollectorPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_CONTROLLER_CACHE_COLLECTOR, function () {
+            return $this->getControllerCacheCollectorPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ControllerCacheCollectorPluginInterface>
+     */
+    protected function getControllerCacheCollectorPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addFilesystem(Container $container): Container
+    {
+        $container->set(static::FILESYSTEM, function () {
+            return new GlueApplicationToSymfonyFilesystemAdapter();
+        });
+
+        return $container;
     }
 
     /**
