@@ -12,6 +12,8 @@ use Spryker\Zed\ProductOfferStorage\Business\Deleter\ProductConcreteProductOffer
 use Spryker\Zed\ProductOfferStorage\Business\Deleter\ProductConcreteProductOffersStorageDeleterInterface;
 use Spryker\Zed\ProductOfferStorage\Business\Deleter\ProductOfferStorageDeleter;
 use Spryker\Zed\ProductOfferStorage\Business\Deleter\ProductOfferStorageDeleterInterface;
+use Spryker\Zed\ProductOfferStorage\Business\Reader\ProductOfferStorageReader;
+use Spryker\Zed\ProductOfferStorage\Business\Reader\ProductOfferStorageReaderInterface;
 use Spryker\Zed\ProductOfferStorage\Business\Writer\ProductConcreteOffersStorageWriter;
 use Spryker\Zed\ProductOfferStorage\Business\Writer\ProductConcreteOffersStorageWriterInterface;
 use Spryker\Zed\ProductOfferStorage\Business\Writer\ProductOfferCriteriaTransferProvider;
@@ -37,10 +39,9 @@ class ProductOfferStorageBusinessFactory extends AbstractBusinessFactory
         return new ProductConcreteOffersStorageWriter(
             $this->getEventBehaviorFacade(),
             $this->getEntityManager(),
-            $this->getRepository(),
             $this->createProductConcreteProductOffersStorageDeleter(),
             $this->getStoreFacade(),
-            $this->createProductOfferCriteriaTransferProvider(),
+            $this->createProductOfferStorageReader(),
             $this->getProductOfferStorageFilterPlugins(),
         );
     }
@@ -53,10 +54,9 @@ class ProductOfferStorageBusinessFactory extends AbstractBusinessFactory
         return new ProductOfferStorageWriter(
             $this->getEventBehaviorFacade(),
             $this->getEntityManager(),
-            $this->getRepository(),
             $this->createProductOfferStorageDeleter(),
             $this->getStoreFacade(),
-            $this->createProductOfferCriteriaTransferProvider(),
+            $this->createProductOfferStorageReader(),
             $this->getProductOfferStorageFilterPlugins(),
         );
     }
@@ -80,6 +80,18 @@ class ProductOfferStorageBusinessFactory extends AbstractBusinessFactory
         return new ProductOfferStorageDeleter(
             $this->getEventBehaviorFacade(),
             $this->getEntityManager(),
+            $this->createProductOfferStorageReader(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferStorage\Business\Reader\ProductOfferStorageReaderInterface
+     */
+    public function createProductOfferStorageReader(): ProductOfferStorageReaderInterface
+    {
+        return new ProductOfferStorageReader(
+            $this->getRepository(),
+            $this->createProductOfferCriteriaTransferProvider(),
         );
     }
 

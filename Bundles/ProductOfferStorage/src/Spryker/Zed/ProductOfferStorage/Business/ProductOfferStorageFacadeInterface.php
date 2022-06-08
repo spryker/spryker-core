@@ -69,4 +69,51 @@ interface ProductOfferStorageFacadeInterface
      * @return void
      */
     public function deleteProductOfferStorageCollectionByProductOfferEvents(array $eventTransfers): void;
+
+    /**
+     * Specification:
+     * - Gets product offer IDs from eventTransfers.
+     * - Queries all active product offers with the given product offer IDs.
+     * - Stores data as json encoded to storage table.
+     * - Removes all inactive product offer storage entities with the given product offer IDs.
+     * - Sends a copy of data to queue based on module config.
+     * - Executes `ProductOfferStorageFilterPluginInterface` plugin stack.
+     *
+     * @api
+     *
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
+     *
+     * @return void
+     */
+    public function writeCollectionByProductOfferStoreEvents(array $eventTransfers): void;
+
+    /**
+     * Specification:
+     * - Gets product offer IDs and store IDs from eventTransfers.
+     * - Finds and deletes product offer storage entities by the given product offer IDs and store IDs.
+     * - Sends delete message to queue based on module config.
+     *
+     * @api
+     *
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
+     *
+     * @return void
+     */
+    public function deleteCollectionByProductOfferStoreEvents(array $eventTransfers): void;
+
+    /**
+     * Specification:
+     * - Gets product offer IDs and obtains the corresponding product SKUs from eventTransfers.
+     * - Queries all active product offers with the given SKUs.
+     * - Stores data as json encoded to storage table.
+     * - Removes all inactive product offer storage entities with the given SKUs.
+     * - Sends a copy of data to queue based on module config.
+     *
+     * @api
+     *
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
+     *
+     * @return void
+     */
+    public function writeProductConcreteProductOffersStorageCollectionByProductOfferStoreEvents(array $eventTransfers): void;
 }
