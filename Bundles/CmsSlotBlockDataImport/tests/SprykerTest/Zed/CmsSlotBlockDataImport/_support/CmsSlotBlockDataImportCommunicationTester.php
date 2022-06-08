@@ -119,7 +119,7 @@ class CmsSlotBlockDataImportCommunicationTester extends Actor
 
         $conditionCmsPage = (new CmsSlotBlockConditionTransfer())->fromArray([
             'all' => true,
-            'pageIds' => [],
+            'cmsPageIds' => [],
         ], true);
 
         $conditions->append($conditionCategory);
