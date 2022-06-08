@@ -4,5 +4,7 @@
 {% if template is not null %}
     {% include template.templatePath with {'data': template.data, 'IdSalesOrderItem': orderItem.IdSalesOrderItem} only %}
 {% else %}
-    {{ orderItem.salesOrderItemConfiguration.displayData }}
+    {% if orderItem.salesOrderItemConfiguration is not null %}
+        {{ orderItem.salesOrderItemConfiguration.displayData }}
+    {% endif %}
 {% endif %}
