@@ -35,6 +35,7 @@ use Generated\Shared\Transfer\GuiTableTitleConfigurationTransfer;
 use Generated\Shared\Transfer\OptionSelectGuiTableFilterTypeOptionsTransfer;
 use Generated\Shared\Transfer\SelectGuiTableFilterTypeOptionsTransfer;
 use Spryker\Shared\GuiTable\Exception\InvalidConfigurationException;
+use Spryker\Shared\GuiTable\Exception\RowActionNotFoundException;
 
 class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterface
 {
@@ -149,6 +150,40 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      * @var bool
      */
     protected $isPaginationEnabled;
+
+    /**
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\GuiTableEditableConfigurationTransfer|null
+     */
+    public function getEditableConfiguration(): ?GuiTableEditableConfigurationTransfer
+    {
+        return $this->editableConfiguration;
+    }
+
+    /**
+     * @api
+     *
+     * @return array<\Generated\Shared\Transfer\GuiTableColumnConfigurationTransfer>
+     */
+    public function getColumns(): array
+    {
+        return $this->columns;
+    }
+
+    /**
+     * @api
+     *
+     * @param array<string, \Generated\Shared\Transfer\GuiTableColumnConfigurationTransfer> $colunms
+     *
+     * @return $this
+     */
+    public function setColumns(array $colunms)
+    {
+        $this->columns = $colunms;
+
+        return $this;
+    }
 
     /**
      * @api
@@ -694,6 +729,34 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
                 (new GuiTableBatchActionOptionsTransfer())
                     ->setInputs($options),
             );
+    }
+
+    /**
+     * @api
+     *
+     * @return array<\Generated\Shared\Transfer\GuiTableRowActionTransfer>
+     */
+    public function getRowActions(): array
+    {
+        return $this->rowActions;
+    }
+
+    /**
+     * @api
+     *
+     * @param string $id
+     *
+     * @throws \Spryker\Shared\GuiTable\Exception\RowActionNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\GuiTableRowActionTransfer
+     */
+    public function getRowAction(string $id): GuiTableRowActionTransfer
+    {
+        if (!isset($this->rowActions[$id])) {
+            throw new RowActionNotFoundException($id);
+        }
+
+        return $this->rowActions[$id];
     }
 
     /**
@@ -1369,6 +1432,23 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
             ]);
 
         $this->addEditableColumn($guiTableColumnConfigurationTransfer);
+
+        return $this;
+    }
+
+    /**
+     * @api
+     *
+     * @param string $columnId
+     * @param string $displayKey
+     *
+     * @return $this
+     */
+    public function setColumnDisplayKey(string $columnId, string $displayKey)
+    {
+        $guiTableColumnConfigurationTransfer = $this->columns[$columnId];
+        $guiTableColumnConfigurationTransfer->setDisplayKey($displayKey);
+        $this->columns[$columnId] = $guiTableColumnConfigurationTransfer;
 
         return $this;
     }

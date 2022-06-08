@@ -31,7 +31,7 @@ interface SortConfigInterface
     public function getAll(): array;
 
     /**
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return string|null
      */

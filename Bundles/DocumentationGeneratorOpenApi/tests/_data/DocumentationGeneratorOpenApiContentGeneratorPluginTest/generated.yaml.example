@@ -1,0 +1,13 @@
+openapi: 3.0.1
+info:
+  title: 'Spryker Glue API specification'
+  description: ''
+  termsOfService: 'https://support.spryker.com/'
+  contact:
+    name: Spryker
+    url: 'https://support.spryker.com/'
+    email: support@spryker.com
+  license:
+    name: MIT
+  version: 1.0.0
+paths: {  }

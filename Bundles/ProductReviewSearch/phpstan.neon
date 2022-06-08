@@ -1,5 +1,3 @@
 parameters:
     level: 7
     checkMissingIterableValueType: false
-    ignoreErrors:
-        - '#Cannot call method format\(\) on DateTime\|string.#'

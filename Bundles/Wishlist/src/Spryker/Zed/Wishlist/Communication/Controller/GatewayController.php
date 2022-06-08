@@ -20,6 +20,9 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
  * @method \Spryker\Zed\Wishlist\Business\WishlistFacadeInterface getFacade()
+ * @method \Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Wishlist\Persistence\WishlistRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Wishlist\Communication\WishlistCommunicationFactory getFactory()
  */
 class GatewayController extends AbstractGatewayController
 {

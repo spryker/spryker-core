@@ -129,7 +129,7 @@ class UrlStorageWriter implements UrlStorageWriterInterface
 
     /**
      * @param array<\Generated\Shared\Transfer\UrlStorageTransfer> $urlStorageTransfers
-     * @param array<\Orm\Zed\UrlStorage\Persistence\SpyUrlStorage> $urlStorageEntities
+     * @param array<int, \Orm\Zed\UrlStorage\Persistence\SpyUrlStorage> $urlStorageEntities
      *
      * @return void
      */
@@ -169,7 +169,7 @@ class UrlStorageWriter implements UrlStorageWriterInterface
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array|null
      */

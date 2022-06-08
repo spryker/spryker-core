@@ -13,6 +13,7 @@ use Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductTableConfigu
 
 /**
  * @method \Spryker\Zed\ProductApprovalGui\Communication\ProductApprovalGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductApprovalGui\ProductApprovalGuiConfig getConfig()
  */
 class ProductApprovalProductTableConfigurationExpanderPlugin extends AbstractPlugin implements ProductTableConfigurationExpanderPluginInterface
 {

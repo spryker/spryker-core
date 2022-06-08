@@ -38,12 +38,12 @@ class CategoryReader implements CategoryReaderInterface
     public const ID_CATEGORY = 'id_category';
 
     /**
-     * @var \ArrayObject
+     * @var \ArrayObject<string, array<string, mixed>>
      */
     protected $categoryKeys;
 
     /**
-     * @var \ArrayObject
+     * @var \ArrayObject<string, array<int, array<string, mixed>>>
      */
     protected $categoryUrls;
 
@@ -100,7 +100,10 @@ class CategoryReader implements CategoryReaderInterface
             ));
         }
 
-        return $this->categoryKeys[$categoryKey][static::ID_CATEGORY_NODE];
+        /** @var array<string, int> $categories */
+        $categories = $this->categoryKeys[$categoryKey];
+
+        return $categories[static::ID_CATEGORY_NODE];
     }
 
     /**
@@ -141,7 +144,10 @@ class CategoryReader implements CategoryReaderInterface
             ));
         }
 
-        foreach ($this->categoryUrls[$categoryKey] as $categoryUrl) {
+        /** @var array<array<string, mixed>> $categoryUrls */
+        $categoryUrls = $this->categoryUrls[$categoryKey];
+
+        foreach ($categoryUrls as $categoryUrl) {
             if ($categoryUrl[static::ID_LOCALE] === $idLocale) {
                 return $categoryUrl[static::URL];
             }

@@ -15,7 +15,7 @@ interface AttributeKeyFormDataProviderInterface
     public function getData();
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions();
 }

@@ -10,7 +10,7 @@ namespace Spryker\Zed\Queue\Dependency\Service;
 interface QueueToUtilEncodingServiceInterface
 {
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param string $format
      *
      * @return string|null

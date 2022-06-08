@@ -14,6 +14,8 @@ use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByOrderInterface;
 
 /**
  * @method \Spryker\Zed\OmsDiscountConnector\Communication\OmsDiscountConnectorCommunicationFactory getFactory()
+ * @method \Spryker\Zed\OmsDiscountConnector\OmsDiscountConnectorConfig getConfig()
+ * @method \Spryker\Zed\OmsDiscountConnector\Business\OmsDiscountConnectorFacadeInterface getFacade()
  */
 class ReleaseUsedVoucherCodes extends AbstractCommand implements CommandByOrderInterface
 {

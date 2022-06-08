@@ -7,14 +7,15 @@
 
 namespace Spryker\Zed\PriceProduct\Persistence;
 
+use Generated\Shared\Transfer\PriceProductCollectionDeleteCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\SpyPriceProductDefaultEntityTransfer;
+use Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefault;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
  * @method \Spryker\Zed\PriceProduct\Persistence\PriceProductPersistenceFactory getFactory()
- * @method \Generated\Shared\Transfer\SpyPriceProductDefaultEntityTransfer save(\Generated\Shared\Transfer\SpyPriceProductDefaultEntityTransfer $spyCompanyUnitAddressEntityTransfer)
  */
 class PriceProductEntityManager extends AbstractEntityManager implements PriceProductEntityManagerInterface
 {
@@ -69,7 +70,17 @@ class PriceProductEntityManager extends AbstractEntityManager implements PricePr
     public function savePriceProductDefaultEntity(
         SpyPriceProductDefaultEntityTransfer $spyPriceProductDefaultEntityTransfer
     ): SpyPriceProductDefaultEntityTransfer {
-        return $this->save($spyPriceProductDefaultEntityTransfer);
+        $priceProductMapper = $this->getFactory()->createPriceProductMapper();
+        $priceProductDefaultEntity = $priceProductMapper->mapPriceProductDefaultTransferToPriceProductEntity(
+            $spyPriceProductDefaultEntityTransfer,
+            new SpyPriceProductDefault(),
+        );
+        $priceProductDefaultEntity->save();
+
+        return $priceProductMapper->mapPriceProductDefaultEntityToPriceProductDefaultTransfer(
+            $priceProductDefaultEntity,
+            $spyPriceProductDefaultEntityTransfer,
+        );
     }
 
     /**
@@ -122,6 +133,30 @@ class PriceProductEntityManager extends AbstractEntityManager implements PricePr
             ->filterByFkPriceProductStore($idPriceProductStore)
             ->find()
             ->delete();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductCollectionDeleteCriteriaTransfer $priceProductCollectionDeleteCriteriaTransfer
+     *
+     * @return void
+     */
+    public function deletePriceProductDefaults(
+        PriceProductCollectionDeleteCriteriaTransfer $priceProductCollectionDeleteCriteriaTransfer
+    ): void {
+        if (!$priceProductCollectionDeleteCriteriaTransfer->getPriceProductDefaultIds()) {
+            return;
+        }
+        $priceProductDefaultCollection = $this->getFactory()
+            ->createPriceProductDefaultQuery()
+            ->filterByIdPriceProductDefault_In(
+                $priceProductCollectionDeleteCriteriaTransfer->getPriceProductDefaultIds(),
+            )
+            ->filterByFkPriceProductStore_In(
+                $priceProductCollectionDeleteCriteriaTransfer->getPriceProductStoreIds(),
+            )
+            ->find();
+
+        $priceProductDefaultCollection->delete();
     }
 
     /**

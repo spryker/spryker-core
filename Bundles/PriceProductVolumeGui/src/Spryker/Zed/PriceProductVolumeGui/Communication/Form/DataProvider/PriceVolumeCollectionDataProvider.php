@@ -185,7 +185,7 @@ class PriceVolumeCollectionDataProvider
     /**
      * @param string $currencyCode
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions(string $currencyCode): array
     {

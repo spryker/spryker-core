@@ -1,0 +1,16 @@
+[
+    {
+        "fileName": "src/Spryker/Zed/AssetStorage/Dependency/Facade/AssetStorageToAssetExternalBridge.php",
+        "description": "Bridges: Method `findAssetById()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/AssetStorage/Dependency/Facade/AssetStorageToStoreFacadeBridge.php",
+        "description": "Bridges: Method `getStoreById()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

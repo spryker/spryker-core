@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade;
 
 use ArrayObject;
+use Generated\Shared\Transfer\PriceProductCollectionDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductCollectionResponseTransfer;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ValidationResponseTransfer;
@@ -30,7 +32,7 @@ class ProductMerchantPortalGuiToPriceProductFacadeBridge implements ProductMerch
     /**
      * @return array<\Generated\Shared\Transfer\PriceTypeTransfer>
      */
-    public function getPriceTypeValues()
+    public function getPriceTypeValues(): array
     {
         return $this->priceProductFacade->getPriceTypeValues();
     }
@@ -56,10 +58,6 @@ class ProductMerchantPortalGuiToPriceProductFacadeBridge implements ProductMerch
     }
 
     /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
@@ -120,12 +118,13 @@ class ProductMerchantPortalGuiToPriceProductFacadeBridge implements ProductMerch
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     * @param \Generated\Shared\Transfer\PriceProductCollectionDeleteCriteriaTransfer $priceProductCollectionDeleteCriteriaTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\PriceProductCollectionResponseTransfer
      */
-    public function removePriceProductDefaultForPriceProduct(PriceProductTransfer $priceProductTransfer): void
-    {
-        $this->priceProductFacade->removePriceProductDefaultForPriceProduct($priceProductTransfer);
+    public function deletePriceProductCollection(
+        PriceProductCollectionDeleteCriteriaTransfer $priceProductCollectionDeleteCriteriaTransfer
+    ): PriceProductCollectionResponseTransfer {
+        return $this->priceProductFacade->deletePriceProductCollection($priceProductCollectionDeleteCriteriaTransfer);
     }
 }

@@ -29,7 +29,7 @@ class PriceProductScheduleDeleteFormDataProvider
     /**
      * @param string $redirectUrl
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions(string $redirectUrl): array
     {

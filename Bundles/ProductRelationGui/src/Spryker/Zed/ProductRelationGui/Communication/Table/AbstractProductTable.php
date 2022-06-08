@@ -17,7 +17,7 @@ abstract class AbstractProductTable extends AbstractTable
     protected const COL_IS_ACTIVE_AGGREGATION = 'is_active_aggregation';
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return string
      */
@@ -31,7 +31,7 @@ abstract class AbstractProductTable extends AbstractTable
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return bool
      */

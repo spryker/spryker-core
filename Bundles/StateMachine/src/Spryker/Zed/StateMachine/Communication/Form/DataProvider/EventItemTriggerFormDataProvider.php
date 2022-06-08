@@ -49,7 +49,7 @@ class EventItemTriggerFormDataProvider
      * @param string $stateMachineName
      * @param string $processName
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions(
         int $identifier,

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Spryker\Zed\BusinessOnBehalfGui\Communication\Form\CustomerBusinessUnitAttachForm;
 use Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade\BusinessOnBehalfGuiToCompanyBusinessUnitFacadeInterface;
 use Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade\BusinessOnBehalfGuiToCompanyFacadeInterface;
 use Spryker\Zed\BusinessOnBehalfGui\Dependency\Facade\BusinessOnBehalfGuiToCustomerFacadeInterface;
@@ -81,24 +80,19 @@ class CustomerBusinessUnitAttachFormDataProvider
     }
 
     /**
-     * @param int $idCompany
-     *
-     * @return array
+     * @return array<string, mixed>
      */
-    public function getOptions(int $idCompany): array
+    public function getOptions(): array
     {
-        return [
-            CustomerBusinessUnitAttachForm::OPTION_COMPANY_BUSINESS_UNIT_CHOICES =>
-                $this->getCompanyBusinessUnitChoices($idCompany),
-        ];
+        return [];
     }
 
     /**
      * @param int $idCompany
      *
-     * @return array
+     * @return array<string, int>
      */
-    protected function getCompanyBusinessUnitChoices(int $idCompany): array
+    public function getCompanyBusinessUnitChoices(int $idCompany): array
     {
         $companyBusinessUnitChoicesValues = [];
 

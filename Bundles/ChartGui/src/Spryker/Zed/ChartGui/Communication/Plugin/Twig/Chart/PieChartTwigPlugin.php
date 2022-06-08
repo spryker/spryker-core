@@ -10,6 +10,7 @@ namespace Spryker\Zed\ChartGui\Communication\Plugin\Twig\Chart;
 /**
  * @method \Spryker\Zed\ChartGui\ChartGuiConfig getConfig()
  * @method \Spryker\Zed\ChartGui\Business\ChartGuiFacadeInterface getFacade()
+ * @method \Spryker\Zed\ChartGui\Communication\ChartGuiCommunicationFactory getFactory()
  */
 class PieChartTwigPlugin extends AbstractChartTwigPlugin
 {

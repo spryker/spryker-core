@@ -35,7 +35,7 @@ class SynchronizationToSearchClientBridge implements SynchronizationToSearchClie
     }
 
     /**
-     * @param array $dataSet
+     * @param array<string, mixed> $dataSet
      * @param string|null $typeName
      * @param string|null $indexName
      *
@@ -57,7 +57,7 @@ class SynchronizationToSearchClientBridge implements SynchronizationToSearchClie
     }
 
     /**
-     * @param array $dataSet
+     * @param array<string, mixed> $dataSet
      * @param string|null $typeName
      * @param string|null $indexName
      *

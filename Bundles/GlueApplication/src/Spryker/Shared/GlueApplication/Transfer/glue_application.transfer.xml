@@ -94,4 +94,8 @@
         <property name="action" type="string"/>
     </transfer>
 
+    <transfer name="ApiControllerConfiguration">
+        <property name="parameters" type="string[]" singular="parameter"/>
+    </transfer>
+
 </transfers>

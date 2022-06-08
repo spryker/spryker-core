@@ -18,7 +18,6 @@
         "spryker/event": "*",
         "spryker/product": "*",
         "spryker/propel": "*",
-        "spryker/propel-orm": "*",
         "spryker/store": "*",
         "spryker/testify": "*"
     },

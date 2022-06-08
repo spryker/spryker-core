@@ -15,6 +15,7 @@ use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceRelation
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceRelationshipsPluginAnnotationAnalyzerInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceTransferAnalyzerInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Storage\ResourceSchemaNameStorageInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Storage\ResourceTransferClassNameStorageInterface;
 
 class ResourceSchemaNameStorageProcessor implements ResourceSchemaNameStorageProcessorInterface
 {
@@ -44,24 +45,32 @@ class ResourceSchemaNameStorageProcessor implements ResourceSchemaNameStoragePro
     protected $resourceRelationshipsPluginAnnotationAnalyzer;
 
     /**
+     * @var \Spryker\Zed\DocumentationGeneratorRestApi\Business\Storage\ResourceTransferClassNameStorageInterface
+     */
+    protected ResourceTransferClassNameStorageInterface $resourceTransferClassNameStorage;
+
+    /**
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Storage\ResourceSchemaNameStorageInterface $resourceSchemaNameStorage
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceTransferAnalyzerInterface $resourceTransferAnalyzer
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceRelationshipsPluginAnalyzerInterface $resourceRelationshipPluginAnalyzer
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\GlueAnnotationAnalyzerInterface $glueAnnotationsAnalyser
      * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceRelationshipsPluginAnnotationAnalyzerInterface $resourceRelationshipsPluginAnnotationAnalyzer
+     * @param \Spryker\Zed\DocumentationGeneratorRestApi\Business\Storage\ResourceTransferClassNameStorageInterface $resourceTransferClassNameStorage
      */
     public function __construct(
         ResourceSchemaNameStorageInterface $resourceSchemaNameStorage,
         ResourceTransferAnalyzerInterface $resourceTransferAnalyzer,
         ResourceRelationshipsPluginAnalyzerInterface $resourceRelationshipPluginAnalyzer,
         GlueAnnotationAnalyzerInterface $glueAnnotationsAnalyser,
-        ResourceRelationshipsPluginAnnotationAnalyzerInterface $resourceRelationshipsPluginAnnotationAnalyzer
+        ResourceRelationshipsPluginAnnotationAnalyzerInterface $resourceRelationshipsPluginAnnotationAnalyzer,
+        ResourceTransferClassNameStorageInterface $resourceTransferClassNameStorage
     ) {
         $this->resourceSchemaNameStorage = $resourceSchemaNameStorage;
         $this->resourceTransferAnalyzer = $resourceTransferAnalyzer;
         $this->resourceRelationshipPluginAnalyzer = $resourceRelationshipPluginAnalyzer;
         $this->glueAnnotationsAnalyser = $glueAnnotationsAnalyser;
         $this->resourceRelationshipsPluginAnnotationAnalyzer = $resourceRelationshipsPluginAnnotationAnalyzer;
+        $this->resourceTransferClassNameStorage = $resourceTransferClassNameStorage;
     }
 
     /**
@@ -105,7 +114,9 @@ class ResourceSchemaNameStorageProcessor implements ResourceSchemaNameStoragePro
     {
         $transferClassName = $this->resolveTransferClassNameForPlugin($plugin, $annotationTransfer);
         $responseDataSchemaName = $this->resourceTransferAnalyzer->createResponseResourceDataSchemaNameFromTransferClassName($transferClassName);
+
         $this->resourceSchemaNameStorage->addResourceSchemaName($plugin->getResourceType(), $responseDataSchemaName);
+        $this->resourceTransferClassNameStorage->addResourceTransferClassName($plugin->getResourceType(), $transferClassName);
     }
 
     /**
@@ -118,7 +129,9 @@ class ResourceSchemaNameStorageProcessor implements ResourceSchemaNameStoragePro
     {
         $transferClassName = $this->resolveTransferClassNameForPlugin($plugin, $annotationTransfer);
         $responseDataSchemaName = $this->resourceTransferAnalyzer->createResponseCollectionDataSchemaNameFromTransferClassName($transferClassName);
+
         $this->resourceSchemaNameStorage->addResourceSchemaName($plugin->getResourceType(), $responseDataSchemaName);
+        $this->resourceTransferClassNameStorage->addResourceTransferClassName($plugin->getResourceType(), $transferClassName);
     }
 
     /**
@@ -157,6 +170,7 @@ class ResourceSchemaNameStorageProcessor implements ResourceSchemaNameStoragePro
                     );
 
                 $this->resourceSchemaNameStorage->addResourceSchemaName($key, $responseResourceDataSchema);
+                $this->resourceTransferClassNameStorage->addResourceTransferClassName($key, $pluginAnnotationsTransfer->getResourceAttributesClassName());
             }
         }
     }

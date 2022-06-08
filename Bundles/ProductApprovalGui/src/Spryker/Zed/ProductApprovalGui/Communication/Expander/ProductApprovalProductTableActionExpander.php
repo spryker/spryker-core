@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ButtonCollectionTransfer;
 use Generated\Shared\Transfer\ButtonTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Shared\ProductApproval\ProductApprovalConfig;
-use Spryker\Zed\ProductApprovalGui\Dependency\Facade\ProductApprovalGuiToProductApprovalFacadeInterface;
+use Spryker\Zed\ProductApprovalGui\Communication\Reader\ProductApprovalStatusReaderInterface;
 
 class ProductApprovalProductTableActionExpander implements ProductApprovalProductTableActionExpanderInterface
 {
@@ -88,16 +88,16 @@ class ProductApprovalProductTableActionExpander implements ProductApprovalProduc
     protected const URL_UPDATE_APPROVAL_STATUS = '/product-approval-gui/edit/update-approval-status';
 
     /**
-     * @var \Spryker\Zed\ProductApprovalGui\Dependency\Facade\ProductApprovalGuiToProductApprovalFacadeInterface
+     * @var \Spryker\Zed\ProductApprovalGui\Communication\Reader\ProductApprovalStatusReaderInterface
      */
-    protected $productApprovalFacade;
+    protected $productApprovalStatusReader;
 
     /**
-     * @param \Spryker\Zed\ProductApprovalGui\Dependency\Facade\ProductApprovalGuiToProductApprovalFacadeInterface $productApprovalFacade
+     * @param \Spryker\Zed\ProductApprovalGui\Communication\Reader\ProductApprovalStatusReaderInterface $productApprovalStatusReader
      */
-    public function __construct(ProductApprovalGuiToProductApprovalFacadeInterface $productApprovalFacade)
+    public function __construct(ProductApprovalStatusReaderInterface $productApprovalStatusReader)
     {
-        $this->productApprovalFacade = $productApprovalFacade;
+        $this->productApprovalStatusReader = $productApprovalStatusReader;
     }
 
     /**
@@ -116,8 +116,7 @@ class ProductApprovalProductTableActionExpander implements ProductApprovalProduc
 
         $approvalStatus = $productData[static::COL_APPROVAL_STATUS] ?? ProductApprovalConfig::STATUS_DRAFT;
 
-        $applicableStatuses = $this->productApprovalFacade
-            ->getApplicableApprovalStatuses($approvalStatus);
+        $applicableStatuses = $this->productApprovalStatusReader->getApplicableTableActionApprovalStatuses($approvalStatus);
 
         foreach ($applicableStatuses as $applicableStatus) {
             $defaultOptions = [

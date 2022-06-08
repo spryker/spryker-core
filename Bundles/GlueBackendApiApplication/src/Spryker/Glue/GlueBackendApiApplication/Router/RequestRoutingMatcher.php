@@ -8,11 +8,13 @@
 namespace Spryker\Glue\GlueBackendApiApplication\Router;
 
 use Generated\Shared\Transfer\GlueRequestTransfer;
+use Spryker\Glue\GlueApplication\Exception\ControllerNotFoundException;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface;
 use Spryker\Glue\GlueBackendApiApplication\GlueBackendApiApplicationConfig;
 use Spryker\Glue\GlueBackendApiApplication\Resource\GenericResource;
 use Spryker\Glue\GlueBackendApiApplication\Resource\MissingResource;
 use Spryker\Glue\GlueBackendApiApplicationExtension\Dependency\Plugin\RequestResourceFilterPluginInterface;
+use Spryker\Glue\Kernel\Controller\AbstractController;
 
 class RequestRoutingMatcher implements RequestRoutingMatcherInterface
 {
@@ -59,10 +61,11 @@ class RequestRoutingMatcher implements RequestRoutingMatcherInterface
             !$glueRequestTransfer->getResource()->getResourceName() &&
             $glueRequestTransfer->getResource()->getController()
         ) {
-            /** @var callable $controller */
+            /** @phpstan-var callable():\Generated\Shared\Transfer\GlueResponseTransfer $controller */
             $controller = $glueRequestTransfer->getResource()->getController();
+            $executable = $this->buildExecutable($controller);
 
-            return new GenericResource($controller);
+            return new GenericResource($executable);
         }
 
         $resource = $this->requestResourceFilterPlugin->filterResource($glueRequestTransfer, $resources);
@@ -75,5 +78,35 @@ class RequestRoutingMatcher implements RequestRoutingMatcherInterface
         }
 
         return $resource;
+    }
+
+    /**
+     * @param callable():\Generated\Shared\Transfer\GlueResponseTransfer $executable
+     *
+     * @return callable():\Generated\Shared\Transfer\GlueResponseTransfer
+     */
+    protected function buildExecutable(callable $executable): callable
+    {
+        if (is_array($executable) && isset($executable[0]) && is_string($executable[0])) {
+            $executable[0] = $this->createControllerInstance($executable[0]);
+        }
+
+        return $executable;
+    }
+
+    /**
+     * @param string $controller
+     *
+     * @throws \Spryker\Glue\GlueApplication\Exception\ControllerNotFoundException
+     *
+     * @return \Spryker\Glue\Kernel\Controller\AbstractController
+     */
+    protected function createControllerInstance(string $controller): AbstractController
+    {
+        if (class_exists($controller)) {
+            return new $controller();
+        }
+
+        throw new ControllerNotFoundException('Controller not found!');
     }
 }

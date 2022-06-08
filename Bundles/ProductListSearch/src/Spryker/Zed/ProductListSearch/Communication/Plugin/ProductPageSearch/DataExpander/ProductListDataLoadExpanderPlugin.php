@@ -27,7 +27,7 @@ class ProductListDataLoadExpanderPlugin extends AbstractPlugin implements Produc
      *
      * @api
      *
-     * @param array $productData
+     * @param array<string, mixed> $productData
      * @param \Generated\Shared\Transfer\ProductPageSearchTransfer $productAbstractPageSearchTransfer
      *
      * @return void
@@ -45,10 +45,10 @@ class ProductListDataLoadExpanderPlugin extends AbstractPlugin implements Produc
     }
 
     /**
-     * @param array $productData
+     * @param array<string, mixed> $productData
      * @param string $type
      *
-     * @return array
+     * @return array<int>
      */
     protected function getListIds(array $productData, string $type): array
     {
@@ -59,7 +59,7 @@ class ProductListDataLoadExpanderPlugin extends AbstractPlugin implements Produc
     }
 
     /**
-     * @param array $productData
+     * @param array<string, mixed> $productData
      *
      * @return \Generated\Shared\Transfer\ProductPayloadTransfer
      */

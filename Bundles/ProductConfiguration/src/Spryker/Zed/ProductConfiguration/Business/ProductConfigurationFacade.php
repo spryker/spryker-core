@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ProductConfigurationFilterTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method \Spryker\Zed\ProductConfiguration\Persistence\ProductConfigurationRepository getRepository()
+ * @method \Spryker\Zed\ProductConfiguration\Persistence\ProductConfigurationRepositoryInterface getRepository()
  * @method \Spryker\Zed\ProductConfiguration\Business\ProductConfigurationBusinessFactory getFactory()
  */
 class ProductConfigurationFacade extends AbstractFacade implements ProductConfigurationFacadeInterface

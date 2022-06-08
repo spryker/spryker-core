@@ -31,12 +31,22 @@ class OauthDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
+    public const PLUGINS_OAUTH_USER_PROVIDER = 'PLUGINS_OAUTH_USER_PROVIDER';
+
+    /**
+     * @var string
+     */
     public const PLUGIN_SCOPE_PROVIDER = 'PLUGIN_SCOPE_PROVIDER';
 
     /**
      * @var string
      */
     public const PLUGINS_GRANT_TYPE_CONFIGURATION_PROVIDER = 'PLUGINS_GRANT_TYPE_CONFIGURATION_PROVIDER';
+
+    /**
+     * @var string
+     */
+    public const PLUGINS_OAUTH_REQUEST_GRANT_TYPE_CONFIGURATION_PROVIDER = 'PLUGINS_OAUTH_REQUEST_GRANT_TYPE_CONFIGURATION_PROVIDER';
 
     /**
      * @var string
@@ -95,6 +105,7 @@ class OauthDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addUtilEncodingService($container);
 
         $container = $this->addUserProviderPlugins($container);
+        $container = $this->addOauthUserProviderPlugins($container);
         $container = $this->addScopeProviderPlugins($container);
         $container = $this->addGrantTypeConfigurationProviderPlugins($container);
         $container = $this->addOauthUserIdentifierFilterPlugins($container);
@@ -106,6 +117,7 @@ class OauthDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addOauthExpiredRefreshTokenRemoverPlugins($container);
         $container = $this->addOauthRefreshTokenReaderPlugins($container);
         $container = $this->addOauthRefreshTokensReaderPlugins($container);
+        $container = $this->addOauthRequestGrantTypeConfigurationProviderPlugins($container);
 
         return $container;
     }
@@ -145,6 +157,20 @@ class OauthDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    protected function addOauthUserProviderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_OAUTH_USER_PROVIDER, function (Container $container) {
+            return $this->getOauthUserProviderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addScopeProviderPlugins(Container $container): Container
     {
         $container->set(static::PLUGIN_SCOPE_PROVIDER, function (Container $container) {
@@ -163,6 +189,20 @@ class OauthDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::PLUGINS_GRANT_TYPE_CONFIGURATION_PROVIDER, function (Container $container) {
             return $this->getGrantTypeConfigurationProviderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addOauthRequestGrantTypeConfigurationProviderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_OAUTH_REQUEST_GRANT_TYPE_CONFIGURATION_PROVIDER, function (Container $container) {
+            return $this->getOauthRequestGrantTypeConfigurationProviderPlugins();
         });
 
         return $container;
@@ -305,6 +345,14 @@ class OauthDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @return array<\Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserProviderPluginInterface>
+     */
+    protected function getOauthUserProviderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
      * @return array<\Spryker\Zed\OauthExtension\Dependency\Plugin\OauthScopeProviderPluginInterface>
      */
     protected function getScopeProviderPlugins(): array
@@ -321,6 +369,14 @@ class OauthDependencyProvider extends AbstractBundleDependencyProvider
             new PasswordOauthGrantTypeConfigurationProviderPlugin(),
             new RefreshTokenOauthGrantTypeConfigurationProviderPlugin(),
         ];
+    }
+
+    /**
+     * @return array<\Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRequestGrantTypeConfigurationProviderPluginInterface>
+     */
+    protected function getOauthRequestGrantTypeConfigurationProviderPlugins(): array
+    {
+        return [];
     }
 
     /**

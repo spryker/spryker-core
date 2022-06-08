@@ -16,7 +16,7 @@ interface ProductApprovalGuiToProductFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
      */
-    public function findProductAbstractById($idProductAbstract): ?ProductAbstractTransfer;
+    public function findProductAbstractById(int $idProductAbstract): ?ProductAbstractTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer

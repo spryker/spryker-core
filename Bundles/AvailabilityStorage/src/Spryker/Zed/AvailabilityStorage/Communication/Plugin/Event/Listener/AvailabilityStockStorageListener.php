@@ -10,7 +10,6 @@ namespace Spryker\Zed\AvailabilityStorage\Communication\Plugin\Event\Listener;
 use Orm\Zed\Availability\Persistence\Map\SpyAvailabilityTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @method \Spryker\Zed\AvailabilityStorage\Persistence\AvailabilityStorageQueryContainerInterface getQueryContainer()
@@ -20,8 +19,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  */
 class AvailabilityStockStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
-    use DatabaseTransactionHandlerTrait;
-
     /**
      * @api
      *
@@ -32,7 +29,6 @@ class AvailabilityStockStorageListener extends AbstractPlugin implements EventBu
      */
     public function handleBulk(array $eventEntityTransfers, $eventName)
     {
-        $this->preventTransaction();
         $availabilityIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys($eventEntityTransfers, SpyAvailabilityTableMap::COL_FK_AVAILABILITY_ABSTRACT);
 
         $this->getFacade()->publish($availabilityIds);

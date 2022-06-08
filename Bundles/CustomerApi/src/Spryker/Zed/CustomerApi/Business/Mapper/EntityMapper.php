@@ -12,7 +12,7 @@ use Orm\Zed\Customer\Persistence\SpyCustomer;
 class EntityMapper implements EntityMapperInterface
 {
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \Orm\Zed\Customer\Persistence\SpyCustomer
      */
@@ -25,7 +25,7 @@ class EntityMapper implements EntityMapperInterface
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array<\Orm\Zed\Customer\Persistence\SpyCustomer>
      */

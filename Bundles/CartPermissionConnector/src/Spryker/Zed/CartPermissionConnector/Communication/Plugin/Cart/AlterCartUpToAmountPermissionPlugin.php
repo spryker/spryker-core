@@ -73,7 +73,7 @@ class AlterCartUpToAmountPermissionPlugin extends AbstractPlugin implements Exec
      *
      * @api
      *
-     * @param array $configuration
+     * @param array<string, mixed> $configuration
      * @param array|string|int|null $context Cent amount.
      *
      * @return bool

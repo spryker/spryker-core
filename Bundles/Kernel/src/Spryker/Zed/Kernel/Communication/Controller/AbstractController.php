@@ -251,7 +251,7 @@ abstract class AbstractController
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */
@@ -262,7 +262,7 @@ abstract class AbstractController
 
     /**
      * @param string $message
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return $this
      */
@@ -275,7 +275,7 @@ abstract class AbstractController
 
     /**
      * @param string $message
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return $this
      */
@@ -288,7 +288,7 @@ abstract class AbstractController
 
     /**
      * @param string $message
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return $this
      */
@@ -312,7 +312,7 @@ abstract class AbstractController
 
     /**
      * @param string $message
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \Generated\Shared\Transfer\MessageTransfer
      */

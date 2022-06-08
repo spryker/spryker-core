@@ -77,7 +77,7 @@ class CmsPageSortConfigBuilder implements SortConfigBuilderInterface
     }
 
     /**
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return string|null
      */

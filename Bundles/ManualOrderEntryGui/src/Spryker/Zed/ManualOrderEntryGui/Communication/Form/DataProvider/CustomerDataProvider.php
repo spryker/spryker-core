@@ -14,7 +14,7 @@ class CustomerDataProvider implements FormDataProviderInterface
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $transfer
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions($transfer): array
     {

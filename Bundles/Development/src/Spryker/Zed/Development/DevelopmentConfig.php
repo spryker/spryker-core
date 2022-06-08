@@ -352,7 +352,6 @@ class DevelopmentConfig extends AbstractBundleConfig
     {
         return [
             'Codeception\\' => 'spryker/testify',
-            'CodeItNow\\BarcodeBundle' => 'spryker/code-it-now',
             'Doctrine\\Common\\Inflector' => 'spryker/doctrine-inflector',
             'Doctrine\\Inflector\\InflectorFactory' => 'spryker/doctrine-inflector',
             'DMS\\PHPUnitExtensions\\' => 'spryker/testify',
@@ -363,7 +362,9 @@ class DevelopmentConfig extends AbstractBundleConfig
             'GuzzleHttp\\' => 'spryker/guzzle',
             'JsonPath\\' => 'spryker/json-path',
             'JsonSchema\\' => 'spryker/json-schema',
-            'Laminas\\' => 'spryker/laminas',
+            'Laminas\\Config' => 'spryker/laminas',
+            'Laminas\\Filter' => 'spryker/laminas',
+            'Laminas\\ServiceManager' => 'spryker/laminas',
             'League\\Csv\\' => 'spryker/csv',
             'Monolog\\' => 'spryker/monolog',
             'org\\bovigo\\vfs\\' => 'spryker/testify',
@@ -399,7 +400,6 @@ class DevelopmentConfig extends AbstractBundleConfig
     {
         return [
             'codeception/codeception' => 'spryker/testify',
-            'codeitnowin/barcode' => 'spryker/code-it-now',
             'dms/phpunit-arraysubset-asserts' => 'spryker/testify',
             'doctrine/inflector' => 'spryker/doctrine-inflector',
             'egulias/email-validator' => 'spryker/egulias',

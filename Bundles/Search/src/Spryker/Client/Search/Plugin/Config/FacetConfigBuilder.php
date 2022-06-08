@@ -62,7 +62,7 @@ class FacetConfigBuilder extends AbstractPlugin implements FacetConfigBuilderInt
     }
 
     /**
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return array<\Generated\Shared\Transfer\FacetConfigTransfer>
      */
@@ -80,7 +80,7 @@ class FacetConfigBuilder extends AbstractPlugin implements FacetConfigBuilderInt
     }
 
     /**
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return array
      */

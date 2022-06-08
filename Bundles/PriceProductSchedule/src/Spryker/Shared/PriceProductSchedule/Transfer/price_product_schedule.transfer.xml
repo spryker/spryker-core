@@ -149,6 +149,7 @@
 
     <transfer name="PriceProductDimension">
         <property name="type" type="string"/>
+        <property name="idPriceProductDefault" type="int"/>
     </transfer>
 
     <transfer name="User">
@@ -156,6 +157,13 @@
     </transfer>
 
     <transfer name="PriceProductCriteria">
+    </transfer>
+
+    <transfer name="PriceProductCollectionDeleteCriteria">
+        <property name="priceProductDefaultIds" type="int[]" singular="idPriceProductDefault"/>
+    </transfer>
+
+    <transfer name="PriceProductCollectionResponse">
     </transfer>
 
 </transfers>

@@ -19,7 +19,7 @@ interface SynchronizationToSearchClientInterface
     public function read($key, $typeName = null, $indexName = null);
 
     /**
-     * @param array $dataSet
+     * @param array<string, mixed> $dataSet
      * @param string|null $typeName
      * @param string|null $indexName
      *
@@ -35,7 +35,7 @@ interface SynchronizationToSearchClientInterface
     public function writeBulk(array $searchDocumentTransfers): bool;
 
     /**
-     * @param array $dataSet
+     * @param array<string, mixed> $dataSet
      * @param string|null $typeName
      * @param string|null $indexName
      *

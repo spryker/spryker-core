@@ -205,13 +205,16 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
             $productAbstractLocalizedEntity = $pair[static::PRODUCT_ABSTRACT_LOCALIZED_ENTITY];
             $productAbstractStorageEntity = $pair[static::PRODUCT_ABSTRACT_STORAGE_ENTITY];
 
-            $productAbstractStorageTransfer = $indexedProductAbstractStorageTransfers[$productAbstractLocalizedEntity[static::COL_FK_PRODUCT_ABSTRACT]] ?? null;
+            if ($productAbstractLocalizedEntity === null || !$this->isActive($productAbstractLocalizedEntity)) {
+                $this->deleteProductAbstractStorageEntity($productAbstractStorageEntity);
 
-            if (
-                $productAbstractLocalizedEntity === null
-                || $productAbstractStorageTransfer === null
-                || !$this->isActive($productAbstractLocalizedEntity)
-            ) {
+                continue;
+            }
+
+            $idProductAbstract = $productAbstractLocalizedEntity[static::COL_FK_PRODUCT_ABSTRACT];
+            $productAbstractStorageTransfer = $indexedProductAbstractStorageTransfers[$idProductAbstract] ?? null;
+
+            if ($productAbstractStorageTransfer === null) {
                 $this->deleteProductAbstractStorageEntity($productAbstractStorageEntity);
 
                 continue;
@@ -233,7 +236,7 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
      * - ProductAbstractStorageEntity without ProductAbstractLocalizedEntities (left outs) are paired with NULL.
      * - ProductAbstractLocalizedEntities are paired multiple times per store.
      *
-     * @param array $productAbstractLocalizedEntities
+     * @param array<array<string, mixed>> $productAbstractLocalizedEntities
      * @param array<\Orm\Zed\ProductStorage\Persistence\SpyProductAbstractStorage> $productAbstractStorageEntities
      *
      * @return array
@@ -338,7 +341,7 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
      * @param \Orm\Zed\ProductStorage\Persistence\SpyProductAbstractStorage $spyProductStorageEntity
      * @param string $storeName
      * @param string $localeName
-     * @param array $attributeMapBulk
+     * @param array<string, \Generated\Shared\Transfer\AttributeMapStorageTransfer> $attributeMapBulk
      *
      * @return void
      */
@@ -408,7 +411,7 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
     /**
      * @param array $productAbstractLocalizedEntity
      * @param \Generated\Shared\Transfer\ProductAbstractStorageTransfer $productAbstractStorageTransfer
-     * @param array $attributeMapBulk
+     * @param array<string, \Generated\Shared\Transfer\AttributeMapStorageTransfer> $attributeMapBulk
      *
      * @return \Generated\Shared\Transfer\ProductAbstractStorageTransfer
      */

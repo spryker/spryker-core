@@ -42,7 +42,7 @@ interface SortConfigBuilderInterface
     /**
      * @api
      *
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return string|null
      */

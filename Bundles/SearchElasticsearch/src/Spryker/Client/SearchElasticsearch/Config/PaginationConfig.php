@@ -35,7 +35,7 @@ class PaginationConfig implements PaginationConfigInterface
     }
 
     /**
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return int
      */
@@ -49,7 +49,7 @@ class PaginationConfig implements PaginationConfigInterface
     }
 
     /**
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return int
      */
@@ -66,7 +66,7 @@ class PaginationConfig implements PaginationConfigInterface
 
     /**
      * @param string $itemsPerPageParameterName
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return bool
      */

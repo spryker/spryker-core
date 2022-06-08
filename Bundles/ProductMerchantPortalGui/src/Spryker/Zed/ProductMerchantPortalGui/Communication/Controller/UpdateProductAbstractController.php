@@ -39,6 +39,13 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
     protected const STATUS_WAITING_FOR_APPROVAL = 'waiting_for_approval';
 
     /**
+     * @uses \Spryker\Shared\ProductApproval\ProductApprovalConfig::STATUS_DRAFT
+     *
+     * @var string
+     */
+    protected const STATUS_DRAFT = 'draft';
+
+    /**
      * @var array
      */
     protected const DEFAULT_INITIAL_DATA = [
@@ -188,15 +195,19 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
 
             $this->updateProductCategories($productAbstractTransfer, $initialCategoryIds);
         } else {
+            /** @var \Symfony\Component\Form\FormErrorIterator<\Symfony\Component\Form\FormError> $formErrors */
+            $formErrors = $productAbstractForm->getErrors(true, true);
             $imageSetsErrors = $this->getFactory()
                 ->createImageSetMapper()
                 ->mapErrorsToImageSetValidationData(
-                    $productAbstractForm->getErrors(true, true),
+                    $formErrors,
                 );
 
+            /** @var \Symfony\Component\Form\FormErrorIterator<\Symfony\Component\Form\FormError> $nestedFormErrors */
+            $nestedFormErrors = $productAbstractForm->getErrors(true, false);
             $attributesInitialData = $this->getFactory()
                 ->createProductAttributesMapper()
-                ->mapErrorsToAttributesData($productAbstractForm->getErrors(true, false), $attributesInitialData);
+                ->mapErrorsToAttributesData($nestedFormErrors, $attributesInitialData);
         }
 
         $priceInitialData = $this->getFactory()
@@ -307,9 +318,12 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
                         ->createProductAbstractFormDataProvider()
                         ->getProductCategoryTree(),
                     'urlAddProductConcrete' => static::URL_ADD_PRODUCT_CONCRETE,
-                    'urlUpdateApprovalStatus' => $this->getFactory()
+                    'urlUpdateApprovalStatus' => $this->getFactory() // @deprecated Use `applicableUpdateApprovalStatuses` instead.
                         ->createCreateProductUrlGenerator()
                         ->getUpdateProductAbstractApprovalStatusUrl(static::STATUS_WAITING_FOR_APPROVAL, $productAbstractTransfer->getIdProductAbstractOrFail()),
+                    'applicableUpdateApprovalStatuses' => $this->getFactory()
+                        ->createApplicableApprovalStatusReader()
+                        ->getApplicableUpdateApprovalStatuses($productAbstractTransfer->getApprovalStatus() ?? static::STATUS_DRAFT),
                 ],
             )->getContent(),
         ];

@@ -14,7 +14,7 @@ interface SalesReturnSearchToSearchClientInterface
     /**
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
      * @param array<\Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface> $resultFormatters
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return \Elastica\ResultSet|mixed|array
      */
@@ -23,7 +23,7 @@ interface SalesReturnSearchToSearchClientInterface
     /**
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
      * @param array<\Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface> $searchQueryExpanders
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
      */

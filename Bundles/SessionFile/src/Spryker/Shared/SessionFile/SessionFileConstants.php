@@ -51,4 +51,14 @@ interface SessionFileConstants
      * @var string
      */
     public const YVES_SESSION_FILE_PATH = 'SESSION_FILE:YVES_SESSION_FILE_PATH';
+
+    /**
+     * Specification:
+     * - Sets file path for saving active session IDs.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const ACTIVE_SESSION_FILE_PATH = 'SESSION_FILE:ACTIVE_SESSION_FILE_PATH';
 }

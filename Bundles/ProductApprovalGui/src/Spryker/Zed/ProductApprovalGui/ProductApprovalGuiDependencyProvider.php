@@ -12,6 +12,9 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductApprovalGui\Dependency\Facade\ProductApprovalGuiToProductApprovalFacadeBridge;
 use Spryker\Zed\ProductApprovalGui\Dependency\Facade\ProductApprovalGuiToProductFacadeBridge;
 
+/**
+ * @method \Spryker\Zed\ProductApprovalGui\ProductApprovalGuiConfig getConfig()
+ */
 class ProductApprovalGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**
@@ -38,6 +41,8 @@ class ProductApprovalGuiDependencyProvider extends AbstractBundleDependencyProvi
      */
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
+        parent::provideCommunicationLayerDependencies($container);
+
         $container = $this->addProductFacade($container);
         $container = $this->addProductApprovalFacade($container);
         $container = $this->addTwig($container);

@@ -26,7 +26,7 @@ interface ResultFormatterPluginInterface
      * @api
      *
      * @param mixed $searchResult
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return mixed
      */

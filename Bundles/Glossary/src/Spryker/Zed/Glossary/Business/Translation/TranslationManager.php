@@ -376,7 +376,7 @@ class TranslationManager implements TranslationManagerInterface
 
     /**
      * @param string $keyName
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return string
@@ -512,7 +512,7 @@ class TranslationManager implements TranslationManagerInterface
 
     /**
      * @param int $idKey
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return string
      */

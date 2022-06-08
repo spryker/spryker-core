@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\PriceProductOffer;
@@ -15,7 +15,7 @@ use Spryker\Zed\PriceProductOffer\Dependency\Facade\PriceProductOfferToStoreFaca
 use Spryker\Zed\PriceProductOffer\Dependency\Facade\PriceProductOfferToTranslatorFacadeBridge;
 
 /**
- * @method \Spryker\Zed\Product\ProductConfig getConfig()
+ * @method \Spryker\Zed\PriceProductOffer\PriceProductOfferConfig getConfig()
  */
 class PriceProductOfferDependencyProvider extends AbstractBundleDependencyProvider
 {

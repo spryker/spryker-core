@@ -19,7 +19,6 @@
         "spryker/elastica": "*",
         "spryker/event": "*",
         "spryker/propel": "*",
-        "spryker/propel-orm": "*",
         "spryker/search": "*",
         "spryker/testify": "*"
     },

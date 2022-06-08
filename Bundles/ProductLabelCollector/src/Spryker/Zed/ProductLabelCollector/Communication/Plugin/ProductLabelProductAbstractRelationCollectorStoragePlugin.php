@@ -18,6 +18,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\ProductLabelCollector\Business\ProductLabelCollectorFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductLabelCollector\ProductLabelCollectorConfig getConfig()
  */
 class ProductLabelProductAbstractRelationCollectorStoragePlugin extends AbstractCollectorPlugin
 {

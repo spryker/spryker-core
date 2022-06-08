@@ -20,6 +20,9 @@ use Spryker\Shared\Kernel\Transfer\Exception\NullValueException;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Shared\Kernel\Transfer\Exception\TransferUnserializationException;
 
+/**
+ * @implements \ArrayAccess<int|string, mixed>
+ */
 abstract class AbstractTransfer implements TransferInterface, Serializable, ArrayAccess
 {
     /**
@@ -228,7 +231,7 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
 
     /**
      * @param string $elementType
-     * @param \ArrayObject|array $arrayObject
+     * @param \ArrayObject<int|string, mixed>|array $arrayObject
      * @param bool $ignoreMissingProperty
      *
      * @return \ArrayObject<int, \Spryker\Shared\Kernel\Transfer\TransferInterface>
@@ -281,7 +284,7 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
      */
     protected function assertCollectionPropertyIsSet($property): void
     {
-        /** @var \ArrayObject $collection */
+        /** @var \ArrayObject<int, mixed> $collection */
         $collection = $this->$property;
         if ($collection->count() === 0) {
             throw new RequiredTransferPropertyException(sprintf(
@@ -415,7 +418,7 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
      *
      * @return bool
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->transferMetadata[$offset]);
     }
@@ -437,7 +440,7 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         $this->$offset = $value;
     }
@@ -449,7 +452,7 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         throw new ArrayAccessReadyOnlyException('Transfer object as an array is available only for read');
     }

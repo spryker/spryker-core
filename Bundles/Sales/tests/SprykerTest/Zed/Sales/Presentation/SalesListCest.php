@@ -24,6 +24,8 @@ use SprykerTest\Zed\Sales\SalesPresentationTester;
 class SalesListCest
 {
     /**
+     * @skip Requires refactoring
+     *
      * @param \SprykerTest\Zed\Sales\SalesPresentationTester $i
      * @param \SprykerTest\Zed\Sales\PageObject\SalesListPage $salesListPage
      *
@@ -36,6 +38,8 @@ class SalesListCest
     }
 
     /**
+     * @skip Requires refactoring
+     *
      * @param \SprykerTest\Zed\Sales\SalesPresentationTester $i
      * @param \SprykerTest\Zed\Sales\PageObject\SalesListPage $salesListPage
      *
@@ -53,6 +57,8 @@ class SalesListCest
     }
 
     /**
+     * @skip Requires refactoring
+     *
      * @param \SprykerTest\Zed\Sales\SalesPresentationTester $i
      * @param \SprykerTest\Zed\Sales\PageObject\SalesListPage $salesListPage
      *

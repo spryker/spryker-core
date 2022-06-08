@@ -1,0 +1,685 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "version": "1.0.0",
+        "contact": {
+            "name": "Spryker",
+            "url": "https:\/\/support.spryker.com\/",
+            "email": "support@spryker.com"
+        },
+        "title": "Spryker API",
+        "license": {
+            "name": "MIT"
+        }
+    },
+    "tags": [
+        {
+            "name": "tests"
+        }
+    ],
+    "servers": [
+        {
+            "url": "http:\/\/glue-storefront.de.spryker.local"
+        }
+    ],
+    "paths": {
+        "\/tests\/{testId}": {
+            "get": {
+                "operationId": "get-tests",
+                "summary": "Retrieves test by id.",
+                "parameters": [
+                    {
+                        "$ref": "#\/components\/parameters\/acceptLanguage"
+                    },
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "description": "Description.",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "include",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "example": [
+                                "countries",
+                                "regions"
+                            ]
+                        }
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/Page"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/Fields"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/Filter"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Expected response to a valid request.",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/TestsRestResponse"
+                                }
+                            },
+                            "application\/vnd.api+json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/TestsRestResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Test not found.",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/TestsRestResponse"
+                                }
+                            },
+                            "application\/vnd.api+json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/JsonApiErrorMessage"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Expected response to a bad request.",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/TestsRestResponse"
+                                }
+                            },
+                            "application\/vnd.api+json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/JsonApiErrorMessage"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "operationId": "update-tests",
+                "summary": "Edits stores resource by id.",
+                "parameters": [
+                    {
+                        "$ref": "#\/components\/parameters\/acceptLanguage"
+                    },
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "description": "Description.",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "include",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "example": [
+                                "countries",
+                                "regions"
+                            ]
+                        }
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/Page"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/Fields"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/Filter"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Expected response to a valid request.",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/TestsRestResponse"
+                                }
+                            },
+                            "application\/vnd.api+json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/TestsRestResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Test not found.",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/TestsRestResponse"
+                                }
+                            },
+                            "application\/vnd.api+json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/JsonApiErrorMessage"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Expected response to a bad request.",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/TestsRestResponse"
+                                }
+                            },
+                            "application\/vnd.api+json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/JsonApiErrorMessage"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "description": "Expected request body.",
+                    "required": true,
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/TestsRestRequest"
+                            }
+                        },
+                        "application\/vnd.api+json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/TestsRestRequest"
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "delete-tests",
+                "summary": "Deletes tests resource.",
+                "parameters": [
+                    {
+                        "$ref": "#\/components\/parameters\/acceptLanguage"
+                    },
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "description": "Description.",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "include",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "example": [
+                                "countries",
+                                "regions"
+                            ]
+                        }
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/Page"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/Fields"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/Filter"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Expected response to a valid request.",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/TestsRestResponse"
+                                }
+                            },
+                            "application\/vnd.api+json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/TestsRestResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Test not found.",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/TestsRestResponse"
+                                }
+                            },
+                            "application\/vnd.api+json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/JsonApiErrorMessage"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Expected response to a bad request.",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/TestsRestResponse"
+                                }
+                            },
+                            "application\/vnd.api+json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/JsonApiErrorMessage"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/tests": {
+            "get": {
+                "operationId": "get-collection-of-tests",
+                "summary": "Retrieves collection of stores.",
+                "parameters": [
+                    {
+                        "$ref": "#\/components\/parameters\/acceptLanguage"
+                    },
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "description": "Description.",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "include",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "example": [
+                                "countries",
+                                "regions"
+                            ]
+                        }
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/Page"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/Fields"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/Filter"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Expected response to a valid request.",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/TestsRestResponse"
+                                }
+                            },
+                            "application\/vnd.api+json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/TestsCollectionRestResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Expected response to a bad request.",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/TestsRestResponse"
+                                }
+                            },
+                            "application\/vnd.api+json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/JsonApiErrorMessage"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "operationId": "create-tests",
+                "summary": "Creates store resource.",
+                "parameters": [
+                    {
+                        "$ref": "#\/components\/parameters\/acceptLanguage"
+                    },
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "description": "Description.",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "include",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            },
+                            "example": [
+                                "countries",
+                                "regions"
+                            ]
+                        }
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/Page"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/Fields"
+                    },
+                    {
+                        "$ref": "#\/components\/parameters\/Filter"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Expected response to a valid request.",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/TestsRestResponse"
+                                }
+                            },
+                            "application\/vnd.api+json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/TestsRestResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Test not found.",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/TestsRestResponse"
+                                }
+                            },
+                            "application\/vnd.api+json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/JsonApiErrorMessage"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Expected response to a bad request.",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/TestsRestResponse"
+                                }
+                            },
+                            "application\/vnd.api+json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/JsonApiErrorMessage"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "description": "Expected request body.",
+                    "required": true,
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/TestsRestRequest"
+                            }
+                        },
+                        "application\/vnd.api+json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/TestsRestRequest"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "BearerAuth": {
+                "type": "http",
+                "scheme": "bearer"
+            }
+        },
+        "schemas": {
+            "RestErrorMessage": {
+                "properties": {
+                    "code": {
+                        "type": "string"
+                    },
+                    "detail": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "TestsRestAttributes": {
+                "properties": {
+                    "timeZone": {
+                        "type": "string"
+                    },
+                    "defaultCurrency": {
+                        "type": "string"
+                    }
+                }
+            },
+            "TestsRestCollectionResponse": {
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#\/components\/schemas\/TestsRestCollectionResponseData"
+                        }
+                    }
+                }
+            },
+            "StoresRestCollectionResponseData": {
+                "properties": {
+                    "type": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string"
+                    },
+                    "attributes": {
+                        "$ref": "#\/components\/schemas\/TestsRestAttributes"
+                    }
+                }
+            },
+            "TestsRestRequest": {
+                "properties": {
+                    "data": {
+                        "$ref": "#\/components\/schemas\/TestsRestRequestData"
+                    }
+                }
+            },
+            "TestsRestRequestAttributes": {
+                "properties": {
+                    "defaultCurrency": {
+                        "type": "string"
+                    }
+                }
+            },
+            "TestsRestRequestData": {
+                "properties": {
+                    "type": {
+                        "type": "string"
+                    },
+                    "attributes": {
+                        "$ref": "#\/components\/schemas\/TestsRestRequestAttributes"
+                    }
+                }
+            },
+            "TestsRestResponse": {
+                "properties": {
+                    "data": {
+                        "$ref": "#\/components\/schemas\/TestsRestResponseData"
+                    }
+                }
+            },
+            "StoresRestResponseData": {
+                "properties": {
+                    "type": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string"
+                    }
+                }
+            },
+            "JsonApiErrorMessage": {
+                "type": "object",
+                "properties": {
+                    "errors": {
+                        "type": "object",
+                        "properties": {
+                            "status": {
+                                "type": "integer"
+                            },
+                            "code": {
+                                "type": "string"
+                            },
+                            "message": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "parameters": {
+            "acceptLanguage": {
+                "name": "Accept-Language",
+                "in": "header",
+                "description": "Locale value relevant for the store.",
+                "schema": {
+                    "type": "string"
+                },
+                "required": false
+            },
+            "Page": {
+                "name": "page",
+                "in": "query",
+                "required": false,
+                "style": "deepObject",
+                "explode": true,
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "offset": {
+                            "type": "integer",
+                            "description": "The number of items to skip before starting to collect the result set."
+                        },
+                        "limit": {
+                            "type": "integer",
+                            "description": "The numbers of items to return."
+                        }
+                    },
+                    "example": {
+                        "offset": 1,
+                        "limit": 10
+                    }
+                }
+            },
+            "Fields": {
+                "name": "fields",
+                "in": "query",
+                "required": false,
+                "style": "deepObject",
+                "explode": true,
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "resourceName": {
+                            "type": "array",
+                            "description": "The name of resource.",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "example": {
+                        "people": "name,last-name"
+                    }
+                }
+            },
+            "Filter": {
+                "name": "filter",
+                "in": "query",
+                "required": false,
+                "style": "deepObject",
+                "explode": true,
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "resource.propertyName": {
+                            "description": "test"
+                        }
+                    },
+                    "example": {
+                        "wishlists.name": "Test",
+                        "wishlists.quantity": 1
+                    }
+                }
+            }
+        }
+    }
+}

@@ -19,7 +19,7 @@ class CmsStorageClient extends AbstractClient implements CmsStorageClientInterfa
      *
      * @api
      *
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \Generated\Shared\Transfer\LocaleCmsPageDataTransfer
      */

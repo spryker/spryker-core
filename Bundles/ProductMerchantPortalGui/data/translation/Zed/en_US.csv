@@ -16,6 +16,10 @@ waiting_for_approval,"Waiting for Approval"
 approved,Approved
 denied,Denied
 draft,Draft
+approval_status_action.approved,Approve
+approval_status_action.denied,Deny
+approval_status_action.draft,"Back to Draft"
+approval_status_action.waiting_for_approval,"Send for Approval"
 "Product successfully created!","Product successfully created!"
 "Please resolve all errors.","Please resolve all errors."
 Price,Price

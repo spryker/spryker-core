@@ -11,7 +11,7 @@ interface SecurityBuilderInterface
 {
     /**
      * @param string $firewallName
-     * @param array $configuration
+     * @param array<string, mixed> $configuration
      *
      * @return $this
      */
@@ -19,7 +19,7 @@ interface SecurityBuilderInterface
 
     /**
      * @param string $firewallName
-     * @param array $configuration
+     * @param array<string, mixed> $configuration
      *
      * @return $this
      */

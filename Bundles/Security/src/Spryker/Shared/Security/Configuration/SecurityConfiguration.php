@@ -67,7 +67,7 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
 
     /**
      * @param string $firewallName
-     * @param array $configuration
+     * @param array<string, mixed> $configuration
      *
      * @return $this
      */
@@ -82,7 +82,7 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
 
     /**
      * @param string $firewallName
-     * @param array $configuration
+     * @param array<string, mixed> $configuration
      *
      * @return $this
      */

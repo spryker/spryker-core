@@ -12,7 +12,7 @@ use Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface;
 use Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface;
 
 /**
- * @method \Spryker\Zed\Company\Business\CompanyFacadeInterface getFacade()
+ * @method \Spryker\Zed\CompanyMailConnector\Business\CompanyMailConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\CompanyMailConnector\Communication\CompanyMailConnectorCommunicationFactory getFactory()
  */
 class CompanyStatusMailTypePlugin extends AbstractPlugin implements MailTypePluginInterface

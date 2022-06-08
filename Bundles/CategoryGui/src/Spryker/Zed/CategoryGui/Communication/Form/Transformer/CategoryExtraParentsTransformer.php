@@ -25,7 +25,7 @@ class CategoryExtraParentsTransformer implements DataTransformerInterface
     /**
      * @param array<\Generated\Shared\Transfer\NodeTransfer> $value
      *
-     * @return \ArrayObject
+     * @return \ArrayObject<int|string, \Generated\Shared\Transfer\NodeTransfer>
      */
     public function reverseTransform($value)
     {

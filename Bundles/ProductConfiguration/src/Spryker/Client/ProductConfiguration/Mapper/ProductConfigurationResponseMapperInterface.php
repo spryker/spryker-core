@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ProductConfiguratorResponseTransfer;
 interface ProductConfigurationResponseMapperInterface
 {
     /**
-     * @param array $configuratorResponseData
+     * @param array<string, mixed> $configuratorResponseData
      * @param \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer

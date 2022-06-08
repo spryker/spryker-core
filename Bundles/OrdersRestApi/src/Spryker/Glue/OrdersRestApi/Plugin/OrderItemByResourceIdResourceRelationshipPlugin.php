@@ -13,6 +13,10 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 use Spryker\Glue\OrdersRestApi\OrdersRestApiConfig;
 
 /**
+ * @Glue({
+ *     "resourceAttributesClassName": "\\Generated\\Shared\\Transfer\\RestOrderItemsAttributesTransfer"
+ * })
+ *
  * @method \Spryker\Glue\OrdersRestApi\OrdersRestApiFactory getFactory()
  */
 class OrderItemByResourceIdResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface

@@ -25,7 +25,7 @@ class ProductViewVariantExpanderPlugin extends AbstractPlugin implements Product
      * - Expands the transfer object with product concrete ID using the values of `selectedAttributes`.
      *
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     * @param array $productData
+     * @param array<string, mixed> $productData
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer

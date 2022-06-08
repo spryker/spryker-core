@@ -184,7 +184,7 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
      *
      * @param int $idPage
      * @param string $placeholder
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return string
      */

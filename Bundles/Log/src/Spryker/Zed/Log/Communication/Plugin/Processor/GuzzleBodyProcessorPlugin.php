@@ -22,7 +22,7 @@ class GuzzleBodyProcessorPlugin extends AbstractPlugin implements LogProcessorPl
      *
      * @api
      *
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */

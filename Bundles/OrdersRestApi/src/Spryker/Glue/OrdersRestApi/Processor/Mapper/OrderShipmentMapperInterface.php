@@ -14,7 +14,7 @@ interface OrderShipmentMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     * @param \ArrayObject $restOrderShipmentTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\RestOrderShipmentTransfer> $restOrderShipmentTransfers
      *
      * @return \ArrayObject<int, \Generated\Shared\Transfer\RestOrderShipmentTransfer>
      */

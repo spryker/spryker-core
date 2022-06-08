@@ -19,7 +19,7 @@ class SynchronizationFacade extends AbstractFacade implements SynchronizationFac
      *
      * @api
      *
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param string $queueName
      *
      * @return void
@@ -34,7 +34,7 @@ class SynchronizationFacade extends AbstractFacade implements SynchronizationFac
      *
      * @api
      *
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param string $queueName
      *
      * @return void
@@ -49,7 +49,7 @@ class SynchronizationFacade extends AbstractFacade implements SynchronizationFac
      *
      * @api
      *
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param string $queueName
      *
      * @return void
@@ -64,7 +64,7 @@ class SynchronizationFacade extends AbstractFacade implements SynchronizationFac
      *
      * @api
      *
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param string $queueName
      *
      * @return void

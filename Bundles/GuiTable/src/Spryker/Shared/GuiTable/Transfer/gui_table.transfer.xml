@@ -35,6 +35,7 @@
         <property name="typeChildren" type="string"/>
         <property name="typeOptions" type="array" singular="typeOption" associative="true"/>
         <property name="typeOptionsMappings" type="array" singular="typeOptionMapping" associative="true"/>
+        <property name="displayKey" type="string"/>
     </transfer>
 
     <transfer name="GuiTableTitleConfiguration">

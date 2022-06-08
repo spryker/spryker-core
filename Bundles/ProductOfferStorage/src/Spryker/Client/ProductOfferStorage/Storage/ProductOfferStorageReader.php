@@ -128,7 +128,6 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
                 ->setProductConcreteSkus($productOfferStorageCriteriaTransfer->getProductConcreteSkus()),
         );
 
-        /** @var \ArrayObject $productOfferStorageTransfers */
         $productOfferStorageTransfers = $productOfferStorageCollectionTransfer->getProductOffers();
         $productOfferStorageTransfers = $productOfferStorageTransfers->getArrayCopy();
 
@@ -151,7 +150,6 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
                 ->setProductConcreteSkus($productOfferStorageCriteriaTransfer->getProductConcreteSkus()),
         );
 
-        /** @var \ArrayObject $productOfferStorageTransfers */
         $productOfferStorageTransfers = $productOfferStorageCollectionTransfer->getProductOffers();
         $productOfferStorageTransfers = $productOfferStorageTransfers->getArrayCopy();
 
@@ -274,7 +272,6 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
     protected function expandProductOffersWithDefaultProductOffer(
         ProductOfferStorageCollectionTransfer $productOfferStorageCollectionTransfer
     ): ProductOfferStorageCollectionTransfer {
-        /** @var \ArrayObject $productOfferStorageTransfers */
         $productOfferStorageTransfers = $productOfferStorageCollectionTransfer->getProductOffers();
         if (!$productOfferStorageTransfers->count()) {
             return $productOfferStorageCollectionTransfer;

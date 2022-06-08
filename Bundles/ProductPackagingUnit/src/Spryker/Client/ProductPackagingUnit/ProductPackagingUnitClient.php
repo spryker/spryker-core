@@ -22,7 +22,7 @@ class ProductPackagingUnitClient extends AbstractClient implements ProductPackag
      * @api
      *
      * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return \Generated\Shared\Transfer\PersistentCartChangeTransfer
      */
@@ -41,7 +41,7 @@ class ProductPackagingUnitClient extends AbstractClient implements ProductPackag
      * @api
      *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */

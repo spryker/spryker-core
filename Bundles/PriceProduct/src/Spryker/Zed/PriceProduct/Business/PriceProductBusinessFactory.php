@@ -11,6 +11,8 @@ use Spryker\Service\PriceProduct\PriceProductServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\PriceProduct\Business\Currency\CurrencyReaderInterface;
 use Spryker\Zed\PriceProduct\Business\Currency\CurrencyReaderWithCache;
+use Spryker\Zed\PriceProduct\Business\Deleter\PriceProductDeleter;
+use Spryker\Zed\PriceProduct\Business\Deleter\PriceProductDeleterInterface;
 use Spryker\Zed\PriceProduct\Business\Expander\Wishlist\PriceProductWishlistItemExpander;
 use Spryker\Zed\PriceProduct\Business\Expander\Wishlist\PriceProductWishlistItemExpanderInterface;
 use Spryker\Zed\PriceProduct\Business\Internal\Install;
@@ -57,6 +59,7 @@ use Spryker\Zed\PriceProduct\Business\PriceProduct\PriceProductDefaultRemoverInt
 use Spryker\Zed\PriceProduct\Business\PriceProduct\PriceProductRemover;
 use Spryker\Zed\PriceProduct\Business\PriceProduct\PriceProductRemoverInterface;
 use Spryker\Zed\PriceProduct\Business\Validator\Constraint\ValidCurrencyAssignedToStoreConstraint;
+use Spryker\Zed\PriceProduct\Business\Validator\Constraint\ValidUniqueStoreCurrencyCollectionConstraint;
 use Spryker\Zed\PriceProduct\Business\Validator\Constraint\ValidUniqueStoreCurrencyGrossNetConstraint;
 use Spryker\Zed\PriceProduct\Business\Validator\ConstraintProvider\PriceProductConstraintProvider;
 use Spryker\Zed\PriceProduct\Business\Validator\ConstraintProvider\PriceProductConstraintProviderInterface;
@@ -182,6 +185,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
             $this->getPriceProductDimensionExpanderStrategyPlugins(),
             $this->getConfig(),
             $this->getPriceProductService(),
+            $this->getCurrencyFacade(),
         );
     }
 
@@ -232,7 +236,6 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     {
         return new PriceProductConcreteReader(
             $this->getQueryContainer(),
-            $this->createPriceProductMapper(),
             $this->getStoreFacade(),
             $this->getRepository(),
             $this->getPriceProductService(),
@@ -374,6 +377,25 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\PriceProduct\Business\Deleter\PriceProductDeleterInterface
+     */
+    public function createPriceProductDeleter(): PriceProductDeleterInterface
+    {
+        return new PriceProductDeleter(
+            $this->getEntityManager(),
+            $this->getPriceProductCollectionDeletePlugins(),
+        );
+    }
+
+    /**
+     * @return array<\Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductCollectionDeletePluginInterface>
+     */
+    public function getPriceProductCollectionDeletePlugins(): array
+    {
+        return $this->getProvidedDependency(PriceProductDependencyProvider::PLUGINS_PRICE_PRODUCT_COLLECTION_DELETE);
+    }
+
+    /**
      * @return \Spryker\Zed\PriceProduct\Business\Validator\PriceProductValidatorInterface
      */
     public function createPriceProductValidator(): PriceProductValidatorInterface
@@ -398,10 +420,23 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
      */
     public function createPriceProductConstraintProvider(): PriceProductConstraintProviderInterface
     {
-        return new PriceProductConstraintProvider([
+        return new PriceProductConstraintProvider(
+            [
             $this->createValidUniqueStoreCurrencyGrossNetConstraint(),
             $this->createValidCurrencyAssignedToStoreConstraint(),
-        ]);
+            ],
+            $this->createValidUniqueStoreCurrencyCollectionConstraint(),
+        );
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraint
+     */
+    public function createValidUniqueStoreCurrencyCollectionConstraint(): Constraint
+    {
+        return new ValidUniqueStoreCurrencyCollectionConstraint(
+            $this->getPriceProductService(),
+        );
     }
 
     /**

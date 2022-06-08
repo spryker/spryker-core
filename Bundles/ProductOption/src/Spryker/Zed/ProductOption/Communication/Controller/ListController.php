@@ -11,6 +11,7 @@ namespace Spryker\Zed\ProductOption\Communication\Controller;
  * @method \Spryker\Zed\ProductOption\Communication\ProductOptionCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductOption\Business\ProductOptionFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductOption\Persistence\ProductOptionRepositoryInterface getRepository()
  */
 class ListController extends IndexController
 {

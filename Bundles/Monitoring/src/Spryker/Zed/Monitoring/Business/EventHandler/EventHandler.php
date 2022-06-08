@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Monitoring\Business\EventHandler;
 
+use Generated\Shared\Transfer\MonitoringTransactionEventTransfer;
 use Spryker\Service\Monitoring\MonitoringServiceInterface;
 use Spryker\Zed\Monitoring\Dependency\Service\MonitoringToUtilNetworkServiceInterface;
 use Symfony\Component\Console\Event\ConsoleTerminateEvent;
@@ -34,15 +35,23 @@ class EventHandler implements EventHandlerInterface
     protected $utilNetworkService;
 
     /**
+     * @var array<\Spryker\Zed\Monitoring\Business\MonitoringTransactionNamingStrategy\MonitoringTransactionNamingStrategyInterface>
+     */
+    protected array $monitoringTransactionNamingStrategies = [];
+
+    /**
      * @param \Spryker\Service\Monitoring\MonitoringServiceInterface $monitoringService
      * @param \Spryker\Zed\Monitoring\Dependency\Service\MonitoringToUtilNetworkServiceInterface $utilNetworkService
+     * @param array<\Spryker\Zed\Monitoring\Business\MonitoringTransactionNamingStrategy\MonitoringTransactionNamingStrategyInterface> $monitoringTransactionNamingStrategies
      */
     public function __construct(
         MonitoringServiceInterface $monitoringService,
-        MonitoringToUtilNetworkServiceInterface $utilNetworkService
+        MonitoringToUtilNetworkServiceInterface $utilNetworkService,
+        array $monitoringTransactionNamingStrategies = []
     ) {
         $this->monitoringService = $monitoringService;
         $this->utilNetworkService = $utilNetworkService;
+        $this->monitoringTransactionNamingStrategies = $monitoringTransactionNamingStrategies;
     }
 
     /**
@@ -67,7 +76,30 @@ class EventHandler implements EventHandlerInterface
      */
     protected function getTransactionName(ConsoleTerminateEvent $event): string
     {
+        $monitoringTransactionEventTransfer = $this->mapConsoleTerminateEventToMonitoringTransactionEventTransfer($event);
+        foreach ($this->monitoringTransactionNamingStrategies as $monitoringTransactionNamingStrategy) {
+            if ($monitoringTransactionNamingStrategy->isApplicable($monitoringTransactionEventTransfer)) {
+                return $monitoringTransactionNamingStrategy->getMonitoringTransactionName($monitoringTransactionEventTransfer);
+            }
+        }
+
         return static::TRANSACTION_NAME_PREFIX . $event->getCommand()->getName();
+    }
+
+    /**
+     * @param \Symfony\Component\Console\Event\ConsoleTerminateEvent $event
+     *
+     * @return \Generated\Shared\Transfer\MonitoringTransactionEventTransfer
+     */
+    protected function mapConsoleTerminateEventToMonitoringTransactionEventTransfer(
+        ConsoleTerminateEvent $event
+    ): MonitoringTransactionEventTransfer {
+        $monitoringTransactionEventTransfer = new MonitoringTransactionEventTransfer();
+        $monitoringTransactionEventTransfer->setCommandName($event->getCommand()->getName());
+        $monitoringTransactionEventTransfer->setArguments($event->getInput()->getArguments());
+        $monitoringTransactionEventTransfer->setTransactionNamePrefix(trim(static::TRANSACTION_NAME_PREFIX));
+
+        return $monitoringTransactionEventTransfer;
     }
 
     /**

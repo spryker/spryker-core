@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\GlueRestApiConvention;
 
+use Spryker\Glue\GlueRestApiConvention\Dependency\External\GlueRestApiConventionToInflectorAdapter;
 use Spryker\Glue\GlueRestApiConvention\Dependency\Service\GlueRestApiConventionToUtilEncodingServiceBridge;
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
@@ -47,6 +48,11 @@ class GlueRestApiConventionDependencyProvider extends AbstractBundleDependencyPr
     public const PLUGINS_RESPONSE_FORMATTER = 'PLUGINS_RESPONSE_FORMATTER';
 
     /**
+     * @var string
+     */
+    public const INFLECTOR = 'INFLECTOR';
+
+    /**
      * @param \Spryker\Glue\Kernel\Container $container
      *
      * @return \Spryker\Glue\Kernel\Container
@@ -60,6 +66,7 @@ class GlueRestApiConventionDependencyProvider extends AbstractBundleDependencyPr
         $container = $this->addRequestValidatorPlugins($container);
         $container = $this->addRequestAfterRoutingValidatorPlugins($container);
         $container = $this->addResponseFormatterPlugins($container);
+        $container = $this->addInflector($container);
 
         return $container;
     }
@@ -175,6 +182,20 @@ class GlueRestApiConventionDependencyProvider extends AbstractBundleDependencyPr
     {
         $container->set(static::PLUGINS_RESPONSE_FORMATTER, function (Container $container) {
             return $this->getResponseFormatterPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addInflector(Container $container): Container
+    {
+        $container->set(static::INFLECTOR, function () {
+            return new GlueRestApiConventionToInflectorAdapter();
         });
 
         return $container;

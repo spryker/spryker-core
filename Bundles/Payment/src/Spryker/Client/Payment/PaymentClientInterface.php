@@ -7,10 +7,30 @@
 
 namespace Spryker\Client\Payment;
 
+use Generated\Shared\Transfer\PaymentAuthorizeRequestTransfer;
+use Generated\Shared\Transfer\PaymentAuthorizeResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface PaymentClientInterface
 {
+    /**
+     * Specification:
+     * - Makes a request from given PaymentAuthorizeRequestTransfer.
+     * - Adds `Authorization` header to request using `PaymentAuthorizeRequest.authorizaton` if exists.
+     * - Adds `X-Store-Reference` header to request using `PaymentAuthorizeRequest.storeReference` if exists.
+     * - Sends a request to a foreign payment service.
+     * - Returns a PaymentAuthorizeResponseTransfer with the received data.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PaymentAuthorizeRequestTransfer $paymentAuthorizeRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\PaymentAuthorizeResponseTransfer
+     */
+    public function authorizeForeignPayment(
+        PaymentAuthorizeRequestTransfer $paymentAuthorizeRequestTransfer
+    ): PaymentAuthorizeResponseTransfer;
+
     /**
      * Specification:
      * - Requests available payment methods from Zed

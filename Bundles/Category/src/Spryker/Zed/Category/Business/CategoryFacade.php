@@ -280,7 +280,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     public function getCategoryNodesWithRelativeNodes(
         CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
     ): NodeCollectionTransfer {
-        return $this->getRepository()
+        return $this->getFactory()
+            ->createCategoryNodeReader()
             ->getCategoryNodesWithRelativeNodes($categoryNodeCriteriaTransfer);
     }
 

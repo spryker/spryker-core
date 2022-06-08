@@ -19,6 +19,9 @@ use Symfony\Component\Validator\Constraints\Regex;
 /**
  * @method \Spryker\Zed\DiscountPromotion\Communication\DiscountPromotionCommunicationFactory getFactory()
  * @method \Spryker\Zed\DiscountPromotion\Persistence\DiscountPromotionRepositoryInterface getRepository()
+ * @method \Spryker\Zed\DiscountPromotion\Persistence\DiscountPromotionQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\DiscountPromotion\DiscountPromotionConfig getConfig()
+ * @method \Spryker\Zed\DiscountPromotion\Business\DiscountPromotionFacadeInterface getFacade()
  */
 class DiscountPromotionFormType extends AbstractDiscountExtensionSubFormType
 {

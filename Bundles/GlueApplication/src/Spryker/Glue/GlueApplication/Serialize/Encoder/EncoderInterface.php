@@ -13,7 +13,7 @@ namespace Spryker\Glue\GlueApplication\Serialize\Encoder;
 interface EncoderInterface
 {
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return string
      */

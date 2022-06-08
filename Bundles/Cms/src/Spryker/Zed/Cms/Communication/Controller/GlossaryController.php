@@ -230,7 +230,7 @@ class GlossaryController extends AbstractController
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \Generated\Shared\Transfer\PageKeyMappingTransfer
      */
@@ -252,7 +252,7 @@ class GlossaryController extends AbstractController
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return void
@@ -371,7 +371,7 @@ class GlossaryController extends AbstractController
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Generated\Shared\Transfer\KeyTranslationTransfer

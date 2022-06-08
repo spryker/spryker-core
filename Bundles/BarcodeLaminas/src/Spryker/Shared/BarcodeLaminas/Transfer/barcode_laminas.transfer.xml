@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="BarcodeResponse">
+        <property name="code" type="string"/>
+        <property name="encoding" type="string"/>
+    </transfer>
+
+    <transfer name="BarcodeRequest">
+        <property name="text" type="string"/>
+        <property name="barcodeType" type="string"/>
+        <property name="renderer" type="string"/>
+        <property name="barcodeOptions" type="array" singular="barcodeOption"/>
+    </transfer>
+
+</transfers>

@@ -45,6 +45,8 @@ class SalesConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @example The format of returned array is:
      * [
      *    'PAYMENT_METHOD_1' => 'StateMachineProcess_1',
@@ -53,7 +55,7 @@ class SalesConfig extends AbstractBundleConfig
      *
      * @return array<string, string>
      */
-    protected function getPaymentMethodStatemachineMapping()
+    public function getPaymentMethodStatemachineMapping()
     {
         return $this->get(SalesConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING, []);
     }
@@ -106,6 +108,8 @@ class SalesConfig extends AbstractBundleConfig
      * This method determines state machine process from the given quote transfer and order item.
      *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\Sales\Business\StateMachineResolver\OrderStateMachineResolver::resolve()} instead.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
@@ -213,5 +217,17 @@ class SalesConfig extends AbstractBundleConfig
     protected function resolveStoreName(?string $storeName): string
     {
         return $storeName ?? Store::getInstance()->getStoreName();
+    }
+
+    /**
+     * @api
+     *
+     * @deprecated Will be removed without replacement.
+     *
+     * @return bool
+     */
+    public function isOldDeterminationForOrderItemProcessEnabled(): bool
+    {
+        return true;
     }
 }

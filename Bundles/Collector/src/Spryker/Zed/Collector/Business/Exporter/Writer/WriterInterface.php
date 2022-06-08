@@ -10,14 +10,14 @@ namespace Spryker\Zed\Collector\Business\Exporter\Writer;
 interface WriterInterface
 {
     /**
-     * @param array $dataSet
+     * @param array<string, mixed> $dataSet
      *
      * @return bool
      */
     public function write(array $dataSet);
 
     /**
-     * @param array $dataSet
+     * @param array<string, mixed> $dataSet
      *
      * @return bool
      */

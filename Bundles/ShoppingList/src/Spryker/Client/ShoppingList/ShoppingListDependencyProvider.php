@@ -14,6 +14,7 @@ use Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToCustomerClientBr
 use Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToMessengerClientBridge;
 use Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToPriceProductClientBridge;
 use Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToProductClientBridge;
+use Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToSessionClientBridge;
 use Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToZedRequestClientBridge;
 
 class ShoppingListDependencyProvider extends AbstractDependencyProvider
@@ -51,6 +52,11 @@ class ShoppingListDependencyProvider extends AbstractDependencyProvider
     /**
      * @var string
      */
+    public const CLIENT_SESSION = 'CLIENT_SESSION';
+
+    /**
+     * @var string
+     */
     public const PLUGINS_SHOPPING_LIST_ITEM_TO_ITEM_MAPPER = 'PLUGINS_SHOPPING_LIST_ITEM_TO_ITEM_MAPPER';
 
     /**
@@ -76,6 +82,7 @@ class ShoppingListDependencyProvider extends AbstractDependencyProvider
         $container = $this->addCustomerClient($container);
         $container = $this->addPriceProductClient($container);
         $container = $this->addMessengerClient($container);
+        $container = $this->addSessionClient($container);
 
         $container = $this->addShoppingListItemToItemMapperPlugins($container);
         $container = $this->addQuoteItemToItemMapperPlugins($container);
@@ -163,6 +170,20 @@ class ShoppingListDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::CLIENT_MESSENGER, function (Container $container) {
             return new ShoppingListToMessengerClientBridge($container->getLocator()->messenger()->client());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addSessionClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_SESSION, function (Container $container) {
+            return new ShoppingListToSessionClientBridge($container->getLocator()->session()->client());
         });
 
         return $container;

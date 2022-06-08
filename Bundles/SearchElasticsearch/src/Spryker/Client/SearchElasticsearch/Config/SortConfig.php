@@ -81,7 +81,7 @@ class SortConfig implements SortConfigInterface
     }
 
     /**
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return string|null
      */

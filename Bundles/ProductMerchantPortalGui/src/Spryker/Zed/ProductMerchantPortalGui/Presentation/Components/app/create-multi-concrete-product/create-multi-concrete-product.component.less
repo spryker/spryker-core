@@ -1,13 +1,25 @@
 @import '~@spryker/styles/src/lib/themes/default/variables/index.less';
 
-@create-multi-concrete-product-padding: 30px;
-@create-multi-concrete-product-actions-margin: 0 -5px;
-@create-multi-concrete-product-action-padding: 0 5px;
-@create-multi-concrete-product-content-border-radius: @border-radius-base;
-@create-multi-concrete-product-preview-title-margin: 30px 0 15px;
-@create-multi-concrete-product-header-padding: 17px 30px;
-@create-multi-concrete-product-header-title-line-height: 2;
-@create-multi-concrete-product-header-sub-title-letter-spacing-base: 0.11px;
+@create-multi-concrete-product-padding: var(--spy-create-multi-concrete-product-padding, 30px);
+@create-multi-concrete-product-actions-margin: var(--spy-create-multi-concrete-product-actions-margin, 0 -5px);
+@create-multi-concrete-product-action-padding: var(--spy-create-multi-concrete-product-action-padding, 0 5px);
+@create-multi-concrete-product-content-border-radius: var(
+    --spy-create-multi-concrete-product-content-border-radius,
+    @border-radius-base
+);
+@create-multi-concrete-product-preview-title-margin: var(
+    --spy-create-multi-concrete-product-preview-title-margin,
+    30px 0 15px
+);
+@create-multi-concrete-product-header-padding: var(--spy-create-multi-concrete-product-header-padding, 17px 30px);
+@create-multi-concrete-product-header-title-line-height: var(
+    --spy-create-multi-concrete-product-header-title-line-height,
+    2
+);
+@create-multi-concrete-product-header-sub-title-letter-spacing-base: var(
+    --spy-create-multi-concrete-product-header-sub-title-letter-spacing-base,
+    0.11px
+);
 
 .@{ajax-form-prefix-cls}-container {
     overflow-y: auto;

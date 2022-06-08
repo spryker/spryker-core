@@ -45,7 +45,7 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param array $dataSet
+     * @param array<string, mixed> $dataSet
      * @param string|null $typeName
      * @param string|null $indexName
      *
@@ -92,7 +92,7 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param array $dataSet
+     * @param array<string, mixed> $dataSet
      * @param string|null $typeName
      * @param string|null $indexName
      *
@@ -158,7 +158,7 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param array $dataSet
+     * @param array<string, mixed> $dataSet
      *
      * @throws \Spryker\Client\Search\Exception\InvalidDataSetException
      *

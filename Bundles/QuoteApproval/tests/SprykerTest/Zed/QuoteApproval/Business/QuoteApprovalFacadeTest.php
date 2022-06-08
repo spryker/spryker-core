@@ -496,7 +496,7 @@ class QuoteApprovalFacadeTest extends Unit
     }
 
     /**
-     * @param array $configuration
+     * @param array<string, mixed> $configuration
      *
      * @return void
      */

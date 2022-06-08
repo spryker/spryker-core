@@ -19,7 +19,7 @@ interface ProductPackagingUnitClientInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return \Generated\Shared\Transfer\PersistentCartChangeTransfer
      */
@@ -35,7 +35,7 @@ interface ProductPackagingUnitClientInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */

@@ -204,7 +204,7 @@ abstract class AbstractController
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */
@@ -214,7 +214,7 @@ abstract class AbstractController
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param array<string> $widgetPlugins
      * @param string|null $template
      *

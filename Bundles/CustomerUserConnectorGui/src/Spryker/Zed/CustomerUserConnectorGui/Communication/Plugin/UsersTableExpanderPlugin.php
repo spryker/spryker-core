@@ -9,6 +9,8 @@ namespace Spryker\Zed\CustomerUserConnectorGui\Communication\Plugin;
 
 /**
  * @deprecated Use {@link \Spryker\Zed\CustomerUserConnectorGui\Communication\Plugin\UserTableActionExpanderPlugin} instead.
+ * @method \Spryker\Zed\CustomerUserConnectorGui\CustomerUserConnectorGuiConfig getConfig()
+ * @method \Spryker\Zed\CustomerUserConnectorGui\Communication\CustomerUserConnectorGuiCommunicationFactory getFactory()
  */
 class UsersTableExpanderPlugin extends UserTableActionExpanderPlugin
 {

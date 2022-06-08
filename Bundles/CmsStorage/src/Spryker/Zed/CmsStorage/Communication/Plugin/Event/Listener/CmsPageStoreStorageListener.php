@@ -10,7 +10,6 @@ namespace Spryker\Zed\CmsStorage\Communication\Plugin\Event\Listener;
 use Orm\Zed\Cms\Persistence\Map\SpyCmsPageStoreTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @method \Spryker\Zed\CmsStorage\CmsStorageConfig getConfig()
@@ -20,8 +19,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  */
 class CmsPageStoreStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
-    use DatabaseTransactionHandlerTrait;
-
     /**
      * {@inheritDoc}
      *  - Saves new store relation on cms page store table changes.
@@ -35,8 +32,6 @@ class CmsPageStoreStorageListener extends AbstractPlugin implements EventBulkHan
      */
     public function handleBulk(array $eventEntityTransfers, $eventName)
     {
-        $this->preventTransaction();
-
         $cmsPageIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferForeignKeys(
             $eventEntityTransfers,
             SpyCmsPageStoreTableMap::COL_FK_CMS_PAGE,

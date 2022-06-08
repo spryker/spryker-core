@@ -1,0 +1,5 @@
+parameters:
+    level: 8
+    reportUnmatchedIgnoredErrors: false
+    ignoreErrors:
+        - '#^Call to static method [A-Za-z]+\(\) on an unknown class Doctrine\\Common\\Inflector\\Inflector\.$#'

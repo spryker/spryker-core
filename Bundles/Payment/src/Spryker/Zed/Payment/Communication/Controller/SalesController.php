@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @method \Spryker\Zed\Payment\Persistence\PaymentQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Payment\Business\PaymentFacadeInterface getFacade()
  * @method \Spryker\Zed\Payment\Persistence\PaymentRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Payment\Communication\PaymentCommunicationFactory getFactory()
  */
 class SalesController extends AbstractController
 {

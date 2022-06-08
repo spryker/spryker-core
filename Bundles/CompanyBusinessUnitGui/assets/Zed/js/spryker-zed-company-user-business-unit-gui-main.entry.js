@@ -3,6 +3,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
+/**
+ * @deprecated not used any more
+ */
+
 'use strict';
 
 require('./modules/company-user/main');

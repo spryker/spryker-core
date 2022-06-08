@@ -46,7 +46,7 @@ class SessionStorage implements SessionStorageInterface
     /**
      * {@inheritDoc}
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions()
     {

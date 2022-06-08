@@ -49,7 +49,7 @@ class ElasticsearchUpdateWriter implements WriterInterface, ConfigurableSearchWr
     }
 
     /**
-     * @param array $dataSet
+     * @param array<string, mixed> $dataSet
      *
      * @return bool
      */
@@ -62,7 +62,7 @@ class ElasticsearchUpdateWriter implements WriterInterface, ConfigurableSearchWr
     }
 
     /**
-     * @param array $dataSet
+     * @param array<string, mixed> $dataSet
      *
      * @return bool
      */
@@ -72,7 +72,7 @@ class ElasticsearchUpdateWriter implements WriterInterface, ConfigurableSearchWr
     }
 
     /**
-     * @param array $dataSet
+     * @param array<string, mixed> $dataSet
      *
      * @return array<\Elastica\Document>
      */

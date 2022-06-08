@@ -100,7 +100,7 @@ class FilterPreferencesDataProvider
     /**
      * @param int|null $idProductSearchAttribute
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions($idProductSearchAttribute = null)
     {

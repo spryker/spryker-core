@@ -1,20 +1,21 @@
 @import '~@spryker/styles/src/lib/themes/default/variables/index.less';
 
-@product-attributes-selector-border-radius: @border-radius-base;
-@product-attributes-selector-content-padding: 20px 12px;
-@product-attributes-selector-content-min-width: 400px;
-@product-attributes-selector-col-padding: 0 8px;
-@product-attributes-selector-header-margin-bottom: 7px;
-@product-attributes-selector-row-margin-bottom: 15px;
-@product-attributes-selector-delete-icon-font-size: 20px;
-@product-attributes-selector-add-icon-font-size: 20px;
-@product-attributes-selector-name-width: 30%;
-@product-attributes-selector-value-width: calc(
-    @product-attributes-selector-value-full-width - @product-attributes-selector-button-width
+@product-attributes-selector-border-radius: var(--spy-product-attributes-selector-border-radius, @border-radius-base);
+@product-attributes-selector-content-padding: var(--spy-product-attributes-selector-content-padding, 20px 12px);
+@product-attributes-selector-content-min-width: var(--spy-product-attributes-selector-content-min-width, 400px);
+@product-attributes-selector-col-padding: var(--spy-product-attributes-selector-col-padding, 0 8px);
+@product-attributes-selector-header-margin-bottom: var(--spy-product-attributes-selector-header-margin-bottom, 7px);
+@product-attributes-selector-row-margin-bottom: var(--spy-product-attributes-selector-row-margin-bottom, 15px);
+@product-attributes-selector-delete-icon-font-size: var(--spy-product-attributes-selector-delete-icon-font-size, 20px);
+@product-attributes-selector-add-icon-font-size: var(--spy-product-attributes-selector-add-icon-font-size, 20px);
+@product-attributes-selector-name-width: var(--spy-product-attributes-selector-name-width, 30%);
+@product-attributes-selector-value-width: var(
+    --spy-product-attributes-selector-value-width,
+    calc(@product-attributes-selector-value-full-width - @product-attributes-selector-button-width)
 );
-@product-attributes-selector-value-full-width: 70%;
-@product-attributes-selector-button-width: 40px;
-@product-attributes-selector-button-add-padding: 0 8px;
+@product-attributes-selector-value-full-width: var(--spy-product-attributes-selector-value-full-width, 70%);
+@product-attributes-selector-button-width: var(--spy-product-attributes-selector-button-width, 40px);
+@product-attributes-selector-button-add-padding: var(--spy-product-attributes-selector-button-add-padding, 0 8px);
 
 .mp-product-attributes-selector {
     display: block;

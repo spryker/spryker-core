@@ -116,7 +116,7 @@ class ProductConcreteRestrictionReaderTest extends Unit
      * @dataProvider getProductConcreteRestrictionReaderData
      *
      * @param array $customerData
-     * @param array $productData
+     * @param array<string, mixed> $productData
      * @param bool $expectedResult
      *
      * @return void

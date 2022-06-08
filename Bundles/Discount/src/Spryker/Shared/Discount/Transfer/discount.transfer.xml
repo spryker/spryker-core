@@ -283,4 +283,7 @@
         <property name="amount" type="int"/>
     </transfer>
 
+    <transfer name="DiscountVoucherCheckResponse">
+        <property name="message" type="Message"/>
+    </transfer>
 </transfers>

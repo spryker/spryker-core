@@ -16,6 +16,7 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 /**
  * @method \Spryker\Zed\MultiCart\Communication\MultiCartCommunicationFactory getFactory()
  * @method \Spryker\Zed\MultiCart\Business\MultiCartFacadeInterface getFacade()
+ * @method \Spryker\Zed\MultiCart\Persistence\MultiCartRepositoryInterface getRepository()
  */
 class GatewayController extends AbstractGatewayController
 {

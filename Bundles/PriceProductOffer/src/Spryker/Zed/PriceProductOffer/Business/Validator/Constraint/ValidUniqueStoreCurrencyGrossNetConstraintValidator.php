@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\PriceProductOffer\Business\Validator\Constraint;
@@ -54,21 +54,28 @@ class ValidUniqueStoreCurrencyGrossNetConstraintValidator extends AbstractConstr
                 return;
             }
 
-            /** @var \ArrayObject<\Generated\Shared\Transfer\PriceProductTransfer> $persistedPriceProductTransfers */
+            /** @var \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $persistedPriceProductTransfers */
             $persistedPriceProductTransfers = $this->getProductOfferPrices(
                 $priceProductTransfer,
                 $constraint,
             );
 
-            if (
-                $persistedPriceProductTransfers->count() > 1
-                || ($persistedPriceProductTransfers->count() === 1
-                    && $persistedPriceProductTransfers->offsetGet(0)->getMoneyValueOrFail()->getIdEntity() !== $moneyValueTransfer->getIdEntity())
-            ) {
-                $this->context->buildViolation($constraint->getMessage())
-                    ->atPath($this->createViolationPath($priceProductIndex))
-                    ->addViolation();
+            if ($persistedPriceProductTransfers->count() < 1) {
+                return;
             }
+
+            if ($persistedPriceProductTransfers->count() === 1) {
+                /** @var \Generated\Shared\Transfer\PriceProductTransfer $persistedPriceProductTransfer */
+                $persistedPriceProductTransfer = $persistedPriceProductTransfers->offsetGet(0);
+
+                if ($persistedPriceProductTransfer->getMoneyValueOrFail()->getIdEntity() === $moneyValueTransfer->getIdEntity()) {
+                    return;
+                }
+            }
+
+            $this->context->buildViolation($constraint->getMessage())
+                ->atPath($this->createViolationPath($priceProductIndex))
+                ->addViolation();
         }
     }
 

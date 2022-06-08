@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ProductApiTransfer;
 class TransferMapper implements TransferMapperInterface
 {
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \Generated\Shared\Transfer\ProductApiTransfer
      */
@@ -42,7 +42,7 @@ class TransferMapper implements TransferMapperInterface
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */

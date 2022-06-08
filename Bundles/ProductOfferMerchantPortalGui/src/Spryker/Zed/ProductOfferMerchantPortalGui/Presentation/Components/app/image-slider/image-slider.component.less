@@ -1,13 +1,13 @@
 @import '~@spryker/styles/src/lib/themes/default/variables/index.less';
 
-@image-slider-height: 125px;
-@image-slider-image-mask: rgba(@ink-static, 0.05);
-@image-slider-preview-margin-right: 10px;
-@image-slider-preview-img-size: 38px;
-@image-slider-showcard-img-size: 125px;
-@image-slider-border-radius: @border-radius-base;
-@image-slider-preview-border: 1px solid @transparent;
-@image-slider-preview-margin-bottom: 4px;
+@image-slider-height: var(--spy-image-slider-height, 125px);
+@image-slider-image-mask: var(--spy-image-slider-image-mask, rgba(@ink-static, 0.05));
+@image-slider-preview-margin-right: var(--spy-image-slider-preview-margin-right, 10px);
+@image-slider-preview-img-size: var(--spy-image-slider-preview-img-size, 38px);
+@image-slider-showcard-img-size: var(--spy-image-slider-showcard-img-size, 125px);
+@image-slider-border-radius: var(--spy-image-slider-border-radius, @border-radius-base);
+@image-slider-preview-border: var(--spy-image-slider-preview-border, 1px solid @transparent);
+@image-slider-preview-margin-bottom: var(--spy-image-slider-preview-margin-bottom, 4px);
 
 .image-slider {
     height: @image-slider-height;

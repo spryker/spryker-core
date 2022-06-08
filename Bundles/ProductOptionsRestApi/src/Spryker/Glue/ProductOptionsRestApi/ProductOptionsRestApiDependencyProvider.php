@@ -15,7 +15,7 @@ use Spryker\Glue\ProductOptionsRestApi\Dependency\Client\ProductOptionsRestApiTo
 use Spryker\Glue\ProductOptionsRestApi\Dependency\Client\ProductOptionsRestApiToProductStorageClientBridge;
 
 /**
- * @method \Spryker\Glue\ProductPricesRestApi\ProductPricesRestApiConfig getConfig()
+ * @method \Spryker\Glue\ProductOptionsRestApi\ProductOptionsRestApiConfig getConfig()
  */
 class ProductOptionsRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {

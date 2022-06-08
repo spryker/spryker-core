@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Zed\PriceProduct\Business\Validator\Constraint\GreaterThanOrEqualOrEmptyConstraint;
 use Spryker\Zed\PriceProduct\Business\Validator\Constraint\TransferConstraint;
-use Spryker\Zed\PriceProduct\Business\Validator\Constraint\ValidUniqueStoreCurrencyCollectionConstraint;
+use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraint as SymfonyConstraint;
 use Symfony\Component\Validator\Constraints\All as AllConstraint;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -34,11 +34,18 @@ class PriceProductConstraintProvider implements PriceProductConstraintProviderIn
     protected $priceProductConstraints;
 
     /**
-     * @param array<\Symfony\Component\Validator\Constraint> $priceProductConstraints
+     * @var \Symfony\Component\Validator\Constraint
      */
-    public function __construct(array $priceProductConstraints)
+    protected $priceProductCollectionConstraint;
+
+    /**
+     * @param array<\Symfony\Component\Validator\Constraint> $priceProductConstraints
+     * @param \Symfony\Component\Validator\Constraint $priceProductCollectionConstraint
+     */
+    public function __construct(array $priceProductConstraints, Constraint $priceProductCollectionConstraint)
     {
         $this->priceProductConstraints = $priceProductConstraints;
+        $this->priceProductCollectionConstraint = $priceProductCollectionConstraint;
     }
 
     /**
@@ -47,7 +54,7 @@ class PriceProductConstraintProvider implements PriceProductConstraintProviderIn
     public function getConstraints(): array
     {
         return [
-            new ValidUniqueStoreCurrencyCollectionConstraint(),
+            $this->priceProductCollectionConstraint,
             new AllConstraint(
                 array_merge(
                     [new TransferConstraint([PriceProductTransfer::MONEY_VALUE => $this->getMoneyValueConstraint()])],

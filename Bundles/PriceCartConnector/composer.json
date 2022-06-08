@@ -18,6 +18,7 @@
         "spryker/code-sniffer": "*",
         "spryker/product": "*",
         "spryker/propel": "*",
+        "spryker/store": "*",
         "spryker/testify": "*"
     },
     "suggest": {

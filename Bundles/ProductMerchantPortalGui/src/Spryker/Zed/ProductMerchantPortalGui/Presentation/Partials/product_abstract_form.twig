@@ -56,9 +56,17 @@
                 {% endblock %}
 
                 {% block action %}
-                    {%- if productAbstract.approvalStatus == 'draft' -%}
-                        <web-spy-button-link cloak variant="outline" size="lg" class="{{ mainClass }}__approval-status-button" url="{{ urlUpdateApprovalStatus }}" action>{{ 'Send for Approval' | trans }}</web-spy-button-link>
-                    {%- endif -%}
+                    {%- for approvalStatus in applicableUpdateApprovalStatuses -%}
+                        {% set urlUpdateApprovalStatusButton = url(
+                            '/product-merchant-portal-gui/product-abstract-approval',
+                            {
+                                'approval-status': approvalStatus,
+                                'id-product-abstract': productAbstract.idProductAbstract,
+                            }
+                        ) %}
+                        {% set labelUpdateApprovalStatusButton = 'approval_status_action.' ~ approvalStatus %}
+                        <web-spy-button-link cloak variant="outline" size="lg" class="{{ mainClass }}__approval-status-button" url="{{ urlUpdateApprovalStatusButton | raw }}" action>{{ labelUpdateApprovalStatusButton | trans }}</web-spy-button-link>
+                    {%- endfor -%}
                     <web-spy-button cloak size="lg" type="submit" action>{{ 'Save' | trans }}</web-spy-button>
                 {% endblock %}
 
@@ -276,7 +284,7 @@
                                                         >
                                                             {{ form_row(localizedAttributeForm.children.metaTitle) }}
                                                             {{ form_row(localizedAttributeForm.children.metaKeywords) }}
-                                                            {{ form_row(localizedAttributeForm.children.metaDescription) }}
+                                                            {{ form_row(localizedAttributeForm.children.metaDescription, { row_attr: { 'no-spaces': 'true' } }) }}
                                                         </web-spy-tab>
                                                     {% endblock %}
                                                 {% endfor %}

@@ -18,15 +18,17 @@ use Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Propel;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
+use Spryker\Zed\Kernel\Persistence\EntityManager\InstancePoolingTrait;
 
 /**
  * @method \Spryker\Zed\PriceProduct\Persistence\PriceProductPersistenceFactory getFactory()
  */
 class PriceProductRepository extends AbstractRepository implements PriceProductRepositoryInterface
 {
+    use InstancePoolingTrait;
+
     /**
      * @var string
      */
@@ -36,44 +38,58 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
      * @param string $concreteSku
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore>
+     * @return array<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findProductConcretePricesBySkuAndCriteria(
         string $concreteSku,
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
-    ): ObjectCollection {
+    ): array {
         $priceProductStoreQuery = $this->createBasePriceProductStoreQuery($priceProductCriteriaTransfer);
         $this->addJoinProductConcreteBySku($priceProductStoreQuery, $concreteSku);
 
-        return $priceProductStoreQuery->find();
+        $priceProductStoreEntities = $this->getPriceProductStoreEntitiesPerDimension(
+            $priceProductCriteriaTransfer,
+            $priceProductStoreQuery,
+        );
+
+        return $this->getFactory()
+            ->createPriceProductMapper()
+            ->mapPriceProductStoreEntitiesToPriceProductTransfers($priceProductStoreEntities);
     }
 
     /**
      * @param string $abstractSku
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore>
+     * @return array<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findProductAbstractPricesBySkuAndCriteria(
         string $abstractSku,
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
-    ): ObjectCollection {
+    ): array {
         $priceProductStoreQuery = $this->createBasePriceProductStoreQuery($priceProductCriteriaTransfer);
         $this->addJoinProductAbstractBySku($priceProductStoreQuery, $abstractSku);
 
-        return $priceProductStoreQuery->find();
+        $priceProductStoreEntities = $this->getPriceProductStoreEntitiesPerDimension(
+            $priceProductCriteriaTransfer,
+            $priceProductStoreQuery,
+        );
+
+        return $this->getFactory()
+            ->createPriceProductMapper()
+            ->mapPriceProductStoreEntitiesToPriceProductTransfers($priceProductStoreEntities);
     }
 
     /**
      * @param int $idProductConcrete
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore>
+     * @return array<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findProductConcretePricesByIdAndCriteria(
         int $idProductConcrete,
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
-    ): ObjectCollection {
+    ): array {
         $priceProductStoreQuery = $this->createBasePriceProductStoreQuery($priceProductCriteriaTransfer)
             ->joinWith(static::PRICE_PRODUCT_RELATION_NAME)
             ->addJoinCondition(
@@ -82,38 +98,54 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
                 $idProductConcrete,
             );
 
-        return $priceProductStoreQuery->find();
+        $priceProductStoreEntities = $this->getPriceProductStoreEntitiesPerDimension(
+            $priceProductCriteriaTransfer,
+            $priceProductStoreQuery,
+        );
+
+        return $this->getFactory()
+            ->createPriceProductMapper()
+            ->mapPriceProductStoreEntitiesToPriceProductTransfers($priceProductStoreEntities);
     }
 
     /**
      * @param array<int> $productConcreteIds
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore>
+     * @return array<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function getProductConcretePricesByIdsAndCriteria(
         array $productConcreteIds,
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
-    ): ObjectCollection {
-        return $this->createBasePriceProductStoreQuery($priceProductCriteriaTransfer)
+    ): array {
+        $priceProductStoreQuery = $this->createBasePriceProductStoreQuery($priceProductCriteriaTransfer)
             ->joinWith(static::PRICE_PRODUCT_RELATION_NAME)
             ->addJoinCondition(
                 static::PRICE_PRODUCT_RELATION_NAME,
                 SpyPriceProductTableMap::COL_FK_PRODUCT . ' IN ?',
                 $productConcreteIds,
-            )->find();
+            );
+
+        $priceProductStoreEntities = $this->getPriceProductStoreEntitiesPerDimension(
+            $priceProductCriteriaTransfer,
+            $priceProductStoreQuery,
+        );
+
+        return $this->getFactory()
+            ->createPriceProductMapper()
+            ->mapPriceProductStoreEntitiesToPriceProductTransfers($priceProductStoreEntities);
     }
 
     /**
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore>
+     * @return array<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findProductAbstractPricesByIdAndCriteria(
         int $idProductAbstract,
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
-    ): ObjectCollection {
+    ): array {
         $priceProductStoreQuery = $this->createBasePriceProductStoreQuery($priceProductCriteriaTransfer)
             ->joinWith(static::PRICE_PRODUCT_RELATION_NAME)
             ->addJoinCondition(
@@ -122,25 +154,38 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
                 $idProductAbstract,
             );
 
-        return $priceProductStoreQuery->find();
+        $priceProductStoreEntities = $this->getPriceProductStoreEntitiesPerDimension(
+            $priceProductCriteriaTransfer,
+            $priceProductStoreQuery,
+        );
+
+        return $this->getFactory()
+            ->createPriceProductMapper()
+            ->mapPriceProductStoreEntitiesToPriceProductTransfers($priceProductStoreEntities);
     }
 
     /**
      * @param array<int> $productAbstractIds
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore>
+     * @return array<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
-    public function findProductAbstractPricesByIdIn(array $productAbstractIds): ObjectCollection
+    public function findProductAbstractPricesByIdIn(array $productAbstractIds): array
     {
-        $priceProductStoreQuery = $this->createBasePriceProductStoreQuery(new PriceProductCriteriaTransfer());
-
-        $priceProductStoreQuery
+        /** @var \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery $priceProductStoreQuery */
+        $priceProductStoreQuery = $this->createBasePriceProductStoreQuery(new PriceProductCriteriaTransfer())
             ->innerJoinWithPriceProduct()
             ->usePriceProductQuery()
                 ->filterByFkProductAbstract_In($productAbstractIds)
             ->endUse();
 
-        return $priceProductStoreQuery->find();
+        $priceProductStoreEntities = $this->getPriceProductStoreEntitiesPerDimension(
+            new PriceProductCriteriaTransfer(),
+            $priceProductStoreQuery,
+        );
+
+        return $this->getFactory()
+            ->createPriceProductMapper()
+            ->mapPriceProductStoreEntitiesToPriceProductTransfers($priceProductStoreEntities);
     }
 
     /**
@@ -171,9 +216,9 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
     /**
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return array<\Generated\Shared\Transfer\SpyPriceProductStoreEntityTransfer>
+     * @return array<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
-    public function findOrphanPriceProductStoreEntities(PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array
+    public function findPriceProductTransfersWithOrphanPriceProductStore(PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array
     {
         $priceProductStoreQuery = $this->getFactory()
             ->createPriceProductStoreQuery();
@@ -187,7 +232,67 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
                 $priceProductCriteriaTransfer,
             );
 
-        return $this->buildQueryFromCriteria($priceProductStoreQuery)->find();
+        $priceProductStoreEntities = $priceProductStoreQuery->find()->getArrayCopy();
+
+        return $this->getFactory()
+            ->createPriceProductMapper()
+            ->mapPriceProductStoreEntitiesToPriceProductTransfers($priceProductStoreEntities);
+    }
+
+    /**
+     * This method allows to execute query per dimension. It suppose to fix the issue when several prices,
+     * that belongs to the different dimensions but have the same `idPriceProductStore`,
+     * are queried within one DB request.
+     *
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     * @param \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery $priceProductStoreQuery
+     *
+     * @return array<\Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore>
+     */
+    protected function getPriceProductStoreEntitiesPerDimension(
+        PriceProductCriteriaTransfer $priceProductCriteriaTransfer,
+        SpyPriceProductStoreQuery $priceProductStoreQuery
+    ): array {
+        $isInstancePoolingEnabled = $this->isInstancePoolingEnabled();
+        $this->disableInstancePooling();
+
+        if ($priceProductCriteriaTransfer->getPriceDimension()) {
+            $this->getFactory()
+                ->createPriceProductDimensionQueryExpander()
+                ->expandPriceProductStoreQueryWithPriceDimension($priceProductStoreQuery, $priceProductCriteriaTransfer);
+
+            $priceProductStoreEntities = $priceProductStoreQuery->find()->getArrayCopy();
+            if ($isInstancePoolingEnabled) {
+                $this->enableInstancePooling();
+            }
+
+            return $priceProductStoreEntities;
+        }
+        $priceProductStoreEntities = [];
+        $priceDimensionQueryCriteriaPlugins = $this->getFactory()->getPriceDimensionQueryCriteriaPlugins();
+
+        foreach ($priceDimensionQueryCriteriaPlugins as $priceDimensionQueryCriteriaPlugin) {
+            $dimensionName = $priceDimensionQueryCriteriaPlugin->getDimensionName();
+            $expandedPriceProductStoreQuery = $this->getFactory()
+                ->createPriceProductDimensionQueryExpander()
+                ->expandPriceProductStoreQueryWithPriceDimensionByDimensionName(
+                    clone $priceProductStoreQuery,
+                    $priceProductCriteriaTransfer,
+                    $dimensionName,
+                );
+
+            if (!$expandedPriceProductStoreQuery) {
+                continue;
+            }
+
+            $priceProductStoreEntities = array_merge($priceProductStoreEntities, $expandedPriceProductStoreQuery->find()->getArrayCopy());
+        }
+
+        if ($isInstancePoolingEnabled) {
+            $this->enableInstancePooling();
+        }
+
+        return $priceProductStoreEntities;
     }
 
     /**
@@ -271,8 +376,7 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
      */
     protected function createBasePriceProductStoreQuery(PriceProductCriteriaTransfer $priceProductCriteriaTransfer): SpyPriceProductStoreQuery
     {
-        $priceProductStoreQuery = $this->getFactory()
-            ->createPriceProductStoreQuery();
+        $priceProductStoreQuery = $this->getFactory()->createPriceProductStoreQuery();
 
         if ($priceProductCriteriaTransfer->getIdStore()) {
             $priceProductStoreQuery->filterByFkStore($priceProductCriteriaTransfer->getIdStore());
@@ -308,10 +412,6 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
         if ($priceProductCriteriaTransfer->getPriceProductStoreIds()) {
             $priceProductStoreQuery->filterByIdPriceProductStore_In($priceProductCriteriaTransfer->getPriceProductStoreIds());
         }
-
-        $this->getFactory()
-            ->createPriceProductDimensionQueryExpander()
-            ->expandPriceProductStoreQueryWithPriceDimension($priceProductStoreQuery, $priceProductCriteriaTransfer);
 
         return $priceProductStoreQuery;
     }
@@ -375,12 +475,12 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
      * @param array<int> $productAbstractIds
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore>
+     * @return array<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findProductAbstractPricesByIdInAndCriteria(
         array $productAbstractIds,
         ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
-    ): ObjectCollection {
+    ): array {
         if (!$priceProductCriteriaTransfer) {
             $priceProductCriteriaTransfer = new PriceProductCriteriaTransfer();
         }
@@ -394,7 +494,14 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
                 ->filterByFkProductAbstract_In($productAbstractIds)
             ->endUse();
 
-        return $priceProductStoreQuery->find();
+        $priceProductStoreEntities = $this->getPriceProductStoreEntitiesPerDimension(
+            new PriceProductCriteriaTransfer(),
+            $priceProductStoreQuery,
+        );
+
+        return $this->getFactory()
+            ->createPriceProductMapper()
+            ->mapPriceProductStoreEntitiesToPriceProductTransfers($priceProductStoreEntities);
     }
 
     /**
@@ -480,25 +587,24 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
     ): array {
         $priceProductStoreQuery = $this->createBasePriceProductStoreQuery($priceProductCriteriaTransfer);
 
-        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore> $priceProductStoreEntities */
-        $priceProductStoreEntities = $priceProductStoreQuery
+        /** @var \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery $priceProductStoreQuery */
+        $priceProductStoreQuery = $priceProductStoreQuery
             ->joinWithCurrency()
             ->addAsColumn('product_sku', 'spy_product.sku')
             ->innerJoinWithPriceProduct()
             ->usePriceProductQuery()
                 ->innerJoinWithSpyProductAbstract()
                 ->useSpyProductAbstractQuery()
-                    ->innerJoinWithSpyProduct()
                     ->useSpyProductQuery()
                         ->filterBySku_In($concreteSkus)
                     ->endUse()
                 ->endUse()
-            ->endUse()
-            ->find();
+            ->endUse();
 
-        if (!$priceProductStoreEntities->count()) {
-            return [];
-        }
+        $priceProductStoreEntities = $this->getPriceProductStoreEntitiesPerDimension(
+            $priceProductCriteriaTransfer,
+            $priceProductStoreQuery,
+        );
 
         return $this->getFactory()
             ->createPriceProductMapper()
@@ -516,8 +622,9 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
     ): array {
         $priceProductStoreQuery = $this->createBasePriceProductStoreQuery($priceProductCriteriaTransfer);
-        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore> $priceProductStoreEntities */
-        $priceProductStoreEntities = $priceProductStoreQuery
+
+        /** @var \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery $priceProductStoreQuery */
+        $priceProductStoreQuery = $priceProductStoreQuery
             ->joinWithCurrency()
             ->joinWithPriceProduct()
             ->usePriceProductQuery()
@@ -525,30 +632,16 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
                 ->useProductQuery()
                     ->filterBySku_In($concreteSkus)
                 ->endUse()
-            ->endUse()
-            ->find();
+            ->endUse();
 
-        if (!$priceProductStoreEntities->count()) {
-            return [];
-        }
+        $priceProductStoreEntities = $this->getPriceProductStoreEntitiesPerDimension(
+            $priceProductCriteriaTransfer,
+            $priceProductStoreQuery,
+        );
 
-        return $this->mapPriceProductStoreEntitiesToPriceProductTransfers($priceProductStoreEntities);
-    }
-
-    /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore> $priceProductStoreEntities
-     *
-     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
-     */
-    protected function mapPriceProductStoreEntitiesToPriceProductTransfers(ObjectCollection $priceProductStoreEntities): array
-    {
-        $mapper = $this->getFactory()->createPriceProductMapper();
-        $priceProductTransfers = [];
-        foreach ($priceProductStoreEntities as $priceProductStoreEntity) {
-            $priceProductTransfers[] = $mapper->mapPriceProductStoreEntityToPriceProductTransfer($priceProductStoreEntity, new PriceProductTransfer());
-        }
-
-        return $priceProductTransfers;
+        return $this->getFactory()
+            ->createPriceProductMapper()
+            ->mapPriceProductStoreEntitiesToPriceProductTransfers($priceProductStoreEntities);
     }
 
     /**
@@ -594,8 +687,8 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
      */
     public function getProductPricesByCriteria(PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ArrayObject
     {
-        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore> $priceProductStoreEntities */
-        $priceProductStoreEntities = $this->createBasePriceProductStoreQuery($priceProductCriteriaTransfer)
+        /** @var \Orm\Zed\PriceProduct\Persistence\SpyPriceProductStoreQuery $priceProductStoreQuery */
+        $priceProductStoreQuery = $this->createBasePriceProductStoreQuery($priceProductCriteriaTransfer)
             ->joinWithCurrency()
             ->addAsColumn('product_sku', SpyProductTableMap::COL_SKU)
             ->innerJoinWithPriceProduct()
@@ -604,9 +697,17 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
                 ->useSpyProductAbstractQuery(null, Criteria::LEFT_JOIN)
                     ->leftJoinWithSpyProduct()
                 ->endUse()
-            ->endUse()
-            ->find();
+            ->endUse();
 
-        return new ArrayObject($this->mapPriceProductStoreEntitiesToPriceProductTransfers($priceProductStoreEntities));
+        $priceProductStoreEntities = $this->getPriceProductStoreEntitiesPerDimension(
+            $priceProductCriteriaTransfer,
+            $priceProductStoreQuery,
+        );
+
+        $priceProductStoreTransfers = $this->getFactory()
+            ->createPriceProductMapper()
+            ->mapPriceProductStoreEntitiesToPriceProductTransfers($priceProductStoreEntities);
+
+        return new ArrayObject($priceProductStoreTransfers);
     }
 }

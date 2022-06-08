@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Event\Business\Dispatcher;
 
+use SplPriorityQueue;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Zed\Event\Business\EventFacadeInterface;
 use Spryker\Zed\Event\Business\Exception\EventListenerAmbiguousException;
@@ -291,12 +292,12 @@ class EventDispatcher implements EventDispatcherInterface
     /**
      * @param string $eventName
      *
-     * @return \SplPriorityQueue<\Spryker\Zed\Event\Business\Dispatcher\EventListenerContextInterface>
+     * @return \SplPriorityQueue<mixed, \Spryker\Zed\Event\Business\Dispatcher\EventListenerContextInterface>
      */
     protected function extractEventListeners($eventName)
     {
         if (!$this->eventCollection->has($eventName)) {
-            return [];
+            return new SplPriorityQueue();
         }
 
         return $this->eventCollection->get($eventName);

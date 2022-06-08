@@ -9,4 +9,9 @@
         <property name="localeName" type="string"/>
     </transfer>
 
+    <transfer name="MonitoringTransactionEvent">
+        <property name="commandName" type="string"/>
+        <property name="arguments" type="array" singular="argument"/>
+        <property name="transactionNamePrefix" type="string"/>
+    </transfer>
 </transfers>

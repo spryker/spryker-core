@@ -9,7 +9,12 @@ namespace Spryker\Glue\GlueStorefrontApiApplication;
 
 use Negotiation\LanguageNegotiator;
 use Spryker\Glue\GlueStorefrontApiApplication\Application\GlueStorefrontApiApplication;
+use Spryker\Glue\GlueStorefrontApiApplication\Cache\ControllerCacheCollector;
+use Spryker\Glue\GlueStorefrontApiApplication\Cache\ControllerCacheCollectorInterface;
 use Spryker\Glue\GlueStorefrontApiApplication\Dependency\Client\GlueStorefrontApiApplicationToStoreClientInterface;
+use Spryker\Glue\GlueStorefrontApiApplication\Expander\ContextExpanderInterface;
+use Spryker\Glue\GlueStorefrontApiApplication\Expander\CustomRoutesContextExpander;
+use Spryker\Glue\GlueStorefrontApiApplication\Expander\ResourcesContextExpander;
 use Spryker\Glue\GlueStorefrontApiApplication\Language\LanguageNegotiation;
 use Spryker\Glue\GlueStorefrontApiApplication\Language\LanguageNegotiationInterface;
 use Spryker\Glue\GlueStorefrontApiApplication\RequestBuilder\LocaleRequestBuilder;
@@ -172,6 +177,17 @@ class GlueStorefrontApiApplicationFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Glue\GlueStorefrontApiApplication\Cache\ControllerCacheCollectorInterface
+     */
+    public function createControllerCacheCollector(): ControllerCacheCollectorInterface
+    {
+        return new ControllerCacheCollector(
+            $this->getResourcePlugins(),
+            $this->getRouterPlugins(),
+        );
+    }
+
+    /**
      * @return array<\Spryker\Glue\GlueStorefrontApiApplicationExtension\Dependency\Plugin\RouteProviderPluginInterface>
      */
     public function getRouteProviderPlugins(): array
@@ -249,5 +265,21 @@ class GlueStorefrontApiApplicationFactory extends AbstractFactory
     public function createRequestCorsValidator(): RequestCorsValidatorInterface
     {
         return new RequestCorsValidator($this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueStorefrontApiApplication\Expander\ContextExpanderInterface
+     */
+    public function createResourcesContextExpander(): ContextExpanderInterface
+    {
+        return new ResourcesContextExpander($this->getResourcePlugins());
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueStorefrontApiApplication\Expander\ContextExpanderInterface
+     */
+    public function createCustomRoutesContextExpander(): ContextExpanderInterface
+    {
+        return new CustomRoutesContextExpander($this->getRouteProviderPlugins());
     }
 }

@@ -9,9 +9,14 @@ namespace Spryker\Glue\GlueJsonApiConvention;
 
 use Spryker\Glue\GlueJsonApiConvention\Decoder\DecoderInterface;
 use Spryker\Glue\GlueJsonApiConvention\Decoder\JsonDecoder;
+use Spryker\Glue\GlueJsonApiConvention\Dependency\External\GlueJsonApiConventionToInflectorInterface;
 use Spryker\Glue\GlueJsonApiConvention\Dependency\Service\GlueJsonApiConventionToUtilEncodingServiceInterface;
 use Spryker\Glue\GlueJsonApiConvention\Encoder\EncoderInterface;
 use Spryker\Glue\GlueJsonApiConvention\Encoder\JsonEncoder;
+use Spryker\Glue\GlueJsonApiConvention\Formatter\JsonApiSchemaFormatter;
+use Spryker\Glue\GlueJsonApiConvention\Formatter\JsonApiSchemaParametersFormatter;
+use Spryker\Glue\GlueJsonApiConvention\Formatter\JsonApiSchemaParametersFormatterInterface;
+use Spryker\Glue\GlueJsonApiConvention\Formatter\SchemaFormatterInterface;
 use Spryker\Glue\GlueJsonApiConvention\Request\AttributesRequestBuilder;
 use Spryker\Glue\GlueJsonApiConvention\Request\RequestBuilderInterface;
 use Spryker\Glue\GlueJsonApiConvention\Request\RequestFilterFieldBuilder;
@@ -129,6 +134,17 @@ class GlueJsonApiConventionFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Glue\GlueJsonApiConvention\Formatter\SchemaFormatterInterface
+     */
+    public function createJsonApiSchemaFormatter(): SchemaFormatterInterface
+    {
+        return new JsonApiSchemaFormatter(
+            $this->getInflector(),
+            $this->createJsonApiSchemaParametersFormatter(),
+        );
+    }
+
+    /**
      * @return array<\Spryker\Glue\GlueJsonApiConventionExtension\Dependency\Plugin\RelationshipProviderPluginInterface>
      */
     public function getRelationshipProviderPlugins(): array
@@ -190,5 +206,21 @@ class GlueJsonApiConventionFactory extends AbstractFactory
     public function createResponseSparseFieldFormatter(): ResponseSparseFieldFormatterInterface
     {
         return new ResponseSparseFieldFormatter();
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueJsonApiConvention\Dependency\External\GlueJsonApiConventionToInflectorInterface
+     */
+    public function getInflector(): GlueJsonApiConventionToInflectorInterface
+    {
+        return $this->getProvidedDependency(GlueJsonApiConventionDependencyProvider::INFLECTOR);
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueJsonApiConvention\Formatter\JsonApiSchemaParametersFormatterInterface
+     */
+    public function createJsonApiSchemaParametersFormatter(): JsonApiSchemaParametersFormatterInterface
+    {
+        return new JsonApiSchemaParametersFormatter();
     }
 }

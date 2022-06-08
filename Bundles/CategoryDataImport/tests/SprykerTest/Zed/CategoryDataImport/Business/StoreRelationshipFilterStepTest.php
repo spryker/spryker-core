@@ -27,7 +27,7 @@ class StoreRelationshipFilterStepTest extends Unit
     /**
      * @dataProvider executeWillCorrectlyFilterStoresToWriteDataProvider
      *
-     * @param array $dataSet
+     * @param array<string, mixed> $dataSet
      * @param array $expInclude
      * @param array $expExclude
      *

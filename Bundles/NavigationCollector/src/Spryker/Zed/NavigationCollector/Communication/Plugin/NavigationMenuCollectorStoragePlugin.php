@@ -18,6 +18,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\NavigationCollector\Business\NavigationCollectorFacadeInterface getFacade()
+ * @method \Spryker\Zed\NavigationCollector\NavigationCollectorConfig getConfig()
  */
 class NavigationMenuCollectorStoragePlugin extends AbstractCollectorPlugin
 {

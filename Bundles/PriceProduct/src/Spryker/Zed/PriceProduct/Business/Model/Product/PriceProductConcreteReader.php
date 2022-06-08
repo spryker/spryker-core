@@ -28,11 +28,6 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
     protected $priceProductQueryContainer;
 
     /**
-     * @var \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapperInterface
-     */
-    protected $priceProductMapper;
-
-    /**
      * @var \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToStoreFacadeInterface
      */
     protected $storeFacade;
@@ -64,7 +59,6 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
 
     /**
      * @param \Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface $priceProductQueryContainer
-     * @param \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductMapperInterface $priceProductMapper
      * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\PriceProduct\Persistence\PriceProductRepositoryInterface $priceProductRepository
      * @param \Spryker\Service\PriceProduct\PriceProductServiceInterface $priceProductService
@@ -74,7 +68,6 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
      */
     public function __construct(
         PriceProductQueryContainerInterface $priceProductQueryContainer,
-        PriceProductMapperInterface $priceProductMapper,
         PriceProductToStoreFacadeInterface $storeFacade,
         PriceProductRepositoryInterface $priceProductRepository,
         PriceProductServiceInterface $priceProductService,
@@ -83,7 +76,6 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
         array $priceProductExternalProviderPlugins
     ) {
         $this->priceProductQueryContainer = $priceProductQueryContainer;
-        $this->priceProductMapper = $priceProductMapper;
         $this->storeFacade = $storeFacade;
         $this->priceProductRepository = $priceProductRepository;
         $this->priceProductService = $priceProductService;
@@ -119,12 +111,8 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
             ->setIdStore($idStore)
             ->setPriceDimension($priceProductDimensionTransfer);
 
-        $priceProductStoreEntities = $this->priceProductRepository
+        $priceProductTransfers = $this->priceProductRepository
             ->findProductConcretePricesBySkuAndCriteria($sku, $priceProductCriteriaTransfer);
-
-        $priceProductTransfers = $this->priceProductMapper->mapPriceProductStoreEntitiesToPriceProductTransfers(
-            $priceProductStoreEntities,
-        );
 
         $priceProductTransfers = $this->priceProductExpander->expandPriceProductTransfers($priceProductTransfers);
         $priceProductTransfers = $this->pluginExecutor->executePriceExtractorPluginsForProductConcrete($priceProductTransfers);
@@ -146,13 +134,9 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
             $priceProductCriteriaTransfer = new PriceProductCriteriaTransfer();
         }
 
-        $priceProductStoreEntities = $this->priceProductRepository->findProductConcretePricesByIdAndCriteria(
+        $priceProductTransfers = $this->priceProductRepository->findProductConcretePricesByIdAndCriteria(
             $idProductConcrete,
             $priceProductCriteriaTransfer,
-        );
-
-        $priceProductTransfers = $this->priceProductMapper->mapPriceProductStoreEntitiesToPriceProductTransfers(
-            $priceProductStoreEntities,
         );
 
         $priceProductTransfers = $this->priceProductExpander->expandPriceProductTransfers($priceProductTransfers);
@@ -182,12 +166,8 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
      */
     public function findProductConcretePricesBySkuAndCriteria(string $sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array
     {
-        $priceProductStoreEntities = $this->priceProductRepository
+        $priceProductTransfers = $this->priceProductRepository
             ->findProductConcretePricesBySkuAndCriteria($sku, $priceProductCriteriaTransfer);
-
-        $priceProductTransfers = $this->priceProductMapper->mapPriceProductStoreEntitiesToPriceProductTransfers(
-            $priceProductStoreEntities,
-        );
 
         $priceProductTransfers = $this->priceProductExpander->expandPriceProductTransfers($priceProductTransfers);
         $priceProductTransfers = $this->pluginExecutor->executePriceExtractorPluginsForProductConcrete($priceProductTransfers);
@@ -230,13 +210,11 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
             $priceProductCriteriaTransfer = new PriceProductCriteriaTransfer();
         }
 
-        $priceProductStoreEntities = $this->priceProductRepository->findProductConcretePricesByIdAndCriteria(
+        $priceProductTransfers = $this->priceProductRepository->findProductConcretePricesByIdAndCriteria(
             $idProductConcrete,
             $priceProductCriteriaTransfer,
         );
-        $priceProductTransfers = $this->priceProductMapper->mapPriceProductStoreEntitiesToPriceProductTransfers(
-            $priceProductStoreEntities,
-        );
+
         $priceProductTransfers = $this->priceProductExpander->expandPriceProductTransfers($priceProductTransfers);
 
         return $priceProductTransfers;
@@ -353,12 +331,11 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
         array $productIds,
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
     ): array {
-        $priceProductStoreEntities = $this->priceProductRepository->getProductConcretePricesByIdsAndCriteria(
+        $priceProductTransfers = $this->priceProductRepository->getProductConcretePricesByIdsAndCriteria(
             $productIds,
             $priceProductCriteriaTransfer,
         );
 
-        $priceProductTransfers = $this->priceProductMapper->mapPriceProductStoreEntitiesToPriceProductTransfers($priceProductStoreEntities);
         $priceProductTransfers = $this->priceProductExpander->expandPriceProductTransfers($priceProductTransfers);
 
         return $this->pluginExecutor->executePriceExtractorPluginsForProductConcrete($priceProductTransfers);

@@ -7,7 +7,10 @@
         "php": ">=7.4",
         "spryker/kernel": "^3.33.0",
         "spryker/monitoring": "^1.0.0 || ^2.0.0",
-        "spryker/session-extension": "^1.0.0"
+        "spryker/session-customer-validation-extension": "^1.0.0",
+        "spryker/session-extension": "^1.0.0",
+        "spryker/session-user-validation-extension": "^1.0.0",
+        "spryker/transfer": "^3.25.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*",

@@ -147,7 +147,7 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
      *
      * @api
      *
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param string $localeName
      * @param array $selectedAttributes
      * @param \Generated\Shared\Transfer\ProductStorageCriteriaTransfer|null $productStorageCriteriaTransfer
@@ -170,7 +170,7 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
      *
      * @api
      *
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param string $localeName
      * @param array $selectedAttributes
      *

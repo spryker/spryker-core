@@ -70,10 +70,8 @@ class AttributesRequestBuilderPluginTest extends Unit
     protected function getContentData(): string
     {
         return json_encode([
-            'data' => [
-                static::ATTRIBUTES_FIRST_FIELD,
-                static::ATTRIBUTES_SECOND_KEY => static::ATTRIBUTES_SECOND_FIELD,
-            ],
+            static::ATTRIBUTES_FIRST_FIELD,
+            static::ATTRIBUTES_SECOND_KEY => static::ATTRIBUTES_SECOND_FIELD,
         ]);
     }
 }

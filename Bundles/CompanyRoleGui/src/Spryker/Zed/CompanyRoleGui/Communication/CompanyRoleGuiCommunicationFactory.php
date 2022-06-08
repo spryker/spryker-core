@@ -191,4 +191,12 @@ class CompanyRoleGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new CompanyUserRoleByCompanyFormDataProvider($this->getCompanyRoleFacade());
     }
+
+    /**
+     * @return array<\Spryker\Zed\CompanyRoleGuiExtension\Communication\Plugin\CompanyRoleCreateFormExpanderPluginInterface>
+     */
+    public function getCompanyRoleCreateFormExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(CompanyRoleGuiDependencyProvider::PLUGINS_COMPANY_ROLE_CREATE_FORM_EXPANDER);
+    }
 }

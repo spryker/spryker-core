@@ -71,6 +71,11 @@ class CategoryFacadeTest extends Unit
     protected const TEST_STORE_AT = 'AT';
 
     /**
+     * @var int
+     */
+    protected const FAKE_CATEGORY_NODE_ID = 8888;
+
+    /**
      * @var \SprykerTest\Zed\Category\CategoryBusinessTester
      */
     protected $tester;
@@ -481,6 +486,118 @@ class CategoryFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testGetCategoryNodesWithRelativeNodesWillReturnNodeTransfersWithRelativeNodes(): void
+    {
+        // Arrange
+        $parentCategoryTransfer = $this->tester->haveCategory();
+
+        $categoryTransfer = $this->tester->haveCategory([
+            CategoryTransfer::PARENT_CATEGORY_NODE => $parentCategoryTransfer->getCategoryNode()->toArray(),
+        ]);
+
+        $childCategoryTransfer = $this->tester->haveCategory([
+            CategoryTransfer::PARENT_CATEGORY_NODE => $categoryTransfer->getCategoryNode()->toArray(),
+        ]);
+        $childCategoryTransfer2 = $this->tester->haveCategory([
+            CategoryTransfer::PARENT_CATEGORY_NODE => $categoryTransfer->getCategoryNode()->toArray(),
+        ]);
+
+        $expectedCategoryNodeIds = [
+            $parentCategoryTransfer->getCategoryNode()->getIdCategoryNode(),
+            $categoryTransfer->getCategoryNode()->getIdCategoryNode(),
+            $childCategoryTransfer->getCategoryNode()->getIdCategoryNode(),
+            $childCategoryTransfer2->getCategoryNode()->getIdCategoryNode(),
+        ];
+
+        $categoryNodeCriteriaTransfer = (new CategoryNodeCriteriaTransfer())
+            ->addIdCategoryNode($categoryTransfer->getCategoryNode()->getIdCategoryNode());
+
+        // Act
+        /** @var array<\Generated\Shared\Transfer\NodeTransfer> $categoryNodeTransfers */
+        $categoryNodeTransfers = $this->getFacade()
+            ->getCategoryNodesWithRelativeNodes($categoryNodeCriteriaTransfer)
+            ->getNodes()
+            ->getArrayCopy();
+
+        // Assert
+        $this->assertCount(4, $categoryNodeTransfers, 'The number of category nodes is not equal to the expected value.');
+
+        $resultCategoryNodeIds = array_map(function (NodeTransfer $nodeTransfer): int {
+            return $nodeTransfer->getIdCategoryNode();
+        }, $categoryNodeTransfers);
+        $this->assertEmpty(array_diff($expectedCategoryNodeIds, $resultCategoryNodeIds), 'Returned category nodes ids are not equal to expected values.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCategoryNodesWithRelativeNodesWillReturnNodeTransfersWithRelativeNodesAndRelations(): void
+    {
+        // Arrange
+        $expectedStoreIds = [
+            $this->tester->haveStore([StoreTransfer::NAME => static::TEST_STORE_DE])->getIdStore(),
+            $this->tester->haveStore([StoreTransfer::NAME => static::TEST_STORE_AT])->getIdStore(),
+        ];
+
+        $localeTransfers = [
+            $this->tester->haveLocale([LocaleTransfer::LOCALE_NAME => static::TEST_LOCALE_DE]),
+            $this->tester->haveLocale([LocaleTransfer::LOCALE_NAME => static::TEST_LOCALE_EN]),
+        ];
+
+        $expectedLocaleIds = $this->extractLocaleIdsFromLocales($localeTransfers);
+
+        $categoryTransfers = $this->tester->createCategoryWithChildrenAndRelations($localeTransfers, $expectedStoreIds, 3);
+        $categoryNodeIds = $this->extractCategoryNodeIdsFromCategoryCollection($categoryTransfers);
+
+        $categoryNodeCriteriaTransfer = (new CategoryNodeCriteriaTransfer())->addIdCategoryNode($categoryNodeIds[0]);
+
+        // Act
+        /** @var array<\Generated\Shared\Transfer\NodeTransfer> $categoryNodeTransfers */
+        $categoryNodeTransfers = $this->getFacade()
+            ->getCategoryNodesWithRelativeNodes($categoryNodeCriteriaTransfer)
+            ->getNodes()
+            ->getArrayCopy();
+
+        // Assert
+        $this->assertCount(4, $categoryNodeTransfers, 'The number of category nodes is not equal to the expected value.');
+        foreach ($categoryNodeTransfers as $categoryNodeTransfer) {
+            $this->assertTrue(in_array($categoryNodeTransfer->getIdCategoryNode(), $categoryNodeIds), 'The category node is missing in expected collection.');
+            $this->assertCategoryNodeWithRelations(
+                $categoryNodeTransfer,
+                $expectedLocaleIds,
+                $expectedStoreIds,
+            );
+        }
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCategoryNodesWithRelativeNodesWillReturnEmptyNodeCollectionForNotExistingCategoryNode(): void
+    {
+        // Arrange
+        $categoryTransfer = $this->tester->haveCategory();
+        $this->tester->haveCategory([
+            CategoryTransfer::PARENT_CATEGORY_NODE => $categoryTransfer->getCategoryNode()->toArray(),
+        ]);
+        $this->tester->haveCategory([
+            CategoryTransfer::PARENT_CATEGORY_NODE => $categoryTransfer->getCategoryNode()->toArray(),
+        ]);
+
+        $categoryNodeCriteriaTransfer = (new CategoryNodeCriteriaTransfer())
+            ->addIdCategoryNode(static::FAKE_CATEGORY_NODE_ID);
+
+        // Act
+        $categoryNodeCollectionTransfer = $this->getFacade()
+            ->getCategoryNodesWithRelativeNodes($categoryNodeCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(0, $categoryNodeCollectionTransfer->getNodes(), 'The number of category nodes is not equal to the expected value.');
+    }
+
+    /**
+     * @return void
+     */
     public function testGetCategoryNodesWillReturnCorrectCategoryNodes(): void
     {
         // Arrange
@@ -878,6 +995,37 @@ class CategoryFacadeTest extends Unit
     }
 
     /**
+     * @param \Generated\Shared\Transfer\NodeTransfer $categoryNodeTransfer
+     * @param array<int> $expectedLocaleIds
+     * @param array<int> $expectedStoreIds
+     *
+     * @return void
+     */
+    protected function assertCategoryNodeWithRelations(
+        NodeTransfer $categoryNodeTransfer,
+        array $expectedLocaleIds,
+        array $expectedStoreIds
+    ): void {
+        $storeRelationTransfer = $categoryNodeTransfer->getCategoryOrFail()->getStoreRelation();
+        $this->assertNotNull($storeRelationTransfer, 'The category does not have store relations.');
+        $this->assertEquals(count($expectedStoreIds), $storeRelationTransfer->getStores()->count(), 'The category node does have all store relations.');
+
+        $resultStoreIds = $this->extractStoreIdsFromStoreRelation($storeRelationTransfer);
+        $this->assertEmpty(array_diff($expectedStoreIds, $resultStoreIds), 'Returned stores ids are not equal to expected values.');
+
+        $categoryLocalizedAttributes = $categoryNodeTransfer->getCategoryOrFail()->getLocalizedAttributes();
+        $this->assertEquals(count($expectedLocaleIds), $categoryLocalizedAttributes->count(), 'The category node does have all localized attributes.');
+
+        foreach ($categoryLocalizedAttributes as $localizedAttributeTransfer) {
+            $this->assertTrue(
+                in_array($localizedAttributeTransfer->getLocaleOrFail()->getIdLocaleOrFail(), $expectedLocaleIds),
+                'The locale is missed in a list of expected values.',
+            );
+            $this->assertNotNull($localizedAttributeTransfer->getUrl(), 'The category localized attribute URL is empty.');
+        }
+    }
+
+    /**
      * @return int
      */
     protected function getRootCategoryId(): int
@@ -949,5 +1097,50 @@ class CategoryFacadeTest extends Unit
             ->method('handleStoreRelationUpdate');
 
         return $categoryStoreAssignerPluginMock;
+    }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\CategoryTransfer> $categoryTransfers
+     *
+     * @return array<int>
+     */
+    protected function extractCategoryNodeIdsFromCategoryCollection(array $categoryTransfers): array
+    {
+        $categoryNodeIds = [];
+        foreach ($categoryTransfers as $categoryTransfer) {
+            $categoryNodeIds[] = $categoryTransfer->getCategoryNodeOrFail()->getIdCategoryNodeOrFail();
+        }
+
+        return $categoryNodeIds;
+    }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\LocaleTransfer> $localeTransfers
+     *
+     * @return array<int>
+     */
+    protected function extractLocaleIdsFromLocales(array $localeTransfers): array
+    {
+        $localeIds = [];
+        foreach ($localeTransfers as $localeTransfer) {
+            $localeIds[] = $localeTransfer->getIdLocaleOrFail();
+        }
+
+        return $localeIds;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
+     *
+     * @return array<int>
+     */
+    protected function extractStoreIdsFromStoreRelation(StoreRelationTransfer $storeRelationTransfer): array
+    {
+        $storeIds = [];
+        foreach ($storeRelationTransfer->getStores() as $storeTransfer) {
+            $storeIds[] = $storeTransfer->getIdStore();
+        }
+
+        return $storeIds;
     }
 }

@@ -214,7 +214,7 @@ class LocalizedGeneralFormType extends AbstractType
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param \Symfony\Component\Validator\Context\ExecutionContextInterface $context
      *
      * @return void
@@ -294,7 +294,7 @@ class LocalizedGeneralFormType extends AbstractType
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return string
      */

@@ -1,12 +1,12 @@
 @import '~@spryker/styles/src/lib/themes/default/variables/index.less';
 
-@dashboard-grid-default-padding: 5px;
+@dashboard-grid-default-padding: var(--spy-dashboard-grid-default-padding, 5px);
 
 .mp-dashboard-card {
     &__heading {
         display: flex;
         flex-wrap: wrap;
-        margin: -@dashboard-grid-default-padding;
+        margin: calc(@dashboard-grid-default-padding * -1);
         align-items: center;
 
         &-col {

@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer;
 
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\DocumentationGeneratorRestApiConfig;
 
 class ResourceRelationshipsPluginAnalyzer implements ResourceRelationshipsPluginAnalyzerInterface
 {
@@ -17,17 +19,26 @@ class ResourceRelationshipsPluginAnalyzer implements ResourceRelationshipsPlugin
     protected $resourceRelationshipCollectionPlugins;
 
     /**
-     * @param array<\Spryker\Glue\DocumentationGeneratorRestApiExtension\Dependency\Plugin\ResourceRelationshipCollectionProviderPluginInterface> $resourceRelationshipCollectionPlugins
+     * @var \Spryker\Zed\DocumentationGeneratorRestApi\DocumentationGeneratorRestApiConfig
      */
-    public function __construct(array $resourceRelationshipCollectionPlugins)
-    {
+    protected DocumentationGeneratorRestApiConfig $documentationGeneratorRestApiConfig;
+
+    /**
+     * @param array<\Spryker\Glue\DocumentationGeneratorRestApiExtension\Dependency\Plugin\ResourceRelationshipCollectionProviderPluginInterface> $resourceRelationshipCollectionPlugins
+     * @param \Spryker\Zed\DocumentationGeneratorRestApi\DocumentationGeneratorRestApiConfig $documentationGeneratorRestApiConfig
+     */
+    public function __construct(
+        array $resourceRelationshipCollectionPlugins,
+        DocumentationGeneratorRestApiConfig $documentationGeneratorRestApiConfig
+    ) {
         $this->resourceRelationshipCollectionPlugins = $resourceRelationshipCollectionPlugins;
+        $this->documentationGeneratorRestApiConfig = $documentationGeneratorRestApiConfig;
     }
 
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
      *
-     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface>
+     * @return array<string, \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface>
      */
     public function getResourceRelationshipsForResourceRoutePlugin(ResourceRoutePluginInterface $plugin): array
     {
@@ -44,5 +55,115 @@ class ResourceRelationshipsPluginAnalyzer implements ResourceRelationshipsPlugin
         }
 
         return $resourceRelationships;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $resourceRoutePlugin
+     *
+     * @return array<string, \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface>
+     */
+    public function getNestedResourceRelationshipsForResourceRoutePlugin(ResourceRoutePluginInterface $resourceRoutePlugin): array
+    {
+        if (!$this->documentationGeneratorRestApiConfig->isNestedRelationshipsEnabled()) {
+            return $this->getResourceRelationshipsForResourceRoutePlugin($resourceRoutePlugin);
+        }
+
+        $mappedResourceRelationshipPlugins = [];
+
+        foreach ($this->resourceRelationshipCollectionPlugins as $resourceRelationshipCollectionPlugin) {
+            $resourceRelationshipCollection = $resourceRelationshipCollectionPlugin->getResourceRelationshipCollection();
+
+            if (!$resourceRelationshipCollection->hasRelationships($resourceRoutePlugin->getResourceType())) {
+                continue;
+            }
+
+            $mappedResourceRelationshipPlugins = $this->getNestedResourceRelationshipsForResourceRelationshipPlugins(
+                $resourceRelationshipCollection->getRelationships($resourceRoutePlugin->getResourceType()),
+                $mappedResourceRelationshipPlugins,
+            );
+        }
+
+        return $mappedResourceRelationshipPlugins;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface $resourceRelationshipPlugin
+     *
+     * @return array<string, \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface>
+     */
+    public function getResourceRelationshipsForResourceRelationshipPlugin(
+        ResourceRelationshipPluginInterface $resourceRelationshipPlugin
+    ): array {
+        $resourceRelationships = [];
+
+        foreach ($this->resourceRelationshipCollectionPlugins as $resourceRelationshipCollectionPlugin) {
+            $resourceRelationshipCollection = $resourceRelationshipCollectionPlugin->getResourceRelationshipCollection();
+
+            if (!$resourceRelationshipCollection->hasRelationships($resourceRelationshipPlugin->getRelationshipResourceType())) {
+                continue;
+            }
+
+            $resourceRelationshipPlugins = $resourceRelationshipCollection->getRelationships($resourceRelationshipPlugin->getRelationshipResourceType());
+
+            foreach ($resourceRelationshipPlugins as $relationshipPlugin) {
+                $resourceRelationships[$relationshipPlugin->getRelationshipResourceType()] = $relationshipPlugin;
+            }
+        }
+
+        return $resourceRelationships;
+    }
+
+    /**
+     * @param array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface> $resourceRelationshipPlugins
+     * @param array<string, \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface> $mappedResourceRelationshipPlugins
+     *
+     * @return array<string, \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface>
+     */
+    protected function getNestedResourceRelationshipsForResourceRelationshipPlugins(
+        array $resourceRelationshipPlugins,
+        array $mappedResourceRelationshipPlugins
+    ): array {
+        foreach ($resourceRelationshipPlugins as $resourceRelationshipPlugin) {
+            $mappedResourceRelationshipPlugins[$resourceRelationshipPlugin->getRelationshipResourceType()] = $resourceRelationshipPlugin;
+
+            $mappedResourceRelationshipPlugins = $this->getNetstedResourceRelationships(
+                $resourceRelationshipPlugin,
+                $mappedResourceRelationshipPlugins,
+            );
+        }
+
+        return $mappedResourceRelationshipPlugins;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface $resourceRelationshipPlugin
+     * @param array<string, \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface> $mappedResourceRelationshipPlugins
+     *
+     * @return array<string, \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface>
+     */
+    protected function getNetstedResourceRelationships(
+        ResourceRelationshipPluginInterface $resourceRelationshipPlugin,
+        array $mappedResourceRelationshipPlugins
+    ): array {
+        foreach ($this->resourceRelationshipCollectionPlugins as $resourceRelationshipCollectionPlugin) {
+            $resourceRelationshipCollection = $resourceRelationshipCollectionPlugin->getResourceRelationshipCollection();
+
+            if (!$resourceRelationshipCollection->hasRelationships($resourceRelationshipPlugin->getRelationshipResourceType())) {
+                continue;
+            }
+
+            $resourceRelationshipPlugins = $resourceRelationshipCollection->getRelationships($resourceRelationshipPlugin->getRelationshipResourceType());
+
+            foreach ($resourceRelationshipPlugins as $relationshipPlugin) {
+                if (isset($mappedResourceRelationshipPlugins[$relationshipPlugin->getRelationshipResourceType()])) {
+                    continue;
+                }
+
+                $mappedResourceRelationshipPlugins[$relationshipPlugin->getRelationshipResourceType()] = $relationshipPlugin;
+                $mappedResourceRelationshipPlugins = $this->getNetstedResourceRelationships($relationshipPlugin, $mappedResourceRelationshipPlugins);
+            }
+        }
+
+        return $mappedResourceRelationshipPlugins;
     }
 }

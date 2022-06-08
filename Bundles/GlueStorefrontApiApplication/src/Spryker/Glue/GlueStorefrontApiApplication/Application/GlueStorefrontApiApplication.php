@@ -10,13 +10,17 @@ namespace Spryker\Glue\GlueStorefrontApiApplication\Application;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueRequestValidationTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
+use Spryker\Client\Session\SessionClient;
 use Spryker\Glue\GlueApplication\ApiApplication\Type\RequestFlowAwareApiApplication;
+use Spryker\Glue\GlueApplication\Session\Storage\MockArraySessionStorage;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\MissingResourceInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface;
 use Spryker\Glue\GlueStorefrontApiApplication\GlueStorefrontApiApplicationConfig;
 use Spryker\Glue\GlueStorefrontApiApplication\Resource\MissingResource;
 use Spryker\Glue\GlueStorefrontApiApplication\Resource\PreFlightResource;
+use Spryker\Shared\Application\ApplicationInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 /**
  * @method \Spryker\Glue\GlueStorefrontApiApplication\GlueStorefrontApiApplicationFactory getFactory()
@@ -27,6 +31,28 @@ class GlueStorefrontApiApplication extends RequestFlowAwareApiApplication
      * @var string
      */
     protected const GLUE_STOREFRONT_API_APPLICATION = 'GLUE_STOREFRONT_API_APPLICATION';
+
+    /**
+     * @return \Spryker\Shared\Application\ApplicationInterface
+     */
+    public function boot(): ApplicationInterface
+    {
+        $this->setUpSession();
+
+        return parent::boot();
+    }
+
+    /**
+     * @return void
+     */
+    protected function setUpSession(): void
+    {
+        (new SessionClient())->setContainer(
+            new Session(
+                new MockArraySessionStorage(),
+            ),
+        );
+    }
 
     /**
      * {@inheritDoc}

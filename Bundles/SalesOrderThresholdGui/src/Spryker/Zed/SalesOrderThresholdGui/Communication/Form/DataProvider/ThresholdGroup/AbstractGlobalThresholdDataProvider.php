@@ -28,7 +28,7 @@ abstract class AbstractGlobalThresholdDataProvider
 
     /**
      * @param \Generated\Shared\Transfer\SalesOrderThresholdTransfer $salesOrderThresholdTransfer
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */
@@ -48,7 +48,7 @@ abstract class AbstractGlobalThresholdDataProvider
 
     /**
      * @param \Generated\Shared\Transfer\SalesOrderThresholdTransfer $salesOrderThresholdTransfer
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */

@@ -13,7 +13,7 @@ use Symfony\Component\Form\FormErrorIterator;
 interface ProductAttributesMapperInterface
 {
     /**
-     * @param \Symfony\Component\Form\FormErrorIterator $errors
+     * @param \Symfony\Component\Form\FormErrorIterator<\Symfony\Component\Form\FormError> $errors
      * @param array $attributesInitialData
      *
      * @return array<array<string>>

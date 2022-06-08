@@ -23,7 +23,7 @@ class QueueToUtilEncodingServiceBridge implements QueueToUtilEncodingServiceInte
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param string $format
      *
      * @return string|null

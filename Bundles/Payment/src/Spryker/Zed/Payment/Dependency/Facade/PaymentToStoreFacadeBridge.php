@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Payment\Dependency\Facade;
 
+use Generated\Shared\Transfer\StoreTransfer;
+
 class PaymentToStoreFacadeBridge implements PaymentToStoreFacadeInterface
 {
     /**
@@ -27,7 +29,7 @@ class PaymentToStoreFacadeBridge implements PaymentToStoreFacadeInterface
      *
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getStoreByName($storeName)
+    public function getStoreByName(string $storeName): StoreTransfer
     {
         return $this->storeFacade->getStoreByName($storeName);
     }

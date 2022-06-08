@@ -238,7 +238,7 @@ class ProductViewVariantRestrictionExpander implements ProductViewVariantRestric
     }
 
     /**
-     * @param \RecursiveIteratorIterator $iterator
+     * @param \RecursiveIteratorIterator<\RecursiveArrayIterator<int|string, mixed>> $iterator
      * @param string $attributeVariantKey
      * @param array $attributeVariantValue
      *
@@ -275,7 +275,7 @@ class ProductViewVariantRestrictionExpander implements ProductViewVariantRestric
     /**
      * @param array $attributeVariants
      *
-     * @return \RecursiveIteratorIterator
+     * @return \RecursiveIteratorIterator<\RecursiveArrayIterator<int|string, mixed>>
      */
     protected function createRecursiveIterator(array $attributeVariants): RecursiveIteratorIterator
     {

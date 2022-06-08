@@ -135,7 +135,7 @@ class ShipmentFormDataProvider
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Generated\Shared\Transfer\ShipmentTransfer|null $shipmentTransfer
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions(OrderTransfer $orderTransfer, ?ShipmentTransfer $shipmentTransfer = null): array
     {
@@ -235,7 +235,7 @@ class ShipmentFormDataProvider
     }
 
     /**
-     * @param \ArrayObject|iterable<\Generated\Shared\Transfer\AddressTransfer> $customerAddressesCollection
+     * @param iterable<int, \Generated\Shared\Transfer\AddressTransfer> $customerAddressesCollection
      *
      * @return array<string>
      */

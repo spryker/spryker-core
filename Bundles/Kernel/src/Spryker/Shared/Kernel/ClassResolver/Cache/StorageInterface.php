@@ -13,7 +13,7 @@ namespace Spryker\Shared\Kernel\ClassResolver\Cache;
 interface StorageInterface
 {
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return void
      */

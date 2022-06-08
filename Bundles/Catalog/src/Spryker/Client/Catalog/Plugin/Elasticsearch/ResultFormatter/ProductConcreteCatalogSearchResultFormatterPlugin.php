@@ -39,7 +39,7 @@ class ProductConcreteCatalogSearchResultFormatterPlugin extends AbstractElastics
 
     /**
      * @param \Elastica\ResultSet $searchResult
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return array
      */
@@ -57,7 +57,7 @@ class ProductConcreteCatalogSearchResultFormatterPlugin extends AbstractElastics
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer
      */

@@ -1,8 +1,7 @@
 parameters:
     level: 7
-    checkGenericClassInNonGenericObjectType: false
     checkMissingIterableValueType: false
     reportUnmatchedIgnoredErrors: false
     ignoreErrors:
-        - '#Method Spryker\\Service\\UtilDataReader\\Model\\BatchIterator\\PdoBatchIterator::valid\(\) should return bool but returns int<0, max>.#'
-        - '#Method Spryker\\Service\\UtilDataReader\\Model\\BatchIterator\\PropelBatchIterator::valid\(\) should return bool but returns int<0, max>.#'
+        - '#Method Spryker\\Service\\UtilDataReader\\Model\\BatchIterator\\.+BatchIterator::valid\(\) should return bool but returns int<0, max>.#'
+        - '#Method Spryker\\Service\\UtilDataReader\\Model\\BatchIterator\\.+BatchIterator::count\(\) should return int<0, max> but returns int.#'

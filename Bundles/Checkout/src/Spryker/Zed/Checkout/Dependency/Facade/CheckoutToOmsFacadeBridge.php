@@ -24,7 +24,7 @@ class CheckoutToOmsFacadeBridge implements CheckoutToOmsFacadeInterface
 
     /**
      * @param array $orderItemIds
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */

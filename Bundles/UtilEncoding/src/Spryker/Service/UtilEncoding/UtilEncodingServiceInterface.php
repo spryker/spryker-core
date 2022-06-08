@@ -48,7 +48,7 @@ interface UtilEncodingServiceInterface
      *
      * @api
      *
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param string $format
      *
      * @throws \Spryker\Service\UtilEncoding\Exception\FormatNotSupportedException

@@ -18,6 +18,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\UrlCollector\Business\UrlCollectorFacadeInterface getFacade()
+ * @method \Spryker\Zed\UrlCollector\UrlCollectorConfig getConfig()
  */
 class UrlCollectorPlugin extends AbstractCollectorPlugin
 {

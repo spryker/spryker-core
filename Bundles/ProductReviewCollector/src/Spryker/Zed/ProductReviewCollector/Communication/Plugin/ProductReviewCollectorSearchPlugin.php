@@ -18,6 +18,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\ProductReviewCollector\Business\ProductReviewCollectorFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductReviewCollector\ProductReviewCollectorConfig getConfig()
  */
 class ProductReviewCollectorSearchPlugin extends AbstractCollectorPlugin
 {

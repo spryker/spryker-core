@@ -14,6 +14,8 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
  * @method \Spryker\Zed\Comment\Business\CommentFacadeInterface getFacade()
+ * @method \Spryker\Zed\Comment\Persistence\CommentRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Comment\Communication\CommentCommunicationFactory getFactory()
  */
 class GatewayController extends AbstractGatewayController
 {

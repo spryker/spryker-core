@@ -35,7 +35,9 @@ class PriceProductServiceFactory extends AbstractServiceFactory
      */
     public function createPriceProductGroupKeyBuilder(): PriceProductGroupKeyBuilderInterface
     {
-        return new PriceProductGroupKeyBuilder();
+        return new PriceProductGroupKeyBuilder(
+            $this->getPreBuildPriceProductGroupKeyPlugins(),
+        );
     }
 
     /**
@@ -60,5 +62,13 @@ class PriceProductServiceFactory extends AbstractServiceFactory
     public function getPriceProductDecisionPlugins(): array
     {
         return $this->getProvidedDependency(PriceProductDependencyProvider::PLUGIN_PRICE_PRODUCT_DECISION);
+    }
+
+    /**
+     * @return array<int, \Spryker\Service\PriceProductExtension\Dependency\Plugin\PreBuildPriceProductGroupKeyPluginInterface>
+     */
+    public function getPreBuildPriceProductGroupKeyPlugins(): array
+    {
+        return $this->getProvidedDependency(PriceProductDependencyProvider::PLUGIN_PRE_BUILD_PRICE_PRODUCT_GROUP_KEY);
     }
 }

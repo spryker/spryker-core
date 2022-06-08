@@ -6,5 +6,8 @@ import { Component, ChangeDetectionStrategy, ViewEncapsulation } from '@angular/
     styleUrls: ['./merchant-layout-centered.component.less'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
+    host: {
+        class: 'mp-merchant-layout-centered',
+    },
 })
 export class MerchantLayoutCenteredComponent {}

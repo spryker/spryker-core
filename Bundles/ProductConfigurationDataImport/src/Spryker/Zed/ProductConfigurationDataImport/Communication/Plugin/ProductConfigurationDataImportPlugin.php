@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductConfigurationDataImport\ProductConfigurationDataImportConfig;
 
 /**
- * @method \Spryker\Zed\ProductConfigurationDataImport\Business\ProductConfigurationDataImportFacade getFacade()
+ * @method \Spryker\Zed\ProductConfigurationDataImport\Business\ProductConfigurationDataImportFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductConfigurationDataImport\ProductConfigurationDataImportConfig getConfig()
  */
 class ProductConfigurationDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface

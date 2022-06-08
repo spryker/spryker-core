@@ -62,7 +62,7 @@ class ProductViewImageExpander implements ProductViewImageExpanderInterface
      * @param string $locale
      * @param string $imageSetName
      *
-     * @return \ArrayObject<\Generated\Shared\Transfer\ProductImageStorageTransfer>|null
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ProductImageStorageTransfer>|null
      */
     protected function getImages(ProductViewTransfer $productViewTransfer, $locale, $imageSetName)
     {
@@ -95,7 +95,7 @@ class ProductViewImageExpander implements ProductViewImageExpanderInterface
      * @param array<\Generated\Shared\Transfer\ProductImageSetStorageTransfer> $imageSetStorageCollection
      * @param string $imageSetName
      *
-     * @return \ArrayObject<\Generated\Shared\Transfer\ProductImageStorageTransfer>|null
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ProductImageStorageTransfer>|null
      */
     protected function getImageSetImages($imageSetStorageCollection, $imageSetName)
     {

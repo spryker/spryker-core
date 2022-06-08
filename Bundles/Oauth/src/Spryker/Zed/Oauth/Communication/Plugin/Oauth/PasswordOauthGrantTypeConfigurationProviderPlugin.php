@@ -14,8 +14,11 @@ use Spryker\Zed\Oauth\OauthConfig;
 use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthGrantTypeConfigurationProviderPluginInterface;
 
 /**
- * @method \Spryker\Zed\OauthCompanyUser\OauthCompanyUserConfig getConfig()
- * @method \Spryker\Zed\OauthCompanyUser\Business\OauthCompanyUserFacadeInterface getFacade()
+ * @deprecated Use {@link \Spryker\Zed\Oauth\Communication\Plugin\Oauth\CustomerPasswordOauthRequestGrantTypeConfigurationProviderPlugin}
+ * or {@link \Spryker\Zed\Oauth\Communication\Plugin\Oauth\UserPasswordOauthRequestGrantTypeConfigurationProviderPlugin} instead.
+
+ * @method \Spryker\Zed\Oauth\OauthConfig getConfig()
+ * @method \Spryker\Zed\Oauth\Business\OauthFacadeInterface getFacade()
  */
 class PasswordOauthGrantTypeConfigurationProviderPlugin extends AbstractPlugin implements OauthGrantTypeConfigurationProviderPluginInterface
 {

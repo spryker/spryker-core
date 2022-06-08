@@ -73,7 +73,7 @@ class ShipmentMethodFormDataProvider extends ViewShipmentMethodFormDataProvider
     /**
      * @param bool $isDeliveryKeyDisabled
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions(bool $isDeliveryKeyDisabled = false): array
     {

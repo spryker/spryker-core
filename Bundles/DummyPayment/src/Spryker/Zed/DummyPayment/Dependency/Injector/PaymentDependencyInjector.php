@@ -26,7 +26,7 @@ class PaymentDependencyInjector extends AbstractDependencyInjector
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function injectBusinessLayerDependencies(Container $container)
+    public function injectBusinessLayerDependencies(Container $container): Container
     {
         $container = $this->injectPaymentPlugins($container);
 
@@ -38,7 +38,7 @@ class PaymentDependencyInjector extends AbstractDependencyInjector
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function injectPaymentPlugins(Container $container)
+    protected function injectPaymentPlugins(Container $container): Container
     {
         $container->extend(PaymentDependencyProvider::CHECKOUT_PLUGINS, function (CheckoutPluginCollection $pluginCollection) {
             $pluginCollection->add(new DummyPaymentPreCheckPlugin(), DummyPaymentConfig::PROVIDER_NAME, PaymentDependencyProvider::CHECKOUT_PRE_CHECK_PLUGINS);

@@ -52,7 +52,7 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
      *  - Returns update quote.
      *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
@@ -81,7 +81,7 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
      *  - Returns update quote.
      *
      * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
@@ -114,7 +114,7 @@ class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorag
      *  - Returns update quote.
      *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */

@@ -11,6 +11,8 @@ use IteratorAggregate;
 
 /**
  * @SuppressWarnings(PHPMD.ShortMethodName)
+ *
+ * @extends \IteratorAggregate<\SplFileInfo>
  */
 interface DocumentationGeneratorRestApiToFinderInterface extends IteratorAggregate
 {

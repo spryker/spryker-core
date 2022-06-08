@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\PriceProductScheduleGui\Communication\Controller;
 
+/**
+ * @method \Spryker\Zed\PriceProductScheduleGui\Communication\PriceProductScheduleGuiCommunicationFactory getFactory()
+ */
 class EditSchedulePriceController extends EditController
 {
 }

@@ -1,27 +1,36 @@
 @import '~@spryker/styles/src/lib/themes/default/variables/index.less';
 
-@edit-concrete-product-padding: 30px;
-@edit-concrete-product-header-padding: 15px 30px;
-@edit-concrete-product-header-headline-padding-bottom: 0;
-@edit-concrete-product-header-title-margin-bottom: 7px;
-@edit-concrete-product-header-name-margin: 0;
-@edit-concrete-product-header-sub-title-padding-top: 20px;
-@edit-concrete-product-header-chips-margin: 0 10px 5px 0;
-@edit-concrete-product-card-padding-bottom: 20px;
-@edit-concrete-product-card-textarea-min-height: 100px;
-@edit-concrete-product-card-last-padding-bottom: 0;
-@edit-concrete-product-card-table-margin-top: 0;
-@edit-concrete-product-table-padding-inside-card: 3px 5px;
-@edit-concrete-product-status-control-min-height: 0;
-@edit-concrete-product-stock-reserved-margin-bottom: 17px;
-@edit-concrete-product-stock-margin: 0 -17px;
-@edit-concrete-product-stock-row-padding: 0 17px;
-@edit-concrete-product-stock-row-base-width: 275px;
-@edit-concrete-product-stock-form-label-padding: 0;
-@edit-concrete-product-stock-form-label-margin: 0;
-@edit-concrete-product-form-item-width: 130px;
-@edit-concrete-product-calendar-width: 200px;
-@edit-concrete-product-searchability-max-width: 420px;
+@edit-concrete-product-padding: var(--spy-edit-concrete-product-padding, 30px);
+@edit-concrete-product-header-padding: var(--spy-edit-concrete-product-header-padding, 17px 30px);
+@edit-concrete-product-header-headline-padding-bottom: var(
+    --spy-edit-concrete-product-header-headline-padding-bottom,
+    0
+);
+@edit-concrete-product-header-title-margin-bottom: var(--spy-edit-concrete-product-header-title-margin-bottom, 7px);
+@edit-concrete-product-header-name-margin: var(--spy-edit-concrete-product-header-name-margin, 0);
+@edit-concrete-product-header-sub-title-padding-top: var(
+    --spy-edit-concrete-product-header-sub-title-padding-top,
+    20px
+);
+@edit-concrete-product-header-chips-margin: var(--spy-edit-concrete-product-header-chips-margin, 0 10px 5px 0);
+@edit-concrete-product-card-padding-bottom: var(--spy-edit-concrete-product-card-padding-bottom, 20px);
+@edit-concrete-product-card-textarea-min-height: var(--spy-edit-concrete-product-card-textarea-min-height, 100px);
+@edit-concrete-product-card-last-padding-bottom: var(--spy-edit-concrete-product-card-last-padding-bottom, 0);
+@edit-concrete-product-card-table-margin-top: var(--spy-edit-concrete-product-card-table-margin-top, 0);
+@edit-concrete-product-table-padding-inside-card: var(--spy-edit-concrete-product-table-padding-inside-card, 3px 5px);
+@edit-concrete-product-status-control-min-height: var(--spy-edit-concrete-product-status-control-min-height, 0);
+@edit-concrete-product-stock-reserved-margin-bottom: var(
+    --spy-edit-concrete-product-stock-reserved-margin-bottom,
+    17px
+);
+@edit-concrete-product-stock-margin: var(--spy-edit-concrete-product-stock-margin, 0 -17px);
+@edit-concrete-product-stock-row-padding: var(--spy-edit-concrete-product-stock-row-padding, 0 17px);
+@edit-concrete-product-stock-row-base-width: var(--spy-edit-concrete-product-stock-row-base-width, 275px);
+@edit-concrete-product-stock-form-label-padding: var(--spy-edit-concrete-product-stock-form-label-padding, 0);
+@edit-concrete-product-stock-form-label-margin: var(--spy-edit-concrete-product-stock-form-label-margin, 0 0 5px);
+@edit-concrete-product-form-item-width: var(--spy-edit-concrete-product-form-item-width, 130px);
+@edit-concrete-product-calendar-width: var(--spy-edit-concrete-product-calendar-width, 200px);
+@edit-concrete-product-searchability-max-width: var(--spy-edit-concrete-product-searchability-max-width, 420px);
 
 .@{ajax-form-prefix-cls}-container {
     overflow-y: auto;

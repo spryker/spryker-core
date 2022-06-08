@@ -13,6 +13,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Maintenance\Business\MaintenanceFacadeInterface getFacade()
+ * @method \Spryker\Zed\Maintenance\Communication\MaintenanceCommunicationFactory getFactory()
  */
 class MaintenanceDisableConsole extends AbstractMaintenanceConsole
 {

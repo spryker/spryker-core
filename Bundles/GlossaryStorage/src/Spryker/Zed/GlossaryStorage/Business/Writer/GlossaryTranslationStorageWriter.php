@@ -205,7 +205,7 @@ class GlossaryTranslationStorageWriter implements GlossaryTranslationStorageWrit
      * @deprecated This method was added to keep the glossary data structure backward compatible and
      * will be removed in the next major version.
      *
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */

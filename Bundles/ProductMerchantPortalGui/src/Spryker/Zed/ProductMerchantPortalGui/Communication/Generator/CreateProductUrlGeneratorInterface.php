@@ -26,6 +26,8 @@ interface CreateProductUrlGeneratorInterface
     public function getCreateProductAbstractUrl(string $sku, string $name): string;
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param string $status
      * @param int $idProductAbstract
      *

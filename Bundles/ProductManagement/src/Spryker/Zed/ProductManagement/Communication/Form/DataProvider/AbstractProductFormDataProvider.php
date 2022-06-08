@@ -500,7 +500,7 @@ class AbstractProductFormDataProvider
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param array $values
      * @param bool $defaultValue
      *
@@ -608,7 +608,7 @@ class AbstractProductFormDataProvider
             $inputType = static::DEFAULT_INPUT_TYPE;
             $allowInput = false;
             $value = $productAttributeValues[$type] ?? null;
-            $shouldBeTextArea = mb_strlen($value) > 255;
+            $shouldBeTextArea = $value && mb_strlen($value) > 255;
             $checkboxDisabled = true;
             $valueDisabled = true;
 

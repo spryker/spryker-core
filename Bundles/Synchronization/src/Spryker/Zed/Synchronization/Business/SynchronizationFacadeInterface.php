@@ -18,7 +18,7 @@ interface SynchronizationFacadeInterface
      *
      * @deprecated Use {@link processStorageMessages()} instead.
      *
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param string $queueName
      *
      * @return void
@@ -34,7 +34,7 @@ interface SynchronizationFacadeInterface
      *
      * @deprecated Use {@link processStorageMessages()} instead.
      *
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param string $queueName
      *
      * @return void
@@ -50,7 +50,7 @@ interface SynchronizationFacadeInterface
      *
      * @deprecated Use {@link \Spryker\Zed\Synchronization\Business\SynchronizationFacadeInterface::processSearchMessages()} instead.
      *
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param string $queueName
      *
      * @return void
@@ -66,7 +66,7 @@ interface SynchronizationFacadeInterface
      *
      * @deprecated Use {@link \Spryker\Zed\Synchronization\Business\SynchronizationFacadeInterface::processSearchMessages()} instead.
      *
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param string $queueName
      *
      * @return void

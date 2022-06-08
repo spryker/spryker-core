@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ApiRequestTransfer;
 
 /**
  * @method \Spryker\Zed\Api\Business\ApiFacadeInterface getFacade()
+ * @method \Spryker\Zed\Api\Communication\ApiCommunicationFactory getFactory()
  */
 class RestController extends AbstractApiController
 {

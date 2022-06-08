@@ -15,4 +15,11 @@
         <property name="name" dataBuilderRule="word(1)"/>
         <property name="paymentProviderKey" dataBuilderRule="word(1)"/>
     </transfer>
+
+    <transfer name="Quote">
+    </transfer>
+
+    <transfer name="Store">
+        <property name="name" dataBuilderRule="isbn10"/>
+    </transfer>
 </transfers>

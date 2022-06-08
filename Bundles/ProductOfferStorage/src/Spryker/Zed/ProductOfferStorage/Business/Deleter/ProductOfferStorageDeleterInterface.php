@@ -23,4 +23,11 @@ interface ProductOfferStorageDeleterInterface
      * @return void
      */
     public function deleteProductOfferStorageEntitiesByProductOfferReferences(array $productOfferReferences, ?string $storeName = null): void;
+
+    /**
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
+     *
+     * @return void
+     */
+    public function deleteCollectionByProductOfferStoreEvents(array $eventTransfers): void;
 }

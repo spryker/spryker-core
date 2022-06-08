@@ -1,7 +1,6 @@
 parameters:
     level: 7
     reportUnmatchedIgnoredErrors: false
-    checkGenericClassInNonGenericObjectType: false
     checkMissingIterableValueType: false
     ignoreErrors:
         - '#Constant T_SEMICOLON not found.#'

@@ -1,2 +1,5 @@
 parameters:
     level: 8
+    ignoreErrors:
+        - '#Method .+RequestRoutingMatcher::createControllerInstance\(\) should return .+AbstractController but returns object.#'
+

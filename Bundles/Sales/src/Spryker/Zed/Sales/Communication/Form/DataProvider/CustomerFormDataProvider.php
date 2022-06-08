@@ -32,7 +32,7 @@ class CustomerFormDataProvider extends AbstractSalesFormDataProvider
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions()
     {

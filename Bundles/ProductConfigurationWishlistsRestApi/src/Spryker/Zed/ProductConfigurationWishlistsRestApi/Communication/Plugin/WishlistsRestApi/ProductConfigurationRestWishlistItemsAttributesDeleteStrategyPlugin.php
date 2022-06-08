@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\WishlistsRestApiExtension\Dependency\Plugin\RestWishlistItemsAttributesDeleteStrategyPluginInterface;
 
 /**
- * @method \Spryker\Zed\ProductConfigurationWishlistsRestApi\Business\ProductConfigurationWishlistsRestApiFacade getFacade()
+ * @method \Spryker\Zed\ProductConfigurationWishlistsRestApi\Business\ProductConfigurationWishlistsRestApiFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductConfigurationWishlistsRestApi\ProductConfigurationWishlistsRestApiConfig getConfig()
  */
 class ProductConfigurationRestWishlistItemsAttributesDeleteStrategyPlugin extends AbstractPlugin implements RestWishlistItemsAttributesDeleteStrategyPluginInterface

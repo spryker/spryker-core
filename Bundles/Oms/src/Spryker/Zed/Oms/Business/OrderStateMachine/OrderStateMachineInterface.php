@@ -14,7 +14,7 @@ interface OrderStateMachineInterface
     /**
      * @param string $eventId
      * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array|null
      */
@@ -22,7 +22,7 @@ interface OrderStateMachineInterface
 
     /**
      * @param array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem> $orderItems
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array|null
      */
@@ -38,7 +38,7 @@ interface OrderStateMachineInterface
 
     /**
      * @param array $orderItemIds
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array|null
      */
@@ -47,7 +47,7 @@ interface OrderStateMachineInterface
     /**
      * @param string $eventId
      * @param int $orderItemId
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array|null
      */
@@ -56,7 +56,7 @@ interface OrderStateMachineInterface
     /**
      * @param string $eventId
      * @param array $orderItemIds
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array|null
      */

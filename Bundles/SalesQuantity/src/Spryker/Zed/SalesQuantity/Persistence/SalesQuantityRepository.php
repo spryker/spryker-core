@@ -47,7 +47,7 @@ class SalesQuantityRepository extends AbstractRepository implements SalesQuantit
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array<bool>
      */

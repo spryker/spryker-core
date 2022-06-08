@@ -1,0 +1,18 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 40,
+            "line_to": 40,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method toArray on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/OauthAuth0/src/Spryker/Client/OauthAuth0/Auth0/Auth0.php",
+            "snippet": "                ? $accessTokenRequestTransfer->getAccessTokenRequestOptions()->toArray()",
+            "selected_text": "toArray",
+            "error_level": 3,
+            "shortcode": 83
+        }
+    ],
+    "deprecation": []
+}

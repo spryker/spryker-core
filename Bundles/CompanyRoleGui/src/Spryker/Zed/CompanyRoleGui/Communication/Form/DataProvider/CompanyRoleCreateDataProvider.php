@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\CompanyRoleGui\Communication\Form\DataProvider;
 
-use Generated\Shared\Transfer\CompanyCollectionTransfer;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
 use Generated\Shared\Transfer\PermissionTransfer;
@@ -91,26 +90,19 @@ class CompanyRoleCreateDataProvider
             $this->permissionFacade->findMergedRegisteredNonInfrastructuralPermissions(),
         );
 
-        $availableCompanies = $this->prepareAvailableCompanies(
-            $this->companyFacade->getCompanies(),
-        );
-
         return [
-            CompanyRoleCreateForm::OPTION_COMPANY_CHOICES => $availableCompanies,
             CompanyRoleCreateForm::OPTION_PERMISSION_CHOICES => $availablePermissions,
         ];
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CompanyCollectionTransfer $companyCollectionTransfer
-     *
      * @return array<int>
      */
-    protected function prepareAvailableCompanies(CompanyCollectionTransfer $companyCollectionTransfer): array
+    public function prepareAvailableCompanies(): array
     {
         $preparedCompanies = [];
 
-        foreach ($companyCollectionTransfer->getCompanies() as $companyTransfer) {
+        foreach ($this->companyFacade->getCompanies()->getCompanies() as $companyTransfer) {
             $key = sprintf(
                 '%s (ID: %d)',
                 $companyTransfer->getName(),

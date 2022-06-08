@@ -15,7 +15,7 @@ abstract class ApiEndToEndTester extends EndToEndTester
 {
     /**
      * @param string $url
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return string
      */
@@ -32,7 +32,7 @@ abstract class ApiEndToEndTester extends EndToEndTester
 
     /**
      * @param string $url
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return string
      */

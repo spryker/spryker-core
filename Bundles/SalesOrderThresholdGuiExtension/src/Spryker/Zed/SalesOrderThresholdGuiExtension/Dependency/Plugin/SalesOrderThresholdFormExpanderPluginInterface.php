@@ -62,7 +62,7 @@ interface SalesOrderThresholdFormExpanderPluginInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\SalesOrderThresholdValueTransfer $salesOrderThresholdValueTransfer
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */
@@ -74,7 +74,7 @@ interface SalesOrderThresholdFormExpanderPluginInterface
      *
      * @api
      *
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param \Generated\Shared\Transfer\SalesOrderThresholdValueTransfer $salesOrderThresholdValueTransfer
      *
      * @return \Generated\Shared\Transfer\SalesOrderThresholdValueTransfer

@@ -11,7 +11,7 @@ interface CsvReaderInterface
 {
     /**
      * @param array $columns
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */

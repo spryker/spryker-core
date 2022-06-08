@@ -3,4 +3,3 @@ parameters:
     checkMissingIterableValueType: false
     ignoreErrors:
         - '#Parameter \#1 \$reference of method .+SynchronizationDataTransfer::setReference\(\) expects string\|null, int given.#'
-        - '#Parameter \#1 \$dateTime of method .+CmsPageStorageWriter::convertDateTimeToString\(\) expects DateTime\|null, .+null given.#'

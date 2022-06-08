@@ -32,7 +32,7 @@ class PaginatedResultFormatterPluginTest extends AbstractResultFormatterPluginTe
      *
      * @param \Spryker\Client\SearchElasticsearch\Config\SearchConfigInterface $searchConfigMock
      * @param int $totalHits
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      * @param \Generated\Shared\Transfer\PaginationSearchResultTransfer $expectedResult
      *
      * @return void

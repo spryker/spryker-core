@@ -10,6 +10,9 @@ namespace Spryker\Zed\Oms\Business\Util;
 use ArrayObject;
 use LogicException;
 
+/**
+ * @extends \ArrayObject<int|string, mixed>
+ */
 class ReadOnlyArrayObject extends ArrayObject
 {
     /**
@@ -19,7 +22,7 @@ class ReadOnlyArrayObject extends ArrayObject
      *
      * @return void
      */
-    public function append($value)
+    public function append($value): void
     {
         throw new LogicException('Attempting to write to an immutable array');
     }
@@ -31,7 +34,7 @@ class ReadOnlyArrayObject extends ArrayObject
      *
      * @return array
      */
-    public function exchangeArray($input)
+    public function exchangeArray($input): array
     {
         throw new LogicException('Attempting to write to an immutable array');
     }
@@ -44,7 +47,7 @@ class ReadOnlyArrayObject extends ArrayObject
      *
      * @return void
      */
-    public function offsetSet($index, $newval)
+    public function offsetSet($index, $newval): void
     {
         throw new LogicException('Attempting to write to an immutable array');
     }
@@ -56,7 +59,7 @@ class ReadOnlyArrayObject extends ArrayObject
      *
      * @return void
      */
-    public function offsetUnset($index)
+    public function offsetUnset($index): void
     {
         throw new LogicException('Attempting to write to an immutable array');
     }

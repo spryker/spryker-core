@@ -70,7 +70,7 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
     /**
      * @param int $idPage
      * @param string $placeholder
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return string
      */

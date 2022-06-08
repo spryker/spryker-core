@@ -14,6 +14,9 @@ use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface as Dependency
 use Spryker\Zed\Oms\Dependency\Plugin\Condition\HasAwareCollectionInterface;
 use Spryker\Zed\Oms\Exception\ConditionNotFoundException;
 
+/**
+ * @implements \ArrayAccess<string, \Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface|\Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface>
+ */
 class ConditionCollection implements ConditionCollectionInterface, HasAwareCollectionInterface, ArrayAccess
 {
     /**
@@ -80,7 +83,7 @@ class ConditionCollection implements ConditionCollectionInterface, HasAwareColle
      *
      * @return bool
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return $this->has($offset);
     }
@@ -90,6 +93,7 @@ class ConditionCollection implements ConditionCollectionInterface, HasAwareColle
      *
      * @return \Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface|\Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return $this->get($offset);
@@ -101,7 +105,7 @@ class ConditionCollection implements ConditionCollectionInterface, HasAwareColle
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         $this->add($value, $offset);
     }
@@ -111,7 +115,7 @@ class ConditionCollection implements ConditionCollectionInterface, HasAwareColle
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->conditions[$offset]);
     }

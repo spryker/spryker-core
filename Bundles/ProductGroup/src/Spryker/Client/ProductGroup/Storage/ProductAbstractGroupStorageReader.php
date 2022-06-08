@@ -52,7 +52,7 @@ class ProductAbstractGroupStorageReader implements ProductAbstractGroupStorageRe
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \Generated\Shared\Transfer\ProductAbstractGroupsTransfer
      */

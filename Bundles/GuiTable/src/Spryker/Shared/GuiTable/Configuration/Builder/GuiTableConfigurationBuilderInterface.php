@@ -8,6 +8,8 @@
 namespace Spryker\Shared\GuiTable\Configuration\Builder;
 
 use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
+use Generated\Shared\Transfer\GuiTableEditableConfigurationTransfer;
+use Generated\Shared\Transfer\GuiTableRowActionTransfer;
 
 interface GuiTableConfigurationBuilderInterface
 {
@@ -112,6 +114,38 @@ interface GuiTableConfigurationBuilderInterface
     public const DATA_SOURCE_TYPE_INLINE_TABLE = 'inline.table';
 
     /**
+     * Specification:
+     *  - Gets editable fields configuration.
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\GuiTableEditableConfigurationTransfer|null
+     */
+    public function getEditableConfiguration(): ?GuiTableEditableConfigurationTransfer;
+
+    /**
+     * Specification:
+     *  - Gets GuiTableColumnConfiguration transfer collection.
+     *
+     * @api
+     *
+     * @return array<string, \Generated\Shared\Transfer\GuiTableColumnConfigurationTransfer>
+     */
+    public function getColumns(): array;
+
+    /**
+     * Specification:
+     *  - Sets GuiTableColumnConfiguration transfer collection.
+     *
+     * @api
+     *
+     * @param array<string, \Generated\Shared\Transfer\GuiTableColumnConfigurationTransfer> $colunms
+     *
+     * @return $this
+     */
+    public function setColumns(array $colunms);
+
+    /**
      * @api
      *
      * @param string $id
@@ -163,6 +197,30 @@ interface GuiTableConfigurationBuilderInterface
         bool $isHideable,
         ?string $uiDateFormat = null
     );
+
+    /**
+     * Specification:
+     *  - Gets GuiTableRowAction transfer collection.
+     *
+     * @api
+     *
+     * @return array<\Generated\Shared\Transfer\GuiTableRowActionTransfer>
+     */
+    public function getRowActions(): array;
+
+    /**
+     * Specification:
+     *  - Gets GuiTableRowAction transfer by id.
+     *
+     * @api
+     *
+     * @param string $id
+     *
+     * @throws \Spryker\Shared\GuiTable\Exception\RowActionNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\GuiTableRowActionTransfer
+     */
+    public function getRowAction(string $id): GuiTableRowActionTransfer;
 
     /**
      * @api
@@ -607,4 +665,17 @@ interface GuiTableConfigurationBuilderInterface
      * @return $this
      */
     public function addEditableColumnDynamic(string $id, string $title, string $dependableColumn, string $dependableUrl);
+
+    /**
+     * Specification:
+     *  - Sets the display key for specified column by column ID.
+     *
+     * @api
+     *
+     * @param string $columnId
+     * @param string $displayKey
+     *
+     * @return $this
+     */
+    public function setColumnDisplayKey(string $columnId, string $displayKey);
 }

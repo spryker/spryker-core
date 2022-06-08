@@ -1,0 +1,128 @@
+asyncapi: 2.2.0
+info:
+    title: 'Registry service (ATRS) AsyncAPI definition.'
+    version: 0.1.0
+channels:
+    channelNameA:
+        subscribe:
+            message:
+                oneOf:
+                    - $ref: '#/components/messages/OutgoingMessage'
+                    - $ref: '#/components/messages/AnotherOutgoingMessage'
+        publish:
+            message:
+                oneOf:
+                    - $ref: '#/components/messages/IncomingMessage'
+                    - $ref: '#/components/messages/AnotherIncomingMessage'
+    channelNameB:
+        subscribe:
+            message:
+                oneOf:
+                    - $ref: '#/components/messages/OutgoingMessage'
+                    - $ref: '#/components/messages/AnotherOutgoingMessage'
+        publish:
+            message:
+                oneOf:
+                    - $ref: '#/components/messages/IncomingMessage'
+                    - $ref: '#/components/messages/AnotherIncomingMessage'
+components:
+    messages:
+        OutgoingMessage:
+            name: OutgoingMessage
+            operationId: Module
+            payload:
+                $ref: '#/components/schemas/OutgoingMessage'
+            headers:
+                $ref: '#/components/schemas/headers'
+        AnotherOutgoingMessage:
+            name: OutgoingMessage
+            operationId: Module
+            payload:
+                $ref: '#/components/schemas/AnotherOutgoingMessage'
+            headers:
+                $ref: '#/components/schemas/headers'
+        IncomingMessage:
+            name: IncomingMessage
+            operationId: Module
+            payload:
+                $ref: '#/components/schemas/IncomingMessage'
+            headers:
+                $ref: '#/components/schemas/headers'
+        AnotherIncomingMessage:
+            name: IncomingMessage
+            operationId: Module
+            payload:
+                $ref: '#/components/schemas/AnotherIncomingMessage'
+            headers:
+                $ref: '#/components/schemas/headers'
+    schemas:
+        OutgoingMessage:
+            type: object
+            properties:
+                outgoingSourceStatus:
+                    type: string
+                    example: 'outgoingSourceStatus'
+                outgoingTargetStatus:
+                    type: string
+                    example: 'outgoingTargetStatus'
+            required:
+                - outgoingSourceStatus
+                - outgoingTargetStatus
+
+        AnotherOutgoingMessage:
+            type: object
+            properties:
+                anotherOutgoingSourceStatus:
+                    type: string
+                    example: 'anotherOutgoingSourceStatus'
+                anotherOutgoingTargetStatus:
+                    type: string
+                    example: 'anotherOutgoingTargetStatus'
+            required:
+                - anotherOutgoingSourceStatus
+                - anotherOutgoingTargetStatus
+
+        IncomingMessage:
+            type: object
+            properties:
+                incomingSourceStatus:
+                    type: string
+                    example: 'incomingSourceStatus'
+                incomingTargetStatus:
+                    type: string
+                    example: 'incomingTargetStatus'
+            required:
+                - incomingSourceStatus
+                - incomingTargetStatus
+
+        AnotherIncomingMessage:
+            type: object
+            properties:
+                anothorIncomingSourceStatus:
+                    type: string
+                    example: 'anothorIncomingSourceStatus'
+                anothorIncomingTargetStatus:
+                    type: string
+                    example: 'anothorIncomingTargetStatus'
+            required:
+                - sourceStatus
+                - anothorIncomingTargetStatus
+
+        headers:
+            type: object
+            properties:
+                timestamp:
+                    type: integer
+                    description: 'Timestamp when this message was created (microtime).'
+                tenantIdentifier:
+                    type: string
+                    description: 'Identifier of the tenant for the triggered event.'
+                appIdentifier:
+                    type: string
+                    description: 'Identifier of the app for the triggered event.'
+                correlationId:
+                    type: string
+                    description: 'Identifier of the current process.'
+            required:
+                - timestamp
+                - correlationId

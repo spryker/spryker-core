@@ -51,6 +51,11 @@ class BusinessHelper extends AbstractHelper
     protected const SHARED_FACTORY_CLASS_NAME_PATTERN = '\%1$s\Shared\%3$s\%3$sSharedFactory';
 
     /**
+     * @var string
+     */
+    protected const APPLICATION_NAME = 'Zed';
+
+    /**
      * @var array
      */
     protected $dependencies = [];
@@ -97,7 +102,7 @@ class BusinessHelper extends AbstractHelper
     public function mockFacadeMethod(string $methodName, $return, ?string $moduleName = null)
     {
         $moduleName = $this->getModuleName($moduleName);
-        $className = $this->resolveClassName(static::BUSINESS_FACADE_CLASS_NAME_PATTERN, $moduleName);
+        $className = $this->resolveClassName(static::BUSINESS_FACADE_CLASS_NAME_PATTERN, $moduleName, static::APPLICATION_NAME);
 
         if (!method_exists($className, $methodName)) {
             throw new Exception(sprintf('You tried to mock a not existing method "%s". Available methods are "%s"', $methodName, implode(', ', get_class_methods($className))));
@@ -170,7 +175,7 @@ class BusinessHelper extends AbstractHelper
      */
     protected function createFacade(string $moduleName): AbstractFacade
     {
-        $className = $this->resolveClassName(static::BUSINESS_FACADE_CLASS_NAME_PATTERN, $moduleName);
+        $className = $this->resolveClassName(static::BUSINESS_FACADE_CLASS_NAME_PATTERN, $moduleName, static::APPLICATION_NAME);
 
         return new $className();
     }
@@ -187,7 +192,7 @@ class BusinessHelper extends AbstractHelper
     public function mockFactoryMethod(string $methodName, $return, ?string $moduleName = null)
     {
         $moduleName = $this->getModuleName($moduleName);
-        $className = $this->resolveClassName(static::BUSINESS_FACTORY_CLASS_NAME_PATTERN, $moduleName);
+        $className = $this->resolveClassName(static::BUSINESS_FACTORY_CLASS_NAME_PATTERN, $moduleName, static::APPLICATION_NAME);
 
         if (!method_exists($className, $methodName)) {
             throw new Exception(sprintf('You tried to mock a not existing method "%s". Available methods are "%s"', $methodName, implode(', ', get_class_methods($className))));
@@ -217,7 +222,7 @@ class BusinessHelper extends AbstractHelper
     public function mockSharedFactoryMethod(string $methodName, $return, ?string $moduleName = null)
     {
         $moduleName = $this->getModuleName($moduleName);
-        $className = $this->resolveClassName(static::SHARED_FACTORY_CLASS_NAME_PATTERN, $moduleName);
+        $className = $this->resolveClassName(static::SHARED_FACTORY_CLASS_NAME_PATTERN, $moduleName, static::APPLICATION_NAME);
 
         if (!method_exists($className, $methodName)) {
             throw new Exception(sprintf('You tried to mock a not existing method "%s". Available methods are "%s"', $methodName, implode(', ', get_class_methods($className))));
@@ -270,7 +275,7 @@ class BusinessHelper extends AbstractHelper
      */
     protected function createFactory(string $moduleName): AbstractBusinessFactory
     {
-        $moduleFactoryClassName = $this->resolveClassName(static::BUSINESS_FACTORY_CLASS_NAME_PATTERN, $moduleName);
+        $moduleFactoryClassName = $this->resolveClassName(static::BUSINESS_FACTORY_CLASS_NAME_PATTERN, $moduleName, static::APPLICATION_NAME);
 
         return new $moduleFactoryClassName();
     }

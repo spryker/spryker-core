@@ -56,7 +56,7 @@ class ProductSetGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @deprecated Use {@link getCreateProductSetForm()} instead.
      *
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
@@ -83,7 +83,7 @@ class ProductSetGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
@@ -96,7 +96,7 @@ class ProductSetGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @deprecated Use {@link getUpdateProductSetForm()} instead.
      *
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
@@ -107,7 +107,7 @@ class ProductSetGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
@@ -225,7 +225,7 @@ class ProductSetGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @deprecated Use {@link getReorderProductSetsForm()} instead.
      *
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
@@ -236,7 +236,7 @@ class ProductSetGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface

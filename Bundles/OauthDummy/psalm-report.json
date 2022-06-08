@@ -1,0 +1,102 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 57,
+            "line_to": 57,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getAudience on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/OauthDummy/src/Spryker/Zed/OauthDummy/Business/Generator/AccessTokenGenerator.php",
+            "snippet": "            if ($accessTokenRequestTransfer->getAccessTokenRequestOptions()->getAudience()) {",
+            "selected_text": "getAudience",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 58,
+            "line_to": 58,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Lcobucci\\JWT\\Builder::permittedFor cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/OauthDummy/src/Spryker/Zed/OauthDummy/Business/Generator/AccessTokenGenerator.php",
+            "snippet": "                $tokenBuilder->permittedFor($accessTokenRequestTransfer->getAccessTokenRequestOptions()->getAudience());",
+            "selected_text": "$accessTokenRequestTransfer->getAccessTokenRequestOptions()->getAudience()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 58,
+            "line_to": 58,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getAudience on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/OauthDummy/src/Spryker/Zed/OauthDummy/Business/Generator/AccessTokenGenerator.php",
+            "snippet": "                $tokenBuilder->permittedFor($accessTokenRequestTransfer->getAccessTokenRequestOptions()->getAudience());",
+            "selected_text": "getAudience",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 60,
+            "line_to": 60,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getStoreReference on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/OauthDummy/src/Spryker/Zed/OauthDummy/Business/Generator/AccessTokenGenerator.php",
+            "snippet": "            if ($accessTokenRequestTransfer->getAccessTokenRequestOptions()->getStoreReference()) {",
+            "selected_text": "getStoreReference",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 63,
+            "line_to": 63,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getStoreReference on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/OauthDummy/src/Spryker/Zed/OauthDummy/Business/Generator/AccessTokenGenerator.php",
+            "snippet": "                    $accessTokenRequestTransfer->getAccessTokenRequestOptions()->getStoreReference(),",
+            "selected_text": "getStoreReference",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 77,
+            "line_to": 77,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getTimestamp on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/OauthDummy/src/Spryker/Zed/OauthDummy/Business/Generator/AccessTokenGenerator.php",
+            "snippet": "            ->setExpiresAt($token->claims()->get('exp')->getTimestamp());",
+            "selected_text": "getTimestamp",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 68,
+            "line_to": 68,
+            "type": "TypeDoesNotContainType",
+            "message": "\"development\" cannot be identical to \"\"",
+            "file_name": "vendor/spryker/spryker/Bundles/OauthDummy/src/Spryker/Zed/OauthDummy/OauthDummyConfig.php",
+            "snippet": "        return APPLICATION_ENV === 'development' || APPLICATION_ENV === 'docker.dev';",
+            "selected_text": "APPLICATION_ENV === 'development'",
+            "error_level": 4,
+            "shortcode": 56
+        },
+        {
+            "severity": "info",
+            "line_from": 68,
+            "line_to": 68,
+            "type": "TypeDoesNotContainType",
+            "message": "\"docker.dev\" cannot be identical to \"\"",
+            "file_name": "vendor/spryker/spryker/Bundles/OauthDummy/src/Spryker/Zed/OauthDummy/OauthDummyConfig.php",
+            "snippet": "        return APPLICATION_ENV === 'development' || APPLICATION_ENV === 'docker.dev';",
+            "selected_text": "APPLICATION_ENV === 'docker.dev'",
+            "error_level": 4,
+            "shortcode": 56
+        }
+    ],
+    "deprecation": []
+}

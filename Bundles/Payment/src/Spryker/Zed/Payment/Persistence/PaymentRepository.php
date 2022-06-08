@@ -7,10 +7,16 @@
 
 namespace Spryker\Zed\Payment\Persistence;
 
+use Generated\Shared\Transfer\PaymentMethodCollectionTransfer;
+use Generated\Shared\Transfer\PaymentMethodCriteriaTransfer;
 use Generated\Shared\Transfer\PaymentMethodsTransfer;
 use Generated\Shared\Transfer\PaymentMethodTransfer;
 use Generated\Shared\Transfer\PaymentProviderCollectionTransfer;
+use Generated\Shared\Transfer\PaymentProviderCriteriaTransfer;
+use Generated\Shared\Transfer\PaymentProviderTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
+use Orm\Zed\Payment\Persistence\SpyPaymentMethodQuery;
+use Orm\Zed\Payment\Persistence\SpyPaymentProviderQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -30,7 +36,35 @@ class PaymentRepository extends AbstractRepository implements PaymentRepositoryI
             ->filterByIdPaymentMethod($idPaymentMethod)
             ->findOne();
 
-        if ($paymentMethodEntity === null) {
+        if (!$paymentMethodEntity) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createPaymentMapper()
+            ->mapPaymentMethodEntityToPaymentMethodTransfer($paymentMethodEntity, new PaymentMethodTransfer());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer
+     *
+     * @return \Generated\Shared\Transfer\PaymentMethodTransfer|null
+     */
+    public function findPaymentMethod(PaymentMethodTransfer $paymentMethodTransfer): ?PaymentMethodTransfer
+    {
+        $paymentMethodQuery = $this->getFactory()->createPaymentMethodQuery();
+
+        if ($paymentMethodTransfer->getIdPaymentMethod() !== null) {
+            $paymentMethodQuery->filterByIdPaymentMethod($paymentMethodTransfer->getIdPaymentMethod());
+        }
+
+        if ($paymentMethodTransfer->getPaymentMethodKey() !== null) {
+            $paymentMethodQuery->filterByPaymentMethodKey($paymentMethodTransfer->getPaymentMethodKey());
+        }
+
+        $paymentMethodEntity = $paymentMethodQuery->findOne();
+
+        if (!$paymentMethodEntity) {
             return null;
         }
 
@@ -68,7 +102,8 @@ class PaymentRepository extends AbstractRepository implements PaymentRepositoryI
         }
 
         return $this->getFactory()
-            ->createPaymentProviderMapper()->mapPaymentProviderEntityCollectionToPaymentProviderCollectionTransfer(
+            ->createPaymentProviderMapper()
+            ->mapPaymentProviderEntityCollectionToPaymentProviderCollectionTransfer(
                 $paymentProviderEntities,
                 $paymentProviderCollectionTransfer,
             );
@@ -100,10 +135,14 @@ class PaymentRepository extends AbstractRepository implements PaymentRepositoryI
     public function getPaymentMethodsWithStoreRelation(): PaymentMethodsTransfer
     {
         $paymentMethodsTransfer = new PaymentMethodsTransfer();
-        $paymentMethodEntities = $this->getFactory()
+        $paymentMethodQuery = $this->getFactory()
             ->createPaymentMethodQuery()
-            ->leftJoinWithSpyPaymentMethodStore()
-            ->find();
+            ->leftJoinWithSpyPaymentMethodStore();
+
+        if ($this->getFactory()->createPaymentMethodQuery()->getTableMap()->hasColumn('is_hidden')) {
+            $paymentMethodQuery->filterByIsHidden(false);
+        }
+        $paymentMethodEntities = $paymentMethodQuery->find();
 
         if (!$paymentMethodEntities->getData()) {
             return $paymentMethodsTransfer;
@@ -115,5 +154,175 @@ class PaymentRepository extends AbstractRepository implements PaymentRepositoryI
                 $paymentMethodEntities,
                 $paymentMethodsTransfer,
             );
+    }
+
+    /**
+     * @param string $paymentProviderKey
+     *
+     * @return \Generated\Shared\Transfer\PaymentProviderTransfer|null
+     */
+    public function findPaymentProviderByKey(string $paymentProviderKey): ?PaymentProviderTransfer
+    {
+        $paymentProviderTransfer = new PaymentProviderTransfer();
+        $paymentProviderEntity = $this->getFactory()
+            ->createPaymentProviderQuery()
+            ->filterByPaymentProviderKey($paymentProviderKey)
+            ->findOne();
+
+        if ($paymentProviderEntity === null) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createPaymentProviderMapper()
+            ->mapPaymentProviderEntityToPaymentProviderTransfer(
+                $paymentProviderEntity,
+                $paymentProviderTransfer,
+            );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PaymentProviderCriteriaTransfer $paymentProviderCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PaymentProviderCollectionTransfer
+     */
+    public function getPaymentProviderCollection(PaymentProviderCriteriaTransfer $paymentProviderCriteriaTransfer): PaymentProviderCollectionTransfer
+    {
+        $paymentProviderCollectionTransfer = new PaymentProviderCollectionTransfer();
+        $paymentProviderQuery = $this->getFactory()
+            ->createPaymentProviderQuery()
+            ->leftJoinWithSpyPaymentMethod();
+
+        $paymentProviderEntities = $this->applyPaymentProviderFilters(
+            $paymentProviderQuery,
+            $paymentProviderCriteriaTransfer,
+        )->find();
+
+        if (!$paymentProviderEntities->count()) {
+            return $paymentProviderCollectionTransfer;
+        }
+
+        return $this->getFactory()
+            ->createPaymentProviderMapper()
+            ->mapPaymentProviderEntityCollectionToPaymentProviderCollectionTransfer(
+                $paymentProviderEntities,
+                $paymentProviderCollectionTransfer,
+            );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PaymentMethodCriteriaTransfer $paymentMethodCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PaymentMethodCollectionTransfer
+     */
+    public function getPaymentMethodCollection(PaymentMethodCriteriaTransfer $paymentMethodCriteriaTransfer): PaymentMethodCollectionTransfer
+    {
+        $paymentMethodCollectionTransfer = new PaymentMethodCollectionTransfer();
+        $paymentMethodQuery = $this->getFactory()
+            ->createPaymentMethodQuery()
+            ->joinWithSpyPaymentProvider();
+        $paymentMethodEntities = $this->applyPaymentMethodFilters(
+            $paymentMethodQuery,
+            $paymentMethodCriteriaTransfer,
+        )->find();
+
+        if (!$paymentMethodEntities->count()) {
+            return $paymentMethodCollectionTransfer;
+        }
+
+        return $this->getFactory()
+            ->createPaymentMapper()
+            ->mapPaymentMethodEntityCollectionToPaymentMethodCollectionTransfer(
+                $paymentMethodEntities,
+                $paymentMethodCollectionTransfer,
+            );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PaymentProviderCriteriaTransfer $paymentProviderCriteriaTransfer
+     *
+     * @return bool
+     */
+    public function hasPaymentProvider(PaymentProviderCriteriaTransfer $paymentProviderCriteriaTransfer): bool
+    {
+        return $this->applyPaymentProviderFilters(
+            $this->getFactory()->createPaymentProviderQuery(),
+            $paymentProviderCriteriaTransfer,
+        )->exists();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PaymentMethodCriteriaTransfer $paymentMethodCriteriaTransfer
+     *
+     * @return bool
+     */
+    public function hasPaymentMethod(PaymentMethodCriteriaTransfer $paymentMethodCriteriaTransfer): bool
+    {
+        return $this->applyPaymentMethodFilters(
+            $this->getFactory()->createPaymentMethodQuery(),
+            $paymentMethodCriteriaTransfer,
+        )->exists();
+    }
+
+    /**
+     * @param \Orm\Zed\Payment\Persistence\SpyPaymentMethodQuery $paymentMethodQuery
+     * @param \Generated\Shared\Transfer\PaymentMethodCriteriaTransfer $paymentMethodCriteriaTransfer
+     *
+     * @return \Orm\Zed\Payment\Persistence\SpyPaymentMethodQuery
+     */
+    protected function applyPaymentMethodFilters(
+        SpyPaymentMethodQuery $paymentMethodQuery,
+        PaymentMethodCriteriaTransfer $paymentMethodCriteriaTransfer
+    ): SpyPaymentMethodQuery {
+        $paymentMethodConditionsTransfer = $paymentMethodCriteriaTransfer->getPaymentMethodConditions();
+
+        if (!$paymentMethodConditionsTransfer) {
+            return $paymentMethodQuery;
+        }
+
+        if ($paymentMethodConditionsTransfer->getNames()) {
+            $paymentMethodQuery->filterByName_In($paymentMethodConditionsTransfer->getNames());
+        }
+
+        if ($paymentMethodConditionsTransfer->getPaymentMethodIds()) {
+            $paymentMethodQuery->filterByIdPaymentMethod_In($paymentMethodConditionsTransfer->getPaymentMethodIds());
+        }
+
+        if ($paymentMethodConditionsTransfer->getPaymentMethodKeys()) {
+            $paymentMethodQuery->filterByPaymentMethodKey_In($paymentMethodConditionsTransfer->getPaymentMethodKeys());
+        }
+
+        return $paymentMethodQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\Payment\Persistence\SpyPaymentProviderQuery $paymentProviderQuery
+     * @param \Generated\Shared\Transfer\PaymentProviderCriteriaTransfer $paymentProviderCriteriaTransfer
+     *
+     * @return \Orm\Zed\Payment\Persistence\SpyPaymentProviderQuery
+     */
+    protected function applyPaymentProviderFilters(
+        SpyPaymentProviderQuery $paymentProviderQuery,
+        PaymentProviderCriteriaTransfer $paymentProviderCriteriaTransfer
+    ): SpyPaymentProviderQuery {
+        $paymentProviderConditionsTransfer = $paymentProviderCriteriaTransfer->getPaymentProviderConditions();
+
+        if (!$paymentProviderConditionsTransfer) {
+            return $paymentProviderQuery;
+        }
+
+        if ($paymentProviderConditionsTransfer->getNames()) {
+            $paymentProviderQuery->filterByName_In($paymentProviderConditionsTransfer->getNames());
+        }
+
+        if ($paymentProviderConditionsTransfer->getPaymentProviderIds()) {
+            $paymentProviderQuery->filterByIdPaymentProvider_In($paymentProviderConditionsTransfer->getPaymentProviderIds());
+        }
+
+        if ($paymentProviderConditionsTransfer->getPaymentProviderKeys()) {
+            $paymentProviderQuery->filterByPaymentProviderKey_In($paymentProviderConditionsTransfer->getPaymentProviderKeys());
+        }
+
+        return $paymentProviderQuery;
     }
 }

@@ -30,7 +30,7 @@ class PaymentsRestApiConfig extends AbstractBundleConfig
     ];
 
     /**
-     * @var array<string, array>
+     * @var array<string, array<string, array<string>>>
      */
     protected const PAYMENT_METHOD_REQUIRED_FIELDS = [];
 

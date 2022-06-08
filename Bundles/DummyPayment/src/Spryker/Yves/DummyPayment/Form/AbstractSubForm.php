@@ -13,6 +13,7 @@ use Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface;
 use Spryker\Yves\StepEngine\Dependency\Form\SubFormProviderNameInterface;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
@@ -32,7 +33,7 @@ abstract class AbstractSubForm extends AbstractSubFormType implements SubFormInt
     /**
      * @return string
      */
-    public function getProviderName()
+    public function getProviderName(): string
     {
         return DummyPaymentConstants::PROVIDER_NAME;
     }
@@ -70,7 +71,7 @@ abstract class AbstractSubForm extends AbstractSubFormType implements SubFormInt
     /**
      * @return \Symfony\Component\Validator\Constraint
      */
-    protected function createNotBlankConstraint()
+    protected function createNotBlankConstraint(): Constraint
     {
         return new NotBlank(['groups' => $this->getPropertyPath()]);
     }
@@ -78,7 +79,7 @@ abstract class AbstractSubForm extends AbstractSubFormType implements SubFormInt
     /**
      * @return \Symfony\Component\Validator\Constraint
      */
-    protected function createBirthdayConstraint()
+    protected function createBirthdayConstraint(): Constraint
     {
         return new Callback([
             'callback' => function ($date, ExecutionContextInterface $context) {

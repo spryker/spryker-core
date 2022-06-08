@@ -13,6 +13,10 @@ use Countable;
 use IteratorAggregate;
 use Spryker\Glue\Testify\OpenApi3\Property\PropertyDefinition;
 
+/**
+ * @implements \ArrayAccess<int|string, \Spryker\Glue\Testify\OpenApi3\Property\PropertyDefinition>
+ * @implements \IteratorAggregate<\Spryker\Glue\Testify\OpenApi3\Property\PropertyDefinition>
+ */
 class ObjectSpecification implements IteratorAggregate, ArrayAccess, Countable
 {
     /**
@@ -40,7 +44,7 @@ class ObjectSpecification implements IteratorAggregate, ArrayAccess, Countable
     }
 
     /**
-     * @return \ArrayIterator<\Spryker\Glue\Testify\OpenApi3\Property\PropertyDefinition>
+     * @return \ArrayIterator<int|string, \Spryker\Glue\Testify\OpenApi3\Property\PropertyDefinition>
      */
     public function getIterator()
     {

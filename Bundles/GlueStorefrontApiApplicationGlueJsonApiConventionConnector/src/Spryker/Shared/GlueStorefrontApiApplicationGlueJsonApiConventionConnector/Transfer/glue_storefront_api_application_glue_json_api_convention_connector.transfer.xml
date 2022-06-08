@@ -5,4 +5,20 @@
         <property name="application" type="string"/>
     </transfer>
 
+    <transfer name="ApiApplicationSchemaContext">
+        <property name="relationshipPluginsContexts" type="RelationshipPluginsContext[]" singular="relationshipPluginsContext"/>
+        <property name="resourceContexts" type="ResourceContext[]" singular="resourceContext"/>
+    </transfer>
+
+    <transfer name="RelationshipPluginsContext">
+        <property name="resourcePluginName" type="string"/>
+        <property name="relationship" type="string"/>
+        <property name="resourceType" type="string"/>
+    </transfer>
+
+    <transfer name="ResourceContext">
+        <property name="relationships" type="string"/>
+        <property name="resourceType" type="string"/>
+    </transfer>
+
 </transfers>

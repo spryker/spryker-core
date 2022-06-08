@@ -28,7 +28,7 @@ class PaymentDataProvider implements FormDataProviderInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $transfer
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions($transfer): array
     {

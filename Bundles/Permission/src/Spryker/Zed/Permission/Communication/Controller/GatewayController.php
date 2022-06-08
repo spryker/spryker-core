@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
  * @method \Spryker\Zed\Permission\Business\PermissionFacadeInterface getFacade()
+ * @method \Spryker\Zed\Permission\Persistence\PermissionRepositoryInterface getRepository()
  */
 class GatewayController extends AbstractGatewayController
 {

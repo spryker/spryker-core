@@ -13,7 +13,7 @@ use Spryker\Zed\SalesReturnExtension\Dependency\Plugin\ReturnExpanderPluginInter
 
 /**
  * @method \Spryker\Zed\MerchantSalesReturn\MerchantSalesReturnConfig getConfig()
- * @method \Spryker\Zed\MerchantSalesReturn\Business\MerchantSalesReturnFacade getFacade()
+ * @method \Spryker\Zed\MerchantSalesReturn\Business\MerchantSalesReturnFacadeInterface getFacade()
  * @method \Spryker\Zed\MerchantSalesReturn\Communication\MerchantSalesReturnCommunicationFactory getFactory()
  */
 class MerchantReturnExpanderPlugin extends AbstractPlugin implements ReturnExpanderPluginInterface

@@ -38,7 +38,7 @@ class ImageCollectionTransformer implements DataTransformerInterface
      *
      * @param array $value The value in the transformed representation
      *
-     * @return \ArrayObject|null The value in the original representation
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\CategoryImageTransfer>|null The value in the original representation
      */
     public function reverseTransform($value)
     {
@@ -48,7 +48,7 @@ class ImageCollectionTransformer implements DataTransformerInterface
 
         $categoryImageTransferCollection = [];
         /** @var \Generated\Shared\Transfer\CategoryImageTransfer $categoryImageTransfer */
-        foreach ($value as $sortOrder => $categoryImageTransfer) {
+        foreach ($value as $categoryImageTransfer) {
             $categoryImageTransferCollection[] = $categoryImageTransfer;
         }
 

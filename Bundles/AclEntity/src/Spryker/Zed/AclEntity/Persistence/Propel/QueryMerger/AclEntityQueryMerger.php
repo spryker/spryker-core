@@ -94,6 +94,10 @@ class AclEntityQueryMerger implements AclEntityQueryMergerInterface
                 (string)$srcJoin->getRightTableAliasOrName(),
             );
             $srcJoin->setRightTableAlias($aclEntityTableAlias);
+            /** @var \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion|null $srcJoinCondition */
+            $srcJoinCondition = $srcJoin->getJoinCondition();
+            $srcJoin = $srcJoinCondition ? $this->rebuildJoinCondition($srcJoin) : $srcJoin;
+
             $dstQuery->addAlias($aclEntityTableAlias, $rightTableName);
             $dstQuery->addJoinObject($srcJoin, $aclEntityTableAlias);
         }

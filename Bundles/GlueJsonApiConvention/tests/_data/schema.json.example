@@ -1,0 +1,428 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "version": "1.0.0",
+        "contact": {
+            "name": "Spryker",
+            "url": "https://support.spryker.com/",
+            "email": "support@spryker.com"
+        },
+        "title": "Spryker API",
+        "license": {
+            "name": "MIT"
+        }
+    },
+    "tags": [
+        {
+            "name": "tests"
+        }
+    ],
+    "servers": [
+        {
+            "url": "http://glue-storefront.de.spryker.local"
+        }
+    ],
+    "paths": {
+        "/tests/{testId}": {
+            "get": {
+                "operationId": "get-tests",
+                "summary": "Retrieves test by id.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/acceptLanguage"
+                    },
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "description": "Description.",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Expected response to a valid request.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TestsRestResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Test not found.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TestsRestResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Expected response to a bad request.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TestsRestResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "operationId": "update-tests",
+                "summary": "Edits tests resource by id.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/acceptLanguage"
+                    },
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "description": "Description.",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Expected response to a valid request.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TestsRestResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Test not found.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TestsRestResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Expected response to a bad request.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TestsRestResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "description": "Expected request body.",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TestsRestRequest"
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "delete-tests",
+                "summary": "Deletes stores resource.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/acceptLanguage"
+                    },
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "description": "Description.",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Expected response to a valid request.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TestsRestResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Test not found.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TestsRestResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Expected response to a bad request.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TestsRestResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/tests": {
+            "get": {
+                "operationId": "get-collection-of-tests",
+                "summary": "Retrieves collection of tests.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/acceptLanguage"
+                    },
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "description": "Description.",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Expected response to a valid request.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TestsRestResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Expected response to a bad request.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TestsRestResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "operationId": "create-tests",
+                "summary": "Creates test resource.",
+                "parameters": [
+                    {
+                        "$ref": "#/components/parameters/acceptLanguage"
+                    },
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "description": "Description.",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Expected response to a valid request.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TestsRestResponse"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Test not found.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TestsRestResponse"
+                                }
+                            }
+                        }
+                    },
+                    "default": {
+                        "description": "Expected response to a bad request.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/TestsRestResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "requestBody": {
+                    "description": "Expected request body.",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/TestsRestRequest"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "BearerAuth": {
+                "type": "http",
+                "scheme": "bearer"
+            }
+        },
+        "schemas": {
+            "Relationships": {
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string"
+                    }
+                }
+            },
+            "RelationshipsData": {
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Relationships"
+                        }
+                    }
+                }
+            },
+            "RestErrorMessage": {
+                "properties": {
+                    "code": {
+                        "type": "string"
+                    },
+                    "detail": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "TestsRestAttributes": {
+                "properties": {
+                    "timeZone": {
+                        "type": "string"
+                    },
+                    "defaultCurrency": {
+                        "type": "string"
+                    }
+                }
+            },
+            "TestsRestCollectionResponse": {
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/TestsRestCollectionResponseData"
+                        }
+                    }
+                }
+            },
+            "TestsRestCollectionResponseData": {
+                "properties": {
+                    "type": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string"
+                    },
+                    "attributes": {
+                        "$ref": "#/components/schemas/TestsRestAttributes"
+                    }
+                }
+            },
+            "TestsRestRelationships": {
+                "properties": {
+                    "relData": {
+                        "$ref": "#/components/schemas/RelationshipsData"
+                    }
+                }
+            },
+            "TestsRestRequest": {
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/TestsRestRequestData"
+                    }
+                }
+            },
+            "TestsRestRequestAttributes": {
+                "properties": {
+                    "defaultCurrency": {
+                        "type": "string"
+                    }
+                }
+            },
+            "TestsRestRequestData": {
+                "properties": {
+                    "type": {
+                        "type": "string"
+                    }
+                }
+            },
+            "TestsRestResponse": {
+                "properties": {
+                    "data": {
+                        "$ref": "#/components/schemas/TestsRestResponseData"
+                    }
+                }
+            },
+            "TestsRestResponseData": {
+                "properties": {
+                    "type": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string"
+                    },
+                    "attributes": {
+                        "$ref": "#/components/schemas/TestsRestAttributes"
+                    }
+                }
+            }
+        },
+        "parameters": {
+            "acceptLanguage": {
+                "name": "Accept-Language",
+                "in": "header",
+                "description": "Locale value relevant for the store.",
+                "schema": {
+                    "type": "string"
+                },
+                "required": false
+            }
+        }
+    }
+}

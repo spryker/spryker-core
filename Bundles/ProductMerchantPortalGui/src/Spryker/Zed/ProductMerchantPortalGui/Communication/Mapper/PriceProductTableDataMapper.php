@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\PriceProductTableViewTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToStoreFacadeInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToPriceProductServiceInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToUtilEncodingServiceInterface;
 
 class PriceProductTableDataMapper implements PriceProductTableDataMapperInterface
@@ -35,18 +36,34 @@ class PriceProductTableDataMapper implements PriceProductTableDataMapperInterfac
     protected $utilEncodingService;
 
     /**
+     * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToPriceProductServiceInterface
+     */
+    protected $priceProductService;
+
+    /**
+     * @var \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\PriceProductMapperInterface
+     */
+    protected $priceProductMapper;
+
+    /**
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToUtilEncodingServiceInterface $utilEncodingService
+     * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToPriceProductServiceInterface $priceProductService
+     * @param \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\PriceProductMapperInterface $priceProductMapper
      */
     public function __construct(
         ProductMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade,
         ProductMerchantPortalGuiToStoreFacadeInterface $storeFacade,
-        ProductMerchantPortalGuiToUtilEncodingServiceInterface $utilEncodingService
+        ProductMerchantPortalGuiToUtilEncodingServiceInterface $utilEncodingService,
+        ProductMerchantPortalGuiToPriceProductServiceInterface $priceProductService,
+        PriceProductMapperInterface $priceProductMapper
     ) {
         $this->priceProductFacade = $priceProductFacade;
         $this->storeFacade = $storeFacade;
         $this->utilEncodingService = $utilEncodingService;
+        $this->priceProductService = $priceProductService;
+        $this->priceProductMapper = $priceProductMapper;
     }
 
     /**
@@ -73,7 +90,7 @@ class PriceProductTableDataMapper implements PriceProductTableDataMapperInterfac
             $rowKey = $this->createPriceProductTableRowKeyByPriceProductTransfer($priceProductTransfer);
 
             if (!array_key_exists($rowKey, $priceProductTableViewTransfers)) {
-                $priceProductTableViewTransfers[$rowKey] = $this->mapPriceProductTransferToPriceProductTableViewTransfer(
+                $priceProductTableViewTransfers[$rowKey] = $this->priceProductMapper->mapPriceProductTransferToPriceProductTableViewTransfer(
                     $priceProductTransfer,
                     new PriceProductTableViewTransfer(),
                 );
@@ -106,20 +123,19 @@ class PriceProductTableDataMapper implements PriceProductTableDataMapperInterfac
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     * @param \Generated\Shared\Transfer\PriceProductTableViewTransfer $priceProductTableViewTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTableViewTransfer
+     * @return string
      */
-    protected function mapPriceProductTransferToPriceProductTableViewTransfer(
-        PriceProductTransfer $priceProductTransfer,
-        PriceProductTableViewTransfer $priceProductTableViewTransfer
-    ): PriceProductTableViewTransfer {
-        return $priceProductTableViewTransfer
-            ->setIdProductAbstract($priceProductTransfer->getIdProductAbstract())
-            ->setIdProductConcrete($priceProductTransfer->getIdProduct())
-            ->setVolumeQuantity($priceProductTransfer->getVolumeQuantity() ?? 1)
-            ->setCurrency($priceProductTransfer->getMoneyValueOrFail()->getCurrencyOrFail()->getCodeOrFail())
-            ->setStore($priceProductTransfer->getMoneyValueOrFail()->getStoreOrFail()->getNameOrFail());
+    protected function createPriceProductTableRowKeyByPriceProductTransfer(
+        PriceProductTransfer $priceProductTransfer
+    ): string {
+        return sprintf(
+            '%s-%s',
+            $this->priceProductService->buildPriceProductGroupKey(
+                (clone $priceProductTransfer)->setPriceTypeName(''),
+            ),
+            $priceProductTransfer->getVolumeQuantity() ?? 1,
+        );
     }
 
     /**
@@ -152,21 +168,6 @@ class PriceProductTableDataMapper implements PriceProductTableDataMapperInterfac
         }
 
         return $prices;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     *
-     * @return string
-     */
-    protected function createPriceProductTableRowKeyByPriceProductTransfer(
-        PriceProductTransfer $priceProductTransfer
-    ): string {
-        return $this->createPriceProductTableRowKey(
-            $priceProductTransfer->getMoneyValueOrFail()->getStoreOrFail()->getNameOrFail(),
-            $priceProductTransfer->getMoneyValueOrFail()->getCurrencyOrFail()->getCodeOrFail(),
-            $priceProductTransfer->getVolumeQuantity() ?? 1,
-        );
     }
 
     /**
@@ -260,7 +261,7 @@ class PriceProductTableDataMapper implements PriceProductTableDataMapperInterfac
             ->getIdEntityOrFail();
         $existingStoreIds = array_filter($existingStoreIds);
 
-        return $this->utilEncodingService->encodeJson($existingStoreIds);
+        return $this->utilEncodingService->encodeJson(array_unique($existingStoreIds));
     }
 
     /**

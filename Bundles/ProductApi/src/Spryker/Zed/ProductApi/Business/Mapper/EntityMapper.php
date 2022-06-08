@@ -13,7 +13,7 @@ use Orm\Zed\Product\Persistence\SpyProductAbstract;
 class EntityMapper implements EntityMapperInterface
 {
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstract
      */
@@ -43,7 +43,7 @@ class EntityMapper implements EntityMapperInterface
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */

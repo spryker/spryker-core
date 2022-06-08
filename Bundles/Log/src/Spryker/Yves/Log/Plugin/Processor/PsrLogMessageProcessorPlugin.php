@@ -16,7 +16,7 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 class PsrLogMessageProcessorPlugin extends AbstractPlugin implements LogProcessorPluginInterface
 {
     /**
-     * @param array $data
+     * @param array<mixed> $data
      *
      * @return array
      */

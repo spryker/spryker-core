@@ -20,6 +20,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrderTotals;
 use Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
+use Spryker\Zed\Sales\Business\StateMachineResolver\OrderStateMachineResolverInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToLocaleInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
@@ -90,6 +91,11 @@ class SalesOrderSaver implements SalesOrderSaverInterface
     protected $localeFacade;
 
     /**
+     * @var \Spryker\Zed\Sales\Business\StateMachineResolver\OrderStateMachineResolverInterface
+     */
+    protected $orderStateMachineResolver;
+
+    /**
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface $countryFacade
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface $omsFacade
      * @param \Spryker\Zed\Sales\Business\Model\Order\OrderReferenceGeneratorInterface $orderReferenceGenerator
@@ -101,6 +107,7 @@ class SalesOrderSaver implements SalesOrderSaverInterface
      * @param array<\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderPostSavePluginInterface> $orderPostSavePlugins
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToStoreInterface $storeFacade
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToLocaleInterface $localeFacade
+     * @param \Spryker\Zed\Sales\Business\StateMachineResolver\OrderStateMachineResolverInterface $orderStateMachineResolver
      */
     public function __construct(
         SalesToCountryInterface $countryFacade,
@@ -113,7 +120,8 @@ class SalesOrderSaver implements SalesOrderSaverInterface
         SalesOrderItemMapperInterface $salesOrderItemMapper,
         array $orderPostSavePlugins,
         SalesToStoreInterface $storeFacade,
-        SalesToLocaleInterface $localeFacade
+        SalesToLocaleInterface $localeFacade,
+        OrderStateMachineResolverInterface $orderStateMachineResolver
     ) {
         $this->countryFacade = $countryFacade;
         $this->omsFacade = $omsFacade;
@@ -126,6 +134,7 @@ class SalesOrderSaver implements SalesOrderSaverInterface
         $this->orderPostSavePlugins = $orderPostSavePlugins;
         $this->storeFacade = $storeFacade;
         $this->localeFacade = $localeFacade;
+        $this->orderStateMachineResolver = $orderStateMachineResolver;
     }
 
     /**
@@ -425,7 +434,7 @@ class SalesOrderSaver implements SalesOrderSaverInterface
      */
     protected function getProcessEntity(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer)
     {
-        $processName = $this->salesConfiguration->determineProcessForOrderItem($quoteTransfer, $itemTransfer);
+        $processName = $this->orderStateMachineResolver->resolve($quoteTransfer, $itemTransfer);
         $processEntity = $this->omsFacade->getProcessEntity($processName);
 
         return $processEntity;

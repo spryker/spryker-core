@@ -27,7 +27,7 @@ abstract class AbstractSuggestionExpanderPlugin extends AbstractPlugin implement
      * @api
      *
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
      */
@@ -40,7 +40,7 @@ abstract class AbstractSuggestionExpanderPlugin extends AbstractPlugin implement
 
     /**
      * @param \Elastica\Query $query
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return void
      */
@@ -94,7 +94,7 @@ abstract class AbstractSuggestionExpanderPlugin extends AbstractPlugin implement
 
     /**
      * @param \Elastica\Query $query
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return \Elastica\Suggest\AbstractSuggest|null
      */

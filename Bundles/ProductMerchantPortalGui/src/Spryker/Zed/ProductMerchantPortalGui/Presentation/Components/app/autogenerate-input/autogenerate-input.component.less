@@ -1,17 +1,17 @@
 @import '~@spryker/styles/src/lib/themes/default/variables/index.less';
 
-@autogenerate-input-max-width: 420px;
-@autogenerate-input-half-width: @autogenerate-input-max-width / 2;
+@autogenerate-input-max-width: var(--spy-autogenerate-input-max-width, 420px);
+@autogenerate-input-half-width: var(--spy-autogenerate-input-half-width, calc(@autogenerate-input-max-width / 2));
 
 .mp-autogenerate-input {
     display: block;
 
-    .@{input-prefix-cls} {
+    .@{input-prefix-cls}-group {
         max-width: @autogenerate-input-max-width;
     }
 
     &--half-width {
-        .@{input-prefix-cls} {
+        .@{input-prefix-cls}-group {
             max-width: @autogenerate-input-half-width;
         }
     }

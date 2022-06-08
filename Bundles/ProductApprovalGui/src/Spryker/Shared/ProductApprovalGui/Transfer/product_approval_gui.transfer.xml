@@ -18,7 +18,6 @@
         <property name="url" type="string"/>
         <property name="title" type="string"/>
         <property name="defaultOptions" type="array" singular="defaultOptions"/>
-        <property name="customOptions" type="array" singular="customOptions"/>
     </transfer>
 
 </transfers>

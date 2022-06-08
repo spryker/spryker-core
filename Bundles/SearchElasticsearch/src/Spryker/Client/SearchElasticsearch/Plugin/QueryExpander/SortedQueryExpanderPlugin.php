@@ -28,7 +28,7 @@ class SortedQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderP
      * @api
      *
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
      */
@@ -41,7 +41,7 @@ class SortedQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderP
 
     /**
      * @param \Elastica\Query $query
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return void
      */

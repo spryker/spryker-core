@@ -36,7 +36,7 @@ class ConfigurableBundlePageSearchBusinessTester extends Actor
     use _generated\ConfigurableBundlePageSearchBusinessTesterActions;
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer
      */
@@ -53,7 +53,7 @@ class ConfigurableBundlePageSearchBusinessTester extends Actor
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */

@@ -145,7 +145,7 @@ class PriceProductScheduleFormDataProvider
      * @param int|null $idPriceProductSchedule
      * @param int|null $idStore
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions(?int $idPriceProductSchedule = null, ?int $idStore = null): array
     {

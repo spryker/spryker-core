@@ -24,7 +24,7 @@ class AddDiscountPromotionPersistentCartRequestExpanderPlugin implements Persist
      * @api
      *
      * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return \Generated\Shared\Transfer\PersistentCartChangeTransfer
      */

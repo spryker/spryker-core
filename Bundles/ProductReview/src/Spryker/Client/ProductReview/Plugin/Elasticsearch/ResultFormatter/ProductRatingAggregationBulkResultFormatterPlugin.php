@@ -34,7 +34,7 @@ class ProductRatingAggregationBulkResultFormatterPlugin extends AbstractElastics
 
     /**
      * @param mixed $searchResult
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return array
      */

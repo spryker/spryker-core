@@ -121,7 +121,7 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
     }
 
     /**
-     * @param array $requestParams
+     * @param array<string, mixed> $requestParams
      *
      * @return void
      */

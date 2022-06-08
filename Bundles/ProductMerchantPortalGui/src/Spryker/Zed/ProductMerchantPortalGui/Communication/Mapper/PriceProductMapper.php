@@ -10,6 +10,8 @@ namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper;
 use ArrayObject;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
+use Generated\Shared\Transfer\PriceProductCollectionDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductTableViewTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
@@ -20,6 +22,7 @@ use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\Merger\PriceProduc
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToCurrencyFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMoneyFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToUtilEncodingServiceInterface;
 
 class PriceProductMapper implements PriceProductMapperInterface
 {
@@ -63,21 +66,37 @@ class PriceProductMapper implements PriceProductMapperInterface
     protected $priceProductMerger;
 
     /**
+     * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToUtilEncodingServiceInterface
+     */
+    protected $utilEncodingService;
+
+    /**
+     * @var array<\Spryker\Zed\ProductMerchantPortalGuiExtension\Dependency\Plugin\PriceProductMapperPluginInterface>
+     */
+    protected $priceProductMapperPlugins;
+
+    /**
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToCurrencyFacadeInterface $currencyFacade
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMoneyFacadeInterface $moneyFacade
      * @param \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\Merger\PriceProductMergerInterface $priceProductMerger
+     * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToUtilEncodingServiceInterface $utilEncodingService
+     * @param array<\Spryker\Zed\ProductMerchantPortalGuiExtension\Dependency\Plugin\PriceProductMapperPluginInterface> $priceProductMapperPlugins
      */
     public function __construct(
         ProductMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade,
         ProductMerchantPortalGuiToCurrencyFacadeInterface $currencyFacade,
         ProductMerchantPortalGuiToMoneyFacadeInterface $moneyFacade,
-        PriceProductMergerInterface $priceProductMerger
+        PriceProductMergerInterface $priceProductMerger,
+        ProductMerchantPortalGuiToUtilEncodingServiceInterface $utilEncodingService,
+        array $priceProductMapperPlugins
     ) {
         $this->priceProductFacade = $priceProductFacade;
         $this->currencyFacade = $currencyFacade;
         $this->moneyFacade = $moneyFacade;
         $this->priceProductMerger = $priceProductMerger;
+        $this->utilEncodingService = $utilEncodingService;
+        $this->priceProductMapperPlugins = $priceProductMapperPlugins;
     }
 
     /**
@@ -101,6 +120,111 @@ class PriceProductMapper implements PriceProductMapperInterface
         }
 
         return $priceProductTransfers;
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     * @param \ArrayObject<int,\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     *
+     * @return \ArrayObject<int,\Generated\Shared\Transfer\PriceProductTransfer>
+     */
+    public function mapRequestDataToPriceProductTransfers(
+        array $data,
+        ArrayObject $priceProductTransfers
+    ): ArrayObject {
+        foreach ($priceProductTransfers as $priceProductTransfer) {
+            $priceProductTransfer = $this->executePriceProductMapperPlugins($priceProductTransfer, $data);
+        }
+
+        return new ArrayObject($priceProductTransfers);
+    }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductCollectionDeleteCriteriaTransfer $priceProductCollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductCollectionDeleteCriteriaTransfer
+     */
+    public function mapPriceProductTransfersToPriceProductCollectionDeleteCriteriaTransfer(
+        array $priceProductTransfers,
+        PriceProductCollectionDeleteCriteriaTransfer $priceProductCollectionDeleteCriteriaTransfer
+    ): PriceProductCollectionDeleteCriteriaTransfer {
+        foreach ($priceProductTransfers as $priceProductTransfer) {
+            if (
+                $priceProductTransfer->getPriceDimension()
+                && $priceProductTransfer->getPriceDimensionOrFail()->getIdPriceProductDefault()
+            ) {
+                $priceProductCollectionDeleteCriteriaTransfer->addIdPriceProductDefault(
+                    $priceProductTransfer->getPriceDimensionOrFail()->getIdPriceProductDefaultOrFail(),
+                );
+                $priceProductCollectionDeleteCriteriaTransfer->addIdPriceProductStore(
+                    $priceProductTransfer->getMoneyValueOrFail()->getIdEntityOrFail(),
+                );
+            }
+        }
+
+        foreach ($this->priceProductMapperPlugins as $priceProductMapperPlugin) {
+            $priceProductCollectionDeleteCriteriaTransfer = $priceProductMapperPlugin
+                ->mapPriceProductTransfersToPriceProductCollectionDeleteCriteriaTransfer(
+                    $priceProductTransfers,
+                    $priceProductCollectionDeleteCriteriaTransfer,
+                );
+        }
+
+        return $priceProductCollectionDeleteCriteriaTransfer;
+    }
+
+    /**
+     * @param array $requestQueryParams
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductCriteriaTransfer
+     */
+    public function mapRequestDataToPriceProductCriteriaTransfer(
+        array $requestQueryParams,
+        PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+    ): PriceProductCriteriaTransfer {
+        $requestQueryParams = $this->decodeRequestQueryParams($requestQueryParams);
+
+        $priceProductCriteriaTransfer = $priceProductCriteriaTransfer->setPriceProductStoreIds(
+            $requestQueryParams[PriceProductTableViewTransfer::TYPE_PRICE_PRODUCT_STORE_IDS],
+        );
+
+        foreach ($this->priceProductMapperPlugins as $priceProductMapperPlugin) {
+            $priceProductCriteriaTransfer = $priceProductMapperPlugin->mapRequestDataToPriceProductCriteriaTransfer(
+                $requestQueryParams,
+                $priceProductCriteriaTransfer,
+            );
+        }
+
+        return $priceProductCriteriaTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTableViewTransfer $priceProductTableViewTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTableViewTransfer
+     */
+    public function mapPriceProductTransferToPriceProductTableViewTransfer(
+        PriceProductTransfer $priceProductTransfer,
+        PriceProductTableViewTransfer $priceProductTableViewTransfer
+    ): PriceProductTableViewTransfer {
+        $priceProductTableViewTransfer = $priceProductTableViewTransfer
+            ->setIdProductAbstract($priceProductTransfer->getIdProductAbstract())
+            ->setIdProductConcrete($priceProductTransfer->getIdProduct())
+            ->setVolumeQuantity($priceProductTransfer->getVolumeQuantity() ?? 1)
+            ->setCurrency($priceProductTransfer->getMoneyValueOrFail()->getCurrencyOrFail()->getCodeOrFail())
+            ->setStore($priceProductTransfer->getMoneyValueOrFail()->getStoreOrFail()->getNameOrFail());
+
+        foreach ($this->priceProductMapperPlugins as $priceProductMapperPlugin) {
+            $priceProductTableViewTransfer = $priceProductMapperPlugin->mapPriceProductTransferToPriceProductTableViewTransfer(
+                $priceProductTransfer,
+                $priceProductTableViewTransfer,
+            );
+        }
+
+        return $priceProductTableViewTransfer;
     }
 
     /**
@@ -158,14 +282,24 @@ class PriceProductMapper implements PriceProductMapperInterface
         $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
             ->setType(static::PRICE_DIMENSION_TYPE_DEFAULT);
 
-        return (new PriceProductTransfer())
+        $priceProductTransfer = (new PriceProductTransfer())
             ->setIdProductAbstract($newPriceProduct[PriceProductTableViewTransfer::ID_PRODUCT_ABSTRACT] ?? null)
             ->setIdProduct($newPriceProduct[PriceProductTableViewTransfer::ID_PRODUCT_CONCRETE] ?? null)
             ->setFkPriceType($priceTypeTransfer->getIdPriceType())
+            ->setPriceTypeName($priceTypeTransfer->getName())
             ->setPriceType($priceTypeTransfer)
             ->setMoneyValue($moneyValueTransfer)
             ->setPriceDimension($priceProductDimensionTransfer)
-            ->setVolumeQuantity($newPriceProduct[PriceProductTableViewTransfer::VOLUME_QUANTITY]);
+            ->setVolumeQuantity((int)$newPriceProduct[PriceProductTableViewTransfer::VOLUME_QUANTITY] ?: 1);
+
+        foreach ($this->priceProductMapperPlugins as $priceProductMapperPlugin) {
+            $priceProductTransfer = $priceProductMapperPlugin->mapTableDataToPriceProductTransfer(
+                $newPriceProduct,
+                $priceProductTransfer,
+            );
+        }
+
+        return $priceProductTransfer;
     }
 
     /**
@@ -257,5 +391,47 @@ class PriceProductMapper implements PriceProductMapperInterface
         $priceTypeName = $priceTypeTransfer->getNameOrFail();
 
         return $priceTypeName === static::PRICE_TYPE_DEFAULT;
+    }
+
+    /**
+     * @param array $requestQueryParams
+     *
+     * @return array
+     */
+    protected function decodeRequestQueryParams(array $requestQueryParams): array
+    {
+        $decodedRequestQueryParams = [];
+
+        foreach ($requestQueryParams as $key => $encodedValue) {
+            $decodedValue = $this->utilEncodingService->decodeJson($encodedValue);
+
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                continue;
+            }
+
+            $decodedRequestQueryParams[$key] = $decodedValue;
+        }
+
+        return $decodedRequestQueryParams;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     * @param array<string, mixed> $data
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    protected function executePriceProductMapperPlugins(
+        PriceProductTransfer $priceProductTransfer,
+        array $data
+    ): PriceProductTransfer {
+        foreach ($this->priceProductMapperPlugins as $priceProductMapperPlugin) {
+            $priceProductTransfer = $priceProductMapperPlugin->mapRequestDataToPriceProductTransfer(
+                $data,
+                $priceProductTransfer,
+            );
+        }
+
+        return $priceProductTransfer;
     }
 }

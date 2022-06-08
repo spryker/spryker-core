@@ -23,7 +23,7 @@ class CmsPageSearchFactory extends AbstractFactory
 {
     /**
      * @param string $searchString
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      * @param array<\Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface> $queryExpanderPlugins
      *
      * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface

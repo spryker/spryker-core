@@ -13,7 +13,7 @@ interface ThresholdStrategyGroupDataProviderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\SalesOrderThresholdTransfer $salesOrderThresholdTransfer
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */

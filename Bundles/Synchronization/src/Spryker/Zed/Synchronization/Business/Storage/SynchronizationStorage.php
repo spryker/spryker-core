@@ -55,7 +55,7 @@ class SynchronizationStorage implements SynchronizationInterface
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param string $queueName
      *
      * @return void
@@ -74,7 +74,7 @@ class SynchronizationStorage implements SynchronizationInterface
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param string $queueName
      *
      * @return void
@@ -134,7 +134,7 @@ class SynchronizationStorage implements SynchronizationInterface
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return void
      */
@@ -156,7 +156,7 @@ class SynchronizationStorage implements SynchronizationInterface
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return void
      */

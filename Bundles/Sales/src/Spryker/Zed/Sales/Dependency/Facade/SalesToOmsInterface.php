@@ -74,7 +74,7 @@ interface SalesToOmsInterface
     /**
      * @param string $eventId
      * @param array $orderItemIds
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array|null
      */

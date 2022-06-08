@@ -168,7 +168,7 @@ class CmsProductSearchContentWidgetPlugin extends AbstractPlugin implements CmsC
      * This method should hydrate all data in product transfer.
      * Including availability, images e.t.c.
      *
-     * @param array $productData
+     * @param array<string, mixed> $productData
      *
      * @return \Generated\Shared\Transfer\StorageProductTransfer
      */

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PriceProductMerchantRelationship\Persistence;
 
+use Generated\Shared\Transfer\PriceProductMerchantRelationshipCollectionDeleteCriteriaTransfer;
 use Generated\Shared\Transfer\SpyPriceProductMerchantRelationshipEntityTransfer;
 use Orm\Zed\PriceProductMerchantRelationship\Persistence\SpyPriceProductMerchantRelationship;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -141,6 +142,33 @@ class PriceProductMerchantRelationshipEntityManager extends AbstractEntityManage
             ->find();
 
         $this->deleteEntitiesAndTriggerEvents($priceProductMerchantRelationshipEntities);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipCollectionDeleteCriteriaTransfer $priceProductMerchantRelationshipCollectionDeleteCriteriaTransfer
+     *
+     * @return void
+     */
+    public function deleteCollection(
+        PriceProductMerchantRelationshipCollectionDeleteCriteriaTransfer $priceProductMerchantRelationshipCollectionDeleteCriteriaTransfer
+    ): void {
+        if (
+            !$priceProductMerchantRelationshipCollectionDeleteCriteriaTransfer->getMerchantRelationshipIds()
+            || !$priceProductMerchantRelationshipCollectionDeleteCriteriaTransfer->getPriceProductStoreIds()
+        ) {
+            return;
+        }
+        $priceProductMerchantRelationshipCollection = $this->getFactory()
+            ->createPriceProductMerchantRelationshipQuery()
+            ->filterByFkMerchantRelationship_In(
+                $priceProductMerchantRelationshipCollectionDeleteCriteriaTransfer->getMerchantRelationshipIds(),
+            )
+            ->filterByFkPriceProductStore_In(
+                $priceProductMerchantRelationshipCollectionDeleteCriteriaTransfer->getPriceProductStoreIds(),
+            )
+            ->find();
+
+        $priceProductMerchantRelationshipCollection->delete();
     }
 
     /**

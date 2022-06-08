@@ -23,11 +23,9 @@ use Orm\Zed\Category\Persistence\Map\SpyCategoryClosureTableTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
 use Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery;
-use Orm\Zed\Category\Persistence\SpyCategoryNode;
 use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryQuery;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
-use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\PropelOrm\Business\Model\Formatter\PropelArraySetFormatter;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
@@ -575,10 +573,6 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     }
 
     /**
-     * @module Locale
-     * @module Store
-     * @module Url
-     *
      * @param \Generated\Shared\Transfer\CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\NodeCollectionTransfer
@@ -593,43 +587,19 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
             return $nodeCollectionTransfer;
         }
 
-        $categoryNodeIdsImploded = implode(', ', $categoryNodeIds);
+        $relatedCategoryNodesIds = $this->getRelatedCategoryNodeIdsByCategoryNodeIds($categoryNodeIds);
+        if ($relatedCategoryNodesIds === []) {
+            return $nodeCollectionTransfer;
+        }
 
-        /** @var literal-string $fkCategoryNodeDescendantCondition */
-        $fkCategoryNodeDescendantCondition = sprintf(
-            '%s IN (%s)',
-            SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE_DESCENDANT,
-            $categoryNodeIdsImploded,
-        );
-
-        /** @var literal-string $fkCategoryNodeCondition */
-        $fkCategoryNodeCondition = sprintf(
-            '%s IN (%s)',
-            SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE,
-            $categoryNodeIdsImploded,
-        );
         /** @var \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery $categoryNodeQuery */
         $categoryNodeQuery = $this->getFactory()
             ->createCategoryNodeQuery()
-            ->leftJoinClosureTable(SpyCategoryClosureTableTableMap::TABLE_NAME)
-            ->addJoinCondition(
-                SpyCategoryClosureTableTableMap::TABLE_NAME,
-                sprintf('%s = %s', SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE_DESCENDANT, SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE),
-                null,
-                Criteria::LOGICAL_OR,
-            )
-            ->leftJoinWithSpyUrl()
             ->leftJoinWithCategory()
             ->useCategoryQuery(null, Criteria::LEFT_JOIN)
                 ->leftJoinWithCategoryTemplate()
-                ->leftJoinSpyCategoryStore()
-                ->useSpyCategoryStoreQuery(null, Criteria::LEFT_JOIN)
-                    ->leftJoinWithSpyStore()
-                ->endUse()
             ->endUse()
-            ->where($fkCategoryNodeDescendantCondition)
-            ->_or()
-            ->where($fkCategoryNodeCondition);
+            ->filterByIdCategoryNode_In($relatedCategoryNodesIds);
 
         $categoryNodeQuery
             ->orderByNodeOrder(Criteria::DESC)
@@ -653,11 +623,49 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
             return $nodeCollectionTransfer;
         }
 
-        $categoryNodeEntities = $this->addCategoryAttributesToCategoryNodeEntities($categoryNodeEntities);
-
         return $this->getFactory()
             ->createCategoryMapper()
             ->mapCategoryNodeEntitiesToNodeCollectionTransfer($categoryNodeEntities, $nodeCollectionTransfer);
+    }
+
+    /**
+     * @module Locale
+     *
+     * @param array<int> $categoryIds
+     *
+     * @return array<int, array<\Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer>>
+     */
+    public function getCategoryAttributesByCategoryIdsGroupByIdCategory(array $categoryIds): array
+    {
+        $categoryAttributeEntities = $this->getFactory()
+            ->createCategoryAttributeQuery()
+            ->filterByFkCategory_In($categoryIds)
+            ->joinWithLocale()
+            ->find();
+
+        return $this->getFactory()
+            ->createCategoryLocalizedAttributeMapper()
+            ->mapCategoryAttributeEntitiesToCategoryLocalizedAttributesTransfersGroupedByIdCategory($categoryAttributeEntities);
+    }
+
+    /**
+     * @module Store
+     *
+     * @param array<int> $categoryIds
+     *
+     * @return array<\Generated\Shared\Transfer\StoreRelationTransfer>
+     */
+    public function getCategoryStoreRelationsByCategoryIds(array $categoryIds): array
+    {
+        $categoryStoreEntities = $this->getFactory()
+            ->createCategoryStoreQuery()
+            ->filterByFkCategory_In($categoryIds)
+            ->joinWithSpyStore()
+            ->find();
+
+        return $this->getFactory()
+            ->createCategoryStoreRelationMapper()
+            ->mapCategoryStoreEntitiesToStoreRelationTransfers($categoryStoreEntities);
     }
 
     /**
@@ -994,65 +1002,32 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     }
 
     /**
-     * @param array<int, \Orm\Zed\Category\Persistence\SpyCategoryNode> $categoryNodeEntities
-     *
-     * @return array<int, \Orm\Zed\Category\Persistence\SpyCategoryNode>
-     */
-    protected function addCategoryAttributesToCategoryNodeEntities(array $categoryNodeEntities): array
-    {
-        $categoryIds = $this->extreactCategoryIdsFromCategoryNodeEntities($categoryNodeEntities);
-
-        $categoryAttributeEntities = $this->getCategoryAttributeEntitiesByCategoryIds($categoryIds);
-        $groupedCategoryAttributeEntities = $this->getCategoryAttributeEntitiesGroupedByIdCategory($categoryAttributeEntities);
-
-        foreach ($categoryNodeEntities as $categoryNodeEntity) {
-            if (isset($groupedCategoryAttributeEntities[$categoryNodeEntity->getFkCategory()])) {
-                $categoryNodeEntity->getCategory()->setAttributes(
-                    new ObjectCollection($groupedCategoryAttributeEntities[$categoryNodeEntity->getFkCategory()]),
-                );
-            }
-        }
-
-        return $categoryNodeEntities;
-    }
-
-    /**
-     * @param array<\Orm\Zed\Category\Persistence\SpyCategoryNode> $categoryNodeEntities
+     * @param array<int> $categoryNodeIds
      *
      * @return array<int>
      */
-    protected function extreactCategoryIdsFromCategoryNodeEntities(array $categoryNodeEntities): array
+    protected function getRelatedCategoryNodeIdsByCategoryNodeIds(array $categoryNodeIds): array
     {
-        return array_map(function (SpyCategoryNode $categoryNodeEntity) {
-            return $categoryNodeEntity->getFkCategory();
-        }, $categoryNodeEntities);
-    }
+        $categoryNodeIdsImploded = implode(', ', $categoryNodeIds);
 
-    /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Category\Persistence\SpyCategoryAttribute> $categoryAttributeEntities
-     *
-     * @return array<int, array<\Orm\Zed\Category\Persistence\SpyCategoryAttribute>>
-     */
-    protected function getCategoryAttributeEntitiesGroupedByIdCategory(ObjectCollection $categoryAttributeEntities): array
-    {
-        $groupedCategoryAttributeEntities = [];
-        foreach ($categoryAttributeEntities as $categoryAttributeEntity) {
-            $groupedCategoryAttributeEntities[$categoryAttributeEntity->getFkCategory()][] = $categoryAttributeEntity;
+        $relatedCategoryNodesData = $this->getFactory()
+            ->createCategoryClosureTableQuery()
+            ->select([
+                SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE_DESCENDANT,
+                SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE,
+            ])
+            ->where(sprintf('%s IN (%s)', SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE_DESCENDANT, $categoryNodeIdsImploded))
+            ->_or()
+            ->where(sprintf('%s IN (%s)', SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE, $categoryNodeIdsImploded))
+            ->find()
+            ->getData();
+
+        $relatedCategoryNodesIds = [];
+        foreach ($relatedCategoryNodesData as $relatedCategoryNodeData) {
+            $relatedCategoryNodesIds[] = (int)$relatedCategoryNodeData[SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE];
+            $relatedCategoryNodesIds[] = (int)$relatedCategoryNodeData[SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE_DESCENDANT];
         }
 
-        return $groupedCategoryAttributeEntities;
-    }
-
-    /**
-     * @param array<int> $categoryIds
-     *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Category\Persistence\SpyCategoryAttribute>
-     */
-    protected function getCategoryAttributeEntitiesByCategoryIds(array $categoryIds): ObjectCollection
-    {
-        return $this->getFactory()
-            ->createCategoryAttributeQuery()
-            ->filterByFkCategory_In($categoryIds)
-            ->find();
+        return array_unique($relatedCategoryNodesIds);
     }
 }

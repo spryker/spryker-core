@@ -9,13 +9,17 @@ namespace SprykerTest\Glue\GlueApplication\Executor;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\GlueRequestTransfer;
+use Generated\Shared\Transfer\GlueResourceMethodCollectionTransfer;
+use Generated\Shared\Transfer\GlueResourceMethodConfigurationTransfer;
 use Generated\Shared\Transfer\GlueResourceTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
+use Spryker\Glue\GlueApplication\Cache\Reader\ControllerCacheReaderInterface;
 use Spryker\Glue\GlueApplication\Exception\ControllerNotFoundException;
 use Spryker\Glue\GlueApplication\Executor\ResourceExecutor;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface;
 use SprykerTest\Glue\GlueApplication\Stub\AttributesTransfer;
 use SprykerTest\Glue\GlueApplication\Stub\ResourceController;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Auto-generated group annotations
@@ -43,15 +47,19 @@ class ResourceExecutorTest extends Unit
             ->method('getResource')
             ->willReturn([new ResourceController(), 'getCollectionAction']);
 
-        $resourceExecutorMock = $this->getMockBuilder(ResourceExecutor::class)
-            ->setMethods(['getAttributesTransfer'])
+        $cacheReaderMock = $this->getMockBuilder(ControllerCacheReaderInterface::class)
+            ->disableOriginalConstructor()
             ->getMock();
-        $resourceExecutorMock
-            ->expects($this->never())
-            ->method('getAttributesTransfer');
+        $cacheReaderMock->expects($this->once())
+            ->method('getActionParameters')
+            ->willReturn([
+                GlueRequestTransfer::class => '',
+                GlueResponseTransfer::class => '',
+            ]);
 
         //Act
-        $glueResponseTransfer = $resourceExecutorMock->executeResource($resourceMock, $glueRequestTransfer);
+        $glueResponseTransfer = (new ResourceExecutor($cacheReaderMock))
+            ->executeResource($resourceMock, $glueRequestTransfer);
 
         //Assert
         $this->assertInstanceOf(GlueResponseTransfer::class, $glueResponseTransfer);
@@ -73,15 +81,20 @@ class ResourceExecutorTest extends Unit
             ->method('getResource')
             ->willReturn([new ResourceController(), 'getByIdAction']);
 
-        $resourceExecutorMock = $this->getMockBuilder(ResourceExecutor::class)
-            ->setMethods(['getAttributesTransfer'])
+        $cacheReaderMock = $this->getMockBuilder(ControllerCacheReaderInterface::class)
+            ->disableOriginalConstructor()
             ->getMock();
-        $resourceExecutorMock
-            ->expects($this->never())
-            ->method('getAttributesTransfer');
+        $cacheReaderMock->expects($this->once())
+            ->method('getActionParameters')
+            ->willReturn([
+                'string' => '',
+                GlueRequestTransfer::class => '',
+                GlueResponseTransfer::class => '',
+            ]);
 
         //Act
-        $glueResponseTransfer = $resourceExecutorMock->executeResource($resourceMock, $glueRequestTransfer);
+        $glueResponseTransfer = (new ResourceExecutor($cacheReaderMock))
+            ->executeResource($resourceMock, $glueRequestTransfer);
 
         //Assert
         $resource = $glueResponseTransfer->getResources()->offsetGet(0);
@@ -103,16 +116,19 @@ class ResourceExecutorTest extends Unit
             ->method('getResource')
             ->willReturn([new ResourceController(), 'getCollectionAction']);
 
-        $resourceExecutorMock = $this->getMockBuilder(ResourceExecutor::class)
-            ->setMethods(['getAttributesTransfer'])
+        $cacheReaderMock = $this->getMockBuilder(ControllerCacheReaderInterface::class)
+            ->disableOriginalConstructor()
             ->getMock();
-        $resourceExecutorMock
-            ->expects($this->once())
-            ->method('getAttributesTransfer')
-            ->willReturn(null);
+        $cacheReaderMock->expects($this->once())
+            ->method('getActionParameters')
+            ->willReturn([
+                GlueRequestTransfer::class => '',
+                GlueResponseTransfer::class => '',
+            ]);
 
         //Act
-        $glueResponseTransfer = $resourceExecutorMock->executeResource($resourceMock, $glueRequestTransfer);
+        $glueResponseTransfer = (new ResourceExecutor($cacheReaderMock))
+            ->executeResource($resourceMock, $glueRequestTransfer);
 
         //Assert
         $this->assertInstanceOf(GlueResponseTransfer::class, $glueResponseTransfer);
@@ -126,24 +142,35 @@ class ResourceExecutorTest extends Unit
     {
         //Arrange
         $glueRequestTransfer = (new GlueRequestTransfer())
-            ->setResource(new GlueResourceTransfer())
+            ->setResource((new GlueResourceTransfer())->setMethod(strtolower(Request::METHOD_POST)))
             ->setContent('fooBar');
 
         $resourceMock = $this->createMock(ResourceInterface::class);
         $resourceMock->expects($this->once())
             ->method('getResource')
             ->willReturn([new ResourceController(), 'postAction']);
+        $resourceMock->expects($this->once())
+            ->method('getDeclaredMethods')
+            ->willReturn(
+                ((new GlueResourceMethodCollectionTransfer())
+                    ->setPost((new GlueResourceMethodConfigurationTransfer())->setAttributes(AttributesTransfer::class))
+                ),
+            );
 
-        $resourceExecutorMock = $this->getMockBuilder(ResourceExecutor::class)
-            ->setMethods(['getAttributesTransfer'])
+        $cacheReaderMock = $this->getMockBuilder(ControllerCacheReaderInterface::class)
+            ->disableOriginalConstructor()
             ->getMock();
-        $resourceExecutorMock
-            ->expects($this->once())
-            ->method('getAttributesTransfer')
-            ->willReturn(new AttributesTransfer());
+        $cacheReaderMock->expects($this->once())
+            ->method('getActionParameters')
+            ->willReturn([
+                AttributesTransfer::class => '',
+                GlueRequestTransfer::class => '',
+                GlueResponseTransfer::class => '',
+            ]);
 
         //Act
-        $glueResponseTransfer = $resourceExecutorMock->executeResource($resourceMock, $glueRequestTransfer);
+        $glueResponseTransfer = (new ResourceExecutor($cacheReaderMock))
+            ->executeResource($resourceMock, $glueRequestTransfer);
 
         //Assert
         $this->assertInstanceOf(GlueResponseTransfer::class, $glueResponseTransfer);
@@ -165,6 +192,7 @@ class ResourceExecutorTest extends Unit
             ->willThrowException($this->createMock(ControllerNotFoundException::class));
 
         $resourceExecutorMock = $this->getMockBuilder(ResourceExecutor::class)
+            ->disableOriginalConstructor()
             ->setMethods(['getAttributesTransfer'])
             ->getMock();
         $resourceExecutorMock

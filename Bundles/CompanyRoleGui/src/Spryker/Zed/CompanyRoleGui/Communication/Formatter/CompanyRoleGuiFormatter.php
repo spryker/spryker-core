@@ -21,7 +21,7 @@ class CompanyRoleGuiFormatter implements CompanyRoleGuiFormatterInterface
         $companyUserRoleNames = '';
 
         foreach ($companyRoleCollectionTransfer->getRoles() as $companyRoleTransfer) {
-            $companyUserRoleNames .= '<p>' . $companyRoleTransfer->getName() . '</p>';
+            $companyUserRoleNames .= '<p>' . htmlspecialchars($companyRoleTransfer->getName()) . '</p>';
         }
 
         return $companyUserRoleNames;

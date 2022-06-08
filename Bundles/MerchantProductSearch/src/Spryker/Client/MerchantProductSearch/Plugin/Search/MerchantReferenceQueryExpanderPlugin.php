@@ -30,7 +30,7 @@ class MerchantReferenceQueryExpanderPlugin extends AbstractPlugin implements Que
      * @api
      *
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
      */
@@ -43,7 +43,7 @@ class MerchantReferenceQueryExpanderPlugin extends AbstractPlugin implements Que
 
     /**
      * @param \Elastica\Query $query
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return void
      */

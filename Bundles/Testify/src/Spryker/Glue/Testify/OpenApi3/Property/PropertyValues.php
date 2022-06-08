@@ -13,6 +13,10 @@ use Countable;
 use IteratorAggregate;
 use Traversable;
 
+/**
+ * @implements \ArrayAccess<string, \Spryker\Glue\Testify\OpenApi3\Property\PropertyValueInterface>
+ * @implements \IteratorAggregate<\Spryker\Glue\Testify\OpenApi3\Property\PropertyValueInterface>
+ */
 class PropertyValues implements IteratorAggregate, ArrayAccess, Countable
 {
     /**

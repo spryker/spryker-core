@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="AssetStorage" strict="true">
+        <property name="idAsset" type="int" deprecated="Use assetId instead."/>
+        <property name="assetId" type="int"/>
+        <property name="assetUuid" type="string"/>
+        <property name="assetContent" type="string"/>
+        <property name="storeName" type="string" deprecated="Will be removed in next major."/>
+        <property name="assetSlot" type="string" deprecated="Will be removed in next major."/>
+    </transfer>
+
+    <transfer name="AssetSlotStorage">
+        <property name="idAssetSlotStorage" type="int"/>
+        <property name="assetSlot" type="string"/>
+        <property name="store" type="string"/>
+        <property name="data" type="AssetStorageCollection"/>
+    </transfer>
+
+    <transfer name="AssetStorageCollection" strict="true">
+        <property name="assetsStorage" type="AssetStorage[]" singular="assetStorage"/>
+    </transfer>
+
+    <transfer name="AssetStorageCriteria" strict="true">
+        <property name="assetSlot" type="string"/>
+        <property name="storeName" type="string"/>
+    </transfer>
+
+    <transfer name="SynchronizationData">
+        <property name="reference" type="string"/>
+        <property name="data" type="string"/>
+        <property name="key" type="string"/>
+        <property name="store" type="string"/>
+    </transfer>
+
+    <transfer name="Asset" strict="true">
+        <property name="idAsset" type="int"/>
+        <property name="assetUuid" type="string"/>
+        <property name="assetName" type="string"/>
+        <property name="assetSlot" type="string"/>
+        <property name="assetContent" type="string"/>
+        <property name="stores" type="string[]" singular="store"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="EventEntity">
+        <property name="additionalValues" type="array" singular="additionalValue"/>
+    </transfer>
+
+    <transfer name="Filter">
+        <property name="offset" type="int"/>
+        <property name="limit" type="int"/>
+    </transfer>
+
+</transfers>

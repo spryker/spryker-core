@@ -150,4 +150,12 @@
         <property name="sku" type="string"/>
     </transfer>
 
+    <transfer name="PriceProductCollectionDeleteCriteria">
+        <property name="priceProductDefaultIds" type="int[]" singular="idPriceProductDefault"/>
+        <property name="priceProductStoreIds" type="int[]" singular="idPriceProductStore"/>
+    </transfer>
+
+    <transfer name="PriceProductCollectionResponse">
+    </transfer>
+
 </transfers>

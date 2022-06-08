@@ -16,7 +16,7 @@ interface ProductConfigurationCartToProductConfigurationClientInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer $productConfiguratorResponseProcessorResponseTransfer
-     * @param array $configuratorResponseData
+     * @param array<string, mixed> $configuratorResponseData
      *
      * @return \Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer
      */
@@ -26,7 +26,7 @@ interface ProductConfigurationCartToProductConfigurationClientInterface
     ): ProductConfiguratorResponseProcessorResponseTransfer;
 
     /**
-     * @param array $configuratorResponseData
+     * @param array<string, mixed> $configuratorResponseData
      * @param \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer

@@ -133,7 +133,7 @@ class AssignController extends AbstractController
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return bool
      */
@@ -149,7 +149,7 @@ class AssignController extends AbstractController
 
     /**
      * @param int $idCategory
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return void
      */

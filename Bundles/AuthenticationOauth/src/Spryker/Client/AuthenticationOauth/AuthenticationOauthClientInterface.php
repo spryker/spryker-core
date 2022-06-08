@@ -1,0 +1,27 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Client\AuthenticationOauth;
+
+use Generated\Shared\Transfer\GlueAuthenticationRequestTransfer;
+use Generated\Shared\Transfer\GlueAuthenticationResponseTransfer;
+
+interface AuthenticationOauthClientInterface
+{
+    /**
+     * Specification:
+     * - Makes Zed request to proccess access token.
+     * - Returns `GlueAuthenticationResponseTransfer` with set `OauthResponseTransfer`.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\GlueAuthenticationRequestTransfer $glueAuthenticationRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\GlueAuthenticationResponseTransfer
+     */
+    public function authenticate(GlueAuthenticationRequestTransfer $glueAuthenticationRequestTransfer): GlueAuthenticationResponseTransfer;
+}

@@ -36,7 +36,7 @@ class ProductOptionExpander implements ProductOptionExpanderInterface
         $salesOrderItemIds = $this->extractSalesOrderItemIds($itemTransfers);
         $mappedOrderItemsWithProductOptions = $this->getMappedOrderItemsWithProductOptions($salesOrderItemIds);
 
-        $productOptionSkus = $this->extractProductOptionSkus($itemTransfers);
+        $productOptionSkus = $this->extractProductOptionSkus($mappedOrderItemsWithProductOptions);
         $mappedProductOptionValueTransfers = $this->getMappedProductOptionValues($productOptionSkus);
 
         foreach ($itemTransfers as $itemTransfer) {

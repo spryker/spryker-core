@@ -72,7 +72,8 @@ class AttributesRequestBuilderTest extends Unit
         $glueRequestTransfer = $this->extractAttributesRequest($glueRequestTransfer);
 
         //Assert
-        $this->assertEmpty($glueRequestTransfer->getAttributes());
+        $this->assertArrayNotHasKey(static::ATTRIBUTES_FIRST_FIELD, $glueRequestTransfer->getAttributes());
+        $this->assertArrayNotHasKey(static::ATTRIBUTES_SECOND_KEY, $glueRequestTransfer->getAttributes());
     }
 
     /**
@@ -122,8 +123,10 @@ class AttributesRequestBuilderTest extends Unit
     protected function getWrongContentData(): string
     {
         return json_encode([
-            static::ATTRIBUTES_FIRST_FIELD,
-            static::ATTRIBUTES_SECOND_KEY => static::ATTRIBUTES_SECOND_FIELD,
+            'data' => [
+                static::ATTRIBUTES_FIRST_FIELD,
+                static::ATTRIBUTES_SECOND_KEY => static::ATTRIBUTES_SECOND_FIELD,
+            ],
         ]);
     }
 
@@ -133,10 +136,8 @@ class AttributesRequestBuilderTest extends Unit
     protected function getContentData(): string
     {
         return json_encode([
-            'data' => [
-                static::ATTRIBUTES_FIRST_FIELD,
-                static::ATTRIBUTES_SECOND_KEY => static::ATTRIBUTES_SECOND_FIELD,
-            ],
+            static::ATTRIBUTES_FIRST_FIELD,
+            static::ATTRIBUTES_SECOND_KEY => static::ATTRIBUTES_SECOND_FIELD,
         ]);
     }
 }

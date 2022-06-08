@@ -13,7 +13,7 @@ use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\Ty
 class MerchantRelationshipHardThresholdFormMapper extends AbstractMerchantRelationshipThresholdFormMapper implements MerchantRelationshipThresholdFormMapperInterface
 {
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer

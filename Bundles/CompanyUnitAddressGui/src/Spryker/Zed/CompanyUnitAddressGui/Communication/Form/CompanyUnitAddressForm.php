@@ -9,6 +9,7 @@ namespace Spryker\Zed\CompanyUnitAddressGui\Communication\Form;
 
 use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Symfony\Component\Form\ChoiceList\Loader\CallbackChoiceLoader;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -26,11 +27,6 @@ class CompanyUnitAddressForm extends AbstractType
     /**
      * @var string
      */
-    public const OPTION_COMPANY_CHOICES = 'company_choices';
-
-    /**
-     * @var string
-     */
     public const OPTION_COUNTRY_CHOICES = 'country_choices';
 
     /**
@@ -40,7 +36,6 @@ class CompanyUnitAddressForm extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setRequired(static::OPTION_COMPANY_CHOICES);
         $resolver->setRequired(static::OPTION_COUNTRY_CHOICES);
     }
 
@@ -53,7 +48,7 @@ class CompanyUnitAddressForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addIdCompanyUnitAddressField($builder)
-            ->addCompanyField($builder, $options[static::OPTION_COMPANY_CHOICES])
+            ->addCompanyField($builder)
             ->addCountryField($builder, $options[static::OPTION_COUNTRY_CHOICES])
             ->addCityField($builder)
             ->addZipCodeField($builder)
@@ -78,16 +73,19 @@ class CompanyUnitAddressForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $choices
      *
      * @return $this
      */
-    protected function addCompanyField(FormBuilderInterface $builder, array $choices = [])
+    protected function addCompanyField(FormBuilderInterface $builder)
     {
         $builder->add(CompanyUnitAddressTransfer::FK_COMPANY, ChoiceType::class, [
             'label' => 'Company',
             'placeholder' => 'Select one',
-            'choices' => array_flip($choices),
+            'choice_loader' => new CallbackChoiceLoader(function () {
+                return array_flip($this->getFactory()
+                    ->createCompanyUnitAddressDataProvider()
+                    ->prepareCompanyChoices());
+            }),
             'constraints' => [
                 new NotBlank(),
             ],

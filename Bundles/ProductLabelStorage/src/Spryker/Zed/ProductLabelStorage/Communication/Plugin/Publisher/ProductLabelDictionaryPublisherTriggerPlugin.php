@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductLabelStorage\Communication\Plugin\Publisher;
 
+use Generated\Shared\Transfer\ProductLabelTransfer;
 use Spryker\Shared\ProductLabelStorage\ProductLabelStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherTriggerPluginInterface;
@@ -20,6 +21,13 @@ use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherTriggerPluginInter
 class ProductLabelDictionaryPublisherTriggerPlugin extends AbstractPlugin implements PublisherTriggerPluginInterface
 {
     /**
+     * @uses \Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelTableMap::COL_ID_PRODUCT_LABEL
+     *
+     * @var string
+     */
+    protected const COL_ID_PRODUCT_LABEL = 'spy_product_label.id_product_label';
+
+    /**
      * {@inheritDoc}
      * - Retrieves product label dictionaries by provided limit and offset.
      *
@@ -32,6 +40,13 @@ class ProductLabelDictionaryPublisherTriggerPlugin extends AbstractPlugin implem
      */
     public function getData(int $offset, int $limit): array
     {
+        if ($offset === 0) {
+            $productLabelTransfer = (new ProductLabelTransfer())
+                ->setIdProductLabel(null);
+
+            return [$productLabelTransfer];
+        }
+
         return [];
     }
 
@@ -68,6 +83,6 @@ class ProductLabelDictionaryPublisherTriggerPlugin extends AbstractPlugin implem
      */
     public function getIdColumnName(): ?string
     {
-        return null;
+        return static::COL_ID_PRODUCT_LABEL;
     }
 }

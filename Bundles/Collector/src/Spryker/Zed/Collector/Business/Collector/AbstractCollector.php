@@ -387,7 +387,7 @@ abstract class AbstractCollector
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\Storage\TouchUpdaterSet $touchUpdaterSet
      * @param string $collectorKey
      * @param int $touchId
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return void
      */

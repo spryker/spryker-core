@@ -57,7 +57,7 @@ class QueueReader implements DataReaderInterface
     /**
      * @return void
      */
-    public function next()
+    public function next(): void
     {
         ++$this->position;
     }
@@ -65,6 +65,7 @@ class QueueReader implements DataReaderInterface
     /**
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
     public function key()
     {
         return $this->position;
@@ -73,7 +74,7 @@ class QueueReader implements DataReaderInterface
     /**
      * @return bool
      */
-    public function valid()
+    public function valid(): bool
     {
         if (!isset($this->messages[$this->position])) {
             $this->readFromQueue();
@@ -85,7 +86,7 @@ class QueueReader implements DataReaderInterface
     /**
      * @return void
      */
-    public function rewind()
+    public function rewind(): void
     {
         $this->readFromQueue();
     }
@@ -93,7 +94,7 @@ class QueueReader implements DataReaderInterface
     /**
      * @return \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface
      */
-    public function current()
+    public function current(): DataSetInterface
     {
         $currentMessage = $this->messages[$this->position];
         $this->dataSet->exchangeArray($currentMessage->toArray());

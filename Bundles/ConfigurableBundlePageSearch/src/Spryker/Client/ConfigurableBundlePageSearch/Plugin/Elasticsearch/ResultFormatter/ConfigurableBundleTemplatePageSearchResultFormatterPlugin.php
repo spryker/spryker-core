@@ -32,7 +32,7 @@ class ConfigurableBundleTemplatePageSearchResultFormatterPlugin extends Abstract
 
     /**
      * @param \Elastica\ResultSet $searchResult
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return array
      */
@@ -50,7 +50,7 @@ class ConfigurableBundleTemplatePageSearchResultFormatterPlugin extends Abstract
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer
      */

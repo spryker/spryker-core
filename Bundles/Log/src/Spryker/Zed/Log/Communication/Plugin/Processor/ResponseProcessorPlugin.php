@@ -22,7 +22,7 @@ class ResponseProcessorPlugin extends AbstractPlugin implements LogProcessorPlug
      *
      * @api
      *
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */

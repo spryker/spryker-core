@@ -74,4 +74,13 @@
         <property name="message" type="string"/>
     </transfer>
 
+    <transfer name="ApiApplicationSchemaContext">
+        <property name="resourceContexts" type="ResourceContext[]" singular="resourceContext"/>
+    </transfer>
+
+    <transfer name="ResourceContext">
+        <property name="resourceType" type="string"/>
+        <property name="resourcePluginName" type="string"/>
+    </transfer>
+
 </transfers>

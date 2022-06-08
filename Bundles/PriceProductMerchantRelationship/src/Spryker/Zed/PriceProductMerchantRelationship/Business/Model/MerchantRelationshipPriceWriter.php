@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\PriceProductMerchantRelationship\Business\Model;
 
+use Generated\Shared\Transfer\PriceProductMerchantRelationshipCollectionDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductMerchantRelationshipCollectionResponseTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\SpyPriceProductMerchantRelationshipEntityTransfer;
 use Spryker\Zed\PriceProductMerchantRelationship\Dependency\Facade\PriceProductMerchantRelationshipToPriceProductFacadeInterface;
@@ -87,6 +89,21 @@ class MerchantRelationshipPriceWriter implements MerchantRelationshipPriceWriter
     public function deleteByIdPriceProductStore(int $idPriceProductStore): void
     {
         $this->priceProductMerchantRelationshipEntityManager->deleteByIdPriceProductStore($idPriceProductStore);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductMerchantRelationshipCollectionDeleteCriteriaTransfer $productReviewCollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductMerchantRelationshipCollectionResponseTransfer
+     */
+    public function deleteCollection(
+        PriceProductMerchantRelationshipCollectionDeleteCriteriaTransfer $productReviewCollectionDeleteCriteriaTransfer
+    ): PriceProductMerchantRelationshipCollectionResponseTransfer {
+        $this->priceProductMerchantRelationshipEntityManager->deleteCollection(
+            $productReviewCollectionDeleteCriteriaTransfer,
+        );
+
+        return new PriceProductMerchantRelationshipCollectionResponseTransfer();
     }
 
     /**

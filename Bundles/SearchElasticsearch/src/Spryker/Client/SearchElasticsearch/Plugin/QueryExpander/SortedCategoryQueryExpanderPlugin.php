@@ -38,7 +38,7 @@ class SortedCategoryQueryExpanderPlugin extends AbstractPlugin implements QueryE
      * @api
      *
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
      */
@@ -74,7 +74,7 @@ class SortedCategoryQueryExpanderPlugin extends AbstractPlugin implements QueryE
     }
 
     /**
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return bool
      */
@@ -87,7 +87,7 @@ class SortedCategoryQueryExpanderPlugin extends AbstractPlugin implements QueryE
     }
 
     /**
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return bool
      */
@@ -101,7 +101,7 @@ class SortedCategoryQueryExpanderPlugin extends AbstractPlugin implements QueryE
 
     /**
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return void
      */
@@ -126,7 +126,7 @@ class SortedCategoryQueryExpanderPlugin extends AbstractPlugin implements QueryE
     }
 
     /**
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return mixed
      */

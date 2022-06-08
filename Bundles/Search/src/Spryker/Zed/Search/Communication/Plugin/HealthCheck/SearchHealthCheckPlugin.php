@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\Search\Communication\SearchCommunicationFactory getFactory()
- * @method \Spryker\Zed\Search\Business\SearchFacade getFacade()
+ * @method \Spryker\Zed\Search\Business\SearchFacadeInterface getFacade()
  * @method \Spryker\Zed\Search\SearchConfig getConfig()
  */
 class SearchHealthCheckPlugin extends AbstractPlugin implements HealthCheckPluginInterface

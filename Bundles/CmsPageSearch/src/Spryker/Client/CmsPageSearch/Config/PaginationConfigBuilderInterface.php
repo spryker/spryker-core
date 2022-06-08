@@ -24,14 +24,14 @@ interface PaginationConfigBuilderInterface
     public function getPaginationConfigTransfer(): PaginationConfigTransfer;
 
     /**
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return int
      */
     public function getCurrentPage(array $requestParameters): int;
 
     /**
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return int
      */

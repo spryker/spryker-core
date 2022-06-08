@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Controller;
 
 use ArrayObject;
+use Generated\Shared\Transfer\PriceProductCollectionDeleteCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductTableViewTransfer;
 use Generated\Shared\Transfer\ValidationResponseTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
@@ -47,12 +48,11 @@ abstract class AbstractSavePriceProductController extends AbstractController
     abstract protected function expandPriceProductTransfersWithProductId(ArrayObject $priceProductTransfers, Request $request): ArrayObject;
 
     /**
-     * @param array<int> $priceProductStoreIds
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
-    abstract protected function findPriceProductTransfers(array $priceProductStoreIds, Request $request): array;
+    abstract protected function findPriceProductTransfers(Request $request): array;
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -74,11 +74,6 @@ abstract class AbstractSavePriceProductController extends AbstractController
             return new JsonResponse(['success' => false]);
         }
 
-        /** @var array<int> $typePriceProductStoreIds */
-        $typePriceProductStoreIds = $this->getFactory()
-            ->getUtilEncodingService()
-            ->decodeJson((string)$request->get(PriceProductTableViewTransfer::TYPE_PRICE_PRODUCT_STORE_IDS), true) ?: [];
-
         $requestBodyContent = $this->getFactory()
             ->getUtilEncodingService()
             ->decodeJson((string)$request->getContent(), true);
@@ -88,27 +83,75 @@ abstract class AbstractSavePriceProductController extends AbstractController
         }
 
         $data = $requestBodyContent[static::REQUEST_BODY_CONTENT_KEY_DATA];
-        $volumeQuantity = (int)$request->get(PriceProductTableViewTransfer::VOLUME_QUANTITY);
+        $volumeQuantity = (int)$request->get(PriceProductTableViewTransfer::VOLUME_QUANTITY, 1);
 
-        $priceProductTransfers = $this->findPriceProductTransfers($typePriceProductStoreIds, $request);
-        $priceProductTransfers = $this->getFactory()
+        $priceProductTransfers = $this->findPriceProductTransfers($request);
+
+        $mappedPriceProductTransfers = $this->getFactory()
             ->createSingleFieldPriceProductMapper()
-            ->mapPriceProductTransfers($data, $volumeQuantity, new ArrayObject($priceProductTransfers));
-        $priceProductTransfers = $this->expandPriceProductTransfersWithProductId($priceProductTransfers, $request);
+            ->mapPriceProductTransfers($data, $volumeQuantity, new ArrayObject($this->clonePriceProductTransfers($priceProductTransfers)));
+
+        $mappedPriceProductTransfers = $this->expandPriceProductTransfersWithProductId($mappedPriceProductTransfers, $request);
 
         $validationResponseTransfer = $this->getFactory()
             ->getPriceProductFacade()
-            ->validatePrices($priceProductTransfers);
+            ->validatePrices($mappedPriceProductTransfers);
 
         if (!$validationResponseTransfer->getIsSuccess()) {
             return $this->createErrorJsonResponse($validationResponseTransfer);
         }
 
-        foreach ($priceProductTransfers as $priceProductTransfer) {
+        foreach ($mappedPriceProductTransfers as $priceProductTransfer) {
             $this->getFactory()->getPriceProductFacade()->persistPriceProductStore($priceProductTransfer);
         }
 
+        $priceProductTransfersToRemove = $this->getPriceProductTransfersToRemove($priceProductTransfers, $mappedPriceProductTransfers);
+
+        if (!$priceProductTransfersToRemove) {
+            return $this->createSuccessJsonResponse();
+        }
+
+        $priceProductCollectionDeleteCriteriaTransfer = $this->getFactory()
+            ->createPriceProductMapper()
+            ->mapPriceProductTransfersToPriceProductCollectionDeleteCriteriaTransfer(
+                $priceProductTransfersToRemove,
+                new PriceProductCollectionDeleteCriteriaTransfer(),
+            );
+        $this->getFactory()->getPriceProductFacade()->deletePriceProductCollection($priceProductCollectionDeleteCriteriaTransfer);
+
         return $this->createSuccessJsonResponse();
+    }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfer
+     *
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
+     */
+    protected function clonePriceProductTransfers(array $priceProductTransfer): array
+    {
+        return unserialize(serialize($priceProductTransfer));
+    }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\PriceProductTransfer> $mappedPriceProductTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
+     */
+    protected function getPriceProductTransfersToRemove(array $priceProductTransfers, ArrayObject $mappedPriceProductTransfers): array
+    {
+        $priceProductTransfersToRemove = [];
+
+        $priceProductService = $this->getFactory()->getPriceProductService();
+        $mappedPriceProductGroupKeys = $this->getPriceProductGroupKeys($mappedPriceProductTransfers->getArrayCopy());
+
+        foreach ($priceProductTransfers as $priceProductTransfer) {
+            if (!in_array($priceProductService->buildPriceProductGroupKey($priceProductTransfer), $mappedPriceProductGroupKeys)) {
+                $priceProductTransfersToRemove[] = $priceProductTransfer;
+            }
+        }
+
+        return $priceProductTransfersToRemove;
     }
 
     /**
@@ -140,8 +183,25 @@ abstract class AbstractSavePriceProductController extends AbstractController
             ->getZedUiFactory()
             ->createZedUiFormResponseBuilder()
             ->addErrorNotification($validationErrorTransfer->getMessageOrFail())
+            ->addActionRefreshTable()
             ->createResponse();
 
         return new JsonResponse($zedUiFormResponseTransfer->toArray());
+    }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     *
+     * @return array
+     */
+    protected function getPriceProductGroupKeys(array $priceProductTransfers): array
+    {
+        $priceProductService = $this->getFactory()->getPriceProductService();
+        $priceProductGroupKeys = [];
+        foreach ($priceProductTransfers as $priceProductTransfer) {
+            $priceProductGroupKeys[] = $priceProductService->buildPriceProductGroupKey($priceProductTransfer);
+        }
+
+        return $priceProductGroupKeys;
     }
 }

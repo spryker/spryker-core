@@ -1,0 +1,114 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 44,
+            "line_to": 44,
+            "type": "UndefinedInterfaceMethod",
+            "message": "Method Spryker\\Shared\\Kernel\\Transfer\\TransferInterface::getMessageAttributes does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/MessageBroker/src/Spryker/Zed/MessageBroker/Business/MessageValidator/StoreReferenceMessageValidator.php",
+            "snippet": "        if ($storeReference !== $messageTransfer->getMessageAttributes()->getStoreReference()) {",
+            "selected_text": "getMessageAttributes",
+            "error_level": 5,
+            "shortcode": 181
+        },
+        {
+            "severity": "info",
+            "line_from": 78,
+            "line_to": 78,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Symfony\\Component\\Messenger\\EventListener\\StopWorkerOnMessageLimitListener::__construct cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MessageBroker/src/Spryker/Zed/MessageBroker/Business/Worker/Worker.php",
+            "snippet": "            $this->eventDispatcher->addSubscriber(new StopWorkerOnMessageLimitListener($messageBrokerWorkerConfigTransfer->getLimit(), $this->logger));",
+            "selected_text": "$messageBrokerWorkerConfigTransfer->getLimit()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 82,
+            "line_to": 82,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Symfony\\Component\\Messenger\\EventListener\\StopWorkerOnFailureLimitListener::__construct cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MessageBroker/src/Spryker/Zed/MessageBroker/Business/Worker/Worker.php",
+            "snippet": "            $this->eventDispatcher->addSubscriber(new StopWorkerOnFailureLimitListener($messageBrokerWorkerConfigTransfer->getFailureLimit(), $this->logger));",
+            "selected_text": "$messageBrokerWorkerConfigTransfer->getFailureLimit()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 86,
+            "line_to": 86,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Symfony\\Component\\Messenger\\EventListener\\StopWorkerOnMemoryLimitListener::__construct cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MessageBroker/src/Spryker/Zed/MessageBroker/Business/Worker/Worker.php",
+            "snippet": "            $this->eventDispatcher->addSubscriber(new StopWorkerOnMemoryLimitListener($messageBrokerWorkerConfigTransfer->getMemoryLimit(), $this->logger));",
+            "selected_text": "$messageBrokerWorkerConfigTransfer->getMemoryLimit()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 90,
+            "line_to": 90,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Symfony\\Component\\Messenger\\EventListener\\StopWorkerOnTimeLimitListener::__construct cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MessageBroker/src/Spryker/Zed/MessageBroker/Business/Worker/Worker.php",
+            "snippet": "            $this->eventDispatcher->addSubscriber(new StopWorkerOnTimeLimitListener($messageBrokerWorkerConfigTransfer->getTimeLimit(), $this->logger));",
+            "selected_text": "$messageBrokerWorkerConfigTransfer->getTimeLimit()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 37,
+            "line_to": 37,
+            "type": "PossiblyFalseArgument",
+            "message": "Argument 1 of Generated\\Shared\\Transfer\\PublisherTransfer::setAppIdentifier cannot be false, possibly null|string value expected",
+            "file_name": "vendor/spryker/spryker/Bundles/MessageBroker/src/Spryker/Zed/MessageBroker/Communication/Plugin/MessageBroker/AppIdentifierMessageAttributeProviderPlugin.php",
+            "snippet": "        $messageAttributesTransfer->setPublisher($publisher->setAppIdentifier(getenv('AOP_APP_IDENTIFIER')));",
+            "selected_text": "getenv('AOP_APP_IDENTIFIER')",
+            "error_level": 3,
+            "shortcode": 104
+        },
+        {
+            "severity": "info",
+            "line_from": 35,
+            "line_to": 35,
+            "type": "PossiblyFalseArgument",
+            "message": "Argument 1 of Generated\\Shared\\Transfer\\MessageAttributesTransfer::setTenantIdentifier cannot be false, possibly null|string value expected",
+            "file_name": "vendor/spryker/spryker/Bundles/MessageBroker/src/Spryker/Zed/MessageBroker/Communication/Plugin/MessageBroker/TenantIdentifierMessageAttributeProviderPlugin.php",
+            "snippet": "        $messageAttributesTransfer->setTenantIdentifier(getenv('TENANT_IDENTIFIER'));",
+            "selected_text": "getenv('TENANT_IDENTIFIER')",
+            "error_level": 3,
+            "shortcode": 104
+        },
+        {
+            "severity": "info",
+            "line_from": 25,
+            "line_to": 25,
+            "type": "FalsableReturnStatement",
+            "message": "The declared return type 'array<string, string>|string' for Spryker\\Zed\\MessageBroker\\MessageBrokerConfig::getMessageToChannelMap does not allow false, but the function returns 'false|string'",
+            "file_name": "vendor/spryker/spryker/Bundles/MessageBroker/src/Spryker/Zed/MessageBroker/MessageBrokerConfig.php",
+            "snippet": "            return getenv('SPRYKER_MESSAGE_TO_CHANNEL_MAP');",
+            "selected_text": "getenv('SPRYKER_MESSAGE_TO_CHANNEL_MAP')",
+            "error_level": 5,
+            "shortcode": 137
+        },
+        {
+            "severity": "info",
+            "line_from": 47,
+            "line_to": 47,
+            "type": "FalsableReturnStatement",
+            "message": "The declared return type 'array<string, string>|string' for Spryker\\Zed\\MessageBroker\\MessageBrokerConfig::getChannelToTransportMap does not allow false, but the function returns 'false|string'",
+            "file_name": "vendor/spryker/spryker/Bundles/MessageBroker/src/Spryker/Zed/MessageBroker/MessageBrokerConfig.php",
+            "snippet": "            return getenv('SPRYKER_CHANNEL_TO_TRANSPORT_MAP');",
+            "selected_text": "getenv('SPRYKER_CHANNEL_TO_TRANSPORT_MAP')",
+            "error_level": 5,
+            "shortcode": 137
+        }
+    ],
+    "deprecation": []
+}

@@ -72,7 +72,7 @@ class ProductListSearchFacade extends AbstractFacade implements ProductListSearc
      *
      * @api
      *
-     * @param array $productData
+     * @param array<string, mixed> $productData
      * @param \Generated\Shared\Transfer\ProductListMapTransfer $productListMapTransfer
      *
      * @return \Generated\Shared\Transfer\ProductListMapTransfer

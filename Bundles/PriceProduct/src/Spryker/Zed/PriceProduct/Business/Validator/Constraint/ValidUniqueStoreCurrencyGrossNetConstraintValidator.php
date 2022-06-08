@@ -10,7 +10,6 @@ namespace Spryker\Zed\PriceProduct\Business\Validator\Constraint;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
-use Spryker\Shared\PriceProduct\PriceProductConfig;
 use Spryker\Zed\Kernel\Communication\Validator\AbstractConstraintValidator;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -48,6 +47,7 @@ class ValidUniqueStoreCurrencyGrossNetConstraintValidator extends AbstractConstr
 
         /** @var \Generated\Shared\Transfer\PriceTypeTransfer $priceTypeTransfer */
         $priceTypeTransfer = $value->getPriceTypeOrFail();
+        $priceProductDimensionTransfer = $this->getPriceProductDimensionTransfer($value);
 
         $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())
             ->setIdProductAbstract($value->getIdProductAbstract())
@@ -55,10 +55,7 @@ class ValidUniqueStoreCurrencyGrossNetConstraintValidator extends AbstractConstr
             ->setIdCurrency($moneyValueTransfer->getFkCurrency())
             ->setIdStore($moneyValueTransfer->getFkStore())
             ->setPriceType($priceTypeTransfer->getNameOrFail())
-            ->setPriceDimension(
-                (new PriceProductDimensionTransfer())
-                    ->setType(PriceProductConfig::PRICE_DIMENSION_DEFAULT),
-            );
+            ->setPriceDimension($priceProductDimensionTransfer);
 
         $priceProductTransfers = $constraint->getPriceProductRepository()
             ->getProductPricesByCriteria($priceProductCriteriaTransfer);
@@ -78,5 +75,17 @@ class ValidUniqueStoreCurrencyGrossNetConstraintValidator extends AbstractConstr
         ) {
             $this->context->addViolation($constraint->getMessage());
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $value
+     *
+     * @return \Generated\Shared\Transfer\PriceProductDimensionTransfer
+     */
+    protected function getPriceProductDimensionTransfer(PriceProductTransfer $value): PriceProductDimensionTransfer
+    {
+        return (new PriceProductDimensionTransfer())
+                    ->fromArray($value->getPriceDimensionOrFail()->toArray(), true)
+                    ->setIdPriceProductDefault(null);
     }
 }

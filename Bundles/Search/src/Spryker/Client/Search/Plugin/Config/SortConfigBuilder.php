@@ -86,7 +86,7 @@ class SortConfigBuilder extends AbstractPlugin implements SortConfigBuilderInter
     }
 
     /**
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return string|null
      */

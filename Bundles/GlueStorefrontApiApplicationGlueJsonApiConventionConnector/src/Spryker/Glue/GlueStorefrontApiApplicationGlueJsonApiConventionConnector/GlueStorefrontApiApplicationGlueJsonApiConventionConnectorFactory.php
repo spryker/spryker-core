@@ -8,6 +8,8 @@
 namespace Spryker\Glue\GlueStorefrontApiApplicationGlueJsonApiConventionConnector;
 
 use Spryker\Glue\GlueJsonApiConventionExtension\Dependency\Plugin\ResourceRelationshipCollectionInterface;
+use Spryker\Glue\GlueStorefrontApiApplicationGlueJsonApiConventionConnector\Expander\ContextExpanderInterface;
+use Spryker\Glue\GlueStorefrontApiApplicationGlueJsonApiConventionConnector\Expander\RelationshipPluginsContextExpander;
 use Spryker\Glue\Kernel\AbstractFactory;
 
 class GlueStorefrontApiApplicationGlueJsonApiConventionConnectorFactory extends AbstractFactory
@@ -18,5 +20,13 @@ class GlueStorefrontApiApplicationGlueJsonApiConventionConnectorFactory extends 
     public function getResourceProviderPlugins(): ResourceRelationshipCollectionInterface
     {
         return $this->getProvidedDependency(GlueStorefrontApiApplicationGlueJsonApiConventionConnectorDependencyProvider::PLUGINS_RESOURCE_RELATIONSHIP);
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueStorefrontApiApplicationGlueJsonApiConventionConnector\Expander\ContextExpanderInterface
+     */
+    public function createRelationshipPluginsContextExpander(): ContextExpanderInterface
+    {
+        return new RelationshipPluginsContextExpander($this->getResourceProviderPlugins());
     }
 }

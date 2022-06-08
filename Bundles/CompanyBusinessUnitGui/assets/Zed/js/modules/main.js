@@ -5,8 +5,23 @@
 
 'use strict';
 
-const parentField = require('./parent-field');
+var DependentSelectBox = require('ZedGuiModules/libs/dependent-select-box');
 
 $(document).ready(function () {
-    parentField.initialize();
+    new DependentSelectBox({
+        $trigger: $('#company-business-unit_fk_company'),
+        $target: $('#company-business-unit_fk_parent_company_business_unit'),
+        requestUrl: '/company-business-unit-gui/suggest',
+        requestMethod: 'GET',
+        data: {
+            _type: 'query',
+            page: 1,
+        },
+        dataKey: 'idCompany',
+        responseData: {
+            response: 'results',
+            value: 'id',
+            text: 'text',
+        },
+    });
 });

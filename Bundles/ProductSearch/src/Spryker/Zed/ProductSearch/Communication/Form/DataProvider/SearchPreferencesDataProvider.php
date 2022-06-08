@@ -59,7 +59,7 @@ class SearchPreferencesDataProvider
     /**
      * @param int|null $idProductAttributeKey
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions($idProductAttributeKey = null)
     {

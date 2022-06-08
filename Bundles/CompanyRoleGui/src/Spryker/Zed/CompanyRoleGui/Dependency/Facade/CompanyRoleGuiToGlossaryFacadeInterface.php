@@ -13,7 +13,7 @@ interface CompanyRoleGuiToGlossaryFacadeInterface
 {
     /**
      * @param string $keyName
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
      *
      * @return string

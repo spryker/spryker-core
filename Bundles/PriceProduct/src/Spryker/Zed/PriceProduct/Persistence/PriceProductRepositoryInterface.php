@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\QueryCriteriaTransfer;
 use Generated\Shared\Transfer\SpyPriceProductDefaultEntityTransfer;
-use Propel\Runtime\Collection\ObjectCollection;
 
 interface PriceProductRepositoryInterface
 {
@@ -20,63 +19,63 @@ interface PriceProductRepositoryInterface
      * @param string $concreteSku
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore>
+     * @return array<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findProductConcretePricesBySkuAndCriteria(
         string $concreteSku,
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
-    ): ObjectCollection;
+    ): array;
 
     /**
      * @param string $abstractSku
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore>
+     * @return array<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findProductAbstractPricesBySkuAndCriteria(
         string $abstractSku,
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
-    ): ObjectCollection;
+    ): array;
 
     /**
      * @param int $idProductConcrete
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore>
+     * @return array<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findProductConcretePricesByIdAndCriteria(
         int $idProductConcrete,
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
-    ): ObjectCollection;
+    ): array;
 
     /**
      * @param array<int> $productConcreteIds
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore>
+     * @return array<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function getProductConcretePricesByIdsAndCriteria(
         array $productConcreteIds,
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
-    ): ObjectCollection;
+    ): array;
 
     /**
      * @param int $idProductAbstract
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore>
+     * @return array<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findProductAbstractPricesByIdAndCriteria(
         int $idProductAbstract,
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
-    ): ObjectCollection;
+    ): array;
 
     /**
      * @param array<int> $productAbstractIds
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore>
+     * @return array<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
-    public function findProductAbstractPricesByIdIn(array $productAbstractIds): ObjectCollection;
+    public function findProductAbstractPricesByIdIn(array $productAbstractIds): array;
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
@@ -95,9 +94,9 @@ interface PriceProductRepositoryInterface
     /**
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return array<\Generated\Shared\Transfer\SpyPriceProductStoreEntityTransfer>
+     * @return array<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
-    public function findOrphanPriceProductStoreEntities(PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array;
+    public function findPriceProductTransfersWithOrphanPriceProductStore(PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array;
 
     /**
      * @param int $idPriceProductStore
@@ -124,12 +123,12 @@ interface PriceProductRepositoryInterface
      * @param array<int> $productAbstractIds
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
-     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\PriceProduct\Persistence\SpyPriceProductStore>
+     * @return array<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function findProductAbstractPricesByIdInAndCriteria(
         array $productAbstractIds,
         ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
-    ): ObjectCollection;
+    ): array;
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer

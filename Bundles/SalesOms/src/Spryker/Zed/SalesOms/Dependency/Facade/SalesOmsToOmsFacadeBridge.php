@@ -25,7 +25,7 @@ class SalesOmsToOmsFacadeBridge implements SalesOmsToOmsFacadeInterface
     /**
      * @param string $eventId
      * @param int $orderItemId
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array|null
      */

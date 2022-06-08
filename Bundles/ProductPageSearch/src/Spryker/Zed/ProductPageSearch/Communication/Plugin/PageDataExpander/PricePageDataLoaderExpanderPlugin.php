@@ -28,7 +28,7 @@ class PricePageDataLoaderExpanderPlugin extends AbstractPlugin implements Produc
      *
      * @api
      *
-     * @param array $productData
+     * @param array<string, mixed> $productData
      * @param \Generated\Shared\Transfer\ProductPageSearchTransfer $productAbstractPageSearchTransfer
      *
      * @return void
@@ -117,7 +117,7 @@ class PricePageDataLoaderExpanderPlugin extends AbstractPlugin implements Produc
     }
 
     /**
-     * @param array $productData
+     * @param array<string, mixed> $productData
      *
      * @return \Generated\Shared\Transfer\ProductPayloadTransfer
      */

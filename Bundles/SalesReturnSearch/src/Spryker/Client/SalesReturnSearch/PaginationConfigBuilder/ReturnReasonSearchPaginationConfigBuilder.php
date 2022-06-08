@@ -35,7 +35,7 @@ class ReturnReasonSearchPaginationConfigBuilder implements PaginationConfigBuild
     }
 
     /**
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return int
      */
@@ -49,7 +49,7 @@ class ReturnReasonSearchPaginationConfigBuilder implements PaginationConfigBuild
     }
 
     /**
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return int
      */
@@ -65,7 +65,7 @@ class ReturnReasonSearchPaginationConfigBuilder implements PaginationConfigBuild
     }
 
     /**
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return bool
      */

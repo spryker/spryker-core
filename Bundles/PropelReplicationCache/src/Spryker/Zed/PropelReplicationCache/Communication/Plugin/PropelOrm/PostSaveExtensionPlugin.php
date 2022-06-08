@@ -13,7 +13,7 @@ use Spryker\Zed\PropelReplicationCache\Business\PropelReplicationCacheFacade;
 
 /**
  * @method \Spryker\Zed\PropelReplicationCache\PropelReplicationCacheConfig getConfig()
- * @method \Spryker\Zed\PropelReplicationCache\Business\PropelReplicationCacheFacade getFacade()
+ * @method \Spryker\Zed\PropelReplicationCache\Business\PropelReplicationCacheFacadeInterface getFacade()
  */
 class PostSaveExtensionPlugin extends AbstractPlugin implements PostSaveExtensionPluginInterface
 {

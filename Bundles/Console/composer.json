@@ -25,6 +25,7 @@
     "autoload": {
         "psr-4": {
             "Spryker\\": "src/Spryker/",
+            "SprykerTest\\Glue\\Console\\Helper\\": "tests/SprykerTest/Glue/Console/_support/Helper/",
             "SprykerTest\\Zed\\Console\\Helper\\": "tests/SprykerTest/Zed/Console/_support/Helper/"
         }
     },

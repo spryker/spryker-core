@@ -95,7 +95,7 @@ class MailBuilder implements MailBuilderInterface
 
     /**
      * @param string $subject
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return $this
      */
@@ -233,7 +233,7 @@ class MailBuilder implements MailBuilderInterface
 
     /**
      * @param string $keyName
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return string
      */

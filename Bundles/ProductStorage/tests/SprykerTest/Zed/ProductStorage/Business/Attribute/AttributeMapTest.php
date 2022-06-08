@@ -300,7 +300,7 @@ class AttributeMapTest extends Unit
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \Propel\Runtime\Collection\ObjectCollection|\PHPUnit\Framework\MockObject\MockObject
      */

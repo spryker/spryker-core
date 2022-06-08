@@ -151,7 +151,7 @@ interface CmsFacadeInterface
      *
      * @param int $idPage
      * @param string $placeholder
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @throws \Spryker\Zed\Cms\Business\Exception\MissingGlossaryKeyMappingException
      * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException

@@ -28,7 +28,7 @@ abstract class AbstractFacetQueryExpanderPluginAggregationTest extends AbstractQ
      *
      * @param \Spryker\Client\SearchElasticsearch\Config\SearchConfigInterface $searchConfigMock
      * @param array $expectedAggregations
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return void
      */

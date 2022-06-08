@@ -30,7 +30,7 @@ class PlaceOrderWithAmountUpToPermissionPlugin implements ExecutablePermissionPl
      * - Returns false, if customer cent amount is not provided.
      * - Returns true, if configuration does not have cent amount set.
      *
-     * @param array $configuration
+     * @param array<string, mixed> $configuration
      * @param array|string|int|null $context Cent amount.
      *
      * @return bool

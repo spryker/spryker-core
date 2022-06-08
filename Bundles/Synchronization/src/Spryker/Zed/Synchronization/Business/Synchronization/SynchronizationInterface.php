@@ -10,7 +10,7 @@ namespace Spryker\Zed\Synchronization\Business\Synchronization;
 interface SynchronizationInterface
 {
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param string $queueName
      *
      * @return void
@@ -18,14 +18,14 @@ interface SynchronizationInterface
     public function write(array $data, $queueName);
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return void
      */
     public function writeBulk(array $data): void;
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param string $queueName
      *
      * @return void
@@ -33,7 +33,7 @@ interface SynchronizationInterface
     public function delete(array $data, $queueName);
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return void
      */

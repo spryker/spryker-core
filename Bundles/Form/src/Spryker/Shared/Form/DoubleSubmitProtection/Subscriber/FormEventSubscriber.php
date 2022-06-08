@@ -129,7 +129,7 @@ class FormEventSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param string $formName
      *
      * @return bool

@@ -18,6 +18,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\ProductCustomerPermissionCollector\Business\ProductCustomerPermissionCollectorFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductCustomerPermissionCollector\ProductCustomerPermissionCollectorConfig getConfig()
+ * @method \Spryker\Zed\ProductCustomerPermissionCollector\Communication\ProductCustomerPermissionCollectorCommunicationFactory getFactory()
  */
 class ProductCustomerPermissionCollectorSearchPlugin extends AbstractCollectorPlugin
 {

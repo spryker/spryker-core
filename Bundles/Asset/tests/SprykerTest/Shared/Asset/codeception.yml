@@ -1,0 +1,6 @@
+namespace: SprykerTest\Shared\Asset
+paths:
+    tests: .
+    data: ../../../_data
+    support: _support
+    log: ../../../_output

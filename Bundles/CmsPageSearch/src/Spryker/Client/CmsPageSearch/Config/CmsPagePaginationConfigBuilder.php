@@ -35,7 +35,7 @@ class CmsPagePaginationConfigBuilder implements PaginationConfigBuilderInterface
     }
 
     /**
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return int
      */
@@ -49,7 +49,7 @@ class CmsPagePaginationConfigBuilder implements PaginationConfigBuilderInterface
     }
 
     /**
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return int
      */
@@ -66,7 +66,7 @@ class CmsPagePaginationConfigBuilder implements PaginationConfigBuilderInterface
 
     /**
      * @param string $paramName
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return bool
      */

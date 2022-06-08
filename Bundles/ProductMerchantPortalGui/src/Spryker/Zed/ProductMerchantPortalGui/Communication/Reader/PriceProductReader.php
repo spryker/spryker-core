@@ -9,9 +9,7 @@ namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Reader;
 
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
-use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductTableCriteriaTransfer;
-use Spryker\Shared\PriceProduct\PriceProductConfig;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductVolumeFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductFacadeInterface;
@@ -34,18 +32,26 @@ class PriceProductReader implements PriceProductReaderInterface
     protected $priceProductVolumeFacade;
 
     /**
+     * @var array<\Spryker\Zed\ProductMerchantPortalGuiExtension\Dependency\Plugin\PriceProductTableFilterPluginInterface>
+     */
+    protected $priceProductTableFilterPlugins;
+
+    /**
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductFacadeInterface $productFacade
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductVolumeFacadeInterface $priceProductVolumeFacade
+     * @param array<\Spryker\Zed\ProductMerchantPortalGuiExtension\Dependency\Plugin\PriceProductTableFilterPluginInterface> $priceProductTableFilterPlugins
      */
     public function __construct(
         ProductMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade,
         ProductMerchantPortalGuiToProductFacadeInterface $productFacade,
-        ProductMerchantPortalGuiToPriceProductVolumeFacadeInterface $priceProductVolumeFacade
+        ProductMerchantPortalGuiToPriceProductVolumeFacadeInterface $priceProductVolumeFacade,
+        array $priceProductTableFilterPlugins
     ) {
         $this->priceProductFacade = $priceProductFacade;
         $this->productFacade = $productFacade;
         $this->priceProductVolumeFacade = $priceProductVolumeFacade;
+        $this->priceProductTableFilterPlugins = $priceProductTableFilterPlugins;
     }
 
     /**
@@ -57,16 +63,13 @@ class PriceProductReader implements PriceProductReaderInterface
     {
         $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())
             ->setIdProductConcrete($priceProductTableCriteriaTransfer->getIdProductConcrete())
-            ->setIdProductAbstract($priceProductTableCriteriaTransfer->getIdProductAbstract());
+            ->setIdProductAbstract($priceProductTableCriteriaTransfer->getIdProductAbstract())
+            ->setWithAllMerchantPrices(true);
 
         $priceProductTransfers = [];
 
         if ($priceProductCriteriaTransfer->getIdProductConcrete() !== null) {
             $priceProductCriteriaTransfer->setOnlyConcretePrices(true);
-            $priceProductCriteriaTransfer->setPriceDimension(
-                (new PriceProductDimensionTransfer())
-                ->setType(PriceProductConfig::PRICE_DIMENSION_DEFAULT),
-            );
 
             $idProductConcrete = $priceProductCriteriaTransfer->getIdProductConcreteOrFail();
             $idProductAbstract = $this->productFacade->findProductAbstractIdByConcreteId($idProductConcrete);
@@ -115,6 +118,11 @@ class PriceProductReader implements PriceProductReaderInterface
             }
         }
 
+        $priceProductTransfers = $this->executePriceProductTableFilterPlugins(
+            $priceProductTransfers,
+            $priceProductTableCriteriaTransfer,
+        );
+
         return $priceProductTransfers;
     }
 
@@ -156,5 +164,22 @@ class PriceProductReader implements PriceProductReaderInterface
             $moneyValueTransfer->getFkStore(),
             $priceProductTableCriteriaTransfer->getFilterInStores(),
         );
+    }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductTableCriteriaTransfer $priceProductTableCriteriaTransfer
+     *
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
+     */
+    protected function executePriceProductTableFilterPlugins(
+        array $priceProductTransfers,
+        PriceProductTableCriteriaTransfer $priceProductTableCriteriaTransfer
+    ): array {
+        foreach ($this->priceProductTableFilterPlugins as $priceProductTableFilterPlugin) {
+            $priceProductTransfers = $priceProductTableFilterPlugin->filter($priceProductTransfers, $priceProductTableCriteriaTransfer);
+        }
+
+        return $priceProductTransfers;
     }
 }

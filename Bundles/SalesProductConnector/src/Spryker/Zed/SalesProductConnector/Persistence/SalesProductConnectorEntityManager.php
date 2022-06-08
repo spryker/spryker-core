@@ -37,6 +37,6 @@ class SalesProductConnectorEntityManager extends AbstractEntityManager implement
             $this->persist($salesOrderItemMetadataEntity);
         }
 
-        $this->commitIdentical();
+        $this->commit();
     }
 }

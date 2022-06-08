@@ -12,6 +12,9 @@ use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetToProductImageTableMa
 
 /**
  * @method \Spryker\Zed\ProductPageSearch\Communication\ProductPageSearchCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductPageSearch\ProductPageSearchConfig getConfig()
+ * @method \Spryker\Zed\ProductPageSearch\Business\ProductPageSearchFacadeInterface getFacade()
  */
 class ProductConcretePageSearchProductImageSetToProductImageListener extends AbstractProductConcretePageSearchListener
 {

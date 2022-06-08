@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
  * @method \Spryker\Zed\Quote\Business\QuoteFacadeInterface getFacade()
+ * @method \Spryker\Zed\Quote\Persistence\QuoteRepositoryInterface getRepository()
  */
 class GatewayController extends AbstractGatewayController
 {

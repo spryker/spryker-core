@@ -203,7 +203,7 @@ class ProductConcreteAttributeTableDataProvider extends AbstractGuiTableDataProv
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \Generated\Shared\Transfer\GuiTableDataResponseTransfer
      */

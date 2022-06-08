@@ -49,7 +49,7 @@ class CategoryEditDataProvider
     /**
      * @param int $idCategory
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions(int $idCategory): array
     {

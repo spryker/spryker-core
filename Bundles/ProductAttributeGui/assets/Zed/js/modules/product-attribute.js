@@ -174,7 +174,9 @@ function AttributeManager() {
     };
 
     _attributeManager.resetRemovedKey = function (key) {
-        delete _attributeManager.removedKeys[key];
+        _attributeManager.removedKeys = _attributeManager.removedKeys.filter(function (removedKey) {
+            return removedKey !== key;
+        });
     };
 
     _attributeManager.resetRemovedKeysCache = function () {

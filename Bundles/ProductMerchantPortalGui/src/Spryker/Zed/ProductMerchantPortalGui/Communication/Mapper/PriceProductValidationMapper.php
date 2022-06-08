@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\ValidationErrorTransfer;
 use Generated\Shared\Transfer\ValidationResponseTransfer;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Creator\PriceProductTableColumnCreatorInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Matcher\PriceProductTableRowMatcherInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToTranslatorFacadeInterface;
 
 class PriceProductValidationMapper implements PriceProductValidationMapperInterface
 {
@@ -30,15 +31,23 @@ class PriceProductValidationMapper implements PriceProductValidationMapperInterf
     protected $priceProductTableRowMatcher;
 
     /**
+     * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToTranslatorFacadeInterface
+     */
+    protected $translatorFacade;
+
+    /**
      * @param \Spryker\Zed\ProductMerchantPortalGui\Communication\Creator\PriceProductTableColumnCreatorInterface $priceProductTableColumnCreator
      * @param \Spryker\Zed\ProductMerchantPortalGui\Communication\Matcher\PriceProductTableRowMatcherInterface $priceProductTableRowMatcher
+     * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade
      */
     public function __construct(
         PriceProductTableColumnCreatorInterface $priceProductTableColumnCreator,
-        PriceProductTableRowMatcherInterface $priceProductTableRowMatcher
+        PriceProductTableRowMatcherInterface $priceProductTableRowMatcher,
+        ProductMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade
     ) {
         $this->priceProductTableColumnCreator = $priceProductTableColumnCreator;
         $this->priceProductTableRowMatcher = $priceProductTableRowMatcher;
+        $this->translatorFacade = $translatorFacade;
     }
 
     /**
@@ -103,7 +112,9 @@ class PriceProductValidationMapper implements PriceProductValidationMapperInterf
                 continue;
             }
 
-            $errorMessage = $validationErrorTransfer->getMessageOrFail();
+            $errorMessage = $this->translatorFacade->trans(
+                $validationErrorTransfer->getMessageOrFail(),
+            );
 
             $propertyPathCount = count($propertyPath);
             if ($this->isColumnError($propertyPathCount)) {

@@ -30,7 +30,7 @@
                     {% if child.vars.attr.template_path is defined %}
                         {% include child.vars.attr.template_path with {'form': child} %}
                     {% else %}
-                        {{ form_widget(child, {'id':'company-user_fk_company'}) }}
+                        {{ form_widget(child) }}
                     {% endif %}
                 </div>
             {% endfor %}

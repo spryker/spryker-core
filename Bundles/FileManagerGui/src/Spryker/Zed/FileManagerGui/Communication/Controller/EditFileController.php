@@ -127,7 +127,7 @@ class EditFileController extends AbstractUploadFileController
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \Generated\Shared\Transfer\FileTransfer
      */

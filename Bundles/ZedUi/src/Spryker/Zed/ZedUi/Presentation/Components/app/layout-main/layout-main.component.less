@@ -1,14 +1,14 @@
 @import '~@spryker/styles/src/lib/themes/default/variables/index.less';
 @import '~@spryker/styles/src/lib/themes/default/mixins/index.less';
 
-@layout-logo-height: 72px;
-@layout-logo-width: 178px;
-@layout-logo-padding: 15px 20px 18px;
-@layout-logo-collapsed-padding-x: 20px;
-@layout-logo-collapsed-width: 47px;
-@layout-sidebar-padding-top: 105px;
-@layout-header-height: 56px;
-@layout-content-padding: 40px 80px;
+@layout-logo-height: var(--spy-layout-logo-height, 72px);
+@layout-logo-width: var(--spy-layout-logo-width, 178px);
+@layout-logo-padding: var(--spy-layout-logo-padding, 15px 20px 18px);
+@layout-logo-collapsed-padding-x: var(--spy-layout-logo-collapsed-padding-x, 20px);
+@layout-logo-collapsed-width: var(--spy-layout-logo-collapsed-width, 47px);
+@layout-sidebar-padding-top: var(--spy-layout-sidebar-padding-top, 105px);
+@layout-header-height: var(--spy-layout-header-height, 56px);
+@layout-content-padding: var(--spy-layout-content-padding, 40px 80px);
 
 .mp-layout-main {
     spy-layout > nz-layout > span {

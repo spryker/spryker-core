@@ -29,7 +29,7 @@ class View implements ViewInterface, WidgetContainerInterface
     protected $data;
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param array<string> $widgetPlugins
      * @param string|null $template
      */
@@ -90,7 +90,7 @@ class View implements ViewInterface, WidgetContainerInterface
      *
      * @return bool
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return isset($this->data[$offset]) || array_key_exists($offset, $this->data);
     }
@@ -100,6 +100,7 @@ class View implements ViewInterface, WidgetContainerInterface
      *
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return $this->data[$offset];
@@ -113,7 +114,7 @@ class View implements ViewInterface, WidgetContainerInterface
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         throw new ReadOnlyException('This is a read only object.');
     }
@@ -125,7 +126,7 @@ class View implements ViewInterface, WidgetContainerInterface
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         throw new ReadOnlyException('This is a read only object.');
     }

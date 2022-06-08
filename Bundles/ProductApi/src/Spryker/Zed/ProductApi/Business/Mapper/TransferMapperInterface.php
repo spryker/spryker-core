@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductApi\Business\Mapper;
 interface TransferMapperInterface
 {
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \Generated\Shared\Transfer\ProductApiTransfer
      */

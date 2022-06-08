@@ -30,7 +30,7 @@ class ProductReviewMapExpanderPlugin extends AbstractPlugin implements ProductPa
      *
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
-     * @param array $productData
+     * @param array<string, mixed> $productData
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Generated\Shared\Transfer\PageMapTransfer
@@ -57,7 +57,7 @@ class ProductReviewMapExpanderPlugin extends AbstractPlugin implements ProductPa
     }
 
     /**
-     * @param array $productData
+     * @param array<string, mixed> $productData
      *
      * @return float
      */

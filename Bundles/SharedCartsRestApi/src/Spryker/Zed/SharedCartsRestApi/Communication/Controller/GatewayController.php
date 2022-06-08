@@ -14,7 +14,8 @@ use Generated\Shared\Transfer\ShareDetailCollectionTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
- * @method \Spryker\Zed\SharedCartsRestApi\Business\SharedCartsRestApiFacade getFacade()
+ * @method \Spryker\Zed\SharedCartsRestApi\Business\SharedCartsRestApiFacadeInterface getFacade()
+ * @method \Spryker\Zed\SharedCartsRestApi\Communication\SharedCartsRestApiCommunicationFactory getFactory()
  */
 class GatewayController extends AbstractGatewayController
 {

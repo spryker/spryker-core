@@ -201,8 +201,14 @@ class PaymentMethodTable extends AbstractTable
      */
     protected function prepareQuery(): SpyPaymentMethodQuery
     {
-        return $this->paymentMethodQuery
+        $query = $this->paymentMethodQuery
             ->leftJoinWithSpyPaymentProvider();
+
+        if ($this->paymentMethodQuery->getTableMap()->hasColumn('is_hidden')) {
+            $query->filterByIsHidden(false);
+        }
+
+        return $query;
     }
 
     /**

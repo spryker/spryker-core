@@ -24,7 +24,7 @@ class ProductCategoryFilterGuiToCatalogClientBridge implements ProductCategoryFi
 
     /**
      * @param string $searchString
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return array
      */

@@ -40,7 +40,7 @@ class PaginationConfigBuilder extends AbstractPlugin implements PaginationConfig
     }
 
     /**
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return int
      */
@@ -54,7 +54,7 @@ class PaginationConfigBuilder extends AbstractPlugin implements PaginationConfig
     }
 
     /**
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return int
      */
@@ -71,7 +71,7 @@ class PaginationConfigBuilder extends AbstractPlugin implements PaginationConfig
 
     /**
      * @param string $paramName
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return bool
      */

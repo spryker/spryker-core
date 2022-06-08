@@ -12,6 +12,12 @@ use Spryker\Zed\Gui\Communication\Form\DeleteForm;
 /**
  * This class is empty because this form needs to implement CSRF protection and all options and form content
  * will be defined in Twig templates.
+ *
+ * @method \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Discount\DiscountConfig getConfig()
+ * @method \Spryker\Zed\Discount\Persistence\DiscountRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Discount\Communication\DiscountCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Discount\Business\DiscountFacadeInterface getFacade()
  */
 class DeleteVoucherCodeForm extends DeleteForm
 {

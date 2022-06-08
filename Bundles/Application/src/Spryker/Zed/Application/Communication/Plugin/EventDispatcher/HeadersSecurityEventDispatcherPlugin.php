@@ -16,8 +16,8 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
  * @method \Spryker\Zed\Application\ApplicationConfig getConfig()
- * @method \Spryker\Zed\Application\Business\ApplicationBusinessFactory getFactory()
- * @method \Spryker\Zed\Application\Business\ApplicationFacade getFacade()
+ * @method \Spryker\Zed\Application\Communication\ApplicationCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Application\Business\ApplicationFacadeInterface getFacade()
  */
 class HeadersSecurityEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
 {

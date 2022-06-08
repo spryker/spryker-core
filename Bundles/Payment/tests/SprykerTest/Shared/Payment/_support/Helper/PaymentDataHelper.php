@@ -100,4 +100,22 @@ class PaymentDataHelper extends Module
 
         return $paymentMethodTransfer;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer
+     *
+     * @return \Generated\Shared\Transfer\PaymentMethodTransfer|null
+     */
+    public function findPaymentMethod(PaymentMethodTransfer $paymentMethodTransfer): ?PaymentMethodTransfer
+    {
+        $paymentMethodEntity = SpyPaymentMethodQuery::create()
+            ->filterByArray($paymentMethodTransfer->modifiedToArrayNotRecursiveCamelCased())
+            ->findOne();
+
+        if (!$paymentMethodEntity) {
+            return null;
+        }
+
+        return $paymentMethodTransfer->fromArray($paymentMethodEntity->toArray(), true);
+    }
 }

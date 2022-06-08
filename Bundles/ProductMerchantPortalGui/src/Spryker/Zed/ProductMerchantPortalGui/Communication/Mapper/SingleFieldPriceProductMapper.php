@@ -34,15 +34,22 @@ class SingleFieldPriceProductMapper implements SingleFieldPriceProductMapperInte
     protected $fieldMapperStrategies = [];
 
     /**
-     * @param array<\Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\FieldStrategy\FieldMapperStrategyInterface> $fieldMapperStrategies
+     * @var \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\PriceProductMapperInterface
      */
-    public function __construct(array $fieldMapperStrategies)
+    protected $priceProductMapper;
+
+    /**
+     * @param array $fieldMapperStrategies
+     * @param \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\PriceProductMapperInterface $priceProductMapper
+     */
+    public function __construct(array $fieldMapperStrategies, PriceProductMapperInterface $priceProductMapper)
     {
         $this->fieldMapperStrategies = $fieldMapperStrategies;
+        $this->priceProductMapper = $priceProductMapper;
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param int $volumeQuantity
      * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
@@ -55,6 +62,11 @@ class SingleFieldPriceProductMapper implements SingleFieldPriceProductMapperInte
     ): ArrayObject {
         $dataField = (string)key($data);
 
+        $priceProductTransfers = $this->priceProductMapper->mapRequestDataToPriceProductTransfers(
+            $data,
+            $priceProductTransfers,
+        );
+
         foreach ($this->fieldMapperStrategies as $fieldMapperStrategy) {
             if ($fieldMapperStrategy->isApplicable($dataField)) {
                 return $fieldMapperStrategy
@@ -62,6 +74,6 @@ class SingleFieldPriceProductMapper implements SingleFieldPriceProductMapperInte
             }
         }
 
-        return $priceProductTransfers;
+        return new ArrayObject($priceProductTransfers);
     }
 }

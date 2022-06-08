@@ -112,7 +112,7 @@ class TwigEventSubscriber implements EventSubscriberInterface
 
     /**
      * @param string $controller
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return string
      */
@@ -125,7 +125,7 @@ class TwigEventSubscriber implements EventSubscriberInterface
 
     /**
      * @param string $viewName
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -141,7 +141,7 @@ class TwigEventSubscriber implements EventSubscriberInterface
 
     /**
      * @param string $controller
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return string
      */

@@ -10,14 +10,14 @@ namespace Spryker\Zed\CustomerApi\Business\Mapper;
 interface EntityMapperInterface
 {
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \Orm\Zed\Customer\Persistence\SpyCustomer
      */
     public function toEntity(array $data);
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array<\Orm\Zed\Customer\Persistence\SpyCustomer>
      */

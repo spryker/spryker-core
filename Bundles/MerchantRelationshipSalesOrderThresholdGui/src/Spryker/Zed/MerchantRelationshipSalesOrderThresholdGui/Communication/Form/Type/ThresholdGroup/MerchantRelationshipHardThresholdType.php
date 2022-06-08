@@ -14,6 +14,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * @method \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\MerchantRelationshipSalesOrderThresholdGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\MerchantRelationshipSalesOrderThresholdGuiConfig getConfig()
+ * @method \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Persistence\MerchantRelationshipSalesOrderThresholdGuiRepositoryInterface getRepository()
  */
 class MerchantRelationshipHardThresholdType extends AbstractMerchantRelationshipThresholdType
 {

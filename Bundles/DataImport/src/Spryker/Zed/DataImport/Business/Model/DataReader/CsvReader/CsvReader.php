@@ -149,7 +149,7 @@ class CsvReader implements DataReaderInterface, ConfigurableDataReaderInterface,
      *
      * @return int
      */
-    public function count()
+    public function count(): int
     {
         $dataSetCount = iterator_count($this->fileObject);
         if ($this->dataSetKeys) {
@@ -164,7 +164,7 @@ class CsvReader implements DataReaderInterface, ConfigurableDataReaderInterface,
      *
      * @return \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface
      */
-    public function current()
+    public function current(): DataSetInterface
     {
         /** @var array $dataSet */
         $dataSet = $this->fileObject->current();
@@ -190,7 +190,7 @@ class CsvReader implements DataReaderInterface, ConfigurableDataReaderInterface,
     /**
      * @return void
      */
-    public function next()
+    public function next(): void
     {
         $this->fileObject->next();
     }
@@ -198,7 +198,7 @@ class CsvReader implements DataReaderInterface, ConfigurableDataReaderInterface,
     /**
      * @return int
      */
-    public function key()
+    public function key(): int
     {
         return $this->fileObject->key();
     }
@@ -206,7 +206,7 @@ class CsvReader implements DataReaderInterface, ConfigurableDataReaderInterface,
     /**
      * @return bool
      */
-    public function valid()
+    public function valid(): bool
     {
         if ($this->limit !== null && $this->limit !== 0) {
             if ($this->offset !== null) {
@@ -220,7 +220,7 @@ class CsvReader implements DataReaderInterface, ConfigurableDataReaderInterface,
     /**
      * @return void
      */
-    public function rewind()
+    public function rewind(): void
     {
         $this->fileObject->rewind();
 

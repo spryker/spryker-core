@@ -1,6 +1,6 @@
 # !!! This is the fallback file for running core phpstan check !!!
-# Please use phpstan.neon file per module now and console code:phpstan -m Spryker.ModuleName instead.
-# Also set up a phpstan.json config per module and set the highest defaultLevel possible.
+# Please use phpstan.neon file per module now and `console code:phpstan -m Spryker.ModuleName` instead.
+# Also set the highest defaultLevel possible.
 includes:
     - ../../spryker-sdk/phpstan-spryker/extension.neon
 

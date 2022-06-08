@@ -5,11 +5,20 @@ import { ToggleModule } from '@spryker/toggle';
 import { CheckboxModule } from '@spryker/checkbox';
 import { FormItemModule } from '@spryker/form-item';
 import { DateRangePickerModule } from '@spryker/date-picker';
+import { HeadlineModule } from '@spryker/headline';
 
 import { BulkEditProductVariantsComponent } from './bulk-edit-product-variants.component';
 
 @NgModule({
-    imports: [CommonModule, CardModule, ToggleModule, FormItemModule, CheckboxModule, DateRangePickerModule],
+    imports: [
+        CommonModule,
+        CardModule,
+        ToggleModule,
+        FormItemModule,
+        CheckboxModule,
+        DateRangePickerModule,
+        HeadlineModule,
+    ],
     declarations: [BulkEditProductVariantsComponent],
     exports: [BulkEditProductVariantsComponent],
 })

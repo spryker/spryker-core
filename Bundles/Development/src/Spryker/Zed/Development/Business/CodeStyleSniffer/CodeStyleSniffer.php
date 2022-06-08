@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Development\Business\CodeStyleSniffer;
 
+use Laminas\Config\Reader\Xml;
 use Laminas\Filter\FilterChain;
 use Laminas\Filter\StringToLower;
 use Laminas\Filter\Word\CamelCaseToDash;
@@ -324,7 +325,8 @@ class CodeStyleSniffer
         $optionIgnore = $codeStyleSnifferConfiguration->getIgnoredPaths();
 
         $customPaths = [];
-        if (!file_exists($path . DIRECTORY_SEPARATOR . 'phpcs.xml')) {
+        $hasConfigFile = file_exists($path . DIRECTORY_SEPARATOR . 'phpcs.xml');
+        if (!$hasConfigFile) {
             if (is_dir($path . 'src')) {
                 $customPaths[] = $path . 'src/';
             }
@@ -347,11 +349,17 @@ class CodeStyleSniffer
             $processConfig .= ' -s';
         }
 
+        if (!$hasConfigFile || $this->hasLegacyConfiguration($path . DIRECTORY_SEPARATOR . 'phpcs.xml')) {
+            $path = ' ' . $path;
+        } else {
+            $path = '';
+        }
+
         $command = sprintf(
             'vendor/bin/%s %s%s',
             $optionFix ? 'phpcbf' : 'phpcs',
             $processConfig,
-            $customPaths ? '' : ' ' . $path,
+            $customPaths ? '' : $path,
         );
 
         $optionDryRun = $codeStyleSnifferConfiguration->isDryRun();
@@ -486,5 +494,17 @@ class CodeStyleSniffer
         $paths[$moduleDirectoryPath] = clone $this->codeStyleSnifferConfigurationLoader->load($options, $moduleDirectoryPath, $namespace);
 
         return $paths;
+    }
+
+    /**
+     * @param string $path
+     *
+     * @return bool
+     */
+    protected function hasLegacyConfiguration(string $path): bool
+    {
+        $xml = (new Xml())->fromFile($path);
+
+        return empty($xml['file']);
     }
 }

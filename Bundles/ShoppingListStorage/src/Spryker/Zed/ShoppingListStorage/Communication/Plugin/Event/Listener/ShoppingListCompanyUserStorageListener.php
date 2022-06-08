@@ -10,7 +10,6 @@ namespace Spryker\Zed\ShoppingListStorage\Communication\Plugin\Event\Listener;
 use Orm\Zed\ShoppingList\Persistence\Map\SpyShoppingListCompanyUserTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @method \Spryker\Zed\ShoppingListStorage\Business\ShoppingListStorageFacadeInterface getFacade()
@@ -19,8 +18,6 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
  */
 class ShoppingListCompanyUserStorageListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
-    use DatabaseTransactionHandlerTrait;
-
     /**
      * {@inheritDoc}
      *  - Handles shipping list to company user relation create and update events.
@@ -34,8 +31,6 @@ class ShoppingListCompanyUserStorageListener extends AbstractPlugin implements E
      */
     public function handleBulk(array $eventEntityTransfers, $eventName): void
     {
-        $this->preventTransaction();
-
         $companyUserIds = $this->getFactory()
             ->getEventBehaviorFacade()
             ->getEventTransferForeignKeys($eventEntityTransfers, SpyShoppingListCompanyUserTableMap::COL_FK_COMPANY_USER);

@@ -44,9 +44,9 @@ class Mapper implements MapperInterface
         $specification = $object->getObjectSpecification();
 
         foreach ($specification as $propertyName => $definition) {
-            if (property_exists($payload, $propertyName)) {
+            if (property_exists($payload, (string)$propertyName)) {
                 $values->setValue(
-                    $propertyName,
+                    (string)$propertyName,
                     $this->createPropertyValue(
                         $definition,
                         $payload->{$propertyName} ?? null,

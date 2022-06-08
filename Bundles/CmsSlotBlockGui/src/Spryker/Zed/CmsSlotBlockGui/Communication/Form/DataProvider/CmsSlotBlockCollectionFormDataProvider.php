@@ -55,7 +55,7 @@ class CmsSlotBlockCollectionFormDataProvider implements CmsSlotBlockCollectionFo
     /**
      * @param int $idCmsSlotTemplate
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions(int $idCmsSlotTemplate): array
     {

@@ -78,7 +78,7 @@ class AclConfigReader implements AclConfigReaderInterface
     {
         $groupTransfers = [];
         foreach ($this->aclConfig->getInstallerGroups() as $groupData) {
-            $groupTransfers[] = (new GroupTransfer())->setName($groupData[GroupTransfer::NAME]);
+            $groupTransfers[] = (new GroupTransfer())->fromArray($groupData, true);
         }
 
         return $groupTransfers;

@@ -77,7 +77,7 @@ class GlobalHardThresholdFormExpanderPlugin extends AbstractPlugin implements Sa
      * @api
      *
      * @param \Generated\Shared\Transfer\SalesOrderThresholdValueTransfer $salesOrderThresholdValueTransfer
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */
@@ -91,7 +91,7 @@ class GlobalHardThresholdFormExpanderPlugin extends AbstractPlugin implements Sa
      *
      * @api
      *
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param \Generated\Shared\Transfer\SalesOrderThresholdValueTransfer $salesOrderThresholdValueTransfer
      *
      * @return \Generated\Shared\Transfer\SalesOrderThresholdValueTransfer

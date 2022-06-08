@@ -35,6 +35,10 @@ use Spryker\Zed\Category\Business\Deleter\CategoryStoreDeleter;
 use Spryker\Zed\Category\Business\Deleter\CategoryStoreDeleterInterface;
 use Spryker\Zed\Category\Business\Deleter\CategoryUrlDeleter;
 use Spryker\Zed\Category\Business\Deleter\CategoryUrlDeleterInterface;
+use Spryker\Zed\Category\Business\Expander\CategoryLocalizedAttributesCategoryNodeRelationExpander;
+use Spryker\Zed\Category\Business\Expander\CategoryNodeRelationExpanderComposite;
+use Spryker\Zed\Category\Business\Expander\CategoryNodeRelationExpanderInterface;
+use Spryker\Zed\Category\Business\Expander\StoreRelationCategoryNodeRelationExpander;
 use Spryker\Zed\Category\Business\Generator\UrlPathGenerator;
 use Spryker\Zed\Category\Business\Generator\UrlPathGeneratorInterface;
 use Spryker\Zed\Category\Business\Model\Category\CategoryHydrator;
@@ -143,6 +147,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     {
         return new CategoryNodeReader(
             $this->getRepository(),
+            $this->createCategoryNodeRelationExpanderComposite(),
         );
     }
 
@@ -444,6 +449,41 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
         return new CategoryStoreDeleter(
             $this->getEntityManager(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Expander\CategoryNodeRelationExpanderInterface
+     */
+    public function createCategoryLocalizedAttributesCategoryNodeRelationExpander(): CategoryNodeRelationExpanderInterface
+    {
+        return new CategoryLocalizedAttributesCategoryNodeRelationExpander($this->getRepository());
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Expander\CategoryNodeRelationExpanderInterface
+     */
+    public function createStoreRelationCategoryNodeRelationExpander(): CategoryNodeRelationExpanderInterface
+    {
+        return new StoreRelationCategoryNodeRelationExpander($this->getRepository());
+    }
+
+    /**
+     * @return array<\Spryker\Zed\Category\Business\Expander\CategoryNodeRelationExpanderInterface>
+     */
+    public function getCategoryNodeRelationExpanders(): array
+    {
+        return [
+            $this->createCategoryLocalizedAttributesCategoryNodeRelationExpander(),
+            $this->createStoreRelationCategoryNodeRelationExpander(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Expander\CategoryNodeRelationExpanderInterface
+     */
+    public function createCategoryNodeRelationExpanderComposite(): CategoryNodeRelationExpanderInterface
+    {
+        return new CategoryNodeRelationExpanderComposite($this->getCategoryNodeRelationExpanders());
     }
 
     /**

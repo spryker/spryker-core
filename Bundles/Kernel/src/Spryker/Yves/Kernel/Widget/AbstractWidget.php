@@ -99,6 +99,7 @@ abstract class AbstractWidget implements WidgetInterface
      *
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return $this->parameters[$offset];

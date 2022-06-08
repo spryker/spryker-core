@@ -138,7 +138,7 @@ class ProductTransferMapper implements ProductTransferMapperInterface
     }
 
     /**
-     * @param array $productData
+     * @param array<string, mixed> $productData
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */

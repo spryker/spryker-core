@@ -103,7 +103,7 @@ class StorageDatabase implements StorageDatabaseInterface
 
     /**
      * @param array<string> $keys
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */

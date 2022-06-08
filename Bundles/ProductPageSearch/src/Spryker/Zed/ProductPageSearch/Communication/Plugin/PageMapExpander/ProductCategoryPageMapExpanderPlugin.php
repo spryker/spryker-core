@@ -46,7 +46,7 @@ class ProductCategoryPageMapExpanderPlugin extends AbstractPlugin implements Pro
      *
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
-     * @param array $productData
+     * @param array<string, mixed> $productData
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Generated\Shared\Transfer\PageMapTransfer
@@ -84,7 +84,7 @@ class ProductCategoryPageMapExpanderPlugin extends AbstractPlugin implements Pro
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
      * @param array $allParentCategories
      * @param array $directParentCategories
-     * @param array $productData
+     * @param array<string, mixed> $productData
      *
      * @return void
      */
@@ -117,7 +117,7 @@ class ProductCategoryPageMapExpanderPlugin extends AbstractPlugin implements Pro
     /**
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
-     * @param array $productData
+     * @param array<string, mixed> $productData
      *
      * @return void
      */
@@ -149,7 +149,7 @@ class ProductCategoryPageMapExpanderPlugin extends AbstractPlugin implements Pro
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
      * @param int $idCategoryNode
      * @param int $productOrder
-     * @param array $productData
+     * @param array<string, mixed> $productData
      *
      * @return void
      */

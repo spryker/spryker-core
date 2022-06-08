@@ -7,21 +7,29 @@
 
 namespace Spryker\Zed\CompanyRoleGui\Communication\Form;
 
+use Symfony\Component\Form\ChoiceList\Loader\CallbackChoiceLoader;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 
+/**
+ * @method \Spryker\Zed\CompanyRoleGui\CompanyRoleGuiConfig getConfig()
+ * @method \Spryker\Zed\CompanyRoleGui\Communication\CompanyRoleGuiCommunicationFactory getFactory()
+ */
 class CompanyRoleEditForm extends CompanyRoleCreateForm
 {
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array<string, mixed> $options
      *
      * @return $this
      */
-    protected function addFkCompanyField(FormBuilderInterface $builder, array $options)
+    protected function addFkCompanyField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_FK_COMPANY, ChoiceType::class, [
-            'choices' => $options[static::OPTION_COMPANY_CHOICES],
+            'choice_loader' => new CallbackChoiceLoader(function () {
+                return $this->getFactory()
+                    ->createCompanyRoleCreateFormDataProvider()
+                    ->prepareAvailableCompanies();
+            }),
             'expanded' => false,
             'placeholder' => 'Select company',
             'label' => 'Company',

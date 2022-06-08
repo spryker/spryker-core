@@ -7,10 +7,12 @@
 
 namespace Spryker\Zed\PriceProduct\Business\Model\Product;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Service\PriceProduct\PriceProductServiceInterface;
 use Spryker\Shared\PriceProduct\PriceProductConstants;
+use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyFacadeInterface;
 use Spryker\Zed\PriceProduct\PriceProductConfig;
 
 class PriceProductExpander implements PriceProductExpanderInterface
@@ -31,18 +33,26 @@ class PriceProductExpander implements PriceProductExpanderInterface
     protected $priceProductService;
 
     /**
+     * @var \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyFacadeInterface
+     */
+    protected $currencyFacade;
+
+    /**
      * @param array<\Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductDimensionExpanderStrategyPluginInterface> $priceProductDimensionExpanderStrategyPlugins
      * @param \Spryker\Zed\PriceProduct\PriceProductConfig $priceProductConfig
      * @param \Spryker\Service\PriceProduct\PriceProductServiceInterface $priceProductService
+     * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyFacadeInterface $currencyFacade
      */
     public function __construct(
         array $priceProductDimensionExpanderStrategyPlugins,
         PriceProductConfig $priceProductConfig,
-        PriceProductServiceInterface $priceProductService
+        PriceProductServiceInterface $priceProductService,
+        PriceProductToCurrencyFacadeInterface $currencyFacade
     ) {
         $this->priceProductDimensionExpanderStrategyPlugins = $priceProductDimensionExpanderStrategyPlugins;
         $this->priceProductConfig = $priceProductConfig;
         $this->priceProductService = $priceProductService;
+        $this->currencyFacade = $currencyFacade;
     }
 
     /**
@@ -71,6 +81,10 @@ class PriceProductExpander implements PriceProductExpanderInterface
         /** @var \Generated\Shared\Transfer\PriceProductDimensionTransfer $priceDimensionTransfer */
         $priceDimensionTransfer = $priceProductTransfer->requirePriceDimension()->getPriceDimension();
         $priceProductTransfer->setPriceDimension($this->expandPriceProductDimensionTransfer($priceDimensionTransfer));
+
+        $currencyTransfer = $priceProductTransfer->getMoneyValueOrFail()->getCurrencyOrFail();
+        $priceProductTransfer->getMoneyValueOrFail()->setCurrency($this->getCurrencyTransfer($currencyTransfer));
+
         $priceProductTransfer->setGroupKey($this->priceProductService->buildPriceProductGroupKey($priceProductTransfer));
 
         return $priceProductTransfer;
@@ -95,5 +109,15 @@ class PriceProductExpander implements PriceProductExpanderInterface
         }
 
         return $priceProductDimensionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
+     *
+     * @return \Generated\Shared\Transfer\CurrencyTransfer
+     */
+    protected function getCurrencyTransfer(CurrencyTransfer $currencyTransfer): CurrencyTransfer
+    {
+        return $this->currencyFacade->getByIdCurrency($currencyTransfer->getIdCurrencyOrFail());
     }
 }

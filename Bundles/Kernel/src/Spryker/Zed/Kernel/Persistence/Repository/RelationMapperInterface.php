@@ -20,7 +20,7 @@ interface RelationMapperInterface
      *
      *  Each blog posts have comments, to add it
      *   $commentCollection = $this->populateCollectionWithRelation($blogCollection, 'SpyBlogComment');
-     *   This will populate each entity with related comments. SpyBlogEntity will have array of SpyBlogCommentEntityTransfer[]
+     *   This will populate each entity with related comments. SpyBlogEntity will have array<SpyBlogCommentEntityTransfer>.
      *
      *  To add related data for each comments use
      *   $this->populateCollectionWithRelation($commentCollection, 'SpyBlogCustomer');

@@ -89,7 +89,7 @@ class ImportErrorListTable extends AbstractTable
 
     /**
      * @param string $id
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return string
      */

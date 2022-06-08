@@ -16,7 +16,7 @@ class OrderOmsTriggerFormDataProvider extends AbstractOmsTriggerFormDataProvider
      * @param string $event
      * @param int $id Order ID
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions(string $redirectUrl, string $event, int $id): array
     {

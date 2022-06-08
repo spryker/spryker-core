@@ -13,8 +13,8 @@ use Spryker\Zed\CartCodeExtension\Dependency\Plugin\CartCodePluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\GiftCard\Business\GiftCardBusinessFactory getFactory()
- * @method \Spryker\Zed\GiftCard\Business\GiftCardFacade getFacade()
+ * @method \Spryker\Zed\GiftCard\Communication\GiftCardCommunicationFactory getFactory()
+ * @method \Spryker\Zed\GiftCard\Business\GiftCardFacadeInterface getFacade()
  * @method \Spryker\Zed\GiftCard\GiftCardConfig getConfig()
  * @method \Spryker\Zed\GiftCard\Persistence\GiftCardQueryContainerInterface getQueryContainer()
  */

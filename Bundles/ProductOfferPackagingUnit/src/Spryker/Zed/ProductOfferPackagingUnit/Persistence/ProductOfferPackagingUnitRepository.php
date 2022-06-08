@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\ProductOfferPackagingUnit\Persistence;
@@ -39,7 +39,7 @@ class ProductOfferPackagingUnitRepository extends AbstractRepository implements 
             ->groupByAmountSku()
             ->groupByProductOfferReference()
             ->useStateQuery()
-                ->filterByName_In(array_keys($reservationRequestTransfer->getReservedStates()->getStates()->getArrayCopy()))
+                ->filterByName_In(array_keys($reservationRequestTransfer->getReservedStatesOrFail()->getStates()->getArrayCopy()))
             ->endUse()
             ->groupByFkOmsOrderItemState()
             ->innerJoinProcess()

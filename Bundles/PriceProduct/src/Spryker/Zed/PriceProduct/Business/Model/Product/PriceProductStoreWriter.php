@@ -105,14 +105,14 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
             ->setIdProductAbstract($priceProductTransfer->getIdProductAbstract())
             ->setIdProductConcrete($priceProductTransfer->getIdProduct());
 
-        $orphanPriceProductStoreEntities = $this->priceProductRepository->findOrphanPriceProductStoreEntities($priceProductCriteriaTransfer);
+        $orphanPriceProductTransfers = $this->priceProductRepository->findPriceProductTransfersWithOrphanPriceProductStore($priceProductCriteriaTransfer);
 
-        if (count($orphanPriceProductStoreEntities) === 0) {
+        if (count($orphanPriceProductTransfers) === 0) {
             return;
         }
 
-        $this->getTransactionHandler()->handleTransaction(function () use ($orphanPriceProductStoreEntities) {
-            $this->doDeleteOrphanPriceProductStoreEntities($orphanPriceProductStoreEntities);
+        $this->getTransactionHandler()->handleTransaction(function () use ($orphanPriceProductTransfers) {
+            $this->deleteOrphanPriceProductStores($orphanPriceProductTransfers);
         });
     }
 
@@ -170,15 +170,15 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
      */
     public function deleteAllOrphanPriceProductStoreEntities(): void
     {
-        $orphanPriceProductStoreEntities = $this->priceProductRepository
-            ->findOrphanPriceProductStoreEntities(new PriceProductCriteriaTransfer());
+        $orphanPriceProductTransfers = $this->priceProductRepository
+            ->findPriceProductTransfersWithOrphanPriceProductStore(new PriceProductCriteriaTransfer());
 
-        if (count($orphanPriceProductStoreEntities) === 0) {
+        if (count($orphanPriceProductTransfers) === 0) {
             return;
         }
 
-        $this->getTransactionHandler()->handleTransaction(function () use ($orphanPriceProductStoreEntities) {
-            $this->doDeleteOrphanPriceProductStoreEntities($orphanPriceProductStoreEntities);
+        $this->getTransactionHandler()->handleTransaction(function () use ($orphanPriceProductTransfers) {
+            $this->deleteOrphanPriceProductStores($orphanPriceProductTransfers);
         });
     }
 
@@ -313,15 +313,18 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
     }
 
     /**
-     * @param array<\Generated\Shared\Transfer\SpyPriceProductStoreEntityTransfer> $priceProductStoreEntityTransfers
+     * @param array<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
      * @return void
      */
-    protected function doDeleteOrphanPriceProductStoreEntities(array $priceProductStoreEntityTransfers): void
+    protected function deleteOrphanPriceProductStores(array $priceProductTransfers): void
     {
-        foreach ($priceProductStoreEntityTransfers as $priceProductStoreEntityTransfer) {
-            $idPriceProductStore = (int)$priceProductStoreEntityTransfer->getIdPriceProductStore();
+        foreach ($priceProductTransfers as $priceProductTransfer) {
+            $idPriceProductStore = $priceProductTransfer->getMoneyValueOrFail()->getIdEntity();
 
+            if (!$idPriceProductStore) {
+                continue;
+            }
             $this->priceProductStoreWriterPluginExecutor->executePriceProductStorePreDeletePlugins($idPriceProductStore);
             $this->priceProductEntityManager->deletePriceProductStore($idPriceProductStore);
         }

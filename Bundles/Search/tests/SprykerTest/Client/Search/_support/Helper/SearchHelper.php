@@ -150,7 +150,7 @@ class SearchHelper extends AbstractHelper
 
     /**
      * @param string $id
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param string $sourceIdentifier
      *
      * @return void

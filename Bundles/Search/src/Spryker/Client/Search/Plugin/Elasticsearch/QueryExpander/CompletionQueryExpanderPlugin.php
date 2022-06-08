@@ -41,7 +41,7 @@ class CompletionQueryExpanderPlugin extends AbstractPlugin implements QueryExpan
      * @api
      *
      * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface $searchQuery
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
      */

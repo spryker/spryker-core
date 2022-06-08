@@ -48,7 +48,7 @@ class CompanyUserRoleByCompanyFormDataProvider
     /**
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions(CompanyUserTransfer $companyUserTransfer): array
     {

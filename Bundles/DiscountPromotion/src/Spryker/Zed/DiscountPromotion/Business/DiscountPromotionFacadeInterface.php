@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\DiscountPromotionCollectionTransfer;
 use Generated\Shared\Transfer\DiscountPromotionCriteriaTransfer;
 use Generated\Shared\Transfer\DiscountPromotionTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
+use Generated\Shared\Transfer\DiscountVoucherCheckResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface DiscountPromotionFacadeInterface
@@ -173,4 +174,24 @@ interface DiscountPromotionFacadeInterface
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
     public function filterDiscountPromotionItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
+
+    /**
+     * Specification:
+     * - Checks if the voucher code is added to the collection of used non-applied codes.
+     * - Returns `DiscountVoucherCheckResponseTransfer::isSuccessful` equal to `true` with a success message, if the voucher code is added.
+     * - Checks if the voucher code is added to the collection of voucher discounts otherwise.
+     * - Returns `DiscountVoucherCheckResponseTransfer::isSuccessful` equal to `true` with a success message, if the voucher code is added.
+     * - Returns `DiscountVoucherCheckResponseTransfer::isSuccessful` equal to `false` with an error message otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $voucherCode
+     *
+     * @return \Generated\Shared\Transfer\DiscountVoucherCheckResponseTransfer
+     */
+    public function checkVoucherCodeApplied(
+        QuoteTransfer $quoteTransfer,
+        string $voucherCode
+    ): DiscountVoucherCheckResponseTransfer;
 }

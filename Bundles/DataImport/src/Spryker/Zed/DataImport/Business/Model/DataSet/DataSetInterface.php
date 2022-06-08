@@ -12,6 +12,10 @@ use Countable;
 use IteratorAggregate;
 use Serializable;
 
+/**
+ * @extends \ArrayAccess<int|string, mixed>
+ * @extends \IteratorAggregate<mixed>
+ */
 interface DataSetInterface extends IteratorAggregate, ArrayAccess, Serializable, Countable
 {
     /**

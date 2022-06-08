@@ -5,6 +5,8 @@
     "license": "proprietary",
     "require": {
         "php": ">=7.4",
+        "spryker/doctrine-inflector": "^1.0.0",
+        "spryker/documentation-generator-api-extension": "^0.1.0",
         "spryker/glue-application-extension": "^1.7.0",
         "spryker/glue-rest-api-convention-extension": "^0.1.0",
         "spryker/kernel": "^3.30.0",
@@ -14,6 +16,7 @@
     },
     "require-dev": {
         "spryker/code-sniffer": "*",
+        "spryker/glue-application": "*",
         "spryker/testify": "*"
     },
     "suggest": {

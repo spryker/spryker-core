@@ -14,7 +14,7 @@ interface ConfigurableBundlePageSearchToSearchClientInterface
     /**
      * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface $searchQuery
      * @param array<\Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface> $resultFormatters
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return \Elastica\ResultSet|array
      */
@@ -23,7 +23,7 @@ interface ConfigurableBundlePageSearchToSearchClientInterface
     /**
      * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface $searchQuery
      * @param array<\Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface> $searchQueryExpanders
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
      */
