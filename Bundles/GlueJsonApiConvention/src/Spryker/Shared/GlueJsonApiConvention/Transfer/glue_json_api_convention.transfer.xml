@@ -80,4 +80,14 @@
     <transfer name="GlueLink">
     </transfer>
 
+    <transfer name="ApiApplicationSchemaContext">
+        <property name="resourceContexts" type="ResourceContext[]" singular="resourceContext"/>
+    </transfer>
+
+    <transfer name="ResourceContext">
+        <property name="resourceType" type="string"/>
+        <property name="relationships" type="string"/>
+        <property name="resourcePluginName" type="string"/>
+    </transfer>
+
 </transfers>

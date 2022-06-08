@@ -55,6 +55,25 @@
         <property name="parameters" type="string[]" singular="parameter"/>
     </transfer>
 
+    <transfer name="ApiApplicationSchemaContext">
+        <property name="resourceContexts" type="ResourceContext[]" singular="resourceContext"/>
+        <property name="customRoutesContexts" type="CustomRoutesContext[]" singular="customRoutesContext"/>
+        <property name="host" type="string"/>
+    </transfer>
+
+    <transfer name="ResourceContext">
+        <property name="resourcePluginName" type="string"/>
+        <property name="resourceType" type="string"/>
+        <property name="controller" type="string"/>
+        <property name="declaredMethods" type="GlueResourceMethodCollection"/>
+    </transfer>
+
+    <transfer name="CustomRoutesContext">
+        <property name="resourceType" type="string"/>
+        <property name="path" type="string"/>
+        <property name="defaults" type="array" singular="default"/>
+    </transfer>
+
     <transfer name="ApiControllerConfiguration">
         <property name="path" type="string"/>
         <property name="controller" type="string"/>

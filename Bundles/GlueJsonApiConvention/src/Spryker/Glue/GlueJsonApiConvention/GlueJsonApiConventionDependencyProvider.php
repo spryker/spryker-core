@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\GlueJsonApiConvention;
 
+use Spryker\Glue\GlueJsonApiConvention\Dependency\External\GlueJsonApiConventionToInflectorAdapter;
 use Spryker\Glue\GlueJsonApiConvention\Dependency\Service\GlueJsonApiConventionToUtilEncodingServiceBridge;
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
@@ -52,6 +53,11 @@ class GlueJsonApiConventionDependencyProvider extends AbstractBundleDependencyPr
     public const PLUGINS_RELATIONSHIP_PROVIDER = 'PLUGINS_RELATIONSHIP_PROVIDER';
 
     /**
+     * @var string
+     */
+    public const INFLECTOR = 'INFLECTOR';
+
+    /**
      * @param \Spryker\Glue\Kernel\Container $container
      *
      * @return \Spryker\Glue\Kernel\Container
@@ -65,6 +71,7 @@ class GlueJsonApiConventionDependencyProvider extends AbstractBundleDependencyPr
         $container = $this->addRequestAfterRoutingValidatorPlugins($container);
         $container = $this->addResponseFormatterPlugins($container);
         $container = $this->addRelationshipProviderPlugins($container);
+        $container = $this->addInflector($container);
 
         return $container;
     }
@@ -148,6 +155,20 @@ class GlueJsonApiConventionDependencyProvider extends AbstractBundleDependencyPr
     {
         $container->set(static::PLUGINS_RELATIONSHIP_PROVIDER, function (Container $container) {
             return $this->getRelationshipProviderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addInflector(Container $container): Container
+    {
+        $container->set(static::INFLECTOR, function () {
+            return new GlueJsonApiConventionToInflectorAdapter();
         });
 
         return $container;

@@ -12,6 +12,9 @@ use Spryker\Glue\GlueBackendApiApplication\Application\GlueBackendApiApplication
 use Spryker\Glue\GlueBackendApiApplication\Cache\ControllerCacheCollector;
 use Spryker\Glue\GlueBackendApiApplication\Cache\ControllerCacheCollectorInterface;
 use Spryker\Glue\GlueBackendApiApplication\Dependency\Facade\GlueBackendApiApplicationToStoreFacadeInterface;
+use Spryker\Glue\GlueBackendApiApplication\Expander\ContextExpanderInterface;
+use Spryker\Glue\GlueBackendApiApplication\Expander\CustomRoutesContextExpander;
+use Spryker\Glue\GlueBackendApiApplication\Expander\ResourcesContextExpander;
 use Spryker\Glue\GlueBackendApiApplication\Language\LanguageNegotiation;
 use Spryker\Glue\GlueBackendApiApplication\Language\LanguageNegotiationInterface;
 use Spryker\Glue\GlueBackendApiApplication\RequestBuilder\LocaleRequestBuilder;
@@ -251,6 +254,22 @@ class GlueBackendApiApplicationFactory extends AbstractFactory
     public function createRequestCorsValidator(): RequestCorsValidatorInterface
     {
         return new RequestCorsValidator($this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueBackendApiApplication\Expander\ContextExpanderInterface
+     */
+    public function createResourcesContextExpander(): ContextExpanderInterface
+    {
+        return new ResourcesContextExpander($this->getResourcePlugins());
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueBackendApiApplication\Expander\ContextExpanderInterface
+     */
+    public function createCustomRoutesContextExpander(): ContextExpanderInterface
+    {
+        return new CustomRoutesContextExpander($this->getRouteProviderPlugins());
     }
 
     /**

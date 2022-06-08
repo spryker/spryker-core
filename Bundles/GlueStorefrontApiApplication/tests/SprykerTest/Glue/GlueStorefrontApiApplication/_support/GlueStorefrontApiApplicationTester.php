@@ -28,8 +28,4 @@ use Codeception\Actor;
 class GlueStorefrontApiApplicationTester extends Actor
 {
     use _generated\GlueStorefrontApiApplicationTesterActions;
-
-    /**
-     * Define custom actions here
-     */
 }

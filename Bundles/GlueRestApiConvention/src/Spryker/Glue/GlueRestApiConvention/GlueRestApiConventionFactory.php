@@ -7,7 +7,12 @@
 
 namespace Spryker\Glue\GlueRestApiConvention;
 
+use Spryker\Glue\GlueRestApiConvention\Dependency\External\GlueRestApiConventionToInflectorInterface;
 use Spryker\Glue\GlueRestApiConvention\Dependency\Service\GlueRestApiConventionToUtilEncodingServiceInterface;
+use Spryker\Glue\GlueRestApiConvention\Formatter\RestApiSchemaFormatter;
+use Spryker\Glue\GlueRestApiConvention\Formatter\RestApiSchemaParametersFormatter;
+use Spryker\Glue\GlueRestApiConvention\Formatter\RestApiSchemaParametersFormatterInterface;
+use Spryker\Glue\GlueRestApiConvention\Formatter\SchemaFormatterInterface;
 use Spryker\Glue\GlueRestApiConvention\RequestBuilder\AttributesRequestBuilder;
 use Spryker\Glue\GlueRestApiConvention\RequestBuilder\RequestBuilderInterface;
 use Spryker\Glue\GlueRestApiConvention\RequestBuilder\RequestFilterFieldBuilder;
@@ -57,6 +62,18 @@ class GlueRestApiConventionFactory extends AbstractFactory
     {
         return new ResponseContentBuilder(
             $this->getResponseEncoderPlugins(),
+            $this->getConfig(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueRestApiConvention\Formatter\SchemaFormatterInterface
+     */
+    public function createRestApiSchemaFormatter(): SchemaFormatterInterface
+    {
+        return new RestApiSchemaFormatter(
+            $this->getInflector(),
+            $this->createRestApiSchemaParametersFormatter(),
             $this->getConfig(),
         );
     }
@@ -141,5 +158,21 @@ class GlueRestApiConventionFactory extends AbstractFactory
         return new AttributesRequestBuilder(
             $this->getUtilEncodingService(),
         );
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueRestApiConvention\Dependency\External\GlueRestApiConventionToInflectorInterface
+     */
+    public function getInflector(): GlueRestApiConventionToInflectorInterface
+    {
+        return $this->getProvidedDependency(GlueRestApiConventionDependencyProvider::INFLECTOR);
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueRestApiConvention\Formatter\RestApiSchemaParametersFormatterInterface
+     */
+    public function createRestApiSchemaParametersFormatter(): RestApiSchemaParametersFormatterInterface
+    {
+        return new RestApiSchemaParametersFormatter();
     }
 }

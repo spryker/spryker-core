@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Bundles\GlueRestApiConvention\tests\SprykerTest\Glue\GlueRestApiConvention\ResponseBuilder;
+namespace SprykerTest\Glue\GlueRestApiConvention\ResponseBuilder;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\GlueRequestTransfer;
@@ -19,9 +19,6 @@ use SprykerTest\Glue\GlueRestApiConvention\Stub\AttributesTransfer;
 /**
  * Auto-generated group annotations
  *
- * @group Bundles
- * @group GlueRestApiConvention
- * @group tests
  * @group SprykerTest
  * @group Glue
  * @group GlueRestApiConvention

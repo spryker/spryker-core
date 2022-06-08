@@ -115,4 +115,77 @@ class GlueRestApiConventionTester extends Actor
             ->setType('articles')
             ->setId('1');
     }
+
+    /**
+     * @return array<mixed>
+     */
+    public function createFormattedData(): array
+    {
+        return json_decode(trim($this->loadJasonFile()), true);
+    }
+
+    /**
+     * @return string
+     */
+    protected function loadJasonFile(): string
+    {
+        return file_get_contents(codecept_data_dir() . 'schema.json.example');
+    }
+
+    /**
+     * @return array
+     */
+    public function createOperation(): array
+    {
+        return [
+            'operationId' => 'get-collection-of-tests',
+            'summary' => 'Retrieves collection of tests.',
+            'parameters' => [
+                [
+                    '$ref' => '#/components/parameters/acceptLanguage',
+                ],
+                [
+                    'name' => 'q',
+                    'in' => 'query',
+                    'description' => 'Description.',
+                    'required' => true,
+                    'schema' => [
+                        'type' => 'string',
+                    ],
+                ],
+            ],
+            'responses' => [
+                [
+                    'description' => 'Expected response to a valid request.',
+                    'content' => [
+                        'application/json' => [
+                            'schema' => [
+                                '$ref' => '#/components/schemas/TestsRestResponse',
+                            ],
+                        ],
+                        'application/vnd.api+json' => [
+                            'schema' => [
+                                '$ref' => '#/components/schemas/TestsCollectionRestResponse',
+                            ],
+                        ],
+                    ],
+                ],
+                'default' => [
+                    'description' => 'Expected response to a bad request.',
+                    'content' => [
+                        'application/json' => [
+                            'schema' => [
+                                '$ref' => '#/components/schemas/TestsRestResponse',
+                            ],
+                        ],
+                        'application/vnd.api+json' => [
+                            'schema' => [
+                                '$ref' => '#/components/schemas/JsonApiErrorMessage',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+        ];
+    }
 }

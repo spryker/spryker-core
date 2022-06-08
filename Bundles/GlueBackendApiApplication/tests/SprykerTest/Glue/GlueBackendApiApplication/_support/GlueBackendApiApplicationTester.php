@@ -8,6 +8,7 @@
 namespace SprykerTest\Glue\GlueBackendApiApplication;
 
 use Codeception\Actor;
+use Generated\Shared\Transfer\ApiApplicationSchemaContextTransfer;
 
 /**
  * Inherited Methods
@@ -30,6 +31,18 @@ class GlueBackendApiApplicationTester extends Actor
     use _generated\GlueBackendApiApplicationTesterActions;
 
     /**
-     * Define custom actions here
+     * @return \Generated\Shared\Transfer\ApiApplicationSchemaContextTransfer
      */
+    public function createApiApplicationSchemaContextTransfer(): ApiApplicationSchemaContextTransfer
+    {
+        return new ApiApplicationSchemaContextTransfer();
+    }
+
+    /**
+     * @return \SprykerTest\Glue\GlueBackendApiApplication\TestAbstractRouteProviderPlugin
+     */
+    public function createTestAbstractRouteProviderPlugin(): TestAbstractRouteProviderPlugin
+    {
+        return new TestAbstractRouteProviderPlugin();
+    }
 }
