@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\Category;
 use Codeception\Actor;
 use Generated\Shared\DataBuilder\CategoryLocalizedAttributesBuilder;
 use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
+use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Orm\Zed\Category\Persistence\SpyCategoryStoreQuery;
@@ -61,5 +62,65 @@ class CategoryBusinessTester extends Actor
         $categoryLocalizedAttributesData[LocalizedAttributesTransfer::LOCALE] = $localeTransfer;
 
         return $this->haveCategoryLocalizedAttributeForCategory($idCategory, $categoryLocalizedAttributesData);
+    }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\LocaleTransfer> $localeTransfers
+     * @param array<int> $storeIds
+     * @param int $numberOfChildren
+     *
+     * @return array<\Generated\Shared\Transfer\CategoryTransfer>
+     */
+    public function createCategoryWithChildrenAndRelations(
+        array $localeTransfers,
+        array $storeIds,
+        int $numberOfChildren
+    ): array {
+        $parentCategoryTransfer = $this->createCategoryWithRelations($localeTransfers, $storeIds);
+
+        $categoryTransfers = [
+            $parentCategoryTransfer,
+        ];
+
+        for ($i = 0; $i < $numberOfChildren; $i++) {
+            $categoryTransfers[] = $this->createCategoryWithRelations(
+                $localeTransfers,
+                $storeIds,
+                [
+                    CategoryTransfer::PARENT_CATEGORY_NODE => $parentCategoryTransfer->getCategoryNode()->toArray(),
+                ],
+            );
+        }
+
+        return $categoryTransfers;
+    }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\LocaleTransfer> $localeTransfers
+     * @param array<int> $storeIds
+     * @param array $seedData
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer
+     */
+    protected function createCategoryWithRelations(
+        array $localeTransfers,
+        array $storeIds,
+        array $seedData = []
+    ): CategoryTransfer {
+        foreach ($localeTransfers as $localeTransfer) {
+            $localizedAttribute = (new CategoryLocalizedAttributesBuilder([
+                CategoryLocalizedAttributesTransfer::LOCALE => $localeTransfer->toArray(),
+            ]))->build();
+
+            $seedData[CategoryTransfer::LOCALIZED_ATTRIBUTES][] = $localizedAttribute->toArray();
+        }
+
+        $categoryTransfer = $this->haveCategory($seedData);
+
+        foreach ($storeIds as $idStore) {
+            $this->haveCategoryStoreRelation($categoryTransfer->getIdCategory(), $idStore);
+        }
+
+        return $categoryTransfer;
     }
 }

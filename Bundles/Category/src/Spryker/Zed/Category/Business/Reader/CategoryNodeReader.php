@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Category\Business\Reader;
 
 use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
+use Generated\Shared\Transfer\NodeCollectionTransfer;
+use Spryker\Zed\Category\Business\Expander\CategoryNodeRelationExpanderInterface;
 use Spryker\Zed\Category\Persistence\CategoryRepositoryInterface;
 
 class CategoryNodeReader implements CategoryNodeReaderInterface
@@ -15,14 +17,23 @@ class CategoryNodeReader implements CategoryNodeReaderInterface
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface
      */
-    protected $categoryRepository;
+    protected CategoryRepositoryInterface $categoryRepository;
+
+    /**
+     * @var \Spryker\Zed\Category\Business\Expander\CategoryNodeRelationExpanderInterface
+     */
+    protected CategoryNodeRelationExpanderInterface $categoryNodeRelationExpander;
 
     /**
      * @param \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface $categoryRepository
+     * @param \Spryker\Zed\Category\Business\Expander\CategoryNodeRelationExpanderInterface $categoryNodeRelationExpander
      */
-    public function __construct(CategoryRepositoryInterface $categoryRepository)
-    {
+    public function __construct(
+        CategoryRepositoryInterface $categoryRepository,
+        CategoryNodeRelationExpanderInterface $categoryNodeRelationExpander
+    ) {
         $this->categoryRepository = $categoryRepository;
+        $this->categoryNodeRelationExpander = $categoryNodeRelationExpander;
     }
 
     /**
@@ -39,5 +50,19 @@ class CategoryNodeReader implements CategoryNodeReaderInterface
             ->getCategoryNodes($categoryNodeCriteriaTransfer)
             ->getNodes()
             ->getArrayCopy();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\NodeCollectionTransfer
+     */
+    public function getCategoryNodesWithRelativeNodes(
+        CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
+    ): NodeCollectionTransfer {
+        $categoryNodeCollectionTransfer = $this->categoryRepository->getCategoryNodesWithRelativeNodes($categoryNodeCriteriaTransfer);
+        $categoryNodeCollectionTransfer = $this->categoryNodeRelationExpander->expandNodeCollectionWithRelations($categoryNodeCollectionTransfer);
+
+        return $categoryNodeCollectionTransfer;
     }
 }

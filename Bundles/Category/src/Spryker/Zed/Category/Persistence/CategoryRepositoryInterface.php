@@ -185,4 +185,18 @@ interface CategoryRepositoryInterface
      * @return array<int, array<string, string>>
      */
     public function getAscendantCategoryKeys(CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer): array;
+
+    /**
+     * @param array<int> $categoryIds
+     *
+     * @return array<int, array<\Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer>>
+     */
+    public function getCategoryAttributesByCategoryIdsGroupByIdCategory(array $categoryIds): array;
+
+    /**
+     * @param array<int> $categoryIds
+     *
+     * @return array<\Generated\Shared\Transfer\StoreRelationTransfer>
+     */
+    public function getCategoryStoreRelationsByCategoryIds(array $categoryIds): array;
 }

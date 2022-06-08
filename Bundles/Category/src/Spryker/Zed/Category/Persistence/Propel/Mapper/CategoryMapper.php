@@ -99,7 +99,7 @@ class CategoryMapper implements CategoryMapperInterface
         NodeCollectionTransfer $nodeCollectionTransfer
     ): NodeCollectionTransfer {
         foreach ($categoryNodeEntities as $categoryNodeEntity) {
-            $nodeTransfer = $this->mapCategoryNodeEntityToNodeTransferWithCategoryRelation(
+            $nodeTransfer = $this->mapCategoryNodeEntityToNodeTransferWithCategoryTemplates(
                 $categoryNodeEntity,
                 new NodeTransfer(),
             );
@@ -135,16 +135,37 @@ class CategoryMapper implements CategoryMapperInterface
      */
     public function mapCategoryNodeEntityToNodeTransferWithCategoryRelation(SpyCategoryNode $nodeEntity, NodeTransfer $nodeTransfer): NodeTransfer
     {
-        $nodeTransfer = $this->categoryNodeMapper->mapCategoryNode($nodeEntity, $nodeTransfer);
+        $nodeTransfer = $this->mapCategoryNodeEntityToNodeTransferWithCategoryTemplates($nodeEntity, $nodeTransfer);
+
         $categoryEntity = $nodeEntity->getCategory();
 
-        $categoryTransfer = $this->mapCategory($categoryEntity, new CategoryTransfer());
-        $categoryTransfer = $this->mapLocalizedAttributes($categoryEntity->getAttributes(), $categoryTransfer, $nodeEntity->getSpyUrls());
+        $categoryTransfer = $this->mapLocalizedAttributes(
+            $categoryEntity->getAttributes(),
+            $nodeTransfer->getCategoryOrFail(),
+            $nodeEntity->getSpyUrls(),
+        );
+
         $storeRelationTransfer = $this->categoryStoreRelationMapper->mapCategoryStoreEntitiesToStoreRelationTransfer(
             $categoryEntity->getSpyCategoryStores(),
             (new StoreRelationTransfer())->setIdEntity($categoryEntity->getIdCategory()),
         );
         $categoryTransfer->setStoreRelation($storeRelationTransfer);
+
+        return $nodeTransfer->setCategory($categoryTransfer);
+    }
+
+    /**
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryNode $nodeEntity
+     * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
+     *
+     * @return \Generated\Shared\Transfer\NodeTransfer
+     */
+    public function mapCategoryNodeEntityToNodeTransferWithCategoryTemplates(SpyCategoryNode $nodeEntity, NodeTransfer $nodeTransfer): NodeTransfer
+    {
+        $nodeTransfer = $this->categoryNodeMapper->mapCategoryNode($nodeEntity, $nodeTransfer);
+        $categoryEntity = $nodeEntity->getCategory();
+
+        $categoryTransfer = $this->mapCategory($categoryEntity, new CategoryTransfer());
 
         $categoryTemplateTransfer = $this->mapCategoryTemplateEntityToCategoryTemplateTransfer(
             $categoryEntity->getCategoryTemplate(),

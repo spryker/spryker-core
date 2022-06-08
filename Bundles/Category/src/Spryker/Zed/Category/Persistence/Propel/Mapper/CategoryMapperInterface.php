@@ -81,4 +81,12 @@ interface CategoryMapperInterface
      * @return \Orm\Zed\Category\Persistence\SpyCategory
      */
     public function mapCategoryTransferToCategoryEntity(CategoryTransfer $categoryTransfer, SpyCategory $categoryEntity): SpyCategory;
+
+    /**
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryNode $nodeEntity
+     * @param \Generated\Shared\Transfer\NodeTransfer $nodeTransfer
+     *
+     * @return \Generated\Shared\Transfer\NodeTransfer
+     */
+    public function mapCategoryNodeEntityToNodeTransferWithCategoryTemplates(SpyCategoryNode $nodeEntity, NodeTransfer $nodeTransfer): NodeTransfer;
 }
