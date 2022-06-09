@@ -20,6 +20,7 @@ class GiftCardDiscountableItemFilter implements GiftCardDiscountableItemFilterIn
      */
     public function filterGiftCardDiscountableItems(CollectedDiscountTransfer $collectedDiscountTransfer)
     {
+        /** @var \ArrayObject<int, \Generated\Shared\Transfer\DiscountableItemTransfer> $discountableItems */
         $discountableItems = new ArrayObject();
 
         foreach ($collectedDiscountTransfer->getDiscountableItems() as $discountableItem) {

@@ -177,6 +177,7 @@ class VersionDataMapper implements VersionDataMapperInterface
      */
     protected function createCmsPlaceholderTranslationTransfers(SpyCmsGlossaryKeyMapping $spyCmsGlossaryKeyMapping): ArrayObject
     {
+        /** @var \ArrayObject<int, \Generated\Shared\Transfer\CmsPlaceholderTranslationTransfer> $cmsGlossaryAttributeTransfers */
         $cmsGlossaryAttributeTransfers = new ArrayObject();
         foreach ($spyCmsGlossaryKeyMapping->getGlossaryKey()->getSpyGlossaryTranslationsJoinLocale() as $glossaryTranslation) {
             $cmsPlaceholderTranslation = new CmsPlaceholderTranslationTransfer();

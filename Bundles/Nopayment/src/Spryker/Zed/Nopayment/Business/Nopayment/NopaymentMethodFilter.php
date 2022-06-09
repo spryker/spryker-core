@@ -51,6 +51,7 @@ class NopaymentMethodFilter implements NopaymentMethodFilterInterface
      */
     protected function disallowRegularPaymentMethods(PaymentMethodsTransfer $paymentMethodsTransfer)
     {
+        /** @var \ArrayObject<int, \Generated\Shared\Transfer\PaymentMethodTransfer> $allowedMethods */
         $allowedMethods = new ArrayObject();
 
         foreach ($paymentMethodsTransfer->getMethods() as $paymentMethodTransfer) {
@@ -75,6 +76,7 @@ class NopaymentMethodFilter implements NopaymentMethodFilterInterface
      */
     protected function disallowNoPaymentMethods(PaymentMethodsTransfer $paymentMethodsTransfer)
     {
+        /** @var \ArrayObject<int, \Generated\Shared\Transfer\PaymentMethodTransfer> $allowedMethods */
         $allowedMethods = new ArrayObject();
 
         foreach ($paymentMethodsTransfer->getMethods() as $paymentMethodTransfer) {

@@ -33,6 +33,7 @@ class FileDirectoryTreeReader implements FileDirectoryTreeReaderInterface
      */
     public function findFileDirectoryTree()
     {
+        /** @var \ArrayObject<int, \Generated\Shared\Transfer\FileDirectoryTreeNodeTransfer> $nodesWithoutPosition */
         $nodesWithoutPosition = new ArrayObject();
         $fileDirectoryTreeTransfer = new FileDirectoryTreeTransfer();
         $rootFileDirectories = $this->repository->getFileDirectories();

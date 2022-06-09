@@ -497,6 +497,7 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
      */
     protected function getProductAbstractTransfersMappedFromProductAbstractEntities(ObjectCollection $productAbstractEntities): ArrayObject
     {
+        /** @var \ArrayObject<int, \Generated\Shared\Transfer\ProductAbstractTransfer> $productAbstractTransfers */
         $productAbstractTransfers = new ArrayObject();
         $productMapper = $this->getFactory()->createProductMapper();
 

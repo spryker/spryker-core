@@ -91,6 +91,7 @@ class ShipmentMethodFilter implements ShipmentMethodFilterInterface
      */
     protected function allowGiftCardOnlyShipmentMethods(ArrayObject $shipmentMethods): ArrayObject
     {
+        /** @var \ArrayObject<int, \Generated\Shared\Transfer\ShipmentMethodTransfer> $result */
         $result = new ArrayObject();
         $giftCardOnlyShipmentMethods = $this->getGiftCardOnlyShipmentMethods();
         foreach ($shipmentMethods as $shipmentMethod) {
@@ -109,6 +110,7 @@ class ShipmentMethodFilter implements ShipmentMethodFilterInterface
      */
     protected function disallowGiftCardOnlyShipmentMethods(ArrayObject $shipmentMethods): ArrayObject
     {
+        /** @var \ArrayObject<int, \Generated\Shared\Transfer\ShipmentMethodTransfer> $result */
         $result = new ArrayObject();
         $giftCardOnlyShipmentMethods = $this->getGiftCardOnlyShipmentMethods();
         foreach ($shipmentMethods as $shipmentMethod) {

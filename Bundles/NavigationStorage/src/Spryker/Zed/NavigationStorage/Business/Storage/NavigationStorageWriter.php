@@ -229,6 +229,7 @@ class NavigationStorageWriter implements NavigationStorageWriterInterface
      */
     protected function mapToNavigationNodeStorageTransfer(ArrayObject $navigationTreeNodeTransfers)
     {
+        /** @var \ArrayObject<int, \Generated\Shared\Transfer\NavigationNodeStorageTransfer> $nodes */
         $nodes = new ArrayObject();
         foreach ($navigationTreeNodeTransfers as $navigationTreeNodeTransfer) {
             $navigationNodeLocalizedAttributes = $navigationTreeNodeTransfer->getNavigationNode()->getNavigationNodeLocalizedAttributes()->getIterator()->current();

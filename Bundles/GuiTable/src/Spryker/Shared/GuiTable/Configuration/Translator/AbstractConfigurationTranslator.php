@@ -46,6 +46,7 @@ abstract class AbstractConfigurationTranslator implements ConfigurationTranslato
     protected function translateColumns(
         GuiTableConfigurationTransfer $guiTableConfigurationTransfer
     ): GuiTableConfigurationTransfer {
+        /** @var \ArrayObject<int, \Generated\Shared\Transfer\GuiTableColumnConfigurationTransfer> $translatedGuiTableColumnConfigurationTransfers */
         $translatedGuiTableColumnConfigurationTransfers = new ArrayObject();
 
         foreach ($guiTableConfigurationTransfer->getColumns() as $guiTableColumnConfigurationTransfer) {
@@ -88,6 +89,7 @@ abstract class AbstractConfigurationTranslator implements ConfigurationTranslato
             return $guiTableConfigurationTransfer;
         }
 
+        /** @var \ArrayObject<int, \Generated\Shared\Transfer\GuiTableFilterTransfer> $translatedGuiTableFilterTransfers */
         $translatedGuiTableFilterTransfers = new ArrayObject();
 
         foreach ($guiTableFiltersConfigurationTransfer->getItems() as $guiTableFilterTransfer) {
@@ -139,6 +141,7 @@ abstract class AbstractConfigurationTranslator implements ConfigurationTranslato
             return $guiTableConfigurationTransfer;
         }
 
+        /** @var \ArrayObject<int, \Generated\Shared\Transfer\GuiTableRowActionTransfer> $translatedGuiTableRowActionTransfers */
         $translatedGuiTableRowActionTransfers = new ArrayObject();
 
         foreach ($guiTableRowActionsConfigurationTransfer->getActions() as $guiTableRowActionTransfer) {
@@ -181,6 +184,7 @@ abstract class AbstractConfigurationTranslator implements ConfigurationTranslato
             return $guiTableConfigurationTransfer;
         }
 
+        /** @var \ArrayObject<int, \Generated\Shared\Transfer\GuiTableBatchActionTransfer> $translatedGuiTableBatchActionTransfers */
         $translatedGuiTableBatchActionTransfers = new ArrayObject();
 
         foreach ($guiTableBatchActionsConfigurationTransfer->getActions() as $guiTableBatchActionTransfer) {
@@ -387,6 +391,7 @@ abstract class AbstractConfigurationTranslator implements ConfigurationTranslato
             return $guiTableConfigurationTransfer;
         }
 
+        /** @var \ArrayObject<int, \Generated\Shared\Transfer\GuiTableColumnConfigurationTransfer> $translatedGuiTableColumnConfigurationTransfers */
         $translatedGuiTableColumnConfigurationTransfers = new ArrayObject();
         foreach ($guiTableColumnConfigurationTransfers as $guiTableColumnConfigurationTransfer) {
             $translatedGuiTableColumnConfigurationTransfers[] = $this->translateColumn($guiTableColumnConfigurationTransfer);

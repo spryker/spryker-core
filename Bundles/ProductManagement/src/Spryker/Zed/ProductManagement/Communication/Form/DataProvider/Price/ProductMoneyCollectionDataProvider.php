@@ -42,7 +42,7 @@ class ProductMoneyCollectionDataProvider
     }
 
     /**
-     * @return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
+     * @return \ArrayObject<string, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function getInitialData()
     {
@@ -69,7 +69,7 @@ class ProductMoneyCollectionDataProvider
     /**
      * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $currentFormMoneyValueCollection
      *
-     * @return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
+     * @return \ArrayObject<string, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     public function mergeMissingMoneyValues(ArrayObject $currentFormMoneyValueCollection)
     {
@@ -88,10 +88,11 @@ class ProductMoneyCollectionDataProvider
     /**
      * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $productMoneyValueCollection
      *
-     * @return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
+     * @return \ArrayObject<string, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function mapProductMoneyValueCollection(ArrayObject $productMoneyValueCollection)
     {
+        /** @var \ArrayObject<string, \Generated\Shared\Transfer\PriceProductTransfer> $mappedProductMoneyValueCollection */
         $mappedProductMoneyValueCollection = new ArrayObject();
 
         foreach ($productMoneyValueCollection as $priceProductTransfer) {
@@ -109,11 +110,11 @@ class ProductMoneyCollectionDataProvider
     }
 
     /**
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $currentFormMoneyValueCollection
+     * @param \ArrayObject<string, \Generated\Shared\Transfer\PriceProductTransfer> $currentFormMoneyValueCollection
      * @param array<\Generated\Shared\Transfer\StoreWithCurrencyTransfer> $storeCurrencyCollection
      * @param array<bool> $existingCurrencyMap
      *
-     * @return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
+     * @return \ArrayObject<string, \Generated\Shared\Transfer\PriceProductTransfer>
      */
     protected function mergeMultiStoreMoneyCollection(
         ArrayObject $currentFormMoneyValueCollection,
