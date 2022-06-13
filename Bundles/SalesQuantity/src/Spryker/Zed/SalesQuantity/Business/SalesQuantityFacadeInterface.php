@@ -47,6 +47,8 @@ interface SalesQuantityFacadeInterface
     /**
      * Specification:
      * - Transforms discountable item according to the non splittable strategy.
+     * - Calculates iteration price based on sum of unit prices of already applied discounts with lower priority,
+     *   if discount priority is provided in `DiscountableItemTransformerTransfer.discount.priority` and `DiscountableItemTransformerTransfer.discountableItem.originalItemCalculatedDiscounts.priority`.
      *
      * @api
      *
