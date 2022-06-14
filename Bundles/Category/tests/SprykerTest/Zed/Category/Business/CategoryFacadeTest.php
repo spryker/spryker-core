@@ -907,6 +907,43 @@ class CategoryFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testUpdateCategoryWhenParentCategoryIsChangedWillProperlyUpdateCategoryClosureTableData(): void
+    {
+        // Arrange
+        $firstParentCategoryTransfer = $this->tester->haveCategory();
+        $secondParentCategoryTransfer = $this->tester->haveCategory();
+        $firstChildCategoryTransfer = $this->tester->haveCategory([
+            CategoryTransfer::PARENT_CATEGORY_NODE => $firstParentCategoryTransfer->getCategoryNode(),
+        ]);
+        $secondChildCategoryTransfer = $this->tester->haveCategory([
+            CategoryTransfer::PARENT_CATEGORY_NODE => $firstChildCategoryTransfer->getCategoryNode(),
+        ]);
+
+        $categoryCriteriaTransfer = (new CategoryCriteriaTransfer())
+            ->setIdCategory($firstChildCategoryTransfer->getIdCategory())
+            ->setWithChildrenRecursively(true);
+        $firstChildCategoryTransfer = $this->getFacade()->findCategory($categoryCriteriaTransfer);
+
+        $firstChildCategoryTransfer->setParentCategoryNode($secondParentCategoryTransfer->getCategoryNode());
+
+        // Act
+        $this->getFacade()->update($firstChildCategoryTransfer);
+
+        // Assert
+        $secondParentIdCategoryNode = $secondParentCategoryTransfer->getCategoryNode()->getIdCategoryNode();
+        $firstChildIdCategoryNode = $firstChildCategoryTransfer->getCategoryNode()->getIdCategoryNode();
+        $secondChildIdCategoryNode = $secondChildCategoryTransfer->getCategoryNode()->getIdCategoryNode();
+
+        $this->assertSame(0, $this->tester->findCategoryClosureTableDepth($firstChildIdCategoryNode, $firstChildIdCategoryNode));
+        $this->assertSame(0, $this->tester->findCategoryClosureTableDepth($secondChildIdCategoryNode, $secondChildIdCategoryNode));
+        $this->assertSame(1, $this->tester->findCategoryClosureTableDepth($secondParentIdCategoryNode, $firstChildIdCategoryNode));
+        $this->assertSame(1, $this->tester->findCategoryClosureTableDepth($firstChildIdCategoryNode, $secondChildIdCategoryNode));
+        $this->assertSame(2, $this->tester->findCategoryClosureTableDepth($secondParentIdCategoryNode, $secondChildIdCategoryNode));
+    }
+
+    /**
+     * @return void
+     */
     public function testGetCategoryNodesWithFilterWillReturnCategoryNodesData(): void
     {
         // Arrange

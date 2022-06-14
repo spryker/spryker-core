@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
+use Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryStoreQuery;
 
 /**
@@ -33,6 +34,11 @@ use Orm\Zed\Category\Persistence\SpyCategoryStoreQuery;
 class CategoryBusinessTester extends Actor
 {
     use _generated\CategoryBusinessTesterActions;
+
+    /**
+     * @var string
+     */
+    protected const COL_DEPTH = 'depth';
 
     /**
      * @param int $idCategory
@@ -122,5 +128,28 @@ class CategoryBusinessTester extends Actor
         }
 
         return $categoryTransfer;
+    }
+
+    /**
+     * @param int $idCategoryNode
+     * @param int $idCategoryNodeDescendant
+     *
+     * @return int|null
+     */
+    public function findCategoryClosureTableDepth(int $idCategoryNode, int $idCategoryNodeDescendant): ?int
+    {
+        return $this->getCategoryClosureTableQuery()
+            ->filterByFkCategoryNode($idCategoryNode)
+            ->filterByFkCategoryNodeDescendant($idCategoryNodeDescendant)
+            ->select(static::COL_DEPTH)
+            ->findOne();
+    }
+
+    /**
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery
+     */
+    protected function getCategoryClosureTableQuery(): SpyCategoryClosureTableQuery
+    {
+        return SpyCategoryClosureTableQuery::create();
     }
 }
