@@ -38,5 +38,7 @@
     </transfer>
 
     <transfer name="EventEntity">
+        <property name="id" type="int"/>
+        <property name="foreignKeys" type="array" singular="foreignKeys"/>
     </transfer>
 </transfers>

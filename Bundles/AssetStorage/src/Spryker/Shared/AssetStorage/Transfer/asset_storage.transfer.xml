@@ -48,6 +48,8 @@
 
     <transfer name="EventEntity">
         <property name="additionalValues" type="array" singular="additionalValue"/>
+        <property name="id" type="int"/>
+        <property name="foreignKeys" type="array" singular="foreignKeys"/>
     </transfer>
 
     <transfer name="Filter">

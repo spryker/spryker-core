@@ -230,6 +230,10 @@
     </transfer>
 
     <transfer name="EventEntity">
+        <property name="name" type="string"/>
+        <property name="id" type="int"/>
+        <property name="event" type="string"/>
+        <property name="modifiedColumns" type="array" singular="modifiedColumns"/>
     </transfer>
 
     <transfer name="StoreRelation">
