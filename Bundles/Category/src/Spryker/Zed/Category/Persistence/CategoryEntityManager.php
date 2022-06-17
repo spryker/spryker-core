@@ -264,10 +264,12 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
      */
     public function deleteCategory(int $idCategory): void
     {
-        $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $categoryObjectCollection */
+        $categoryObjectCollection = $this->getFactory()
             ->createCategoryQuery()
-            ->findByIdCategory($idCategory)
-            ->delete();
+            ->findByIdCategory($idCategory);
+
+        $categoryObjectCollection->delete();
     }
 
     /**
@@ -277,10 +279,12 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
      */
     public function deleteCategoryLocalizedAttributes(int $idCategory): void
     {
-        $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $categoryAttributeObjectCollection */
+        $categoryAttributeObjectCollection = $this->getFactory()
             ->createCategoryAttributeQuery()
-            ->findByFkCategory($idCategory)
-            ->delete();
+            ->findByFkCategory($idCategory);
+
+        $categoryAttributeObjectCollection->delete();
     }
 
     /**
@@ -290,10 +294,12 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
      */
     public function deleteCategoryNode(int $idCategoryNode): void
     {
-        $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $categoryNodeObjectCollection */
+        $categoryNodeObjectCollection = $this->getFactory()
             ->createCategoryNodeQuery()
-            ->findByIdCategoryNode($idCategoryNode)
-            ->delete();
+            ->findByIdCategoryNode($idCategoryNode);
+
+        $categoryNodeObjectCollection->delete();
     }
 
     /**
