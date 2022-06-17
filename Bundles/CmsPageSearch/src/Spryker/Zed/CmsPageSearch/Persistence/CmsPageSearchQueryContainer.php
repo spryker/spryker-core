@@ -45,8 +45,8 @@ class CmsPageSearchQueryContainer extends AbstractQueryContainer implements CmsP
      */
     public function queryCmsPageVersionByIds(array $cmsPageIds)
     {
-        /** @var literal-string $whee */
-        $whee = sprintf('%s = (%s)', SpyCmsVersionTableMap::COL_VERSION, $this->getMaxVersionSubQuery());
+        /** @var literal-string $where */
+        $where = sprintf('%s = (%s)', SpyCmsVersionTableMap::COL_VERSION, $this->getMaxVersionSubQuery());
 
         /** @phpstan-var \Orm\Zed\Cms\Persistence\SpyCmsPageQuery */
         return $this->getFactory()
@@ -56,7 +56,7 @@ class CmsPageSearchQueryContainer extends AbstractQueryContainer implements CmsP
             ->joinWithSpyUrl()
             ->joinWith('SpyUrl.SpyLocale')
             ->joinWithSpyCmsVersion()
-            ->where($whee)
+            ->where($where)
             ->joinWithSpyCmsPageStore(Criteria::LEFT_JOIN)
             ->useSpyCmsPageStoreQuery()
                 ->joinWithSpyStore()

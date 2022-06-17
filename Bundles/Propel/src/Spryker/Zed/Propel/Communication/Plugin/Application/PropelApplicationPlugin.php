@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Propel\Communication\Plugin\Application;
 
 use Exception;
-use Propel\Runtime\Connection\ConnectionManagerMasterSlave;
+use Propel\Runtime\Connection\ConnectionManagerPrimaryReplica;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ServiceContainer\StandardServiceContainer;
 use Spryker\Service\Container\ContainerInterface;
@@ -39,7 +39,7 @@ class PropelApplicationPlugin extends AbstractPlugin implements ApplicationPlugi
      */
     public function provide(ContainerInterface $container): ContainerInterface
     {
-        $manager = new ConnectionManagerMasterSlave(static::DATA_SOURCE_NAME);
+        $manager = new ConnectionManagerPrimaryReplica(static::DATA_SOURCE_NAME);
         $manager->setWriteConfiguration($this->getPropelWriteConfiguration());
         $manager->setReadConfiguration($this->getPropelReadConfiguration() ?? []);
 
