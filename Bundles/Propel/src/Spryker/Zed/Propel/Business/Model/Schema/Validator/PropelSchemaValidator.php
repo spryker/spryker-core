@@ -110,6 +110,7 @@ class PropelSchemaValidator implements PropelSchemaValidatorInterface
      */
     protected function createXmlElements(array $schemaFiles): ArrayObject
     {
+        /** @var \ArrayObject<int, \SimpleXMLElement> $mergeSourceXmlElements */
         $mergeSourceXmlElements = new ArrayObject();
         foreach ($schemaFiles as $schemaFile) {
             $mergeSourceXmlElements[] = $this->createXmlElement($schemaFile);
@@ -171,7 +172,7 @@ class PropelSchemaValidator implements PropelSchemaValidatorInterface
 
     /**
      * @param \SimpleXMLElement $toXmlElement
-     * @param \ArrayObject<int, \SimpleXMLElement> $toXmlElements
+     * @param \ArrayObject<string, \SimpleXMLElement> $toXmlElements
      * @param string $fromXmlElementName
      * @param string $fromXmlChildTagName
      * @param \SimpleXMLElement $fromXmlChildElement
@@ -195,10 +196,11 @@ class PropelSchemaValidator implements PropelSchemaValidatorInterface
     /**
      * @param \SimpleXMLElement $toXmlElement
      *
-     * @return \ArrayObject<int, \SimpleXMLElement>
+     * @return \ArrayObject<string, \SimpleXMLElement>
      */
     protected function retrieveToXmlElements(SimpleXMLElement $toXmlElement): ArrayObject
     {
+        /** @var \ArrayObject<string, \SimpleXMLElement> $toXmlElements */
         $toXmlElements = new ArrayObject();
         $toXmlElementChildren = $toXmlElement->children();
 

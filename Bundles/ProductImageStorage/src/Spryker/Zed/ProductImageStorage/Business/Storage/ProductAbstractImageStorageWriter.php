@@ -259,7 +259,8 @@ class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWr
      */
     protected function generateProductAbstractImageSets(array $productImageSetEntityTransfers)
     {
-        $imageSets = new ArrayObject();
+        /** @var \ArrayObject<int, \Generated\Shared\Transfer\ProductImageSetStorageTransfer> $productImageSetStorageTransfers */
+        $productImageSetStorageTransfers = new ArrayObject();
 
         foreach ($productImageSetEntityTransfers as $productImageSetEntityTransfer) {
             $imageSet = (new ProductImageSetStorageTransfer())
@@ -272,10 +273,10 @@ class ProductAbstractImageStorageWriter implements ProductAbstractImageStorageWr
                     ->setExternalUrlLarge($productImageTransfer->getExternalUrlLarge())
                     ->setExternalUrlSmall($productImageTransfer->getExternalUrlSmall()));
             }
-            $imageSets[] = $imageSet;
+            $productImageSetStorageTransfers[] = $imageSet;
         }
 
-        return $imageSets;
+        return $productImageSetStorageTransfers;
     }
 
     /**

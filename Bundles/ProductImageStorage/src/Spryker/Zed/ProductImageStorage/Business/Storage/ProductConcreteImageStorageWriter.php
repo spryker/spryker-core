@@ -235,6 +235,7 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
      */
     protected function generateProductImageSetStorageTransfers(array $productImageSetEntityTransfers): ArrayObject
     {
+        /** @var \ArrayObject<int, \Generated\Shared\Transfer\ProductImageSetStorageTransfer> $productImageSetStorageTransfers */
         $productImageSetStorageTransfers = new ArrayObject();
 
         foreach ($productImageSetEntityTransfers as $imageLocalizedSet) {

@@ -375,6 +375,7 @@ class Discount implements DiscountInterface
     protected function mergeQuoteItemsBySku(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         $itemTransfers = $quoteTransfer->getItems();
+        /** @var \ArrayObject<string, \Generated\Shared\Transfer\ItemTransfer> $mergedItemsCollection */
         $mergedItemsCollection = new ArrayObject();
 
         foreach ($itemTransfers as $itemTransfer) {
@@ -413,6 +414,7 @@ class Discount implements DiscountInterface
      */
     protected function cloneQuoteOriginalItems(ArrayObject $quoteItemsCollection): ArrayObject
     {
+        /** @var \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $originalItemsCollection */
         $originalItemsCollection = new ArrayObject();
         foreach ($quoteItemsCollection as $itemTransfer) {
             $originalItemsCollection[] = clone $itemTransfer;

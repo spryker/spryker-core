@@ -132,6 +132,8 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
     ): CartPreCheckResponseTransfer {
         $cartPreCheckResponseTransfer = new CartPreCheckResponseTransfer();
         $cartPreCheckResponseTransfer->setIsSuccess(true);
+
+        /** @var \ArrayObject<int, \Generated\Shared\Transfer\MessageTransfer> $messages */
         $messages = new ArrayObject();
         foreach ($sellableItemsResponseTransfer->getSellableItemResponses() as $sellableItemResponseTransfer) {
             if (!$sellableItemResponseTransfer->getIsSellable()) {
@@ -160,6 +162,7 @@ class CheckCartAvailability implements CheckCartAvailabilityInterface
         $storeTransfer = $this->getStoreTransfer($cartChangeTransfer);
         $itemsInCart = clone $cartChangeTransfer->getQuote()->getItems();
 
+        /** @var \ArrayObject<int, \Generated\Shared\Transfer\MessageTransfer> $messages */
         $messages = new ArrayObject();
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             if ($itemTransfer->getAmount() !== null) {

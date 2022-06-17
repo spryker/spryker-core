@@ -33,6 +33,7 @@ class ProductBundlePreReloadUpdater implements ProductBundlePreReloadUpdaterInte
      */
     protected function removeBundledItems(QuoteTransfer $quoteTransfer)
     {
+        /** @var \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $items */
         $items = new ArrayObject();
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             if ($itemTransfer->getRelatedBundleItemIdentifier()) {

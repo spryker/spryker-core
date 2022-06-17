@@ -527,9 +527,11 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
      */
     protected function mapAbstractProductImageSets(ArrayObject $productImageSetTransfers, int $idProductConcrete): ArrayObject
     {
+        /** @var \ArrayObject<int, \Generated\Shared\Transfer\ProductImageSetTransfer> $mappedImageSetsTransfers */
         $mappedImageSetsTransfers = new ArrayObject();
 
         foreach ($productImageSetTransfers as $productImageSetTransfer) {
+            /** @var \ArrayObject<int, \Generated\Shared\Transfer\ProductImageTransfer> $newProductImages */
             $newProductImages = new ArrayObject();
             foreach ($productImageSetTransfer->getProductImages() as $productImage) {
                 $newProductImage = new ProductImageTransfer();

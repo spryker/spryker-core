@@ -205,6 +205,7 @@ class CartSharer implements CartSharerInterface
      */
     protected function filterShareDetailsWithoutQuotePermissionGroup(ArrayObject $shareDetails): ArrayObject
     {
+        /** @var \ArrayObject<int, \Generated\Shared\Transfer\ShareDetailTransfer> $filteredShareDetails */
         $filteredShareDetails = new ArrayObject();
         foreach ($shareDetails as $shareDetail) {
             if ($shareDetail->getQuotePermissionGroup() === null) {

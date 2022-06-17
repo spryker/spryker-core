@@ -73,6 +73,7 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
      */
     public function checkCartAvailability(CartChangeTransfer $cartChangeTransfer)
     {
+        /** @var \ArrayObject<int, \Generated\Shared\Transfer\MessageTransfer> $cartPreCheckFailedItems */
         $cartPreCheckFailedItems = new ArrayObject();
         $itemsInCart = clone $cartChangeTransfer->getQuote()->getItems();
 

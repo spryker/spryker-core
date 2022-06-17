@@ -181,6 +181,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
      */
     private function createSchemaXmlElements(array $schemaFiles)
     {
+        /** @var \ArrayObject<int, \SimpleXMLElement> $mergeSourceXmlElements */
         $mergeSourceXmlElements = new ArrayObject();
         foreach ($schemaFiles as $schemaFile) {
             $simpleXmlElement = $this->createXmlElement($schemaFile);
@@ -351,10 +352,11 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
     /**
      * @param \SimpleXMLElement $toXmlElement
      *
-     * @return \ArrayObject<int, \SimpleXMLElement>
+     * @return \ArrayObject<string, \SimpleXMLElement>
      */
     private function retrieveToXmlElements(SimpleXMLElement $toXmlElement)
     {
+        /** @var \ArrayObject<string, \SimpleXMLElement> $toXmlElementNames */
         $toXmlElementNames = new ArrayObject();
         $toXmlElementChildren = $toXmlElement->children();
 

@@ -54,6 +54,7 @@ class ProductBundleCheckoutAvailabilityCheck extends BasePreCheck implements Pro
 
         $storeTransfer = $this->storeFacade->getStoreByName($storeTransfer->getName());
 
+        /** @var \ArrayObject<int, \Generated\Shared\Transfer\CheckoutErrorTransfer> $checkoutErrorMessages */
         $checkoutErrorMessages = new ArrayObject();
         $uniqueBundleItems = $this->getUniqueBundleItems($quoteTransfer);
         $itemsInCart = $quoteTransfer->getItems();

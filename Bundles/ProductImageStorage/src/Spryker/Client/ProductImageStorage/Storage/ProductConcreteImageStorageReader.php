@@ -53,6 +53,7 @@ class ProductConcreteImageStorageReader implements ProductConcreteImageStorageRe
 
             $imageSets = $collectorData['imageSets'];
 
+            /** @var \ArrayObject<int, array<string, mixed>> $formattedImageSets */
             $formattedImageSets = new ArrayObject();
             foreach ($imageSets as $imageSetName => $images) {
                 $formattedImageSets[] = [

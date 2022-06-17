@@ -29,4 +29,8 @@
         <property name="customerReference" type="string"/>
     </transfer>
 
+    <transfer name="EventEntity">
+        <property name="modifiedColumns" type="array" singular="modifiedColumns"/>
+    </transfer>
+
 </transfers>

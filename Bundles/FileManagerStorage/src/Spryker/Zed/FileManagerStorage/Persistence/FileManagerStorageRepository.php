@@ -53,6 +53,7 @@ class FileManagerStorageRepository extends AbstractRepository implements FileMan
      */
     public function findFileStoragesByIds(array $fileStorageIds)
     {
+        /** @var \ArrayObject<int, \Generated\Shared\Transfer\FileStorageTransfer> $fileStorageTransferCollection */
         $fileStorageTransferCollection = new ArrayObject();
         $storageCompositeKey = $this->getFactory()->getConfig()->getStorageCompositeKey();
         $mapper = $this->getFactory()->createFileManagerStorageMapper();

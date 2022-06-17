@@ -301,7 +301,7 @@ class ProductCategoryStorageRepository extends AbstractRepository implements Pro
             ->withColumn($depthToBoostClause, static::COL_BOOSTED_DEPTH)
             ->orderBy(static::COL_BOOSTED_DEPTH, Criteria::DESC)
             ->useClosureTableQuery()
-                ->orderByDepth(Criteria::DESC)
+                ->orderByDepth(Criteria::ASC)
             ->endUse();
 
         return $categoryNodeQuery;

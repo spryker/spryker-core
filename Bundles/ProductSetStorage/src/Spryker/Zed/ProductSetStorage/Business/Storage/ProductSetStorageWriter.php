@@ -204,7 +204,8 @@ class ProductSetStorageWriter implements ProductSetStorageWriterInterface
             $spyProductSetLocalizedEntity['SpyProductSet']['SpyProductImageSets'],
             $spyProductSetLocalizedEntity['fk_locale'],
         );
-        $productImageSet = new ArrayObject();
+        /** @var \ArrayObject<int, \Generated\Shared\Transfer\ProductImageSetStorageTransfer> $productImageSets */
+        $productImageSets = new ArrayObject();
         foreach ($filteredProductImageSets as $spyProductImageSets) {
             $productImageSetStorageTransfer = new ProductImageSetStorageTransfer();
             $productImageSetStorageTransfer->setName($spyProductImageSets['name']);
@@ -215,10 +216,10 @@ class ProductSetStorageWriter implements ProductSetStorageWriterInterface
                 $productImageStorageTransfer->setExternalUrlLarge($productImageSetToProductImage['SpyProductImage']['external_url_large']);
                 $productImageSetStorageTransfer->addImage($productImageStorageTransfer);
             }
-            $productImageSet[] = $productImageSetStorageTransfer;
+            $productImageSets[] = $productImageSetStorageTransfer;
         }
 
-        return $productImageSet;
+        return $productImageSets;
     }
 
     /**

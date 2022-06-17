@@ -270,6 +270,7 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
      */
     protected function getProductOptionGroupStorageTransfers(array $productOptions, $idStore): ArrayObject
     {
+        /** @var \ArrayObject<int, \Generated\Shared\Transfer\ProductOptionGroupStorageTransfer> $productOptionGroupStorageTransfers */
         $productOptionGroupStorageTransfers = new ArrayObject();
         foreach ($productOptions as $productOption) {
             $productOptionGroupStorageTransfer = new ProductOptionGroupStorageTransfer();

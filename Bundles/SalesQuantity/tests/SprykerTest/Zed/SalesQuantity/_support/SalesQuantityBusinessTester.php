@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\SalesQuantity;
 
 use Codeception\Actor;
+use Orm\Zed\Discount\Persistence\SpyDiscount;
 
 /**
  * @method void wantToTest($text)
@@ -20,11 +21,19 @@ use Codeception\Actor;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
- * @method \Spryker\Zed\SalesQuantity\Business\SalesQuantityFacade getFacade()
+ * @method \Spryker\Zed\SalesQuantity\Business\SalesQuantityFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
  */
 class SalesQuantityBusinessTester extends Actor
 {
     use _generated\SalesQuantityBusinessTesterActions;
+
+    /**
+     * @return bool
+     */
+    public function discountPriorityFieldExists(): bool
+    {
+        return property_exists(SpyDiscount::class, 'priority');
+    }
 }
