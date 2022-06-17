@@ -230,6 +230,7 @@
     </transfer>
 
     <transfer name="EventEntity">
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="StoreRelation">
