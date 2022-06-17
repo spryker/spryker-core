@@ -598,6 +598,7 @@ SCRIPT;
     {
         $this->declareClasses(
             '\Propel\Runtime\Collection\ObjectCollection',
+            '\Propel\Runtime\Collection\Collection',
             '\Propel\Runtime\Connection\ConnectionInterface',
             '\Propel\Runtime\Propel',
         );
@@ -620,7 +621,7 @@ SCRIPT;
      * @param     array \$keys Primary keys to use for the query
      * @param     ConnectionInterface \$con an optional connection object
      *
-     * @return ObjectCollection|array|mixed the list of results, formatted by the current formatter
+     * @return    Collection|array|mixed the list of results, formatted by the current formatter
      */
     public function findPks(\$keys, ConnectionInterface \$con = null)
     {";
