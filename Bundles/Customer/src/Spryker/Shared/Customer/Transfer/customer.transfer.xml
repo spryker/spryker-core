@@ -207,6 +207,7 @@
     </transfer>
 
     <transfer name="AuthorizationEntity">
+        <property name="identifier" type="string"/>
     </transfer>
 
     <transfer name="Store">
