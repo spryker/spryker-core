@@ -80,9 +80,12 @@ class UrlRedirectUpdateObserver implements UrlUpdaterAfterSaveObserverInterface
      */
     protected function findUrlRedirectEntitiesByTargetUrl($targetUrl)
     {
-        return $this->urlQueryContainer
+        /** @var  \Propel\Runtime\Collection\ObjectCollection $redirectsCollection */
+        $redirectsCollection = $this->urlQueryContainer
             ->queryRedirects()
             ->findByToUrl($targetUrl);
+
+        return $redirectsCollection;
     }
 
     /**
