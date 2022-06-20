@@ -85,7 +85,7 @@ class PropertyValues implements IteratorAggregate, ArrayAccess, Countable
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         trigger_error(sprintf('Trying to set readonly property: %s::%s', static::class, $offset), E_USER_WARNING);
     }
@@ -95,7 +95,7 @@ class PropertyValues implements IteratorAggregate, ArrayAccess, Countable
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         trigger_error(sprintf('Trying to unset readonly property: %s::%s', static::class, $offset), E_USER_WARNING);
     }
