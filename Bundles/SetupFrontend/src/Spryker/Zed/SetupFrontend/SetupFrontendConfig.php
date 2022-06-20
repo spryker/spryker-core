@@ -36,7 +36,7 @@ class SetupFrontendConfig extends AbstractBundleConfig
      */
     public function getProjectInstallCommand()
     {
-        return 'npm ci --prefer-offline --legacy-peer-deps';
+        return 'npm ci --prefer-offline';
     }
 
     /**
