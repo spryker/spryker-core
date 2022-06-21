@@ -7,8 +7,6 @@
 
 namespace SprykerTest\Zed\MessageBroker\Helper;
 
-use Codeception\Module;
-
 trait InMemoryMessageBrokerHelperTrait
 {
     /**
@@ -27,5 +25,5 @@ trait InMemoryMessageBrokerHelperTrait
      *
      * @return \Codeception\Module
      */
-    abstract protected function getModule(string $name): Module;
+    abstract protected function getModule($name);
 }
