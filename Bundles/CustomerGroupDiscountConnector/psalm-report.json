@@ -39,8 +39,8 @@
         },
         {
             "severity": "info",
-            "line_from": 92,
-            "line_to": 92,
+            "line_from": 88,
+            "line_to": 88,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getIdCustomer on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/CustomerGroupDiscountConnector/src/Spryker/Zed/CustomerGroupDiscountConnector/Business/DecisionRule/CustomerGroupDecisionRule.php",

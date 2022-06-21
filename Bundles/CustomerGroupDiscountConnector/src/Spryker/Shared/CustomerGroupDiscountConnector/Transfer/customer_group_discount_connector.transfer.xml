@@ -9,6 +9,10 @@
         <property name="name" type="string"/>
     </transfer>
 
+    <transfer name="CalculableObject">
+        <property name="customer" type="Customer"/>
+    </transfer>
+
     <transfer name="Customer">
         <property name="idCustomer" type="int"/>
     </transfer>

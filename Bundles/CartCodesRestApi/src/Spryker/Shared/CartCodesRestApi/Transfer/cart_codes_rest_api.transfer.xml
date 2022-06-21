@@ -42,9 +42,11 @@
 
     <transfer name="RestUser">
         <property name="naturalIdentifier" type="string"/>
+        <property name="surrogateIdentifier" type="int"/>
     </transfer>
 
     <transfer name="Customer">
+        <property name="idCustomer" type="int"/>
         <property name="customerReference" type="string"/>
     </transfer>
 
