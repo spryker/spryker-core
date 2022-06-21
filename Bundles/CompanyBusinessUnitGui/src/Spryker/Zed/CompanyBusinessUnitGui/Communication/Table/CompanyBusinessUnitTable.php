@@ -105,7 +105,6 @@ class CompanyBusinessUnitTable extends AbstractTable
             static::COL_ACTIONS => 'Actions',
         ]);
 
-        $config->addRawColumn(static::COL_ADDRESS);
         $config->addRawColumn(static::COL_ACTIONS);
 
         $config->setSortable([
