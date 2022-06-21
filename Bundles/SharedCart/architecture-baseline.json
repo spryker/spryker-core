@@ -1,40 +1,5 @@
 [
     {
-        "fileName": "src/Spryker/Client/SharedCart/Dependency/Client/SharedCartToCustomerClientInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `setCustomer()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Client/SharedCart/Dependency/Client/SharedCartToCustomerClientInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `getCustomer()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Client/SharedCart/Dependency/Client/SharedCartToMessengerClientBridge.php",
-        "description": "Bridges: Type should be defined for param `message` in method `Spryker\\Client\\SharedCart\\Dependency\\Client\\SharedCartToMessengerClientBridge::addErrorMessage()`.",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Client/SharedCart/Dependency/Client/SharedCartToMessengerClientInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `addErrorMessage()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Client/SharedCart/Dependency/Client/SharedCartToPersistentCartClientInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `updateQuote()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
         "fileName": "src/Spryker/Zed/SharedCart/Dependency/Facade/SharedCartToCustomerFacadeBridge.php",
         "description": "Bridges: Method `findCustomerByReference()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
@@ -49,23 +14,9 @@
         "priority": "2"
     },
     {
-        "fileName": "src/Spryker/Zed/SharedCart/Dependency/Facade/SharedCartToCustomerFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `getCustomer()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
         "fileName": "src/Spryker/Zed/SharedCart/Dependency/Facade/SharedCartToMessengerFacadeBridge.php",
         "description": "Bridges: Method `addInfoMessage()` must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/SharedCart/Dependency/Facade/SharedCartToMessengerFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `addInfoMessage()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -85,13 +36,6 @@
     },
     {
         "fileName": "src/Spryker/Zed/SharedCart/Dependency/Facade/SharedCartToQuoteFacadeBridge.php",
-        "description": "Bridges: Type should be defined for param `idQuote` in method `Spryker\\Zed\\SharedCart\\Dependency\\Facade\\SharedCartToQuoteFacadeBridge::findQuoteById()`.",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/SharedCart/Dependency/Facade/SharedCartToQuoteFacadeBridge.php",
         "description": "Bridges: Method `findQuoteById()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
@@ -101,13 +45,6 @@
         "fileName": "src/Spryker/Zed/SharedCart/Dependency/Facade/SharedCartToStoreFacadeBridge.php",
         "description": "Bridges: Method `getCurrentStore()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/SharedCart/Dependency/Facade/SharedCartToStoreFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `getCurrentStore()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
     }

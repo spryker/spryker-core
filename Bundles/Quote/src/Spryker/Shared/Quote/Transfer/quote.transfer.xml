@@ -70,4 +70,24 @@
     <transfer name="Filter">
     </transfer>
 
+    <transfer name="CommentRequest">
+        <property name="ownerId" type="int"/>
+        <property name="ownerType" type="string"/>
+        <property name="comment" type="Comment"/>
+    </transfer>
+
+    <transfer name="Comment">
+        <property name="customer" type="Customer"/>
+    </transfer>
+
+    <transfer name="CommentValidationResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
+        <property name="parameters" type="array" singular="parameters"/>
+    </transfer>
+
 </transfers>

@@ -14,5 +14,5 @@ interface SharedCartToMessengerClientInterface
      *
      * @return void
      */
-    public function addErrorMessage($message);
+    public function addErrorMessage(string $message): void;
 }

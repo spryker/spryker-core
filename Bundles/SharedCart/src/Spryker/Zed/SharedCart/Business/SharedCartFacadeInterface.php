@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\SharedCart\Business;
 
+use Generated\Shared\Transfer\CommentRequestTransfer;
+use Generated\Shared\Transfer\CommentValidationResponseTransfer;
 use Generated\Shared\Transfer\CustomerCollectionTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
@@ -343,4 +345,23 @@ interface SharedCartFacadeInterface
      * @return void
      */
     public function addDefaultSharedQuoteChangedMessage(QuoteTransfer $quoteTransfer): void;
+
+    /**
+     * Specification:
+     * - Requires 'CommentRequestTransfer.ownerId', `CommentRequestTransfer.comment`, `CommentRequestTransfer.comment.customer`,
+     *   `CommentRequestTransfer.comment.customer.companyUserTransfer`, `CommentRequestTransfer.comment.customer.companyUserTransfer.idCompanyUser` transfer properties to be set.
+     * - Checks if provided company user has access to comment owner shared cart.
+     * - Returns error message when validation failed.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
+     * @param \Generated\Shared\Transfer\CommentValidationResponseTransfer $commentValidationResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\CommentValidationResponseTransfer
+     */
+    public function validateSharedCartComment(
+        CommentRequestTransfer $commentRequestTransfer,
+        CommentValidationResponseTransfer $commentValidationResponseTransfer
+    ): CommentValidationResponseTransfer;
 }

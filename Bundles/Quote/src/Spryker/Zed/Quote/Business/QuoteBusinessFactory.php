@@ -24,6 +24,8 @@ use Spryker\Zed\Quote\Business\Quote\QuoteLocker;
 use Spryker\Zed\Quote\Business\Quote\QuoteLockerInterface;
 use Spryker\Zed\Quote\Business\QuoteValidator\QuoteLockStatusValidator;
 use Spryker\Zed\Quote\Business\QuoteValidator\QuoteLockStatusValidatorInterface;
+use Spryker\Zed\Quote\Business\Validator\QuoteCommentValidator;
+use Spryker\Zed\Quote\Business\Validator\QuoteCommentValidatorInterface;
 use Spryker\Zed\Quote\Business\Validator\QuoteValidator;
 use Spryker\Zed\Quote\Business\Validator\QuoteValidatorInterface;
 use Spryker\Zed\Quote\QuoteConfig;
@@ -137,6 +139,17 @@ class QuoteBusinessFactory extends AbstractBusinessFactory
         return new QuoteFieldsConfigurator(
             $this->getConfig(),
             $this->getQuoteFieldsAllowedForSavingProviderPlugins(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Quote\Business\Validator\QuoteCommentValidatorInterface
+     */
+    public function createQuoteCommentValidator(): QuoteCommentValidatorInterface
+    {
+        return new QuoteCommentValidator(
+            $this->getStoreFacade(),
+            $this->createQuoteReader(),
         );
     }
 

@@ -46,6 +46,8 @@ interface CommentFacadeInterface
      * - Expects owner type to be provided.
      * - Expects comment message to be provided.
      * - Expects customer id to be provided.
+     * - Validates `CommentRequestTransfer`.
+     * - Executes {@link \Spryker\Zed\CommentExtension\Dependency\Plugin\CommentValidatorPluginInterface} plugin stack.
      * - Creates comment thread if it does not exist in Persistence yet.
      * - Persists provided comment for the comment thread.
      * - Returns 'isSuccessful=true' with the up to date comment thread.
@@ -63,6 +65,8 @@ interface CommentFacadeInterface
      * Specification:
      * - Expects comment message to be provided.
      * - Expects customer id to be provided.
+     * - Validates `CommentRequestTransfer`.
+     * - Executes {@link \Spryker\Zed\CommentExtension\Dependency\Plugin\CommentValidatorPluginInterface} plugin stack.
      * - Updates the provided comment by comment UUID in Persistence.
      * - Returns 'isSuccessful=true' with the up to date comment thread.
      * - Returns 'isSuccessful=false' with error messages otherwise.
@@ -78,6 +82,8 @@ interface CommentFacadeInterface
     /**
      * Specification:
      * - Expects customer id to be provided.
+     * - Validates `CommentRequestTransfer`.
+     * - Executes {@link \Spryker\Zed\CommentExtension\Dependency\Plugin\CommentValidatorPluginInterface} plugin stack.
      * - Removes the provided comment by comment UUID in Persistence.
      * - Removes assigned tags in Persistence.
      * - Returns 'isSuccessful=true' with the up to date comment thread.

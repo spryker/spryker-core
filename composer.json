@@ -176,6 +176,7 @@
         "spryker/collector-storage-connector": "*",
         "spryker/comment": "*",
         "spryker/comment-data-import": "*",
+        "spryker/comment-extension": "*",
         "spryker/comment-sales-connector": "*",
         "spryker/companies-rest-api": "*",
         "spryker/company": "*",

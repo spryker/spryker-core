@@ -29,7 +29,7 @@ class SharedCartToMessengerFacadeBridge implements SharedCartToMessengerFacadeIn
      *
      * @return void
      */
-    public function addInfoMessage(MessageTransfer $message)
+    public function addInfoMessage(MessageTransfer $message): void
     {
         $this->messengerFacade->addInfoMessage($message);
     }

@@ -9,12 +9,15 @@ namespace Spryker\Zed\Comment\Business;
 
 use Spryker\Zed\Comment\Business\Reader\CommentThreadReader;
 use Spryker\Zed\Comment\Business\Reader\CommentThreadReaderInterface;
+use Spryker\Zed\Comment\Business\Validator\CommentValidator;
+use Spryker\Zed\Comment\Business\Validator\CommentValidatorInterface;
 use Spryker\Zed\Comment\Business\Writer\CommentTagWriter;
 use Spryker\Zed\Comment\Business\Writer\CommentTagWriterInterface;
 use Spryker\Zed\Comment\Business\Writer\CommentThreadWriter;
 use Spryker\Zed\Comment\Business\Writer\CommentThreadWriterInterface;
 use Spryker\Zed\Comment\Business\Writer\CommentWriter;
 use Spryker\Zed\Comment\Business\Writer\CommentWriterInterface;
+use Spryker\Zed\Comment\CommentDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -34,6 +37,7 @@ class CommentBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->createCommentThreadReader(),
             $this->createCommentThreadWriter(),
+            $this->createCommentValidator(),
         );
     }
 
@@ -70,5 +74,21 @@ class CommentBusinessFactory extends AbstractBusinessFactory
         return new CommentThreadReader(
             $this->getRepository(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Comment\Business\Validator\CommentValidatorInterface
+     */
+    public function createCommentValidator(): CommentValidatorInterface
+    {
+        return new CommentValidator($this->getCommentValidatorPlugins());
+    }
+
+    /**
+     * @return array<\Spryker\Zed\CommentExtension\Dependency\Plugin\CommentValidatorPluginInterface>
+     */
+    public function getCommentValidatorPlugins(): array
+    {
+        return $this->getProvidedDependency(CommentDependencyProvider::PLUGINS_COMMENT_VALIDATOR);
     }
 }

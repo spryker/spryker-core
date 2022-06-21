@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\Quote\Dependency\Plugin;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
+
 class QuoteToCurrencyBridge implements QuoteToCurrencyInterface
 {
     /**
@@ -25,7 +27,7 @@ class QuoteToCurrencyBridge implements QuoteToCurrencyInterface
     /**
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function getCurrent()
+    public function getCurrent(): CurrencyTransfer
     {
         return $this->currencyPlugin->getCurrent();
     }

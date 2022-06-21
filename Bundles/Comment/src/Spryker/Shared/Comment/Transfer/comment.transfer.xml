@@ -68,4 +68,9 @@
         <property name="idCustomer" type="int"/>
     </transfer>
 
+    <transfer name="CommentValidationResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
 </transfers>

@@ -185,4 +185,19 @@
     <transfer name="Filter">
     </transfer>
 
+    <transfer name="CommentRequest">
+        <property name="comment" type="Comment"/>
+        <property name="ownerId" type="int"/>
+        <property name="ownerType" type="string"/>
+    </transfer>
+
+    <transfer name="CommentValidationResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
+    <transfer name="Comment">
+        <property name="customer" type="Customer"/>
+    </transfer>
+
 </transfers>

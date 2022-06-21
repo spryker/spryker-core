@@ -33,14 +33,14 @@ class CommentFacadeRemoveCommentTest extends Unit
     protected const FAKE_COMMENT_UUID = 'FAKE_COMMENT_UUID';
 
     /**
-     * @uses \Spryker\Zed\Comment\Business\Writer\CommentWriter::GLOSSARY_KEY_COMMENT_NOT_FOUND
+     * @uses \Spryker\Zed\Comment\Business\Validator\CommentValidator::GLOSSARY_KEY_COMMENT_NOT_FOUND
      *
      * @var string
      */
     protected const GLOSSARY_KEY_COMMENT_NOT_FOUND = 'comment.validation.error.comment_not_found';
 
     /**
-     * @uses \Spryker\Zed\Comment\Business\Writer\CommentWriter::GLOSSARY_KEY_COMMENT_ACCESS_DENIED
+     * @uses \Spryker\Zed\Comment\Business\Validator\CommentValidator::GLOSSARY_KEY_COMMENT_ACCESS_DENIED
      *
      * @var string
      */
