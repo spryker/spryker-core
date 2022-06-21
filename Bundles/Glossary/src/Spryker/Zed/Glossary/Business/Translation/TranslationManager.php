@@ -47,6 +47,11 @@ class TranslationManager implements TranslationManagerInterface
     public const LOCALE_PREFIX = 'locale_';
 
     /**
+     * @var string
+     */
+    protected const TRANSLATION_VALUE_ZERO = '0';
+
+    /**
      * @var \Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface
      */
     protected $glossaryQueryContainer;
@@ -124,7 +129,7 @@ class TranslationManager implements TranslationManagerInterface
                     $translationValue = (string)$keyTranslationTransfer->getLocales()[$localeName];
                     $translationTransfer = $this->createTranslationTransfer($localeTransfer, $idGlossaryKey, $translationValue);
                     $this->saveAndTouchTranslation($translationTransfer);
-                    if (!$translationValue) {
+                    if (!$this->isTranslationValueValid($translationValue)) {
                         $this->deleteTranslation($translationKey, $localeTransfer);
                     }
                 }
@@ -718,6 +723,18 @@ class TranslationManager implements TranslationManagerInterface
             throw new MissingTranslationException(sprintf('Could not find a translation with id %s', $idTranslation));
         }
 
+        /** @var \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslation */
         return $translation;
+    }
+
+    /**
+     * @param string $translationValue
+     *
+     * @return bool
+     */
+    protected function isTranslationValueValid(string $translationValue): bool
+    {
+        return $translationValue
+            || $translationValue === static::TRANSLATION_VALUE_ZERO;
     }
 }

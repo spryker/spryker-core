@@ -40,6 +40,7 @@ class GlossaryStorageRepository extends AbstractRepository implements GlossarySt
             ->createGlossaryStorageQuery()
             ->filterByFkGlossaryKey_In($glossaryKeyIds);
 
+        /** @var array<\Generated\Shared\Transfer\SpyGlossaryStorageEntityTransfer> */
         return $this->buildQueryFromCriteria($query)->find();
     }
 
@@ -59,6 +60,7 @@ class GlossaryStorageRepository extends AbstractRepository implements GlossarySt
             $query->filterByIdGlossaryStorage_In($ids);
         }
 
+        /** @var array<\Generated\Shared\Transfer\SynchronizationDataTransfer> */
         return $this->buildQueryFromCriteria($query, $filterTransfer)
             ->setFormatter(SynchronizationDataTransferObjectFormatter::class)
             ->find();
@@ -82,6 +84,7 @@ class GlossaryStorageRepository extends AbstractRepository implements GlossarySt
             ->joinWithLocale()
             ->addAnd('fk_glossary_key', $glossaryKeyIds, Criteria::IN);
 
+        /** @var array<\Generated\Shared\Transfer\SpyGlossaryTranslationEntityTransfer> */
         return $this->buildQueryFromCriteria($query)->find();
     }
 

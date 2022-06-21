@@ -24,6 +24,11 @@ class GlossaryTranslationStorageWriter implements GlossaryTranslationStorageWrit
     protected const COL_FK_GLOSSARY_KEY = 'spy_glossary_translation.fk_glossary_key';
 
     /**
+     * @var string
+     */
+    protected const TRANSLATION_VALUE_ZERO = '0';
+
+    /**
      * @var \Spryker\Zed\GlossaryStorage\Dependency\Facade\GlossaryStorageToEventBehaviorFacadeInterface
      */
     protected $eventBehaviorFacade;
@@ -137,7 +142,7 @@ class GlossaryTranslationStorageWriter implements GlossaryTranslationStorageWrit
             $idGlossaryKey = $glossaryTranslationEntityTransfer->getFkGlossaryKey();
             $localeName = $glossaryTranslationEntityTransfer->getLocale()->getLocaleName();
 
-            if ((!$glossaryTranslationEntityTransfer->getIsActive() || !$glossaryTranslationEntityTransfer->getGlossaryKey()->getIsActive() || !$glossaryTranslationEntityTransfer->getValue())) {
+            if (!$this->isGlossaryTranslationActive($glossaryTranslationEntityTransfer) || !$this->isTranslationValueValid($glossaryTranslationEntityTransfer)) {
                 unset($glossaryTranslationEntityTransfers[$id]);
 
                 if (isset($mappedGlossaryStorageEntityTransfers[$idGlossaryKey][$localeName])) {
@@ -215,5 +220,25 @@ class GlossaryTranslationStorageWriter implements GlossaryTranslationStorageWrit
         $data['Locale'] = $data['locale'];
 
         return $data;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyGlossaryTranslationEntityTransfer $glossaryTranslationEntityTransfer
+     *
+     * @return bool
+     */
+    protected function isGlossaryTranslationActive(SpyGlossaryTranslationEntityTransfer $glossaryTranslationEntityTransfer): bool
+    {
+        return $glossaryTranslationEntityTransfer->getIsActive() && $glossaryTranslationEntityTransfer->getGlossaryKeyOrFail()->getIsActive();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyGlossaryTranslationEntityTransfer $glossaryTranslationEntityTransfer
+     *
+     * @return bool
+     */
+    protected function isTranslationValueValid(SpyGlossaryTranslationEntityTransfer $glossaryTranslationEntityTransfer): bool
+    {
+        return $glossaryTranslationEntityTransfer->getValue() || $glossaryTranslationEntityTransfer->getValue() === static::TRANSLATION_VALUE_ZERO;
     }
 }
