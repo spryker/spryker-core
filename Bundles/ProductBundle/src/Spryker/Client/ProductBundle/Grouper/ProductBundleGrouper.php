@@ -225,6 +225,7 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
         $bundleProduct->setSumSubtotalAggregation(0);
         $bundleProduct->setUnitSubtotalAggregation(0);
         $bundleProduct->setQuantity($groupedBundleQuantity[$bundleGroupKey]);
+        $bundleProduct->setGroupKey($bundleGroupKey);
 
         $bundleItems[$bundleGroupKey] = [
             static::BUNDLE_PRODUCT => $bundleProduct,
