@@ -40,7 +40,7 @@
 {% block content %}
     {{ form_start(form, {attr: {novalidate: '', withMonitor: true}}) }}
         <web-mp-profile cloak>
-            <span title>{{ 'Profile' | trans }}</span>
+            <h1 title>{{ 'Profile' | trans }}</h1>
 
             {{ form_row(form.save, {attr: {class: 'mp-profile__submit', 'action': true, 'size': 'lg'}}) }}
 
