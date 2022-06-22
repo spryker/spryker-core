@@ -44,7 +44,6 @@ class ResourceExecutor implements ResourceExecutorInterface
         ResourceInterface $resource,
         GlueRequestTransfer $glueRequestTransfer
     ): GlueResponseTransfer {
-        $glueResponseTransfer = new GlueResponseTransfer();
         $executableResource = $resource->getResource($glueRequestTransfer);
 
         $parameters = $this->controllerCacheReader->getActionParameters($executableResource, $resource, $glueRequestTransfer);
@@ -107,9 +106,14 @@ class ResourceExecutor implements ResourceExecutorInterface
     {
         $glueResourceMethodCollectionTransfer = $resource->getDeclaredMethods();
 
+        $method = strtolower($glueRequestTransfer->getResource()->getMethod());
+        if (!$glueResourceMethodCollectionTransfer->offsetExists($method)) {
+            return null;
+        }
+
         /** @var \Generated\Shared\Transfer\GlueResourceMethodConfigurationTransfer|null $glueResourceMethodConfigurationTransfer */
         $glueResourceMethodConfigurationTransfer = $glueResourceMethodCollectionTransfer
-            ->offsetGet($glueRequestTransfer->getResource()->getMethod());
+            ->offsetGet($method);
 
         if ($glueResourceMethodConfigurationTransfer && $glueResourceMethodConfigurationTransfer->getAttributes()) {
             $attributeTransfer = $glueResourceMethodConfigurationTransfer->getAttributesOrFail();

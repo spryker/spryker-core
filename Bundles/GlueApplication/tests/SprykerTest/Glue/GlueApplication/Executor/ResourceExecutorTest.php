@@ -108,7 +108,48 @@ class ResourceExecutorTest extends Unit
     {
         //Arrange
         $glueRequestTransfer = (new GlueRequestTransfer())
-            ->setResource(new GlueResourceTransfer())
+            ->setResource((new GlueResourceTransfer())->setMethod('get'))
+            ->setContent('fooBar');
+
+        $resourceMock = $this->createMock(ResourceInterface::class);
+        $resourceMock->expects($this->once())
+            ->method('getResource')
+            ->willReturn([new ResourceController(), 'getCollectionAction']);
+        $resourceMock->expects($this->once())
+            ->method('getDeclaredMethods')
+            ->willReturn(
+                ((new GlueResourceMethodCollectionTransfer())
+                    ->setGet((new GlueResourceMethodConfigurationTransfer())->setAction('getAction'))
+                ),
+            );
+
+        $cacheReaderMock = $this->getMockBuilder(ControllerCacheReaderInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $cacheReaderMock->expects($this->once())
+            ->method('getActionParameters')
+            ->willReturn([
+                GlueRequestTransfer::class => '',
+                GlueResponseTransfer::class => '',
+            ]);
+
+        //Act
+        $glueResponseTransfer = (new ResourceExecutor($cacheReaderMock))
+            ->executeResource($resourceMock, $glueRequestTransfer);
+
+        //Assert
+        $this->assertInstanceOf(GlueResponseTransfer::class, $glueResponseTransfer);
+        $this->assertSame($glueResponseTransfer->getContent(), $glueRequestTransfer->getContent());
+    }
+
+    /**
+     * @return void
+     */
+    public function testExecuteResourceExecutesMethodInUpperCase(): void
+    {
+        //Arrange
+        $glueRequestTransfer = (new GlueRequestTransfer())
+            ->setResource((new GlueResourceTransfer())->setMethod('GET'))
             ->setContent('fooBar');
 
         $resourceMock = $this->createMock(ResourceInterface::class);
