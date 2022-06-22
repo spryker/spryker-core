@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\SalesSplit\Business\Model\Fixtures;
 
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem as OriginalSpySalesOrderItem;
+use Propel\Runtime\Connection\ConnectionInterface;
 
 class SpySalesOrderItemMock extends OriginalSpySalesOrderItem
 {
@@ -34,5 +35,15 @@ class SpySalesOrderItemMock extends OriginalSpySalesOrderItem
     public function getCreatedCopy(): OriginalSpySalesOrderItem
     {
         return $this->propelModelCopy;
+    }
+
+    /**
+     * @param \Propel\Runtime\Connection\ConnectionInterface|null $con
+     *
+     * @return int
+     */
+    public function save(?ConnectionInterface $con = null): int
+    {
+        return 1;
     }
 }

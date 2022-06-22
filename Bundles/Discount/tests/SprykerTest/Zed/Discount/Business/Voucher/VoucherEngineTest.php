@@ -41,7 +41,7 @@ class VoucherEngineTest extends Unit
         $discountVoucherEntityMock
             ->expects($this->once())
             ->method('save')
-            ->willReturn(true);
+            ->willReturn(1);
 
         $voucherEngine = $this->createVoucherEngine(
             null,
