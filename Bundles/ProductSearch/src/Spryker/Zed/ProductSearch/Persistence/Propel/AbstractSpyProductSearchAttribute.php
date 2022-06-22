@@ -27,7 +27,7 @@ abstract class AbstractSpyProductSearchAttribute extends BaseSpyProductSearchAtt
      *
      * @return bool
      */
-    public function preInsert(?ConnectionInterface $con = null)
+    public function preInsert(?ConnectionInterface $con = null): bool
     {
         $this->presetPosition($con);
 
@@ -39,7 +39,7 @@ abstract class AbstractSpyProductSearchAttribute extends BaseSpyProductSearchAtt
      *
      * @return bool
      */
-    public function preUpdate(?ConnectionInterface $con = null)
+    public function preUpdate(?ConnectionInterface $con = null): bool
     {
         $this->setSynced(false);
 

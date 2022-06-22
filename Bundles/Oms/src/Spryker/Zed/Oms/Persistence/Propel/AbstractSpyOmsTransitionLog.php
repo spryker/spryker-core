@@ -26,7 +26,7 @@ abstract class AbstractSpyOmsTransitionLog extends BaseSpyOmsTransitionLog
      *
      * @return bool
      */
-    public function preSave(?ConnectionInterface $con = null)
+    public function preSave(?ConnectionInterface $con = null): bool
     {
         if (
             $this->getIsError() === null
