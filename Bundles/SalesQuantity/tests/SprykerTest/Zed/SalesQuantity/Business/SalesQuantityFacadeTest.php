@@ -144,18 +144,18 @@ class SalesQuantityFacadeTest extends Unit
      *
      * @return void
      */
-    public function testIsItemQuantitySplittableReturnsTrueForItemsWithBundleItemIdentifier(): void
+    public function testIsItemQuantitySplittableItemsWithBundleItemIdentifierAreNotAffectedByRegularItemsThreshold(): void
     {
-        // Assign
-        $threshold = 5;
-        $this->configMock->expects($this->any())->method('findItemQuantityThreshold')->willReturn($threshold);
+        // Arrange
+        $regularItemsThreshold = 5;
+        $this->configMock->expects($this->any())->method('findItemQuantityThreshold')->willReturn($regularItemsThreshold);
 
         $expectedResult = true;
 
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setIsQuantitySplittable(false);
         $itemTransfer->setBundleItemIdentifier('test-id');
-        $itemTransfer->setQuantity($threshold);
+        $itemTransfer->setQuantity($regularItemsThreshold);
 
         // Act
         $actualResult = $this->facade->isItemQuantitySplittable($itemTransfer);
@@ -169,17 +169,17 @@ class SalesQuantityFacadeTest extends Unit
      *
      * @return void
      */
-    public function testIsItemQuantitySplittableReturnsTrueForItemsWithRelatedBundleItemIdentifier(): void
+    public function testIsItemQuantitySplittableItemsWithRelatedBundleItemIdentifierAreNotAffectedByRegularItemsThreshold(): void
     {
-        // Assign
-        $threshold = 5;
-        $this->configMock->expects($this->any())->method('findItemQuantityThreshold')->willReturn($threshold);
+        // Arrange
+        $regularItemsThreshold = 5;
+        $this->configMock->expects($this->any())->method('findItemQuantityThreshold')->willReturn($regularItemsThreshold);
         $expectedResult = true;
 
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setIsQuantitySplittable(false);
         $itemTransfer->setRelatedBundleItemIdentifier('test-id');
-        $itemTransfer->setQuantity($threshold);
+        $itemTransfer->setQuantity($regularItemsThreshold);
 
         // Act
         $actualResult = $this->facade->isItemQuantitySplittable($itemTransfer);
@@ -202,6 +202,31 @@ class SalesQuantityFacadeTest extends Unit
 
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setIsQuantitySplittable(false);
+
+        // Act
+        $actualResult = $this->facade->isItemQuantitySplittable($itemTransfer);
+
+        // Assert
+        $this->assertSame($expectedResult, $actualResult);
+    }
+
+    /**
+     * @see SalesQuantityConfig::getBundledItemNonSplitQuantityThreshold()
+     *
+     * @return void
+     */
+    public function testIsItemQuantitySplittableRegularItemsAreNotAffectedByBundledItemsThreshold(): void
+    {
+        // Arrange
+        $bundledItemsThreshold = 5;
+        $this->configMock
+            ->expects($this->any())
+            ->method('getBundledItemNonSplitQuantityThreshold')
+            ->willReturn($bundledItemsThreshold);
+        $expectedResult = true;
+
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->setQuantity($bundledItemsThreshold);
 
         // Act
         $actualResult = $this->facade->isItemQuantitySplittable($itemTransfer);
@@ -237,15 +262,45 @@ class SalesQuantityFacadeTest extends Unit
     }
 
     /**
+     * @dataProvider thresholds
+     *
+     * @see SalesQuantityConfig::getBundledItemNonSplitQuantityThreshold()
+     *
+     * @param bool $expectedResult
+     * @param int $quantity
+     * @param int|null $threshold
+     *
+     * @return void
+     */
+    public function testIsItemQuantitySplittableRespectsBundledItemsThreshold(bool $expectedResult, int $quantity, ?int $threshold): void
+    {
+        // Arrange
+        $this->configMock
+            ->expects($this->any())
+            ->method('getBundledItemNonSplitQuantityThreshold')
+            ->willReturn($threshold);
+
+        $itemTransfer = (new ItemTransfer())
+            ->setQuantity($quantity)
+            ->setRelatedBundleItemIdentifier('test-id');
+
+        // Act
+        $actualResult = $this->facade->isItemQuantitySplittable($itemTransfer);
+
+        // Assert
+        $this->assertSame($expectedResult, $actualResult);
+    }
+
+    /**
      * @return array
      */
     public function thresholds(): array
     {
         return [
-            [true, 5, null],
-            [true, 5, 6],
-            [false, 5, 5],
-            [false, 5, 4],
+            'Test that item is splittable if threshold is not set' => [true, 5, null],
+            'Test that item is splittable if quantity is below the threshold' => [true, 5, 6],
+            'Test that item is not splittable if quantity equals to the threshold' => [false, 5, 5],
+            'Test that item is not splittable if quantity is higher than the threshold' => [false, 5, 4],
         ];
     }
 

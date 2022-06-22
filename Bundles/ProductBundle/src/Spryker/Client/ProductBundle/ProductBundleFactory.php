@@ -11,6 +11,8 @@ use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\ProductBundle\Grouper\ProductBundleGrouper;
 use Spryker\Client\ProductBundle\ItemOperation\ItemQuantityCounter;
 use Spryker\Client\ProductBundle\ItemOperation\ItemQuantityCounterInterface;
+use Spryker\Client\ProductBundle\QuoteChangeRequestExpander\BundleItemReplacer;
+use Spryker\Client\ProductBundle\QuoteChangeRequestExpander\BundleItemReplacerInterface;
 use Spryker\Client\ProductBundle\QuoteChangeRequestExpander\QuoteChangeRequestExpander;
 use Spryker\Client\ProductBundle\QuoteChangeRequestExpander\QuoteChangeRequestExpanderInterface;
 use Spryker\Client\ProductBundle\QuoteItemFinder\BundleProductQuoteItemFinder;
@@ -42,6 +44,14 @@ class ProductBundleFactory extends AbstractFactory
     public function createQuoteChangeRequestExpander(): QuoteChangeRequestExpanderInterface
     {
         return new QuoteChangeRequestExpander();
+    }
+
+    /**
+     * @return \Spryker\Client\ProductBundle\QuoteChangeRequestExpander\BundleItemReplacerInterface
+     */
+    public function createBundleItemReplacer(): BundleItemReplacerInterface
+    {
+        return new BundleItemReplacer();
     }
 
     /**

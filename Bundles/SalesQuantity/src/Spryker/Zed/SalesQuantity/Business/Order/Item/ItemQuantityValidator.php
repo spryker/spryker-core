@@ -33,7 +33,7 @@ class ItemQuantityValidator implements ItemQuantityValidatorInterface
     public function isItemQuantitySplittable(ItemTransfer $itemTransfer): bool
     {
         if ($this->isBundledItem($itemTransfer)) {
-            return true;
+            return !$this->isNonSplittableQuantityThresholdReachedForBundledItem($itemTransfer);
         }
 
         if ($this->isNonSplittableItem($itemTransfer)) {
@@ -94,5 +94,20 @@ class ItemQuantityValidator implements ItemQuantityValidatorInterface
         }
 
         return false;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return bool
+     */
+    protected function isNonSplittableQuantityThresholdReachedForBundledItem(ItemTransfer $itemTransfer): bool
+    {
+        $nonSplittableThreshold = $this->config->getBundledItemNonSplitQuantityThreshold();
+        if ($nonSplittableThreshold === null) {
+            return false;
+        }
+
+        return $itemTransfer->getQuantity() >= $nonSplittableThreshold;
     }
 }

@@ -42,6 +42,28 @@ interface ProductBundleFacadeInterface
 
     /**
      * Specification:
+     * - Requires `CartChangeTransfer.quote.priceMode` to be set.
+     * - Requires `id`, `sku`, `groupKey`, `quantity` and price (depending on mode) to be set for each element in `CartChangeTransfer.items`.
+     * - Moves bundles from `CartChangeTransfer.items` to `CartChangeTransfer.quote.bundleItems` and adds bundled items instead.
+     * - New bundle identifiers are assigned to bundles, which were moved to `CartChangeTransfer.quote.bundleItems`.
+     * - Bundle price is distributed proportionally between all bundled items.
+     * - Bundled items get into `CartChangeTransfer.items` united in one piece with a corresponding quantity,
+     *   instead of being added individually with a quantity of 1. I.e. a bundle in `CartChangeTransfer.items`
+     *   with a quantity of 3 will be replaced with groups of bundled items, each group also having a quantity of 3.
+     * - Used instead of `expandBundleItems()` method, when united bundled items approach is applied in cart.
+     *
+     * @api
+     *
+     * @see {@link \Spryker\Zed\ProductBundle\Business\ProductBundleFacadeInterface::expandBundleItems()}
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function unfoldBundlesToUnitedItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
+
+    /**
+     * Specification:
      * - It will add images to product bundle.
      *
      * @api
@@ -75,6 +97,22 @@ interface ProductBundleFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function postSaveCartUpdateBundles(QuoteTransfer $quoteTransfer);
+
+    /**
+     * Specification:
+     * - Requires `bundleItemIdentifier` to be set for each element in `QuoteTransfer.bundleItems`
+     * - Refreshes `QuoteTransfer.bundleItems` to be in sync with current existing bundled items in cart.
+     * - Used instead of `postSaveCartUpdateBundles()` method, when united bundled items approach is applied in cart.
+     *
+     * @api
+     *
+     * @see {@link \Spryker\Zed\ProductBundle\Business\ProductBundleFacadeInterface::postSaveCartUpdateBundles()}
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function refreshBundlesWithUnitedItemsToBeInSyncWithQuote(QuoteTransfer $quoteTransfer): QuoteTransfer;
 
     /**
      * Specification:
@@ -355,6 +393,26 @@ interface ProductBundleFacadeInterface
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
     public function replaceItemsWithBundleItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
+
+    /**
+     * Specification:
+     * - Requires `CartChangeTransfer.quote` to be set.
+     * - Requires `groupKey` and `quantity` to be set for each element in `CartChangeTransfer.items`.
+     * - Replaces bundles in `CartChangeTransfer.items` with corresponding bundled items.
+     * - Bundled items get into `CartChangeTransfer.items` united in one piece with a corresponding quantity,
+     *   instead of being added individually with a quantity of 1. I.e. a bundle in `CartChangeTransfer.items`
+     *   with a quantity of 3 will be replaced with groups of bundled items, each group also having a quantity of 3.
+     * - Used instead of `replaceItemsWithBundleItems()` method, when united bundled items approach is applied in cart.
+     *
+     * @api
+     *
+     * @see {@link \Spryker\Zed\ProductBundle\Business\ProductBundleFacadeInterface::replaceItemsWithBundleItems()}
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function replaceBundlesWithUnitedItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
 
     /**
      * Specification:

@@ -8,6 +8,7 @@
 namespace Spryker\Client\ProductBundle;
 
 use ArrayObject;
+use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
@@ -65,5 +66,21 @@ class ProductBundleClient extends AbstractClient implements ProductBundleClientI
         return $this->getFactory()
             ->createQuoteBundleItemsFinder()
             ->findBundledItems($quoteTransfer, $sku, $groupKey);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function replaceBundlesWithUnitedItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
+    {
+        return $this->getFactory()
+            ->createBundleItemReplacer()
+            ->replaceBundlesWithUnitedItems($cartChangeTransfer);
     }
 }

@@ -14,6 +14,10 @@ use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleA
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Cache\ProductBundleCache;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Cache\ProductBundleCacheInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Calculation\ProductBundlePriceCalculation;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\BundleItemRefresher;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\BundleItemUnfolder;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\BundleItemUnfolderInterface;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\BundleRefresherInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartChangeObserver;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartChangeObserverInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartExpander;
@@ -32,6 +36,8 @@ use Spryker\Zed\ProductBundle\Business\ProductBundle\Expander\ProductBundleItemE
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Expander\ProductBundleItemExpanderInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Expander\ProductOptionExpander;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Expander\ProductOptionExpanderInterface;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\PersistentCart\BundleItemReplacer;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\PersistentCart\BundleItemReplacerInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\PersistentCart\ChangeRequestExpander;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\PersistentCart\ChangeRequestExpanderInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\PersistentCart\QuoteItemFinder;
@@ -112,6 +118,20 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\BundleItemUnfolderInterface
+     */
+    public function createBundleItemUnfolder(): BundleItemUnfolderInterface
+    {
+        return new BundleItemUnfolder(
+            $this->getPriceProductFacade(),
+            $this->getProductFacade(),
+            $this->getLocaleFacade(),
+            $this->createProductBundleReader(),
+            $this->createPriceReader(),
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartExpanderInterface
      */
     public function createProductBundleImageCartExpander()
@@ -159,6 +179,14 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     public function createProductBundlePostSaveUpdate()
     {
         return new ProductBundleCartPostSaveUpdate();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\BundleRefresherInterface
+     */
+    public function createBundleItemRefresher(): BundleRefresherInterface
+    {
+        return new BundleItemRefresher();
     }
 
     /**
@@ -305,6 +333,14 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     public function createChangeRequestExpander(): ChangeRequestExpanderInterface
     {
         return new ChangeRequestExpander();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\PersistentCart\BundleItemReplacerInterface
+     */
+    public function createBundleItemReplacer(): BundleItemReplacerInterface
+    {
+        return new BundleItemReplacer();
     }
 
     /**
