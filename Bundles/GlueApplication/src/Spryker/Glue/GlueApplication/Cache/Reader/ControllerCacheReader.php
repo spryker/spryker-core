@@ -75,8 +75,7 @@ class ControllerCacheReader implements ControllerCacheReaderInterface
         $controllerConfigurationKey = $this->generateControllerConfigurationKey($executableResource[1], $resource, $glueRequestTransfer);
 
         if (!isset($controllerCache[$glueRequestTransfer->getApplication()][$controllerConfigurationKey])) {
-            unlink($controllerCachePath);
-            $this->getActionParameters($executableResource, $resource, $glueRequestTransfer);
+            return null;
         }
 
         /**

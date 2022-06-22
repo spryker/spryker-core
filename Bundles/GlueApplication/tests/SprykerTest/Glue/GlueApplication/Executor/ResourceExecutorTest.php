@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\GlueResourceTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
 use Spryker\Glue\GlueApplication\Cache\Reader\ControllerCacheReaderInterface;
 use Spryker\Glue\GlueApplication\Exception\ControllerNotFoundException;
+use Spryker\Glue\GlueApplication\Exception\InvalidActionParametersException;
 use Spryker\Glue\GlueApplication\Executor\ResourceExecutor;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface;
 use SprykerTest\Glue\GlueApplication\Stub\AttributesTransfer;
@@ -245,5 +246,34 @@ class ResourceExecutorTest extends Unit
 
         //Act
         $glueResponseTransfer = $resourceExecutorMock->executeResource($resourceMock, $glueRequestTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testExecuteResourceThrowsExceptionIfCachedDataDoesNotExist(): void
+    {
+        //Arrange
+        $glueRequestTransfer = (new GlueRequestTransfer())
+            ->setResource(new GlueResourceTransfer());
+
+        $resourceMock = $this->createMock(ResourceInterface::class);
+        $resourceMock->expects($this->once())
+            ->method('getResource')
+            ->willReturn([new ResourceController(), 'getCollectionAction']);
+
+        $cacheReaderMock = $this->getMockBuilder(ControllerCacheReaderInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+        $cacheReaderMock->expects($this->once())
+            ->method('getActionParameters')
+            ->willReturn(null);
+
+        //Assert
+        $this->expectException(InvalidActionParametersException::class);
+
+        //Act
+        $glueResponseTransfer = (new ResourceExecutor($cacheReaderMock))
+            ->executeResource($resourceMock, $glueRequestTransfer);
     }
 }

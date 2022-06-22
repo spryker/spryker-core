@@ -7,17 +7,13 @@
 
 namespace Spryker\Glue\GlueApplication\Executor;
 
-use Generated\Shared\Transfer\GlueErrorTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
 use Spryker\Glue\GlueApplication\Cache\Reader\ControllerCacheReaderInterface;
 use Spryker\Glue\GlueApplication\Exception\InvalidActionParametersException;
-use Spryker\Glue\GlueApplication\GlueApplicationConfig;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Throwable;
 
 class ResourceExecutor implements ResourceExecutorInterface
 {
@@ -38,6 +34,8 @@ class ResourceExecutor implements ResourceExecutorInterface
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface $resource
      * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
      *
+     * @throws \Spryker\Glue\GlueApplication\Exception\InvalidActionParametersException
+     *
      * @return \Generated\Shared\Transfer\GlueResponseTransfer
      */
     public function executeResource(
@@ -48,9 +46,9 @@ class ResourceExecutor implements ResourceExecutorInterface
 
         $parameters = $this->controllerCacheReader->getActionParameters($executableResource, $resource, $glueRequestTransfer);
         if ($parameters === null) {
-            return $this->createUnsupportedRequest(
-                GlueApplicationConfig::ERROR_MESSAGE_METHOD_NOT_FOUND,
-                GlueApplicationConfig::ERROR_CODE_METHOD_NOT_FOUND,
+            throw new InvalidActionParametersException(
+                'Method with requested parameters is not found.
+                Run `glue glue-api:controller:cache:warm-up` to update a controller cache.',
             );
         }
 
@@ -58,42 +56,20 @@ class ResourceExecutor implements ResourceExecutorInterface
             $attributesTransfer = $this->getAttributesTransfer($resource, $glueRequestTransfer);
 
             if (!$attributesTransfer) {
-                return $this->callControllerAction($executableResource, $this->collectParameters($parameters, [$glueRequestTransfer]));
+                return call_user_func_array($executableResource, $this->collectParameters($parameters, [$glueRequestTransfer]));
             }
 
             $attributesTransfer->fromArray($glueRequestTransfer->getAttributes(), true);
             $glueRequestTransfer->getResource()->setAttributes($attributesTransfer);
 
-            return $this->callControllerAction($executableResource, $this->collectParameters($parameters, [$attributesTransfer, $glueRequestTransfer]));
+            return call_user_func_array($executableResource, $this->collectParameters($parameters, [$attributesTransfer, $glueRequestTransfer]));
         }
 
-        if ($glueRequestTransfer->getResource()->getId()) {
-            return $this->callControllerAction($executableResource, $this->collectParameters($parameters, [$glueRequestTransfer->getResource()->getId(), $glueRequestTransfer]));
+        if ($glueRequestTransfer->getResource() && $glueRequestTransfer->getResource()->getId()) {
+            return call_user_func_array($executableResource, $this->collectParameters($parameters, [$glueRequestTransfer->getResource()->getId(), $glueRequestTransfer]));
         }
 
-        return $this->callControllerAction($executableResource, $this->collectParameters($parameters, [$glueRequestTransfer]));
-    }
-
-    /**
-     * @param callable():\Generated\Shared\Transfer\GlueResponseTransfer $executableResource
-     * @param array<mixed> $parameters
-     *
-     * @throws \Spryker\Glue\GlueApplication\Exception\InvalidActionParametersException
-     *
-     * @return \Generated\Shared\Transfer\GlueResponseTransfer
-     */
-    protected function callControllerAction($executableResource, array $parameters): GlueResponseTransfer
-    {
-        try {
-            $glueResponseTransfer = call_user_func_array($executableResource, $parameters);
-        } catch (Throwable $exception) {
-            throw new InvalidActionParametersException(
-                'Method with requested parameters is not found.
-                Run `glue glue-api:controller:cache:warm-up` to update a controller cache.',
-            );
-        }
-
-        return $glueResponseTransfer;
+        return call_user_func_array($executableResource, $this->collectParameters($parameters, [$glueRequestTransfer]));
     }
 
     /**
@@ -167,23 +143,5 @@ class ResourceExecutor implements ResourceExecutorInterface
         }
 
         return $parameters;
-    }
-
-    /**
-     * @param string $errorMessage
-     * @param string $errorCode
-     *
-     * @return \Generated\Shared\Transfer\GlueResponseTransfer
-     */
-    protected function createUnsupportedRequest(string $errorMessage, string $errorCode): GlueResponseTransfer
-    {
-        return (new GlueResponseTransfer())
-            ->setHttpStatus(Response::HTTP_BAD_REQUEST)
-            ->addError(
-                (new GlueErrorTransfer())
-                    ->setStatus(Response::HTTP_BAD_REQUEST)
-                    ->setCode($errorCode)
-                    ->setMessage($errorMessage),
-            );
     }
 }

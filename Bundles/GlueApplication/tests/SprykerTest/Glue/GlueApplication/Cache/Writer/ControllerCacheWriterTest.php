@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\GlueApplication\Cache;
+namespace SprykerTest\Zed\GlueApplication\Cache\Writer;
 
 use Codeception\Configuration;
 use Codeception\Test\Unit;
@@ -22,10 +22,11 @@ use Symfony\Component\Finder\Finder;
  * @group Zed
  * @group GlueApplication
  * @group Cache
- * @group ControllerCacheTest
+ * @group Writer
+ * @group ControllerCacheWriterTest
  * Add your own group annotations below this line
  */
-class ControllerCacheTest extends Unit
+class ControllerCacheWriterTest extends Unit
 {
     /**
      * @var \SprykerTest\Glue\GlueApplication\GlueApplicationTester
@@ -72,14 +73,7 @@ class ControllerCacheTest extends Unit
      */
     protected function tearDown(): void
     {
-        $finder = new Finder();
-        $finder->in(Configuration::dataDir())->name(GlueApplicationConfig::API_CONTROLLER_CACHE_FILENAME);
-        if ($finder->count() > 0) {
-            foreach ($finder as $fileInfo) {
-                unlink($fileInfo->getPathname());
-            }
-        }
-
+        $this->tester->removeCacheFile();
         parent::tearDown();
     }
 }
