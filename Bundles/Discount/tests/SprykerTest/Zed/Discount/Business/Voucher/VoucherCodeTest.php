@@ -39,7 +39,7 @@ class VoucherCodeTest extends Unit
 
         $discountVoucherEntity->expects($this->once())
             ->method('save')
-            ->willReturn(true);
+            ->willReturn(1);
 
         $discountVoucherEntity->expects($this->never())
             ->method('getMaxNumberOfUses')
