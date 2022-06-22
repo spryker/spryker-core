@@ -5,5 +5,4 @@ parameters:
         - '#Call to an undefined method Orm\\.+\\SpyWishlistItemQuery::groupByIdPaymentProvider\(\)#'
         - '#Call to an undefined method Spryker\\Shared\\Kernel\\Transfer\\AbstractTransfer::toArrayNotRecursiveCamelCased\(\)\.#'
         - '#Method .+PaymentToUtilEncodingServiceBridge::decodeJson\(\) should return array\|null but returns array\|object\|null\.#'
-        #- '#Parameter \#1 \$data of method .+OrderTransfer::fromArray\(\) expects array\<string, mixed\>, array\|string given.#'
         - '#Call to an undefined method Spryker\\Shared\\Kernel\\Transfer\\TransferInterface::*.#'
