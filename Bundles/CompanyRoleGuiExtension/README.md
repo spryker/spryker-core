@@ -12,4 +12,4 @@ composer require spryker/company-role-gui-extension
 
 ## Documentation
 
-[Spryker Documentation](https://docs.spryker.com/docs/scos/dev/developer-getting-started-guide.html)
+[Spryker Documentation](https://docs.spryker.com)

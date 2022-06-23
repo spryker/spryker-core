@@ -12,4 +12,4 @@ composer require spryker/session-customer-validation
 
 ## Documentation
 
-[Spryker Documentation](https://documentation.spryker.com/module_guide/overview.htm)
+[Spryker Documentation](https://docs.spryker.com)
