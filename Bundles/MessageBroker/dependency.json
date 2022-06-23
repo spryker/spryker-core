@@ -2,5 +2,8 @@
     "include": {
         "spryker/transfer": "Provides transfer objects definition with `::get*OrFail()` functionality.",
         "symfony/messenger": "Provides basic functionality to send and receive messages via message queues."
+    },
+    "include-dev": {
+        "spryker-sdk/async-api": "Adds capability to dump the configuration in conjunction with the AsycnApi schema file."
     }
 }

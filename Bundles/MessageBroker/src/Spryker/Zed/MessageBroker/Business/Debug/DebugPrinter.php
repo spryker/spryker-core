@@ -10,8 +10,8 @@ namespace Spryker\Zed\MessageBroker\Business\Debug;
 use Spryker\Zed\MessageBroker\Business\Config\ConfigFormatterInterface;
 use Spryker\Zed\MessageBroker\Business\Exception\AsyncApiFileNotFoundException;
 use Spryker\Zed\MessageBroker\MessageBrokerConfig;
-use SprykerSdk\AsyncApi\Channel\AsyncApiChannelInterface;
-use SprykerSdk\AsyncApi\Loader\AsyncApiLoaderInterface;
+use SprykerSdk\AsyncApi\AsyncApi\Channel\AsyncApiChannelInterface;
+use SprykerSdk\AsyncApi\AsyncApi\Loader\AsyncApiLoaderInterface;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -43,7 +43,7 @@ class DebugPrinter implements DebugPrinterInterface
     protected array $messageHandlerPlugins;
 
     /**
-     * @var \SprykerSdk\AsyncApi\Loader\AsyncApiLoaderInterface
+     * @var \SprykerSdk\AsyncApi\AsyncApi\Loader\AsyncApiLoaderInterface
      */
     protected AsyncApiLoaderInterface $asyncApiLoader;
 
@@ -53,7 +53,7 @@ class DebugPrinter implements DebugPrinterInterface
      * @param array<\Spryker\Zed\MessageBrokerExtension\Dependency\Plugin\MessageReceiverPluginInterface> $receiverPlugins
      * @param array<\Spryker\Zed\MessageBrokerExtension\Dependency\Plugin\MessageSenderPluginInterface> $senderPlugins
      * @param array<\Spryker\Zed\MessageBrokerExtension\Dependency\Plugin\MessageHandlerPluginInterface> $messageHandlerPlugins
-     * @param \SprykerSdk\AsyncApi\Loader\AsyncApiLoaderInterface $asyncApiLoader
+     * @param \SprykerSdk\AsyncApi\AsyncApi\Loader\AsyncApiLoaderInterface $asyncApiLoader
      */
     public function __construct(
         MessageBrokerConfig $config,
@@ -148,7 +148,7 @@ class DebugPrinter implements DebugPrinterInterface
     }
 
     /**
-     * @param \SprykerSdk\AsyncApi\Channel\AsyncApiChannelInterface $channel
+     * @param \SprykerSdk\AsyncApi\AsyncApi\Channel\AsyncApiChannelInterface $channel
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @return void
@@ -199,7 +199,7 @@ class DebugPrinter implements DebugPrinterInterface
     }
 
     /**
-     * @param \SprykerSdk\AsyncApi\Channel\AsyncApiChannelInterface $channel
+     * @param \SprykerSdk\AsyncApi\AsyncApi\Channel\AsyncApiChannelInterface $channel
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @return void
