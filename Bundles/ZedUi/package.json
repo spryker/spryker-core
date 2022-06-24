@@ -61,7 +61,7 @@
         "@spryker/locale": "^0.3.0",
         "@spryker/logo": "^0.4.0",
         "@spryker/modal": "^0.2.0",
-        "@spryker/navigation": "^0.5.0",
+        "@spryker/navigation": "^0.5.4",
         "@spryker/notification": "^0.5.0",
         "@spryker/pagination": "^0.4.0",
         "@spryker/persistence": "^0.2.0",
