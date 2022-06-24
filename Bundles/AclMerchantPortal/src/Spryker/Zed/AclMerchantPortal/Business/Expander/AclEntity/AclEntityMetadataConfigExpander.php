@@ -965,6 +965,12 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                 ),
         );
         $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
+            'Orm\Zed\CmsBlock\Persistence\SpyCmsBlockStore',
+            (new AclEntityMetadataTransfer())
+                ->setEntityName('Orm\Zed\CmsBlock\Persistence\SpyCmsBlockStore')
+                ->setDefaultGlobalOperationMask(AclEntityConstants::OPERATION_MASK_READ),
+        );
+        $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
             'Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplate',
             (new AclEntityMetadataTransfer())
                 ->setEntityName('Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplate')

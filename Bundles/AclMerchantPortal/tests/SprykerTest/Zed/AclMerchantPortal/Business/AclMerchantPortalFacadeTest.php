@@ -190,7 +190,7 @@ class AclMerchantPortalFacadeTest extends Unit
         // Assert
         $this->assertInstanceOf(AclEntityMetadataConfigTransfer::class, $aclEntityMetadataConfigTransfer);
         $this->assertNotEmpty($aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertSame(108, count($aclEntityMetadataCollectionTransfer->getCollection()));
+        $this->assertSame(109, count($aclEntityMetadataCollectionTransfer->getCollection()));
         $this->assertAclEntityMetadataConfigEntityWithoutParents($aclEntityMetadataCollectionTransfer);
         $this->assertAclEntityMetadataConfigHasEntities($aclEntityMetadataCollectionTransfer);
     }
@@ -339,6 +339,7 @@ class AclMerchantPortalFacadeTest extends Unit
             'Orm\Zed\Category\Persistence\SpyCategoryTemplate',
             'Orm\Zed\CmsBlock\Persistence\SpyCmsBlock',
             'Orm\Zed\CmsBlock\Persistence\SpyCmsBlockGlossaryKeyMapping',
+            'Orm\Zed\CmsBlock\Persistence\SpyCmsBlockStore',
             'Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplate',
             'Orm\Zed\Comment\Persistence\SpyCommentThread',
             'Orm\Zed\Tax\Persistence\SpyTaxRate',
