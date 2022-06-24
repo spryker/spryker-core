@@ -33,18 +33,26 @@ class ProductAttributeDecisionRule implements ProductAttributeDecisionRuleInterf
     protected $productFacade;
 
     /**
+     * @var array<\Spryker\Zed\ProductDiscountConnectorExtension\Dependency\Plugin\ProductAttributeDecisionRuleExpanderPluginInterface>
+     */
+    protected $productAttributeDecisionRuleExpanderPlugins;
+
+    /**
      * @param \Spryker\Zed\ProductDiscountConnector\Dependency\Facade\ProductDiscountConnectorToProductInterface $productFacade
      * @param \Spryker\Zed\ProductDiscountConnector\Dependency\Facade\ProductDiscountConnectorToDiscountInterface $discountFacade
      * @param \Spryker\Zed\ProductDiscountConnector\Dependency\Facade\ProductDiscountConnectorToLocaleInterface $localeFacade
+     * @param array<\Spryker\Zed\ProductDiscountConnectorExtension\Dependency\Plugin\ProductAttributeDecisionRuleExpanderPluginInterface> $productAttributeDecisionRuleExpanderPlugins
      */
     public function __construct(
         ProductDiscountConnectorToProductInterface $productFacade,
         ProductDiscountConnectorToDiscountInterface $discountFacade,
-        ProductDiscountConnectorToLocaleInterface $localeFacade
+        ProductDiscountConnectorToLocaleInterface $localeFacade,
+        array $productAttributeDecisionRuleExpanderPlugins
     ) {
-        $this->productFacade = $productFacade;
         $this->discountFacade = $discountFacade;
         $this->localeFacade = $localeFacade;
+        $this->productFacade = $productFacade;
+        $this->productAttributeDecisionRuleExpanderPlugins = $productAttributeDecisionRuleExpanderPlugins;
     }
 
     /**
@@ -69,7 +77,7 @@ class ProductAttributeDecisionRule implements ProductAttributeDecisionRuleInterf
                 }
 
                 if ($this->discountFacade->queryStringCompare($clauseTransfer, $value)) {
-                    return true;
+                    return $this->executeProductAttributeDecisionRuleExpanderPlugins($quoteTransfer, $currentItemTransfer, $clauseTransfer);
                 }
             }
         }
@@ -88,5 +96,26 @@ class ProductAttributeDecisionRule implements ProductAttributeDecisionRuleInterf
         $productConcreteTransfer->setIdProductConcrete($currentItemTransfer->requireId()->getId());
 
         return $productConcreteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $currentItemTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
+     *
+     * @return bool
+     */
+    protected function executeProductAttributeDecisionRuleExpanderPlugins(
+        QuoteTransfer $quoteTransfer,
+        ItemTransfer $currentItemTransfer,
+        ClauseTransfer $clauseTransfer
+    ): bool {
+        foreach ($this->productAttributeDecisionRuleExpanderPlugins as $attributeDecisionRuleExpanderPlugin) {
+            if (!$attributeDecisionRuleExpanderPlugin->isSatisfiedBy($quoteTransfer, $currentItemTransfer, $clauseTransfer)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

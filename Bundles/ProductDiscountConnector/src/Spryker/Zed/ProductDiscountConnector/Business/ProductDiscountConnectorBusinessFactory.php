@@ -28,6 +28,7 @@ class ProductDiscountConnectorBusinessFactory extends AbstractBusinessFactory
             $this->getProductFacade(),
             $this->getDiscountFacade(),
             $this->getLocaleFacade(),
+            $this->getProductAttributeDecisionRuleExpanderPlugins(),
         );
     }
 
@@ -36,7 +37,10 @@ class ProductDiscountConnectorBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductAttributeCollector()
     {
-        return new ProductAttributeCollector($this->createProductAttributeDecisionRule());
+        return new ProductAttributeCollector(
+            $this->createProductAttributeDecisionRule(),
+            $this->getProductAttributeCollectorExpanderPlugins(),
+        );
     }
 
     /**
@@ -50,7 +54,7 @@ class ProductDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductDiscountConnector\Dependency\Facade\ProductDiscountConnectorToProductInterface
      */
-    protected function getProductFacade()
+    public function getProductFacade()
     {
         return $this->getProvidedDependency(ProductDiscountConnectorDependencyProvider::FACADE_PRODUCT);
     }
@@ -58,7 +62,7 @@ class ProductDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductDiscountConnector\Dependency\Facade\ProductDiscountConnectorToDiscountInterface
      */
-    protected function getDiscountFacade()
+    public function getDiscountFacade()
     {
         return $this->getProvidedDependency(ProductDiscountConnectorDependencyProvider::FACADE_DISCOUNT);
     }
@@ -66,8 +70,24 @@ class ProductDiscountConnectorBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductDiscountConnector\Dependency\Facade\ProductDiscountConnectorToLocaleInterface
      */
-    protected function getLocaleFacade()
+    public function getLocaleFacade()
     {
         return $this->getProvidedDependency(ProductDiscountConnectorDependencyProvider::FACADE_LOCALE);
+    }
+
+    /**
+     * @return array<\Spryker\Zed\ProductDiscountConnectorExtension\Dependency\Plugin\ProductAttributeCollectorExpanderPluginInterface>
+     */
+    public function getProductAttributeCollectorExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductDiscountConnectorDependencyProvider::PLUGINS_PRODUCT_ATTRIBUTE_COLLECTOR_EXPANDER);
+    }
+
+    /**
+     * @return array<\Spryker\Zed\ProductDiscountConnectorExtension\Dependency\Plugin\ProductAttributeDecisionRuleExpanderPluginInterface>
+     */
+    public function getProductAttributeDecisionRuleExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductDiscountConnectorDependencyProvider::PLUGINS_PRODUCT_ATTRIBUTE_DECISION_RULE_EXPANDER);
     }
 }

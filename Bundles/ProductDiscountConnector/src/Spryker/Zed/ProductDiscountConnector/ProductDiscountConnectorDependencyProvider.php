@@ -39,6 +39,16 @@ class ProductDiscountConnectorDependencyProvider extends AbstractBundleDependenc
     public const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_PRODUCT_ATTRIBUTE_COLLECTOR_EXPANDER = 'PLUGINS_PRODUCT_ATTRIBUTE_COLLECTOR_EXPANDER';
+
+    /**
+     * @var string
+     */
+    public const PLUGINS_PRODUCT_ATTRIBUTE_DECISION_RULE_EXPANDER = 'PLUGINS_PRODUCT_ATTRIBUTE_DECISION_RULE_EXPANDER';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -57,6 +67,53 @@ class ProductDiscountConnectorDependencyProvider extends AbstractBundleDependenc
             return new ProductDiscountConnectorToProductBridge($container->getLocator()->product()->facade());
         });
 
+        $container = $this->addProductAttributeCollectorExpanderPlugins($container);
+        $container = $this->addProductAttributeDecisionRuleExpanderPlugins($container);
+
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductAttributeCollectorExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRODUCT_ATTRIBUTE_COLLECTOR_EXPANDER, function () {
+            return $this->getProductAttributeCollectorExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductAttributeDecisionRuleExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRODUCT_ATTRIBUTE_DECISION_RULE_EXPANDER, function () {
+            return $this->getProductAttributeDecisionRuleExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Zed\ProductDiscountConnectorExtension\Dependency\Plugin\ProductAttributeCollectorExpanderPluginInterface>
+     */
+    protected function getProductAttributeCollectorExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return array<\Spryker\Zed\ProductDiscountConnectorExtension\Dependency\Plugin\ProductAttributeDecisionRuleExpanderPluginInterface>
+     */
+    protected function getProductAttributeDecisionRuleExpanderPlugins(): array
+    {
+        return [];
     }
 }

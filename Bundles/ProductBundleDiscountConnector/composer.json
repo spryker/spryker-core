@@ -1,20 +1,26 @@
 {
-    "name": "spryker/product-discount-connector",
+    "name": "spryker/product-bundle-discount-connector",
     "type": "library",
-    "description": "ProductDiscountConnector module",
+    "description": "ProductBundleDiscountConnector module",
     "license": "proprietary",
     "require": {
         "php": ">=7.4",
-        "spryker/discount": "^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^9.0.0",
+        "spryker/discount": "^9.0.0",
         "spryker/kernel": "^3.30.0",
         "spryker/locale": "^3.0.0",
-        "spryker/product": "^5.0.0 || ^6.0.0",
-        "spryker/product-discount-connector-extension": "^1.0.0"
+        "spryker/product": "^6.0.0",
+        "spryker/product-bundle": "^7.0.0",
+        "spryker/product-discount-connector-extension": "^1.0.0",
+        "spryker/transfer": "^3.25.0"
     },
     "require-dev": {
+        "spryker/availability": "*",
         "spryker/code-sniffer": "*",
+        "spryker/currency": "*",
+        "spryker/price-product": "*",
         "spryker/propel": "*",
-        "spryker/tax": "*",
+        "spryker/stock": "*",
+        "spryker/store": "*",
         "spryker/testify": "*"
     },
     "autoload": {
@@ -35,7 +41,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "5.0.x-dev"
+            "dev-master": "1.0.x-dev"
         }
     },
     "config": {

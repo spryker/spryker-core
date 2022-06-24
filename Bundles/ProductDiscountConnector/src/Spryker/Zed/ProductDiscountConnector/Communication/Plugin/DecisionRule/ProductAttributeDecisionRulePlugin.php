@@ -24,6 +24,9 @@ class ProductAttributeDecisionRulePlugin extends AbstractPlugin implements Decis
 {
     /**
      * {@inheritDoc}
+     * - Builds all product variants by abstract SKU.
+     * - Looks for the attribute in any variants.
+     * - Executes {@link \Spryker\Zed\ProductDiscountConnectorExtension\Dependency\Plugin\ProductAttributeDecisionRuleExpanderPluginInterface} plugin stack.
      *
      * @api
      *

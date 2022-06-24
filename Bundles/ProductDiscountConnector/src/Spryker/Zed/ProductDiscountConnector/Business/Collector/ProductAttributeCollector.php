@@ -21,11 +21,20 @@ class ProductAttributeCollector implements ProductAttributeCollectorInterface
     protected $productAttributeDecisionRule;
 
     /**
-     * @param \Spryker\Zed\ProductDiscountConnector\Business\DecisionRule\ProductAttributeDecisionRuleInterface $productAttributeDecisionRule
+     * @var array<\Spryker\Zed\ProductDiscountConnectorExtension\Dependency\Plugin\ProductAttributeCollectorExpanderPluginInterface>
      */
-    public function __construct(ProductAttributeDecisionRuleInterface $productAttributeDecisionRule)
-    {
+    protected $productAttributeCollectorExpanderPlugins;
+
+    /**
+     * @param \Spryker\Zed\ProductDiscountConnector\Business\DecisionRule\ProductAttributeDecisionRuleInterface $productAttributeDecisionRule
+     * @param array<\Spryker\Zed\ProductDiscountConnectorExtension\Dependency\Plugin\ProductAttributeCollectorExpanderPluginInterface> $productAttributeCollectorExpanderPlugins
+     */
+    public function __construct(
+        ProductAttributeDecisionRuleInterface $productAttributeDecisionRule,
+        array $productAttributeCollectorExpanderPlugins
+    ) {
         $this->productAttributeDecisionRule = $productAttributeDecisionRule;
+        $this->productAttributeCollectorExpanderPlugins = $productAttributeCollectorExpanderPlugins;
     }
 
     /**
@@ -46,7 +55,7 @@ class ProductAttributeCollector implements ProductAttributeCollectorInterface
             }
         }
 
-        return $discountableItems;
+        return $this->executeProductAttributeCollectorExpanderPlugins($discountableItems, $quoteTransfer, $clauseTransfer);
     }
 
     /**
@@ -81,5 +90,28 @@ class ProductAttributeCollector implements ProductAttributeCollectorInterface
         } else {
             return $itemTransfer->getUnitGrossPrice();
         }
+    }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\DiscountableItemTransfer> $discountableItems
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
+     *
+     * @return array<\Generated\Shared\Transfer\DiscountableItemTransfer>
+     */
+    protected function executeProductAttributeCollectorExpanderPlugins(
+        array $discountableItems,
+        QuoteTransfer $quoteTransfer,
+        ClauseTransfer $clauseTransfer
+    ): array {
+        foreach ($this->productAttributeCollectorExpanderPlugins as $attributeCollectorExpanderPlugin) {
+            $discountableItems = $attributeCollectorExpanderPlugin->expandDiscountableItemsCollection(
+                $discountableItems,
+                $quoteTransfer,
+                $clauseTransfer,
+            );
+        }
+
+        return $discountableItems;
     }
 }
