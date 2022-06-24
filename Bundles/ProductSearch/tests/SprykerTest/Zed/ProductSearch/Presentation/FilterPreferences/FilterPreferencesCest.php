@@ -63,6 +63,7 @@ class FilterPreferencesCest
 
         // drag and drop to change order
         $i->dragAndDrop('li[data-id-product-search-attribute="' . $idFoo . '"]', 'li[data-id-product-search-attribute="' . $idBar . '"]');
+        $i->dragAndDrop('li[data-id-product-search-attribute="' . $idBar . '"]', 'li[data-id-product-search-attribute="' . $idFoo . '"]');
 
         // check order after drag and drop
         $i->canSeeElement('li[data-id-product-search-attribute="' . $idBar . '"] ~ li[data-id-product-search-attribute="' . $idFoo . '"]');

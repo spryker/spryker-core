@@ -51,6 +51,10 @@ class CategoryReSortCest
             CategoryReSortPage::SELECTOR_FIRST_SUB_CATEGORY,
             CategoryReSortPage::SELECTOR_LAST_SUB_CATEGORY,
         );
+        $i->dragAndDrop(
+            CategoryReSortPage::SELECTOR_LAST_SUB_CATEGORY,
+            CategoryReSortPage::SELECTOR_SECOND_SUB_CATEGORY,
+        );
         $i->canSee($firstItemName, CategoryReSortPage::SELECTOR_LAST_SUB_CATEGORY);
     }
 
