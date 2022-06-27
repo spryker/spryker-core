@@ -49,7 +49,7 @@ class ChainRouterTest extends Unit
         $matchResult = [
             '_resourceName' => 'fooResource',
             '_method' => 'fooMethod',
-            '_controller' => 'fooController',
+            '_controller' => ['fooController', 'fooAction'],
             '_action' => 'fooAction',
         ];
 
@@ -82,7 +82,7 @@ class ChainRouterTest extends Unit
         //Assert
         $this->assertSame('fooResource', $glueRequestTransfer->getResource()->getResourceName());
         $this->assertSame('fooMethod', $glueRequestTransfer->getResource()->getMethod());
-        $this->assertSame('fooController', $glueRequestTransfer->getResource()->getController());
+        $this->assertSame(['fooController', 'fooAction'], $glueRequestTransfer->getResource()->getContollerExecutable());
         $this->assertSame('fooAction', $glueRequestTransfer->getResource()->getAction());
         $this->assertSame($matchResult, $glueRequestTransfer->getResource()->getParameters());
     }

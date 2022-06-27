@@ -13,12 +13,14 @@
         "spryker/glue-backend-api-application-extension": "^1.0.0",
         "spryker/kernel": "^3.66.0",
         "spryker/log": "^3.12.0",
+        "spryker/oauth-extension": "^1.7.0",
         "spryker/store": "^1.15.0",
         "spryker/symfony": "^3.7.0",
         "spryker/transfer": "^3.25.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*",
+        "spryker/glue-json-api-convention-extension": "*",
         "spryker/testify": "*",
         "willdurand/negotiation": "*"
     },

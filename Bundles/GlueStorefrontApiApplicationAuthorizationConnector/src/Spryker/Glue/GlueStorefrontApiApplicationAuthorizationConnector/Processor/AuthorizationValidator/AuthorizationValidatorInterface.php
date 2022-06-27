@@ -5,13 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\GlueStorefrontApiApplication\RequestValidator;
+namespace Spryker\Glue\GlueStorefrontApiApplicationAuthorizationConnector\Processor\AuthorizationValidator;
 
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueRequestValidationTransfer;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface;
 
-interface RequestCorsValidatorInterface
+interface AuthorizationValidatorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer

@@ -15,7 +15,7 @@ use Spryker\Glue\GlueBackendApiApplication\GlueBackendApiApplicationConfig;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class RequestCorsValidator implements RequestCorsValidatorInterface
+class RequestCorsValidator implements RequestValidatorInterface
 {
     /**
      * @var string

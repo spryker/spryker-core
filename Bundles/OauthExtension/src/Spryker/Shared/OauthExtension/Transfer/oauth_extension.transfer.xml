@@ -28,4 +28,10 @@
     <transfer name="OauthRequest">
     </transfer>
 
+    <transfer name="OauthScopeFindRequest">
+    </transfer>
+
+    <transfer name="OauthScopeFind">
+    </transfer>
+
 </transfers>

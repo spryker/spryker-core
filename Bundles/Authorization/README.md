@@ -5,7 +5,7 @@
 
 Generic authorization module that can be used across different layers.
 
-It provides the possibility to implement different authorization strategies using the `Spryker\Client\AuthorizationExtension\Dependency\Plugin\AuthorizationStrategyPluginInterface`.
+It provides the possibility to implement different authorization strategies using the `Spryker\Shared\AuthorizationExtension\Dependency\Plugin\AuthorizationStrategyPluginInterface`.
 
 The general idea is that strategies have a name and when an authorization check is requested a strategy can be requested by name. This allows it to share a single strategy coming from one module between different modules and also makes it easy to change strategies.
 

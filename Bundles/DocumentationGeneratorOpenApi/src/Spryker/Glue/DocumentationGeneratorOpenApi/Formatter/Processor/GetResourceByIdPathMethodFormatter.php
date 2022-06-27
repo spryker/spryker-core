@@ -45,11 +45,15 @@ class GetResourceByIdPathMethodFormatter implements PathMethodFormatterInterface
      */
     public function format(PathAnnotationTransfer $pathAnnotationsTransfer, array $formattedData): array
     {
+        if (!$pathAnnotationsTransfer->getGetResourceById()) {
+            return $formattedData;
+        }
+
         $resourceType = $pathAnnotationsTransfer->getResourceTypeOrFail();
 
         $pathMethodData = $this->openApiSpecificationPathMethodFormatter->getPathMethodComponentData(
             $resourceType,
-            $pathAnnotationsTransfer->getGetResourceByIdOrFail(),
+            $pathAnnotationsTransfer->getGetResourceById(),
             static::PATTERN_OPERATION_ID_GET_RESOURCE,
             Response::HTTP_OK,
         );

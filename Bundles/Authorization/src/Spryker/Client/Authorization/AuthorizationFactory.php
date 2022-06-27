@@ -32,7 +32,7 @@ class AuthorizationFactory extends AbstractFactory
     }
 
     /**
-     * @return array<\Spryker\Client\AuthorizationExtension\Dependency\Plugin\AuthorizationStrategyPluginInterface>
+     * @return array<\Spryker\Shared\AuthorizationExtension\Dependency\Plugin\AuthorizationStrategyPluginInterface>
      */
     public function getAuthorizationStrategyPlugins(): array
     {

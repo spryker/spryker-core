@@ -45,11 +45,15 @@ class PatchResourcePathMethodFormatter implements PathMethodFormatterInterface
      */
     public function format(PathAnnotationTransfer $pathAnnotationTransfer, array $formattedData): array
     {
+        if (!$pathAnnotationTransfer->getPatch()) {
+            return $formattedData;
+        }
+
         $resourceType = $pathAnnotationTransfer->getResourceTypeOrFail();
 
         $pathMethodData = $this->openApiSpecificationPathMethodFormatter->getPathMethodComponentData(
             $resourceType,
-            $pathAnnotationTransfer->getPatchOrFail(),
+            $pathAnnotationTransfer->getPatch(),
             static::PATTERN_OPERATION_ID_PATCH_RESOURCE,
             Response::HTTP_OK,
         );

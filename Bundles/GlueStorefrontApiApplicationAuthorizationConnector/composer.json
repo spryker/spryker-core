@@ -1,0 +1,47 @@
+{
+    "name": "spryker/glue-storefront-api-application-authorization-connector",
+    "type": "library",
+    "description": "GlueStorefrontApiApplicationAuthorizationConnector module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=7.4",
+        "spryker/authorization": "^1.1.0",
+        "spryker/glue-application-authorization-connector-extension": "^1.0.0",
+        "spryker/glue-application-extension": "^1.7.0",
+        "spryker/glue-storefront-api-application-extension": "^1.0.0",
+        "spryker/kernel": "^3.62.0",
+        "spryker/symfony": "^3.7.0",
+        "spryker/transfer": "^3.25.0"
+    },
+    "require-dev": {
+        "spryker/code-sniffer": "*",
+        "spryker/testify": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Spryker\\": "src/Spryker/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SprykerTest\\": "tests/SprykerTest/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
+}

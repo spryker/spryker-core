@@ -50,6 +50,7 @@
         <property name="grantType" type="string"/>
         <property name="username" type="string"/>
         <property name="password" type="string"/>
+        <property name="scope" type="string"/>
     </transfer>
 
     <transfer name="ApiTokenResponseAttributes">

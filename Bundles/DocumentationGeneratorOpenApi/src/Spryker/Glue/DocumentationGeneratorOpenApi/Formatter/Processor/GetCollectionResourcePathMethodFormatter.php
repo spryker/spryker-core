@@ -45,11 +45,15 @@ class GetCollectionResourcePathMethodFormatter implements PathMethodFormatterInt
      */
     public function format(PathAnnotationTransfer $pathAnnotationTransfer, array $formattedData): array
     {
+        if (!$pathAnnotationTransfer->getGetCollection()) {
+            return $formattedData;
+        }
+
         $resourceType = $pathAnnotationTransfer->getResourceTypeOrFail();
 
         $pathMethodData = $this->openApiSpecificationPathMethodFormatter->getPathMethodComponentData(
             $resourceType,
-            $pathAnnotationTransfer->getGetCollectionOrFail(),
+            $pathAnnotationTransfer->getGetCollection(),
             static::PATTERN_OPERATION_ID_GET_COLLECTION,
             Response::HTTP_OK,
             true,

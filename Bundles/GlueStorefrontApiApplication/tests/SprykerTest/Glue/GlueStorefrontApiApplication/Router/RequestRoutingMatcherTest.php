@@ -69,7 +69,7 @@ class RequestRoutingMatcherTest extends Unit
         //Arrange
         $glueRequestTransfer = (new GlueRequestTransfer())
             ->setResource(
-                (new GlueResourceTransfer())->setController([new ResourceController(), 'getCollectionAction']),
+                (new GlueResourceTransfer())->setContollerExecutable([new ResourceController(), 'getCollectionAction']),
             );
 
         $chainRouterMock = $this->createMock(ChainRouterInterface::class);
@@ -106,7 +106,7 @@ class RequestRoutingMatcherTest extends Unit
         $glueRequestTransfer = (new GlueRequestTransfer())
             ->setResource(
                 (new GlueResourceTransfer())
-                    ->setController([new ResourceController(), 'getCollectionAction'])
+                    ->setContollerExecutable([new ResourceController(), 'getCollectionAction'])
                     ->setResourceName('Foo'),
             );
 
@@ -145,7 +145,7 @@ class RequestRoutingMatcherTest extends Unit
         $glueRequestTransfer = (new GlueRequestTransfer())
             ->setResource(
                 (new GlueResourceTransfer())
-                    ->setController([new ResourceController(), 'getCollectionAction'])
+                    ->setContollerExecutable([new ResourceController(), 'getCollectionAction'])
                     ->setResourceName('Foo'),
             );
 

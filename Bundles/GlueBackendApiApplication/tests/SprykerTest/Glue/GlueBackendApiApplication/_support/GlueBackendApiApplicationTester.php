@@ -31,6 +31,16 @@ class GlueBackendApiApplicationTester extends Actor
     use _generated\GlueBackendApiApplicationTesterActions;
 
     /**
+     * @var string
+     */
+    public const GET_METHOD_NAME = 'get';
+
+    /**
+     * @var string
+     */
+    public const GET_METHOD_SCOPE = 'backend:test:read';
+
+    /**
      * @return \Generated\Shared\Transfer\ApiApplicationSchemaContextTransfer
      */
     public function createApiApplicationSchemaContextTransfer(): ApiApplicationSchemaContextTransfer

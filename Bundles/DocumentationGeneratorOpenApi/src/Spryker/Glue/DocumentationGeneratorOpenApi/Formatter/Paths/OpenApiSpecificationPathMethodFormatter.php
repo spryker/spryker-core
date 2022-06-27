@@ -138,7 +138,7 @@ class OpenApiSpecificationPathMethodFormatter implements OpenApiSpecificationPat
             $pathMethodData[static::KEY_SUMMARY] = $pathMethodData[static::KEY_SUMMARY][0];
         }
 
-        if ($pathMethodData[static::KEY_PARAMETERS]) {
+        if (isset($pathMethodData[static::KEY_PARAMETERS])) {
             $pathMethodData[static::KEY_PARAMETERS] = $this->pathParameterSpecificationComponent->getSpecificationComponentData($pathMethodData);
         }
 

@@ -19,7 +19,16 @@ use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthScopeProviderPluginInterfa
 class CustomerOauthScopeProviderPlugin extends AbstractPlugin implements OauthScopeProviderPluginInterface
 {
     /**
+     * @see \Spryker\Glue\GlueStorefrontApiApplication\Application\GlueStorefrontApiApplication::GLUE_STOREFRONT_API_APPLICATION
+     *
+     * @var string
+     */
+    protected const GLUE_STOREFRONT_API_APPLICATION = 'GLUE_STOREFRONT_API_APPLICATION';
+
+    /**
      * {@inheritDoc}
+     * - Checks whether the grant type is {@link \Spryker\Zed\OauthUserConnector\OauthUserConnectorConfig::GRANT_TYPE_PASSWORD}
+     * - Checks whether the requestApplication is "GLUE_STOREFRONT_API_APPLICATION" or requestApplication is not sent (for BC reasons).
      *
      * @api
      *
@@ -29,15 +38,14 @@ class CustomerOauthScopeProviderPlugin extends AbstractPlugin implements OauthSc
      */
     public function accept(OauthScopeRequestTransfer $oauthScopeRequestTransfer): bool
     {
-        if ($oauthScopeRequestTransfer->getGrantType() !== OauthCustomerConnectorConfig::GRANT_TYPE_PASSWORD) {
-            return false;
-        }
-
-        return true;
+        return $oauthScopeRequestTransfer->getGrantType() === OauthCustomerConnectorConfig::GRANT_TYPE_PASSWORD &&
+            (!$oauthScopeRequestTransfer->getRequestApplication() ||
+                $oauthScopeRequestTransfer->getRequestApplication() === static::GLUE_STOREFRONT_API_APPLICATION);
     }
 
     /**
      * {@inheritDoc}
+     * - Retrieves the customer scopes.
      *
      * @api
      *

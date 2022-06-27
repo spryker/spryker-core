@@ -119,7 +119,9 @@ class RestApiSchemaFormatter implements SchemaFormatterInterface
     protected function formatPaths(array $formattedData, ResourceContextTransfer $resourceContext): array
     {
         foreach ($this->getResourcePaths($resourceContext->getResourceTypeOrFail()) as $resourcePathKey) {
-            $formattedData['paths'][$resourcePathKey] = $this->formatOperation($resourcePathKey, $formattedData['paths'][$resourcePathKey], $resourceContext);
+            if (isset($formattedData['paths'][$resourcePathKey])) {
+                $formattedData['paths'][$resourcePathKey] = $this->formatOperation($resourcePathKey, $formattedData['paths'][$resourcePathKey], $resourceContext);
+            }
         }
 
         return $formattedData;

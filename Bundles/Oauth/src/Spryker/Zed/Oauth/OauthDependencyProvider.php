@@ -11,6 +11,8 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Oauth\Communication\Plugin\Oauth\PasswordOauthGrantTypeConfigurationProviderPlugin;
 use Spryker\Zed\Oauth\Communication\Plugin\Oauth\RefreshTokenOauthGrantTypeConfigurationProviderPlugin;
+use Spryker\Zed\Oauth\Dependency\External\OauthToSymfonyFilesystemAdapter;
+use Spryker\Zed\Oauth\Dependency\External\OauthToYamlAdapter;
 use Spryker\Zed\Oauth\Dependency\Service\OauthToUtilEncodingServiceBridge;
 
 /**
@@ -37,6 +39,11 @@ class OauthDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PLUGIN_SCOPE_PROVIDER = 'PLUGIN_SCOPE_PROVIDER';
+
+    /**
+     * @var string
+     */
+    public const PLUGINS_SCOPE_FINDER = 'PLUGINS_SCOPE_FINDER';
 
     /**
      * @var string
@@ -94,6 +101,21 @@ class OauthDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_OAUTH_REFRESH_TOKENS_READER = 'PLUGINS_OAUTH_REFRESH_TOKENS_READER';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_SCOPE_COLLECTOR = 'PLUGINS_SCOPE_COLLECTOR';
+
+    /**
+     * @var string
+     */
+    public const FILESYSTEM = 'FILESYSTEM';
+
+    /**
+     * @var string
+     */
+    public const YAML_DUMPER = 'YAML_DUMPER';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -118,6 +140,10 @@ class OauthDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addOauthRefreshTokenReaderPlugins($container);
         $container = $this->addOauthRefreshTokensReaderPlugins($container);
         $container = $this->addOauthRequestGrantTypeConfigurationProviderPlugins($container);
+        $container = $this->addScopeCollectorPlugins($container);
+        $container = $this->addFilesystem($container);
+        $container = $this->addYamlDumper($container);
+        $container = $this->addScopeFinderPlugins($container);
 
         return $container;
     }
@@ -175,6 +201,20 @@ class OauthDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::PLUGIN_SCOPE_PROVIDER, function (Container $container) {
             return $this->getScopeProviderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addScopeFinderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_SCOPE_FINDER, function (Container $container) {
+            return $this->getScopeFinderPlugins();
         });
 
         return $container;
@@ -337,6 +377,48 @@ class OauthDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addScopeCollectorPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_SCOPE_COLLECTOR, function (Container $container) {
+            return $this->getScopeCollectorPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addFilesystem(Container $container): Container
+    {
+        $container->set(static::FILESYSTEM, function () {
+            return new OauthToSymfonyFilesystemAdapter();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addYamlDumper(Container $container): Container
+    {
+        $container->set(static::YAML_DUMPER, function () {
+            return new OauthToYamlAdapter();
+        });
+
+        return $container;
+    }
+
+    /**
      * @return array<\Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserProviderPluginInterface>
      */
     protected function getUserProviderPlugins(): array
@@ -356,6 +438,14 @@ class OauthDependencyProvider extends AbstractBundleDependencyProvider
      * @return array<\Spryker\Zed\OauthExtension\Dependency\Plugin\OauthScopeProviderPluginInterface>
      */
     protected function getScopeProviderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return array<\Spryker\Glue\OauthExtension\Dependency\Plugin\ScopeFinderPluginInterface>
+     */
+    protected function getScopeFinderPlugins(): array
     {
         return [];
     }
@@ -449,6 +539,14 @@ class OauthDependencyProvider extends AbstractBundleDependencyProvider
      * @return array<\Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokensReaderPluginInterface>
      */
     protected function getOauthRefreshTokensReaderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return array<\Spryker\Glue\OauthExtension\Dependency\Plugin\ScopeCollectorPluginInterface>
+     */
+    protected function getScopeCollectorPlugins(): array
     {
         return [];
     }

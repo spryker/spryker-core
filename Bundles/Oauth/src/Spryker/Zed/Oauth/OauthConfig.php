@@ -26,6 +26,21 @@ class OauthConfig extends AbstractBundleConfig
     public const GRANT_TYPE_REFRESH_TOKEN = 'refresh_token';
 
     /**
+     * @var string
+     */
+    protected const GENERATED_FULL_FILE_NAME = '/Generated/Zed/Oauth/GlueScopesCache/glue_scopes_cache.yml';
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getGeneratedFullFileNameForCollectedScopes(): string
+    {
+        return APPLICATION_SOURCE_DIR . static::GENERATED_FULL_FILE_NAME;
+    }
+
+    /**
      * @api
      *
      * @return string

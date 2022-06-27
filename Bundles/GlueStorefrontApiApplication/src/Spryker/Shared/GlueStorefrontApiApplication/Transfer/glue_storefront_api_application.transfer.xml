@@ -14,15 +14,18 @@
         <property name="method" type="string"/>
         <property name="host" type="string"/>
         <property name="parametersString" type="string"/>
+        <property name="requestCustomer" type="GlueRequestCustomer"/>
     </transfer>
 
     <transfer name="GlueResource">
         <property name="type" type="string"/>
         <property name="resourceName" type="string"/>
         <property name="controller" type="string"/>
+        <property name="contollerExecutable" type="string[]" singular="contollerExecutable"/>
         <property name="method" type="string"/>
         <property name="action" type="string"/>
         <property name="parameters" type="string[]" singular="parameter"/>
+        <property name="scope" type="string"/>
     </transfer>
 
     <transfer name="GlueRequestValidation">
@@ -55,6 +58,15 @@
     </transfer>
 
     <transfer name="GlueResourceMethodConfiguration">
+    </transfer>
+
+    <transfer name="OauthScopeFind">
+        <property name="identifier" type="string"/>
+        <property name="applicationName" type="string"/>
+    </transfer>
+
+    <transfer name="GlueRequestCustomer">
+        <property name="scopes" type="string[]" singular="scope"/>
     </transfer>
 
     <transfer name="ApiApplicationSchemaContext">

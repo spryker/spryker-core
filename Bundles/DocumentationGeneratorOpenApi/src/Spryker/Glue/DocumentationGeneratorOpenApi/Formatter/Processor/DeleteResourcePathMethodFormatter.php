@@ -45,16 +45,20 @@ class DeleteResourcePathMethodFormatter implements PathMethodFormatterInterface
      */
     public function format(PathAnnotationTransfer $pathAnnotationTransfer, array $formattedData): array
     {
+        if (!$pathAnnotationTransfer->getDelete()) {
+            return $formattedData;
+        }
+
         $resourceType = $pathAnnotationTransfer->getResourceTypeOrFail();
 
         $pathMethodData = $this->openApiSpecificationPathMethodFormatter->getPathMethodComponentData(
             $resourceType,
-            $pathAnnotationTransfer->getDeleteOrFail(),
+            $pathAnnotationTransfer->getDelete(),
             static::PATTERN_OPERATION_ID_DELETE_RESOURCE,
             Response::HTTP_NO_CONTENT,
         );
 
-        if ($pathMethodData['requestBody']) {
+        if (isset($pathMethodData['requestBody'])) {
             unset($pathMethodData['requestBody']);
         }
         if (!$pathMethodData['summary']) {

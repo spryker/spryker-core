@@ -11,7 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\AuthorizationRequestTransfer;
 use Spryker\Client\Authorization\AuthorizationDependencyProvider;
 use Spryker\Client\Authorization\Exception\AuthorizationStrategyNotFoundException;
-use Spryker\Client\AuthorizationExtension\Dependency\Plugin\AuthorizationStrategyPluginInterface;
+use Spryker\Shared\AuthorizationExtension\Dependency\Plugin\AuthorizationStrategyPluginInterface;
 
 /**
  * Auto-generated group annotations
@@ -88,7 +88,7 @@ class AuthorizationClientTest extends Unit
     /**
      * @param bool $isAuthorized
      *
-     * @return \Spryker\Client\AuthorizationExtension\Dependency\Plugin\AuthorizationStrategyPluginInterface
+     * @return \Spryker\Shared\AuthorizationExtension\Dependency\Plugin\AuthorizationStrategyPluginInterface
      */
     protected function getAuthorizationStrategyPluginMock(bool $isAuthorized = true): AuthorizationStrategyPluginInterface
     {

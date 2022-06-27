@@ -59,11 +59,10 @@ class RequestRoutingMatcher implements RequestRoutingMatcherInterface
 
         if (
             !$glueRequestTransfer->getResource()->getResourceName() &&
-            $glueRequestTransfer->getResource()->getController()
+            $glueRequestTransfer->getResource()->getContollerExecutable()
         ) {
-            /** @phpstan-var callable():\Generated\Shared\Transfer\GlueResponseTransfer $controller */
-            $controller = $glueRequestTransfer->getResource()->getController();
-            $executable = $this->buildExecutable($controller);
+            /** @var callable $executable */
+            $executable = $this->buildExecutable($glueRequestTransfer->getResource()->getContollerExecutable());
 
             return new GenericResource($executable);
         }
@@ -81,13 +80,13 @@ class RequestRoutingMatcher implements RequestRoutingMatcherInterface
     }
 
     /**
-     * @param callable():\Generated\Shared\Transfer\GlueResponseTransfer $executable
+     * @param array<string> $executable
      *
-     * @return callable():\Generated\Shared\Transfer\GlueResponseTransfer
+     * @return array<mixed>
      */
-    protected function buildExecutable(callable $executable): callable
+    protected function buildExecutable(array $executable): array
     {
-        if (is_array($executable) && isset($executable[0]) && is_string($executable[0])) {
+        if (isset($executable[0]) && is_string($executable[0])) {
             $executable[0] = $this->createControllerInstance($executable[0]);
         }
 
@@ -104,9 +103,14 @@ class RequestRoutingMatcher implements RequestRoutingMatcherInterface
     protected function createControllerInstance(string $controller): AbstractController
     {
         if (class_exists($controller)) {
+            /** @var \Spryker\Glue\Kernel\Controller\AbstractController $controller */
+            $controller = new $controller();
+
             return new $controller();
         }
 
-        throw new ControllerNotFoundException('Controller not found!');
+        throw new ControllerNotFoundException(
+            sprintf('Controller not found: %s', $controller),
+        );
     }
 }

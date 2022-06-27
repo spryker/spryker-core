@@ -26,12 +26,18 @@ use Orm\Zed\OauthRevoke\Persistence\SpyOauthRefreshTokenQuery;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
+ * @method \Spryker\Zed\Oauth\Business\OauthBusinessFactory getFactory()
  *
  * @SuppressWarnings(PHPMD)
  */
 class OauthBusinessTester extends Actor
 {
     use _generated\OauthBusinessTesterActions;
+
+    /**
+     * @var string
+     */
+    public const GET_METHOD_SCOPE = 'scope:test:read';
 
     /**
      * @var string

@@ -1,4 +1,7 @@
 namespace: SprykerTest
+include:
+    - tests/SprykerTest/Client/Authorization
+    - tests/SprykerTest/Zed/Authorization
 paths:
     tests: tests/
     log: tests/_output/

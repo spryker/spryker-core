@@ -68,8 +68,9 @@ class ChainRouter extends SymfonyChainRouter implements ChainRouterInterface
         $glueResourceTransfer = (new GlueResourceTransfer())
             ->setResourceName($matchResult['_resourceName'] ?? null)
             ->setMethod($matchResult['_method'] ?? null)
-            ->setController($matchResult['_controller'] ?? null)
+            ->setContollerExecutable($matchResult['_controller'] ?? null)
             ->setAction($matchResult['_action'] ?? null)
+            ->setScope($matchResult['scope'] ?? null)
             ->setParameters($this->filterParameters($matchResult));
 
         $glueRequestTransfer->setResource($glueResourceTransfer);

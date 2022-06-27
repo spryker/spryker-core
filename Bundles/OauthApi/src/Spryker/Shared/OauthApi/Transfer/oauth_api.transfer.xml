@@ -84,9 +84,17 @@
     </transfer>
 
     <transfer name="ApiTokenAttributes">
+        <property name="grantType" type="string"/>
+        <property name="username" type="string"/>
+        <property name="password" type="string"/>
+        <property name="scope" type="string"/>
     </transfer>
 
     <transfer name="ApiTokenResponseAttributes">
+        <property name="tokenType" type="string"/>
+        <property name="expiresIn" type="string"/>
+        <property name="accessToken" type="string"/>
+        <property name="refreshToken" type="string"/>
     </transfer>
 
     <transfer name="OauthError">

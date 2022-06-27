@@ -33,6 +33,13 @@ class GlueStorefrontApiApplicationConfig extends AbstractBundleConfig
     public const ERROR_MESSAGE_RESOURCE_NOT_FOUND = 'Not found';
 
     /**
+     * @uses \Spryker\Zed\Oauth\OauthConfig::GENERATED_FULL_FILE_NAME
+     *
+     * @var string
+     */
+    protected const GENERATED_FULL_FILE_NAME = '/Generated/Zed/Oauth/GlueScopesCache/glue_scopes_cache.yml';
+
+    /**
      * @var string
      */
     protected const HEADER_X_FRAME_OPTIONS_VALUE = 'SAMEORIGIN';
@@ -172,6 +179,16 @@ class GlueStorefrontApiApplicationConfig extends AbstractBundleConfig
             static::HEADER_ACCEPT_LANGUAGE,
             static::HEADER_AUTHORIZATION,
         ];
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getGeneratedFullFileNameForCollectedScopes(): string
+    {
+        return APPLICATION_SOURCE_DIR . static::GENERATED_FULL_FILE_NAME;
     }
 
     /**

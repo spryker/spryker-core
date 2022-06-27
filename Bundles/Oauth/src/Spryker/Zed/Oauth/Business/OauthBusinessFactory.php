@@ -10,6 +10,8 @@ namespace Spryker\Zed\Oauth\Business;
 use DateTime;
 use League\OAuth2\Server\ResponseTypes\ResponseTypeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Oauth\Business\Collector\ScopeCacheCollector;
+use Spryker\Zed\Oauth\Business\Collector\ScopeCacheCollectorInterface;
 use Spryker\Zed\Oauth\Business\Installer\OauthClientInstaller;
 use Spryker\Zed\Oauth\Business\Installer\OauthClientInstallerInterface;
 use Spryker\Zed\Oauth\Business\Mapper\OauthRefreshTokenMapper;
@@ -50,6 +52,8 @@ use Spryker\Zed\Oauth\Business\Model\OauthScopeReader;
 use Spryker\Zed\Oauth\Business\Model\OauthScopeReaderInterface;
 use Spryker\Zed\Oauth\Business\Model\OauthScopeWriter;
 use Spryker\Zed\Oauth\Business\Model\OauthScopeWriterInterface;
+use Spryker\Zed\Oauth\Dependency\External\OauthToFilesystemInterface;
+use Spryker\Zed\Oauth\Dependency\External\OauthToYamlInterface;
 use Spryker\Zed\Oauth\Dependency\Service\OauthToUtilEncodingServiceInterface;
 use Spryker\Zed\Oauth\OauthConfig;
 use Spryker\Zed\Oauth\OauthDependencyProvider;
@@ -170,6 +174,7 @@ class OauthBusinessFactory extends AbstractBusinessFactory
             $this->getOauthRefreshTokenSaverPlugins(),
             $this->getOauthRefreshTokenPersistencePlugins(),
             $this->getOauthUserProviderPlugins(),
+            $this->getScopeFinderPlugins(),
         );
     }
 
@@ -305,6 +310,14 @@ class OauthBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return array<\Spryker\Glue\OauthExtension\Dependency\Plugin\ScopeFinderPluginInterface>
+     */
+    public function getScopeFinderPlugins(): array
+    {
+        return $this->getProvidedDependency(OauthDependencyProvider::PLUGINS_SCOPE_FINDER);
+    }
+
+    /**
      * @return \Spryker\Zed\Oauth\Business\Model\OauthClientReaderInterface
      */
     public function createOauthClientReader(): OauthClientReaderInterface
@@ -429,5 +442,42 @@ class OauthBusinessFactory extends AbstractBusinessFactory
     public function getOauthRefreshTokenPersistencePlugins(): array
     {
         return $this->getProvidedDependency(OauthDependencyProvider::PLUGINS_OAUTH_REFRESH_TOKEN_PERSISTENCE);
+    }
+
+    /**
+     * @return array<\Spryker\Glue\OauthExtension\Dependency\Plugin\ScopeCollectorPluginInterface>
+     */
+    public function getScopeCollectorPlugins(): array
+    {
+        return $this->getProvidedDependency(OauthDependencyProvider::PLUGINS_SCOPE_COLLECTOR);
+    }
+
+    /**
+     * @return \Spryker\Zed\Oauth\Dependency\External\OauthToFilesystemInterface
+     */
+    public function getFilesystem(): OauthToFilesystemInterface
+    {
+        return $this->getProvidedDependency(OauthDependencyProvider::FILESYSTEM);
+    }
+
+    /**
+     * @return \Spryker\Zed\Oauth\Business\Collector\ScopeCacheCollectorInterface
+     */
+    public function createScopeCacheCollector(): ScopeCacheCollectorInterface
+    {
+        return new ScopeCacheCollector(
+            $this->getFilesystem(),
+            $this->getYamlDumper(),
+            $this->getScopeCollectorPlugins(),
+            $this->getConfig(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Oauth\Dependency\External\OauthToYamlInterface
+     */
+    public function getYamlDumper(): OauthToYamlInterface
+    {
+        return $this->getProvidedDependency(OauthDependencyProvider::YAML_DUMPER);
     }
 }

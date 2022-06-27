@@ -178,4 +178,16 @@ class OauthFacade extends AbstractFacade implements OauthFacadeInterface
     {
         return $this->getFactory()->createOauthExpiredRefreshTokenRemover()->deleteExpiredRefreshTokens();
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function generateScopeCollection(): void
+    {
+        $this->getFactory()->createScopeCacheCollector()->collect();
+    }
 }

@@ -45,7 +45,7 @@ class AuthorizationDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return array<\Spryker\Client\AuthorizationExtension\Dependency\Plugin\AuthorizationStrategyPluginInterface>
+     * @return array<\Spryker\Shared\AuthorizationExtension\Dependency\Plugin\AuthorizationStrategyPluginInterface>
      */
     protected function getAuthorizationStrategyPlugins(): array
     {

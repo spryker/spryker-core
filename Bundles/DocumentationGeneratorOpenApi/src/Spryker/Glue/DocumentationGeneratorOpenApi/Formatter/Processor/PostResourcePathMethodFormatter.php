@@ -45,11 +45,15 @@ class PostResourcePathMethodFormatter implements PathMethodFormatterInterface
      */
     public function format(PathAnnotationTransfer $pathAnnotationTransfer, array $formattedData): array
     {
+        if (!$pathAnnotationTransfer->getPost()) {
+            return $formattedData;
+        }
+
         $resourceType = $pathAnnotationTransfer->getResourceTypeOrFail();
 
         $pathMethodData = $this->openApiSpecificationPathMethodFormatter->getPathMethodComponentData(
             $resourceType,
-            $pathAnnotationTransfer->getPostOrFail(),
+            $pathAnnotationTransfer->getPost(),
             static::PATTERN_OPERATION_ID_POST_RESOURCE,
             Response::HTTP_CREATED,
         );

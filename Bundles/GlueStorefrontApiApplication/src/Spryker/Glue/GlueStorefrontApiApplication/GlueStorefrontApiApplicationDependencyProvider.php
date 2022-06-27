@@ -8,6 +8,7 @@
 namespace Spryker\Glue\GlueStorefrontApiApplication;
 
 use Spryker\Glue\GlueStorefrontApiApplication\Dependency\Client\GlueStorefrontApiApplicationToStoreClientBridge;
+use Spryker\Glue\GlueStorefrontApiApplication\Dependency\External\GlueStorefrontApiApplicationToYamlAdapter;
 use Spryker\Glue\GlueStorefrontApiApplication\Exception\MissingRequestResourceFilterPluginException;
 use Spryker\Glue\GlueStorefrontApiApplicationExtension\Dependency\Plugin\RequestResourceFilterPluginInterface;
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
@@ -74,6 +75,11 @@ class GlueStorefrontApiApplicationDependencyProvider extends AbstractBundleDepen
     public const PLUGIN_REQUEST_RESOURCE_FILTER = 'PLUGIN_REQUEST_RESOURCE_FILTER';
 
     /**
+     * @var string
+     */
+    public const ADAPTER_YAML = 'ADAPTER_YAML';
+
+    /**
      * @param \Spryker\Glue\Kernel\Container $container
      *
      * @return \Spryker\Glue\Kernel\Container
@@ -92,6 +98,7 @@ class GlueStorefrontApiApplicationDependencyProvider extends AbstractBundleDepen
         $container = $this->addRouterPlugins($container);
         $container = $this->addRequestResourceFilterPlugin($container);
         $container = $this->addRouteProviderPlugins($container);
+        $container = $this->addYamlAdapter($container);
 
         return $container;
     }
@@ -326,6 +333,20 @@ class GlueStorefrontApiApplicationDependencyProvider extends AbstractBundleDepen
     {
         $container->set(static::PLUGINS_ROUTE_PROVIDER, function () {
             return $this->getRouteProviderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addYamlAdapter(Container $container): Container
+    {
+        $container->set(static::ADAPTER_YAML, function () {
+            return new GlueStorefrontApiApplicationToYamlAdapter();
         });
 
         return $container;

@@ -36,6 +36,7 @@
     <transfer name="OauthScopeRequest">
         <property name="defaultScopes" type="OauthScope[]" singular="scope"/>
         <property name="grantType" type="string"/>
+        <property name="requestApplication" type="string"/>
     </transfer>
 
     <transfer name="OauthGrantTypeConfiguration">

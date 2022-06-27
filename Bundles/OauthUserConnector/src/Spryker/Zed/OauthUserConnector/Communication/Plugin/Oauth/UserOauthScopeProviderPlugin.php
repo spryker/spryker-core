@@ -19,8 +19,16 @@ use Spryker\Zed\OauthUserConnector\OauthUserConnectorConfig;
 class UserOauthScopeProviderPlugin extends AbstractPlugin implements OauthScopeProviderPluginInterface
 {
     /**
+     * @uses \Spryker\Glue\GlueBackendApiApplication\Application\GlueBackendApiApplication::GLUE_BACKEND_API_APPLICATION
+     *
+     * @var string
+     */
+    protected const GLUE_BACKEND_API_APPLICATION = 'GLUE_BACKEND_API_APPLICATION';
+
+    /**
      * {@inheritDoc}
-     * - Checks whether the requested oauth scope equals to {@link \Spryker\Zed\OauthUserConnector\OauthUserConnectorConfig::GRANT_TYPE_PASSWORD}
+     * - Checks whether the grant type is {@link \Spryker\Zed\OauthUserConnector\OauthUserConnectorConfig::GRANT_TYPE_PASSWORD}
+     * - Checks whether the requestApplication is "GLUE_BACKEND_API_APPLICATION".
      *
      * @api
      *
@@ -30,7 +38,8 @@ class UserOauthScopeProviderPlugin extends AbstractPlugin implements OauthScopeP
      */
     public function accept(OauthScopeRequestTransfer $oauthScopeRequestTransfer): bool
     {
-        return $oauthScopeRequestTransfer->getGrantType() === OauthUserConnectorConfig::GRANT_TYPE_PASSWORD;
+        return $oauthScopeRequestTransfer->getGrantType() === OauthUserConnectorConfig::GRANT_TYPE_PASSWORD &&
+            $oauthScopeRequestTransfer->getRequestApplication() === static::GLUE_BACKEND_API_APPLICATION;
     }
 
     /**

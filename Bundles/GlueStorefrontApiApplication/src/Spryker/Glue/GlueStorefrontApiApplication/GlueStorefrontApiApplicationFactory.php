@@ -11,16 +11,22 @@ use Negotiation\LanguageNegotiator;
 use Spryker\Glue\GlueStorefrontApiApplication\Application\GlueStorefrontApiApplication;
 use Spryker\Glue\GlueStorefrontApiApplication\Cache\ControllerCacheCollector;
 use Spryker\Glue\GlueStorefrontApiApplication\Cache\ControllerCacheCollectorInterface;
+use Spryker\Glue\GlueStorefrontApiApplication\Collector\StorefrontScopeCollector;
+use Spryker\Glue\GlueStorefrontApiApplication\Collector\StorefrontScopeCollectorInterface;
 use Spryker\Glue\GlueStorefrontApiApplication\Dependency\Client\GlueStorefrontApiApplicationToStoreClientInterface;
+use Spryker\Glue\GlueStorefrontApiApplication\Dependency\External\GlueStorefrontApiApplicationToYamlAdapterInterface;
 use Spryker\Glue\GlueStorefrontApiApplication\Expander\ContextExpanderInterface;
 use Spryker\Glue\GlueStorefrontApiApplication\Expander\CustomRoutesContextExpander;
 use Spryker\Glue\GlueStorefrontApiApplication\Expander\ResourcesContextExpander;
+use Spryker\Glue\GlueStorefrontApiApplication\Finder\StorefrontScopeFinder;
+use Spryker\Glue\GlueStorefrontApiApplication\Finder\StorefrontScopeFinderInterface;
 use Spryker\Glue\GlueStorefrontApiApplication\Language\LanguageNegotiation;
 use Spryker\Glue\GlueStorefrontApiApplication\Language\LanguageNegotiationInterface;
 use Spryker\Glue\GlueStorefrontApiApplication\RequestBuilder\LocaleRequestBuilder;
 use Spryker\Glue\GlueStorefrontApiApplication\RequestBuilder\LocaleRequestBuilderInterface;
 use Spryker\Glue\GlueStorefrontApiApplication\RequestValidator\RequestCorsValidator;
-use Spryker\Glue\GlueStorefrontApiApplication\RequestValidator\RequestCorsValidatorInterface;
+use Spryker\Glue\GlueStorefrontApiApplication\RequestValidator\RequestValidatorInterface;
+use Spryker\Glue\GlueStorefrontApiApplication\RequestValidator\ScopeRequestAfterRoutingValidator;
 use Spryker\Glue\GlueStorefrontApiApplication\Router\Cache\Cache;
 use Spryker\Glue\GlueStorefrontApiApplication\Router\Cache\CacheInterface;
 use Spryker\Glue\GlueStorefrontApiApplication\Router\ChainRouter;
@@ -260,11 +266,50 @@ class GlueStorefrontApiApplicationFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\GlueStorefrontApiApplication\RequestValidator\RequestCorsValidatorInterface
+     * @return \Spryker\Glue\GlueStorefrontApiApplication\RequestValidator\RequestValidatorInterface
      */
-    public function createRequestCorsValidator(): RequestCorsValidatorInterface
+    public function createRequestCorsValidator(): RequestValidatorInterface
     {
         return new RequestCorsValidator($this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueStorefrontApiApplication\Collector\StorefrontScopeCollectorInterface
+     */
+    public function createStorefrontScopeCollector(): StorefrontScopeCollectorInterface
+    {
+        return new StorefrontScopeCollector(
+            $this->getResourcePlugins(),
+            $this->getRouteProviderPlugins(),
+            $this->createRouteCollection(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueStorefrontApiApplication\Dependency\External\GlueStorefrontApiApplicationToYamlAdapterInterface
+     */
+    public function getYamlAdapter(): GlueStorefrontApiApplicationToYamlAdapterInterface
+    {
+        return $this->getProvidedDependency(GlueStorefrontApiApplicationDependencyProvider::ADAPTER_YAML);
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueStorefrontApiApplication\Finder\StorefrontScopeFinderInterface
+     */
+    public function createStorefrontScopeFinder(): StorefrontScopeFinderInterface
+    {
+        return new StorefrontScopeFinder(
+            $this->getConfig(),
+            $this->getYamlAdapter(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueStorefrontApiApplication\RequestValidator\RequestValidatorInterface
+     */
+    public function createScopeRequestAfterRoutingValidator(): RequestValidatorInterface
+    {
+        return new ScopeRequestAfterRoutingValidator();
     }
 
     /**

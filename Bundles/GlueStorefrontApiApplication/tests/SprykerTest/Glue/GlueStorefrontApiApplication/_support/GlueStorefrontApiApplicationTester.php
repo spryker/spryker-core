@@ -28,4 +28,14 @@ use Codeception\Actor;
 class GlueStorefrontApiApplicationTester extends Actor
 {
     use _generated\GlueStorefrontApiApplicationTesterActions;
+
+    /**
+     * @var string
+     */
+    public const GET_METHOD_NAME = 'get';
+
+    /**
+     * @var string
+     */
+    public const GET_METHOD_SCOPE = 'storefront:test:read';
 }

@@ -90,10 +90,19 @@ class GrantTypeExecutor implements GrantTypeExecutorInterface
      */
     protected function createAccessTokenRequest(OauthRequestTransfer $oauthRequestTransfer): ServerRequest
     {
-        $accessTokenRequest = new ServerRequest('POST', '', []);
-        $accessTokenRequest = $accessTokenRequest->withParsedBody($oauthRequestTransfer->toArray());
+        $accessTokenRequest = new ServerRequest('POST', '');
+        $oauthRequestArray = $oauthRequestTransfer->toArray();
+        if (
+            $oauthRequestTransfer->getGlueAuthenticationRequestContext() &&
+            $oauthRequestTransfer->getGlueAuthenticationRequestContext()->getRequestApplication()
+        ) {
+            $oauthRequestArray = array_merge(
+                ['request_application' => $oauthRequestTransfer->getGlueAuthenticationRequestContext()->getRequestApplication()],
+                $oauthRequestArray,
+            );
+        }
 
-        return $accessTokenRequest;
+        return $accessTokenRequest->withParsedBody($oauthRequestArray);
     }
 
     /**

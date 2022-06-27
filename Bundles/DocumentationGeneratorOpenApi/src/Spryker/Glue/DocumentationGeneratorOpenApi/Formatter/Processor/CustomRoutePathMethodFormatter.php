@@ -75,8 +75,6 @@ class CustomRoutePathMethodFormatter implements CustomPathMethodFormatterInterfa
      */
     public function format(CustomRoutesContextTransfer $customRouteTransfer, array $formattedData): array
     {
-        $pathAnnotationsTransfer = $customRouteTransfer->getPathAnnotationOrFail();
-
         $resourceType = $this->getResourceType($customRouteTransfer);
         $requestMethodName = $this->getRequestMethodFromAnnotation($customRouteTransfer);
         $operationIdPattern = $requestMethodName . static::PATTERN_OPERATION_ID_GET_RESOURCE;

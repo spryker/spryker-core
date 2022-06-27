@@ -90,6 +90,11 @@ class RepositoryBuilder implements RepositoryBuilderInterface
     protected $oauthRefreshTokenPersistencePlugins;
 
     /**
+     * @var array<\Spryker\Glue\OauthExtension\Dependency\Plugin\ScopeFinderPluginInterface>
+     */
+    protected $scopeFinderPlugins;
+
+    /**
      * @param \Spryker\Zed\Oauth\Persistence\OauthRepositoryInterface $oauthRepository
      * @param \Spryker\Zed\Oauth\Persistence\OauthEntityManagerInterface $oauthEntityManager
      * @param \Spryker\Zed\Oauth\Dependency\Service\OauthToUtilEncodingServiceInterface $utilEncodingService
@@ -103,6 +108,7 @@ class RepositoryBuilder implements RepositoryBuilderInterface
      * @param array<\Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenSaverPluginInterface> $oauthRefreshTokenSaverPlugins
      * @param array<\Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenPersistencePluginInterface> $oauthRefreshTokenPersistencePlugins
      * @param array<\Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserProviderPluginInterface> $oauthUserProviderPlugins
+     * @param array<\Spryker\Glue\OauthExtension\Dependency\Plugin\ScopeFinderPluginInterface> $scopeFinderPlugins
      */
     public function __construct(
         OauthRepositoryInterface $oauthRepository,
@@ -117,7 +123,8 @@ class RepositoryBuilder implements RepositoryBuilderInterface
         array $oauthRefreshTokenCheckerPlugins = [],
         array $oauthRefreshTokenSaverPlugins = [],
         array $oauthRefreshTokenPersistencePlugins = [],
-        array $oauthUserProviderPlugins = []
+        array $oauthUserProviderPlugins = [],
+        array $scopeFinderPlugins = []
     ) {
         $this->oauthRepository = $oauthRepository;
         $this->oauthEntityManager = $oauthEntityManager;
@@ -132,6 +139,7 @@ class RepositoryBuilder implements RepositoryBuilderInterface
         $this->oauthRefreshTokenSaverPlugins = $oauthRefreshTokenSaverPlugins;
         $this->oauthRefreshTokenPersistencePlugins = $oauthRefreshTokenPersistencePlugins;
         $this->oauthUserProviderPlugins = $oauthUserProviderPlugins;
+        $this->scopeFinderPlugins = $scopeFinderPlugins;
     }
 
     /**
@@ -147,7 +155,11 @@ class RepositoryBuilder implements RepositoryBuilderInterface
      */
     public function createScopeRepository(): ScopeRepositoryInterface
     {
-        return new ScopeRepository($this->oauthRepository, $this->scopeProviderPlugins);
+        return new ScopeRepository(
+            $this->oauthRepository,
+            $this->scopeProviderPlugins,
+            $this->scopeFinderPlugins,
+        );
     }
 
     /**
