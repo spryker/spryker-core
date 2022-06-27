@@ -87,7 +87,11 @@
                 <div class="spy-row spy-row-gutter-sm">
                     <div class="spy-col-6 spy-col-gutter-sm">
                         <div class="mp-image-sets__image-container" *ngIf="image.srcSmall && image.idProductImage">
-                            <img [src]="image.srcSmall" class="mp-image-sets__image mp-image-sets__image--small" />
+                            <img
+                                [src]="image.srcSmall"
+                                [alt]="image.alt ?? ''"
+                                class="mp-image-sets__image mp-image-sets__image--small"
+                            />
                         </div>
                         <spy-form-item
                             class="mp-image-sets__image-url-small"
@@ -107,7 +111,11 @@
                     </div>
                     <div class="spy-col-6 spy-col-gutter-sm">
                         <div class="mp-image-sets__image-container" *ngIf="image.srcLarge && image.idProductImage">
-                            <img [src]="image.srcLarge" class="mp-image-sets__image mp-image-sets__image--large" />
+                            <img
+                                [src]="image.srcLarge"
+                                [alt]="image.alt ?? ''"
+                                class="mp-image-sets__image mp-image-sets__image--large"
+                            />
                         </div>
                         <spy-form-item
                             class="mp-image-sets__image-url-large"

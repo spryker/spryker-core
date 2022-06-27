@@ -220,6 +220,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      * @param string $title
      * @param bool $isSortable
      * @param bool $isHideable
+     * @param string|null $idAltSourceColumn
      *
      * @return $this
      */
@@ -227,7 +228,8 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
         string $id,
         string $title,
         bool $isSortable,
-        bool $isHideable
+        bool $isHideable,
+        ?string $idAltSourceColumn = null
     ) {
         $guiTableColumnConfigurationTransfer = (new GuiTableColumnConfigurationTransfer())
             ->setId($id)
@@ -235,6 +237,10 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
             ->setType(static::COLUMN_TYPE_IMAGE)
             ->setSortable($isSortable)
             ->setHideable($isHideable);
+
+        if ($idAltSourceColumn !== null) {
+            $guiTableColumnConfigurationTransfer->addTypeOption('alt', sprintf('${row.%s}', $idAltSourceColumn));
+        }
 
         $this->addColumn($guiTableColumnConfigurationTransfer);
 

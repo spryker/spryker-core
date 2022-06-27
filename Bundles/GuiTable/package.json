@@ -10,7 +10,7 @@
         "@spryker/table.column.chip": "^0.2.0",
         "@spryker/table.column.date": "^0.2.0",
         "@spryker/table.column.dynamic": "^0.3.0",
-        "@spryker/table.column.image": "^0.3.0",
+        "@spryker/table.column.image": "^0.3.2",
         "@spryker/table.column.input": "^0.2.0",
         "@spryker/table.column.select": "^0.2.0",
         "@spryker/table.column.text": "^0.3.0",

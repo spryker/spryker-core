@@ -187,7 +187,7 @@ class ProductAbstractGuiTableConfigurationProvider implements ProductAbstractGui
     protected function addColumns(GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder): GuiTableConfigurationBuilderInterface
     {
         $guiTableConfigurationBuilder->addColumnText(static::COL_KEY_SKU, 'SKU', true, false)
-            ->addColumnImage(static::COL_KEY_IMAGE, 'Image', false, true)
+            ->addColumnImage(static::COL_KEY_IMAGE, 'Image', false, true, static::COL_KEY_NAME)
             ->addColumnText(static::COL_KEY_NAME, 'Name', true, false)
             ->addColumnListChip(static::COL_KEY_SUPER_ATTRIBUTES, 'Super Attributes', false, true, 2, 'gray')
             ->addColumnChip(static::COL_KEY_VARIANTS, 'Variants', true, true, 'gray')

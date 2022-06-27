@@ -14,7 +14,7 @@
         {% set images = imageSet.productImages | reduce((accumulator, image) => (
                 accumulator | merge([{
                 src: image.externalUrlSmall,
-                alt: '',
+                alt: productName,
             }])
         ), []) %}
     {% endif %}

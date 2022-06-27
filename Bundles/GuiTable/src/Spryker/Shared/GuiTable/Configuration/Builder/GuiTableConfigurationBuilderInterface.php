@@ -169,6 +169,7 @@ interface GuiTableConfigurationBuilderInterface
      * @param string $title
      * @param bool $isSortable
      * @param bool $isHideable
+     * @param string|null $idAltSourceColumn
      *
      * @return $this
      */
@@ -176,7 +177,8 @@ interface GuiTableConfigurationBuilderInterface
         string $id,
         string $title,
         bool $isSortable,
-        bool $isHideable
+        bool $isHideable,
+        ?string $idAltSourceColumn = null
     );
 
     /**
