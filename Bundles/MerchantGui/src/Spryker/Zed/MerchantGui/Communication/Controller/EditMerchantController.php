@@ -85,6 +85,7 @@ class EditMerchantController extends AbstractController
             'idMerchant' => $idMerchant,
             'applicableMerchantStatuses' => $applicableMerchantStatuses,
             'merchantFormTabs' => $this->getFactory()->createMerchantFormTabs()->createView(),
+            'merchantStatusForm' => $this->getFactory()->createMerchantStatusForm()->createView(),
         ]);
     }
 
