@@ -10,7 +10,7 @@ namespace SprykerTest\Glue\GlueRestApiConvention\Plugin\GlueRestApiConvention;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ApiApplicationSchemaContextTransfer;
 use Generated\Shared\Transfer\ResourceContextTransfer;
-use Spryker\Glue\GlueRestApiConvention\Plugin\GlueRestApiConvention\RestApiSchemaFormatterPlugin;
+use Spryker\Glue\GlueRestApiConvention\Plugin\DocumentationGeneratorApi\RestApiSchemaFormatterPlugin;
 use SprykerTest\Glue\GlueRestApiConvention\Stub\TestEmptyRestResourcePlugin;
 
 /**

@@ -114,7 +114,7 @@ class GlueRestApiConventionDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addRequestBuilderPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_REQUEST_BUILDER, function (Container $container) {
+        $container->set(static::PLUGINS_REQUEST_BUILDER, function () {
             return $this->getRequestBuilderPlugins();
         });
 
@@ -122,7 +122,7 @@ class GlueRestApiConventionDependencyProvider extends AbstractBundleDependencyPr
     }
 
     /**
-     * @return array<\Spryker\Glue\GlueRestApiConventionExtension\Dependency\Plugin\RequestBuilderPluginInterface>
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RequestBuilderPluginInterface>
      */
     protected function getRequestBuilderPlugins(): array
     {
@@ -136,7 +136,7 @@ class GlueRestApiConventionDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addRequestValidatorPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_REQUEST_VALIDATOR, function (Container $container) {
+        $container->set(static::PLUGINS_REQUEST_VALIDATOR, function () {
             return $this->getRequestValidatorPlugins();
         });
 
@@ -144,7 +144,7 @@ class GlueRestApiConventionDependencyProvider extends AbstractBundleDependencyPr
     }
 
     /**
-     * @return array<\Spryker\Glue\GlueRestApiConventionExtension\Dependency\Plugin\RequestValidatorPluginInterface>
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RequestValidatorPluginInterface>
      */
     protected function getRequestValidatorPlugins(): array
     {
@@ -158,7 +158,7 @@ class GlueRestApiConventionDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addRequestAfterRoutingValidatorPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_REQUEST_AFTER_ROUTING_VALIDATOR, function (Container $container) {
+        $container->set(static::PLUGINS_REQUEST_AFTER_ROUTING_VALIDATOR, function () {
             return $this->getRequestAfterRoutingValidatorPlugins();
         });
 
@@ -166,7 +166,7 @@ class GlueRestApiConventionDependencyProvider extends AbstractBundleDependencyPr
     }
 
     /**
-     * @return array<\Spryker\Glue\GlueRestApiConventionExtension\Dependency\Plugin\RequestAfterRoutingValidatorPluginInterface>
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RequestAfterRoutingValidatorPluginInterface>
      */
     protected function getRequestAfterRoutingValidatorPlugins(): array
     {
@@ -180,11 +180,19 @@ class GlueRestApiConventionDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addResponseFormatterPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_RESPONSE_FORMATTER, function (Container $container) {
+        $container->set(static::PLUGINS_RESPONSE_FORMATTER, function () {
             return $this->getResponseFormatterPlugins();
         });
 
         return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResponseFormatterPluginInterface>
+     */
+    protected function getResponseFormatterPlugins(): array
+    {
+        return [];
     }
 
     /**
@@ -199,13 +207,5 @@ class GlueRestApiConventionDependencyProvider extends AbstractBundleDependencyPr
         });
 
         return $container;
-    }
-
-    /**
-     * @return array<\Spryker\Glue\GlueRestApiConventionExtension\Dependency\Plugin\ResponseFormatterPluginInterface>
-     */
-    protected function getResponseFormatterPlugins(): array
-    {
-        return [];
     }
 }

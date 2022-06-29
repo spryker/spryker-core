@@ -18,7 +18,7 @@ use Spryker\Shared\AuthenticationExtension\Dependency\Plugin\AuthenticationServe
 class OauthAuthenticationServerPlugin extends AbstractPlugin implements AuthenticationServerPluginInterface
 {
     /**
-     * @see \Spryker\Glue\GlueStorefrontApiApplication\Application\GlueStorefrontApiApplication::GLUE_STOREFRONT_API_APPLICATION
+     * @uses \Spryker\Glue\GlueStorefrontApiApplication\Plugin\GlueApplication\ApplicationIdentifierRequestBuilderPlugin::GLUE_STOREFRONT_API_APPLICATION
      *
      * @var string
      */

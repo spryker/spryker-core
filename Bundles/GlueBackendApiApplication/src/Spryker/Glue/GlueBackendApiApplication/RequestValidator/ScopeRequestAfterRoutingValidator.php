@@ -10,8 +10,8 @@ namespace Spryker\Glue\GlueBackendApiApplication\RequestValidator;
 use Generated\Shared\Transfer\GlueErrorTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueRequestValidationTransfer;
+use Spryker\Glue\GlueApplication\Resource\GenericResource;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface;
-use Spryker\Glue\GlueBackendApiApplication\Resource\GenericResource;
 use Spryker\Glue\OauthExtension\Dependency\Plugin\ScopeDefinitionPluginInterface;
 use Symfony\Component\HttpFoundation\Response;
 

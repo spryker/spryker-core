@@ -10,7 +10,7 @@ namespace SprykerTest\Glue\GlueStorefrontApiApplication\Plugin\GlueStorefrontApi
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ApiApplicationSchemaContextTransfer;
 use Spryker\Glue\GlueStorefrontApiApplication\GlueStorefrontApiApplicationDependencyProvider;
-use Spryker\Glue\GlueStorefrontApiApplication\Plugin\GlueStorefrontApiApplication\StorefrontCustomRoutesContextExpanderPlugin;
+use Spryker\Glue\GlueStorefrontApiApplication\Plugin\DocumentationGeneratorApi\StorefrontCustomRoutesContextExpanderPlugin;
 use SprykerTest\Glue\GlueStorefrontApiApplication\Stub\TestRouteProviderPlugin;
 
 /**

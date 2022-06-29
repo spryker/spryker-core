@@ -32,7 +32,7 @@ class BackendScopeCollectorPluginTest extends Unit
     protected $tester;
 
     /**
-     * @uses \Spryker\Glue\GlueBackendApiApplication\Plugin\GlueBackendApiApplication\BackendApiApplicationProviderPlugin::GLUE_BACKEND_API_APPLICATION_NAME
+     * @uses \Spryker\Glue\GlueBackendApiApplication\Plugin\DocumentationGeneratorApi\BackendApiApplicationProviderPlugin::GLUE_BACKEND_API_APPLICATION_NAME
      *
      * @var string
      */

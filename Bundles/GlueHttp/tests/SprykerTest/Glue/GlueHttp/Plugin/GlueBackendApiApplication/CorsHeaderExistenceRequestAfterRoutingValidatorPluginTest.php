@@ -40,7 +40,7 @@ class CorsHeaderExistenceRequestAfterRoutingValidatorPluginTest extends Unit
 
         //Act
         $corsHeaderExistenceRequestAfterRoutingValidatorPlugin = new CorsHeaderExistenceRequestAfterRoutingValidatorPlugin();
-        $glueRequestValidationTransfer = $corsHeaderExistenceRequestAfterRoutingValidatorPlugin->validateRequest($glueRequestTransfer, $resourceMock);
+        $glueRequestValidationTransfer = $corsHeaderExistenceRequestAfterRoutingValidatorPlugin->validate($glueRequestTransfer, $resourceMock);
 
         // Assert
         $this->assertTrue($glueRequestValidationTransfer->getIsValid());

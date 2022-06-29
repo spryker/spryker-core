@@ -22,7 +22,7 @@ use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRequestGrantTypeConfigurat
 class UserPasswordOauthRequestGrantTypeConfigurationProviderPlugin extends AbstractPlugin implements OauthRequestGrantTypeConfigurationProviderPluginInterface
 {
     /**
-     * @see \Spryker\Glue\GlueBackendApiApplication\Application\GlueBackendApiApplication::GLUE_BACKEND_API_APPLICATION
+     * @uses \Spryker\Glue\GlueBackendApiApplication\Plugin\GlueApplication\ApplicationIdentifierRequestBuilderPlugin::GLUE_BACKEND_API_APPLICATION
      *
      * @var string
      */

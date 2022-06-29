@@ -36,7 +36,7 @@ class AuthenticationClientTester extends Actor
     use _generated\AuthenticationClientTesterActions;
 
     /**
-     * @uses \Spryker\Glue\GlueStorefrontApiApplication\Application\GlueStorefrontApiApplication::GLUE_STOREFRONT_API_APPLICATION
+     * @uses \Spryker\Glue\GlueStorefrontApiApplication\Plugin\GlueApplication\ApplicationIdentifierRequestBuilderPlugin::GLUE_STOREFRONT_API_APPLICATION
      *
      * @var string
      */

@@ -10,6 +10,8 @@ namespace Spryker\Glue\GlueApplicationExtension\Dependency\Plugin;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 
 /**
+ * @deprecated Will be removed without replacement.
+ *
  * Use this plugin interface to enhance Resource filtering during routing.
  */
 interface ResourceFilterPluginInterface

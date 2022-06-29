@@ -11,7 +11,7 @@ use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ApiApplicationSchemaContextTransfer;
 use Spryker\Glue\GlueBackendApiApplication\GlueBackendApiApplicationDependencyProvider;
-use Spryker\Glue\GlueBackendApiApplication\Plugin\GlueBackendApiApplication\BackendCustomRoutesContextExpanderPlugin;
+use Spryker\Glue\GlueBackendApiApplication\Plugin\DocumentationGeneratorApi\BackendCustomRoutesContextExpanderPlugin;
 use SprykerTest\Glue\GlueBackendApiApplication\Stub\TestRouteProviderPlugin;
 
 /**

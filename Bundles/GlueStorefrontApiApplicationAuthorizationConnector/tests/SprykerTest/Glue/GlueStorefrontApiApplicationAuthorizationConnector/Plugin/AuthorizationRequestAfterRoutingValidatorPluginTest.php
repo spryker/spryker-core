@@ -60,7 +60,7 @@ class AuthorizationRequestAfterRoutingValidatorPluginTest extends Unit
         $stubResource = new TestDefaultAuthorizationStrategyAwareResourceRoutePlugin();
 
         //Act
-        $glueRequestValidationTransfer = $plugin->validateRequest($glueRequestTransfer, $stubResource);
+        $glueRequestValidationTransfer = $plugin->validate($glueRequestTransfer, $stubResource);
 
         //Assert
         $this->assertTrue($glueRequestValidationTransfer->getIsValid());
@@ -83,7 +83,7 @@ class AuthorizationRequestAfterRoutingValidatorPluginTest extends Unit
         $stubResource = new TestDefaultAuthorizationStrategyAwareResourceRoutePlugin();
 
         //Act
-        $glueRequestValidationTransfer = $plugin->validateRequest($glueRequestTransfer, $stubResource);
+        $glueRequestValidationTransfer = $plugin->validate($glueRequestTransfer, $stubResource);
 
         //Assert
         $this->assertFalse($glueRequestValidationTransfer->getIsValid());
@@ -109,7 +109,7 @@ class AuthorizationRequestAfterRoutingValidatorPluginTest extends Unit
         $stubResource = new TestAuthorizationStrategyAwareResourceRoutePlugin();
 
         //Act
-        $glueRequestValidationTransfer = $plugin->validateRequest($glueRequestTransfer, $stubResource);
+        $glueRequestValidationTransfer = $plugin->validate($glueRequestTransfer, $stubResource);
 
         //Assert
         $this->assertTrue($glueRequestValidationTransfer->getIsValid());
@@ -133,7 +133,7 @@ class AuthorizationRequestAfterRoutingValidatorPluginTest extends Unit
         $stubResource = new TestDefaultAuthorizationStrategyAwareResourceRoutePlugin();
 
         //Act
-        $glueRequestValidationTransfer = $plugin->validateRequest($glueRequestTransfer, $stubResource);
+        $glueRequestValidationTransfer = $plugin->validate($glueRequestTransfer, $stubResource);
 
         //Assert
         $this->assertFalse($glueRequestValidationTransfer->getIsValid());
@@ -158,7 +158,7 @@ class AuthorizationRequestAfterRoutingValidatorPluginTest extends Unit
         $stubResource = new TestUnsupportResourcePlugin();
 
         //Act
-        $glueRequestValidationTransfer = $plugin->validateRequest($glueRequestTransfer, $stubResource);
+        $glueRequestValidationTransfer = $plugin->validate($glueRequestTransfer, $stubResource);
 
         //Assert
         $this->assertTrue($glueRequestValidationTransfer->getIsValid());
@@ -181,7 +181,7 @@ class AuthorizationRequestAfterRoutingValidatorPluginTest extends Unit
         $stubResource = new TestAuthorizationStrategyAwareResourceRoutePlugin();
 
         //Act
-        $glueRequestValidationTransfer = $plugin->validateRequest($glueRequestTransfer, $stubResource);
+        $glueRequestValidationTransfer = $plugin->validate($glueRequestTransfer, $stubResource);
 
         //Assert
         $this->assertTrue($glueRequestValidationTransfer->getIsValid());

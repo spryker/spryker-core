@@ -9,11 +9,12 @@ namespace Spryker\Glue\GlueStorefrontApiApplication\Cache;
 
 use Generated\Shared\Transfer\ApiControllerConfigurationTransfer;
 use ReflectionMethod;
+use Symfony\Component\Routing\RouteCollection;
 
 class ControllerCacheCollector implements ControllerCacheCollectorInterface
 {
     /**
-     * @uses \Spryker\Glue\GlueStorefrontApiApplication\Application\GlueStorefrontApiApplication::GLUE_STOREFRONT_API_APPLICATION
+     * @uses \Spryker\Glue\GlueStorefrontApiApplication\Plugin\GlueApplication\ApplicationIdentifierRequestBuilderPlugin::GLUE_STOREFRONT_API_APPLICATION
      *
      * @var string
      */
@@ -35,9 +36,9 @@ class ControllerCacheCollector implements ControllerCacheCollectorInterface
     protected $resources = [];
 
     /**
-     * @var array<\Spryker\Glue\GlueStorefrontApiApplicationExtension\Dependency\Plugin\RouterPluginInterface>
+     * @var array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RouteProviderPluginInterface>
      */
-    protected $routerPlugins = [];
+    protected $routeProviderPlugins = [];
 
     /**
      * @var array<string, \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface>
@@ -46,12 +47,12 @@ class ControllerCacheCollector implements ControllerCacheCollectorInterface
 
     /**
      * @param array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface> $resources
-     * @param array<\Spryker\Glue\GlueStorefrontApiApplicationExtension\Dependency\Plugin\RouterPluginInterface> $routerPlugins
+     * @param array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RouteProviderPluginInterface> $routeProviderPlugins
      */
-    public function __construct(array $resources, array $routerPlugins)
+    public function __construct(array $resources, array $routeProviderPlugins)
     {
         $this->resources = $resources;
-        $this->routerPlugins = $routerPlugins;
+        $this->routeProviderPlugins = $routeProviderPlugins;
     }
 
     /**
@@ -99,28 +100,31 @@ class ControllerCacheCollector implements ControllerCacheCollectorInterface
      */
     protected function collectCustomRoutes(array $apiControllerConfigurationTransfersData): array
     {
-        foreach ($this->routerPlugins as $routerPlugin) {
-            foreach ($routerPlugin->getRouter()->getRouteCollection() as $pathName => $route) {
-                $routeDefaults = $route->getDefaults();
+        $routeCollection = new RouteCollection();
+        foreach ($this->routeProviderPlugins as $routeProviderPlugin) {
+            $routeCollection = $routeProviderPlugin->addRoutes($routeCollection);
+        }
 
-                if (isset($routeDefaults['_controller'])) {
-                    $apiControllerConfigurationTransfersData = $this->mapApiControllerConfigurationTransfer(
-                        $routeDefaults['_controller'][0],
-                        $routeDefaults['_controller'][1],
-                        $pathName,
-                        $apiControllerConfigurationTransfersData,
-                    );
+        foreach ($routeCollection as $pathName => $route) {
+            $routeDefaults = $route->getDefaults();
 
-                    continue;
-                }
-
+            if (isset($routeDefaults['_controller'])) {
                 $apiControllerConfigurationTransfersData = $this->mapApiControllerConfigurationTransfer(
-                    $this->resourcesData[$routeDefaults[static::RESOURCE_NAME]]->getController(),
-                    $routeDefaults['_method'] . 'Action',
-                    $routeDefaults[static::RESOURCE_NAME],
+                    $routeDefaults['_controller'][0],
+                    $routeDefaults['_controller'][1],
+                    $pathName,
                     $apiControllerConfigurationTransfersData,
                 );
+
+                continue;
             }
+
+            $apiControllerConfigurationTransfersData = $this->mapApiControllerConfigurationTransfer(
+                $this->resourcesData[$routeDefaults[static::RESOURCE_NAME]]->getController(),
+                $routeDefaults['_method'] . 'Action',
+                $routeDefaults[static::RESOURCE_NAME],
+                $apiControllerConfigurationTransfersData,
+            );
         }
 
         return $apiControllerConfigurationTransfersData;

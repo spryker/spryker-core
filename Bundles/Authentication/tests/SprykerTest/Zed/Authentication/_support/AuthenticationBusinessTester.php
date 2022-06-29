@@ -36,7 +36,7 @@ class AuthenticationBusinessTester extends Actor
     use _generated\AuthenticationBusinessTesterActions;
 
     /**
-     * @uses \Spryker\Glue\GlueBackendApiApplication\Application\GlueBackendApiApplication::GLUE_BACKEND_API_APPLICATION
+     * @uses \Spryker\Glue\GlueBackendApiApplication\Plugin\GlueApplication\ApplicationIdentifierRequestBuilderPlugin::GLUE_BACKEND_API_APPLICATION
      *
      * @var string
      */

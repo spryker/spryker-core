@@ -9,7 +9,7 @@ namespace SprykerTest\Glue\GlueRestApiConvention\Plugin\GlueRestApiConvention;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\GlueRequestTransfer;
-use Spryker\Glue\GlueRestApiConvention\Plugin\GlueRestApiConvention\AttributesRequestBuilderPlugin;
+use Spryker\Glue\GlueRestApiConvention\Plugin\GlueApplication\AttributesRequestBuilderPlugin;
 
 /**
  * Auto-generated group annotations

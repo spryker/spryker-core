@@ -8,7 +8,7 @@
 namespace Spryker\Glue\GlueBackendApiApplication\Collector;
 
 use Generated\Shared\Transfer\OauthScopeFindTransfer;
-use Spryker\Glue\GlueBackendApiApplicationExtension\Dependency\Plugin\RouteProviderPluginInterface;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RouteProviderPluginInterface;
 use Spryker\Glue\OauthExtension\Dependency\Plugin\ScopeDefinitionPluginInterface;
 use Spryker\Glue\OauthExtension\Dependency\Plugin\ScopeRouteProviderPluginInterface;
 use Symfony\Component\Routing\RouteCollection;
@@ -16,7 +16,7 @@ use Symfony\Component\Routing\RouteCollection;
 class BackendScopeCollector implements BackendScopeCollectorInterface
 {
     /**
-     * @uses \Spryker\Glue\GlueBackendApiApplication\Plugin\GlueBackendApiApplication\BackendApiApplicationProviderPlugin::GLUE_BACKEND_API_APPLICATION_NAME
+     * @uses \Spryker\Glue\GlueBackendApiApplication\Plugin\DocumentationGeneratorApi\BackendApiApplicationProviderPlugin::GLUE_BACKEND_API_APPLICATION_NAME
      *
      * @var string
      */
@@ -33,7 +33,7 @@ class BackendScopeCollector implements BackendScopeCollectorInterface
     protected $resourcePlugins = [];
 
     /**
-     * @var array<\Spryker\Glue\GlueBackendApiApplicationExtension\Dependency\Plugin\RouteProviderPluginInterface>
+     * @var array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RouteProviderPluginInterface>
      */
     protected $routeProviderPlugins = [];
 
@@ -44,7 +44,7 @@ class BackendScopeCollector implements BackendScopeCollectorInterface
 
     /**
      * @param array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface> $resourcePlugins
-     * @param array<\Spryker\Glue\GlueBackendApiApplicationExtension\Dependency\Plugin\RouteProviderPluginInterface> $routeProviderPlugins
+     * @param array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RouteProviderPluginInterface> $routeProviderPlugins
      * @param \Symfony\Component\Routing\RouteCollection $routeCollection
      */
     public function __construct(
@@ -78,7 +78,7 @@ class BackendScopeCollector implements BackendScopeCollectorInterface
     }
 
     /**
-     * @param \Spryker\Glue\GlueBackendApiApplicationExtension\Dependency\Plugin\RouteProviderPluginInterface $routeProviderPlugin
+     * @param \Spryker\Glue\OauthExtension\Dependency\Plugin\ScopeRouteProviderPluginInterface&\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RouteProviderPluginInterface $routeProviderPlugin
      * @param array<\Generated\Shared\Transfer\OauthScopeFindTransfer> $scopes
      *
      * @return array<\Generated\Shared\Transfer\OauthScopeFindTransfer>

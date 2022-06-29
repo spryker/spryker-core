@@ -21,7 +21,7 @@
         <property name="type" type="string"/>
         <property name="resourceName" type="string"/>
         <property name="controller" type="string"/>
-        <property name="contollerExecutable" type="string[]" singular="contollerExecutable"/>
+        <property name="controllerExecutable" type="string[]" singular="controllerExecutable"/>
         <property name="method" type="string"/>
         <property name="action" type="string"/>
         <property name="parameters" type="string[]" singular="parameter"/>

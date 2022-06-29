@@ -6,8 +6,8 @@
     "require": {
         "php": ">=7.4",
         "spryker/authentication": "^0.1.0",
-        "spryker/glue-rest-api-convention-extension": "^0.1.0",
-        "spryker/glue-storefront-api-application-extension": "^1.0.0",
+        "spryker/glue-application-extension": "^1.10.0",
+        "spryker/glue-rest-api-convention-extension": "^0.2.0",
         "spryker/kernel": "^3.58.0",
         "spryker/oauth": "^2.4.0",
         "spryker/symfony": "^3.5.0",

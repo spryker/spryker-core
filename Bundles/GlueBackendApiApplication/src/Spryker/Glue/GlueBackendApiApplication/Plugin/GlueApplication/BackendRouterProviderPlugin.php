@@ -8,7 +8,7 @@
 namespace Spryker\Glue\GlueBackendApiApplication\Plugin\GlueApplication;
 
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ApiApplicationEndpointProviderPluginInterface;
-use Spryker\Glue\Kernel\AbstractPlugin;
+use Spryker\Glue\Kernel\Backend\AbstractPlugin;
 use Symfony\Component\Routing\RouteCollection;
 
 /**
@@ -26,7 +26,13 @@ class BackendRouterProviderPlugin extends AbstractPlugin implements ApiApplicati
      */
     public function getRouteCollection(): RouteCollection
     {
-        return $this->getFactory()->createChainRouter()->getRouteCollection();
+        $routeCollection = new RouteCollection();
+        $routeProviderPlugins = $this->getFactory()->getRouteProviderPlugins();
+        foreach ($routeProviderPlugins as $routeProviderPlugin) {
+            $routeCollection = $routeProviderPlugin->addRoutes($routeCollection);
+        }
+
+        return $routeCollection;
     }
 
     /**

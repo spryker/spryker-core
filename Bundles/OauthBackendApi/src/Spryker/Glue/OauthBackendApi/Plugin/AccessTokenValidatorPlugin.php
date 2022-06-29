@@ -9,7 +9,7 @@ namespace Spryker\Glue\OauthBackendApi\Plugin;
 
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueRequestValidationTransfer;
-use Spryker\Glue\GlueBackendApiApplicationExtension\Dependency\Plugin\RequestValidatorPluginInterface;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RequestValidatorPluginInterface;
 use Spryker\Glue\Kernel\Backend\AbstractPlugin;
 
 /**

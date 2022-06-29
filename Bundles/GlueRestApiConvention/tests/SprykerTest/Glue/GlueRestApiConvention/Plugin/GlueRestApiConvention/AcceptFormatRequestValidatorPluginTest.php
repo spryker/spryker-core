@@ -10,7 +10,7 @@ namespace SprykerTest\Glue\GlueRestApiConvention\Plugin\GlueRestApiConvention;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Spryker\Glue\GlueRestApiConvention\GlueRestApiConventionDependencyProvider;
-use Spryker\Glue\GlueRestApiConvention\Plugin\GlueRestApiConvention\AcceptFormatRequestValidatorPlugin;
+use Spryker\Glue\GlueRestApiConvention\Plugin\GlueApplication\AcceptFormatRequestValidatorPlugin;
 use Spryker\Glue\GlueRestApiConvention\Plugin\GlueRestApiConvention\JsonResponseEncoderPlugin;
 
 /**

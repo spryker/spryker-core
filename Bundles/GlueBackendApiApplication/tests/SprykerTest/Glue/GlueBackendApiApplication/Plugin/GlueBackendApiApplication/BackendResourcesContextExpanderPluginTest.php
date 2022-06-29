@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\GlueResourceMethodCollectionTransfer;
 use Generated\Shared\Transfer\GlueResourceMethodConfigurationTransfer;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface;
 use Spryker\Glue\GlueBackendApiApplication\GlueBackendApiApplicationDependencyProvider;
-use Spryker\Glue\GlueBackendApiApplication\Plugin\GlueBackendApiApplication\BackendResourcesContextExpanderPlugin;
+use Spryker\Glue\GlueBackendApiApplication\Plugin\DocumentationGeneratorApi\BackendResourcesContextExpanderPlugin;
 
 /**
  * Auto-generated group annotations

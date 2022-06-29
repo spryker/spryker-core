@@ -11,9 +11,8 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\GlueResourceMethodCollectionTransfer;
 use Generated\Shared\Transfer\GlueResourceMethodConfigurationTransfer;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RouteProviderPluginInterface;
 use Spryker\Glue\GlueBackendApiApplication\Cache\ControllerCacheCollector;
-use Spryker\Glue\GlueBackendApiApplication\Router\RouterInterface;
-use Spryker\Glue\GlueBackendApiApplicationExtension\Dependency\Plugin\RouterPluginInterface;
 use SprykerTest\Glue\GlueBackendApiApplication\Stub\ResourceController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Route;
@@ -47,7 +46,7 @@ class ControllerCacheCollectorTest extends Unit
     protected const FAKE_COLLECTION = 'fakeCollection';
 
     /**
-     * @uses \Spryker\Glue\GlueBackendApiApplication\Application\GlueBackendApiApplication::GLUE_BACKEND_API_APPLICATION
+     * @uses \Spryker\Glue\GlueBackendApiApplication\Plugin\GlueApplication\ApplicationIdentifierRequestBuilderPlugin::GLUE_BACKEND_API_APPLICATION
      *
      * @var string
      */
@@ -85,18 +84,13 @@ class ControllerCacheCollectorTest extends Unit
         //Arrange
         $resourceMock = $this->createResourceMock();
 
-        $routerMock = $this->createMock(RouterInterface::class);
-        $routerMock->expects($this->once())
-            ->method('getRouteCollection')
+        $routeProviderPluginMock = $this->createMock(RouteProviderPluginInterface::class);
+        $routeProviderPluginMock->expects($this->once())
+            ->method('addRoutes')
             ->willReturn($this->createFakeRouteCollection());
 
-        $routerPluginMock = $this->createMock(RouterPluginInterface::class);
-        $routerPluginMock->expects($this->once())
-            ->method('getRouter')
-            ->willReturn($routerMock);
-
         //Act
-        $controllerCacheCollector = new ControllerCacheCollector([$resourceMock], [$routerPluginMock]);
+        $controllerCacheCollector = new ControllerCacheCollector([$resourceMock], [$routeProviderPluginMock]);
         $apiControllerConfigurationTransfersData = $controllerCacheCollector->collect();
 
         //Assert

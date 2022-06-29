@@ -7,31 +7,13 @@
 
 namespace Spryker\Glue\GlueBackendApiApplication;
 
-use Spryker\Glue\GlueBackendApiApplication\Router\Generator\UrlGenerator;
-use Spryker\Glue\GlueBackendApiApplication\Router\UrlMatcher\CompiledUrlMatcher;
 use Spryker\Glue\Kernel\AbstractBundleConfig;
 use Spryker\Shared\GlueBackendApiApplication\GlueBackendApiApplicationConstants;
+use Symfony\Component\Routing\Generator\CompiledUrlGenerator;
+use Symfony\Component\Routing\Matcher\CompiledUrlMatcher;
 
 class GlueBackendApiApplicationConfig extends AbstractBundleConfig
 {
-    /**
-     * @api
-     *
-     * @uses \Spryker\Glue\GlueApplication\GlueApplicationConfig::ERROR_CODE_RESOURCE_NOT_FOUND
-     *
-     * @var string
-     */
-    public const ERROR_CODE_RESOURCE_NOT_FOUND = '007';
-
-    /**
-     * @api
-     *
-     * @uses \Spryker\Glue\GlueApplication\GlueApplicationConfig::ERROR_MESSAGE_RESOURCE_NOT_FOUND
-     *
-     * @var string
-     */
-    public const ERROR_MESSAGE_RESOURCE_NOT_FOUND = 'Not found';
-
     /**
      * @var string
      */
@@ -145,25 +127,6 @@ class GlueBackendApiApplicationConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - Returns a Router configuration which makes use of a Router cache.
-     *
-     * @api
-     *
-     * @see \Symfony\Component\Routing\Router::setOptions()
-     *
-     * @return array<string, mixed>
-     */
-    public function getRouterConfiguration(): array
-    {
-        return [
-            'cache_dir' => $this->getCachePathIfCacheEnabled(),
-            'generator_class' => UrlGenerator::class,
-            'matcher_class' => CompiledUrlMatcher::class,
-        ];
-    }
-
-    /**
-     * Specification:
      * - List of allowed CORS headers.
      *
      * @api
@@ -178,6 +141,25 @@ class GlueBackendApiApplicationConfig extends AbstractBundleConfig
             static::HEADER_CONTENT_LANGUAGE,
             static::HEADER_ACCEPT_LANGUAGE,
             static::HEADER_AUTHORIZATION,
+        ];
+    }
+
+    /**
+     * Specification:
+     * - Returns a Router configuration which makes use of a Router cache.
+     *
+     * @api
+     *
+     * @see \Symfony\Component\Routing\Router::setOptions()
+     *
+     * @return array<string, mixed>
+     */
+    public function getRouterConfiguration(): array
+    {
+        return [
+            'cache_dir' => $this->getCachePathIfCacheEnabled(),
+            'generator_class' => CompiledUrlGenerator::class,
+            'matcher_class' => CompiledUrlMatcher::class,
         ];
     }
 

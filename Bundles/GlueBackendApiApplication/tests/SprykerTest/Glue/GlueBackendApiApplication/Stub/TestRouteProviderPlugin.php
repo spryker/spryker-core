@@ -7,11 +7,13 @@
 
 namespace SprykerTest\Glue\GlueBackendApiApplication\Stub;
 
-use Spryker\Glue\GlueBackendApiApplication\Plugin\GlueBackendApiApplication\RouteProvider\AbstractRouteProviderPlugin;
-use Spryker\Glue\GlueBackendApiApplicationExtension\Dependency\Plugin\RouteProviderPluginInterface;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RouteProviderPluginInterface;
+use Spryker\Glue\Kernel\Backend\AbstractPlugin;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
 
-class TestRouteProviderPlugin extends AbstractRouteProviderPlugin implements RouteProviderPluginInterface
+class TestRouteProviderPlugin extends AbstractPlugin implements RouteProviderPluginInterface
 {
     /**
      * @param \Symfony\Component\Routing\RouteCollection $routeCollection
@@ -20,10 +22,26 @@ class TestRouteProviderPlugin extends AbstractRouteProviderPlugin implements Rou
      */
     public function addRoutes(RouteCollection $routeCollection): RouteCollection
     {
-        $route = $this->createGetRoute('/get', 'store');
+        $route = (new Route('/get'))
+            ->setDefault(
+                '_controller',
+                [
+                    ResourceController::class,
+                    'getCollectionAction',
+                ],
+            )
+            ->setMethods(Request::METHOD_GET);
         $routeCollection->add('get', $route);
 
-        $postRoute = $this->createPostRoute('/post', 'store');
+        $postRoute = (new Route('/post'))
+            ->setDefault(
+                '_controller',
+                [
+                    ResourceController::class,
+                    'getCollectionAction',
+                ],
+            )
+            ->setMethods(Request::METHOD_POST);
         $routeCollection->add('post', $postRoute);
 
         return $routeCollection;

@@ -444,8 +444,10 @@ class OpenApiSchemasFormatter implements OpenApiSchemaFormatterInterface
         foreach ($relationshipPluginsContextTransfers as $relationshipPluginsContextTransfer) {
             $resourceType = $relationshipPluginsContextTransfer->getResourceTypeOrFail();
             $relationship = $relationshipPluginsContextTransfer->getRelationshipOrFail();
-            $resourceAttributesClassName = $relationshipPluginsContextTransfer->getRelationshipPluginAnnotationsContextOrFail()->getResourceAttributesClassNameOrFail();
-            $this->relationshipMap[$resourceType][$relationship] = $resourceAttributesClassName;
+            if ($relationshipPluginsContextTransfer->getRelationshipPluginAnnotationsContext()) {
+                $resourceAttributesClassName = $relationshipPluginsContextTransfer->getRelationshipPluginAnnotationsContextOrFail()->getResourceAttributesClassNameOrFail();
+                $this->relationshipMap[$resourceType][$relationship] = $resourceAttributesClassName;
+            }
         }
     }
 
@@ -465,6 +467,10 @@ class OpenApiSchemasFormatter implements OpenApiSchemaFormatterInterface
         $relationships = $this->getRelationships($resourceContextTransfer);
 
         foreach ($relationships as $relationship) {
+            if (!isset($this->relationshipMap[$resourceTypeOrFail][$relationship])) {
+                continue;
+            }
+
             $resourceAttributesClassName[$relationship] = $this->relationshipMap[$resourceTypeOrFail][$relationship];
         }
 

@@ -38,27 +38,27 @@ class GetResourceByIdPathMethodFormatter implements PathMethodFormatterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PathAnnotationTransfer $pathAnnotationsTransfer
+     * @param \Generated\Shared\Transfer\PathAnnotationTransfer $pathAnnotationTransfer
      * @param array<mixed> $formattedData
      *
      * @return array<mixed>
      */
-    public function format(PathAnnotationTransfer $pathAnnotationsTransfer, array $formattedData): array
+    public function format(PathAnnotationTransfer $pathAnnotationTransfer, array $formattedData): array
     {
-        if (!$pathAnnotationsTransfer->getGetResourceById()) {
+        if (!$pathAnnotationTransfer->getGetResourceById()) {
             return $formattedData;
         }
 
-        $resourceType = $pathAnnotationsTransfer->getResourceTypeOrFail();
+        $resourceType = $pathAnnotationTransfer->getResourceTypeOrFail();
 
         $pathMethodData = $this->openApiSpecificationPathMethodFormatter->getPathMethodComponentData(
             $resourceType,
-            $pathAnnotationsTransfer->getGetResourceById(),
+            $pathAnnotationTransfer->getGetResourceById(),
             static::PATTERN_OPERATION_ID_GET_RESOURCE,
             Response::HTTP_OK,
         );
 
-        if (!$pathMethodData['summary']) {
+        if (!isset($pathMethodData['summary'])) {
             $pathMethodData['summary'] = $this->openApiSpecificationPathMethodFormatter
                 ->getDefaultMethodSummary(static::PATTERN_SUMMARY_GET_RESOURCE, $resourceType);
         }

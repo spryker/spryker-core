@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
 use Spryker\Glue\GlueApplication\Cache\Reader\ControllerCacheReaderInterface;
 use Spryker\Glue\GlueApplication\Exception\InvalidActionParametersException;
+use Spryker\Glue\GlueApplication\Resource\GenericResource;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Symfony\Component\HttpFoundation\Request;
@@ -53,7 +54,7 @@ class ResourceExecutor implements ResourceExecutorInterface
         }
 
         if ($glueRequestTransfer->getContent()) {
-            $attributesTransfer = $this->getAttributesTransfer($resource, $glueRequestTransfer);
+            $attributesTransfer = $this->getAttributesTransfer($resource, $glueRequestTransfer, $parameters);
 
             if (!$attributesTransfer) {
                 return call_user_func_array($executableResource, $this->collectParameters($parameters, [$glueRequestTransfer]));
@@ -75,11 +76,27 @@ class ResourceExecutor implements ResourceExecutorInterface
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface $resource
      * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
+     * @param array<mixed> $parameters
      *
      * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer|null
      */
-    protected function getAttributesTransfer(ResourceInterface $resource, GlueRequestTransfer $glueRequestTransfer): ?AbstractTransfer
-    {
+    protected function getAttributesTransfer(
+        ResourceInterface $resource,
+        GlueRequestTransfer $glueRequestTransfer,
+        array $parameters
+    ): ?AbstractTransfer {
+        if ($resource instanceof GenericResource) {
+            foreach ($parameters as $parameterType => $parameter) {
+                if (
+                    class_exists($parameterType)
+                    && is_subclass_of($parameterType, AbstractTransfer::class)
+                    && !$parameterType instanceof GlueRequestTransfer
+                ) {
+                    return new $parameterType();
+                }
+            }
+        }
+
         $glueResourceMethodCollectionTransfer = $resource->getDeclaredMethods();
 
         $method = strtolower($glueRequestTransfer->getResource()->getMethod());
@@ -89,7 +106,7 @@ class ResourceExecutor implements ResourceExecutorInterface
 
         /** @var \Generated\Shared\Transfer\GlueResourceMethodConfigurationTransfer|null $glueResourceMethodConfigurationTransfer */
         $glueResourceMethodConfigurationTransfer = $glueResourceMethodCollectionTransfer
-            ->offsetGet($method);
+            ->offsetGet(strtolower($glueRequestTransfer->getResource()->getMethod()));
 
         if ($glueResourceMethodConfigurationTransfer && $glueResourceMethodConfigurationTransfer->getAttributes()) {
             $attributeTransfer = $glueResourceMethodConfigurationTransfer->getAttributesOrFail();
@@ -98,6 +115,16 @@ class ResourceExecutor implements ResourceExecutorInterface
                 !$attributeTransfer instanceof GlueRequestTransfer
             ) {
                 return new $attributeTransfer();
+            }
+        }
+
+        foreach ($parameters as $parameterType => $parameter) {
+            if (
+                class_exists($parameterType)
+                && is_subclass_of($parameterType, AbstractTransfer::class)
+                && !$parameterType instanceof GlueRequestTransfer
+            ) {
+                return new $parameterType();
             }
         }
 

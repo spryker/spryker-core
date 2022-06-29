@@ -26,7 +26,13 @@ class StorefrontRouterProviderPlugin extends AbstractPlugin implements ApiApplic
      */
     public function getRouteCollection(): RouteCollection
     {
-        return $this->getFactory()->createChainRouter()->getRouteCollection();
+        $routeCollection = new RouteCollection();
+        $routeProviderPlugins = $this->getFactory()->getRouteProviderPlugins();
+        foreach ($routeProviderPlugins as $routeProviderPlugin) {
+            $routeCollection = $routeProviderPlugin->addRoutes($routeCollection);
+        }
+
+        return $routeCollection;
     }
 
     /**

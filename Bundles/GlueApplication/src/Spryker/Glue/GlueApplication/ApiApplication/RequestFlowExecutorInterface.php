@@ -10,20 +10,20 @@ namespace Spryker\Glue\GlueApplication\ApiApplication;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
 use Spryker\Glue\GlueApplication\ApiApplication\Type\RequestFlowAwareApiApplication;
-use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ApiConventionPluginInterface;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ConventionPluginInterface;
 
 interface RequestFlowExecutorInterface
 {
     /**
-     * @param \Spryker\Glue\GlueApplication\ApiApplication\Type\RequestFlowAwareApiApplication $apiApplication
-     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ApiConventionPluginInterface $apiConventionPlugin
      * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
+     * @param \Spryker\Glue\GlueApplication\ApiApplication\Type\RequestFlowAwareApiApplication $apiApplication
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ConventionPluginInterface|null $conventionPlugin
      *
      * @return \Generated\Shared\Transfer\GlueResponseTransfer
      */
     public function executeRequestFlow(
+        GlueRequestTransfer $glueRequestTransfer,
         RequestFlowAwareApiApplication $apiApplication,
-        ApiConventionPluginInterface $apiConventionPlugin,
-        GlueRequestTransfer $glueRequestTransfer
+        ?ConventionPluginInterface $conventionPlugin
     ): GlueResponseTransfer;
 }

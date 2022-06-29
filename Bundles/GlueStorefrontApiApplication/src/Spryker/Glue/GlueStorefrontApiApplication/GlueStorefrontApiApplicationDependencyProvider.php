@@ -9,8 +9,6 @@ namespace Spryker\Glue\GlueStorefrontApiApplication;
 
 use Spryker\Glue\GlueStorefrontApiApplication\Dependency\Client\GlueStorefrontApiApplicationToStoreClientBridge;
 use Spryker\Glue\GlueStorefrontApiApplication\Dependency\External\GlueStorefrontApiApplicationToYamlAdapter;
-use Spryker\Glue\GlueStorefrontApiApplication\Exception\MissingRequestResourceFilterPluginException;
-use Spryker\Glue\GlueStorefrontApiApplicationExtension\Dependency\Plugin\RequestResourceFilterPluginInterface;
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
 
@@ -57,22 +55,7 @@ class GlueStorefrontApiApplicationDependencyProvider extends AbstractBundleDepen
     /**
      * @var string
      */
-    public const PLUGINS_ROUTE_MATCHER = 'PLUGINS_ROUTE_MATCHER';
-
-    /**
-     * @var string
-     */
-    public const PLUGINS_ROUTER = 'PLUGINS_ROUTER';
-
-    /**
-     * @var string
-     */
     public const PLUGINS_ROUTE_PROVIDER = 'PLUGINS_ROUTE_PROVIDER';
-
-    /**
-     * @var string
-     */
-    public const PLUGIN_REQUEST_RESOURCE_FILTER = 'PLUGIN_REQUEST_RESOURCE_FILTER';
 
     /**
      * @var string
@@ -94,9 +77,6 @@ class GlueStorefrontApiApplicationDependencyProvider extends AbstractBundleDepen
         $container = $this->addRequestAfterRoutingValidatorPlugins($container);
         $container = $this->addResponseFormatterPlugins($container);
         $container = $this->addStoreClient($container);
-        $container = $this->addRouteMatcherPlugins($container);
-        $container = $this->addRouterPlugins($container);
-        $container = $this->addRequestResourceFilterPlugin($container);
         $container = $this->addRouteProviderPlugins($container);
         $container = $this->addYamlAdapter($container);
 
@@ -154,11 +134,19 @@ class GlueStorefrontApiApplicationDependencyProvider extends AbstractBundleDepen
      */
     protected function addRequestBuilderPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_REQUEST_BUILDER, function (Container $container) {
+        $container->set(static::PLUGINS_REQUEST_BUILDER, function () {
             return $this->getRequestBuilderPlugins();
         });
 
         return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RequestBuilderPluginInterface>
+     */
+    protected function getRequestBuilderPlugins(): array
+    {
+        return [];
     }
 
     /**
@@ -168,11 +156,19 @@ class GlueStorefrontApiApplicationDependencyProvider extends AbstractBundleDepen
      */
     protected function addRequestValidatorPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_REQUEST_VALIDATOR, function (Container $container) {
+        $container->set(static::PLUGINS_REQUEST_VALIDATOR, function () {
             return $this->getRequestValidatorPlugins();
         });
 
         return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RequestValidatorPluginInterface>
+     */
+    protected function getRequestValidatorPlugins(): array
+    {
+        return [];
     }
 
     /**
@@ -182,11 +178,19 @@ class GlueStorefrontApiApplicationDependencyProvider extends AbstractBundleDepen
      */
     protected function addRequestAfterRoutingValidatorPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_REQUEST_AFTER_ROUTING_VALIDATOR, function (Container $container) {
+        $container->set(static::PLUGINS_REQUEST_AFTER_ROUTING_VALIDATOR, function () {
             return $this->getRequestAfterRoutingValidatorPlugins();
         });
 
         return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RequestAfterRoutingValidatorPluginInterface>
+     */
+    protected function getRequestAfterRoutingValidatorPlugins(): array
+    {
+        return [];
     }
 
     /**
@@ -196,11 +200,19 @@ class GlueStorefrontApiApplicationDependencyProvider extends AbstractBundleDepen
      */
     protected function addResponseFormatterPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_RESPONSE_FORMATTER, function (Container $container) {
+        $container->set(static::PLUGINS_RESPONSE_FORMATTER, function () {
             return $this->getResponseFormatterPlugins();
         });
 
         return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResponseFormatterPluginInterface>
+     */
+    protected function getResponseFormatterPlugins(): array
+    {
+        return [];
     }
 
     /**
@@ -218,113 +230,6 @@ class GlueStorefrontApiApplicationDependencyProvider extends AbstractBundleDepen
     }
 
     /**
-     * @return array<\Spryker\Glue\GlueStorefrontApiApplicationExtension\Dependency\Plugin\RequestBuilderPluginInterface>
-     */
-    protected function getRequestBuilderPlugins(): array
-    {
-        return [];
-    }
-
-    /**
-     * @return array<\Spryker\Glue\GlueStorefrontApiApplicationExtension\Dependency\Plugin\RequestValidatorPluginInterface>
-     */
-    protected function getRequestValidatorPlugins(): array
-    {
-        return [];
-    }
-
-    /**
-     * @return array<\Spryker\Glue\GlueStorefrontApiApplicationExtension\Dependency\Plugin\RequestAfterRoutingValidatorPluginInterface>
-     */
-    protected function getRequestAfterRoutingValidatorPlugins(): array
-    {
-        return [];
-    }
-
-    /**
-     * @return array<\Spryker\Glue\GlueStorefrontApiApplicationExtension\Dependency\Plugin\ResponseFormatterPluginInterface>
-     */
-    protected function getResponseFormatterPlugins(): array
-    {
-        return [];
-    }
-
-    /**
-     * @param \Spryker\Glue\Kernel\Container $container
-     *
-     * @return \Spryker\Glue\Kernel\Container
-     */
-    protected function addRouteMatcherPlugins(Container $container): Container
-    {
-        $container->set(static::PLUGINS_ROUTE_MATCHER, function () {
-            return $this->getRouteMatcherPlugins();
-        });
-
-        return $container;
-    }
-
-    /**
-     * @return array<\Spryker\Glue\GlueStorefrontApiApplicationExtension\Dependency\Plugin\RouteMatcherPluginInterface>
-     */
-    protected function getRouteMatcherPlugins(): array
-    {
-        return [];
-    }
-
-    /**
-     * @param \Spryker\Glue\Kernel\Container $container
-     *
-     * @return \Spryker\Glue\Kernel\Container
-     */
-    protected function addRouterPlugins(Container $container): Container
-    {
-        $container->set(static::PLUGINS_ROUTER, function () {
-            return $this->getRouterPlugins();
-        });
-
-        return $container;
-    }
-
-    /**
-     * @return array<\Spryker\Glue\RouterExtension\Dependency\Plugin\RouterPluginInterface>
-     */
-    protected function getRouterPlugins(): array
-    {
-        return [];
-    }
-
-    /**
-     * @param \Spryker\Glue\Kernel\Container $container
-     *
-     * @return \Spryker\Glue\Kernel\Container
-     */
-    protected function addRequestResourceFilterPlugin(Container $container): Container
-    {
-        $container->set(static::PLUGIN_REQUEST_RESOURCE_FILTER, function () {
-            return $this->getRequestResourceFilterPlugin();
-        });
-
-        return $container;
-    }
-
-    /**
-     * @throws \Spryker\Glue\GlueStorefrontApiApplication\Exception\MissingRequestResourceFilterPluginException
-     *
-     * @return \Spryker\Glue\GlueStorefrontApiApplicationExtension\Dependency\Plugin\RequestResourceFilterPluginInterface
-     */
-    public function getRequestResourceFilterPlugin(): RequestResourceFilterPluginInterface
-    {
-        throw new MissingRequestResourceFilterPluginException(
-            sprintf(
-                'There is no registered resource filter plugin.
-                    Make sure that GlueStorefrontApiApplicationDependencyProvider::getRequestResourceFilterPlugin() returns
-                    an implementation of %s',
-                RequestResourceFilterPluginInterface::class,
-            ),
-        );
-    }
-
-    /**
      * @param \Spryker\Glue\Kernel\Container $container
      *
      * @return \Spryker\Glue\Kernel\Container
@@ -339,6 +244,14 @@ class GlueStorefrontApiApplicationDependencyProvider extends AbstractBundleDepen
     }
 
     /**
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RouteProviderPluginInterface>
+     */
+    protected function getRouteProviderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
      * @param \Spryker\Glue\Kernel\Container $container
      *
      * @return \Spryker\Glue\Kernel\Container
@@ -350,13 +263,5 @@ class GlueStorefrontApiApplicationDependencyProvider extends AbstractBundleDepen
         });
 
         return $container;
-    }
-
-    /**
-     * @return array<\Spryker\Glue\GlueStorefrontApiApplicationExtension\Dependency\Plugin\RouteProviderPluginInterface>
-     */
-    protected function getRouteProviderPlugins(): array
-    {
-        return [];
     }
 }

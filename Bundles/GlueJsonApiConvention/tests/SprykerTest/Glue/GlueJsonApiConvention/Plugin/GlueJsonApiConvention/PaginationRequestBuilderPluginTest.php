@@ -9,7 +9,7 @@ namespace SprykerTest\Glue\GlueJsonApiConvention\Plugin\GlueJsonApiConvention;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\PaginationTransfer;
-use Spryker\Glue\GlueJsonApiConvention\Plugin\GlueJsonApiConvention\PaginationRequestBuilderPlugin;
+use Spryker\Glue\GlueJsonApiConvention\Plugin\GlueApplication\PaginationRequestBuilderPlugin;
 
 /**
  * Auto-generated group annotations

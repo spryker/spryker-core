@@ -10,7 +10,7 @@ namespace SprykerTest\Glue\GlueStorefrontApiApplication\Plugin\GlueApplication;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\GlueApiContextTransfer;
 use Spryker\Glue\GlueStorefrontApiApplication\GlueStorefrontApiApplicationFactory;
-use Spryker\Glue\GlueStorefrontApiApplication\Plugin\StorefrontApiGlueApplicationBootstrapPlugin;
+use Spryker\Glue\GlueStorefrontApiApplication\Plugin\GlueApplication\StorefrontApiGlueApplicationBootstrapPlugin;
 use Spryker\Shared\Application\ApplicationInterface;
 
 /**

@@ -9,3 +9,4 @@ parameters:
         - '#Instanceof between class-string<.+AbstractTransfer> and .+GlueRequestTransfer will always evaluate to false.#'
         - '#Method .+AbstractResourcePlugin::getResource\(\) should return callable\(\): mixed but returns array{.+AbstractController, string}.#'
         - '#Method .+AbstractResourcePlugin::createControllerInstance\(\) should return .+AbstractController but returns object.#'
+        - '#Method .+CustomRouteMatcher::createControllerInstance\(\) should return .+AbstractController but returns object.#'

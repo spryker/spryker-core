@@ -9,12 +9,14 @@ namespace Spryker\Glue\GlueApplication\Plugin\GlueApplication;
 
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Spryker\Glue\GlueApplication\Exception\MissingApiConventionException;
-use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ApiConventionPluginInterface;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ConventionPluginInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceFilterPluginInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 
 /**
+ * @deprecated Will be removed without replacement.
+ *
  * @method \Spryker\Glue\GlueApplication\GlueApplicationFactory getFactory()
  */
 class ConventionResourceFilterPlugin extends AbstractPlugin implements ResourceFilterPluginInterface
@@ -53,11 +55,11 @@ class ConventionResourceFilterPlugin extends AbstractPlugin implements ResourceF
      *
      * @throws \Spryker\Glue\GlueApplication\Exception\MissingApiConventionException
      *
-     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ApiConventionPluginInterface
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ConventionPluginInterface
      */
-    protected function getApiConventionPluginClassName(string $conventionName): ApiConventionPluginInterface
+    protected function getApiConventionPluginClassName(string $conventionName): ConventionPluginInterface
     {
-        foreach ($this->getFactory()->getApiConventionPlugins() as $apiConventionPlugin) {
+        foreach ($this->getFactory()->getConventionPlugins() as $apiConventionPlugin) {
             if ($apiConventionPlugin->getName() === $conventionName) {
                 return $apiConventionPlugin;
             }
@@ -66,8 +68,8 @@ class ConventionResourceFilterPlugin extends AbstractPlugin implements ResourceF
         throw new MissingApiConventionException(
             sprintf(
                 'No plugin that implements `%s` was found for the current request.
-                Please implement one and inject into `GlueApplicationDependencyProvider::getApiConventionPlugins()`',
-                ApiConventionPluginInterface::class,
+                Please implement one and inject into `GlueApplicationDependencyProvider::getConventionPlugins()`',
+                ConventionPluginInterface::class,
             ),
         );
     }

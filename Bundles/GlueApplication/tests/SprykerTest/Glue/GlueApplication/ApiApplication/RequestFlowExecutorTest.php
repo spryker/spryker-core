@@ -14,9 +14,13 @@ use Generated\Shared\Transfer\GlueResponseTransfer;
 use Spryker\Glue\GlueApplication\ApiApplication\RequestFlowExecutor;
 use Spryker\Glue\GlueApplication\ApiApplication\Type\RequestFlowAwareApiApplication;
 use Spryker\Glue\GlueApplication\Executor\ResourceExecutorInterface;
-use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ApiConventionPluginInterface;
+use Spryker\Glue\GlueApplication\Router\RouteMatcherInterface;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ConventionPluginInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\MissingResourceInterface;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RequestAfterRoutingValidatorPluginInterface;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RequestValidatorPluginInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Auto-generated group annotations
@@ -38,31 +42,31 @@ class RequestFlowExecutorTest extends Unit
         $apiConventionPluginMock = $this->createBaseApiConventionPluginMock($this->createResourceMock());
         $apiConventionPluginMock
             ->expects($this->once())
-            ->method('validateRequestAfterRouting')
-            ->willReturn(
-                (new GlueRequestValidationTransfer())
-                    ->setIsValid(true),
-            );
+            ->method('provideRequestAfterRoutingValidatorPlugins')
+            ->willReturn([]);
 
         $apiApplicationPluginMock = $this->createBaseApiApplicationPluginMock($this->createResourceMock());
         $apiApplicationPluginMock
             ->expects($this->once())
-            ->method('validateRequestAfterRouting')
-            ->willReturn(
-                (new GlueRequestValidationTransfer())
-                    ->setIsValid(true),
-            );
+            ->method('provideRequestAfterRoutingValidatorPlugins')
+            ->willReturn([]);
 
         $resourceExecutorMock = $this->createMock(ResourceExecutorInterface::class);
         $resourceExecutorMock->expects($this->once())
             ->method('executeResource')
             ->willReturn(new GlueResponseTransfer());
 
-        $requestFlowExecutor = new RequestFlowExecutor($resourceExecutorMock);
+        $routeMatcherMock = $this->createMock(RouteMatcherInterface::class);
+        $routeMatcherMock
+            ->expects($this->once())
+            ->method('route')
+            ->willReturn($this->createMock(ResourceInterface::class));
+
+        $requestFlowExecutor = new RequestFlowExecutor($resourceExecutorMock, $routeMatcherMock);
         $requestFlowExecutor->executeRequestFlow(
+            new GlueRequestTransfer(),
             $apiApplicationPluginMock,
             $apiConventionPluginMock,
-            new GlueRequestTransfer(),
         );
     }
 
@@ -73,37 +77,52 @@ class RequestFlowExecutorTest extends Unit
     {
         $expectedValidationResult = (new GlueRequestValidationTransfer())
             ->setIsValid(false)
-            ->setStatusCode('400')
+            ->setStatus(Response::HTTP_BAD_REQUEST)
             ->setValidationError('failed validation');
 
-        $apiConventionPluginMock = $this->createMock(ApiConventionPluginInterface::class);
-        $apiConventionPluginMock
-            ->expects($this->once())
-            ->method('buildRequest')
-            ->willReturnArgument(0);
-        $apiConventionPluginMock
-            ->expects($this->once())
-            ->method('validateRequest')
+        $requestValidatorPluginMock = $this->createMock(RequestValidatorPluginInterface::class);
+        $requestValidatorPluginMock->method('validate')
             ->willReturn($expectedValidationResult);
+
+        $anotherRequestValidatorPluginMock = $this->createMock(RequestValidatorPluginInterface::class);
+        $anotherRequestValidatorPluginMock->expects($this->never())
+            ->method('validate');
+
+        $apiConventionPluginMock = $this->createMock(ConventionPluginInterface::class);
+        $apiConventionPluginMock
+            ->expects($this->once())
+            ->method('provideRequestBuilderPlugins')
+            ->willReturn([]);
+        $apiConventionPluginMock
+            ->expects($this->once())
+            ->method('provideRequestValidatorPlugins')
+            ->willReturn([$requestValidatorPluginMock]);
 
         $apiApplicationPluginMock = $this->createMock(RequestFlowAwareApiApplication::class);
         $apiApplicationPluginMock
             ->expects($this->once())
-            ->method('buildRequest')
-            ->willReturnArgument(0);
+            ->method('provideRequestBuilderPlugins')
+            ->willReturn([]);
         $apiApplicationPluginMock
-            ->expects($this->never())
-            ->method('validateRequest');
+            ->expects($this->once())
+            ->method('provideRequestValidatorPlugins')
+            ->willReturn([$anotherRequestValidatorPluginMock]);
 
         $resourceExecutorMock = $this->createMock(ResourceExecutorInterface::class);
         $resourceExecutorMock->expects($this->never())
             ->method('executeResource');
 
-        $requestFlowExecutor = new RequestFlowExecutor($resourceExecutorMock);
+        $routeMatcherMock = $this->createMock(RouteMatcherInterface::class);
+        $routeMatcherMock
+            ->expects($this->never())
+            ->method('route')
+            ->willReturn($this->createMock(ResourceInterface::class));
+
+        $requestFlowExecutor = new RequestFlowExecutor($resourceExecutorMock, $routeMatcherMock);
         $requestFlowExecutor->executeRequestFlow(
+            new GlueRequestTransfer(),
             $apiApplicationPluginMock,
             $apiConventionPluginMock,
-            new GlueRequestTransfer(),
         );
     }
 
@@ -112,43 +131,54 @@ class RequestFlowExecutorTest extends Unit
      */
     public function testRequestFlowSendsResponseOnApplicationValidationError(): void
     {
+        $requestValidatorPluginMock = $this->createMock(RequestValidatorPluginInterface::class);
+        $requestValidatorPluginMock->method('validate')
+            ->willReturn((new GlueRequestValidationTransfer())->setIsValid(true));
+
         $expectedValidationResult = (new GlueRequestValidationTransfer())
             ->setIsValid(false)
-            ->setStatusCode('400')
+            ->setStatus(Response::HTTP_BAD_REQUEST)
             ->setValidationError('failed validation');
 
-        $apiConventionPluginMock = $this->createMock(ApiConventionPluginInterface::class);
+        $anotherRequestValidatorPluginMock = $this->createMock(RequestValidatorPluginInterface::class);
+        $anotherRequestValidatorPluginMock->method('validate')
+            ->willReturn($expectedValidationResult);
+
+        $apiConventionPluginMock = $this->createMock(ConventionPluginInterface::class);
         $apiConventionPluginMock
             ->expects($this->once())
-            ->method('buildRequest')
-            ->willReturnArgument(0);
+            ->method('provideRequestBuilderPlugins')
+            ->willReturn([]);
         $apiConventionPluginMock
             ->expects($this->once())
-            ->method('validateRequest')
-            ->willReturn(
-                (new GlueRequestValidationTransfer())
-                ->setIsValid(true),
-            );
+            ->method('provideRequestValidatorPlugins')
+            ->willReturn([$requestValidatorPluginMock]);
 
         $apiApplicationPluginMock = $this->createMock(RequestFlowAwareApiApplication::class);
         $apiApplicationPluginMock
             ->expects($this->once())
-            ->method('buildRequest')
-            ->willReturnArgument(0);
+            ->method('provideRequestBuilderPlugins')
+            ->willReturn([]);
         $apiApplicationPluginMock
             ->expects($this->once())
-            ->method('validateRequest')
-            ->willReturn($expectedValidationResult);
+            ->method('provideRequestValidatorPlugins')
+            ->willReturn([$anotherRequestValidatorPluginMock]);
 
         $resourceExecutorMock = $this->createMock(ResourceExecutorInterface::class);
         $resourceExecutorMock->expects($this->never())
             ->method('executeResource');
 
-        $requestFlowExecutor = new RequestFlowExecutor($resourceExecutorMock);
+        $routeMatcherMock = $this->createMock(RouteMatcherInterface::class);
+        $routeMatcherMock
+            ->expects($this->never())
+            ->method('route')
+            ->willReturn($this->createMock(ResourceInterface::class));
+
+        $requestFlowExecutor = new RequestFlowExecutor($resourceExecutorMock, $routeMatcherMock);
         $requestFlowExecutor->executeRequestFlow(
+            new GlueRequestTransfer(),
             $apiApplicationPluginMock,
             $apiConventionPluginMock,
-            new GlueRequestTransfer(),
         );
     }
 
@@ -171,37 +201,40 @@ class RequestFlowExecutorTest extends Unit
     {
         $apiConventionPluginMock = $this->createBaseApiConventionPluginMock($this->createResourceMock());
 
+        $requestValidatorPluginMock = $this->createMock(RequestValidatorPluginInterface::class);
+        $requestValidatorPluginMock->method('validate')
+            ->willReturn((new GlueRequestValidationTransfer())->setIsValid(true));
+
         $apiApplicationPluginMock = $this->createMock(RequestFlowAwareApiApplication::class);
         $apiApplicationPluginMock
             ->expects($this->once())
-            ->method('buildRequest')
-            ->willReturnArgument(0);
+            ->method('provideRequestBuilderPlugins')
+            ->willReturn([]);
         $apiApplicationPluginMock
             ->expects($this->once())
-            ->method('validateRequest')
-            ->willReturn(
-                (new GlueRequestValidationTransfer())
-                    ->setIsValid(true),
-            );
+            ->method('provideRequestValidatorPlugins')
+            ->willReturn([$requestValidatorPluginMock]);
         $apiApplicationPluginMock
             ->expects($this->once())
-            ->method('route')
-            ->willReturn($expectedResource);
-        $apiApplicationPluginMock
-            ->expects($this->once())
-            ->method('formatResponse')
-            ->willReturnArgument(0);
+            ->method('provideResponseFormatterPlugins')
+            ->willReturn([]);
 
         $resourceExecutorMock = $this->createMock(ResourceExecutorInterface::class);
         $resourceExecutorMock->expects($this->once())
             ->method('executeResource')
             ->willReturn(new GlueResponseTransfer());
 
-        $requestFlowExecutor = new RequestFlowExecutor($resourceExecutorMock);
+        $routeMatcherMock = $this->createMock(RouteMatcherInterface::class);
+        $routeMatcherMock
+            ->expects($this->once())
+            ->method('route')
+            ->willReturn($this->createMock(MissingResourceInterface::class));
+
+        $requestFlowExecutor = new RequestFlowExecutor($resourceExecutorMock, $routeMatcherMock);
         $requestFlowExecutor->executeRequestFlow(
+            new GlueRequestTransfer(),
             $apiApplicationPluginMock,
             $apiConventionPluginMock,
-            new GlueRequestTransfer(),
         );
     }
 
@@ -212,29 +245,44 @@ class RequestFlowExecutorTest extends Unit
     {
         $expectedValidationResult = (new GlueRequestValidationTransfer())
             ->setIsValid(false)
-            ->setStatusCode('400')
+            ->setStatus(Response::HTTP_BAD_REQUEST)
             ->setValidationError('failed validation');
+
+        $requestAfterRoutingValidatorPluginMock = $this->createMock(RequestAfterRoutingValidatorPluginInterface::class);
+        $requestAfterRoutingValidatorPluginMock->method('validate')
+            ->willReturn($expectedValidationResult);
+
+        $anotherRequestAfterRoutingValidatorPluginMock = $this->createMock(RequestAfterRoutingValidatorPluginInterface::class);
+        $anotherRequestAfterRoutingValidatorPluginMock->expects($this->never())
+            ->method('validate');
 
         $apiConventionPluginMock = $this->createBaseApiConventionPluginMock($this->createResourceMock());
         $apiConventionPluginMock
             ->expects($this->once())
-            ->method('validateRequestAfterRouting')
-            ->willReturn($expectedValidationResult);
+            ->method('provideRequestAfterRoutingValidatorPlugins')
+            ->willReturn([$requestAfterRoutingValidatorPluginMock]);
 
         $apiApplicationPluginMock = $this->createBaseApiApplicationPluginMock($this->createResourceMock());
         $apiApplicationPluginMock
-            ->expects($this->never())
-            ->method('validateRequestAfterRouting');
+            ->expects($this->once())
+            ->method('provideRequestAfterRoutingValidatorPlugins')
+            ->willReturn([$anotherRequestAfterRoutingValidatorPluginMock]);
 
         $resourceExecutorMock = $this->createMock(ResourceExecutorInterface::class);
         $resourceExecutorMock->expects($this->never())
             ->method('executeResource');
 
-        $requestFlowExecutor = new RequestFlowExecutor($resourceExecutorMock);
+        $routeMatcherMock = $this->createMock(RouteMatcherInterface::class);
+        $routeMatcherMock
+            ->expects($this->once())
+            ->method('route')
+            ->willReturn($this->createMock(ResourceInterface::class));
+
+        $requestFlowExecutor = new RequestFlowExecutor($resourceExecutorMock, $routeMatcherMock);
         $requestFlowExecutor->executeRequestFlow(
+            new GlueRequestTransfer(),
             $apiApplicationPluginMock,
             $apiConventionPluginMock,
-            new GlueRequestTransfer(),
         );
     }
 
@@ -243,32 +291,46 @@ class RequestFlowExecutorTest extends Unit
      */
     public function testRequestFlowSendsResponseOnApplicationValidationErrorAfterRouting(): void
     {
+        $requestAfterRoutingValidatorPluginMock = $this->createMock(RequestAfterRoutingValidatorPluginInterface::class);
+        $requestAfterRoutingValidatorPluginMock->method('validate')
+            ->willReturn((new GlueRequestValidationTransfer())->setIsValid(true));
+
         $expectedValidationResult = (new GlueRequestValidationTransfer())
             ->setIsValid(false)
-            ->setStatusCode('400')
+            ->setStatus(Response::HTTP_BAD_REQUEST)
             ->setValidationError('failed validation');
+
+        $anotherRequestAfterRoutingValidatorPluginMock = $this->createMock(RequestAfterRoutingValidatorPluginInterface::class);
+        $anotherRequestAfterRoutingValidatorPluginMock->method('validate')
+            ->willReturn($expectedValidationResult);
 
         $apiConventionPluginMock = $this->createBaseApiConventionPluginMock($this->createResourceMock());
         $apiConventionPluginMock
             ->expects($this->once())
-            ->method('validateRequestAfterRouting')
-            ->willReturn((new GlueRequestValidationTransfer())->setIsValid(true));
+            ->method('provideRequestAfterRoutingValidatorPlugins')
+            ->willReturn([$requestAfterRoutingValidatorPluginMock]);
+
+        $routeMatcherMock = $this->createMock(RouteMatcherInterface::class);
+        $routeMatcherMock
+            ->expects($this->once())
+            ->method('route')
+            ->willReturn($this->createMock(ResourceInterface::class));
 
         $apiApplicationPluginMock = $this->createBaseApiApplicationPluginMock($this->createResourceMock());
         $apiApplicationPluginMock
             ->expects($this->once())
-            ->method('validateRequestAfterRouting')
-            ->willReturn($expectedValidationResult);
+            ->method('provideRequestAfterRoutingValidatorPlugins')
+            ->willReturn([$anotherRequestAfterRoutingValidatorPluginMock]);
 
         $resourceExecutorMock = $this->createMock(ResourceExecutorInterface::class);
         $resourceExecutorMock->expects($this->never())
             ->method('executeResource');
 
-        $requestFlowExecutor = new RequestFlowExecutor($resourceExecutorMock);
+        $requestFlowExecutor = new RequestFlowExecutor($resourceExecutorMock, $routeMatcherMock);
         $requestFlowExecutor->executeRequestFlow(
+            new GlueRequestTransfer(),
             $apiApplicationPluginMock,
             $apiConventionPluginMock,
-            new GlueRequestTransfer(),
         );
     }
 
@@ -296,20 +358,16 @@ class RequestFlowExecutorTest extends Unit
         $apiApplicationPluginMock = $this->createMock(RequestFlowAwareApiApplication::class);
         $apiApplicationPluginMock
             ->expects($this->once())
-            ->method('buildRequest')
-            ->willReturnArgument(0);
+            ->method('provideRequestBuilderPlugins')
+            ->willReturn([]);
         $apiApplicationPluginMock
             ->expects($this->once())
-            ->method('validateRequest')
-            ->willReturn((new GlueRequestValidationTransfer())->setIsValid(true));
+            ->method('provideRequestValidatorPlugins')
+            ->willReturn([]);
         $apiApplicationPluginMock
             ->expects($this->once())
-            ->method('route')
-            ->willReturn($resourceMock);
-        $apiApplicationPluginMock
-            ->expects($this->once())
-            ->method('formatResponse')
-            ->willReturnArgument(0);
+            ->method('provideResponseFormatterPlugins')
+            ->willReturn([]);
 
         return $apiApplicationPluginMock;
     }
@@ -319,21 +377,21 @@ class RequestFlowExecutorTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ApiConventionPluginInterface
      */
-    protected function createBaseApiConventionPluginMock(ResourceInterface $resourceMock): ApiConventionPluginInterface
+    protected function createBaseApiConventionPluginMock(ResourceInterface $resourceMock): ConventionPluginInterface
     {
-        $apiConventionPluginMock = $this->createMock(ApiConventionPluginInterface::class);
+        $apiConventionPluginMock = $this->createMock(ConventionPluginInterface::class);
         $apiConventionPluginMock
             ->expects($this->once())
-            ->method('buildRequest')
-            ->willReturnArgument(0);
+            ->method('provideRequestBuilderPlugins')
+            ->willReturn([]);
         $apiConventionPluginMock
             ->expects($this->once())
-            ->method('validateRequest')
-            ->willReturn((new GlueRequestValidationTransfer())->setIsValid(true));
+            ->method('provideRequestValidatorPlugins')
+            ->willReturn([]);
         $apiConventionPluginMock
             ->expects($this->once())
-            ->method('formatResponse')
-            ->willReturnArgument(0);
+            ->method('provideResponseFormatterPlugins')
+            ->willReturn([]);
 
         return $apiConventionPluginMock;
     }

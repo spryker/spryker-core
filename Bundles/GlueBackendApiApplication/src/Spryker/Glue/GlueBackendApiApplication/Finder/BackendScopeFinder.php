@@ -15,7 +15,7 @@ use Spryker\Glue\GlueBackendApiApplication\GlueBackendApiApplicationConfig;
 class BackendScopeFinder implements BackendScopeFinderInterface
 {
     /**
-     * @uses \Spryker\Glue\GlueBackendApiApplication\Plugin\GlueBackendApiApplication\BackendApiApplicationProviderPlugin::GLUE_BACKEND_API_APPLICATION_NAME
+     * @uses \Spryker\Glue\GlueBackendApiApplication\Plugin\DocumentationGeneratorApi\BackendApiApplicationProviderPlugin::GLUE_BACKEND_API_APPLICATION_NAME
      *
      * @var string
      */

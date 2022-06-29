@@ -61,7 +61,7 @@ class DeleteResourcePathMethodFormatter implements PathMethodFormatterInterface
         if (isset($pathMethodData['requestBody'])) {
             unset($pathMethodData['requestBody']);
         }
-        if (!$pathMethodData['summary']) {
+        if (!isset($pathMethodData['summary'])) {
             $pathMethodData['summary'] = $this->openApiSpecificationPathMethodFormatter->getDefaultMethodSummary(static::PATTERN_SUMMARY_DELETE_RESOURCE, $resourceType);
         }
 

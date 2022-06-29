@@ -13,6 +13,8 @@ use Generated\Shared\Transfer\GlueResponseTransfer;
 
 /**
  * Use this plugin interface to implement an API convention.
+ *
+ * @deprecated Use ConventionPluginInterface.
  */
 interface ApiConventionPluginInterface
 {

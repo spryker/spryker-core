@@ -18,12 +18,14 @@
         <property name="locale" type="string"/>
         <property name="content" type="string"/>
         <property name="path" type="string"/>
+        <property name="host" type="string"/>
         <property name="meta" type="array" associative="true" singular="meta"/>
         <property name="convention" type="string"/>
         <property name="application" type="string"/>
         <property name="attributes" type="array" singular="attribute"/>
         <property name="resource" type="GlueResource"/>
         <property name="method" type="string"/>
+        <property name="parametersString" type="string"/>
         <property name="parentResources" type="GlueResource[]" singular="parentResource" associative="true"/>
     </transfer>
     <transfer name="GlueResponse">
@@ -73,10 +75,13 @@
         <property name="resourceName" type="string"/>
         <property name="method" type="string"/>
         <property name="controller" type="string"/>
+        <property name="controllerExecutable" type="string[]" singular="controllerExecutable"/>
         <property name="action" type="string"/>
+        <property name="route" type="string"/>
         <property name="parameters" type="string[]" singular="parameter"/>
         <property name="id" type="string"/>
         <property name="attributes" type="AbstractAttributes"/>
+        <property name="scope" type="string"/>
     </transfer>
 
     <transfer name="GlueResourceMethodCollection">

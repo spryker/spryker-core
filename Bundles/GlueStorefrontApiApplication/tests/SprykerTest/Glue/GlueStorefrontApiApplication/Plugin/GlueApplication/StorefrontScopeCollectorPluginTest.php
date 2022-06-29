@@ -32,7 +32,7 @@ class StorefrontScopeCollectorPluginTest extends Unit
     protected $tester;
 
     /**
-     * @uses \Spryker\Glue\GlueStorefrontApiApplication\Plugin\GlueStorefrontApiApplication\GlueStorefrontApiApplicationProviderPlugin::GLUE_STOREFRONT_API_APPLICATION_NAME
+     * @uses \Spryker\Glue\GlueStorefrontApiApplication\Plugin\GlueApplication\GlueStorefrontApiApplicationProviderPlugin::GLUE_STOREFRONT_API_APPLICATION_NAME
      *
      * @var string
      */

@@ -8,7 +8,7 @@
 namespace SprykerTest\Glue\GlueRestApiConvention\Plugin\GlueRestApiConvention;
 
 use Codeception\Test\Unit;
-use Spryker\Glue\GlueRestApiConvention\Plugin\GlueRestApiConvention\SparseFieldRequestBuilderPlugin;
+use Spryker\Glue\GlueRestApiConvention\Plugin\GlueApplication\SparseFieldRequestBuilderPlugin;
 
 /**
  * Auto-generated group annotations

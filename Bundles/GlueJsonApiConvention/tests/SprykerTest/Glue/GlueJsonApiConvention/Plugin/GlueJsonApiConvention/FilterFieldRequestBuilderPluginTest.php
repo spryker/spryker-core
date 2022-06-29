@@ -9,7 +9,7 @@ namespace SprykerTest\Glue\GlueJsonApiConvention\Plugin\GlueJsonApiConvention;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\GlueFilterTransfer;
-use Spryker\Glue\GlueJsonApiConvention\Plugin\GlueJsonApiConvention\FilterFieldRequestBuilderPlugin;
+use Spryker\Glue\GlueJsonApiConvention\Plugin\GlueApplication\FilterFieldRequestBuilderPlugin;
 
 /**
  * Auto-generated group annotations

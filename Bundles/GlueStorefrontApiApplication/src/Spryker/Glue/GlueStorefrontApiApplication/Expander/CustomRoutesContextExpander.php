@@ -29,12 +29,12 @@ class CustomRoutesContextExpander implements ContextExpanderInterface
     protected const METHOD = '_method';
 
     /**
-     * @var array<\Spryker\Glue\GlueStorefrontApiApplicationExtension\Dependency\Plugin\RouteProviderPluginInterface>
+     * @var array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RouteProviderPluginInterface>
      */
     protected $routeProviderPlugins = [];
 
     /**
-     * @param array<\Spryker\Glue\GlueStorefrontApiApplicationExtension\Dependency\Plugin\RouteProviderPluginInterface> $routeProviderPlugins
+     * @param array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RouteProviderPluginInterface> $routeProviderPlugins
      */
     public function __construct(array $routeProviderPlugins)
     {
@@ -91,8 +91,8 @@ class CustomRoutesContextExpander implements ContextExpanderInterface
             $resourceMethodConfigurationTransfer = $resourceContext->getDeclaredMethodsOrFail()[$routeDefaults[static::METHOD]];
             $result = [
                 static::CONTROLLER => [
-                    $resourceContext->getController(),
-                    $resourceMethodConfigurationTransfer->getAction(),
+                    $resourceMethodConfigurationTransfer->getController() ?? $resourceContext->getController(),
+                    $resourceMethodConfigurationTransfer->getAction() ?? sprintf('%sAction', $routeDefaults[static::METHOD]),
                 ],
             ];
         }

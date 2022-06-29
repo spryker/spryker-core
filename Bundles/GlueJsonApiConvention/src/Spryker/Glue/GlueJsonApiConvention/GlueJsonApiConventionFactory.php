@@ -42,6 +42,38 @@ use Spryker\Glue\Kernel\AbstractFactory;
 class GlueJsonApiConventionFactory extends AbstractFactory
 {
     /**
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RequestBuilderPluginInterface>
+     */
+    public function getRequestBuilderPlugins(): array
+    {
+        return $this->getProvidedDependency(GlueJsonApiConventionDependencyProvider::PLUGINS_REQUEST_BUILDER);
+    }
+
+    /**
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RequestValidatorPluginInterface>
+     */
+    public function getRequestValidatorPlugins(): array
+    {
+        return $this->getProvidedDependency(GlueJsonApiConventionDependencyProvider::PLUGINS_REQUEST_VALIDATOR);
+    }
+
+    /**
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RequestAfterRoutingValidatorPluginInterface>
+     */
+    public function getRequestAfterRoutingValidatorPlugins(): array
+    {
+        return $this->getProvidedDependency(GlueJsonApiConventionDependencyProvider::PLUGINS_REQUEST_AFTER_ROUTING_VALIDATOR);
+    }
+
+    /**
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResponseFormatterPluginInterface>
+     */
+    public function getResponseFormatterPlugins(): array
+    {
+        return $this->getProvidedDependency(GlueJsonApiConventionDependencyProvider::PLUGINS_RESPONSE_FORMATTER);
+    }
+
+    /**
      * @return \Spryker\Glue\GlueJsonApiConvention\Request\RequestBuilderInterface
      */
     public function createRequestPaginationParameterBuilder(): RequestBuilderInterface
@@ -158,38 +190,6 @@ class GlueJsonApiConventionFactory extends AbstractFactory
     public function getUtilEncodingService(): GlueJsonApiConventionToUtilEncodingServiceInterface
     {
         return $this->getProvidedDependency(GlueJsonApiConventionDependencyProvider::SERVICE_UTIL_ENCODING);
-    }
-
-    /**
-     * @return array<\Spryker\Glue\GlueJsonApiConventionExtension\Dependency\Plugin\RequestBuilderPluginInterface>
-     */
-    public function getRequestBuilderPlugins(): array
-    {
-        return $this->getProvidedDependency(GlueJsonApiConventionDependencyProvider::PLUGINS_REQUEST_BUILDER);
-    }
-
-    /**
-     * @return array<\Spryker\Glue\GlueJsonApiConventionExtension\Dependency\Plugin\RequestValidatorPluginInterface>
-     */
-    public function getRequestValidatorPlugins(): array
-    {
-        return $this->getProvidedDependency(GlueJsonApiConventionDependencyProvider::PLUGINS_REQUEST_VALIDATOR);
-    }
-
-    /**
-     * @return array<\Spryker\Glue\GlueJsonApiConventionExtension\Dependency\Plugin\RequestAfterRoutingValidatorPluginInterface>
-     */
-    public function getRequestAfterRoutingValidatorPlugins(): array
-    {
-        return $this->getProvidedDependency(GlueJsonApiConventionDependencyProvider::PLUGINS_REQUEST_AFTER_ROUTING_VALIDATOR);
-    }
-
-    /**
-     * @return array<\Spryker\Glue\GlueJsonApiConventionExtension\Dependency\Plugin\ResponseFormatterPluginInterface>
-     */
-    public function getResponseFormatterPlugins(): array
-    {
-        return $this->getProvidedDependency(GlueJsonApiConventionDependencyProvider::PLUGINS_RESPONSE_FORMATTER);
     }
 
     /**

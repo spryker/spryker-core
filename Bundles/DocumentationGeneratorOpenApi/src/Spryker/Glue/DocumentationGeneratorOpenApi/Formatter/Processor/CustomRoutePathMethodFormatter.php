@@ -10,6 +10,7 @@ namespace Spryker\Glue\DocumentationGeneratorOpenApi\Formatter\Processor;
 use Generated\Shared\Transfer\AnnotationTransfer;
 use Generated\Shared\Transfer\CustomRoutesContextTransfer;
 use Spryker\Glue\DocumentationGeneratorOpenApi\Formatter\Paths\OpenApiSpecificationPathMethodFormatterInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class CustomRoutePathMethodFormatter implements CustomPathMethodFormatterInterface
@@ -138,7 +139,7 @@ class CustomRoutePathMethodFormatter implements CustomPathMethodFormatterInterfa
     protected function getRequestMethodFromAnnotation(CustomRoutesContextTransfer $customRouteTransfer): string
     {
         $defaultsData = $customRouteTransfer->getDefaults();
-        $method = $defaultsData[static::DEFAULT_METHOD_FIELD];
+        $method = $defaultsData[static::DEFAULT_METHOD_FIELD] ?? Request::METHOD_GET;
 
         return ($method === static::METHOD_GET_COLLECTION) ? static::REQUEST_METHOD_GET : strtolower($method);
     }

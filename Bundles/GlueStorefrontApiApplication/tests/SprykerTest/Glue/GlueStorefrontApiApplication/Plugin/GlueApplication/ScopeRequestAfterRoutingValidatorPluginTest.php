@@ -11,7 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\GlueRequestCustomerTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface;
-use Spryker\Glue\GlueStorefrontApiApplication\Plugin\GlueStorefrontApiApplication\ScopeRequestAfterRoutingValidatorPlugin;
+use Spryker\Glue\GlueStorefrontApiApplication\Plugin\GlueApplication\ScopeRequestAfterRoutingValidatorPlugin;
 use SprykerTest\Glue\GlueStorefrontApiApplication\Stub\TestResource;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -43,7 +43,7 @@ class ScopeRequestAfterRoutingValidatorPluginTest extends Unit
         $scopeRequestAfterRoutingValidatorPlugin = new ScopeRequestAfterRoutingValidatorPlugin();
 
         //Act
-        $glueRequestValidationTransfer = $scopeRequestAfterRoutingValidatorPlugin->validateRequest(
+        $glueRequestValidationTransfer = $scopeRequestAfterRoutingValidatorPlugin->validate(
             new GlueRequestTransfer(),
             $resourcePluginMockMock,
         );
@@ -61,7 +61,7 @@ class ScopeRequestAfterRoutingValidatorPluginTest extends Unit
         $scopeRequestAfterRoutingValidatorPlugin = new ScopeRequestAfterRoutingValidatorPlugin();
 
         //Act
-        $glueRequestValidationTransfer = $scopeRequestAfterRoutingValidatorPlugin->validateRequest(
+        $glueRequestValidationTransfer = $scopeRequestAfterRoutingValidatorPlugin->validate(
             new GlueRequestTransfer(),
             new TestResource(),
         );
@@ -79,7 +79,7 @@ class ScopeRequestAfterRoutingValidatorPluginTest extends Unit
         $scopeRequestAfterRoutingValidatorPlugin = new ScopeRequestAfterRoutingValidatorPlugin();
 
         //Act
-        $glueRequestValidationTransfer = $scopeRequestAfterRoutingValidatorPlugin->validateRequest(
+        $glueRequestValidationTransfer = $scopeRequestAfterRoutingValidatorPlugin->validate(
             $this->createGlueRequestTransfer(),
             new TestResource(),
         );

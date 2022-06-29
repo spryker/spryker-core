@@ -9,8 +9,8 @@ namespace Spryker\Glue\GlueStorefrontApiApplicationAuthorizationConnector\Plugin
 
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueRequestValidationTransfer;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RequestAfterRoutingValidatorPluginInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface;
-use Spryker\Glue\GlueStorefrontApiApplicationExtension\Dependency\Plugin\RequestAfterRoutingValidatorPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 
 /**
@@ -32,7 +32,7 @@ class AuthorizationRequestAfterRoutingValidatorPlugin extends AbstractPlugin imp
      *
      * @return \Generated\Shared\Transfer\GlueRequestValidationTransfer
      */
-    public function validateRequest(GlueRequestTransfer $glueRequestTransfer, ResourceInterface $resource): GlueRequestValidationTransfer
+    public function validate(GlueRequestTransfer $glueRequestTransfer, ResourceInterface $resource): GlueRequestValidationTransfer
     {
         return $this->getFactory()->createAuthorizationValidator()->validate($glueRequestTransfer, $resource);
     }

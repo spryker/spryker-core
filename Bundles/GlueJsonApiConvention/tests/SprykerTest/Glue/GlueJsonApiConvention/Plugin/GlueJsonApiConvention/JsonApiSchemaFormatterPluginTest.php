@@ -10,7 +10,7 @@ namespace SprykerTest\Glue\GlueJsonApiConvention\Plugin\GlueRestApiConvention;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ApiApplicationSchemaContextTransfer;
 use Generated\Shared\Transfer\ResourceContextTransfer;
-use Spryker\Glue\GlueJsonApiConvention\Plugin\GlueJsonApiConvention\JsonApiSchemaFormatterPlugin;
+use Spryker\Glue\GlueJsonApiConvention\Plugin\DocumentationGeneratorApi\JsonApiSchemaFormatterPlugin;
 use SprykerTest\Glue\GlueJsonApiConvention\Stub\TestEmptyJsonApiResourcePlugin;
 
 /**

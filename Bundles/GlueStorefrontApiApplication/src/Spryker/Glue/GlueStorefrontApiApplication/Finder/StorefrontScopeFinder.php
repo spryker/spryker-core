@@ -16,7 +16,7 @@ use Spryker\Glue\GlueStorefrontApiApplication\GlueStorefrontApiApplicationConfig
 class StorefrontScopeFinder implements StorefrontScopeFinderInterface
 {
     /**
-     * @uses \Spryker\Glue\GlueStorefrontApiApplication\Plugin\GlueStorefrontApiApplication\StorefrontApiApplicationProviderPlugin::GLUE_STOREFRONT_API_APPLICATION_NAME
+     * @uses \Spryker\Glue\GlueStorefrontApiApplication\Plugin\GlueApplication\StorefrontApiApplicationProviderPlugin::GLUE_STOREFRONT_API_APPLICATION_NAME
      *
      * @var string
      */

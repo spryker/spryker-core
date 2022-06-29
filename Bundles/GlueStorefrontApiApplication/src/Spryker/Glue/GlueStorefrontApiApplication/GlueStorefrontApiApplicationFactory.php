@@ -27,19 +27,6 @@ use Spryker\Glue\GlueStorefrontApiApplication\RequestBuilder\LocaleRequestBuilde
 use Spryker\Glue\GlueStorefrontApiApplication\RequestValidator\RequestCorsValidator;
 use Spryker\Glue\GlueStorefrontApiApplication\RequestValidator\RequestValidatorInterface;
 use Spryker\Glue\GlueStorefrontApiApplication\RequestValidator\ScopeRequestAfterRoutingValidator;
-use Spryker\Glue\GlueStorefrontApiApplication\Router\Cache\Cache;
-use Spryker\Glue\GlueStorefrontApiApplication\Router\Cache\CacheInterface;
-use Spryker\Glue\GlueStorefrontApiApplication\Router\ChainRouter;
-use Spryker\Glue\GlueStorefrontApiApplication\Router\ChainRouterInterface;
-use Spryker\Glue\GlueStorefrontApiApplication\Router\Loader\ClosureLoader;
-use Spryker\Glue\GlueStorefrontApiApplication\Router\Loader\LoaderInterface;
-use Spryker\Glue\GlueStorefrontApiApplication\Router\RequestRoutingMatcher;
-use Spryker\Glue\GlueStorefrontApiApplication\Router\RequestRoutingMatcherInterface;
-use Spryker\Glue\GlueStorefrontApiApplication\Router\Router;
-use Spryker\Glue\GlueStorefrontApiApplication\Router\RouterInterface;
-use Spryker\Glue\GlueStorefrontApiApplication\Router\RouterResource\RouterResource;
-use Spryker\Glue\GlueStorefrontApiApplication\Router\RouterResource\RouterResourceInterface;
-use Spryker\Glue\GlueStorefrontApiApplicationExtension\Dependency\Plugin\RequestResourceFilterPluginInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\Application\ApplicationInterface;
@@ -99,87 +86,11 @@ class GlueStorefrontApiApplicationFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\GlueStorefrontApiApplication\Router\ChainRouterInterface
-     */
-    public function createChainRouter(): ChainRouterInterface
-    {
-        return new ChainRouter(
-            $this->getRouterPlugins(),
-        );
-    }
-
-    /**
-     * @return \Spryker\Glue\GlueStorefrontApiApplication\Router\RequestRoutingMatcherInterface
-     */
-    public function createRequestRoutingMatcher(): RequestRoutingMatcherInterface
-    {
-        return new RequestRoutingMatcher(
-            $this->createChainRouter(),
-            $this->getRequestResourceFilterPlugin(),
-        );
-    }
-
-    /**
-     * @return \Spryker\Glue\GlueStorefrontApiApplicationExtension\Dependency\Plugin\RequestResourceFilterPluginInterface
-     */
-    public function getRequestResourceFilterPlugin(): RequestResourceFilterPluginInterface
-    {
-        return $this->getProvidedDependency(GlueStorefrontApiApplicationDependencyProvider::PLUGIN_REQUEST_RESOURCE_FILTER);
-    }
-
-    /**
-     * @return \Spryker\Glue\GlueStorefrontApiApplication\Router\RouterInterface
-     */
-    public function createRouter(): RouterInterface
-    {
-        return new Router(
-            $this->createClosureLoader(),
-            $this->createRouterResource(),
-            $this->getConfig()->getRouterConfiguration(),
-        );
-    }
-
-    /**
-     * @return \Spryker\Glue\GlueStorefrontApiApplication\Router\Loader\LoaderInterface
-     */
-    public function createClosureLoader(): LoaderInterface
-    {
-        return new ClosureLoader();
-    }
-
-    /**
-     * @return \Spryker\Glue\GlueStorefrontApiApplication\Router\RouterResource\RouterResourceInterface
-     */
-    public function createRouterResource(): RouterResourceInterface
-    {
-        return new RouterResource(
-            $this->createRouteCollection(),
-            $this->getRouteProviderPlugins(),
-        );
-    }
-
-    /**
-     * @return \Symfony\Component\Routing\RouteCollection
-     */
-    public function createRouteCollection(): RouteCollection
-    {
-        return new RouteCollection();
-    }
-
-    /**
      * @return \Negotiation\LanguageNegotiator
      */
     public function createLanguageNegotiator(): LanguageNegotiator
     {
         return new LanguageNegotiator();
-    }
-
-    /**
-     * @return \Spryker\Glue\GlueStorefrontApiApplication\Router\Cache\CacheInterface
-     */
-    public function createCache(): CacheInterface
-    {
-        return new Cache($this->createChainRouter(), $this->getConfig());
     }
 
     /**
@@ -189,24 +100,16 @@ class GlueStorefrontApiApplicationFactory extends AbstractFactory
     {
         return new ControllerCacheCollector(
             $this->getResourcePlugins(),
-            $this->getRouterPlugins(),
+            $this->getRouteProviderPlugins(),
         );
     }
 
     /**
-     * @return array<\Spryker\Glue\GlueStorefrontApiApplicationExtension\Dependency\Plugin\RouteProviderPluginInterface>
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RouteProviderPluginInterface>
      */
     public function getRouteProviderPlugins(): array
     {
         return $this->getProvidedDependency(GlueStorefrontApiApplicationDependencyProvider::PLUGINS_ROUTE_PROVIDER);
-    }
-
-    /**
-     * @return array<\Spryker\Glue\GlueStorefrontApiApplicationExtension\Dependency\Plugin\RouterPluginInterface>
-     */
-    public function getRouterPlugins(): array
-    {
-        return $this->getProvidedDependency(GlueStorefrontApiApplicationDependencyProvider::PLUGINS_ROUTER);
     }
 
     /**
@@ -226,7 +129,7 @@ class GlueStorefrontApiApplicationFactory extends AbstractFactory
     }
 
     /**
-     * @return array<\Spryker\Glue\GlueStorefrontApiApplicationExtension\Dependency\Plugin\RequestBuilderPluginInterface>
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RequestBuilderPluginInterface>
      */
     public function getRequestBuilderPlugins(): array
     {
@@ -234,7 +137,7 @@ class GlueStorefrontApiApplicationFactory extends AbstractFactory
     }
 
     /**
-     * @return array<\Spryker\Glue\GlueStorefrontApiApplicationExtension\Dependency\Plugin\RequestValidatorPluginInterface>
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RequestValidatorPluginInterface>
      */
     public function getRequestValidatorPlugins(): array
     {
@@ -242,7 +145,7 @@ class GlueStorefrontApiApplicationFactory extends AbstractFactory
     }
 
     /**
-     * @return array<\Spryker\Glue\GlueStorefrontApiApplicationExtension\Dependency\Plugin\RequestAfterRoutingValidatorPluginInterface>
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RequestAfterRoutingValidatorPluginInterface>
      */
     public function getRequestAfterRoutingValidatorPlugins(): array
     {
@@ -250,19 +153,11 @@ class GlueStorefrontApiApplicationFactory extends AbstractFactory
     }
 
     /**
-     * @return array<\Spryker\Glue\GlueStorefrontApiApplicationExtension\Dependency\Plugin\ResponseFormatterPluginInterface>
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResponseFormatterPluginInterface>
      */
     public function getResponseFormatterPlugins(): array
     {
         return $this->getProvidedDependency(GlueStorefrontApiApplicationDependencyProvider::PLUGINS_RESPONSE_FORMATTER);
-    }
-
-    /**
-     * @return array<\Spryker\Glue\GlueStorefrontApiApplicationExtension\Dependency\Plugin\RouteMatcherPluginInterface>
-     */
-    public function getRouteMatcherPlugins(): array
-    {
-        return $this->getProvidedDependency(GlueStorefrontApiApplicationDependencyProvider::PLUGINS_ROUTE_MATCHER);
     }
 
     /**
@@ -326,5 +221,13 @@ class GlueStorefrontApiApplicationFactory extends AbstractFactory
     public function createCustomRoutesContextExpander(): ContextExpanderInterface
     {
         return new CustomRoutesContextExpander($this->getRouteProviderPlugins());
+    }
+
+    /**
+     * @return \Symfony\Component\Routing\RouteCollection
+     */
+    public function createRouteCollection(): RouteCollection
+    {
+        return new RouteCollection();
     }
 }

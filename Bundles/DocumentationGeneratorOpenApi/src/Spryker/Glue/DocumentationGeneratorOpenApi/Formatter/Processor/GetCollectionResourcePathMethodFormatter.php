@@ -59,7 +59,7 @@ class GetCollectionResourcePathMethodFormatter implements PathMethodFormatterInt
             true,
         );
 
-        if (!$pathMethodData['summary']) {
+        if (!isset($pathMethodData['summary'])) {
             $pathMethodData['summary'] = $this->openApiSpecificationPathMethodFormatter
                 ->getDefaultMethodSummary(static::PATTERN_SUMMARY_GET_COLLECTION, $resourceType);
         }

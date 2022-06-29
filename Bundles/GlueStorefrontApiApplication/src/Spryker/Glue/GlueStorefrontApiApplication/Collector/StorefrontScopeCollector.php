@@ -8,7 +8,7 @@
 namespace Spryker\Glue\GlueStorefrontApiApplication\Collector;
 
 use Generated\Shared\Transfer\OauthScopeFindTransfer;
-use Spryker\Glue\GlueStorefrontApiApplicationExtension\Dependency\Plugin\RouteProviderPluginInterface;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RouteProviderPluginInterface;
 use Spryker\Glue\OauthExtension\Dependency\Plugin\ScopeDefinitionPluginInterface;
 use Spryker\Glue\OauthExtension\Dependency\Plugin\ScopeRouteProviderPluginInterface;
 use Symfony\Component\Routing\RouteCollection;
@@ -16,7 +16,7 @@ use Symfony\Component\Routing\RouteCollection;
 class StorefrontScopeCollector implements StorefrontScopeCollectorInterface
 {
     /**
-     * @uses \Spryker\Glue\GlueStorefrontApiApplication\Plugin\GlueStorefrontApiApplication\StorefrontApiApplicationProviderPlugin::GLUE_STOREFRONT_API_APPLICATION_NAME
+     * @uses \Spryker\Glue\GlueStorefrontApiApplication\Plugin\GlueApplication\StorefrontApiApplicationProviderPlugin::GLUE_STOREFRONT_API_APPLICATION_NAME
      *
      * @var string
      */
@@ -33,7 +33,7 @@ class StorefrontScopeCollector implements StorefrontScopeCollectorInterface
     protected $resourcePlugins = [];
 
     /**
-     * @var array<\Spryker\Glue\GlueStorefrontApiApplicationExtension\Dependency\Plugin\RouteProviderPluginInterface>
+     * @var array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RouteProviderPluginInterface>
      */
     protected $routeProviderPlugins = [];
 
@@ -44,7 +44,7 @@ class StorefrontScopeCollector implements StorefrontScopeCollectorInterface
 
     /**
      * @param array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface> $resourcePlugins
-     * @param array<\Spryker\Glue\GlueStorefrontApiApplicationExtension\Dependency\Plugin\RouteProviderPluginInterface> $routeProviderPlugins
+     * @param array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RouteProviderPluginInterface> $routeProviderPlugins
      * @param \Symfony\Component\Routing\RouteCollection $routeCollection
      */
     public function __construct(
@@ -78,7 +78,7 @@ class StorefrontScopeCollector implements StorefrontScopeCollectorInterface
     }
 
     /**
-     * @param \Spryker\Glue\GlueStorefrontApiApplicationExtension\Dependency\Plugin\RouteProviderPluginInterface $routeProviderPlugin
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RouteProviderPluginInterface&\Spryker\Glue\OauthExtension\Dependency\Plugin\ScopeRouteProviderPluginInterface $routeProviderPlugin
      * @param array<\Generated\Shared\Transfer\OauthScopeFindTransfer> $scopes
      *
      * @return array<\Generated\Shared\Transfer\OauthScopeFindTransfer>

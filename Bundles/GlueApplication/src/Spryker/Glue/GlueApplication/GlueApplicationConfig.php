@@ -302,4 +302,20 @@ class GlueApplicationConfig extends AbstractBundleConfig
             APPLICATION_CODE_BUCKET,
         );
     }
+
+    /**
+     * Specification:
+     * - Lists the route matchers that will run for each ApiApplication.
+     *
+     * @api
+     *
+     * @return array<string>
+     */
+    public function getRouteMatchers(): array
+    {
+        return [
+            'routes',
+            'resources',
+        ];
+    }
 }
