@@ -10,6 +10,7 @@ namespace Spryker\Zed\FileManagerGui\Communication\Table;
 use Orm\Zed\FileManager\Persistence\Map\SpyMimeTypeTableMap;
 use Orm\Zed\FileManager\Persistence\SpyMimeTypeQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
+use Spryker\Zed\FileManagerGui\Communication\Form\DeleteMimeTypeForm;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -177,6 +178,8 @@ class MimeTypeSettingsTable extends AbstractTable
                 static::REQUEST_ID_MIME_TYPE => $item[static::COL_ID_MIME_TYPE],
             ]),
             'Delete',
+            [],
+            DeleteMimeTypeForm::class,
         );
 
         return $buttons;
