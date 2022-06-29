@@ -343,7 +343,7 @@ class OauthFacadeTest extends Unit
     {
         return [
             ['P100Y', '', 1],
-            ['P100Y', '-100 years', 0],
+            ['P10Y', '-10 years', 0],
             ['P2M', '', 1],
             ['P2M', '-2 month', 0],
             ['PT0M', '1 month', 1],
