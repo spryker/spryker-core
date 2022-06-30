@@ -13,7 +13,7 @@
         "spryker/locale": "^3.0.0",
         "spryker/mail": "^4.6.0",
         "spryker/propel": "^3.0.0",
-        "spryker/propel-orm": "^1.5.0",
+        "spryker/propel-orm": "^1.16.0",
         "spryker/sequence-number": "^3.0.0",
         "spryker/session": "^3.0.0 || ^4.0.0",
         "spryker/store": "^1.4.0",
