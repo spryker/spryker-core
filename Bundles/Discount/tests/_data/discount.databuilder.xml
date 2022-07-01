@@ -30,7 +30,7 @@
         <property name="displayName" dataBuilderRule="unique()->sentence"/>
         <property name="description" dataBuilderRule="sentence(10)"/>
         <property name="validFrom" dataBuilderRule="=2016-01-01 00:00:00"/>
-        <property name="validTo" dataBuilderRule="=2099-01-01 00:00:00"/>
+        <property name="validTo" dataBuilderRule="=2030-01-01 00:00:00"/>
         <property name="isExclusive" dataBuilderRule="="/>
         <property name="isActive" dataBuilderRule="=true"/>
     </transfer>

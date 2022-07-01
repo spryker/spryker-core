@@ -94,10 +94,12 @@ class AssetEntityManager extends AbstractEntityManager implements AssetEntityMan
      */
     public function deleteAsset(AssetTransfer $assetTransfer): void
     {
-        $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $assetStoreObjectCollection */
+        $assetStoreObjectCollection = $this->getFactory()
             ->createAssetStoreQuery()
-            ->findByFkAsset($assetTransfer->getIdAssetOrFail())
-            ->delete();
+            ->findByFkAsset($assetTransfer->getIdAssetOrFail());
+
+        $assetStoreObjectCollection->delete();
 
         $assetEntity = $this->getFactory()
             ->createAssetQuery()

@@ -46,6 +46,7 @@ class KeyController extends AbstractController
 
         $translations = [];
         if ($idGlossaryKey) {
+            /** @var \Propel\Runtime\Collection\ObjectCollection $translations */
             $translations = $this->getQueryContainer()
                 ->queryTranslations()
                 ->findByFkGlossaryKey($idGlossaryKey);

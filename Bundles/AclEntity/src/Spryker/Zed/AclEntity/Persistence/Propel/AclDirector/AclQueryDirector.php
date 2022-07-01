@@ -92,7 +92,7 @@ class AclQueryDirector implements AclQueryDirectorInterface
     {
         $aclEntityRuleCollectionTransfer = $this->aclEntityRuleProvider->getCurrentUserAclEntityRules();
         $aclEntityMetadataTransfer = $this->aclEntityMetadataReader->findAclEntityMetadataTransferForEntityClass(
-            $query->getModelName(),
+            $query->getModelNameOrFail(),
         );
         if ($aclEntityMetadataTransfer && $aclEntityMetadataTransfer->getIsSubEntity()) {
             $query = $this->applyAclRuleToSubEntityQuery($query, $aclEntityRuleCollectionTransfer, $aclEntityMetadataTransfer);
@@ -144,7 +144,7 @@ class AclQueryDirector implements AclQueryDirectorInterface
         }
 
         $aclEntityMetadataTransfer = $this->aclEntityMetadataReader->findAclEntityMetadataTransferForEntityClass(
-            $query->getModelName(),
+            $query->getModelNameOrFail(),
         );
 
         if ($aclEntityMetadataTransfer && $aclEntityMetadataTransfer->getIsSubEntity()) {
@@ -195,7 +195,7 @@ class AclQueryDirector implements AclQueryDirectorInterface
     ): ModelCriteria {
         $query = $this->aclQueryExpander->joinSubEntityRootRelation($query, $aclEntityMetadataTransfer);
         $rootAclEntityMetadata = $this->aclEntityMetadataReader->getRootAclEntityMetadataTransferForEntitySubClass(
-            $query->getModelName(),
+            $query->getModelNameOrFail(),
         );
 
         $rootEntityQuery = PropelQuery::from($rootAclEntityMetadata->getEntityNameOrFail());
@@ -231,7 +231,7 @@ class AclQueryDirector implements AclQueryDirectorInterface
 
         $condition = current($conditions);
         /** @var \Propel\Runtime\Map\ColumnMap $primaryKey */
-        $primaryKey = current($query->getTableMap()->getPrimaryKeys());
+        $primaryKey = current($query->getTableMapOrFail()->getPrimaryKeys());
 
         return $condition->getColumn() === $primaryKey->getName()
             && $condition->getComparison() === ModelCriteria::EQUAL

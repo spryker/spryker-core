@@ -10,9 +10,9 @@ namespace Spryker\Zed\Synchronization\Persistence\Propel\Formatter;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Propel\Runtime\DataFetcher\DataFetcherInterface;
 use Propel\Runtime\Exception\LogicException;
-use Propel\Runtime\Formatter\ArrayFormatter;
+use Propel\Runtime\Formatter\AbstractFormatterWithHydration;
 
-class SynchronizationDataTransferObjectFormatter extends ArrayFormatter
+class SynchronizationDataTransferObjectFormatter extends AbstractFormatterWithHydration
 {
     /**
      * @var array
@@ -26,7 +26,7 @@ class SynchronizationDataTransferObjectFormatter extends ArrayFormatter
      *
      * @return array<\Spryker\Shared\Kernel\Transfer\TransferInterface>
      */
-    public function format(?DataFetcherInterface $dataFetcher = null)
+    public function format(?DataFetcherInterface $dataFetcher = null): array
     {
         $this->checkInit();
 
@@ -43,7 +43,7 @@ class SynchronizationDataTransferObjectFormatter extends ArrayFormatter
 
         $items = [];
         foreach ($dataFetcher as $row) {
-            $rowArray = &$this->getStructuredArrayFromRow($row);
+            $rowArray = &$this->hydratePropelObjectCollection($row);
             if ($rowArray) {
                 $items[] = &$rowArray;
             }
@@ -85,7 +85,7 @@ class SynchronizationDataTransferObjectFormatter extends ArrayFormatter
 
         $item = [];
         foreach ($dataFetcher as $row) {
-            $rowArray = &$this->getStructuredArrayFromRow($row);
+            $rowArray = &$this->hydratePropelObjectCollection($row);
             if ($rowArray) {
                 $item = &$rowArray;
             }
@@ -118,7 +118,7 @@ class SynchronizationDataTransferObjectFormatter extends ArrayFormatter
     /**
      * @return bool
      */
-    public function isObjectFormatter()
+    public function isObjectFormatter(): bool
     {
         return false;
     }

@@ -204,7 +204,7 @@ class PaymentMethodTable extends AbstractTable
         $query = $this->paymentMethodQuery
             ->leftJoinWithSpyPaymentProvider();
 
-        if ($this->paymentMethodQuery->getTableMap()->hasColumn('is_hidden')) {
+        if ($this->paymentMethodQuery->getTableMap() && $this->paymentMethodQuery->getTableMap()->hasColumn('is_hidden')) {
             $query->filterByIsHidden(false);
         }
 

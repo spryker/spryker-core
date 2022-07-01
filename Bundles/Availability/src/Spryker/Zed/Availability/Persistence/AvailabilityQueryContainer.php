@@ -487,7 +487,7 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
             Criteria::LEFT_JOIN,
         );
         $joinOmsProductReservation->buildJoinCondition($query);
-        $joinOmsProductReservation->getJoinCondition()->addAnd($omsProductReservationFkStoreCriterion);
+        $joinOmsProductReservation->getJoinConditionOrFail()->addAnd($omsProductReservationFkStoreCriterion);
 
         $query->addJoinObject($joinOmsProductReservation);
 
@@ -513,7 +513,7 @@ class AvailabilityQueryContainer extends AbstractQueryContainer implements Avail
             Criteria::LEFT_JOIN,
         );
         $joinStockProduct->buildJoinCondition($query);
-        $joinStockProduct->getJoinCondition()->addAnd($stockIdsCriterion);
+        $joinStockProduct->getJoinConditionOrFail()->addAnd($stockIdsCriterion);
 
         $query->addJoinObject($joinStockProduct);
 

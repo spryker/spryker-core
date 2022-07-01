@@ -14,6 +14,7 @@ use IteratorAggregate;
 use Spryker\Glue\Testify\OpenApi3\Property\PropertyDefinition;
 use Spryker\Glue\Testify\OpenApi3\Property\PropertyValueInterface;
 use Spryker\Glue\Testify\OpenApi3\SchemaFieldInterface;
+use Traversable;
 
 /**
  * @implements \ArrayAccess<int|string, \Spryker\Glue\Testify\OpenApi3\Property\PropertyValueInterface>
@@ -83,7 +84,7 @@ abstract class AbstractCollection implements CollectionInterface, IteratorAggreg
     /**
      * @return \Traversable
      */
-    public function getIterator()
+    public function getIterator(): Traversable
     {
         return new ArrayIterator(array_map(function (PropertyValueInterface $element) {
             return $element->getValue()->export();
@@ -93,7 +94,7 @@ abstract class AbstractCollection implements CollectionInterface, IteratorAggreg
     /**
      * @return int
      */
-    public function count()
+    public function count(): int
     {
         return count($this->elements);
     }
@@ -103,7 +104,7 @@ abstract class AbstractCollection implements CollectionInterface, IteratorAggreg
      *
      * @return bool
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return array_key_exists($offset, $this->elements);
     }
@@ -113,6 +114,7 @@ abstract class AbstractCollection implements CollectionInterface, IteratorAggreg
      *
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         if (!$this->offsetExists($offset)) {
@@ -132,7 +134,7 @@ abstract class AbstractCollection implements CollectionInterface, IteratorAggreg
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         trigger_error(sprintf('Trying to set readonly property: %s::%s', static::class, $offset), E_USER_WARNING);
     }
@@ -142,7 +144,7 @@ abstract class AbstractCollection implements CollectionInterface, IteratorAggreg
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         trigger_error(sprintf('Trying to unset readonly property: %s::%s', static::class, $offset), E_USER_WARNING);
     }

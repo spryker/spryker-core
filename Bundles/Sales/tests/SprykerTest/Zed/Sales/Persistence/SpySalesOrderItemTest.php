@@ -65,7 +65,7 @@ class SpySalesOrderItemTest extends Unit
             ->getMock();
 
         $salesOrderItemEntityMock->method('doSave')
-            ->willReturn(true);
+            ->willReturn(1);
 
         return $salesOrderItemEntityMock;
     }
@@ -80,7 +80,7 @@ class SpySalesOrderItemTest extends Unit
             ->getMock();
 
         $mockedOmsOrderItemStateHistory->method('save')
-            ->willReturn(true);
+            ->willReturn(1);
 
         return $mockedOmsOrderItemStateHistory;
     }

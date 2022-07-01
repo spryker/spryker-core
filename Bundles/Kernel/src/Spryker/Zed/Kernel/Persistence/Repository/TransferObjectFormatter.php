@@ -9,9 +9,10 @@ namespace Spryker\Zed\Kernel\Persistence\Repository;
 
 use Propel\Runtime\DataFetcher\DataFetcherInterface;
 use Propel\Runtime\Exception\LogicException;
-use Propel\Runtime\Formatter\ArrayFormatter;
+use Propel\Runtime\Formatter\AbstractFormatterWithHydration;
+use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
-class TransferObjectFormatter extends ArrayFormatter
+class TransferObjectFormatter extends AbstractFormatterWithHydration
 {
     /**
      * @var array
@@ -25,7 +26,7 @@ class TransferObjectFormatter extends ArrayFormatter
      *
      * @return array<\Spryker\Shared\Kernel\Transfer\TransferInterface>
      */
-    public function format(?DataFetcherInterface $dataFetcher = null)
+    public function format(?DataFetcherInterface $dataFetcher = null): array
     {
         $this->checkInit();
 
@@ -42,14 +43,14 @@ class TransferObjectFormatter extends ArrayFormatter
 
         $items = [];
         foreach ($dataFetcher as $row) {
-            $rowArray = &$this->getStructuredArrayFromRow($row);
+            $rowArray = &$this->hydratePropelObjectCollection($row);
             if ($rowArray) {
                 $items[] = &$rowArray;
             }
         }
 
         foreach ($items as $item) {
-            $entityName = $this->getTableMap()->getPhpName();
+            $entityName = $this->getTableMap()->getPhpNameOrFail();
             $entityTransfer = $this->mapArrayToEntityTransfer($entityName, $item);
             $collection[] = $entityTransfer;
         }
@@ -68,7 +69,7 @@ class TransferObjectFormatter extends ArrayFormatter
      *
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface|null
      */
-    public function formatOne(?DataFetcherInterface $dataFetcher = null)
+    public function formatOne(?DataFetcherInterface $dataFetcher = null): ?TransferInterface
     {
         $this->checkInit();
         $result = null;
@@ -85,14 +86,14 @@ class TransferObjectFormatter extends ArrayFormatter
 
         $item = [];
         foreach ($dataFetcher as $row) {
-            $rowArray = &$this->getStructuredArrayFromRow($row);
+            $rowArray = &$this->hydratePropelObjectCollection($row);
             if ($rowArray) {
                 $item = &$rowArray;
             }
         }
 
         if ($item) {
-            $entityName = $this->getTableMap()->getPhpName();
+            $entityName = $this->getTableMap()->getPhpNameOrFail();
             $result = $this->mapArrayToEntityTransfer($entityName, $item);
         }
 
@@ -123,7 +124,7 @@ class TransferObjectFormatter extends ArrayFormatter
     /**
      * @return bool
      */
-    public function isObjectFormatter()
+    public function isObjectFormatter(): bool
     {
         return false;
     }

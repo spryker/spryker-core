@@ -177,17 +177,19 @@ class ConfigurableBundleTemplateSlotTable extends AbstractTable
      */
     protected function prepareQuery(SpyConfigurableBundleTemplateSlotQuery $configurableBundleTemplateSlotPropelQuery): SpyConfigurableBundleTemplateSlotQuery
     {
+        /** @var literal-string $where */
+        $where = sprintf(
+            '%s = %s',
+            SpyGlossaryTranslationTableMap::COL_FK_LOCALE,
+            $this->localeFacade->getCurrentLocale()->getIdLocale(),
+        );
         $configurableBundleTemplateSlotPropelQuery
             ->filterByFkConfigurableBundleTemplate($this->idConfigurableBundleTemplate)
             ->addJoin(SpyConfigurableBundleTemplateSlotTableMap::COL_NAME, SpyGlossaryKeyTableMap::COL_KEY, Criteria::INNER_JOIN)
             ->addJoin(SpyGlossaryKeyTableMap::COL_ID_GLOSSARY_KEY, SpyGlossaryTranslationTableMap::COL_FK_GLOSSARY_KEY, Criteria::INNER_JOIN)
             ->withColumn(SpyGlossaryTranslationTableMap::COL_VALUE, static::COL_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_NAME_TRANSLATION)
             ->innerJoinSpyProductList()
-            ->where(sprintf(
-                '%s = %s',
-                SpyGlossaryTranslationTableMap::COL_FK_LOCALE,
-                $this->localeFacade->getCurrentLocale()->getIdLocale(),
-            ))
+            ->where($where)
             ->select([
                 SpyConfigurableBundleTemplateSlotTableMap::COL_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT,
                 SpyConfigurableBundleTemplateSlotTableMap::COL_FK_PRODUCT_LIST,

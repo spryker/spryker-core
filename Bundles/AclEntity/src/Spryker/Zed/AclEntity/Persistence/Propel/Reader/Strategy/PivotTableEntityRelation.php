@@ -51,7 +51,7 @@ class PivotTableEntityRelation extends AbstractAclEntityRelation implements AclE
 
         $targetEntityQuery = PropelQuery::from($aclEntityMetadataTransfer->getParentOrFail()->getEntityNameOrFail());
         $pivotEntity = $aclEntityMetadataTransfer->getParentOrFail()->getConnectionOrFail()->getPivotEntityNameOrFail();
-        $pivotTableMap = PropelQuery::from($pivotEntity)->getTableMap();
+        $pivotTableMap = PropelQuery::from($pivotEntity)->getTableMapOrFail();
 
         $referenceColumn = $aclEntityMetadataTransfer->getParentOrFail()->getConnectionOrFail()->getReferenceOrFail();
 

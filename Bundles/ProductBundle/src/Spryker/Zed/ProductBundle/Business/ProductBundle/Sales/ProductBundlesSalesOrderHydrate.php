@@ -60,10 +60,13 @@ class ProductBundlesSalesOrderHydrate implements ProductBundlesSalesOrderHydrate
      */
     protected function findOrderItemsByIdSalesOrder($idSalesOrder)
     {
-        return $this->salesQueryContainer
+        /** @var \Propel\Runtime\Collection\ObjectCollection $salesOrderCollection */
+        $salesOrderCollection = $this->salesQueryContainer
             ->querySalesOrderItem()
             ->orderBySku()
             ->findByFkSalesOrder($idSalesOrder);
+
+        return $salesOrderCollection;
     }
 
     /**

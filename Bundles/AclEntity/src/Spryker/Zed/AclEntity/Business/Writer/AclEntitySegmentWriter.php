@@ -57,7 +57,7 @@ class AclEntitySegmentWriter implements AclEntitySegmentWriterInterface
         $entity = $aclEntitySegmentRequestTransfer->getEntity();
         $this->aclEntitySegmentConnectorValidator->validate($entity);
         $referenceColumnName = $this->aclEntityService->generateSegmentConnectorReferenceColumnName(
-            PropelQuery::from($entity)->getTableMap()->getName(),
+            PropelQuery::from($entity)->getTableMapOrFail()->getNameOrFail(),
         );
 
         $aclEntitySegmentRequestTransfer->setEntity(

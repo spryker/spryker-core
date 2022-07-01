@@ -1010,15 +1010,21 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     {
         $categoryNodeIdsImploded = implode(', ', $categoryNodeIds);
 
+        /** @var literal-string $whereCategoryNodeDescendant */
+        $whereCategoryNodeDescendant = sprintf('%s IN (%s)', SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE_DESCENDANT, $categoryNodeIdsImploded);
+
+        /** @var literal-string $whereCategoryNode */
+        $whereCategoryNode = sprintf('%s IN (%s)', SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE, $categoryNodeIdsImploded);
+
         $relatedCategoryNodesData = $this->getFactory()
             ->createCategoryClosureTableQuery()
             ->select([
                 SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE_DESCENDANT,
                 SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE,
             ])
-            ->where(sprintf('%s IN (%s)', SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE_DESCENDANT, $categoryNodeIdsImploded))
+            ->where($whereCategoryNodeDescendant)
             ->_or()
-            ->where(sprintf('%s IN (%s)', SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE, $categoryNodeIdsImploded))
+            ->where($whereCategoryNode)
             ->find()
             ->getData();
 

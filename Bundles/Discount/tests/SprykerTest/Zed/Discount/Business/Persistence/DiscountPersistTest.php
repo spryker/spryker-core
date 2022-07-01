@@ -309,7 +309,7 @@ class DiscountPersistTest extends Unit
         $discountEntity = $this->getMockBuilder(SpyDiscount::class)->getMock();
         $discountEntity->expects($this->once())
             ->method('save')
-            ->willReturn(true);
+            ->willReturn(1);
 
         return $discountEntity;
     }
@@ -322,7 +322,7 @@ class DiscountPersistTest extends Unit
         $discountVoucherPoolEntity = $this->getMockBuilder(SpyDiscountVoucherPool::class)->getMock();
         $discountVoucherPoolEntity
             ->method('save')
-            ->willReturn(true);
+            ->willReturn(1);
 
         return $discountVoucherPoolEntity;
     }

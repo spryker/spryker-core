@@ -24,7 +24,7 @@ class TableMapBuilder extends PropelTableMapBuilder
      *
      * @return string
      */
-    public function buildObjectInstanceCreationCode($objName, $clsName)
+    public function buildObjectInstanceCreationCode(string $objName, string $clsName): string
     {
         $bundle = $this->getBundleName();
 
@@ -42,7 +42,7 @@ class TableMapBuilder extends PropelTableMapBuilder
      *
      * @return string
      */
-    protected function getBundleName()
+    protected function getBundleName(): string
     {
         if (preg_match('/Zed.(.*?).Persistence/', $this->getClasspath(), $matches)) {
             return $matches[1];
@@ -58,7 +58,7 @@ class TableMapBuilder extends PropelTableMapBuilder
      *
      * @return void
      */
-    protected function addPopulateObject(&$script)
+    protected function addPopulateObject(string &$script): void
     {
         $table = $this->getTable();
         $script .= '
@@ -73,9 +73,9 @@ class TableMapBuilder extends PropelTableMapBuilder
      *
      * @throws PropelException Any exceptions caught during processing will be
      *                         rethrown wrapped into a PropelException.
-     * @return array           (' . $this->getObjectClassName() . " object, last column rank)
+     * @return array Array (' . $this->getObjectClassName() . " object, last column rank)
      */
-    public static function populateObject(\$row, \$offset = 0, \$indexType = TableMap::TYPE_NUM)
+    public static function populateObject(array \$row, int \$offset = 0, string \$indexType = TableMap::TYPE_NUM): array
     {
         \$key = {$this->getTableMapClassName()}::getPrimaryKeyHashFromRow(\$row, \$offset, \$indexType);
         if (null !== (\$obj = {$this->getTableMapClassName()}::getInstanceFromPool(\$key))) {
@@ -110,7 +110,7 @@ class TableMapBuilder extends PropelTableMapBuilder
             {$this->getTableMapClassName()}::addInstanceToPool(\$obj, \$key);
         }
 
-        return array(\$obj, \$col);
+        return [\$obj, \$col];
     }
 ";
     }

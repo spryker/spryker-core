@@ -75,7 +75,7 @@ class SegmentAclQueryScope implements AclQueryScopeInterface
     {
         $aclEntityRuleCollectionTransfer = $this->getFilteredAclEntityRules(
             $aclEntityRuleCollectionTransfer,
-            $query->getModelName(),
+            $query->getModelNameOrFail(),
             AclEntityConstants::OPERATION_MASK_READ,
         );
         $aclEntitySegmentIds = array_map(
@@ -86,13 +86,13 @@ class SegmentAclQueryScope implements AclQueryScopeInterface
         );
 
         $segmentRelationName = $this->aclEntityService->generateSegmentConnectorRelationName($query->getModelShortName());
-        $segmentClassName = $this->aclEntityService->generateSegmentConnectorClassName($query->getModelName());
-        $segmentTableMap = PropelQuery::from($segmentClassName)->getTableMap();
+        $segmentClassName = $this->aclEntityService->generateSegmentConnectorClassName($query->getModelNameOrFail());
+        $segmentTableMap = PropelQuery::from($segmentClassName)->getTableMapOrFail();
 
         $query
             ->join($segmentRelationName)
             ->addJoinCondition(
-                $segmentTableMap->getPhpName(),
+                $segmentTableMap->getPhpNameOrFail(),
                 $this->generateSegmentJoinCondition($segmentTableMap),
                 $aclEntitySegmentIds,
             );
@@ -110,7 +110,7 @@ class SegmentAclQueryScope implements AclQueryScopeInterface
     {
         $aclEntityRuleCollectionTransfer = $this->getFilteredAclEntityRules(
             $aclEntityRuleCollectionTransfer,
-            $query->getModelName(),
+            $query->getModelNameOrFail(),
             AclEntityConstants::OPERATION_MASK_UPDATE,
         );
 
@@ -123,7 +123,7 @@ class SegmentAclQueryScope implements AclQueryScopeInterface
         // Propel does not support joins for update queries through query builder (@see \Propel\Runtime\ActiveQuery\ModelCriteria::update)
         // Limit update scope with additional IN condition
         /** @var \Propel\Runtime\Map\ColumnMap $primaryKey */
-        $primaryKey = current($query->getTableMap()->getPrimaryKeys());
+        $primaryKey = current($query->getTableMapOrFail()->getPrimaryKeys());
         if (!$updatePermissionAclEntityRuleSegmentIds) {
             return $query->filterBy($primaryKey->getPhpName(), null, Criteria::ISNULL);
         }
@@ -143,7 +143,7 @@ class SegmentAclQueryScope implements AclQueryScopeInterface
     {
         $aclEntityRuleCollectionTransfer = $this->getFilteredAclEntityRules(
             $aclEntityRuleCollectionTransfer,
-            $query->getModelName(),
+            $query->getModelNameOrFail(),
             AclEntityConstants::OPERATION_MASK_DELETE,
         );
         // Propel tries to delete joined tables data on delete query as well.
@@ -155,7 +155,7 @@ class SegmentAclQueryScope implements AclQueryScopeInterface
             $aclEntityRuleCollectionTransfer->getAclEntityRules()->getArrayCopy(),
         );
         /** @var \Propel\Runtime\Map\ColumnMap $primaryKey */
-        $primaryKey = current($query->getTableMap()->getPrimaryKeys());
+        $primaryKey = current($query->getTableMapOrFail()->getPrimaryKeys());
         if (!$deletePermissionAclEntityRuleSegmentIds) {
             return $query->filterBy($primaryKey->getPhpName(), null, Criteria::ISNULL);
         }
@@ -176,11 +176,11 @@ class SegmentAclQueryScope implements AclQueryScopeInterface
     protected function getAccessibleTargetEntityIds(ModelCriteria $query, array $segmentIds): array
     {
         $segmentTableQuery = PropelQuery::from(
-            $this->aclEntityService->generateSegmentConnectorClassName($query->getModelName()),
+            $this->aclEntityService->generateSegmentConnectorClassName($query->getModelNameOrFail()),
         );
         $segmentEntities = $segmentTableQuery
             ->filterBy(
-                $segmentTableQuery->getTableMap()->getColumn(static::FK_ACL_ENTITY_SEGMENT)->getPhpName(),
+                $segmentTableQuery->getTableMapOrFail()->getColumn(static::FK_ACL_ENTITY_SEGMENT)->getPhpName(),
                 $segmentIds,
                 Criteria::IN,
             )
@@ -190,7 +190,7 @@ class SegmentAclQueryScope implements AclQueryScopeInterface
             function (ActiveRecordInterface $segmentEntity) use ($query): int {
                 $callable = [
                     $segmentEntity,
-                    $this->aclEntityService->generateSegmentConnectorReferenceGetter($query->getModelName()),
+                    $this->aclEntityService->generateSegmentConnectorReferenceGetter($query->getModelNameOrFail()),
                 ];
 
                 if (!is_callable($callable)) {

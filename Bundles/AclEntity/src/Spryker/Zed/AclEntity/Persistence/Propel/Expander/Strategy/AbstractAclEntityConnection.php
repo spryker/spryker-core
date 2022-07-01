@@ -85,7 +85,7 @@ abstract class AbstractAclEntityConnection
         $parentRelationName = $this->getParentRelationName($aclEntityMetadataTransfer);
         $parentTableName = $this->getTableMapByEntityClass(
             $aclEntityMetadataTransfer->getParentOrFail()->getEntityNameOrFail(),
-        )->getName();
+        )->getNameOrFail();
         if (!$this->hasTableNameOrAlias($query, $parentTableName)) {
             return $query->addJoinObject($aclEntityJoin, $parentRelationName);
         }
@@ -269,7 +269,7 @@ abstract class AbstractAclEntityConnection
     {
         $relations = Propel::getServiceContainer()->getDatabaseMap()->getTableByPhpName($class)->getRelations();
         foreach ($relations as $relation) {
-            $rightTableClass = ltrim($relation->getRightTable()->getClassName(), '\\');
+            $rightTableClass = ltrim($relation->getRightTable()->getClassNameOrFail(), '\\');
             if ($rightTableClass === $relationClass) {
                 return $relation;
             }

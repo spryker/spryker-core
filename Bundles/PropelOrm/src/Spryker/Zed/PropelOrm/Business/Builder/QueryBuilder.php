@@ -37,7 +37,7 @@ class QueryBuilder extends PropelQueryBuilder
      *
      * @return string
      */
-    protected function addFilterByColIn(Column $col)
+    protected function addFilterByColIn(Column $col): string
     {
         $script = '';
 
@@ -70,7 +70,7 @@ SCRIPT;
      *
      * @return string
      */
-    protected function addFilterByColBetween(Column $col)
+    protected function addFilterByColBetween(Column $col): string
     {
         $script = '';
 
@@ -139,7 +139,7 @@ SCRIPT;
     /**
      * @return array<string>
      */
-    protected function getAllowedArrayFilters()
+    protected function getAllowedArrayFilters(): array
     {
         return [
             'Criteria::IN',
@@ -155,7 +155,7 @@ SCRIPT;
      *
      * @return void
      */
-    protected function addFilterByCol(&$script, Column $col)
+    protected function addFilterByCol(string &$script, Column $col): void
     {
         $allowedArrayFilters = $this->getAllowedArrayFilters();
         $implodedArrayComparisons = implode(', ', $allowedArrayFilters);
@@ -413,7 +413,7 @@ SCRIPT;
      *
      * @return void
      */
-    protected function addClassBody(&$script)
+    protected function addClassBody(string &$script): void
     {
         $classes = $this->getFactory()
             ->createFindClassNamespacesCollector()
@@ -436,7 +436,7 @@ SCRIPT;
      *
      * @return void
      */
-    protected function addForUpdate(&$script)
+    protected function addForUpdate(string &$script): void
     {
         $script .= "
     /**
@@ -461,7 +461,7 @@ SCRIPT;
      *
      * @return string
      */
-    public function createSelectSql(&\$params)
+    public function createSelectSql(&\$params): string
     {
         \$sql = parent::createSelectSql(\$params);
         if (\$this->isForUpdateEnabled) {
@@ -494,7 +494,7 @@ SCRIPT;
      *
      * @return void
      */
-    protected function addFindPk(&$script)
+    protected function addFindPk(string &$script): void
     {
         $class = $this->getObjectClassName();
         $tableMapClassName = $this->getTableMapClassName();
@@ -531,7 +531,7 @@ SCRIPT;
      *
      * @return $class|array|mixed the result, formatted by the current formatter
      */
-    public function findPk(\$key, ConnectionInterface \$con = null)
+    public function findPk(\$key, ?ConnectionInterface \$con = null)
     {";
         if (!$table->hasPrimaryKey()) {
             $this->declareClass('Propel\\Runtime\\Exception\\LogicException');
@@ -594,10 +594,11 @@ SCRIPT;
      *
      * @return void
      */
-    protected function addFindPks(&$script)
+    protected function addFindPks(string &$script): void
     {
         $this->declareClasses(
             '\Propel\Runtime\Collection\ObjectCollection',
+            '\Propel\Runtime\Collection\Collection',
             '\Propel\Runtime\Connection\ConnectionInterface',
             '\Propel\Runtime\Propel',
         );
@@ -620,7 +621,7 @@ SCRIPT;
      * @param     array \$keys Primary keys to use for the query
      * @param     ConnectionInterface \$con an optional connection object
      *
-     * @return ObjectCollection|array|mixed the list of results, formatted by the current formatter
+     * @return    Collection|array|mixed the list of results, formatted by the current formatter
      */
     public function findPks(\$keys, ConnectionInterface \$con = null)
     {";
@@ -663,7 +664,7 @@ SCRIPT;
      *
      * @return void
      */
-    protected function addFind(&$script)
+    protected function addFind(string &$script): void
     {
         $script .= "
     /**
@@ -696,7 +697,7 @@ SCRIPT;
      *
      * @return void
      */
-    protected function addFindOne(&$script)
+    protected function addFindOne(string &$script): void
     {
         $script .= "
     /**
@@ -731,7 +732,7 @@ SCRIPT;
      *
      * @return void
      */
-    protected function addExists(&$script)
+    protected function addExists(string &$script): void
     {
         $script .= "
     /**
@@ -741,7 +742,7 @@ SCRIPT;
      *
      * @return bool column existence
      */
-    public function exists(?ConnectionInterface \$con = null)
+    public function exists(?ConnectionInterface \$con = null): bool
     {";
 
         $extensionPlugins = $this->getFactory()->getFindExtensionPlugins();

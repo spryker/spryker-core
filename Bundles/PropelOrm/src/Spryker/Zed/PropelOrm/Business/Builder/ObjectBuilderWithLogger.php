@@ -53,7 +53,7 @@ class ObjectBuilderWithLogger extends PropelObjectBuilder
      *
      * @return void
      */
-    protected function addBooleanMutator(&$script, Column $col)
+    protected function addBooleanMutator(string &$script, Column $col): void
     {
         $clo = $col->getLowercasedName();
 
@@ -70,7 +70,7 @@ class ObjectBuilderWithLogger extends PropelObjectBuilder
             if (is_string(\$v)) {
                 \$v = in_array(strtolower(\$v), array('false', 'off', '-', 'no', 'n', '0', '')) ? false : true;
             } else {
-                \$v = (bool) \$v;
+                \$v = (bool)\$v;
             }
         }
 
@@ -104,7 +104,7 @@ class ObjectBuilderWithLogger extends PropelObjectBuilder
      *
      * @return void
      */
-    protected function addClassBody(&$script)
+    protected function addClassBody(string &$script): void
     {
         $classes = $this->getFactory()
             ->createtPostSaveClassNamespacesCollector()
@@ -122,24 +122,24 @@ class ObjectBuilderWithLogger extends PropelObjectBuilder
      *
      * @return string the doInsert() method code
      */
-    protected function addDoInsert()
+    protected function addDoInsert(): string
     {
         $table = $this->getTable();
         $script = "
     /**
      * Insert the row in the database.
      *
-     * @param      ConnectionInterface \$con
-     *
+     * @param ConnectionInterface \$con
      * @throws PropelException
+     * @return void
      * @see doSave()
      */
-    protected function doInsert(ConnectionInterface \$con)
+    protected function doInsert(ConnectionInterface \$con): void
     {";
         if ($this->getPlatform() instanceof MssqlPlatform) {
             if ($table->hasAutoIncrementPrimaryKey()) {
                 $script .= "
-        \$this->modifiedColumns[" . $this->getColumnConstant($table->getAutoIncrementPrimaryKey()) . '] = true;';
+        \$this->modifiedColumns[" . $this->getColumnConstant($table->getAutoIncrementPrimaryKeyOrFail()) . '] = true;';
             }
             $script .= "
         \$criteria = \$this->buildCriteria();";
@@ -167,7 +167,7 @@ class ObjectBuilderWithLogger extends PropelObjectBuilder
      *
      * @return string the doUpdate() method code
      */
-    protected function addDoUpdate()
+    protected function addDoUpdate(): string
     {
         return "
     /**
@@ -175,10 +175,10 @@ class ObjectBuilderWithLogger extends PropelObjectBuilder
      *
      * @param      ConnectionInterface \$con
      *
-     * @return Integer Number of updated rows
+     * @return int Number of updated rows
      * @see doSave()
      */
-    protected function doUpdate(ConnectionInterface \$con)
+    protected function doUpdate(ConnectionInterface \$con): int
     {
         \$selectCriteria = \$this->buildPkeyCriteria();
         \$valuesCriteria = \$this->buildCriteria();
@@ -199,7 +199,7 @@ class ObjectBuilderWithLogger extends PropelObjectBuilder
      *
      * @return void
      */
-    protected function addDeleteClose(&$script)
+    protected function addDeleteClose(string &$script): void
     {
         $script .= "
         \\Spryker\\Shared\\Log\\LoggerFactory::getInstance()->info('Entity delete', ['entity' => \$this->toArray('fieldName', false)]);
@@ -214,7 +214,7 @@ class ObjectBuilderWithLogger extends PropelObjectBuilder
      *
      * @return void
      */
-    protected function addHookMethods(&$script)
+    protected function addHookMethods(string &$script): void
     {
         $hooks = [];
         foreach (['pre', 'post'] as $hook) {
@@ -239,7 +239,7 @@ class ObjectBuilderWithLogger extends PropelObjectBuilder
      *
      * @return void
      */
-    protected function addSaveClose(&$script)
+    protected function addSaveClose(string &$script): void
     {
         $script .= "
     }
@@ -261,7 +261,7 @@ class ObjectBuilderWithLogger extends PropelObjectBuilder
      * Code to be run after persisting the object
      * @param \\Propel\\Runtime\\Connection\\ConnectionInterface \$con
      */
-     public function postSave(?ConnectionInterface \$con = null)
+     public function postSave(?ConnectionInterface \$con = null): void
      {";
 
         $extensionPlugins = $this->getFactory()->getPostSaveExtensionPlugins();

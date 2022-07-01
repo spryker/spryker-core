@@ -157,7 +157,7 @@ class RelationMapper implements RelationMapperInterface
      */
     protected function createEntityQueryClass(RelationMap $relationMap)
     {
-        return PropelQuery::from($relationMap->getRightTable()->getClassName());
+        return PropelQuery::from($relationMap->getRightTable()->getClassNameOrFail());
     }
 
     /**

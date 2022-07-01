@@ -83,6 +83,7 @@ class UrlRedirectAppendObserver implements UrlCreatorAfterSaveObserverInterface,
             return;
         }
 
+        /** @var \Propel\Runtime\Collection\ObjectCollection $chainRedirectEntities */
         $chainRedirectEntities = $this->findUrlRedirectEntitiesByTargetUrl($urlTransfer->getUrl());
 
         foreach ($chainRedirectEntities as $chainRedirectEntity) {
@@ -100,6 +101,7 @@ class UrlRedirectAppendObserver implements UrlCreatorAfterSaveObserverInterface,
      */
     protected function findUrlRedirectEntitiesByTargetUrl($targetUrl)
     {
+        /** @var \Propel\Runtime\Collection\ObjectCollection $chainRedirectEntities */
         $chainRedirectEntities = $this->urlQueryContainer
             ->queryRedirects()
             ->findByToUrl($targetUrl);

@@ -34,8 +34,10 @@ class SynchronizationDataQueryExpanderWhereBetweenStrategyPlugin implements Sync
 
         $nextRange = $offset + $chunkSize;
 
+        /** @var literal-string $where */
+        $where = sprintf('%s BETWEEN %s AND %s', key($primaryKeys), $offset, $nextRange);
         $query
-            ->where(sprintf('%s BETWEEN %s AND %s', key($primaryKeys), $offset, $nextRange));
+            ->where($where);
 
         return $query;
     }
