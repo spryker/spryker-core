@@ -2,7 +2,7 @@
     {% block widget_content %}
         <div class="row form-group">
             <div class="col-xs-2"><b>{{ 'SKU' | trans }}</b></div>
-            <div class="col-xs-10"><a target="_blank" href="{{ url('/product-management/view', {'id-product-abstract': productConcrete.fkProductAbstract}) }}">{{ productConcrete.sku }}</a></div>
+            <div class="col-xs-10"><a target="_blank" href="{{ url('/product-management/view/variant', {'id-product-abstract': productConcrete.fkProductAbstract, 'id-product': productConcrete.idProductConcrete}) }}">{{ productConcrete.sku }}</a></div>
         </div>
 
         {% set productType = 'Product' | trans %}
