@@ -12,7 +12,7 @@ interface ProductConcreteReaderInterface
     /**
      * @param int $idProductList
      *
-     * @return array<int>
+     * @return array<int, string>
      */
-    public function getMappedProductConcreteIds(int $idProductList): array;
+    public function getProductConcreteSkusIndexedByIdProductConcrete(int $idProductList): array;
 }
