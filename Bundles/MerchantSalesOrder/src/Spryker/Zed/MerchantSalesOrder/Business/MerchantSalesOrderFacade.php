@@ -201,4 +201,20 @@ class MerchantSalesOrderFacade extends AbstractFacade implements MerchantSalesOr
     {
         return $this->getRepository()->getMerchantOrderItemCollection($merchantOrderItemCriteriaTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function updateMerchantOrderTotals(OrderTransfer $orderTransfer): OrderTransfer
+    {
+        return $this->getFactory()
+            ->createMerchantOrderTotalsWriter()
+            ->updateMerchantOrderTotals($orderTransfer);
+    }
 }

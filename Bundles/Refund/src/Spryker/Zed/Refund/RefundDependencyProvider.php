@@ -53,6 +53,11 @@ class RefundDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
+    public const PLUGINS_REFUND_POST_SAVE = 'PLUGINS_REFUND_POST_SAVE';
+
+    /**
+     * @var string
+     */
     public const SERVICE_DATE_TIME = 'date formatter';
 
     /**
@@ -67,6 +72,7 @@ class RefundDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addSalesFacade($container);
         $container = $this->addCalculationFacade($container);
         $container = $this->addSalesQueryContainer($container);
+        $container = $this->addRefundPostSavePlugins($container);
 
         return $container;
     }
@@ -124,6 +130,28 @@ class RefundDependencyProvider extends AbstractBundleDependencyProvider
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addRefundPostSavePlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_REFUND_POST_SAVE, function () {
+            return $this->getRefundPostSavePlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Zed\RefundExtension\Dependency\Plugin\RefundPostSavePluginInterface>
+     */
+    protected function getRefundPostSavePlugins(): array
+    {
+        return [];
     }
 
     /**

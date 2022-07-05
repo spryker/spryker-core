@@ -45,4 +45,12 @@ interface MerchantSalesOrderEntityManagerInterface
      * @return \Generated\Shared\Transfer\TotalsTransfer
      */
     public function createMerchantOrderTotals(int $idMerchantOrder, TotalsTransfer $totalsTransfer): TotalsTransfer;
+
+    /**
+     * @param int $idMerchantOrder
+     * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
+     *
+     * @return \Generated\Shared\Transfer\TotalsTransfer
+     */
+    public function updateMerchantOrderTotals(int $idMerchantOrder, TotalsTransfer $totalsTransfer): TotalsTransfer;
 }

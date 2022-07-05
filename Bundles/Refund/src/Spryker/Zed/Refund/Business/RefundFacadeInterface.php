@@ -61,6 +61,7 @@ interface RefundFacadeInterface
      * Specification:
      * - Persists calculated Refund amount.
      * - Sets calculated refund amount as canceled amount to each sales order item.
+     * - Executes {@link \Spryker\Zed\RefundExtension\Dependency\Plugin\RefundPostSavePluginInterface} plugin stack.
      *
      * @api
      *

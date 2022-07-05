@@ -743,6 +743,7 @@
         "spryker/ramsey-uuid": "*",
         "spryker/redis": "*",
         "spryker/refund": "*",
+        "spryker/refund-extension": "*",
         "spryker/related-products-rest-api": "*",
         "spryker/resource-share": "*",
         "spryker/resource-share-extension": "*",

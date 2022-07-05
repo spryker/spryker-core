@@ -269,6 +269,12 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
                 ->endUse();
         }
 
+        if ($merchantOrderCriteriaTransfer->getMerchantReferences()) {
+            $merchantSalesOrderQuery->filterByMerchantReference_In(
+                $merchantOrderCriteriaTransfer->getMerchantReferences(),
+            );
+        }
+
         return $merchantSalesOrderQuery;
     }
 

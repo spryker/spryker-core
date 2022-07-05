@@ -165,13 +165,13 @@ class RefundSaverTest extends Unit
         if ($refundEntity) {
             $refundSaverMock = $this->getMockBuilder(RefundSaver::class)
                 ->setMethods(['buildRefundEntity'])
-                ->setConstructorArgs([$salesQueryContainerMock, $salesFacadeMock, $calculationFacadeMock])->getMock();
+                ->setConstructorArgs([$salesQueryContainerMock, $salesFacadeMock, $calculationFacadeMock, []])->getMock();
 
             $refundSaverMock->expects($this->once())->method('buildRefundEntity')->willReturn($refundEntity);
         } else {
             $refundSaverMock = $this->getMockBuilder(RefundSaver::class)
                 ->setMethods(['saveRefundEntity', 'updateOrderItems', 'updateExpenses'])
-                ->setConstructorArgs([$this->getSalesQueryContainerMock(), $salesFacadeMock, $calculationFacadeMock])
+                ->setConstructorArgs([$this->getSalesQueryContainerMock(), $salesFacadeMock, $calculationFacadeMock, []])
                 ->getMock();
             $refundSaverMock->expects($this->once())->method('saveRefundEntity');
         }
