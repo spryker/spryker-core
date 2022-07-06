@@ -407,9 +407,9 @@ class CmsFacade extends AbstractFacade implements CmsFacadeInterface
      *
      * @param int $idCmsPage
      *
-     * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
+     * @return \Generated\Shared\Transfer\CmsGlossaryTransfer|null
      */
-    public function findPageGlossaryAttributes(int $idCmsPage): CmsGlossaryTransfer
+    public function findPageGlossaryAttributes(int $idCmsPage): ?CmsGlossaryTransfer
     {
         return $this->getFactory()
             ->createCmsGlossaryReader()
