@@ -194,4 +194,22 @@ interface DiscountPromotionFacadeInterface
         QuoteTransfer $quoteTransfer,
         string $voucherCode
     ): DiscountVoucherCheckResponseTransfer;
+
+    /**
+     * Specification:
+     * - Requires `DiscountConfigurator.discountCalculator` transfer property to be set.
+     * - Requires `DiscountConfigurator.discountGeneral.idDiscount` transfer property to be set.
+     * - Sets an empty promotional discount to `DiscountConfigurator.discountCalculator`, if `DiscountConfigurator.discountCalculator.discountPromotion` is not set.
+     * - Otherwise, checks if `DiscountConfigurator.discountCalculator.discountPromotion.idDiscountPromotion` is set.
+     * - If `DiscountConfigurator.discountCalculator.discountPromotion.idDiscountPromotion` is set, updates promotional discount.
+     * - Otherwise, creates a new promotional discount.
+     * - Sets promotional discount to `DiscountConfigurator.discountCalculator`.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
+     *
+     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer
+     */
+    public function postUpdateDiscount(DiscountConfiguratorTransfer $discountConfiguratorTransfer): DiscountConfiguratorTransfer;
 }

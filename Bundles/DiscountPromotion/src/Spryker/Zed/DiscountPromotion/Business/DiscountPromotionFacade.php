@@ -236,4 +236,20 @@ class DiscountPromotionFacade extends AbstractFacade implements DiscountPromotio
             ->createDiscountPromotionVoucherCodeApplicationChecker()
             ->check($quoteTransfer, $voucherCode);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DiscountConfiguratorTransfer $discountConfiguratorTransfer
+     *
+     * @return \Generated\Shared\Transfer\DiscountConfiguratorTransfer
+     */
+    public function postUpdateDiscount(DiscountConfiguratorTransfer $discountConfiguratorTransfer): DiscountConfiguratorTransfer
+    {
+        return $this->getFactory()
+            ->createDiscountPromotionDiscountPostUpdater()
+            ->postUpdate($discountConfiguratorTransfer);
+    }
 }

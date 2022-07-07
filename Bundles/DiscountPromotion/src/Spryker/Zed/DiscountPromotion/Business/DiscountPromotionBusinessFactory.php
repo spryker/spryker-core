@@ -30,6 +30,8 @@ use Spryker\Zed\DiscountPromotion\Business\Filter\DiscountPromotionItemFilter;
 use Spryker\Zed\DiscountPromotion\Business\Filter\DiscountPromotionItemFilterInterface;
 use Spryker\Zed\DiscountPromotion\Business\Model\DiscountCollectorStrategy\PromotionAvailabilityCalculator;
 use Spryker\Zed\DiscountPromotion\Business\Model\DiscountPromotionReader;
+use Spryker\Zed\DiscountPromotion\Business\PostUpdater\DiscountPromotionDiscountPostUpdater;
+use Spryker\Zed\DiscountPromotion\Business\PostUpdater\DiscountPromotionDiscountPostUpdaterInterface;
 use Spryker\Zed\DiscountPromotion\Business\Writer\DiscountVoucherQuoteWriter;
 use Spryker\Zed\DiscountPromotion\Business\Writer\DiscountVoucherQuoteWriterInterface;
 use Spryker\Zed\DiscountPromotion\DiscountPromotionDependencyProvider;
@@ -185,6 +187,17 @@ class DiscountPromotionBusinessFactory extends AbstractBusinessFactory
     public function createDiscountPromotionVoucherCodeApplicationChecker(): DiscountPromotionVoucherCodeApplicationCheckerInterface
     {
         return new DiscountPromotionVoucherCodeApplicationChecker();
+    }
+
+    /**
+     * @return \Spryker\Zed\DiscountPromotion\Business\PostUpdater\DiscountPromotionDiscountPostUpdaterInterface
+     */
+    public function createDiscountPromotionDiscountPostUpdater(): DiscountPromotionDiscountPostUpdaterInterface
+    {
+        return new DiscountPromotionDiscountPostUpdater(
+            $this->createDiscountPromotionCreator(),
+            $this->createDiscountPromotionUpdater(),
+        );
     }
 
     /**
