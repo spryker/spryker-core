@@ -13,12 +13,10 @@ class MerchantUserNotFoundException extends Exception
 {
     /**
      * @param int $idUser
-     *
-     * @return void
      */
-    public function __constructor($idUser)
+    public function __construct(int $idUser)
     {
-        parent::__construct($this->buildMessage((int)$idUser));
+        parent::__construct($this->buildMessage($idUser));
     }
 
     /**

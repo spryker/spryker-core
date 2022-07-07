@@ -23,6 +23,11 @@ class ChangePasswordController extends AbstractController
     protected const RESPONSE_NOTIFICATION_MESSAGE_SUCCESS = 'Success! The Password is updated.';
 
     /**
+     * @var string
+     */
+    protected const RESPONSE_NOTIFICATION_MESSAGE_ERROR = 'Please resolve all errors.';
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
@@ -67,7 +72,21 @@ class ChangePasswordController extends AbstractController
                 ->createResponse();
 
             $responseData = array_merge($responseData, $zedUiFormResponseTransfer->toArray());
+
+            return new JsonResponse($responseData);
         }
+
+        $zedUiFormResponseTransfer = $this->getFactory()
+            ->getZedUiFactory()
+            ->createZedUiFormResponseBuilder()
+            ->addErrorNotification(
+                $this->getFactory()
+                    ->getTranslatorFacade()
+                    ->trans(static::RESPONSE_NOTIFICATION_MESSAGE_ERROR),
+            )
+            ->createResponse();
+
+        $responseData = array_merge($responseData, $zedUiFormResponseTransfer->toArray());
 
         return new JsonResponse($responseData);
     }
