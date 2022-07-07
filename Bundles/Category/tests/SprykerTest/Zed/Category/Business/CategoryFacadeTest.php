@@ -1063,6 +1063,55 @@ class CategoryFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testUpdateShouldUpdateCategoryWhenParentCategoryAndAdditionalParentSwitched(): void
+    {
+        // Arrange
+        $localeTransfer = $this->tester->haveLocale([LocaleTransfer::LOCALE_NAME => static::TEST_LOCALE_EN]);
+
+        $parentCategoryNodeTransfer = $this->tester->haveCategory([
+            CategoryTransfer::LOCALIZED_ATTRIBUTES => [
+                $this->createCategoryLocalizedAttributesTransferForLocale($localeTransfer)->toArray(),
+            ],
+        ])->getCategoryNodeOrFail();
+
+        $extraParentCategoryNodeTransfer = $this->tester->haveCategory([
+            CategoryTransfer::LOCALIZED_ATTRIBUTES => [
+                $this->createCategoryLocalizedAttributesTransferForLocale($localeTransfer)->toArray(),
+            ],
+        ])->getCategoryNodeOrFail();
+
+        $categoryTransfer = $this->tester->haveCategory([
+            CategoryTransfer::PARENT_CATEGORY_NODE => $parentCategoryNodeTransfer,
+            CategoryTransfer::EXTRA_PARENTS => [
+                $extraParentCategoryNodeTransfer->toArray(),
+            ],
+            CategoryTransfer::LOCALIZED_ATTRIBUTES => [
+                $this->createCategoryLocalizedAttributesTransferForLocale($localeTransfer)->toArray(),
+            ],
+        ]);
+
+        $categoryTransfer->setParentCategoryNode($extraParentCategoryNodeTransfer);
+        $categoryTransfer->setExtraParents(new ArrayObject([$parentCategoryNodeTransfer]));
+        $this->getFacade()->update($categoryTransfer);
+
+        $categoryTransfer->setParentCategoryNode($parentCategoryNodeTransfer);
+        $categoryTransfer->setExtraParents(new ArrayObject([$extraParentCategoryNodeTransfer]));
+
+        // Act
+        $this->getFacade()->update($categoryTransfer);
+
+        // Assert
+        $this->assertSame($parentCategoryNodeTransfer->getIdCategoryNodeOrFail(), $categoryTransfer->getCategoryNodeOrFail()->getFkParentCategoryNodeOrFail());
+        $this->assertCount(1, $categoryTransfer->getExtraParents());
+
+        /** @var \Generated\Shared\Transfer\NodeTransfer $updatedExtraParentCategoryNodeTransfer */
+        $updatedExtraParentCategoryNodeTransfer = $categoryTransfer->getExtraParents()->offsetGet(0);
+        $this->assertSame($extraParentCategoryNodeTransfer->getIdCategoryNodeOrFail(), $updatedExtraParentCategoryNodeTransfer->getIdCategoryNodeOrFail());
+    }
+
+    /**
      * @return int
      */
     protected function getRootCategoryId(): int

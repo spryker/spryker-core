@@ -93,10 +93,10 @@ class CategoryRelationshipUpdater implements CategoryRelationshipUpdaterInterfac
 
         $this->executeCategoryRelationUpdatePlugins($categoryTransfer);
 
+        $this->categoryNodeUpdater->updateExtraParentCategoryNodes($categoryTransfer);
         $this->categoryNodeUpdater->updateCategoryNode($categoryTransfer);
         $this->categoryAttributeUpdater->updateCategoryAttributes($categoryTransfer);
         $this->categoryUrlUpdater->updateCategoryUrl($categoryTransfer);
-        $this->categoryNodeUpdater->updateExtraParentCategoryNodes($categoryTransfer);
 
         $this->handleStoreRelationUpdate($categoryTransfer);
     }
