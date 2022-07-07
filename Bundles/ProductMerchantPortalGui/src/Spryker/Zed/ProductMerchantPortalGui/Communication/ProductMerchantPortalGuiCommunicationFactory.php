@@ -819,6 +819,7 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
             $this->getLocaleFacade(),
             $this->getProductFacade(),
             $this->createProductAttributeDataProvider(),
+            $this->createPriceProductReader(),
         );
     }
 

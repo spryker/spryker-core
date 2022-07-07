@@ -98,6 +98,28 @@ class PriceProductReader implements PriceProductReaderInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     *
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
+     */
+    public function getPriceProductsWithoutPriceExtraction(
+        PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+    ): array {
+        $idProductConcrete = $priceProductCriteriaTransfer->getIdProductConcreteOrFail();
+        $idProductAbstract = $priceProductCriteriaTransfer->getIdProductAbstractOrFail();
+
+        $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())
+            ->setOnlyConcretePrices(true)
+            ->setWithAllMerchantPrices(true);
+
+        return $this->priceProductFacade->findProductConcretePricesWithoutPriceExtraction(
+            $idProductConcrete,
+            $idProductAbstract,
+            $priceProductCriteriaTransfer,
+        );
+    }
+
+    /**
      * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductTableCriteriaTransfer $priceProductTableCriteriaTransfer
      *

@@ -10,22 +10,34 @@ namespace SprykerTest\Zed\ProductMerchantPortalGui;
 use Codeception\Actor;
 use Codeception\Util\Stub;
 use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\MerchantUserTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceTypeTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\DataProvider\ProductConcreteEditFormDataProvider;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\DataProvider\ProductConcreteEditFormDataProviderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\Merger\PriceProductMerger;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\Merger\PriceProductMergerInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\PriceProductMapper;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\PriceProductMapperInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\ProductMerchantPortalGuiCommunicationFactory;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Reader\PriceProductReader;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Reader\PriceProductReaderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToCurrencyFacadeBridge;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToCurrencyFacadeInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantProductFacadeBridge;
+use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantProductFacadeInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantUserFacadeBridge;
+use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantUserFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMoneyFacadeBridge;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMoneyFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeBridge;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductFacadeBridge;
+use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToUtilEncodingServiceBridge;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToUtilEncodingServiceInterface;
 use Spryker\Zed\ProductMerchantPortalGui\ProductMerchantPortalGuiDependencyProvider;
@@ -189,6 +201,17 @@ class ProductMerchantPortalGuiCommunicationTester extends Actor
     }
 
     /**
+     * @param array<string, callable> $mockedMethods
+     *
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeInterface
+     */
+    public function createProductMerchantPortalGuiToPriceProductFacadeMock(
+        array $mockedMethods
+    ): ProductMerchantPortalGuiToPriceProductFacadeInterface {
+        return Stub::make(ProductMerchantPortalGuiToPriceProductFacadeBridge::class, $mockedMethods);
+    }
+
+    /**
      * @return \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToCurrencyFacadeBridge
      */
     public function createCurrencyFacadeMock(): ProductMerchantPortalGuiToCurrencyFacadeBridge
@@ -206,6 +229,45 @@ class ProductMerchantPortalGuiCommunicationTester extends Actor
                     return (new CurrencyTransfer());
                 },
             ],
+        );
+    }
+
+    /**
+     * @param array<string, callable> $mockedMethods
+     *
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantUserFacadeInterface
+     */
+    public function createMerchantUserFacadeMock(array $mockedMethods = []): ProductMerchantPortalGuiToMerchantUserFacadeInterface
+    {
+        return Stub::make(
+            ProductMerchantPortalGuiToMerchantUserFacadeBridge::class,
+            $mockedMethods,
+        );
+    }
+
+    /**
+     * @param array $mockedMethods
+     *
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantProductFacadeInterface
+     */
+    public function createMerchantProductFacadeMock(array $mockedMethods = []): ProductMerchantPortalGuiToMerchantProductFacadeInterface
+    {
+        return Stub::make(
+            ProductMerchantPortalGuiToMerchantProductFacadeBridge::class,
+            $mockedMethods,
+        );
+    }
+
+    /**
+     * @param array $mockedMethods
+     *
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductFacadeInterface
+     */
+    public function createProductFacadeMock(array $mockedMethods = []): ProductMerchantPortalGuiToProductFacadeInterface
+    {
+        return Stub::make(
+            ProductMerchantPortalGuiToProductFacadeBridge::class,
+            $mockedMethods,
         );
     }
 
@@ -288,5 +350,57 @@ class ProductMerchantPortalGuiCommunicationTester extends Actor
             static::FAKE_CURRENCY_ID_1 => (new CurrencyTransfer())->setIdCurrency(static::FAKE_CURRENCY_ID_1),
             static::FAKE_CURRENCY_ID_2 => (new CurrencyTransfer())->setIdCurrency(static::FAKE_CURRENCY_ID_2),
         ];
+    }
+
+    /**
+     * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade
+     *
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Reader\PriceProductReaderInterface
+     */
+    public function createPriceProductReader(
+        ProductMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade
+    ): PriceProductReaderInterface {
+        return new PriceProductReader(
+            $priceProductFacade,
+            $this->getFactory()->getProductFacade(),
+            $this->getFactory()->getPriceProductVolumeFacade(),
+            [],
+        );
+    }
+
+    /**
+     * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantProductFacadeInterface $merchantProductFacade
+     * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade
+     *
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductMerchantPortalGui\Communication\Form\DataProvider\ProductConcreteEditFormDataProviderInterface
+     */
+    public function createProductConcreteEditFormDataProvider(
+        ProductMerchantPortalGuiToMerchantProductFacadeInterface $merchantProductFacade,
+        ProductMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade
+    ): ProductConcreteEditFormDataProviderInterface {
+        $merchantUserFacade = $this->createMerchantUserFacadeMock(
+            [
+                'getCurrentMerchantUser' => function () {
+                    return (new MerchantUserTransfer())->setIdMerchant(1)->setIdMerchantUser(1);
+                },
+            ],
+        );
+
+        $productFacade = $this->createProductFacadeMock(
+            [
+                'findProductAbstractById' => function () {
+                    return (new ProductAbstractTransfer())->setIdProductAbstract(1);
+                },
+            ],
+        );
+
+        return new ProductConcreteEditFormDataProvider(
+            $merchantUserFacade,
+            $merchantProductFacade,
+            $this->getFactory()->getLocaleFacade(),
+            $productFacade,
+            $this->getFactory()->createProductAttributeDataProvider(),
+            $this->createPriceProductReader($priceProductFacade),
+        );
     }
 }

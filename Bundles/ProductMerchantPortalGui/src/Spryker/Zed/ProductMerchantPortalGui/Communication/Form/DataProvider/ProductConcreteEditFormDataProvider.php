@@ -9,9 +9,13 @@ namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Form\DataProvider;
 
 use ArrayObject;
 use Generated\Shared\Transfer\MerchantProductCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\ProductAttributeDataProviderInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Reader\PriceProductReaderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToLocaleFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantProductFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantUserFacadeInterface;
@@ -87,24 +91,32 @@ class ProductConcreteEditFormDataProvider implements ProductConcreteEditFormData
     protected $productAttributeDataProvider;
 
     /**
+     * @var \Spryker\Zed\ProductMerchantPortalGui\Communication\Reader\PriceProductReaderInterface
+     */
+    protected $priceProductReader;
+
+    /**
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantProductFacadeInterface $merchantProductFacade
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToLocaleFacadeInterface $localeFacade
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductFacadeInterface $productFacade
      * @param \Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\ProductAttributeDataProviderInterface $productAttributeDataProvider
+     * @param \Spryker\Zed\ProductMerchantPortalGui\Communication\Reader\PriceProductReaderInterface $priceProductReader
      */
     public function __construct(
         ProductMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade,
         ProductMerchantPortalGuiToMerchantProductFacadeInterface $merchantProductFacade,
         ProductMerchantPortalGuiToLocaleFacadeInterface $localeFacade,
         ProductMerchantPortalGuiToProductFacadeInterface $productFacade,
-        ProductAttributeDataProviderInterface $productAttributeDataProvider
+        ProductAttributeDataProviderInterface $productAttributeDataProvider,
+        PriceProductReaderInterface $priceProductReader
     ) {
         $this->merchantUserFacade = $merchantUserFacade;
         $this->merchantProductFacade = $merchantProductFacade;
         $this->localeFacade = $localeFacade;
         $this->productFacade = $productFacade;
         $this->productAttributeDataProvider = $productAttributeDataProvider;
+        $this->priceProductReader = $priceProductReader;
     }
 
     /**
@@ -137,9 +149,14 @@ class ProductConcreteEditFormDataProvider implements ProductConcreteEditFormData
             $productAbstractTransfer->getImageSets(),
         );
 
+        $useAbstractProductPrices = $this->isProductConcretePricesEmpty(
+            $productAbstractTransfer,
+            $productConcreteTransfer,
+        );
+
         return [
             static::PRODUCT_CONCRETE_EDIT_FORM_FIELD_PRODUCT_CONCRETE => $productConcreteTransfer,
-            static::PRODUCT_CONCRETE_EDIT_FORM_FIELD_USE_ABSTRACT_PRODUCT_PRICES => $productConcreteTransfer->getPrices()->count() === 0,
+            static::PRODUCT_CONCRETE_EDIT_FORM_FIELD_USE_ABSTRACT_PRODUCT_PRICES => $useAbstractProductPrices,
             static::PRODUCT_CONCRETE_EDIT_FORM_FIELD_USE_ABSTRACT_PRODUCT_NAME => $useAbstractProductName,
             static::PRODUCT_CONCRETE_EDIT_FORM_FIELD_USE_ABSTRACT_PRODUCT_DESCRIPTION => $useAbstractProductDescription,
             static::PRODUCT_CONCRETE_EDIT_FORM_FIELD_USE_ABSTRACT_PRODUCT_IMAGE_SETS => $useAbstractProductImageSets,
@@ -272,5 +289,26 @@ class ProductConcreteEditFormDataProvider implements ProductConcreteEditFormData
         }
 
         return $result;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return bool
+     */
+    protected function isProductConcretePricesEmpty(ProductAbstractTransfer $productAbstractTransfer, ProductConcreteTransfer $productConcreteTransfer): bool
+    {
+        if ($productConcreteTransfer->getPrices()->count()) {
+            return false;
+        }
+
+        $priceProducts = $this->priceProductReader->getPriceProductsWithoutPriceExtraction(
+            (new PriceProductCriteriaTransfer())
+                ->setIdProductAbstract($productAbstractTransfer->getIdProductAbstractOrFail())
+                ->setIdProductConcrete($productConcreteTransfer->getIdProductConcreteOrFail()),
+        );
+
+        return $priceProducts === [];
     }
 }
