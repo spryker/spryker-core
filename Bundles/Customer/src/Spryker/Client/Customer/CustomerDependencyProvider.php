@@ -87,7 +87,7 @@ class CustomerDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return array<\Spryker\Client\Customer\Dependency\Plugin\DefaultAddressChangePluginInterface>
+     * @return array<\Spryker\Client\CustomerExtension\Dependency\Plugin\DefaultAddressChangePluginInterface>
      */
     protected function getDefaultAddressChangePlugins()
     {
@@ -209,7 +209,7 @@ class CustomerDependencyProvider extends AbstractDependencyProvider
     {
         throw new MissingAccessTokenAuthenticationHandlerPluginException(
             sprintf(
-                "Missing instance of %s! You need to configure an access token authentication handler plugin 
+                "Missing instance of %s! You need to configure an access token authentication handler plugin
                       in your own CustomerDependencyProvider::getAccessTokenAuthenticationHandlerPlugin() to allow retrieve customer by access token.",
                 AccessTokenAuthenticationHandlerPluginInterface::class,
             ),

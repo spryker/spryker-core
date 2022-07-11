@@ -7,19 +7,11 @@
 
 namespace Spryker\Client\Customer\Dependency\Plugin;
 
-use Generated\Shared\Transfer\CustomerTransfer;
+use Spryker\Client\CustomerExtension\Dependency\Plugin\DefaultAddressChangePluginInterface as ExtensionDefaultAddressChangePluginInterface;
 
-interface DefaultAddressChangePluginInterface
+/**
+ * @deprecated Use {@link \Spryker\Client\CustomerExtension\Dependency\Plugin\DefaultAddressChangePluginInterface} instead.
+ */
+interface DefaultAddressChangePluginInterface extends ExtensionDefaultAddressChangePluginInterface
 {
-    /**
-     * Specification:
-     *  - executes plugin process after create or update customer address
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return void
-     */
-    public function process(CustomerTransfer $customerTransfer);
 }
