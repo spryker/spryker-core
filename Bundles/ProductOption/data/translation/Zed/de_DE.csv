@@ -3,7 +3,7 @@ Activate,Aktivieren
 "All products","Alle Produkte"
 "Assigned products","Zugeordnete Produkte"
 "Could not activate option.","Option konnte nicht aktiviert werden."
-"Create a product option by defining option values with translation key, sku and price. By adding more than 1 option value bellow, you will create an option group. With an option group your customer can choose one option from this group.","Produktoption erstellen durch das Festlegen von Optionswerten mit Übersetzungsschlüssel, SKU und Preis. Wird mehr als 1 Optionswert hinzugefügt, wird eine Optionengruppe erstellt. Bei einer Optionengruppe kann Ihr Kunde eine Option dieser Gruppe auswählen."
+"Create a product option by defining option values with translation key, sku and price. By adding more than 1 option value below, you will create an option group. With an option group your customer can choose one option from this group.","Produktoption erstellen durch das Festlegen von Optionswerten mit Übersetzungsschlüssel, SKU und Preis. Wird mehr als 1 Optionswert hinzugefügt, wird eine Optionengruppe erstellt. Bei einer Optionengruppe kann Ihr Kunde eine Option dieser Gruppe auswählen."
 "Create product option","Produktoption erstellen"
 "Created at","Erstellt am"
 Deactivate,Deaktivieren
