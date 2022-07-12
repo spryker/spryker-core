@@ -74,9 +74,8 @@ class AclHelper extends Module
         if ($aclRoleCriteriaTransfer->getName()) {
             $aclRoleQuery->filterByName($aclRoleCriteriaTransfer->getName());
         }
-        if ($aclRoleCriteriaTransfer->getReference()) {
-            $aclRoleQuery->filterByReference($aclRoleCriteriaTransfer->getReference());
-        }
+
+        $aclRoleQuery = $this->filterAclRoleByReference($aclRoleCriteriaTransfer, $aclRoleQuery);
 
         $aclRoleQuery->delete();
     }
@@ -95,6 +94,7 @@ class AclHelper extends Module
         if ($groupCriteriaTransfer->getName()) {
             $aclGroupQuery->filterByName($groupCriteriaTransfer->getName());
         }
+
         if ($groupCriteriaTransfer->getReference()) {
             $aclGroupQuery->filterByReference($groupCriteriaTransfer->getReference());
         }
@@ -140,5 +140,24 @@ class AclHelper extends Module
     protected function getAclGroupQuery(): SpyAclGroupQuery
     {
         return SpyAclGroupQuery::create();
+    }
+
+    /**
+     * @deprecated Will be removed in the next major without replacement.
+     *
+     * @param \Generated\Shared\Transfer\AclRoleCriteriaTransfer $aclRoleCriteriaTransfer
+     * @param \Orm\Zed\Acl\Persistence\SpyAclRoleQuery $aclRoleQuery
+     *
+     * @return \Orm\Zed\Acl\Persistence\SpyAclRoleQuery
+     */
+    protected function filterAclRoleByReference(
+        AclRoleCriteriaTransfer $aclRoleCriteriaTransfer,
+        SpyAclRoleQuery $aclRoleQuery
+    ): SpyAclRoleQuery {
+        if ($aclRoleCriteriaTransfer->getReference()) {
+            $aclRoleQuery->filterByReference($aclRoleCriteriaTransfer->getReference());
+        }
+
+        return $aclRoleQuery;
     }
 }

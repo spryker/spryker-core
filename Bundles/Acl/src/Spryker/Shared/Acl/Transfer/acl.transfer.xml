@@ -47,7 +47,7 @@
     <transfer name="AclRoleCriteria">
         <property name="names" type="string[]" singular="name"/>
         <property name="name" type="string"/>
-        <property name="reference" type="string"/>
+        <property name="reference" type="string" deprecated="Will be removed with next major release."/>
     </transfer>
 
     <transfer name="GroupCriteria">
