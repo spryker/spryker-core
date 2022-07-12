@@ -8,7 +8,9 @@
 namespace SprykerTest\Glue\GlueJsonApiConvention\Plugin\GlueRestApiConvention;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\AnnotationTransfer;
 use Generated\Shared\Transfer\ApiApplicationSchemaContextTransfer;
+use Generated\Shared\Transfer\PathAnnotationTransfer;
 use Generated\Shared\Transfer\ResourceContextTransfer;
 use Spryker\Glue\GlueJsonApiConvention\Plugin\DocumentationGeneratorApi\JsonApiSchemaFormatterPlugin;
 use SprykerTest\Glue\GlueJsonApiConvention\Stub\TestEmptyJsonApiResourcePlugin;
@@ -34,12 +36,12 @@ class JsonApiSchemaFormatterPluginTest extends Unit
     /**
      * @var string
      */
-    protected const COMPONENTS_SCHEMAS_RESPONSE = '#/components/schemas/TestsRestResponse';
+    protected const COMPONENTS_SCHEMAS_RESPONSE = '#/components/schemas/TestsResponse';
 
     /**
      * @var string
      */
-    protected const COMPONENTS_SCHEMAS_COLLECTION_RESPONSE = '#/components/schemas/TestsRestCollectionResponse';
+    protected const COMPONENTS_SCHEMAS_COLLECTION_RESPONSE = '#/components/schemas/TestsCollectionResponse';
 
     /**
      * @var string
@@ -63,9 +65,16 @@ class JsonApiSchemaFormatterPluginTest extends Unit
     {
         //Arrange
         $apiApplicationSchemaContextTransfer = new ApiApplicationSchemaContextTransfer();
+        $annotationTransfer = (new AnnotationTransfer())->setResponseAttributesClassName('TestsTransfer');
         $resourceContextTransfer = (new ResourceContextTransfer())
             ->setResourcePluginName(TestEmptyJsonApiResourcePlugin::class)
-            ->setResourceType('tests');
+            ->setResourceType('tests')
+            ->setPathAnnotation((new PathAnnotationTransfer())
+                ->setGetCollection($annotationTransfer)
+                ->setGetResourceById($annotationTransfer)
+                ->setPost($annotationTransfer)
+                ->setDelete($annotationTransfer)
+                ->setPatch($annotationTransfer));
         $apiApplicationSchemaContextTransfer->addResourceContext($resourceContextTransfer);
         $plugin = new JsonApiSchemaFormatterPlugin();
 

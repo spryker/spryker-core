@@ -144,7 +144,7 @@ class ResourceTransferAnalyzer implements ResourceTransferAnalyzerInterface
     public function createResponseResourceSchemaNameFromTransferClassName(string $transferClassName): string
     {
         return str_replace(
-            static::TRANSFER_NAME_PARTIAL_ATTRIBUTES . static::TRANSFER_NAME_PARTIAL_TRANSFER,
+            static::TRANSFER_NAME_PARTIAL_TRANSFER,
             static::SCHEMA_NAME_PARTIAL_RESPONSE,
             $this->getTransferClassNamePartial($transferClassName),
         );
@@ -172,7 +172,7 @@ class ResourceTransferAnalyzer implements ResourceTransferAnalyzerInterface
     public function createResponseCollectionSchemaNameFromTransferClassName(string $transferClassName): string
     {
         return str_replace(
-            static::TRANSFER_NAME_PARTIAL_ATTRIBUTES . static::TRANSFER_NAME_PARTIAL_TRANSFER,
+            static::TRANSFER_NAME_PARTIAL_TRANSFER,
             static::SCHEMA_NAME_PARTIAL_COLLECTION . static::SCHEMA_NAME_PARTIAL_RESPONSE,
             $this->getTransferClassNamePartial($transferClassName),
         );

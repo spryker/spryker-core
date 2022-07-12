@@ -121,7 +121,11 @@ class PathResponseSpecificationComponent implements PathResponseSpecificationCom
     protected function addDefaultSuccessResponseToResponseData(array $pathMethodData): array
     {
         if (!isset($pathMethodData[static::KEY_RESPONSES][(string)$pathMethodData[static::KEY_DEFAULT_RESPONSE_CODE]])) {
+            if (isset($pathMethodData[static::KEY_RESPONSES])) {
+                $pathMethodData[static::KEY_RESPONSES] = array_reverse($pathMethodData[static::KEY_RESPONSES], true);
+            }
             $pathMethodData[static::KEY_RESPONSES][(string)$pathMethodData[static::KEY_DEFAULT_RESPONSE_CODE]] = static::DESCRIPTION_SUCCESSFUL_RESPONSE;
+            $pathMethodData[static::KEY_RESPONSES] = array_reverse($pathMethodData[static::KEY_RESPONSES], true);
         }
 
         return $pathMethodData;

@@ -88,6 +88,19 @@
         <property name="resourceType" type="string"/>
         <property name="relationships" type="string"/>
         <property name="resourcePluginName" type="string"/>
+        <property name="pathAnnotation" type="PathAnnotation"/>
+    </transfer>
+
+    <transfer name="PathAnnotation">
+        <property name="getResourceById" type="Annotation"/>
+        <property name="getCollection" type="Annotation"/>
+        <property name="post" type="Annotation"/>
+        <property name="patch" type="Annotation"/>
+        <property name="delete" type="Annotation"/>
+    </transfer>
+
+    <transfer name="Annotation">
+        <property name="responseAttributesClassName" type="string"/>
     </transfer>
 
 </transfers>

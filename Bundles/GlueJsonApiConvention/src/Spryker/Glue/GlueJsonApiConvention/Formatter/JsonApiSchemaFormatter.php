@@ -7,7 +7,9 @@
 
 namespace Spryker\Glue\GlueJsonApiConvention\Formatter;
 
+use Generated\Shared\Transfer\AnnotationTransfer;
 use Generated\Shared\Transfer\ApiApplicationSchemaContextTransfer;
+use Generated\Shared\Transfer\PathAnnotationTransfer;
 use Generated\Shared\Transfer\ResourceContextTransfer;
 use Spryker\Glue\GlueJsonApiConvention\Dependency\External\GlueJsonApiConventionToInflectorInterface;
 use Spryker\Glue\GlueJsonApiConvention\GlueJsonApiConventionConfig;
@@ -39,11 +41,6 @@ class JsonApiSchemaFormatter implements SchemaFormatterInterface
     /**
      * @var string
      */
-    protected const PART_REST = 'Rest';
-
-    /**
-     * @var string
-     */
     protected const PART_RESPONSE = 'Response';
 
     /**
@@ -65,6 +62,21 @@ class JsonApiSchemaFormatter implements SchemaFormatterInterface
      * @var string
      */
     protected const SCHEMA_REF = '#/components/schemas/';
+
+    /**
+     * @var string
+     */
+    protected const HTTP_METHOD_GET = 'get';
+
+    /**
+     * @var string
+     */
+    protected const TRANSFER_NAME_PARTIAL_TRANSFER = 'Transfer';
+
+    /**
+     * @var string
+     */
+    protected const TRANSFER_PROPERTY_OR_FAIL_PART = 'OrFail';
 
     /**
      * @var \Spryker\Glue\GlueJsonApiConvention\Dependency\External\GlueJsonApiConventionToInflectorInterface
@@ -118,7 +130,9 @@ class JsonApiSchemaFormatter implements SchemaFormatterInterface
     protected function formatPaths(array $formattedData, ResourceContextTransfer $resourceContext): array
     {
         foreach ($this->getResourcePaths($resourceContext->getResourceTypeOrFail()) as $resourcePathKey) {
-            $formattedData['paths'][$resourcePathKey] = $this->formatOperation($resourcePathKey, $formattedData['paths'][$resourcePathKey], $resourceContext);
+            if (isset($formattedData['paths'][$resourcePathKey])) {
+                $formattedData['paths'][$resourcePathKey] = $this->formatOperation($resourcePathKey, $formattedData['paths'][$resourcePathKey], $resourceContext);
+            }
         }
 
         return $formattedData;
@@ -134,14 +148,15 @@ class JsonApiSchemaFormatter implements SchemaFormatterInterface
     protected function formatOperation(string $path, array $pathData, ResourceContextTransfer $resourceContext): array
     {
         foreach ($pathData as $key => $operation) {
-            $resourceTypeWithConventionName = ucfirst($resourceContext->getResourceTypeOrFail());
+            $isGetCollection = $key === static::HTTP_METHOD_GET && $path === $this->getCollectionResourcePath($resourceContext->getResourceTypeOrFail());
+
+            $responseAttributesClassName = $this->getResponseAttributesClassName($resourceContext->getPathAnnotationOrFail(), $key, $isGetCollection);
             if (isset($operation['requestBody'])) {
+                $resourceTypeWithConventionName = ucfirst($resourceContext->getResourceTypeOrFail());
                 $operation = $this->formatRequestBody($operation, $resourceTypeWithConventionName);
             }
 
-            $isGetCollection = $key === 'get' && $path === $this->getCollectionResourcePath($resourceContext->getResourceTypeOrFail());
-
-            $operation = $this->formatResponses($operation, $resourceTypeWithConventionName, $isGetCollection);
+            $operation = $this->formatResponses($operation, $responseAttributesClassName, $isGetCollection);
             $operation = $this->jsonApiSchemaParametersFormatter->setOperationParameters($operation, $resourceContext);
 
             $pathData[$key] = $operation;
@@ -184,7 +199,6 @@ class JsonApiSchemaFormatter implements SchemaFormatterInterface
         if (isset($operation['responses'])) {
             foreach ($operation['responses'] as $responseCode => $response) {
                 $schemaObjectName = $resourceTypeWithConventionName
-                    . static::PART_REST
                     . ($isGetCollection ? static::PART_COLLECTION : '')
                     . static::PART_RESPONSE;
 
@@ -290,5 +304,79 @@ class JsonApiSchemaFormatter implements SchemaFormatterInterface
     protected function getCollectionResourcePath(string $resourceType): string
     {
         return sprintf('/%s', $resourceType);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PathAnnotationTransfer $pathAnnotationTransfer
+     * @param string $methodName
+     * @param bool $isCollection
+     *
+     * @return string
+     */
+    protected function getResponseAttributesClassName(
+        PathAnnotationTransfer $pathAnnotationTransfer,
+        string $methodName,
+        bool $isCollection
+    ): string {
+        $annotationTransfer = $this->resolveAnnotationTransfer($pathAnnotationTransfer, $methodName, $isCollection);
+
+        /** @var string $responseAttributesClassName */
+        $responseAttributesClassName = $annotationTransfer->getResponseAttributesClassName();
+        if ($responseAttributesClassName) {
+            $responseAttributesClassName = $this->getResponseAttributesName($responseAttributesClassName);
+        }
+
+        return $responseAttributesClassName;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PathAnnotationTransfer $pathAnnotationTransfer
+     * @param string $methodName
+     * @param bool $isCollection
+     *
+     * @return \Generated\Shared\Transfer\AnnotationTransfer
+     */
+    protected function resolveAnnotationTransfer(
+        PathAnnotationTransfer $pathAnnotationTransfer,
+        string $methodName,
+        bool $isCollection
+    ): AnnotationTransfer {
+        if ($methodName === static::HTTP_METHOD_GET && !$isCollection) {
+            return $pathAnnotationTransfer->getGetResourceByIdOrFail();
+        }
+        if ($isCollection) {
+            return $pathAnnotationTransfer->getGetCollectionOrFail();
+        }
+
+        $annotationPropertyName = static::HTTP_METHOD_GET . ucfirst($methodName) . static::TRANSFER_PROPERTY_OR_FAIL_PART;
+
+        return $pathAnnotationTransfer->$annotationPropertyName();
+    }
+
+    /**
+     * @param string $transferClassName
+     *
+     * @return string
+     */
+    protected function getResponseAttributesName(string $transferClassName): string
+    {
+        return str_replace(
+            static::TRANSFER_NAME_PARTIAL_TRANSFER,
+            '',
+            $this->getTransferClassNamePartial($transferClassName),
+        );
+    }
+
+    /**
+     * @param string $transferClassName
+     *
+     * @return string
+     */
+    protected function getTransferClassNamePartial(string $transferClassName): string
+    {
+        $transferClassNameExploded = explode('\\', $transferClassName);
+
+        /** @phpstan-var string */
+        return end($transferClassNameExploded);
     }
 }

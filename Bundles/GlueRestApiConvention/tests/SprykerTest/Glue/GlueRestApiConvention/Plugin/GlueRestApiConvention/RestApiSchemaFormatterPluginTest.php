@@ -8,7 +8,9 @@
 namespace SprykerTest\Glue\GlueRestApiConvention\Plugin\GlueRestApiConvention;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\AnnotationTransfer;
 use Generated\Shared\Transfer\ApiApplicationSchemaContextTransfer;
+use Generated\Shared\Transfer\PathAnnotationTransfer;
 use Generated\Shared\Transfer\ResourceContextTransfer;
 use Spryker\Glue\GlueRestApiConvention\Plugin\DocumentationGeneratorApi\RestApiSchemaFormatterPlugin;
 use SprykerTest\Glue\GlueRestApiConvention\Stub\TestEmptyRestResourcePlugin;
@@ -29,7 +31,7 @@ class RestApiSchemaFormatterPluginTest extends Unit
     /**
      * @var string
      */
-    protected const COMPONENTS_SCHEMAS_ATTRIBUTES = '#/components/schemas/TestsRestAttributes';
+    protected const COMPONENTS_SCHEMAS_ATTRIBUTES = '#/components/schemas/Tests';
 
     /**
      * @var string
@@ -63,9 +65,16 @@ class RestApiSchemaFormatterPluginTest extends Unit
     {
         //Arrange
         $apiApplicationSchemaContextTransfer = new ApiApplicationSchemaContextTransfer();
+        $annotationTransfer = (new AnnotationTransfer())->setResponseAttributesClassName('TestsTransfer');
         $resourceContextTransfer = (new ResourceContextTransfer())
             ->setResourcePluginName(TestEmptyRestResourcePlugin::class)
-            ->setResourceType('tests');
+            ->setResourceType('tests')
+            ->setPathAnnotation((new PathAnnotationTransfer())
+                ->setGetCollection($annotationTransfer)
+                ->setGetResourceById($annotationTransfer)
+                ->setPost($annotationTransfer)
+                ->setDelete($annotationTransfer)
+                ->setPatch($annotationTransfer));
         $apiApplicationSchemaContextTransfer->addResourceContext($resourceContextTransfer);
 
         $plugin = new RestApiSchemaFormatterPlugin();
