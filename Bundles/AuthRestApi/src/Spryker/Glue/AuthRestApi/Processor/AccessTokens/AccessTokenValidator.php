@@ -43,18 +43,18 @@ class AccessTokenValidator implements AccessTokenValidatorInterface
     public function validate(Request $request): ?RestErrorMessageTransfer
     {
         $isProtected = $request->attributes->get(static::REQUEST_ATTRIBUTE_IS_PROTECTED, false);
-
-        if (!$isProtected) {
-            return null;
-        }
-
         $authorizationToken = $request->headers->get(AuthRestApiConfig::HEADER_AUTHORIZATION);
-        if (!$authorizationToken) {
+
+        if (!$authorizationToken && $isProtected) {
             return $this->createErrorMessageTransfer(
                 AuthRestApiConfig::RESPONSE_DETAIL_MISSING_ACCESS_TOKEN,
                 Response::HTTP_FORBIDDEN,
                 AuthRestApiConfig::RESPONSE_CODE_FORBIDDEN,
             );
+        }
+
+        if (!$authorizationToken) {
+            return null;
         }
 
         if (!$this->validateAccessToken($authorizationToken)) {
