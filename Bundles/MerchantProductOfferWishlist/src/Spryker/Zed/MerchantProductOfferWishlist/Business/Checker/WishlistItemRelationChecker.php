@@ -13,6 +13,9 @@ use Generated\Shared\Transfer\WishlistPreAddItemCheckResponseTransfer;
 use Generated\Shared\Transfer\WishlistPreUpdateItemCheckResponseTransfer;
 use Spryker\Zed\MerchantProductOfferWishlist\Dependency\Facade\MerchantProductOfferWishlistToProductOfferFacadeInterface;
 
+/**
+ * @deprecated Use {@link \Spryker\Zed\MerchantProductOfferWishlist\Business\Validator\WishlistItemProductOfferValidator} instead.
+ */
 class WishlistItemRelationChecker implements WishlistItemRelationCheckerInterface
 {
     /**

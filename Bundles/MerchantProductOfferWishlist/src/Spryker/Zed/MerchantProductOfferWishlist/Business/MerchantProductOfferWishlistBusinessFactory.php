@@ -10,6 +10,9 @@ namespace Spryker\Zed\MerchantProductOfferWishlist\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\MerchantProductOfferWishlist\Business\Checker\WishlistItemRelationChecker;
 use Spryker\Zed\MerchantProductOfferWishlist\Business\Checker\WishlistItemRelationCheckerInterface;
+use Spryker\Zed\MerchantProductOfferWishlist\Business\Validator\WishlistItemProductOfferValidator;
+use Spryker\Zed\MerchantProductOfferWishlist\Business\Validator\WishlistItemProductOfferValidatorInterface;
+use Spryker\Zed\MerchantProductOfferWishlist\Dependency\Facade\MerchantProductOfferWishlistToMerchantFacadeInterface;
 use Spryker\Zed\MerchantProductOfferWishlist\Dependency\Facade\MerchantProductOfferWishlistToProductOfferFacadeInterface;
 use Spryker\Zed\MerchantProductOfferWishlist\MerchantProductOfferWishlistDependencyProvider;
 
@@ -21,6 +24,8 @@ use Spryker\Zed\MerchantProductOfferWishlist\MerchantProductOfferWishlistDepende
 class MerchantProductOfferWishlistBusinessFactory extends AbstractBusinessFactory
 {
     /**
+     * @deprecated Use {@link \Spryker\Zed\MerchantProductOfferWishlist\Business\MerchantProductOfferWishlistBusinessFactory::createWishlistItemProductOfferValidator()} instead.
+     *
      * @return \Spryker\Zed\MerchantProductOfferWishlist\Business\Checker\WishlistItemRelationCheckerInterface
      */
     public function createWishlistItemRelationChecker(): WishlistItemRelationCheckerInterface
@@ -31,10 +36,29 @@ class MerchantProductOfferWishlistBusinessFactory extends AbstractBusinessFactor
     }
 
     /**
+     * @return \Spryker\Zed\MerchantProductOfferWishlist\Business\Validator\WishlistItemProductOfferValidatorInterface
+     */
+    public function createWishlistItemProductOfferValidator(): WishlistItemProductOfferValidatorInterface
+    {
+        return new WishlistItemProductOfferValidator(
+            $this->getProductOfferFacade(),
+            $this->getMerchantFacade(),
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\MerchantProductOfferWishlist\Dependency\Facade\MerchantProductOfferWishlistToProductOfferFacadeInterface
      */
     public function getProductOfferFacade(): MerchantProductOfferWishlistToProductOfferFacadeInterface
     {
         return $this->getProvidedDependency(MerchantProductOfferWishlistDependencyProvider::FACADE_PRODUCT_OFFER);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProductOfferWishlist\Dependency\Facade\MerchantProductOfferWishlistToMerchantFacadeInterface
+     */
+    public function getMerchantFacade(): MerchantProductOfferWishlistToMerchantFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantProductOfferWishlistDependencyProvider::FACADE_MERCHANT);
     }
 }

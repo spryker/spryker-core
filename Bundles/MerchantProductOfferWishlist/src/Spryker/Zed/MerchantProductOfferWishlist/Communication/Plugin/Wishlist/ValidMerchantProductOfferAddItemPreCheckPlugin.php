@@ -13,19 +13,21 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\WishlistExtension\Dependency\Plugin\AddItemPreCheckPluginInterface;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\MerchantProductOfferWishlist\Communication\Plugin\Wishlist\ValidMerchantProductOfferAddItemPreCheckPlugin} instead.
- *
  * @method \Spryker\Zed\MerchantProductOfferWishlist\MerchantProductOfferWishlistConfig getConfig()
  * @method \Spryker\Zed\MerchantProductOfferWishlist\Communication\MerchantProductOfferWishlistCommunicationFactory getFactory()
  * @method \Spryker\Zed\MerchantProductOfferWishlist\Business\MerchantProductOfferWishlistFacadeInterface getFacade()
  */
-class MerchantProductOfferAddItemPreCheckPlugin extends AbstractPlugin implements AddItemPreCheckPluginInterface
+class ValidMerchantProductOfferAddItemPreCheckPlugin extends AbstractPlugin implements AddItemPreCheckPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Gets product offer collection by `WishlistItem.sku` transfer property.
-     * - Checks if product offer exists in collection by `WishlistItem.productOfferReference` transfer object.
-     * - Returns `WishlistPreAddItemCheckResponseTransfer.success=true` if product offer found.
+     * - Requires `WishlistItem.sku` and `WishlistItem.merchantReference` transfer properties to be set if `WishlistItem.productOfferReference` is set.
+     * - Checks that product offer belongs to the item with specified SKU.
+     * - Checks that product offer belongs to the specified merchant.
+     * - Finds an active and approved product offer by `WishlistItem.sku` and `WishlistItem.productOfferReference` transfer properties.
+     * - Finds an active and approved merchant by `ProductOffer.merchantReference` transfer property.
+     * - Returns `WishlistPreAddItemCheckResponseTransfer.success=true` if the corresponding product offer and merchant found.
+     * - Returns `WishlistPreAddItemCheckResponseTransfer.success=false` otherwise.
      *
      * @api
      *
@@ -35,6 +37,6 @@ class MerchantProductOfferAddItemPreCheckPlugin extends AbstractPlugin implement
      */
     public function check(WishlistItemTransfer $wishlistItemTransfer): WishlistPreAddItemCheckResponseTransfer
     {
-        return $this->getFacade()->checkWishlistItemProductOfferRelation($wishlistItemTransfer);
+        return $this->getFacade()->validateWishlistItemProductOfferBeforeCreation($wishlistItemTransfer);
     }
 }

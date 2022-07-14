@@ -13,19 +13,21 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\WishlistExtension\Dependency\Plugin\UpdateItemPreCheckPluginInterface;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\MerchantProductOfferWishlist\Communication\Plugin\Wishlist\ValidMerchantProductOfferUpdateItemPreCheckPlugin} instead.
- *
  * @method \Spryker\Zed\MerchantProductOfferWishlist\MerchantProductOfferWishlistConfig getConfig()
  * @method \Spryker\Zed\MerchantProductOfferWishlist\Communication\MerchantProductOfferWishlistCommunicationFactory getFactory()
  * @method \Spryker\Zed\MerchantProductOfferWishlist\Business\MerchantProductOfferWishlistFacadeInterface getFacade()
  */
-class MerchantProductOfferUpdateItemPreCheckPlugin extends AbstractPlugin implements UpdateItemPreCheckPluginInterface
+class ValidMerchantProductOfferUpdateItemPreCheckPlugin extends AbstractPlugin implements UpdateItemPreCheckPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Gets product offer collection by `WishlistItem.sku` transfer property.
-     * - Checks if product offer exists in collection by `WishlistItem.productOfferReference` transfer object.
-     * - Returns `WishlistPreUpdateItemCheckResponseTransfer.success=true` if product offer found.
+     * - Requires `WishlistItem.sku` and `WishlistItem.merchantReference` transfer properties to be set if `WishlistItem.productOfferReference` is set.
+     * - Checks that product offer belongs to the item with specified SKU.
+     * - Checks that product offer belongs to the specified merchant.
+     * - Finds an active and approved product offer by `WishlistItem.sku` and `WishlistItem.productOfferReference` transfer properties.
+     * - Finds an active and approved merchant by `ProductOffer.merchantReference` transfer property.
+     * - Returns `WishlistPreUpdateItemCheckResponseTransfer.success=true` if the corresponding product offer and merchant found.
+     * - Returns `WishlistPreUpdateItemCheckResponseTransfer.success=false` otherwise.
      *
      * @api
      *
@@ -35,6 +37,6 @@ class MerchantProductOfferUpdateItemPreCheckPlugin extends AbstractPlugin implem
      */
     public function check(WishlistItemTransfer $wishlistItemTransfer): WishlistPreUpdateItemCheckResponseTransfer
     {
-        return $this->getFacade()->checkUpdateWishlistItemProductOfferRelation($wishlistItemTransfer);
+        return $this->getFacade()->validateWishlistItemProductOfferBeforeUpdate($wishlistItemTransfer);
     }
 }

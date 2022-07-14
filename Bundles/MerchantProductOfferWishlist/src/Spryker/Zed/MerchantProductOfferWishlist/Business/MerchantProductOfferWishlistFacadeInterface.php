@@ -21,11 +21,35 @@ interface MerchantProductOfferWishlistFacadeInterface
      *
      * @api
      *
+     * @deprecated use {@link \Spryker\Zed\MerchantProductOfferWishlist\Business\MerchantProductOfferWishlistFacadeInterface::validateWishlistItemProductOfferBeforeCreation()} instead.
+     *
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistPreAddItemCheckResponseTransfer
      */
-    public function checkWishlistItemProductOfferRelation(WishlistItemTransfer $wishlistItemTransfer): WishlistPreAddItemCheckResponseTransfer;
+    public function checkWishlistItemProductOfferRelation(
+        WishlistItemTransfer $wishlistItemTransfer
+    ): WishlistPreAddItemCheckResponseTransfer;
+
+    /**
+     * Specification:
+     * - Requires `WishlistItem.sku` and `WishlistItem.merchantReference` transfer properties to be set if `WishlistItem.productOfferReference` is set.
+     * - Checks that product offer belongs to the item with specified SKU.
+     * - Checks that product offer belongs to the specified merchant.
+     * - Finds an active and approved product offer by `WishlistItem.sku` and `WishlistItem.productOfferReference` transfer properties.
+     * - Finds an active and approved merchant by `ProductOffer.merchantReference` transfer property.
+     * - Returns `WishlistPreAddItemCheckResponseTransfer.success=true` if the corresponding product offer and merchant found.
+     * - Returns `WishlistPreAddItemCheckResponseTransfer.success=false` otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistPreAddItemCheckResponseTransfer
+     */
+    public function validateWishlistItemProductOfferBeforeCreation(
+        WishlistItemTransfer $wishlistItemTransfer
+    ): WishlistPreAddItemCheckResponseTransfer;
 
     /**
      * Specification:
@@ -35,11 +59,33 @@ interface MerchantProductOfferWishlistFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\MerchantProductOfferWishlist\Business\MerchantProductOfferWishlistFacadeInterface::validateWishlistItemProductOfferBeforeUpdate()} instead.
+     *
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistPreUpdateItemCheckResponseTransfer
      */
     public function checkUpdateWishlistItemProductOfferRelation(
+        WishlistItemTransfer $wishlistItemTransfer
+    ): WishlistPreUpdateItemCheckResponseTransfer;
+
+    /**
+     * Specification:
+     * - Requires `WishlistItem.sku` and `WishlistItem.merchantReference` transfer properties to be set if `WishlistItem.productOfferReference` is set.
+     * - Checks that product offer belongs to the item with specified SKU.
+     * - Checks that product offer belongs to the specified merchant.
+     * - Finds an active and approved product offer by `WishlistItem.sku` and `WishlistItem.productOfferReference` transfer properties.
+     * - Finds an active and approved merchant by `ProductOffer.merchantReference` transfer property.
+     * - Returns `WishlistPreUpdateItemCheckResponseTransfer.success=true` if the corresponding product offer and merchant found.
+     * - Returns `WishlistPreUpdateItemCheckResponseTransfer.success=false` otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistPreUpdateItemCheckResponseTransfer
+     */
+    public function validateWishlistItemProductOfferBeforeUpdate(
         WishlistItemTransfer $wishlistItemTransfer
     ): WishlistPreUpdateItemCheckResponseTransfer;
 }

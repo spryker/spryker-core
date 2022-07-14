@@ -8,9 +8,6 @@
 namespace SprykerTest\Zed\MerchantProductOfferWishlist\Business;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\ProductOfferTransfer;
-use Generated\Shared\Transfer\WishlistItemTransfer;
-use Generated\Shared\Transfer\WishlistTransfer;
 
 /**
  * Auto-generated group annotations
@@ -31,55 +28,14 @@ class MerchantProductOfferWishlistFacadeTest extends Unit
     protected $tester;
 
     /**
-     * @var \Generated\Shared\Transfer\CustomerTransfer
-     */
-    protected $customerTransfer;
-
-    /**
-     * @var \Generated\Shared\Transfer\MerchantTransfer
-     */
-    protected $merchantTransfer;
-
-    /**
-     * @var \Generated\Shared\Transfer\ProductOfferTransfer
-     */
-    protected $productOfferTransfer;
-
-    /**
-     * @var \Generated\Shared\Transfer\WishlistTransfer
-     */
-    protected $wishlistTransfer;
-
-    /**
      * @return void
      */
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        $this->customerTransfer = $this->tester->haveCustomer();
-        $this->merchantTransfer = $this->tester->haveMerchant();
-        $this->productOfferTransfer = $this->tester->haveProductOffer([
-            ProductOfferTransfer::FK_MERCHANT => $this->merchantTransfer->getIdMerchant(),
-        ]);
-        $this->wishlistTransfer = $this->tester->haveWishlist([
-            WishlistTransfer::FK_CUSTOMER => $this->customerTransfer->getIdCustomer(),
-        ]);
-    }
-
-    /**
-     * @return void
-     */
-    public function testCheckWishlistItemProductOfferRelationSuccess(): void
+    public function testCheckWishlistItemProductOfferRelationSucceeds(): void
     {
         // Arrange
-        $wishlistItemTransfer = $this->tester->haveItemInWishlist([
-            WishlistItemTransfer::FK_WISHLIST => $this->wishlistTransfer->getIdWishlist(),
-            WishlistItemTransfer::FK_CUSTOMER => $this->customerTransfer->getIdCustomer(),
-            WishlistItemTransfer::SKU => $this->productOfferTransfer->getConcreteSku(),
-            WishlistItemTransfer::WISHLIST_NAME => $this->wishlistTransfer->getName(),
-            WishlistItemTransfer::PRODUCT_OFFER_REFERENCE => $this->productOfferTransfer->getProductOfferReference(),
-        ]);
+        $this->tester->setUpMerchant();
+        $this->tester->setUpMerchantProductOffer();
+        $wishlistItemTransfer = $this->tester->createProductOfferWishlistItem();
 
         // Act
         $wishlistPreAddItemCheckResponseTransfer = $this->tester->getFacade()
@@ -92,18 +48,12 @@ class MerchantProductOfferWishlistFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckWishlistItemProductOfferRelationNotSuccess(): void
+    public function testCheckWishlistItemProductOfferRelationDoesNotSucceed(): void
     {
         // Arrange
-        $productTransfer = $this->tester->haveProduct();
-
-        $wishlistItemTransfer = $this->tester->haveItemInWishlist([
-            WishlistItemTransfer::FK_WISHLIST => $this->wishlistTransfer->getIdWishlist(),
-            WishlistItemTransfer::FK_CUSTOMER => $this->customerTransfer->getIdCustomer(),
-            WishlistItemTransfer::SKU => $productTransfer->getSku(),
-            WishlistItemTransfer::WISHLIST_NAME => $this->wishlistTransfer->getName(),
-            WishlistItemTransfer::PRODUCT_OFFER_REFERENCE => 'TEST_PRODUCT_OFFER_REFERENCE',
-        ]);
+        $this->tester->setUpMerchant();
+        $this->tester->setUpMerchantProductOffer();
+        $wishlistItemTransfer = $this->tester->createProductOfferWishlistItem(false);
 
         // Act
         $wishlistPreAddItemCheckResponseTransfer = $this->tester->getFacade()
@@ -116,16 +66,12 @@ class MerchantProductOfferWishlistFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckUpdateWishlistItemProductOfferRelationSuccess(): void
+    public function testCheckUpdateWishlistItemProductOfferRelationSucceeds(): void
     {
         // Arrange
-        $wishlistItemTransfer = $this->tester->haveItemInWishlist([
-            WishlistItemTransfer::FK_WISHLIST => $this->wishlistTransfer->getIdWishlist(),
-            WishlistItemTransfer::FK_CUSTOMER => $this->customerTransfer->getIdCustomer(),
-            WishlistItemTransfer::SKU => $this->productOfferTransfer->getConcreteSku(),
-            WishlistItemTransfer::WISHLIST_NAME => $this->wishlistTransfer->getName(),
-            WishlistItemTransfer::PRODUCT_OFFER_REFERENCE => $this->productOfferTransfer->getProductOfferReference(),
-        ]);
+        $this->tester->setUpMerchant();
+        $this->tester->setUpMerchantProductOffer();
+        $wishlistItemTransfer = $this->tester->createProductOfferWishlistItem();
 
         // Act
         $wishlistPreUpdateItemCheckResponseTransfer = $this->tester->getFacade()
@@ -138,22 +84,232 @@ class MerchantProductOfferWishlistFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckUpdateWishlistItemProductOfferRelationNotSuccess(): void
+    public function testCheckUpdateWishlistItemProductOfferRelationDoesNotSucceed(): void
     {
         // Arrange
-        $productTransfer = $this->tester->haveProduct();
-
-        $wishlistItemTransfer = $this->tester->haveItemInWishlist([
-            WishlistItemTransfer::FK_WISHLIST => $this->wishlistTransfer->getIdWishlist(),
-            WishlistItemTransfer::FK_CUSTOMER => $this->customerTransfer->getIdCustomer(),
-            WishlistItemTransfer::SKU => $productTransfer->getSku(),
-            WishlistItemTransfer::WISHLIST_NAME => $this->wishlistTransfer->getName(),
-            WishlistItemTransfer::PRODUCT_OFFER_REFERENCE => 'TEST_PRODUCT_OFFER_REFERENCE',
-        ]);
+        $this->tester->setUpMerchant();
+        $this->tester->setUpMerchantProductOffer();
+        $wishlistItemTransfer = $this->tester->createProductOfferWishlistItem(false);
 
         // Act
         $wishlistPreUpdateItemCheckResponseTransfer = $this->tester->getFacade()
             ->checkUpdateWishlistItemProductOfferRelation($wishlistItemTransfer);
+
+        // Assert
+        $this->assertFalse($wishlistPreUpdateItemCheckResponseTransfer->getIsSuccess());
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateWishlistItemProductOfferBeforeCreationSucceeds(): void
+    {
+        // Arrange
+        $this->tester->setUpMerchant();
+        $this->tester->setUpMerchantProductOffer();
+        $wishlistItemTransfer = $this->tester->createProductOfferWishlistItem();
+
+        // Act
+        $wishlistPreAddItemCheckResponseTransfer = $this->tester->getFacade()
+            ->validateWishlistItemProductOfferBeforeCreation($wishlistItemTransfer);
+
+        // Assert
+        $this->assertTrue($wishlistPreAddItemCheckResponseTransfer->getIsSuccess());
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateWishlistItemProductOfferBeforeCreationDoesNotSucceedWithWrongOfferRelation(): void
+    {
+        // Arrange
+        $this->tester->setUpMerchant();
+        $this->tester->setUpMerchantProductOffer();
+        $wishlistItemTransfer = $this->tester->createProductOfferWishlistItem(false);
+
+        // Act
+        $wishlistPreAddItemCheckResponseTransfer = $this->tester->getFacade()
+            ->validateWishlistItemProductOfferBeforeCreation($wishlistItemTransfer);
+
+        // Assert
+        $this->assertFalse($wishlistPreAddItemCheckResponseTransfer->getIsSuccess());
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateWishlistItemProductOfferBeforeCreationDoesNotSucceedWhenOfferIsNotActive(): void
+    {
+        // Arrange
+        $this->tester->setUpMerchant();
+        $this->tester->setUpMerchantProductOffer(false);
+        $wishlistItemTransfer = $this->tester->createProductOfferWishlistItem();
+
+        // Act
+        $wishlistPreAddItemCheckResponseTransfer = $this->tester->getFacade()
+            ->validateWishlistItemProductOfferBeforeCreation($wishlistItemTransfer);
+
+        // Assert
+        $this->assertFalse($wishlistPreAddItemCheckResponseTransfer->getIsSuccess());
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateWishlistItemProductOfferBeforeCreationDoesNotSucceedWhenOfferIsNotApproved(): void
+    {
+        // Arrange
+        $this->tester->setUpMerchant();
+        $this->tester->setUpMerchantProductOffer(true, false);
+        $wishlistItemTransfer = $this->tester->createProductOfferWishlistItem();
+
+        // Act
+        $wishlistPreAddItemCheckResponseTransfer = $this->tester->getFacade()
+            ->validateWishlistItemProductOfferBeforeCreation($wishlistItemTransfer);
+
+        // Assert
+        $this->assertFalse($wishlistPreAddItemCheckResponseTransfer->getIsSuccess());
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateWishlistItemProductOfferBeforeCreationDoesNotSucceedWhenMerchantIsNotActive(): void
+    {
+        // Arrange
+        $this->tester->setUpMerchant(false);
+        $this->tester->setUpMerchantProductOffer();
+        $wishlistItemTransfer = $this->tester->createProductOfferWishlistItem();
+
+        // Act
+        $wishlistPreAddItemCheckResponseTransfer = $this->tester->getFacade()
+            ->validateWishlistItemProductOfferBeforeCreation($wishlistItemTransfer);
+
+        // Assert
+        $this->assertFalse($wishlistPreAddItemCheckResponseTransfer->getIsSuccess());
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateWishlistItemProductOfferBeforeCreationDoesNotSucceedWhenMerchantIsNotApproved(): void
+    {
+        // Arrange
+        $this->tester->setUpMerchant(true, false);
+        $this->tester->setUpMerchantProductOffer();
+        $wishlistItemTransfer = $this->tester->createProductOfferWishlistItem();
+
+        // Act
+        $wishlistPreAddItemCheckResponseTransfer = $this->tester->getFacade()
+            ->validateWishlistItemProductOfferBeforeCreation($wishlistItemTransfer);
+
+        // Assert
+        $this->assertFalse($wishlistPreAddItemCheckResponseTransfer->getIsSuccess());
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateWishlistItemProductOfferBeforeUpdateSucceeds(): void
+    {
+        // Arrange
+        $this->tester->setUpMerchant();
+        $this->tester->setUpMerchantProductOffer();
+        $wishlistItemTransfer = $this->tester->createProductOfferWishlistItem();
+
+        // Act
+        $wishlistPreUpdateItemCheckResponseTransfer = $this->tester->getFacade()
+            ->validateWishlistItemProductOfferBeforeUpdate($wishlistItemTransfer);
+
+        // Assert
+        $this->assertTrue($wishlistPreUpdateItemCheckResponseTransfer->getIsSuccess());
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateWishlistItemProductOfferBeforeUpdateDoesNotSucceedWithWrongOfferRelation(): void
+    {
+        // Arrange
+        $this->tester->setUpMerchant();
+        $this->tester->setUpMerchantProductOffer();
+        $wishlistItemTransfer = $this->tester->createProductOfferWishlistItem(false);
+
+        // Act
+        $wishlistPreUpdateItemCheckResponseTransfer = $this->tester->getFacade()
+            ->validateWishlistItemProductOfferBeforeUpdate($wishlistItemTransfer);
+
+        // Assert
+        $this->assertFalse($wishlistPreUpdateItemCheckResponseTransfer->getIsSuccess());
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateWishlistItemProductOfferBeforeUpdateDoesNotSucceedWhenOfferIsNotActive(): void
+    {
+        // Arrange
+        $this->tester->setUpMerchant();
+        $this->tester->setUpMerchantProductOffer(false);
+        $wishlistItemTransfer = $this->tester->createProductOfferWishlistItem();
+
+        // Act
+        $wishlistPreUpdateItemCheckResponseTransfer = $this->tester->getFacade()
+            ->validateWishlistItemProductOfferBeforeUpdate($wishlistItemTransfer);
+
+        // Assert
+        $this->assertFalse($wishlistPreUpdateItemCheckResponseTransfer->getIsSuccess());
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateWishlistItemProductOfferBeforeUpdateDoesNotSucceedWhenOfferIsNotApproved(): void
+    {
+        // Arrange
+        $this->tester->setUpMerchant();
+        $this->tester->setUpMerchantProductOffer(true, false);
+        $wishlistItemTransfer = $this->tester->createProductOfferWishlistItem();
+
+        // Act
+        $wishlistPreUpdateItemCheckResponseTransfer = $this->tester->getFacade()
+            ->validateWishlistItemProductOfferBeforeUpdate($wishlistItemTransfer);
+
+        // Assert
+        $this->assertFalse($wishlistPreUpdateItemCheckResponseTransfer->getIsSuccess());
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateWishlistItemProductOfferBeforeUpdateDoesNotSucceedWhenMerchantIsNotActive(): void
+    {
+        // Arrange
+        $this->tester->setUpMerchant(false);
+        $this->tester->setUpMerchantProductOffer();
+        $wishlistItemTransfer = $this->tester->createProductOfferWishlistItem();
+
+        // Act
+        $wishlistPreUpdateItemCheckResponseTransfer = $this->tester->getFacade()
+            ->validateWishlistItemProductOfferBeforeUpdate($wishlistItemTransfer);
+
+        // Assert
+        $this->assertFalse($wishlistPreUpdateItemCheckResponseTransfer->getIsSuccess());
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateWishlistItemProductOfferBeforeUpdateDoesNotSucceedWhenMerchantIsNotApproved(): void
+    {
+        // Arrange
+        $this->tester->setUpMerchant(true, false);
+        $this->tester->setUpMerchantProductOffer();
+        $wishlistItemTransfer = $this->tester->createProductOfferWishlistItem();
+
+        // Act
+        $wishlistPreUpdateItemCheckResponseTransfer = $this->tester->getFacade()
+            ->validateWishlistItemProductOfferBeforeUpdate($wishlistItemTransfer);
 
         // Assert
         $this->assertFalse($wishlistPreUpdateItemCheckResponseTransfer->getIsSuccess());
