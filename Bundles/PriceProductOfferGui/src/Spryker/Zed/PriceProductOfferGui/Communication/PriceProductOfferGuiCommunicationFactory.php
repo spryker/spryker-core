@@ -8,6 +8,8 @@
 namespace Spryker\Zed\PriceProductOfferGui\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\PriceProductOfferGui\Communication\Filter\PriceProductOfferFilter;
+use Spryker\Zed\PriceProductOfferGui\Communication\Filter\PriceProductOfferFilterInterface;
 use Spryker\Zed\PriceProductOfferGui\Communication\Reader\PriceProductOfferReader;
 use Spryker\Zed\PriceProductOfferGui\Communication\Reader\PriceProductOfferReaderInterface;
 use Spryker\Zed\PriceProductOfferGui\Dependency\Facade\PriceProductOfferGuiToPriceFacadeInterface;
@@ -54,5 +56,13 @@ class PriceProductOfferGuiCommunicationFactory extends AbstractCommunicationFact
     public function getUtilEncodingService(): PriceProductOfferGuiToUtilEncodingServiceInterface
     {
         return $this->getProvidedDependency(PriceProductOfferGuiDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductOfferGui\Communication\Filter\PriceProductOfferFilterInterface
+     */
+    public function createPriceProductOfferFilter(): PriceProductOfferFilterInterface
+    {
+        return new PriceProductOfferFilter();
     }
 }
