@@ -55,6 +55,8 @@ class AttributeMergerTest extends Unit
             'localized concrete attributes' => $this->getLocalizedConcreteAttributesData(),
             'abstract attributes' => $this->getAbstractAttributesData(),
             'localized abstract attributes' => $this->getLocalizedAbstractAttributesData(),
+            'numeric key attributes' => $this->getNumericKeyAttributesData(),
+            'quoted numeric key attributes' => $this->getQuotedNumericKeyAttributesData(),
         ];
     }
 
@@ -177,6 +179,44 @@ class AttributeMergerTest extends Unit
             ])
             ->setAbstractLocalizedAttributes([
                 'baz' => 'Baz - localized',
+            ]);
+
+        return [$rawProductAttributesTransfer, $expectedAttributes];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getNumericKeyAttributesData(): array
+    {
+        $expectedAttributes = [
+            1234 => 'Foo',
+        ];
+
+        $rawProductAttributesTransfer = new RawProductAttributesTransfer();
+        $rawProductAttributesTransfer->setConcreteAttributes([
+            1234 => 'Foo',
+        ]);
+
+        return [$rawProductAttributesTransfer, $expectedAttributes];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getQuotedNumericKeyAttributesData(): array
+    {
+        $expectedAttributes = [
+            1234 => 'Quoted 1234',
+        ];
+
+        $rawProductAttributesTransfer = new RawProductAttributesTransfer();
+        $rawProductAttributesTransfer
+            ->setConcreteAttributes([
+                1234 => 'Numeric 1234',
+            ])
+            ->setConcreteLocalizedAttributes([
+                '1234' => 'Quoted 1234',
             ]);
 
         return [$rawProductAttributesTransfer, $expectedAttributes];
