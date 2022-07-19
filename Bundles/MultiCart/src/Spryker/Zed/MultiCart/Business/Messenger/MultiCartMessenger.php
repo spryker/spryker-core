@@ -57,6 +57,10 @@ class MultiCartMessenger implements MultiCartMessengerInterface
             return;
         }
 
+        if (!$this->isQuoteChangedByQuoteOwner($quoteTransfer)) {
+            return;
+        }
+
         $isQuoteDefault = $this->multiCartRepository->isQuoteDefault(
             $quoteTransfer->getIdQuote(),
             $quoteTransfer->getCustomer()->getCustomerReference(),
@@ -71,5 +75,15 @@ class MultiCartMessenger implements MultiCartMessengerInterface
             ->setParameters([static::GLOSSARY_KEY_PARAMETER_QUOTE => $quoteTransfer->getName()]);
 
         $this->messengerFacade->addInfoMessage($messageTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function isQuoteChangedByQuoteOwner(QuoteTransfer $quoteTransfer): bool
+    {
+        return $quoteTransfer->getCustomerOrFail()->getCustomerReference() === $quoteTransfer->getCustomerReference();
     }
 }
