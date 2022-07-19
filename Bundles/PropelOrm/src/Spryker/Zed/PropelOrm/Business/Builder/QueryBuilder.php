@@ -432,6 +432,8 @@ SCRIPT;
     }
 
     /**
+     * @deprecated You can achieve same results with {@link \Propel\Runtime\ActiveQuery\Criteria::lockForUpdate()}.
+     *
      * @param string $script
      *
      * @return void
@@ -445,6 +447,8 @@ SCRIPT;
     protected \$isForUpdateEnabled = false;
 
     /**
+     * @deprecated Use {@link \Propel\Runtime\ActiveQuery\Criteria::lockForUpdate()} instead.
+     *
      * @param bool \$isForUpdateEnabled
      *
      * @return \$this The primary criteria object
