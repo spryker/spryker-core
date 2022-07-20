@@ -19,6 +19,8 @@ class ProductApprovalProductAbstractEditViewExpanderPlugin extends AbstractPlugi
     /**
      * {@inheritDoc}
      * - Expands view data with abstract product approval status data.
+     * - Renders action buttons taken from `ProductApprovalGuiConfig::getProductApprovalTableActionStatusTree()`, if `ProductApprovalGuiConfig::isApprovalStatusTreeCustomizationEnabled()` is true.
+     * - Renders action buttons taken from `ProductApprovalFacade::getApplicableApprovalStatuses()` otherwise.
      *
      * @api
      *

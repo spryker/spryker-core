@@ -20,6 +20,8 @@ class ProductApprovalProductTableActionExpanderPlugin extends AbstractPlugin imp
     /**
      * {@inheritDoc}
      * - Expands product table with abstract product approval status actions.
+     * - Renders action buttons taken from `ProductApprovalGuiConfig::getProductApprovalTableActionStatusTree()`, if `ProductApprovalGuiConfig::isApprovalStatusTreeCustomizationEnabled()` is true.
+     * - Renders action buttons taken from `ProductApprovalFacade::getApplicableApprovalStatuses()` otherwise.
      *
      * @api
      *

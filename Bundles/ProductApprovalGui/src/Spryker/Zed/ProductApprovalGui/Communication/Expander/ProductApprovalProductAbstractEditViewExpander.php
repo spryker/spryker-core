@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductApprovalGui\Communication\Expander;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
-use Spryker\Zed\ProductApprovalGui\Dependency\Facade\ProductApprovalGuiToProductApprovalFacadeInterface;
+use Spryker\Zed\ProductApprovalGui\Communication\Reader\ProductApprovalStatusReaderInterface;
 use Spryker\Zed\ProductApprovalGui\Dependency\Facade\ProductApprovalGuiToProductFacadeInterface;
 use Twig\Environment;
 
@@ -93,9 +93,9 @@ class ProductApprovalProductAbstractEditViewExpander implements ProductApprovalP
     protected $productFacade;
 
     /**
-     * @var \Spryker\Zed\ProductApprovalGui\Dependency\Facade\ProductApprovalGuiToProductApprovalFacadeInterface
+     * @var \Spryker\Zed\ProductApprovalGui\Communication\Reader\ProductApprovalStatusReaderInterface
      */
-    protected $productApprovalFacade;
+    protected $productApprovalStatusReader;
 
     /**
      * @var \Twig\Environment
@@ -103,16 +103,16 @@ class ProductApprovalProductAbstractEditViewExpander implements ProductApprovalP
     protected $twig;
 
     /**
-     * @param \Spryker\Zed\ProductApprovalGui\Dependency\Facade\ProductApprovalGuiToProductApprovalFacadeInterface $productApprovalFacade
+     * @param \Spryker\Zed\ProductApprovalGui\Communication\Reader\ProductApprovalStatusReaderInterface $productApprovalStatusReader
      * @param \Spryker\Zed\ProductApprovalGui\Dependency\Facade\ProductApprovalGuiToProductFacadeInterface $productFacade
      * @param \Twig\Environment $twig
      */
     public function __construct(
-        ProductApprovalGuiToProductApprovalFacadeInterface $productApprovalFacade,
+        ProductApprovalStatusReaderInterface $productApprovalStatusReader,
         ProductApprovalGuiToProductFacadeInterface $productFacade,
         Environment $twig
     ) {
-        $this->productApprovalFacade = $productApprovalFacade;
+        $this->productApprovalStatusReader = $productApprovalStatusReader;
         $this->productFacade = $productFacade;
         $this->twig = $twig;
     }
@@ -136,7 +136,7 @@ class ProductApprovalProductAbstractEditViewExpander implements ProductApprovalP
 
         $viewData[ProductAbstractTransfer::APPROVAL_STATUS] = $productAbstractTransfer->getApprovalStatus();
         $applicableApprovalStatuses = $productAbstractTransfer->getApprovalStatus()
-            ? $this->productApprovalFacade->getApplicableApprovalStatuses($productAbstractTransfer->getApprovalStatus())
+            ? $this->productApprovalStatusReader->getApplicableTableActionApprovalStatuses($productAbstractTransfer->getApprovalStatus())
             : [];
         $viewData[static::COL_ACTIONS] = $viewData[static::COL_ACTIONS] ?? [];
         foreach ($applicableApprovalStatuses as $applicableApprovalStatus) {

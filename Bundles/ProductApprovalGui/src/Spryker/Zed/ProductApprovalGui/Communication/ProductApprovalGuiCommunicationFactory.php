@@ -61,7 +61,7 @@ class ProductApprovalGuiCommunicationFactory extends AbstractCommunicationFactor
     public function createProductApprovalProductAbstractEditViewExpander(): ProductApprovalProductAbstractEditViewExpanderInterface
     {
         return new ProductApprovalProductAbstractEditViewExpander(
-            $this->getProductApprovalFacade(),
+            $this->createProductApprovalStatusReader(),
             $this->getProductFacade(),
             $this->getTwig(),
         );
