@@ -28,6 +28,7 @@
         "spryker/application": "*",
         "spryker/code-sniffer": "*",
         "spryker/config": "*",
+        "spryker/product-attribute": "*",
         "spryker/propel": "*",
         "spryker/testify": "*",
         "spryker/zed-navigation": "*"

@@ -13,7 +13,12 @@ interface ProductCategoryFilterGuiToProductSearchFacadeInterface
      * @param string $searchText
      * @param int $limit
      *
-     * @return array
+     * @return array<string>
      */
-    public function suggestProductSearchAttributeKeys($searchText = '', $limit = 10);
+    public function suggestProductSearchAttributeKeys($searchText = '', $limit = 10): array;
+
+    /**
+     * @return array<string>
+     */
+    public function getAllProductAttributeKeys(): array;
 }

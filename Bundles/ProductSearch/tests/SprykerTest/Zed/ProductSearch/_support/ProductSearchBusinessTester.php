@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\ProductSearch;
 
 use Codeception\Actor;
+use Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery;
 
 /**
  * @method void wantToTest($text)
@@ -20,10 +21,27 @@ use Codeception\Actor;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
+ * @method \Spryker\Zed\ProductSearch\Business\ProductSearchFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
  */
 class ProductSearchBusinessTester extends Actor
 {
     use _generated\ProductSearchBusinessTesterActions;
+
+    /**
+     * @return void
+     */
+    public function ensureProductAttributeKeyTableIsEmpty(): void
+    {
+        $this->ensureDatabaseTableIsEmpty($this->createProductAttributeKeyQuery());
+    }
+
+    /**
+     * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
+     */
+    protected function createProductAttributeKeyQuery(): SpyProductAttributeKeyQuery
+    {
+        return SpyProductAttributeKeyQuery::create();
+    }
 }

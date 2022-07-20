@@ -25,4 +25,9 @@ interface ProductSearchRepositoryInterface
         array $productIds,
         array $localeIds
     ): array;
+
+    /**
+     * @return array<string>
+     */
+    public function getAllProductAttributeKeys(): array;
 }

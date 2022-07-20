@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\ProductSearch\Persistence;
 
+use Orm\Zed\Product\Persistence\Map\SpyProductAttributeKeyTableMap;
 use Orm\Zed\ProductSearch\Persistence\Map\SpyProductSearchTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
+use Spryker\Zed\PropelOrm\Business\Model\Formatter\PropelArraySetFormatter;
 
 /**
  * @method \Spryker\Zed\ProductSearch\Persistence\ProductSearchPersistenceFactory getFactory()
@@ -53,5 +55,17 @@ class ProductSearchRepository extends AbstractRepository implements ProductSearc
         }
 
         return $result;
+    }
+
+    /**
+     * @return array<string>
+     */
+    public function getAllProductAttributeKeys(): array
+    {
+        return $this->getFactory()
+            ->createProductAttributeKeyQuery()
+            ->addSelectColumn(SpyProductAttributeKeyTableMap::COL_KEY)
+            ->setFormatter(new PropelArraySetFormatter())
+            ->find();
     }
 }

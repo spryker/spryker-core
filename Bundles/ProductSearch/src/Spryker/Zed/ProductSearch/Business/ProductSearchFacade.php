@@ -438,4 +438,16 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
             ->createProductConcreteSearchReader()
             ->expandProductConcreteTransfersWithIsSearchable($productConcreteTransfers);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return array<string>
+     */
+    public function getAllProductAttributeKeys(): array
+    {
+        return $this->getRepository()->getAllProductAttributeKeys();
+    }
 }

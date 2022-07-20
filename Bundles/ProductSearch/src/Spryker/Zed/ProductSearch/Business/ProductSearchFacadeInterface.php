@@ -353,4 +353,14 @@ interface ProductSearchFacadeInterface
      * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function expandProductConcreteTransfersWithIsSearchable(array $productConcreteTransfers): array;
+
+    /**
+     * Specification:
+     * - Gets all product attribute keys from Persistence.
+     *
+     * @api
+     *
+     * @return array<string>
+     */
+    public function getAllProductAttributeKeys(): array;
 }
