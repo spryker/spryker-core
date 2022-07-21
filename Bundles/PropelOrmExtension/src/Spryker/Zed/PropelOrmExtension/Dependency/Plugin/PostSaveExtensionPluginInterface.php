@@ -8,13 +8,13 @@
 namespace Spryker\Zed\PropelOrmExtension\Dependency\Plugin;
 
 /**
- * Executes after Propel postSave() method is generated
+ * This plugin is created for extension of Propel's postSave() method generation
  */
 interface PostSaveExtensionPluginInterface extends DeclareClassesToBeUsedInterface
 {
     /**
      * Specification:
-     * - Used to extend postSave() method in Propel's query objects.
+     * - Used to extend postSave() method in Propel's entity objects.
      *
      * @api
      *

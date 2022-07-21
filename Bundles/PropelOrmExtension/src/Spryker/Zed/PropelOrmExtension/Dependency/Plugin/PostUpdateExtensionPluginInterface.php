@@ -8,13 +8,13 @@
 namespace Spryker\Zed\PropelOrmExtension\Dependency\Plugin;
 
 /**
- * This plugin is created for extension of Propel's find*() methods generation
+ * This plugin is created for extension of Propel's postUpdate() method generation
  */
-interface FindExtensionPluginInterface extends DeclareClassesToBeUsedInterface
+interface PostUpdateExtensionPluginInterface extends DeclareClassesToBeUsedInterface
 {
     /**
      * Specification:
-     * - Used to extend find*() methods in Propel's query objects.
+     * - Used to extend postUpdate() method in Propel's objects.
      *
      * @api
      *

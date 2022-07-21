@@ -49,4 +49,20 @@ class PropelOrmBusinessFactory extends AbstractBusinessFactory
     {
         return $this->getProvidedDependency(PropelOrmDependencyProvider::PLUGINS_POST_SAVE_EXTENSION);
     }
+
+    /**
+     * @return array<\Spryker\Zed\PropelOrmExtension\Dependency\Plugin\PostUpdateExtensionPluginInterface>
+     */
+    public function getPostUpdateExtensionPlugins(): array
+    {
+        return $this->getProvidedDependency(PropelOrmDependencyProvider::PLUGINS_POST_UPDATE_EXTENSION);
+    }
+
+    /**
+     * @return array<\Spryker\Zed\PropelOrmExtension\Dependency\Plugin\PostDeleteExtensionPluginInterface>
+     */
+    public function getPostDeleteExtensionPlugins(): array
+    {
+        return $this->getProvidedDependency(PropelOrmDependencyProvider::PLUGINS_POST_UPDATE_EXTENSION);
+    }
 }

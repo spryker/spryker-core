@@ -424,6 +424,8 @@ SCRIPT;
         }
 
         $this->addForUpdate($script);
+        $this->addPostUpdate($script);
+        $this->addPostDelete($script);
         $this->addFind($script);
         $this->addFindOne($script);
         $this->addExists($script);
@@ -490,6 +492,66 @@ SCRIPT;
 
         return \$this;
     }\n
+    ";
+    }
+
+    /**
+     * Adds custom postUpdate hook to Propel instance
+     *
+     * @param string $script
+     *
+     * @return void
+     */
+    protected function addPostUpdate(string &$script): void
+    {
+        $script .= "
+    /**
+     * @param int \$affectedRows
+     * @param \\Propel\\Runtime\\Connection\\ConnectionInterface \$con
+     *
+     * @return int|null
+     */
+    protected function postUpdate(int \$affectedRows, ConnectionInterface \$con): ?int
+    {";
+
+        $extensionPlugins = $this->getFactory()->getPostUpdateExtensionPlugins();
+        foreach ($extensionPlugins as $plugin) {
+            $script = $plugin->extend($script);
+        }
+
+        $script .= "
+        return null;
+    }
+    ";
+    }
+
+    /**
+     * Adds custom postDelete hook to Propel instance
+     *
+     * @param string $script
+     *
+     * @return void
+     */
+    protected function addPostDelete(string &$script): void
+    {
+        $script .= "
+    /**
+     * @param int \$affectedRows
+     * @param \\Propel\\Runtime\\Connection\\ConnectionInterface \$con
+     *
+     * @return int|null
+     */
+    protected function postDelete(int \$affectedRows, ConnectionInterface \$con): ?int
+    {";
+
+        $extensionPlugins = $this->getFactory()->getPostDeleteExtensionPlugins();
+        foreach ($extensionPlugins as $plugin) {
+            $script = $plugin->extend($script);
+        }
+
+        $script .= "
+        return null;
+    }
     ";
     }
 

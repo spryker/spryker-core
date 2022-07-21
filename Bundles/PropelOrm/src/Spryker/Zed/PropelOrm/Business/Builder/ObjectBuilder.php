@@ -196,6 +196,8 @@ class ObjectBuilder extends PropelObjectBuilder
     }
     ";
         $this->addPostSaveMethodProcess($script);
+        $this->addPostUpdateMethodProcess($script);
+        $this->addPostDeleteMethodProcess($script);
     }
 
     /**
@@ -208,12 +210,14 @@ class ObjectBuilder extends PropelObjectBuilder
     protected function addPostSaveMethodProcess(string &$script): void
     {
         $script .= "
-     /**
+    /**
      * Code to be run after persisting the object
-     * @param \\Propel\\Runtime\\Connection\\ConnectionInterface \$con
+     * @param \\Propel\\Runtime\\Connection\\ConnectionInterface|null \$con
+     *
+     * @return void
      */
-     public function postSave(?ConnectionInterface \$con = null): void
-     {";
+    public function postSave(?ConnectionInterface \$con = null): void
+    {";
 
         $extensionPlugins = $this->getFactory()->getPostSaveExtensionPlugins();
         foreach ($extensionPlugins as $plugin) {
@@ -221,7 +225,65 @@ class ObjectBuilder extends PropelObjectBuilder
         }
 
         $script .= "
-     }
-     ";
+    }
+    ";
+    }
+
+    /**
+     * Adds custom postUpdate hook to Propel instance
+     *
+     * @param string $script
+     *
+     * @return void
+     */
+    protected function addPostUpdateMethodProcess(string &$script): void
+    {
+        $script .= "
+    /**
+     * Code to be run after updating the object in database
+     * @param \\Propel\\Runtime\\Connection\\ConnectionInterface|null \$con
+     *
+     * @return void
+     */
+    public function postUpdate(?ConnectionInterface \$con = null): void
+    {";
+
+        $extensionPlugins = $this->getFactory()->getPostUpdateExtensionPlugins();
+        foreach ($extensionPlugins as $plugin) {
+            $script = $plugin->extend($script);
+        }
+
+        $script .= "
+    }
+    ";
+    }
+
+    /**
+     * Adds custom postDelete hook to Propel instance
+     *
+     * @param string $script
+     *
+     * @return void
+     */
+    protected function addPostDeleteMethodProcess(string &$script): void
+    {
+        $script .= "
+    /**
+     * Code to be run after deleting the object in database
+     * @param \\Propel\\Runtime\\Connection\\ConnectionInterface|null \$con
+     *
+     * @return void
+     */
+    public function postDelete(?ConnectionInterface \$con = null): void
+    {";
+
+        $extensionPlugins = $this->getFactory()->getPostDeleteExtensionPlugins();
+        foreach ($extensionPlugins as $plugin) {
+            $script = $plugin->extend($script);
+        }
+
+        $script .= "
+    }
+    ";
     }
 }
