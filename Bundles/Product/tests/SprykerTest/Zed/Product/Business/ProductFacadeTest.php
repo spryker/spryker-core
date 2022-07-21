@@ -407,4 +407,25 @@ class ProductFacadeTest extends Unit
             static::LOCALE_NAME_EN => $this->tester->haveLocale([LocaleTransfer::LOCALE_NAME => static::LOCALE_NAME_EN]),
         ];
     }
+
+    /**
+     * @return void
+     */
+    public function testGetProductConcreteTransfersByProductIdsReturnsAttributesArray(): void
+    {
+        // Arrange
+        $productConcreteIds = $this->tester->getProductConcreteIds();
+        $expectedIdCount = count($productConcreteIds);
+
+        // Act
+        $productConcreteTransfers = $this->tester->getProductFacade()->getProductConcreteTransfersByProductIds($productConcreteIds);
+
+        // Assert
+        $this->assertTrue($expectedIdCount > 0);
+        $this->assertSame($expectedIdCount, count($productConcreteTransfers));
+        foreach ($productConcreteTransfers as $productConcreteTransfer) {
+            $this->assertInstanceOf(ProductConcreteTransfer::class, $productConcreteTransfer);
+            $this->assertIsArray($productConcreteTransfer->getAttributes());
+        }
+    }
 }

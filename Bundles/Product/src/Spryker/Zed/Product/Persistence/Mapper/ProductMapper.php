@@ -63,6 +63,9 @@ class ProductMapper implements ProductMapperInterface
             $productEntity->getSpyProductAbstract()->getSku(),
         );
 
+        $attributes = $this->utilEncodingService->decodeJson($productEntity->getAttributes(), true) ?? [];
+        $productConcreteTransfer->setAttributes($attributes);
+
         foreach ($productEntity->getSpyProductLocalizedAttributess() as $productLocalizedAttributesEntity) {
             $productConcreteTransfer->addLocalizedAttributes(
                 $this->localizedAttributeMapper
