@@ -61,8 +61,8 @@ $(document).ready(function () {
     var $inputFrom = $('#discount_discountGeneral_valid_from');
     var $inputTo = $('#discount_discountGeneral_valid_to');
     var defaultDateFormat = 'd.m.Y H:i';
-    var inputFromFormat = $inputFrom.data('format') ?? defaultDateFormat;
-    var inputToFormat = $inputTo.data('format') ?? defaultDateFormat;
+    var inputFromFormat = $inputFrom.data('format') || defaultDateFormat;
+    var inputToFormat = $inputTo.data('format') || defaultDateFormat;
 
     $inputFrom.datetimepicker({
         format: inputFromFormat,
@@ -91,7 +91,7 @@ $(document).ready(function () {
     });
 
     $inputTo.datetimepicker({
-        format: inputFromFormat,
+        format: inputToFormat,
         defaultTime: '00:00',
         todayButton: false,
         onShow: function () {

@@ -32,7 +32,6 @@ Bundles/SecuritySystemUser/tests/SprykerTest/SecuritySystemUser/_support/_genera
 dist/
 node_modules/
 /static/public/
-yarn.lock
 /vendor/*
 composer.phar
 composer.lock
