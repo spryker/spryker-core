@@ -10,7 +10,7 @@ namespace Spryker\Zed\Router\Communication\Plugin\Console;
 use Symfony\Component\Routing\RouteCollection;
 
 /**
- * @method \Spryker\Zed\Router\Business\RouterFacade getFacade()
+ * @method \Spryker\Zed\Router\Business\RouterFacadeInterface getFacade()
  * @method \Spryker\Zed\Router\Communication\RouterCommunicationFactory getFactory()
  */
 class RouterDebugBackofficeConsole extends AbstractRouterDebugConsole

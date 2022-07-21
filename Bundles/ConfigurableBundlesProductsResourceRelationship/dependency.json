@@ -1,5 +1,6 @@
 {
     "include": {
-        "spryker/configurable-bundles-rest-api": "ConfigurableBundlesRestApi module provides REST functionality for configurable bundle feature."
+        "spryker/configurable-bundles-rest-api": "ConfigurableBundlesRestApi module provides REST functionality for configurable bundle feature.",
+        "spryker/transfer": "Provides transfer objects definition with `::get*OrFail()` functionality."
     }
 }

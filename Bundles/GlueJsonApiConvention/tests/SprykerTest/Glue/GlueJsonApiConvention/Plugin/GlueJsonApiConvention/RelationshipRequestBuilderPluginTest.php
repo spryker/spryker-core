@@ -8,7 +8,7 @@
 namespace SprykerTest\Glue\GlueJsonApiConvention\Plugin\GlueJsonApiConvention;
 
 use Codeception\Test\Unit;
-use Spryker\Glue\GlueJsonApiConvention\Plugin\GlueJsonApiConvention\RelationshipRequestBuilderPlugin;
+use Spryker\Glue\GlueJsonApiConvention\Plugin\GlueApplication\RelationshipRequestBuilderPlugin;
 
 /**
  * Auto-generated group annotations

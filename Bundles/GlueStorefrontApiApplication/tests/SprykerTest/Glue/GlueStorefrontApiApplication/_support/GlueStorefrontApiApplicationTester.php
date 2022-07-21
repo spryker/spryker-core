@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
@@ -29,6 +30,12 @@ class GlueStorefrontApiApplicationTester extends Actor
     use _generated\GlueStorefrontApiApplicationTesterActions;
 
     /**
-     * Define custom actions here
+     * @var string
      */
+    public const GET_METHOD_NAME = 'get';
+
+    /**
+     * @var string
+     */
+    public const GET_METHOD_SCOPE = 'storefront:test:read';
 }

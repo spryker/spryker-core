@@ -8,11 +8,19 @@
 namespace Spryker\Zed\SalesQuantity\Business\Discount\DiscountableItem;
 
 use Generated\Shared\Transfer\CalculatedDiscountTransfer;
+use Generated\Shared\Transfer\DiscountableItemTransfer;
 use Generated\Shared\Transfer\DiscountableItemTransformerTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 
 class DiscountableItemTransformer implements DiscountableItemTransformerInterface
 {
+    /**
+     * @uses \Spryker\Zed\Discount\DiscountDependencyProvider::PLUGIN_CALCULATOR_PERCENTAGE
+     *
+     * @var string
+     */
+    protected const PLUGIN_CALCULATOR_PERCENTAGE = 'PLUGIN_CALCULATOR_PERCENTAGE';
+
     /**
      * @param \Generated\Shared\Transfer\DiscountableItemTransformerTransfer $discountableItemTransformerTransfer
      *
@@ -29,7 +37,13 @@ class DiscountableItemTransformer implements DiscountableItemTransformerInterfac
         $quantity = $discountableItemTransformerTransfer->getQuantity();
 
         $calculatedDiscountTransfer = $this->createBaseCalculatedDiscountTransfer($discountTransfer);
-        $singleItemAmountShare = $discountableItemTransfer->getUnitPrice() * $quantity / $totalAmount;
+
+        $iterationUnitPrice = (int)$discountableItemTransfer->getUnitPrice();
+        if ($this->isDiscountPriorityIterationApplicable($discountableItemTransfer, $discountTransfer)) {
+            $iterationUnitPrice = $this->calculatePriorityIterationUnitPrice($discountableItemTransfer, $discountTransfer, $iterationUnitPrice);
+        }
+
+        $singleItemAmountShare = $iterationUnitPrice * $quantity / $totalAmount;
 
         $itemDiscountAmount = ($totalDiscountAmount * $singleItemAmountShare) + $roundingError;
         $itemDiscountAmountRounded = (int)round($itemDiscountAmount);
@@ -61,5 +75,49 @@ class DiscountableItemTransformer implements DiscountableItemTransformerInterfac
         $calculatedDiscountTransfer->fromArray($discountTransfer->toArray(), true);
 
         return $calculatedDiscountTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DiscountableItemTransfer $discountableItemTransfer
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
+     * @param int $iterationUnitPrice
+     *
+     * @return int
+     */
+    protected function calculatePriorityIterationUnitPrice(
+        DiscountableItemTransfer $discountableItemTransfer,
+        DiscountTransfer $discountTransfer,
+        int $iterationUnitPrice
+    ): int {
+        foreach ($discountableItemTransfer->getOriginalItemCalculatedDiscounts() as $calculatedDiscountTransfer) {
+            if ($calculatedDiscountTransfer->getPriority() < $discountTransfer->getPriority()) {
+                $iterationUnitPrice -= $calculatedDiscountTransfer->getUnitAmount();
+            }
+        }
+
+        return $iterationUnitPrice;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\DiscountableItemTransfer $discountableItemTransfer
+     * @param \Generated\Shared\Transfer\DiscountTransfer $discountTransfer
+     *
+     * @return bool
+     */
+    protected function isDiscountPriorityIterationApplicable(
+        DiscountableItemTransfer $discountableItemTransfer,
+        DiscountTransfer $discountTransfer
+    ): bool {
+        if ($discountTransfer->getPriority() !== null && $discountTransfer->getCalculatorPlugin() !== static::PLUGIN_CALCULATOR_PERCENTAGE) {
+            return false;
+        }
+
+        foreach ($discountableItemTransfer->getOriginalItemCalculatedDiscounts() as $calculatedDiscountTransfer) {
+            if ($calculatedDiscountTransfer->getPriority() !== null) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

@@ -18,6 +18,8 @@ use Spryker\Zed\ProductApprovalGui\Communication\Expander\ProductApprovalProduct
 use Spryker\Zed\ProductApprovalGui\Communication\Expander\ProductApprovalProductTableConfigurationExpanderInterface;
 use Spryker\Zed\ProductApprovalGui\Communication\Expander\ProductApprovalProductTableDataExpander;
 use Spryker\Zed\ProductApprovalGui\Communication\Expander\ProductApprovalProductTableDataExpanderInterface;
+use Spryker\Zed\ProductApprovalGui\Communication\Reader\ProductApprovalStatusReader;
+use Spryker\Zed\ProductApprovalGui\Communication\Reader\ProductApprovalStatusReaderInterface;
 use Spryker\Zed\ProductApprovalGui\Dependency\Facade\ProductApprovalGuiToProductApprovalFacadeInterface;
 use Spryker\Zed\ProductApprovalGui\Dependency\Facade\ProductApprovalGuiToProductFacadeInterface;
 use Spryker\Zed\ProductApprovalGui\ProductApprovalGuiDependencyProvider;
@@ -25,6 +27,7 @@ use Twig\Environment;
 
 /**
  * @method \Spryker\Zed\ProductApprovalGui\Persistence\ProductApprovalGuiRepositoryInterface getRepository()
+ * @method \Spryker\Zed\ProductApprovalGui\ProductApprovalGuiConfig getConfig()
  */
 class ProductApprovalGuiCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -49,7 +52,7 @@ class ProductApprovalGuiCommunicationFactory extends AbstractCommunicationFactor
      */
     public function createProductApprovalProductTableActionExpander(): ProductApprovalProductTableActionExpanderInterface
     {
-        return new ProductApprovalProductTableActionExpander($this->getProductApprovalFacade());
+        return new ProductApprovalProductTableActionExpander($this->createProductApprovalStatusReader());
     }
 
     /**
@@ -58,7 +61,7 @@ class ProductApprovalGuiCommunicationFactory extends AbstractCommunicationFactor
     public function createProductApprovalProductAbstractEditViewExpander(): ProductApprovalProductAbstractEditViewExpanderInterface
     {
         return new ProductApprovalProductAbstractEditViewExpander(
-            $this->getProductApprovalFacade(),
+            $this->createProductApprovalStatusReader(),
             $this->getProductFacade(),
             $this->getTwig(),
         );
@@ -72,6 +75,17 @@ class ProductApprovalGuiCommunicationFactory extends AbstractCommunicationFactor
         return new ProductApprovalProductTableDataExpander(
             $this->createArrayExpander(),
             $this->getTwig(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductApprovalGui\Communication\Reader\ProductApprovalStatusReaderInterface
+     */
+    public function createProductApprovalStatusReader(): ProductApprovalStatusReaderInterface
+    {
+        return new ProductApprovalStatusReader(
+            $this->getConfig(),
+            $this->getProductApprovalFacade(),
         );
     }
 

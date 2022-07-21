@@ -25,7 +25,7 @@ class File implements StorageInterface
     protected $cacheFilePath;
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return void
      */

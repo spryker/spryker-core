@@ -109,7 +109,7 @@ class SessionHandlerMysql implements SessionHandlerInterface
      *
      * @return bool
      */
-    public function open($savePath, $sessionName)
+    public function open($savePath, $sessionName): bool
     {
         return $this->connection ? true : false;
     }
@@ -117,7 +117,7 @@ class SessionHandlerMysql implements SessionHandlerInterface
     /**
      * @return bool
      */
-    public function close()
+    public function close(): bool
     {
         unset($this->connection);
 
@@ -129,7 +129,7 @@ class SessionHandlerMysql implements SessionHandlerInterface
      *
      * @return string|null
      */
-    public function read($sessionId)
+    public function read($sessionId): ?string
     {
         $key = $this->keyPrefix . $sessionId;
         $startTime = microtime(true);
@@ -151,7 +151,7 @@ class SessionHandlerMysql implements SessionHandlerInterface
      *
      * @return bool
      */
-    public function write($sessionId, $sessionData)
+    public function write($sessionId, $sessionData): bool
     {
         $key = $this->keyPrefix . $sessionId;
 
@@ -181,7 +181,7 @@ class SessionHandlerMysql implements SessionHandlerInterface
      *
      * @return bool
      */
-    public function destroy($sessionId)
+    public function destroy($sessionId): bool
     {
         $key = $this->keyPrefix . $sessionId;
 
@@ -200,7 +200,7 @@ class SessionHandlerMysql implements SessionHandlerInterface
      *
      * @return bool
      */
-    public function gc($maxLifetime)
+    public function gc($maxLifetime): bool
     {
         return true;
     }

@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountPostUpdatePluginInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\DiscountPromotion\Communication\Plugin\Discount\DiscountPromotionDiscountPostUpdatePlugin} instead.
+ *
  * @method \Spryker\Zed\DiscountPromotion\Business\DiscountPromotionFacadeInterface getFacade()
  * @method \Spryker\Zed\DiscountPromotion\Communication\DiscountPromotionCommunicationFactory getFactory()
  * @method \Spryker\Zed\DiscountPromotion\Persistence\DiscountPromotionQueryContainerInterface getQueryContainer()

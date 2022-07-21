@@ -36,7 +36,7 @@ class CustomerApiValidator implements CustomerApiValidatorInterface
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param string $field
      * @param array<\Generated\Shared\Transfer\ApiValidationErrorTransfer> $apiValidationErrorTransfers
      *
@@ -53,7 +53,7 @@ class CustomerApiValidator implements CustomerApiValidatorInterface
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param string $field
      * @param array<\Generated\Shared\Transfer\ApiValidationErrorTransfer> $apiValidationErrorTransfers
      *

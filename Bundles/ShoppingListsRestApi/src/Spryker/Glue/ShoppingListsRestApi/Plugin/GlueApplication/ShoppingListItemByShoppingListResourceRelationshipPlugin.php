@@ -14,7 +14,7 @@ use Spryker\Glue\ShoppingListsRestApi\ShoppingListsRestApiConfig;
 
 /**
  * @Glue({
- *     "resourceAttributesClassName": "\\Generated\\Shared\\Transfer\\RestShoppingListsAttributesTransfer"
+ *     "resourceAttributesClassName": "\\Generated\\Shared\\Transfer\\RestShoppingListItemsAttributesTransfer"
  * })
  *
  * @method \Spryker\Glue\ShoppingListsRestApi\ShoppingListsRestApiFactory getFactory()

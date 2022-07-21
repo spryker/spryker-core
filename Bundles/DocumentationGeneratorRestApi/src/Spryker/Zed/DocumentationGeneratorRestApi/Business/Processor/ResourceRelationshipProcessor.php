@@ -8,6 +8,7 @@
 namespace Spryker\Zed\DocumentationGeneratorRestApi\Business\Processor;
 
 use Generated\Shared\Transfer\SchemaDataTransfer;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceRelationshipsPluginAnalyzerInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Analyzer\ResourceRelationshipsPluginAnnotationAnalyzerInterface;
@@ -76,6 +77,27 @@ class ResourceRelationshipProcessor implements ResourceRelationshipProcessorInte
     }
 
     /**
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface $resourceRelationshipPlugin
+     * @param string $transferClassName
+     * @param string $responseDataSchemaName
+     *
+     * @return array<\Generated\Shared\Transfer\SchemaDataTransfer>
+     */
+    public function getRelationshipSchemaDataTransfersForRelationshipPlugin(
+        ResourceRelationshipPluginInterface $resourceRelationshipPlugin,
+        string $transferClassName,
+        string $responseDataSchemaName
+    ): array {
+        $resourceRelationships = $this->getResourceRelationshipsForResourceRelationshipPlugin($resourceRelationshipPlugin);
+
+        if (!$resourceRelationships) {
+            return [];
+        }
+
+        return $this->createResourceRelationshipSchemaDataTransfers($responseDataSchemaName, array_keys($resourceRelationships), $transferClassName);
+    }
+
+    /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $plugin
      * @param string $transferClassName
      * @param array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface> $resourceRelationships
@@ -117,7 +139,7 @@ class ResourceRelationshipProcessor implements ResourceRelationshipProcessorInte
     public function getResourceAttributesClassNamesFromPlugin(ResourceRoutePluginInterface $plugin): array
     {
         $resourceAttributesClassNames = [];
-        $resourceRelationships = $this->getResourceRelationshipsForResourceRoutePlugin($plugin);
+        $resourceRelationships = $this->getNestedResourceRelationshipsForResourceRoutePlugin($plugin);
 
         if (!$resourceRelationships) {
             return $resourceAttributesClassNames;
@@ -145,6 +167,27 @@ class ResourceRelationshipProcessor implements ResourceRelationshipProcessorInte
     public function getResourceRelationshipsForResourceRoutePlugin(ResourceRoutePluginInterface $plugin): array
     {
         return $this->resourceRelationshipPluginAnalyzer->getResourceRelationshipsForResourceRoutePlugin($plugin);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface $resourceRoutePlugin
+     *
+     * @return array<string, \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface>
+     */
+    public function getNestedResourceRelationshipsForResourceRoutePlugin(ResourceRoutePluginInterface $resourceRoutePlugin): array
+    {
+        return $this->resourceRelationshipPluginAnalyzer->getNestedResourceRelationshipsForResourceRoutePlugin($resourceRoutePlugin);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface $resourceRelationshipPlugin
+     *
+     * @return array<string, \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface>
+     */
+    public function getResourceRelationshipsForResourceRelationshipPlugin(
+        ResourceRelationshipPluginInterface $resourceRelationshipPlugin
+    ): array {
+        return $this->resourceRelationshipPluginAnalyzer->getResourceRelationshipsForResourceRelationshipPlugin($resourceRelationshipPlugin);
     }
 
     /**

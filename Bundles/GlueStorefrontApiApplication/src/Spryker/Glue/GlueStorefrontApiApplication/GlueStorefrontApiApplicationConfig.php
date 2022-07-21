@@ -7,30 +7,19 @@
 
 namespace Spryker\Glue\GlueStorefrontApiApplication;
 
-use Spryker\Glue\GlueStorefrontApiApplication\Router\Generator\UrlGenerator;
-use Spryker\Glue\GlueStorefrontApiApplication\Router\UrlMatcher\CompiledUrlMatcher;
 use Spryker\Glue\Kernel\AbstractBundleConfig;
 use Spryker\Shared\GlueStorefrontApiApplication\GlueStorefrontApiApplicationConstants;
+use Symfony\Component\Routing\Generator\CompiledUrlGenerator;
+use Symfony\Component\Routing\Matcher\CompiledUrlMatcher;
 
 class GlueStorefrontApiApplicationConfig extends AbstractBundleConfig
 {
     /**
-     * @api
-     *
-     * @uses \Spryker\Glue\GlueApplication\GlueApplicationConfig::ERROR_CODE_RESOURCE_NOT_FOUND
+     * @uses \Spryker\Zed\Oauth\OauthConfig::GENERATED_FULL_FILE_NAME
      *
      * @var string
      */
-    public const ERROR_CODE_RESOURCE_NOT_FOUND = '007';
-
-    /**
-     * @api
-     *
-     * @uses \Spryker\Glue\GlueApplication\GlueApplicationConfig::ERROR_MESSAGE_RESOURCE_NOT_FOUND
-     *
-     * @var string
-     */
-    public const ERROR_MESSAGE_RESOURCE_NOT_FOUND = 'Not found';
+    protected const GENERATED_FULL_FILE_NAME = '/Generated/Zed/Oauth/GlueScopesCache/glue_scopes_cache.yml';
 
     /**
      * @var string
@@ -138,25 +127,6 @@ class GlueStorefrontApiApplicationConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - Returns a Router configuration which makes use of a Router cache.
-     *
-     * @api
-     *
-     * @see \Symfony\Component\Routing\Router::setOptions()
-     *
-     * @return array<string, mixed>
-     */
-    public function getRouterConfiguration(): array
-    {
-        return [
-            'cache_dir' => $this->getCachePathIfCacheEnabled(),
-            'generator_class' => UrlGenerator::class,
-            'matcher_class' => CompiledUrlMatcher::class,
-        ];
-    }
-
-    /**
-     * Specification:
      * - List of allowed CORS headers.
      *
      * @api
@@ -171,6 +141,25 @@ class GlueStorefrontApiApplicationConfig extends AbstractBundleConfig
             static::HEADER_CONTENT_LANGUAGE,
             static::HEADER_ACCEPT_LANGUAGE,
             static::HEADER_AUTHORIZATION,
+        ];
+    }
+
+    /**
+     * Specification:
+     * - Returns a Router configuration which makes use of a Router cache.
+     *
+     * @api
+     *
+     * @see \Symfony\Component\Routing\Router::setOptions()
+     *
+     * @return array<string, mixed>
+     */
+    public function getRouterConfiguration(): array
+    {
+        return [
+            'cache_dir' => $this->getCachePathIfCacheEnabled(),
+            'generator_class' => CompiledUrlGenerator::class,
+            'matcher_class' => CompiledUrlMatcher::class,
         ];
     }
 
@@ -200,5 +189,15 @@ class GlueStorefrontApiApplicationConfig extends AbstractBundleConfig
             APPLICATION_CODE_BUCKET,
             $projectNamespaces,
         );
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getGeneratedFullFileNameForCollectedScopes(): string
+    {
+        return APPLICATION_SOURCE_DIR . static::GENERATED_FULL_FILE_NAME;
     }
 }

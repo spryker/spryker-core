@@ -37,7 +37,7 @@ class CommentFacadeAddCommentTagTest extends Unit
     protected const FAKE_COMMENT_UUID = 'FAKE_COMMENT_UUID';
 
     /**
-     * @uses \Spryker\Zed\Comment\Business\Writer\CommentWriter::GLOSSARY_KEY_COMMENT_NOT_FOUND
+     * @uses \Spryker\Zed\Comment\Business\Validator\CommentValidator::GLOSSARY_KEY_COMMENT_NOT_FOUND
      *
      * @var string
      */

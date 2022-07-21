@@ -12,4 +12,4 @@ composer require spryker/price-product-merchant-relationship-merchant-portal-gui
 
 ## Documentation
 
-[Spryker Documentation](https://docs.spryker.com/module_guide/overview.htm)
+[Spryker Documentation](https://docs.spryker.com)

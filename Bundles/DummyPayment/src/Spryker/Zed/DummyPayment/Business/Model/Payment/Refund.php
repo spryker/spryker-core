@@ -9,19 +9,19 @@ namespace Spryker\Zed\DummyPayment\Business\Model\Payment;
 
 use Generated\Shared\Transfer\RefundTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
-use Spryker\Zed\DummyPayment\Dependency\Facade\DummyPaymentToRefundInterface;
+use Spryker\Zed\DummyPayment\Dependency\Facade\DummyPaymentToRefundFacadeInterface;
 
 class Refund implements RefundInterface
 {
     /**
-     * @var \Spryker\Zed\DummyPayment\Dependency\Facade\DummyPaymentToRefundInterface
+     * @var \Spryker\Zed\DummyPayment\Dependency\Facade\DummyPaymentToRefundFacadeInterface
      */
     protected $refundFacade;
 
     /**
-     * @param \Spryker\Zed\DummyPayment\Dependency\Facade\DummyPaymentToRefundInterface $refundFacade
+     * @param \Spryker\Zed\DummyPayment\Dependency\Facade\DummyPaymentToRefundFacadeInterface $refundFacade
      */
-    public function __construct(DummyPaymentToRefundInterface $refundFacade)
+    public function __construct(DummyPaymentToRefundFacadeInterface $refundFacade)
     {
         $this->refundFacade = $refundFacade;
     }
@@ -32,7 +32,7 @@ class Refund implements RefundInterface
      *
      * @return void
      */
-    public function refund(array $salesOrderItems, SpySalesOrder $salesOrderEntity)
+    public function refund(array $salesOrderItems, SpySalesOrder $salesOrderEntity): void
     {
         $refundTransfer = $this->refundFacade->calculateRefund($salesOrderItems, $salesOrderEntity);
         $paymentRefundResult = $this->refundPayment($refundTransfer);
@@ -49,7 +49,7 @@ class Refund implements RefundInterface
      *
      * @return bool
      */
-    protected function refundPayment(RefundTransfer $refundTransfer)
+    protected function refundPayment(RefundTransfer $refundTransfer): bool
     {
         return ($refundTransfer->getAmount() > 0);
     }

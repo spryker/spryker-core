@@ -9,6 +9,7 @@ namespace Spryker\Zed\Oauth\Business\Model\League\Grant;
 
 use DateInterval;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
+use League\OAuth2\Server\Entities\ScopeEntityInterface;
 use League\OAuth2\Server\Entities\UserEntityInterface;
 use League\OAuth2\Server\Exception\OAuthServerException;
 use League\OAuth2\Server\Grant\AbstractGrant;
@@ -19,6 +20,11 @@ use Spryker\Zed\Oauth\OauthConfig;
 
 class PasswordGrantType extends AbstractGrant implements GrantTypeInterface
 {
+    /**
+     * @var \Spryker\Zed\Oauth\Business\Model\League\Repositories\ScopeRepositoryInterface
+     */
+    protected $scopeRepository;
+
     /**
      * @var string
      */
@@ -35,6 +41,11 @@ class PasswordGrantType extends AbstractGrant implements GrantTypeInterface
     protected const REQUEST_PARAMETER_USERNAME = 'username';
 
     /**
+     * @var string
+     */
+    protected const REQUEST_APPLICATION_NAME = 'request_application';
+
+    /**
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \League\OAuth2\Server\ResponseTypes\ResponseTypeInterface $responseType
      * @param \DateInterval $accessTokenTTL
@@ -47,12 +58,13 @@ class PasswordGrantType extends AbstractGrant implements GrantTypeInterface
         DateInterval $accessTokenTTL
     ) {
         // Validate request
+        $applicationName = $this->getRequestParameter(static::REQUEST_APPLICATION_NAME, $request);
         $client = $this->validateClient($request);
-        $scopes = $this->validateScopes($this->getRequestParameter(static::REQUEST_PARAMETER_SCOPE, $request, $this->defaultScope));
+        $scopes = $this->validateScopes($this->getRequestParameter(static::REQUEST_PARAMETER_SCOPE, $request, $this->defaultScope), null, $applicationName);
         $user = $this->validateUser($request, $client);
 
         // Finalize the requested scopes
-        $finalizedScopes = $this->scopeRepository->finalizeScopes($scopes, $this->getIdentifier(), $client, $user->getIdentifier());
+        $finalizedScopes = $this->scopeRepository->finalizeScopes($scopes, $this->getIdentifier(), $client, $user->getIdentifier(), $applicationName);
 
         // Issue and persist new tokens
         $accessToken = $this->issueAccessToken($accessTokenTTL, $client, $user->getIdentifier(), $finalizedScopes);
@@ -75,6 +87,50 @@ class PasswordGrantType extends AbstractGrant implements GrantTypeInterface
     public function getIdentifier()
     {
         return OauthConfig::GRANT_TYPE_PASSWORD;
+    }
+
+    /**
+     * @param array|string $scopes
+     * @param string|null $redirectUri
+     * @param string|null $applicationName
+     *
+     * @throws \League\OAuth2\Server\Exception\OAuthServerException
+     *
+     * @return array<\League\OAuth2\Server\Entities\ScopeEntityInterface>
+     */
+    public function validateScopes($scopes, $redirectUri = null, ?string $applicationName = null): array
+    {
+        if (is_string($scopes)) {
+            $scopes = $this->convertScopesQueryStringToArray($scopes);
+        }
+
+        if (!is_array($scopes)) {
+            throw OAuthServerException::invalidRequest('scope');
+        }
+
+        $validScopes = [];
+
+        foreach ($scopes as $scopeItem) {
+            $scope = $this->scopeRepository->getScopeEntityByIdentifier($scopeItem, $applicationName);
+
+            if ($scope instanceof ScopeEntityInterface) {
+                $validScopes[] = $scope;
+            }
+        }
+
+        return $validScopes;
+    }
+
+    /**
+     * @param string $scopes
+     *
+     * @return array<string>
+     */
+    protected function convertScopesQueryStringToArray(string $scopes): array
+    {
+        return array_filter(explode(static::SCOPE_DELIMITER_STRING, trim($scopes)), function ($scope) {
+            return $scope !== '';
+        });
     }
 
     /**

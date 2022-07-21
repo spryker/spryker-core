@@ -24,5 +24,5 @@ interface SharedCartToCustomerFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    public function getCustomer(CustomerTransfer $customerTransfer);
+    public function getCustomer(CustomerTransfer $customerTransfer): CustomerTransfer;
 }

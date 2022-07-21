@@ -32,7 +32,7 @@ class CompletionResultFormatterPlugin extends AbstractElasticsearchResultFormatt
 
     /**
      * @param \Elastica\ResultSet $searchResult
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return array
      */

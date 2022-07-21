@@ -41,7 +41,7 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
      * @param \Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface $searchConfig
      * @param array $aggregationResult
      * @param array $expectedResult
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return void
      */

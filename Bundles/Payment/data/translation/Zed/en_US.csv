@@ -1,3 +1,10 @@
 Amount,Amount
 "Payment method","Payment method"
 "Payment provider","Payment provider"
+"Payment method key ""%paymentMethodKey%"" used more then once among requested entities.","Payment method key ""%paymentMethodKey%"" used more then once among requested entities."
+"Payment method name ""%paymentMethodName%"" used more then once among requested entities.","Payment method name ""%paymentMethodName%"" used more then once among requested entities."
+"Payment provider with key ""%paymentProviderKey%"" already exists.","Payment provider with key ""%paymentProviderKey%"" already exists."
+"Payment method with key ""%paymentMethodKey%"" already exists.","Payment method with key ""%paymentMethodKey%"" already exists."
+"Payment provider key ""%paymentProviderKey%"" used more then once among requested entities.","Payment provider key ""%paymentProviderKey%"" used more then once among requested entities."
+"Payment provider name ""%paymentProviderName%"" used more then once among requested entities.","Payment provider name ""%paymentProviderName%"" used more then once among requested entities."
+"Payment provider with id ""%paymentProviderId%"" is unknown.","Payment provider with id ""%paymentProviderId%"" is unknown."

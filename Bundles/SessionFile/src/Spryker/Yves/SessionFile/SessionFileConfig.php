@@ -49,4 +49,17 @@ class SessionFileConfig extends AbstractBundleConfig
     {
         return $this->getSharedConfig()->getSessionHandlerFileName();
     }
+
+    /**
+     * Specification:
+     * - Returns file path for saving active session IDs.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getActiveSessionFilePath(): string
+    {
+        return $this->getSharedConfig()->getActiveSessionFilePath();
+    }
 }

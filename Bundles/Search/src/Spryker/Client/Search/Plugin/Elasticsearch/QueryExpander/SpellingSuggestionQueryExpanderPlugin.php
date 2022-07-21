@@ -29,7 +29,7 @@ class SpellingSuggestionQueryExpanderPlugin extends AbstractSuggestionExpanderPl
 
     /**
      * @param \Elastica\Query $query
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return \Elastica\Suggest\AbstractSuggest|null
      */

@@ -2,7 +2,6 @@ namespace: SprykerTest
 
 include:
     - tests/SprykerTest/Zed/AppCatalogGui
-    - tests/SprykerTest/Client/AppCatalogGui
 
 paths:
     tests: tests

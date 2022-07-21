@@ -1,5 +1,7 @@
 namespace: SprykerTest
 include:
+    - tests/SprykerTest/Client/Payment
+    - tests/SprykerTest/Service/Payment
     - tests/SprykerTest/Zed/Payment
 paths:
     tests: tests
@@ -12,6 +14,3 @@ settings:
     colors: true
     memory_limit: 1024M
     log: true
-extensions:
-    enabled: [SprykerTest\Shared\Testify\Helper\WebDriverHelper]
-    config: { SprykerTest\Shared\Testify\Helper\WebDriverHelper: { suites: [Presentation] } }

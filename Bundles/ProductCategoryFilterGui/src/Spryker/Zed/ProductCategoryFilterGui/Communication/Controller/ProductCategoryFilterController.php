@@ -9,9 +9,11 @@ namespace Spryker\Zed\ProductCategoryFilterGui\Communication\Controller;
 
 use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\CategoryTransfer;
+use Generated\Shared\Transfer\ProductCategoryFilterTransfer;
 use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\FacetResultFormatterPlugin;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\ProductCategoryFilterGui\Communication\Form\ProductCategoryFilterForm;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -31,6 +33,16 @@ class ProductCategoryFilterController extends AbstractController
     public const REDIRECT_ADDRESS = '/product-category-filter-gui/product-category-filter';
 
     /**
+     * @var string
+     */
+    protected const SUCCESS_MESSAGE_CATEGORY_FILTERS_UPDATED = 'Filters for Category "%s" were updated successfully.';
+
+    /**
+     * @var string
+     */
+    protected const ERROR_MESSAGE_INVALID_FILTERS = 'Filters for Category "%s" cannot be saved. Invalid filter(s) provided.';
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
@@ -40,12 +52,10 @@ class ProductCategoryFilterController extends AbstractController
         $idCategory = $this->castId($request->query->get(static::PARAM_ID_CATEGORY_NODE));
         $localeTransfer = $this->getCurrentLocale();
 
-        $category = $this->getCategory($idCategory, $localeTransfer->getIdLocaleOrFail());
+        $categoryTransfer = $this->getCategory($idCategory, $localeTransfer->getIdLocaleOrFail());
 
         $productCategoryFilterDataProvider = $this->getFactory()
             ->createProductCategoryFilterDataProvider();
-
-        $productCategoryFilterFormatter = $this->getFactory()->createProductCategoryFilterFormatter();
 
         $productCategoryFilterForm = $this->getFactory()
             ->getProductCategoryFilterForm(
@@ -58,30 +68,21 @@ class ProductCategoryFilterController extends AbstractController
             ->getProductCategoryFilterFacade()
             ->findProductCategoryFilterByCategoryId($idCategory);
 
-        $productCategoryFilterTransfer = $productCategoryFilterFormatter
-            ->generateTransferWithJsonFromTransfer($savedProductCategoryFilters);
-
-        $searchResultsForCategory = $this->getFactory()
+        $categorySearchFilters = $this->getFactory()
             ->getCatalogClient()
-            ->catalogSearch('', [PageIndexMap::CATEGORY => $idCategory]);
+            ->catalogSearch('', [PageIndexMap::CATEGORY => $idCategory])[FacetResultFormatterPlugin::NAME];
 
-        if ($productCategoryFilterForm->isSubmitted() && $productCategoryFilterForm->isValid()) {
-            $productCategoryFilterTransfer = $productCategoryFilterFormatter->generateTransferFromJson(
-                $savedProductCategoryFilters->getIdProductCategoryFilter(),
-                $idCategory,
-                $productCategoryFilterForm->getData()[ProductCategoryFilterForm::FIELD_FILTERS],
-            );
+        $productCategoryFilterTransfer = $this->handleProductCategoryFilterForm(
+            $productCategoryFilterForm,
+            $categoryTransfer,
+            array_keys($categorySearchFilters),
+            $savedProductCategoryFilters->getIdProductCategoryFilter(),
+        );
 
-            $facadeFunction = 'createProductCategoryFilter';
-            if ($productCategoryFilterTransfer->getIdProductCategoryFilter()) {
-                $facadeFunction = 'updateProductCategoryFilter';
-            }
-
-            $this->getFactory()
-                ->getProductCategoryFilterFacade()
-                ->$facadeFunction($productCategoryFilterTransfer);
-
-            $this->addSuccessMessage('Filters for Category "%s" were updated successfully.', ['%s' => $category->getName()]);
+        if (!$productCategoryFilterTransfer) {
+            $productCategoryFilterTransfer = $this->getFactory()
+                ->createProductCategoryFilterFormatter()
+                ->generateTransferWithJsonFromTransfer($savedProductCategoryFilters);
         }
 
         $filters = [];
@@ -90,7 +91,7 @@ class ProductCategoryFilterController extends AbstractController
             $filters = $this->getFactory()
                 ->getProductCategoryFilterClient()
                 ->updateFacetsByCategory(
-                    $searchResultsForCategory[FacetResultFormatterPlugin::NAME],
+                    $categorySearchFilters,
                     $productCategoryFilterTransfer->getFilterDataArray(),
                 );
         }
@@ -99,15 +100,15 @@ class ProductCategoryFilterController extends AbstractController
         $productCategoryFilters = $productCategoryFilterTransfer->getFilters();
         $nonSearchFilters = $this->getNonSearchFilters(
             ($productCategoryFilters !== null) ? (array)$productCategoryFilters : [],
-            $searchResultsForCategory[FacetResultFormatterPlugin::NAME],
+            $categorySearchFilters,
         );
 
         return $this->viewResponse([
             'productCategoryFilterForm' => $productCategoryFilterForm->createView(),
-            'category' => $category,
+            'category' => $categoryTransfer,
             'filters' => $filters,
             'productCategoryFilters' => $productCategoryFilterTransfer,
-            'allFilters' => $searchResultsForCategory[FacetResultFormatterPlugin::NAME],
+            'allFilters' => $categorySearchFilters,
             'nonSearchAttributes' => $nonSearchFilters,
         ]);
     }
@@ -184,5 +185,65 @@ class ProductCategoryFilterController extends AbstractController
         $category->setName($mainCategory->getName());
 
         return $category;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $productCategoryFilterForm
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param array<int, int|string> $categorySearchFilters
+     * @param int|null $idProductCategoryFilter
+     *
+     * @return \Generated\Shared\Transfer\ProductCategoryFilterTransfer|null
+     */
+    protected function handleProductCategoryFilterForm(
+        FormInterface $productCategoryFilterForm,
+        CategoryTransfer $categoryTransfer,
+        array $categorySearchFilters,
+        ?int $idProductCategoryFilter = null
+    ): ?ProductCategoryFilterTransfer {
+        if (!$this->isProductCategoryFilterFormHandable($productCategoryFilterForm, $categoryTransfer)) {
+            return null;
+        }
+
+        $productCategoryFilterTransfer = $this->getFactory()
+            ->createProductCategoryFilterFormatter()
+            ->generateTransferFromJson(
+                $idProductCategoryFilter,
+                $categoryTransfer->getIdCategoryOrFail(),
+                $productCategoryFilterForm->getData()[ProductCategoryFilterForm::FIELD_FILTERS],
+            );
+
+        $isProductCategoryFilterValid = $this->getFactory()
+            ->createProductCategoryFilterValidator()
+            ->validate($productCategoryFilterTransfer, $categorySearchFilters);
+
+        if (!$isProductCategoryFilterValid) {
+            $this->addErrorMessage(static::ERROR_MESSAGE_INVALID_FILTERS, ['%s' => $categoryTransfer->getName()]);
+
+            return null;
+        }
+
+        $productCategoryFilterTransfer = $this->getFactory()
+            ->createProductCategoryFilterSaver()
+            ->save($productCategoryFilterTransfer);
+
+        $this->addSuccessMessage(static::SUCCESS_MESSAGE_CATEGORY_FILTERS_UPDATED, ['%s' => $categoryTransfer->getName()]);
+
+        return $productCategoryFilterTransfer;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormInterface $productCategoryFilterForm
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return bool
+     */
+    protected function isProductCategoryFilterFormHandable(
+        FormInterface $productCategoryFilterForm,
+        CategoryTransfer $categoryTransfer
+    ): bool {
+        return $productCategoryFilterForm->isSubmitted()
+            && $productCategoryFilterForm->isValid()
+            && $categoryTransfer->getIdCategory();
     }
 }

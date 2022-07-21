@@ -8,6 +8,7 @@
 namespace Spryker\Zed\AppCatalogGui;
 
 use Spryker\Zed\AppCatalogGui\Dependency\Facade\AppCatalogGuiToLocaleFacadeBridge;
+use Spryker\Zed\AppCatalogGui\Dependency\Facade\AppCatalogGuiToOauthClientFacadeBridge;
 use Spryker\Zed\AppCatalogGui\Dependency\Facade\AppCatalogGuiToStoreFacadeBridge;
 use Spryker\Zed\AppCatalogGui\Dependency\Facade\AppCatalogGuiToStoreReferenceFacadeBridge;
 use Spryker\Zed\AppCatalogGui\Dependency\Facade\AppCatalogGuiToTranslatorFacadeBridge;
@@ -32,7 +33,7 @@ class AppCatalogGuiDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
-    public const CLIENT_APP_CATALOG_GUI = 'CLIENT_APP_CATALOG_GUI';
+    public const FACADE_OAUTH_CLIENT = 'FACADE_OAUTH_CLIENT';
 
     /**
      * @var string
@@ -51,9 +52,8 @@ class AppCatalogGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container): Container
     {
-        $container = $this->addAppCatalogGuiClient($container);
         $container = $this->addTranslatorFacade($container);
-        $container = $this->addStoreReferenceFacade($container);
+        $container = $this->addOauthClientFacade($container);
 
         return $container;
     }
@@ -122,10 +122,12 @@ class AppCatalogGuiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addAppCatalogGuiClient(Container $container): Container
+    protected function addTranslatorFacade(Container $container): Container
     {
-        $container->set(static::CLIENT_APP_CATALOG_GUI, function (Container $container) {
-            return $container->getLocator()->appCatalogGui()->client();
+        $container->set(static::FACADE_TRANSLATOR, function (Container $container) {
+            return new AppCatalogGuiToTranslatorFacadeBridge(
+                $container->getLocator()->translator()->facade(),
+            );
         });
 
         return $container;
@@ -136,11 +138,11 @@ class AppCatalogGuiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addTranslatorFacade(Container $container): Container
+    protected function addOauthClientFacade(Container $container): Container
     {
-        $container->set(static::FACADE_TRANSLATOR, function (Container $container) {
-            return new AppCatalogGuiToTranslatorFacadeBridge(
-                $container->getLocator()->translator()->facade(),
+        $container->set(static::FACADE_OAUTH_CLIENT, function (Container $container) {
+            return new AppCatalogGuiToOauthClientFacadeBridge(
+                $container->getLocator()->oauthClient()->facade(),
             );
         });
 

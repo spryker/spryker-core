@@ -10,7 +10,7 @@ namespace Spryker\Client\ProductConfiguration\Dependency\External;
 interface ProductConfigurationToChecksumGeneratorInterface
 {
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param string $encryptionKey
      *
      * @return string

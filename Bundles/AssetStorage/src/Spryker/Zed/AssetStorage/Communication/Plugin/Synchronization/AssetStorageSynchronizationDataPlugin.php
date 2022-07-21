@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\AssetStorage\Communication\Plugin\Synchronization;
 
-use Generated\Shared\Transfer\SynchronizationDataTransfer;
+use Generated\Shared\Transfer\FilterTransfer;
 use Spryker\Shared\AssetStorage\AssetStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface;
@@ -57,31 +57,11 @@ class AssetStorageSynchronizationDataPlugin extends AbstractPlugin implements Sy
      */
     public function getData(int $offset, int $limit, array $ids = []): array
     {
-        $synchronizationDataTransfers = [];
-        foreach ($this->findAssetStorage($ids) as $assetStorageEntityTransfer) {
-            $synchronizationDataTransfer = new SynchronizationDataTransfer();
-            $synchronizationDataTransfer->setData($assetStorageEntityTransfer->getData());
-            $synchronizationDataTransfer->setKey($assetStorageEntityTransfer->getAssetSlot());
-            $synchronizationDataTransfer->setStore($assetStorageEntityTransfer->getStore());
+        $filterTransfer = (new FilterTransfer())
+            ->setOffset($offset)
+            ->setLimit($limit);
 
-            $synchronizationDataTransfers[] = $synchronizationDataTransfer;
-        }
-
-        return $synchronizationDataTransfers;
-    }
-
-    /**
-     * @param array<int> $ids
-     *
-     * @return array<\Generated\Shared\Transfer\SpyAssetSlotStorageEntityTransfer>
-     */
-    protected function findAssetStorage(array $ids): array
-    {
-        if ($ids === []) {
-            return $this->getRepository()->findAssetStorages();
-        }
-
-        return $this->getRepository()->findAssetStoragesByAssetIds($ids);
+        return $this->getRepository()->getSynchronizationTransferCollection($filterTransfer, $ids);
     }
 
     /**

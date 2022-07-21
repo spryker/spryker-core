@@ -20,9 +20,9 @@ interface Connection
     public function getRequestMethod(): string;
 
     /**
-     * @return array
+     * @return object|array|string
      */
-    public function getRequestParameters(): array;
+    public function getRequestParameters();
 
     /**
      * @return array

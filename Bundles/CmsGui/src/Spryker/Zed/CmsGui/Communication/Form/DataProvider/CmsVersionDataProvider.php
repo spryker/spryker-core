@@ -62,7 +62,7 @@ class CmsVersionDataProvider
     /**
      * @param int|null $idCmsPage
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions($idCmsPage = null)
     {

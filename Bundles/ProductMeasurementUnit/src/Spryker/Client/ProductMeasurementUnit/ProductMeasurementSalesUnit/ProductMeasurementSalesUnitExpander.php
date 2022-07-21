@@ -22,7 +22,7 @@ class ProductMeasurementSalesUnitExpander implements ProductMeasurementSalesUnit
 
     /**
      * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $cartChangeTransfer
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return \Generated\Shared\Transfer\PersistentCartChangeTransfer
      */
@@ -48,7 +48,7 @@ class ProductMeasurementSalesUnitExpander implements ProductMeasurementSalesUnit
 
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
@@ -96,7 +96,7 @@ class ProductMeasurementSalesUnitExpander implements ProductMeasurementSalesUnit
     }
 
     /**
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return int
      */

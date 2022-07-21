@@ -7,15 +7,17 @@
 
 namespace Spryker\Client\Quote\Dependency\Client;
 
+use Generated\Shared\Transfer\CustomerTransfer;
+
 interface QuoteToCustomerClientInterface
 {
     /**
      * @return bool
      */
-    public function isLoggedIn();
+    public function isLoggedIn(): bool;
 
     /**
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    public function getCustomer();
+    public function getCustomer(): ?CustomerTransfer;
 }

@@ -30,8 +30,8 @@ class RangeExtractor extends AbstractAggregationExtractor implements Aggregation
     }
 
     /**
-     * @param array $aggregations
-     * @param array $requestParameters
+     * @param array<string, mixed> $aggregations
+     * @param array<string, mixed> $requestParameters
      *
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
@@ -49,8 +49,8 @@ class RangeExtractor extends AbstractAggregationExtractor implements Aggregation
 
     /**
      * @param \Generated\Shared\Transfer\RangeSearchResultTransfer $rangeResultTransfer
-     * @param array $aggregations
-     * @param array $requestParameters
+     * @param array<string, mixed> $aggregations
+     * @param array<string, mixed> $requestParameters
      *
      * @return \Generated\Shared\Transfer\RangeSearchResultTransfer
      */
@@ -95,7 +95,7 @@ class RangeExtractor extends AbstractAggregationExtractor implements Aggregation
     }
 
     /**
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      * @param float $min
      * @param float $max
      *

@@ -37,6 +37,20 @@ class UserPasswordResetFacadeTest extends Unit
     protected const TEST_SYSTEM_USER_TOKEN = 'token';
 
     /**
+     * @uses \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS_DELETED
+     *
+     * @var string
+     */
+    protected const USER_STATUS_DELETED = 'deleted';
+
+    /**
+     * @uses \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS_ACTIVE
+     *
+     * @var string
+     */
+    protected const USER_STATUS_ACTIVE = 'active';
+
+    /**
      * @var \SprykerTest\Zed\UserPasswordReset\UserPasswordResetBusinessTester
      */
     protected $tester;
@@ -54,6 +68,7 @@ class UserPasswordResetFacadeTest extends Unit
         // Arrange
         $userTransfer = $this->tester->haveUser([
             UserTransfer::USERNAME => static::TEST_MAIL,
+            UserTransfer::STATUS => static::USER_STATUS_ACTIVE,
         ]);
 
         // Act
@@ -162,5 +177,26 @@ class UserPasswordResetFacadeTest extends Unit
         // Assert
         $this->assertFalse($isValidExpiredPasswordResetToken);
         $this->assertFalse($isValidNotExistingPasswordResetToken);
+    }
+
+    /**
+     * @return void
+     */
+    public function testRequestPasswordResetReturnsFalseForNonActiveUser(): void
+    {
+        // Arrange
+        $userTransfer = $this->tester->haveUser([
+            UserTransfer::USERNAME => static::TEST_MAIL,
+            UserTransfer::STATUS => static::USER_STATUS_DELETED,
+        ]);
+
+        // Act
+        $isPasswordResetSuccessfully = $this->tester->getUserPasswordReset()->requestPasswordReset(
+            (new UserPasswordResetRequestTransfer())
+                ->setEmail($userTransfer->getUsername()),
+        );
+
+        // Assert
+        $this->assertFalse($isPasswordResetSuccessfully, 'It is not possible to request restore password for non active user');
     }
 }

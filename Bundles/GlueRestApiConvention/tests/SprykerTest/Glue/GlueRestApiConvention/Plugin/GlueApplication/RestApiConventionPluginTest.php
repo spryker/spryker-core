@@ -11,14 +11,14 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueRequestValidationTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
-use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ApiConventionPluginInterface;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ConventionPluginInterface;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RequestAfterRoutingValidatorPluginInterface;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RequestBuilderPluginInterface;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RequestValidatorPluginInterface;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResponseFormatterPluginInterface;
 use Spryker\Glue\GlueRestApiConvention\GlueRestApiConventionConfig;
 use Spryker\Glue\GlueRestApiConvention\GlueRestApiConventionDependencyProvider;
-use Spryker\Glue\GlueRestApiConvention\Plugin\GlueApplication\RestApiConventionPlugin;
-use Spryker\Glue\GlueRestApiConventionExtension\Dependency\Plugin\RequestAfterRoutingValidatorPluginInterface;
-use Spryker\Glue\GlueRestApiConventionExtension\Dependency\Plugin\RequestBuilderPluginInterface;
-use Spryker\Glue\GlueRestApiConventionExtension\Dependency\Plugin\RequestValidatorPluginInterface;
-use Spryker\Glue\GlueRestApiConventionExtension\Dependency\Plugin\ResponseFormatterPluginInterface;
+use Spryker\Glue\GlueRestApiConvention\Plugin\GlueApplication\RestConventionPlugin;
 use Spryker\Glue\GlueRestApiConventionExtension\Dependency\Plugin\RestResourceInterface;
 
 /**
@@ -96,14 +96,13 @@ class RestApiConventionPluginTest extends Unit
             GlueRestApiConventionDependencyProvider::PLUGINS_REQUEST_BUILDER,
             $this->createArrayOfRequestBuilderPluginMock(),
         );
-        $glueRequestTransfer = $this->tester->createGlueRequestTransfer();
+        $restApiConventionPlugin = $this->createRestApiConventionPlugin();
 
         //Act
-        $restApiConventionPlugin = $this->createRestApiConventionPlugin();
-        $glueRequestTransfer = $restApiConventionPlugin->buildRequest($glueRequestTransfer);
+        $actualRequestBuilderPlugins = $restApiConventionPlugin->provideRequestBuilderPlugins();
 
         //Assert
-        $this->assertSame(static::TEST_VALUE, $glueRequestTransfer->getAcceptedFormat());
+        $this->assertEquals($actualRequestBuilderPlugins, $this->createArrayOfRequestBuilderPluginMock());
     }
 
     /**
@@ -116,14 +115,13 @@ class RestApiConventionPluginTest extends Unit
             GlueRestApiConventionDependencyProvider::PLUGINS_REQUEST_VALIDATOR,
             $this->createArrayOfRequestValidatorPluginMock(),
         );
-        $glueRequestTransfer = $this->tester->createGlueRequestTransfer();
+        $restApiConventionPlugin = $this->createRestApiConventionPlugin();
 
         //Act
-        $restApiConventionPlugin = $this->createRestApiConventionPlugin();
-        $glueRequestValidationTransfer = $restApiApiConventionName = $restApiConventionPlugin->validateRequest($glueRequestTransfer);
+        $actualRequestValidatorPlugins = $restApiConventionPlugin->provideRequestValidatorPlugins();
 
         //Assert
-        $this->assertFalse($glueRequestValidationTransfer->getIsValid());
+        $this->assertEquals($actualRequestValidatorPlugins, $this->createArrayOfRequestValidatorPluginMock());
     }
 
     /**
@@ -136,15 +134,13 @@ class RestApiConventionPluginTest extends Unit
             GlueRestApiConventionDependencyProvider::PLUGINS_REQUEST_AFTER_ROUTING_VALIDATOR,
             $this->createArrayOfRequestAfterRoutingValidatorPluginInterfaceMock(),
         );
-        $glueRequestTransfer = $this->tester->createGlueRequestTransfer();
-        $restApiResourceInterfaceMock = $this->getMockBuilder(RestResourceInterface::class)->getMock();
+        $restApiConventionPlugin = $this->createRestApiConventionPlugin();
 
         //Act
-        $restApiConventionPlugin = $this->createRestApiConventionPlugin();
-        $glueRequestValidationTransfer = $restApiConventionPlugin->validateRequestAfterRouting($glueRequestTransfer, $restApiResourceInterfaceMock);
+        $actualRequestAfterRoutingValidatorPlugins = $restApiConventionPlugin->provideRequestAfterRoutingValidatorPlugins();
 
         //Assert
-        $this->assertFalse($glueRequestValidationTransfer->getIsValid());
+        $this->assertEquals($this->createArrayOfRequestAfterRoutingValidatorPluginInterfaceMock(), $actualRequestAfterRoutingValidatorPlugins);
     }
 
     /**
@@ -157,23 +153,21 @@ class RestApiConventionPluginTest extends Unit
             GlueRestApiConventionDependencyProvider::PLUGINS_RESPONSE_FORMATTER,
             $this->createArrayOfResponseFormatterPluginInterfaceMock(),
         );
-        $glueRequestTransfer = $this->tester->createGlueRequestTransfer();
-        $glueResponseTransfer = $this->tester->createGlueResponseTransfer();
+        $restApiConventionPlugin = $this->createRestApiConventionPlugin();
 
         //Act
-        $restApiConventionPlugin = $this->createRestApiConventionPlugin();
-        $glueResponseTransfer = $restApiConventionPlugin->formatResponse($glueResponseTransfer, $glueRequestTransfer);
+        $actualResponseFormatterPlugins = $restApiConventionPlugin->provideResponseFormatterPlugins();
 
         //Assert
-        $this->assertSame(static::TEST_VALUE, $glueResponseTransfer->getContent());
+        $this->assertEquals($this->createArrayOfResponseFormatterPluginInterfaceMock(), $actualResponseFormatterPlugins);
     }
 
     /**
-     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ApiConventionPluginInterface
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ConventionPluginInterface
      */
-    protected function createRestApiConventionPlugin(): ApiConventionPluginInterface
+    protected function createRestApiConventionPlugin(): ConventionPluginInterface
     {
-        return new RestApiConventionPlugin();
+        return new RestConventionPlugin();
     }
 
     /**
@@ -184,15 +178,13 @@ class RestApiConventionPluginTest extends Unit
         $firstRequestBuilderPluginInterfaceMock = $this
             ->getMockBuilder(RequestBuilderPluginInterface::class)
             ->getMock();
-        $firstRequestBuilderPluginInterfaceMock->expects($this->once())
-            ->method('build')
+        $firstRequestBuilderPluginInterfaceMock->method('build')
             ->willReturn((new GlueRequestTransfer())->setAcceptedFormat(static::TEST_VALUE));
 
         $secondRequestBuilderPluginInterfaceMock = $this
             ->getMockBuilder(RequestBuilderPluginInterface::class)
             ->getMock();
-        $secondRequestBuilderPluginInterfaceMock->expects($this->once())
-            ->method('build')
+        $secondRequestBuilderPluginInterfaceMock->method('build')
             ->willReturn((new GlueRequestTransfer())->setAcceptedFormat(static::TEST_VALUE));
 
         return [
@@ -209,22 +201,19 @@ class RestApiConventionPluginTest extends Unit
         $firstRequestValidatorPluginInterfaceMock = $this
             ->getMockBuilder(RequestValidatorPluginInterface::class)
             ->getMock();
-        $firstRequestValidatorPluginInterfaceMock->expects($this->once())
-            ->method('validate')
+        $firstRequestValidatorPluginInterfaceMock->method('validate')
             ->willReturn((new GlueRequestValidationTransfer())->setIsValid(true));
 
         $secondRequestValidatorPluginInterfaceMock = $this
             ->getMockBuilder(RequestValidatorPluginInterface::class)
             ->getMock();
-        $secondRequestValidatorPluginInterfaceMock->expects($this->once())
-            ->method('validate')
+        $secondRequestValidatorPluginInterfaceMock->method('validate')
             ->willReturn((new GlueRequestValidationTransfer())->setIsValid(false));
 
         $thirdRequestValidatorPluginInterfaceMock = $this
             ->getMockBuilder(RequestValidatorPluginInterface::class)
             ->getMock();
-        $thirdRequestValidatorPluginInterfaceMock->expects($this->never())
-            ->method('validate')
+        $thirdRequestValidatorPluginInterfaceMock->method('validate')
             ->willReturn((new GlueRequestValidationTransfer())->setIsValid(true));
 
         return [
@@ -242,22 +231,19 @@ class RestApiConventionPluginTest extends Unit
         $firstRequestAfterRoutingValidatorPluginInterfaceMock = $this
             ->getMockBuilder(RequestAfterRoutingValidatorPluginInterface::class)
             ->getMock();
-        $firstRequestAfterRoutingValidatorPluginInterfaceMock->expects($this->once())
-            ->method('validateRequest')
+        $firstRequestAfterRoutingValidatorPluginInterfaceMock->method('validate')
             ->willReturn((new GlueRequestValidationTransfer())->setIsValid(true));
 
         $secondRequestAfterRoutingValidatorPluginInterfaceMock = $this
             ->getMockBuilder(RequestAfterRoutingValidatorPluginInterface::class)
             ->getMock();
-        $secondRequestAfterRoutingValidatorPluginInterfaceMock->expects($this->once())
-            ->method('validateRequest')
+        $secondRequestAfterRoutingValidatorPluginInterfaceMock->method('validate')
             ->willReturn((new GlueRequestValidationTransfer())->setIsValid(false));
 
         $thirdRequestAfterRoutingValidatorPluginInterfaceMock = $this
             ->getMockBuilder(RequestAfterRoutingValidatorPluginInterface::class)
             ->getMock();
-        $thirdRequestAfterRoutingValidatorPluginInterfaceMock->expects($this->never())
-            ->method('validateRequest')
+        $thirdRequestAfterRoutingValidatorPluginInterfaceMock->method('validate')
             ->willReturn((new GlueRequestValidationTransfer())->setIsValid(true));
 
         return [
@@ -275,8 +261,7 @@ class RestApiConventionPluginTest extends Unit
         $responseFormatterPluginInterfaceMock = $this
             ->getMockBuilder(ResponseFormatterPluginInterface::class)
             ->getMock();
-        $responseFormatterPluginInterfaceMock->expects($this->once())
-            ->method('format')
+        $responseFormatterPluginInterfaceMock->method('format')
             ->willReturn((new GlueResponseTransfer())->setContent(static::TEST_VALUE));
 
         return [$responseFormatterPluginInterfaceMock];

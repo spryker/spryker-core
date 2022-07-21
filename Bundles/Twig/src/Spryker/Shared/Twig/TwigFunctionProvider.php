@@ -20,7 +20,7 @@ abstract class TwigFunctionProvider
     abstract public function getFunction();
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions()
     {

@@ -184,7 +184,7 @@ class ProductOfferGuiTableConfigurationProvider implements GuiTableConfiguration
         $guiTableConfigurationBuilder->addColumnText(static::COL_KEY_OFFER_REFERENCE, 'Reference', true, false)
             ->addColumnText(static::COL_KEY_MERCHANT_SKU, 'Merchant SKU', true, true)
             ->addColumnText(static::COL_KEY_CONCRETE_SKU, 'SKU', true, true)
-            ->addColumnImage(static::COL_KEY_IMAGE, 'Image', false, true)
+            ->addColumnImage(static::COL_KEY_IMAGE, 'Image', false, true, static::COL_KEY_PRODUCT_NAME)
             ->addColumnText(static::COL_KEY_PRODUCT_NAME, 'Name', true, true)
             ->addColumnListChip(static::COL_KEY_STORES, 'Stores', false, true, 2, 'gray')
             ->addColumnChip(static::COL_KEY_STOCK, 'Stock', true, true, 'green', [0 => 'red'])

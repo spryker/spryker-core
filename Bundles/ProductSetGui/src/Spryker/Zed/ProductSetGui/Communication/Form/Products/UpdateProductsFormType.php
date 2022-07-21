@@ -159,7 +159,7 @@ class UpdateProductsFormType extends AbstractType
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */
@@ -173,7 +173,7 @@ class UpdateProductsFormType extends AbstractType
 
     /**
      * @param array $idProductAbstracts
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */
@@ -184,7 +184,7 @@ class UpdateProductsFormType extends AbstractType
 
     /**
      * @param array $idProductAbstracts
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */

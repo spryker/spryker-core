@@ -12,6 +12,7 @@ use ArrayIterator;
 use Countable;
 use IteratorAggregate;
 use Spryker\Glue\Testify\OpenApi3\Property\PropertyDefinition;
+use Traversable;
 
 /**
  * @implements \ArrayAccess<int|string, \Spryker\Glue\Testify\OpenApi3\Property\PropertyDefinition>
@@ -44,9 +45,9 @@ class ObjectSpecification implements IteratorAggregate, ArrayAccess, Countable
     }
 
     /**
-     * @return \ArrayIterator<int|string, \Spryker\Glue\Testify\OpenApi3\Property\PropertyDefinition>
+     * @return \ArrayIterator<int|string, \Spryker\Glue\Testify\OpenApi3\Property\PropertyDefinition>|\Traversable
      */
-    public function getIterator()
+    public function getIterator(): Traversable
     {
         return new ArrayIterator($this->properties);
     }
@@ -54,7 +55,7 @@ class ObjectSpecification implements IteratorAggregate, ArrayAccess, Countable
     /**
      * @return int
      */
-    public function count()
+    public function count(): int
     {
         return count($this->properties);
     }
@@ -64,7 +65,7 @@ class ObjectSpecification implements IteratorAggregate, ArrayAccess, Countable
      *
      * @return bool
      */
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         return array_key_exists($offset, $this->properties);
     }
@@ -74,6 +75,7 @@ class ObjectSpecification implements IteratorAggregate, ArrayAccess, Countable
      *
      * @return \Spryker\Glue\Testify\OpenApi3\Property\PropertyDefinition
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return $this->properties[$offset];
@@ -85,7 +87,7 @@ class ObjectSpecification implements IteratorAggregate, ArrayAccess, Countable
      *
      * @return void
      */
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         trigger_error(sprintf('Trying to set readonly property: %s::%s', static::class, $offset), E_USER_WARNING);
     }
@@ -95,7 +97,7 @@ class ObjectSpecification implements IteratorAggregate, ArrayAccess, Countable
      *
      * @return void
      */
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         trigger_error(sprintf('Trying to unset readonly property: %s::%s', static::class, $offset), E_USER_WARNING);
     }

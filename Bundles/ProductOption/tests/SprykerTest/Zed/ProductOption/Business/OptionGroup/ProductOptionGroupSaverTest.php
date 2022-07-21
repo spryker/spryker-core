@@ -193,8 +193,13 @@ class ProductOptionGroupSaverTest extends MockProvider
      */
     protected function createProductOptionGroupEntityMock(): SpyProductOptionGroup
     {
-        return $this->getMockBuilder(SpyProductOptionGroup::class)
+        $mockedProductOptionGroup = $this->getMockBuilder(SpyProductOptionGroup::class)
             ->setMethods(['save'])
             ->getMock();
+
+        $mockedProductOptionGroup->method('save')
+            ->willReturn(1);
+
+        return $mockedProductOptionGroup;
     }
 }

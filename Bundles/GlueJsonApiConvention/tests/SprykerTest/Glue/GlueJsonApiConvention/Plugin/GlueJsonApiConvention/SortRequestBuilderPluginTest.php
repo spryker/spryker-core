@@ -9,7 +9,7 @@ namespace SprykerTest\Glue\GlueJsonApiConvention\Plugin\GlueRestApiConvention;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\SortTransfer;
-use Spryker\Glue\GlueJsonApiConvention\Plugin\GlueJsonApiConvention\SortRequestBuilderPlugin;
+use Spryker\Glue\GlueJsonApiConvention\Plugin\GlueApplication\SortRequestBuilderPlugin;
 
 /**
  * Auto-generated group annotations

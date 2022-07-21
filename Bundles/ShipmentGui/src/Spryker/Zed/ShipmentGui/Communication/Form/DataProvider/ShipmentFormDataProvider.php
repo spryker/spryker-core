@@ -135,7 +135,7 @@ class ShipmentFormDataProvider
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Generated\Shared\Transfer\ShipmentTransfer|null $shipmentTransfer
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions(OrderTransfer $orderTransfer, ?ShipmentTransfer $shipmentTransfer = null): array
     {

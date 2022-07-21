@@ -83,7 +83,7 @@ class MerchantRelationshipPriceProductMapper implements MerchantRelationshipPric
         array $data,
         PriceProductTransfer $priceProductTransfer
     ): PriceProductTransfer {
-        if (!isset($data[PriceProductDimensionTransfer::ID_MERCHANT_RELATIONSHIP])) {
+        if (!array_key_exists(PriceProductDimensionTransfer::ID_MERCHANT_RELATIONSHIP, $data)) {
             return $priceProductTransfer;
         }
 

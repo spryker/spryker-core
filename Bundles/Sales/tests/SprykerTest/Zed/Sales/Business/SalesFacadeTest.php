@@ -242,7 +242,7 @@ class SalesFacadeTest extends Unit
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */

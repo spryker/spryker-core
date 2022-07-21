@@ -286,7 +286,7 @@ class Container implements ContainerInterface, ArrayAccess
 
     /**
      * @param string $id
-     * @param array $configuration
+     * @param array<string, mixed> $configuration
      *
      * @throws \Spryker\Service\Container\Exception\NotFoundException
      *

@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\CompanyBusinessUnitGui\Communication\Form;
 
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @method \Spryker\Zed\CompanyBusinessUnitGui\Communication\CompanyBusinessUnitGuiCommunicationFactory getFactory()
@@ -17,13 +19,70 @@ use Symfony\Component\Form\FormBuilderInterface;
 class CompanyBusinessUnitEditForm extends CompanyBusinessUnitForm
 {
     /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setRequired([
+            static::OPTION_PARENT_CHOICES_VALUES,
+            static::OPTION_PARENT_CHOICES_ATTRIBUTES,
+        ]);
+    }
+
+    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $choices
+     * @param array<string, mixed> $options
+     *
+     * @return void
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options): void
+    {
+        $this
+            ->addCompanyField($builder)
+            ->addIdCompanyBusinessUnitField($builder)
+            ->addFkParentCompanyBusinessUnitFieldForEdit(
+                $builder,
+                $options[static::OPTION_PARENT_CHOICES_VALUES],
+                $options[static::OPTION_PARENT_CHOICES_ATTRIBUTES],
+            )
+            ->addNameField($builder)
+            ->addIbanField($builder)
+            ->addBicField($builder)
+            ->addPluginForms($builder);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return $this
      */
-    protected function addCompanyField(FormBuilderInterface $builder, array $choices)
+    protected function addCompanyField(FormBuilderInterface $builder)
     {
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array<string, int> $choiceValues
+     * @param array<string, array<string, int>> $choiceAttributes
+     *
+     * @return $this
+     */
+    protected function addFkParentCompanyBusinessUnitFieldForEdit(
+        FormBuilderInterface $builder,
+        array $choiceValues,
+        array $choiceAttributes
+    ) {
+        $builder->add(static::FIELD_FK_PARENT_COMPANY_BUSINESS_UNIT, ChoiceType::class, [
+            'label' => 'Parent',
+            'placeholder' => 'No parent',
+            'choices' => $choiceValues,
+            'required' => false,
+            'choice_attr' => $choiceAttributes,
+        ]);
+
         return $this;
     }
 

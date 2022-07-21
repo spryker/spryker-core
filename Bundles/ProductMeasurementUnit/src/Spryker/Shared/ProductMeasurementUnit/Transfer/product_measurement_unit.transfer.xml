@@ -71,6 +71,7 @@
     </transfer>
 
     <transfer name="EventEntity">
+        <property name="id" type="int"/>
     </transfer>
 
     <transfer name="Locale">

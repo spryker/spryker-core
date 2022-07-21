@@ -23,6 +23,8 @@ use SprykerTest\Zed\Discount\PageObject\DiscountCreatePage;
 class DiscountCreateCest
 {
     /**
+     * @skip Requires refactoring
+     *
      * @param \SprykerTest\Zed\Discount\DiscountPresentationTester $i
      * @param \SprykerTest\Zed\Discount\PageObject\DiscountCreatePage $createPage
      *
@@ -35,6 +37,8 @@ class DiscountCreateCest
     }
 
     /**
+     * @skip Requires refactoring
+     *
      * @param \SprykerTest\Zed\Discount\DiscountPresentationTester $i
      * @param \SprykerTest\Zed\Discount\PageObject\DiscountCreatePage $createPage
      *

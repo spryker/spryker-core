@@ -106,6 +106,8 @@ class CreateProductUrlGenerator implements CreateProductUrlGeneratorInterface
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param string $status
      * @param int $idProductAbstract
      *

@@ -85,7 +85,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 /**
  * @method \Spryker\Zed\AclEntity\AclEntityConfig getConfig()
  * @method \Spryker\Zed\AclEntity\Persistence\AclEntityEntityManagerInterface getEntityManager()
- * @method \Spryker\Zed\AclEntity\Persistence\AclEntityRepository getRepository()
+ * @method \Spryker\Zed\AclEntity\Persistence\AclEntityRepositoryInterface getRepository()
  */
 class AclEntityPersistenceFactory extends AbstractPersistenceFactory
 {

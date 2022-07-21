@@ -10,7 +10,7 @@ namespace Spryker\Shared\Twig\Cache;
 interface CacheWriterInterface
 {
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return void
      */

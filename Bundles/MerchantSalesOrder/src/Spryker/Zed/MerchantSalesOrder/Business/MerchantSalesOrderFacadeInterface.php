@@ -184,4 +184,21 @@ interface MerchantSalesOrderFacadeInterface
      * @return \Generated\Shared\Transfer\MerchantOrderItemCollectionTransfer
      */
     public function getMerchantOrderItemCollection(MerchantOrderItemCriteriaTransfer $merchantOrderItemCriteriaTransfer): MerchantOrderItemCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Expects `OrderTransfer.merchantReferences` to be set.
+     * - Does nothing if merchant references are not provided.
+     * - Requires `OrderTransfer.idSalesOrder` to be provided.
+     * - Requires `OrderTransfer.totals` to be provided.
+     * - Finds merchant orders by provided references.
+     * - Updates merchant order totals taken from `OrderTransfer.totals`.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function updateMerchantOrderTotals(OrderTransfer $orderTransfer): OrderTransfer;
 }

@@ -29,7 +29,7 @@ interface ContainerInterface extends PsrContainerInterface
 
     /**
      * @param string $id
-     * @param array $configuration
+     * @param array<string, mixed> $configuration
      *
      * @return void
      */

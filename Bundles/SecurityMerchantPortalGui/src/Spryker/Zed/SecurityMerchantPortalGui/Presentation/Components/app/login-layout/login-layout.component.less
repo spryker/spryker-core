@@ -1,12 +1,12 @@
 @import '~@spryker/styles/src/lib/themes/default/variables/index.less';
 
-@letter-spacing-base: 0.11px;
-@login-max-width: 420px;
-@login-logo-padding-bottom: 30px;
-@login-logo-width: 193px;
-@login-logo-image-height: 74px;
-@login-logo-text-margin-bottom: 15px;
-@login-link-margin-top: 20px;
+@letter-spacing-base: var(--spy-letter-spacing-base, 0.11px);
+@login-max-width: var(--spy-login-max-width, 420px);
+@login-logo-padding-bottom: var(--spy-login-logo-padding-bottom, 30px);
+@login-logo-width: var(--spy-login-logo-width, 193px);
+@login-logo-image-height: var(--spy-login-logo-image-height, 74px);
+@login-logo-text-margin-bottom: var(--spy-login-logo-text-margin-bottom, 15px);
+@login-link-margin-top: var(--spy-login-link-margin-top, 20px);
 
 .login {
     max-width: @login-max-width;

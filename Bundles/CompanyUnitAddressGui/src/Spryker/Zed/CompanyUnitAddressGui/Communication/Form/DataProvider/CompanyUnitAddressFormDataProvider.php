@@ -52,7 +52,6 @@ class CompanyUnitAddressFormDataProvider
     {
         return [
             'data_class' => CompanyUnitAddressTransfer::class,
-            CompanyUnitAddressForm::OPTION_COMPANY_CHOICES => $this->prepareCompanyChoices(),
             CompanyUnitAddressForm::OPTION_COUNTRY_CHOICES => $this->prepareCountryChoices(),
         ];
     }
@@ -76,7 +75,7 @@ class CompanyUnitAddressFormDataProvider
     /**
      * @return array<string>
      */
-    protected function prepareCompanyChoices(): array
+    public function prepareCompanyChoices(): array
     {
         $result = [];
 

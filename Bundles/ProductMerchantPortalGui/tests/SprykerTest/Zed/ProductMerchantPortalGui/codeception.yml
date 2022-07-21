@@ -15,3 +15,9 @@ suites:
     Communication:
         path: Communication
         class_name: ProductMerchantPortalGuiCommunicationTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Zed\Testify\Helper\Communication\CommunicationHelper

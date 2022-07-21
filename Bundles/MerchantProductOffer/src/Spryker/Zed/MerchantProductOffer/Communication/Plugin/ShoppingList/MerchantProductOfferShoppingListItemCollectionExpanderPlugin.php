@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemCollectionExpanderPluginInterface;
 
 /**
- * @method \Spryker\Zed\MerchantProductOffer\Business\MerchantProductOfferFacade getFacade()
+ * @method \Spryker\Zed\MerchantProductOffer\Business\MerchantProductOfferFacadeInterface getFacade()
  * @method \Spryker\Zed\MerchantProductOffer\MerchantProductOfferConfig getConfig()
  */
 class MerchantProductOfferShoppingListItemCollectionExpanderPlugin extends AbstractPlugin implements ShoppingListItemCollectionExpanderPluginInterface

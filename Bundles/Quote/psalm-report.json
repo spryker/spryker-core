@@ -243,6 +243,18 @@
         },
         {
             "severity": "info",
+            "line_from": 107,
+            "line_to": 107,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getCustomerReference on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/Quote/src/Spryker/Zed/Quote/Business/Validator/QuoteCommentValidator.php",
+            "snippet": "            && $commentRequestTransfer->getCommentOrFail()->getCustomer()->getCustomerReference();",
+            "selected_text": "getCustomerReference",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
             "line_from": 42,
             "line_to": 42,
             "type": "PossiblyNullReference",
@@ -377,8 +389,8 @@
         },
         {
             "severity": "info",
-            "line_from": 68,
-            "line_to": 68,
+            "line_from": 70,
+            "line_to": 70,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Zed\\Quote\\Business\\Model\\QuoteReaderInterface::findQuoteByCustomer has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Quote/src/Spryker/Zed/Quote/Business/QuoteFacade.php",

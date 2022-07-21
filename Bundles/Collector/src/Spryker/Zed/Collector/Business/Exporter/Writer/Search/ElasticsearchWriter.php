@@ -51,7 +51,7 @@ class ElasticsearchWriter implements WriterInterface, ConfigurableSearchWriterIn
     }
 
     /**
-     * @param array $dataSet
+     * @param array<string, mixed> $dataSet
      *
      * @throws \Spryker\Zed\Collector\Business\Exporter\Exception\InvalidDataSetException
      *
@@ -71,7 +71,7 @@ class ElasticsearchWriter implements WriterInterface, ConfigurableSearchWriterIn
     }
 
     /**
-     * @param array $dataSet
+     * @param array<string, mixed> $dataSet
      *
      * @throws \Spryker\Zed\Collector\Business\Exporter\Exception\InvalidDataSetException
      *
@@ -116,7 +116,7 @@ class ElasticsearchWriter implements WriterInterface, ConfigurableSearchWriterIn
     }
 
     /**
-     * @param array $dataSet
+     * @param array<string, mixed> $dataSet
      *
      * @throws \Spryker\Zed\Collector\Business\Exporter\Exception\InvalidDataSetException
      *
@@ -186,7 +186,7 @@ class ElasticsearchWriter implements WriterInterface, ConfigurableSearchWriterIn
 
     /**
      * @param \Elastica\Document $document
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return void
      */

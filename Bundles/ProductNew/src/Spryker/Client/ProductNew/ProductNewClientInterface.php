@@ -21,7 +21,7 @@ interface ProductNewClientInterface
      *
      * @api
      *
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return array
      */

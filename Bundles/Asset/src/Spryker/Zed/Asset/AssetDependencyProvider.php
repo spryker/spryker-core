@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Asset;
 
+use Spryker\Zed\Asset\Dependency\Facade\AssetToEventFacadeBridge;
 use Spryker\Zed\Asset\Dependency\Facade\AssetToStoreReferenceFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -22,6 +23,11 @@ class AssetDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_STORE_REFERENCE = 'FACADE_STORE_REFERENCE';
 
     /**
+     * @var string
+     */
+    public const FACADE_EVENT = 'FACADE_EVENT';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -29,7 +35,8 @@ class AssetDependencyProvider extends AbstractBundleDependencyProvider
     public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = parent::provideBusinessLayerDependencies($container);
-        $container = $this->addStoreReferenceService($container);
+        $container = $this->addStoreReferenceFacade($container);
+        $container = $this->addEventFacade($container);
 
         return $container;
     }
@@ -39,10 +46,24 @@ class AssetDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addStoreReferenceService(Container $container): Container
+    protected function addStoreReferenceFacade(Container $container): Container
     {
         $container->set(static::FACADE_STORE_REFERENCE, function (Container $container) {
             return new AssetToStoreReferenceFacadeBridge($container->getLocator()->storeReference()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addEventFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_EVENT, function (Container $container) {
+            return new AssetToEventFacadeBridge($container->getLocator()->event()->facade());
         });
 
         return $container;

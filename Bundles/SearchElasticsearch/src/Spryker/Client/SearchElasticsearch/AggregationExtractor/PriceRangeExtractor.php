@@ -29,7 +29,7 @@ class PriceRangeExtractor extends RangeExtractor
     }
 
     /**
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      * @param float|null $min
      * @param float|null $max
      *
@@ -46,7 +46,7 @@ class PriceRangeExtractor extends RangeExtractor
     }
 
     /**
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return array<float|null>
      */

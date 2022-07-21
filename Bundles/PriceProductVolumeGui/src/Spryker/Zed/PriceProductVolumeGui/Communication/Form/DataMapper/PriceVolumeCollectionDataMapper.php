@@ -40,7 +40,7 @@ class PriceVolumeCollectionDataMapper implements PriceVolumeCollectionDataMapper
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
@@ -58,7 +58,7 @@ class PriceVolumeCollectionDataMapper implements PriceVolumeCollectionDataMapper
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */
@@ -75,7 +75,7 @@ class PriceVolumeCollectionDataMapper implements PriceVolumeCollectionDataMapper
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */

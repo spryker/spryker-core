@@ -7,13 +7,19 @@
 
 {% block action %}
     {{ backActionButton(url('/merchant-gui/list-merchant'), 'Back to Merchants' | trans) }}
-    {%  for applicableMerchantStatus in applicableMerchantStatuses %}
-        {% if applicableMerchantStatus == 'denied' %}
-            {{ removeActionButton(url('/merchant-gui/merchant-status', {'status': applicableMerchantStatus, 'id-merchant': idMerchant}), (applicableMerchantStatus ~ '_button') | trans, {'icon':'<i class="fa fa-key"></i> '}) }}
-        {% else %}
-            {{ createActionButton(url('/merchant-gui/merchant-status', {'status': applicableMerchantStatus, 'id-merchant': idMerchant}), (applicableMerchantStatus ~ '_button') | trans, {'icon':'<i class="fa fa-key"></i> '}) }}
-        {%  endif %}
-    {%  endfor %}
+        {{ form_start(merchantStatusForm, {
+            'attr': {'class': 'form-inline'},
+        }) }}
+            {%  for applicableMerchantStatus in applicableMerchantStatuses %}
+                <button
+                    class="btn btn-sm btn-outline safe-submit {{ applicableMerchantStatus == 'denied' ? 'btn-remove' : 'btn-create' }}"
+                    formaction="{{ url('/merchant-gui/merchant-status', {'status': applicableMerchantStatus, 'id-merchant': idMerchant}) }}"
+                >
+                    <i class="fa fa-key"></i>
+                    {{ (applicableMerchantStatus ~ '_button') | trans }}
+                </button>
+            {% endfor %}
+        {{ form_end(merchantStatusForm) }}
 {% endblock %}
 
 {% block content %}

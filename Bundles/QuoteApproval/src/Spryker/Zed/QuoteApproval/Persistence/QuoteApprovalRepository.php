@@ -86,7 +86,7 @@ class QuoteApprovalRepository extends AbstractRepository implements QuoteApprova
         foreach ($quoteApprovalEntities as $quoteApprovalEntity) {
             /** @var int $quoteId */
             $quoteId = $quoteApprovalEntity->getFkQuote();
-            if ($quoteApprovalTransfers[$quoteId] === null) {
+            if (!isset($quoteApprovalTransfers[$quoteId])) {
                 $quoteApprovalTransfers[$quoteId] = [];
             }
 

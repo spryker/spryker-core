@@ -47,6 +47,8 @@ interface SalesQuantityFacadeInterface
     /**
      * Specification:
      * - Transforms discountable item according to the non splittable strategy.
+     * - Calculates iteration price based on sum of unit prices of already applied discounts with lower priority,
+     *   if discount priority is provided in `DiscountableItemTransformerTransfer.discount.priority` and `DiscountableItemTransformerTransfer.discountableItem.originalItemCalculatedDiscounts.priority`.
      *
      * @api
      *
@@ -61,7 +63,7 @@ interface SalesQuantityFacadeInterface
     /**
      * Specification:
      * - Checks if the item is splittable per quantity.
-     * - Returns true if the item is a bundled item.
+     * - Returns false if the item is a bundled product and its quantity exceeds the preconfigured quantity threshold for bundled products.
      * - Returns false if the product is non-splittable.
      * - Returns false if the item exceeded the preconfigured quantity threshold.
      * - Returns true in any other case.

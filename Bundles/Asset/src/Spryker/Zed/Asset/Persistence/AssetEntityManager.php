@@ -41,8 +41,7 @@ class AssetEntityManager extends AbstractEntityManager implements AssetEntityMan
         $assetTransfer->requireAssetUuid()
             ->requireAssetName()
             ->requireAssetContent()
-            ->requireAssetSlot()
-            ->requireStores();
+            ->requireAssetSlot();
 
         $assetEntity = $this->getFactory()
             ->createAssetQuery()
@@ -72,7 +71,7 @@ class AssetEntityManager extends AbstractEntityManager implements AssetEntityMan
         AssetTransfer $assetTransfer,
         array $storeTransfers
     ): AssetTransfer {
-        $assetTransfer->requireIdAsset()->requireStores();
+        $assetTransfer->requireIdAsset();
 
         $storeTransferIds = [];
         foreach ($storeTransfers as $storeTransfer) {
@@ -95,10 +94,12 @@ class AssetEntityManager extends AbstractEntityManager implements AssetEntityMan
      */
     public function deleteAsset(AssetTransfer $assetTransfer): void
     {
-        $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $assetStoreObjectCollection */
+        $assetStoreObjectCollection = $this->getFactory()
             ->createAssetStoreQuery()
-            ->findByFkAsset($assetTransfer->getIdAssetOrFail())
-            ->delete();
+            ->findByFkAsset($assetTransfer->getIdAssetOrFail());
+
+        $assetStoreObjectCollection->delete();
 
         $assetEntity = $this->getFactory()
             ->createAssetQuery()
@@ -135,7 +136,7 @@ class AssetEntityManager extends AbstractEntityManager implements AssetEntityMan
      */
     public function deleteAssetStores(AssetTransfer $assetTransfer, array $storeTransfers): void
     {
-        $assetTransfer->requireIdAsset()->requireStores();
+        $assetTransfer->requireIdAsset();
 
         $storeIds = [];
         foreach ($storeTransfers as $store) {

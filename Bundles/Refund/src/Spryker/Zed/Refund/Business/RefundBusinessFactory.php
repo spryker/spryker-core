@@ -56,6 +56,7 @@ class RefundBusinessFactory extends AbstractBusinessFactory
             $this->getSalesQueryContainer(),
             $this->getSalesFacade(),
             $this->getCalculationFacade(),
+            $this->getRefundPostSavePlugins(),
         );
     }
 
@@ -92,5 +93,13 @@ class RefundBusinessFactory extends AbstractBusinessFactory
     protected function getSalesQueryContainer()
     {
         return $this->getProvidedDependency(RefundDependencyProvider::QUERY_CONTAINER_SALES);
+    }
+
+    /**
+     * @return array<\Spryker\Zed\RefundExtension\Dependency\Plugin\RefundPostSavePluginInterface>
+     */
+    public function getRefundPostSavePlugins(): array
+    {
+        return $this->getProvidedDependency(RefundDependencyProvider::PLUGINS_REFUND_POST_SAVE);
     }
 }

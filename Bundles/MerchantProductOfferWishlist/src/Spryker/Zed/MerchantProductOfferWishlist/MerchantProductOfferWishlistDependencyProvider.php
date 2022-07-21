@@ -49,8 +49,9 @@ class MerchantProductOfferWishlistDependencyProvider extends AbstractBundleDepen
      */
     public function provideBusinessLayerDependencies(Container $container): Container
     {
-        $container = parent::provideCommunicationLayerDependencies($container);
+        $container = parent::provideBusinessLayerDependencies($container);
 
+        $container = $this->addMerchantFacade($container);
         $container = $this->addProductOfferFacade($container);
 
         return $container;

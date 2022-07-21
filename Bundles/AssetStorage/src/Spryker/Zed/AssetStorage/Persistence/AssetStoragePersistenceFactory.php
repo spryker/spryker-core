@@ -22,7 +22,7 @@ class AssetStoragePersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Orm\Zed\AssetStorage\Persistence\SpyAssetSlotStorageQuery
      */
-    public function createAssetStorageQuery(): SpyAssetSlotStorageQuery
+    public function createAssetSlotStorageQuery(): SpyAssetSlotStorageQuery
     {
         return SpyAssetSlotStorageQuery::create();
     }

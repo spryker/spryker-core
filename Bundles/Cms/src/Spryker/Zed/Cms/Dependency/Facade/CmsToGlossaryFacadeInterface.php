@@ -14,7 +14,7 @@ interface CmsToGlossaryFacadeInterface
 {
     /**
      * @param int $idKey
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @throws \Spryker\Zed\Glossary\Business\Exception\MissingTranslationException
      *

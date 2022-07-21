@@ -13,7 +13,7 @@ use Spryker\Zed\DataExportExtension\Dependency\Plugin\DataEntityExporterPluginIn
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\SalesDataExport\Business\SalesDataExportFacade getFacade()
+ * @method \Spryker\Zed\SalesDataExport\Business\SalesDataExportFacadeInterface getFacade()
  * @method \Spryker\Zed\SalesDataExport\SalesDataExportConfig getConfig()
  * @method \Spryker\Zed\SalesDataExport\Communication\SalesDataExportCommunicationFactory getFactory()
  */

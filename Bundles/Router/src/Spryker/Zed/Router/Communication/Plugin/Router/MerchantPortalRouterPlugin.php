@@ -12,7 +12,7 @@ use Spryker\Zed\RouterExtension\Dependency\Plugin\RouterPluginInterface;
 use Symfony\Component\Routing\RouterInterface;
 
 /**
- * @method \Spryker\Zed\Router\Business\RouterFacade getFacade()
+ * @method \Spryker\Zed\Router\Business\RouterFacadeInterface getFacade()
  * @method \Spryker\Zed\Router\RouterConfig getConfig()
  * @method \Spryker\Zed\Router\Communication\RouterCommunicationFactory getFactory()
  */

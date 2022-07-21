@@ -13,6 +13,8 @@ use Spryker\Client\Customer\CustomerSecuredPattern\CustomerSecuredPatternInterfa
 use Spryker\Client\Customer\Reader\CustomerAccessTokenReader;
 use Spryker\Client\Customer\Reader\CustomerAccessTokenReaderInterface;
 use Spryker\Client\Customer\Session\CustomerSession;
+use Spryker\Client\Customer\Updater\CustomerAddressUpdater;
+use Spryker\Client\Customer\Updater\CustomerAddressUpdaterInterface;
 use Spryker\Client\Customer\Zed\CustomerStub;
 use Spryker\Client\CustomerExtension\Dependency\Plugin\AccessTokenAuthenticationHandlerPluginInterface;
 use Spryker\Client\Kernel\AbstractFactory;
@@ -64,6 +66,16 @@ class CustomerFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Client\Customer\Updater\CustomerAddressUpdaterInterface
+     */
+    public function createCustomerAddressUpdater(): CustomerAddressUpdaterInterface
+    {
+        return new CustomerAddressUpdater(
+            $this->createSessionCustomerSession(),
+        );
+    }
+
+    /**
      * @return array<\Spryker\Client\Customer\Dependency\Plugin\CustomerSessionGetPluginInterface>
      */
     public function getCustomerSessionGetPlugins()
@@ -80,7 +92,7 @@ class CustomerFactory extends AbstractFactory
     }
 
     /**
-     * @return array<\Spryker\Client\Customer\Dependency\Plugin\DefaultAddressChangePluginInterface>
+     * @return array<\Spryker\Client\CustomerExtension\Dependency\Plugin\DefaultAddressChangePluginInterface>
      */
     public function getDefaultAddressChangePlugins()
     {

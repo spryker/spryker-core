@@ -134,7 +134,7 @@ class VoucherValidator implements VoucherValidatorInterface
 
     /**
      * @param string $message
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return void
      */
@@ -147,7 +147,7 @@ class VoucherValidator implements VoucherValidatorInterface
 
     /**
      * @param string $message
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return void
      */
@@ -160,7 +160,7 @@ class VoucherValidator implements VoucherValidatorInterface
 
     /**
      * @param string $message
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \Generated\Shared\Transfer\MessageTransfer
      */

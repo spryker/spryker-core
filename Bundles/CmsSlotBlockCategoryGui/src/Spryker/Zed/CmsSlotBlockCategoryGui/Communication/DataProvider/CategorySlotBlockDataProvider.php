@@ -68,7 +68,7 @@ class CategorySlotBlockDataProvider implements CategorySlotBlockDataProviderInte
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions(): array
     {

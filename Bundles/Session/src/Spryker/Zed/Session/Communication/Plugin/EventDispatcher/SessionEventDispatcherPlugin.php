@@ -145,7 +145,7 @@ class SessionEventDispatcherPlugin extends AbstractPlugin implements EventDispat
     /**
      * @param string $sessionName
      * @param string $sessionId
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return \Symfony\Component\HttpFoundation\Cookie
      */

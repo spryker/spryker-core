@@ -47,7 +47,7 @@ class RouterDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return array<\Spryker\Glue\RouterExtension\Dependency\Plugin\RouterPluginInterface>
+     * @return array<\Spryker\Glue\RouterExtension\Dependency\Plugin\RouterPluginInterface|\Spryker\Glue\Kernel\AbstractPlugin>
      */
     protected function getRouterPlugins(): array
     {

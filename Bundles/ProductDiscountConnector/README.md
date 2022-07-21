@@ -9,3 +9,7 @@ ProductDiscountConnector is a plugin for the Discount module to have decision ru
 ```
 composer require spryker/product-discount-connector
 ```
+
+## Documentation
+
+[Spryker Documentation](https://docs.spryker.com)

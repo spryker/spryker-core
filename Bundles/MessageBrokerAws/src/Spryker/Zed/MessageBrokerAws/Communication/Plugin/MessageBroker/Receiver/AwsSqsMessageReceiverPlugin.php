@@ -15,7 +15,7 @@ use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\Transport\Receiver\QueueReceiverInterface;
 
 /**
- * @method \Spryker\Zed\MessageBroker\MessageBrokerConfig getConfig()
+ * @method \Spryker\Zed\MessageBrokerAws\MessageBrokerAwsConfig getConfig()
  * @method \Spryker\Zed\MessageBrokerAws\Business\MessageBrokerAwsFacadeInterface getFacade()
  */
 class AwsSqsMessageReceiverPlugin extends AbstractPlugin implements MessageReceiverPluginInterface, QueueReceiverInterface

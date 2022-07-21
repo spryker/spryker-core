@@ -1,0 +1,6 @@
+{
+    "include": {
+        "spryker/product-bundle": "ProductBundle provides base functionality.",
+        "spryker/transfer": "Provides transfer objects definition with `::get*OrFail()` functionality."
+    }
+}

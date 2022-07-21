@@ -8,6 +8,7 @@
     <transfer name="PriceProduct">
         <property name="priceType" type="PriceType"/>
         <property name="moneyValue" type="MoneyValue"/>
+        <property name="priceDimension" type="PriceProductDimension"/>
     </transfer>
 
     <transfer name="MoneyValue">
@@ -27,6 +28,13 @@
 
     <transfer name="Store">
         <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="PriceProductTableCriteria">
+    </transfer>
+
+    <transfer name="PriceProductDimension">
+        <property name="type" type="string"/>
     </transfer>
 
 </transfers>

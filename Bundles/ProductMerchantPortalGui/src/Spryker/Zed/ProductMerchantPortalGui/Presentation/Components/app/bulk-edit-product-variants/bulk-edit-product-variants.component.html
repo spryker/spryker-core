@@ -1,45 +1,34 @@
-<div class="mp-bulk-edit-product-variants__information">
-    <div class="mp-bulk-edit-product-variants__heading">
-        <div class="mp-bulk-edit-product-variants__heading-col">
-            <h3 class="mp-bulk-edit-product-variants__title">
-                <ng-content select="[title]"></ng-content>
-            </h3>
-        </div>
-
-        <div class="mp-bulk-edit-product-variants__heading-col">
-            <ng-content select="[action]"></ng-content>
-        </div>
-    </div>
+<div class="mp-bulk-edit-product-variants__header">
+    <spy-headline>
+        <ng-content select="[title]"></ng-content>
+        <ng-content actions select="[action]"></ng-content>
+    </spy-headline>
 </div>
 
 <div class="mp-bulk-edit-product-variants__content">
     <ng-content select="[notification]"></ng-content>
 
-    <spy-card *ngIf="sections?.status" [spyTitle]="statusTitleTpl" class="mp-bulk-edit-product-variants__content">
-        <div class="mp-bulk-edit-product-variants__card-content">
-            <spy-form-item noSpaces [error]="sections.status.error">
-                <spy-toggle [(value)]="statusValue" [disabled]="!isStatusActive" [name]="sections.status.name" control>
-                    {{ sections.status.placeholder }}
-                </spy-toggle>
-            </spy-form-item>
-        </div>
+    <spy-card *ngIf="sections?.status" [spyTitle]="statusTitleTpl" class="mp-bulk-edit-product-variants__card">
+        <spy-form-item noSpaces [error]="sections.status.error">
+            <spy-toggle [(value)]="statusValue" [disabled]="!isStatusActive" [name]="sections.status.name" control>
+                {{ sections.status.placeholder }}
+            </spy-toggle>
+        </spy-form-item>
     </spy-card>
 
-    <spy-card *ngIf="sections?.validity" [spyTitle]="validityTitleTpl" class="mp-bulk-edit-product-variants__content">
-        <div class="mp-bulk-edit-product-variants__card-content">
-            <spy-form-item noSpaces class="mp-bulk-edit-product-variants__range" [error]="sections.validity.error">
-                <spy-date-range-picker
-                    [(dates)]="validityDates"
-                    [placeholderFrom]="sections.validity.placeholder.from"
-                    [placeholderTo]="sections.validity.placeholder.to"
-                    [nameFrom]="sections.validity.name.from"
-                    [nameTo]="sections.validity.name.to"
-                    [disabled]="!isValidityActive"
-                    control
-                >
-                </spy-date-range-picker>
-            </spy-form-item>
-        </div>
+    <spy-card *ngIf="sections?.validity" [spyTitle]="validityTitleTpl" class="mp-bulk-edit-product-variants__card">
+        <spy-form-item noSpaces class="mp-bulk-edit-product-variants__range" [error]="sections.validity.error">
+            <spy-date-range-picker
+                [(dates)]="validityDates"
+                [placeholderFrom]="sections.validity.placeholder.from"
+                [placeholderTo]="sections.validity.placeholder.to"
+                [nameFrom]="sections.validity.name.from"
+                [nameTo]="sections.validity.name.to"
+                [disabled]="!isValidityActive"
+                control
+            >
+            </spy-date-range-picker>
+        </spy-form-item>
     </spy-card>
 </div>
 

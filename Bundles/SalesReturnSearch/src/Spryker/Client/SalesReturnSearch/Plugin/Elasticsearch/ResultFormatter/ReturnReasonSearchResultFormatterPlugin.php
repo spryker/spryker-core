@@ -32,7 +32,7 @@ class ReturnReasonSearchResultFormatterPlugin extends AbstractElasticsearchResul
 
     /**
      * @param \Elastica\ResultSet $searchResult
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return \Generated\Shared\Transfer\ReturnReasonSearchCollectionTransfer
      */
@@ -50,7 +50,7 @@ class ReturnReasonSearchResultFormatterPlugin extends AbstractElasticsearchResul
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \Generated\Shared\Transfer\ReturnReasonSearchTransfer
      */

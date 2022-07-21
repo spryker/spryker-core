@@ -7,7 +7,12 @@
 
 namespace Spryker\Glue\GlueRestApiConvention;
 
+use Spryker\Glue\GlueRestApiConvention\Dependency\External\GlueRestApiConventionToInflectorInterface;
 use Spryker\Glue\GlueRestApiConvention\Dependency\Service\GlueRestApiConventionToUtilEncodingServiceInterface;
+use Spryker\Glue\GlueRestApiConvention\Formatter\RestApiSchemaFormatter;
+use Spryker\Glue\GlueRestApiConvention\Formatter\RestApiSchemaParametersFormatter;
+use Spryker\Glue\GlueRestApiConvention\Formatter\RestApiSchemaParametersFormatterInterface;
+use Spryker\Glue\GlueRestApiConvention\Formatter\SchemaFormatterInterface;
 use Spryker\Glue\GlueRestApiConvention\RequestBuilder\AttributesRequestBuilder;
 use Spryker\Glue\GlueRestApiConvention\RequestBuilder\RequestBuilderInterface;
 use Spryker\Glue\GlueRestApiConvention\RequestBuilder\RequestFilterFieldBuilder;
@@ -26,6 +31,38 @@ use Spryker\Glue\Kernel\AbstractFactory;
  */
 class GlueRestApiConventionFactory extends AbstractFactory
 {
+    /**
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RequestBuilderPluginInterface>
+     */
+    public function getRequestBuilderPlugins(): array
+    {
+        return $this->getProvidedDependency(GlueRestApiConventionDependencyProvider::PLUGINS_REQUEST_BUILDER);
+    }
+
+    /**
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RequestValidatorPluginInterface>
+     */
+    public function getRequestValidatorPlugins(): array
+    {
+        return $this->getProvidedDependency(GlueRestApiConventionDependencyProvider::PLUGINS_REQUEST_VALIDATOR);
+    }
+
+    /**
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RequestAfterRoutingValidatorPluginInterface>
+     */
+    public function getRequestAfterRoutingValidatorPlugins(): array
+    {
+        return $this->getProvidedDependency(GlueRestApiConventionDependencyProvider::PLUGINS_REQUEST_AFTER_ROUTING_VALIDATOR);
+    }
+
+    /**
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResponseFormatterPluginInterface>
+     */
+    public function getResponseFormatterPlugins(): array
+    {
+        return $this->getProvidedDependency(GlueRestApiConventionDependencyProvider::PLUGINS_RESPONSE_FORMATTER);
+    }
+
     /**
      * @return \Spryker\Glue\GlueRestApiConvention\RequestBuilder\RequestBuilderInterface
      */
@@ -62,43 +99,23 @@ class GlueRestApiConventionFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Glue\GlueRestApiConvention\Formatter\SchemaFormatterInterface
+     */
+    public function createRestApiSchemaFormatter(): SchemaFormatterInterface
+    {
+        return new RestApiSchemaFormatter(
+            $this->getInflector(),
+            $this->createRestApiSchemaParametersFormatter(),
+            $this->getConfig(),
+        );
+    }
+
+    /**
      * @return array<\Spryker\Glue\GlueRestApiConventionExtension\Dependency\Plugin\ResponseEncoderPluginInterface>
      */
     public function getResponseEncoderPlugins(): array
     {
         return $this->getProvidedDependency(GlueRestApiConventionDependencyProvider::PLUGINS_RESPONSE_ENCODER);
-    }
-
-    /**
-     * @return array<\Spryker\Glue\GlueRestApiConventionExtension\Dependency\Plugin\RequestBuilderPluginInterface>
-     */
-    public function getRequestBuilderPlugins(): array
-    {
-        return $this->getProvidedDependency(GlueRestApiConventionDependencyProvider::PLUGINS_REQUEST_BUILDER);
-    }
-
-    /**
-     * @return array<\Spryker\Glue\GlueRestApiConventionExtension\Dependency\Plugin\RequestValidatorPluginInterface>
-     */
-    public function getRequestValidatorPlugins(): array
-    {
-        return $this->getProvidedDependency(GlueRestApiConventionDependencyProvider::PLUGINS_REQUEST_VALIDATOR);
-    }
-
-    /**
-     * @return array<\Spryker\Glue\GlueRestApiConventionExtension\Dependency\Plugin\RequestAfterRoutingValidatorPluginInterface>
-     */
-    public function getRequestAfterRoutingValidatorPlugins(): array
-    {
-        return $this->getProvidedDependency(GlueRestApiConventionDependencyProvider::PLUGINS_REQUEST_AFTER_ROUTING_VALIDATOR);
-    }
-
-    /**
-     * @return array<\Spryker\Glue\GlueRestApiConventionExtension\Dependency\Plugin\ResponseFormatterPluginInterface>
-     */
-    public function getResponseFormatterPlugins(): array
-    {
-        return $this->getProvidedDependency(GlueRestApiConventionDependencyProvider::PLUGINS_RESPONSE_FORMATTER);
     }
 
     /**
@@ -141,5 +158,21 @@ class GlueRestApiConventionFactory extends AbstractFactory
         return new AttributesRequestBuilder(
             $this->getUtilEncodingService(),
         );
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueRestApiConvention\Dependency\External\GlueRestApiConventionToInflectorInterface
+     */
+    public function getInflector(): GlueRestApiConventionToInflectorInterface
+    {
+        return $this->getProvidedDependency(GlueRestApiConventionDependencyProvider::INFLECTOR);
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueRestApiConvention\Formatter\RestApiSchemaParametersFormatterInterface
+     */
+    public function createRestApiSchemaParametersFormatter(): RestApiSchemaParametersFormatterInterface
+    {
+        return new RestApiSchemaParametersFormatter();
     }
 }

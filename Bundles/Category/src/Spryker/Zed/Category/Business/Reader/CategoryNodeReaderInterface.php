@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\Category\Business\Reader;
 
+use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
+use Generated\Shared\Transfer\NodeCollectionTransfer;
+
 interface CategoryNodeReaderInterface
 {
     /**
@@ -15,4 +18,13 @@ interface CategoryNodeReaderInterface
      * @return array<\Generated\Shared\Transfer\NodeTransfer>
      */
     public function getAllNodesByIdCategory(int $idCategory): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\NodeCollectionTransfer
+     */
+    public function getCategoryNodesWithRelativeNodes(
+        CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer
+    ): NodeCollectionTransfer;
 }

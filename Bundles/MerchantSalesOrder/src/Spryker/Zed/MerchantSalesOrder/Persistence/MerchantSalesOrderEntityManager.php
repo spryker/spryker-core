@@ -90,6 +90,35 @@ class MerchantSalesOrderEntityManager extends AbstractEntityManager implements M
     }
 
     /**
+     * @param int $idMerchantOrder
+     * @param \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer
+     *
+     * @return \Generated\Shared\Transfer\TotalsTransfer
+     */
+    public function updateMerchantOrderTotals(int $idMerchantOrder, TotalsTransfer $totalsTransfer): TotalsTransfer
+    {
+        $merchantSalesOrderMapper = $this->getFactory()->createMerchantSalesOrderMapper();
+
+        $merchantSalesOrderTotalsEntity = $this->getFactory()
+            ->createMerchantSalesOrderTotalsQuery()
+            ->filterByFkMerchantSalesOrder($idMerchantOrder)
+            ->findOne();
+
+        $merchantSalesOrderTotalsEntity = $merchantSalesOrderMapper->mapTotalsTransferToMerchantSalesOrderTotalsEntity(
+            $idMerchantOrder,
+            $totalsTransfer,
+            $merchantSalesOrderTotalsEntity,
+        );
+
+        $merchantSalesOrderTotalsEntity->save();
+
+        return $merchantSalesOrderMapper->mapMerchantSalesOrderTotalsEntityToTotalsTransfer(
+            $merchantSalesOrderTotalsEntity,
+            $totalsTransfer,
+        );
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\MerchantOrderItemTransfer $merchantOrderItemTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantOrderItemTransfer

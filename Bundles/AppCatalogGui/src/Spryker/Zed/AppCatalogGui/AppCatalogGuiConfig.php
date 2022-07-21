@@ -21,4 +21,34 @@ class AppCatalogGuiConfig extends AbstractBundleConfig
     {
         return $this->get(AppCatalogGuiConstants::APP_CATALOG_SCRIPT_URL, '');
     }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getOauthAudience(): string
+    {
+        return $this->get(AppCatalogGuiConstants::OAUTH_OPTION_AUDIENCE, '');
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getOauthProviderName(): string
+    {
+        return $this->get(AppCatalogGuiConstants::OAUTH_PROVIDER_NAME, '');
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getOauthGrantType(): string
+    {
+        return $this->get(AppCatalogGuiConstants::OAUTH_GRANT_TYPE, '');
+    }
 }

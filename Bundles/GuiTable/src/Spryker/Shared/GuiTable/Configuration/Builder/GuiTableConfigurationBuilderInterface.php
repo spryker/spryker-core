@@ -169,6 +169,7 @@ interface GuiTableConfigurationBuilderInterface
      * @param string $title
      * @param bool $isSortable
      * @param bool $isHideable
+     * @param string|null $idAltSourceColumn
      *
      * @return $this
      */
@@ -176,7 +177,8 @@ interface GuiTableConfigurationBuilderInterface
         string $id,
         string $title,
         bool $isSortable,
-        bool $isHideable
+        bool $isHideable,
+        ?string $idAltSourceColumn = null
     );
 
     /**
@@ -665,4 +667,17 @@ interface GuiTableConfigurationBuilderInterface
      * @return $this
      */
     public function addEditableColumnDynamic(string $id, string $title, string $dependableColumn, string $dependableUrl);
+
+    /**
+     * Specification:
+     *  - Sets the display key for specified column by column ID.
+     *
+     * @api
+     *
+     * @param string $columnId
+     * @param string $displayKey
+     *
+     * @return $this
+     */
+    public function setColumnDisplayKey(string $columnId, string $displayKey);
 }

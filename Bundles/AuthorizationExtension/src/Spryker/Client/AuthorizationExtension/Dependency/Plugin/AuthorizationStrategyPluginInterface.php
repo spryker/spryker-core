@@ -7,30 +7,11 @@
 
 namespace Spryker\Client\AuthorizationExtension\Dependency\Plugin;
 
-use Generated\Shared\Transfer\AuthorizationRequestTransfer;
+use Spryker\Shared\AuthorizationExtension\Dependency\Plugin\AuthorizationStrategyPluginInterface as SharedAuthorizationStrategyPluginInterface;
 
-interface AuthorizationStrategyPluginInterface
+/**
+ * @deprecated Use {@link \Spryker\Shared\AuthorizationExtension\Dependency\Plugin\AuthorizationStrategyPluginInterface} instead.
+ */
+interface AuthorizationStrategyPluginInterface extends SharedAuthorizationStrategyPluginInterface
 {
-    /**
-     * Specification:
-     * - Processes an authorization request.
-     * - Returns true if authorized, false if not authorized.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\AuthorizationRequestTransfer $authorizationRequestTransfer
-     *
-     * @return bool
-     */
-    public function authorize(AuthorizationRequestTransfer $authorizationRequestTransfer): bool;
-
-    /**
-     * Specification:
-     * - Returns the strategy name so that the authorization system can look up and use the strategy by name to perform the authorization check against that strategy.
-     *
-     * @api
-     *
-     * @return string
-     */
-    public function getStrategyName(): string;
 }

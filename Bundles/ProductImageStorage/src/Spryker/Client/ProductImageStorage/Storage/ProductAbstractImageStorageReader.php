@@ -53,6 +53,7 @@ class ProductAbstractImageStorageReader implements ProductAbstractImageStorageRe
 
             $imageSets = $collectorData['imageSets'];
 
+            /** @var \ArrayObject<int, array<string, mixed>> $formattedImageSets */
             $formattedImageSets = new ArrayObject();
             foreach ($imageSets as $imageSetName => $images) {
                 $formattedImageSets[] = [

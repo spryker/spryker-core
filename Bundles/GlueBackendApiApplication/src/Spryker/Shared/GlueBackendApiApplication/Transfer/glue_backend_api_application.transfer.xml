@@ -13,6 +13,7 @@
         <property name="host" type="string"/>
         <property name="parametersString" type="string"/>
         <property name="resource" type="GlueResource"/>
+        <property name="requestUser" type="GlueRequestUser"/>
     </transfer>
 
     <transfer name="Store">
@@ -51,7 +52,45 @@
         <property name="resourceName" type="string"/>
         <property name="method" type="string"/>
         <property name="controller" type="string"/>
+        <property name="controllerExecutable" type="string[]" singular="controllerExecutable"/>
         <property name="action" type="string"/>
+        <property name="parameters" type="string[]" singular="parameter"/>
+        <property name="scope" type="string"/>
+    </transfer>
+
+    <transfer name="OauthScopeFind">
+        <property name="identifier" type="string"/>
+        <property name="applicationName" type="string"/>
+    </transfer>
+
+    <transfer name="GlueRequestUser">
+        <property name="scopes" type="string[]" singular="scope"/>
+    </transfer>
+
+    <transfer name="ApiApplicationSchemaContext">
+        <property name="resourceContexts" type="ResourceContext[]" singular="resourceContext"/>
+        <property name="customRoutesContexts" type="CustomRoutesContext[]" singular="customRoutesContext"/>
+        <property name="host" type="string"/>
+    </transfer>
+
+    <transfer name="ResourceContext">
+        <property name="resourcePluginName" type="string"/>
+        <property name="resourceType" type="string"/>
+        <property name="controller" type="string"/>
+        <property name="declaredMethods" type="GlueResourceMethodCollection"/>
+    </transfer>
+
+    <transfer name="CustomRoutesContext">
+        <property name="resourceType" type="string"/>
+        <property name="path" type="string"/>
+        <property name="defaults" type="array" singular="default"/>
+    </transfer>
+
+    <transfer name="ApiControllerConfiguration">
+        <property name="path" type="string"/>
+        <property name="controller" type="string"/>
+        <property name="method" type="string"/>
+        <property name="apiApplication" type="string"/>
         <property name="parameters" type="string[]" singular="parameter"/>
     </transfer>
 </transfers>

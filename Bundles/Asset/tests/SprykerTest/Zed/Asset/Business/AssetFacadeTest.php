@@ -32,7 +32,12 @@ class AssetFacadeTest extends Unit
     /**
      * @var string
      */
-    protected const ASSSET_SLOT_SLT_FOOTER = 'slt-footer';
+    protected const TEST_STORE_NAME = 'DE';
+
+    /**
+     * @var string
+     */
+    protected const ASSET_SLOT_SLT_FOOTER = 'slt-footer';
 
     /**
      * @var string
@@ -57,7 +62,7 @@ class AssetFacadeTest extends Unit
         parent::setUp();
 
         $this->assetUuid = $this->tester->getUuid();
-        $this->tester->setStoreReferenceData(['DE' => AssetBusinessTester::STORE_REFERENCE]);
+        $this->tester->setStoreReferenceData([static::TEST_STORE_NAME => AssetBusinessTester::STORE_REFERENCE]);
     }
 
     /**
@@ -102,22 +107,23 @@ class AssetFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAddAssetAssertSuccessfull(): void
+    public function testAddAssetAssertSuccessful(): void
     {
         // Arrange
         $assetMessageTransfer = $this->tester->buildAssetAddedTransfer(
             AssetBusinessTester::STORE_REFERENCE,
-            static::ASSSET_SLOT_SLT_FOOTER,
+            static::ASSET_SLOT_SLT_FOOTER,
             $this->assetUuid,
         );
         $expectedAssetTransfer = $this->tester->buildAssetTransfer(
             '<script>',
             $this->assetUuid,
+            static::TEST_STORE_NAME,
         );
 
         // Act
         $assetTransfer = $this->getAssetFacade()->addAsset($assetMessageTransfer);
-        $assetTransfer->setIdAsset(1)->setAssetSlot(static::ASSSET_SLOT_SLT_FOOTER);
+        $assetTransfer->setIdAsset(1)->setAssetSlot(static::ASSET_SLOT_SLT_FOOTER);
 
         // Assert
         $this->assertEquals($expectedAssetTransfer, $assetTransfer);
@@ -141,30 +147,31 @@ class AssetFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateAssetAssertSuccessfull(): void
+    public function testUpdateAssetAssertSuccessful(): void
     {
         // Arrange
         $startAssetMessageTransfer = $this->tester->buildAssetAddedTransfer(
             AssetBusinessTester::STORE_REFERENCE,
-            static::ASSSET_SLOT_SLT_FOOTER,
+            static::ASSET_SLOT_SLT_FOOTER,
             $this->assetUuid,
         );
         $newAssetMessageTransfer = $this->tester->buildAssetUpdatedTransfer(
             AssetBusinessTester::STORE_REFERENCE,
-            static::ASSSET_SLOT_SLT_FOOTER,
+            static::ASSET_SLOT_SLT_FOOTER,
             $this->assetUuid,
             '<script> </script>',
         );
         $expectedAssetTransfer = $this->tester->buildAssetTransfer(
             '<script> </script>',
             $this->assetUuid,
+            static::TEST_STORE_NAME,
         );
 
         // Act
         $assetFacade = $this->getAssetFacade();
         $assetFacade->addAsset($startAssetMessageTransfer);
         $assetTransfer = $assetFacade->updateAsset($newAssetMessageTransfer);
-        $assetTransfer->setIdAsset(1)->setAssetSlot(static::ASSSET_SLOT_SLT_FOOTER);
+        $assetTransfer->setIdAsset(1)->setAssetSlot(static::ASSET_SLOT_SLT_FOOTER);
 
         // Assert
         $this->assertEquals($expectedAssetTransfer, $assetTransfer);
@@ -188,12 +195,12 @@ class AssetFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testDeleteAssetAssertSuccessfull(): void
+    public function testDeleteAssetAssertSuccessful(): void
     {
         // Arrange
         $startAssetTransfer = $this->tester->buildAssetAddedTransfer(
             AssetBusinessTester::STORE_REFERENCE,
-            static::ASSSET_SLOT_SLT_FOOTER,
+            static::ASSET_SLOT_SLT_FOOTER,
             $this->assetUuid,
         );
         $delAssetTransfer = $this->tester->buildAssetDeletedTransfer(
@@ -202,7 +209,7 @@ class AssetFacadeTest extends Unit
         );
         $updateCheckTransfer = $this->tester->buildAssetUpdatedTransfer(
             AssetBusinessTester::STORE_REFERENCE,
-            static::ASSSET_SLOT_SLT_FOOTER,
+            static::ASSET_SLOT_SLT_FOOTER,
             $this->assetUuid,
         );
 

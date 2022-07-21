@@ -20,7 +20,7 @@ interface ProductMeasurementUnitClientInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $cartChangeTransfer
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @throws \Spryker\Client\ProductMeasurementUnit\Exception\InvalidItemCountException
      *
@@ -39,7 +39,7 @@ interface ProductMeasurementUnitClientInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @throws \Spryker\Client\ProductMeasurementUnit\Exception\InvalidItemCountException
      *

@@ -61,6 +61,7 @@ class CustomerGroup implements CustomerGroupInterface
      */
     protected function entityCollectionToTransferCollection(ObjectCollection $customerGroupToCustomerCollection)
     {
+        /** @var \ArrayObject<int, \Generated\Shared\Transfer\CustomerGroupToCustomerTransfer> $customerGroups */
         $customerGroups = new ArrayObject();
 
         foreach ($customerGroupToCustomerCollection as $customerGroupToCustomerEntity) {

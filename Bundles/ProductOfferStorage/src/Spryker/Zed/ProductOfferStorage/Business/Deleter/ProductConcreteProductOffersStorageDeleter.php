@@ -7,12 +7,18 @@
 
 namespace Spryker\Zed\ProductOfferStorage\Business\Deleter;
 
-use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Spryker\Zed\ProductOfferStorage\Dependency\Facade\ProductOfferStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\ProductOfferStorage\Persistence\ProductOfferStorageEntityManagerInterface;
 
 class ProductConcreteProductOffersStorageDeleter implements ProductConcreteProductOffersStorageDeleterInterface
 {
+    /**
+     * @uses \Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap::COL_CONCRETE_SKU
+     *
+     * @var string
+     */
+    protected const COL_CONCRETE_SKU = 'spy_product_offer.concrete_sku';
+
     /**
      * @var \Spryker\Zed\ProductOfferStorage\Dependency\Facade\ProductOfferStorageToEventBehaviorFacadeInterface
      */
@@ -42,7 +48,7 @@ class ProductConcreteProductOffersStorageDeleter implements ProductConcreteProdu
      */
     public function deleteProductConcreteProductOffersStorageCollectionByProductEvents(array $eventTransfers): void
     {
-        $productSkus = $this->eventBehaviorFacade->getEventTransfersAdditionalValues($eventTransfers, SpyProductOfferTableMap::COL_CONCRETE_SKU);
+        $productSkus = $this->eventBehaviorFacade->getEventTransfersAdditionalValues($eventTransfers, static::COL_CONCRETE_SKU);
 
         if (!$productSkus) {
             return;

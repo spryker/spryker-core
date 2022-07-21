@@ -38,7 +38,7 @@ class FacetResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlu
 
     /**
      * @param \Elastica\ResultSet $searchResult
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return array
      */
@@ -70,7 +70,7 @@ class FacetResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlu
     }
 
     /**
-     * @param array $aggregations
+     * @param array<string, mixed> $aggregations
      * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
      *
      * @return array

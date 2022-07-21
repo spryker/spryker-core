@@ -33,7 +33,7 @@ class JsonFormatEncoder implements FormatEncoderInterface
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return string|null
      */

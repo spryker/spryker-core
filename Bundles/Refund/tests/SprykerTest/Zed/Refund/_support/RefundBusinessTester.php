@@ -20,6 +20,7 @@ use Codeception\Actor;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
+ * @method \Spryker\Zed\Refund\Business\RefundFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
  */

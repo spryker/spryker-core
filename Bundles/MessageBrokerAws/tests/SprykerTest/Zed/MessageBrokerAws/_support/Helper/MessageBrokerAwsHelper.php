@@ -16,7 +16,6 @@ use Codeception\TestInterface;
 use Exception;
 use Generated\Shared\Transfer\MessageAttributesTransfer;
 use Generated\Shared\Transfer\MessageBrokerTestMessageTransfer;
-use Generated\Shared\Transfer\PublisherTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Ramsey\Uuid\Uuid;
 use Spryker\Zed\MessageBrokerAws\Business\MessageBrokerAwsBusinessFactory;
@@ -130,11 +129,7 @@ class MessageBrokerAwsHelper extends Module
 
         $messageAttributesTransfer = new MessageAttributesTransfer();
         $messageAttributesTransfer->setTransferName('MessageBrokerTestMessage');
-        $messageAttributesTransfer->setPublisher(
-            (new PublisherTransfer())
-                ->setStoreReference('StoreReference')
-                ->setAppIdentifier('AppIdentifier'),
-        );
+        $messageAttributesTransfer->setEmitter('Publisher');
 
         $messageBrokerTestMessageTransfer->setMessageAttributes($messageAttributesTransfer);
 

@@ -70,6 +70,8 @@ use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\SecuritySchemeRe
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\SecuritySchemeRendererInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Storage\ResourceSchemaNameStorage;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Storage\ResourceSchemaNameStorageInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Storage\ResourceTransferClassNameStorage;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Storage\ResourceTransferClassNameStorageInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Writer\DocumentationWriterInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Writer\YamlOpenApiDocumentationWriter;
 use Spryker\Zed\DocumentationGeneratorRestApi\Dependency\External\DocumentationGeneratorRestApiToFilesystemInterface;
@@ -106,6 +108,9 @@ class DocumentationGeneratorRestApiBusinessFactory extends AbstractBusinessFacto
             $this->createOpenApiSpecificationSchemaBuilder(),
             $this->createSchemaRenderer(),
             $this->createResourceRelationshipProcessor(),
+            $this->createResourceRelationshipsPluginAnnotationAnalyzer(),
+            $this->createResourceTransferClassNameStorage(),
+            $this->getConfig(),
         );
     }
 
@@ -196,6 +201,7 @@ class DocumentationGeneratorRestApiBusinessFactory extends AbstractBusinessFacto
     {
         return new ResourceRelationshipsPluginAnalyzer(
             $this->getResourceRelationshipCollectionProviderPlugin(),
+            $this->getConfig(),
         );
     }
 
@@ -398,7 +404,16 @@ class DocumentationGeneratorRestApiBusinessFactory extends AbstractBusinessFacto
             $this->createResourceRelationshipsPluginAnalyzer(),
             $this->createGlueAnnotationAnalyzer(),
             $this->createResourceRelationshipsPluginAnnotationAnalyzer(),
+            $this->createResourceTransferClassNameStorage(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Storage\ResourceTransferClassNameStorageInterface
+     */
+    public function createResourceTransferClassNameStorage(): ResourceTransferClassNameStorageInterface
+    {
+        return new ResourceTransferClassNameStorage();
     }
 
     /**

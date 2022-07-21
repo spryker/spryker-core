@@ -25,7 +25,7 @@ class MerchantSearchPaginationConfigBuilder implements MerchantSearchPaginationC
     }
 
     /**
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return int
      */
@@ -37,7 +37,7 @@ class MerchantSearchPaginationConfigBuilder implements MerchantSearchPaginationC
     }
 
     /**
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return int
      */
@@ -53,7 +53,7 @@ class MerchantSearchPaginationConfigBuilder implements MerchantSearchPaginationC
     }
 
     /**
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return bool
      */

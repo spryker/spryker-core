@@ -22,7 +22,7 @@ class PaginatedQueryExpanderPlugin extends AbstractPlugin implements QueryExpand
 {
     /**
      * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface $searchQuery
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
      */
@@ -38,7 +38,7 @@ class PaginatedQueryExpanderPlugin extends AbstractPlugin implements QueryExpand
     /**
      * @param \Elastica\Query $query
      * @param \Spryker\Client\Search\Dependency\Plugin\PaginationConfigBuilderInterface $paginationConfig
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return void
      */

@@ -167,4 +167,16 @@ interface OauthFacadeInterface
      * @return int|null
      */
     public function deleteExpiredRefreshTokens(): ?int;
+
+    /**
+     * Specification:
+     * - Creates cache file with all existing scopes.
+     * - Runs a stack of `Spryker\Glue\OauthExtension\Dependency\Plugin\ScopeCollectorPluginInterface`.
+     * - Creates cache file in the location configured in `Spryker\Zed\Oauth\OauthConfig::getGeneratedFullFileNameForCollectedScopes()`.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function generateScopeCollection(): void;
 }

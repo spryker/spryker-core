@@ -25,3 +25,13 @@ suites:
                 - \SprykerTest\Shared\Customer\Helper\CustomerDataHelper
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
                 - \SprykerTest\Glue\AuthRestApi\Helper\AuthRestApiHelper
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper
+
+    Communication:
+        path: Communication
+        class_name: OauthCommunicationTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Zed\Console\Helper\ConsoleHelper

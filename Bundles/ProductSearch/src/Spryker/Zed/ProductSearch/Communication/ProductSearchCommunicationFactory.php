@@ -39,7 +39,7 @@ class ProductSearchCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface
@@ -58,7 +58,7 @@ class ProductSearchCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param array<string, mixed> $options
      *
      * @return \Symfony\Component\Form\FormInterface

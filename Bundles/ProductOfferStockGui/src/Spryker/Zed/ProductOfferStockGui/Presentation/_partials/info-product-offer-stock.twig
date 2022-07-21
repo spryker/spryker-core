@@ -9,9 +9,12 @@
                     <td><b>{{ 'Stock Type' | trans }}</b></td>
                     <td><b>{{ 'Quantity' | trans }}</b></td>
                     {% set firstProductOfferStock = productOfferStocks | first %}
-                    {% for header in firstProductOfferStock.additionalColumns.headers %}
-                        <td><b>{{ header | trans }}</b></td>
-                    {% endfor %}
+                    {% set hasAdditionalColumns = firstProductOfferStock.additionalColumns | length > 0 %}
+                    {% if hasAdditionalColumns %}
+                        {% for header in firstProductOfferStock.additionalColumns.headers %}
+                            <td><b>{{ header | trans }}</b></td>
+                        {% endfor %}
+                    {% endif %}
                     <td><b>{{ 'Never out of stock' | trans }}</b></td>
                 </tr>
                 </thead>
@@ -21,9 +24,11 @@
                             <td>{{ productOfferStock.name }} <span class="label label-info">{{ productOfferStock.storeName }}</span></td>
                             <td>{{ productOfferStock.quantity.trim() }}</td>
 
-                            {% for column in productOfferStock.additionalColumns.columns %}
-                                <td>{{ column | trans }}</td>
-                            {% endfor %}
+                            {% if hasAdditionalColumns %}
+                                {% for column in productOfferStock.additionalColumns.columns %}
+                                    <td>{{ column | trans }}</td>
+                                {% endfor %}
+                            {% endif %}
 
                             <td>
                                 {% if productOfferStock.isNeverOutOfStock %}

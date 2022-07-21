@@ -9,8 +9,10 @@ namespace SprykerTest\Zed\GlossaryStorage\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
+use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Generated\Shared\Transfer\SpyGlossaryTranslationEntityTransfer;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
+use Orm\Zed\Glossary\Persistence\SpyGlossaryKey;
 use Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery;
 use Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery;
 use Orm\Zed\GlossaryStorage\Persistence\SpyGlossaryStorageQuery;
@@ -42,6 +44,11 @@ class GlossaryStorageFacadeTest extends Unit
      * @var string
      */
     public const LOCALE_EN_US = 'en_US';
+
+    /**
+     * @var string
+     */
+    protected const TRANSLATION_VALUE_ZERO = '0';
 
     /**
      * @var \SprykerTest\Zed\GlossaryStorage\GlossaryStorageCommunicationTester
@@ -82,6 +89,36 @@ class GlossaryStorageFacadeTest extends Unit
 
         // Assert
         $this->assertGlossaryStorage(static::ID_GLOSSARY, $glossaryStorageCount);
+    }
+
+    /**
+     * @return void
+     */
+    public function testWriteCollectionByGlossaryTranslationEventsPublishesZeroStringValueCorrectly(): void
+    {
+        // Arrange
+        $localeTransfers = $this->tester->getLocator()->locale()->facade()->getLocaleCollection();
+
+        $seedData = [];
+        foreach ($localeTransfers as $localeTransfer) {
+            $seedData[KeyTranslationTransfer::LOCALES][$localeTransfer->getLocaleName()] = static::TRANSLATION_VALUE_ZERO;
+        }
+        $idGlossaryKey = $this->tester->haveTranslation($seedData);
+
+        $this->cleanUpGlossaryStorage($idGlossaryKey);
+        $glossaryStorageEntitiesCount = $this->createGlossaryStorageQuery()->filterByFkGlossaryKey($idGlossaryKey)->count();
+
+        $eventEntityTransfers = [
+            (new EventEntityTransfer())->setForeignKeys([
+                SpyGlossaryTranslationTableMap::COL_FK_GLOSSARY_KEY => $idGlossaryKey,
+            ]),
+        ];
+
+        // Act
+        $this->getGlossaryStorageFacade()->writeCollectionByGlossaryTranslationEvents($eventEntityTransfers);
+
+        // Assert
+        $this->assertGlossaryStorage($idGlossaryKey, $glossaryStorageEntitiesCount);
     }
 
     /**
@@ -152,7 +189,7 @@ class GlossaryStorageFacadeTest extends Unit
             ->filterByLocale(static::LOCALE_EN_US)
             ->findOneByFkGlossaryKey($idGlossaryKey);
 
-        $glossaryKeyEntity = $this->findGlossaryKeyEntity();
+        $glossaryKeyEntity = $this->findGlossaryKeyEntity($idGlossaryKey);
         $glossaryTranslationEntityTransfer = new SpyGlossaryTranslationEntityTransfer();
         $glossaryTranslationEntityTransfer->fromArray($spyGlossaryStorage->getData(), true);
 
@@ -200,10 +237,16 @@ class GlossaryStorageFacadeTest extends Unit
     }
 
     /**
-     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKey
+     * @param int|null $idGlossaryKey
+     *
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKey|null
      */
-    protected function findGlossaryKeyEntity()
+    protected function findGlossaryKeyEntity(?int $idGlossaryKey = null): ?SpyGlossaryKey
     {
+        if ($idGlossaryKey === null) {
+            $idGlossaryKey = static::ID_GLOSSARY;
+        }
+
         return $this->createGlossaryKeyQuery()
             ->joinWithSpyGlossaryTranslation()
                 ->useSpyGlossaryTranslationQuery()
@@ -211,7 +254,7 @@ class GlossaryStorageFacadeTest extends Unit
                     ->filterByLocaleName(static::LOCALE_EN_US)
                     ->endUse()
                 ->endUse()
-            ->findByIdGlossaryKey(static::ID_GLOSSARY)
+            ->findByIdGlossaryKey($idGlossaryKey)
             ->getFirst();
     }
 }

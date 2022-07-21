@@ -104,7 +104,7 @@ class CmsPageSearchDataMapper implements CmsPageSearchDataMapperInterface
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param string|null $storeName
      *
@@ -145,7 +145,7 @@ class CmsPageSearchDataMapper implements CmsPageSearchDataMapperInterface
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */
@@ -160,7 +160,7 @@ class CmsPageSearchDataMapper implements CmsPageSearchDataMapperInterface
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return string|null
      */
@@ -170,7 +170,7 @@ class CmsPageSearchDataMapper implements CmsPageSearchDataMapperInterface
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return string|null
      */

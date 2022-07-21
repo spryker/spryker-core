@@ -44,7 +44,7 @@ abstract class AbstractBulkTouchQuery
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param string $separator
      *
      * @return string

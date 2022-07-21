@@ -12,6 +12,7 @@ use Spryker\Zed\FileManagerGui\Communication\Form\DataProvider\FileFormDataProvi
 use Spryker\Zed\FileManagerGui\Communication\Form\DataProvider\MimeTypeFormDataProvider;
 use Spryker\Zed\FileManagerGui\Communication\Form\DeleteDirectoryForm;
 use Spryker\Zed\FileManagerGui\Communication\Form\DeleteFileForm;
+use Spryker\Zed\FileManagerGui\Communication\Form\DeleteMimeTypeForm;
 use Spryker\Zed\FileManagerGui\Communication\Form\FileDirectoryForm;
 use Spryker\Zed\FileManagerGui\Communication\Form\FileForm;
 use Spryker\Zed\FileManagerGui\Communication\Form\FileLocalizedAttributesForm;
@@ -215,6 +216,16 @@ class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createDeleteDirectoryForm(): FormInterface
     {
         return $this->getFormFactory()->create(DeleteDirectoryForm::class, [], [
+            'fields' => [],
+        ]);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getDeleteMimeTypeForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(DeleteMimeTypeForm::class, [], [
             'fields' => [],
         ]);
     }

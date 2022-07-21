@@ -13,7 +13,7 @@ use Symfony\Component\Console\Event\ConsoleTerminateEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
- * @method \Spryker\Zed\Monitoring\Business\MonitoringFacade getFacade()
+ * @method \Spryker\Zed\Monitoring\Business\MonitoringFacadeInterface getFacade()
  * @method \Spryker\Zed\Monitoring\Communication\MonitoringCommunicationFactory getFactory()
  * @method \Spryker\Zed\Monitoring\MonitoringConfig getConfig()
  */

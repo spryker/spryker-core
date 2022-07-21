@@ -88,7 +88,7 @@ class RouterApplicationPlugin extends AbstractPlugin implements ApplicationPlugi
      *
      * @param \Spryker\Service\Container\ContainerInterface $container
      * @param string $serviceName
-     * @param array $configuration
+     * @param array<string, mixed> $configuration
      *
      * @return void
      */

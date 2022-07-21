@@ -12,7 +12,7 @@ use Spryker\Zed\MessageBrokerExtension\Dependency\Plugin\MessageSenderPluginInte
 use Symfony\Component\Messenger\Envelope;
 
 /**
- * @method \Spryker\Zed\MessageBroker\MessageBrokerConfig getConfig()
+ * @method \Spryker\Zed\MessageBrokerAws\MessageBrokerAwsConfig getConfig()
  * @method \Spryker\Zed\MessageBrokerAws\Business\MessageBrokerAwsFacadeInterface getFacade()
  */
 class AwsSnsMessageSenderPlugin extends AbstractPlugin implements MessageSenderPluginInterface

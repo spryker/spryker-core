@@ -112,6 +112,7 @@ class RememberMeSecurityPlugin implements SecurityPluginInterface
     {
         $container->set('security.remember_me.service._proto', $container->protect(function ($providerKey, $options) use ($container) {
             return function () use ($providerKey, $options, $container) {
+                /** @var array<string, mixed> $options */
                 $options = array_replace([
                     'name' => 'REMEMBERME',
                     'lifetime' => static::LIFETIME_ONE_YEAR,

@@ -12,6 +12,8 @@ use Spryker\Client\Customer\Dependency\Plugin\DefaultAddressChangePluginInterfac
 use Spryker\Client\Kernel\AbstractPlugin;
 
 /**
+ * @deprecated Use {@link \Spryker\Client\Customer\Plugin\Customer\CustomerAddressDefaultAddressChangePlugin} instead.
+ *
  * @method \Spryker\Client\Customer\CustomerClientInterface getClient()
  */
 class CustomerAddressSessionUpdatePlugin extends AbstractPlugin implements DefaultAddressChangePluginInterface

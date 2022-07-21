@@ -8,17 +8,17 @@
 namespace Spryker\Client\Authorization\Authorization;
 
 use RuntimeException;
-use Spryker\Client\AuthorizationExtension\Dependency\Plugin\AuthorizationStrategyPluginInterface;
+use Spryker\Shared\AuthorizationExtension\Dependency\Plugin\AuthorizationStrategyPluginInterface;
 
 class AuthorizationStrategyCollection implements AuthorizationStrategyCollectionInterface
 {
     /**
-     * @var array<\Spryker\Client\AuthorizationExtension\Dependency\Plugin\AuthorizationStrategyPluginInterface>
+     * @var array<\Spryker\Shared\AuthorizationExtension\Dependency\Plugin\AuthorizationStrategyPluginInterface>
      */
     protected $authorizationStrategies = [];
 
     /**
-     * @param array<\Spryker\Client\AuthorizationExtension\Dependency\Plugin\AuthorizationStrategyPluginInterface> $authorizationStrategyPlugins
+     * @param array<\Spryker\Shared\AuthorizationExtension\Dependency\Plugin\AuthorizationStrategyPluginInterface> $authorizationStrategyPlugins
      */
     public function __construct(array $authorizationStrategyPlugins)
     {
@@ -29,7 +29,7 @@ class AuthorizationStrategyCollection implements AuthorizationStrategyCollection
 
     /**
      * @param string $name
-     * @param \Spryker\Client\AuthorizationExtension\Dependency\Plugin\AuthorizationStrategyPluginInterface $authorizationStrategy
+     * @param \Spryker\Shared\AuthorizationExtension\Dependency\Plugin\AuthorizationStrategyPluginInterface $authorizationStrategy
      *
      * @throws \RuntimeException
      *

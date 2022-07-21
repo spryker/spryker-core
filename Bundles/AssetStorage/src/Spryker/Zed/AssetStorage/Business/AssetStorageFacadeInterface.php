@@ -11,11 +11,47 @@ interface AssetStorageFacadeInterface
 {
     /**
      * Specification:
+     * - Passes through `EventEntity` transfers to get the Assets to publish.
+     * - Processes found `Asset` transfers one by one.
+     * - Finds all existing AssetSlotStorage entries using `Asset.assetSlot` and Asset.stores`.
+     * - Updates the found entries by adding or updating Asset data matching `Asset.idAsset`.
+     * - Creates new AssetSlotStorage entry if there's no yet.
+     * - Saves change to the database.
+     *
+     * @api
+     *
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeAssetCollectionByAssetEvents(array $eventEntityTransfers): void;
+
+    /**
+     *  Specification:
+     * - Passes through `EventEntity` transfers to get the Assets to un-publish.
+     * - Processes found `Asset` transfers one by one.
+     * - Finds all existing AssetSlotStorage entries using `Asset.assetSlot` and Asset.stores`.
+     * - Updates the found entries by removing Asset data matching `Asset.idAsset`.
+     * - Saves change to the database if there is Asset data left in the entry.
+     * - Deletes the entry otherwise.
+     *
+     * @api
+     *
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function deleteAssetCollectionByAssetEvents(array $eventEntityTransfers): void;
+
+    /**
+     * Specification:
      * - Queries all assets with asset slot equals to requested asset slot.
      * - Stores data as json encoded to storage table per asset slot and store.
      * - Sends a copy of data to queue based on module config.
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @param int $idAsset
      *
@@ -30,6 +66,8 @@ interface AssetStorageFacadeInterface
      * - Sends a copy of data to queue based on module config.
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @param int $idAsset
      * @param int $idStore
@@ -46,6 +84,8 @@ interface AssetStorageFacadeInterface
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @param int $idAsset
      *
      * @return void
@@ -59,6 +99,8 @@ interface AssetStorageFacadeInterface
      * - Sends a copy of data to queue based on module config.
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @param int $idAsset
      * @param int $idStore

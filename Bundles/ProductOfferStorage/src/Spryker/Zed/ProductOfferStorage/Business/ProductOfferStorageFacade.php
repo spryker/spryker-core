@@ -79,4 +79,52 @@ class ProductOfferStorageFacade extends AbstractFacade implements ProductOfferSt
             ->createProductOfferStorageDeleter()
             ->deleteProductOfferStorageCollectionByProductOfferEvents($eventTransfers);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
+     *
+     * @return void
+     */
+    public function writeCollectionByProductOfferStoreEvents(array $eventTransfers): void
+    {
+        $this->getFactory()
+            ->createProductOfferStorageWriter()
+            ->writeCollectionByProductOfferStoreEvents($eventTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
+     *
+     * @return void
+     */
+    public function deleteCollectionByProductOfferStoreEvents(array $eventTransfers): void
+    {
+        $this->getFactory()
+            ->createProductOfferStorageDeleter()
+            ->deleteCollectionByProductOfferStoreEvents($eventTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
+     *
+     * @return void
+     */
+    public function writeProductConcreteProductOffersStorageCollectionByProductOfferStoreEvents(array $eventTransfers): void
+    {
+        $this->getFactory()
+            ->createProductConcreteProductOffersStorageWriter()
+            ->writeProductConcreteProductOffersStorageCollectionByProductOfferStoreEvents($eventTransfers);
+    }
 }

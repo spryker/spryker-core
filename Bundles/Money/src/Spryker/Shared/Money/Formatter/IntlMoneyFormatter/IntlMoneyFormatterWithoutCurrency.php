@@ -19,7 +19,7 @@ class IntlMoneyFormatterWithoutCurrency extends AbstractIntlMoneyFormatter
     protected function getNumberFormatter($localeName)
     {
         $numberFormatter = new NumberFormatter($localeName, NumberFormatter::CURRENCY);
-        $pattern = str_replace(['¤', ' '], '', $numberFormatter->getPattern());
+        $pattern = str_replace(['¤', ' '], '', (string)$numberFormatter->getPattern());
         $numberFormatter->setPattern($pattern);
 
         return $numberFormatter;

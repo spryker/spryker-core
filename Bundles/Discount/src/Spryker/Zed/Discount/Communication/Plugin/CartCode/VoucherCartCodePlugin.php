@@ -69,6 +69,7 @@ class VoucherCartCodePlugin extends AbstractPlugin implements CartCodePluginInte
 
     /**
      * {@inheritDoc}
+     * - Executes {\Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountVoucherApplyCheckerStrategyPluginInterface} plugin stack.
      * - Returns a MessageTransfer with a Successfully Applied Voucher message when the voucher was applied successfully.
      * - Returns a MessageTransfer with a Failed to Apply Voucher message when the voucher was applied unsuccessfully.
      * - Returns an empty failed message when the code is not applicable.

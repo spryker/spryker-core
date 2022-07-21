@@ -37,6 +37,11 @@ class GlossaryFacadeTest extends Unit
     protected const TRANSLATION = 'translation';
 
     /**
+     * @var string
+     */
+    protected const TRANSLATION_VALUE_ZERO = '0';
+
+    /**
      * @var array
      */
     protected $locales = [];
@@ -155,9 +160,49 @@ class GlossaryFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testAddTranslationWithZeroValueSuccess(): void
+    {
+        // Arrange
+        $glossaryFacade = $this->getGlossaryFacade();
+
+        $localeTransfer = $this->getLocaleFacade()->getLocale(reset($this->locales));
+
+        $formData = [
+            KeyTranslationTransfer::GLOSSARY_KEY => 'form.button.save',
+            KeyTranslationTransfer::LOCALES => [
+                $localeTransfer->getLocaleName() => static::TRANSLATION_VALUE_ZERO,
+            ],
+        ];
+        $keyTranslationTransfer = (new KeyTranslationTransfer())->fromArray($formData);
+
+        // Act
+        $glossaryFacade->saveGlossaryKeyTranslations($keyTranslationTransfer);
+
+        // Assert
+        $translationTransfers = $glossaryFacade->getTranslationsByGlossaryKeyAndLocales(
+            $formData[KeyTranslationTransfer::GLOSSARY_KEY],
+            [$localeTransfer],
+        );
+        $this->assertCount(
+            1,
+            $translationTransfers,
+            'There should be a single translation element after saving translation for one locale',
+        );
+
+        $translationTransfer = reset($translationTransfers);
+        $this->assertSame(
+            static::TRANSLATION_VALUE_ZERO,
+            $translationTransfer->getValue(),
+            'Translation with zero string value should be successfully retrieved from the database after saving',
+        );
+    }
+
+    /**
+     * @return void
+     */
     public function testTranslationsCanBeFoundInBulk(): void
     {
-        //Arrange
+        // Arrange
         $glossaryFacade = $this->getGlossaryFacade();
         $localeFacade = $this->getLocaleFacade();
         $localeTransfers = $localeFacade->getLocaleCollection();
@@ -167,10 +212,10 @@ class GlossaryFacadeTest extends Unit
         }
         $this->tester->haveTranslation($seedData);
 
-        //Act
+        // Act
         $translations = $glossaryFacade->getTranslationsByGlossaryKeyAndLocales(static::GLOSSARY_KEY, $localeTransfers);
 
-        //Assert
+        // Assert
         $this->assertCount(count($localeTransfers), $translations);
     }
 
@@ -179,7 +224,7 @@ class GlossaryFacadeTest extends Unit
      */
     public function testTranslationsCanBeFoundInBuGlossaryKeysAndLocaleTransfers(): void
     {
-        //Arrange
+        // Arrange
         $glossaryFacade = $this->getGlossaryFacade();
         $localeFacade = $this->getLocaleFacade();
         $localeTransfers = $localeFacade->getLocaleCollection();
@@ -189,10 +234,10 @@ class GlossaryFacadeTest extends Unit
         }
         $this->tester->haveTranslation($seedData);
 
-        //Act
+        // Act
         $translations = $glossaryFacade->getTranslationsByGlossaryKeysAndLocaleTransfers([static::GLOSSARY_KEY], $localeTransfers);
 
-        //Assert
+        // Assert
         $this->assertCount(count($localeTransfers), $translations);
     }
 
@@ -201,15 +246,15 @@ class GlossaryFacadeTest extends Unit
      */
     public function testGlossaryKeyTransfersCanBeFoundByGlossaryKeysInBulk(): void
     {
-        //Arrange
+        // Arrange
         $glossaryFacade = $this->getGlossaryFacade();
         $seedData = ['glossaryKey' => static::GLOSSARY_KEY];
         $this->tester->haveTranslation($seedData);
 
-        //Act
+        // Act
         $translations = $glossaryFacade->getGlossaryKeyTransfersByGlossaryKeys([static::GLOSSARY_KEY]);
 
-        //Assert
+        // Assert
         $this->assertCount(1, $translations);
     }
 }

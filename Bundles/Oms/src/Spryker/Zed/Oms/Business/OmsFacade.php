@@ -102,7 +102,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @param string $eventId
      * @param array $orderItemIds
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array|null
      */
@@ -119,7 +119,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      * @api
      *
      * @param array $orderItemIds
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array|null
      */
@@ -137,7 +137,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @param string $eventId
      * @param int $orderItemId
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array|null
      */
@@ -410,7 +410,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      * @param string $eventId
      * @param \Propel\Runtime\Collection\ObjectCollection $orderItems
      * @param array $logContext
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array|null
      */
@@ -430,7 +430,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @param \Propel\Runtime\Collection\ObjectCollection $orderItems
      * @param array $logContext
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array|null
      */
@@ -451,7 +451,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      * @param string $eventId
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
      * @param array $logContext
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array|null
      */

@@ -12,15 +12,6 @@ use Generated\Shared\Transfer\StoreTransfer;
 interface AppCatalogGuiToStoreReferenceFacadeInterface
 {
     /**
-     * @param string $storeReference
-     *
-     * @throws \Spryker\Zed\StoreReference\Business\Exception\StoreReferenceNotFoundException
-     *
-     * @return \Generated\Shared\Transfer\StoreTransfer
-     */
-    public function getStoreByStoreReference(string $storeReference): StoreTransfer;
-
-    /**
      * @param string $storeName
      *
      * @throws \Spryker\Zed\StoreReference\Business\Exception\StoreReferenceNotFoundException

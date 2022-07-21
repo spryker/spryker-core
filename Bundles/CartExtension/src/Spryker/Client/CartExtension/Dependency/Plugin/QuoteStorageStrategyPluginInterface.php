@@ -35,7 +35,7 @@ interface QuoteStorageStrategyPluginInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
@@ -49,7 +49,7 @@ interface QuoteStorageStrategyPluginInterface
      * @api
      *
      * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
@@ -66,7 +66,7 @@ interface QuoteStorageStrategyPluginInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */

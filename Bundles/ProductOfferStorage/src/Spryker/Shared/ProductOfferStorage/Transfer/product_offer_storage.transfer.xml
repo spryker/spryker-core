@@ -19,6 +19,8 @@
         <property name="approvalStatuses" type="string[]" singular="approvalStatus"/>
         <property name="isActiveConcreteProduct" type="bool"/>
         <property name="concreteSkus" type="string[]" singular="concreteSku"/>
+        <property name="productOfferIds" type="int[]" singular="idProductOffer"/>
+        <property name="storeIds" type="int[]" singular="idStore"/>
     </transfer>
 
     <transfer name="ProductOfferStorage">
@@ -62,6 +64,11 @@
         <property name="column" type="string"/>
         <property name="value" type="string"/>
         <property name="comparison" type="string"/>
+    </transfer>
+
+    <transfer name="EventEntity">
+        <property name="foreignKeys" type="array" singular="foreignKeys"/>
+        <property name="additionalValues" type="array" singular="additionalValue"/>
     </transfer>
 
 </transfers>

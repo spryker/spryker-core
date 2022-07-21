@@ -8,6 +8,7 @@
         <property name="isLocked" type="bool"/>
         <property name="customer" type="Customer"/>
         <property name="currency" type="Currency"/>
+        <property name="idQuote" type="int"/>
     </transfer>
 
     <transfer name="CartChange">

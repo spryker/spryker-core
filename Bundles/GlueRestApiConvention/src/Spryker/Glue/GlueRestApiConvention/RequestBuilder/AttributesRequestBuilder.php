@@ -39,11 +39,11 @@ class AttributesRequestBuilder implements RequestBuilderInterface
         }
 
         $decodedContent = $this->utilEncodingService->decodeJson($content, true);
-        if (!$decodedContent || !isset($decodedContent['data'])) {
+        if (!$decodedContent) {
             return $glueRequestTransfer;
         }
 
-        $glueRequestTransfer->setAttributes($decodedContent['data']);
+        $glueRequestTransfer->setAttributes($decodedContent);
 
         return $glueRequestTransfer;
     }

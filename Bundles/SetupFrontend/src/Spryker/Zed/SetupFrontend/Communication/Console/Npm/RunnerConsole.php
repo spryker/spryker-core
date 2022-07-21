@@ -18,7 +18,7 @@ use Symfony\Component\Process\Process;
  * Use `frontend:yves:build` for build Yves frontend.
  * Use `frontend:zed:build` for build Zed frontend.
  *
- * @method \Spryker\Zed\Setup\Business\SetupFacadeInterface getFacade()
+ * @method \Spryker\Zed\SetupFrontend\Business\SetupFrontendFacadeInterface getFacade()
  * @method \Spryker\Zed\Setup\Communication\SetupCommunicationFactory getFactory()
  */
 class RunnerConsole extends Console

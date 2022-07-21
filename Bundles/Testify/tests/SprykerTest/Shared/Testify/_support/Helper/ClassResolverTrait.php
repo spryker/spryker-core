@@ -44,12 +44,13 @@ trait ClassResolverTrait
     /**
      * @param string $classNamePattern
      * @param string $moduleName
+     * @param string|null $applicationName
      *
      * @return string|null
      */
-    protected function resolveClassName(string $classNamePattern, string $moduleName): ?string
+    protected function resolveClassName(string $classNamePattern, string $moduleName, ?string $applicationName = null): ?string
     {
-        $classNameCandidates = $this->getClassNameCandidates($classNamePattern, $moduleName);
+        $classNameCandidates = $this->getClassNameCandidates($classNamePattern, $moduleName, $applicationName);
 
         foreach ($classNameCandidates as $classNameCandidate) {
             if (class_exists($classNameCandidate)) {
@@ -63,18 +64,20 @@ trait ClassResolverTrait
     /**
      * @param string $classNamePattern
      * @param string $moduleName
+     * @param string|null $applicationName
      *
      * @return array<string>
      */
-    protected function getClassNameCandidates(string $classNamePattern, string $moduleName): array
+    protected function getClassNameCandidates(string $classNamePattern, string $moduleName, ?string $applicationName = null): array
     {
         $config = Configuration::config();
         $namespaceParts = explode('\\', $config['namespace']);
         $classNameCandidates = [];
-        $classNameCandidates[] = sprintf($classNamePattern, $this->trimTestNamespacePostfix($namespaceParts[0]), $namespaceParts[1], $moduleName);
+        $application = $applicationName ?? $namespaceParts[1];
+        $classNameCandidates[] = sprintf($classNamePattern, $this->trimTestNamespacePostfix($namespaceParts[0]), $application, $moduleName);
 
         foreach ($this->coreNamespaces as $coreNamespace) {
-            $classNameCandidates[] = sprintf($classNamePattern, $coreNamespace, $namespaceParts[1], $moduleName);
+            $classNameCandidates[] = sprintf($classNamePattern, $coreNamespace, $application, $moduleName);
         }
 
         return $classNameCandidates;

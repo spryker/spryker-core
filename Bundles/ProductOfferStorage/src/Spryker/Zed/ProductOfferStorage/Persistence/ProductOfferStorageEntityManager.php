@@ -18,7 +18,7 @@ class ProductOfferStorageEntityManager extends AbstractEntityManager implements 
 {
     /**
      * @param string $concreteSku
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param string $storeName
      *
      * @return void

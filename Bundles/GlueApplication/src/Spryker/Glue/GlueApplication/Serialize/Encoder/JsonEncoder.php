@@ -28,7 +28,7 @@ class JsonEncoder implements EncoderInterface
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return string
      */

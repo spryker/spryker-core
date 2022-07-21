@@ -57,7 +57,7 @@ class FacetConfig implements FacetConfigInterface
     }
 
     /**
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return array<\Generated\Shared\Transfer\FacetConfigTransfer>
      */
@@ -75,7 +75,7 @@ class FacetConfig implements FacetConfigInterface
     }
 
     /**
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return array<string>
      */

@@ -157,7 +157,9 @@ class ForeignKeysProvider implements ForeignKeysProviderInterface
             $tableXmlElement->registerXPathNamespace('s', 'spryker:schema-01');
         }
 
-        return ($tableXmlElement->xpath($hasNamespace ? 's:behavior[@name="archivable"]' : 'behavior[@name="archivable"]') === false || count($tableXmlElement->xpath($hasNamespace ? 's:behavior[@name="archivable"]' : 'behavior[@name="archivable"]')) === 0);
+        $xPath = $tableXmlElement->xpath($hasNamespace ? 's:behavior[@name="archivable"]' : 'behavior[@name="archivable"]');
+
+        return !$xPath;
     }
 
     /**
@@ -174,7 +176,7 @@ class ForeignKeysProvider implements ForeignKeysProviderInterface
         }
         $foreignKeyReferencesXmlElement = $tableXmlElement->xpath($hasNamespace ? 's:foreign-key/s:reference' : 'foreign-key/reference');
 
-        if ($foreignKeyReferencesXmlElement === false) {
+        if (!$foreignKeyReferencesXmlElement) {
             return $foreignKeyColumnNames;
         }
 
@@ -203,7 +205,7 @@ class ForeignKeysProvider implements ForeignKeysProviderInterface
             : 'index/index-column | column[@primaryKey="true"]',
         );
 
-        if ($indexColumnXmlElements === false) {
+        if (!$indexColumnXmlElements) {
             return $indexedColumnNames;
         }
         foreach ($indexColumnXmlElements as $indexColumnXmlElement) {

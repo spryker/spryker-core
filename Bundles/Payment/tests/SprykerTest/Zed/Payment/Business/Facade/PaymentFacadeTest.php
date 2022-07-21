@@ -93,9 +93,9 @@ class PaymentFacadeTest extends Unit
         $this->paymentFacade = $this->tester->getFacade();
         $configMock = $this->createMock(PaymentConfig::class);
         $configMock->method('getPaymentStatemachineMappings')->willReturn([]);
-        $factory = new PaymentBusinessFactory();
-        $factory->setConfig($configMock);
-        $this->paymentFacade->setFactory($factory);
+        $paymentBusinessFactory = new PaymentBusinessFactory();
+        $paymentBusinessFactory->setConfig($configMock);
+        $this->paymentFacade->setFactory($paymentBusinessFactory);
     }
 
     /**
@@ -714,7 +714,7 @@ class PaymentFacadeTest extends Unit
             (new PaymentMethodsTransfer())
                 ->addMethod(
                     (new PaymentMethodTransfer())->setMethodName('dummyPaymentInvoice')
-                    ->setPaymentMethodKey('dummyPaymentInvoice'),
+                        ->setPaymentMethodKey('dummyPaymentInvoice'),
                 ),
         );
 

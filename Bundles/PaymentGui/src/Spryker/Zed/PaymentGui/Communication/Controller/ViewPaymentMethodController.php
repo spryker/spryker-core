@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\PaymentGui\Communication\Controller;
 
+use Generated\Shared\Transfer\PaymentMethodConditionsTransfer;
+use Generated\Shared\Transfer\PaymentMethodCriteriaTransfer;
 use Generated\Shared\Transfer\PaymentMethodResponseTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,6 +29,11 @@ class ViewPaymentMethodController extends AbstractController
     protected const REDIRECT_URL = '/payment-gui/payment-method';
 
     /**
+     * @var string
+     */
+    protected const MESSAGE_PAYMENT_METHOD_NOT_FOUND = 'Payment method not found';
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
@@ -37,19 +44,19 @@ class ViewPaymentMethodController extends AbstractController
             $request->query->getInt(static::PARAM_ID_PAYMENT_METHOD),
         );
 
-        $paymentMethodResponseTransfer = $this->getFactory()
-            ->getPaymentFacade()
-            ->findPaymentMethodById($idPaymentMethod);
-
-        if (!$paymentMethodResponseTransfer->getIsSuccessful()) {
-            $this->setErrors($paymentMethodResponseTransfer);
+        $paymentMethodCriteriaTransfer = (new PaymentMethodCriteriaTransfer())
+            ->setPaymentMethodConditions(
+                (new PaymentMethodConditionsTransfer())->addIdPaymentMethod($idPaymentMethod),
+            );
+        $paymentMethodCollectionTransfer = $this->getFactory()->getPaymentFacade()->getPaymentMethodCollection($paymentMethodCriteriaTransfer);
+        if ($paymentMethodCollectionTransfer->getPaymentMethods()->count() === 0) {
+            $this->addErrorMessage(static::MESSAGE_PAYMENT_METHOD_NOT_FOUND);
 
             return $this->redirectResponse(static::REDIRECT_URL);
         }
 
         /** @var \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer */
-        $paymentMethodTransfer = $paymentMethodResponseTransfer->requirePaymentMethod()
-            ->getPaymentMethod();
+        $paymentMethodTransfer = $paymentMethodCollectionTransfer->getPaymentMethods()->getIterator()->current();
         $dataProvider = $this->getFactory()->createViewPaymentMethodFormDataProvider();
         $form = $this->getFactory()->createViewPaymentMethodForm(
             $dataProvider->getData($paymentMethodTransfer),

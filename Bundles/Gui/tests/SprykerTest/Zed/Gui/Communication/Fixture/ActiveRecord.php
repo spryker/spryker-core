@@ -17,7 +17,7 @@ class ActiveRecord implements ActiveRecordInterface
     protected $data = [];
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      */
     public function __construct(array $data)
     {
@@ -30,5 +30,13 @@ class ActiveRecord implements ActiveRecordInterface
     public function toArray(): array
     {
         return $this->data;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isPrimaryKeyNull(): bool
+    {
+        return false;
     }
 }

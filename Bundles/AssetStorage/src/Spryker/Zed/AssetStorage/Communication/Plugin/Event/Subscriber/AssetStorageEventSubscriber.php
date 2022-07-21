@@ -17,6 +17,8 @@ use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
+ * Will be removed in the next major without replacement, registration of plugins now takes place in {@link \Spryker\Zed\Publisher\PublisherDependencyProvider::getPublisherPlugins()}.
+ *
  * @method \Spryker\Zed\AssetStorage\AssetStorageConfig getConfig()
  * @method \Spryker\Zed\AssetStorage\Business\AssetStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\AssetStorage\Communication\AssetStorageCommunicationFactory getFactory()
@@ -42,6 +44,8 @@ class AssetStorageEventSubscriber extends AbstractPlugin implements EventSubscri
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\AssetStorage\Communication\Plugin\Publisher\Asset\AssetWritePublisherPlugin} instead.
+     *
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return \Spryker\Zed\Event\Dependency\EventCollectionInterface
@@ -52,6 +56,8 @@ class AssetStorageEventSubscriber extends AbstractPlugin implements EventSubscri
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\AssetStorage\Communication\Plugin\Publisher\Asset\AssetWritePublisherPlugin} instead.
+     *
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return \Spryker\Zed\Event\Dependency\EventCollectionInterface
@@ -62,6 +68,8 @@ class AssetStorageEventSubscriber extends AbstractPlugin implements EventSubscri
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\AssetStorage\Communication\Plugin\Publisher\Asset\AssetDeletePublisherPlugin} instead.
+     *
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return \Spryker\Zed\Event\Dependency\EventCollectionInterface
@@ -72,6 +80,8 @@ class AssetStorageEventSubscriber extends AbstractPlugin implements EventSubscri
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\AssetStorage\Communication\Plugin\Publisher\Asset\AssetWritePublisherPlugin} instead.
+     *
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return \Spryker\Zed\Event\Dependency\EventCollectionInterface
@@ -82,6 +92,8 @@ class AssetStorageEventSubscriber extends AbstractPlugin implements EventSubscri
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\AssetStorage\Communication\Plugin\Publisher\Asset\AssetDeletePublisherPlugin} instead.
+     *
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return \Spryker\Zed\Event\Dependency\EventCollectionInterface

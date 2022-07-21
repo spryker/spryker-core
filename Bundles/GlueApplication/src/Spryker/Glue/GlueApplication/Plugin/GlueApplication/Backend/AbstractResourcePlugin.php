@@ -7,11 +7,15 @@
 
 namespace Spryker\Glue\GlueApplication\Plugin\GlueApplication\Backend;
 
+use Generated\Shared\Transfer\GlueErrorTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
+use Generated\Shared\Transfer\GlueResponseTransfer;
 use Spryker\Glue\GlueApplication\Exception\ControllerNotFoundException;
+use Spryker\Glue\GlueApplication\GlueApplicationConfig;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface;
 use Spryker\Glue\Kernel\Backend\AbstractPlugin;
 use Spryker\Glue\Kernel\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @method \Spryker\Glue\GlueApplication\GlueApplicationFactory getFactory()
@@ -45,11 +49,25 @@ abstract class AbstractResourcePlugin extends AbstractPlugin implements Resource
             ];
         }
 
-        $controller = $this->getController();
+        $controller = $this->createControllerInstance($this->getController());
+        $actionName = $this->getActionName($glueRequestTransfer);
+
+        if (!method_exists($controller, $actionName)) {
+            return function (): GlueResponseTransfer {
+                $glueErrorTransfer = (new GlueErrorTransfer())
+                    ->setStatus(Response::HTTP_NOT_FOUND)
+                    ->setCode(GlueApplicationConfig::ERROR_CODE_METHOD_NOT_FOUND)
+                    ->setMessage(GlueApplicationConfig::ERROR_MESSAGE_METHOD_NOT_FOUND);
+
+                return (new GlueResponseTransfer())
+                    ->setHttpStatus(Response::HTTP_NOT_FOUND)
+                    ->addError($glueErrorTransfer);
+            };
+        }
 
         return [
-            $this->createControllerInstance($controller),
-            $this->getActionName($glueRequestTransfer),
+            $controller,
+            $actionName,
         ];
     }
 

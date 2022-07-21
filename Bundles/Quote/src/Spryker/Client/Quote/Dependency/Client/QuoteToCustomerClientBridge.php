@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\Quote\Dependency\Client;
 
+use Generated\Shared\Transfer\CustomerTransfer;
+
 class QuoteToCustomerClientBridge implements QuoteToCustomerClientInterface
 {
     /**
@@ -25,7 +27,7 @@ class QuoteToCustomerClientBridge implements QuoteToCustomerClientInterface
     /**
      * @return bool
      */
-    public function isLoggedIn()
+    public function isLoggedIn(): bool
     {
         return $this->customerClient->isLoggedIn();
     }
@@ -33,7 +35,7 @@ class QuoteToCustomerClientBridge implements QuoteToCustomerClientInterface
     /**
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    public function getCustomer()
+    public function getCustomer(): ?CustomerTransfer
     {
         return $this->customerClient->getCustomer();
     }

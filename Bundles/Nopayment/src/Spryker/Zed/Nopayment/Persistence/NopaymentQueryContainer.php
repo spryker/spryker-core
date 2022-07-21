@@ -26,7 +26,10 @@ class NopaymentQueryContainer extends AbstractQueryContainer implements Nopaymen
      */
     public function queryOrderItem(SpySalesOrderItem $orderItem)
     {
-        return $this->getFactory()->createNopaymentPaidQuery()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $orderOrderItemCollection */
+        $orderOrderItemCollection = $this->getFactory()->createNopaymentPaidQuery()
             ->findByFkSalesOrderItem($orderItem->getIdSalesOrderItem());
+
+        return $orderOrderItemCollection;
     }
 }

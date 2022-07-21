@@ -7,10 +7,6 @@
 
 namespace Spryker\Glue\GlueApplication\ApiApplication\Type;
 
-use Generated\Shared\Transfer\GlueRequestTransfer;
-use Generated\Shared\Transfer\GlueRequestValidationTransfer;
-use Generated\Shared\Transfer\GlueResponseTransfer;
-use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface;
 use Spryker\Glue\Kernel\FactoryResolverAwareTrait;
 use Spryker\Shared\Application\Application;
 
@@ -25,58 +21,41 @@ abstract class RequestFlowAwareApiApplication extends Application
 
     /**
      * Specification:
-     * - Builds the request by extracting transport and format specific fields (e.g.: HTTP headers to GlueRequestTransfer.meta).
+     * - Provide a set of builders for the API application.
+     * - Plugins receive the `GlueRequestTransfer`.
      *
-     * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\GlueRequestTransfer
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RequestBuilderPluginInterface>
      */
-    abstract public function buildRequest(GlueRequestTransfer $glueRequestTransfer): GlueRequestTransfer;
+    abstract public function provideRequestBuilderPlugins(): array;
 
     /**
      * Specification:
-     * - Executes validation specific to the application.
+     * - Provide a set of validators for the API application.
+     * - Will be run before the routing is executed.
+     * - Plugins receive the `GlueRequestTransfer`.
      *
-     * @see {@link \Spryker\Glue\GlueApplication\ApiApplication\Type\RequestFlowAwareApiApplication::buildRequest()}
+     * @see {@link \Spryker\Glue\GlueApplication\ApiApplication\Type\RequestFlowAwareApiApplication::provideRequestBuilderPlugins()}
      *
-     * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\GlueRequestValidationTransfer
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RequestValidatorPluginInterface>
      */
-    abstract public function validateRequest(GlueRequestTransfer $glueRequestTransfer): GlueRequestValidationTransfer;
+    abstract public function provideRequestValidatorPlugins(): array;
 
     /**
      * Specification:
-     * - Routes the `GlueRequestTransfer` against the `ResourceInterface` plugins wired for the application.
+     * - Provide a set of validators for the API application.
+     * - Will be run after the routing is executed.
+     * - Plugins receive the `\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface` and `GlueRequestTransfer`.
      *
-     * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
-     *
-     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RequestAfterRoutingValidatorPluginInterface>
      */
-    abstract public function route(GlueRequestTransfer $glueRequestTransfer): ResourceInterface;
+    abstract public function provideRequestAfterRoutingValidatorPlugins(): array;
 
     /**
      * Specification:
-     * - Executes validations that need to be aware of the resolved route.
+     * - Provide a set of formatters for the API application.
+     * - Plugins receive the `GlueRequestTransfer`.
      *
-     * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
-     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface $resource
-     *
-     * @return \Generated\Shared\Transfer\GlueRequestValidationTransfer
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResponseFormatterPluginInterface>
      */
-    abstract public function validateRequestAfterRouting(
-        GlueRequestTransfer $glueRequestTransfer,
-        ResourceInterface $resource
-    ): GlueRequestValidationTransfer;
-
-    /**
-     * Specification:
-     * - Formats the response in an application-specific way.
-     *
-     * @param \Generated\Shared\Transfer\GlueResponseTransfer $glueResponseTransfer
-     * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\GlueResponseTransfer
-     */
-    abstract public function formatResponse(GlueResponseTransfer $glueResponseTransfer, GlueRequestTransfer $glueRequestTransfer): GlueResponseTransfer;
+    abstract public function provideResponseFormatterPlugins(): array;
 }

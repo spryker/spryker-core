@@ -20,7 +20,7 @@ class CmsPageSearchClient extends AbstractClient implements CmsPageSearchClientI
      * @api
      *
      * @param string $searchString
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return array
      */
@@ -47,7 +47,7 @@ class CmsPageSearchClient extends AbstractClient implements CmsPageSearchClientI
      * @api
      *
      * @param string $searchString
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return int
      */

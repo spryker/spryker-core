@@ -15,7 +15,7 @@ class GlobalHardThresholdDataProvider extends AbstractGlobalThresholdDataProvide
 {
     /**
      * @param \Generated\Shared\Transfer\SalesOrderThresholdTransfer $salesOrderThresholdTransfer
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */

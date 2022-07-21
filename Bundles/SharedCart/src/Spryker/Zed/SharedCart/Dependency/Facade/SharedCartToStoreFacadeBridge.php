@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\SharedCart\Dependency\Facade;
 
+use Generated\Shared\Transfer\StoreTransfer;
+
 class SharedCartToStoreFacadeBridge implements SharedCartToStoreFacadeInterface
 {
     /**
@@ -25,7 +27,7 @@ class SharedCartToStoreFacadeBridge implements SharedCartToStoreFacadeInterface
     /**
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getCurrentStore()
+    public function getCurrentStore(): StoreTransfer
     {
         return $this->storeFacade->getCurrentStore();
     }

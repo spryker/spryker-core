@@ -8,6 +8,8 @@
 namespace Spryker\Zed\DummyPayment\Business;
 
 use Spryker\Zed\DummyPayment\Business\Model\Payment\Refund;
+use Spryker\Zed\DummyPayment\Business\Model\Payment\RefundInterface;
+use Spryker\Zed\DummyPayment\Dependency\Facade\DummyPaymentToRefundFacadeInterface;
 use Spryker\Zed\DummyPayment\DummyPaymentDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -19,7 +21,7 @@ class DummyPaymentBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\DummyPayment\Business\Model\Payment\RefundInterface
      */
-    public function createRefund()
+    public function createRefund(): RefundInterface
     {
         return new Refund(
             $this->getRefundFacade(),
@@ -27,9 +29,9 @@ class DummyPaymentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\DummyPayment\Dependency\Facade\DummyPaymentToRefundInterface
+     * @return \Spryker\Zed\DummyPayment\Dependency\Facade\DummyPaymentToRefundFacadeInterface
      */
-    protected function getRefundFacade()
+    public function getRefundFacade(): DummyPaymentToRefundFacadeInterface
     {
         return $this->getProvidedDependency(DummyPaymentDependencyProvider::FACADE_REFUND);
     }

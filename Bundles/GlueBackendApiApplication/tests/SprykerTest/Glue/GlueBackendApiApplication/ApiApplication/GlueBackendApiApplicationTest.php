@@ -8,18 +8,13 @@
 namespace SprykerTest\Glue\GlueBackendApiApplication\ApiApplication;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueRequestValidationTransfer;
-use Generated\Shared\Transfer\GlueResponseTransfer;
-use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\MissingResourceInterface;
-use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RequestAfterRoutingValidatorPluginInterface;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RequestBuilderPluginInterface;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RequestValidatorPluginInterface;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResponseFormatterPluginInterface;
 use Spryker\Glue\GlueBackendApiApplication\Application\GlueBackendApiApplication;
 use Spryker\Glue\GlueBackendApiApplication\GlueBackendApiApplicationFactory;
-use Spryker\Glue\GlueBackendApiApplicationExtension\Dependency\Plugin\RequestAfterRoutingValidatorPluginInterface;
-use Spryker\Glue\GlueBackendApiApplicationExtension\Dependency\Plugin\RequestBuilderPluginInterface;
-use Spryker\Glue\GlueBackendApiApplicationExtension\Dependency\Plugin\RequestValidatorPluginInterface;
-use Spryker\Glue\GlueBackendApiApplicationExtension\Dependency\Plugin\ResponseFormatterPluginInterface;
-use Spryker\Glue\GlueBackendApiApplicationExtension\Dependency\Plugin\RouteMatcherPluginInterface;
 
 /**
  * Auto-generated group annotations
@@ -39,13 +34,11 @@ class GlueBackendApiApplicationTest extends Unit
     public function testBuildRequestRunsPluginsAndReturnsGlueRequestTransfer(): void
     {
         $requestBuilderPluginMock = $this->createMock(RequestBuilderPluginInterface::class);
-        $requestBuilderPluginMock->expects($this->once())
-            ->method('build');
 
         $glueBackendApiApplicationMock = $this->createGlueBackendApiApplicationMock('getRequestBuilderPlugins', [$requestBuilderPluginMock]);
-        $glueRequestTransfer = $glueBackendApiApplicationMock->buildRequest(new GlueRequestTransfer());
+        $actualRequestBuilderPlugins = $glueBackendApiApplicationMock->provideRequestBuilderPlugins();
 
-        $this->assertInstanceOf(GlueRequestTransfer::class, $glueRequestTransfer);
+        $this->assertEquals([$requestBuilderPluginMock], $actualRequestBuilderPlugins);
     }
 
     /**
@@ -54,25 +47,9 @@ class GlueBackendApiApplicationTest extends Unit
     public function testValidateRequestRunsPluginsTillFirstFailingAndReturnsGlueRequestValidationTransfer()
     {
         $glueBackendApiApplicationMock = $this->createGlueBackendApiApplicationMock('getRequestValidatorPlugins', $this->createRequestValidatorPluginMocks());
-        $glueRequestValidationTransfer = $glueBackendApiApplicationMock->validateRequest(new GlueRequestTransfer());
+        $actualRequestValidatorPlugins = $glueBackendApiApplicationMock->provideRequestValidatorPlugins();
 
-        $this->assertInstanceOf(GlueRequestValidationTransfer::class, $glueRequestValidationTransfer);
-    }
-
-    /**
-     * @return void
-     */
-    public function testRouteRunsPluginsAndReturnsResource(): void
-    {
-        $routeMatcherPlugins = $this->createMock(RouteMatcherPluginInterface::class);
-        $routeMatcherPlugins->expects($this->once())
-            ->method('route');
-
-        $glueBackendApiApplicationMock = $this->createGlueBackendApiApplicationMock('getRouteMatcherPlugins', [$routeMatcherPlugins]);
-        $resource = $glueBackendApiApplicationMock->route(new GlueRequestTransfer());
-
-        $this->assertInstanceOf(ResourceInterface::class, $resource);
-        $this->assertNotInstanceOf(MissingResourceInterface::class, $resource);
+        $this->assertEquals($this->createRequestValidatorPluginMocks(), $actualRequestValidatorPlugins);
     }
 
     /**
@@ -81,9 +58,9 @@ class GlueBackendApiApplicationTest extends Unit
     public function testValidateRequestAfterRoutingRunsPluginsTillFirstFailingAndReturnsGlueRequestValidationTransfer(): void
     {
         $glueBackendApiApplicationMock = $this->createGlueBackendApiApplicationMock('getRequestAfterRoutingValidatorPlugins', $this->createRequestValidatorAfterRoutingPluginMocks());
-        $glueRequestValidationTransfer = $glueBackendApiApplicationMock->validateRequestAfterRouting(new GlueRequestTransfer(), $this->createMock(ResourceInterface::class));
+        $actualRequestValidatorAfterRoutingPlugins = $glueBackendApiApplicationMock->provideRequestAfterRoutingValidatorPlugins();
 
-        $this->assertInstanceOf(GlueRequestValidationTransfer::class, $glueRequestValidationTransfer);
+        $this->assertEquals($this->createRequestValidatorAfterRoutingPluginMocks(), $actualRequestValidatorAfterRoutingPlugins);
     }
 
     /**
@@ -91,21 +68,19 @@ class GlueBackendApiApplicationTest extends Unit
      */
     public function testFormatResponseRunsPluginsAndReturnsGlueRequestTransfer(): void
     {
-        $reponseFormatterPluginMock = $this->createMock(ResponseFormatterPluginInterface::class);
-        $reponseFormatterPluginMock->expects($this->once())
-            ->method('format');
+        $responseFormatterPluginMock = $this->createMock(ResponseFormatterPluginInterface::class);
 
-        $glueBackendApiApplicationMock = $this->createGlueBackendApiApplicationMock('getResponseFormatterPlugins', [$reponseFormatterPluginMock]);
-        $glueResponseTransfer = $glueBackendApiApplicationMock->formatResponse(new GlueResponseTransfer(), new GlueRequestTransfer());
+        $glueBackendApiApplicationMock = $this->createGlueBackendApiApplicationMock('getResponseFormatterPlugins', [$responseFormatterPluginMock]);
+        $actualResponseFormatterPlugins = $glueBackendApiApplicationMock->provideResponseFormatterPlugins();
 
-        $this->assertInstanceOf(GlueResponseTransfer::class, $glueResponseTransfer);
+        $this->assertEquals([$responseFormatterPluginMock], $actualResponseFormatterPlugins);
     }
 
     /**
      * @param string $methodName
      * @param array<\PHPUnit\Framework\MockObject\MockObject|mixed> $pluginMocks
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject|\SprykerTest\Glue\GlueBackendApiApplication\ApiApplication\Spryker\Glue\GlueBackendApiApplication\Application\GlueBackendApiApplication
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Glue\GlueBackendApiApplication\Application\GlueBackendApiApplication
      */
     protected function createGlueBackendApiApplicationMock(string $methodName, array $pluginMocks): GlueBackendApiApplication
     {
@@ -127,19 +102,16 @@ class GlueBackendApiApplicationTest extends Unit
     {
         $executableValidatorBuilderPluginMock = $this->createMock(RequestValidatorPluginInterface::class);
         $executableValidatorBuilderPluginMock
-            ->expects($this->once())
             ->method('validate')
             ->willReturn((new GlueRequestValidationTransfer())->setIsValid(true));
 
         $executableFailedValidatorBuilderPluginMock = $this->createMock(RequestValidatorPluginInterface::class);
         $executableFailedValidatorBuilderPluginMock
-            ->expects($this->once())
             ->method('validate')
             ->willReturn((new GlueRequestValidationTransfer())->setIsValid(false));
 
         $nonExecutableValidatorBuilderPluginMock = $this->createMock(RequestValidatorPluginInterface::class);
         $nonExecutableValidatorBuilderPluginMock
-            ->expects($this->never())
             ->method('validate');
 
         return [
@@ -156,20 +128,17 @@ class GlueBackendApiApplicationTest extends Unit
     {
         $executableValidatorAfterRoutingBuilderPluginMock = $this->createMock(RequestAfterRoutingValidatorPluginInterface::class);
         $executableValidatorAfterRoutingBuilderPluginMock
-            ->expects($this->once())
-            ->method('validateRequest')
+            ->method('validate')
             ->willReturn((new GlueRequestValidationTransfer())->setIsValid(true));
 
         $executableFailedValidatorAfterRoutingBuilderPluginMock = $this->createMock(RequestAfterRoutingValidatorPluginInterface::class);
         $executableFailedValidatorAfterRoutingBuilderPluginMock
-            ->expects($this->once())
-            ->method('validateRequest')
+            ->method('validate')
             ->willReturn((new GlueRequestValidationTransfer())->setIsValid(false));
 
         $nonExecutableValidatorAfterRoutingBuilderPluginMock = $this->createMock(RequestAfterRoutingValidatorPluginInterface::class);
         $nonExecutableValidatorAfterRoutingBuilderPluginMock
-            ->expects($this->never())
-            ->method('validateRequest');
+            ->method('validate');
 
         return [
             $executableValidatorAfterRoutingBuilderPluginMock,

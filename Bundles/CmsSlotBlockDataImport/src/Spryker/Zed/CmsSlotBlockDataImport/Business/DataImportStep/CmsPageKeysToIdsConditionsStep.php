@@ -31,7 +31,7 @@ class CmsPageKeysToIdsConditionsStep implements DataImportStepInterface
      *
      * @var string
      */
-    protected const KEY_CMS_PAGE_IDS = 'pageIds';
+    protected const KEY_CMS_PAGE_IDS = 'cmsPageIds';
 
     /**
      * @var \Spryker\Zed\CmsSlotBlockDataImport\Business\Resolver\ConditionResolverInterface

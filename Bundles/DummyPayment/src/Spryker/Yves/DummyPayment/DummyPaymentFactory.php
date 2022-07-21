@@ -13,13 +13,14 @@ use Spryker\Yves\DummyPayment\Form\DataProvider\DummyPaymentInvoiceFormDataProvi
 use Spryker\Yves\DummyPayment\Form\InvoiceSubForm;
 use Spryker\Yves\DummyPayment\Handler\DummyPaymentHandler;
 use Spryker\Yves\Kernel\AbstractFactory;
+use Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface;
 
 class DummyPaymentFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Yves\DummyPayment\Form\CreditCardSubForm
+     * @return \Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface
      */
-    public function createCreditCardForm()
+    public function createCreditCardForm(): SubFormInterface
     {
         return new CreditCardSubForm();
     }
@@ -27,15 +28,15 @@ class DummyPaymentFactory extends AbstractFactory
     /**
      * @return \Spryker\Yves\DummyPayment\Form\DataProvider\DummyPaymentCreditCardFormDataProvider
      */
-    public function createCreditCardFormDataProvider()
+    public function createCreditCardFormDataProvider(): DummyPaymentCreditCardFormDataProvider
     {
         return new DummyPaymentCreditCardFormDataProvider();
     }
 
     /**
-     * @return \Spryker\Yves\DummyPayment\Form\InvoiceSubForm
+     * @return \Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface
      */
-    public function createInvoiceForm()
+    public function createInvoiceForm(): SubFormInterface
     {
         return new InvoiceSubForm();
     }
@@ -43,7 +44,7 @@ class DummyPaymentFactory extends AbstractFactory
     /**
      * @return \Spryker\Yves\DummyPayment\Form\DataProvider\DummyPaymentInvoiceFormDataProvider
      */
-    public function createInvoiceFormDataProvider()
+    public function createInvoiceFormDataProvider(): DummyPaymentInvoiceFormDataProvider
     {
         return new DummyPaymentInvoiceFormDataProvider();
     }
@@ -51,7 +52,7 @@ class DummyPaymentFactory extends AbstractFactory
     /**
      * @return \Spryker\Yves\DummyPayment\Handler\DummyPaymentHandler
      */
-    public function createDummyPaymentHandler()
+    public function createDummyPaymentHandler(): DummyPaymentHandler
     {
         return new DummyPaymentHandler();
     }

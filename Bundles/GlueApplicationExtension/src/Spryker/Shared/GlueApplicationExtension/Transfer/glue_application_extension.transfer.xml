@@ -27,4 +27,7 @@
 
     <transfer name="GlueResourceMethodCollection">
     </transfer>
+
+    <transfer name="ApiControllerConfiguration">
+    </transfer>
 </transfers>

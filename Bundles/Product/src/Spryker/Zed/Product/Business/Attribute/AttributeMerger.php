@@ -18,7 +18,7 @@ class AttributeMerger implements AttributeMergerInterface
      */
     public function merge(RawProductAttributesTransfer $rawProductAttributesTransfer)
     {
-        $combinedAttributes = array_merge(
+        $combinedAttributes = array_replace(
             $rawProductAttributesTransfer->getAbstractAttributes(),
             $rawProductAttributesTransfer->getAbstractLocalizedAttributes(),
             $rawProductAttributesTransfer->getConcreteAttributes(),

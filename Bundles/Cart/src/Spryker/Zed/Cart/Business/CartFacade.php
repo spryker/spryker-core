@@ -171,4 +171,18 @@ class CartFacade extends AbstractFacade implements CartFacadeInterface
     {
         return $this->getFactory()->createQuoteLocker()->resetQuoteLock($quoteTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function expandItemGroupKeysWithCartIdentifier(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
+    {
+        return $this->getFactory()->createGroupKeyExpander()->expandItemGroupKeysWithCartIdentifier($cartChangeTransfer);
+    }
 }

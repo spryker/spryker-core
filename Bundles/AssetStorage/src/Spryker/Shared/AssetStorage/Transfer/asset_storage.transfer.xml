@@ -2,11 +2,19 @@
 <transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="AssetStorage" strict="true">
-        <property name="idAsset" type="int"/>
+        <property name="idAsset" type="int" deprecated="Use assetId instead."/>
+        <property name="assetId" type="int"/>
         <property name="assetUuid" type="string"/>
         <property name="assetContent" type="string"/>
-        <property name="storeName" type="string"/>
+        <property name="storeName" type="string" deprecated="Will be removed in next major."/>
+        <property name="assetSlot" type="string" deprecated="Will be removed in next major."/>
+    </transfer>
+
+    <transfer name="AssetSlotStorage">
+        <property name="idAssetSlotStorage" type="int"/>
         <property name="assetSlot" type="string"/>
+        <property name="store" type="string"/>
+        <property name="data" type="AssetStorageCollection"/>
     </transfer>
 
     <transfer name="AssetStorageCollection" strict="true">
@@ -36,6 +44,17 @@
 
     <transfer name="Store">
         <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="EventEntity">
+        <property name="additionalValues" type="array" singular="additionalValue"/>
+        <property name="id" type="int"/>
+        <property name="foreignKeys" type="array" singular="foreignKeys"/>
+    </transfer>
+
+    <transfer name="Filter">
+        <property name="offset" type="int"/>
+        <property name="limit" type="int"/>
     </transfer>
 
 </transfers>

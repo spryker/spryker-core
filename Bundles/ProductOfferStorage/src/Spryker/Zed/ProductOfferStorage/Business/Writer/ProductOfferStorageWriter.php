@@ -9,13 +9,12 @@ namespace Spryker\Zed\ProductOfferStorage\Business\Writer;
 
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
-use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\ProductOfferStorage\Business\Deleter\ProductOfferStorageDeleterInterface;
+use Spryker\Zed\ProductOfferStorage\Business\Reader\ProductOfferStorageReaderInterface;
 use Spryker\Zed\ProductOfferStorage\Dependency\Facade\ProductOfferStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\ProductOfferStorage\Dependency\Facade\ProductOfferStorageToStoreFacadeInterface;
 use Spryker\Zed\ProductOfferStorage\Persistence\ProductOfferStorageEntityManagerInterface;
-use Spryker\Zed\ProductOfferStorage\Persistence\ProductOfferStorageRepositoryInterface;
 
 /**
  * @method \Spryker\Zed\ProductOfferStorage\Business\ProductOfferStorageBusinessFactory getFactory()
@@ -23,6 +22,20 @@ use Spryker\Zed\ProductOfferStorage\Persistence\ProductOfferStorageRepositoryInt
 class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
 {
     use TransactionTrait;
+
+    /**
+     * @uses \Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE
+     *
+     * @var string
+     */
+    protected const COL_PRODUCT_OFFER_REFERENCE = 'spy_product_offer.product_offer_reference';
+
+    /**
+     * @uses \Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferStoreTableMap::COL_FK_PRODUCT_OFFER
+     *
+     * @var string
+     */
+    protected const COL_FK_PRODUCT_OFFER = 'spy_product_offer_store.fk_product_offer';
 
     /**
      * @uses \Spryker\Shared\ProductOffer\ProductOfferConfig::STATUS_APPROVED
@@ -42,11 +55,6 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
     protected $productOfferStorageEntityManager;
 
     /**
-     * @var \Spryker\Zed\ProductOfferStorage\Persistence\ProductOfferStorageRepositoryInterface
-     */
-    protected $productOfferStorageRepository;
-
-    /**
      * @var \Spryker\Zed\ProductOfferStorage\Business\Deleter\ProductOfferStorageDeleterInterface
      */
     protected $productOfferStorageDeleter;
@@ -62,9 +70,9 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
     protected $storeTransfers;
 
     /**
-     * @var \Spryker\Zed\ProductOfferStorage\Business\Writer\ProductOfferCriteriaTransferProviderInterface
+     * @var \Spryker\Zed\ProductOfferStorage\Business\Reader\ProductOfferStorageReaderInterface
      */
-    protected $productOfferCriteriaTransferProvider;
+    protected $productOfferStorageReader;
 
     /**
      * @var array<\Spryker\Zed\ProductOfferStorageExtension\Dependency\Plugin\ProductOfferStorageFilterPluginInterface>
@@ -74,27 +82,24 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
     /**
      * @param \Spryker\Zed\ProductOfferStorage\Dependency\Facade\ProductOfferStorageToEventBehaviorFacadeInterface $eventBehaviorFacade
      * @param \Spryker\Zed\ProductOfferStorage\Persistence\ProductOfferStorageEntityManagerInterface $productOfferStorageEntityManager
-     * @param \Spryker\Zed\ProductOfferStorage\Persistence\ProductOfferStorageRepositoryInterface $productOfferStorageRepository
      * @param \Spryker\Zed\ProductOfferStorage\Business\Deleter\ProductOfferStorageDeleterInterface $productOfferStorageDeleter
      * @param \Spryker\Zed\ProductOfferStorage\Dependency\Facade\ProductOfferStorageToStoreFacadeInterface $storeFacade
-     * @param \Spryker\Zed\ProductOfferStorage\Business\Writer\ProductOfferCriteriaTransferProviderInterface $productOfferCriteriaTransferProvider
+     * @param \Spryker\Zed\ProductOfferStorage\Business\Reader\ProductOfferStorageReaderInterface $productOfferStorageReader
      * @param array<\Spryker\Zed\ProductOfferStorageExtension\Dependency\Plugin\ProductOfferStorageFilterPluginInterface> $productOfferStorageFilterPlugins
      */
     public function __construct(
         ProductOfferStorageToEventBehaviorFacadeInterface $eventBehaviorFacade,
         ProductOfferStorageEntityManagerInterface $productOfferStorageEntityManager,
-        ProductOfferStorageRepositoryInterface $productOfferStorageRepository,
         ProductOfferStorageDeleterInterface $productOfferStorageDeleter,
         ProductOfferStorageToStoreFacadeInterface $storeFacade,
-        ProductOfferCriteriaTransferProviderInterface $productOfferCriteriaTransferProvider,
+        ProductOfferStorageReaderInterface $productOfferStorageReader,
         array $productOfferStorageFilterPlugins
     ) {
         $this->eventBehaviorFacade = $eventBehaviorFacade;
         $this->productOfferStorageEntityManager = $productOfferStorageEntityManager;
-        $this->productOfferStorageRepository = $productOfferStorageRepository;
         $this->productOfferStorageDeleter = $productOfferStorageDeleter;
         $this->storeFacade = $storeFacade;
-        $this->productOfferCriteriaTransferProvider = $productOfferCriteriaTransferProvider;
+        $this->productOfferStorageReader = $productOfferStorageReader;
         $this->productOfferStorageFilterPlugins = $productOfferStorageFilterPlugins;
     }
 
@@ -105,29 +110,57 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
      */
     public function writeProductOfferStorageCollectionByProductOfferEvents(array $eventTransfers): void
     {
-        $productOfferReferences = $this->eventBehaviorFacade->getEventTransfersAdditionalValues($eventTransfers, SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE);
+        $productOfferReferences = $this->eventBehaviorFacade->getEventTransfersAdditionalValues(
+            $eventTransfers,
+            static::COL_PRODUCT_OFFER_REFERENCE,
+        );
 
         if (!$productOfferReferences) {
             return;
         }
 
-        $this->getTransactionHandler()->handleTransaction(function () use ($productOfferReferences) {
-            $this->writeByProductOfferReferences($productOfferReferences);
+        $productOfferCollectionTransfer = $this->productOfferStorageReader->getProductOfferCollectionByProductOfferReferences($productOfferReferences);
+
+        $this->getTransactionHandler()->handleTransaction(function () use ($productOfferCollectionTransfer, $productOfferReferences) {
+            $this->writeProductOfferCollectionByProductOfferReferences($productOfferCollectionTransfer, $productOfferReferences);
         });
     }
 
     /**
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
+     *
+     * @return void
+     */
+    public function writeCollectionByProductOfferStoreEvents(array $eventTransfers): void
+    {
+        $productOfferIds = $this->eventBehaviorFacade->getEventTransferForeignKeys($eventTransfers, static::COL_FK_PRODUCT_OFFER);
+
+        if (!$productOfferIds) {
+            return;
+        }
+
+        $productOfferCollectionTransfer = $this->productOfferStorageReader->getProductOfferCollectionByProductOfferIds($productOfferIds);
+        $productOfferReferences = $this->extractProductOfferReferencesFromProductOfferCollection($productOfferCollectionTransfer);
+
+        if (!$productOfferReferences) {
+            return;
+        }
+
+        $this->getTransactionHandler()->handleTransaction(function () use ($productOfferCollectionTransfer, $productOfferReferences) {
+            $this->writeProductOfferCollectionByProductOfferReferences($productOfferCollectionTransfer, $productOfferReferences);
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferCollectionTransfer $productOfferCollectionTransfer
      * @param array<string> $productOfferReferences
      *
      * @return void
      */
-    protected function writeByProductOfferReferences(array $productOfferReferences): void
-    {
-        $sellableProductOfferCriteriaTransfer = $this->productOfferCriteriaTransferProvider->createSellableProductOfferCriteriaTransfer()
-            ->setProductOfferReferences($productOfferReferences);
-
-        $productOfferCollectionTransfer = $this->productOfferStorageRepository
-            ->getProductOffers($sellableProductOfferCriteriaTransfer);
+    protected function writeProductOfferCollectionByProductOfferReferences(
+        ProductOfferCollectionTransfer $productOfferCollectionTransfer,
+        array $productOfferReferences
+    ): void {
         $productOfferCollectionTransfer = $this->executeProductOfferStorageFilterPlugins($productOfferCollectionTransfer);
 
         $sellableProductOfferReferences = [];
@@ -160,7 +193,7 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
     /**
      * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
      *
-     * @return array
+     * @return array<string, string>
      */
     protected function getProductOfferReferenceToRemoveGroupedByStoreName(ProductOfferTransfer $productOfferTransfer): array
     {
@@ -168,7 +201,7 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
         foreach ($this->getStoreTransfers() as $storeTransfer) {
             /** @var string $storeName */
             $storeName = $storeTransfer->getName();
-            $productOfferReferencesToRemoveGroupedByStoreName[$storeName] = $productOfferTransfer->getProductOfferReference();
+            $productOfferReferencesToRemoveGroupedByStoreName[$storeName] = $productOfferTransfer->getProductOfferReferenceOrFail();
             foreach ($productOfferTransfer->getStores() as $productOfferStoreTransfer) {
                 /** @var string $productOfferStoreName */
                 $productOfferStoreName = $productOfferStoreTransfer->getName();
@@ -195,6 +228,22 @@ class ProductOfferStorageWriter implements ProductOfferStorageWriterInterface
         }
 
         return $this->storeTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferCollectionTransfer $productOfferCollectionTransfer
+     *
+     * @return array<string>
+     */
+    protected function extractProductOfferReferencesFromProductOfferCollection(ProductOfferCollectionTransfer $productOfferCollectionTransfer): array
+    {
+        $productOfferReferences = [];
+
+        foreach ($productOfferCollectionTransfer->getProductOffers() as $productOfferTransfer) {
+            $productOfferReferences[] = $productOfferTransfer->getProductOfferReferenceOrFail();
+        }
+
+        return $productOfferReferences;
     }
 
     /**

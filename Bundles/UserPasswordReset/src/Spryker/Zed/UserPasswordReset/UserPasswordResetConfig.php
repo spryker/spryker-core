@@ -25,6 +25,13 @@ class UserPasswordResetConfig extends AbstractBundleConfig
     protected const PASSWORD_RESET_PATH = '/security-gui/password/reset';
 
     /**
+     * @uses \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS_ACTIVE
+     *
+     * @var string
+     */
+    protected const USER_STATUS_ACTIVE = 'active';
+
+    /**
      * @api
      *
      * @return int
@@ -52,5 +59,15 @@ class UserPasswordResetConfig extends AbstractBundleConfig
     public function getPasswordResetPath(): string
     {
         return static::PASSWORD_RESET_PATH;
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getUserStatusActive(): string
+    {
+        return static::USER_STATUS_ACTIVE;
     }
 }

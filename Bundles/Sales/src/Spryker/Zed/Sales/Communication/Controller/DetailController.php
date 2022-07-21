@@ -126,7 +126,7 @@ class DetailController extends AbstractController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return array

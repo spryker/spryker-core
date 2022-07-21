@@ -1,33 +1,5 @@
 [
     {
-        "fileName": "src/Spryker/Zed/Acl/Communication/Form/GroupForm.php",
-        "description": "Method `Spryker\\Zed\\Acl\\Communication\\Form\\GroupForm::getBlockPrefix()` must have return type.",
-        "rule": "ExternalMethodExtensionReturnTypeRule",
-        "ruleset": "Spryker",
-        "priority": "1"
-    },
-    {
-        "fileName": "src/Spryker/Zed/Acl/Communication/Form/RoleForm.php",
-        "description": "Method `Spryker\\Zed\\Acl\\Communication\\Form\\RoleForm::getBlockPrefix()` must have return type.",
-        "rule": "ExternalMethodExtensionReturnTypeRule",
-        "ruleset": "Spryker",
-        "priority": "1"
-    },
-    {
-        "fileName": "src/Spryker/Zed/Acl/Communication/Form/RuleForm.php",
-        "description": "Method `Spryker\\Zed\\Acl\\Communication\\Form\\RuleForm::getBlockPrefix()` must have return type.",
-        "rule": "ExternalMethodExtensionReturnTypeRule",
-        "ruleset": "Spryker",
-        "priority": "1"
-    },
-    {
-        "fileName": "src/Spryker/Zed/Acl/Dependency/Facade/AclToUserBridge.php",
-        "description": "Bridges: Type should be defined for param `username` in method `Spryker\\Zed\\Acl\\Dependency\\Facade\\AclToUserBridge::getUserByUsername()`.",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
         "fileName": "src/Spryker/Zed/Acl/Dependency/Facade/AclToUserBridge.php",
         "description": "Bridges: Method `getUserByUsername()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
@@ -38,34 +10,6 @@
         "fileName": "src/Spryker/Zed/Acl/Dependency/Facade/AclToUserBridge.php",
         "description": "Bridges: Method `getCurrentUser()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/Acl/Dependency/Facade/AclToUserInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `isSystemUser()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/Acl/Dependency/Facade/AclToUserInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `getUserByUsername()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/Acl/Dependency/Facade/AclToUserInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `hasCurrentUser()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/Acl/Dependency/Facade/AclToUserInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `getCurrentUser()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
     }

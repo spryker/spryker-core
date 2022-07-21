@@ -38,7 +38,7 @@ class WriteShoppingListPermissionPlugin extends AbstractPlugin implements Execut
      *
      * @api
      *
-     * @param array $configuration
+     * @param array<string, mixed> $configuration
      * @param int|null $context ID shopping list.
      *
      * @return bool

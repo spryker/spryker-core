@@ -1,0 +1,5 @@
+backend:
+    - 'backend:test:read'
+    - 'backend:test:update'
+    - 'backend:test:create'
+    - 'backend:test:delete'

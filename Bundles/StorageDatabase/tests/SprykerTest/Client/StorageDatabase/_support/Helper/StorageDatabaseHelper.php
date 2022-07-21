@@ -66,7 +66,7 @@ class StorageDatabaseHelper extends Module
 
     /**
      * @param string $key
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param array $aliasKeys
      *
      * @return bool

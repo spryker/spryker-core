@@ -22,12 +22,15 @@ class MerchantProductOfferWishlistFacade extends AbstractFacade implements Merch
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\MerchantProductOfferWishlist\Business\MerchantProductOfferWishlistFacade::validateWishlistItemProductOfferBeforeCreation()} instead.
+     *
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistPreAddItemCheckResponseTransfer
      */
-    public function checkWishlistItemProductOfferRelation(WishlistItemTransfer $wishlistItemTransfer): WishlistPreAddItemCheckResponseTransfer
-    {
+    public function checkWishlistItemProductOfferRelation(
+        WishlistItemTransfer $wishlistItemTransfer
+    ): WishlistPreAddItemCheckResponseTransfer {
         return $this->getFactory()->createWishlistItemRelationChecker()->checkWishlistItemProductOfferRelation($wishlistItemTransfer);
     }
 
@@ -35,6 +38,25 @@ class MerchantProductOfferWishlistFacade extends AbstractFacade implements Merch
      * {@inheritDoc}
      *
      * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistPreAddItemCheckResponseTransfer
+     */
+    public function validateWishlistItemProductOfferBeforeCreation(
+        WishlistItemTransfer $wishlistItemTransfer
+    ): WishlistPreAddItemCheckResponseTransfer {
+        return $this->getFactory()
+            ->createWishlistItemProductOfferValidator()
+            ->validateWishlistItemProductOfferBeforeCreation($wishlistItemTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\MerchantProductOfferWishlist\Business\MerchantProductOfferWishlistFacade::validateWishlistItemProductOfferBeforeUpdate()} instead.
      *
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
@@ -46,5 +68,22 @@ class MerchantProductOfferWishlistFacade extends AbstractFacade implements Merch
         return $this->getFactory()
             ->createWishlistItemRelationChecker()
             ->checkUpdateWishlistItemProductOfferRelation($wishlistItemTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistPreUpdateItemCheckResponseTransfer
+     */
+    public function validateWishlistItemProductOfferBeforeUpdate(
+        WishlistItemTransfer $wishlistItemTransfer
+    ): WishlistPreUpdateItemCheckResponseTransfer {
+        return $this->getFactory()
+            ->createWishlistItemProductOfferValidator()
+            ->validateWishlistItemProductOfferBeforeUpdate($wishlistItemTransfer);
     }
 }

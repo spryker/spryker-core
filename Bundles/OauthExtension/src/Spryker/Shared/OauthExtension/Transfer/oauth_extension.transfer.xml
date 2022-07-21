@@ -19,4 +19,19 @@
     <transfer name="OauthRefreshToken">
     </transfer>
 
+    <transfer name="GlueAuthenticationRequest">
+    </transfer>
+
+    <transfer name="GlueAuthenticationRequestContext">
+    </transfer>
+
+    <transfer name="OauthRequest">
+    </transfer>
+
+    <transfer name="OauthScopeFindRequest">
+    </transfer>
+
+    <transfer name="OauthScopeFind">
+    </transfer>
+
 </transfers>

@@ -34,7 +34,7 @@ class ElasticsearchSearchAdapterPlugin extends AbstractPlugin implements SearchA
      *
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
      * @param array<\Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface> $resultFormatters
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return \Elastica\ResultSet|array
      */

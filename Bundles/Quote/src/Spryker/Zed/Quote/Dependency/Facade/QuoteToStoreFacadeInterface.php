@@ -7,17 +7,19 @@
 
 namespace Spryker\Zed\Quote\Dependency\Facade;
 
+use Generated\Shared\Transfer\StoreTransfer;
+
 interface QuoteToStoreFacadeInterface
 {
     /**
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getCurrentStore();
+    public function getCurrentStore(): StoreTransfer;
 
     /**
      * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getStoreByName($storeName);
+    public function getStoreByName(string $storeName): StoreTransfer;
 }

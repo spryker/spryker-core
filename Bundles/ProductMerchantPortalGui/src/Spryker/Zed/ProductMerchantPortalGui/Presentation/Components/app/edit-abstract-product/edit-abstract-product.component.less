@@ -1,20 +1,26 @@
 @import '~@spryker/styles/src/lib/themes/default/variables/index.less';
 
-@edit-abstract-product-padding: 30px;
-@edit-abstract-product-header-padding: 15px 30px;
-@edit-abstract-product-header-headline-padding-bottom: 0;
-@edit-abstract-product-title-margin-bottom: 7px;
-@edit-abstract-product-common-blocks-indent: 7px;
-@edit-abstract-product-common-padding-bottom: 30px;
-@edit-abstract-product-sub-title-margin: 0;
-@edit-abstract-product-card-padding-bottom: 20px;
-@edit-abstract-product-card-textarea-min-height: 100px;
-@edit-abstract-product-card-last-padding-bottom: 0;
-@edit-abstract-product-table-padding-inside-card: 3px 5px;
-@edit-abstract-product-stores-field-max-width: 420px;
-@edit-abstract-product-form-item-width: 130px;
-@edit-abstract-product-approval-status-margin-left: 20px;
-@edit-abstract-product-approval-status-button-margin-right: 8px;
+@edit-abstract-product-padding: var(--spy-edit-abstract-product-padding, 30px);
+@edit-abstract-product-header-padding: var(--spy-edit-abstract-product-header-padding, 17px 30px);
+@edit-abstract-product-header-headline-padding-bottom: var(
+    --spy-edit-abstract-product-header-headline-padding-bottom,
+    0
+);
+@edit-abstract-product-title-margin-bottom: var(--spy-edit-abstract-product-title-margin-bottom, 7px);
+@edit-abstract-product-common-blocks-indent: var(--spy-edit-abstract-product-common-blocks-indent, 7px);
+@edit-abstract-product-common-padding-bottom: var(--spy-edit-abstract-product-common-padding-bottom, 30px);
+@edit-abstract-product-sub-title-margin: var(--spy-edit-abstract-product-sub-title-margin, 0);
+@edit-abstract-product-card-padding-bottom: var(--spy-edit-abstract-product-card-padding-bottom, 20px);
+@edit-abstract-product-card-textarea-min-height: var(--spy-edit-abstract-product-card-textarea-min-height, 100px);
+@edit-abstract-product-card-last-padding-bottom: var(--spy-edit-abstract-product-card-last-padding-bottom, 0);
+@edit-abstract-product-table-padding-inside-card: var(--spy-edit-abstract-product-table-padding-inside-card, 3px 5px);
+@edit-abstract-product-stores-field-max-width: var(--spy-edit-abstract-product-stores-field-max-width, 420px);
+@edit-abstract-product-form-item-width: var(--spy-edit-abstract-product-form-item-width, 130px);
+@edit-abstract-product-approval-status-margin-left: var(--spy-edit-abstract-product-approval-status-margin-left, 20px);
+@edit-abstract-product-approval-status-button-margin-right: var(
+    --spy-edit-abstract-product-approval-status-button-margin-right,
+    8px
+);
 
 .@{ajax-form-prefix-cls}-container {
     overflow-y: auto;
@@ -39,6 +45,10 @@
 
         .@{headline-prefix-cls} {
             padding-bottom: @edit-abstract-product-header-headline-padding-bottom;
+        }
+
+        .@{btn-prefix-cls} {
+            vertical-align: top;
         }
     }
 

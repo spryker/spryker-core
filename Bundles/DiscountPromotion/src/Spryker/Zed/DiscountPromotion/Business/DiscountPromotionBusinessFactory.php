@@ -11,6 +11,8 @@ use Spryker\Zed\DiscountPromotion\Business\Cart\CartValidator;
 use Spryker\Zed\DiscountPromotion\Business\Cart\CartValidatorInterface;
 use Spryker\Zed\DiscountPromotion\Business\Checker\DiscountPromotionItemChecker;
 use Spryker\Zed\DiscountPromotion\Business\Checker\DiscountPromotionItemCheckerInterface;
+use Spryker\Zed\DiscountPromotion\Business\Checker\DiscountPromotionVoucherCodeApplicationChecker;
+use Spryker\Zed\DiscountPromotion\Business\Checker\DiscountPromotionVoucherCodeApplicationCheckerInterface;
 use Spryker\Zed\DiscountPromotion\Business\CollectorStrategy\DiscountPromotionCollectorStrategyComposite;
 use Spryker\Zed\DiscountPromotion\Business\CollectorStrategy\DiscountPromotionCollectorStrategyCompositeInterface;
 use Spryker\Zed\DiscountPromotion\Business\CollectorStrategy\DiscountPromotionCollectorStrategyInterface;
@@ -28,6 +30,8 @@ use Spryker\Zed\DiscountPromotion\Business\Filter\DiscountPromotionItemFilter;
 use Spryker\Zed\DiscountPromotion\Business\Filter\DiscountPromotionItemFilterInterface;
 use Spryker\Zed\DiscountPromotion\Business\Model\DiscountCollectorStrategy\PromotionAvailabilityCalculator;
 use Spryker\Zed\DiscountPromotion\Business\Model\DiscountPromotionReader;
+use Spryker\Zed\DiscountPromotion\Business\PostUpdater\DiscountPromotionDiscountPostUpdater;
+use Spryker\Zed\DiscountPromotion\Business\PostUpdater\DiscountPromotionDiscountPostUpdaterInterface;
 use Spryker\Zed\DiscountPromotion\Business\Writer\DiscountVoucherQuoteWriter;
 use Spryker\Zed\DiscountPromotion\Business\Writer\DiscountVoucherQuoteWriterInterface;
 use Spryker\Zed\DiscountPromotion\DiscountPromotionDependencyProvider;
@@ -174,6 +178,25 @@ class DiscountPromotionBusinessFactory extends AbstractBusinessFactory
         return new SingleSkuDiscountPromotionCollectorStrategy(
             $this->createDiscountableItemCreator(),
             $this->getRepository(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\DiscountPromotion\Business\Checker\DiscountPromotionVoucherCodeApplicationCheckerInterface
+     */
+    public function createDiscountPromotionVoucherCodeApplicationChecker(): DiscountPromotionVoucherCodeApplicationCheckerInterface
+    {
+        return new DiscountPromotionVoucherCodeApplicationChecker();
+    }
+
+    /**
+     * @return \Spryker\Zed\DiscountPromotion\Business\PostUpdater\DiscountPromotionDiscountPostUpdaterInterface
+     */
+    public function createDiscountPromotionDiscountPostUpdater(): DiscountPromotionDiscountPostUpdaterInterface
+    {
+        return new DiscountPromotionDiscountPostUpdater(
+            $this->createDiscountPromotionCreator(),
+            $this->createDiscountPromotionUpdater(),
         );
     }
 

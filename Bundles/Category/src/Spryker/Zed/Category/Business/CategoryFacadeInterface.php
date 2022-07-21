@@ -279,6 +279,7 @@ interface CategoryFacadeInterface
      * - Retrieves all NodeTransfers by categoryNodeIds and all their parents and children NodeTransfers.
      * - Filters category nodes according to `CategoryNodeCriteriaTransfer`.
      * - Requires `CategoryNodeCriteriaTransfer.categoryNodeIds` to be set.
+     * - Expands category nodes with localized attributes and store relations.
      *
      * @api
      *

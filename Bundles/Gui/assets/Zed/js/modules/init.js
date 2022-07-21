@@ -11,6 +11,7 @@ var TranslationCopyFields = require('./libs/translation-copy-fields');
 var Ibox = require('./libs/ibox');
 var dataTable = require('./libs/data-table');
 var safeChecks = require('./libs/safe-checks');
+var select2combobox = require('./libs/select2-combobox');
 
 var dataTablesSearchDelay = function () {
     var dataTablesWrapper = $('.dataTables_wrapper');
@@ -144,43 +145,6 @@ $(document).ready(function () {
 
     $('.dropdown-toggle').dropdown();
 
-    $('.spryker-form-select2combobox').each(function (index, element) {
-        var select2InitOptions = {};
-        var selectElement = $(element);
-
-        if (selectElement.data('autocomplete-url')) {
-            select2InitOptions = {
-                ajax: {
-                    url: selectElement.data('autocomplete-url'),
-                    dataType: 'json',
-                    delay: 500,
-                    cache: true,
-                    data: function (params) {
-                        params.page = params.page || 1;
-
-                        return params;
-                    },
-                },
-                minimumInputLength: 3,
-            };
-
-            selectElement.on('select2:unselecting', function (e) {
-                var idSelected = e.params.args.data.id;
-                var selectedValues = selectElement.val();
-
-                selectElement
-                    .val(
-                        selectedValues.filter(function (value) {
-                            return value !== '' + idSelected;
-                        }),
-                    )
-                    .trigger('change');
-            });
-        }
-
-        selectElement.select2(select2InitOptions);
-    });
-
     $('.more-history').click(function (e) {
         e.preventDefault();
         var idProductItem = $(this).data('id');
@@ -192,6 +156,9 @@ $(document).ready(function () {
         $button.toggleClass('is-hidden', !isHidden);
         $button.toggleClass('is-shown', isHidden);
     });
+
+    /* Init Select2 combobox */
+    select2combobox();
 
     /* Init tabs */
     $('.tabs-container').each(function (index, item) {

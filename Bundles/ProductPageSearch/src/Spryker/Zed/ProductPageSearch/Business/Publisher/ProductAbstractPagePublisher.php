@@ -240,7 +240,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
     }
 
     /**
-     * @param array $productAbstractLocalizedEntities
+     * @param array<array<string, mixed>> $productAbstractLocalizedEntities
      * @param array<\Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch> $productAbstractPageSearchEntities
      * @param array<\Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInterface> $pageDataExpanderPlugins
      * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $productPageLoadTransfer
@@ -278,13 +278,16 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
             $store = $pairedEntity[static::STORE_NAME];
             $locale = $pairedEntity[static::LOCALE_NAME];
 
-            $productPageSearchTransfer = $indexedProductAbstractPageSearchTransfers[$locale][$productAbstractLocalizedEntity['fk_product_abstract']] ?? null;
+            if ($productAbstractLocalizedEntity === null || !$this->isActual($productAbstractLocalizedEntity)) {
+                $this->deleteProductAbstractPageSearchEntity($productAbstractPageSearchEntity);
 
-            if (
-                $productAbstractLocalizedEntity === null
-                || $productPageSearchTransfer === null
-                || !$this->isActual($productAbstractLocalizedEntity)
-            ) {
+                continue;
+            }
+
+            $idProductAbstract = $productAbstractLocalizedEntity['fk_product_abstract'];
+            $productPageSearchTransfer = $indexedProductAbstractPageSearchTransfers[$locale][$idProductAbstract] ?? null;
+
+            if ($productPageSearchTransfer === null) {
                 $this->deleteProductAbstractPageSearchEntity($productAbstractPageSearchEntity);
 
                 continue;
@@ -443,7 +446,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
 
     /**
      * @param array<\Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInterface> $pageDataExpanderPlugins
-     * @param array $productAbstractLocalizedEntity
+     * @param array<string, mixed> $productAbstractLocalizedEntity
      * @param \Generated\Shared\Transfer\ProductPageSearchTransfer $productPageSearchTransfer
      *
      * @return void
@@ -464,7 +467,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
      * - ProductAbstractPageSearchEntity without ProductAbstractLocalizedEntities (left outs) are paired with NULL.
      * - ProductAbstractLocalizedEntities are paired multiple times per store.
      *
-     * @param array $productAbstractLocalizedEntities
+     * @param array<array<string, mixed>> $productAbstractLocalizedEntities
      * @param array<\Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch> $productAbstractPageSearchEntities
      * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $productPageLoadTransfer
      *
@@ -761,9 +764,18 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
         $productAbstractPageSearchTransfers = [];
 
         foreach ($pairedEntities as $pairedEntity) {
+            /** @var array|null $productAbstractLocalizedEntity */
+            $productAbstractLocalizedEntity = $pairedEntity[static::PRODUCT_ABSTRACT_LOCALIZED_ENTITY] ?? null;
+            /** @var \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch $productAbstractPageSearchEntity */
+            $productAbstractPageSearchEntity = $pairedEntity[static::PRODUCT_ABSTRACT_PAGE_SEARCH_ENTITY];
+
+            if (!$productAbstractLocalizedEntity) {
+                continue;
+            }
+
             $productAbstractPageSearchTransfers[] = $this->getProductPageSearchTransfer(
-                $pairedEntity[static::PRODUCT_ABSTRACT_LOCALIZED_ENTITY],
-                $pairedEntity[static::PRODUCT_ABSTRACT_PAGE_SEARCH_ENTITY],
+                $productAbstractLocalizedEntity,
+                $productAbstractPageSearchEntity,
                 $isRefresh,
             );
         }

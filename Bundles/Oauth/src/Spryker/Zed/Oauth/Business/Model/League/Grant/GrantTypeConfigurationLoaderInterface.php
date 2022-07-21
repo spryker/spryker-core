@@ -10,6 +10,9 @@ namespace Spryker\Zed\Oauth\Business\Model\League\Grant;
 use Generated\Shared\Transfer\OauthGrantTypeConfigurationTransfer;
 use Generated\Shared\Transfer\OauthRequestTransfer;
 
+/**
+ * @deprecated Use {@link \Spryker\Zed\Oauth\Business\Model\League\Grant\OauthGrantTypeConfigurationLoaderInterface} instead.
+ */
 interface GrantTypeConfigurationLoaderInterface
 {
     /**

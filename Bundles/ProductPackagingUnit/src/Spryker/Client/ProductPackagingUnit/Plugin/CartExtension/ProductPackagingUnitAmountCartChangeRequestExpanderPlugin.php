@@ -22,7 +22,7 @@ class ProductPackagingUnitAmountCartChangeRequestExpanderPlugin extends Abstract
      * @api
      *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */

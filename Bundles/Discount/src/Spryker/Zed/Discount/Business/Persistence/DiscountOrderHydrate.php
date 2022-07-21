@@ -81,9 +81,8 @@ class DiscountOrderHydrate implements DiscountOrderHydrateInterface
     {
         return $this->discountQueryContainer
             ->querySalesDiscount()
-            ->leftJoinWithExpense()
+            ->leftJoinWithDiscountCode()
             ->leftJoinWithOrderItem()
-            ->joinWithOrder()
             ->filterByFkSalesOrder($idSalesOrder)
             ->find();
     }

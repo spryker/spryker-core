@@ -7,7 +7,10 @@
 
 namespace SprykerTest\Zed\ZedNavigation\Helper;
 
+use Codeception\Exception\ElementNotFound;
 use Codeception\Module;
+use Facebook\WebDriver\Exception\NoSuchElementException;
+use Facebook\WebDriver\Exception\TimeoutException;
 use SprykerTest\Shared\Testify\Helper\ZedBootstrap;
 use SprykerTest\Zed\Application\Helper\ApplicationHelper;
 
@@ -78,10 +81,16 @@ class BreadcrumbHelper extends Module
 
         $driver = $this->getDriver();
 
-        if ($this->isPresentationSuite) {
-            $driver->waitForElement('//spryker-breadcrumbs');
-        } else {
-            $driver->seeElement('//spryker-breadcrumbs');
+        try {
+            if ($this->isPresentationSuite) {
+                $driver->waitForElement('//spryker-breadcrumbs');
+            } else {
+                $driver->seeElement('//spryker-breadcrumbs');
+            }
+        } catch (ElementNotFound | NoSuchElementException | TimeoutException $exception) {
+            $this->checkBreadcrumbNavigationNative($breadcrumbParts);
+
+            return;
         }
 
         $breadcrumbAttribute = $driver->grabAttributeFrom('//spryker-breadcrumbs', 'breadcrumbs');
@@ -92,6 +101,22 @@ class BreadcrumbHelper extends Module
         foreach ($breadcrumbParts as $key => $breadcrumbPart) {
             $driver->assertTrue(array_key_exists($key, $decodedBreadcrumbAttribute));
             $driver->assertSame($decodedBreadcrumbAttribute[$key]['label'], $breadcrumbPart);
+        }
+    }
+
+    /**
+     * @param array $breadcrumbParts
+     *
+     * @return void
+     */
+    protected function checkBreadcrumbNavigationNative(array $breadcrumbParts): void
+    {
+        $driver = $this->getDriver();
+        $position = 0;
+
+        foreach ($breadcrumbParts as $breadcrumbPart) {
+            $driver->see($breadcrumbPart, sprintf('//ol[@class="breadcrumb"]/li[%s]', $position + 1));
+            $position++;
         }
     }
 }

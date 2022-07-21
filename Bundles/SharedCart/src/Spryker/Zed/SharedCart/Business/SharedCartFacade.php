@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\SharedCart\Business;
 
+use Generated\Shared\Transfer\CommentRequestTransfer;
+use Generated\Shared\Transfer\CommentValidationResponseTransfer;
 use Generated\Shared\Transfer\CustomerCollectionTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\PermissionCollectionTransfer;
@@ -402,5 +404,24 @@ class SharedCartFacade extends AbstractFacade implements SharedCartFacadeInterfa
     public function addDefaultSharedQuoteChangedMessage(QuoteTransfer $quoteTransfer): void
     {
         $this->getFactory()->createSharedCartMessenger()->addDefaultSharedQuoteChangedMessage($quoteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
+     * @param \Generated\Shared\Transfer\CommentValidationResponseTransfer $commentValidationResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\CommentValidationResponseTransfer
+     */
+    public function validateSharedCartComment(
+        CommentRequestTransfer $commentRequestTransfer,
+        CommentValidationResponseTransfer $commentValidationResponseTransfer
+    ): CommentValidationResponseTransfer {
+        return $this->getFactory()
+            ->createSharedCartCommentValidator()
+            ->validate($commentRequestTransfer, $commentValidationResponseTransfer);
     }
 }

@@ -101,7 +101,7 @@ interface ShoppingListClientInterface
      * @deprecated Use {@link addShoppingListItem()} instead. Will be removed with next major release.
      *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
@@ -121,7 +121,7 @@ interface ShoppingListClientInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
      */

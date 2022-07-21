@@ -28,7 +28,7 @@ class PropelArraySetFormatter extends SimpleArrayFormatter
     public function init(BaseModelCriteria $criteria, ?DataFetcherInterface $dataFetcher = null)
     {
         $this->dbName = $criteria->getDbName();
-        $this->setClass($criteria->getModelName());
+        $this->setClass($criteria->getModelNameOrFail());
         $this->setWith($criteria->getWith());
         $this->asColumns = array_merge($criteria->getSelectColumns(), $criteria->getAsColumns());
         $this->hasLimit = $criteria->getLimit() !== -1;

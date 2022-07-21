@@ -19,7 +19,7 @@
 
     {{ form_start(merchantAccountForm, { attr: { novalidate: '', withMonitor: true } }) }}
         <web-mp-my-account cloak>
-            <span title>{{ 'My Account' | trans }}</span>
+            <h1 title>{{ 'My Account' | trans }}</h1>
             {{ form_row(merchantAccountForm.save, { attr: { size: 'lg', action: '' } }) }}
 
             <web-spy-card class="mp-my-account__card" cloak spy-title="{{ 'Personal Details' | trans }}">

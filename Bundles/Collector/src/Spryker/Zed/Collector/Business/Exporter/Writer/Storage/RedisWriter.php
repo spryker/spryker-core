@@ -26,7 +26,7 @@ class RedisWriter implements WriterInterface
     }
 
     /**
-     * @param array $dataSet
+     * @param array<string, mixed> $dataSet
      *
      * @return bool
      */
@@ -36,7 +36,7 @@ class RedisWriter implements WriterInterface
     }
 
     /**
-     * @param array $dataSet
+     * @param array<string, mixed> $dataSet
      *
      * @return bool
      */

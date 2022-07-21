@@ -64,18 +64,14 @@ describe('BulkEditProductVariantsComponent', () => {
         component = fixture.componentInstance;
     });
 
-    it('should render default projected title in the `.mp-bulk-edit-product-variants__title` element', () => {
-        const projectedTitle = fixture.debugElement.query(
-            By.css('.mp-bulk-edit-product-variants__title .projected-title'),
-        );
+    it('should render default projected title in the `spy-headline` element', () => {
+        const projectedTitle = fixture.debugElement.query(By.css('spy-headline .projected-title'));
 
         expect(projectedTitle).toBeTruthy();
     });
 
-    it('should render default projected action in the `.mp-bulk-edit-product-variants__heading-col` element', () => {
-        const projectedAction = fixture.debugElement.query(
-            By.css('.mp-bulk-edit-product-variants__heading-col .projected-action'),
-        );
+    it('should render default projected action in the `spy-headline` element', () => {
+        const projectedAction = fixture.debugElement.query(By.css('spy-headline .projected-action'));
 
         expect(projectedAction).toBeTruthy();
     });

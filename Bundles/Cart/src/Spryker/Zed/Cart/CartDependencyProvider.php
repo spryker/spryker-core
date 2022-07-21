@@ -10,6 +10,7 @@ namespace Spryker\Zed\Cart;
 use Spryker\Zed\Cart\Dependency\Facade\CartToCalculationBridge;
 use Spryker\Zed\Cart\Dependency\Facade\CartToMessengerBridge;
 use Spryker\Zed\Cart\Dependency\Facade\CartToQuoteFacadeBridge;
+use Spryker\Zed\Cart\Dependency\Service\CartToUtilTextServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -94,6 +95,11 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_QUOTE_LOCK_PRE_RESET = 'PLUGINS_QUOTE_LOCK_PRE_RESET';
 
     /**
+     * @var string
+     */
+    public const SERVICE_UTIL_TEXT = 'SERVICE_UTIL_TEXT';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -117,6 +123,7 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addPostReloadItemsPlugins($container);
         $container = $this->addCartBeforePreCheckNormalizerPlugins($container);
         $container = $this->addQuoteLockPreResetPlugins($container);
+        $container = $this->addUtilTextService($container);
 
         return $container;
     }
@@ -326,6 +333,20 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::PLUGINS_QUOTE_LOCK_PRE_RESET, function () {
             return $this->getQuoteLockPreResetPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilTextService(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_TEXT, function (Container $container) {
+            return new CartToUtilTextServiceBridge($container->getLocator()->utilText()->service());
         });
 
         return $container;

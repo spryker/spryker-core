@@ -112,7 +112,7 @@ class ProductConcreteStorage implements ProductConcreteStorageInterface
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \Generated\Shared\Transfer\StorageProductTransfer
      */

@@ -27,7 +27,7 @@ class ProductReviewCollectorToSearchBridge implements ProductReviewCollectorToSe
 
     /**
      * @param \Spryker\Zed\Search\Dependency\Plugin\PageMapInterface $pageMap
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return array

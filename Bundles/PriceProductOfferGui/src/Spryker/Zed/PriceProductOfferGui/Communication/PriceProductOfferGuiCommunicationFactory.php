@@ -2,12 +2,14 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\PriceProductOfferGui\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\PriceProductOfferGui\Communication\Filter\PriceProductOfferFilter;
+use Spryker\Zed\PriceProductOfferGui\Communication\Filter\PriceProductOfferFilterInterface;
 use Spryker\Zed\PriceProductOfferGui\Communication\Reader\PriceProductOfferReader;
 use Spryker\Zed\PriceProductOfferGui\Communication\Reader\PriceProductOfferReaderInterface;
 use Spryker\Zed\PriceProductOfferGui\Dependency\Facade\PriceProductOfferGuiToPriceFacadeInterface;
@@ -54,5 +56,13 @@ class PriceProductOfferGuiCommunicationFactory extends AbstractCommunicationFact
     public function getUtilEncodingService(): PriceProductOfferGuiToUtilEncodingServiceInterface
     {
         return $this->getProvidedDependency(PriceProductOfferGuiDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductOfferGui\Communication\Filter\PriceProductOfferFilterInterface
+     */
+    public function createPriceProductOfferFilter(): PriceProductOfferFilterInterface
+    {
+        return new PriceProductOfferFilter();
     }
 }

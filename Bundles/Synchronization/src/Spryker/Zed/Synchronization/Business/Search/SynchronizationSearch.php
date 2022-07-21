@@ -63,7 +63,7 @@ class SynchronizationSearch implements SynchronizationInterface
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param string $queueName
      *
      * @return void
@@ -76,6 +76,7 @@ class SynchronizationSearch implements SynchronizationInterface
         $data = $this->formatTimestamp($data);
         $existingEntry = $this->read($data[static::KEY], $typeName);
 
+        /** @var array<string, mixed> $formattedData */
         $formattedData = [
             $data[static::KEY] => $data[static::VALUE],
         ];
@@ -88,7 +89,7 @@ class SynchronizationSearch implements SynchronizationInterface
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param string $queueName
      *
      * @return void
@@ -101,6 +102,7 @@ class SynchronizationSearch implements SynchronizationInterface
         $data = $this->formatTimestamp($data);
         $existingEntry = $this->read($data[static::KEY], $typeName);
 
+        /** @var array<string, mixed> $formattedData */
         $formattedData = [
             $data[static::KEY] => [],
         ];
@@ -113,7 +115,7 @@ class SynchronizationSearch implements SynchronizationInterface
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param string $parameterName
      *
      * @return string
@@ -144,7 +146,7 @@ class SynchronizationSearch implements SynchronizationInterface
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */
@@ -161,7 +163,7 @@ class SynchronizationSearch implements SynchronizationInterface
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return void
      */
@@ -177,7 +179,7 @@ class SynchronizationSearch implements SynchronizationInterface
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array<\Generated\Shared\Transfer\SearchDocumentTransfer>
      */
@@ -204,7 +206,7 @@ class SynchronizationSearch implements SynchronizationInterface
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return void
      */
@@ -220,7 +222,7 @@ class SynchronizationSearch implements SynchronizationInterface
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */

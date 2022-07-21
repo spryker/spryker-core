@@ -264,10 +264,12 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
      */
     public function deleteCategory(int $idCategory): void
     {
-        $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $categoryObjectCollection */
+        $categoryObjectCollection = $this->getFactory()
             ->createCategoryQuery()
-            ->findByIdCategory($idCategory)
-            ->delete();
+            ->findByIdCategory($idCategory);
+
+        $categoryObjectCollection->delete();
     }
 
     /**
@@ -277,10 +279,12 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
      */
     public function deleteCategoryLocalizedAttributes(int $idCategory): void
     {
-        $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $categoryAttributeObjectCollection */
+        $categoryAttributeObjectCollection = $this->getFactory()
             ->createCategoryAttributeQuery()
-            ->findByFkCategory($idCategory)
-            ->delete();
+            ->findByFkCategory($idCategory);
+
+        $categoryAttributeObjectCollection->delete();
     }
 
     /**
@@ -290,10 +294,12 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
      */
     public function deleteCategoryNode(int $idCategoryNode): void
     {
-        $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $categoryNodeObjectCollection */
+        $categoryNodeObjectCollection = $this->getFactory()
             ->createCategoryNodeQuery()
-            ->findByIdCategoryNode($idCategoryNode)
-            ->delete();
+            ->findByIdCategoryNode($idCategoryNode);
+
+        $categoryNodeObjectCollection->delete();
     }
 
     /**
@@ -359,13 +365,15 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
             ->setLeftTableName(SpyCategoryClosureTableTableMap::TABLE_NAME)
             ->setLeftTableAlias('descendants');
 
+        /** @var literal-string $where */
+        $where = sprintf('descendants.fk_category_node = %d', $idCategoryNode);
         $categoryClosureTableQuery->addJoinObject($joinCategoryNodeDescendant)
             ->addJoinObject($joinCategoryNodeAscendant, 'ascendantsJoin')
             ->addJoinCondition(
                 'ascendantsJoin',
                 'ascendants.fk_category_node_descendant = node.fk_category_node',
             )
-            ->where(sprintf('descendants.fk_category_node = %d', $idCategoryNode))
+            ->where($where)
             ->where('ascendants.fk_category_node IS NULL')
             ->find()
             ->delete();
@@ -461,19 +469,19 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
 
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Category\Persistence\SpyCategoryClosureTable> $parentCategoryClosureTableEntities
-     * @param \Orm\Zed\Category\Persistence\SpyCategoryClosureTable $categoryClosureTableEntity
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryClosureTable $baseCategoryClosureTableEntity
      *
      * @return void
      */
     protected function persistCategoryClosureTableParentEntries(
         ObjectCollection $parentCategoryClosureTableEntities,
-        SpyCategoryClosureTable $categoryClosureTableEntity
+        SpyCategoryClosureTable $baseCategoryClosureTableEntity
     ): void {
         foreach ($parentCategoryClosureTableEntities as $parentCategoryClosureTableEntity) {
-            $depth = $categoryClosureTableEntity->getDepth() + $parentCategoryClosureTableEntity->getDepth() + 1;
+            $depth = $baseCategoryClosureTableEntity->getDepth() + $parentCategoryClosureTableEntity->getDepth() + 1;
             $categoryClosureTableEntity = $this->createCategoryClosureTableEntity(
                 $parentCategoryClosureTableEntity->getFkCategoryNode(),
-                $categoryClosureTableEntity->getFkCategoryNodeDescendant(),
+                $baseCategoryClosureTableEntity->getFkCategoryNodeDescendant(),
                 $depth,
             );
 

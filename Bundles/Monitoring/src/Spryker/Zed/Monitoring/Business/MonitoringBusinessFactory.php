@@ -24,7 +24,19 @@ class MonitoringBusinessFactory extends AbstractBusinessFactory
      */
     public function createEventHandler(): EventHandlerInterface
     {
-        return new EventHandler($this->getMonitoringService(), $this->getUtilNetworkService());
+        return new EventHandler(
+            $this->getMonitoringService(),
+            $this->getUtilNetworkService(),
+            $this->getMonitoringTransactionNamingStrategies(),
+        );
+    }
+
+    /**
+     * @return array<\Spryker\Zed\Monitoring\Business\MonitoringTransactionNamingStrategy\MonitoringTransactionNamingStrategyInterface>
+     */
+    public function getMonitoringTransactionNamingStrategies(): array
+    {
+        return [];
     }
 
     /**

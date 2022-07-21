@@ -19,7 +19,7 @@ interface FieldMapperStrategyInterface
     public function isApplicable(string $dataField): bool;
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param int $volumeQuantity
      * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *

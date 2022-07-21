@@ -114,7 +114,7 @@ class MerchantUserUpdater implements MerchantUserUpdaterInterface
             ->findMerchantUser($merchantUserCriteriaTransfer);
 
         if (!$merchantUserTransfer) {
-            throw new MerchantUserNotFoundException((string)$idUser);
+            throw new MerchantUserNotFoundException($idUser);
         }
 
         return $merchantUserTransfer;

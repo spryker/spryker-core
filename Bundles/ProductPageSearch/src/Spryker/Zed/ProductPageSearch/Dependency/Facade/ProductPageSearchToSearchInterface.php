@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 interface ProductPageSearchToSearchInterface
 {
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param string $mapperName
      *

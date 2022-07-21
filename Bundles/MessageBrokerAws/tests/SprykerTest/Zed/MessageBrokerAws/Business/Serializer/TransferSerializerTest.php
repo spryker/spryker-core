@@ -127,7 +127,7 @@ class TransferSerializerTest extends Unit
                 'body' => '{"key": "value"}',
                 'headers' => [
                     'transferName' => 'MessageBrokerTestMessage',
-                    'publisher' => '{"storeReference": "storeReference", "appIdentifier": "appIdentifier"}',
+                    'publisher' => 'publisher',
                 ],
             ],
         );

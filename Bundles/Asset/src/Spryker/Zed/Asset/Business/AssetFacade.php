@@ -67,6 +67,8 @@ class AssetFacade extends AbstractFacade implements AssetFacadeInterface
      *
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @param int $idAsset
      *
      * @return \Generated\Shared\Transfer\AssetTransfer|null

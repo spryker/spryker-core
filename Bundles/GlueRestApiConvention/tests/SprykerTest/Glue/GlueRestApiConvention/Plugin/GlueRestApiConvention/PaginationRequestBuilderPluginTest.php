@@ -9,7 +9,7 @@ namespace SprykerTest\Glue\GlueRestApiConvention\Plugin\GlueRestApiConvention;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\PaginationTransfer;
-use Spryker\Glue\GlueRestApiConvention\Plugin\GlueRestApiConvention\PaginationRequestBuilderPlugin;
+use Spryker\Glue\GlueRestApiConvention\Plugin\GlueApplication\PaginationRequestBuilderPlugin;
 
 /**
  * Auto-generated group annotations

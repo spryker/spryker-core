@@ -249,7 +249,7 @@ class JsonGlueResponseFormatter implements JsonGlueResponseFormatterInterface
     protected function getResourceSelfLink(array $resource, GlueRequestTransfer $glueRequestTransfer): array
     {
         $link = $resource[static::RESOURCE_TYPE];
-        if ($resource[static::RESOURCE_ID]) {
+        if (isset($resource[static::RESOURCE_ID]) && $resource[static::RESOURCE_ID]) {
             $link .= '/' . $resource[static::RESOURCE_ID];
         }
         $queryString = $this->buildQueryString($glueRequestTransfer);

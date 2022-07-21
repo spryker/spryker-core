@@ -48,7 +48,7 @@ class CompanyUserFormDataProvider
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions(): array
     {
@@ -57,6 +57,20 @@ class CompanyUserFormDataProvider
             CompanyUserCustomerForm::OPTION_SALUTATION_CHOICES => $this->getSalutationChoices(),
             CompanyUserCustomerForm::OPTION_GENDER_CHOICES => $this->getGenderChoices(),
         ];
+    }
+
+    /**
+     * @return array<string, int>
+     */
+    public function prepareCompanyChoices(): array
+    {
+        $companyChoices = [];
+
+        foreach ($this->companyFacade->getCompanies()->getCompanies() as $companyTransfer) {
+            $companyChoices[$companyTransfer->getName()] = $companyTransfer->getIdCompany();
+        }
+
+        return $companyChoices;
     }
 
     /**

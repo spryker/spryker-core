@@ -7,12 +7,14 @@
 
 namespace Spryker\Client\Quote\Dependency\Client;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
+
 interface QuoteToCurrencyClientInterface
 {
     /**
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function getCurrent();
+    public function getCurrent(): CurrencyTransfer;
 
     /**
      * @param string $currencyIsoCode

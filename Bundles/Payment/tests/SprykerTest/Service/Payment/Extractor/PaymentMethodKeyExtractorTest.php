@@ -9,7 +9,6 @@ namespace SprykerTest\Service\Payment\Extractor;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\PaymentTransfer;
-use Spryker\Service\Payment\Extractor\PaymentMethodKeyExtractor;
 
 /**
  * Auto-generated group annotations
@@ -24,81 +23,71 @@ use Spryker\Service\Payment\Extractor\PaymentMethodKeyExtractor;
 class PaymentMethodKeyExtractorTest extends Unit
 {
     /**
-     * @var \SprykerTest\Service\Payment\PaymentMethodKeyExtractorInterface
+     * @var \SprykerTest\Service\Payment\PaymentServiceTester
      */
-    protected $paymentService;
-
-    /**
-     * @return void
-     */
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->paymentService = new PaymentMethodKeyExtractor();
-    }
+    protected $tester;
 
     /**
      * @dataProvider getPaymentSelectionKeyCollectionDataProvider
      *
-     * @param string $inputKey
      * @param string $expectedKey
+     * @param string|null $inputKey
      *
      * @return void
      */
     public function testGetPaymentSelectionKeyReturnsCorrectResponseWhenInputDataAreCorrect(
-        string $inputKey,
-        string $expectedKey
+        string $expectedKey,
+        ?string $inputKey = null
     ): void {
         // Arrange
         $paymentTransfer = (new PaymentTransfer())->setPaymentSelection($inputKey);
 
         // Act
-        $key = $this->paymentService->getPaymentSelectionKey($paymentTransfer);
+        $key = $this->tester->getService()->getPaymentSelectionKey($paymentTransfer);
 
         // Assert
         $this->assertEquals($expectedKey, $key);
     }
 
     /**
-     * @return array
+     * @return array<int, array<int, string|null>>
      */
     public function getPaymentSelectionKeyCollectionDataProvider(): array
     {
         return [
-            ['www[qwe]', 'www'], ['w1w2w(qwe)', 'w1w2w'], ['t_es_t{qwe}', 't_es_t'], ['www[(qwe)]', 'www'], ['', ''],
+            ['www', 'www[qwe]'], ['w1w2w', 'w1w2w(qwe)'], ['t_es_t', 't_es_t{qwe}'], ['www', 'www[(qwe)]'], ['', ''], ['', null],
         ];
     }
 
     /**
      * @dataProvider getPaymentMethodKeyCollectionDataProvider
      *
-     * @param string $inputKey
      * @param string $expectedKey
+     * @param string|null $inputKey
      *
      * @return void
      */
     public function testGetPaymentMethodKeyReturnsCorrectResponseWhenInputDataAreCorrect(
-        string $inputKey,
-        string $expectedKey
+        string $expectedKey,
+        ?string $inputKey = null
     ): void {
         // Arrange
         $paymentTransfer = (new PaymentTransfer())->setPaymentSelection($inputKey);
 
         // Act
-        $key = $this->paymentService->getPaymentMethodKey($paymentTransfer);
+        $key = $this->tester->getService()->getPaymentMethodKey($paymentTransfer);
 
         // Assert
         $this->assertEquals($expectedKey, $key);
     }
 
     /**
-     * @return array
+     * @return array<int, array<int, string|null>>
      */
     public function getPaymentMethodKeyCollectionDataProvider(): array
     {
         return [
-            ['www[qwe]', 'qwe'], ['test[w_w_w]', 'w_w_w'], ['t_es_t[q1w2e]', 'q1w2e'], ['', ''],
+            ['qwe', 'www[qwe]'], ['w_w_w', 'test[w_w_w]'], ['q1w2e', 't_es_t[q1w2e]'], ['', ''], ['', null],
         ];
     }
 }

@@ -32,7 +32,7 @@ class ProductListMerchantRelationshipFormDataProvider
     /**
      * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer|null $merchantRelationshipTransfer
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions(?MerchantRelationshipTransfer $merchantRelationshipTransfer): array
     {

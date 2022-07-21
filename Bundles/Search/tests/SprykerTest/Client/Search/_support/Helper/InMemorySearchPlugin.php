@@ -24,7 +24,7 @@ class InMemorySearchPlugin implements InMemorySearchPluginInterface
     /**
      * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
      * @param array $resultFormatters
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return mixed
      */

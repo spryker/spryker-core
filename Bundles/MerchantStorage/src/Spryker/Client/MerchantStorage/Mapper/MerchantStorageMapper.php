@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\MerchantStorageTransfer;
 class MerchantStorageMapper implements MerchantStorageMapperInterface
 {
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \Generated\Shared\Transfer\MerchantStorageTransfer
      */

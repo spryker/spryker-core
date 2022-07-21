@@ -15,7 +15,7 @@ use Spryker\Shared\SalesReturnSearch\SalesReturnSearchConfig;
 class ReturnReasonSearchDataMapper implements ReturnReasonSearchDataMapperInterface
 {
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return array
@@ -34,7 +34,7 @@ class ReturnReasonSearchDataMapper implements ReturnReasonSearchDataMapperInterf
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */
@@ -48,7 +48,7 @@ class ReturnReasonSearchDataMapper implements ReturnReasonSearchDataMapperInterf
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array<string>
      */
@@ -60,7 +60,7 @@ class ReturnReasonSearchDataMapper implements ReturnReasonSearchDataMapperInterf
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array<string>
      */
@@ -72,7 +72,7 @@ class ReturnReasonSearchDataMapper implements ReturnReasonSearchDataMapperInterf
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array<string>
      */
@@ -84,7 +84,7 @@ class ReturnReasonSearchDataMapper implements ReturnReasonSearchDataMapperInterf
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array<string>
      */

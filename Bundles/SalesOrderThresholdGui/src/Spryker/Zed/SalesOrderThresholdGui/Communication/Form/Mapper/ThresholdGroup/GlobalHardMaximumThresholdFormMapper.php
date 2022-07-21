@@ -13,7 +13,7 @@ use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Type\ThresholdGroup\Gl
 class GlobalHardMaximumThresholdFormMapper extends AbstractGlobalThresholdFormMapper implements GlobalThresholdFormMapperInterface
 {
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param \Generated\Shared\Transfer\SalesOrderThresholdTransfer $salesOrderThresholdTransfer
      *
      * @return \Generated\Shared\Transfer\SalesOrderThresholdTransfer

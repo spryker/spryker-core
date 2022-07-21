@@ -7,7 +7,8 @@
 
 namespace Spryker\Zed\AssetStorage\Persistence;
 
-use Propel\Runtime\ActiveQuery\Criteria;
+use Generated\Shared\Transfer\FilterTransfer;
+use Orm\Zed\AssetStorage\Persistence\Map\SpyAssetSlotStorageTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -16,92 +17,44 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class AssetStorageRepository extends AbstractRepository implements AssetStorageRepositoryInterface
 {
     /**
-     * @return array<\Generated\Shared\Transfer\SpyAssetSlotStorageEntityTransfer>
-     */
-    public function findAssetStorages(): array
-    {
-        $assetSlotStorageEntities = $this->getFactory()
-            ->createAssetStorageQuery()
-            ->find();
-
-        return $this->getFactory()
-            ->createAssetStorageMapper()
-            ->mapAssetSlotStorageEntitiesToAssetSlotStorageEntityTransfers($assetSlotStorageEntities);
-    }
-
-    /**
-     * @param array<int> $ids
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param array<int> $assetSlotStorageIds
      *
-     * @return array<\Generated\Shared\Transfer\SpyAssetSlotStorageEntityTransfer>
+     * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
-    public function findAssetStoragesByAssetIds(array $ids): array
-    {
-        $query = $this->getFactory()->createAssetStorageQuery();
+    public function getSynchronizationTransferCollection(
+        FilterTransfer $filterTransfer,
+        array $assetSlotStorageIds
+    ): array {
+        $assetSlotStorageQuery = $this->getFactory()->createAssetSlotStorageQuery()
+            ->orderBy(SpyAssetSlotStorageTableMap::COL_ID_ASSET_SLOT_STORAGE);
 
-        if ($ids !== []) {
-            $query->filterByIdAssetSlotStorage_In($ids);
+        if ($assetSlotStorageIds !== []) {
+            $assetSlotStorageQuery->filterByIdAssetSlotStorage_In($assetSlotStorageIds);
         }
 
-        $assetSlotStorageEntities = $query->find();
+        $assetSlotStorageEntityTransfers = $this->buildQueryFromCriteria($assetSlotStorageQuery, $filterTransfer)->find();
 
-        return $this
-            ->getFactory()
-            ->createAssetStorageMapper()
-            ->mapAssetSlotStorageEntitiesToAssetSlotStorageEntityTransfers($assetSlotStorageEntities);
-    }
-
-    /**
-     * @param string $assetSlot
-     *
-     * @return array<\Generated\Shared\Transfer\SpyAssetSlotStorageEntityTransfer>
-     */
-    public function findAssetStoragesByAssetSlot(string $assetSlot): array
-    {
-        $assetSlotStorageEntities = $this->getFactory()
-            ->createAssetStorageQuery()
-            ->filterByAssetSlot($assetSlot)
-            ->find();
-
-        return $this->getFactory()
-            ->createAssetStorageMapper()
-            ->mapAssetSlotStorageEntitiesToAssetSlotStorageEntityTransfers($assetSlotStorageEntities);
+        return $this->getFactory()->createAssetStorageMapper()
+            ->mapAssetSlotStorageEntityTransfersToSynchronizationTransfers($assetSlotStorageEntityTransfers);
     }
 
     /**
      * @param string $assetSlot
      * @param array<string> $storeNames
      *
-     * @return array<\Generated\Shared\Transfer\SpyAssetSlotStorageEntityTransfer>
-     */
-    public function findAssetStoragesWithAssetSlotNotEqualAndByStores(string $assetSlot, array $storeNames): array
-    {
-        $assetSlotStorageEntities = $this->getFactory()
-            ->createAssetStorageQuery()
-            ->filterByAssetSlot($assetSlot, Criteria::NOT_EQUAL)
-            ->filterByStore_In($storeNames)
-            ->find();
-
-        return $this->getFactory()
-            ->createAssetStorageMapper()
-            ->mapAssetSlotStorageEntitiesToAssetSlotStorageEntityTransfers($assetSlotStorageEntities);
-    }
-
-    /**
-     * @param string $assetSlot
-     * @param array<string> $storeNames
-     *
-     * @return array<\Generated\Shared\Transfer\SpyAssetSlotStorageEntityTransfer>
+     * @return array<\Generated\Shared\Transfer\AssetSlotStorageTransfer>
      */
     public function findAssetStoragesByAssetSlotAndStores(string $assetSlot, array $storeNames): array
     {
         $assetSlotStorageEntities = $this->getFactory()
-            ->createAssetStorageQuery()
+            ->createAssetSlotStorageQuery()
             ->filterByAssetSlot($assetSlot)
             ->filterByStore_In($storeNames)
             ->find();
 
         return $this->getFactory()
             ->createAssetStorageMapper()
-            ->mapAssetSlotStorageEntitiesToAssetSlotStorageEntityTransfers($assetSlotStorageEntities);
+            ->mapAssetSlotStorageEntitiesToTransfers($assetSlotStorageEntities);
     }
 }

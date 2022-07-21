@@ -10,7 +10,7 @@ namespace Spryker\Zed\CmsSlotBlockCmsGui\Communication\Form\DataProvider;
 interface CmsPageConditionDataProviderInterface
 {
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions(): array;
 }

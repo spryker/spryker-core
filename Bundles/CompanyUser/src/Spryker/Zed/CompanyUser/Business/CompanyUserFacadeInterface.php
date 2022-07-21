@@ -152,8 +152,9 @@ interface CompanyUserFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves count of company user information by customer ID
-     * - Checks activity flag in a related company
+     * - Retrieves count of company users by customer ID.
+     * - Checks activity flag for company user.
+     * - Checks activity flag in a related company.
      *
      * @api
      *

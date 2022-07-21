@@ -44,7 +44,7 @@ class ProductPageSearchWriter implements ProductPageSearchWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductPageSearchTransfer $productPageSearchTransfer
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch $productPageSearchEntity
      *
      * @return void
@@ -57,7 +57,7 @@ class ProductPageSearchWriter implements ProductPageSearchWriterInterface
     /**
      * @param \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch $productPageSearchEntity
      * @param \Generated\Shared\Transfer\ProductPageSearchTransfer $productPageSearchTransfer
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
@@ -87,7 +87,7 @@ class ProductPageSearchWriter implements ProductPageSearchWriterInterface
     /**
      * @param \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch $productPageSearchEntity
      * @param \Generated\Shared\Transfer\ProductPageSearchTransfer $productPageSearchTransfer
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return void
      */

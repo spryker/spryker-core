@@ -351,7 +351,7 @@ class ElasticsearchHelper extends Module
     }
 
     /**
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return \Elastica\Mapping|\Elastica\Type\Mapping|\PHPUnit\Framework\MockObject\MockObject
      */

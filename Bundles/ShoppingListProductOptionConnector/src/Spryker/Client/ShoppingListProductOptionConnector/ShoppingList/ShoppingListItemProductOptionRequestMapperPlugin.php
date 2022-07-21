@@ -26,7 +26,7 @@ class ShoppingListItemProductOptionRequestMapperPlugin extends AbstractPlugin im
      *
      * @api
      *
-     * @param array $params
+     * @param array<string, mixed> $params
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
@@ -43,7 +43,7 @@ class ShoppingListItemProductOptionRequestMapperPlugin extends AbstractPlugin im
     }
 
     /**
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return array
      */

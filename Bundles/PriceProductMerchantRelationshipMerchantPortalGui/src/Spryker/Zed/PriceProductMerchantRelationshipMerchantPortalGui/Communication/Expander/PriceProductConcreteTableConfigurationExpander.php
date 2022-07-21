@@ -150,10 +150,14 @@ class PriceProductConcreteTableConfigurationExpander implements PriceProductConc
                 false,
                 $this->getMerchantRelationshipChoices($guiTableConfigurationBuilder),
             );
+        $guiTableConfigurationBuilder = $guiTableConfigurationBuilder->setColumnDisplayKey(
+            PriceProductTableViewTransfer::ID_MERCHANT_RELATIONSHIP,
+            PriceProductTableViewTransfer::MERCHANT_RELATIONSHIP_NAME,
+        );
 
-        $columns = $this->reorderTableColumns($guiTableConfigurationBuilder->getColumns());
+        $guiTableColumnConfigurationTransfers = $this->reorderTableColumns($guiTableConfigurationBuilder->getColumns());
 
-        return $guiTableConfigurationBuilder->setColumns($columns);
+        return $guiTableConfigurationBuilder->setColumns($guiTableColumnConfigurationTransfers);
     }
 
     /**

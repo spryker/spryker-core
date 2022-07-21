@@ -27,7 +27,7 @@ class ReadShoppingListPermissionPlugin extends AbstractPlugin implements Executa
     /**
      * {@inheritDoc}
      *
-     * @param array $configuration
+     * @param array<string, mixed> $configuration
      * @param int|null $context ID shopping list.
      *
      * @return bool

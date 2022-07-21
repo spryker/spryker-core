@@ -16,22 +16,22 @@ interface AclToUserInterface
      *
      * @return bool
      */
-    public function isSystemUser(UserTransfer $user);
+    public function isSystemUser(UserTransfer $user): bool;
 
     /**
      * @param string $username
      *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
-    public function getUserByUsername($username);
+    public function getUserByUsername(string $username): UserTransfer;
 
     /**
      * @return bool
      */
-    public function hasCurrentUser();
+    public function hasCurrentUser(): bool;
 
     /**
      * @return \Generated\Shared\Transfer\UserTransfer
      */
-    public function getCurrentUser();
+    public function getCurrentUser(): UserTransfer;
 }

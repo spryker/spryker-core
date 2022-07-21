@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 interface CmsPageSearchDataMapperInterface
 {
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param string|null $storeName
      *

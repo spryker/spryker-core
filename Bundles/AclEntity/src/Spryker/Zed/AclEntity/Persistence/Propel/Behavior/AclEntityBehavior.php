@@ -121,16 +121,15 @@ class AclEntityBehavior extends Behavior
             return;
         }
 
-        $table = $this->getTable();
-        /** @var \Propel\Generator\Model\Database $database */
-        $database = $table->getDatabase();
+        $table = $this->getTableOrFail();
+        $database = $table->getDatabaseOrFail();
 
         $connectorTableName = $this->getAclEntityPersistenceFactory()
             ->getAclEntityService()
             ->generateSegmentConnectorTableName($table->getName());
         if (!$database->hasTable($connectorTableName)) {
             $connectorTableBuilder = $this->getAclEntityPersistenceFactory()->createConnectorTableBuilder(
-                $this->getTable(),
+                $this->getTableOrFail(),
                 $database,
             );
             $connectorTableBuilder->build();
@@ -158,7 +157,7 @@ class AclEntityBehavior extends Behavior
      */
     protected function getEntityName(): string
     {
-        return sprintf('%s\%s', $this->getTable()->getNamespace(), $this->getTable()->getPhpName());
+        return sprintf('%s\%s', $this->getTableOrFail()->getNamespace(), $this->getTableOrFail()->getPhpName());
     }
 
     /**

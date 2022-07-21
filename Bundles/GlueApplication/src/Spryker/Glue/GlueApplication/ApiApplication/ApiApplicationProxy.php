@@ -10,18 +10,23 @@ namespace Spryker\Glue\GlueApplication\ApiApplication;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Spryker\Glue\GlueApplication\ApiApplication\Type\RequestFlowAgnosticApiApplication;
 use Spryker\Glue\GlueApplication\ApiApplication\Type\RequestFlowAwareApiApplication;
-use Spryker\Glue\GlueApplication\Exception\MissingApiConventionException;
 use Spryker\Glue\GlueApplication\Exception\MissingCommunicationProtocolException;
 use Spryker\Glue\GlueApplication\Exception\UnknownRequestFlowImplementationException;
-use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ApiConventionPluginInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\CommunicationProtocolPluginInterface;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ConventionPluginInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\GlueApplicationBootstrapPluginInterface;
 use Spryker\Shared\Application\ApplicationInterface;
 
 class ApiApplicationProxy implements ApplicationInterface
 {
+    /**
+     * @var \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\GlueApplicationBootstrapPluginInterface
+     */
     protected GlueApplicationBootstrapPluginInterface $glueApplicationBootstrapPlugin;
 
+    /**
+     * @var \Spryker\Glue\GlueApplication\ApiApplication\RequestFlowExecutorInterface
+     */
     protected RequestFlowExecutorInterface $requestFlowExecutor;
 
     /**
@@ -30,15 +35,15 @@ class ApiApplicationProxy implements ApplicationInterface
     protected array $communicationProtocolPlugins;
 
     /**
-     * @var array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ApiConventionPluginInterface>
+     * @var array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ConventionPluginInterface>
      */
-    protected array $apiConventionPlugins;
+    protected array $conventionPlugins;
 
     /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\GlueApplicationBootstrapPluginInterface $glueApplicationBootstrapPlugin
      * @param \Spryker\Glue\GlueApplication\ApiApplication\RequestFlowExecutorInterface $requestFlowExecutor
      * @param array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\CommunicationProtocolPluginInterface> $communicationProtocolPlugins
-     * @param array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ApiConventionPluginInterface> $apiConventionPlugins
+     * @param array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ConventionPluginInterface> $apiConventionPlugins
      */
     public function __construct(
         GlueApplicationBootstrapPluginInterface $glueApplicationBootstrapPlugin,
@@ -47,9 +52,9 @@ class ApiApplicationProxy implements ApplicationInterface
         array $apiConventionPlugins
     ) {
         $this->glueApplicationBootstrapPlugin = $glueApplicationBootstrapPlugin;
-        $this->requestFlowExecutor = $requestFlowExecutor;
         $this->communicationProtocolPlugins = $communicationProtocolPlugins;
-        $this->apiConventionPlugins = $apiConventionPlugins;
+        $this->requestFlowExecutor = $requestFlowExecutor;
+        $this->conventionPlugins = $apiConventionPlugins;
     }
 
     /**
@@ -80,12 +85,12 @@ class ApiApplicationProxy implements ApplicationInterface
         if ($bootstrapApplication instanceof RequestFlowAwareApiApplication) {
             $communicationProtocolPlugin = $this->resolveCommunicationPlugin($this->communicationProtocolPlugins);
             $glueRequestTransfer = $communicationProtocolPlugin->extractRequest(new GlueRequestTransfer());
-            $apiConventionPlugin = $this->resolveApiConvention($this->apiConventionPlugins, $glueRequestTransfer);
+            $apiConventionPlugin = $this->resolveConvention($this->conventionPlugins, $glueRequestTransfer);
 
             $glueResponseTransfer = $this->requestFlowExecutor->executeRequestFlow(
+                $glueRequestTransfer,
                 $bootstrapApplication,
                 $apiConventionPlugin,
-                $glueRequestTransfer,
             );
             $communicationProtocolPlugin->sendResponse($glueResponseTransfer);
 
@@ -101,14 +106,12 @@ class ApiApplicationProxy implements ApplicationInterface
     }
 
     /**
-     * @param array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ApiConventionPluginInterface> $apiConventionPlugins
+     * @param array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ConventionPluginInterface> $apiConventionPlugins
      * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
      *
-     * @throws \Spryker\Glue\GlueApplication\Exception\MissingApiConventionException
-     *
-     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ApiConventionPluginInterface
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ConventionPluginInterface|null
      */
-    protected function resolveApiConvention(array $apiConventionPlugins, GlueRequestTransfer $glueRequestTransfer): ApiConventionPluginInterface
+    protected function resolveConvention(array $apiConventionPlugins, GlueRequestTransfer $glueRequestTransfer): ?ConventionPluginInterface
     {
         foreach ($apiConventionPlugins as $apiConventionPlugin) {
             if ($apiConventionPlugin->isApplicable($glueRequestTransfer)) {
@@ -116,13 +119,7 @@ class ApiApplicationProxy implements ApplicationInterface
             }
         }
 
-        throw new MissingApiConventionException(
-            sprintf(
-                'No plugin that implements `%s` was found for the current request.
-                Please implement one and inject into `GlueApplicationDependencyProvider::getApiConventionPlugins()`',
-                ApiConventionPluginInterface::class,
-            ),
-        );
+        return null;
     }
 
     /**

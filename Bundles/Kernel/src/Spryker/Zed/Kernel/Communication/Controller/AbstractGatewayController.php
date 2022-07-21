@@ -53,7 +53,7 @@ abstract class AbstractGatewayController extends AbstractController
 
     /**
      * @param string $message
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return $this
      */
@@ -70,7 +70,7 @@ abstract class AbstractGatewayController extends AbstractController
 
     /**
      * @param string $message
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return $this
      */
@@ -87,7 +87,7 @@ abstract class AbstractGatewayController extends AbstractController
 
     /**
      * @param string $message
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return $this
      */

@@ -105,7 +105,7 @@ class ProductSetPageSearchDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return array
+     * @return array<\Spryker\Client\SearchElasticsearch\Plugin\ResultFormatter\AbstractElasticsearchResultFormatterPlugin>
      */
     protected function getProductSetListResultFormatterPlugins()
     {
@@ -113,7 +113,7 @@ class ProductSetPageSearchDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return array
+     * @return array<\Spryker\Client\Kernel\AbstractPlugin>
      */
     protected function getProductSetListQueryExpanderPlugins()
     {

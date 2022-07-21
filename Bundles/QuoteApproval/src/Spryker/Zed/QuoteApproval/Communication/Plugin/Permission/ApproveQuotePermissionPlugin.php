@@ -30,7 +30,7 @@ class ApproveQuotePermissionPlugin implements ExecutablePermissionPluginInterfac
      *
      * @api
      *
-     * @param array $configuration
+     * @param array<string, mixed> $configuration
      * @param array|string|int|null $context
      *
      * @return bool

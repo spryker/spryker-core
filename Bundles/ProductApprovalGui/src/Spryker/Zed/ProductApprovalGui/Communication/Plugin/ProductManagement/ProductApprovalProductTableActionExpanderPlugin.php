@@ -13,12 +13,15 @@ use Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductTableActionE
 
 /**
  * @method \Spryker\Zed\ProductApprovalGui\Communication\ProductApprovalGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductApprovalGui\ProductApprovalGuiConfig getConfig()
  */
 class ProductApprovalProductTableActionExpanderPlugin extends AbstractPlugin implements ProductTableActionExpanderPluginInterface
 {
     /**
      * {@inheritDoc}
      * - Expands product table with abstract product approval status actions.
+     * - Renders action buttons taken from `ProductApprovalGuiConfig::getProductApprovalTableActionStatusTree()`, if `ProductApprovalGuiConfig::isApprovalStatusTreeCustomizationEnabled()` is true.
+     * - Renders action buttons taken from `ProductApprovalFacade::getApplicableApprovalStatuses()` otherwise.
      *
      * @api
      *

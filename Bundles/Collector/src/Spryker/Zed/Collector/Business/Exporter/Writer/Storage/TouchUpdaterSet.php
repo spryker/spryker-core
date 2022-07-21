@@ -21,7 +21,7 @@ class TouchUpdaterSet
 
     /**
      * @param string $exporterIdTouch
-     * @param array $data
+     * @param array<string, mixed> $data
      */
     public function __construct($exporterIdTouch, array $data = [])
     {
@@ -38,7 +38,7 @@ class TouchUpdaterSet
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return void
      */

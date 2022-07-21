@@ -13,7 +13,7 @@ use Spryker\Zed\User\Communication\Form\UserUpdateForm;
 class UserUpdateFormDataProvider extends UserFormDataProvider
 {
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions()
     {

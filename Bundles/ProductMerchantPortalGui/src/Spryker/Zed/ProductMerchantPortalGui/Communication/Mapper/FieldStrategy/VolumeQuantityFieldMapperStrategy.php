@@ -44,7 +44,7 @@ class VolumeQuantityFieldMapperStrategy extends AbstractFieldMapperStrategy
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param int $volumeQuantity
      * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *

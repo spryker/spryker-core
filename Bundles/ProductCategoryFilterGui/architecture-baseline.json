@@ -264,5 +264,12 @@
         "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductCategoryFilterGui/Dependency/Facade/ProductCategoryFilterGuiToProductSearchFacadeBridge.php",
+        "description": "Bridges: Method `getAllProductAttributeKeys()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
     }
 ]

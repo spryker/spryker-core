@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Quote\Business;
 
+use Generated\Shared\Transfer\CommentRequestTransfer;
+use Generated\Shared\Transfer\CommentValidationResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
@@ -219,4 +221,24 @@ interface QuoteFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
      */
     public function validateQuote(QuoteTransfer $quoteTransfer): QuoteValidationResponseTransfer;
+
+    /**
+     * Specification:
+     * - Requires 'CommentRequestTransfer.ownerId', `CommentRequestTransfer.comment`, `CommentRequestTransfer.comment.customer`,
+     *   `CommentRequestTransfer.comment.customer.customerReference` transfer properties to be set.
+     * - Checks if quote with provided id exists.
+     * - Checks if provided customer is an owner of comment owner quote.
+     * - Returns error message when validation failed.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
+     * @param \Generated\Shared\Transfer\CommentValidationResponseTransfer $commentValidationResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\CommentValidationResponseTransfer
+     */
+    public function validateQuoteComment(
+        CommentRequestTransfer $commentRequestTransfer,
+        CommentValidationResponseTransfer $commentValidationResponseTransfer
+    ): CommentValidationResponseTransfer;
 }

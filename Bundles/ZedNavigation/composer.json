@@ -17,6 +17,7 @@
         "spryker/zed-navigation-extension": "^1.1.0"
     },
     "require-dev": {
+        "php-webdriver/webdriver": "*",
         "spryker/code-sniffer": "*",
         "spryker/container": "*",
         "spryker/propel": "*",

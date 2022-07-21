@@ -49,7 +49,7 @@ class CompanyBusinessUnitFormDataProvider
      */
     public function getData(?int $idCompanyBusinessUnit = null): CompanyBusinessUnitTransfer
     {
-        return $this->findCompanyBusinessUnitTransfer($idCompanyBusinessUnit);
+        return $this->createCompanyBusinessUnitTransfer($idCompanyBusinessUnit);
     }
 
     /**
@@ -63,32 +63,15 @@ class CompanyBusinessUnitFormDataProvider
 
         return [
             'data_class' => CompanyBusinessUnitTransfer::class,
-            CompanyBusinessUnitForm::OPTION_COMPANY_CHOICES => $this->prepareCompanyChoices(),
             CompanyBusinessUnitForm::OPTION_PARENT_CHOICES_VALUES => $choicesValues,
             CompanyBusinessUnitForm::OPTION_PARENT_CHOICES_ATTRIBUTES => $choicesAttributes,
         ];
     }
 
     /**
-     * @param int|null $idCompanyBusinessUnit
-     *
-     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
+     * @return array<string, int> [company name => company id]
      */
-    protected function findCompanyBusinessUnitTransfer(?int $idCompanyBusinessUnit = null): CompanyBusinessUnitTransfer
-    {
-        $companyBusinessUnitTransfer = new CompanyBusinessUnitTransfer();
-
-        if (!$idCompanyBusinessUnit) {
-            return $companyBusinessUnitTransfer;
-        }
-
-        return $this->companyBusinessUnitFacade->findCompanyBusinessUnitById($idCompanyBusinessUnit) ?? $companyBusinessUnitTransfer;
-    }
-
-    /**
-     * @return array<int> [company name => company id]
-     */
-    protected function prepareCompanyChoices(): array
+    public function prepareCompanyChoices(): array
     {
         $result = [];
 
@@ -105,6 +88,22 @@ class CompanyBusinessUnitFormDataProvider
     }
 
     /**
+     * @param int|null $idCompanyBusinessUnit
+     *
+     * @return \Generated\Shared\Transfer\CompanyBusinessUnitTransfer
+     */
+    protected function createCompanyBusinessUnitTransfer(?int $idCompanyBusinessUnit = null): CompanyBusinessUnitTransfer
+    {
+        $companyBusinessUnitTransfer = new CompanyBusinessUnitTransfer();
+
+        if (!$idCompanyBusinessUnit) {
+            return $companyBusinessUnitTransfer;
+        }
+
+        return $this->companyBusinessUnitFacade->findCompanyBusinessUnitById($idCompanyBusinessUnit) ?? $companyBusinessUnitTransfer;
+    }
+
+    /**
      * Retrieves the list of business units for the same company as the provided business unit.
      * Excludes the provided business unit from the result.
      *
@@ -115,12 +114,17 @@ class CompanyBusinessUnitFormDataProvider
      */
     protected function prepareUnitParentAttributeMap(?int $idCompanyBusinessUnit = null): array
     {
-        $businessUnitCollection = $this->companyBusinessUnitFacade
-            ->getCompanyBusinessUnitCollection(new CompanyBusinessUnitCriteriaFilterTransfer())
-            ->getCompanyBusinessUnits();
         $values = [];
         $attributes = [];
-        $idCompany = $this->findCompanyBusinessUnitTransfer($idCompanyBusinessUnit)->getFkCompany();
+        $idCompany = $this->createCompanyBusinessUnitTransfer($idCompanyBusinessUnit)->getFkCompany();
+
+        $companyBusinessUnitCriteriaFilterTransfer = (new CompanyBusinessUnitCriteriaFilterTransfer())
+            ->setIdCompany($idCompany)
+            ->setWithoutExpanders(true);
+
+        $businessUnitCollection = $this->companyBusinessUnitFacade
+            ->getCompanyBusinessUnitCollection($companyBusinessUnitCriteriaFilterTransfer)
+            ->getCompanyBusinessUnits();
 
         foreach ($businessUnitCollection as $businessUnit) {
             if ($idCompany && $businessUnit->getFkCompany() !== $idCompany) {

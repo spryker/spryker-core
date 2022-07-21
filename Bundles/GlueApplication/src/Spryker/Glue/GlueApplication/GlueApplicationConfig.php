@@ -98,6 +98,13 @@ class GlueApplicationConfig extends AbstractBundleConfig
     public const VALIDATE_REQUEST_HEADERS = true;
 
     /**
+     * @api
+     *
+     * @var string
+     */
+    public const API_CONTROLLER_CACHE_FILENAME = 'api_controller.cache';
+
+    /**
      * Specification:
      *  - Enables or disables request header validation.
      *
@@ -276,5 +283,39 @@ class GlueApplicationConfig extends AbstractBundleConfig
     public function getApiVersionResolvingRegex(): string
     {
         return '/^(?P<fullVersion>(0|[1-9]\d*)(\.(0|[1-9]\d*))?)$/';
+    }
+
+    /**
+     * Specification:
+     * - Returns a path that contains the Controllers configuration cache.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getControllerCachePath(): string
+    {
+        return sprintf(
+            '%s/src/Generated/%s/Controller/codeBucket%s',
+            APPLICATION_ROOT_DIR,
+            'Glue',
+            APPLICATION_CODE_BUCKET,
+        );
+    }
+
+    /**
+     * Specification:
+     * - Lists the route matchers that will run for each ApiApplication.
+     *
+     * @api
+     *
+     * @return array<string>
+     */
+    public function getRouteMatchers(): array
+    {
+        return [
+            'routes',
+            'resources',
+        ];
     }
 }

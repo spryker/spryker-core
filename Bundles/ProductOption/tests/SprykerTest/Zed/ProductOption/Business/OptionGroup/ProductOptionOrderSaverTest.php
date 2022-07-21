@@ -98,8 +98,13 @@ class ProductOptionOrderSaverTest extends MockProvider
      */
     protected function createSalesOrderItemOptionMock(): SpySalesOrderItemOption
     {
-        return $this->getMockBuilder(SpySalesOrderItemOption::class)
+        $mockedSalesOrderItemOption = $this->getMockBuilder(SpySalesOrderItemOption::class)
             ->setMethods(['save'])
             ->getMock();
+
+        $mockedSalesOrderItemOption->method('save')
+            ->willReturn(1);
+
+        return $mockedSalesOrderItemOption;
     }
 }

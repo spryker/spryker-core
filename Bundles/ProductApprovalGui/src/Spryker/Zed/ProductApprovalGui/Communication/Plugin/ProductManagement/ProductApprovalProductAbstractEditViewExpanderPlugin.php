@@ -12,12 +12,15 @@ use Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractEdit
 
 /**
  * @method \Spryker\Zed\ProductApprovalGui\Communication\ProductApprovalGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductApprovalGui\ProductApprovalGuiConfig getConfig()
  */
 class ProductApprovalProductAbstractEditViewExpanderPlugin extends AbstractPlugin implements ProductAbstractEditViewExpanderPluginInterface
 {
     /**
      * {@inheritDoc}
      * - Expands view data with abstract product approval status data.
+     * - Renders action buttons taken from `ProductApprovalGuiConfig::getProductApprovalTableActionStatusTree()`, if `ProductApprovalGuiConfig::isApprovalStatusTreeCustomizationEnabled()` is true.
+     * - Renders action buttons taken from `ProductApprovalFacade::getApplicableApprovalStatuses()` otherwise.
      *
      * @api
      *

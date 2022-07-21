@@ -15,7 +15,7 @@ class UrlKeyBuilder
     use KeyBuilderTrait;
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */

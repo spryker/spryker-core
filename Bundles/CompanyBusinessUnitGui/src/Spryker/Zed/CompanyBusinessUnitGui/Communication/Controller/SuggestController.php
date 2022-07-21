@@ -32,6 +32,11 @@ class SuggestController extends AbstractController
     /**
      * @var string
      */
+    protected const PARAM_TERM = 'term';
+
+    /**
+     * @var string
+     */
     protected const PARAM_ID_COMPANY = 'idCompany';
 
     /**
@@ -76,6 +81,7 @@ class SuggestController extends AbstractController
     protected function createCompanyBusinessUnitCriteriaFilterTransfer(Request $request): CompanyBusinessUnitCriteriaFilterTransfer
     {
         $suggestionName = (string)$request->query->get(static::PARAM_SUGGESTION) ?: null;
+        $suggestionNameAlternative = (string)$request->query->get(static::PARAM_TERM) ?: null;
         $idCompany = $this->castId($request->query->get(static::PARAM_ID_COMPANY));
 
         $limit = $this->getFactory()->getConfig()->getCompanyBusinessUnitSuggestionLimit();
@@ -85,7 +91,7 @@ class SuggestController extends AbstractController
             ->setLimit($limit);
 
         return $companyBusinessUnitCriteriaFilterTransfer
-            ->setName($suggestionName)
+            ->setName($suggestionName ?? $suggestionNameAlternative)
             ->setIdCompany($idCompany)
             ->setFilter($filterTransfer)
             ->setWithoutExpanders(true);

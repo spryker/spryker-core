@@ -122,7 +122,7 @@ class PivotTableEntityConnection extends AbstractAclEntityConnection implements 
             ->getPivotEntityNameOrFail();
         $relationName = $this->getShortClassName($pivotTableEntity);
 
-        $tableMap = PropelQuery::from($aclEntityMetadataTransfer->getEntityNameOrFail())->getTableMap();
+        $tableMap = PropelQuery::from($aclEntityMetadataTransfer->getEntityNameOrFail())->getTableMapOrFail();
         if ($tableMap->hasRelation($relationName)) {
             return $relationName;
         }
@@ -155,7 +155,7 @@ class PivotTableEntityConnection extends AbstractAclEntityConnection implements 
             $query,
             $this->getTableMapByEntityClass(
                 $aclEntityMetadataTransfer->getParentOrFail()->getEntityNameOrFail(),
-            )->getName(),
+            )->getNameOrFail(),
         );
     }
 
@@ -174,7 +174,7 @@ class PivotTableEntityConnection extends AbstractAclEntityConnection implements 
         $pivotQuery = PropelQuery::from(
             $aclEntityMetadataTransfer->getParentOrFail()->getConnectionOrFail()->getPivotEntityNameOrFail(),
         );
-        $pivotTableMap = $pivotQuery->getTableMap();
+        $pivotTableMap = $pivotQuery->getTableMapOrFail();
         if ($pivotTableMap->hasRelation($relationName)) {
             return $relationName;
         }

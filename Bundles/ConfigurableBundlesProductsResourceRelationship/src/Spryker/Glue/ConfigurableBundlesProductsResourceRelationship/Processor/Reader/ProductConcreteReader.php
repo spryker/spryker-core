@@ -55,9 +55,9 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
     /**
      * @param int $idProductList
      *
-     * @return array<int>
+     * @return array<int, string>
      */
-    public function getMappedProductConcreteIds(int $idProductList): array
+    public function getProductConcreteSkusIndexedByIdProductConcrete(int $idProductList): array
     {
         $productConcreteCriteriaFilterTransfer = (new ProductConcreteCriteriaFilterTransfer())
             ->setRequestParams([
@@ -65,7 +65,7 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
                 static::REQUEST_PARAM_ITEMS_PER_PAGE => static::REQUEST_PARAM_ITEMS_PER_PAGE_VALUE,
             ]);
 
-        /** @var array $searchResult */
+        /** @var array<string, array<\Generated\Shared\Transfer\ProductConcretePageSearchTransfer>> $searchResult */
         $searchResult = $this->catalogClient->searchProductConcretesByFullText($productConcreteCriteriaFilterTransfer);
         $productConcretePageSearchTransfers = $searchResult[static::FORMATTED_RESULT_KEY] ?? [];
 
@@ -73,12 +73,14 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
             return [];
         }
 
-        $productConcreteIds = [];
+        $productConcreteIdsToProductConcreteSkusMap = [];
         foreach ($productConcretePageSearchTransfers as $productConcretePageSearchTransfer) {
-            /** @var \Generated\Shared\Transfer\ProductConcretePageSearchTransfer $productConcretePageSearchTransfer */
-            $productConcreteIds[$productConcretePageSearchTransfer->getSku()] = $productConcretePageSearchTransfer->getFkProduct();
+            if (!$productConcretePageSearchTransfer->getFkProduct() || !$productConcretePageSearchTransfer->getSku()) {
+                continue;
+            }
+            $productConcreteIdsToProductConcreteSkusMap[$productConcretePageSearchTransfer->getFkProductOrFail()] = $productConcretePageSearchTransfer->getSkuOrFail();
         }
 
-        return $productConcreteIds;
+        return $productConcreteIdsToProductConcreteSkusMap;
     }
 }

@@ -59,14 +59,24 @@ abstract class AbstractFieldMapperStrategy implements FieldMapperStrategyInterfa
             ->setMoneyValue($this->recreateMoneyValueTransfer($moneyValueTransfer));
 
         $priceTypeTransfer = $this->getPriceTypeByName($priceTypeName);
-        if ($priceTypeTransfer) {
-            $newPriceProductTransfer->setPriceType($priceTypeTransfer)
-                ->setFkPriceType($priceTypeTransfer->getIdPriceType())
-                ->setPriceDimension(
-                    (new PriceProductDimensionTransfer())
-                        ->setType(static::PRICE_DIMENSION_TYPE_DEFAULT),
-                );
+        if (!$priceTypeTransfer) {
+            return $newPriceProductTransfer;
         }
+
+        $newPriceProductTransfer->setPriceType($priceTypeTransfer)
+            ->setFkPriceType($priceTypeTransfer->getIdPriceType())
+            ->setPriceTypeName($priceTypeName);
+
+        $priceProductDimensionTransfer = $priceProductTransfer->getPriceDimension();
+        if (!$priceProductDimensionTransfer) {
+            return $newPriceProductTransfer->setPriceDimension(
+                (new PriceProductDimensionTransfer())->setType(static::PRICE_DIMENSION_TYPE_DEFAULT),
+            );
+        }
+
+        $newPriceProductTransfer->setPriceDimension(
+            (clone $priceProductDimensionTransfer)->setIdPriceProductDefault(null),
+        );
 
         return $newPriceProductTransfer;
     }
@@ -88,16 +98,20 @@ abstract class AbstractFieldMapperStrategy implements FieldMapperStrategyInterfa
         $priceProductTransfer = $priceProductTransfers[0];
 
         $moneyValueTransfer = $priceProductTransfer->getMoneyValueOrFail();
+        $priceDimensionTransfer = $priceProductTransfer->getPriceDimensionOrFail();
 
         foreach ($this->priceProductFacade->getPriceTypeValues() as $priceTypeTransfer) {
             if (in_array($priceTypeTransfer->getIdPriceType(), $priceTypeIds)) {
                 continue;
             }
 
+            $newPriceDimensionTransfer = (clone $priceDimensionTransfer)
+                ->setIdPriceProductDefault(null);
+
             $priceProductTransfers[] = (new PriceProductTransfer())
                 ->setFkPriceType($priceTypeTransfer->getIdPriceType())
                 ->setPriceType($priceTypeTransfer)
-                ->setPriceDimension($priceProductTransfer->getPriceDimensionOrFail())
+                ->setPriceDimension($newPriceDimensionTransfer)
                 ->setMoneyValue($this->recreateMoneyValueTransfer($moneyValueTransfer))
                 ->setPriceTypeName($priceTypeTransfer->getNameOrFail());
         }

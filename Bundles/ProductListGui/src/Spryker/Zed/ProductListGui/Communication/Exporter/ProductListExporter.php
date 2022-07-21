@@ -72,7 +72,7 @@ class ProductListExporter implements ProductListExporterInterface
 
     /**
      * @param string $title
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \Generated\Shared\Transfer\CsvFileTransfer
      */

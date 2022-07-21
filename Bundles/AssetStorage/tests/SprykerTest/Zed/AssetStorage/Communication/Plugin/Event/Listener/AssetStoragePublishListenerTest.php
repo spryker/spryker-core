@@ -55,7 +55,7 @@ class AssetStoragePublishListenerTest extends Unit
     /**
      * @return void
      */
-    public function testHandleWitchCorrectDataSuccessfully(): void
+    public function testHandleWithCorrectDataSuccessfully(): void
     {
         // Arrange
         $assetStoragePublishListener = new AssetStoragePublishListener();

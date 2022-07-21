@@ -37,6 +37,8 @@ use Spryker\Zed\SharedCart\Business\ResourceShare\ResourceShareQuoteCompanyUserW
 use Spryker\Zed\SharedCart\Business\ResourceShare\ResourceShareQuoteCompanyUserWriterInterface;
 use Spryker\Zed\SharedCart\Business\ResourceShare\ResourceShareQuoteShare;
 use Spryker\Zed\SharedCart\Business\ResourceShare\ResourceShareQuoteShareInterface;
+use Spryker\Zed\SharedCart\Business\Validator\SharedCartCommentValidator;
+use Spryker\Zed\SharedCart\Business\Validator\SharedCartCommentValidatorInterface;
 use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToCustomerFacadeInterface;
 use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToMessengerFacadeInterface;
 use Spryker\Zed\SharedCart\Dependency\Facade\SharedCartToPermissionFacadeInterface;
@@ -251,6 +253,14 @@ class SharedCartBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getMessengerFacade(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\SharedCart\Business\Validator\SharedCartCommentValidatorInterface
+     */
+    public function createSharedCartCommentValidator(): SharedCartCommentValidatorInterface
+    {
+        return new SharedCartCommentValidator($this->getRepository());
     }
 
     /**

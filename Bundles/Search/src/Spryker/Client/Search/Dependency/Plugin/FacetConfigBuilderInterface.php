@@ -49,7 +49,7 @@ interface FacetConfigBuilderInterface
     /**
      * @api
      *
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return array<\Generated\Shared\Transfer\FacetConfigTransfer>
      */
@@ -58,7 +58,7 @@ interface FacetConfigBuilderInterface
     /**
      * @api
      *
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return array
      */

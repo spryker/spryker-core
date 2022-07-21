@@ -156,6 +156,11 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGIN_STORE_RELATION_FORM_TYPE = 'PLUGIN_STORE_RELATION_FORM_TYPE';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_DISCOUNT_VOUCHER_APPLY_CHECKER_STRATEGY = 'PLUGINS_DISCOUNT_VOUCHER_APPLY_CHECKER_STRATEGY';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -179,6 +184,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addDiscountableItemExpanderStrategyPlugins($container);
         $container = $this->addValidationAdapter($container);
         $container = $this->addTranslatorFacade($container);
+        $container = $this->addDiscountVoucherApplyCheckerStrategyPlugins($container);
 
         return $container;
     }
@@ -451,6 +457,28 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
      * @return array<\Spryker\Zed\Discount\Dependency\Plugin\DiscountPostUpdatePluginInterface>
      */
     protected function getDiscountPostUpdatePlugins()
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addDiscountVoucherApplyCheckerStrategyPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_DISCOUNT_VOUCHER_APPLY_CHECKER_STRATEGY, function () {
+            return $this->getDiscountVoucherApplyCheckerStrategyPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountVoucherApplyCheckerStrategyPluginInterface>
+     */
+    protected function getDiscountVoucherApplyCheckerStrategyPlugins(): array
     {
         return [];
     }

@@ -289,7 +289,7 @@ class CustomerApi implements CustomerApiInterface
      *
      * Customize to allow hashing and storing of password or registration key fields.
      *
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */

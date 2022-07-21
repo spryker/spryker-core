@@ -10,6 +10,8 @@ namespace SprykerTest\Zed\Oauth;
 use Codeception\Actor;
 use Generated\Shared\DataBuilder\RevokeRefreshTokenRequestBuilder;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\GlueAuthenticationRequestContextTransfer;
+use Generated\Shared\Transfer\OauthRequestTransfer;
 use Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer;
 use Orm\Zed\OauthRevoke\Persistence\SpyOauthRefreshTokenQuery;
 
@@ -24,6 +26,7 @@ use Orm\Zed\OauthRevoke\Persistence\SpyOauthRefreshTokenQuery;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
+ * @method \Spryker\Zed\Oauth\Business\OauthBusinessFactory getFactory()
  *
  * @SuppressWarnings(PHPMD)
  */
@@ -34,7 +37,27 @@ class OauthBusinessTester extends Actor
     /**
      * @var string
      */
+    public const GET_METHOD_SCOPE = 'scope:test:read';
+
+    /**
+     * @var string
+     */
     protected const TEST_PASSWORD = 'Test password';
+
+    /**
+     * @var string
+     */
+    protected const CLIENT_IDENTIFIER = 'test client';
+
+    /**
+     * @var string
+     */
+    protected const CLIENT_SECRET = 'abc123';
+
+    /**
+     * @var string
+     */
+    protected const FAKE_PASSWORD = 'change123';
 
     /**
      * @param string $customerReference
@@ -76,5 +99,41 @@ class OauthBusinessTester extends Actor
     public function deleteAllOauthRefreshTokens(): int
     {
         return SpyOauthRefreshTokenQuery::create()->deleteAll();
+    }
+
+    /**
+     * @param string $applicationContext
+     *
+     * @return \Generated\Shared\Transfer\GlueAuthenticationRequestContextTransfer
+     */
+    public function createGlueAuthenticationRequestContextTransfer(string $applicationContext): GlueAuthenticationRequestContextTransfer
+    {
+        $glueAuthenticationRequestContextTransfer = new GlueAuthenticationRequestContextTransfer();
+        $glueAuthenticationRequestContextTransfer->setRequestApplication($applicationContext);
+
+        return $glueAuthenticationRequestContextTransfer;
+    }
+
+    /**
+     * @param string $username
+     * @param string $applicationContext
+     *
+     * @return \Generated\Shared\Transfer\OauthRequestTransfer
+     */
+    public function createOauthRequestTransfer(string $username, string $applicationContext): OauthRequestTransfer
+    {
+        $oauthRequestTransfer = new OauthRequestTransfer();
+        $oauthRequestTransfer
+            ->setGrantType('password')
+            ->setClientId(static::CLIENT_IDENTIFIER)
+            ->setClientSecret(static::CLIENT_SECRET)
+            ->setUsername($username)
+            ->setPassword(static::FAKE_PASSWORD)
+            ->setGlueAuthenticationRequestContext(
+                (new GlueAuthenticationRequestContextTransfer())
+                    ->setRequestApplication($applicationContext),
+            );
+
+        return $oauthRequestTransfer;
     }
 }

@@ -32,7 +32,7 @@ interface OauthClientInterface
 
     /**
      * Specification:
-     *  - Validates JWT token, checks if fingerprint is valid using public key, does not go to Zed.
+     *  - Validates JWT token, checks if the fingerprint is valid using a public key, do not go to Zed.
      *
      * @api
      *
@@ -49,7 +49,7 @@ interface OauthClientInterface
     /**
      * Specification:
      * - Validates JWT token.
-     * - Checks if fingerprint is valid using public key.
+     * - Checks if a fingerprint is valid using a public key.
      * - Does not go to Zed.
      *
      * @api

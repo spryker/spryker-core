@@ -248,7 +248,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
@@ -320,7 +320,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */
@@ -340,7 +340,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param array<\Generated\Shared\Transfer\ProductManagementAttributeTransfer> $attributeTransferCollection
      *
      * @return array
@@ -412,7 +412,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */

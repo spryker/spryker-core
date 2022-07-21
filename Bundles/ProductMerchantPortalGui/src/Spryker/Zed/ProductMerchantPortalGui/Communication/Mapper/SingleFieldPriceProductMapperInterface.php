@@ -12,7 +12,7 @@ use ArrayObject;
 interface SingleFieldPriceProductMapperInterface
 {
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param int $volumeQuantity
      * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *

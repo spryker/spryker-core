@@ -432,4 +432,19 @@ interface CustomerClientInterface
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function getCustomerByAccessToken(string $accessToken): CustomerResponseTransfer;
+
+    /**
+     * Specification:
+     * - Expects `CustomerTransfer.addresses` to be provided.
+     * - Gets customer from the session.
+     * - Updates `addresses` field for the customer.
+     * - Sets updated customer to session.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return void
+     */
+    public function updateCustomerAddresses(CustomerTransfer $customerTransfer): void;
 }

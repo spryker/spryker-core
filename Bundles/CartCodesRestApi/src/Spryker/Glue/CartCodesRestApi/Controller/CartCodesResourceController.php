@@ -26,6 +26,7 @@ class CartCodesResourceController extends AbstractController
      *          "parameters": [{
      *              "ref": "acceptLanguage"
      *          }],
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestCartsAttributesTransfer",
      *          "responses": {
      *              "401": "Invalid access token.",
      *              "403": "Missing access token.",
@@ -52,7 +53,7 @@ class CartCodesResourceController extends AbstractController
     /**
      * @Glue({
      *     "delete": {
-     *          "path": "/carts/{cartId}/cart-codes/{code}",
+     *          "path": "/carts/{cartId}/cart-codes/{cartCodeId}",
      *          "summary": [
      *              "Deletes a gift card code from a cart."
      *          ],

@@ -74,6 +74,7 @@ abstract class AbstractWidgetPlugin extends AbstractPlugin implements WidgetPlug
      *
      * @return bool
      */
+    #[\ReturnTypeWillChange]
     public function offsetExists($offset)
     {
         return isset($this->parameters[$offset]) || array_key_exists($offset, $this->parameters);
@@ -84,6 +85,7 @@ abstract class AbstractWidgetPlugin extends AbstractPlugin implements WidgetPlug
      *
      * @return mixed
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($offset)
     {
         return $this->parameters[$offset];
@@ -97,6 +99,7 @@ abstract class AbstractWidgetPlugin extends AbstractPlugin implements WidgetPlug
      *
      * @return void
      */
+    #[\ReturnTypeWillChange]
     public function offsetSet($offset, $value)
     {
         throw new ReadOnlyException('This is a read only object.');
@@ -109,6 +112,7 @@ abstract class AbstractWidgetPlugin extends AbstractPlugin implements WidgetPlug
      *
      * @return void
      */
+    #[\ReturnTypeWillChange]
     public function offsetUnset($offset)
     {
         throw new ReadOnlyException('This is a read only object.');

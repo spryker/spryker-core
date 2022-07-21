@@ -32,6 +32,10 @@ use Spryker\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGeneratorI
 use Spryker\Zed\Customer\Business\Sales\CustomerOrderHydrator;
 use Spryker\Zed\Customer\Business\StrategyResolver\OrderSaverStrategyResolver;
 use Spryker\Zed\Customer\Business\StrategyResolver\OrderSaverStrategyResolverInterface;
+use Spryker\Zed\Customer\Business\Validator\CustomerAddressCheckoutSalutationValidator;
+use Spryker\Zed\Customer\Business\Validator\CustomerAddressCheckoutSalutationValidatorInterface;
+use Spryker\Zed\Customer\Business\Validator\CustomerCheckoutSalutationValidator;
+use Spryker\Zed\Customer\Business\Validator\CustomerCheckoutSalutationValidatorInterface;
 use Spryker\Zed\Customer\CustomerDependencyProvider;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToStoreFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -226,7 +230,10 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
      */
     public function createPreConditionChecker()
     {
-        return new PreConditionChecker($this->createCustomer(), $this->getUtilValidateService());
+        return new PreConditionChecker(
+            $this->createCustomer(),
+            $this->getUtilValidateService(),
+        );
     }
 
     /**
@@ -347,5 +354,27 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     public function getStoreFacade(): CustomerToStoreFacadeInterface
     {
         return $this->getProvidedDependency(CustomerDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Customer\Business\Validator\CustomerCheckoutSalutationValidatorInterface
+     */
+    public function createCustomerCheckoutSalutationValidator(): CustomerCheckoutSalutationValidatorInterface
+    {
+        return new CustomerCheckoutSalutationValidator(
+            $this->getRepository(),
+            $this->getConfig(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Customer\Business\Validator\CustomerAddressCheckoutSalutationValidatorInterface
+     */
+    public function createCustomerAddressCheckoutSalutationValidator(): CustomerAddressCheckoutSalutationValidatorInterface
+    {
+        return new CustomerAddressCheckoutSalutationValidator(
+            $this->getRepository(),
+            $this->getConfig(),
+        );
     }
 }

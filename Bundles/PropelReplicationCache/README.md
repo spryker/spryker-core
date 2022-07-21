@@ -12,4 +12,4 @@ composer require spryker/propel-replication-cache
 
 ## Documentation
 
-[Spryker Documentation](https://docs.spryker.com/)
+[Spryker Documentation](https://docs.spryker.com)

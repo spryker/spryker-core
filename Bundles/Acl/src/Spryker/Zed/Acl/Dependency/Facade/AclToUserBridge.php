@@ -29,7 +29,7 @@ class AclToUserBridge implements AclToUserInterface
      *
      * @return bool
      */
-    public function isSystemUser(UserTransfer $user)
+    public function isSystemUser(UserTransfer $user): bool
     {
         return $this->userFacade->isSystemUser($user);
     }
@@ -39,7 +39,7 @@ class AclToUserBridge implements AclToUserInterface
      *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
-    public function getUserByUsername($username)
+    public function getUserByUsername(string $username): UserTransfer
     {
         return $this->userFacade->getUserByUsername($username);
     }
@@ -47,7 +47,7 @@ class AclToUserBridge implements AclToUserInterface
     /**
      * @return bool
      */
-    public function hasCurrentUser()
+    public function hasCurrentUser(): bool
     {
         return $this->userFacade->hasCurrentUser();
     }
@@ -55,7 +55,7 @@ class AclToUserBridge implements AclToUserInterface
     /**
      * @return \Generated\Shared\Transfer\UserTransfer
      */
-    public function getCurrentUser()
+    public function getCurrentUser(): UserTransfer
     {
         return $this->userFacade->getCurrentUser();
     }

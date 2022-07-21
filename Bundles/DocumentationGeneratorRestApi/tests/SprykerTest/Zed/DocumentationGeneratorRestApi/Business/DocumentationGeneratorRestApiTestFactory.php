@@ -74,6 +74,8 @@ use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\SecuritySchemeRe
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Renderer\SecuritySchemeRendererInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Storage\ResourceSchemaNameStorage;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Storage\ResourceSchemaNameStorageInterface;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Storage\ResourceTransferClassNameStorage;
+use Spryker\Zed\DocumentationGeneratorRestApi\Business\Storage\ResourceTransferClassNameStorageInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Writer\DocumentationWriterInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Business\Writer\YamlOpenApiDocumentationWriter;
 use Spryker\Zed\DocumentationGeneratorRestApi\Dependency\External\DocumentationGeneratorRestApiToDoctrineInflectorAdapter;
@@ -86,8 +88,12 @@ use Spryker\Zed\DocumentationGeneratorRestApi\Dependency\External\DocumentationG
 use Spryker\Zed\DocumentationGeneratorRestApi\Dependency\External\DocumentationGeneratorRestApiToYamlDumperInterface;
 use Spryker\Zed\DocumentationGeneratorRestApi\Dependency\Service\DocumentationGeneratorRestApiToUtilEncodingServiceBridge;
 use Spryker\Zed\DocumentationGeneratorRestApi\Dependency\Service\DocumentationGeneratorRestApiToUtilEncodingServiceInterface;
-use Spryker\Zed\DocumentationGeneratorRestApi\DocumentationGeneratorRestApiConfig;
+use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\ConfigWithEnabledRelationshipNesting;
 use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\Plugin\GlueApplication\TestAnnotationResourceRelationshipPlugin;
+use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\Plugin\GlueApplication\TestFirstNestedResourceRelationshipPlugin;
+use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\Plugin\GlueApplication\TestFourthNestedResourceRelationshipPlugin;
+use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\Plugin\GlueApplication\TestSecondNestedResourceRelationshipPlugin;
+use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\Plugin\GlueApplication\TestThirdWithoutAnnotationNestedResourceRelationshipPlugin;
 use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\Plugin\TestResourceRelationshipPlugin;
 use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\Plugin\TestResourceRouteWithAllMethodsPlugin;
 use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\Plugin\TestResourceRouteWithEmptyAnnotationsPlugin;
@@ -145,7 +151,10 @@ class DocumentationGeneratorRestApiTestFactory extends Unit
      */
     public function createResourceRelationshipsPluginAnalyzer(): ResourceRelationshipsPluginAnalyzerInterface
     {
-        return new ResourceRelationshipsPluginAnalyzer([$this->createResourceRelationshipProcessorCollectionPluginMock()]);
+        return new ResourceRelationshipsPluginAnalyzer(
+            [$this->createResourceRelationshipProcessorCollectionPluginMock()],
+            $this->createConfig(),
+        );
     }
 
     /**
@@ -206,6 +215,22 @@ class DocumentationGeneratorRestApiTestFactory extends Unit
             'test-resource-with-all-methods',
             new TestAnnotationResourceRelationshipPlugin(),
         );
+        $resourceRelationshipCollection->addRelationship(
+            'test-nested-resource',
+            new TestFirstNestedResourceRelationshipPlugin(),
+        );
+        $resourceRelationshipCollection->addRelationship(
+            'test-first-nested-resource',
+            new TestSecondNestedResourceRelationshipPlugin(),
+        );
+        $resourceRelationshipCollection->addRelationship(
+            'test-second-nested-resource',
+            new TestThirdWithoutAnnotationNestedResourceRelationshipPlugin(),
+        );
+        $resourceRelationshipCollection->addRelationship(
+            'test-third-without-annotation-nested-resource',
+            new TestFourthNestedResourceRelationshipPlugin(),
+        );
 
         return $resourceRelationshipCollection;
     }
@@ -220,6 +245,9 @@ class DocumentationGeneratorRestApiTestFactory extends Unit
             $this->createOpenApiSpecificationSchemaBuilder(),
             $this->createSchemaRenderer(),
             $this->createResourceRelationshipProcessor(),
+            $this->createResourceRelationshipProcessorsPluginAnnotationAnalyzer(),
+            $this->createResourceTransferClassNameStorage(),
+            $this->createConfig(),
         );
     }
 
@@ -249,6 +277,7 @@ class DocumentationGeneratorRestApiTestFactory extends Unit
             $this->createResourceRelationshipsPluginAnalyzer(),
             $this->createGlueAnnotationAnalyzer(),
             $this->createResourceRelationshipProcessorsPluginAnnotationAnalyzer(),
+            $this->createResourceTransferClassNameStorage(),
         );
     }
 
@@ -505,6 +534,14 @@ class DocumentationGeneratorRestApiTestFactory extends Unit
     }
 
     /**
+     * @return \Spryker\Zed\DocumentationGeneratorRestApi\Business\Storage\ResourceTransferClassNameStorageInterface
+     */
+    public function createResourceTransferClassNameStorage(): ResourceTransferClassNameStorageInterface
+    {
+        return new ResourceTransferClassNameStorage();
+    }
+
+    /**
      * @return \Spryker\Zed\DocumentationGeneratorRestApi\Dependency\External\DocumentationGeneratorRestApiToYamlDumperInterface
      */
     public function createYamlDumper(): DocumentationGeneratorRestApiToYamlDumperInterface
@@ -521,10 +558,10 @@ class DocumentationGeneratorRestApiTestFactory extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\DocumentationGeneratorRestApi\DocumentationGeneratorRestApiConfig
+     * @return \SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\ConfigWithEnabledRelationshipNesting
      */
-    public function createConfig(): DocumentationGeneratorRestApiConfig
+    public function createConfig(): ConfigWithEnabledRelationshipNesting
     {
-        return new DocumentationGeneratorRestApiConfig();
+        return new ConfigWithEnabledRelationshipNesting();
     }
 }

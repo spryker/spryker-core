@@ -12,7 +12,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method \Spryker\Zed\MessageBrokerAws\Business\MessageBrokerAwsFacade getFacade()
+ * @method \Spryker\Zed\MessageBrokerAws\Business\MessageBrokerAwsFacadeInterface getFacade()
  */
 class MessageBrokerSqsToSnsSubscriberConsole extends Console
 {

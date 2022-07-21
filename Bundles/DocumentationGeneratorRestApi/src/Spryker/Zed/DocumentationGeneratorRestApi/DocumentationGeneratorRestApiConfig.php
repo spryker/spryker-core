@@ -236,4 +236,17 @@ class DocumentationGeneratorRestApiConfig extends AbstractBundleConfig
     {
         return '';
     }
+
+    /**
+     * Specification:
+     * - Defines if nested relationships displaying is enabled.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isNestedRelationshipsEnabled(): bool
+    {
+        return false;
+    }
 }

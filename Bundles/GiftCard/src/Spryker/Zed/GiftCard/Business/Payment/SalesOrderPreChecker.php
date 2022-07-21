@@ -71,6 +71,7 @@ class SalesOrderPreChecker implements SalesOrderPreCheckerInterface
         }
 
         $result = true;
+        /** @var \ArrayObject<int, \Generated\Shared\Transfer\PaymentTransfer> $validPayments */
         $validPayments = new ArrayObject();
 
         foreach ($quoteTransfer->getPayments() as $paymentTransfer) {

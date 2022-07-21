@@ -25,7 +25,7 @@ interface MailBuilderInterface
 
     /**
      * @param string $subject
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return $this
      */

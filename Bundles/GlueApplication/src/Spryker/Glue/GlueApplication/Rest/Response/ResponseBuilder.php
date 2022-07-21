@@ -100,7 +100,7 @@ class ResponseBuilder implements ResponseBuilderInterface
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return bool
      */
@@ -252,7 +252,7 @@ class ResponseBuilder implements ResponseBuilderInterface
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */

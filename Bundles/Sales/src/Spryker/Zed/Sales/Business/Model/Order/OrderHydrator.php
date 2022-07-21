@@ -423,7 +423,8 @@ class OrderHydrator implements OrderHydratorInterface
      */
     protected function hydrateExpensesToOrderTransfer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer)
     {
-        foreach ($orderEntity->getExpenses(new Criteria()) as $expenseEntity) {
+        $criteria = (new Criteria())->setDistinct();
+        foreach ($orderEntity->getExpenses($criteria) as $expenseEntity) {
             $expenseTransfer = new ExpenseTransfer();
             $expenseTransfer->fromArray($expenseEntity->toArray(), true);
 

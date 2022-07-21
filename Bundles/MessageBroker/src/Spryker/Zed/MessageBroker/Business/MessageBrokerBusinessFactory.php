@@ -28,8 +28,8 @@ use Spryker\Zed\MessageBroker\Business\Worker\Worker;
 use Spryker\Zed\MessageBroker\Business\Worker\WorkerInterface;
 use Spryker\Zed\MessageBroker\Dependency\Service\MessageBrokerToUtilEncodingServiceInterface;
 use Spryker\Zed\MessageBroker\MessageBrokerDependencyProvider;
-use SprykerSdk\AsyncApi\Loader\AsyncApiLoader;
-use SprykerSdk\AsyncApi\Loader\AsyncApiLoaderInterface;
+use SprykerSdk\AsyncApi\AsyncApi\Loader\AsyncApiLoader;
+use SprykerSdk\AsyncApi\AsyncApi\Loader\AsyncApiLoaderInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Messenger\Handler\HandlersLocatorInterface;
 use Symfony\Component\Messenger\MessageBus;
@@ -211,7 +211,7 @@ class MessageBrokerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \SprykerSdk\AsyncApi\Loader\AsyncApiLoaderInterface
+     * @return \SprykerSdk\AsyncApi\AsyncApi\Loader\AsyncApiLoaderInterface
      */
     public function createAsyncApiLoader(): AsyncApiLoaderInterface
     {

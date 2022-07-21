@@ -14,10 +14,16 @@ use Spryker\Glue\GlueApplication\ApiApplication\ApiApplicationProxy;
 use Spryker\Glue\GlueApplication\ApiApplication\GlueStorefrontFallbackApiApplication;
 use Spryker\Glue\GlueApplication\ApiApplication\RequestFlowExecutor;
 use Spryker\Glue\GlueApplication\ApiApplication\RequestFlowExecutorInterface;
+use Spryker\Glue\GlueApplication\Cache\Reader\ControllerCacheReader;
+use Spryker\Glue\GlueApplication\Cache\Reader\ControllerCacheReaderInterface;
+use Spryker\Glue\GlueApplication\Cache\Writer\ControllerCacheWriter;
+use Spryker\Glue\GlueApplication\Cache\Writer\ControllerCacheWriterInterface;
 use Spryker\Glue\GlueApplication\Dependency\Client\GlueApplicationToStoreClientInterface;
+use Spryker\Glue\GlueApplication\Dependency\External\GlueApplicationToSymfonyFilesystemInterface;
 use Spryker\Glue\GlueApplication\Dependency\Service\GlueApplicationToUtilEncodingServiceInterface;
 use Spryker\Glue\GlueApplication\Executor\ResourceExecutor;
 use Spryker\Glue\GlueApplication\Executor\ResourceExecutorInterface;
+use Spryker\Glue\GlueApplication\Plugin\Console\Helper\DescriptorHelper;
 use Spryker\Glue\GlueApplication\Plugin\Rest\GlueControllerListenerPlugin;
 use Spryker\Glue\GlueApplication\Rest\ContentType\ContentTypeResolver;
 use Spryker\Glue\GlueApplication\Rest\ContentType\ContentTypeResolverInterface;
@@ -77,12 +83,20 @@ use Spryker\Glue\GlueApplication\Rest\User\UserProvider;
 use Spryker\Glue\GlueApplication\Rest\User\UserProviderInterface;
 use Spryker\Glue\GlueApplication\Rest\Version\VersionResolver;
 use Spryker\Glue\GlueApplication\Rest\Version\VersionResolverInterface;
-use Spryker\Glue\GlueApplication\Router\RequestResourcePluginFilter;
-use Spryker\Glue\GlueApplication\Router\RequestResourcePluginFilterInterface;
-use Spryker\Glue\GlueApplication\Router\ResourceRouter;
-use Spryker\Glue\GlueApplication\Router\ResourceRouterInterface;
-use Spryker\Glue\GlueApplication\Router\Uri\UriParser;
-use Spryker\Glue\GlueApplication\Router\Uri\UriParserInterface;
+use Spryker\Glue\GlueApplication\Router\CustomRouteRouter\Builder\RouterBuilder;
+use Spryker\Glue\GlueApplication\Router\CustomRouteRouter\Builder\RouterBuilderInterface;
+use Spryker\Glue\GlueApplication\Router\CustomRouteRouter\Cache\RouterCacheCollector;
+use Spryker\Glue\GlueApplication\Router\CustomRouteRouter\Cache\RouterCacheCollectorInterface;
+use Spryker\Glue\GlueApplication\Router\CustomRouteRouter\CustomRouteMatcher;
+use Spryker\Glue\GlueApplication\Router\ResourceRouter\ConventionResourceFilter;
+use Spryker\Glue\GlueApplication\Router\ResourceRouter\ConventionResourceFilterInterface;
+use Spryker\Glue\GlueApplication\Router\ResourceRouter\RequestResourcePluginFilter;
+use Spryker\Glue\GlueApplication\Router\ResourceRouter\RequestResourcePluginFilterInterface;
+use Spryker\Glue\GlueApplication\Router\ResourceRouter\ResourceRouteMatcher;
+use Spryker\Glue\GlueApplication\Router\ResourceRouter\Uri\UriParser;
+use Spryker\Glue\GlueApplication\Router\ResourceRouter\Uri\UriParserInterface;
+use Spryker\Glue\GlueApplication\Router\RouteMatcherCollection;
+use Spryker\Glue\GlueApplication\Router\RouteMatcherInterface;
 use Spryker\Glue\GlueApplication\Serialize\Decoder\DecoderInterface;
 use Spryker\Glue\GlueApplication\Serialize\Decoder\JsonDecoder;
 use Spryker\Glue\GlueApplication\Serialize\Encoder\EncoderInterface;
@@ -93,6 +107,9 @@ use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\Application\ApplicationInterface;
 use Spryker\Shared\Kernel\Container\ContainerProxy;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
  * @method \Spryker\Glue\GlueApplication\GlueApplicationConfig getConfig()
@@ -718,7 +735,7 @@ class GlueApplicationFactory extends AbstractFactory
             $glueApplicationBootstrapPlugin,
             $this->createRequestFlowExecutor(),
             $this->getCommunicationProtocolPlugins(),
-            $this->getApiConventionPlugins(),
+            $this->getConventionPlugins(),
         );
     }
 
@@ -733,9 +750,12 @@ class GlueApplicationFactory extends AbstractFactory
     /**
      * @return \Spryker\Glue\GlueApplication\ApiApplication\RequestFlowExecutorInterface
      */
-    protected function createRequestFlowExecutor(): RequestFlowExecutorInterface
+    public function createRequestFlowExecutor(): RequestFlowExecutorInterface
     {
-        return new RequestFlowExecutor($this->createResourceExecutor());
+        return new RequestFlowExecutor(
+            $this->createResourceExecutor(),
+            $this->createRouteMatcher(),
+        );
     }
 
     /**
@@ -747,11 +767,11 @@ class GlueApplicationFactory extends AbstractFactory
     }
 
     /**
-     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ApiConventionPluginInterface>
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ConventionPluginInterface>
      */
-    public function getApiConventionPlugins(): array
+    public function getConventionPlugins(): array
     {
-        return $this->getProvidedDependency(GlueApplicationDependencyProvider::PLUGINS_API_CONVENTION);
+        return $this->getProvidedDependency(GlueApplicationDependencyProvider::PLUGINS_CONVENTION);
     }
 
     /**
@@ -759,41 +779,175 @@ class GlueApplicationFactory extends AbstractFactory
      */
     public function createResourceExecutor(): ResourceExecutorInterface
     {
-        return new ResourceExecutor();
+        return new ResourceExecutor(
+            $this->createControllerCacheReader(),
+        );
     }
 
     /**
-     * @return \Spryker\Glue\GlueApplication\Router\ResourceRouterInterface
+     * @return \Spryker\Glue\GlueApplication\Router\ResourceRouter\RequestResourcePluginFilterInterface
      */
-    public function createResourceRouter(): ResourceRouterInterface
+    public function createRequestResourcePluginFilter(): RequestResourcePluginFilterInterface
     {
-        return new ResourceRouter(
+        return new RequestResourcePluginFilter($this->createConventionResourceFilter());
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Router\ResourceRouter\ConventionResourceFilterInterface
+     */
+    public function createConventionResourceFilter(): ConventionResourceFilterInterface
+    {
+        return new ConventionResourceFilter($this->getConventionPlugins());
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Plugin\Console\Helper\DescriptorHelper
+     */
+    public function createDescriptorHelper(): DescriptorHelper
+    {
+        return new DescriptorHelper();
+    }
+
+    /**
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     *
+     * @return \Symfony\Component\Console\Style\SymfonyStyle
+     */
+    public function createConsoleOutputStyle(InputInterface $input, OutputInterface $output): SymfonyStyle
+    {
+        return new SymfonyStyle($input, $output);
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Router\ResourceRouter\Uri\UriParserInterface
+     */
+    public function createUriParser(): UriParserInterface
+    {
+        return new UriParser();
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Cache\Writer\ControllerCacheWriterInterface
+     */
+    public function createControllerCacheWriter(): ControllerCacheWriterInterface
+    {
+        return new ControllerCacheWriter(
+            $this->getControllerCacheCollectorPlugins(),
+            $this->getConfig(),
+            $this->getFilesystem(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Cache\Reader\ControllerCacheReaderInterface
+     */
+    public function createControllerCacheReader(): ControllerCacheReaderInterface
+    {
+        return new ControllerCacheReader(
+            $this->createControllerCacheWriter(),
+            $this->getConfig(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Dependency\External\GlueApplicationToSymfonyFilesystemInterface
+     */
+    public function getFilesystem(): GlueApplicationToSymfonyFilesystemInterface
+    {
+        return $this->getProvidedDependency(GlueApplicationDependencyProvider::FILESYSTEM);
+    }
+
+    /**
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ControllerCacheCollectorPluginInterface>
+     */
+    public function getControllerCacheCollectorPlugins(): array
+    {
+        return $this->getProvidedDependency(GlueApplicationDependencyProvider::PLUGINS_CONTROLLER_CACHE_COLLECTOR);
+    }
+
+    /**
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ApiApplicationEndpointProviderPluginInterface>
+     */
+    public function getGlueApplicationRouterProviderPlugins(): array
+    {
+        return $this->getProvidedDependency(GlueApplicationDependencyProvider::PLUGINS_GLUE_APPLICATION_ROUTER_PROVIDER);
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Router\RouteMatcherInterface
+     */
+    public function createCustomRouteMatcher(): RouteMatcherInterface
+    {
+        return new CustomRouteMatcher($this->createRouterBuilder());
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Router\RouteMatcherInterface
+     */
+    public function createResourceRouteMatcher(): RouteMatcherInterface
+    {
+        return new ResourceRouteMatcher(
+            $this->getResourcesProviderPlugins(),
             $this->createUriParser(),
             $this->createRequestResourcePluginFilter(),
         );
     }
 
     /**
-     * @return \Spryker\Glue\GlueApplication\Router\RequestResourcePluginFilterInterface
+     * @return \Spryker\Glue\GlueApplication\Router\RouteMatcherInterface
      */
-    public function createRequestResourcePluginFilter(): RequestResourcePluginFilterInterface
+    public function createRouteMatcher(): RouteMatcherInterface
     {
-        return new RequestResourcePluginFilter($this->getResourceFilterPlugins());
+        return new RouteMatcherCollection(
+            $this->getRouteMatchers(),
+            $this->getConfig(),
+        );
     }
 
     /**
-     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceFilterPluginInterface>
+     * @return array<\Spryker\Glue\GlueApplication\Router\RouteMatcherInterface>
      */
-    public function getResourceFilterPlugins(): array
+    public function getRouteMatchers(): array
     {
-        return $this->getProvidedDependency(GlueApplicationDependencyProvider::PLUGINS_RESOURCE_FILTER);
+        return [
+            'routes' => $this->createCustomRouteMatcher(),
+            'resources' => $this->createResourceRouteMatcher(),
+        ];
     }
 
     /**
-     * @return \Spryker\Glue\GlueApplication\Router\Uri\UriParserInterface
+     * @return \Spryker\Glue\GlueApplication\Router\CustomRouteRouter\Builder\RouterBuilderInterface
      */
-    public function createUriParser(): UriParserInterface
+    public function createRouterBuilder(): RouterBuilderInterface
     {
-        return new UriParser();
+        return new RouterBuilder($this->getRoutesProviderPlugins());
+    }
+
+    /**
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RoutesProviderPluginInterface>
+     */
+    public function getRoutesProviderPlugins(): array
+    {
+        return $this->getProvidedDependency(GlueApplicationDependencyProvider::PLUGINS_ROUTES_PROVIDER);
+    }
+
+    /**
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourcesProviderPluginInterface>
+     */
+    public function getResourcesProviderPlugins(): array
+    {
+        return $this->getProvidedDependency(GlueApplicationDependencyProvider::PLUGINS_RESOURCES_PROVIDER);
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Router\CustomRouteRouter\Cache\RouterCacheCollectorInterface
+     */
+    public function createRouterCacheCollector(): RouterCacheCollectorInterface
+    {
+        return new RouterCacheCollector(
+            $this->createRouterBuilder(),
+            $this->getRoutesProviderPlugins(),
+        );
     }
 }

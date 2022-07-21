@@ -344,7 +344,7 @@ class DataImportBusinessFactory extends AbstractBusinessFactory implements DataI
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface
      */

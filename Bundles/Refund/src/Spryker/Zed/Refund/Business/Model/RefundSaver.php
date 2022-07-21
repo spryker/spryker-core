@@ -9,6 +9,7 @@ namespace Spryker\Zed\Refund\Business\Model;
 
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\RefundTransfer;
 use Orm\Zed\Refund\Persistence\SpyRefund;
 use Spryker\Zed\Refund\Dependency\Facade\RefundToCalculationInterface;
@@ -33,18 +34,26 @@ class RefundSaver implements RefundSaverInterface
     protected $calculationFacade;
 
     /**
+     * @var array<\Spryker\Zed\RefundExtension\Dependency\Plugin\RefundPostSavePluginInterface>
+     */
+    protected array $refundPostSavePlugins;
+
+    /**
      * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $salesQueryContainer
      * @param \Spryker\Zed\Refund\Dependency\Facade\RefundToSalesInterface $saleFacade
      * @param \Spryker\Zed\Refund\Dependency\Facade\RefundToCalculationInterface $calculationFacade
+     * @param array<\Spryker\Zed\RefundExtension\Dependency\Plugin\RefundPostSavePluginInterface> $refundPostSavePlugins
      */
     public function __construct(
         SalesQueryContainerInterface $salesQueryContainer,
         RefundToSalesInterface $saleFacade,
-        RefundToCalculationInterface $calculationFacade
+        RefundToCalculationInterface $calculationFacade,
+        array $refundPostSavePlugins
     ) {
         $this->salesQueryContainer = $salesQueryContainer;
         $this->salesFacade = $saleFacade;
         $this->calculationFacade = $calculationFacade;
+        $this->refundPostSavePlugins = $refundPostSavePlugins;
     }
 
     /**
@@ -58,22 +67,44 @@ class RefundSaver implements RefundSaverInterface
 
         $this->updateOrderItems($refundTransfer);
         $this->updateExpenses($refundTransfer);
-        $this->storeRefund($refundTransfer);
-        $this->recalculateOrder($refundTransfer);
+
+        $refundTransfer = $this->storeRefund($refundTransfer);
+        $orderTransfer = $this->recalculateOrder($refundTransfer);
+
+        $this->executeRefundPostSavePlugins($refundTransfer, $orderTransfer);
 
         return $this->salesQueryContainer->getConnection()->commit();
     }
 
     /**
      * @param \Generated\Shared\Transfer\RefundTransfer $refundTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\RefundTransfer
      */
-    protected function storeRefund(RefundTransfer $refundTransfer)
+    protected function executeRefundPostSavePlugins(
+        RefundTransfer $refundTransfer,
+        OrderTransfer $orderTransfer
+    ): RefundTransfer {
+        foreach ($this->refundPostSavePlugins as $refundPostSavePlugin) {
+            $refundTransfer = $refundPostSavePlugin->postSave($refundTransfer, $orderTransfer);
+        }
+
+        return $refundTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RefundTransfer $refundTransfer
+     *
+     * @return \Generated\Shared\Transfer\RefundTransfer
+     */
+    protected function storeRefund(RefundTransfer $refundTransfer): RefundTransfer
     {
         $refundEntity = $this->buildRefundEntity($refundTransfer);
 
         $this->saveRefundEntity($refundEntity);
+
+        return $refundTransfer;
     }
 
     /**
@@ -158,12 +189,15 @@ class RefundSaver implements RefundSaverInterface
     /**
      * @param \Generated\Shared\Transfer\RefundTransfer $refundTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    protected function recalculateOrder(RefundTransfer $refundTransfer)
+    protected function recalculateOrder(RefundTransfer $refundTransfer): OrderTransfer
     {
         $orderTransfer = $this->salesFacade->getOrderByIdSalesOrder($refundTransfer->getFkSalesOrder());
         $orderTransfer = $this->calculationFacade->recalculateOrder($orderTransfer);
+
         $this->salesFacade->updateOrder($orderTransfer, $refundTransfer->getFkSalesOrder());
+
+        return $orderTransfer;
     }
 }

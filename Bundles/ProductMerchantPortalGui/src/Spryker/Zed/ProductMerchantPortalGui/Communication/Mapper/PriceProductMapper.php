@@ -417,7 +417,7 @@ class PriceProductMapper implements PriceProductMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */

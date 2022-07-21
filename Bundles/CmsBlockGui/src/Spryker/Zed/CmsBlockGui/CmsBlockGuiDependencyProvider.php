@@ -165,7 +165,7 @@ class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return array
+     * @return array<\Spryker\Zed\CmsBlockGui\Communication\Plugin\CmsBlockFormPluginInterface>
      */
     protected function getCmsBlockFormPlugins()
     {
@@ -187,7 +187,7 @@ class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return array
+     * @return array<\Spryker\Zed\CmsBlockGui\Communication\Plugin\CmsBlockViewPluginInterface>
      */
     protected function getCmsBlockViewPlugins()
     {

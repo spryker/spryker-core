@@ -22,7 +22,7 @@ class PsrLogMessageProcessorPlugin extends AbstractPlugin implements LogProcesso
      *
      * @api
      *
-     * @param array $data
+     * @param array<mixed> $data
      *
      * @return array
      */

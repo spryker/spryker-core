@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\SalesOrderThresholdTransfer;
 interface GlobalThresholdFormMapperInterface
 {
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param \Generated\Shared\Transfer\SalesOrderThresholdTransfer $salesOrderThresholdTransfer
      *
      * @return \Generated\Shared\Transfer\SalesOrderThresholdTransfer

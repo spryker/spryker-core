@@ -14,7 +14,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\StockDataImport\StockDataImportConfig;
 
 /**
- * @method \Spryker\Zed\StockDataImport\Business\StockDataImportFacade getFacade()
+ * @method \Spryker\Zed\StockDataImport\Business\StockDataImportFacadeInterface getFacade()
  * @method \Spryker\Zed\StockDataImport\StockDataImportConfig getConfig()
  */
 class StockDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface

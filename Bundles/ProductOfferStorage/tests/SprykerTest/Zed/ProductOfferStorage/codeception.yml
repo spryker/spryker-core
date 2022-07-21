@@ -14,7 +14,7 @@ coverage:
 suites:
     Business:
         path: Business
-        class_name: ProductOfferStorageTester
+        class_name: ProductOfferStorageBusinessTester
         modules:
             enabled:
                 - Asserts
@@ -26,3 +26,4 @@ suites:
                 - \SprykerTest\Shared\Product\Helper\ProductDataHelper
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
                 - \SprykerTest\Zed\ProductOffer\Helper\ProductOfferHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDataHelper

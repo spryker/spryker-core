@@ -30,10 +30,13 @@
         <property name="sumAmount" type="int"/>
         <property name="unitAmount" type="int"/>
         <property name="quantity" type="int"/>
+        <property name="priority" type="int"/>
     </transfer>
 
     <transfer name="Discount">
         <property name="idDiscount" type="int"/>
+        <property name="priority" type="int"/>
+        <property name="calculatorPlugin" type="string"/>
     </transfer>
 
     <transfer name="ItemCollection">

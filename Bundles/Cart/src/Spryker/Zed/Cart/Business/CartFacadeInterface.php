@@ -203,4 +203,18 @@ interface CartFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function resetQuoteLock(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     * - Epxects `CartChangeTransfer.quote.id` to be provided.
+     * - Requires `CartChangeTransfer.items.groupKey` to be set.
+     * - Expands items group key with hashed cart identifier.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function expandItemGroupKeysWithCartIdentifier(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer;
 }

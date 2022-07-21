@@ -18,7 +18,7 @@ class ProductViewAvailabilityStorageExpanderPlugin extends AbstractPlugin implem
 {
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     * @param array $productData
+     * @param array<string, mixed> $productData
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer

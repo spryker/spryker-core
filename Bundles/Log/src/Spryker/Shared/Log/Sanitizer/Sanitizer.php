@@ -30,7 +30,7 @@ class Sanitizer implements SanitizerInterface
     }
 
     /**
-     * @param array $data
+     * @param array<mixed> $data
      *
      * @return array
      */
@@ -46,7 +46,7 @@ class Sanitizer implements SanitizerInterface
     }
 
     /**
-     * @param array $data
+     * @param array<mixed> $data
      * @param string $key
      * @param array|string $value
      *
@@ -60,7 +60,7 @@ class Sanitizer implements SanitizerInterface
     }
 
     /**
-     * @param array $data
+     * @param array<mixed> $data
      * @param string $key
      * @param array|string $value
      *
@@ -74,7 +74,7 @@ class Sanitizer implements SanitizerInterface
     }
 
     /**
-     * @param array $data
+     * @param array<mixed> $data
      * @param string $key
      * @param string $value
      *
@@ -90,7 +90,7 @@ class Sanitizer implements SanitizerInterface
     /**
      * Indexed array can contain arrays, iterate over them and sanitize
      *
-     * @param array $data
+     * @param array<mixed> $data
      *
      * @return array
      */
@@ -131,7 +131,7 @@ class Sanitizer implements SanitizerInterface
     }
 
     /**
-     * @param array $data
+     * @param array<mixed> $data
      *
      * @return bool
      */

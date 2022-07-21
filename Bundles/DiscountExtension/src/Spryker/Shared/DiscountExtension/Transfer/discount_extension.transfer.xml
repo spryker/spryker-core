@@ -19,4 +19,7 @@
     <transfer name="Item">
     </transfer>
 
+    <transfer name="DiscountVoucherCheckResponse">
+    </transfer>
+
 </transfers>

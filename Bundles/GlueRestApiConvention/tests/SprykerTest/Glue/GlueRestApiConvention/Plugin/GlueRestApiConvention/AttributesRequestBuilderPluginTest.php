@@ -9,7 +9,7 @@ namespace SprykerTest\Glue\GlueRestApiConvention\Plugin\GlueRestApiConvention;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\GlueRequestTransfer;
-use Spryker\Glue\GlueRestApiConvention\Plugin\GlueRestApiConvention\AttributesRequestBuilderPlugin;
+use Spryker\Glue\GlueRestApiConvention\Plugin\GlueApplication\AttributesRequestBuilderPlugin;
 
 /**
  * Auto-generated group annotations
@@ -70,10 +70,8 @@ class AttributesRequestBuilderPluginTest extends Unit
     protected function getContentData(): string
     {
         return json_encode([
-            'data' => [
-                static::ATTRIBUTES_FIRST_FIELD,
-                static::ATTRIBUTES_SECOND_KEY => static::ATTRIBUTES_SECOND_FIELD,
-            ],
+            static::ATTRIBUTES_FIRST_FIELD,
+            static::ATTRIBUTES_SECOND_KEY => static::ATTRIBUTES_SECOND_FIELD,
         ]);
     }
 }

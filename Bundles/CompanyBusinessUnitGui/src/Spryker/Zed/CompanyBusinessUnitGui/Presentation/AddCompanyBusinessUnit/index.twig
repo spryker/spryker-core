@@ -1,4 +1,4 @@
-{% extends '@CompanyBusinessUnitGui/_layout/layout.twig' %}
+{% extends '@Gui/Layout/layout.twig' %}
 
 {% set widget_title = 'Create Company Business Unit' | trans %}
 
@@ -25,4 +25,9 @@
 
     {% endembed %}
 
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="{{ assetsPath('js/spryker-zed-company-business-unit-gui-main.js') }}"></script>
 {% endblock %}

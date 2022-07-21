@@ -31,7 +31,7 @@ interface SortConfigBuilderInterface
     public function getAllSortConfigTransfers(): array;
 
     /**
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return string|null
      */

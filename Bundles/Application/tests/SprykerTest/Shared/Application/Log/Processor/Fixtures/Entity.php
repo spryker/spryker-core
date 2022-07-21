@@ -21,4 +21,12 @@ class Entity implements ActiveRecordInterface
             'last_name' => 'lastName',
         ];
     }
+
+    /**
+     * @return bool
+     */
+    public function isPrimaryKeyNull(): bool
+    {
+        return false;
+    }
 }

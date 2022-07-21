@@ -203,7 +203,7 @@ class ProductRuleTable extends AbstractProductTable
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */
@@ -244,7 +244,7 @@ class ProductRuleTable extends AbstractProductTable
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */

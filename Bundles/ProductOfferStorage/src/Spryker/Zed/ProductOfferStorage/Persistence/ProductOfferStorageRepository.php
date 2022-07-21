@@ -96,6 +96,16 @@ class ProductOfferStorageRepository extends AbstractRepository implements Produc
             $productOfferQuery->filterByConcreteSku_In($productOfferCriteriaTransfer->getConcreteSkus());
         }
 
+        if ($productOfferCriteriaTransfer->getProductOfferIds()) {
+            $productOfferQuery->filterByIdProductOffer_In($productOfferCriteriaTransfer->getProductOfferIds());
+        }
+
+        if ($productOfferCriteriaTransfer->getStoreIds()) {
+            $productOfferQuery->useSpyProductOfferStoreQuery()
+                ->filterByFkStore_In($productOfferCriteriaTransfer->getStoreIds())
+                ->endUse();
+        }
+
         return $productOfferQuery;
     }
 }

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Cart\Business;
 
+use Spryker\Zed\Cart\Business\Expander\GroupKeyExpander;
+use Spryker\Zed\Cart\Business\Expander\GroupKeyExpanderInterface;
 use Spryker\Zed\Cart\Business\Locker\QuoteLocker;
 use Spryker\Zed\Cart\Business\Locker\QuoteLockerInterface;
 use Spryker\Zed\Cart\Business\Model\Operation;
@@ -21,6 +23,7 @@ use Spryker\Zed\Cart\Business\StorageProvider\NonPersistentProvider;
 use Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface;
 use Spryker\Zed\Cart\CartDependencyProvider;
 use Spryker\Zed\Cart\Dependency\Facade\CartToQuoteFacadeInterface;
+use Spryker\Zed\Cart\Dependency\Service\CartToUtilTextServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -230,5 +233,21 @@ class CartBusinessFactory extends AbstractBusinessFactory
     public function getQuoteLockPreResetPlugins(): array
     {
         return $this->getProvidedDependency(CartDependencyProvider::PLUGINS_QUOTE_LOCK_PRE_RESET);
+    }
+
+    /**
+     * @return \Spryker\Zed\Cart\Business\Expander\GroupKeyExpanderInterface
+     */
+    public function createGroupKeyExpander(): GroupKeyExpanderInterface
+    {
+        return new GroupKeyExpander($this->getUtilTextService());
+    }
+
+    /**
+     * @return \Spryker\Zed\Cart\Dependency\Service\CartToUtilTextServiceInterface
+     */
+    public function getUtilTextService(): CartToUtilTextServiceInterface
+    {
+        return $this->getProvidedDependency(CartDependencyProvider::SERVICE_UTIL_TEXT);
     }
 }

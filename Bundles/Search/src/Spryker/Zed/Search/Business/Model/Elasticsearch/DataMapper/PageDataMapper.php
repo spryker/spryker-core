@@ -92,7 +92,7 @@ class PageDataMapper implements PageDataMapperInterface
      * @deprecated Use {@link transferDataByMapperName()} instead.
      *
      * @param \Spryker\Zed\Search\Dependency\Plugin\PageMapInterface $pageMap
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return array
@@ -113,7 +113,7 @@ class PageDataMapper implements PageDataMapperInterface
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param string $mapperName
      *

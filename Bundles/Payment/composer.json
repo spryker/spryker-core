@@ -13,7 +13,7 @@
         "spryker/message-broker": "^1.0.0",
         "spryker/message-broker-extension": "^1.0.0",
         "spryker/oms": "^7.0.0 || ^8.0.0 || ^10.0.0 || ^11.0.0",
-        "spryker/payment-extension": "^1.0.0",
+        "spryker/payment-extension": "^1.1.0",
         "spryker/propel-orm": "^1.0.0",
         "spryker/sales": "^8.0.0 || ^10.0.0 || ^11.0.0",
         "spryker/store": "^1.4.0",

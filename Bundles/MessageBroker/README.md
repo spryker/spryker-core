@@ -20,7 +20,7 @@ composer require spryker/message-broker
 
 This is just an example for testing purposes and the real configuration will be made via env variables.
 
-```
+```php
 $config[MessageBrokerAwsConstants::SNS_SENDER_CONFIG] = [
     'endpoint' => 'https://sns.eu-central-1.amazonaws.com',
     'accessKeyId' => '...',

@@ -9,7 +9,6 @@ namespace Spryker\Zed\CompanyUserGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Spryker\Zed\CompanyUserGui\Communication\Form\CustomerCompanyAttachForm;
 use Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToCompanyFacadeInterface;
 use Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToCompanyUserFacadeInterface;
 use Spryker\Zed\CompanyUserGui\Dependency\Facade\CompanyUserGuiToCustomerFacadeInterface;
@@ -75,14 +74,13 @@ class CustomerCompanyAttachFormDataProvider
     {
         return [
             'data_class' => CompanyUserTransfer::class,
-            CustomerCompanyAttachForm::OPTION_COMPANY_CHOICES => $this->createCompanyList(),
         ];
     }
 
     /**
      * @return array<int> [company name => company id]
      */
-    protected function createCompanyList(): array
+    public function createCompanyList(): array
     {
         $companies = [];
 

@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\Authorization\Authorization;
 
-use Spryker\Client\AuthorizationExtension\Dependency\Plugin\AuthorizationStrategyPluginInterface;
+use Spryker\Shared\AuthorizationExtension\Dependency\Plugin\AuthorizationStrategyPluginInterface;
 
 interface AuthorizationStrategyCollectionInterface
 {
@@ -21,7 +21,7 @@ interface AuthorizationStrategyCollectionInterface
     /**
      * @param string $name
      *
-     * @return \Spryker\Client\AuthorizationExtension\Dependency\Plugin\AuthorizationStrategyPluginInterface
+     * @return \Spryker\Shared\AuthorizationExtension\Dependency\Plugin\AuthorizationStrategyPluginInterface
      */
     public function get(string $name): AuthorizationStrategyPluginInterface;
 }

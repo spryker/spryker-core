@@ -26,10 +26,18 @@ class ProductCategoryFilterGuiToProductSearchFacadeBridge implements ProductCate
      * @param string $searchText
      * @param int $limit
      *
-     * @return array
+     * @return array<string>
      */
-    public function suggestProductSearchAttributeKeys($searchText = '', $limit = 10)
+    public function suggestProductSearchAttributeKeys($searchText = '', $limit = 10): array
     {
         return $this->productSearchFacade->suggestProductSearchAttributeKeys($searchText, $limit);
+    }
+
+    /**
+     * @return array<string>
+     */
+    public function getAllProductAttributeKeys(): array
+    {
+        return $this->productSearchFacade->getAllProductAttributeKeys();
     }
 }

@@ -29,7 +29,7 @@ class SharedCartToCustomerClientBridge implements SharedCartToCustomerClientInte
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    public function setCustomer(CustomerTransfer $customerTransfer)
+    public function setCustomer(CustomerTransfer $customerTransfer): CustomerTransfer
     {
         return $this->customerClient->setCustomer($customerTransfer);
     }
@@ -37,7 +37,7 @@ class SharedCartToCustomerClientBridge implements SharedCartToCustomerClientInte
     /**
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    public function getCustomer()
+    public function getCustomer(): ?CustomerTransfer
     {
         return $this->customerClient->getCustomer();
     }

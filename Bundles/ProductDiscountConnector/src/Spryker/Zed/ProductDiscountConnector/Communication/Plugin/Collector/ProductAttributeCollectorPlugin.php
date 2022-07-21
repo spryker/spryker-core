@@ -23,6 +23,10 @@ class ProductAttributeCollectorPlugin extends AbstractPlugin implements Collecto
 {
     /**
      * {@inheritDoc}
+     * - Builds all product variants by abstract SKU.
+     * - Looks for the attribute in any variants.
+     * - Collects all matching items.
+     * - Executes {@link \Spryker\Zed\ProductDiscountConnectorExtension\Dependency\Plugin\ProductAttributeCollectorExpanderPluginInterface} plugin stack.
      *
      * @api
      *

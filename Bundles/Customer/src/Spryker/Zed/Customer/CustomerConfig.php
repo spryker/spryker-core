@@ -53,6 +53,11 @@ class CustomerConfig extends AbstractBundleConfig
     protected const MAX_LENGTH_CUSTOMER_PASSWORD = 72;
 
     /**
+     * @var int
+     */
+    protected const ERROR_CODE_CUSTOMER_INVALID_SALUTATION = 4003;
+
+    /**
      * @api
      *
      * @return string
@@ -235,6 +240,16 @@ class CustomerConfig extends AbstractBundleConfig
     public function isDoubleOptInEnabled(): bool
     {
         return $this->getSharedConfig()->isDoubleOptInEnabled();
+    }
+
+    /**
+     * @api
+     *
+     * @return int
+     */
+    public function getCustomerInvalidSalutationErrorCode(): int
+    {
+        return static::ERROR_CODE_CUSTOMER_INVALID_SALUTATION;
     }
 
     /**

@@ -30,4 +30,18 @@
         <property name="value" type="string"/>
     </transfer>
 
+    <transfer name="PaymentMethodCollection">
+        <property name="paymentMethods" singular="paymentMethod" type="PaymentMethod[]"/>
+    </transfer>
+
+    <transfer name="PaymentMethodCriteria">
+        <property name="paymentMethodConditions" type="PaymentMethodConditions"/>
+    </transfer>
+
+    <transfer name="PaymentMethodConditions">
+        <property name="names" type="string[]" singular="name"/>
+        <property name="paymentMethodIds" type="int[]" singular="idPaymentMethod"/>
+        <property name="paymentMethodKeys" type="string[]" singular="paymentMethodKey"/>
+    </transfer>
+
 </transfers>

@@ -10,7 +10,6 @@ namespace Spryker\Zed\Asset\Persistence;
 use Orm\Zed\Asset\Persistence\SpyAssetQuery;
 use Orm\Zed\Asset\Persistence\SpyAssetStoreQuery;
 use Spryker\Zed\Asset\Persistence\Mapper\AssetMapper;
-use Spryker\Zed\Asset\Persistence\Mapper\AssetMapperInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -37,9 +36,9 @@ class AssetPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\Asset\Persistence\Mapper\AssetMapperInterface
+     * @return \Spryker\Zed\Asset\Persistence\Mapper\AssetMapper
      */
-    public function createAssetMapper(): AssetMapperInterface
+    public function createAssetMapper(): AssetMapper
     {
         return new AssetMapper();
     }

@@ -12,7 +12,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @method \Spryker\Zed\Router\Business\RouterFacade getFacade()
+ * @method \Spryker\Zed\Router\Business\RouterFacadeInterface getFacade()
  * @method \Spryker\Zed\Router\Communication\RouterCommunicationFactory getFactory()
  */
 class BackendGatewayRouterCacheWarmUpConsole extends Console

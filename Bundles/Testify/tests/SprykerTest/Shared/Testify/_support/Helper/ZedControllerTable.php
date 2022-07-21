@@ -55,7 +55,7 @@ class ZedControllerTable extends Module implements DependsOnModule
 
     /**
      * @param string $uri
-     * @param array $params
+     * @param array<string, mixed> $params
      *
      * @return void
      */

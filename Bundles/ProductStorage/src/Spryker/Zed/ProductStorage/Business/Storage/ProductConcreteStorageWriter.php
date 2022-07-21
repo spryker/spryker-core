@@ -194,13 +194,17 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
         foreach ($pairedEntities as $index => $pair) {
             $productConcreteLocalizedEntity = $pair[static::PRODUCT_CONCRETE_LOCALIZED_ENTITY];
             $productConcreteStorageEntity = $pair[static::PRODUCT_CONCRETE_STORAGE_ENTITY];
-            $productConcreteStorageTransfer = $productConcreteStorageTransfersIndexedByIdProductConcrete[$productConcreteLocalizedEntity[static::COL_FK_PRODUCT]] ?? null;
 
-            if (
-                $productConcreteLocalizedEntity === null
-                || $productConcreteStorageTransfer === null
-                || !$this->isActive($productConcreteLocalizedEntity)
-            ) {
+            if ($productConcreteLocalizedEntity === null || !$this->isActive($productConcreteLocalizedEntity)) {
+                $this->deletedProductConcreteSorageEntity($productConcreteStorageEntity);
+
+                continue;
+            }
+
+            $idProduct = $productConcreteLocalizedEntity[static::COL_FK_PRODUCT];
+            $productConcreteStorageTransfer = $productConcreteStorageTransfersIndexedByIdProductConcrete[$idProduct] ?? null;
+
+            if ($productConcreteStorageTransfer === null) {
                 $this->deletedProductConcreteSorageEntity($productConcreteStorageEntity);
 
                 continue;
@@ -219,7 +223,7 @@ class ProductConcreteStorageWriter implements ProductConcreteStorageWriterInterf
      * - ProductConcreteLocalizedEntities without ProductConcreteStorageEntity are paired with a newly created ProductConcreteStorageEntity.
      * - ProductConcreteStorageEntities without ProductConcreteLocalizedEntity (left outs) are paired with NULL.
      *
-     * @param array $productConcreteLocalizedEntities
+     * @param array<array<string, mixed>> $productConcreteLocalizedEntities
      * @param array<\Orm\Zed\ProductStorage\Persistence\SpyProductConcreteStorage> $productConcreteStorageEntities
      *
      * @return array

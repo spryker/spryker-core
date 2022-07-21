@@ -189,18 +189,20 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
      */
     protected function createProductImagesSubquery(int $idLocale): string
     {
+        /** @var literal-string $where */
+        $where = sprintf(
+            '%1$s = %2$s AND (%3$s = %4$d OR %3$s IS NULL)',
+            SpyProductImageSetTableMap::COL_FK_PRODUCT_ABSTRACT,
+            SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
+            SpyProductImageSetTableMap::COL_FK_LOCALE,
+            $idLocale,
+        );
         $productImagesSubquery = $this->getFactory()->getProductImagePropelQuery()
             ->joinSpyProductImageSetToProductImage()
             ->useSpyProductImageSetToProductImageQuery()
             ->joinSpyProductImageSet()
             ->endUse()
-            ->where(sprintf(
-                '%1$s = %2$s AND (%3$s = %4$d OR %3$s IS NULL)',
-                SpyProductImageSetTableMap::COL_FK_PRODUCT_ABSTRACT,
-                SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
-                SpyProductImageSetTableMap::COL_FK_LOCALE,
-                $idLocale,
-            ))
+            ->where($where)
             ->orderBy(SpyProductImageSetTableMap::COL_FK_LOCALE)
             ->limit(1);
         $productImagesSubquery->addSelectColumn(SpyProductImageTableMap::COL_EXTERNAL_URL_SMALL);
@@ -219,9 +221,9 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
         $productQuery = $this->getFactory()->getProductConcretePropelQuery();
         $productQuery->addAsColumn('products_count', 'COUNT(*)');
 
-        $productQuery->where(
-            SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT . ' = ' . SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT,
-        );
+        /** @var literal-string $where */
+        $where = SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT . ' = ' . SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT;
+        $productQuery->where($where);
 
         return $productQuery->createSelectSql($params);
     }
@@ -235,10 +237,10 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
         $productQuery = $this->getFactory()->getProductConcretePropelQuery();
         $productQuery->addAsColumn('products_count', 'COUNT(*)');
 
-        $productQuery->where(
-            SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT . ' = ' . SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT
-            . ' AND ' . SpyProductTableMap::COL_IS_ACTIVE,
-        );
+        /** @var literal-string $where */
+        $where = SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT . ' = ' . SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT
+            . ' AND ' . SpyProductTableMap::COL_IS_ACTIVE;
+        $productQuery->where($where);
 
         return $productQuery->createSelectSql($params);
     }
@@ -271,13 +273,15 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
                 ->joinAttribute()
             ->endUse();
 
-        $productStoresSubquery->where(sprintf(
+        /** @var literal-string $where */
+        $where = sprintf(
             '%s = %s AND %s = %s',
             SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
             SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT,
             SpyCategoryAttributeTableMap::COL_FK_LOCALE,
             $idLocale,
-        ));
+        );
+        $productStoresSubquery->where($where);
         $productStoresSubquery->addAsColumn('category_names', sprintf('GROUP_CONCAT(DISTINCT %s)', SpyCategoryAttributeTableMap::COL_NAME));
         $params = [];
 
@@ -467,13 +471,13 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
             return $merchantProductAbstractQuery;
         }
 
-        $merchantProductAbstractQuery->where(
-            sprintf(
-                '(%s) %s 0',
-                $this->createActiveProductsCountSubquery(),
-                $isVisible ? '>' : '=',
-            ),
+        /** @var literal-string $where */
+        $where = sprintf(
+            '(%s) %s 0',
+            $this->createActiveProductsCountSubquery(),
+            $isVisible ? '>' : '=',
         );
+        $merchantProductAbstractQuery->where($where);
 
         return $merchantProductAbstractQuery;
     }

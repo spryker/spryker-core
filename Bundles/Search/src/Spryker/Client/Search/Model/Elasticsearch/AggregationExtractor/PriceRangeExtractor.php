@@ -32,8 +32,8 @@ class PriceRangeExtractor extends RangeExtractor
     }
 
     /**
-     * @param array $aggregations
-     * @param array $requestParameters
+     * @param array<string, mixed> $aggregations
+     * @param array<string, mixed> $requestParameters
      *
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
@@ -46,7 +46,7 @@ class PriceRangeExtractor extends RangeExtractor
     }
 
     /**
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      * @param float $min
      * @param float $max
      *
@@ -63,7 +63,7 @@ class PriceRangeExtractor extends RangeExtractor
     }
 
     /**
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return array
      */

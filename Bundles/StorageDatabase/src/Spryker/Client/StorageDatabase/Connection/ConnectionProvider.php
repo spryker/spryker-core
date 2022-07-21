@@ -68,7 +68,7 @@ class ConnectionProvider implements ConnectionProviderInterface
     {
         $serviceContainer = $this->getServiceContainer();
         $serviceContainer->setAdapterClass(static::CONNECTION_NAME, $this->config->getDbEngineName());
-        $serviceContainer->setConnectionManager(static::CONNECTION_NAME, $this->createConnectionManager());
+        $serviceContainer->setConnectionManager($this->createConnectionManager());
         $serviceContainer->setDefaultDatasource(static::CONNECTION_NAME);
 
         $this->setupConnection();
@@ -79,9 +79,8 @@ class ConnectionProvider implements ConnectionProviderInterface
      */
     protected function createConnectionManager(): ConnectionManagerInterface
     {
-        $connectionManager = new ConnectionManagerSingle();
+        $connectionManager = new ConnectionManagerSingle(static::CONNECTION_NAME);
         $connectionManager->setConfiguration($this->getPropelConfig());
-        $connectionManager->setName(static::CONNECTION_NAME);
 
         return $connectionManager;
     }

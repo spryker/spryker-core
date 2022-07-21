@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Quote\Business;
 
+use Generated\Shared\Transfer\CommentRequestTransfer;
+use Generated\Shared\Transfer\CommentValidationResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
@@ -239,5 +241,24 @@ class QuoteFacade extends AbstractFacade implements QuoteFacadeInterface
         return $this->getFactory()
             ->createQuoteValidator()
             ->validate($quoteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CommentRequestTransfer $commentRequestTransfer
+     * @param \Generated\Shared\Transfer\CommentValidationResponseTransfer $commentValidationResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\CommentValidationResponseTransfer
+     */
+    public function validateQuoteComment(
+        CommentRequestTransfer $commentRequestTransfer,
+        CommentValidationResponseTransfer $commentValidationResponseTransfer
+    ): CommentValidationResponseTransfer {
+        return $this->getFactory()
+            ->createQuoteCommentValidator()
+            ->validate($commentRequestTransfer, $commentValidationResponseTransfer);
     }
 }

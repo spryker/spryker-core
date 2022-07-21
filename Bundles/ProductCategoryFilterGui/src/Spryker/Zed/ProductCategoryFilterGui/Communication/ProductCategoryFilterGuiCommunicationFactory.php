@@ -10,8 +10,12 @@ namespace Spryker\Zed\ProductCategoryFilterGui\Communication;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductCategoryFilterGui\Communication\Form\DataProvider\ProductCategoryFilterDataProvider;
 use Spryker\Zed\ProductCategoryFilterGui\Communication\Form\ProductCategoryFilterForm;
+use Spryker\Zed\ProductCategoryFilterGui\Communication\Saver\ProductCategoryFilterSaver;
+use Spryker\Zed\ProductCategoryFilterGui\Communication\Saver\ProductCategoryFilterSaverInterface;
 use Spryker\Zed\ProductCategoryFilterGui\Communication\Table\CategoryRootNodeTable;
 use Spryker\Zed\ProductCategoryFilterGui\Communication\TransferGenerator\ProductCategoryFilterTransferGenerator;
+use Spryker\Zed\ProductCategoryFilterGui\Communication\Validator\ProductCategoryFilterValidator;
+use Spryker\Zed\ProductCategoryFilterGui\Communication\Validator\ProductCategoryFilterValidatorInterface;
 use Spryker\Zed\ProductCategoryFilterGui\ProductCategoryFilterGuiDependencyProvider;
 
 /**
@@ -124,6 +128,26 @@ class ProductCategoryFilterGuiCommunicationFactory extends AbstractCommunication
     public function createProductCategoryFilterFormatter()
     {
         return new ProductCategoryFilterTransferGenerator($this->getUtilEncodingService());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductCategoryFilterGui\Communication\Validator\ProductCategoryFilterValidatorInterface
+     */
+    public function createProductCategoryFilterValidator(): ProductCategoryFilterValidatorInterface
+    {
+        return new ProductCategoryFilterValidator(
+            $this->getProductSearchFacade(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductCategoryFilterGui\Communication\Saver\ProductCategoryFilterSaverInterface
+     */
+    public function createProductCategoryFilterSaver(): ProductCategoryFilterSaverInterface
+    {
+        return new ProductCategoryFilterSaver(
+            $this->getProductCategoryFilterFacade(),
+        );
     }
 
     /**

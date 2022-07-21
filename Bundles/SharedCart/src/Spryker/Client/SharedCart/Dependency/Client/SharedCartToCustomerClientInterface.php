@@ -16,10 +16,10 @@ interface SharedCartToCustomerClientInterface
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    public function setCustomer(CustomerTransfer $customerTransfer);
+    public function setCustomer(CustomerTransfer $customerTransfer): CustomerTransfer;
 
     /**
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    public function getCustomer();
+    public function getCustomer(): ?CustomerTransfer;
 }

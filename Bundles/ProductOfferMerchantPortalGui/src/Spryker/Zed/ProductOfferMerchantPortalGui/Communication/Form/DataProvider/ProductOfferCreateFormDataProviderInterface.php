@@ -23,7 +23,7 @@ interface ProductOfferCreateFormDataProviderInterface
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions(ProductAbstractTransfer $productAbstractTransfer): array;
 }

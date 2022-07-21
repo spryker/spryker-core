@@ -12,6 +12,7 @@
         <property name="usedNotAppliedVoucherCodes" type="array" singular="usedNotAppliedVoucherCode"/>
         <property name="items" type="Item[]" singular="item"/>
         <property name="store" type="Store"/>
+        <property name="voucherDiscounts" type="Discount[]" singular="voucherDiscount"/>
     </transfer>
 
     <transfer name="PromotionItem">
@@ -61,6 +62,7 @@
 
     <transfer name="CalculableObject">
         <property name="promotionItems" type="PromotionItem[]" singular="promotionItem"/>
+        <property name="usedNotAppliedVoucherCodes" type="array" singular="usedNotAppliedVoucherCode"/>
     </transfer>
 
     <transfer name="StorageProduct">
@@ -129,5 +131,10 @@
         <property name="discountPromotionIds" type="int[]" singular="idDiscountPromotion"/>
         <property name="discountIds" type="int[]" singular="idDiscount"/>
         <property name="uuids" type="string[]" singular="uuid"/>
+    </transfer>
+
+    <transfer name="DiscountVoucherCheckResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="message" type="Message"/>
     </transfer>
 </transfers>

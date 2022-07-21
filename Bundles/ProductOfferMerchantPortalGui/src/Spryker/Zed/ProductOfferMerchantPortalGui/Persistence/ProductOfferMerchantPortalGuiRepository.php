@@ -131,6 +131,8 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
         $merchantReference = $productTableCriteriaTransfer->getMerchantReferenceOrFail();
 
         $productConcreteQuery = $this->addLocalizedAttributesToProductTableQuery($productConcreteQuery, $idLocale);
+        /** @var literal-string $where */
+        $where = sprintf('(%s) IS NOT NULL', $this->createProductStoresSubquery());
         $productConcreteQuery->leftJoinSpyProductValidity()
             ->joinSpyProductAbstract()
             ->addAsColumn(ProductConcreteTransfer::ID_PRODUCT_CONCRETE, SpyProductTableMap::COL_ID_PRODUCT)
@@ -145,7 +147,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
             ->addAsColumn(ProductConcreteTransfer::VALID_FROM, SpyProductValidityTableMap::COL_VALID_FROM)
             ->addAsColumn(ProductConcreteTransfer::VALID_TO, SpyProductValidityTableMap::COL_VALID_TO)
             ->addAsColumn(ProductConcreteTransfer::ABSTRACT_SKU, SpyProductAbstractTableMap::COL_SKU)
-            ->where(sprintf('(%s) IS NOT NULL', $this->createProductStoresSubquery()))
+            ->where($where)
             ->setFormatter(ModelCriteria::FORMAT_ARRAY);
 
         return $productConcreteQuery;
@@ -174,13 +176,19 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
      */
     protected function createProductStoresSubquery(): string
     {
+        /** @var literal-string $where */
+        $where = sprintf(
+            '%s = %s',
+            SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT,
+            SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT,
+        );
         $productStoresSubquery = $this->getFactory()->getStorePropelQuery()
             ->joinSpyProductAbstractStore()
             ->useSpyProductAbstractStoreQuery()
             ->joinSpyProductAbstract()
             ->endUse()
             ->addAsColumn('stores', sprintf('GROUP_CONCAT(DISTINCT %s)', SpyStoreTableMap::COL_NAME))
-            ->where(sprintf('%s = %s', SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT));
+            ->where($where);
         $params = [];
 
         return $productStoresSubquery->createSelectSql($params);
@@ -193,18 +201,20 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
      */
     protected function createProductImagesSubquery(int $idLocale): string
     {
+        /** @var literal-string $where */
+        $where = sprintf(
+            '%1$s = %2$s AND (%3$s = %4$d OR %3$s IS NULL)',
+            SpyProductImageSetTableMap::COL_FK_PRODUCT,
+            SpyProductTableMap::COL_ID_PRODUCT,
+            SpyProductImageSetTableMap::COL_FK_LOCALE,
+            $idLocale,
+        );
         $productImagesSubquery = $this->getFactory()->getProductImagePropelQuery()
             ->joinSpyProductImageSetToProductImage()
             ->useSpyProductImageSetToProductImageQuery()
             ->joinSpyProductImageSet()
             ->endUse()
-            ->where(sprintf(
-                '%1$s = %2$s AND (%3$s = %4$d OR %3$s IS NULL)',
-                SpyProductImageSetTableMap::COL_FK_PRODUCT,
-                SpyProductTableMap::COL_ID_PRODUCT,
-                SpyProductImageSetTableMap::COL_FK_LOCALE,
-                $idLocale,
-            ))
+            ->where($where)
             ->addSelectColumn(SpyProductImageTableMap::COL_EXTERNAL_URL_SMALL)
             ->orderBy(SpyProductImageSetTableMap::COL_FK_LOCALE)
             ->limit(1);
@@ -237,14 +247,16 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
     {
         $productOffersSubquery = $this->getFactory()->getProductOfferPropelQuery();
 
-        return $productOffersSubquery
-            ->where(sprintf(
-                '%s = %s AND %s = \'%s\'',
-                SpyProductOfferTableMap::COL_CONCRETE_SKU,
-                SpyProductTableMap::COL_SKU,
-                SpyProductOfferTableMap::COL_MERCHANT_REFERENCE,
-                $merchantReference,
-            ));
+        /** @var literal-string $where */
+        $where = sprintf(
+            '%s = %s AND %s = \'%s\'',
+            SpyProductOfferTableMap::COL_CONCRETE_SKU,
+            SpyProductTableMap::COL_SKU,
+            SpyProductOfferTableMap::COL_MERCHANT_REFERENCE,
+            $merchantReference,
+        );
+
+        return $productOffersSubquery->where($where);
     }
 
     /**
@@ -405,13 +417,13 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
         /** @var string $merchantReference */
         $merchantReference = $productTableCriteriaTransfer->requireMerchantReference()->getMerchantReference();
 
-        $productConcreteQuery->where(
-            sprintf(
-                '(%s) %s 0',
-                $this->createProductOffersCountSubquery($merchantReference),
-                $productConcreteHasOffers ? '>' : '=',
-            ),
+        /** @var literal-string $where */
+        $where = sprintf(
+            '(%s) %s 0',
+            $this->createProductOffersCountSubquery($merchantReference),
+            $productConcreteHasOffers ? '>' : '=',
         );
+        $productConcreteQuery->where($where);
 
         return $productConcreteQuery;
     }
@@ -702,13 +714,13 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
             return $productOfferQuery;
         }
 
-        $productOfferQuery->where(
-            sprintf(
-                '(%s) %s 0',
-                SpyProductOfferStockTableMap::COL_QUANTITY,
-                $productOfferTableCriteriaTransfer->getFilterHasStock() ? '>' : '=',
-            ),
+        /** @var literal-string $where */
+        $where = sprintf(
+            '(%s) %s 0',
+            SpyProductOfferStockTableMap::COL_QUANTITY,
+            $productOfferTableCriteriaTransfer->getFilterHasStock() ? '>' : '=',
         );
+        $productOfferQuery->where($where);
 
         if (!$productOfferTableCriteriaTransfer->getFilterHasStock()) {
             $productOfferQuery->_or()

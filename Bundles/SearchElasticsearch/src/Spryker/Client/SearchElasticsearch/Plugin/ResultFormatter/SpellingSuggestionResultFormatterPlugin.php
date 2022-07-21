@@ -34,7 +34,7 @@ class SpellingSuggestionResultFormatterPlugin extends AbstractElasticsearchResul
 
     /**
      * @param \Elastica\ResultSet $searchResult
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return string|null
      */

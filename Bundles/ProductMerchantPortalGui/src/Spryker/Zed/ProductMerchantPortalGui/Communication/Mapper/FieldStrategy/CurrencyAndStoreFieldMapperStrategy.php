@@ -57,7 +57,7 @@ class CurrencyAndStoreFieldMapperStrategy extends AbstractFieldMapperStrategy
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param int $volumeQuantity
      * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
@@ -97,7 +97,7 @@ class CurrencyAndStoreFieldMapperStrategy extends AbstractFieldMapperStrategy
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
@@ -125,7 +125,7 @@ class CurrencyAndStoreFieldMapperStrategy extends AbstractFieldMapperStrategy
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */

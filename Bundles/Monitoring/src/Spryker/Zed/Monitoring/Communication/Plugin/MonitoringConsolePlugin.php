@@ -15,7 +15,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 /**
  * @deprecated Use {@link \Spryker\Zed\Monitoring\Communication\Plugin\Console\MonitoringConsolePlugin} instead.
  *
- * @method \Spryker\Zed\Monitoring\Business\MonitoringFacade getFacade()
+ * @method \Spryker\Zed\Monitoring\Business\MonitoringFacadeInterface getFacade()
  * @method \Spryker\Zed\Monitoring\Communication\MonitoringCommunicationFactory getFactory()
  * @method \Spryker\Zed\Monitoring\MonitoringConfig getConfig()
  */

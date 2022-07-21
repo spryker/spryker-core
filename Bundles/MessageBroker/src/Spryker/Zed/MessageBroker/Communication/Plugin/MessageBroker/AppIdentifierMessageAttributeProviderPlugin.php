@@ -8,7 +8,6 @@
 namespace Spryker\Zed\MessageBroker\Communication\Plugin\MessageBroker;
 
 use Generated\Shared\Transfer\MessageAttributesTransfer;
-use Generated\Shared\Transfer\PublisherTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\MessageBrokerExtension\Dependency\Plugin\MessageAttributeProviderPluginInterface;
 
@@ -33,8 +32,8 @@ class AppIdentifierMessageAttributeProviderPlugin extends AbstractPlugin impleme
             return $messageAttributesTransfer;
         }
 
-        $publisher = $messageAttributesTransfer->getPublisher() ?? new PublisherTransfer();
-        $messageAttributesTransfer->setPublisher($publisher->setAppIdentifier(getenv('AOP_APP_IDENTIFIER')));
+        $emitter = $messageAttributesTransfer->getEmitter() ?? getenv('AOP_APP_IDENTIFIER');
+        $messageAttributesTransfer->setEmitter($emitter);
 
         return $messageAttributesTransfer;
     }

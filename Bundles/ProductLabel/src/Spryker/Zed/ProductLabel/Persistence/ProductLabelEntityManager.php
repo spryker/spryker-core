@@ -77,10 +77,12 @@ class ProductLabelEntityManager extends AbstractEntityManager implements Product
      */
     public function deleteProductLabel(int $idProductLabel): void
     {
-        $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $productLabelCollection */
+        $productLabelCollection = $this->getFactory()
             ->createProductLabelQuery()
-            ->findByIdProductLabel($idProductLabel)
-            ->delete();
+            ->findByIdProductLabel($idProductLabel);
+
+        $productLabelCollection->delete();
     }
 
     /**
@@ -90,10 +92,12 @@ class ProductLabelEntityManager extends AbstractEntityManager implements Product
      */
     public function deleteProductLabelStoreRelations(int $idProductLabel): void
     {
-        $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $productLabelStoreCollection */
+        $productLabelStoreCollection = $this->getFactory()
             ->createProductLabelStoreQuery()
-            ->findByFkProductLabel($idProductLabel)
-            ->delete();
+            ->findByFkProductLabel($idProductLabel);
+
+        $productLabelStoreCollection->delete();
     }
 
     /**
@@ -103,10 +107,12 @@ class ProductLabelEntityManager extends AbstractEntityManager implements Product
      */
     public function deleteProductLabelLocalizedAttributes(int $idProductLabel): void
     {
-        $this->getFactory()
+        /** @var \Propel\Runtime\Collection\ObjectCollection $productLocalizedAttributesCollection */
+        $productLocalizedAttributesCollection = $this->getFactory()
             ->createLocalizedAttributesQuery()
-            ->findByFkProductLabel($idProductLabel)
-            ->delete();
+            ->findByFkProductLabel($idProductLabel);
+
+        $productLocalizedAttributesCollection->delete();
     }
 
     /**

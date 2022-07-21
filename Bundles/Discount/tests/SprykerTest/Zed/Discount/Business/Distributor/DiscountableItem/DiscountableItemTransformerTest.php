@@ -132,6 +132,7 @@ class DiscountableItemTransformerTest extends Unit
                         [
                             CalculatedDiscountTransfer::PRIORITY => 9,
                             CalculatedDiscountTransfer::UNIT_AMOUNT => 100,
+                            CalculatedDiscountTransfer::ID_DISCOUNT => 1,
                         ],
                     ],
                 ],
@@ -153,6 +154,7 @@ class DiscountableItemTransformerTest extends Unit
                         [
                             CalculatedDiscountTransfer::PRIORITY => 9,
                             CalculatedDiscountTransfer::UNIT_AMOUNT => 100,
+                            CalculatedDiscountTransfer::ID_DISCOUNT => 1,
                         ],
                     ],
                 ],
@@ -174,10 +176,12 @@ class DiscountableItemTransformerTest extends Unit
                         [
                             CalculatedDiscountTransfer::PRIORITY => 8,
                             CalculatedDiscountTransfer::UNIT_AMOUNT => 100,
+                            CalculatedDiscountTransfer::ID_DISCOUNT => 1,
                         ],
                         [
                             CalculatedDiscountTransfer::PRIORITY => 9,
                             CalculatedDiscountTransfer::UNIT_AMOUNT => 200,
+                            CalculatedDiscountTransfer::ID_DISCOUNT => 2,
                         ],
                     ],
                 ],
@@ -199,10 +203,12 @@ class DiscountableItemTransformerTest extends Unit
                         [
                             CalculatedDiscountTransfer::PRIORITY => 8,
                             CalculatedDiscountTransfer::UNIT_AMOUNT => 100,
+                            CalculatedDiscountTransfer::ID_DISCOUNT => 1,
                         ],
                         [
                             CalculatedDiscountTransfer::PRIORITY => 9,
                             CalculatedDiscountTransfer::UNIT_AMOUNT => 200,
+                            CalculatedDiscountTransfer::ID_DISCOUNT => 2,
                         ],
                     ],
                 ],
@@ -224,10 +230,12 @@ class DiscountableItemTransformerTest extends Unit
                         [
                             CalculatedDiscountTransfer::PRIORITY => 8,
                             CalculatedDiscountTransfer::UNIT_AMOUNT => 100,
+                            CalculatedDiscountTransfer::ID_DISCOUNT => 1,
                         ],
                         [
                             CalculatedDiscountTransfer::PRIORITY => 10,
                             CalculatedDiscountTransfer::UNIT_AMOUNT => 200,
+                            CalculatedDiscountTransfer::ID_DISCOUNT => 2,
                         ],
                     ],
                 ],
@@ -249,10 +257,12 @@ class DiscountableItemTransformerTest extends Unit
                         [
                             CalculatedDiscountTransfer::PRIORITY => 8,
                             CalculatedDiscountTransfer::UNIT_AMOUNT => 100,
+                            CalculatedDiscountTransfer::ID_DISCOUNT => 1,
                         ],
                         [
                             CalculatedDiscountTransfer::PRIORITY => 10,
                             CalculatedDiscountTransfer::UNIT_AMOUNT => 200,
+                            CalculatedDiscountTransfer::ID_DISCOUNT => 2,
                         ],
                     ],
                 ],
@@ -274,10 +284,12 @@ class DiscountableItemTransformerTest extends Unit
                         [
                             CalculatedDiscountTransfer::PRIORITY => 8,
                             CalculatedDiscountTransfer::UNIT_AMOUNT => 100,
+                            CalculatedDiscountTransfer::ID_DISCOUNT => 1,
                         ],
                         [
                             CalculatedDiscountTransfer::PRIORITY => 10,
                             CalculatedDiscountTransfer::UNIT_AMOUNT => 200,
+                            CalculatedDiscountTransfer::ID_DISCOUNT => 2,
                         ],
                     ],
                 ],
@@ -299,10 +311,12 @@ class DiscountableItemTransformerTest extends Unit
                         [
                             CalculatedDiscountTransfer::PRIORITY => 8,
                             CalculatedDiscountTransfer::UNIT_AMOUNT => 100,
+                            CalculatedDiscountTransfer::ID_DISCOUNT => 1,
                         ],
                         [
                             CalculatedDiscountTransfer::PRIORITY => 10,
                             CalculatedDiscountTransfer::UNIT_AMOUNT => 200,
+                            CalculatedDiscountTransfer::ID_DISCOUNT => 2,
                         ],
                     ],
                 ],

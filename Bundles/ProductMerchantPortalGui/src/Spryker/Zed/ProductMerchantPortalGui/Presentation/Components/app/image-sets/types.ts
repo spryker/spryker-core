@@ -3,6 +3,7 @@ export interface ImageData {
     order: number;
     srcLarge: string;
     srcSmall: string;
+    alt?: string;
 }
 
 export interface ImageSets {

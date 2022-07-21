@@ -187,7 +187,7 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      * @deprecated Will be removed without replacement.
      *
      * @param \Spryker\Zed\Search\Dependency\Plugin\PageMapInterface $pageMap
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @throws \Spryker\Zed\Search\Business\Exception\InvalidPropertyNameException
@@ -208,7 +208,7 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      *
      * @deprecated Will be removed without replacement.
      *
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param string $mapperName
      *

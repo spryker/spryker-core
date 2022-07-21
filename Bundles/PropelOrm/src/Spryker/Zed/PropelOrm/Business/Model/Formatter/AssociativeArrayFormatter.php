@@ -16,7 +16,7 @@ class AssociativeArrayFormatter extends SimpleArrayFormatter
      *
      * @return array<string, mixed>
      */
-    public function getStructuredArrayFromRow($row)
+    public function getStructuredArrayFromRow($row): array
     {
         $columnNames = array_keys($this->getAsColumns());
 

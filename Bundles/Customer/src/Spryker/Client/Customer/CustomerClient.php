@@ -561,4 +561,20 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
             ->createCustomerAccessTokenReader()
             ->getCustomerByAccessToken($accessToken);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return void
+     */
+    public function updateCustomerAddresses(CustomerTransfer $customerTransfer): void
+    {
+        $this->getFactory()
+            ->createCustomerAddressUpdater()
+            ->updateCustomerAddresses($customerTransfer);
+    }
 }

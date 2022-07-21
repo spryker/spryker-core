@@ -34,7 +34,7 @@ class ConfigurableBundleStorageCommunicationTester extends Actor
     use _generated\ConfigurableBundleStorageCommunicationTesterActions;
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer
      */
@@ -64,7 +64,7 @@ class ConfigurableBundleStorageCommunicationTester extends Actor
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */

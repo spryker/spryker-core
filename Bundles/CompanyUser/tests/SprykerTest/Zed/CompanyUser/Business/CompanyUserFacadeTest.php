@@ -365,13 +365,20 @@ class CompanyUserFacadeTest extends Test
             [CompanyUserTransfer::CUSTOMER => $customerTransfer],
             [CompanyTransfer::IS_ACTIVE => false],
         );
+        $this->tester->createCompanyUserTransfer(
+            [
+                CompanyUserTransfer::CUSTOMER => $customerTransfer,
+                CompanyUserTransfer::IS_ACTIVE => false,
+            ],
+            [CompanyTransfer::IS_ACTIVE => true],
+        );
 
         //Act
         $actualCompanyUserAmount = $this->tester->getFacade()
             ->countActiveCompanyUsersByIdCustomer($customerTransfer);
 
         //Assert
-        $this->tester->assertEquals($expectedCount, $actualCompanyUserAmount);
+        $this->tester->assertSame($expectedCount, $actualCompanyUserAmount);
     }
 
     /**

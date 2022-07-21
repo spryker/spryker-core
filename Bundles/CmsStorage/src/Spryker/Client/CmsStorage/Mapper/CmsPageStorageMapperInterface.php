@@ -10,7 +10,7 @@ namespace Spryker\Client\CmsStorage\Mapper;
 interface CmsPageStorageMapperInterface
 {
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \Generated\Shared\Transfer\LocaleCmsPageDataTransfer
      */

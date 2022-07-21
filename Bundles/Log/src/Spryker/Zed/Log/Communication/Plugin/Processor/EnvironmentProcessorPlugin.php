@@ -22,7 +22,7 @@ class EnvironmentProcessorPlugin extends AbstractPlugin implements LogProcessorP
      *
      * @api
      *
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */

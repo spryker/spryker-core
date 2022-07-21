@@ -14,8 +14,8 @@ use Spryker\Glue\GlueApplication\ApiApplication\Type\RequestFlowAgnosticApiAppli
 use Spryker\Glue\GlueApplication\ApiApplication\Type\RequestFlowAwareApiApplication;
 use Spryker\Glue\GlueApplication\Exception\MissingCommunicationProtocolException;
 use Spryker\Glue\GlueApplication\Exception\UnknownRequestFlowImplementationException;
-use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ApiConventionPluginInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\CommunicationProtocolPluginInterface;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ConventionPluginInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\GlueApplicationBootstrapPluginInterface;
 use Spryker\Shared\Application\ApplicationInterface;
 
@@ -36,7 +36,7 @@ class ApiApplicationProxyTest extends Unit
      */
     public function testBootIsExecutedOnBootBootstrapPlugin(): void
     {
-        $apiApplicationConventionMock = $this->createMock(ApiConventionPluginInterface::class);
+        $apiApplicationConventionMock = $this->createMock(ConventionPluginInterface::class);
         $communicationProtocolPluginMock = $this->createMock(CommunicationProtocolPluginInterface::class);
 
         $requestFlowExecutorMock = $this->createMock(RequestFlowExecutorInterface::class);
@@ -65,7 +65,7 @@ class ApiApplicationProxyTest extends Unit
      */
     public function testRunIsExecutedOnRequestFlowAgnosticBootstrapPlugin(): void
     {
-        $apiApplicationConventionMock = $this->createMock(ApiConventionPluginInterface::class);
+        $apiApplicationConventionMock = $this->createMock(ConventionPluginInterface::class);
         $communicationProtocolPluginMock = $this->createMock(CommunicationProtocolPluginInterface::class);
         $requestFlowExecutorMock = $this->createMock(RequestFlowExecutorInterface::class);
         $requestFlowExecutorMock
@@ -97,7 +97,7 @@ class ApiApplicationProxyTest extends Unit
      */
     public function testExecuteRequestIsExecutedOnRequestFlowAwareApiApplicationPlugin(): void
     {
-        $apiApplicationConventionMock = $this->createMock(ApiConventionPluginInterface::class);
+        $apiApplicationConventionMock = $this->createMock(ConventionPluginInterface::class);
         $apiApplicationConventionMock
             ->expects($this->once())
             ->method('isApplicable')
@@ -139,7 +139,7 @@ class ApiApplicationProxyTest extends Unit
      */
     public function testExceptionIsThrownIfCommunicationPluginNotApplicable(): void
     {
-        $apiApplicationConventionMock = $this->createMock(ApiConventionPluginInterface::class);
+        $apiApplicationConventionMock = $this->createMock(ConventionPluginInterface::class);
 
         $communicationProtocolPluginMock = $this->createMock(CommunicationProtocolPluginInterface::class);
         $communicationProtocolPluginMock
@@ -184,7 +184,7 @@ class ApiApplicationProxyTest extends Unit
      */
     public function testExceptionIsThrownIfNeitherRequestFlowAwareNorAgnosticIsImplemented(): void
     {
-        $apiApplicationConventionMock = $this->createMock(ApiConventionPluginInterface::class);
+        $apiApplicationConventionMock = $this->createMock(ConventionPluginInterface::class);
         $communicationProtocolPluginMock = $this->createMock(CommunicationProtocolPluginInterface::class);
         $bootstrapPluginMock = $this->createMock(GlueApplicationBootstrapPluginInterface::class);
         $requestFlowExecutorMock = $this->createMock(RequestFlowExecutorInterface::class);

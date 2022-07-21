@@ -52,6 +52,22 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
+    public function unfoldBundlesToUnitedItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
+    {
+        return $this->getFactory()
+            ->createBundleItemUnfolder()
+            ->unfoldBundlesToUnitedItems($cartChangeTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
     public function expandBundleItemsWithImages(CartChangeTransfer $cartChangeTransfer)
     {
         return $this->getFactory()
@@ -89,6 +105,22 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
         return $this->getFactory()
             ->createProductBundlePostSaveUpdate()
             ->updateBundles($quoteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function refreshBundlesWithUnitedItemsToBeInSyncWithQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        return $this->getFactory()
+            ->createBundleItemRefresher()
+            ->refreshBundlesWithUnitedItemsToBeInSyncWithQuote($quoteTransfer);
     }
 
     /**
@@ -434,6 +466,22 @@ class ProductBundleFacade extends AbstractFacade implements ProductBundleFacadeI
         return $this->getFactory()
             ->createChangeRequestExpander()
             ->expand($cartChangeTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function replaceBundlesWithUnitedItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
+    {
+        return $this->getFactory()
+            ->createBundleItemReplacer()
+            ->replaceBundlesWithUnitedItems($cartChangeTransfer);
     }
 
     /**

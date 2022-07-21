@@ -41,7 +41,7 @@ class CustomerUpdateFormDataProvider extends CustomerFormDataProvider
     /**
      * @param int|null $idCustomer
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions($idCustomer = null)
     {

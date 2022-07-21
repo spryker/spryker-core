@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\SessionFile\Communication\SessionFileCommunicationFactory getFactory()
  * @method \Spryker\Zed\SessionFile\SessionFileConfig getConfig()
+ * @method \Spryker\Zed\SessionFile\Business\SessionFileFacadeInterface getFacade()
  */
 class SessionHandlerFileProviderPlugin extends AbstractPlugin implements SessionHandlerProviderPluginInterface
 {

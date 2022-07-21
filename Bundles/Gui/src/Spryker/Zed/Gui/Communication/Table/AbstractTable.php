@@ -473,7 +473,7 @@ abstract class AbstractTable
     }
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return void
      */
@@ -550,9 +550,9 @@ abstract class AbstractTable
     }
 
     /**
-     * @param array $row
-     * @param array $originalRow
-     * @param array $extraColumns
+     * @param array<mixed> $row
+     * @param array<mixed> $originalRow
+     * @param array<string> $extraColumns
      *
      * @return array
      */
@@ -569,7 +569,7 @@ abstract class AbstractTable
     }
 
     /**
-     * @param array $data
+     * @param array<mixed> $data
      *
      * @return void
      */
@@ -579,7 +579,7 @@ abstract class AbstractTable
     }
 
     /**
-     * @return array
+     * @return array<mixed>
      */
     public function getData()
     {
@@ -794,7 +794,7 @@ abstract class AbstractTable
     }
 
     /**
-     * @param array $dataArray
+     * @param array<string, mixed> $dataArray
      * @param string $key
      * @param string $defaultValue
      *
@@ -1047,6 +1047,7 @@ abstract class AbstractTable
             $conditions,
         );
 
+        /** @var literal-string $gluedCondition */
         $gluedCondition = '(' . $gluedCondition . ')';
 
         if ($config->getHasSearchableFieldsWithAggregateFunctions()) {
@@ -1529,15 +1530,15 @@ abstract class AbstractTable
     {
         $search = $column->getSearch();
         if (preg_match('/created_at|updated_at/', $searchColumns[$column->getData()])) {
-            $query->where(
-                sprintf(
-                    '(%s >= %s AND %s <= %s)',
-                    $searchColumns[$column->getData()],
-                    Propel::getConnection()->quote($this->filterSearchValue($search[static::PARAMETER_VALUE]) . ' 00:00:00'),
-                    $searchColumns[$column->getData()],
-                    Propel::getConnection()->quote($this->filterSearchValue($search[static::PARAMETER_VALUE]) . ' 23:59:59'),
-                ),
+            /** @var literal-string $where */
+            $where = sprintf(
+                '(%s >= %s AND %s <= %s)',
+                $searchColumns[$column->getData()],
+                Propel::getConnection()->quote($this->filterSearchValue($search[static::PARAMETER_VALUE]) . ' 00:00:00'),
+                $searchColumns[$column->getData()],
+                Propel::getConnection()->quote($this->filterSearchValue($search[static::PARAMETER_VALUE]) . ' 23:59:59'),
             );
+            $query->where($where);
 
             return;
         }
@@ -1547,11 +1548,13 @@ abstract class AbstractTable
             return;
         }
 
-        $query->where(sprintf(
+        /** @var literal-string $where */
+        $where = sprintf(
             '%s = %s',
             $searchColumns[$column->getData()],
             Propel::getConnection()->quote($value),
-        ));
+        );
+        $query->where($where);
     }
 
     /**

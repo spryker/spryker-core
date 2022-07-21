@@ -134,7 +134,10 @@ class CartCodeAdder implements CartCodeAdderInterface
     {
         $cartResource = $restRequest->findParentResourceByType($resourceType);
         $customerReference = $restRequest->getRestUser()->getNaturalIdentifier();
-        $customerTransfer = (new CustomerTransfer())->setCustomerReference($customerReference);
+        $idCustomer = $restRequest->getRestUser()->getSurrogateIdentifier();
+        $customerTransfer = (new CustomerTransfer())
+            ->setCustomerReference($customerReference)
+            ->setIdCustomer($idCustomer);
 
         return (new QuoteTransfer())
             ->setUuid($cartResource ? $cartResource->getId() : null)

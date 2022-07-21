@@ -153,6 +153,15 @@ class MimeTypeController extends AbstractController
         $mimeTypeTransfer = new MimeTypeTransfer();
         $mimeTypeTransfer->setIdMimeType($request->get(static::URL_PARAM_ID_MIME_TYPE));
 
+        $deleteMimeTypeForm = $this->getFactory()->getDeleteMimeTypeForm()->handleRequest($request);
+        $redirectUrl = Url::generate(static::ROUTE_MIME_TYPE_INDEX)->build();
+
+        if (!$deleteMimeTypeForm->isSubmitted() || !$deleteMimeTypeForm->isValid()) {
+            $this->addErrorMessage(static::MESSAGE_MIME_TYPE_DELETING_ERROR);
+
+            return $this->redirectResponse($redirectUrl);
+        }
+
         $mimeTypeResponseTransfer = $this->getFactory()
             ->getFileManagerFacade()
             ->deleteMimeType($mimeTypeTransfer);
@@ -161,9 +170,7 @@ class MimeTypeController extends AbstractController
             $this->addSuccessMessage(static::MESSAGE_MIME_TYPE_DELETING_SUCCESS) :
             $this->addErrorMessage(static::MESSAGE_MIME_TYPE_DELETING_ERROR);
 
-        return $this->redirectResponse(
-            Url::generate(static::ROUTE_MIME_TYPE_INDEX)->build(),
-        );
+        return $this->redirectResponse($redirectUrl);
     }
 
     /**

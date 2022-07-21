@@ -15,8 +15,9 @@ interface ProductDiscountConnectorFacadeInterface
 {
     /**
      * Specification:
-     * - Builds all product variants by abstract sku
-     * - Looks for attribute in any variants
+     * - Builds all product variants by abstract SKU.
+     * - Looks for the attribute in any variants.
+     * - Executes {@link \Spryker\Zed\ProductDiscountConnectorExtension\Dependency\Plugin\ProductAttributeDecisionRuleExpanderPluginInterface} plugin stack.
      *
      * @api
      *
@@ -30,9 +31,10 @@ interface ProductDiscountConnectorFacadeInterface
 
     /**
      * Specification:
-     * - Builds all product variants by abstract sku
-     * - Looks for attribute in any variants
-     * - Collects all matching items
+     * - Builds all product variants by abstract SKU.
+     * - Looks for the attribute in any variants.
+     * - Collects all matching items.
+     * - Executes {@link \Spryker\Zed\ProductDiscountConnectorExtension\Dependency\Plugin\ProductAttributeCollectorExpanderPluginInterface} plugin stack.
      *
      * @api
      *

@@ -43,7 +43,7 @@ class DummyPaymentPostCheckPluginTest extends Unit
         $quoteTransfer->setBillingAddress($billingAddress);
 
         $plugin = new DummyPaymentPostCheckPlugin();
-        $checkoutResponseTransfer = $plugin->execute($quoteTransfer, $checkoutResponseTransfer);
+        $plugin->execute($quoteTransfer, $checkoutResponseTransfer);
 
         $this->assertTrue($checkoutResponseTransfer->getIsSuccess());
     }
@@ -63,7 +63,7 @@ class DummyPaymentPostCheckPluginTest extends Unit
         $quoteTransfer->setBillingAddress($billingAddress);
 
         $plugin = new DummyPaymentPostCheckPlugin();
-        $checkoutResponseTransfer = $plugin->execute($quoteTransfer, $checkoutResponseTransfer);
+        $plugin->execute($quoteTransfer, $checkoutResponseTransfer);
 
         $this->assertFalse($checkoutResponseTransfer->getIsSuccess());
     }

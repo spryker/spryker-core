@@ -15,7 +15,7 @@ class CmsPageKeysToIdsConditionResolver implements ConditionResolverInterface
     /**
      * @var string
      */
-    protected const KEY_CMS_PAGE_IDS = 'pageIds';
+    protected const KEY_CMS_PAGE_IDS = 'cmsPageIds';
 
     /**
      * @var array<int>

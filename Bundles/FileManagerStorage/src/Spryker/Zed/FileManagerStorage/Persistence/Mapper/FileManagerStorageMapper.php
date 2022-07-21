@@ -39,13 +39,15 @@ class FileManagerStorageMapper implements FileManagerStorageMapperInterface
             );
         }
 
-        $fileLocalizedAttributesCollection = new ArrayObject();
+        /** @var \ArrayObject<int, \Generated\Shared\Transfer\FileLocalizedAttributesTransfer> $mappedFileLocalizedAttributesCollection */
+        $mappedFileLocalizedAttributesCollection = new ArrayObject();
 
-        foreach ($file->getSpyFileLocalizedAttributess() as $fileLocalizedAttributes) {
-            $fileLocalizedAttributesCollection[$fileLocalizedAttributes->getFkLocale()] = $this->mapAddSpyFileLocalizedAttributesEntityToTransfer($fileLocalizedAttributes, new FileLocalizedAttributesTransfer());
+        $fileLocalizedAttributesCollection = $file->getSpyFileLocalizedAttributess();
+        foreach ($fileLocalizedAttributesCollection as $fileLocalizedAttributes) {
+            $mappedFileLocalizedAttributesCollection[$fileLocalizedAttributes->getFkLocale()] = $this->mapAddSpyFileLocalizedAttributesEntityToTransfer($fileLocalizedAttributes, new FileLocalizedAttributesTransfer());
         }
 
-        $fileTransfer->setLocalizedAttributes($fileLocalizedAttributesCollection);
+        $fileTransfer->setLocalizedAttributes($mappedFileLocalizedAttributesCollection);
 
         return $fileTransfer;
     }

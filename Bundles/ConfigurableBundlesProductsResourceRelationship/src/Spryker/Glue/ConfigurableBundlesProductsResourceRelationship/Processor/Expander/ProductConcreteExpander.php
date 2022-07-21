@@ -44,28 +44,28 @@ class ProductConcreteExpander implements ProductConcreteExpanderInterface
      */
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
-        $mappedProductConcreteIdsBySku = $this->getMappedProductConcreteIdsByProductListId($resources);
-        $productConcreteIds = $this->mergeProductConcreteIds($mappedProductConcreteIdsBySku);
+        $indexedProductConcreteIdsToProductConcreteSkusMap = $this->getProductConcreteIdsToProductConcreteSkusMapIndexedByIdProductList($resources);
+        $productConcreteIds = $this->extractProductConcreteIds($indexedProductConcreteIdsToProductConcreteSkusMap);
 
         $productConcreteRestResources = $this->productsRestApiResource
             ->getProductConcreteCollectionByIds($productConcreteIds, $restRequest);
 
-        $mappedProductConcreteRestResources = $this->mapProductConcreteRestResourcesByProductId(
+        $groupedProductConcreteRestResources = $this->getProductConcreteRestResourcesGroupedByIdProductList(
             $productConcreteRestResources,
-            $mappedProductConcreteIdsBySku,
+            $indexedProductConcreteIdsToProductConcreteSkusMap,
         );
 
-        $this->addProductConcreteRestResources($mappedProductConcreteRestResources, $resources);
+        $this->addProductConcreteRestResources($groupedProductConcreteRestResources, $resources);
     }
 
     /**
      * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $resources
      *
-     * @return array<array<int>>
+     * @return array<int, array<int, string>>
      */
-    protected function getMappedProductConcreteIdsByProductListId(array $resources): array
+    protected function getProductConcreteIdsToProductConcreteSkusMapIndexedByIdProductList(array $resources): array
     {
-        $mappedProductConcreteIds = [];
+        $indexedProductConcreteIdsToProductConcreteSkusMap = [];
 
         foreach ($resources as $resource) {
             $configurableBundleTemplateSlotStorageTransfer = $resource->getPayload();
@@ -79,45 +79,42 @@ class ProductConcreteExpander implements ProductConcreteExpanderInterface
                 continue;
             }
 
-            $mappedProductConcreteIds[$idProductList] = $this->productConcreteReader->getMappedProductConcreteIds($idProductList);
+            $indexedProductConcreteIdsToProductConcreteSkusMap[$idProductList] = $this->productConcreteReader->getProductConcreteSkusIndexedByIdProductConcrete($idProductList);
         }
 
-        return $mappedProductConcreteIds;
+        return $indexedProductConcreteIdsToProductConcreteSkusMap;
     }
 
     /**
-     * @param array<array<int>> $mappedProductConcreteIds
+     * @param array<int, array<int, string>> $indexedProductConcreteIdsToProductConcreteSkusMap
      *
      * @return array<int>
      */
-    protected function mergeProductConcreteIds(array $mappedProductConcreteIds): array
+    protected function extractProductConcreteIds(array $indexedProductConcreteIdsToProductConcreteSkusMap): array
     {
-        $mergedProductConcreteIds = [];
-
-        foreach ($mappedProductConcreteIds as $productConcreteIds) {
-            $mergedProductConcreteIds = array_merge($mergedProductConcreteIds, array_values($productConcreteIds));
+        $productConcreteIds = [];
+        foreach ($indexedProductConcreteIdsToProductConcreteSkusMap as $productConcreteIdsToProductConcreteSkusMap) {
+            $productConcreteIds[] = array_keys($productConcreteIdsToProductConcreteSkusMap);
         }
 
-        return $mergedProductConcreteIds;
+        return array_merge(...$productConcreteIds);
     }
 
     /**
      * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $productConcreteRestResources
-     * @param array<array<int>> $mappedProductConcreteIdsBySku
+     * @param array<int, array<int, string>> $indexedProductConcreteIdsToProductConcreteSkusMap
      *
-     * @return array<array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>>
+     * @return array<int, array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>>
      */
-    protected function mapProductConcreteRestResourcesByProductId(
+    protected function getProductConcreteRestResourcesGroupedByIdProductList(
         array $productConcreteRestResources,
-        array $mappedProductConcreteIdsBySku
+        array $indexedProductConcreteIdsToProductConcreteSkusMap
     ): array {
         $mappedProductConcreteRestResources = [];
 
-        foreach ($mappedProductConcreteIdsBySku as $idProductList => $productConcreteIds) {
-            $skus = array_keys($productConcreteIds);
-
+        foreach ($indexedProductConcreteIdsToProductConcreteSkusMap as $idProductList => $productConcreteSkus) {
             foreach ($productConcreteRestResources as $productConcreteRestResource) {
-                if (in_array($productConcreteRestResource->getId(), $skus, true)) {
+                if (in_array($productConcreteRestResource->getId(), $productConcreteSkus, true)) {
                     $mappedProductConcreteRestResources[$idProductList][] = $productConcreteRestResource;
                 }
             }
@@ -127,12 +124,12 @@ class ProductConcreteExpander implements ProductConcreteExpanderInterface
     }
 
     /**
-     * @param array<array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>> $mappedProductConcreteRestResources
+     * @param array<int, array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>> $groupedProductConcreteRestResources
      * @param array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $resources
      *
      * @return void
      */
-    protected function addProductConcreteRestResources(array $mappedProductConcreteRestResources, array $resources): void
+    protected function addProductConcreteRestResources(array $groupedProductConcreteRestResources, array $resources): void
     {
         foreach ($resources as $resource) {
             $configurableBundleTemplateSlotStorageTransfer = $resource->getPayload();
@@ -140,7 +137,7 @@ class ProductConcreteExpander implements ProductConcreteExpanderInterface
                 continue;
             }
 
-            $productConcreteRestResources = $mappedProductConcreteRestResources[$configurableBundleTemplateSlotStorageTransfer->getIdProductList()] ?? [];
+            $productConcreteRestResources = $groupedProductConcreteRestResources[$configurableBundleTemplateSlotStorageTransfer->getIdProductList()] ?? [];
 
             foreach ($productConcreteRestResources as $productConcreteRestResource) {
                 $resource->addRelationship($productConcreteRestResource);

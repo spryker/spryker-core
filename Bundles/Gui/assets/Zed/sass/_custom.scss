@@ -124,6 +124,48 @@ textarea {
     overflow: hidden;
 }
 
+.breadcrumb {
+    position: relative;
+    padding: 11px 0px 8px;
+    margin-top: 7px;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 9999px;
+        height: 3px;
+        background-color: $grey-light;
+        vertical-align: middle;
+    }
+
+    > li {
+        vertical-align: middle;
+
+        a {
+            transition: border-color 0.25s ease-in-out 0s, color 0.25s ease-in-out 0s;
+            border-bottom: 1px solid $white;
+            color: $grey-dark;
+            line-height: 1;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 400;
+
+            &:hover {
+                border-color: $green-base;
+                color: $green-base;
+            }
+
+            &.disabled {
+                pointer-events: none;
+                color: $grey;
+            }
+        }
+    }
+}
+
 /* Login page */
 body.login {
     .spryker-login {

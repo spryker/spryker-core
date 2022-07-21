@@ -577,4 +577,44 @@ interface CustomerFacadeInterface
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function getCustomerByCriteria(CustomerCriteriaTransfer $customerCriteriaTransfer): CustomerResponseTransfer;
+
+    /**
+     * Specification:
+     * - Requires `QuoteTransfer.customer` to be set.
+     * - If `QuoteTransfer.customer.salutation` is set, checks if the salutation is present in a list of available salutations.
+     * - If the salutation is invalid, sets `CheckoutResponseTransfer.isSuccess` equal to `false` and adds an error.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return bool
+     */
+    public function validateCustomerCheckoutSalutation(
+        QuoteTransfer $quoteTransfer,
+        CheckoutResponseTransfer $checkoutResponseTransfer
+    ): bool;
+
+    /**
+     * Specification:
+     * - If `QuoteTransfer.billingAddress.salutation` is set, checks if the salutation is present in a list of available salutations.
+     * - If the salutation is invalid, sets `CheckoutResponseTransfer.isSuccess` equal to `false` and adds an error.
+     * - If `QuoteTransfer.shippingAddress.salutation` is set, checks if the salutation is present in a list of available salutations.
+     * - If the salutation is invalid, sets `CheckoutResponseTransfer.isSuccess` equal to `false` and adds an error.
+     * - Extracts items from `QuoteTransfer`.
+     * - If `ItemTransfer.shipment.shippingAddress.salutation` is set, checks if the salutation is present in a list of available salutations.
+     * - If the salutation is invalid, sets `CheckoutResponseTransfer.isSuccess` equal to `false` and adds an error.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return bool
+     */
+    public function validateCustomerAddressCheckoutSalutation(
+        QuoteTransfer $quoteTransfer,
+        CheckoutResponseTransfer $checkoutResponseTransfer
+    ): bool;
 }

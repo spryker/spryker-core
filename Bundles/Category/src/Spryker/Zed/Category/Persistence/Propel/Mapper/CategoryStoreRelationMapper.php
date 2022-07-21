@@ -34,6 +34,26 @@ class CategoryStoreRelationMapper
     }
 
     /**
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Category\Persistence\SpyCategoryStore> $categoryStoreEntities
+     *
+     * @return array<\Generated\Shared\Transfer\StoreRelationTransfer>
+     */
+    public function mapCategoryStoreEntitiesToStoreRelationTransfers(ObjectCollection $categoryStoreEntities): array
+    {
+        $storeRelationTransfers = [];
+
+        $groupedCategoryStoreEntities = $this->getCategoryStoreEntitiesGroupedByIdCategory($categoryStoreEntities);
+        foreach ($groupedCategoryStoreEntities as $idCategory => $categoryStoreEntitiesByCategoryId) {
+            $storeRelationTransfers[] = $this->mapCategoryStoreEntitiesToStoreRelationTransfer(
+                new ObjectCollection($categoryStoreEntitiesByCategoryId),
+                (new StoreRelationTransfer())->setIdEntity($idCategory),
+            );
+        }
+
+        return $storeRelationTransfers;
+    }
+
+    /**
      * @param \Orm\Zed\Store\Persistence\SpyStore $storeEntity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
@@ -42,5 +62,20 @@ class CategoryStoreRelationMapper
     protected function mapStoreEntityToStoreTransfer(SpyStore $storeEntity, StoreTransfer $storeTransfer): StoreTransfer
     {
         return $storeTransfer->fromArray($storeEntity->toArray(), true);
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Category\Persistence\SpyCategoryStore> $categoryStoreEntities
+     *
+     * @return array<int, array<\Orm\Zed\Category\Persistence\SpyCategoryStore>>
+     */
+    protected function getCategoryStoreEntitiesGroupedByIdCategory(ObjectCollection $categoryStoreEntities): array
+    {
+        $groupedCategoryStoreEntities = [];
+        foreach ($categoryStoreEntities as $categoryStoreEntity) {
+            $groupedCategoryStoreEntities[$categoryStoreEntity->getFkCategory()][] = $categoryStoreEntity;
+        }
+
+        return $groupedCategoryStoreEntities;
     }
 }

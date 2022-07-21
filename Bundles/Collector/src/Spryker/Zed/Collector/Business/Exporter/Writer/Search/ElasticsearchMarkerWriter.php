@@ -60,7 +60,7 @@ class ElasticsearchMarkerWriter implements WriterInterface, ConfigurableSearchWr
     }
 
     /**
-     * @param array $dataSet
+     * @param array<string, mixed> $dataSet
      *
      * @return bool
      */
@@ -88,7 +88,7 @@ class ElasticsearchMarkerWriter implements WriterInterface, ConfigurableSearchWr
      * Deletes all timestamps. Parameter $dataSet is ignored.
      * TODO Needs refactoring
      *
-     * @param array $dataSet
+     * @param array<string, mixed> $dataSet
      *
      * @return bool
      */

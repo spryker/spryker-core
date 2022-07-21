@@ -34,7 +34,7 @@ class CategoryTreeFilterPageSearchResultFormatterPlugin extends AbstractElastics
 
     /**
      * @param \Elastica\ResultSet $searchResult
-     * @param array $requestParameters
+     * @param array<string, mixed> $requestParameters
      *
      * @return \ArrayObject<int, \Generated\Shared\Transfer\CategoryNodeSearchResultTransfer>
      */

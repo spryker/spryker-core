@@ -24,7 +24,7 @@ class ProductConfigurationClient extends AbstractClient implements ProductConfig
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer $productConfiguratorResponseProcessorResponseTransfer
-     * @param array $configuratorResponseData
+     * @param array<string, mixed> $configuratorResponseData
      *
      * @return \Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer
      */
@@ -76,7 +76,7 @@ class ProductConfigurationClient extends AbstractClient implements ProductConfig
      *
      * @api
      *
-     * @param array $configuratorResponseData
+     * @param array<string, mixed> $configuratorResponseData
      * @param \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer

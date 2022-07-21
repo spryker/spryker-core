@@ -124,7 +124,7 @@ class CalculatorForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormInterface $form
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return void
      */

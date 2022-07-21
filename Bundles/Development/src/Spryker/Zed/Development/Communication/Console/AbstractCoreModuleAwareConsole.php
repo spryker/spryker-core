@@ -19,7 +19,7 @@ use Symfony\Component\Console\Input\InputInterface;
 
 /**
  * @method \Spryker\Zed\Development\Business\DevelopmentFacadeInterface getFacade()
- * @method \Spryker\Zed\Development\Business\DevelopmentBusinessFactory getFactory()
+ * @method \Spryker\Zed\Development\Communication\DevelopmentCommunicationFactory getFactory()
  */
 class AbstractCoreModuleAwareConsole extends Console
 {

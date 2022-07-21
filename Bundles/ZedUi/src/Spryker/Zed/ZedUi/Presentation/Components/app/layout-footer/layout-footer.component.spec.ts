@@ -35,8 +35,8 @@ describe('LayoutFooterComponent', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should render default content in the `.footer` element', () => {
-        const defaultContentElement = fixture.debugElement.query(By.css('.footer .default-content'));
+    it('should render default content in the `.mp-layout-footer__content` element', () => {
+        const defaultContentElement = fixture.debugElement.query(By.css('.mp-layout-footer__content .default-content'));
 
         expect(defaultContentElement).toBeTruthy();
     });

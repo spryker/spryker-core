@@ -1,56 +1,40 @@
 @import '~@spryker/styles/src/lib/themes/default/variables/index.less';
 
-@bulk-edit-product-variants-padding: 30px;
-@bulk-edit-product-variants-information-padding: 20px;
-@bulk-edit-product-variants-common-blocks-indent: 7px;
-@bulk-edit-product-variants-common-padding-bottom: 30px;
-@bulk-edit-product-variants-default-spacing-top: 20px;
-@bulk-edit-product-card-content-padding: 20px;
-@bulk-edit-product-card-title-lable-padding-left: 13px;
-@bulk-edit-product-range-max-width: 375px;
-@bulk-edit-abstract-information-margin: -@bulk-edit-product-variants-padding -@bulk-edit-product-variants-padding 0;
-@bulk-edit-abstract-heading-margin: 0 -@bulk-edit-product-variants-common-blocks-indent;
-@bulk-edit-abstract-heading-padding: 0 @bulk-edit-product-variants-common-blocks-indent;
+@bulk-edit-product-variants-padding: var(--spy-bulk-edit-product-variants-padding, 30px);
+@bulk-edit-product-variants-information-padding: var(--spy-bulk-edit-product-variants-information-padding, 17px 30px);
+@bulk-edit-product-card-title-lable-padding-left: var(--spy-bulk-edit-product-card-title-lable-padding-left, 13px);
+@bulk-edit-product-card-margin-bottom: var(--spy-bulk-edit-product-card-margin-bottom, 20px);
+@bulk-edit-product-range-max-width: var(--spy-bulk-edit-product-range-max-width, 375px);
 
 .mp-bulk-edit-product-variants {
-    display: block;
-    height: 100%;
-    padding: @bulk-edit-product-variants-padding;
-    background: @gray-lighter;
-    font: @font-weight-medium @spy-font-size-base @font-family;
-    letter-spacing: @letter-spacing-base;
-    color: @ink;
-    overflow-y: auto;
+    .@{headline-prefix-cls} {
+        padding-bottom: 0;
 
-    &__information {
-        margin: @bulk-edit-abstract-information-margin;
+        &__title {
+            &--h1 {
+                font-size: @heading-5-font-size;
+                font-weight: @font-weight-semi-bold;
+            }
+        }
+    }
+
+    &__header {
         padding: @bulk-edit-product-variants-information-padding;
         background: @spy-white;
     }
 
-    &__heading {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin: @bulk-edit-abstract-heading-margin;
-
-        &-col {
-            padding: @bulk-edit-abstract-heading-padding;
-        }
-    }
-
-    &__title {
-        font-size: @heading-3-font-size;
-        font-weight: @font-weight-semi-bold;
-    }
-
     &__content {
         display: block;
-        padding-top: @bulk-edit-product-variants-default-spacing-top;
+        padding: @bulk-edit-product-variants-padding;
     }
 
-    &__card-content {
-        padding: @bulk-edit-product-card-content-padding;
+    &__card {
+        display: block;
+        margin-bottom: @bulk-edit-product-card-margin-bottom;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
     }
 
     &__range {
@@ -73,8 +57,9 @@
 
         &-wrapper {
             font-size: @heading-5-font-size;
-            line-height: @card-head-line-height;
             font-weight: @font-weight-semi-bold;
+            display: flex;
+            align-items: center;
         }
 
         + span {

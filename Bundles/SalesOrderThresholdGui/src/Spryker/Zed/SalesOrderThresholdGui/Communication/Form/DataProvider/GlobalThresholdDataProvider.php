@@ -70,7 +70,7 @@ class GlobalThresholdDataProvider
     /**
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function getOptions(CurrencyTransfer $currencyTransfer): array
     {

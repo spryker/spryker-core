@@ -15,7 +15,7 @@ class MerchantRelationshipHardThresholdDataProvider extends AbstractMerchantRela
 {
     /**
      * @param \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return array
      */

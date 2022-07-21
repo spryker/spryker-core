@@ -1,7 +1,7 @@
 @import '~@spryker/styles/src/lib/themes/default/variables/index.less';
 
-@order-items-table-padding: 5px;
-@order-items-filter-padding: 20px;
+@order-items-table-padding: var(--spy-order-items-table-padding, 5px);
+@order-items-filter-padding: var(--spy-order-items-filter-padding, 20px);
 
 .mp-order-items-table {
     .@{table-prefix-cls},

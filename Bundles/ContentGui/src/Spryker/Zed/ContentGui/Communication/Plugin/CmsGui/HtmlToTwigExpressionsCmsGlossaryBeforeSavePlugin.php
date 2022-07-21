@@ -12,7 +12,7 @@ use Spryker\Zed\CmsGuiExtension\Dependency\Plugin\CmsGlossaryBeforeSavePluginInt
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @method \Spryker\Zed\ContentGui\Business\ContentGuiFacade getFacade()
+ * @method \Spryker\Zed\ContentGui\Business\ContentGuiFacadeInterface getFacade()
  * @method \Spryker\Zed\ContentGui\Communication\ContentGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\ContentGui\ContentGuiConfig getConfig()
  */

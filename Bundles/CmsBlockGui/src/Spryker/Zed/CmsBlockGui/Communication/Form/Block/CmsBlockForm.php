@@ -86,10 +86,11 @@ class CmsBlockForm extends AbstractType
 
         $resolver->setDefaults([
             'validation_groups' => function (FormInterface $form) {
+                /** @var \Generated\Shared\Transfer\CmsBlockTransfer $defaultData */
                 $defaultData = $form->getConfig()->getData();
                 $formData = $form->getData();
 
-                if (!array_key_exists(static::FIELD_NAME, $defaultData)) {
+                if (!array_key_exists(static::FIELD_NAME, $defaultData->toArray())) {
                     return [Constraint::DEFAULT_GROUP, static::GROUP_UNIQUE_BLOCK_CHECK];
                 }
 

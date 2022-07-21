@@ -10,7 +10,7 @@ namespace Spryker\Zed\Router\Communication\Plugin\Application;
 use Spryker\Service\Container\ContainerInterface;
 
 /**
- * @method \Spryker\Zed\Router\Business\RouterFacade getFacade()
+ * @method \Spryker\Zed\Router\Business\RouterFacadeInterface getFacade()
  * @method \Spryker\Zed\Router\RouterConfig getConfig()
  * @method \Spryker\Zed\Router\Communication\RouterCommunicationFactory getFactory()
  */

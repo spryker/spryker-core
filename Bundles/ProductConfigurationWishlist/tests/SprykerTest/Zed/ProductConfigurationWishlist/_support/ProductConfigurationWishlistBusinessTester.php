@@ -32,7 +32,7 @@ class ProductConfigurationWishlistBusinessTester extends Actor
     use _generated\ProductConfigurationWishlistBusinessTesterActions;
 
     /**
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @throws \InvalidArgumentException
      *

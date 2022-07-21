@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\AssetDeletedTransfer;
 use Generated\Shared\Transfer\AssetTransfer;
 use Generated\Shared\Transfer\AssetUpdatedTransfer;
 use Generated\Shared\Transfer\MessageAttributesTransfer;
-use Generated\Shared\Transfer\PublisherTransfer;
 use Ramsey\Uuid\Uuid;
 
 /**
@@ -57,7 +56,7 @@ class AssetBusinessTester extends Actor
             ->setAssetSlot($assetSlot)
             ->setMessageAttributes(
                 (new MessageAttributesTransfer())
-                    ->setPublisher($this->havePublisherTransfer())
+                    ->setEmitter($this->getUuid())
                     ->setStoreReference($storeReference),
             );
     }
@@ -84,7 +83,7 @@ class AssetBusinessTester extends Actor
             ->setAssetSlot($assetSlot)
             ->setMessageAttributes(
                 (new MessageAttributesTransfer())
-                    ->setPublisher($this->havePublisherTransfer())
+                    ->setEmitter($this->getUuid())
                     ->setStoreReference($storeReference),
             );
     }
@@ -105,7 +104,7 @@ class AssetBusinessTester extends Actor
             ->setAssetIdentifier($assetUuid)
             ->setMessageAttributes(
                 (new MessageAttributesTransfer())
-                    ->setPublisher($this->havePublisherTransfer())
+                    ->setEmitter($this->getUuid())
                     ->setStoreReference($storeReference),
             );
     }
@@ -119,26 +118,20 @@ class AssetBusinessTester extends Actor
     }
 
     /**
-     * @return \Generated\Shared\Transfer\PublisherTransfer
-     */
-    public function havePublisherTransfer(): PublisherTransfer
-    {
-        return (new PublisherTransfer())->setAppIdentifier($this->getUuid());
-    }
-
-    /**
      * @param string $assetContent
      * @param string $assetUuid
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\AssetTransfer
      */
-    public function buildAssetTransfer(string $assetContent, string $assetUuid): AssetTransfer
+    public function buildAssetTransfer(string $assetContent, string $assetUuid, string $storeName): AssetTransfer
     {
         return (new AssetTransfer())
             ->setAssetSlot('slt-footer')
             ->setAssetName('test')
             ->setAssetContent($assetContent)
             ->setIdAsset(1)
-            ->setAssetUuid($assetUuid);
+            ->setAssetUuid($assetUuid)
+            ->addStore($storeName);
     }
 }

@@ -90,7 +90,6 @@ class CustomerGroupDecisionRuleTest extends Unit
             ->willReturn($customerGroupCollectionTransfer);
 
         $discountFacadeMock
-            ->expects($this->exactly(2))
             ->method('queryStringCompare')
             ->willReturnCallback(function (ClauseTransfer $clauseTransfer, string $customerGroupName) {
                 return $clauseTransfer->getValue() === strtolower($customerGroupName);
@@ -102,10 +101,16 @@ class CustomerGroupDecisionRuleTest extends Unit
         $customerGroupDecisionRule = $this->createCustomerGroupDecisionRule($discountFacadeMock, $customerGroupFacadeMock);
 
         $clauseTransfer->setValue(static::CUSTOMER_GROUP_NAMES_TEST_GROUP_1);
-        $customerGroupDecisionRule->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
+        $this->assertTrue(
+            $customerGroupDecisionRule->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer),
+            'isSatisfiedBy should work correctly when all data is present',
+        );
 
         $clauseTransfer->setValue(static::CUSTOMER_GROUP_NAMES_TEST_GROUP_2);
-        $customerGroupDecisionRule->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
+        $this->assertTrue(
+            $customerGroupDecisionRule->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer),
+            'isSatisfiedBy should work correctly with multiple groups when all data is present',
+        );
     }
 
     /**

@@ -12,4 +12,4 @@ composer require spryker/propel-orm-extension
 
 ## Documentation
 
-[Spryker Documentation](https://docs.spryker.com/)
+[Spryker Documentation](https://docs.spryker.com)

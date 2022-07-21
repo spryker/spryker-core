@@ -110,7 +110,7 @@ interface SearchFacadeInterface
      * - The transformation is based on the given page map what configures which data goes into which field
      *
      * @param \Spryker\Zed\Search\Dependency\Plugin\PageMapInterface $pageMap
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return array
@@ -126,7 +126,7 @@ interface SearchFacadeInterface
      *
      * @deprecated Will be removed without replacement.
      *
-     * @param array $data
+     * @param array<string, mixed> $data
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param string $mapperName
      *

@@ -173,7 +173,7 @@ class RedirectController extends AbstractController
 
     /**
      * @param \Orm\Zed\Url\Persistence\SpyUrl $url
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
@@ -191,7 +191,7 @@ class RedirectController extends AbstractController
 
     /**
      * @param \Orm\Zed\Url\Persistence\SpyUrlRedirect $redirect
-     * @param array $data
+     * @param array<string, mixed> $data
      *
      * @return \Generated\Shared\Transfer\RedirectTransfer
      */
