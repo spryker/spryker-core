@@ -101,6 +101,8 @@ class ConsoleBootstrap extends Application
             $output->writeln($this->getInfoText());
         }
 
+        $this->printDevVmDeprecationInfoText($output);
+
         $this->getFactory()
             ->createApplication()
             ->boot();
@@ -147,5 +149,28 @@ class ConsoleBootstrap extends Application
         if (getenv('FORCE_COLOR_MODE')) {
             $output->setDecorated(true);
         }
+    }
+
+    /**
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     *
+     * @return void
+     */
+    protected function printDevVmDeprecationInfoText(OutputInterface $output): void
+    {
+        if ($this->isDevVmEnv()) {
+            $output->writeln('<fg=yellow;options=bold>---------------------------------</>');
+            $output->writeln('<bg=yellow;options=bold>Warning! DevVM is depricated.</>');
+            $output->writeln('<bg=yellow;options=bold>Please use docker environment.</>');
+            $output->writeln('<fg=yellow;options=bold>---------------------------------</>');
+        }
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isDevVmEnv(): bool
+    {
+        return getenv('USER') === 'vagrant';
     }
 }

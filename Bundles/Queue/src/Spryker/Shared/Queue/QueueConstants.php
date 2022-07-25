@@ -14,7 +14,7 @@ interface QueueConstants
 {
     /**
      * Specification:
-     * - Server unique id e.g spryker-vagrant.
+     * - Server unique id e.g spryker-{hostname}.
      *
      * @api
      *
