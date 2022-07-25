@@ -30,21 +30,16 @@ class HttpConfig extends AbstractSharedConfig
      */
     public function getUriSignerSecret(): string
     {
-        $uriSignerSecret = null;
-        if (getenv('SPRYKER_ZED_REQUEST_TOKEN')) {
-            $uriSignerSecret = getenv('SPRYKER_ZED_REQUEST_TOKEN');
-        }
-
         $uriSignerSecret = $this->get(
             HttpConstants::URI_SIGNER_SECRET_KEY,
-            $uriSignerSecret,
+            $this->getZedRequestToken(),
         );
 
         if (!$uriSignerSecret) {
             trigger_error(
                 'Environment configuration `HttpConstants::URI_SIGNER_SECRET_KEY` must be set.'
-                . ' Please, define `$config[HttpConstants::URI_SIGNER_SECRET_KEY] = getenv(\'SPRYKER_ZED_REQUEST_TOKEN\') ?: null;`'
-                . ' in your `config_default.php` file.',
+                . ' Please, define `$config[HttpConstants::URI_SIGNER_SECRET_KEY] = getenv(\'SPRYKER_URI_SIGNER_SECRET_KEY\');`'
+                . ' in your `config_default.php` file and define environment variable `SPRYKER_URI_SIGNER_SECRET_KEY` on each environment.',
                 E_USER_ERROR,
             );
         }
@@ -80,5 +75,15 @@ class HttpConfig extends AbstractSharedConfig
     public function getTrustedHeaderSet(): int
     {
         return static::REQUEST_TRUSTED_HEADER_SET;
+    }
+
+    /**
+     * @deprecated Will be removed in the next releases.
+     *
+     * @return string
+     */
+    protected function getZedRequestToken(): string
+    {
+        return (string)getenv('SPRYKER_ZED_REQUEST_TOKEN');
     }
 }
