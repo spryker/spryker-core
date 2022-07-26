@@ -18,6 +18,8 @@ use Spryker\Glue\OauthApi\Processor\RequestBuilder\CustomerRequestBuilder;
 use Spryker\Glue\OauthApi\Processor\RequestBuilder\CustomerRequestBuilderInterface;
 use Spryker\Glue\OauthApi\Processor\Validator\AccessTokenValidator;
 use Spryker\Glue\OauthApi\Processor\Validator\AccessTokenValidatorInterface;
+use Spryker\Glue\OauthApi\Processor\Validator\CustomerRequestValidator;
+use Spryker\Glue\OauthApi\Processor\Validator\CustomerRequestValidatorInterface;
 
 /**
  * @method \Spryker\Glue\OauthApi\OauthApiConfig getConfig()
@@ -85,5 +87,13 @@ class OauthApiFactory extends AbstractStorefrontApiFactory
             $this->getUtilEncodingService(),
             $this->createAccessTokenExtractor(),
         );
+    }
+
+    /**
+     * @return \Spryker\Glue\OauthApi\Processor\Validator\CustomerRequestValidatorInterface
+     */
+    public function createCustomerRequestValidator(): CustomerRequestValidatorInterface
+    {
+        return new CustomerRequestValidator();
     }
 }

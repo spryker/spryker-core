@@ -1,4 +1,6 @@
 namespace: OauthApi
+include:
+    - tests/SprykerTest/Glue/OauthApi
 actor: Tester
 paths:
     tests: tests
