@@ -50,7 +50,7 @@ class AccessTokenValidator implements AccessTokenValidatorInterface
     {
         $glueRequestValidationTransfer = new GlueRequestValidationTransfer();
 
-        if (!$glueRequestTransfer->getHttpRequestAttributes()) {
+        if (!$this->accessTokenExtractor->isAuthorizationHeaderSet($glueRequestTransfer)) {
             return $glueRequestValidationTransfer->setIsValid(true);
         }
 
@@ -83,10 +83,6 @@ class AccessTokenValidator implements AccessTokenValidatorInterface
         }
 
         $glueRequestValidationTransfer->setIsValid($oauthAccessTokenValidationRequestTransfer->getIsValid());
-
-        if (!array_key_exists(OauthApiConfig::REQUEST_ATTRIBUTE_IS_PROTECTED, $glueRequestTransfer->getHttpRequestAttributes())) {
-            $glueRequestValidationTransfer->setIsValid(true);
-        }
 
         return $glueRequestValidationTransfer;
     }

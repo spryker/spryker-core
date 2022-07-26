@@ -58,7 +58,7 @@ class AccessTokenValidatorPluginTest extends Unit
     public function testValidatorEmptyAuth(): void
     {
         //Arrange
-        $glueRequestTransfer = (new GlueRequestTransfer())->setHttpRequestAttributes(['is-protected' => true]);
+        $glueRequestTransfer = new GlueRequestTransfer();
 
         //Act
         $result = (new AccessTokenValidatorPlugin())->validate($glueRequestTransfer);
@@ -66,12 +66,7 @@ class AccessTokenValidatorPluginTest extends Unit
         //Assert
         $this->assertInstanceOf(GlueRequestValidationTransfer::class, $result);
 
-        $this->assertFalse($result->getIsValid());
-
-        $glueErrorTransfer = $result->getErrors()->getArrayCopy()[0];
-        $this->assertSame(OauthApiConfig::RESPONSE_CODE_FORBIDDEN, $glueErrorTransfer->getCode());
-        $this->assertSame(Response::HTTP_FORBIDDEN, $glueErrorTransfer->getStatus());
-        $this->assertSame(OauthApiConfig::RESPONSE_DETAIL_MISSING_ACCESS_TOKEN, $glueErrorTransfer->getMessage());
+        $this->assertTrue($result->getIsValid());
     }
 
     /**
@@ -88,7 +83,6 @@ class AccessTokenValidatorPluginTest extends Unit
             return $oauthFacade;
         });
         $glueRequestTransfer = (new GlueRequestTransfer())
-            ->setHttpRequestAttributes(['is-protected' => true])
             ->setMeta(['authorization' => [0 => 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9']]);
 
         //Act
@@ -117,7 +111,6 @@ class AccessTokenValidatorPluginTest extends Unit
             return $oauthFacade;
         });
         $glueRequestTransfer = (new GlueRequestTransfer())
-            ->setHttpRequestAttributes(['is-protected' => true])
             ->setMeta(['authorization' => [0 => 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9']]);
 
         //Act

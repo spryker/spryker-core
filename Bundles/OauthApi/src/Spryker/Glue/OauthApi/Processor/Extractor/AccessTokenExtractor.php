@@ -19,14 +19,22 @@ class AccessTokenExtractor implements AccessTokenExtractorInterface
      */
     public function extract(GlueRequestTransfer $glueRequestTransfer): ?array
     {
-        if (
-            !$glueRequestTransfer->getMeta() ||
-            !array_key_exists(OauthApiConfig::HEADER_AUTHORIZATION, $glueRequestTransfer->getMeta())
-        ) {
+        if (!$this->isAuthorizationHeaderSet($glueRequestTransfer)) {
             return null;
         }
 
         return $this->extractTokenData($glueRequestTransfer->getMeta()[OauthApiConfig::HEADER_AUTHORIZATION][0]);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
+     *
+     * @return bool
+     */
+    public function isAuthorizationHeaderSet(GlueRequestTransfer $glueRequestTransfer): bool
+    {
+        return ($glueRequestTransfer->getMeta() &&
+            array_key_exists(OauthApiConfig::HEADER_AUTHORIZATION, $glueRequestTransfer->getMeta()));
     }
 
     /**

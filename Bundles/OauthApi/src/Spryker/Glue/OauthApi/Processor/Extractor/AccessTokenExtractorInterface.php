@@ -17,4 +17,11 @@ interface AccessTokenExtractorInterface
      * @return array<string>|null
      */
     public function extract(GlueRequestTransfer $glueRequestTransfer): ?array;
+
+    /**
+     * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
+     *
+     * @return bool
+     */
+    public function isAuthorizationHeaderSet(GlueRequestTransfer $glueRequestTransfer): bool;
 }
