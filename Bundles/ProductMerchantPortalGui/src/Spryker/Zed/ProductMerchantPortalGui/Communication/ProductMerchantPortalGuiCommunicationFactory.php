@@ -374,7 +374,7 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     public function createPriceProductTransformer(): DataTransformerInterface
     {
         return new PriceProductTransformer(
-            $this->getPriceProductFacade(),
+            $this->createPriceProductReader(),
             $this->createPriceProductMapper(),
             $this->createPriceProductTableDataMapper(),
             $this->getUtilEncodingService(),

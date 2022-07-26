@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\Merger\MergeStrategy;
 
 use ArrayObject;
+use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 
 class PriceProductAlreadyAddedMergeStrategy extends AbstractPriceProductMergeStrategy
@@ -23,7 +24,8 @@ class PriceProductAlreadyAddedMergeStrategy extends AbstractPriceProductMergeStr
         ArrayObject $priceProductTransfers
     ): bool {
         return !$this->isVolumePriceProduct($newPriceProductTransfer)
-            && $this->isNewPriceAlreadyAddedToList($newPriceProductTransfer, $priceProductTransfers);
+            && $this->isNewPriceAlreadyAddedToList($newPriceProductTransfer, $priceProductTransfers)
+            && $this->hasMergeablePrices($newPriceProductTransfer, $priceProductTransfers);
     }
 
     /**
@@ -40,6 +42,7 @@ class PriceProductAlreadyAddedMergeStrategy extends AbstractPriceProductMergeStr
             if (
                 $this->isNewPriceProductTransfer($priceProductTransfer)
                 && $this->isSamePriceProduct($priceProductTransfer, $newPriceProductTransfer)
+                && $this->isMergeablePrices($newPriceProductTransfer, $priceProductTransfer)
             ) {
                 $newMoneyValueTransfer = $newPriceProductTransfer->getMoneyValueOrFail();
 
@@ -76,5 +79,82 @@ class PriceProductAlreadyAddedMergeStrategy extends AbstractPriceProductMergeStr
         }
 
         return false;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     *
+     * @return bool
+     */
+    protected function hasMergeablePrices(
+        PriceProductTransfer $priceProductTransfer,
+        ArrayObject $priceProductTransfers
+    ): bool {
+        foreach ($priceProductTransfers as $priceProductToCompareTransfer) {
+            if ($this->isMergeablePrices($priceProductTransfer, $priceProductToCompareTransfer)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductToCompareTransfer
+     *
+     * @return bool
+     */
+    protected function isMergeablePrices(
+        PriceProductTransfer $priceProductTransfer,
+        PriceProductTransfer $priceProductToCompareTransfer
+    ): bool {
+        if (!$this->isSamePriceProduct($priceProductTransfer, $priceProductToCompareTransfer)) {
+            return false;
+        }
+
+        $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
+        $moneyValueToCompareTransfer = $priceProductToCompareTransfer->getMoneyValue();
+        if (!$moneyValueTransfer || !$moneyValueToCompareTransfer) {
+            return false;
+        }
+
+        return $this->hasMergeableNetPrice($moneyValueTransfer, $moneyValueToCompareTransfer)
+            || $this->hasMergeableGrossPrice($moneyValueTransfer, $moneyValueToCompareTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer
+     * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueToCompareTransfer
+     *
+     * @return bool
+     */
+    protected function hasMergeableNetPrice(
+        MoneyValueTransfer $moneyValueTransfer,
+        MoneyValueTransfer $moneyValueToCompareTransfer
+    ): bool {
+        if ($moneyValueTransfer->getNetAmount() && !$moneyValueToCompareTransfer->getNetAmount()) {
+            return true;
+        }
+
+        return !$moneyValueTransfer->getNetAmount() && $moneyValueToCompareTransfer->getNetAmount();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer
+     * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueToCompareTransfer
+     *
+     * @return bool
+     */
+    protected function hasMergeableGrossPrice(
+        MoneyValueTransfer $moneyValueTransfer,
+        MoneyValueTransfer $moneyValueToCompareTransfer
+    ): bool {
+        if ($moneyValueTransfer->getGrossAmount() && !$moneyValueToCompareTransfer->getGrossAmount()) {
+            return true;
+        }
+
+        return !$moneyValueTransfer->getGrossAmount() && $moneyValueToCompareTransfer->getGrossAmount();
     }
 }

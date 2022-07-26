@@ -26,6 +26,7 @@ use Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery;
 use ReflectionClass;
 use Spryker\Shared\Price\PriceConfig;
 use Spryker\Shared\PriceProduct\PriceProductConfig;
+use Spryker\Shared\PriceProduct\PriceProductConstants;
 use Spryker\Zed\Currency\Business\CurrencyFacade;
 use Spryker\Zed\Currency\Business\CurrencyFacadeInterface;
 use Spryker\Zed\PriceProduct\Business\Model\Reader;
@@ -93,6 +94,13 @@ class PriceProductFacadeTest extends Unit
      * @var string
      */
     protected const PRICE_DATA_BY_PRICE_TYPE = 'priceDataByPriceType';
+
+    /**
+     * @uses \Spryker\Zed\PriceProduct\Business\Validator\Constraint\ValidUniqueStoreCurrencyCollectionConstraint::MESSAGE
+     *
+     * @var string
+     */
+    protected const VALIDATION_MESSAGE_STORE_AND_CURRENCY_NEEDS_TO_BE_UNIQUE = 'The set of inputs Store and Currency needs to be unique.';
 
     /**
      * @var \SprykerTest\Zed\PriceProduct\PriceProductBusinessTester
@@ -1308,7 +1316,41 @@ class PriceProductFacadeTest extends Unit
         $this->assertFalse($validationResponseTransfer->getIsSuccess());
         $this->assertCount(1, $validationResponseTransfer->getValidationErrors());
         $this->assertSame(
-            'The set of inputs Store and Currency needs to be unique.',
+            static::VALIDATION_MESSAGE_STORE_AND_CURRENCY_NEEDS_TO_BE_UNIQUE,
+            $validationResponseTransfer->getValidationErrors()->offsetGet(0)->getMessage(),
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidatePricesFailsValidUniqueStoreCurrencyCollectionConstraint(): void
+    {
+        // Arrange
+        $productAbstractTransfer = $this->tester->haveProductAbstract();
+
+        $priceProductTransfer1 = $this->tester->havePriceProductAbstract(
+            $productAbstractTransfer->getIdProductAbstractOrFail(),
+            [
+                PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'sku',
+            ],
+        );
+        $priceProductTransfer1->setPriceDimension(
+            (new PriceProductDimensionTransfer())
+                ->setType(PriceProductConstants::PRICE_DIMENSION_DEFAULT),
+        );
+
+        $priceProductTransfer2 = clone $priceProductTransfer1;
+
+        // Act
+        $validationResponseTransfer = $this->getPriceProductFacade()
+            ->validatePrices(new ArrayObject([$priceProductTransfer1, $priceProductTransfer2]));
+
+        // Assert
+        $this->assertFalse($validationResponseTransfer->getIsSuccess());
+        $this->assertCount(1, $validationResponseTransfer->getValidationErrors());
+        $this->assertSame(
+            static::VALIDATION_MESSAGE_STORE_AND_CURRENCY_NEEDS_TO_BE_UNIQUE,
             $validationResponseTransfer->getValidationErrors()->offsetGet(0)->getMessage(),
         );
     }

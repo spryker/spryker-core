@@ -105,18 +105,29 @@ class PriceProductReader implements PriceProductReaderInterface
     public function getPriceProductsWithoutPriceExtraction(
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
     ): array {
-        $idProductConcrete = $priceProductCriteriaTransfer->getIdProductConcreteOrFail();
-        $idProductAbstract = $priceProductCriteriaTransfer->getIdProductAbstractOrFail();
+        $idProductAbstract = $priceProductCriteriaTransfer->getIdProductAbstract();
+        $idProductConcrete = $priceProductCriteriaTransfer->getIdProductConcrete();
 
-        $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())
-            ->setOnlyConcretePrices(true)
-            ->setWithAllMerchantPrices(true);
+        if ($idProductAbstract !== null && $idProductConcrete !== null) {
+            $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())
+                ->setOnlyConcretePrices(true)
+                ->setWithAllMerchantPrices(true);
 
-        return $this->priceProductFacade->findProductConcretePricesWithoutPriceExtraction(
-            $idProductConcrete,
-            $idProductAbstract,
-            $priceProductCriteriaTransfer,
-        );
+            return $this->priceProductFacade->findProductConcretePricesWithoutPriceExtraction(
+                $idProductConcrete,
+                $idProductAbstract,
+                $priceProductCriteriaTransfer,
+            );
+        }
+
+        if ($idProductAbstract !== null) {
+            return $this->priceProductFacade->findProductAbstractPricesWithoutPriceExtraction(
+                $idProductAbstract,
+                (new PriceProductCriteriaTransfer())->setWithAllMerchantPrices(true),
+            );
+        }
+
+        return [];
     }
 
     /**

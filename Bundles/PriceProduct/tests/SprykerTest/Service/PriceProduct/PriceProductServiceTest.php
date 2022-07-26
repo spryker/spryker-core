@@ -18,6 +18,7 @@ use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Service\PriceProduct\PriceProductServiceInterface;
+use Spryker\Shared\PriceProduct\PriceProductConstants;
 
 /**
  * Auto-generated group annotations
@@ -63,6 +64,21 @@ class PriceProductServiceTest extends Unit
      * @var int
      */
     protected const TEST_ID_CURRENCY = 1;
+
+    /**
+     * @var int
+     */
+    protected const TEST_FK_STORE = 1;
+
+    /**
+     * @var string
+     */
+    protected const EXPECTED_GROUP_KEY_EMPTY_DIMENSION = 'EUR-DEFAULT-1';
+
+    /**
+     * @var string
+     */
+    protected const EXPECTED_GROUP_KEY_DEFAULT_DIMENSION = 'EUR-DEFAULT-1-PRICE_DIMENSION_DEFAULT';
 
     /**
      * @var \SprykerTest\Service\PriceProduct\PriceProductTester
@@ -362,6 +378,51 @@ class PriceProductServiceTest extends Unit
             $expectedProductPrice,
             $priceMode,
         );
+    }
+
+    /**
+     * @return void
+     */
+    public function testBuildPriceProductGroupKeyUsesDefaultPriceProductProperties(): void
+    {
+        // Arrange
+        $priceProductService = $this->getPriceProductService();
+        $priceProductTransfer = $this->tester->createPriceProductTransfer(
+            [PriceProductTransfer::PRICE_TYPE_NAME => static::PRICE_TYPE_DEFAULT],
+            [MoneyValueTransfer::FK_STORE => static::TEST_FK_STORE],
+            [CurrencyTransfer::CODE => static::CURRENCY_ISO_CODE],
+        );
+        $priceProductTransfer->setPriceDimension(new PriceProductDimensionTransfer());
+
+        // Act
+        $priceProductGroupKey = $priceProductService->buildPriceProductGroupKey($priceProductTransfer);
+
+        // Assert
+        $this->assertSame(static::EXPECTED_GROUP_KEY_EMPTY_DIMENSION, $priceProductGroupKey);
+    }
+
+    /**
+     * @return void
+     */
+    public function testBuildPriceProductGroupKeyUsesPriceProductDimensionProperties(): void
+    {
+        // Arrange
+        $priceProductService = $this->getPriceProductService();
+        $priceProductTransfer = $this->tester->createPriceProductTransfer(
+            [PriceProductTransfer::PRICE_TYPE_NAME => static::PRICE_TYPE_DEFAULT],
+            [MoneyValueTransfer::FK_STORE => static::TEST_FK_STORE],
+            [CurrencyTransfer::CODE => static::CURRENCY_ISO_CODE],
+        );
+        $priceProductTransfer->setPriceDimension(
+            (new PriceProductDimensionTransfer())
+                ->setType(PriceProductConstants::PRICE_DIMENSION_DEFAULT),
+        );
+
+        // Act
+        $priceProductGroupKey = $priceProductService->buildPriceProductGroupKey($priceProductTransfer);
+
+        // Assert
+        $this->assertSame(static::EXPECTED_GROUP_KEY_DEFAULT_DIMENSION, $priceProductGroupKey);
     }
 
     /**

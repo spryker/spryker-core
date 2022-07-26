@@ -9,6 +9,11 @@ namespace SprykerTest\Zed\ProductMerchantPortalGui;
 
 use Codeception\Actor;
 use Codeception\Util\Stub;
+use Generated\Shared\DataBuilder\CurrencyBuilder;
+use Generated\Shared\DataBuilder\MoneyValueBuilder;
+use Generated\Shared\DataBuilder\PriceProductBuilder;
+use Generated\Shared\DataBuilder\PriceProductDimensionBuilder;
+use Generated\Shared\DataBuilder\PriceTypeBuilder;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
@@ -17,6 +22,7 @@ use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceTypeTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use PHPUnit\Framework\MockObject\Rule\InvokedCount;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\DataProvider\ProductConcreteEditFormDataProvider;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\DataProvider\ProductConcreteEditFormDataProviderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\Merger\PriceProductMerger;
@@ -100,6 +106,11 @@ class ProductMerchantPortalGuiCommunicationTester extends Actor
     public const FAKE_STORE_ID_2 = - 2;
 
     /**
+     * @var string
+     */
+    protected const CURRENCY_CODE_EUR = 'EUR';
+
+    /**
      * @param array<\Spryker\Zed\ProductMerchantPortalGuiExtension\Dependency\Plugin\PriceProductMapperPluginInterface> $priceProductMapperPlugins
      *
      * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\PriceProductMapperInterface
@@ -157,7 +168,7 @@ class ProductMerchantPortalGuiCommunicationTester extends Actor
     }
 
     /**
-     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\Transformer\Merger\PriceProductsMergerInterface
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\Merger\PriceProductMergerInterface
      */
     protected function createPriceProductMerger(): PriceProductMergerInterface
     {
@@ -350,6 +361,166 @@ class ProductMerchantPortalGuiCommunicationTester extends Actor
             static::FAKE_CURRENCY_ID_1 => (new CurrencyTransfer())->setIdCurrency(static::FAKE_CURRENCY_ID_1),
             static::FAKE_CURRENCY_ID_2 => (new CurrencyTransfer())->setIdCurrency(static::FAKE_CURRENCY_ID_2),
         ];
+    }
+
+    /**
+     * @param \PHPUnit\Framework\MockObject\Rule\InvokedCount $expectedInvokedCount
+     * @param string $method
+     * @param array<mixed> ...$arguments
+     *
+     * @return \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeInterface
+     */
+    public function createPriceProductFacadeMockWithExpectations(
+        InvokedCount $expectedInvokedCount,
+        string $method,
+        ...$arguments
+    ): ProductMerchantPortalGuiToPriceProductFacadeInterface {
+        $priceProductFacadeMock = Stub::makeEmpty(ProductMerchantPortalGuiToPriceProductFacadeInterface::class);
+
+        $priceProductFacadeMock
+            ->expects($expectedInvokedCount)
+            ->method($method)
+            ->with(...$arguments);
+
+        return $priceProductFacadeMock;
+    }
+
+    /**
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
+     */
+    public function createMergeablePriceProductTransfers(): array
+    {
+        $priceProduct1Transfer = $this->createPriceProductTransfer(
+            [
+                PriceProductTransfer::VOLUME_QUANTITY => 1,
+                PriceProductTransfer::PRICE_TYPE_NAME => static::FAKE_PRICE_TYPE_1,
+            ],
+            [
+                PriceProductDimensionTransfer::TYPE => static::FAKE_PRICE_DIMENSION,
+            ],
+            [
+                MoneyValueTransfer::FK_STORE => static::FAKE_STORE_ID_1,
+                MoneyValueTransfer::GROSS_AMOUNT => 17774,
+                MoneyValueTransfer::NET_AMOUNT => null,
+            ],
+            [
+                CurrencyTransfer::CODE => static::CURRENCY_CODE_EUR,
+            ],
+        );
+
+        $priceProduct2Transfer = $this->createPriceProductTransfer(
+            [
+                PriceProductTransfer::VOLUME_QUANTITY => 1,
+                PriceProductTransfer::PRICE_TYPE_NAME => static::FAKE_PRICE_TYPE_1,
+            ],
+            [
+                PriceProductDimensionTransfer::TYPE => static::FAKE_PRICE_DIMENSION,
+            ],
+            [
+                MoneyValueTransfer::FK_STORE => static::FAKE_STORE_ID_1,
+                MoneyValueTransfer::GROSS_AMOUNT => null,
+                MoneyValueTransfer::NET_AMOUNT => 17774,
+            ],
+            [
+                CurrencyTransfer::CODE => static::CURRENCY_CODE_EUR,
+            ],
+        );
+
+        return [$priceProduct1Transfer, $priceProduct2Transfer];
+    }
+
+    /**
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
+     */
+    public function createNotMergeablePriceProductTransfers(): array
+    {
+        $priceProduct1Transfer = $this->createPriceProductTransfer(
+            [
+                PriceProductTransfer::VOLUME_QUANTITY => 1,
+                PriceProductTransfer::PRICE_TYPE_NAME => static::FAKE_PRICE_TYPE_1,
+            ],
+            [
+                PriceProductDimensionTransfer::TYPE => static::FAKE_PRICE_DIMENSION,
+            ],
+            [
+                MoneyValueTransfer::FK_STORE => static::FAKE_STORE_ID_1,
+                MoneyValueTransfer::GROSS_AMOUNT => 17774,
+                MoneyValueTransfer::NET_AMOUNT => null,
+            ],
+            [
+                CurrencyTransfer::CODE => static::CURRENCY_CODE_EUR,
+            ],
+        );
+
+        $priceProduct2Transfer = $this->createPriceProductTransfer(
+            [
+                PriceProductTransfer::VOLUME_QUANTITY => 1,
+                PriceProductTransfer::PRICE_TYPE_NAME => static::FAKE_PRICE_TYPE_1,
+            ],
+            [
+                PriceProductDimensionTransfer::TYPE => static::FAKE_PRICE_DIMENSION,
+            ],
+            [
+                MoneyValueTransfer::FK_STORE => static::FAKE_STORE_ID_1,
+                MoneyValueTransfer::GROSS_AMOUNT => 18992,
+                MoneyValueTransfer::NET_AMOUNT => null,
+            ],
+            [
+                CurrencyTransfer::CODE => static::CURRENCY_CODE_EUR,
+            ],
+        );
+
+        return [$priceProduct1Transfer, $priceProduct2Transfer];
+    }
+
+    /**
+     * @param array<string, mixed> $seed
+     * @param array<string, mixed> $priceDimensionSeed
+     * @param array<string, mixed> $moneyValueSeed
+     * @param array<string, mixed> $currencySeed
+     * @param array<string, mixed> $priceTypeSeed
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    protected function createPriceProductTransfer(
+        array $seed,
+        array $priceDimensionSeed = [],
+        array $moneyValueSeed = [],
+        array $currencySeed = [],
+        array $priceTypeSeed = []
+    ): PriceProductTransfer {
+        $priceProductBuilder = new PriceProductBuilder($seed);
+        if ($priceDimensionSeed) {
+            $priceDimensionBuilder = new PriceProductDimensionBuilder($priceDimensionSeed);
+            $priceProductBuilder->withPriceDimension($priceDimensionBuilder);
+        }
+        if ($moneyValueSeed) {
+            $moneyValueBuilder = $this->createMoneyValueBuilder($moneyValueSeed, $currencySeed);
+            $priceProductBuilder->withMoneyValue($moneyValueBuilder);
+        }
+        if ($priceTypeSeed) {
+            $priceTypeBuilder = new PriceTypeBuilder($priceTypeSeed);
+            $priceProductBuilder->withPriceType($priceTypeBuilder);
+        }
+
+        return $priceProductBuilder->build();
+    }
+
+    /**
+     * @param array<string, mixed> $moneyValueSeed
+     * @param array<string, mixed> $currencySeed
+     *
+     * @return \Generated\Shared\DataBuilder\MoneyValueBuilder
+     */
+    protected function createMoneyValueBuilder(array $moneyValueSeed, array $currencySeed = []): MoneyValueBuilder
+    {
+        $moneyValueBuilder = new MoneyValueBuilder($moneyValueSeed);
+        if ($currencySeed) {
+            $currencyBuilder = new CurrencyBuilder($currencySeed);
+            $moneyValueBuilder->withCurrency($currencyBuilder);
+        }
+
+        return $moneyValueBuilder;
     }
 
     /**

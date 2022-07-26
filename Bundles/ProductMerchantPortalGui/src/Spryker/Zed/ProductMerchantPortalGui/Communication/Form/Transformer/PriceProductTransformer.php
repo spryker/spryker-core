@@ -9,12 +9,10 @@ namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Transformer;
 
 use ArrayObject;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
-use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductTableViewCollectionTransfer;
-use Spryker\Shared\PriceProduct\PriceProductConfig;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\PriceProductMapperInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\PriceProductTableDataMapperInterface;
-use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\Reader\PriceProductReaderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToUtilEncodingServiceInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 
@@ -31,9 +29,9 @@ class PriceProductTransformer implements DataTransformerInterface
     protected $idProductConcrete;
 
     /**
-     * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeInterface
+     * @var \Spryker\Zed\ProductMerchantPortalGui\Communication\Reader\PriceProductReaderInterface
      */
-    protected $priceProductFacade;
+    protected $priceProductReader;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\PriceProductMapperInterface
@@ -51,18 +49,18 @@ class PriceProductTransformer implements DataTransformerInterface
     protected $utilEncodingService;
 
     /**
-     * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade
+     * @param \Spryker\Zed\ProductMerchantPortalGui\Communication\Reader\PriceProductReaderInterface $priceProductReader
      * @param \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\PriceProductMapperInterface $priceProductMapper
      * @param \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\PriceProductTableDataMapperInterface $priceProductTableDataMapper
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToUtilEncodingServiceInterface $utilEncodingService
      */
     public function __construct(
-        ProductMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade,
+        PriceProductReaderInterface $priceProductReader,
         PriceProductMapperInterface $priceProductMapper,
         PriceProductTableDataMapperInterface $priceProductTableDataMapper,
         ProductMerchantPortalGuiToUtilEncodingServiceInterface $utilEncodingService
     ) {
-        $this->priceProductFacade = $priceProductFacade;
+        $this->priceProductReader = $priceProductReader;
         $this->priceProductMapper = $priceProductMapper;
         $this->priceProductTableDataMapper = $priceProductTableDataMapper;
         $this->utilEncodingService = $utilEncodingService;
@@ -117,46 +115,19 @@ class PriceProductTransformer implements DataTransformerInterface
     public function reverseTransform($value)
     {
         $newPriceProducts = $this->utilEncodingService->decodeJson($value, true);
-
         if (!$newPriceProducts) {
             return new ArrayObject();
         }
 
-        $priceProductTransfers = $this->getExistingPriceProducts();
+        $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())
+            ->setIdProductConcrete($this->idProductConcrete)
+            ->setIdProductAbstract($this->idProductAbstract);
+
+        $priceProductTransfers = $this->priceProductReader->getPriceProductsWithoutPriceExtraction(
+            $priceProductCriteriaTransfer,
+        );
 
         return $this->priceProductMapper
             ->mapTableRowsToPriceProductTransfers($newPriceProducts, new ArrayObject($priceProductTransfers));
-    }
-
-    /**
-     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
-     */
-    protected function getExistingPriceProducts(): array
-    {
-        if ($this->idProductConcrete !== null && $this->idProductAbstract !== null) {
-            $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())
-                ->setOnlyConcretePrices(true)
-                ->setPriceDimension(
-                    (new PriceProductDimensionTransfer())
-                        ->setType(PriceProductConfig::PRICE_DIMENSION_DEFAULT),
-                );
-
-            return $this->priceProductFacade
-                ->findProductConcretePricesWithoutPriceExtraction(
-                    $this->idProductConcrete,
-                    $this->idProductAbstract,
-                    $priceProductCriteriaTransfer,
-                );
-        }
-
-        if ($this->idProductAbstract !== null) {
-            return $this->priceProductFacade
-                ->findProductAbstractPricesWithoutPriceExtraction(
-                    $this->idProductAbstract,
-                    (new PriceProductCriteriaTransfer())->setWithAllMerchantPrices(true),
-                );
-        }
-
-        return [];
     }
 }
