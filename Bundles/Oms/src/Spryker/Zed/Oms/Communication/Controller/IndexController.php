@@ -31,6 +31,18 @@ class IndexController extends AbstractController
     public const DEFAULT_FONT_SIZE = 14;
 
     /**
+     * @uses \Spryker\Zed\Oms\Communication\Controller\IndexController::indexAction()
+     *
+     * @var string
+     */
+    protected const URL_OMS = '/oms';
+
+    /**
+     * @var string
+     */
+    protected const ERROR_MESSAGE_FORMAT_NOT_SUPPORTED = 'This file format is not supported. Please use file format SVG.';
+
+    /**
      * @var array<string, string>
      */
     protected $formatContentTypes = [
@@ -58,7 +70,7 @@ class IndexController extends AbstractController
         /** @var string|null $processName */
         $processName = $request->query->get('process');
         if ($processName === null) {
-            return $this->redirectResponse('/oms');
+            return $this->redirectResponse(static::URL_OMS);
         }
 
         /** @var string|null $format */
@@ -80,6 +92,12 @@ class IndexController extends AbstractController
 
         if ($reload) {
             return $this->redirectResponse('/oms/index/draw?process=' . $processName . '&format=' . $format . '&font=' . $fontSize . '&state=' . $highlightState);
+        }
+
+        if (!isset($this->formatContentTypes[$format])) {
+            $this->addErrorMessage(static::ERROR_MESSAGE_FORMAT_NOT_SUPPORTED);
+
+            return $this->redirectResponse(static::URL_OMS);
         }
 
         $response = $this->getFacade()->drawProcess($processName, $highlightState, $format, $fontSize);
@@ -121,7 +139,7 @@ class IndexController extends AbstractController
     {
         $processName = $request->query->get('process');
         if ($processName === null) {
-            return $this->redirectResponse('/oms');
+            return $this->redirectResponse(static::URL_OMS);
         }
 
         return $this->viewResponse([

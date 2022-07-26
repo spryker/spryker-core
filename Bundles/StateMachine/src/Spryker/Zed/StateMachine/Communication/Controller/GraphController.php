@@ -52,6 +52,11 @@ class GraphController extends AbstractController
     public const URL_STATE_MACHINE_LIST = '/state-machine/list';
 
     /**
+     * @var string
+     */
+    protected const ERROR_MESSAGE_FORMAT_NOT_SUPPORTED = 'This file format is not supported. Please use file format SVG.';
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\StreamedResponse
@@ -92,6 +97,12 @@ class GraphController extends AbstractController
                     ],
                 )->build(),
             );
+        }
+
+        if (!isset($stateMachineBundleConfig->getGraphFormatContentTypes()[$format])) {
+            $this->addErrorMessage(static::ERROR_MESSAGE_FORMAT_NOT_SUPPORTED);
+
+            return $this->redirectResponse(static::URL_STATE_MACHINE_LIST);
         }
 
         $stateMachineProcessTransfer = new StateMachineProcessTransfer();
