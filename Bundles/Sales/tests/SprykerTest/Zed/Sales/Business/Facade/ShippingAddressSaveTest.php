@@ -52,6 +52,16 @@ class ShippingAddressSaveTest extends Test
     }
 
     /**
+     * @return void
+     */
+    protected function _after(): void
+    {
+        parent::_after();
+
+        $this->tester->cleanStaticProperty();
+    }
+
+    /**
      * @dataProvider saveOrderAddressShouldPersistAddressEntityDataProvider
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

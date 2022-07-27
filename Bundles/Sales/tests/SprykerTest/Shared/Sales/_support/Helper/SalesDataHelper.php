@@ -12,6 +12,8 @@ use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\SaveOrderBuilder;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
+use ReflectionClass;
+use Spryker\Zed\Oms\Business\OrderStateMachine\PersistenceManager;
 use Spryker\Zed\Sales\Business\SalesBusinessFactory;
 use Spryker\Zed\Sales\Business\SalesFacadeInterface;
 use SprykerTest\Shared\Sales\Helper\Config\TesterSalesConfig;
@@ -139,6 +141,7 @@ class SalesDataHelper extends Module
         }
 
         $salesFacade->saveSalesOrder($quoteTransfer, $saveOrderTransfer);
+        $this->cleanStaticProperty();
 
         return $saveOrderTransfer;
     }
@@ -194,5 +197,21 @@ class SalesDataHelper extends Module
         $this->moduleContainer->create(static::NAMESPACE_ROOT . OmsHelper::class);
 
         return $this->getModule(static::NAMESPACE_ROOT . OmsHelper::class);
+    }
+
+    /**
+     * @return void
+     */
+    public function cleanStaticProperty(): void
+    {
+        $reflectedClass = new ReflectionClass(PersistenceManager::class);
+
+        $stateCache = $reflectedClass->getProperty('stateCache');
+        $stateCache->setAccessible(true);
+        $stateCache->setValue(null);
+
+        $processCache = $reflectedClass->getProperty('processCache');
+        $processCache->setAccessible(true);
+        $processCache->setValue(null);
     }
 }
