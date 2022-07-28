@@ -200,7 +200,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
     {
         $bundleTotalStockPerWarehouse = [];
         foreach ($bundledItemStock as $idStock => $warehouseStock) {
-            $bundleStock = new Decimal(0);
+            $bundleStock = new Decimal(PHP_INT_MAX);
             $isAllNeverOutOfStock = true;
             foreach ($warehouseStock as $idProduct => $productStockQuantity) {
                 $bundleItemQuantity = $bundledItemQuantity[$idProduct];
@@ -218,7 +218,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
             }
 
             $bundleTotalStockPerWarehouse[$idStock] = [
-                static::QUANTITY => $bundleStock->floor(),
+                static::QUANTITY => $bundleStock->floor()->toInt() == PHP_INT_MAX ? (new Decimal(0))->floor() : $bundleStock->floor(),
                 static::IS_NEVER_OUT_OF_STOCK => $isAllNeverOutOfStock,
             ];
         }
@@ -235,7 +235,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
      */
     protected function isCurrentStockIsLowestWithingBundle(Decimal $bundleStock, Decimal $itemStock, bool $isNeverOutOfStock): bool
     {
-        if (($bundleStock->greaterThan($itemStock) || $bundleStock->isZero()) && !$isNeverOutOfStock) {
+        if (($bundleStock->greaterThan($itemStock)) && !$isNeverOutOfStock) {
             return true;
         }
 
