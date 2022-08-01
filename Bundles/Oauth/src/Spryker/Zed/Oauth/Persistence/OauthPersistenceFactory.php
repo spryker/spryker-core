@@ -11,6 +11,7 @@ use Orm\Zed\Oauth\Persistence\SpyOauthAccessTokenQuery;
 use Orm\Zed\Oauth\Persistence\SpyOauthClientQuery;
 use Orm\Zed\Oauth\Persistence\SpyOauthScopeQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\Oauth\Persistence\Propel\Mapper\OauthTokenMapper;
 
 /**
  * @method \Spryker\Zed\Oauth\OauthConfig getConfig()
@@ -41,5 +42,13 @@ class OauthPersistenceFactory extends AbstractPersistenceFactory
     public function createScopeQuery(): SpyOauthScopeQuery
     {
         return SpyOauthScopeQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\Oauth\Persistence\Propel\Mapper\OauthTokenMapper
+     */
+    public function createOauthTokenMapper(): OauthTokenMapper
+    {
+        return new OauthTokenMapper();
     }
 }

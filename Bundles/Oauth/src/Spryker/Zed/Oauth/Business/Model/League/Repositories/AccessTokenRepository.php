@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\Oauth\Business\Model\League\Repositories;
 
+use Generated\Shared\Transfer\OauthAccessTokenTransfer;
 use Generated\Shared\Transfer\SpyOauthAccessTokenEntityTransfer;
 use League\OAuth2\Server\Entities\AccessTokenEntityInterface;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
-use League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface;
 use Spryker\Zed\Oauth\Business\Model\League\Entities\AccessTokenEntity;
 use Spryker\Zed\Oauth\Dependency\Service\OauthToUtilEncodingServiceInterface;
 use Spryker\Zed\Oauth\Persistence\OauthEntityManagerInterface;
@@ -144,5 +144,16 @@ class AccessTokenRepository implements AccessTokenRepositoryInterface
         }
 
         return (string)$this->utilEncodingService->encodeJson($decodedUserIdentifier);
+    }
+
+    /**
+     * @param \League\OAuth2\Server\Entities\ClientEntityInterface $client
+     * @param array<\League\OAuth2\Server\Entities\ScopeEntityInterface> $scopes
+     *
+     * @return \Generated\Shared\Transfer\OauthAccessTokenTransfer|null
+     */
+    public function findAccessToken(ClientEntityInterface $client, array $scopes = []): ?OauthAccessTokenTransfer
+    {
+        return $this->oauthRepository->findAccessToken($client, $scopes);
     }
 }

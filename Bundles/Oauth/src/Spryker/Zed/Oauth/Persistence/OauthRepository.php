@@ -7,10 +7,14 @@
 
 namespace Spryker\Zed\Oauth\Persistence;
 
+use DateTimeImmutable;
+use Generated\Shared\Transfer\OauthAccessTokenTransfer;
 use Generated\Shared\Transfer\OauthScopeTransfer;
 use Generated\Shared\Transfer\SpyOauthClientEntityTransfer;
 use Generated\Shared\Transfer\SpyOauthScopeEntityTransfer;
+use League\OAuth2\Server\Entities\ClientEntityInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
  * @method \Spryker\Zed\Oauth\Persistence\OauthPersistenceFactory getFactory()
@@ -72,5 +76,34 @@ class OauthRepository extends AbstractRepository implements OauthRepositoryInter
         }
 
         return $oauthScopeTransfers;
+    }
+
+    /**
+     * @param \League\OAuth2\Server\Entities\ClientEntityInterface $client
+     * @param array<\League\OAuth2\Server\Entities\ScopeEntityInterface> $scopes
+     *
+     * @return \Generated\Shared\Transfer\OauthAccessTokenTransfer|null
+     */
+    public function findAccessToken(ClientEntityInterface $client, array $scopes = []): ?OauthAccessTokenTransfer
+    {
+        $scopeIdentifiers = [];
+        foreach ($scopes as $scope) {
+            $scopeIdentifiers[] = $scope->getIdentifier();
+        }
+        $scopes = sprintf('["%s"]', implode('", "', $scopeIdentifiers));
+
+        $oauthAccessTokenEntity = $this->getFactory()
+            ->createAccessTokenQuery()
+            ->filterByFkOauthClient($client->getIdentifier())
+            ->filterByScopes($scopes)
+            ->filterByExpirityDate(['min' => new DateTimeImmutable('now')], Criteria::GREATER_EQUAL)
+            ->orderByIdOauthAccessToken(Criteria::DESC)
+            ->findOne();
+
+        if ($oauthAccessTokenEntity === null) {
+            return null;
+        }
+
+        return $this->getFactory()->createOauthTokenMapper()->mapOauthAccessTokenEntityToOauthAccessTokenTransfer($oauthAccessTokenEntity, new OauthAccessTokenTransfer());
     }
 }

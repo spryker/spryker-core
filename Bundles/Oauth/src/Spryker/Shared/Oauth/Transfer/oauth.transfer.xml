@@ -135,4 +135,8 @@
         <property name="applicationName" type="string"/>
     </transfer>
 
+    <transfer name="OauthAccessToken">
+        <property name="accessTokenIdentifier" type="string"/>
+        <property name="expiresAt" type="string"/>
+    </transfer>
 </transfers>

@@ -8,10 +8,13 @@
 namespace Spryker\Zed\Oauth\Business\Model\League\Grant;
 
 use DateInterval;
+use DateTimeImmutable;
+use League\OAuth2\Server\Entities\AccessTokenEntityInterface;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
 use League\OAuth2\Server\Entities\ScopeEntityInterface;
 use League\OAuth2\Server\Entities\UserEntityInterface;
 use League\OAuth2\Server\Exception\OAuthServerException;
+use League\OAuth2\Server\Exception\UniqueTokenIdentifierConstraintViolationException;
 use League\OAuth2\Server\Grant\AbstractGrant;
 use League\OAuth2\Server\RequestEvent;
 use League\OAuth2\Server\ResponseTypes\ResponseTypeInterface;
@@ -24,6 +27,11 @@ class PasswordGrantType extends AbstractGrant implements GrantTypeInterface
      * @var \Spryker\Zed\Oauth\Business\Model\League\Repositories\ScopeRepositoryInterface
      */
     protected $scopeRepository;
+
+    /**
+     * @var \Spryker\Zed\Oauth\Business\Model\League\Repositories\AccessTokenRepositoryInterface
+     */
+    protected $accessTokenRepository;
 
     /**
      * @var string
@@ -177,5 +185,56 @@ class PasswordGrantType extends AbstractGrant implements GrantTypeInterface
     protected function createRequestEvent(string $requestEvent, ServerRequestInterface $request): RequestEvent
     {
         return new RequestEvent($requestEvent, $request);
+    }
+
+    /**
+     * Issue an access token.
+     *
+     * @param \DateInterval $accessTokenTTL
+     * @param \League\OAuth2\Server\Entities\ClientEntityInterface $client
+     * @param string|null $userIdentifier
+     * @param array<\League\OAuth2\Server\Entities\ScopeEntityInterface> $scopes
+     *
+     * @throws \League\OAuth2\Server\Exception\UniqueTokenIdentifierConstraintViolationException
+     *
+     * @return \League\OAuth2\Server\Entities\AccessTokenEntityInterface
+     */
+    protected function issueAccessToken(
+        DateInterval $accessTokenTTL,
+        ClientEntityInterface $client,
+        $userIdentifier,
+        array $scopes = []
+    ): AccessTokenEntityInterface {
+        $maxGenerationAttempts = static::MAX_RANDOM_TOKEN_GENERATION_ATTEMPTS;
+
+        $accessToken = $this->accessTokenRepository->getNewToken($client, $scopes, $userIdentifier);
+        $accessToken->setExpiryDateTime((new DateTimeImmutable())->add($accessTokenTTL));
+        $accessToken->setPrivateKey($this->privateKey);
+
+        $accessTokenTransfer = $this->accessTokenRepository->findAccessToken($client, $scopes);
+        if ($accessTokenTransfer !== null) {
+            /** @phpstan-var \DateTime $expirityDate */
+            $expirityDate = $accessTokenTransfer->getExpiresAtOrFail();
+            $accessToken->setExpiryDateTime(DateTimeImmutable::createFromMutable($expirityDate));
+
+            $accessToken->setIdentifier($accessTokenTransfer->getAccessTokenIdentifierOrFail());
+
+            return $accessToken;
+        }
+
+        while ($maxGenerationAttempts-- > 0) {
+            $accessToken->setIdentifier($this->generateUniqueIdentifier());
+            try {
+                $this->accessTokenRepository->persistNewAccessToken($accessToken);
+
+                break;
+            } catch (UniqueTokenIdentifierConstraintViolationException $e) {
+                if ($maxGenerationAttempts === 0) {
+                    throw $e;
+                }
+            }
+        }
+
+        return $accessToken;
     }
 }

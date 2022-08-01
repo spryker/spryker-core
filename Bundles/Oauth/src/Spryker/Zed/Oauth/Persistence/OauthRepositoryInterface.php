@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\Oauth\Persistence;
 
+use Generated\Shared\Transfer\OauthAccessTokenTransfer;
 use Generated\Shared\Transfer\SpyOauthClientEntityTransfer;
 use Generated\Shared\Transfer\SpyOauthScopeEntityTransfer;
+use League\OAuth2\Server\Entities\ClientEntityInterface;
 
 /**
  * @method \Spryker\Zed\Oauth\Persistence\OauthPersistenceFactory getFactory()
@@ -35,4 +37,12 @@ interface OauthRepositoryInterface
      * @return array<\Generated\Shared\Transfer\OauthScopeTransfer>
      */
     public function getScopesByIdentifiers(array $customerScopes): array;
+
+    /**
+     * @param \League\OAuth2\Server\Entities\ClientEntityInterface $client
+     * @param array<\League\OAuth2\Server\Entities\ScopeEntityInterface> $scopes
+     *
+     * @return \Generated\Shared\Transfer\OauthAccessTokenTransfer|null
+     */
+    public function findAccessToken(ClientEntityInterface $client, array $scopes = []): ?OauthAccessTokenTransfer;
 }
