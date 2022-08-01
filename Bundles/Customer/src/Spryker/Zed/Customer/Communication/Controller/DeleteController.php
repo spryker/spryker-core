@@ -55,8 +55,18 @@ class DeleteController extends AbstractController
         }
 
         $customerDeleteForm = $this->getFactory()->getCustomerDeleteForm();
+        $customerViewLink = $this->getFactory()
+            ->getRouterFacade()
+            ->getBackofficeChainRouter()
+            ->generate(
+                'customer:view',
+                [
+                    CustomerConstants::PARAM_ID_CUSTOMER => $idCustomer,
+                ],
+            );
 
         return $this->viewResponse([
+            'backUrl' => $customerViewLink,
             'customerDeleteForm' => $customerDeleteForm->setData($customerTransfer)
                 ->createView(),
         ]);

@@ -12,6 +12,7 @@ use Spryker\Shared\Kernel\ContainerInterface;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryBridge;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleBridge;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailBridge;
+use Spryker\Zed\Customer\Dependency\Facade\CustomerToRouterFacadeBridge;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToSequenceNumberBridge;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToStoreFacadeBridge;
 use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilDateTimeServiceBridge;
@@ -44,6 +45,11 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_MAIL = 'FACADE_MAIL';
+
+    /**
+     * @var string
+     */
+    public const FACADE_ROUTER = 'FACADE_ROUTER';
 
     /**
      * @var string
@@ -151,6 +157,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addLocaleFacade($container);
         $container = $this->addSubRequestHandler($container);
         $container = $this->provideCustomerTableActionPlugins($container);
+        $container = $this->addRouterFacade($container);
 
         return $container;
     }
@@ -392,6 +399,22 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::SERVICE_CUSTOMER, function (Container $container): CustomerServiceInterface {
             return $container->getLocator()->customer()->service();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addRouterFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_ROUTER, function (Container $container) {
+            return new CustomerToRouterFacadeBridge(
+                $container->getLocator()->router()->facade(),
+            );
         });
 
         return $container;

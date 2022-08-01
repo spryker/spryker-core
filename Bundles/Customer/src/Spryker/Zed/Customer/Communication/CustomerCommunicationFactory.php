@@ -19,6 +19,7 @@ use Spryker\Zed\Customer\Communication\Table\CustomerTable;
 use Spryker\Zed\Customer\Communication\Table\PluginExecutor\CustomerTableExpanderPluginExecutor;
 use Spryker\Zed\Customer\Communication\Table\PluginExecutor\CustomerTableExpanderPluginExecutorInterface;
 use Spryker\Zed\Customer\CustomerDependencyProvider;
+use Spryker\Zed\Customer\Dependency\Facade\CustomerToRouterFacadeInterface;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToStoreFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Symfony\Component\Form\FormInterface;
@@ -199,5 +200,13 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
         return new CustomerTableExpanderPluginExecutor(
             $this->getCustomerTableActionExpanderPlugins(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Customer\Dependency\Facade\CustomerToRouterFacadeInterface
+     */
+    public function getRouterFacade(): CustomerToRouterFacadeInterface
+    {
+        return $this->getProvidedDependency(CustomerDependencyProvider::FACADE_ROUTER);
     }
 }
