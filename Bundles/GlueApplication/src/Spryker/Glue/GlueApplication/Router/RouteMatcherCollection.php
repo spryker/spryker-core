@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\GlueRequestTransfer;
 use Spryker\Glue\GlueApplication\GlueApplicationConfig;
 use Spryker\Glue\GlueApplication\Resource\MissingResource;
 use Spryker\Glue\GlueApplication\Resource\PreFlightResource;
+use Spryker\Glue\GlueApplication\Router\CustomRouteRouter\Cache\RouterCacheCollectorInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\MissingResourceInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,15 +29,23 @@ class RouteMatcherCollection implements RouteMatcherInterface
     protected array $routeMatchers;
 
     /**
+     * @var \Spryker\Glue\GlueApplication\Router\CustomRouteRouter\Cache\RouterCacheCollectorInterface
+     */
+    protected $routerCacheCollector;
+
+    /**
      * @param array<\Spryker\Glue\GlueApplication\Router\RouteMatcherInterface> $routeMatchers
      * @param \Spryker\Glue\GlueApplication\GlueApplicationConfig $glueApplicationConfig
+     * @param \Spryker\Glue\GlueApplication\Router\CustomRouteRouter\Cache\RouterCacheCollectorInterface $routerCacheCollector
      */
     public function __construct(
         array $routeMatchers,
-        GlueApplicationConfig $glueApplicationConfig
+        GlueApplicationConfig $glueApplicationConfig,
+        RouterCacheCollectorInterface $routerCacheCollector
     ) {
         $this->routeMatchers = $routeMatchers;
         $this->glueApplicationConfig = $glueApplicationConfig;
+        $this->routerCacheCollector = $routerCacheCollector;
     }
 
     /**
@@ -46,6 +55,10 @@ class RouteMatcherCollection implements RouteMatcherInterface
      */
     public function route(GlueRequestTransfer $glueRequestTransfer): ResourceInterface
     {
+        if ($this->glueApplicationConfig->isDevelopmentMode()) {
+            $this->routerCacheCollector->warmUp();
+        }
+
         foreach ($this->routeMatchers as $routeMatcherType => $routeMatcher) {
             if (!in_array($routeMatcherType, $this->glueApplicationConfig->getRouteMatchers())) {
                 continue;

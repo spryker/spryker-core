@@ -10,7 +10,9 @@ namespace Spryker\Glue\GlueApplication\Executor;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
 use Spryker\Glue\GlueApplication\Cache\Reader\ControllerCacheReaderInterface;
+use Spryker\Glue\GlueApplication\Cache\Writer\ControllerCacheWriterInterface;
 use Spryker\Glue\GlueApplication\Exception\InvalidActionParametersException;
+use Spryker\Glue\GlueApplication\GlueApplicationConfig;
 use Spryker\Glue\GlueApplication\Resource\GenericResource;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
@@ -19,16 +21,39 @@ use Symfony\Component\HttpFoundation\Request;
 class ResourceExecutor implements ResourceExecutorInterface
 {
     /**
-     * @var \Spryker\Glue\GlueApplication\Cache\Reader\ControllerCacheReaderInterface;
+     * @var string
+     */
+    protected const CLEAR_CACHE_ERROR_MESSAGE = 'Method with requested parameters is not found.
+                Run `glue glue-api:controller:cache:warm-up` to update a controller cache.';
+
+    /**
+     * @var \Spryker\Glue\GlueApplication\Cache\Reader\ControllerCacheReaderInterface
      */
     protected $controllerCacheReader;
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Cache\Reader\ControllerCacheReaderInterface $controllerCacheReader
+     * @var \Spryker\Glue\GlueApplication\Cache\Writer\ControllerCacheWriterInterface
      */
-    public function __construct(ControllerCacheReaderInterface $controllerCacheReader)
-    {
+    protected $controllerCacheWriter;
+
+    /**
+     * @var \Spryker\Glue\GlueApplication\GlueApplicationConfig
+     */
+    protected $glueApplicationConfig;
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Cache\Reader\ControllerCacheReaderInterface $controllerCacheReader
+     * @param \Spryker\Glue\GlueApplication\Cache\Writer\ControllerCacheWriterInterface $controllerCacheWriter
+     * @param \Spryker\Glue\GlueApplication\GlueApplicationConfig $glueApplicationConfig
+     */
+    public function __construct(
+        ControllerCacheReaderInterface $controllerCacheReader,
+        ControllerCacheWriterInterface $controllerCacheWriter,
+        GlueApplicationConfig $glueApplicationConfig
+    ) {
         $this->controllerCacheReader = $controllerCacheReader;
+        $this->controllerCacheWriter = $controllerCacheWriter;
+        $this->glueApplicationConfig = $glueApplicationConfig;
     }
 
     /**
@@ -43,34 +68,53 @@ class ResourceExecutor implements ResourceExecutorInterface
         ResourceInterface $resource,
         GlueRequestTransfer $glueRequestTransfer
     ): GlueResponseTransfer {
+        if ($this->glueApplicationConfig->isDevelopmentMode()) {
+            $this->controllerCacheWriter->cache();
+        }
+
         $executableResource = $resource->getResource($glueRequestTransfer);
 
         $parameters = $this->controllerCacheReader->getActionParameters($executableResource, $resource, $glueRequestTransfer);
         if ($parameters === null) {
-            throw new InvalidActionParametersException(
-                'Method with requested parameters is not found.
-                Run `glue glue-api:controller:cache:warm-up` to update a controller cache.',
-            );
+            throw new InvalidActionParametersException(static::CLEAR_CACHE_ERROR_MESSAGE);
         }
 
         if ($glueRequestTransfer->getContent()) {
             $attributesTransfer = $this->getAttributesTransfer($resource, $glueRequestTransfer, $parameters);
 
             if (!$attributesTransfer) {
-                return call_user_func_array($executableResource, $this->collectParameters($parameters, [$glueRequestTransfer]));
+                return call_user_func_array(
+                    $executableResource,
+                    $this->collectParameters($parameters, [$glueRequestTransfer]),
+                );
             }
 
             $attributesTransfer->fromArray($glueRequestTransfer->getAttributes(), true);
             $glueRequestTransfer->getResource()->setAttributes($attributesTransfer);
 
-            return call_user_func_array($executableResource, $this->collectParameters($parameters, [$attributesTransfer, $glueRequestTransfer]));
+            return call_user_func_array(
+                $executableResource,
+                $this->collectParameters(
+                    $parameters,
+                    [$attributesTransfer, $glueRequestTransfer],
+                ),
+            );
         }
 
         if ($glueRequestTransfer->getResource() && $glueRequestTransfer->getResource()->getId()) {
-            return call_user_func_array($executableResource, $this->collectParameters($parameters, [$glueRequestTransfer->getResource()->getId(), $glueRequestTransfer]));
+            return call_user_func_array(
+                $executableResource,
+                $this->collectParameters(
+                    $parameters,
+                    [$glueRequestTransfer->getResource()->getId(), $glueRequestTransfer],
+                ),
+            );
         }
 
-        return call_user_func_array($executableResource, $this->collectParameters($parameters, [$glueRequestTransfer]));
+        return call_user_func_array(
+            $executableResource,
+            $this->collectParameters($parameters, [$glueRequestTransfer]),
+        );
     }
 
     /**

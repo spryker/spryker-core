@@ -781,6 +781,8 @@ class GlueApplicationFactory extends AbstractFactory
     {
         return new ResourceExecutor(
             $this->createControllerCacheReader(),
+            $this->createControllerCacheWriter(),
+            $this->getConfig(),
         );
     }
 
@@ -902,6 +904,7 @@ class GlueApplicationFactory extends AbstractFactory
         return new RouteMatcherCollection(
             $this->getRouteMatchers(),
             $this->getConfig(),
+            $this->createRouterCacheCollector(),
         );
     }
 

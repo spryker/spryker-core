@@ -318,4 +318,17 @@ class GlueApplicationConfig extends AbstractBundleConfig
             'resources',
         ];
     }
+
+    /**
+     * Specification:
+     * - Returns if current application is in development mode.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isDevelopmentMode(): bool
+    {
+        return APPLICATION_ENV === 'development' || APPLICATION_ENV === 'docker.dev';
+    }
 }
