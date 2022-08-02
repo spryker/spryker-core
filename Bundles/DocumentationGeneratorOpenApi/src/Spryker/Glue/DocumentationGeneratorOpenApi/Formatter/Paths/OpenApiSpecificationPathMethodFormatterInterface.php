@@ -7,26 +7,16 @@
 
 namespace Spryker\Glue\DocumentationGeneratorOpenApi\Formatter\Paths;
 
-use Generated\Shared\Transfer\AnnotationTransfer;
+use Generated\Shared\Transfer\PathMethodComponentDataTransfer;
 
 interface OpenApiSpecificationPathMethodFormatterInterface
 {
     /**
-     * @param string $resourceType
-     * @param \Generated\Shared\Transfer\AnnotationTransfer $annotationTransfer
-     * @param string $patternOperationIdResource
-     * @param int $defaultResponseCode
-     * @param bool|null $isGetCollection
+     * @param \Generated\Shared\Transfer\PathMethodComponentDataTransfer $pathMethodComponentDataTransfer
      *
      * @return array<mixed>
      */
-    public function getPathMethodComponentData(
-        string $resourceType,
-        AnnotationTransfer $annotationTransfer,
-        string $patternOperationIdResource,
-        int $defaultResponseCode,
-        ?bool $isGetCollection = false
-    ): array;
+    public function getPathMethodComponentData(PathMethodComponentDataTransfer $pathMethodComponentDataTransfer): array;
 
     /**
      * @param string $pattern

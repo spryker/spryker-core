@@ -116,4 +116,12 @@
     <transfer name="RestErrorMessage">
     </transfer>
 
+    <transfer name="PathMethodComponentData">
+        <property name="resourceType" type="string"/>
+        <property name="annotation" type="Annotation"/>
+        <property name="patternOperationIdResource" type="string"/>
+        <property name="defaultResponseCode" type="int"/>
+        <property name="isGetCollection" type="bool"/>
+        <property name="pathName" type="string"/>
+    </transfer>
 </transfers>

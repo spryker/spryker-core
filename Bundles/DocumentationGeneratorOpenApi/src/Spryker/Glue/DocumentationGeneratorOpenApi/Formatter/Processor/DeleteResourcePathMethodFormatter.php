@@ -8,6 +8,7 @@
 namespace Spryker\Glue\DocumentationGeneratorOpenApi\Formatter\Processor;
 
 use Generated\Shared\Transfer\PathAnnotationTransfer;
+use Generated\Shared\Transfer\PathMethodComponentDataTransfer;
 use Spryker\Glue\DocumentationGeneratorOpenApi\Formatter\Paths\OpenApiSpecificationPathMethodFormatterInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -50,12 +51,18 @@ class DeleteResourcePathMethodFormatter implements PathMethodFormatterInterface
         }
 
         $resourceType = $pathAnnotationTransfer->getResourceTypeOrFail();
+        $pathName = $this->openApiSpecificationPathMethodFormatter->getPathFromResourceType($resourceType);
+
+        $pathMethodComponentDataTransfer = (new PathMethodComponentDataTransfer())
+            ->setResourceType($resourceType)
+            ->setAnnotation($pathAnnotationTransfer->getDelete())
+            ->setPatternOperationIdResource(static::PATTERN_OPERATION_ID_DELETE_RESOURCE)
+            ->setDefaultResponseCode(Response::HTTP_NO_CONTENT)
+            ->setIsGetCollection(false)
+            ->setPathName($pathName);
 
         $pathMethodData = $this->openApiSpecificationPathMethodFormatter->getPathMethodComponentData(
-            $resourceType,
-            $pathAnnotationTransfer->getDelete(),
-            static::PATTERN_OPERATION_ID_DELETE_RESOURCE,
-            Response::HTTP_NO_CONTENT,
+            $pathMethodComponentDataTransfer,
         );
 
         if (isset($pathMethodData['requestBody'])) {
@@ -67,7 +74,7 @@ class DeleteResourcePathMethodFormatter implements PathMethodFormatterInterface
 
         return $this->openApiSpecificationPathMethodFormatter->addPath(
             $pathMethodData,
-            $this->openApiSpecificationPathMethodFormatter->getPathFromResourceType($resourceType),
+            $pathName,
             strtolower(Request::METHOD_DELETE),
             $formattedData,
         );

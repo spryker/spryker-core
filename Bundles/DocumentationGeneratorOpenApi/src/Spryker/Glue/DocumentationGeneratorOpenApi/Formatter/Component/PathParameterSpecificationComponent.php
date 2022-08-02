@@ -22,6 +22,21 @@ class PathParameterSpecificationComponent implements PathParameterSpecificationC
     /**
      * @var string
      */
+    protected const PATTERN_REGEX_WORD_SLICE = '/(?=[A-Z])/';
+
+    /**
+     * @var string
+     */
+    protected const KEY_OPERATION_ID = 'operationId';
+
+    /**
+     * @var string
+     */
+    protected const PATTERN_DESCRIPTION_PATH_PARAMETER = 'Id of %s.';
+
+    /**
+     * @var string
+     */
     protected const KEY_SCHEMA = 'schema';
 
     /**
@@ -61,14 +76,19 @@ class PathParameterSpecificationComponent implements PathParameterSpecificationC
 
     /**
      * @param array<mixed> $pathMethodData
+     * @param string $pathName
      *
      * @return array<mixed>
      */
-    public function getSpecificationComponentData(array $pathMethodData): array
+    public function getSpecificationComponentData(array $pathMethodData, string $pathName): array
     {
-        $parameters = $this->addIdParametersFromPath($pathMethodData);
+        $parameters = [];
 
-        if ($pathMethodData['parameters']) {
+        if ($pathName) {
+            $parameters = $this->addIdParametersFromPath($pathName);
+        }
+
+        if (!empty($pathMethodData['parameters'])) {
             $parameters = array_merge($parameters, $this->addPathParameterComponents($pathMethodData));
         }
 
@@ -76,13 +96,14 @@ class PathParameterSpecificationComponent implements PathParameterSpecificationC
     }
 
     /**
-     * @param array<mixed> $pathMethodData
+     * @param string $pathName
      *
      * @return array<mixed>
      */
-    protected function addIdParametersFromPath(array $pathMethodData): array
+    protected function addIdParametersFromPath(string $pathName): array
     {
-        $pathParameters = $this->getPathParametersFromResourcePath((string)key($pathMethodData));
+        $pathParameters = $this->getPathParametersFromResourcePath($pathName);
+
         $parameters = [];
 
         foreach ($pathParameters as $pathParameter) {
@@ -90,7 +111,6 @@ class PathParameterSpecificationComponent implements PathParameterSpecificationC
             $parameterComponentData['name'] = $pathParameter;
             $parameterComponentData['in'] = static::PARAMETER_LOCATION_PATH;
             $parameterComponentData['description'] = $this->getPathParameterDescription($pathParameter);
-            $parameterComponentData['schemaType'] = static::PARAMETER_SCHEMA_TYPE_STRING;
             $parameterComponentData[static::KEY_REQUIRED] = true;
 
             $parameters[] = $this->addPathParameterComponent($parameterComponentData);
@@ -160,11 +180,11 @@ class PathParameterSpecificationComponent implements PathParameterSpecificationC
     protected function getPathParameterDescription(string $parameter): string
     {
         /** @var array<string> $pieces */
-        $pieces = preg_split(static::PATTERN_REGEX_RESOURCE_ID, $parameter);
+        $pieces = preg_split(static::PATTERN_REGEX_WORD_SLICE, $parameter);
 
         $parameterSplitted = array_slice($pieces, 0, -1);
         $parameterSplitted = array_map('lcfirst', $parameterSplitted);
 
-        return sprintf(static::PATTERN_REGEX_RESOURCE_ID, implode(' ', $parameterSplitted));
+        return sprintf(static::PATTERN_DESCRIPTION_PATH_PARAMETER, implode(' ', $parameterSplitted));
     }
 }

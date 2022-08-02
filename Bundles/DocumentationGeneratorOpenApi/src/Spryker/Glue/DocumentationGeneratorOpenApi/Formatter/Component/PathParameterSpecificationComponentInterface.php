@@ -11,8 +11,9 @@ interface PathParameterSpecificationComponentInterface
 {
     /**
      * @param array<mixed> $pathMethodData
+     * @param string $pathName
      *
      * @return array<mixed>
      */
-    public function getSpecificationComponentData(array $pathMethodData): array;
+    public function getSpecificationComponentData(array $pathMethodData, string $pathName): array;
 }

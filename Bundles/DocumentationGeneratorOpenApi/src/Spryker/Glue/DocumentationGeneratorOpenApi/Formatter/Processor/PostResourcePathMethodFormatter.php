@@ -8,6 +8,7 @@
 namespace Spryker\Glue\DocumentationGeneratorOpenApi\Formatter\Processor;
 
 use Generated\Shared\Transfer\PathAnnotationTransfer;
+use Generated\Shared\Transfer\PathMethodComponentDataTransfer;
 use Spryker\Glue\DocumentationGeneratorOpenApi\Formatter\Paths\OpenApiSpecificationPathMethodFormatterInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -50,12 +51,18 @@ class PostResourcePathMethodFormatter implements PathMethodFormatterInterface
         }
 
         $resourceType = $pathAnnotationTransfer->getResourceTypeOrFail();
+        $pathName = sprintf('/%s', $resourceType);
+
+        $pathMethodComponentDataTransfer = (new PathMethodComponentDataTransfer())
+            ->setResourceType($resourceType)
+            ->setAnnotation($pathAnnotationTransfer->getPost())
+            ->setPatternOperationIdResource(static::PATTERN_OPERATION_ID_POST_RESOURCE)
+            ->setDefaultResponseCode(Response::HTTP_CREATED)
+            ->setIsGetCollection(false)
+            ->setPathName($pathName);
 
         $pathMethodData = $this->openApiSpecificationPathMethodFormatter->getPathMethodComponentData(
-            $resourceType,
-            $pathAnnotationTransfer->getPost(),
-            static::PATTERN_OPERATION_ID_POST_RESOURCE,
-            Response::HTTP_CREATED,
+            $pathMethodComponentDataTransfer,
         );
 
         if (!$pathMethodData['summary']) {
@@ -65,7 +72,7 @@ class PostResourcePathMethodFormatter implements PathMethodFormatterInterface
 
         $formattedData = $this->openApiSpecificationPathMethodFormatter->addPath(
             $pathMethodData,
-            sprintf('/%s', $resourceType),
+            $pathName,
             strtolower(Request::METHOD_POST),
             $formattedData,
         );

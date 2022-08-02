@@ -9,6 +9,7 @@ namespace Spryker\Glue\DocumentationGeneratorOpenApi\Formatter\Processor;
 
 use Generated\Shared\Transfer\AnnotationTransfer;
 use Generated\Shared\Transfer\CustomRoutesContextTransfer;
+use Generated\Shared\Transfer\PathMethodComponentDataTransfer;
 use Spryker\Glue\DocumentationGeneratorOpenApi\Formatter\Paths\OpenApiSpecificationPathMethodFormatterInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -80,11 +81,15 @@ class CustomRoutePathMethodFormatter implements CustomPathMethodFormatterInterfa
         $requestMethodName = $this->getRequestMethodFromAnnotation($customRouteTransfer);
         $operationIdPattern = $requestMethodName . static::PATTERN_OPERATION_ID_GET_RESOURCE;
 
+        $pathMethodComponentDataTransfer = (new PathMethodComponentDataTransfer())
+            ->setResourceType($resourceType)
+            ->setAnnotation($this->getAnnotationTransfer($customRouteTransfer))
+            ->setPatternOperationIdResource($operationIdPattern)
+            ->setDefaultResponseCode(Response::HTTP_OK)
+            ->setPathName($customRouteTransfer->getPathOrFail());
+
         $pathMethodData = $this->openApiSpecificationPathMethodFormatter->getPathMethodComponentData(
-            $resourceType,
-            $this->getAnnotationTransfer($customRouteTransfer),
-            $operationIdPattern,
-            Response::HTTP_OK,
+            $pathMethodComponentDataTransfer,
         );
 
         $pathMethodData = $this->fixEmptySummary($resourceType, $pathMethodData);

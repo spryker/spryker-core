@@ -8,6 +8,7 @@
 namespace Spryker\Glue\DocumentationGeneratorOpenApi\Formatter\Paths;
 
 use Generated\Shared\Transfer\AnnotationTransfer;
+use Generated\Shared\Transfer\PathMethodComponentDataTransfer;
 use Spryker\Glue\DocumentationGeneratorOpenApi\Analyzer\ResourceTransferAnalyzerInterface;
 use Spryker\Glue\DocumentationGeneratorOpenApi\Dependency\External\DocumentationGeneratorOpenApiToInflectorInterface;
 use Spryker\Glue\DocumentationGeneratorOpenApi\Formatter\Component\PathParameterSpecificationComponentInterface;
@@ -113,23 +114,14 @@ class OpenApiSpecificationPathMethodFormatter implements OpenApiSpecificationPat
     }
 
     /**
-     * @param string $resourceType
-     * @param \Generated\Shared\Transfer\AnnotationTransfer $annotationTransfer
-     * @param string $patternOperationIdResource
-     * @param int $defaultResponseCode
-     * @param bool|null $isGetCollection
+     * @param \Generated\Shared\Transfer\PathMethodComponentDataTransfer $pathMethodComponentDataTransfer
      *
      * @return array<mixed>
      */
-    public function getPathMethodComponentData(
-        string $resourceType,
-        AnnotationTransfer $annotationTransfer,
-        string $patternOperationIdResource,
-        int $defaultResponseCode,
-        ?bool $isGetCollection = false
-    ): array {
-        $operationId = sprintf($patternOperationIdResource, $resourceType);
-
+    public function getPathMethodComponentData(PathMethodComponentDataTransfer $pathMethodComponentDataTransfer): array
+    {
+        $operationId = sprintf($pathMethodComponentDataTransfer->getPatternOperationIdResourceOrFail(), $pathMethodComponentDataTransfer->getResourceType());
+        $annotationTransfer = $pathMethodComponentDataTransfer->getAnnotationOrFail();
         $pathMethodData = [];
         $pathMethodData[static::KEY_OPERATION_ID] = $operationId;
         $pathMethodData = array_merge($pathMethodData, $annotationTransfer->modifiedToArray());
@@ -138,8 +130,13 @@ class OpenApiSpecificationPathMethodFormatter implements OpenApiSpecificationPat
             $pathMethodData[static::KEY_SUMMARY] = $pathMethodData[static::KEY_SUMMARY][0];
         }
 
-        if (isset($pathMethodData[static::KEY_PARAMETERS])) {
-            $pathMethodData[static::KEY_PARAMETERS] = $this->pathParameterSpecificationComponent->getSpecificationComponentData($pathMethodData);
+        $specificationComponentData = $this->pathParameterSpecificationComponent->getSpecificationComponentData(
+            $pathMethodData,
+            $pathMethodComponentDataTransfer->getPathNameOrFail(),
+        );
+
+        if ($specificationComponentData) {
+            $pathMethodData[static::KEY_PARAMETERS] = $specificationComponentData;
         }
 
         if (
@@ -150,11 +147,11 @@ class OpenApiSpecificationPathMethodFormatter implements OpenApiSpecificationPat
             $pathMethodData[static::KEY_REQUEST_BODY] = $this->pathRequestSpecificationComponent->getSpecificationComponentData($pathMethodData, $requestReference);
         }
 
-        $responseReference = $isGetCollection
+        $responseReference = $pathMethodComponentDataTransfer->getIsGetCollection()
             ? $this->getResponseCollectionName($annotationTransfer)
             : $this->getResponseName($annotationTransfer);
         $pathMethodData[static::KEY_RESPONSES] = $this->pathResponseSpecificationComponent->getSpecificationComponentData(
-            array_merge($pathMethodData, [static::KEY_DEFAULT_RESPONSE_CODE => $defaultResponseCode]),
+            array_merge($pathMethodData, [static::KEY_DEFAULT_RESPONSE_CODE => $pathMethodComponentDataTransfer->getDefaultResponseCode()]),
             $responseReference,
         );
 
