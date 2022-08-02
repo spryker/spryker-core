@@ -232,11 +232,12 @@ class Worker implements WorkerInterface
      */
     protected function getQueueWorkerOutputFileNameBasedOnType(): string
     {
-        if (is_resource($this->queueConfig->getQueueWorkerOutputFileName())) {
-            return stream_get_meta_data($this->queueConfig->getQueueWorkerOutputFileName())['uri'];
+        $outputFileName = $this->queueConfig->getQueueWorkerOutputFileName();
+        if (is_resource($outputFileName)) {
+            return stream_get_meta_data($outputFileName)['uri'];
         }
 
-        return $this->queueConfig->getQueueWorkerOutputFileName();
+        return $outputFileName;
     }
 
     /**
