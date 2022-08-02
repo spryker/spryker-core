@@ -156,7 +156,7 @@ class QueueConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string
+     * @return resource|string
      */
     public function getQueueWorkerOutputFileName()
     {

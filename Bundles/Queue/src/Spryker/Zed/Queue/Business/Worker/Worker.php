@@ -208,7 +208,7 @@ class Worker implements WorkerInterface
             $processCommand = sprintf('%s %s', $command, $queue);
 
             if ($this->queueConfig->getQueueWorkerLogStatus()) {
-                $processCommand = sprintf('%s >> %s', $processCommand, $this->queueConfig->getQueueWorkerOutputFileName());
+                $processCommand = sprintf('%s >> %s', $processCommand, $this->getQueueWorkerOutputFileNameBasedOnType());
             }
 
             $queueProcesses = $this->startProcesses($processCommand, $queue);
@@ -225,6 +225,18 @@ class Worker implements WorkerInterface
         }
 
         return $processes;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getQueueWorkerOutputFileNameBasedOnType(): string
+    {
+        if (is_resource($this->queueConfig->getQueueWorkerOutputFileName())) {
+            return stream_get_meta_data($this->queueConfig->getQueueWorkerOutputFileName())['uri'];
+        }
+
+        return $this->queueConfig->getQueueWorkerOutputFileName();
     }
 
     /**
