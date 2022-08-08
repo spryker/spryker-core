@@ -49,20 +49,7 @@
             "shortcode": 4
         }
     ],
-    "warning": [
-        {
-            "severity": "info",
-            "line_from": 155,
-            "line_to": 155,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 1 of Spryker\\Client\\ProductNew\\Plugin\\Elasticsearch\\Query\\NewProductsQueryPlugin::createStringFacetValueFilter cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductNew/src/Spryker/Client/ProductNew/Plugin/Elasticsearch/Query/NewProductsQueryPlugin.php",
-            "snippet": "        $stringFacetValueFilter = $this->createStringFacetValueFilter($labelId);",
-            "selected_text": "$labelId",
-            "error_level": 3,
-            "shortcode": 78
-        }
-    ],
+    "warning": [],
     "deprecation": [
         {
             "severity": "info",
