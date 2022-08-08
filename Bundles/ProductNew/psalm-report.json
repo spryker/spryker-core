@@ -61,18 +61,6 @@
             "selected_text": "$labelId",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 186,
-            "line_to": 186,
-            "type": "InvalidScalarArgument",
-            "message": "Argument 2 of Elastica\\Query\\Term::setTerm expects array<array-key, mixed>|string, int provided",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductNew/src/Spryker/Client/ProductNew/Plugin/Elasticsearch/Query/NewProductsQueryPlugin.php",
-            "snippet": "        $termQuery->setTerm(PageIndexMap::STRING_FACET_FACET_VALUE, $idProductLabel);",
-            "selected_text": "$idProductLabel",
-            "error_level": 4,
-            "shortcode": 12
         }
     ],
     "deprecation": [
