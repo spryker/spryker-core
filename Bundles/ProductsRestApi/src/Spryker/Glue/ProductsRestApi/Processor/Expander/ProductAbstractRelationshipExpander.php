@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\RestPromotionalItemsAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductsRestApi\Processor\AbstractProducts\AbstractProductsReaderInterface;
+use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
 
 class ProductAbstractRelationshipExpander implements ProductAbstractRelationshipExpanderInterface
 {
@@ -71,6 +72,10 @@ class ProductAbstractRelationshipExpander implements ProductAbstractRelationship
     {
         $productAbstractSkus = $this->getProductAbstractSkus($resources);
         if (!$productAbstractSkus) {
+            return;
+        }
+
+        if ($this->isAbstractProductsResource($restRequest->getResource())) {
             return;
         }
 
@@ -153,5 +158,15 @@ class ProductAbstractRelationshipExpander implements ProductAbstractRelationship
         }
 
         return null;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
+     *
+     * @return bool
+     */
+    protected function isAbstractProductsResource(RestResourceInterface $resource): bool
+    {
+        return $resource->getType() === ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS;
     }
 }
