@@ -289,7 +289,8 @@ class MerchantOrderTable extends AbstractTable
      */
     protected function formatFullCustomerName(array $item): string
     {
-        $salutation = $item[SpySalesOrderTableMap::COL_SALUTATION];
+        $salutations = SpySalesOrderTableMap::getValueSets()[SpySalesOrderTableMap::COL_SALUTATION];
+        $salutation = $salutations[$item[SpySalesOrderTableMap::COL_SALUTATION]];
 
         $fullCustomerName = sprintf(
             '%s%s %s',
