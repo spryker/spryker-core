@@ -18,6 +18,7 @@ use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginI
 use SprykerTest\Glue\GlueApplication\Stub\RestTestAttributesTransfer;
 use SprykerTest\Glue\GlueApplication\Stub\TestResourceWithParentRoutePlugin;
 use SprykerTest\Glue\GlueApplication\Stub\TestVersionableResourceRoutePlugin;
+use SprykerTest\Glue\GlueApplication\Stub\TestVersionableResourceWithParentRoutePlugin;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -35,6 +36,16 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ResourceRouteLoaderTest extends Unit
 {
+    /**
+     * @var string
+     */
+    protected const TEST_RESOURCE_TYPE = 'tests';
+
+    /**
+     * @var string
+     */
+    protected const TEST_PARENT_RESOURCE_TYPE = 'test-parent-resource-type';
+
     /**
      * @return void
      */
@@ -155,6 +166,58 @@ class ResourceRouteLoaderTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testLoadWithVersioningAndResourcesWithParentsShouldReturnRouteWithParent(): void
+    {
+        // Arrange
+        $restVersionTransfer = (new RestVersionTransfer())
+            ->setMajor(2)
+            ->setMinor(0);
+
+        $versionableResourceRoutePluginMock = $this->createResourceRoutePluginWithVersionMock();
+        $this->configureBaseRouteMock($versionableResourceRoutePluginMock);
+
+        $versionableResourceRoutePluginMock
+            ->method('getVersion')
+            ->willReturn($restVersionTransfer);
+
+        $versionableResourceWithParentRoutePluginMock = $this->createTestVersionableResourceWithParentRoutePlugin(
+            $restVersionTransfer,
+            static::TEST_PARENT_RESOURCE_TYPE,
+        );
+        $this->configureBaseRouteMock($versionableResourceWithParentRoutePluginMock);
+
+        $resourceRouteLoader = $this->createResourceLoader(
+            [
+                $versionableResourceRoutePluginMock, $versionableResourceWithParentRoutePluginMock,
+            ],
+            $this->createVersionResolverMock(2, 0),
+        );
+
+        $resources = [
+            [RequestConstantsInterface::ATTRIBUTE_TYPE => static::TEST_PARENT_RESOURCE_TYPE],
+            [RequestConstantsInterface::ATTRIBUTE_TYPE => static::TEST_RESOURCE_TYPE],
+        ];
+
+        $httpRequest = Request::create(
+            sprintf('%s/%s', static::TEST_PARENT_RESOURCE_TYPE, static::TEST_RESOURCE_TYPE),
+        );
+
+        // Act
+        $resourceRoute = $resourceRouteLoader->load(
+            $versionableResourceRoutePluginMock->getResourceType(),
+            $resources,
+            $httpRequest,
+        );
+
+        // Assert
+        $this->assertSame(static::TEST_RESOURCE_TYPE, $resourceRoute[RequestConstantsInterface::ATTRIBUTE_TYPE]);
+        $this->assertArrayHasKey(RequestConstantsInterface::ATTRIBUTE_PARENT_RESOURCE, $resourceRoute);
+        $this->assertSame(static::TEST_PARENT_RESOURCE_TYPE, $resourceRoute[RequestConstantsInterface::ATTRIBUTE_PARENT_RESOURCE]);
+    }
+
+    /**
      * @param array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface> $plugins
      * @param \Spryker\Glue\GlueApplication\Rest\Version\VersionResolverInterface $versionResolverMock
      * @param array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RouterParameterExpanderPluginInterface> $routerParameterExpanderPlugins
@@ -195,6 +258,29 @@ class ResourceRouteLoaderTest extends Unit
     }
 
     /**
+     * @param \Generated\Shared\Transfer\RestVersionTransfer $restVersionTransfer
+     * @param string $parentResourceType
+     *
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface
+     */
+    protected function createTestVersionableResourceWithParentRoutePlugin(
+        RestVersionTransfer $restVersionTransfer,
+        string $parentResourceType
+    ): ResourceRoutePluginInterface {
+        $resourceRoutePluginMock = $this->createMock(TestVersionableResourceWithParentRoutePlugin::class);
+
+        $resourceRoutePluginMock
+            ->method('getVersion')
+            ->willReturn($restVersionTransfer);
+
+        $resourceRoutePluginMock
+            ->method('getParentResourceType')
+            ->willReturn($parentResourceType);
+
+        return $resourceRoutePluginMock;
+    }
+
+    /**
      * @param int|null $major
      * @param int|null $minor
      *
@@ -225,7 +311,7 @@ class ResourceRouteLoaderTest extends Unit
     {
         $resourceRoutePluginMock
             ->method('getResourceType')
-            ->willReturn('tests');
+            ->willReturn(static::TEST_RESOURCE_TYPE);
 
         $resourceRoutePluginMock
             ->method('getController')

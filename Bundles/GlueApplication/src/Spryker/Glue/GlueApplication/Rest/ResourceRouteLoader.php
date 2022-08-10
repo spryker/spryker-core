@@ -127,13 +127,13 @@ class ResourceRouteLoader implements ResourceRouteLoaderInterface
     protected function findResourcePlugin(string $resourceType, array $resources, Request $httpRequest): ?ResourceRoutePluginInterface
     {
         $resourcePlugins = $this->filterResourcePlugins($resourceType, $resources);
+        $resourcePlugins = $this->filterOutDuplicatedResourceRoutePlugins($resourcePlugins, $resources);
 
         $requestedVersionTransfer = $this->versionResolver->findVersion($httpRequest);
         if ($requestedVersionTransfer->getMajor()) {
             return $this->findByVersion($resourcePlugins, $requestedVersionTransfer);
         }
 
-        $resourcePlugins = $this->filterOutDuplicatedResourceRoutePlugins($resourcePlugins, $resources);
         if (count($resourcePlugins) === 1) {
             return $resourcePlugins[0];
         }
