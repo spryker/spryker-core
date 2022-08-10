@@ -40,8 +40,6 @@ class AuthenticationOauthClientTest extends Unit
      */
     public function testAuthenticateWithValidCredentialsIsSuccessful(): void
     {
-        $this->markTestSkipped('Remove once Travis for PHP 8.1 is fixed.');
-
         //Arrange
         $authenticationOauthClient = $this->tester->getLocator()->authenticationOauth()->client();
         $glueAuthenticationRequestTransfer = $this->tester->haveGlueAuthenticationRequestTransfer(static::TEST_USERNAME);
@@ -59,8 +57,6 @@ class AuthenticationOauthClientTest extends Unit
      */
     public function testAuthenticateWithInvalidCredentialsIsFailed(): void
     {
-        $this->markTestSkipped('Remove once Travis for PHP 8.1 is fixed.');
-
         //Arrange
         $authenticationOauthClient = $this->tester->getLocator()->authenticationOauth()->client();
         $glueAuthenticationRequestTransfer = $this->tester->haveGlueAuthenticationRequestTransfer(static::TEST_USERNAME_INVALID);
