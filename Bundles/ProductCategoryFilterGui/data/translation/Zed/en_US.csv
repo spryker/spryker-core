@@ -11,6 +11,6 @@ Add,Add
 "Root nodes list","Root nodes list"
 Save,Save
 Search,Search
-"There are no manual filter preferences defined for this category. The filters listed bellow are global settings. To define manual references for this category, modify the filters below.","There are no manual filter preferences defined for this category. The filters listed bellow are global settings. To define manual references for this category, modify the filters below."
+"There are no manual filter preferences defined for this category. The filters listed below are global settings. To define manual references for this category, modify the filters below.","There are no manual filter preferences defined for this category. The filters listed below are global settings. To define manual references for this category, modify the filters below."
 "Type first three letters of an existing filter key for suggestions.","Type first three letters of an existing filter key for suggestions."
 "Filters for Category ""%s"" cannot be saved. Invalid filter(s) provided.","Filters for Category ""%s"" cannot be saved. Invalid filter(s) provided."
