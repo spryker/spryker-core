@@ -509,4 +509,19 @@ class CompanyBusinessUnitFacadeTest extends Test
         // Assert
         $this->assertGreaterThan(0, $companyBusinessUnitCollection->getCompanyBusinessUnits()->count());
     }
+
+    /**
+     * @return void
+     */
+    public function testFindDefaultBusinessUnitByCompanyIdShouldReturnNull(): void
+    {
+        // Arrange
+        $idCompany = -1;
+
+        // Act
+        $companyBusinessUnitTransfer = $this->tester->getFacade()->findDefaultBusinessUnitByCompanyId($idCompany);
+
+        // Assert
+        $this->assertNull($companyBusinessUnitTransfer);
+    }
 }
