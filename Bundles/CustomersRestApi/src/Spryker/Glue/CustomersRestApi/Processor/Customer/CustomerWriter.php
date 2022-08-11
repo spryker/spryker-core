@@ -124,6 +124,12 @@ class CustomerWriter implements CustomerWriterInterface
             );
         }
 
+        $restResponse = $this->restApiValidator->validateCustomerGender($restCustomersAttributesTransfer, $restResponse);
+
+        if (count($restResponse->getErrors()) > 0) {
+            return $restResponse;
+        }
+
         $customerTransfer = (new CustomerTransfer())->fromArray($restCustomersAttributesTransfer->toArray(), true);
         $customerResponseTransfer = $this->customerClient->registerCustomer($customerTransfer);
 
@@ -177,6 +183,12 @@ class CustomerWriter implements CustomerWriterInterface
                 RestCustomersAttributesTransfer::PASSWORD,
                 RestCustomersAttributesTransfer::CONFIRM_PASSWORD,
             );
+        }
+
+        $restResponse = $this->restApiValidator->validateCustomerGender($restCustomersAttributesTransfer, $restResponse);
+
+        if (count($restResponse->getErrors()) > 0) {
+            return $restResponse;
         }
 
         $customerResponseTransfer = $this->customerReader->findCustomer($restRequest);
