@@ -10,3 +10,28 @@
 .cdk-overlay-container.spy-drawer-container-overlay {
     z-index: 1000;
 }
+
+.app-catalog-error {
+    &-title {
+        font-size: 30px;
+        font-weight: 600;
+        color: #121212;
+        margin: 0 0 40px;
+    }
+
+    &-block {
+        background-color: #ffffff;
+        text-align: center;
+        border-radius: 10px;
+        padding: 60px;
+
+        &__text {
+            max-width: 800px;
+            margin: 30px auto 0 auto;
+            line-height: 22px;
+            font-size: 16px;
+            color: #71747c;
+            font-weight: 600;
+        }
+    }
+}

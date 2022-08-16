@@ -19,7 +19,12 @@ class AppCatalogGuiConfig extends AbstractBundleConfig
      */
     public function getAppCatalogScriptUrl(): string
     {
-        return $this->get(AppCatalogGuiConstants::APP_CATALOG_SCRIPT_URL, '');
+        $url = $this->get(
+            AppCatalogGuiConstants::APP_CATALOG_SCRIPT_URL,
+            '',
+        );
+
+        return $url ?: 'https://app-catalog.atrs.spryker.com/loader';
     }
 
     /**

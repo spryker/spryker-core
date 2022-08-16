@@ -6,3 +6,4 @@
 'use strict';
 
 require('../sass/main.scss');
+require('../img/app-catalog-error.svg');

@@ -7,16 +7,20 @@
 {% endblock %}
 
 {% block content %}
-    <app-root></app-root>
-
-    {% if appCatalogScriptUrl is empty or storeReference is empty %}
-        <h3>{{ 'Error: AOP Catalog configuration is incomplete' | trans }}</h3>
-        <p>{{ 'The AOP Catalog, can not be displayed, because its technical configuration is incomplete. Please contact your Administrator!' | trans }}</p>
+    {% if appCatalogScriptUrl is empty %}
+        <div class="app-catalog-error-title">{{ 'App Composition Platform Catalog' | trans }}</div>
+        <div class="app-catalog-error-block">
+            <img class="app-catalog-error-block__icon" src="{{ assetsPath('img/app-catalog-error.svg') }}" />
+            <div class="app-catalog-error-block__text">{{ 'The App Catalog can not be displayed, because its technical configuration is incomplete. Please contact your Administrator!' | trans }}</div>
+        </div>
+    {% else %}
+        <app-root></app-root>
     {% endif %}
 {% endblock %}
 
 {% block footer_js %}
     {{ parent() }}
+    {% if appCatalogScriptUrl is not empty %}
     <script>
         window['catalogSpaOptions'] = {
             authTokenUrl: '/app-catalog-gui/api-login'
@@ -27,4 +31,5 @@
         storeReference: storeReference,
         language: localeName,
     }) }}"></script>
+    {% endif %}
 {% endblock %}
