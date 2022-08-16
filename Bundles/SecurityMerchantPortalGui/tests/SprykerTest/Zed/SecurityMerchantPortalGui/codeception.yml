@@ -41,3 +41,5 @@ suites:
                           - \Spryker\Zed\Validator\Communication\Plugin\Form\ValidatorFormPlugin
                           - \Spryker\Zed\Http\Communication\Plugin\Form\HttpFoundationFormPlugin
                 - \SprykerTest\Zed\Validator\Helper\ValidatorHelper
+                - \SprykerTest\Zed\Acl\Helper\AclHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper

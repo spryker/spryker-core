@@ -26,4 +26,8 @@
         <property name="email" type="string"/>
     </transfer>
 
+    <transfer name="Group">
+        <property name="name" type="string"/>
+    </transfer>
+
 </transfers>

@@ -10,6 +10,7 @@ namespace Spryker\Zed\SecurityMerchantPortalGui\Communication\Plugin\Security\Pr
 use Generated\Shared\Transfer\MerchantUserCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\SecurityMerchantPortalGui\Communication\Exception\AccessDeniedException;
 use Spryker\Zed\SecurityMerchantPortalGui\Communication\Security\MerchantUser;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -29,9 +30,23 @@ class MerchantUserProvider extends AbstractPlugin implements UserProviderInterfa
     protected const MERCHANT_STATUS_APPROVED = 'approved';
 
     /**
+     * @var array<\Spryker\Zed\SecurityMerchantPortalGuiExtension\Dependency\Plugin\MerchantUserLoginRestrictionPluginInterface>
+     */
+    protected array $merchantUserLoginRestrictionPlugins;
+
+    /**
+     * @param array<\Spryker\Zed\SecurityMerchantPortalGuiExtension\Dependency\Plugin\MerchantUserLoginRestrictionPluginInterface> $merchantUserLoginRestrictionPlugins
+     */
+    public function __construct(array $merchantUserLoginRestrictionPlugins)
+    {
+        $this->merchantUserLoginRestrictionPlugins = $merchantUserLoginRestrictionPlugins;
+    }
+
+    /**
      * @param string $username
      *
      * @throws \Symfony\Component\Security\Core\Exception\UsernameNotFoundException
+     * @throws \Spryker\Zed\SecurityMerchantPortalGui\Communication\Exception\AccessDeniedException
      *
      * @return \Symfony\Component\Security\Core\User\UserInterface
      */
@@ -41,6 +56,12 @@ class MerchantUserProvider extends AbstractPlugin implements UserProviderInterfa
 
         if ($merchantUserTransfer === null) {
             throw new UsernameNotFoundException();
+        }
+
+        foreach ($this->merchantUserLoginRestrictionPlugins as $merchantUserLoginRestrictionPlugin) {
+            if ($merchantUserLoginRestrictionPlugin->isRestricted($merchantUserTransfer)) {
+                throw new AccessDeniedException();
+            }
         }
 
         return $this->getFactory()

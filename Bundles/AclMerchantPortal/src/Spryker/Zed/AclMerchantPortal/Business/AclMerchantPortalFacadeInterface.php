@@ -77,4 +77,17 @@ interface AclMerchantPortalFacadeInterface
      * @return bool
      */
     public function checkUserRoleFilterCondition(UserTransfer $userTransfer, string $role): bool;
+
+    /**
+     * Specification:
+     * - Requires `MerchantUserTransfer.idUser` to be provided.
+     * - Returns `true` if the given `MerchantUser` transfer has a group with a `root_group` name, `false` otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantUserTransfer $merchantUserTransfer
+     *
+     * @return bool
+     */
+    public function isMerchantUserLoginRestricted(MerchantUserTransfer $merchantUserTransfer): bool;
 }

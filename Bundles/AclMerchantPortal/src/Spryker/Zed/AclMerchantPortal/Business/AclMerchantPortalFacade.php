@@ -80,4 +80,20 @@ class AclMerchantPortalFacade extends AbstractFacade implements AclMerchantPorta
             ->createUserRoleFilterConditionChecker()
             ->checkUserRoleFilterCondition($userTransfer, $role);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantUserTransfer $merchantUserTransfer
+     *
+     * @return bool
+     */
+    public function isMerchantUserLoginRestricted(MerchantUserTransfer $merchantUserTransfer): bool
+    {
+        return $this->getFactory()
+            ->createMerchantUserRestrictionChecker()
+            ->isLoginRestricted($merchantUserTransfer);
+    }
 }

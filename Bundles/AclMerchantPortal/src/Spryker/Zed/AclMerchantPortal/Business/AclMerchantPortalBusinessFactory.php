@@ -8,6 +8,8 @@
 namespace Spryker\Zed\AclMerchantPortal\Business;
 
 use Spryker\Zed\AclMerchantPortal\AclMerchantPortalDependencyProvider;
+use Spryker\Zed\AclMerchantPortal\Business\Checker\MerchantUserRestrictionChecker;
+use Spryker\Zed\AclMerchantPortal\Business\Checker\MerchantUserRestrictionCheckerInterface;
 use Spryker\Zed\AclMerchantPortal\Business\ConditionChecker\MerchantUser\UserRoleFilterConditionChecker;
 use Spryker\Zed\AclMerchantPortal\Business\ConditionChecker\MerchantUser\UserRoleFilterConditionCheckerInterface;
 use Spryker\Zed\AclMerchantPortal\Business\Expander\AclEntity\AclEntityMetadataConfigExpander;
@@ -65,6 +67,14 @@ class AclMerchantPortalBusinessFactory extends AbstractBusinessFactory
             $this->getConfig(),
             $this->getAclFacade(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\AclMerchantPortal\Business\Checker\MerchantUserRestrictionCheckerInterface
+     */
+    public function createMerchantUserRestrictionChecker(): MerchantUserRestrictionCheckerInterface
+    {
+        return new MerchantUserRestrictionChecker($this->getAclFacade());
     }
 
     /**

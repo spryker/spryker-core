@@ -34,6 +34,11 @@ class SecurityMerchantPortalGuiDependencyProvider extends AbstractBundleDependen
     public const FACADE_SECURITY = 'FACADE_SECURITY';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_MERCHANT_USER_LOGIN_RESTRICTION = 'PLUGINS_MERCHANT_USER_LOGIN_RESTRICTION';
+
+    /**
      * @uses \Spryker\Zed\Security\Communication\Plugin\Application\SecurityApplicationPlugin::SERVICE_SECURITY_TOKEN_STORAGE
      *
      * @var string
@@ -54,6 +59,8 @@ class SecurityMerchantPortalGuiDependencyProvider extends AbstractBundleDependen
         $container = $this->addSecurityFacade($container);
 
         $container = $this->addTokenStorage($container);
+
+        $container = $this->addMerchantUserLoginRestrictionPlugins($container);
 
         return $container;
     }
@@ -93,6 +100,20 @@ class SecurityMerchantPortalGuiDependencyProvider extends AbstractBundleDependen
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    public function addMerchantUserLoginRestrictionPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_MERCHANT_USER_LOGIN_RESTRICTION, function () {
+            return $this->getMerchantUserLoginRestrictionPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addMessengerFacade(Container $container): Container
     {
         $container->set(static::FACADE_MESSENGER, function (Container $container) {
@@ -118,6 +139,14 @@ class SecurityMerchantPortalGuiDependencyProvider extends AbstractBundleDependen
         });
 
         return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Zed\SecurityMerchantPortalGuiExtension\Dependency\Plugin\MerchantUserLoginRestrictionPluginInterface>
+     */
+    protected function getMerchantUserLoginRestrictionPlugins(): array
+    {
+        return [];
     }
 
     /**

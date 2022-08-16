@@ -61,6 +61,20 @@ class AclHelper extends Module
     }
 
     /**
+     * @param int $idUser
+     * @param int $idGroup
+     *
+     * @return int
+     */
+    public function addUserToGroup(int $idUser, int $idGroup): int
+    {
+        return $this->getLocator()
+            ->acl()
+            ->facade()
+            ->addUserToGroup($idUser, $idGroup);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\AclRoleCriteriaTransfer $aclRoleCriteriaTransfer
      *
      * @return void

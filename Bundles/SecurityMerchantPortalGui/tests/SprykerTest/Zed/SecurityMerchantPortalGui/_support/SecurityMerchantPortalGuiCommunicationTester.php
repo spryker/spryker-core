@@ -8,6 +8,10 @@
 namespace SprykerTest\Zed\SecurityMerchantPortalGui;
 
 use Codeception\Actor;
+use Codeception\Stub;
+use Generated\Shared\Transfer\GroupCriteriaTransfer;
+use Generated\Shared\Transfer\GroupTransfer;
+use Spryker\Zed\SecurityMerchantPortalGuiExtension\Dependency\Plugin\MerchantUserLoginRestrictionPluginInterface;
 
 /**
  * Inherited Methods
@@ -30,6 +34,36 @@ class SecurityMerchantPortalGuiCommunicationTester extends Actor
     use _generated\SecurityMerchantPortalGuiCommunicationTesterActions;
 
     /**
-     * Define custom actions here
+     * @uses \Spryker\Shared\Acl\AclConstants::ROOT_GROUP
+     *
+     * @var string
      */
+    protected const ROOT_GROUP_NAME = 'root_group';
+
+    /**
+     * @param array<string, callable> $params
+     *
+     * @return \Spryker\Zed\SecurityMerchantPortalGuiExtension\Dependency\Plugin\MerchantUserLoginRestrictionPluginInterface
+     */
+    public function createMerchantUserLoginRestrictionPluginMock(array $params): MerchantUserLoginRestrictionPluginInterface
+    {
+        return Stub::makeEmpty(
+            MerchantUserLoginRestrictionPluginInterface::class,
+            $params,
+        );
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\GroupTransfer
+     */
+    public function haveRootGroup(): GroupTransfer
+    {
+        $groupCriteriaTransfer = (new GroupCriteriaTransfer())->setName(static::ROOT_GROUP_NAME);
+        $groupTransfer = $this->getLocator()->acl()->facade()->findGroup($groupCriteriaTransfer);
+        if ($groupTransfer) {
+            return $groupTransfer;
+        }
+
+        return $this->haveGroup([GroupTransfer::NAME => static::ROOT_GROUP_NAME]);
+    }
 }

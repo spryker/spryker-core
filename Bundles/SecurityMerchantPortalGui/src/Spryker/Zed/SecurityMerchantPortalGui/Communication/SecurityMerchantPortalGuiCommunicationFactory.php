@@ -40,7 +40,7 @@ class SecurityMerchantPortalGuiCommunicationFactory extends AbstractCommunicatio
      */
     public function createMerchantUserProvider(): UserProviderInterface
     {
-        return new MerchantUserProvider();
+        return new MerchantUserProvider($this->getMerchantUserLoginRestrictionPlugins());
     }
 
     /**
@@ -134,5 +134,13 @@ class SecurityMerchantPortalGuiCommunicationFactory extends AbstractCommunicatio
     public function getTokenStorageService(): TokenStorageInterface
     {
         return $this->getProvidedDependency(SecurityMerchantPortalGuiDependencyProvider::SERVICE_SECURITY_TOKEN_STORAGE);
+    }
+
+    /**
+     * @return array<\Spryker\Zed\SecurityMerchantPortalGuiExtension\Dependency\Plugin\MerchantUserLoginRestrictionPluginInterface>
+     */
+    public function getMerchantUserLoginRestrictionPlugins(): array
+    {
+        return $this->getProvidedDependency(SecurityMerchantPortalGuiDependencyProvider::PLUGINS_MERCHANT_USER_LOGIN_RESTRICTION);
     }
 }

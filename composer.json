@@ -802,6 +802,7 @@
         "spryker/security-gui": "*",
         "spryker/security-gui-extension": "*",
         "spryker/security-merchant-portal-gui": "*",
+        "spryker/security-merchant-portal-gui-extension": "*",
         "spryker/security-oauth-user": "*",
         "spryker/security-oauth-user-extension": "*",
         "spryker/security-system-user": "*",

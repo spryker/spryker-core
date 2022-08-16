@@ -10,6 +10,8 @@ namespace SprykerTest\Zed\AclMerchantPortal;
 use Codeception\Actor;
 use Generated\Shared\Transfer\AclEntityMetadataCollectionTransfer;
 use Generated\Shared\Transfer\AclEntityMetadataConfigTransfer;
+use Generated\Shared\Transfer\GroupCriteriaTransfer;
+use Generated\Shared\Transfer\GroupTransfer;
 use Orm\Zed\Acl\Persistence\SpyAclGroupQuery;
 use Orm\Zed\Acl\Persistence\SpyAclRoleQuery;
 use Orm\Zed\Acl\Persistence\SpyAclRuleQuery;
@@ -37,6 +39,13 @@ use Spryker\Zed\AclMerchantPortal\AclMerchantPortalConfig;
 class AclMerchantPortalBusinessTester extends Actor
 {
     use _generated\AclMerchantPortalBusinessTesterActions;
+
+    /**
+     * @uses \Spryker\Shared\Acl\AclConstants::ROOT_GROUP
+     *
+     * @var string
+     */
+    protected const ROOT_GROUP_NAME = 'root_group';
 
     /**
      * @return void
@@ -91,6 +100,20 @@ class AclMerchantPortalBusinessTester extends Actor
     {
         return (new AclEntityMetadataConfigTransfer())
             ->setAclEntityMetadataCollection(new AclEntityMetadataCollectionTransfer());
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\GroupTransfer
+     */
+    public function haveRootGroup(): GroupTransfer
+    {
+        $groupCriteriaTransfer = (new GroupCriteriaTransfer())->setName(static::ROOT_GROUP_NAME);
+        $groupTransfer = $this->getLocator()->acl()->facade()->findGroup($groupCriteriaTransfer);
+        if ($groupTransfer) {
+            return $groupTransfer;
+        }
+
+        return $this->haveGroup([GroupTransfer::NAME => static::ROOT_GROUP_NAME]);
     }
 
     /**

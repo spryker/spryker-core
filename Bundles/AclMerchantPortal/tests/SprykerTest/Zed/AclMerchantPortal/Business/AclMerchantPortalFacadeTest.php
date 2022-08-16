@@ -260,6 +260,42 @@ class AclMerchantPortalFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testIsMerchantUserLoginRestrictedReturnsTrueWhenMerchantUserHasRootGroup(): void
+    {
+        // Arrange
+        $merchantTransfer = $this->tester->haveMerchant();
+        $userTransfer = $this->tester->haveUser();
+        $groupTransfer = $this->tester->haveRootGroup();
+        $this->tester->addUserToGroup($userTransfer->getIdUserOrFail(), $groupTransfer->getIdAclGroupOrFail());
+
+        $merchantUserTransfer = $this->tester->haveMerchantUser($merchantTransfer, $userTransfer);
+
+        // Act
+        $isMerchantUserLoginRestricted = $this->tester->getFacade()->isMerchantUserLoginRestricted($merchantUserTransfer);
+
+        // Assert
+        $this->assertTrue($isMerchantUserLoginRestricted);
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsMerchantUserLoginRestrictedReturnsFalseWhenMerchantUserHasNoRootGroup(): void
+    {
+        $merchantTransfer = $this->tester->haveMerchant();
+        $userTransfer = $this->tester->haveUser();
+        $merchantUserTransfer = $this->tester->haveMerchantUser($merchantTransfer, $userTransfer);
+
+        // Act
+        $isMerchantUserLoginRestricted = $this->tester->getFacade()->isMerchantUserLoginRestricted($merchantUserTransfer);
+
+        // Assert
+        $this->assertFalse($isMerchantUserLoginRestricted);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\AclEntityMetadataCollectionTransfer $aclEntityMetadataCollectionTransfer
      *
      * @return void
