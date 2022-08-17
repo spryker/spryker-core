@@ -114,14 +114,8 @@ class ProductOfferSynchronizationDataBulkRepositoryPlugin extends AbstractPlugin
      */
     protected function createSynchronizationDataTransfer(SpyProductOfferStorage $productOfferStorage): SynchronizationDataTransfer
     {
-        $synchronizationDataTransfer = new SynchronizationDataTransfer();
-
-        /** @var string $data */
-        $data = $productOfferStorage->getData();
-        $synchronizationDataTransfer->setData($data);
-        $synchronizationDataTransfer->setKey($productOfferStorage->getKey());
-
-        return $synchronizationDataTransfer;
+        return (new SynchronizationDataTransfer())
+            ->fromArray($productOfferStorage->toArray(), true);
     }
 
     /**

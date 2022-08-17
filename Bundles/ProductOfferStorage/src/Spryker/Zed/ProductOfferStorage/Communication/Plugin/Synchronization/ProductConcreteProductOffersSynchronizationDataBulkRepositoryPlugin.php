@@ -115,14 +115,8 @@ class ProductConcreteProductOffersSynchronizationDataBulkRepositoryPlugin extend
     protected function createSynchronizationDataTransfer(
         SpyProductConcreteProductOffersStorage $productConcreteProductOffersStorageEntity
     ): SynchronizationDataTransfer {
-        $synchronizationDataTransfer = new SynchronizationDataTransfer();
-
-        /** @var string $data */
-        $data = $productConcreteProductOffersStorageEntity->getData();
-        $synchronizationDataTransfer->setData($data);
-        $synchronizationDataTransfer->setKey($productConcreteProductOffersStorageEntity->getKey());
-
-        return $synchronizationDataTransfer;
+        return (new SynchronizationDataTransfer())
+            ->fromArray($productConcreteProductOffersStorageEntity->toArray(), true);
     }
 
     /**
