@@ -13,6 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
@@ -40,6 +41,11 @@ class FileDirectoryLocalizedAttributesForm extends AbstractType
      * @var string
      */
     public const OPTION_DATA_CLASS = 'data_class';
+
+    /**
+     * @var int
+     */
+    protected const FIELD_TITLE_MAX_LENGTH = 255;
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -82,6 +88,9 @@ class FileDirectoryLocalizedAttributesForm extends AbstractType
                 'required' => true,
                 'constraints' => [
                     new NotBlank(),
+                    new Length([
+                        'max' => static::FIELD_TITLE_MAX_LENGTH,
+                    ]),
                 ],
             ]);
 

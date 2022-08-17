@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
@@ -42,6 +43,11 @@ class FileDirectoryForm extends AbstractType
      * @var string
      */
     public const OPTION_AVAILABLE_LOCALES = 'option_available_locales';
+
+    /**
+     * @var int
+     */
+    protected const FIELD_NAME_MAX_LENGTH = 255;
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -81,8 +87,12 @@ class FileDirectoryForm extends AbstractType
             static::FIELD_NAME,
             TextType::class,
             [
+
                 'constraints' => [
                     new NotBlank(),
+                    new Length([
+                        'max' => static::FIELD_NAME_MAX_LENGTH,
+                    ]),
                 ],
             ],
         );
