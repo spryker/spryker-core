@@ -305,21 +305,21 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
         SpyPriceProductStoreQuery $priceProductStoreQuery,
         PriceProductCriteriaTransfer $priceProductCriteriaTransfer
     ): SpyPriceProductStoreQuery {
-        if ($priceProductCriteriaTransfer->getIdProductAbstract()) {
-            $priceProductStoreQuery->joinPriceProduct()
-                ->add(
-                    SpyPriceProductTableMap::COL_FK_PRODUCT_ABSTRACT,
-                    $priceProductCriteriaTransfer->getIdProductAbstract(),
-                    Criteria::EQUAL,
-                );
-
-            return $priceProductStoreQuery;
-        }
         if ($priceProductCriteriaTransfer->getIdProductConcrete()) {
             $priceProductStoreQuery->joinPriceProduct()
                 ->add(
                     SpyPriceProductTableMap::COL_FK_PRODUCT,
                     $priceProductCriteriaTransfer->getIdProductConcrete(),
+                    Criteria::EQUAL,
+                );
+
+            return $priceProductStoreQuery;
+        }
+        if ($priceProductCriteriaTransfer->getIdProductAbstract()) {
+            $priceProductStoreQuery->joinPriceProduct()
+                ->add(
+                    SpyPriceProductTableMap::COL_FK_PRODUCT_ABSTRACT,
+                    $priceProductCriteriaTransfer->getIdProductAbstract(),
                     Criteria::EQUAL,
                 );
         }

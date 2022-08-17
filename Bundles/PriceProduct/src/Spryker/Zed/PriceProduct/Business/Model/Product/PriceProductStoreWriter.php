@@ -158,7 +158,7 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
 
         $priceProductTransfer = $this->persistPriceProductDimension($priceProductTransfer);
 
-        if ($this->priceProductConfig->getIsDeleteOrphanStorePricesOnSaveEnabled()) {
+        if ($this->isDeleteOrphanStorePricesOnSaveEnabled()) {
             $this->deleteOrphanPriceProductStoreEntities($priceProductTransfer);
         }
 
@@ -180,6 +180,20 @@ class PriceProductStoreWriter implements PriceProductStoreWriterInterface
         $this->getTransactionHandler()->handleTransaction(function () use ($orphanPriceProductTransfers) {
             $this->deleteOrphanPriceProductStores($orphanPriceProductTransfers);
         });
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isDeleteOrphanStorePricesOnSaveEnabled(): bool
+    {
+        $isRemovalEnabledByVoters = $this->priceProductStoreWriterPluginExecutor->executeOrphanPriceProductStoreRemovalVoterPlugins();
+
+        if ($isRemovalEnabledByVoters !== null) {
+            return $isRemovalEnabledByVoters;
+        }
+
+        return $this->priceProductConfig->getIsDeleteOrphanStorePricesOnSaveEnabled();
     }
 
     /**

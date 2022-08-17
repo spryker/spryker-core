@@ -27,18 +27,26 @@ class PriceProductStoreWriterPluginExecutor implements PriceProductStoreWriterPl
     protected $priceDimensionConcreteSaverPlugins;
 
     /**
+     * @var array<\Spryker\Zed\PriceProductExtension\Dependency\Plugin\OrphanPriceProductStoreRemovalVoterPluginInterface>
+     */
+    protected $orphanPriceProductStoreRemovalVoterPlugins;
+
+    /**
      * @param array<\Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductStorePreDeletePluginInterface> $priceProductStorePreDeletePlugins
      * @param array<\Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionAbstractSaverPluginInterface> $priceDimensionAbstractSaverPlugins
      * @param array<\Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionConcreteSaverPluginInterface> $priceDimensionConcreteSaverPlugins
+     * @param array<\Spryker\Zed\PriceProductExtension\Dependency\Plugin\OrphanPriceProductStoreRemovalVoterPluginInterface> $orphanPriceProductStoreRemovalVoterPlugins
      */
     public function __construct(
         array $priceProductStorePreDeletePlugins,
         array $priceDimensionAbstractSaverPlugins,
-        array $priceDimensionConcreteSaverPlugins
+        array $priceDimensionConcreteSaverPlugins,
+        array $orphanPriceProductStoreRemovalVoterPlugins
     ) {
         $this->priceProductStorePreDeletePlugins = $priceProductStorePreDeletePlugins;
         $this->priceDimensionAbstractSaverPlugins = $priceDimensionAbstractSaverPlugins;
         $this->priceDimensionConcreteSaverPlugins = $priceDimensionConcreteSaverPlugins;
+        $this->orphanPriceProductStoreRemovalVoterPlugins = $orphanPriceProductStoreRemovalVoterPlugins;
     }
 
     /**
@@ -95,5 +103,22 @@ class PriceProductStoreWriterPluginExecutor implements PriceProductStoreWriterPl
         foreach ($this->priceProductStorePreDeletePlugins as $priceProductStorePreDeletePlugin) {
             $priceProductStorePreDeletePlugin->preDelete($idPriceProductStore);
         }
+    }
+
+    /**
+     * @return bool|null
+     */
+    public function executeOrphanPriceProductStoreRemovalVoterPlugins(): ?bool
+    {
+        $isRemovalEnabled = null;
+
+        foreach ($this->orphanPriceProductStoreRemovalVoterPlugins as $orphanPriceProductStoreRemovalVoterPlugin) {
+            $isRemovalEnabled = $orphanPriceProductStoreRemovalVoterPlugin->isRemovalEnabled();
+            if (!$isRemovalEnabled) {
+                return false;
+            }
+        }
+
+        return $isRemovalEnabled;
     }
 }

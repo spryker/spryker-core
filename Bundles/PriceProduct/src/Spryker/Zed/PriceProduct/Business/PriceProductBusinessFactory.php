@@ -339,6 +339,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
             $this->getPriceProductStorePreDeletePlugins(),
             $this->getPriceDimensionAbstractSaverPlugins(),
             $this->getPriceDimensionConcreteSaverPlugins(),
+            $this->getOrphanPriceProductStoreRemovalVoterPlugins(),
         );
     }
 
@@ -548,6 +549,14 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     public function getPriceDimensionConcreteSaverPlugins(): array
     {
         return $this->getProvidedDependency(PriceProductDependencyProvider::PLUGIN_PRICE_DIMENSION_CONCRETE_SAVER);
+    }
+
+    /**
+     * @return array<\Spryker\Zed\PriceProductExtension\Dependency\Plugin\OrphanPriceProductStoreRemovalVoterPluginInterface>
+     */
+    public function getOrphanPriceProductStoreRemovalVoterPlugins(): array
+    {
+        return $this->getProvidedDependency(PriceProductDependencyProvider::PLUGINS_ORPHAN_PRICE_PRODUCT_STORE_REMOVAL_VOTER);
     }
 
     /**

@@ -76,6 +76,11 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
+    public const PLUGINS_ORPHAN_PRICE_PRODUCT_STORE_REMOVAL_VOTER = 'PLUGINS_ORPHAN_PRICE_PRODUCT_STORE_REMOVAL_VOTER';
+
+    /**
+     * @var string
+     */
     public const PLUGIN_PRICE_PRODUCT_DIMENSION_TRANSFER_EXPANDER = 'PLUGIN_PRICE_PRODUCT_DIMENSION_TRANSFER_EXPANDER';
 
     /**
@@ -131,6 +136,7 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addValidationAdapter($container);
         $container = $this->addPriceProductValidatorPlugins($container);
         $container = $this->addPriceProductCollectionDeletePlugins($container);
+        $container = $this->addOrphanPriceProductStoreRemovalVoterPlugins($container);
 
         return $container;
     }
@@ -322,6 +328,20 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    protected function addOrphanPriceProductStoreRemovalVoterPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_ORPHAN_PRICE_PRODUCT_STORE_REMOVAL_VOTER, function () {
+            return $this->getOrphanPriceProductStoreRemovalVoterPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addUtilEncodingService(Container $container): Container
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
@@ -467,6 +487,14 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
      * @return array<\Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductCollectionDeletePluginInterface>
      */
     protected function getPriceProductCollectionDeletePlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return array<\Spryker\Zed\PriceProductExtension\Dependency\Plugin\OrphanPriceProductStoreRemovalVoterPluginInterface>
+     */
+    protected function getOrphanPriceProductStoreRemovalVoterPlugins(): array
     {
         return [];
     }
