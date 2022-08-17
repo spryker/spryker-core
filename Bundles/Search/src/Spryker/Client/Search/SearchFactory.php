@@ -321,6 +321,8 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
+     * @phpstan-return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
+     *
      * @deprecated Will be removed without replacement.
      *
      * @param string $searchString
@@ -335,6 +337,8 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
+     * @phpstan-return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
+     *
      * @deprecated Will be removed without replacement.
      *
      * @param string $searchString

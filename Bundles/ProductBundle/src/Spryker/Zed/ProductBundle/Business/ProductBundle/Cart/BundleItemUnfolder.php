@@ -103,6 +103,7 @@ class BundleItemUnfolder implements BundleItemUnfolderInterface
      */
     public function unfoldBundlesToUnitedItems(CartChangeTransfer $cartChangeTransfer): CartChangeTransfer
     {
+        /** @var \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $cartChangeItemTransfers */
         $cartChangeItemTransfers = new ArrayObject();
         $quoteTransfer = $cartChangeTransfer->getQuoteOrFail();
 

@@ -203,6 +203,8 @@ class ProductReviewDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
+     * @phpstan-return array<\Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface>
+     *
      * @return array<\Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface>
      */
     public function getProductReviewsSearchResultFormatterPlugins()

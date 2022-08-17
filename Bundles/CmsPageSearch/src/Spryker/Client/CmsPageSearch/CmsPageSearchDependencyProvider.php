@@ -132,6 +132,8 @@ class CmsPageSearchDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
+     * @phpstan-return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
+     *
      * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
      */
     protected function createCmsPageSearchQueryPlugin(): QueryInterface

@@ -16,6 +16,8 @@ use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 class ConfigurableBundlePageSearchFactory extends AbstractFactory
 {
     /**
+     * @phpstan-return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
+     *
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchRequestTransfer $configurableBundleTemplatePageSearchRequestTransfer
      *
      * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
