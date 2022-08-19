@@ -153,7 +153,10 @@ class PhpMdRunner
      */
     protected function runPhpMdCommand($path, array $options)
     {
-        $pathToFiles = rtrim($path, DIRECTORY_SEPARATOR);
+        $pathToFiles = rtrim($path, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+        if (is_dir($pathToFiles . 'src')) {
+            $pathToFiles .= 'src' . DIRECTORY_SEPARATOR;
+        }
 
         $format = 'text';
         if ($options[static::OPTION_FORMAT]) {

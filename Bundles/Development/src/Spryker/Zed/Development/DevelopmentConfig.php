@@ -259,6 +259,8 @@ class DevelopmentConfig extends AbstractBundleConfig
      * Either a relative or full path to the ruleset.xml or a name of an installed
      * standard (see `phpcs -i` for a list of available ones).
      *
+     * Deprecated: Directly provide a ROOT phpcs.xml in your project instead.
+     *
      * @api
      *
      * @return string
@@ -280,7 +282,7 @@ class DevelopmentConfig extends AbstractBundleConfig
      */
     public function getArchitectureStandard()
     {
-        return __DIR__ . '/Business/PhpMd/ruleset.xml';
+        return dirname(__DIR__, 4) . '/resources/phpmd/ruleset.xml';
     }
 
     /**
