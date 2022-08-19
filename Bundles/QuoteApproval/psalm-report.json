@@ -1193,42 +1193,6 @@
         },
         {
             "severity": "info",
-            "line_from": 70,
-            "line_to": 70,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Client\\QuoteApproval\\Permission\\ContextProvider\\PermissionContextProvider::getShipmentPriceForQuote has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/QuoteApproval/src/Spryker/Client/QuoteApproval/Permission/ContextProvider/PermissionContextProvider.php",
-            "snippet": "        return $quoteTransfer->getTotals()->getGrandTotal() - $this->getShipmentPriceForQuote($quoteTransfer);",
-            "selected_text": "getShipmentPriceForQuote",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 82,
-            "line_to": 82,
-            "type": "DeprecatedMethod",
-            "message": "The method Generated\\Shared\\Transfer\\QuoteTransfer::getShipment has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/QuoteApproval/src/Spryker/Client/QuoteApproval/Permission/ContextProvider/PermissionContextProvider.php",
-            "snippet": "        if (!$quoteTransfer->getShipment()) {",
-            "selected_text": "getShipment",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 86,
-            "line_to": 86,
-            "type": "DeprecatedMethod",
-            "message": "The method Generated\\Shared\\Transfer\\QuoteTransfer::getShipment has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/QuoteApproval/src/Spryker/Client/QuoteApproval/Permission/ContextProvider/PermissionContextProvider.php",
-            "snippet": "        $shipmentMethodTransfer = $quoteTransfer->getShipment()",
-            "selected_text": "getShipment",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
             "line_from": 53,
             "line_to": 53,
             "type": "DeprecatedMethod",
@@ -1236,18 +1200,6 @@
             "file_name": "vendor/spryker/spryker/Bundles/QuoteApproval/src/Spryker/Client/QuoteApproval/QuoteApproval/QuoteApprovalCreator.php",
             "snippet": "            (!$quoteApprovalRequestTransfer->getIdQuote() && !$quoteApprovalRequestTransfer->getQuote())",
             "selected_text": "getIdQuote",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 36,
-            "line_to": 36,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Shared\\QuoteApproval\\QuoteApprovalConfig::isShipmentPriceIncludedInQuoteApprovalPermissionCheck has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/QuoteApproval/src/Spryker/Client/QuoteApproval/QuoteApprovalConfig.php",
-            "snippet": "        return $this->getSharedConfig()->isShipmentPriceIncludedInQuoteApprovalPermissionCheck();",
-            "selected_text": "isShipmentPriceIncludedInQuoteApprovalPermissionCheck",
             "error_level": 2,
             "shortcode": 1
         },
@@ -1277,42 +1229,6 @@
         },
         {
             "severity": "info",
-            "line_from": 70,
-            "line_to": 70,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\QuoteApproval\\Business\\Permission\\ContextProvider\\PermissionContextProvider::getShipmentPriceForQuote has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/QuoteApproval/src/Spryker/Zed/QuoteApproval/Business/Permission/ContextProvider/PermissionContextProvider.php",
-            "snippet": "        return $quoteTransfer->getTotals()->getGrandTotal() - $this->getShipmentPriceForQuote($quoteTransfer);",
-            "selected_text": "getShipmentPriceForQuote",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 82,
-            "line_to": 82,
-            "type": "DeprecatedMethod",
-            "message": "The method Generated\\Shared\\Transfer\\QuoteTransfer::getShipment has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/QuoteApproval/src/Spryker/Zed/QuoteApproval/Business/Permission/ContextProvider/PermissionContextProvider.php",
-            "snippet": "        if (!$quoteTransfer->getShipment()) {",
-            "selected_text": "getShipment",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 86,
-            "line_to": 86,
-            "type": "DeprecatedMethod",
-            "message": "The method Generated\\Shared\\Transfer\\QuoteTransfer::getShipment has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/QuoteApproval/src/Spryker/Zed/QuoteApproval/Business/Permission/ContextProvider/PermissionContextProvider.php",
-            "snippet": "        $shipmentMethodTransfer = $quoteTransfer->getShipment()",
-            "selected_text": "getShipment",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
             "line_from": 248,
             "line_to": 248,
             "type": "DeprecatedMethod",
@@ -1334,18 +1250,7 @@
             "selected_text": "getIdQuote",
             "error_level": 2,
             "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 36,
-            "line_to": 36,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Shared\\QuoteApproval\\QuoteApprovalConfig::isShipmentPriceIncludedInQuoteApprovalPermissionCheck has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/QuoteApproval/src/Spryker/Zed/QuoteApproval/QuoteApprovalConfig.php",
-            "snippet": "        return $this->getSharedConfig()->isShipmentPriceIncludedInQuoteApprovalPermissionCheck();",
-            "selected_text": "isShipmentPriceIncludedInQuoteApprovalPermissionCheck",
-            "error_level": 2,
-            "shortcode": 1
         }
-    ]
+    ],
+    "count": 104
 }

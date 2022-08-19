@@ -135,18 +135,6 @@
         },
         {
             "severity": "info",
-            "line_from": 66,
-            "line_to": 66,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/Synchronization/src/Spryker/Zed/Synchronization/Business/Iterator/SynchronizationDataQueryContainerPluginIterator.php",
-            "snippet": "        $this->current = $query->find()->getData();",
-            "selected_text": "getData",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
             "line_from": 17,
             "line_to": 17,
             "type": "NonInvariantDocblockPropertyType",
@@ -396,6 +384,18 @@
             "selected_text": "$this->utilEncodingService->encodeJson($value)",
             "error_level": 5,
             "shortcode": 139
+        },
+        {
+            "severity": "info",
+            "line_from": 30,
+            "line_to": 30,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getPrimaryKeys on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/Synchronization/src/Spryker/Zed/Synchronization/Communication/Plugin/Synchronization/SynchronizationDataQueryExpanderWhereBetweenStrategyPlugin.php",
+            "snippet": "        $primaryKeys = $query->getTableMap()->getPrimaryKeys();",
+            "selected_text": "getPrimaryKeys",
+            "error_level": 3,
+            "shortcode": 83
         }
     ],
     "deprecation": [
@@ -461,8 +461,8 @@
         },
         {
             "severity": "info",
-            "line_from": 195,
-            "line_to": 195,
+            "line_from": 197,
+            "line_to": 197,
             "type": "DeprecatedMethod",
             "message": "The method Generated\\Shared\\Transfer\\SearchDocumentTransfer::setType has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Synchronization/src/Spryker/Zed/Synchronization/Business/Search/SynchronizationSearch.php",
@@ -473,25 +473,13 @@
         },
         {
             "severity": "info",
-            "line_from": 196,
-            "line_to": 196,
+            "line_from": 198,
+            "line_to": 198,
             "type": "DeprecatedMethod",
             "message": "The method Generated\\Shared\\Transfer\\SearchDocumentTransfer::setIndex has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Synchronization/src/Spryker/Zed/Synchronization/Business/Search/SynchronizationSearch.php",
             "snippet": "            $searchDocumentTransfer->setIndex($indexName);",
             "selected_text": "setIndex",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 122,
-            "line_to": 122,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\Synchronization\\Business\\Export\\ExporterPluginResolverInterface::executeResolvedPluginsBySources has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Synchronization/src/Spryker/Zed/Synchronization/Business/SynchronizationFacade.php",
-            "snippet": "        $this->getFactory()->createExporterPluginResolver()->executeResolvedPluginsBySources($resources);",
-            "selected_text": "executeResolvedPluginsBySources",
             "error_level": 2,
             "shortcode": 1
         },
@@ -555,5 +543,6 @@
             "error_level": 2,
             "shortcode": 1
         }
-    ]
+    ],
+    "count": 45
 }

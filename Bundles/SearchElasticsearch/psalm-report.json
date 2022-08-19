@@ -1590,30 +1590,6 @@
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 23,
-            "line_to": 23,
-            "type": "DeprecatedInterface",
-            "message": "Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\SearchContextAwareQueryInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/SearchElasticsearch/src/Spryker/Client/SearchElasticsearch/Plugin/Query/SearchKeysQuery.php",
-            "snippet": "class SearchKeysQuery implements QueryInterface, SearchContextAwareQueryInterface",
-            "selected_text": "SearchKeysQuery",
-            "error_level": 2,
-            "shortcode": 152
-        },
-        {
-            "severity": "info",
-            "line_from": 20,
-            "line_to": 20,
-            "type": "DeprecatedInterface",
-            "message": "Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\SearchContextAwareQueryInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/SearchElasticsearch/src/Spryker/Client/SearchElasticsearch/Plugin/Query/SearchStringQuery.php",
-            "snippet": "class SearchStringQuery implements QueryInterface, SearchContextAwareQueryInterface",
-            "selected_text": "SearchStringQuery",
-            "error_level": 2,
-            "shortcode": 152
-        },
-        {
-            "severity": "info",
             "line_from": 49,
             "line_to": 52,
             "type": "DeprecatedClass",
@@ -1674,84 +1650,12 @@
         },
         {
             "severity": "info",
-            "line_from": 16,
-            "line_to": 16,
-            "type": "DeprecatedInterface",
-            "message": "Spryker\\Client\\SearchElasticsearch\\Reader\\DocumentReaderFactoryInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/SearchElasticsearch/src/Spryker/Client/SearchElasticsearch/Reader/DocumentReaderFactory.php",
-            "snippet": "class DocumentReaderFactory implements DocumentReaderFactoryInterface",
-            "selected_text": "DocumentReaderFactory",
-            "error_level": 2,
-            "shortcode": 152
-        },
-        {
-            "severity": "info",
-            "line_from": 39,
-            "line_to": 39,
-            "type": "DeprecatedClass",
-            "message": "Spryker\\Client\\SearchElasticsearch\\Reader\\MappingTypeAwareDocumentReader is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/SearchElasticsearch/src/Spryker/Client/SearchElasticsearch/Reader/DocumentReaderFactory.php",
-            "snippet": "            return new MappingTypeAwareDocumentReader($client);",
-            "selected_text": "new MappingTypeAwareDocumentReader($client)",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 42,
-            "line_to": 42,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Client\\SearchElasticsearch\\Reader\\MappingTypeAwareDocumentReader::getTypeName has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/SearchElasticsearch/src/Spryker/Client/SearchElasticsearch/Reader/MappingTypeAwareDocumentReader.php",
-            "snippet": "        $typeName = $this->getTypeName($searchDocumentTransfer, $elasticaIndex);",
-            "selected_text": "getTypeName",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 96,
-            "line_to": 96,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Client\\SearchElasticsearch\\Reader\\MappingTypeAwareDocumentReader::readMappingTypeNameFromElasticsearch has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/SearchElasticsearch/src/Spryker/Client/SearchElasticsearch/Reader/MappingTypeAwareDocumentReader.php",
-            "snippet": "            ->getTypeName() ?? $this->readMappingTypeNameFromElasticsearch($elasticaIndex);",
-            "selected_text": "readMappingTypeNameFromElasticsearch",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
             "line_from": 80,
             "line_to": 80,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Client\\SearchElasticsearch\\Search\\Search::getSearchContext has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/SearchElasticsearch/src/Spryker/Client/SearchElasticsearch/Search/Search.php",
             "snippet": "        $searchContext = $this->getSearchContext($query);",
-            "selected_text": "getSearchContext",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 103,
-            "line_to": 103,
-            "type": "DeprecatedClass",
-            "message": "Class Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\SearchContextAwareQueryInterface is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/SearchElasticsearch/src/Spryker/Client/SearchElasticsearch/Search/Search.php",
-            "snippet": "     * @param \\Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\SearchContextAwareQueryInterface|\\Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\QueryInterface $searchQuery",
-            "selected_text": "\\Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\SearchContextAwareQueryInterface|\\Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\QueryInterface",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 121,
-            "line_to": 121,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\SearchContextAwareQueryInterface::getSearchContext has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/SearchElasticsearch/src/Spryker/Client/SearchElasticsearch/Search/Search.php",
-            "snippet": "        return $searchQuery->getSearchContext();",
             "selected_text": "getSearchContext",
             "error_level": 2,
             "shortcode": 1
@@ -1854,54 +1758,6 @@
         },
         {
             "severity": "info",
-            "line_from": 16,
-            "line_to": 16,
-            "type": "DeprecatedInterface",
-            "message": "Spryker\\Client\\SearchElasticsearch\\Writer\\DocumentWriterFactoryInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/SearchElasticsearch/src/Spryker/Client/SearchElasticsearch/Writer/DocumentWriterFactory.php",
-            "snippet": "class DocumentWriterFactory implements DocumentWriterFactoryInterface",
-            "selected_text": "DocumentWriterFactory",
-            "error_level": 2,
-            "shortcode": 152
-        },
-        {
-            "severity": "info",
-            "line_from": 39,
-            "line_to": 39,
-            "type": "DeprecatedClass",
-            "message": "Spryker\\Client\\SearchElasticsearch\\Writer\\MappingTypeAwareDocumentWriter is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/SearchElasticsearch/src/Spryker/Client/SearchElasticsearch/Writer/DocumentWriterFactory.php",
-            "snippet": "            return new MappingTypeAwareDocumentWriter($client);",
-            "selected_text": "new MappingTypeAwareDocumentWriter($client)",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 15,
-            "line_to": 15,
-            "type": "DeprecatedInterface",
-            "message": "Spryker\\Zed\\SearchElasticsearch\\Business\\Installer\\Index\\Mapping\\MappingBuilderFactoryInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/SearchElasticsearch/src/Spryker/Zed/SearchElasticsearch/Business/Installer/Index/Mapping/MappingBuilderFactory.php",
-            "snippet": "class MappingBuilderFactory implements MappingBuilderFactoryInterface",
-            "selected_text": "MappingBuilderFactory",
-            "error_level": 2,
-            "shortcode": 152
-        },
-        {
-            "severity": "info",
-            "line_from": 36,
-            "line_to": 36,
-            "type": "DeprecatedClass",
-            "message": "Spryker\\Zed\\SearchElasticsearch\\Business\\Installer\\Index\\Mapping\\MappingTypeAwareMappingBuilder is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/SearchElasticsearch/src/Spryker/Zed/SearchElasticsearch/Business/Installer/Index/Mapping/MappingBuilderFactory.php",
-            "snippet": "            return new MappingTypeAwareMappingBuilder();",
-            "selected_text": "new MappingTypeAwareMappingBuilder()",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
             "line_from": 182,
             "line_to": 182,
             "type": "DeprecatedMethod",
@@ -1911,42 +1767,6 @@
             "selected_text": "createMappingBuilderFactory",
             "error_level": 2,
             "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 188,
-            "line_to": 188,
-            "type": "DeprecatedClass",
-            "message": "Class Spryker\\Zed\\SearchElasticsearch\\Business\\Installer\\Index\\Mapping\\MappingBuilderFactoryInterface is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/SearchElasticsearch/src/Spryker/Zed/SearchElasticsearch/Business/SearchElasticsearchBusinessFactory.php",
-            "snippet": "     * @return \\Spryker\\Zed\\SearchElasticsearch\\Business\\Installer\\Index\\Mapping\\MappingBuilderFactoryInterface",
-            "selected_text": "\\Spryker\\Zed\\SearchElasticsearch\\Business\\Installer\\Index\\Mapping\\MappingBuilderFactoryInterface",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 190,
-            "line_to": 190,
-            "type": "DeprecatedClass",
-            "message": "Class Spryker\\Zed\\SearchElasticsearch\\Business\\Installer\\Index\\Mapping\\MappingBuilderFactoryInterface is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/SearchElasticsearch/src/Spryker/Zed/SearchElasticsearch/Business/SearchElasticsearchBusinessFactory.php",
-            "snippet": "    public function createMappingBuilderFactory(): MappingBuilderFactoryInterface",
-            "selected_text": "MappingBuilderFactoryInterface",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 192,
-            "line_to": 194,
-            "type": "DeprecatedClass",
-            "message": "Spryker\\Zed\\SearchElasticsearch\\Business\\Installer\\Index\\Mapping\\MappingBuilderFactory is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/SearchElasticsearch/src/Spryker/Zed/SearchElasticsearch/Business/SearchElasticsearchBusinessFactory.php",
-            "snippet": "        return new MappingBuilderFactory(\n            $this->createMappingTypeSupportDetector(),\n        );",
-            "selected_text": "new MappingBuilderFactory(\n            $this->createMappingTypeSupportDetector(),\n        )",
-            "error_level": 2,
-            "shortcode": 98
         },
         {
             "severity": "info",
@@ -1960,5 +1780,6 @@
             "error_level": 2,
             "shortcode": 1
         }
-    ]
+    ],
+    "count": 148
 }

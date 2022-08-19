@@ -750,78 +750,6 @@
         },
         {
             "severity": "info",
-            "line_from": 87,
-            "line_to": 87,
-            "type": "DeprecatedConstant",
-            "message": "Constant Spryker\\Glue\\CustomersRestApi\\CustomersRestApiDependencyProvider::CLIENT_SESSION is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/CustomersRestApi/src/Spryker/Glue/CustomersRestApi/CustomersRestApiDependencyProvider.php",
-            "snippet": "        $container->set(static::CLIENT_SESSION, function (Container $container) {",
-            "selected_text": "static::CLIENT_SESSION",
-            "error_level": 2,
-            "shortcode": 170
-        },
-        {
-            "severity": "info",
-            "line_from": 88,
-            "line_to": 88,
-            "type": "DeprecatedClass",
-            "message": "Spryker\\Glue\\CustomersRestApi\\Dependency\\Client\\CustomersRestApiToSessionClientBridge is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/CustomersRestApi/src/Spryker/Glue/CustomersRestApi/CustomersRestApiDependencyProvider.php",
-            "snippet": "            return new CustomersRestApiToSessionClientBridge($container->getLocator()->session()->client());",
-            "selected_text": "new CustomersRestApiToSessionClientBridge($container->getLocator()->session()->client())",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 273,
-            "line_to": 273,
-            "type": "DeprecatedClass",
-            "message": "Class Spryker\\Glue\\CustomersRestApi\\Dependency\\Client\\CustomersRestApiToSessionClientInterface is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/CustomersRestApi/src/Spryker/Glue/CustomersRestApi/CustomersRestApiFactory.php",
-            "snippet": "     * @return \\Spryker\\Glue\\CustomersRestApi\\Dependency\\Client\\CustomersRestApiToSessionClientInterface",
-            "selected_text": "\\Spryker\\Glue\\CustomersRestApi\\Dependency\\Client\\CustomersRestApiToSessionClientInterface",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 275,
-            "line_to": 275,
-            "type": "DeprecatedClass",
-            "message": "Class Spryker\\Glue\\CustomersRestApi\\Dependency\\Client\\CustomersRestApiToSessionClientInterface is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/CustomersRestApi/src/Spryker/Glue/CustomersRestApi/CustomersRestApiFactory.php",
-            "snippet": "    public function getSessionClient(): CustomersRestApiToSessionClientInterface",
-            "selected_text": "CustomersRestApiToSessionClientInterface",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 277,
-            "line_to": 277,
-            "type": "DeprecatedConstant",
-            "message": "Constant Spryker\\Glue\\CustomersRestApi\\CustomersRestApiDependencyProvider::CLIENT_SESSION is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/CustomersRestApi/src/Spryker/Glue/CustomersRestApi/CustomersRestApiFactory.php",
-            "snippet": "        return $this->getProvidedDependency(CustomersRestApiDependencyProvider::CLIENT_SESSION);",
-            "selected_text": "CustomersRestApiDependencyProvider::CLIENT_SESSION",
-            "error_level": 2,
-            "shortcode": 170
-        },
-        {
-            "severity": "info",
-            "line_from": 13,
-            "line_to": 13,
-            "type": "DeprecatedInterface",
-            "message": "Spryker\\Glue\\CustomersRestApi\\Dependency\\Client\\CustomersRestApiToSessionClientInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/CustomersRestApi/src/Spryker/Glue/CustomersRestApi/Dependency/Client/CustomersRestApiToSessionClientBridge.php",
-            "snippet": "class CustomersRestApiToSessionClientBridge implements CustomersRestApiToSessionClientInterface",
-            "selected_text": "CustomersRestApiToSessionClientBridge",
-            "error_level": 2,
-            "shortcode": 152
-        },
-        {
-            "severity": "info",
             "line_from": 62,
             "line_to": 62,
             "type": "DeprecatedMethod",
@@ -831,18 +759,7 @@
             "selected_text": "setShippingAddress",
             "error_level": 2,
             "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 51,
-            "line_to": 51,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\CustomersRestApi\\Business\\CustomersRestApiFacadeInterface::updateCustomerAddressUuid has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/CustomersRestApi/src/Spryker/Zed/CustomersRestApi/Communication/Console/CustomerAddressesUuidWriterConsole.php",
-            "snippet": "        $this->getFacade()->updateCustomerAddressUuid();",
-            "selected_text": "updateCustomerAddressUuid",
-            "error_level": 2,
-            "shortcode": 1
         }
-    ]
+    ],
+    "count": 63
 }

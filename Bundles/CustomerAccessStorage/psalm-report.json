@@ -14,30 +14,6 @@
         }
     ],
     "warning": [],
-    "deprecation": [
-        {
-            "severity": "info",
-            "line_from": 23,
-            "line_to": 23,
-            "type": "DeprecatedInterface",
-            "message": "Spryker\\Zed\\SynchronizationExtension\\Dependency\\Plugin\\SynchronizationDataRepositoryPluginInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/CustomerAccessStorage/src/Spryker/Zed/CustomerAccessStorage/Communication/Plugin/Synchronization/CustomerAccessSynchronizationDataPlugin.php",
-            "snippet": "class CustomerAccessSynchronizationDataPlugin extends AbstractPlugin implements SynchronizationDataRepositoryPluginInterface",
-            "selected_text": "CustomerAccessSynchronizationDataPlugin",
-            "error_level": 2,
-            "shortcode": 152
-        },
-        {
-            "severity": "info",
-            "line_from": 96,
-            "line_to": 96,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\CustomerAccessStorage\\Persistence\\CustomerAccessStorageRepositoryInterface::findAllCustomerAccessStorageEntities has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/CustomerAccessStorage/src/Spryker/Zed/CustomerAccessStorage/Communication/Plugin/Synchronization/CustomerAccessSynchronizationDataPlugin.php",
-            "snippet": "        $customerAccessStorageEntities = $this->getRepository()->findAllCustomerAccessStorageEntities();",
-            "selected_text": "findAllCustomerAccessStorageEntities",
-            "error_level": 2,
-            "shortcode": 1
-        }
-    ]
+    "deprecation": [],
+    "count": 1
 }

@@ -1494,150 +1494,6 @@
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 94,
-            "line_to": 94,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\Cms\\Business\\Page\\PageManagerInterface::savePage has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Cms/src/Spryker/Zed/Cms/Business/CmsFacade.php",
-            "snippet": "        return $pageManager->savePage($pageTransfer);",
-            "selected_text": "savePage",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 87,
-            "line_to": 87,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\Cms\\Business\\Page\\PageManager::checkTemplateExists has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Cms/src/Spryker/Zed/Cms/Business/Page/PageManager.php",
-            "snippet": "        $this->checkTemplateExists($pageTransfer->getFkTemplate());",
-            "selected_text": "checkTemplateExists",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 90,
-            "line_to": 90,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\Cms\\Business\\Page\\PageManager::createPage has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Cms/src/Spryker/Zed/Cms/Business/Page/PageManager.php",
-            "snippet": "            return $this->createPage($pageTransfer);",
-            "selected_text": "createPage",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 93,
-            "line_to": 93,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\Cms\\Business\\Page\\PageManager::updatePage has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Cms/src/Spryker/Zed/Cms/Business/Page/PageManager.php",
-            "snippet": "        return $this->updatePage($pageTransfer);",
-            "selected_text": "updatePage",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 105,
-            "line_to": 105,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\Cms\\Business\\Page\\PageManager::checkTemplateExists has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Cms/src/Spryker/Zed/Cms/Business/Page/PageManager.php",
-            "snippet": "        $this->checkTemplateExists($pageTransfer->getFkTemplate());",
-            "selected_text": "checkTemplateExists",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 111,
-            "line_to": 111,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\Cms\\Business\\Page\\PageManager::persistNewPage has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Cms/src/Spryker/Zed/Cms/Business/Page/PageManager.php",
-            "snippet": "        $this->persistNewPage($pageTransfer);",
-            "selected_text": "persistNewPage",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 136,
-            "line_to": 136,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\Cms\\Business\\Page\\PageManager::createPageUrl has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Cms/src/Spryker/Zed/Cms/Business/Page/PageManager.php",
-            "snippet": "            $urlTransfer = $this->createPageUrl($pageTransfer);",
-            "selected_text": "createPageUrl",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 140,
-            "line_to": 140,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\Cms\\Business\\Page\\PageManager::createCmsPageLocalizedAttributes has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Cms/src/Spryker/Zed/Cms/Business/Page/PageManager.php",
-            "snippet": "        $this->createCmsPageLocalizedAttributes($pageTransfer->getLocalizedAttributes(), $pageEntity);",
-            "selected_text": "createCmsPageLocalizedAttributes",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 156,
-            "line_to": 156,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\Cms\\Business\\Page\\PageManager::persistExistingPage has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Cms/src/Spryker/Zed/Cms/Business/Page/PageManager.php",
-            "snippet": "        $this->persistExistingPage($pageTransfer);",
-            "selected_text": "persistExistingPage",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 174,
-            "line_to": 174,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\Cms\\Business\\Page\\PageManager::getPageById has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Cms/src/Spryker/Zed/Cms/Business/Page/PageManager.php",
-            "snippet": "        $pageEntity = $this->getPageById($pageTransfer->getIdCmsPage());",
-            "selected_text": "getPageById",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 178,
-            "line_to": 178,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\Cms\\Business\\Page\\PageManager::updatePageUrl has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Cms/src/Spryker/Zed/Cms/Business/Page/PageManager.php",
-            "snippet": "            $urlTransfer = $this->updatePageUrl($pageTransfer);",
-            "selected_text": "updatePageUrl",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 184,
-            "line_to": 184,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\Cms\\Business\\Page\\PageManager::updateCmsPageLocalizedAttributes has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Cms/src/Spryker/Zed/Cms/Business/Page/PageManager.php",
-            "snippet": "        $this->updateCmsPageLocalizedAttributes($pageTransfer->getLocalizedAttributes(), $pageEntity);",
-            "selected_text": "updateCmsPageLocalizedAttributes",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
             "line_from": 344,
             "line_to": 344,
             "type": "DeprecatedMethod",
@@ -1671,18 +1527,6 @@
             "selected_text": "CmsConstants::YVES_THEME",
             "error_level": 2,
             "shortcode": 170
-        },
-        {
-            "severity": "info",
-            "line_from": 118,
-            "line_to": 118,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\Cms\\CmsConfig::getTemplateRealPath has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Cms/src/Spryker/Zed/Cms/Communication/CmsCommunicationFactory.php",
-            "snippet": "            ->getTemplateRealPath($templateRelativePath);",
-            "selected_text": "getTemplateRealPath",
-            "error_level": 2,
-            "shortcode": 1
         },
         {
             "severity": "info",
@@ -1720,5 +1564,6 @@
             "error_level": 2,
             "shortcode": 1
         }
-    ]
+    ],
+    "count": 130
 }

@@ -15,44 +15,8 @@
         },
         {
             "severity": "info",
-            "line_from": 54,
-            "line_to": 54,
-            "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of Spryker\\Zed\\SalesOrderThresholdGui\\Communication\\Form\\Constraint\\ThresholdStrategyConstraintValidator::isPluginApplicable expects Spryker\\Zed\\SalesOrderThresholdGuiExtension\\Dependency\\Plugin\\SalesOrderThresholdFormExpanderPluginInterface, possibly different type Spryker\\Zed\\SalesOrderThresholdGuiExtension\\Dependency\\Plugin\\SalesOrderThresholdFormExpanderPluginInterface|Spryker\\Zed\\SalesOrderThresholdGuiExtension\\Dependency\\Plugin\\SalesOrderThresholdFormFieldDependenciesPluginInterface provided",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesOrderThresholdGui/src/Spryker/Zed/SalesOrderThresholdGui/Communication/Form/Constraint/ThresholdStrategyConstraintValidator.php",
-            "snippet": "            if (!$this->isPluginApplicable($salesOrderThresholdFormExpanderPlugin, $formData)) {",
-            "selected_text": "$salesOrderThresholdFormExpanderPlugin",
-            "error_level": 3,
-            "shortcode": 92
-        },
-        {
-            "severity": "info",
-            "line_from": 58,
-            "line_to": 58,
-            "type": "PossiblyUndefinedMethod",
-            "message": "Method Spryker\\Zed\\SalesOrderThresholdGuiExtension\\Dependency\\Plugin\\SalesOrderThresholdFormExpanderPluginInterface::getThresholdFieldDependentFieldNames does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesOrderThresholdGui/src/Spryker/Zed/SalesOrderThresholdGui/Communication/Form/Constraint/ThresholdStrategyConstraintValidator.php",
-            "snippet": "            $fieldsToCheck = array_merge($fieldsToCheck, $salesOrderThresholdFormExpanderPlugin->getThresholdFieldDependentFieldNames());",
-            "selected_text": "getThresholdFieldDependentFieldNames",
-            "error_level": 3,
-            "shortcode": 108
-        },
-        {
-            "severity": "info",
-            "line_from": 59,
-            "line_to": 59,
-            "type": "PossiblyUndefinedMethod",
-            "message": "Method Spryker\\Zed\\SalesOrderThresholdGuiExtension\\Dependency\\Plugin\\SalesOrderThresholdFormFieldDependenciesPluginInterface::getThresholdGroup does not exist",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesOrderThresholdGui/src/Spryker/Zed/SalesOrderThresholdGui/Communication/Form/Constraint/ThresholdStrategyConstraintValidator.php",
-            "snippet": "            $thresholdGroup = $salesOrderThresholdFormExpanderPlugin->getThresholdGroup();",
-            "selected_text": "getThresholdGroup",
-            "error_level": 3,
-            "shortcode": 108
-        },
-        {
-            "severity": "info",
-            "line_from": 114,
-            "line_to": 114,
+            "line_from": 115,
+            "line_to": 115,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getData on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/SalesOrderThresholdGui/src/Spryker/Zed/SalesOrderThresholdGui/Communication/Form/Constraint/ThresholdStrategyConstraintValidator.php",
@@ -434,30 +398,6 @@
             "shortcode": 78
         }
     ],
-    "deprecation": [
-        {
-            "severity": "info",
-            "line_from": 131,
-            "line_to": 131,
-            "type": "DeprecatedConstant",
-            "message": "Constant Spryker\\Zed\\SalesOrderThresholdGui\\SalesOrderThresholdGuiConfig::STRATEGY_TYPE_TO_FORM_TYPE_MAP is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesOrderThresholdGui/src/Spryker/Zed/SalesOrderThresholdGui/SalesOrderThresholdGuiConfig.php",
-            "snippet": "        return static::STRATEGY_TYPE_TO_FORM_TYPE_MAP;",
-            "selected_text": "static::STRATEGY_TYPE_TO_FORM_TYPE_MAP",
-            "error_level": 2,
-            "shortcode": 170
-        },
-        {
-            "severity": "info",
-            "line_from": 155,
-            "line_to": 155,
-            "type": "DeprecatedConstant",
-            "message": "Constant Spryker\\Zed\\SalesOrderThresholdGui\\SalesOrderThresholdGuiConfig::STRATEGY_TYPE_TO_DATA_PROVIDER_MAP is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesOrderThresholdGui/src/Spryker/Zed/SalesOrderThresholdGui/SalesOrderThresholdGuiConfig.php",
-            "snippet": "        return static::STRATEGY_TYPE_TO_DATA_PROVIDER_MAP;",
-            "selected_text": "static::STRATEGY_TYPE_TO_DATA_PROVIDER_MAP",
-            "error_level": 2,
-            "shortcode": 170
-        }
-    ]
+    "deprecation": [],
+    "count": 33
 }

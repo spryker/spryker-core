@@ -340,8 +340,8 @@
         },
         {
             "severity": "info",
-            "line_from": 34,
-            "line_to": 34,
+            "line_from": 36,
+            "line_to": 36,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\DiscountPromotion\\Business\\DiscountPromotionFacadeInterface::removePromotionByIdDiscount cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/DiscountPromotion/src/Spryker/Zed/DiscountPromotion/Communication/Plugin/Discount/DiscountPromotionCleanerPostUpdatePlugin.php",
@@ -352,8 +352,8 @@
         },
         {
             "severity": "info",
-            "line_from": 34,
-            "line_to": 34,
+            "line_from": 36,
+            "line_to": 36,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getIdDiscount on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/DiscountPromotion/src/Spryker/Zed/DiscountPromotion/Communication/Plugin/Discount/DiscountPromotionCleanerPostUpdatePlugin.php",
@@ -364,8 +364,8 @@
         },
         {
             "severity": "info",
-            "line_from": 35,
-            "line_to": 35,
+            "line_from": 37,
+            "line_to": 37,
             "type": "PossiblyNullReference",
             "message": "Cannot call method setDiscountPromotion on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/DiscountPromotion/src/Spryker/Zed/DiscountPromotion/Communication/Plugin/Discount/DiscountPromotionCleanerPostUpdatePlugin.php",
@@ -412,8 +412,8 @@
         },
         {
             "severity": "info",
-            "line_from": 36,
-            "line_to": 36,
+            "line_from": 38,
+            "line_to": 38,
             "type": "PossiblyNullReference",
             "message": "Cannot call method setDiscountPromotion on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/DiscountPromotion/src/Spryker/Zed/DiscountPromotion/Communication/Plugin/Discount/DiscountPromotionPostCreatePlugin.php",
@@ -424,8 +424,8 @@
         },
         {
             "severity": "info",
-            "line_from": 39,
-            "line_to": 39,
+            "line_from": 43,
+            "line_to": 43,
             "type": "PossiblyNullReference",
             "message": "Cannot call method setDiscountPromotion on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/DiscountPromotion/src/Spryker/Zed/DiscountPromotion/Communication/Plugin/Discount/DiscountPromotionPostUpdatePlugin.php",
@@ -460,6 +460,18 @@
         },
         {
             "severity": "info",
+            "line_from": 47,
+            "line_to": 47,
+            "type": "ArgumentTypeCoercion",
+            "message": "Argument 1 of Spryker\\Zed\\DiscountPromotion\\Persistence\\Propel\\Mapper\\DiscountPromotionMapper::mapDiscountPromotionEntitiesToDiscountPromotionCollectionTransfer expects Propel\\Runtime\\Collection\\ObjectCollection<Orm\\Zed\\DiscountPromotion\\Persistence\\SpyDiscountPromotion>, parent type Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\DiscountPromotion\\Persistence\\SpyDiscountPromotion> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/DiscountPromotion/src/Spryker/Zed/DiscountPromotion/Persistence/DiscountPromotionRepository.php",
+            "snippet": "                $discountPromotionQuery->find(),",
+            "selected_text": "$discountPromotionQuery->find()",
+            "error_level": 3,
+            "shortcode": 193
+        },
+        {
+            "severity": "info",
             "line_from": 76,
             "line_to": 76,
             "type": "PossiblyInvalidMethodCall",
@@ -469,18 +481,6 @@
             "selected_text": "getIterator",
             "error_level": 3,
             "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 64,
-            "line_to": 64,
-            "type": "MismatchingDocblockParamType",
-            "message": "Parameter $discountPromotionEntities has wrong type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\DiscountPromotion\\Persistence\\SpyDiscountPromotion>', should be 'Propel\\Runtime\\Collection\\ObjectCollection'",
-            "file_name": "vendor/spryker/spryker/Bundles/DiscountPromotion/src/Spryker/Zed/DiscountPromotion/Persistence/Propel/Mapper/DiscountPromotionMapper.php",
-            "snippet": "     * @param \\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\DiscountPromotion\\Persistence\\SpyDiscountPromotion[] $discountPromotionEntities",
-            "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\DiscountPromotion\\Persistence\\SpyDiscountPromotion[]",
-            "error_level": 4,
-            "shortcode": 141
         }
     ],
     "deprecation": [
@@ -558,42 +558,6 @@
         },
         {
             "severity": "info",
-            "line_from": 105,
-            "line_to": 105,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\DiscountPromotion\\Business\\Model\\DiscountPromotionReaderInterface::findDiscountPromotionByIdDiscountPromotion has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/DiscountPromotion/src/Spryker/Zed/DiscountPromotion/Business/DiscountPromotionFacade.php",
-            "snippet": "            ->findDiscountPromotionByIdDiscountPromotion($idDiscountPromotion);",
-            "selected_text": "findDiscountPromotionByIdDiscountPromotion",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 155,
-            "line_to": 155,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\DiscountPromotion\\Business\\Model\\DiscountPromotionReaderInterface::findDiscountPromotionByIdDiscount has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/DiscountPromotion/src/Spryker/Zed/DiscountPromotion/Business/DiscountPromotionFacade.php",
-            "snippet": "            ->findDiscountPromotionByIdDiscount($idDiscount);",
-            "selected_text": "findDiscountPromotionByIdDiscount",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 173,
-            "line_to": 173,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\DiscountPromotion\\Business\\Model\\DiscountPromotionReaderInterface::findDiscountPromotionByUuid has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/DiscountPromotion/src/Spryker/Zed/DiscountPromotion/Business/DiscountPromotionFacade.php",
-            "snippet": "            ->findDiscountPromotionByUuid($uuid);",
-            "selected_text": "findDiscountPromotionByUuid",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
             "line_from": 66,
             "line_to": 66,
             "type": "DeprecatedMethod",
@@ -630,8 +594,8 @@
         },
         {
             "severity": "info",
-            "line_from": 43,
-            "line_to": 43,
+            "line_from": 46,
+            "line_to": 46,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Zed\\DiscountPromotion\\Persistence\\DiscountPromotionRepositoryInterface::isAbstractSkusFieldExists has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/DiscountPromotion/src/Spryker/Zed/DiscountPromotion/Communication/Form/DiscountPromotionFormType.php",
@@ -642,8 +606,8 @@
         },
         {
             "severity": "info",
-            "line_from": 86,
-            "line_to": 86,
+            "line_from": 89,
+            "line_to": 89,
             "type": "DeprecatedConstant",
             "message": "Constant Generated\\Shared\\Transfer\\DiscountPromotionTransfer::ABSTRACT_SKU is deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/DiscountPromotion/src/Spryker/Zed/DiscountPromotion/Communication/Form/DiscountPromotionFormType.php",
@@ -690,18 +654,6 @@
         },
         {
             "severity": "info",
-            "line_from": 30,
-            "line_to": 30,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\DiscountPromotion\\Persistence\\Checker\\DiscountPromotionFieldCheckerInterface::isAbstractSkusFieldExists has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/DiscountPromotion/src/Spryker/Zed/DiscountPromotion/Persistence/DiscountPromotionRepository.php",
-            "snippet": "            ->isAbstractSkusFieldExists();",
-            "selected_text": "isAbstractSkusFieldExists",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
             "line_from": 97,
             "line_to": 97,
             "type": "DeprecatedMethod",
@@ -736,5 +688,6 @@
             "error_level": 2,
             "shortcode": 1
         }
-    ]
+    ],
+    "count": 57
 }

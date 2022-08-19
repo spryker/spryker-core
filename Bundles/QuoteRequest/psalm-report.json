@@ -1421,18 +1421,6 @@
         },
         {
             "severity": "info",
-            "line_from": 74,
-            "line_to": 74,
-            "type": "DeprecatedMethod",
-            "message": "The method Generated\\Shared\\Transfer\\QuoteTransfer::getShipment has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/QuoteRequest/src/Spryker/Client/QuoteRequest/Checker/QuoteChecker.php",
-            "snippet": "        $shipmentTransfer = $quoteTransfer->getShipment();",
-            "selected_text": "getShipment",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
             "line_from": 114,
             "line_to": 114,
             "type": "DeprecatedMethod",
@@ -1440,42 +1428,6 @@
             "file_name": "vendor/spryker/spryker/Bundles/QuoteRequest/src/Spryker/Zed/QuoteRequest/Business/Sanitizer/QuoteRequestVersionSanitizer.php",
             "snippet": "        $quoteTransfer = $this->clearSingleShipmentMethodSourcePrices($quoteTransfer);",
             "selected_text": "clearSingleShipmentMethodSourcePrices",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 182,
-            "line_to": 182,
-            "type": "DeprecatedMethod",
-            "message": "The method Generated\\Shared\\Transfer\\QuoteTransfer::getShipment has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/QuoteRequest/src/Spryker/Zed/QuoteRequest/Business/Sanitizer/QuoteRequestVersionSanitizer.php",
-            "snippet": "        if ($quoteTransfer->getShipment() && $quoteTransfer->getShipment()->getMethod()) {",
-            "selected_text": "getShipment",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 182,
-            "line_to": 182,
-            "type": "DeprecatedMethod",
-            "message": "The method Generated\\Shared\\Transfer\\QuoteTransfer::getShipment has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/QuoteRequest/src/Spryker/Zed/QuoteRequest/Business/Sanitizer/QuoteRequestVersionSanitizer.php",
-            "snippet": "        if ($quoteTransfer->getShipment() && $quoteTransfer->getShipment()->getMethod()) {",
-            "selected_text": "getShipment",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 183,
-            "line_to": 183,
-            "type": "DeprecatedMethod",
-            "message": "The method Generated\\Shared\\Transfer\\QuoteTransfer::getShipment has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/QuoteRequest/src/Spryker/Zed/QuoteRequest/Business/Sanitizer/QuoteRequestVersionSanitizer.php",
-            "snippet": "            $quoteTransfer->getShipment()->getMethod()->setSourcePrice(null);",
-            "selected_text": "getShipment",
             "error_level": 2,
             "shortcode": 1
         },
@@ -1491,5 +1443,6 @@
             "error_level": 2,
             "shortcode": 152
         }
-    ]
+    ],
+    "count": 120
 }

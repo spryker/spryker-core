@@ -2058,90 +2058,6 @@
         },
         {
             "severity": "info",
-            "line_from": 121,
-            "line_to": 121,
-            "type": "DeprecatedMethod",
-            "message": "The method Generated\\Shared\\Transfer\\CalculatedDiscountTransfer::setSumGrossAmount has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Calculation/src/Spryker/Zed/Calculation/Business/Model/Aggregator/DiscountAmountAggregator/DiscountAmountAggregatorForGrossAmount.php",
-            "snippet": "        $calculatedDiscountTransfer->setSumGrossAmount(",
-            "selected_text": "setSumGrossAmount",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 122,
-            "line_to": 122,
-            "type": "DeprecatedMethod",
-            "message": "The method Generated\\Shared\\Transfer\\CalculatedDiscountTransfer::getUnitGrossAmount has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Calculation/src/Spryker/Zed/Calculation/Business/Model/Aggregator/DiscountAmountAggregator/DiscountAmountAggregatorForGrossAmount.php",
-            "snippet": "            $calculatedDiscountTransfer->getUnitGrossAmount() * $calculatedDiscountTransfer->getQuantity(),",
-            "selected_text": "getUnitGrossAmount",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 166,
-            "line_to": 166,
-            "type": "DeprecatedMethod",
-            "message": "The method Generated\\Shared\\Transfer\\CalculatedDiscountTransfer::getSumGrossAmount has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Calculation/src/Spryker/Zed/Calculation/Business/Model/Aggregator/DiscountAmountAggregator/DiscountAmountAggregatorForGrossAmount.php",
-            "snippet": "            $discountAmount = $calculatedDiscountTransfer->getSumGrossAmount();",
-            "selected_text": "getSumGrossAmount",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 197,
-            "line_to": 197,
-            "type": "DeprecatedMethod",
-            "message": "The method Generated\\Shared\\Transfer\\CalculatedDiscountTransfer::getUnitGrossAmount has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Calculation/src/Spryker/Zed/Calculation/Business/Model/Aggregator/DiscountAmountAggregator/DiscountAmountAggregatorForGrossAmount.php",
-            "snippet": "            $discountAmount = $calculatedDiscountTransfer->getUnitGrossAmount();",
-            "selected_text": "getUnitGrossAmount",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 199,
-            "line_to": 199,
-            "type": "DeprecatedMethod",
-            "message": "The method Generated\\Shared\\Transfer\\CalculatedDiscountTransfer::getUnitGrossAmount has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Calculation/src/Spryker/Zed/Calculation/Business/Model/Aggregator/DiscountAmountAggregator/DiscountAmountAggregatorForGrossAmount.php",
-            "snippet": "                $discountAmount = $this->calculateNetDiscountAmount($taxRate, $calculatedDiscountTransfer->getUnitGrossAmount());",
-            "selected_text": "getUnitGrossAmount",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 200,
-            "line_to": 200,
-            "type": "DeprecatedMethod",
-            "message": "The method Generated\\Shared\\Transfer\\CalculatedDiscountTransfer::setUnitGrossAmount has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Calculation/src/Spryker/Zed/Calculation/Business/Model/Aggregator/DiscountAmountAggregator/DiscountAmountAggregatorForGrossAmount.php",
-            "snippet": "                $calculatedDiscountTransfer->setUnitGrossAmount($discountAmount);",
-            "selected_text": "setUnitGrossAmount",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 237,
-            "line_to": 237,
-            "type": "DeprecatedMethod",
-            "message": "The method Generated\\Shared\\Transfer\\CalculatedDiscountTransfer::getSumGrossAmount has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Calculation/src/Spryker/Zed/Calculation/Business/Model/Aggregator/DiscountAmountAggregator/DiscountAmountAggregatorForGrossAmount.php",
-            "snippet": "        $discountAmount = $calculatedDiscountTransfer->getSumGrossAmount();",
-            "selected_text": "getSumGrossAmount",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
             "line_from": 17,
             "line_to": 17,
             "type": "DeprecatedClass",
@@ -2463,30 +2379,7 @@
             "selected_text": "TaxTotalCalculatorPlugin",
             "error_level": 2,
             "shortcode": 152
-        },
-        {
-            "severity": "info",
-            "line_from": 22,
-            "line_to": 22,
-            "type": "DeprecatedInterface",
-            "message": "Spryker\\Zed\\Checkout\\Dependency\\Plugin\\CheckoutPreConditionInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Calculation/src/Spryker/Zed/Calculation/Communication/Plugin/CheckoutGrandTotalPreCondition.php",
-            "snippet": "class CheckoutGrandTotalPreCondition extends AbstractPlugin implements CheckoutPreConditionInterface",
-            "selected_text": "CheckoutGrandTotalPreCondition",
-            "error_level": 2,
-            "shortcode": 152
-        },
-        {
-            "severity": "info",
-            "line_from": 32,
-            "line_to": 32,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\Calculation\\Business\\CalculationFacadeInterface::validateCheckoutGrandTotal has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Calculation/src/Spryker/Zed/Calculation/Communication/Plugin/CheckoutGrandTotalPreCondition.php",
-            "snippet": "        return $this->getFacade()->validateCheckoutGrandTotal($quoteTransfer, $checkoutResponseTransfer);",
-            "selected_text": "validateCheckoutGrandTotal",
-            "error_level": 2,
-            "shortcode": 1
         }
-    ]
+    ],
+    "count": 198
 }

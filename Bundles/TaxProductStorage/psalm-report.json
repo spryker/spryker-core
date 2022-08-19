@@ -66,30 +66,6 @@
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 21,
-            "line_to": 21,
-            "type": "DeprecatedTrait",
-            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/TaxProductStorage/src/Spryker/Zed/TaxProductStorage/Communication/Plugin/Event/Listener/TaxProductStoragePublishListener.php",
-            "snippet": "    use DatabaseTransactionHandlerTrait;",
-            "selected_text": "DatabaseTransactionHandlerTrait",
-            "error_level": 2,
-            "shortcode": 171
-        },
-        {
-            "severity": "info",
-            "line_from": 21,
-            "line_to": 21,
-            "type": "DeprecatedTrait",
-            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/TaxProductStorage/src/Spryker/Zed/TaxProductStorage/Communication/Plugin/Event/Listener/TaxProductStorageUnpublishListener.php",
-            "snippet": "    use DatabaseTransactionHandlerTrait;",
-            "selected_text": "DatabaseTransactionHandlerTrait",
-            "error_level": 2,
-            "shortcode": 171
-        },
-        {
-            "severity": "info",
             "line_from": 20,
             "line_to": 20,
             "type": "DeprecatedInterface",
@@ -100,5 +76,6 @@
             "error_level": 2,
             "shortcode": 152
         }
-    ]
+    ],
+    "count": 6
 }

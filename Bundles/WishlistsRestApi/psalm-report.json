@@ -110,18 +110,6 @@
             "shortcode": 113
         }
     ],
-    "deprecation": [
-        {
-            "severity": "info",
-            "line_from": 51,
-            "line_to": 51,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\WishlistsRestApi\\Business\\WishlistsRestApiFacadeInterface::updateWishlistsUuid has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/WishlistsRestApi/src/Spryker/Zed/WishlistsRestApi/Communication/Console/WishlistsUuidWriterConsole.php",
-            "snippet": "        $this->getFacade()->updateWishlistsUuid();",
-            "selected_text": "updateWishlistsUuid",
-            "error_level": 2,
-            "shortcode": 1
-        }
-    ]
+    "deprecation": [],
+    "count": 9
 }

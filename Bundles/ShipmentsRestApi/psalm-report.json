@@ -798,30 +798,6 @@
         },
         {
             "severity": "info",
-            "line_from": 89,
-            "line_to": 89,
-            "type": "DeprecatedMethod",
-            "message": "The method Generated\\Shared\\Transfer\\OrderTransfer::getShippingAddress has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ShipmentsRestApi/src/Spryker/Glue/ShipmentsRestApi/Processor/Expander/ShipmentsByOrderResourceRelationshipExpander.php",
-            "snippet": "        return !$orderTransfer->getShippingAddress() && !$orderTransfer->getIdShipmentMethod();",
-            "selected_text": "getShippingAddress",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 89,
-            "line_to": 89,
-            "type": "DeprecatedMethod",
-            "message": "The method Generated\\Shared\\Transfer\\OrderTransfer::getIdShipmentMethod has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ShipmentsRestApi/src/Spryker/Glue/ShipmentsRestApi/Processor/Expander/ShipmentsByOrderResourceRelationshipExpander.php",
-            "snippet": "        return !$orderTransfer->getShippingAddress() && !$orderTransfer->getIdShipmentMethod();",
-            "selected_text": "getIdShipmentMethod",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
             "line_from": 33,
             "line_to": 33,
             "type": "DeprecatedMethod",
@@ -856,5 +832,6 @@
             "error_level": 2,
             "shortcode": 1
         }
-    ]
+    ],
+    "count": 69
 }

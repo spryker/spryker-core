@@ -161,18 +161,6 @@
         },
         {
             "severity": "info",
-            "line_from": 45,
-            "line_to": 45,
-            "type": "DeprecatedProperty",
-            "message": "Spryker\\Zed\\ZedNavigation\\Business\\Model\\Cache\\ZedNavigationCache::$isEnabled is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ZedNavigation/src/Spryker/Zed/ZedNavigation/Business/Model/Cache/ZedNavigationCache.php",
-            "snippet": "        return $this->isEnabled;",
-            "selected_text": "$this->isEnabled",
-            "error_level": 2,
-            "shortcode": 99
-        },
-        {
-            "severity": "info",
             "line_from": 59,
             "line_to": 59,
             "type": "DeprecatedMethod",
@@ -185,30 +173,6 @@
         },
         {
             "severity": "info",
-            "line_from": 193,
-            "line_to": 193,
-            "type": "DeprecatedClass",
-            "message": "Class Spryker\\Zed\\ZedNavigationExtension\\Dependency\\Plugin\\NavigationItemFilterPluginInterface is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ZedNavigation/src/Spryker/Zed/ZedNavigation/Business/ZedNavigationBusinessFactory.php",
-            "snippet": "     * @return array<\\Spryker\\Zed\\ZedNavigationExtension\\Dependency\\Plugin\\NavigationItemFilterPluginInterface>",
-            "selected_text": "array<\\Spryker\\Zed\\ZedNavigationExtension\\Dependency\\Plugin\\NavigationItemFilterPluginInterface>",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 197,
-            "line_to": 197,
-            "type": "DeprecatedConstant",
-            "message": "Constant Spryker\\Zed\\ZedNavigation\\ZedNavigationDependencyProvider::PLUGINS_NAVIGATION_ITEM_FILTER is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ZedNavigation/src/Spryker/Zed/ZedNavigation/Business/ZedNavigationBusinessFactory.php",
-            "snippet": "        return $this->getProvidedDependency(ZedNavigationDependencyProvider::PLUGINS_NAVIGATION_ITEM_FILTER);",
-            "selected_text": "ZedNavigationDependencyProvider::PLUGINS_NAVIGATION_ITEM_FILTER",
-            "error_level": 2,
-            "shortcode": 170
-        },
-        {
-            "severity": "info",
             "line_from": 36,
             "line_to": 36,
             "type": "DeprecatedMethod",
@@ -218,90 +182,6 @@
             "selected_text": "addAlias",
             "error_level": 2,
             "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 49,
-            "line_to": 49,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Service\\Container\\Container::offsetSet has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ZedNavigation/src/Spryker/Zed/ZedNavigation/Communication/Plugin/ServiceProvider/ZedNavigationServiceProvider.php",
-            "snippet": "        $app['twig'] = $app->share(",
-            "selected_text": "$app",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 49,
-            "line_to": 49,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Service\\Container\\Container::share has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ZedNavigation/src/Spryker/Zed/ZedNavigation/Communication/Plugin/ServiceProvider/ZedNavigationServiceProvider.php",
-            "snippet": "        $app['twig'] = $app->share(",
-            "selected_text": "share",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 103,
-            "line_to": 103,
-            "type": "DeprecatedClass",
-            "message": "Spryker\\Zed\\ZedNavigation\\Communication\\Plugin\\ZedNavigation is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ZedNavigation/src/Spryker/Zed/ZedNavigation/Communication/Plugin/ServiceProvider/ZedNavigationServiceProvider.php",
-            "snippet": "            $this->navigation = (new ZedNavigation())",
-            "selected_text": "new ZedNavigation()",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 118,
-            "line_to": 118,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Service\\Container\\Container::offsetGet has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ZedNavigation/src/Spryker/Zed/ZedNavigation/Communication/Plugin/ServiceProvider/ZedNavigationServiceProvider.php",
-            "snippet": "        $requestStack = $application['request_stack'];",
-            "selected_text": "$application",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 151,
-            "line_to": 151,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Service\\Container\\Container::offsetSet has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ZedNavigation/src/Spryker/Zed/ZedNavigation/Communication/Plugin/ServiceProvider/ZedNavigationServiceProvider.php",
-            "snippet": "        $application['twig.global.variables'] = $application->share(",
-            "selected_text": "$application",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 151,
-            "line_to": 151,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Service\\Container\\Container::share has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ZedNavigation/src/Spryker/Zed/ZedNavigation/Communication/Plugin/ServiceProvider/ZedNavigationServiceProvider.php",
-            "snippet": "        $application['twig.global.variables'] = $application->share(",
-            "selected_text": "share",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 172,
-            "line_to": 172,
-            "type": "DeprecatedClass",
-            "message": "Spryker\\Zed\\ZedNavigation\\Communication\\Plugin\\ZedNavigation is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ZedNavigation/src/Spryker/Zed/ZedNavigation/Communication/Plugin/ServiceProvider/ZedNavigationServiceProvider.php",
-            "snippet": "        return (new ZedNavigation())",
-            "selected_text": "new ZedNavigation()",
-            "error_level": 2,
-            "shortcode": 98
         },
         {
             "severity": "info",
@@ -323,18 +203,6 @@
             "message": "The method Spryker\\Zed\\ZedNavigation\\ZedNavigationConfig::getNavigationSchemaFileNamePattern has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ZedNavigation/src/Spryker/Zed/ZedNavigation/ZedNavigationConfig.php",
             "snippet": "            static::NAVIGATION_TYPE_MAIN => $this->getNavigationSchemaFileNamePattern(),",
-            "selected_text": "getNavigationSchemaFileNamePattern",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 108,
-            "line_to": 108,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\ZedNavigation\\ZedNavigationConfig::getNavigationSchemaFileNamePattern has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ZedNavigation/src/Spryker/Zed/ZedNavigation/ZedNavigationConfig.php",
-            "snippet": "        return $this->getRootNavigationSchemasDirName() . $this->getNavigationSchemaFileNamePattern();",
             "selected_text": "getNavigationSchemaFileNamePattern",
             "error_level": 2,
             "shortcode": 1
@@ -374,42 +242,7 @@
             "selected_text": "addNavigationItemFilterPlugins",
             "error_level": 2,
             "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 103,
-            "line_to": 103,
-            "type": "DeprecatedConstant",
-            "message": "Constant Spryker\\Zed\\ZedNavigation\\ZedNavigationDependencyProvider::PLUGINS_NAVIGATION_ITEM_FILTER is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ZedNavigation/src/Spryker/Zed/ZedNavigation/ZedNavigationDependencyProvider.php",
-            "snippet": "        $container->set(static::PLUGINS_NAVIGATION_ITEM_FILTER, function () {",
-            "selected_text": "static::PLUGINS_NAVIGATION_ITEM_FILTER",
-            "error_level": 2,
-            "shortcode": 170
-        },
-        {
-            "severity": "info",
-            "line_from": 104,
-            "line_to": 104,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\ZedNavigation\\ZedNavigationDependencyProvider::getNavigationItemFilterPlugins has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ZedNavigation/src/Spryker/Zed/ZedNavigation/ZedNavigationDependencyProvider.php",
-            "snippet": "            return $this->getNavigationItemFilterPlugins();",
-            "selected_text": "getNavigationItemFilterPlugins",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 127,
-            "line_to": 127,
-            "type": "DeprecatedClass",
-            "message": "Class Spryker\\Zed\\ZedNavigationExtension\\Dependency\\Plugin\\NavigationItemFilterPluginInterface is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ZedNavigation/src/Spryker/Zed/ZedNavigation/ZedNavigationDependencyProvider.php",
-            "snippet": "     * @return array<\\Spryker\\Zed\\ZedNavigationExtension\\Dependency\\Plugin\\NavigationItemFilterPluginInterface>",
-            "selected_text": "array<\\Spryker\\Zed\\ZedNavigationExtension\\Dependency\\Plugin\\NavigationItemFilterPluginInterface>",
-            "error_level": 2,
-            "shortcode": 98
         }
-    ]
+    ],
+    "count": 20
 }

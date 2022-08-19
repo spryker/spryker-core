@@ -38,18 +38,7 @@
             "selected_text": "getScheme",
             "error_level": 2,
             "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 111,
-            "line_to": 111,
-            "type": "DeprecatedConstant",
-            "message": "Constant Spryker\\Shared\\StorageRedis\\StorageRedisConstants::STORAGE_REDIS_PROTOCOL is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/StorageRedis/src/Spryker/Client/StorageRedis/StorageRedisConfig.php",
-            "snippet": "            $this->get(StorageRedisConstants::STORAGE_REDIS_PROTOCOL);",
-            "selected_text": "StorageRedisConstants::STORAGE_REDIS_PROTOCOL",
-            "error_level": 2,
-            "shortcode": 170
         }
-    ]
+    ],
+    "count": 3
 }

@@ -24,6 +24,18 @@
             "selected_text": "$localeNameMapByStoreName",
             "error_level": 3,
             "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 111,
+            "line_to": 111,
+            "type": "ArgumentTypeCoercion",
+            "message": "Argument 1 of Orm\\Zed\\Cms\\Persistence\\SpyCmsVersionQuery::where expects array<array-key, mixed>|literal-string, parent type string provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsStorage/src/Spryker/Zed/CmsStorage/Persistence/CmsStorageQueryContainer.php",
+            "snippet": "            ->where(sprintf('%s = %s', SpyCmsVersionTableMap::COL_FK_CMS_PAGE, SpyCmsPageTableMap::COL_ID_CMS_PAGE));",
+            "selected_text": "sprintf('%s = %s', SpyCmsVersionTableMap::COL_FK_CMS_PAGE, SpyCmsPageTableMap::COL_ID_CMS_PAGE)",
+            "error_level": 3,
+            "shortcode": 193
         }
     ],
     "deprecation": [
@@ -74,102 +86,7 @@
             "selected_text": "$this->isSendingToQueue",
             "error_level": 2,
             "shortcode": 99
-        },
-        {
-            "severity": "info",
-            "line_from": 26,
-            "line_to": 26,
-            "type": "DeprecatedTrait",
-            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsStorage/src/Spryker/Zed/CmsStorage/Communication/Plugin/Event/Listener/CmsPageStorageListener.php",
-            "snippet": "    use DatabaseTransactionHandlerTrait;",
-            "selected_text": "DatabaseTransactionHandlerTrait",
-            "error_level": 2,
-            "shortcode": 171
-        },
-        {
-            "severity": "info",
-            "line_from": 22,
-            "line_to": 22,
-            "type": "DeprecatedTrait",
-            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsStorage/src/Spryker/Zed/CmsStorage/Communication/Plugin/Event/Listener/CmsPageStoragePublishListener.php",
-            "snippet": "    use DatabaseTransactionHandlerTrait;",
-            "selected_text": "DatabaseTransactionHandlerTrait",
-            "error_level": 2,
-            "shortcode": 171
-        },
-        {
-            "severity": "info",
-            "line_from": 22,
-            "line_to": 22,
-            "type": "DeprecatedTrait",
-            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsStorage/src/Spryker/Zed/CmsStorage/Communication/Plugin/Event/Listener/CmsPageStorageUnpublishListener.php",
-            "snippet": "    use DatabaseTransactionHandlerTrait;",
-            "selected_text": "DatabaseTransactionHandlerTrait",
-            "error_level": 2,
-            "shortcode": 171
-        },
-        {
-            "severity": "info",
-            "line_from": 23,
-            "line_to": 23,
-            "type": "DeprecatedTrait",
-            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsStorage/src/Spryker/Zed/CmsStorage/Communication/Plugin/Event/Listener/CmsPageStoreStorageListener.php",
-            "snippet": "    use DatabaseTransactionHandlerTrait;",
-            "selected_text": "DatabaseTransactionHandlerTrait",
-            "error_level": 2,
-            "shortcode": 171
-        },
-        {
-            "severity": "info",
-            "line_from": 27,
-            "line_to": 27,
-            "type": "DeprecatedTrait",
-            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsStorage/src/Spryker/Zed/CmsStorage/Communication/Plugin/Event/Listener/CmsPageUrlStorageListener.php",
-            "snippet": "    use DatabaseTransactionHandlerTrait;",
-            "selected_text": "DatabaseTransactionHandlerTrait",
-            "error_level": 2,
-            "shortcode": 171
-        },
-        {
-            "severity": "info",
-            "line_from": 23,
-            "line_to": 23,
-            "type": "DeprecatedTrait",
-            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsStorage/src/Spryker/Zed/CmsStorage/Communication/Plugin/Event/Listener/CmsPageUrlStoragePublishListener.php",
-            "snippet": "    use DatabaseTransactionHandlerTrait;",
-            "selected_text": "DatabaseTransactionHandlerTrait",
-            "error_level": 2,
-            "shortcode": 171
-        },
-        {
-            "severity": "info",
-            "line_from": 23,
-            "line_to": 23,
-            "type": "DeprecatedTrait",
-            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsStorage/src/Spryker/Zed/CmsStorage/Communication/Plugin/Event/Listener/CmsPageUrlStorageUnpublishListener.php",
-            "snippet": "    use DatabaseTransactionHandlerTrait;",
-            "selected_text": "DatabaseTransactionHandlerTrait",
-            "error_level": 2,
-            "shortcode": 171
-        },
-        {
-            "severity": "info",
-            "line_from": 23,
-            "line_to": 23,
-            "type": "DeprecatedTrait",
-            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsStorage/src/Spryker/Zed/CmsStorage/Communication/Plugin/Event/Listener/CmsPageVersionStorageListener.php",
-            "snippet": "    use DatabaseTransactionHandlerTrait;",
-            "selected_text": "DatabaseTransactionHandlerTrait",
-            "error_level": 2,
-            "shortcode": 171
         }
-    ]
+    ],
+    "count": 7
 }

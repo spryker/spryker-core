@@ -386,18 +386,7 @@
             "selected_text": "new CurrencyPlugin()",
             "error_level": 2,
             "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 70,
-            "line_to": 70,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\Quote\\Business\\Model\\QuoteReaderInterface::findQuoteByCustomer has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Quote/src/Spryker/Zed/Quote/Business/QuoteFacade.php",
-            "snippet": "        return $this->getFactory()->createQuoteReader()->findQuoteByCustomer($customerTransfer);",
-            "selected_text": "findQuoteByCustomer",
-            "error_level": 2,
-            "shortcode": 1
         }
-    ]
+    ],
+    "count": 32
 }

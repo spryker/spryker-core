@@ -11,6 +11,30 @@
             "selected_text": "$command",
             "error_level": 6,
             "shortcode": 4
+        },
+        {
+            "severity": "error",
+            "line_from": 231,
+            "line_to": 231,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'string' for Spryker\\Zed\\Queue\\Business\\Worker\\Worker::getQueueWorkerOutputFileNameBasedOnType is incorrect, got 'resource|string'",
+            "file_name": "vendor/spryker/spryker/Bundles/Queue/src/Spryker/Zed/Queue/Business/Worker/Worker.php",
+            "snippet": "     * @return string",
+            "selected_text": "string",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 239,
+            "line_to": 239,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'resource|string' does not match the declared return type 'string' for Spryker\\Zed\\Queue\\Business\\Worker\\Worker::getQueueWorkerOutputFileNameBasedOnType",
+            "file_name": "vendor/spryker/spryker/Bundles/Queue/src/Spryker/Zed/Queue/Business/Worker/Worker.php",
+            "snippet": "        return $this->queueConfig->getQueueWorkerOutputFileName();",
+            "selected_text": "$this->queueConfig->getQueueWorkerOutputFileName()",
+            "error_level": 6,
+            "shortcode": 128
         }
     ],
     "warning": [
@@ -172,8 +196,20 @@
         },
         {
             "severity": "info",
-            "line_from": 246,
-            "line_to": 246,
+            "line_from": 236,
+            "line_to": 236,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of stream_get_meta_data expects resource, possibly different type resource|string provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Queue/src/Spryker/Zed/Queue/Business/Worker/Worker.php",
+            "snippet": "            return stream_get_meta_data($this->queueConfig->getQueueWorkerOutputFileName())['uri'];",
+            "selected_text": "$this->queueConfig->getQueueWorkerOutputFileName()",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 258,
+            "line_to": 258,
             "type": "ArgumentTypeCoercion",
             "message": "Argument 1 of usleep expects 0|positive-int, parent type int provided",
             "file_name": "vendor/spryker/spryker/Bundles/Queue/src/Spryker/Zed/Queue/Business/Worker/Worker.php",
@@ -198,8 +234,8 @@
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 326,
-            "line_to": 326,
+            "line_from": 338,
+            "line_to": 338,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Zed\\Queue\\QueueConfig::getIsWorkerLoopEnabled has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Queue/src/Spryker/Zed/Queue/Business/Worker/Worker.php",
@@ -207,18 +243,7 @@
             "selected_text": "getIsWorkerLoopEnabled",
             "error_level": 2,
             "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 215,
-            "line_to": 215,
-            "type": "DeprecatedConstant",
-            "message": "Constant Spryker\\Shared\\Queue\\QueueConstants::QUEUE_WORKER_LOOP is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Queue/src/Spryker/Zed/Queue/QueueConfig.php",
-            "snippet": "        return $this->get(QueueConstants::QUEUE_WORKER_LOOP, false);",
-            "selected_text": "QueueConstants::QUEUE_WORKER_LOOP",
-            "error_level": 2,
-            "shortcode": 170
         }
-    ]
+    ],
+    "count": 20
 }

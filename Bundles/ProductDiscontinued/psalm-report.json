@@ -318,18 +318,6 @@
         },
         {
             "severity": "info",
-            "line_from": 100,
-            "line_to": 100,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\ProductDiscontinued\\Business\\ProductDiscontinued\\ProductDiscontinuedPluginExecutor::executePostDeleteProductDiscontinuedPlugins has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinued/src/Spryker/Zed/ProductDiscontinued/Business/ProductDiscontinued/ProductDiscontinuedPluginExecutor.php",
-            "snippet": "            $this->executePostDeleteProductDiscontinuedPlugins($productDiscontinuedTransfer);",
-            "selected_text": "executePostDeleteProductDiscontinuedPlugins",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
             "line_from": 61,
             "line_to": 61,
             "type": "DeprecatedMethod",
@@ -339,18 +327,6 @@
             "selected_text": "getPostDeleteProductDiscontinuedPlugins",
             "error_level": 2,
             "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 153,
-            "line_to": 153,
-            "type": "DeprecatedClass",
-            "message": "Class Spryker\\Zed\\ProductDiscontinuedExtension\\Dependency\\Plugin\\PostDeleteProductDiscontinuedPluginInterface is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinued/src/Spryker/Zed/ProductDiscontinued/Business/ProductDiscontinuedBusinessFactory.php",
-            "snippet": "     * @return array<\\Spryker\\Zed\\ProductDiscontinuedExtension\\Dependency\\Plugin\\PostDeleteProductDiscontinuedPluginInterface>",
-            "selected_text": "array<\\Spryker\\Zed\\ProductDiscontinuedExtension\\Dependency\\Plugin\\PostDeleteProductDiscontinuedPluginInterface>",
-            "error_level": 2,
-            "shortcode": 98
         },
         {
             "severity": "info",
@@ -399,30 +375,7 @@
             "selected_text": "addPostDeleteProductDiscontinuedPlugins",
             "error_level": 2,
             "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 100,
-            "line_to": 100,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\ProductDiscontinued\\ProductDiscontinuedDependencyProvider::getPostDeleteProductDiscontinuedPlugins has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinued/src/Spryker/Zed/ProductDiscontinued/ProductDiscontinuedDependencyProvider.php",
-            "snippet": "            return $this->getPostDeleteProductDiscontinuedPlugins();",
-            "selected_text": "getPostDeleteProductDiscontinuedPlugins",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 145,
-            "line_to": 145,
-            "type": "DeprecatedClass",
-            "message": "Class Spryker\\Zed\\ProductDiscontinuedExtension\\Dependency\\Plugin\\PostDeleteProductDiscontinuedPluginInterface is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinued/src/Spryker/Zed/ProductDiscontinued/ProductDiscontinuedDependencyProvider.php",
-            "snippet": "     * @return array<\\Spryker\\Zed\\ProductDiscontinuedExtension\\Dependency\\Plugin\\PostDeleteProductDiscontinuedPluginInterface>",
-            "selected_text": "array<\\Spryker\\Zed\\ProductDiscontinuedExtension\\Dependency\\Plugin\\PostDeleteProductDiscontinuedPluginInterface>",
-            "error_level": 2,
-            "shortcode": 98
         }
-    ]
+    ],
+    "count": 31
 }

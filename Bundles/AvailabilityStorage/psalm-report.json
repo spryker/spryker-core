@@ -89,18 +89,6 @@
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 65,
-            "line_to": 65,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Client\\AvailabilityStorage\\Storage\\AvailabilityStorageReaderInterface::getAvailabilityAbstract has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/AvailabilityStorage/src/Spryker/Client/AvailabilityStorage/AvailabilityStorageClient.php",
-            "snippet": "            ->getAvailabilityAbstract($idProductAbstract);",
-            "selected_text": "getAvailabilityAbstract",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
             "line_from": 17,
             "line_to": 17,
             "type": "DeprecatedInterface",
@@ -161,20 +149,8 @@
         },
         {
             "severity": "info",
-            "line_from": 25,
-            "line_to": 25,
-            "type": "DeprecatedTrait",
-            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/AvailabilityStorage/src/Spryker/Zed/AvailabilityStorage/Communication/Plugin/Event/Listener/AvailabilityProductStorageListener.php",
-            "snippet": "    use DatabaseTransactionHandlerTrait;",
-            "selected_text": "DatabaseTransactionHandlerTrait",
-            "error_level": 2,
-            "shortcode": 171
-        },
-        {
-            "severity": "info",
-            "line_from": 74,
-            "line_to": 74,
+            "line_from": 69,
+            "line_to": 69,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Zed\\AvailabilityStorage\\AvailabilityStorageConfig::isSendingToQueue has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/AvailabilityStorage/src/Spryker/Zed/AvailabilityStorage/Communication/Plugin/Event/Listener/AvailabilityProductStorageListener.php",
@@ -182,54 +158,7 @@
             "selected_text": "isSendingToQueue",
             "error_level": 2,
             "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 23,
-            "line_to": 23,
-            "type": "DeprecatedTrait",
-            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/AvailabilityStorage/src/Spryker/Zed/AvailabilityStorage/Communication/Plugin/Event/Listener/AvailabilityStockStorageListener.php",
-            "snippet": "    use DatabaseTransactionHandlerTrait;",
-            "selected_text": "DatabaseTransactionHandlerTrait",
-            "error_level": 2,
-            "shortcode": 171
-        },
-        {
-            "severity": "info",
-            "line_from": 26,
-            "line_to": 26,
-            "type": "DeprecatedTrait",
-            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/AvailabilityStorage/src/Spryker/Zed/AvailabilityStorage/Communication/Plugin/Event/Listener/AvailabilityStorageListener.php",
-            "snippet": "    use DatabaseTransactionHandlerTrait;",
-            "selected_text": "DatabaseTransactionHandlerTrait",
-            "error_level": 2,
-            "shortcode": 171
-        },
-        {
-            "severity": "info",
-            "line_from": 22,
-            "line_to": 22,
-            "type": "DeprecatedTrait",
-            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/AvailabilityStorage/src/Spryker/Zed/AvailabilityStorage/Communication/Plugin/Event/Listener/AvailabilityStoragePublishListener.php",
-            "snippet": "    use DatabaseTransactionHandlerTrait;",
-            "selected_text": "DatabaseTransactionHandlerTrait",
-            "error_level": 2,
-            "shortcode": 171
-        },
-        {
-            "severity": "info",
-            "line_from": 22,
-            "line_to": 22,
-            "type": "DeprecatedTrait",
-            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/AvailabilityStorage/src/Spryker/Zed/AvailabilityStorage/Communication/Plugin/Event/Listener/AvailabilityStorageUnpublishListener.php",
-            "snippet": "    use DatabaseTransactionHandlerTrait;",
-            "selected_text": "DatabaseTransactionHandlerTrait",
-            "error_level": 2,
-            "shortcode": 171
         }
-    ]
+    ],
+    "count": 13
 }

@@ -90,30 +90,6 @@
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 24,
-            "line_to": 24,
-            "type": "DeprecatedInterface",
-            "message": "Spryker\\Zed\\EventBehavior\\Dependency\\Plugin\\EventResourceRepositoryPluginInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ContentStorage/src/Spryker/Zed/ContentStorage/Communication/Plugin/Event/ContentStorageEventResourceRepositoryPlugin.php",
-            "snippet": "class ContentStorageEventResourceRepositoryPlugin extends AbstractPlugin implements EventResourceRepositoryPluginInterface",
-            "selected_text": "ContentStorageEventResourceRepositoryPlugin",
-            "error_level": 2,
-            "shortcode": 152
-        },
-        {
-            "severity": "info",
-            "line_from": 49,
-            "line_to": 49,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\ContentStorage\\Persistence\\ContentStorageRepositoryInterface::findContentByContentIds has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ContentStorage/src/Spryker/Zed/ContentStorage/Communication/Plugin/Event/ContentStorageEventResourceRepositoryPlugin.php",
-            "snippet": "        return $this->getRepository()->findContentByContentIds($ids);",
-            "selected_text": "findContentByContentIds",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
             "line_from": 21,
             "line_to": 21,
             "type": "DeprecatedInterface",
@@ -124,5 +100,6 @@
             "error_level": 2,
             "shortcode": 152
         }
-    ]
+    ],
+    "count": 8
 }

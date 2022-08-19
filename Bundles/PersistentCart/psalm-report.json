@@ -1142,18 +1142,6 @@
             "shortcode": 78
         }
     ],
-    "deprecation": [
-        {
-            "severity": "info",
-            "line_from": 71,
-            "line_to": 71,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\Quote\\Business\\QuoteFacadeInterface::findQuoteByCustomer has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/PersistentCart/src/Spryker/Zed/PersistentCart/Dependency/Facade/PersistentCartToQuoteFacadeBridge.php",
-            "snippet": "        return $this->quoteFacade->findQuoteByCustomer($customerTransfer);",
-            "selected_text": "findQuoteByCustomer",
-            "error_level": 2,
-            "shortcode": 1
-        }
-    ]
+    "deprecation": [],
+    "count": 95
 }

@@ -38,18 +38,6 @@
             "shortcode": 83
         }
     ],
-    "deprecation": [
-        {
-            "severity": "info",
-            "line_from": 126,
-            "line_to": 126,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Client\\QuoteRequestAgent\\Reader\\QuoteRequestReaderInterface::findQuoteRequestByReference has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/QuoteRequestAgent/src/Spryker/Client/QuoteRequestAgent/QuoteRequestAgentClient.php",
-            "snippet": "            ->findQuoteRequestByReference($quoteRequestReference);",
-            "selected_text": "findQuoteRequestByReference",
-            "error_level": 2,
-            "shortcode": 1
-        }
-    ]
+    "deprecation": [],
+    "count": 3
 }

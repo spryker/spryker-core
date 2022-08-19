@@ -112,8 +112,8 @@
         },
         {
             "severity": "info",
-            "line_from": 174,
-            "line_to": 174,
+            "line_from": 175,
+            "line_to": 175,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\CmsBlockGui\\Communication\\Form\\Block\\CmsBlockForm::hasTemplateFile cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CmsBlockGui/src/Spryker/Zed/CmsBlockGui/Communication/Form/Block/CmsBlockForm.php",
@@ -148,6 +148,18 @@
         },
         {
             "severity": "info",
+            "line_from": 247,
+            "line_to": 247,
+            "type": "ArgumentTypeCoercion",
+            "message": "Argument 1 of Spryker\\Zed\\CmsBlockGui\\Communication\\Table\\CmsBlockTable::formatStoreNames expects Propel\\Runtime\\Collection\\ObjectCollection, parent type Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\CmsBlock\\Persistence\\SpyCmsBlockStore> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockGui/src/Spryker/Zed/CmsBlockGui/Communication/Table/CmsBlockTable.php",
+            "snippet": "        return $this->formatStoreNames($cmsBlockStoreCollection);",
+            "selected_text": "$cmsBlockStoreCollection",
+            "error_level": 3,
+            "shortcode": 193
+        },
+        {
+            "severity": "info",
             "line_from": 52,
             "line_to": 52,
             "type": "PossiblyNullArgument",
@@ -174,32 +186,8 @@
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 204,
-            "line_to": 204,
-            "type": "DeprecatedClass",
-            "message": "Spryker\\Zed\\Kernel\\Communication\\Plugin\\Pimple is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockGui/src/Spryker/Zed/CmsBlockGui/CmsBlockGuiDependencyProvider.php",
-            "snippet": "        $pimplePlugin = new Pimple();",
-            "selected_text": "new Pimple()",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 206,
-            "line_to": 206,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Service\\Container\\Container::offsetGet has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockGui/src/Spryker/Zed/CmsBlockGui/CmsBlockGuiDependencyProvider.php",
-            "snippet": "        return $pimplePlugin->getApplication()['twig'];",
-            "selected_text": "$pimplePlugin->getApplication()",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 117,
-            "line_to": 117,
+            "line_from": 119,
+            "line_to": 119,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Zed\\Gui\\Communication\\Table\\TableConfiguration::setDefaultSortDirection has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/CmsBlockGui/src/Spryker/Zed/CmsBlockGui/Communication/Table/CmsBlockTable.php",
@@ -208,5 +196,6 @@
             "error_level": 2,
             "shortcode": 1
         }
-    ]
+    ],
+    "count": 16
 }

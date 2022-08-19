@@ -138,78 +138,6 @@
         },
         {
             "severity": "info",
-            "line_from": 242,
-            "line_to": 242,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\Router\\Business\\RouterBusinessFactory::getRouterPlugins has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Router/src/Spryker/Zed/Router/Business/RouterBusinessFactory.php",
-            "snippet": "        return new ChainRouter($this->getRouterPlugins());",
-            "selected_text": "getRouterPlugins",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 252,
-            "line_to": 252,
-            "type": "DeprecatedConstant",
-            "message": "Constant Spryker\\Zed\\Router\\RouterDependencyProvider::ROUTER_PLUGINS is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Router/src/Spryker/Zed/Router/Business/RouterBusinessFactory.php",
-            "snippet": "        return $this->getProvidedDependency(RouterDependencyProvider::ROUTER_PLUGINS);",
-            "selected_text": "RouterDependencyProvider::ROUTER_PLUGINS",
-            "error_level": 2,
-            "shortcode": 170
-        },
-        {
-            "severity": "info",
-            "line_from": 264,
-            "line_to": 264,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\Router\\Business\\RouterBusinessFactory::createResource has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Router/src/Spryker/Zed/Router/Business/RouterBusinessFactory.php",
-            "snippet": "            $this->createResource(),",
-            "selected_text": "createResource",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 265,
-            "line_to": 265,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\Router\\Business\\RouterBusinessFactory::getRouterEnhancerPlugins has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Router/src/Spryker/Zed/Router/Business/RouterBusinessFactory.php",
-            "snippet": "            $this->getRouterEnhancerPlugins(),",
-            "selected_text": "getRouterEnhancerPlugins",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 266,
-            "line_to": 266,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\Router\\RouterConfig::getRouterConfiguration has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Router/src/Spryker/Zed/Router/Business/RouterBusinessFactory.php",
-            "snippet": "            $this->getConfig()->getRouterConfiguration(),",
-            "selected_text": "getRouterConfiguration",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 277,
-            "line_to": 277,
-            "type": "DeprecatedConstant",
-            "message": "Constant Spryker\\Zed\\Router\\RouterDependencyProvider::ROUTER_ENHANCER_PLUGINS is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Router/src/Spryker/Zed/Router/Business/RouterBusinessFactory.php",
-            "snippet": "        return $this->getProvidedDependency(RouterDependencyProvider::ROUTER_ENHANCER_PLUGINS);",
-            "selected_text": "RouterDependencyProvider::ROUTER_ENHANCER_PLUGINS",
-            "error_level": 2,
-            "shortcode": 170
-        },
-        {
-            "severity": "info",
             "line_from": 287,
             "line_to": 287,
             "type": "DeprecatedMethod",
@@ -231,30 +159,6 @@
             "selected_text": "getRouterEnhancerPlugins",
             "error_level": 2,
             "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 300,
-            "line_to": 300,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\Router\\Business\\RouterBusinessFactory::createRouter has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Router/src/Spryker/Zed/Router/Business/RouterBusinessFactory.php",
-            "snippet": "        return new Cache($this->createRouter(), $this->getConfig());",
-            "selected_text": "createRouter",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 310,
-            "line_to": 312,
-            "type": "DeprecatedClass",
-            "message": "Spryker\\Zed\\Router\\Business\\Router\\RouterResource\\RouterResource is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Router/src/Spryker/Zed/Router/Business/RouterBusinessFactory.php",
-            "snippet": "        return new RouterResource(\n            $this->getConfig(),\n        );",
-            "selected_text": "new RouterResource(\n            $this->getConfig(),\n        )",
-            "error_level": 2,
-            "shortcode": 98
         },
         {
             "severity": "info",
@@ -289,30 +193,6 @@
             "file_name": "vendor/spryker/spryker/Bundles/Router/src/Spryker/Zed/Router/Business/RouterFacade.php",
             "snippet": "        $this->getFactory()->createCache()->warmUp();",
             "selected_text": "createCache",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 75,
-            "line_to": 75,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\Router\\Communication\\Plugin\\Application\\RouterApplicationPlugin::setBackwardsCompatibleServiceNames has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Router/src/Spryker/Zed/Router/Communication/Plugin/Application/RouterApplicationPlugin.php",
-            "snippet": "        $this->setBackwardsCompatibleServiceNames($container, static::SERVICE_ROUTER, [",
-            "selected_text": "setBackwardsCompatibleServiceNames",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 45,
-            "line_to": 45,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\Router\\Business\\RouterFacadeInterface::cacheWarmUp has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Router/src/Spryker/Zed/Router/Communication/Plugin/Console/RouterCacheWarmUpBackofficeConsole.php",
-            "snippet": "        $this->getFacade()->cacheWarmUp();",
-            "selected_text": "cacheWarmUp",
             "error_level": 2,
             "shortcode": 1
         },
@@ -354,18 +234,6 @@
         },
         {
             "severity": "info",
-            "line_from": 170,
-            "line_to": 170,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\Router\\RouterConfig::getCachePathIfCacheEnabled has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Router/src/Spryker/Zed/Router/RouterConfig.php",
-            "snippet": "            'cache_dir' => $this->getCachePathIfCacheEnabled(),",
-            "selected_text": "getCachePathIfCacheEnabled",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
             "line_from": 189,
             "line_to": 189,
             "type": "DeprecatedMethod",
@@ -375,30 +243,6 @@
             "selected_text": "getRouterConfiguration",
             "error_level": 2,
             "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 202,
-            "line_to": 202,
-            "type": "DeprecatedConstant",
-            "message": "Constant Spryker\\Shared\\Router\\RouterConstants::ZED_IS_CACHE_ENABLED is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Router/src/Spryker/Zed/Router/RouterConfig.php",
-            "snippet": "        if ($this->get(RouterConstants::ZED_IS_CACHE_ENABLED, true)) {",
-            "selected_text": "RouterConstants::ZED_IS_CACHE_ENABLED",
-            "error_level": 2,
-            "shortcode": 170
-        },
-        {
-            "severity": "info",
-            "line_from": 203,
-            "line_to": 203,
-            "type": "DeprecatedConstant",
-            "message": "Constant Spryker\\Shared\\Router\\RouterConstants::ZED_CACHE_PATH is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Router/src/Spryker/Zed/Router/RouterConfig.php",
-            "snippet": "            return $this->get(RouterConstants::ZED_CACHE_PATH, $this->getSharedConfig()->getDefaultRouterCachePath());",
-            "selected_text": "RouterConstants::ZED_CACHE_PATH",
-            "error_level": 2,
-            "shortcode": 170
         },
         {
             "severity": "info",
@@ -423,54 +267,7 @@
             "selected_text": "addRouterEnhancerPlugins",
             "error_level": 2,
             "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 259,
-            "line_to": 259,
-            "type": "DeprecatedConstant",
-            "message": "Constant Spryker\\Zed\\Router\\RouterDependencyProvider::ROUTER_PLUGINS is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Router/src/Spryker/Zed/Router/RouterDependencyProvider.php",
-            "snippet": "        $container->set(static::ROUTER_PLUGINS, function () {",
-            "selected_text": "static::ROUTER_PLUGINS",
-            "error_level": 2,
-            "shortcode": 170
-        },
-        {
-            "severity": "info",
-            "line_from": 260,
-            "line_to": 260,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\Router\\RouterDependencyProvider::getRouterPlugins has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Router/src/Spryker/Zed/Router/RouterDependencyProvider.php",
-            "snippet": "            return $this->getRouterPlugins();",
-            "selected_text": "getRouterPlugins",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 289,
-            "line_to": 289,
-            "type": "DeprecatedConstant",
-            "message": "Constant Spryker\\Zed\\Router\\RouterDependencyProvider::ROUTER_ENHANCER_PLUGINS is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Router/src/Spryker/Zed/Router/RouterDependencyProvider.php",
-            "snippet": "        $container->set(static::ROUTER_ENHANCER_PLUGINS, function () {",
-            "selected_text": "static::ROUTER_ENHANCER_PLUGINS",
-            "error_level": 2,
-            "shortcode": 170
-        },
-        {
-            "severity": "info",
-            "line_from": 290,
-            "line_to": 290,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\Router\\RouterDependencyProvider::getRouterEnhancerPlugins has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Router/src/Spryker/Zed/Router/RouterDependencyProvider.php",
-            "snippet": "            return $this->getRouterEnhancerPlugins();",
-            "selected_text": "getRouterEnhancerPlugins",
-            "error_level": 2,
-            "shortcode": 1
         }
-    ]
+    ],
+    "count": 22
 }

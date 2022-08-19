@@ -498,54 +498,6 @@
         },
         {
             "severity": "info",
-            "line_from": 67,
-            "line_to": 67,
-            "type": "DeprecatedConstant",
-            "message": "Constant Spryker\\Yves\\Navigation\\NavigationDependencyProvider::PLUGIN_APPLICATION is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Navigation/src/Spryker/Yves/Navigation/NavigationDependencyProvider.php",
-            "snippet": "        $container->set(static::PLUGIN_APPLICATION, function () {",
-            "selected_text": "static::PLUGIN_APPLICATION",
-            "error_level": 2,
-            "shortcode": 170
-        },
-        {
-            "severity": "info",
-            "line_from": 68,
-            "line_to": 68,
-            "type": "DeprecatedClass",
-            "message": "Spryker\\Yves\\Kernel\\Plugin\\Pimple is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Navigation/src/Spryker/Yves/Navigation/NavigationDependencyProvider.php",
-            "snippet": "            $pimplePlugin = new Pimple();",
-            "selected_text": "new Pimple()",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 37,
-            "line_to": 37,
-            "type": "DeprecatedClass",
-            "message": "Class Spryker\\Yves\\Kernel\\Application is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Navigation/src/Spryker/Yves/Navigation/NavigationFactory.php",
-            "snippet": "     * @return \\Spryker\\Yves\\Kernel\\Application",
-            "selected_text": "\\Spryker\\Yves\\Kernel\\Application",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 41,
-            "line_to": 41,
-            "type": "DeprecatedConstant",
-            "message": "Constant Spryker\\Yves\\Navigation\\NavigationDependencyProvider::PLUGIN_APPLICATION is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Navigation/src/Spryker/Yves/Navigation/NavigationFactory.php",
-            "snippet": "        return $this->getProvidedDependency(NavigationDependencyProvider::PLUGIN_APPLICATION);",
-            "selected_text": "NavigationDependencyProvider::PLUGIN_APPLICATION",
-            "error_level": 2,
-            "shortcode": 170
-        },
-        {
-            "severity": "info",
             "line_from": 29,
             "line_to": 29,
             "type": "DeprecatedMethod",
@@ -664,5 +616,6 @@
             "error_level": 2,
             "shortcode": 171
         }
-    ]
+    ],
+    "count": 51
 }

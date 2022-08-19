@@ -1122,30 +1122,6 @@
         },
         {
             "severity": "info",
-            "line_from": 123,
-            "line_to": 123,
-            "type": "DeprecatedMethod",
-            "message": "The method Generated\\Shared\\Transfer\\QuoteTransfer::getShipment has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ManualOrderEntryGui/src/Spryker/Zed/ManualOrderEntryGui/Communication/Form/DataProvider/ShipmentDataProvider.php",
-            "snippet": "        $quoteShipmentTransfer = $quoteTransfer->getShipment();",
-            "selected_text": "getShipment",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 128,
-            "line_to": 128,
-            "type": "DeprecatedMethod",
-            "message": "The method Generated\\Shared\\Transfer\\QuoteTransfer::getShippingAddress has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ManualOrderEntryGui/src/Spryker/Zed/ManualOrderEntryGui/Communication/Form/DataProvider/ShipmentDataProvider.php",
-            "snippet": "        $quoteShipmentTransfer->setShippingAddress($quoteTransfer->getShippingAddress());",
-            "selected_text": "getShippingAddress",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
             "line_from": 32,
             "line_to": 32,
             "type": "DeprecatedConstant",
@@ -1288,5 +1264,6 @@
             "error_level": 2,
             "shortcode": 1
         }
-    ]
+    ],
+    "count": 105
 }

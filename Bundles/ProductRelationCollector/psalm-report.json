@@ -3,6 +3,18 @@
     "warning": [
         {
             "severity": "info",
+            "line_from": 126,
+            "line_to": 131,
+            "type": "LessSpecificReturnStatement",
+            "message": "The type 'Propel\\Runtime\\Collection\\Collection<Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed' is more general than the declared return type 'Propel\\Runtime\\Collection\\ObjectCollection<Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>' for Spryker\\Zed\\ProductRelationCollector\\Business\\Collector\\Storage\\ProductRelationCollector::findRelationProducts",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductRelationCollector/src/Spryker/Zed/ProductRelationCollector/Business/Collector/Storage/ProductRelationCollector.php",
+            "snippet": "        return $this->productRelationQueryContainer\n            ->queryProductRelationWithProductAbstractByIdRelationAndLocale(\n                $idProductRelation,\n                $this->locale->getIdLocale(),\n            )\n            ->find();",
+            "selected_text": "$this->productRelationQueryContainer\n            ->queryProductRelationWithProductAbstractByIdRelationAndLocale(\n                $idProductRelation,\n                $this->locale->getIdLocale(),\n            )\n            ->find()",
+            "error_level": 3,
+            "shortcode": 129
+        },
+        {
+            "severity": "info",
             "line_from": 129,
             "line_to": 129,
             "type": "PossiblyNullArgument",
@@ -77,8 +89,8 @@
         },
         {
             "severity": "info",
-            "line_from": 31,
-            "line_to": 31,
+            "line_from": 32,
+            "line_to": 32,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductRelationCollector/src/Spryker/Zed/ProductRelationCollector/Communication/Plugin/ProductRelationCollectorPlugin.php",
@@ -111,5 +123,6 @@
             "error_level": 2,
             "shortcode": 98
         }
-    ]
+    ],
+    "count": 10
 }

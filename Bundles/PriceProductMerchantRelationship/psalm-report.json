@@ -1,5 +1,18 @@
 {
-    "error": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 100,
+            "line_to": 100,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Zed\\PriceProductMerchantRelationship\\Business\\Model\\MerchantRelationshipPriceWriter::deleteCollection has wrong name $productReviewCollectionDeleteCriteriaTransfer, expecting $priceProductMerchantRelationshipCollectionDeleteCriteriaTransfer as defined by Spryker\\Zed\\PriceProductMerchantRelationship\\Business\\Model\\MerchantRelationshipPriceWriterInterface::deleteCollection",
+            "file_name": "vendor/spryker/spryker/Bundles/PriceProductMerchantRelationship/src/Spryker/Zed/PriceProductMerchantRelationship/Business/Model/MerchantRelationshipPriceWriter.php",
+            "snippet": "        PriceProductMerchantRelationshipCollectionDeleteCriteriaTransfer $productReviewCollectionDeleteCriteriaTransfer",
+            "selected_text": "$productReviewCollectionDeleteCriteriaTransfer",
+            "error_level": 7,
+            "shortcode": 230
+        }
+    ],
     "warning": [
         {
             "severity": "info",
@@ -195,8 +208,8 @@
         },
         {
             "severity": "info",
-            "line_from": 60,
-            "line_to": 60,
+            "line_from": 62,
+            "line_to": 62,
             "type": "PossiblyNullReference",
             "message": "Cannot call method requireIdMerchantRelationship on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/PriceProductMerchantRelationship/src/Spryker/Zed/PriceProductMerchantRelationship/Business/Model/MerchantRelationshipPriceWriter.php",
@@ -207,8 +220,8 @@
         },
         {
             "severity": "info",
-            "line_from": 113,
-            "line_to": 113,
+            "line_from": 130,
+            "line_to": 130,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getIdMerchantRelationship on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/PriceProductMerchantRelationship/src/Spryker/Zed/PriceProductMerchantRelationship/Business/Model/MerchantRelationshipPriceWriter.php",
@@ -219,8 +232,8 @@
         },
         {
             "severity": "info",
-            "line_from": 114,
-            "line_to": 114,
+            "line_from": 131,
+            "line_to": 131,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getIdEntity on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/PriceProductMerchantRelationship/src/Spryker/Zed/PriceProductMerchantRelationship/Business/Model/MerchantRelationshipPriceWriter.php",
@@ -231,15 +244,39 @@
         },
         {
             "severity": "info",
-            "line_from": 147,
-            "line_to": 147,
-            "type": "MismatchingDocblockParamType",
-            "message": "Parameter $priceProductMerchantRelationshipEntities has wrong type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\PriceProductMerchantRelationship\\Persistence\\SpyPriceProductMerchantRelationship>', should be 'Propel\\Runtime\\Collection\\ObjectCollection'",
+            "line_from": 117,
+            "line_to": 117,
+            "type": "ArgumentTypeCoercion",
+            "message": "Argument 1 of Spryker\\Zed\\PriceProductMerchantRelationship\\Persistence\\PriceProductMerchantRelationshipEntityManager::deleteEntitiesAndTriggerEvents expects Propel\\Runtime\\Collection\\ObjectCollection<Orm\\Zed\\PriceProductMerchantRelationship\\Persistence\\SpyPriceProductMerchantRelationship>, parent type Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\PriceProductMerchantRelationship\\Persistence\\SpyPriceProductMerchantRelationship> provided",
             "file_name": "vendor/spryker/spryker/Bundles/PriceProductMerchantRelationship/src/Spryker/Zed/PriceProductMerchantRelationship/Persistence/PriceProductMerchantRelationshipEntityManager.php",
-            "snippet": "     * @param \\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\PriceProductMerchantRelationship\\Persistence\\SpyPriceProductMerchantRelationship[] $priceProductMerchantRelationshipEntities",
-            "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\PriceProductMerchantRelationship\\Persistence\\SpyPriceProductMerchantRelationship[]",
-            "error_level": 4,
-            "shortcode": 141
+            "snippet": "        $this->deleteEntitiesAndTriggerEvents($priceProductMerchantRelationshipEntities);",
+            "selected_text": "$priceProductMerchantRelationshipEntities",
+            "error_level": 3,
+            "shortcode": 193
+        },
+        {
+            "severity": "info",
+            "line_from": 132,
+            "line_to": 132,
+            "type": "ArgumentTypeCoercion",
+            "message": "Argument 1 of Spryker\\Zed\\PriceProductMerchantRelationship\\Persistence\\PriceProductMerchantRelationshipEntityManager::deleteEntitiesAndTriggerEvents expects Propel\\Runtime\\Collection\\ObjectCollection<Orm\\Zed\\PriceProductMerchantRelationship\\Persistence\\SpyPriceProductMerchantRelationship>, parent type Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\PriceProductMerchantRelationship\\Persistence\\SpyPriceProductMerchantRelationship> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/PriceProductMerchantRelationship/src/Spryker/Zed/PriceProductMerchantRelationship/Persistence/PriceProductMerchantRelationshipEntityManager.php",
+            "snippet": "        $this->deleteEntitiesAndTriggerEvents($priceProductMerchantRelationshipEntities);",
+            "selected_text": "$priceProductMerchantRelationshipEntities",
+            "error_level": 3,
+            "shortcode": 193
+        },
+        {
+            "severity": "info",
+            "line_from": 144,
+            "line_to": 144,
+            "type": "ArgumentTypeCoercion",
+            "message": "Argument 1 of Spryker\\Zed\\PriceProductMerchantRelationship\\Persistence\\PriceProductMerchantRelationshipEntityManager::deleteEntitiesAndTriggerEvents expects Propel\\Runtime\\Collection\\ObjectCollection<Orm\\Zed\\PriceProductMerchantRelationship\\Persistence\\SpyPriceProductMerchantRelationship>, parent type Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\PriceProductMerchantRelationship\\Persistence\\SpyPriceProductMerchantRelationship> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/PriceProductMerchantRelationship/src/Spryker/Zed/PriceProductMerchantRelationship/Persistence/PriceProductMerchantRelationshipEntityManager.php",
+            "snippet": "        $this->deleteEntitiesAndTriggerEvents($priceProductMerchantRelationshipEntities);",
+            "selected_text": "$priceProductMerchantRelationshipEntities",
+            "error_level": 3,
+            "shortcode": 193
         },
         {
             "severity": "info",
@@ -279,8 +316,8 @@
         },
         {
             "severity": "info",
-            "line_from": 35,
-            "line_to": 35,
+            "line_from": 39,
+            "line_to": 39,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getIdMerchantRelationship on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/PriceProductMerchantRelationship/src/Spryker/Zed/PriceProductMerchantRelationship/Persistence/Propel/PriceDimensionQueryExpander/MerchantRelationshipPriceQueryExpander.php",
@@ -291,8 +328,8 @@
         },
         {
             "severity": "info",
-            "line_from": 78,
-            "line_to": 78,
+            "line_from": 82,
+            "line_to": 82,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getCustomer on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/PriceProductMerchantRelationship/src/Spryker/Zed/PriceProductMerchantRelationship/Persistence/Propel/PriceDimensionQueryExpander/MerchantRelationshipPriceQueryExpander.php",
@@ -305,8 +342,8 @@
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 63,
-            "line_to": 63,
+            "line_from": 65,
+            "line_to": 65,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Zed\\PriceProductMerchantRelationship\\Business\\Model\\MerchantRelationshipPriceWriter::persistPriceProductStore has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/PriceProductMerchantRelationship/src/Spryker/Zed/PriceProductMerchantRelationship/Business/Model/MerchantRelationshipPriceWriter.php",
@@ -314,18 +351,7 @@
             "selected_text": "persistPriceProductStore",
             "error_level": 2,
             "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 34,
-            "line_to": 34,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\PriceProductMerchantRelationship\\Business\\PriceProductMerchantRelationshipFacadeInterface::deletePriceProductMerchantRelationshipByIdPriceProductStore has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/PriceProductMerchantRelationship/src/Spryker/Zed/PriceProductMerchantRelationship/Communication/Plugin/PriceProduct/MerchantRelationshipPriceProductStorePreDeletePlugin.php",
-            "snippet": "            ->deletePriceProductMerchantRelationshipByIdPriceProductStore($idPriceProductStore);",
-            "selected_text": "deletePriceProductMerchantRelationshipByIdPriceProductStore",
-            "error_level": 2,
-            "shortcode": 1
         }
-    ]
+    ],
+    "count": 29
 }

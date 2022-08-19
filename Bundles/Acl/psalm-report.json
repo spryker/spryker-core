@@ -135,8 +135,8 @@
         },
         {
             "severity": "info",
-            "line_from": 109,
-            "line_to": 109,
+            "line_from": 101,
+            "line_to": 101,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\Acl\\Business\\Model\\GroupInterface::hasGroupName cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Acl/src/Spryker/Zed/Acl/Business/Model/Installer.php",
@@ -147,8 +147,8 @@
         },
         {
             "severity": "info",
-            "line_from": 125,
-            "line_to": 125,
+            "line_from": 117,
+            "line_to": 117,
             "type": "PossiblyNullReference",
             "message": "Cannot call method requireName on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/Acl/src/Spryker/Zed/Acl/Business/Model/Installer.php",
@@ -159,8 +159,8 @@
         },
         {
             "severity": "info",
-            "line_from": 127,
-            "line_to": 127,
+            "line_from": 119,
+            "line_to": 119,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\Acl\\Business\\Model\\RoleInterface::findRoleByName cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Acl/src/Spryker/Zed/Acl/Business/Model/Installer.php",
@@ -171,8 +171,8 @@
         },
         {
             "severity": "info",
-            "line_from": 147,
-            "line_to": 147,
+            "line_from": 139,
+            "line_to": 139,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\Acl\\Business\\Model\\GroupInterface::getByName cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Acl/src/Spryker/Zed/Acl/Business/Model/Installer.php",
@@ -183,8 +183,8 @@
         },
         {
             "severity": "info",
-            "line_from": 147,
-            "line_to": 147,
+            "line_from": 139,
+            "line_to": 139,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getName on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/Acl/src/Spryker/Zed/Acl/Business/Model/Installer.php",
@@ -195,8 +195,8 @@
         },
         {
             "severity": "info",
-            "line_from": 149,
-            "line_to": 149,
+            "line_from": 141,
+            "line_to": 141,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Acl/src/Spryker/Zed/Acl/Business/Model/Installer.php",
@@ -207,8 +207,8 @@
         },
         {
             "severity": "info",
-            "line_from": 149,
-            "line_to": 149,
+            "line_from": 141,
+            "line_to": 141,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getName on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/Acl/src/Spryker/Zed/Acl/Business/Model/Installer.php",
@@ -219,8 +219,8 @@
         },
         {
             "severity": "info",
-            "line_from": 152,
-            "line_to": 152,
+            "line_from": 144,
+            "line_to": 144,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\Acl\\Business\\Model\\GroupInterface::addRoleToGroup cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Acl/src/Spryker/Zed/Acl/Business/Model/Installer.php",
@@ -231,8 +231,8 @@
         },
         {
             "severity": "info",
-            "line_from": 152,
-            "line_to": 152,
+            "line_from": 144,
+            "line_to": 144,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\Acl\\Business\\Model\\GroupInterface::addRoleToGroup cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Acl/src/Spryker/Zed/Acl/Business/Model/Installer.php",
@@ -243,8 +243,8 @@
         },
         {
             "severity": "info",
-            "line_from": 171,
-            "line_to": 171,
+            "line_from": 163,
+            "line_to": 163,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\Acl\\Business\\Model\\RuleInterface::existsRoleRule cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Acl/src/Spryker/Zed/Acl/Business/Model/Installer.php",
@@ -255,8 +255,8 @@
         },
         {
             "severity": "info",
-            "line_from": 172,
-            "line_to": 172,
+            "line_from": 164,
+            "line_to": 164,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\Acl\\Business\\Model\\RuleInterface::existsRoleRule cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Acl/src/Spryker/Zed/Acl/Business/Model/Installer.php",
@@ -267,8 +267,8 @@
         },
         {
             "severity": "info",
-            "line_from": 173,
-            "line_to": 173,
+            "line_from": 165,
+            "line_to": 165,
             "type": "PossiblyNullArgument",
             "message": "Argument 3 of Spryker\\Zed\\Acl\\Business\\Model\\RuleInterface::existsRoleRule cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Acl/src/Spryker/Zed/Acl/Business/Model/Installer.php",
@@ -279,8 +279,8 @@
         },
         {
             "severity": "info",
-            "line_from": 174,
-            "line_to": 174,
+            "line_from": 166,
+            "line_to": 166,
             "type": "PossiblyNullArgument",
             "message": "Argument 4 of Spryker\\Zed\\Acl\\Business\\Model\\RuleInterface::existsRoleRule cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Acl/src/Spryker/Zed/Acl/Business/Model/Installer.php",
@@ -291,8 +291,8 @@
         },
         {
             "severity": "info",
-            "line_from": 175,
-            "line_to": 175,
+            "line_from": 167,
+            "line_to": 167,
             "type": "PossiblyNullArgument",
             "message": "Argument 5 of Spryker\\Zed\\Acl\\Business\\Model\\RuleInterface::existsRoleRule cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Acl/src/Spryker/Zed/Acl/Business/Model/Installer.php",
@@ -303,8 +303,8 @@
         },
         {
             "severity": "info",
-            "line_from": 195,
-            "line_to": 195,
+            "line_from": 187,
+            "line_to": 187,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\Acl\\Business\\Model\\GroupInterface::getByName cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Acl/src/Spryker/Zed/Acl/Business/Model/Installer.php",
@@ -315,8 +315,8 @@
         },
         {
             "severity": "info",
-            "line_from": 197,
-            "line_to": 197,
+            "line_from": 189,
+            "line_to": 189,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Acl/src/Spryker/Zed/Acl/Business/Model/Installer.php",
@@ -327,8 +327,8 @@
         },
         {
             "severity": "info",
-            "line_from": 199,
-            "line_to": 199,
+            "line_from": 191,
+            "line_to": 191,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\Acl\\Dependency\\Facade\\AclToUserInterface::getUserByUsername cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Acl/src/Spryker/Zed/Acl/Business/Model/Installer.php",
@@ -339,8 +339,8 @@
         },
         {
             "severity": "info",
-            "line_from": 201,
-            "line_to": 201,
+            "line_from": 193,
+            "line_to": 193,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Acl/src/Spryker/Zed/Acl/Business/Model/Installer.php",
@@ -351,8 +351,8 @@
         },
         {
             "severity": "info",
-            "line_from": 204,
-            "line_to": 204,
+            "line_from": 196,
+            "line_to": 196,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\Acl\\Business\\Model\\GroupInterface::hasUser cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Acl/src/Spryker/Zed/Acl/Business/Model/Installer.php",
@@ -363,8 +363,8 @@
         },
         {
             "severity": "info",
-            "line_from": 204,
-            "line_to": 204,
+            "line_from": 196,
+            "line_to": 196,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\Acl\\Business\\Model\\GroupInterface::hasUser cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Acl/src/Spryker/Zed/Acl/Business/Model/Installer.php",
@@ -375,8 +375,8 @@
         },
         {
             "severity": "info",
-            "line_from": 207,
-            "line_to": 207,
+            "line_from": 199,
+            "line_to": 199,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\Acl\\Business\\Model\\GroupInterface::addUser cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Acl/src/Spryker/Zed/Acl/Business/Model/Installer.php",
@@ -387,8 +387,8 @@
         },
         {
             "severity": "info",
-            "line_from": 207,
-            "line_to": 207,
+            "line_from": 199,
+            "line_to": 199,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\Acl\\Business\\Model\\GroupInterface::addUser cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Acl/src/Spryker/Zed/Acl/Business/Model/Installer.php",
@@ -480,6 +480,18 @@
             "selected_text": "$ruleTransfer->getIdAclRule()",
             "error_level": 3,
             "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 202,
+            "line_to": 202,
+            "type": "ArgumentTypeCoercion",
+            "message": "Argument 1 of Spryker\\Zed\\Acl\\Persistence\\AclQueryContainerInterface::queryGroupRules expects Propel\\Runtime\\Collection\\ObjectCollection, parent type Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\Acl\\Persistence\\SpyAclGroupsHasRoles> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Acl/src/Spryker/Zed/Acl/Business/Model/Rule.php",
+            "snippet": "        $roleCollection = $this->queryContainer->queryGroupRules($relationshipCollection)->find();",
+            "selected_text": "$relationshipCollection",
+            "error_level": 3,
+            "shortcode": 193
         },
         {
             "severity": "info",
@@ -593,30 +605,6 @@
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 54,
-            "line_to": 54,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\Acl\\Business\\Model\\GroupInterface::addGroup has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Acl/src/Spryker/Zed/Acl/Business/AclFacade.php",
-            "snippet": "            ->addGroup($groupName);",
-            "selected_text": "addGroup",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 255,
-            "line_to": 255,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\Acl\\Business\\Model\\RoleInterface::addRole has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Acl/src/Spryker/Zed/Acl/Business/AclFacade.php",
-            "snippet": "        return $this->getFactory()->createRoleModel()->addRole($name);",
-            "selected_text": "addRole",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
             "line_from": 141,
             "line_to": 141,
             "type": "DeprecatedMethod",
@@ -624,18 +612,6 @@
             "file_name": "vendor/spryker/spryker/Bundles/Acl/src/Spryker/Zed/Acl/Business/Model/Rule.php",
             "snippet": "        $rules = $this->findByRoles($rolesTransfer);",
             "selected_text": "findByRoles",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 180,
-            "line_to": 180,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\Acl\\Persistence\\AclQueryContainerInterface::queryRuleByPathAndRoles has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Acl/src/Spryker/Zed/Acl/Business/Model/Rule.php",
-            "snippet": "        $ruleCollection = $this->queryContainer->queryRuleByPathAndRoles($roles, $bundle, $controller, $action)->find();",
-            "selected_text": "queryRuleByPathAndRoles",
             "error_level": 2,
             "shortcode": 1
         },
@@ -665,42 +641,6 @@
         },
         {
             "severity": "info",
-            "line_from": 44,
-            "line_to": 44,
-            "type": "DeprecatedMethod",
-            "message": "The method Silex\\Application::before has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Acl/src/Spryker/Zed/Acl/Communication/Plugin/Bootstrap/AclBootstrapProvider.php",
-            "snippet": "        $app->before(function (Request $request) use ($app, $aclFacade, $config) {",
-            "selected_text": "before",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 54,
-            "line_to": 54,
-            "type": "DeprecatedMethod",
-            "message": "The method Silex\\Application::redirect has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Acl/src/Spryker/Zed/Acl/Communication/Plugin/Bootstrap/AclBootstrapProvider.php",
-            "snippet": "                return $app->redirect($config->getAccessDeniedUri());",
-            "selected_text": "redirect",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 59,
-            "line_to": 59,
-            "type": "DeprecatedMethod",
-            "message": "The method Silex\\Application::redirect has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Acl/src/Spryker/Zed/Acl/Communication/Plugin/Bootstrap/AclBootstrapProvider.php",
-            "snippet": "                return $app->redirect($config->getAccessDeniedUri());",
-            "selected_text": "redirect",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
             "line_from": 62,
             "line_to": 62,
             "type": "DeprecatedMethod",
@@ -710,18 +650,7 @@
             "selected_text": "isMasterRequest",
             "error_level": 2,
             "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 22,
-            "line_to": 22,
-            "type": "DeprecatedInterface",
-            "message": "Spryker\\Zed\\ZedNavigationExtension\\Dependency\\Plugin\\NavigationItemFilterPluginInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Acl/src/Spryker/Zed/Acl/Communication/Plugin/Navigation/AclNavigationItemFilterPlugin.php",
-            "snippet": "class AclNavigationItemFilterPlugin extends AbstractPlugin implements NavigationItemFilterPluginInterface",
-            "selected_text": "AclNavigationItemFilterPlugin",
-            "error_level": 2,
-            "shortcode": 152
         }
-    ]
+    ],
+    "count": 54
 }

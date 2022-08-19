@@ -14,18 +14,6 @@
             "shortcode": 78
         }
     ],
-    "deprecation": [
-        {
-            "severity": "info",
-            "line_from": 31,
-            "line_to": 31,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Service\\Container\\Container::offsetSet has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Assertion/src/Spryker/Zed/Assertion/Communication/Plugin/ServiceProvider/AssertionServiceProvider.php",
-            "snippet": "        $app[static::ASSERTION] = function () {",
-            "selected_text": "$app",
-            "error_level": 2,
-            "shortcode": 1
-        }
-    ]
+    "deprecation": [],
+    "count": 1
 }

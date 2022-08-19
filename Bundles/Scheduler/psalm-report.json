@@ -98,42 +98,6 @@
             "shortcode": 166
         }
     ],
-    "deprecation": [
-        {
-            "severity": "info",
-            "line_from": 32,
-            "line_to": 32,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Service\\Container\\Container::offsetSet has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Scheduler/src/Spryker/Zed/Scheduler/Communication/Plugin/ServiceProvider/SchedulerTwigServiceProvider.php",
-            "snippet": "        $app['twig'] = $app->share(",
-            "selected_text": "$app",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 32,
-            "line_to": 32,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Service\\Container\\Container::share has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Scheduler/src/Spryker/Zed/Scheduler/Communication/Plugin/ServiceProvider/SchedulerTwigServiceProvider.php",
-            "snippet": "        $app['twig'] = $app->share(",
-            "selected_text": "share",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 34,
-            "line_to": 34,
-            "type": "DeprecatedClass",
-            "message": "Spryker\\Zed\\Scheduler\\Communication\\Twig\\SchedulerTwigPlugin is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Scheduler/src/Spryker/Zed/Scheduler/Communication/Plugin/ServiceProvider/SchedulerTwigServiceProvider.php",
-            "snippet": "                $twig->addExtension(new SchedulerTwigPlugin());",
-            "selected_text": "new SchedulerTwigPlugin()",
-            "error_level": 2,
-            "shortcode": 98
-        }
-    ]
+    "deprecation": [],
+    "count": 8
 }

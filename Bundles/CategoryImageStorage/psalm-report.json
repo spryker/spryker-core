@@ -5,7 +5,7 @@
             "line_from": 59,
             "line_to": 59,
             "type": "InvalidReturnStatement",
-            "message": "The inferred type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed' does not match the declared return type 'array<array-key, Generated\\Shared\\Transfer\\SpyCategoryImageSetEntityTransfer>' for Spryker\\Zed\\CategoryImageStorage\\Persistence\\CategoryImageStorageRepository::getCategoryImageSetsByFkCategoryIn",
+            "message": "The inferred type 'Propel\\Runtime\\Collection\\Collection<Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed' does not match the declared return type 'array<array-key, Generated\\Shared\\Transfer\\SpyCategoryImageSetEntityTransfer>' for Spryker\\Zed\\CategoryImageStorage\\Persistence\\CategoryImageStorageRepository::getCategoryImageSetsByFkCategoryIn",
             "file_name": "vendor/spryker/spryker/Bundles/CategoryImageStorage/src/Spryker/Zed/CategoryImageStorage/Persistence/CategoryImageStorageRepository.php",
             "snippet": "        return $this->buildQueryFromCriteria($categoryImageSetsQuery)->find();",
             "selected_text": "$this->buildQueryFromCriteria($categoryImageSetsQuery)->find()",
@@ -17,7 +17,7 @@
             "line_from": 73,
             "line_to": 73,
             "type": "InvalidReturnStatement",
-            "message": "The inferred type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed' does not match the declared return type 'array<array-key, Generated\\Shared\\Transfer\\SpyCategoryImageStorageEntityTransfer>' for Spryker\\Zed\\CategoryImageStorage\\Persistence\\CategoryImageStorageRepository::getCategoryImageStorageByFkCategoryIn",
+            "message": "The inferred type 'Propel\\Runtime\\Collection\\Collection<Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed' does not match the declared return type 'array<array-key, Generated\\Shared\\Transfer\\SpyCategoryImageStorageEntityTransfer>' for Spryker\\Zed\\CategoryImageStorage\\Persistence\\CategoryImageStorageRepository::getCategoryImageStorageByFkCategoryIn",
             "file_name": "vendor/spryker/spryker/Bundles/CategoryImageStorage/src/Spryker/Zed/CategoryImageStorage/Persistence/CategoryImageStorageRepository.php",
             "snippet": "        return $this->buildQueryFromCriteria($categoryImageStorageQuery)->find();",
             "selected_text": "$this->buildQueryFromCriteria($categoryImageStorageQuery)->find()",
@@ -100,30 +100,6 @@
         },
         {
             "severity": "info",
-            "line_from": 43,
-            "line_to": 43,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/CategoryImageStorage/src/Spryker/Zed/CategoryImageStorage/Communication/Plugin/Event/Listener/CategoryImageSetCategoryImageStorageListener.php",
-            "snippet": "            ->getData();",
-            "selected_text": "getData",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 41,
-            "line_to": 41,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/CategoryImageStorage/src/Spryker/Zed/CategoryImageStorage/Communication/Plugin/Event/Listener/CategoryImageStorageListener.php",
-            "snippet": "            ->getData();",
-            "selected_text": "getData",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
             "line_from": 40,
             "line_to": 40,
             "type": "PossiblyNullReference",
@@ -136,77 +112,53 @@
         },
         {
             "severity": "info",
-            "line_from": 17,
-            "line_to": 17,
-            "type": "MismatchingDocblockParamType",
-            "message": "Parameter $categoryImageStorageEntityCollection has wrong type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\CategoryImageStorage\\Persistence\\SpyCategoryImageStorage>', should be 'Propel\\Runtime\\Collection\\ObjectCollection'",
-            "file_name": "vendor/spryker/spryker/Bundles/CategoryImageStorage/src/Spryker/Zed/CategoryImageStorage/Persistence/Propel/Mapper/CategoryImageStorageMapper.php",
-            "snippet": "     * @param \\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\CategoryImageStorage\\Persistence\\SpyCategoryImageStorage[] $categoryImageStorageEntityCollection",
-            "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\CategoryImageStorage\\Persistence\\SpyCategoryImageStorage[]",
-            "error_level": 4,
-            "shortcode": 141
+            "line_from": 30,
+            "line_to": 30,
+            "type": "MoreSpecificReturnType",
+            "message": "The declared return type 'Propel\\Runtime\\Collection\\ObjectCollection<Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>' for Spryker\\Zed\\CategoryImageStorage\\Persistence\\CategoryImageStorageRepository::getCategoryIdsByCategoryImageSetIds is more specific than the inferred return type 'Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\CategoryImage\\Persistence\\SpyCategoryImageSet>'",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryImageStorage/src/Spryker/Zed/CategoryImageStorage/Persistence/CategoryImageStorageRepository.php",
+            "snippet": "     * @return \\Propel\\Runtime\\Collection\\ObjectCollection<\\Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>",
+            "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection<\\Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>",
+            "error_level": 3,
+            "shortcode": 70
+        },
+        {
+            "severity": "info",
+            "line_from": 34,
+            "line_to": 38,
+            "type": "LessSpecificReturnStatement",
+            "message": "The type 'Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\CategoryImage\\Persistence\\SpyCategoryImageSet>' is more general than the declared return type 'Propel\\Runtime\\Collection\\ObjectCollection<Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>' for Spryker\\Zed\\CategoryImageStorage\\Persistence\\CategoryImageStorageRepository::getCategoryIdsByCategoryImageSetIds",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryImageStorage/src/Spryker/Zed/CategoryImageStorage/Persistence/CategoryImageStorageRepository.php",
+            "snippet": "        return $this->getFactory()\n            ->getCategoryImageSetQuery()\n            ->filterByIdCategoryImageSet_In($categoryImageSetIds)\n            ->select([SpyCategoryImageSetTableMap::COL_FK_CATEGORY])\n            ->find();",
+            "selected_text": "$this->getFactory()\n            ->getCategoryImageSetQuery()\n            ->filterByIdCategoryImageSet_In($categoryImageSetIds)\n            ->select([SpyCategoryImageSetTableMap::COL_FK_CATEGORY])\n            ->find()",
+            "error_level": 3,
+            "shortcode": 129
+        },
+        {
+            "severity": "info",
+            "line_from": 79,
+            "line_to": 79,
+            "type": "MoreSpecificReturnType",
+            "message": "The declared return type 'Propel\\Runtime\\Collection\\ObjectCollection<Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>' for Spryker\\Zed\\CategoryImageStorage\\Persistence\\CategoryImageStorageRepository::getCategoryIdsByCategoryImageIds is more specific than the inferred return type 'Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\CategoryImage\\Persistence\\SpyCategoryImageSetToCategoryImage>'",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryImageStorage/src/Spryker/Zed/CategoryImageStorage/Persistence/CategoryImageStorageRepository.php",
+            "snippet": "     * @return \\Propel\\Runtime\\Collection\\ObjectCollection<\\Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>",
+            "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection<\\Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>",
+            "error_level": 3,
+            "shortcode": 70
+        },
+        {
+            "severity": "info",
+            "line_from": 83,
+            "line_to": 90,
+            "type": "LessSpecificReturnStatement",
+            "message": "The type 'Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\CategoryImage\\Persistence\\SpyCategoryImageSetToCategoryImage>' is more general than the declared return type 'Propel\\Runtime\\Collection\\ObjectCollection<Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>' for Spryker\\Zed\\CategoryImageStorage\\Persistence\\CategoryImageStorageRepository::getCategoryIdsByCategoryImageIds",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryImageStorage/src/Spryker/Zed/CategoryImageStorage/Persistence/CategoryImageStorageRepository.php",
+            "snippet": "        return $this->getFactory()\n            ->getQueryCategoryImageSetToCategoryImage()\n            ->filterByFkCategoryImage_In($categoryImageIds)\n            ->innerJoinSpyCategoryImageSet()\n            ->withColumn('DISTINCT ' . SpyCategoryImageSetTableMap::COL_FK_CATEGORY, static::FK_CATEGORY)\n            ->select([static::FK_CATEGORY])\n            ->addAnd(SpyCategoryImageSetTableMap::COL_FK_CATEGORY, null, ModelCriteria::NOT_EQUAL)\n            ->find();",
+            "selected_text": "$this->getFactory()\n            ->getQueryCategoryImageSetToCategoryImage()\n            ->filterByFkCategoryImage_In($categoryImageIds)\n            ->innerJoinSpyCategoryImageSet()\n            ->withColumn('DISTINCT ' . SpyCategoryImageSetTableMap::COL_FK_CATEGORY, static::FK_CATEGORY)\n            ->select([static::FK_CATEGORY])\n            ->addAnd(SpyCategoryImageSetTableMap::COL_FK_CATEGORY, null, ModelCriteria::NOT_EQUAL)\n            ->find()",
+            "error_level": 3,
+            "shortcode": 129
         }
     ],
-    "deprecation": [
-        {
-            "severity": "info",
-            "line_from": 22,
-            "line_to": 22,
-            "type": "DeprecatedTrait",
-            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/CategoryImageStorage/src/Spryker/Zed/CategoryImageStorage/Communication/Plugin/Event/Listener/CategoryImagePublishStorageListener.php",
-            "snippet": "    use DatabaseTransactionHandlerTrait;",
-            "selected_text": "DatabaseTransactionHandlerTrait",
-            "error_level": 2,
-            "shortcode": 171
-        },
-        {
-            "severity": "info",
-            "line_from": 23,
-            "line_to": 23,
-            "type": "DeprecatedTrait",
-            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/CategoryImageStorage/src/Spryker/Zed/CategoryImageStorage/Communication/Plugin/Event/Listener/CategoryImageSetCategoryImageStorageListener.php",
-            "snippet": "    use DatabaseTransactionHandlerTrait;",
-            "selected_text": "DatabaseTransactionHandlerTrait",
-            "error_level": 2,
-            "shortcode": 171
-        },
-        {
-            "severity": "info",
-            "line_from": 22,
-            "line_to": 22,
-            "type": "DeprecatedTrait",
-            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/CategoryImageStorage/src/Spryker/Zed/CategoryImageStorage/Communication/Plugin/Event/Listener/CategoryImageSetStorageListener.php",
-            "snippet": "    use DatabaseTransactionHandlerTrait;",
-            "selected_text": "DatabaseTransactionHandlerTrait",
-            "error_level": 2,
-            "shortcode": 171
-        },
-        {
-            "severity": "info",
-            "line_from": 22,
-            "line_to": 22,
-            "type": "DeprecatedTrait",
-            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/CategoryImageStorage/src/Spryker/Zed/CategoryImageStorage/Communication/Plugin/Event/Listener/CategoryImageStorageListener.php",
-            "snippet": "    use DatabaseTransactionHandlerTrait;",
-            "selected_text": "DatabaseTransactionHandlerTrait",
-            "error_level": 2,
-            "shortcode": 171
-        },
-        {
-            "severity": "info",
-            "line_from": 24,
-            "line_to": 24,
-            "type": "DeprecatedInterface",
-            "message": "Spryker\\Zed\\SynchronizationExtension\\Dependency\\Plugin\\SynchronizationDataRepositoryPluginInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/CategoryImageStorage/src/Spryker/Zed/CategoryImageStorage/Communication/Plugin/Synchronization/CategoryImageSynchronizationDataPlugin.php",
-            "snippet": "class CategoryImageSynchronizationDataPlugin extends AbstractPlugin implements SynchronizationDataRepositoryPluginInterface",
-            "selected_text": "CategoryImageSynchronizationDataPlugin",
-            "error_level": 2,
-            "shortcode": 152
-        }
-    ]
+    "deprecation": [],
+    "count": 13
 }

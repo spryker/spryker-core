@@ -149,18 +149,6 @@
         },
         {
             "severity": "info",
-            "line_from": 13,
-            "line_to": 13,
-            "type": "DeprecatedInterface",
-            "message": "Spryker\\Zed\\ApiQueryBuilder\\Dependency\\Service\\ApiQueryBuilderToUtilEncodingInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ApiQueryBuilder/src/Spryker/Zed/ApiQueryBuilder/Dependency/Service/ApiQueryBuilderToUtilEncodingBridge.php",
-            "snippet": "class ApiQueryBuilderToUtilEncodingBridge implements ApiQueryBuilderToUtilEncodingInterface",
-            "selected_text": "ApiQueryBuilderToUtilEncodingBridge",
-            "error_level": 2,
-            "shortcode": 152
-        },
-        {
-            "severity": "info",
             "line_from": 40,
             "line_to": 40,
             "type": "DeprecatedClass",
@@ -171,5 +159,6 @@
             "error_level": 2,
             "shortcode": 98
         }
-    ]
+    ],
+    "count": 13
 }

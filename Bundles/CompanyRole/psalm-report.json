@@ -542,18 +542,6 @@
             "shortcode": 78
         }
     ],
-    "deprecation": [
-        {
-            "severity": "info",
-            "line_from": 253,
-            "line_to": 253,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\CompanyRole\\Persistence\\CompanyRoleRepositoryInterface::getDefaultCompanyRole has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/CompanyRole/src/Spryker/Zed/CompanyRole/Business/CompanyRoleFacade.php",
-            "snippet": "        return $this->getRepository()->getDefaultCompanyRole();",
-            "selected_text": "getDefaultCompanyRole",
-            "error_level": 2,
-            "shortcode": 1
-        }
-    ]
+    "deprecation": [],
+    "count": 45
 }

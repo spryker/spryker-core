@@ -318,138 +318,6 @@
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 63,
-            "line_to": 63,
-            "type": "DeprecatedMethod",
-            "message": "The method Generated\\Shared\\Transfer\\QuoteTransfer::getShippingAddress has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/TaxProductConnector/src/Spryker/Zed/TaxProductConnector/Business/Model/ProductItemTaxRateCalculator.php",
-            "snippet": "        $itemTransfers = $this->recalculateWithItemsAndShippingAddress($quoteTransfer->getItems(), $quoteTransfer->getShippingAddress());",
-            "selected_text": "getShippingAddress",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 74,
-            "line_to": 74,
-            "type": "DeprecatedMethod",
-            "message": "The method Generated\\Shared\\Transfer\\CalculableObjectTransfer::getShippingAddress has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/TaxProductConnector/src/Spryker/Zed/TaxProductConnector/Business/Model/ProductItemTaxRateCalculator.php",
-            "snippet": "        $itemTransfers = $this->recalculateWithItemsAndShippingAddress($calculableObjectTransfer->getItems(), $calculableObjectTransfer->getShippingAddress());",
-            "selected_text": "getShippingAddress",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 171,
-            "line_to": 171,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\TaxProductConnector\\Persistence\\TaxProductConnectorQueryContainerInterface::queryTaxSetByIdProductAbstractAndCountryIso2Code has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/TaxProductConnector/src/Spryker/Zed/TaxProductConnector/Business/Model/ProductItemTaxRateCalculator.php",
-            "snippet": "            ->queryTaxSetByIdProductAbstractAndCountryIso2Code($allIdProductAbstracts, $countryIso2Code)",
-            "selected_text": "queryTaxSetByIdProductAbstractAndCountryIso2Code",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 19,
-            "line_to": 19,
-            "type": "DeprecatedInterface",
-            "message": "Spryker\\Zed\\TaxProductConnector\\Business\\StrategyResolver\\ProductItemTaxRateCalculatorStrategyResolverInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/TaxProductConnector/src/Spryker/Zed/TaxProductConnector/Business/StrategyResolver/ProductItemTaxRateCalculatorStrategyResolver.php",
-            "snippet": "class ProductItemTaxRateCalculatorStrategyResolver implements ProductItemTaxRateCalculatorStrategyResolverInterface",
-            "selected_text": "ProductItemTaxRateCalculatorStrategyResolver",
-            "error_level": 2,
-            "shortcode": 152
-        },
-        {
-            "severity": "info",
-            "line_from": 64,
-            "line_to": 64,
-            "type": "DeprecatedClass",
-            "message": "Spryker\\Zed\\TaxProductConnector\\Business\\Model\\ProductItemTaxRateCalculator is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/TaxProductConnector/src/Spryker/Zed/TaxProductConnector/Business/TaxProductConnectorBusinessFactory.php",
-            "snippet": "        return new ProductItemTaxRateCalculator($this->getQueryContainer(), $this->getTaxFacade());",
-            "selected_text": "new ProductItemTaxRateCalculator($this->getQueryContainer(), $this->getTaxFacade())",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 97,
-            "line_to": 97,
-            "type": "DeprecatedClass",
-            "message": "Class Spryker\\Zed\\TaxProductConnector\\Business\\StrategyResolver\\ProductItemTaxRateCalculatorStrategyResolver is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/TaxProductConnector/src/Spryker/Zed/TaxProductConnector/Business/TaxProductConnectorBusinessFactory.php",
-            "snippet": "     * @return \\Spryker\\Zed\\TaxProductConnector\\Business\\StrategyResolver\\ProductItemTaxRateCalculatorStrategyResolver",
-            "selected_text": "\\Spryker\\Zed\\TaxProductConnector\\Business\\StrategyResolver\\ProductItemTaxRateCalculatorStrategyResolver",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 99,
-            "line_to": 99,
-            "type": "DeprecatedClass",
-            "message": "Class Spryker\\Zed\\TaxProductConnector\\Business\\StrategyResolver\\ProductItemTaxRateCalculatorStrategyResolverInterface is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/TaxProductConnector/src/Spryker/Zed/TaxProductConnector/Business/TaxProductConnectorBusinessFactory.php",
-            "snippet": "    public function createProductItemTaxRateCalculatorStrategyResolver(): ProductItemTaxRateCalculatorStrategyResolverInterface",
-            "selected_text": "ProductItemTaxRateCalculatorStrategyResolverInterface",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 103,
-            "line_to": 103,
-            "type": "DeprecatedClass",
-            "message": "Class Spryker\\Zed\\TaxProductConnector\\Business\\StrategyResolver\\ProductItemTaxRateCalculatorStrategyResolver is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/TaxProductConnector/src/Spryker/Zed/TaxProductConnector/Business/TaxProductConnectorBusinessFactory.php",
-            "snippet": "        $strategyContainer[ProductItemTaxRateCalculatorStrategyResolver::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT] = function () {",
-            "selected_text": "ProductItemTaxRateCalculatorStrategyResolver::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 104,
-            "line_to": 104,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\TaxProductConnector\\Business\\TaxProductConnectorBusinessFactory::createProductItemTaxRateCalculator has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/TaxProductConnector/src/Spryker/Zed/TaxProductConnector/Business/TaxProductConnectorBusinessFactory.php",
-            "snippet": "            return $this->createProductItemTaxRateCalculator();",
-            "selected_text": "createProductItemTaxRateCalculator",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 107,
-            "line_to": 107,
-            "type": "DeprecatedClass",
-            "message": "Class Spryker\\Zed\\TaxProductConnector\\Business\\StrategyResolver\\ProductItemTaxRateCalculatorStrategyResolver is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/TaxProductConnector/src/Spryker/Zed/TaxProductConnector/Business/TaxProductConnectorBusinessFactory.php",
-            "snippet": "        $strategyContainer[ProductItemTaxRateCalculatorStrategyResolver::STRATEGY_KEY_WITH_MULTI_SHIPMENT] = function () {",
-            "selected_text": "ProductItemTaxRateCalculatorStrategyResolver::STRATEGY_KEY_WITH_MULTI_SHIPMENT",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 111,
-            "line_to": 111,
-            "type": "DeprecatedClass",
-            "message": "Spryker\\Zed\\TaxProductConnector\\Business\\StrategyResolver\\ProductItemTaxRateCalculatorStrategyResolver is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/TaxProductConnector/src/Spryker/Zed/TaxProductConnector/Business/TaxProductConnectorBusinessFactory.php",
-            "snippet": "        return new ProductItemTaxRateCalculatorStrategyResolver($strategyContainer);",
-            "selected_text": "new ProductItemTaxRateCalculatorStrategyResolver($strategyContainer)",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
             "line_from": 82,
             "line_to": 82,
             "type": "DeprecatedMethod",
@@ -498,8 +366,8 @@
         },
         {
             "severity": "info",
-            "line_from": 26,
-            "line_to": 26,
+            "line_from": 28,
+            "line_to": 28,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Zed\\TaxProductConnector\\Business\\TaxProductConnectorFacadeInterface::getTaxSetForProductAbstract has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/TaxProductConnector/src/Spryker/Zed/TaxProductConnector/Communication/Controller/GatewayController.php",
@@ -507,42 +375,7 @@
             "selected_text": "getTaxSetForProductAbstract",
             "error_level": 2,
             "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 21,
-            "line_to": 21,
-            "type": "DeprecatedInterface",
-            "message": "Spryker\\Zed\\Calculation\\Dependency\\Plugin\\CalculatorPluginInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/TaxProductConnector/src/Spryker/Zed/TaxProductConnector/Communication/Plugin/ProductItemTaxRateCalculatorPlugin.php",
-            "snippet": "class ProductItemTaxRateCalculatorPlugin extends AbstractPlugin implements CalculatorPluginInterface",
-            "selected_text": "ProductItemTaxRateCalculatorPlugin",
-            "error_level": 2,
-            "shortcode": 152
-        },
-        {
-            "severity": "info",
-            "line_from": 21,
-            "line_to": 21,
-            "type": "DeprecatedInterface",
-            "message": "Spryker\\Zed\\Product\\Dependency\\Plugin\\ProductAbstractPluginCreateInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/TaxProductConnector/src/Spryker/Zed/TaxProductConnector/Communication/Plugin/TaxSetProductAbstractAfterCreatePlugin.php",
-            "snippet": "class TaxSetProductAbstractAfterCreatePlugin extends AbstractPlugin implements ProductAbstractPluginCreateInterface",
-            "selected_text": "TaxSetProductAbstractAfterCreatePlugin",
-            "error_level": 2,
-            "shortcode": 152
-        },
-        {
-            "severity": "info",
-            "line_from": 21,
-            "line_to": 21,
-            "type": "DeprecatedInterface",
-            "message": "Spryker\\Zed\\Product\\Dependency\\Plugin\\ProductAbstractPluginReadInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/TaxProductConnector/src/Spryker/Zed/TaxProductConnector/Communication/Plugin/TaxSetProductAbstractReadPlugin.php",
-            "snippet": "class TaxSetProductAbstractReadPlugin extends AbstractPlugin implements ProductAbstractPluginReadInterface",
-            "selected_text": "TaxSetProductAbstractReadPlugin",
-            "error_level": 2,
-            "shortcode": 152
         }
-    ]
+    ],
+    "count": 31
 }

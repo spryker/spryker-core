@@ -1,5 +1,18 @@
 {
-    "error": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 291,
+            "line_to": 291,
+            "type": "NullArgument",
+            "message": "Argument 1 of ArrayObject::offsetSet cannot be null, null value provided to parameter with type int",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOptionStorage/src/Spryker/Zed/ProductOptionStorage/Business/Storage/ProductOptionStorageWriter.php",
+            "snippet": "                $productOptionGroupStorageTransfers[] = $productOptionGroupStorageTransfer;",
+            "selected_text": "$productOptionGroupStorageTransfers",
+            "error_level": 6,
+            "shortcode": 57
+        }
+    ],
     "warning": [
         {
             "severity": "info",
@@ -72,18 +85,6 @@
             "selected_text": "$storePrices",
             "error_level": 3,
             "shortcode": 125
-        },
-        {
-            "severity": "info",
-            "line_from": 220,
-            "line_to": 220,
-            "type": "InvalidScalarArgument",
-            "message": "Argument 1 of Orm\\Zed\\ProductOptionStorage\\Persistence\\SpyProductAbstractOptionStorage::setStore expects string, 0|string provided",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductOptionStorage/src/Spryker/Zed/ProductOptionStorage/Business/Storage/ProductOptionStorageWriter.php",
-            "snippet": "            $spyProductAbstractOptionStorageEntity->setStore($store);",
-            "selected_text": "$store",
-            "error_level": 4,
-            "shortcode": 12
         }
     ],
     "deprecation": [
@@ -134,66 +135,7 @@
             "selected_text": "$this->isSendingToQueue",
             "error_level": 2,
             "shortcode": 99
-        },
-        {
-            "severity": "info",
-            "line_from": 22,
-            "line_to": 22,
-            "type": "DeprecatedTrait",
-            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductOptionStorage/src/Spryker/Zed/ProductOptionStorage/Communication/Plugin/Event/Listener/ProductOptionGroupStorageListener.php",
-            "snippet": "    use DatabaseTransactionHandlerTrait;",
-            "selected_text": "DatabaseTransactionHandlerTrait",
-            "error_level": 2,
-            "shortcode": 171
-        },
-        {
-            "severity": "info",
-            "line_from": 22,
-            "line_to": 22,
-            "type": "DeprecatedTrait",
-            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductOptionStorage/src/Spryker/Zed/ProductOptionStorage/Communication/Plugin/Event/Listener/ProductOptionPublishStorageListener.php",
-            "snippet": "    use DatabaseTransactionHandlerTrait;",
-            "selected_text": "DatabaseTransactionHandlerTrait",
-            "error_level": 2,
-            "shortcode": 171
-        },
-        {
-            "severity": "info",
-            "line_from": 23,
-            "line_to": 23,
-            "type": "DeprecatedTrait",
-            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductOptionStorage/src/Spryker/Zed/ProductOptionStorage/Communication/Plugin/Event/Listener/ProductOptionStorageListener.php",
-            "snippet": "    use DatabaseTransactionHandlerTrait;",
-            "selected_text": "DatabaseTransactionHandlerTrait",
-            "error_level": 2,
-            "shortcode": 171
-        },
-        {
-            "severity": "info",
-            "line_from": 23,
-            "line_to": 23,
-            "type": "DeprecatedTrait",
-            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductOptionStorage/src/Spryker/Zed/ProductOptionStorage/Communication/Plugin/Event/Listener/ProductOptionValuePriceStorageListener.php",
-            "snippet": "    use DatabaseTransactionHandlerTrait;",
-            "selected_text": "DatabaseTransactionHandlerTrait",
-            "error_level": 2,
-            "shortcode": 171
-        },
-        {
-            "severity": "info",
-            "line_from": 23,
-            "line_to": 23,
-            "type": "DeprecatedTrait",
-            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductOptionStorage/src/Spryker/Zed/ProductOptionStorage/Communication/Plugin/Event/Listener/ProductOptionValueStorageListener.php",
-            "snippet": "    use DatabaseTransactionHandlerTrait;",
-            "selected_text": "DatabaseTransactionHandlerTrait",
-            "error_level": 2,
-            "shortcode": 171
         }
-    ]
+    ],
+    "count": 11
 }

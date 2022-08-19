@@ -1,5 +1,54 @@
 {
-    "error": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 59,
+            "line_to": 59,
+            "type": "NullArgument",
+            "message": "Argument 1 of ArrayObject::offsetSet cannot be null, null value provided to parameter with type int",
+            "file_name": "vendor/spryker/spryker/Bundles/Nopayment/src/Spryker/Zed/Nopayment/Business/Nopayment/NopaymentMethodFilter.php",
+            "snippet": "                $allowedMethods[] = $paymentMethodTransfer;",
+            "selected_text": "$allowedMethods",
+            "error_level": 6,
+            "shortcode": 57
+        },
+        {
+            "severity": "error",
+            "line_from": 65,
+            "line_to": 65,
+            "type": "NullArgument",
+            "message": "Argument 1 of ArrayObject::offsetSet cannot be null, null value provided to parameter with type int",
+            "file_name": "vendor/spryker/spryker/Bundles/Nopayment/src/Spryker/Zed/Nopayment/Business/Nopayment/NopaymentMethodFilter.php",
+            "snippet": "                $allowedMethods[] = $paymentMethodTransfer;",
+            "selected_text": "$allowedMethods",
+            "error_level": 6,
+            "shortcode": 57
+        },
+        {
+            "severity": "error",
+            "line_from": 84,
+            "line_to": 84,
+            "type": "NullArgument",
+            "message": "Argument 1 of ArrayObject::offsetSet cannot be null, null value provided to parameter with type int",
+            "file_name": "vendor/spryker/spryker/Bundles/Nopayment/src/Spryker/Zed/Nopayment/Business/Nopayment/NopaymentMethodFilter.php",
+            "snippet": "                $allowedMethods[] = $paymentMethodTransfer;",
+            "selected_text": "$allowedMethods",
+            "error_level": 6,
+            "shortcode": 57
+        },
+        {
+            "severity": "error",
+            "line_from": 90,
+            "line_to": 90,
+            "type": "NullArgument",
+            "message": "Argument 1 of ArrayObject::offsetSet cannot be null, null value provided to parameter with type int",
+            "file_name": "vendor/spryker/spryker/Bundles/Nopayment/src/Spryker/Zed/Nopayment/Business/Nopayment/NopaymentMethodFilter.php",
+            "snippet": "                $allowedMethods[] = $paymentMethodTransfer;",
+            "selected_text": "$allowedMethods",
+            "error_level": 6,
+            "shortcode": 57
+        }
+    ],
     "warning": [
         {
             "severity": "info",
@@ -24,18 +73,6 @@
             "selected_text": "getPriceToPay",
             "error_level": 3,
             "shortcode": 83
-        },
-        {
-            "severity": "info",
-            "line_from": 62,
-            "line_to": 62,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Nopayment\\Persistence\\SpyNopaymentPaid> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/Nopayment/src/Spryker/Zed/Nopayment/Business/Nopayment/Paid.php",
-            "snippet": "        return ($this->queryContainer->queryOrderItem($orderItem)->count() > 0);",
-            "selected_text": "count",
-            "error_level": 3,
-            "shortcode": 113
         },
         {
             "severity": "info",
@@ -65,8 +102,8 @@
         },
         {
             "severity": "info",
-            "line_from": 57,
-            "line_to": 57,
+            "line_from": 58,
+            "line_to": 58,
             "type": "DeprecatedMethod",
             "message": "The method Generated\\Shared\\Transfer\\PaymentMethodTransfer::getMethodName has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Nopayment/src/Spryker/Zed/Nopayment/Business/Nopayment/NopaymentMethodFilter.php",
@@ -77,8 +114,8 @@
         },
         {
             "severity": "info",
-            "line_from": 63,
-            "line_to": 63,
+            "line_from": 64,
+            "line_to": 64,
             "type": "DeprecatedMethod",
             "message": "The method Generated\\Shared\\Transfer\\PaymentMethodTransfer::getMethodName has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Nopayment/src/Spryker/Zed/Nopayment/Business/Nopayment/NopaymentMethodFilter.php",
@@ -89,8 +126,8 @@
         },
         {
             "severity": "info",
-            "line_from": 81,
-            "line_to": 81,
+            "line_from": 83,
+            "line_to": 83,
             "type": "DeprecatedMethod",
             "message": "The method Generated\\Shared\\Transfer\\PaymentMethodTransfer::getMethodName has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Nopayment/src/Spryker/Zed/Nopayment/Business/Nopayment/NopaymentMethodFilter.php",
@@ -101,8 +138,8 @@
         },
         {
             "severity": "info",
-            "line_from": 87,
-            "line_to": 87,
+            "line_from": 89,
+            "line_to": 89,
             "type": "DeprecatedMethod",
             "message": "The method Generated\\Shared\\Transfer\\PaymentMethodTransfer::getMethodName has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Nopayment/src/Spryker/Zed/Nopayment/Business/Nopayment/NopaymentMethodFilter.php",
@@ -110,18 +147,7 @@
             "selected_text": "getMethodName",
             "error_level": 2,
             "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 24,
-            "line_to": 24,
-            "type": "DeprecatedInterface",
-            "message": "Spryker\\Zed\\Payment\\Dependency\\Plugin\\Checkout\\CheckoutPreCheckPluginInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Nopayment/src/Spryker/Zed/Nopayment/Communication/Plugin/Checkout/NopaymentPreCheckPlugin.php",
-            "snippet": "class NopaymentPreCheckPlugin extends AbstractPlugin implements CheckoutPreCheckPluginInterface",
-            "selected_text": "NopaymentPreCheckPlugin",
-            "error_level": 2,
-            "shortcode": 152
         }
-    ]
+    ],
+    "count": 12
 }

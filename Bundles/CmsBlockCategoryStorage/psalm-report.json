@@ -24,18 +24,6 @@
             "selected_text": "$cmsBlockCategoriesTransfer->getIdCategory()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 34,
-            "line_to": 34,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockCategoryStorage/src/Spryker/Zed/CmsBlockCategoryStorage/Communication/Plugin/Event/Listener/CmsBlockCategoryPositionStorageListener.php",
-            "snippet": "        $idCategories = $this->getQueryContainer()->queryCategoryIdsByPositionIds($idPosition)->find()->getData();",
-            "selected_text": "getData",
-            "error_level": 3,
-            "shortcode": 113
         }
     ],
     "deprecation": [
@@ -86,90 +74,7 @@
             "selected_text": "$this->isSendingToQueue",
             "error_level": 2,
             "shortcode": 99
-        },
-        {
-            "severity": "info",
-            "line_from": 23,
-            "line_to": 23,
-            "type": "DeprecatedTrait",
-            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockCategoryStorage/src/Spryker/Zed/CmsBlockCategoryStorage/Communication/Plugin/Event/Listener/CmsBlockCategoryConnectorEntityStoragePublishListener.php",
-            "snippet": "    use DatabaseTransactionHandlerTrait;",
-            "selected_text": "DatabaseTransactionHandlerTrait",
-            "error_level": 2,
-            "shortcode": 171
-        },
-        {
-            "severity": "info",
-            "line_from": 23,
-            "line_to": 23,
-            "type": "DeprecatedTrait",
-            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockCategoryStorage/src/Spryker/Zed/CmsBlockCategoryStorage/Communication/Plugin/Event/Listener/CmsBlockCategoryConnectorEntityStorageUnpublishListener.php",
-            "snippet": "    use DatabaseTransactionHandlerTrait;",
-            "selected_text": "DatabaseTransactionHandlerTrait",
-            "error_level": 2,
-            "shortcode": 171
-        },
-        {
-            "severity": "info",
-            "line_from": 26,
-            "line_to": 26,
-            "type": "DeprecatedTrait",
-            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockCategoryStorage/src/Spryker/Zed/CmsBlockCategoryStorage/Communication/Plugin/Event/Listener/CmsBlockCategoryConnectorPublishStorageListener.php",
-            "snippet": "    use DatabaseTransactionHandlerTrait;",
-            "selected_text": "DatabaseTransactionHandlerTrait",
-            "error_level": 2,
-            "shortcode": 171
-        },
-        {
-            "severity": "info",
-            "line_from": 27,
-            "line_to": 27,
-            "type": "DeprecatedTrait",
-            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockCategoryStorage/src/Spryker/Zed/CmsBlockCategoryStorage/Communication/Plugin/Event/Listener/CmsBlockCategoryConnectorStorageListener.php",
-            "snippet": "    use DatabaseTransactionHandlerTrait;",
-            "selected_text": "DatabaseTransactionHandlerTrait",
-            "error_level": 2,
-            "shortcode": 171
-        },
-        {
-            "severity": "info",
-            "line_from": 22,
-            "line_to": 22,
-            "type": "DeprecatedTrait",
-            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockCategoryStorage/src/Spryker/Zed/CmsBlockCategoryStorage/Communication/Plugin/Event/Listener/CmsBlockCategoryConnectorStoragePublishListener.php",
-            "snippet": "    use DatabaseTransactionHandlerTrait;",
-            "selected_text": "DatabaseTransactionHandlerTrait",
-            "error_level": 2,
-            "shortcode": 171
-        },
-        {
-            "severity": "info",
-            "line_from": 22,
-            "line_to": 22,
-            "type": "DeprecatedTrait",
-            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockCategoryStorage/src/Spryker/Zed/CmsBlockCategoryStorage/Communication/Plugin/Event/Listener/CmsBlockCategoryConnectorStorageUnpublishListener.php",
-            "snippet": "    use DatabaseTransactionHandlerTrait;",
-            "selected_text": "DatabaseTransactionHandlerTrait",
-            "error_level": 2,
-            "shortcode": 171
-        },
-        {
-            "severity": "info",
-            "line_from": 22,
-            "line_to": 22,
-            "type": "DeprecatedTrait",
-            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockCategoryStorage/src/Spryker/Zed/CmsBlockCategoryStorage/Communication/Plugin/Event/Listener/CmsBlockCategoryPositionStorageListener.php",
-            "snippet": "    use DatabaseTransactionHandlerTrait;",
-            "selected_text": "DatabaseTransactionHandlerTrait",
-            "error_level": 2,
-            "shortcode": 171
         }
-    ]
+    ],
+    "count": 6
 }

@@ -222,18 +222,6 @@
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 50,
-            "line_to": 50,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\NavigationGui\\Communication\\NavigationGuiCommunicationFactory::createNavigationFormType has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/NavigationGui/src/Spryker/Zed/NavigationGui/Communication/NavigationGuiCommunicationFactory.php",
-            "snippet": "        return $this->getFormFactory()->create($this->createNavigationFormType(), $data, $options);",
-            "selected_text": "createNavigationFormType",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
             "line_from": 61,
             "line_to": 61,
             "type": "DeprecatedMethod",
@@ -241,18 +229,6 @@
             "file_name": "vendor/spryker/spryker/Bundles/NavigationGui/src/Spryker/Zed/NavigationGui/Communication/NavigationGuiCommunicationFactory.php",
             "snippet": "        return $this->createNavigationForm($data, $options);",
             "selected_text": "createNavigationForm",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 103,
-            "line_to": 103,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\NavigationGui\\Communication\\NavigationGuiCommunicationFactory::createUpdateNavigationFormType has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/NavigationGui/src/Spryker/Zed/NavigationGui/Communication/NavigationGuiCommunicationFactory.php",
-            "snippet": "        return $this->getFormFactory()->create($this->createUpdateNavigationFormType(), $data, $options);",
-            "selected_text": "createUpdateNavigationFormType",
             "error_level": 2,
             "shortcode": 1
         },
@@ -270,18 +246,6 @@
         },
         {
             "severity": "info",
-            "line_from": 145,
-            "line_to": 145,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\NavigationGui\\Communication\\NavigationGuiCommunicationFactory::createNavigationNodeFormType has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/NavigationGui/src/Spryker/Zed/NavigationGui/Communication/NavigationGuiCommunicationFactory.php",
-            "snippet": "        return $this->getFormFactory()->create($this->createNavigationNodeFormType(), $data, $options);",
-            "selected_text": "createNavigationNodeFormType",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
             "line_from": 156,
             "line_to": 156,
             "type": "DeprecatedMethod",
@@ -292,5 +256,6 @@
             "error_level": 2,
             "shortcode": 1
         }
-    ]
+    ],
+    "count": 21
 }

@@ -606,18 +606,6 @@
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 73,
-            "line_to": 73,
-            "type": "DeprecatedClass",
-            "message": "Class Spryker\\Zed\\SalesReturnExtension\\Dependency\\Plugin\\ReturnCollectionExpanderPluginInterface is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesReturn/src/Spryker/Zed/SalesReturn/Business/Reader/ReturnReader.php",
-            "snippet": "     * @var array<\\Spryker\\Zed\\SalesReturnExtension\\Dependency\\Plugin\\ReturnCollectionExpanderPluginInterface>",
-            "selected_text": "array<\\Spryker\\Zed\\SalesReturnExtension\\Dependency\\Plugin\\ReturnCollectionExpanderPluginInterface>",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
             "line_from": 82,
             "line_to": 82,
             "type": "DeprecatedClass",
@@ -666,30 +654,6 @@
         },
         {
             "severity": "info",
-            "line_from": 194,
-            "line_to": 194,
-            "type": "DeprecatedClass",
-            "message": "Class Spryker\\Zed\\SalesReturnExtension\\Dependency\\Plugin\\ReturnCollectionExpanderPluginInterface is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesReturn/src/Spryker/Zed/SalesReturn/Business/SalesReturnBusinessFactory.php",
-            "snippet": "     * @return array<\\Spryker\\Zed\\SalesReturnExtension\\Dependency\\Plugin\\ReturnCollectionExpanderPluginInterface>",
-            "selected_text": "array<\\Spryker\\Zed\\SalesReturnExtension\\Dependency\\Plugin\\ReturnCollectionExpanderPluginInterface>",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 198,
-            "line_to": 198,
-            "type": "DeprecatedConstant",
-            "message": "Constant Spryker\\Zed\\SalesReturn\\SalesReturnDependencyProvider::PLUGINS_RETURN_COLLECTION_EXPANDER is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesReturn/src/Spryker/Zed/SalesReturn/Business/SalesReturnBusinessFactory.php",
-            "snippet": "        return $this->getProvidedDependency(SalesReturnDependencyProvider::PLUGINS_RETURN_COLLECTION_EXPANDER);",
-            "selected_text": "SalesReturnDependencyProvider::PLUGINS_RETURN_COLLECTION_EXPANDER",
-            "error_level": 2,
-            "shortcode": 170
-        },
-        {
-            "severity": "info",
             "line_from": 85,
             "line_to": 85,
             "type": "DeprecatedMethod",
@@ -699,42 +663,7 @@
             "selected_text": "addReturnCollectionExpanderPlugins",
             "error_level": 2,
             "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 216,
-            "line_to": 216,
-            "type": "DeprecatedConstant",
-            "message": "Constant Spryker\\Zed\\SalesReturn\\SalesReturnDependencyProvider::PLUGINS_RETURN_COLLECTION_EXPANDER is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesReturn/src/Spryker/Zed/SalesReturn/SalesReturnDependencyProvider.php",
-            "snippet": "        $container->set(static::PLUGINS_RETURN_COLLECTION_EXPANDER, function () {",
-            "selected_text": "static::PLUGINS_RETURN_COLLECTION_EXPANDER",
-            "error_level": 2,
-            "shortcode": 170
-        },
-        {
-            "severity": "info",
-            "line_from": 217,
-            "line_to": 217,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\SalesReturn\\SalesReturnDependencyProvider::getReturnCollectionExpanderPlugins has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesReturn/src/Spryker/Zed/SalesReturn/SalesReturnDependencyProvider.php",
-            "snippet": "            return $this->getReturnCollectionExpanderPlugins();",
-            "selected_text": "getReturnCollectionExpanderPlugins",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 256,
-            "line_to": 256,
-            "type": "DeprecatedClass",
-            "message": "Class Spryker\\Zed\\SalesReturnExtension\\Dependency\\Plugin\\ReturnCollectionExpanderPluginInterface is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesReturn/src/Spryker/Zed/SalesReturn/SalesReturnDependencyProvider.php",
-            "snippet": "     * @return array<\\Spryker\\Zed\\SalesReturnExtension\\Dependency\\Plugin\\ReturnCollectionExpanderPluginInterface>",
-            "selected_text": "array<\\Spryker\\Zed\\SalesReturnExtension\\Dependency\\Plugin\\ReturnCollectionExpanderPluginInterface>",
-            "error_level": 2,
-            "shortcode": 98
         }
-    ]
+    ],
+    "count": 55
 }

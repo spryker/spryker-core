@@ -1,18 +1,6 @@
 {
     "error": [],
     "warning": [],
-    "deprecation": [
-        {
-            "severity": "info",
-            "line_from": 17,
-            "line_to": 17,
-            "type": "DeprecatedInterface",
-            "message": "Spryker\\Zed\\ProductManagementExtension\\Dependency\\Plugin\\ProductTableDataExpanderPluginInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductConfigurationGui/src/Spryker/Zed/ProductConfigurationGui/Communication/Plugin/ProductManagement/ProductConfigurationTableDataExpanderPlugin.php",
-            "snippet": "class ProductConfigurationTableDataExpanderPlugin extends AbstractPlugin implements ProductTableDataExpanderPluginInterface",
-            "selected_text": "ProductConfigurationTableDataExpanderPlugin",
-            "error_level": 2,
-            "shortcode": 152
-        }
-    ]
+    "deprecation": [],
+    "count": 0
 }

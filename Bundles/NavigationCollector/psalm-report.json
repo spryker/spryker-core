@@ -65,8 +65,8 @@
         },
         {
             "severity": "info",
-            "line_from": 31,
-            "line_to": 31,
+            "line_from": 32,
+            "line_to": 32,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/NavigationCollector/src/Spryker/Zed/NavigationCollector/Communication/Plugin/NavigationMenuCollectorStoragePlugin.php",
@@ -99,5 +99,6 @@
             "error_level": 2,
             "shortcode": 98
         }
-    ]
+    ],
+    "count": 8
 }

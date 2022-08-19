@@ -267,32 +267,8 @@
         },
         {
             "severity": "info",
-            "line_from": 151,
-            "line_to": 151,
-            "type": "MismatchingDocblockParamType",
-            "message": "Parameter $productAbstractEntities has wrong type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\Product\\Persistence\\SpyProductAbstract>', should be 'Propel\\Runtime\\Collection\\ObjectCollection'",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelGui/src/Spryker/Zed/ProductLabelGui/Communication/Table/AbstractRelatedProductRelationTable.php",
-            "snippet": "     * @param \\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\Product\\Persistence\\SpyProductAbstract[] $productAbstractEntities",
-            "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\Product\\Persistence\\SpyProductAbstract[]",
-            "error_level": 4,
-            "shortcode": 141
-        },
-        {
-            "severity": "info",
-            "line_from": 106,
-            "line_to": 106,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Product\\Persistence\\SpyProductAbstract> variable $productAbstractEntities",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelGui/src/Spryker/Zed/ProductLabelGui/Communication/Table/AbstractRelatedProductTable.php",
-            "snippet": "        $productAbstractIds = $productAbstractEntities->getPrimaryKeys();",
-            "selected_text": "getPrimaryKeys",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 110,
-            "line_to": 110,
+            "line_from": 114,
+            "line_to": 114,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\ProductLabelGui\\Persistence\\ProductLabelGuiRepositoryInterface::getCategoryNamesGroupedByIdProductAbstract cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelGui/src/Spryker/Zed/ProductLabelGui/Communication/Table/AbstractRelatedProductTable.php",
@@ -324,69 +300,33 @@
             "selected_text": "$tableIdentifier",
             "error_level": 3,
             "shortcode": 267
+        },
+        {
+            "severity": "info",
+            "line_from": 92,
+            "line_to": 95,
+            "type": "ArgumentTypeCoercion",
+            "message": "Argument 1 of Orm\\Zed\\Product\\Persistence\\SpyProductAbstractQuery::where expects array<array-key, mixed>|literal-string, parent type string provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelGui/src/Spryker/Zed/ProductLabelGui/Communication/Table/RelatedProductTableQueryBuilder.php",
+            "snippet": "        $query->where(sprintf(\n            '%s IS NULL',\n            SpyProductLabelProductAbstractTableMap::COL_FK_PRODUCT_LABEL,\n        ));",
+            "selected_text": "sprintf(\n            '%s IS NULL',\n            SpyProductLabelProductAbstractTableMap::COL_FK_PRODUCT_LABEL,\n        )",
+            "error_level": 3,
+            "shortcode": 193
+        },
+        {
+            "severity": "info",
+            "line_from": 109,
+            "line_to": 112,
+            "type": "ArgumentTypeCoercion",
+            "message": "Argument 1 of Orm\\Zed\\Product\\Persistence\\SpyProductAbstractQuery::where expects array<array-key, mixed>|literal-string, parent type string provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelGui/src/Spryker/Zed/ProductLabelGui/Communication/Table/RelatedProductTableQueryBuilder.php",
+            "snippet": "        $query->where(sprintf(\n            '%s IS NOT NULL',\n            SpyProductLabelProductAbstractTableMap::COL_FK_PRODUCT_LABEL,\n        ));",
+            "selected_text": "sprintf(\n            '%s IS NOT NULL',\n            SpyProductLabelProductAbstractTableMap::COL_FK_PRODUCT_LABEL,\n        )",
+            "error_level": 3,
+            "shortcode": 193
         }
     ],
     "deprecation": [
-        {
-            "severity": "info",
-            "line_from": 121,
-            "line_to": 121,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\ProductLabelGui\\Communication\\Table\\AbstractRelatedProductTable::getRow has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelGui/src/Spryker/Zed/ProductLabelGui/Communication/Table/AbstractRelatedProductRelationTable.php",
-            "snippet": "        $row = parent::getRow($productAbstractEntity);",
-            "selected_text": "parent::getRow($productAbstractEntity)",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 165,
-            "line_to": 165,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\ProductLabelGui\\Communication\\Table\\AbstractRelatedProductTable::getCategoriesColumn has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelGui/src/Spryker/Zed/ProductLabelGui/Communication/Table/AbstractRelatedProductRelationTable.php",
-            "snippet": "                RelatedProductTableQueryBuilder::RESULT_FIELD_PRODUCT_ABSTRACT_CATEGORY_NAMES_CSV => $this->getCategoriesColumn($productAbstractEntity),",
-            "selected_text": "getCategoriesColumn",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 139,
-            "line_to": 139,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\ProductLabelGui\\Communication\\Table\\AbstractRelatedProductTable::getCategoriesColumn has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelGui/src/Spryker/Zed/ProductLabelGui/Communication/Table/AbstractRelatedProductTable.php",
-            "snippet": "            static::COL_PRODUCT_ABSTRACT_CATEGORIES => $this->getCategoriesColumn($productAbstractEntity),",
-            "selected_text": "getCategoriesColumn",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 157,
-            "line_to": 157,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\ProductLabelGui\\Communication\\Table\\AbstractRelatedProductTable::getRow has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelGui/src/Spryker/Zed/ProductLabelGui/Communication/Table/RelatedProductOverviewTable.php",
-            "snippet": "        $row = parent::getRow($productAbstractEntity);",
-            "selected_text": "parent::getRow($productAbstractEntity)",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 160,
-            "line_to": 160,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\ProductLabelGui\\Communication\\Table\\RelatedProductOverviewTable::getAdditionalRelationCountColumn has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelGui/src/Spryker/Zed/ProductLabelGui/Communication/Table/RelatedProductOverviewTable.php",
-            "snippet": "        $row[static::COL_PRODUCT_ABSTRACT_RELATION_COUNT] = $this->getAdditionalRelationCountColumn($productAbstractEntity);",
-            "selected_text": "getAdditionalRelationCountColumn",
-            "error_level": 2,
-            "shortcode": 1
-        },
         {
             "severity": "info",
             "line_from": 22,
@@ -399,5 +339,6 @@
             "error_level": 2,
             "shortcode": 170
         }
-    ]
+    ],
+    "count": 28
 }

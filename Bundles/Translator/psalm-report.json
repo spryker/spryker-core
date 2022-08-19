@@ -54,114 +54,6 @@
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 19,
-            "line_to": 19,
-            "type": "DeprecatedClass",
-            "message": "Class Spryker\\Shared\\Kernel\\Communication\\Application is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Translator/src/Spryker/Zed/Translator/Business/Translator/TranslatorPreparator.php",
-            "snippet": "     * @var \\Spryker\\Shared\\Kernel\\Communication\\Application",
-            "selected_text": "\\Spryker\\Shared\\Kernel\\Communication\\Application",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 29,
-            "line_to": 29,
-            "type": "DeprecatedClass",
-            "message": "Class Spryker\\Shared\\Kernel\\Communication\\Application is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Translator/src/Spryker/Zed/Translator/Business/Translator/TranslatorPreparator.php",
-            "snippet": "     * @param \\Spryker\\Shared\\Kernel\\Communication\\Application $application",
-            "selected_text": "\\Spryker\\Shared\\Kernel\\Communication\\Application",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 142,
-            "line_to": 142,
-            "type": "DeprecatedClass",
-            "message": "Class Spryker\\Shared\\Kernel\\Communication\\Application is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Translator/src/Spryker/Zed/Translator/Business/TranslatorBusinessFactory.php",
-            "snippet": "     * @return \\Spryker\\Shared\\Kernel\\Communication\\Application",
-            "selected_text": "\\Spryker\\Shared\\Kernel\\Communication\\Application",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 144,
-            "line_to": 144,
-            "type": "DeprecatedClass",
-            "message": "Class Spryker\\Shared\\Kernel\\Communication\\Application is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Translator/src/Spryker/Zed/Translator/Business/TranslatorBusinessFactory.php",
-            "snippet": "    public function getApplication(): Application",
-            "selected_text": "Application",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 146,
-            "line_to": 146,
-            "type": "DeprecatedConstant",
-            "message": "Constant Spryker\\Zed\\Translator\\TranslatorDependencyProvider::APPLICATION is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Translator/src/Spryker/Zed/Translator/Business/TranslatorBusinessFactory.php",
-            "snippet": "        return $this->getProvidedDependency(TranslatorDependencyProvider::APPLICATION);",
-            "selected_text": "TranslatorDependencyProvider::APPLICATION",
-            "error_level": 2,
-            "shortcode": 170
-        },
-        {
-            "severity": "info",
-            "line_from": 176,
-            "line_to": 179,
-            "type": "DeprecatedClass",
-            "message": "Spryker\\Zed\\Translator\\Business\\Translator\\TranslatorPreparator is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Translator/src/Spryker/Zed/Translator/Business/TranslatorBusinessFactory.php",
-            "snippet": "        return new TranslatorPreparator(\n            $this->getApplication(),\n            $this->createTranslator(),\n        );",
-            "selected_text": "new TranslatorPreparator(\n            $this->getApplication(),\n            $this->createTranslator(),\n        )",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 177,
-            "line_to": 177,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\Translator\\Business\\TranslatorBusinessFactory::getApplication has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Translator/src/Spryker/Zed/Translator/Business/TranslatorBusinessFactory.php",
-            "snippet": "            $this->getApplication(),",
-            "selected_text": "getApplication",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 52,
-            "line_to": 52,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\Translator\\Business\\TranslatorBusinessFactory::createTranslatorPreparator has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Translator/src/Spryker/Zed/Translator/Business/TranslatorFacade.php",
-            "snippet": "        $this->getFactory()->createTranslatorPreparator()->prepareTranslatorService();",
-            "selected_text": "createTranslatorPreparator",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 36,
-            "line_to": 36,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\Translator\\Business\\TranslatorFacadeInterface::prepareTranslatorService has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Translator/src/Spryker/Zed/Translator/Communication/Plugin/Application/ZedTranslatorPlugin.php",
-            "snippet": "        $this->getFacade()->prepareTranslatorService();",
-            "selected_text": "prepareTranslatorService",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
             "line_from": 67,
             "line_to": 67,
             "type": "DeprecatedClass",
@@ -171,90 +63,6 @@
             "selected_text": "\\Spryker\\Shared\\TranslatorExtension\\Dependency\\Plugin\\TranslatorPluginInterface|\\Spryker\\Zed\\Translator\\Business\\Translator\\Translator",
             "error_level": 2,
             "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 72,
-            "line_to": 72,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\Translator\\Business\\TranslatorFacadeInterface::setLocale has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Translator/src/Spryker/Zed/Translator/Communication/Plugin/Translator/TranslatorPlugin.php",
-            "snippet": "        $this->getFacade()->setLocale($locale);",
-            "selected_text": "setLocale",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 20,
-            "line_to": 20,
-            "type": "DeprecatedInterface",
-            "message": "Spryker\\Shared\\TranslatorExtension\\Dependency\\Plugin\\TranslatorPluginInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Translator/src/Spryker/Zed/Translator/Communication/Plugin/TranslatorPlugin.php",
-            "snippet": "class TranslatorPlugin extends AbstractPlugin implements TranslatorPluginInterface",
-            "selected_text": "TranslatorPlugin",
-            "error_level": 2,
-            "shortcode": 152
-        },
-        {
-            "severity": "info",
-            "line_from": 54,
-            "line_to": 54,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\Translator\\Business\\TranslatorFacadeInterface::transChoice has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Translator/src/Spryker/Zed/Translator/Communication/Plugin/TranslatorPlugin.php",
-            "snippet": "        return $this->getFacade()->transChoice($id, $number, $parameters, $domain, $locale);",
-            "selected_text": "transChoice",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 72,
-            "line_to": 72,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\Translator\\Business\\TranslatorFacadeInterface::setLocale has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Translator/src/Spryker/Zed/Translator/Communication/Plugin/TranslatorPlugin.php",
-            "snippet": "        $this->getFacade()->setLocale($locale);",
-            "selected_text": "setLocale",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 26,
-            "line_to": 26,
-            "type": "DeprecatedClass",
-            "message": "Class Spryker\\Shared\\Kernel\\Communication\\Application is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Translator/src/Spryker/Zed/Translator/Communication/TranslatorCommunicationFactory.php",
-            "snippet": "     * @return \\Spryker\\Shared\\Kernel\\Communication\\Application",
-            "selected_text": "\\Spryker\\Shared\\Kernel\\Communication\\Application",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 28,
-            "line_to": 28,
-            "type": "DeprecatedClass",
-            "message": "Class Spryker\\Shared\\Kernel\\Communication\\Application is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Translator/src/Spryker/Zed/Translator/Communication/TranslatorCommunicationFactory.php",
-            "snippet": "    public function getApplication(): Application",
-            "selected_text": "Application",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 30,
-            "line_to": 30,
-            "type": "DeprecatedConstant",
-            "message": "Constant Spryker\\Zed\\Translator\\TranslatorDependencyProvider::APPLICATION is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Translator/src/Spryker/Zed/Translator/Communication/TranslatorCommunicationFactory.php",
-            "snippet": "        return $this->getProvidedDependency(TranslatorDependencyProvider::APPLICATION);",
-            "selected_text": "TranslatorDependencyProvider::APPLICATION",
-            "error_level": 2,
-            "shortcode": 170
         },
         {
             "severity": "info",
@@ -354,30 +162,6 @@
         },
         {
             "severity": "info",
-            "line_from": 106,
-            "line_to": 106,
-            "type": "DeprecatedConstant",
-            "message": "Constant Spryker\\Zed\\Translator\\TranslatorDependencyProvider::APPLICATION is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Translator/src/Spryker/Zed/Translator/TranslatorDependencyProvider.php",
-            "snippet": "        $container->set(static::APPLICATION, function () {",
-            "selected_text": "static::APPLICATION",
-            "error_level": 2,
-            "shortcode": 170
-        },
-        {
-            "severity": "info",
-            "line_from": 107,
-            "line_to": 107,
-            "type": "DeprecatedClass",
-            "message": "Spryker\\Zed\\Kernel\\Communication\\Plugin\\Pimple is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Translator/src/Spryker/Zed/Translator/TranslatorDependencyProvider.php",
-            "snippet": "            return (new Pimple())->getApplication();",
-            "selected_text": "new Pimple()",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
             "line_from": 154,
             "line_to": 154,
             "type": "DeprecatedClass",
@@ -412,5 +196,6 @@
             "error_level": 2,
             "shortcode": 98
         }
-    ]
+    ],
+    "count": 16
 }

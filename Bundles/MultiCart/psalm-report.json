@@ -338,18 +338,6 @@
             "shortcode": 83
         }
     ],
-    "deprecation": [
-        {
-            "severity": "info",
-            "line_from": 51,
-            "line_to": 51,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Client\\MultiCart\\CartOperation\\CartUpdaterInterface::setDefaultQuote has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/MultiCart/src/Spryker/Client/MultiCart/MultiCartClient.php",
-            "snippet": "            ->setDefaultQuote($quoteTransfer);",
-            "selected_text": "setDefaultQuote",
-            "error_level": 2,
-            "shortcode": 1
-        }
-    ]
+    "deprecation": [],
+    "count": 28
 }

@@ -5,7 +5,7 @@
             "line_from": 100,
             "line_to": 100,
             "type": "InvalidReturnType",
-            "message": "The declared return type 'array<array-key, string>' for Spryker\\Zed\\CmsBlockCategoryConnector\\Business\\Model\\CmsBlockCategoryReader::getCmsBlockNamesIndexedByCmsBlockIdsForCategory is incorrect, got 'array<int, null|string>'",
+            "message": "The declared return type 'array<array-key, string>' for Spryker\\Zed\\CmsBlockCategoryConnector\\Business\\Model\\CmsBlockCategoryReader::getCmsBlockNamesIndexedByCmsBlockIdsForCategory is incorrect, got 'array<\"\"|int, null|string>'",
             "file_name": "vendor/spryker/spryker/Bundles/CmsBlockCategoryConnector/src/Spryker/Zed/CmsBlockCategoryConnector/Business/Model/CmsBlockCategoryReader.php",
             "snippet": "     * @return array<string>",
             "selected_text": "array<string>",
@@ -17,7 +17,7 @@
             "line_from": 115,
             "line_to": 115,
             "type": "InvalidReturnStatement",
-            "message": "The inferred type 'array<int, null|string>' does not match the declared return type 'array<array-key, string>' for Spryker\\Zed\\CmsBlockCategoryConnector\\Business\\Model\\CmsBlockCategoryReader::getCmsBlockNamesIndexedByCmsBlockIdsForCategory",
+            "message": "The inferred type 'array<\"\"|int, null|string>' does not match the declared return type 'array<array-key, string>' for Spryker\\Zed\\CmsBlockCategoryConnector\\Business\\Model\\CmsBlockCategoryReader::getCmsBlockNamesIndexedByCmsBlockIdsForCategory",
             "file_name": "vendor/spryker/spryker/Bundles/CmsBlockCategoryConnector/src/Spryker/Zed/CmsBlockCategoryConnector/Business/Model/CmsBlockCategoryReader.php",
             "snippet": "        return $cmsBlocks;",
             "selected_text": "$cmsBlocks",
@@ -29,7 +29,7 @@
             "line_from": 45,
             "line_to": 45,
             "type": "InvalidReturnType",
-            "message": "The declared return type 'array<array-key, string>' for Spryker\\Zed\\CmsBlockCategoryConnector\\Communication\\Plugin\\ReadCmsBlockCategoryRelationsPlugin::getRelations is incorrect, got 'array<int, null|string>'",
+            "message": "The declared return type 'array<array-key, string>' for Spryker\\Zed\\CmsBlockCategoryConnector\\Communication\\Plugin\\ReadCmsBlockCategoryRelationsPlugin::getRelations is incorrect, got 'array<\"\"|int, null|string>'",
             "file_name": "vendor/spryker/spryker/Bundles/CmsBlockCategoryConnector/src/Spryker/Zed/CmsBlockCategoryConnector/Communication/Plugin/ReadCmsBlockCategoryRelationsPlugin.php",
             "snippet": "     * @return array<string>",
             "selected_text": "array<string>",
@@ -41,7 +41,7 @@
             "line_from": 58,
             "line_to": 58,
             "type": "InvalidReturnStatement",
-            "message": "The inferred type 'array<int, null|string>' does not match the declared return type 'array<array-key, string>' for Spryker\\Zed\\CmsBlockCategoryConnector\\Communication\\Plugin\\ReadCmsBlockCategoryRelationsPlugin::getRelations",
+            "message": "The inferred type 'array<\"\"|int, null|string>' does not match the declared return type 'array<array-key, string>' for Spryker\\Zed\\CmsBlockCategoryConnector\\Communication\\Plugin\\ReadCmsBlockCategoryRelationsPlugin::getRelations",
             "file_name": "vendor/spryker/spryker/Bundles/CmsBlockCategoryConnector/src/Spryker/Zed/CmsBlockCategoryConnector/Communication/Plugin/ReadCmsBlockCategoryRelationsPlugin.php",
             "snippet": "        return $cmsBlocks;",
             "selected_text": "$cmsBlocks",
@@ -100,15 +100,27 @@
         },
         {
             "severity": "info",
-            "line_from": 111,
-            "line_to": 111,
-            "type": "MismatchingDocblockParamType",
-            "message": "Parameter $relations has wrong type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\CmsBlockCategoryConnector\\Persistence\\SpyCmsBlockCategoryConnector>', should be 'Propel\\Runtime\\Collection\\ObjectCollection'",
+            "line_from": 106,
+            "line_to": 106,
+            "type": "ArgumentTypeCoercion",
+            "message": "Argument 1 of Spryker\\Zed\\CmsBlockCategoryConnector\\Business\\Model\\CmsBlockCategoryWriter::deleteRelations expects Propel\\Runtime\\Collection\\ObjectCollection<Orm\\Zed\\CmsBlockCategoryConnector\\Persistence\\SpyCmsBlockCategoryConnector>, parent type Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\CmsBlockCategoryConnector\\Persistence\\SpyCmsBlockCategoryConnector> provided",
             "file_name": "vendor/spryker/spryker/Bundles/CmsBlockCategoryConnector/src/Spryker/Zed/CmsBlockCategoryConnector/Business/Model/CmsBlockCategoryWriter.php",
-            "snippet": "     * @param \\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\CmsBlockCategoryConnector\\Persistence\\SpyCmsBlockCategoryConnector[] $relations",
-            "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\CmsBlockCategoryConnector\\Persistence\\SpyCmsBlockCategoryConnector[]",
-            "error_level": 4,
-            "shortcode": 141
+            "snippet": "        $this->deleteRelations($relations);",
+            "selected_text": "$relations",
+            "error_level": 3,
+            "shortcode": 193
+        },
+        {
+            "severity": "info",
+            "line_from": 107,
+            "line_to": 107,
+            "type": "ArgumentTypeCoercion",
+            "message": "Argument 1 of Spryker\\Zed\\CmsBlockCategoryConnector\\Business\\Model\\CmsBlockCategoryWriter::touchDeleteCategoryCmsBlockRelation expects Propel\\Runtime\\Collection\\ObjectCollection<Orm\\Zed\\CmsBlockCategoryConnector\\Persistence\\SpyCmsBlockCategoryConnector>, parent type Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\CmsBlockCategoryConnector\\Persistence\\SpyCmsBlockCategoryConnector> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockCategoryConnector/src/Spryker/Zed/CmsBlockCategoryConnector/Business/Model/CmsBlockCategoryWriter.php",
+            "snippet": "        $this->touchDeleteCategoryCmsBlockRelation($relations);",
+            "selected_text": "$relations",
+            "error_level": 3,
+            "shortcode": 193
         },
         {
             "severity": "info",
@@ -124,15 +136,27 @@
         },
         {
             "severity": "info",
-            "line_from": 192,
-            "line_to": 192,
-            "type": "MismatchingDocblockParamType",
-            "message": "Parameter $relations has wrong type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\CmsBlockCategoryConnector\\Persistence\\SpyCmsBlockCategoryConnector>', should be 'Propel\\Runtime\\Collection\\ObjectCollection'",
+            "line_from": 187,
+            "line_to": 187,
+            "type": "ArgumentTypeCoercion",
+            "message": "Argument 1 of Spryker\\Zed\\CmsBlockCategoryConnector\\Business\\Model\\CmsBlockCategoryWriter::deleteRelations expects Propel\\Runtime\\Collection\\ObjectCollection<Orm\\Zed\\CmsBlockCategoryConnector\\Persistence\\SpyCmsBlockCategoryConnector>, parent type Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\CmsBlockCategoryConnector\\Persistence\\SpyCmsBlockCategoryConnector> provided",
             "file_name": "vendor/spryker/spryker/Bundles/CmsBlockCategoryConnector/src/Spryker/Zed/CmsBlockCategoryConnector/Business/Model/CmsBlockCategoryWriter.php",
-            "snippet": "     * @param \\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\CmsBlockCategoryConnector\\Persistence\\SpyCmsBlockCategoryConnector[] $relations",
-            "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\CmsBlockCategoryConnector\\Persistence\\SpyCmsBlockCategoryConnector[]",
-            "error_level": 4,
-            "shortcode": 141
+            "snippet": "        $this->deleteRelations($relations);",
+            "selected_text": "$relations",
+            "error_level": 3,
+            "shortcode": 193
+        },
+        {
+            "severity": "info",
+            "line_from": 188,
+            "line_to": 188,
+            "type": "ArgumentTypeCoercion",
+            "message": "Argument 1 of Spryker\\Zed\\CmsBlockCategoryConnector\\Business\\Model\\CmsBlockCategoryWriter::touchDeleteCategoryCmsBlockRelation expects Propel\\Runtime\\Collection\\ObjectCollection<Orm\\Zed\\CmsBlockCategoryConnector\\Persistence\\SpyCmsBlockCategoryConnector>, parent type Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\CmsBlockCategoryConnector\\Persistence\\SpyCmsBlockCategoryConnector> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockCategoryConnector/src/Spryker/Zed/CmsBlockCategoryConnector/Business/Model/CmsBlockCategoryWriter.php",
+            "snippet": "        $this->touchDeleteCategoryCmsBlockRelation($relations);",
+            "selected_text": "$relations",
+            "error_level": 3,
+            "shortcode": 193
         },
         {
             "severity": "info",
@@ -217,18 +241,6 @@
             "selected_text": "$idLocale",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 165,
-            "line_to": 165,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Category\\Persistence\\SpyCategoryAttribute> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockCategoryConnector/src/Spryker/Zed/CmsBlockCategoryConnector/Communication/DataProvider/CmsBlockDataProvider.php",
-            "snippet": "            ->getFirst()",
-            "selected_text": "getFirst",
-            "error_level": 3,
-            "shortcode": 113
         },
         {
             "severity": "info",
@@ -330,20 +342,8 @@
         },
         {
             "severity": "info",
-            "line_from": 26,
-            "line_to": 26,
-            "type": "DeprecatedInterface",
-            "message": "Spryker\\Zed\\Category\\Dependency\\Plugin\\CategoryFormPluginInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockCategoryConnector/src/Spryker/Zed/CmsBlockCategoryConnector/Communication/Plugin/CategoryFormPlugin.php",
-            "snippet": "class CategoryFormPlugin extends AbstractPlugin implements CategoryFormPluginInterface, CategoryRelationUpdatePluginInterface",
-            "selected_text": "CategoryFormPlugin",
-            "error_level": 2,
-            "shortcode": 152
-        },
-        {
-            "severity": "info",
-            "line_from": 31,
-            "line_to": 31,
+            "line_from": 34,
+            "line_to": 34,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/CmsBlockCategoryConnector/src/Spryker/Zed/CmsBlockCategoryConnector/Communication/Plugin/CmsBlockCategoryConnectorCollectorPlugin.php",
@@ -376,5 +376,6 @@
             "error_level": 2,
             "shortcode": 98
         }
-    ]
+    ],
+    "count": 31
 }

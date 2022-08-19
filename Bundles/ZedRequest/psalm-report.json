@@ -317,18 +317,6 @@
         },
         {
             "severity": "info",
-            "line_from": 86,
-            "line_to": 86,
-            "type": "DeprecatedProperty",
-            "message": "Spryker\\Client\\ZedRequest\\Client\\HttpClient::$utilTextService is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ZedRequest/src/Spryker/Client/ZedRequest/Client/HttpClient.php",
-            "snippet": "            $header['Auth-Token'] = $this->utilTextService->generateToken($this->config->getRawToken(), $this->config->getTokenOptions());",
-            "selected_text": "$this->utilTextService",
-            "error_level": 2,
-            "shortcode": 99
-        },
-        {
-            "severity": "info",
             "line_from": 56,
             "line_to": 56,
             "type": "DeprecatedConstant",
@@ -365,54 +353,6 @@
         },
         {
             "severity": "info",
-            "line_from": 47,
-            "line_to": 47,
-            "type": "DeprecatedProperty",
-            "message": "Spryker\\Zed\\ZedRequest\\Communication\\Plugin\\GatewayServiceProviderPlugin::$controllerListener is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ZedRequest/src/Spryker/Zed/ZedRequest/Communication/Plugin/GatewayServiceProviderPlugin.php",
-            "snippet": "        $this->controllerListener = $controllerListener;",
-            "selected_text": "$this->controllerListener",
-            "error_level": 2,
-            "shortcode": 99
-        },
-        {
-            "severity": "info",
-            "line_from": 79,
-            "line_to": 79,
-            "type": "DeprecatedProperty",
-            "message": "Spryker\\Zed\\ZedRequest\\Communication\\Plugin\\GatewayServiceProviderPlugin::$controllerListener is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ZedRequest/src/Spryker/Zed/ZedRequest/Communication/Plugin/GatewayServiceProviderPlugin.php",
-            "snippet": "        if (!$this->controllerListener) {",
-            "selected_text": "$this->controllerListener",
-            "error_level": 2,
-            "shortcode": 99
-        },
-        {
-            "severity": "info",
-            "line_from": 83,
-            "line_to": 83,
-            "type": "DeprecatedProperty",
-            "message": "Spryker\\Zed\\ZedRequest\\Communication\\Plugin\\GatewayServiceProviderPlugin::$controllerListener is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ZedRequest/src/Spryker/Zed/ZedRequest/Communication/Plugin/GatewayServiceProviderPlugin.php",
-            "snippet": "        return $this->controllerListener;",
-            "selected_text": "$this->controllerListener",
-            "error_level": 2,
-            "shortcode": 99
-        },
-        {
-            "severity": "info",
-            "line_from": 97,
-            "line_to": 97,
-            "type": "DeprecatedMethod",
-            "message": "The method Silex\\Application::before has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ZedRequest/src/Spryker/Zed/ZedRequest/Communication/Plugin/GatewayServiceProviderPlugin.php",
-            "snippet": "        $app->before(function (Request $request) {",
-            "selected_text": "before",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
             "line_from": 65,
             "line_to": 65,
             "type": "DeprecatedMethod",
@@ -423,5 +363,6 @@
             "error_level": 2,
             "shortcode": 1
         }
-    ]
+    ],
+    "count": 30
 }

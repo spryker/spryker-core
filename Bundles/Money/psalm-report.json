@@ -234,30 +234,6 @@
         },
         {
             "severity": "info",
-            "line_from": 70,
-            "line_to": 70,
-            "type": "DeprecatedConstant",
-            "message": "Constant Spryker\\Client\\Money\\MoneyDependencyProvider::PLUGIN_CURRENCY is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Money/src/Spryker/Client/Money/MoneyDependencyProvider.php",
-            "snippet": "        $container->set(static::PLUGIN_CURRENCY, function () {",
-            "selected_text": "static::PLUGIN_CURRENCY",
-            "error_level": 2,
-            "shortcode": 170
-        },
-        {
-            "severity": "info",
-            "line_from": 71,
-            "line_to": 71,
-            "type": "DeprecatedClass",
-            "message": "Spryker\\Client\\Currency\\Plugin\\CurrencyPlugin is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Money/src/Spryker/Client/Money/MoneyDependencyProvider.php",
-            "snippet": "            return new CurrencyPlugin();",
-            "selected_text": "new CurrencyPlugin()",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
             "line_from": 91,
             "line_to": 91,
             "type": "DeprecatedMethod",
@@ -267,54 +243,7 @@
             "selected_text": "getLocaleFromStore",
             "error_level": 2,
             "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 32,
-            "line_to": 32,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Service\\Container\\Container::offsetSet has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Money/src/Spryker/Yves/Money/Plugin/ServiceProvider/TwigMoneyServiceProvider.php",
-            "snippet": "        $app['twig'] = $app->share(",
-            "selected_text": "$app",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 32,
-            "line_to": 32,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Service\\Container\\Container::share has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Money/src/Spryker/Yves/Money/Plugin/ServiceProvider/TwigMoneyServiceProvider.php",
-            "snippet": "        $app['twig'] = $app->share(",
-            "selected_text": "share",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 44,
-            "line_to": 44,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Service\\Container\\Container::offsetSet has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Money/src/Spryker/Zed/Money/Communication/Plugin/ServiceProvider/TwigMoneyServiceProvider.php",
-            "snippet": "        $app['twig'] = $app->share(",
-            "selected_text": "$app",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 44,
-            "line_to": 44,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Service\\Container\\Container::share has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Money/src/Spryker/Zed/Money/Communication/Plugin/ServiceProvider/TwigMoneyServiceProvider.php",
-            "snippet": "        $app['twig'] = $app->share(",
-            "selected_text": "share",
-            "error_level": 2,
-            "shortcode": 1
         }
-    ]
+    ],
+    "count": 20
 }

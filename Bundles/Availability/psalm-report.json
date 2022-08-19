@@ -27,8 +27,8 @@
         },
         {
             "severity": "info",
-            "line_from": 149,
-            "line_to": 149,
+            "line_from": 193,
+            "line_to": 193,
             "type": "PossiblyInvalidArgument",
             "message": "Argument 1 of Spryker\\Zed\\AvailabilityExtension\\Dependency\\Plugin\\CartItemQuantityCounterStrategyPluginInterface::isApplicable expects ArrayObject<int, Generated\\Shared\\Transfer\\ItemTransfer>, possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ItemTransfer> provided",
             "file_name": "vendor/spryker/spryker/Bundles/Availability/src/Spryker/Zed/Availability/Business/Model/ProductsAvailableCheckoutPreCondition.php",
@@ -39,8 +39,8 @@
         },
         {
             "severity": "info",
-            "line_from": 151,
-            "line_to": 151,
+            "line_from": 195,
+            "line_to": 195,
             "type": "PossiblyInvalidArgument",
             "message": "Argument 1 of Spryker\\Zed\\AvailabilityExtension\\Dependency\\Plugin\\CartItemQuantityCounterStrategyPluginInterface::countCartItemQuantity expects ArrayObject<int, Generated\\Shared\\Transfer\\ItemTransfer>, possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ItemTransfer> provided",
             "file_name": "vendor/spryker/spryker/Bundles/Availability/src/Spryker/Zed/Availability/Business/Model/ProductsAvailableCheckoutPreCondition.php",
@@ -135,102 +135,18 @@
         },
         {
             "severity": "info",
-            "line_from": 66,
-            "line_to": 66,
-            "type": "MismatchingDocblockParamType",
-            "message": "Parameter $availabilityEntities has wrong type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\Availability\\Persistence\\SpyAvailability>', should be 'Propel\\Runtime\\Collection\\ObjectCollection'",
-            "file_name": "vendor/spryker/spryker/Bundles/Availability/src/Spryker/Zed/Availability/Persistence/Mapper/AvailabilityMapper.php",
-            "snippet": "     * @param \\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\Availability\\Persistence\\SpyAvailability[] $availabilityEntities",
-            "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\Availability\\Persistence\\SpyAvailability[]",
-            "error_level": 4,
-            "shortcode": 141
-        },
-        {
-            "severity": "info",
-            "line_from": 41,
-            "line_to": 41,
-            "type": "MismatchingDocblockParamType",
-            "message": "Parameter $availabilityEntities has wrong type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\Availability\\Persistence\\SpyAvailability>', should be 'Propel\\Runtime\\Collection\\ObjectCollection'",
-            "file_name": "vendor/spryker/spryker/Bundles/Availability/src/Spryker/Zed/Availability/Persistence/Mapper/AvailabilityMapperInterface.php",
-            "snippet": "     * @param \\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\Availability\\Persistence\\SpyAvailability[] $availabilityEntities",
-            "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\Availability\\Persistence\\SpyAvailability[]",
-            "error_level": 4,
-            "shortcode": 141
+            "line_from": 343,
+            "line_to": 343,
+            "type": "ArgumentTypeCoercion",
+            "message": "Argument 1 of Spryker\\Zed\\Availability\\Persistence\\Mapper\\AvailabilityMapperInterface::mapAvailabilityEntitiesToProductConcreteAvailabilityCollectionTransfer expects Propel\\Runtime\\Collection\\ObjectCollection<Orm\\Zed\\Availability\\Persistence\\SpyAvailability>, parent type Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\Availability\\Persistence\\SpyAvailability> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Availability/src/Spryker/Zed/Availability/Persistence/AvailabilityRepository.php",
+            "snippet": "                $availabilityEntities,",
+            "selected_text": "$availabilityEntities",
+            "error_level": 3,
+            "shortcode": 193
         }
     ],
     "deprecation": [
-        {
-            "severity": "info",
-            "line_from": 66,
-            "line_to": 66,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Client\\Availability\\AvailabilityFactory::createAvailabilityStub has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Availability/src/Spryker/Client/Availability/AvailabilityClient.php",
-            "snippet": "            ->createAvailabilityStub()",
-            "selected_text": "createAvailabilityStub",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 67,
-            "line_to": 67,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Client\\Availability\\Zed\\AvailabilityStubInterface::findProductConcreteAvailability has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Availability/src/Spryker/Client/Availability/AvailabilityClient.php",
-            "snippet": "            ->findProductConcreteAvailability($productConcreteAvailabilityRequestTransfer);",
-            "selected_text": "findProductConcreteAvailability",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 37,
-            "line_to": 37,
-            "type": "DeprecatedClass",
-            "message": "Class Spryker\\Client\\Availability\\Zed\\AvailabilityStubInterface is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Availability/src/Spryker/Client/Availability/AvailabilityFactory.php",
-            "snippet": "     * @return \\Spryker\\Client\\Availability\\Zed\\AvailabilityStubInterface",
-            "selected_text": "\\Spryker\\Client\\Availability\\Zed\\AvailabilityStubInterface",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 39,
-            "line_to": 39,
-            "type": "DeprecatedClass",
-            "message": "Class Spryker\\Client\\Availability\\Zed\\AvailabilityStubInterface is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Availability/src/Spryker/Client/Availability/AvailabilityFactory.php",
-            "snippet": "    public function createAvailabilityStub(): AvailabilityStubInterface",
-            "selected_text": "AvailabilityStubInterface",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 41,
-            "line_to": 41,
-            "type": "DeprecatedClass",
-            "message": "Spryker\\Client\\Availability\\Zed\\AvailabilityStub is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Availability/src/Spryker/Client/Availability/AvailabilityFactory.php",
-            "snippet": "        return new AvailabilityStub($this->getZedRequestClient());",
-            "selected_text": "new AvailabilityStub($this->getZedRequestClient())",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 16,
-            "line_to": 16,
-            "type": "DeprecatedInterface",
-            "message": "Spryker\\Client\\Availability\\Zed\\AvailabilityStubInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Availability/src/Spryker/Client/Availability/Zed/AvailabilityStub.php",
-            "snippet": "class AvailabilityStub implements AvailabilityStubInterface",
-            "selected_text": "AvailabilityStub",
-            "error_level": 2,
-            "shortcode": 152
-        },
         {
             "severity": "info",
             "line_from": 243,
@@ -257,44 +173,8 @@
         },
         {
             "severity": "info",
-            "line_from": 101,
-            "line_to": 101,
-            "type": "DeprecatedClass",
-            "message": "Class Spryker\\Zed\\Availability\\Business\\Model\\ProductReservationReaderInterface is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Availability/src/Spryker/Zed/Availability/Business/AvailabilityBusinessFactory.php",
-            "snippet": "     * @return \\Spryker\\Zed\\Availability\\Business\\Model\\ProductReservationReaderInterface",
-            "selected_text": "\\Spryker\\Zed\\Availability\\Business\\Model\\ProductReservationReaderInterface",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 103,
-            "line_to": 103,
-            "type": "DeprecatedClass",
-            "message": "Class Spryker\\Zed\\Availability\\Business\\Model\\ProductReservationReaderInterface is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Availability/src/Spryker/Zed/Availability/Business/AvailabilityBusinessFactory.php",
-            "snippet": "    public function createProductReservationReader(): ProductReservationReaderInterface",
-            "selected_text": "ProductReservationReaderInterface",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 105,
-            "line_to": 109,
-            "type": "DeprecatedClass",
-            "message": "Spryker\\Zed\\Availability\\Business\\Model\\ProductReservationReader is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Availability/src/Spryker/Zed/Availability/Business/AvailabilityBusinessFactory.php",
-            "snippet": "        return new ProductReservationReader(\n            $this->getQueryContainer(),\n            $this->getStockFacade(),\n            $this->getStoreFacade(),\n        );",
-            "selected_text": "new ProductReservationReader(\n            $this->getQueryContainer(),\n            $this->getStockFacade(),\n            $this->getStoreFacade(),\n        )",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 196,
-            "line_to": 196,
+            "line_from": 197,
+            "line_to": 197,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\AvailabilityExtension\\Dependency\\Plugin\\AvailabilityStrategyPluginInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Availability/src/Spryker/Zed/Availability/Business/AvailabilityBusinessFactory.php",
@@ -302,78 +182,6 @@
             "selected_text": "array<\\Spryker\\Zed\\AvailabilityExtension\\Dependency\\Plugin\\AvailabilityStrategyPluginInterface>",
             "error_level": 2,
             "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 193,
-            "line_to": 193,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\Availability\\Business\\AvailabilityBusinessFactory::createProductReservationReader has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Availability/src/Spryker/Zed/Availability/Business/AvailabilityFacade.php",
-            "snippet": "            ->createProductReservationReader()",
-            "selected_text": "createProductReservationReader",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 194,
-            "line_to": 194,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\Availability\\Business\\Model\\ProductReservationReaderInterface::getProductAbstractAvailability has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Availability/src/Spryker/Zed/Availability/Business/AvailabilityFacade.php",
-            "snippet": "            ->getProductAbstractAvailability($idProductAbstract, $idLocale);",
-            "selected_text": "getProductAbstractAvailability",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 213,
-            "line_to": 213,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\Availability\\Business\\AvailabilityBusinessFactory::createProductReservationReader has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Availability/src/Spryker/Zed/Availability/Business/AvailabilityFacade.php",
-            "snippet": "            ->createProductReservationReader()",
-            "selected_text": "createProductReservationReader",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 214,
-            "line_to": 214,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\Availability\\Business\\Model\\ProductReservationReaderInterface::findProductAbstractAvailability has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Availability/src/Spryker/Zed/Availability/Business/AvailabilityFacade.php",
-            "snippet": "            ->findProductAbstractAvailability($idProductAbstract, $idLocale, $idStore);",
-            "selected_text": "findProductAbstractAvailability",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 232,
-            "line_to": 232,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\Availability\\Business\\AvailabilityBusinessFactory::createProductReservationReader has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Availability/src/Spryker/Zed/Availability/Business/AvailabilityFacade.php",
-            "snippet": "            ->createProductReservationReader()",
-            "selected_text": "createProductReservationReader",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 233,
-            "line_to": 233,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\Availability\\Business\\Model\\ProductReservationReaderInterface::findProductConcreteAvailability has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Availability/src/Spryker/Zed/Availability/Business/AvailabilityFacade.php",
-            "snippet": "            ->findProductConcreteAvailability($productConcreteAvailabilityRequestTransfer);",
-            "selected_text": "findProductConcreteAvailability",
-            "error_level": 2,
-            "shortcode": 1
         },
         {
             "severity": "info",
@@ -413,18 +221,6 @@
         },
         {
             "severity": "info",
-            "line_from": 25,
-            "line_to": 25,
-            "type": "DeprecatedInterface",
-            "message": "Spryker\\Zed\\Availability\\Business\\Model\\ProductReservationReaderInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Availability/src/Spryker/Zed/Availability/Business/Model/ProductReservationReader.php",
-            "snippet": "class ProductReservationReader implements ProductReservationReaderInterface",
-            "selected_text": "ProductReservationReader",
-            "error_level": 2,
-            "shortcode": 152
-        },
-        {
-            "severity": "info",
             "line_from": 40,
             "line_to": 40,
             "type": "DeprecatedClass",
@@ -461,30 +257,6 @@
         },
         {
             "severity": "info",
-            "line_from": 29,
-            "line_to": 29,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\Availability\\Business\\AvailabilityFacadeInterface::findProductConcreteAvailability has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Availability/src/Spryker/Zed/Availability/Communication/Controller/GatewayController.php",
-            "snippet": "        return $this->getFacade()->findProductConcreteAvailability($productConcreteAvailabilityRequestTransfer);",
-            "selected_text": "findProductConcreteAvailability",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 22,
-            "line_to": 22,
-            "type": "DeprecatedInterface",
-            "message": "Spryker\\Zed\\Oms\\Dependency\\Plugin\\ReservationHandlerPluginInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Availability/src/Spryker/Zed/Availability/Communication/Plugin/AvailabilityHandlerPlugin.php",
-            "snippet": "class AvailabilityHandlerPlugin extends AbstractPlugin implements ReservationHandlerPluginInterface, StockUpdateHandlerPluginInterface",
-            "selected_text": "AvailabilityHandlerPlugin",
-            "error_level": 2,
-            "shortcode": 152
-        },
-        {
-            "severity": "info",
             "line_from": 32,
             "line_to": 32,
             "type": "DeprecatedMethod",
@@ -507,5 +279,6 @@
             "error_level": 2,
             "shortcode": 152
         }
-    ]
+    ],
+    "count": 23
 }

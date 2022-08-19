@@ -111,18 +111,6 @@
             "shortcode": 78
         }
     ],
-    "deprecation": [
-        {
-            "severity": "info",
-            "line_from": 21,
-            "line_to": 21,
-            "type": "DeprecatedInterface",
-            "message": "Spryker\\Zed\\ProductDiscontinuedExtension\\Dependency\\Plugin\\PostDeleteProductDiscontinuedPluginInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedProductLabelConnector/src/Spryker/Zed/ProductDiscontinuedProductLabelConnector/Communication/Plugin/PostDeleteProductDiscontinuedPlugin.php",
-            "snippet": "class PostDeleteProductDiscontinuedPlugin extends AbstractPlugin implements PostDeleteProductDiscontinuedPluginInterface",
-            "selected_text": "PostDeleteProductDiscontinuedPlugin",
-            "error_level": 2,
-            "shortcode": 152
-        }
-    ]
+    "deprecation": [],
+    "count": 9
 }

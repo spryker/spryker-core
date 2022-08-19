@@ -714,18 +714,6 @@
         },
         {
             "severity": "info",
-            "line_from": 16,
-            "line_to": 16,
-            "type": "DeprecatedInterface",
-            "message": "Spryker\\Client\\Collector\\Matcher\\UrlMatcherInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Client/Collector/Matcher/UrlMatcher.php",
-            "snippet": "class UrlMatcher implements UrlMatcherInterface",
-            "selected_text": "UrlMatcher",
-            "error_level": 2,
-            "shortcode": 152
-        },
-        {
-            "severity": "info",
             "line_from": 52,
             "line_to": 52,
             "type": "DeprecatedClass",
@@ -1086,78 +1074,6 @@
         },
         {
             "severity": "info",
-            "line_from": 15,
-            "line_to": 15,
-            "type": "DeprecatedInterface",
-            "message": "Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Model/BatchResult.php",
-            "snippet": "class BatchResult implements BatchResultInterface",
-            "selected_text": "BatchResult",
-            "error_level": 2,
-            "shortcode": 152
-        },
-        {
-            "severity": "info",
-            "line_from": 38,
-            "line_to": 38,
-            "type": "DeprecatedClass",
-            "message": "Class Spryker\\Zed\\Collector\\Business\\Model\\FailedResultInterface is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Model/BatchResult.php",
-            "snippet": "     * @var array<\\Spryker\\Zed\\Collector\\Business\\Model\\FailedResultInterface>",
-            "selected_text": "array<\\Spryker\\Zed\\Collector\\Business\\Model\\FailedResultInterface>",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 40,
-            "line_to": 40,
-            "type": "DeprecatedClass",
-            "message": "Class Spryker\\Zed\\Collector\\Business\\Model\\FailedResultInterface is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Model/BatchResult.php",
-            "snippet": "    /**\n     * @var array<\\Spryker\\Zed\\Collector\\Business\\Model\\FailedResultInterface>\n     */\n    protected $failed = [];",
-            "selected_text": "protected $failed = [];",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 117,
-            "line_to": 117,
-            "type": "DeprecatedClass",
-            "message": "Class Spryker\\Zed\\Collector\\Business\\Model\\FailedResultInterface is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Model/BatchResult.php",
-            "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\FailedResultInterface $failed",
-            "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\FailedResultInterface",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 61,
-            "line_to": 61,
-            "type": "DeprecatedClass",
-            "message": "Class Spryker\\Zed\\Collector\\Business\\Model\\FailedResultInterface is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Model/BatchResultInterface.php",
-            "snippet": "     * @param \\Spryker\\Zed\\Collector\\Business\\Model\\FailedResultInterface $failed",
-            "selected_text": "\\Spryker\\Zed\\Collector\\Business\\Model\\FailedResultInterface",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 13,
-            "line_to": 13,
-            "type": "DeprecatedInterface",
-            "message": "Spryker\\Zed\\Collector\\Business\\Model\\FailedResultInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Model/FailedResult.php",
-            "snippet": "class FailedResult implements FailedResultInterface",
-            "selected_text": "FailedResult",
-            "error_level": 2,
-            "shortcode": 152
-        },
-        {
-            "severity": "info",
             "line_from": 250,
             "line_to": 250,
             "type": "DeprecatedConstant",
@@ -1398,30 +1314,6 @@
         },
         {
             "severity": "info",
-            "line_from": 80,
-            "line_to": 80,
-            "type": "DeprecatedConstant",
-            "message": "Constant Spryker\\Shared\\Collector\\CollectorConstants::ZED_DB_ENGINE_MYSQL is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/CollectorConfig.php",
-            "snippet": "        return Config::get(CollectorConstants::ZED_DB_ENGINE_MYSQL, PropelConfig::DB_ENGINE_MYSQL);",
-            "selected_text": "CollectorConstants::ZED_DB_ENGINE_MYSQL",
-            "error_level": 2,
-            "shortcode": 170
-        },
-        {
-            "severity": "info",
-            "line_from": 92,
-            "line_to": 92,
-            "type": "DeprecatedConstant",
-            "message": "Constant Spryker\\Shared\\Collector\\CollectorConstants::ZED_DB_ENGINE_PGSQL is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/CollectorConfig.php",
-            "snippet": "        return Config::get(CollectorConstants::ZED_DB_ENGINE_PGSQL, PropelConfig::DB_ENGINE_PGSQL);",
-            "selected_text": "CollectorConstants::ZED_DB_ENGINE_PGSQL",
-            "error_level": 2,
-            "shortcode": 170
-        },
-        {
-            "severity": "info",
             "line_from": 15,
             "line_to": 15,
             "type": "DeprecatedClass",
@@ -1492,5 +1384,6 @@
             "error_level": 2,
             "shortcode": 1
         }
-    ]
+    ],
+    "count": 115
 }

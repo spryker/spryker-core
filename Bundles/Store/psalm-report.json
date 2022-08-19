@@ -186,18 +186,6 @@
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 15,
-            "line_to": 15,
-            "type": "DeprecatedInterface",
-            "message": "Spryker\\Zed\\Store\\Business\\Model\\Configuration\\StoreConfigurationProviderInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Store/src/Spryker/Zed/Store/Business/Model/Configuration/StoreConfigurationProvider.php",
-            "snippet": "class StoreConfigurationProvider extends StoreToKernelStoreAdapter implements StoreConfigurationProviderInterface",
-            "selected_text": "StoreConfigurationProvider",
-            "error_level": 2,
-            "shortcode": 152
-        },
-        {
-            "severity": "info",
             "line_from": 66,
             "line_to": 66,
             "type": "DeprecatedProperty",
@@ -207,42 +195,7 @@
             "selected_text": "$this->storeConfigurationProvider",
             "error_level": 2,
             "shortcode": 99
-        },
-        {
-            "severity": "info",
-            "line_from": 86,
-            "line_to": 86,
-            "type": "DeprecatedClass",
-            "message": "Class Spryker\\Zed\\Store\\Business\\Model\\Configuration\\StoreConfigurationProviderInterface is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Store/src/Spryker/Zed/Store/Business/StoreBusinessFactory.php",
-            "snippet": "     * @return \\Spryker\\Zed\\Store\\Business\\Model\\Configuration\\StoreConfigurationProviderInterface",
-            "selected_text": "\\Spryker\\Zed\\Store\\Business\\Model\\Configuration\\StoreConfigurationProviderInterface",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 90,
-            "line_to": 90,
-            "type": "DeprecatedClass",
-            "message": "Spryker\\Zed\\Store\\Business\\Model\\Configuration\\StoreConfigurationProvider is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Store/src/Spryker/Zed/Store/Business/StoreBusinessFactory.php",
-            "snippet": "        return new StoreConfigurationProvider($this->getStore());",
-            "selected_text": "new StoreConfigurationProvider($this->getStore())",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 90,
-            "line_to": 90,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\Store\\Business\\StoreBusinessFactory::getStore has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Store/src/Spryker/Zed/Store/Business/StoreBusinessFactory.php",
-            "snippet": "        return new StoreConfigurationProvider($this->getStore());",
-            "selected_text": "getStore",
-            "error_level": 2,
-            "shortcode": 1
         }
-    ]
+    ],
+    "count": 16
 }

@@ -123,41 +123,17 @@
         },
         {
             "severity": "info",
-            "line_from": 84,
-            "line_to": 84,
-            "type": "MismatchingDocblockParamType",
-            "message": "Parameter $fileStorageEntities has wrong type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\FileManagerStorage\\Persistence\\SpyFileStorage>', should be 'Propel\\Runtime\\Collection\\ObjectCollection'",
-            "file_name": "vendor/spryker/spryker/Bundles/FileManagerStorage/src/Spryker/Zed/FileManagerStorage/Persistence/Mapper/FileManagerStorageMapper.php",
-            "snippet": "     * @param \\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\FileManagerStorage\\Persistence\\SpyFileStorage[] $fileStorageEntities",
-            "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\FileManagerStorage\\Persistence\\SpyFileStorage[]",
-            "error_level": 4,
-            "shortcode": 141
-        },
-        {
-            "severity": "info",
-            "line_from": 43,
-            "line_to": 43,
-            "type": "MismatchingDocblockParamType",
-            "message": "Parameter $fileStorageEntities has wrong type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\FileManagerStorage\\Persistence\\SpyFileStorage>', should be 'Propel\\Runtime\\Collection\\ObjectCollection'",
-            "file_name": "vendor/spryker/spryker/Bundles/FileManagerStorage/src/Spryker/Zed/FileManagerStorage/Persistence/Mapper/FileManagerStorageMapperInterface.php",
-            "snippet": "     * @param \\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\FileManagerStorage\\Persistence\\SpyFileStorage[] $fileStorageEntities",
-            "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\FileManagerStorage\\Persistence\\SpyFileStorage[]",
-            "error_level": 4,
-            "shortcode": 141
+            "line_from": 99,
+            "line_to": 99,
+            "type": "ArgumentTypeCoercion",
+            "message": "Argument 1 of Spryker\\Zed\\FileManagerStorage\\Persistence\\Mapper\\FileManagerStorageMapperInterface::mapFileStorageEntityCollectionToTransferCollection expects Propel\\Runtime\\Collection\\ObjectCollection<Orm\\Zed\\FileManagerStorage\\Persistence\\SpyFileStorage>, parent type Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\FileManagerStorage\\Persistence\\SpyFileStorage> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/FileManagerStorage/src/Spryker/Zed/FileManagerStorage/Persistence/FileManagerStorageRepository.php",
+            "snippet": "                $fileStorageQuery->find(),",
+            "selected_text": "$fileStorageQuery->find()",
+            "error_level": 3,
+            "shortcode": 193
         }
     ],
-    "deprecation": [
-        {
-            "severity": "info",
-            "line_from": 20,
-            "line_to": 20,
-            "type": "DeprecatedTrait",
-            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/FileManagerStorage/src/Spryker/Zed/FileManagerStorage/Communication/Plugin/Event/Listener/AbstractFileManagerListener.php",
-            "snippet": "    use DatabaseTransactionHandlerTrait;",
-            "selected_text": "DatabaseTransactionHandlerTrait",
-            "error_level": 2,
-            "shortcode": 171
-        }
-    ]
+    "deprecation": [],
+    "count": 11
 }

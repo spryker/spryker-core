@@ -63,8 +63,8 @@
         },
         {
             "severity": "info",
-            "line_from": 928,
-            "line_to": 928,
+            "line_from": 1037,
+            "line_to": 1037,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\Transfer\\Business\\Model\\Generator\\ClassDefinition::buildAddTypeShimNotice cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Transfer/src/Spryker/Zed/Transfer/Business/Model/Generator/ClassDefinition.php",
@@ -75,8 +75,8 @@
         },
         {
             "severity": "info",
-            "line_from": 1335,
-            "line_to": 1335,
+            "line_from": 1444,
+            "line_to": 1444,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Transfer/src/Spryker/Zed/Transfer/Business/Model/Generator/ClassDefinition.php",
@@ -233,73 +233,13 @@
         },
         {
             "severity": "info",
-            "line_from": 152,
-            "line_to": 152,
+            "line_from": 156,
+            "line_to": 156,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Zed\\Transfer\\Business\\Model\\Generator\\ClassDefinition::setNameWithoutValidation has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Transfer/src/Spryker/Zed/Transfer/Business/Model/Generator/ClassDefinition.php",
             "snippet": "            $this->setNameWithoutValidation($name);",
             "selected_text": "setNameWithoutValidation",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 16,
-            "line_to": 16,
-            "type": "DeprecatedInterface",
-            "message": "Spryker\\Zed\\Transfer\\Business\\Model\\TransferCleanerInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Transfer/src/Spryker/Zed/Transfer/Business/Model/TransferCleaner.php",
-            "snippet": "class TransferCleaner implements TransferCleanerInterface",
-            "selected_text": "TransferCleaner",
-            "error_level": 2,
-            "shortcode": 152
-        },
-        {
-            "severity": "info",
-            "line_from": 190,
-            "line_to": 190,
-            "type": "DeprecatedClass",
-            "message": "Class Spryker\\Zed\\Transfer\\Business\\Model\\TransferCleanerInterface is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Transfer/src/Spryker/Zed/Transfer/Business/TransferBusinessFactory.php",
-            "snippet": "     * @return \\Spryker\\Zed\\Transfer\\Business\\Model\\TransferCleanerInterface",
-            "selected_text": "\\Spryker\\Zed\\Transfer\\Business\\Model\\TransferCleanerInterface",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 194,
-            "line_to": 196,
-            "type": "DeprecatedClass",
-            "message": "Spryker\\Zed\\Transfer\\Business\\Model\\TransferCleaner is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Transfer/src/Spryker/Zed/Transfer/Business/TransferBusinessFactory.php",
-            "snippet": "        return new TransferCleaner(\n            $this->getConfig()->getClassTargetDirectory(),\n        );",
-            "selected_text": "new TransferCleaner(\n            $this->getConfig()->getClassTargetDirectory(),\n        )",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 72,
-            "line_to": 72,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\Transfer\\Business\\TransferBusinessFactory::createTransferGeneratedDirectory has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Transfer/src/Spryker/Zed/Transfer/Business/TransferFacade.php",
-            "snippet": "        $this->getFactory()->createTransferGeneratedDirectory()->clear();",
-            "selected_text": "createTransferGeneratedDirectory",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 56,
-            "line_to": 56,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\Transfer\\Business\\TransferFacadeInterface::deleteGeneratedTransferObjects has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Transfer/src/Spryker/Zed/Transfer/Communication/Console/GeneratorConsole.php",
-            "snippet": "        $facade->deleteGeneratedTransferObjects();",
-            "selected_text": "deleteGeneratedTransferObjects",
             "error_level": 2,
             "shortcode": 1
         },
@@ -327,5 +267,6 @@
             "error_level": 2,
             "shortcode": 1
         }
-    ]
+    ],
+    "count": 22
 }

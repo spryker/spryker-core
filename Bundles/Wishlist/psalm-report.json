@@ -2,8 +2,8 @@
     "error": [
         {
             "severity": "error",
-            "line_from": 395,
-            "line_to": 395,
+            "line_from": 393,
+            "line_to": 393,
             "type": "InvalidReturnType",
             "message": "The declared return type 'array<int, string>' for Spryker\\Zed\\Wishlist\\Business\\Model\\Reader::getSkuCollection is incorrect, got 'list<null|string>'",
             "file_name": "vendor/spryker/spryker/Bundles/Wishlist/src/Spryker/Zed/Wishlist/Business/Model/Reader.php",
@@ -14,8 +14,8 @@
         },
         {
             "severity": "error",
-            "line_from": 404,
-            "line_to": 404,
+            "line_from": 402,
+            "line_to": 402,
             "type": "InvalidReturnStatement",
             "message": "The inferred type 'list<null|string>' does not match the declared return type 'array<int, string>' for Spryker\\Zed\\Wishlist\\Business\\Model\\Reader::getSkuCollection",
             "file_name": "vendor/spryker/spryker/Bundles/Wishlist/src/Spryker/Zed/Wishlist/Business/Model/Reader.php",
@@ -196,30 +196,6 @@
         },
         {
             "severity": "info",
-            "line_from": 145,
-            "line_to": 145,
-            "type": "PossiblyInvalidArgument",
-            "message": "Argument 2 of Spryker\\Zed\\Wishlist\\Business\\Model\\Reader::updatePaginationTransfer expects Propel\\Runtime\\Util\\PropelModelPager<mixed>, possibly different type Propel\\Runtime\\Util\\PropelModelPager|array<array-key, Orm\\Zed\\Wishlist\\Persistence\\SpyWishlistItem> provided",
-            "file_name": "vendor/spryker/spryker/Bundles/Wishlist/src/Spryker/Zed/Wishlist/Business/Model/Reader.php",
-            "snippet": "        $wishlistPaginationTransfer = $this->updatePaginationTransfer($wishlistPaginationTransfer, $itemPaginationModel);",
-            "selected_text": "$itemPaginationModel",
-            "error_level": 3,
-            "shortcode": 92
-        },
-        {
-            "severity": "info",
-            "line_from": 147,
-            "line_to": 147,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Wishlist\\Persistence\\SpyWishlistItem> variable $itemPaginationModel",
-            "file_name": "vendor/spryker/spryker/Bundles/Wishlist/src/Spryker/Zed/Wishlist/Business/Model/Reader.php",
-            "snippet": "        $wishlistItemCollection = $itemPaginationModel->getResults();",
-            "selected_text": "getResults",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
             "line_from": 160,
             "line_to": 160,
             "type": "PossiblyInvalidArgument",
@@ -268,8 +244,8 @@
         },
         {
             "severity": "info",
-            "line_from": 297,
-            "line_to": 297,
+            "line_from": 295,
+            "line_to": 295,
             "type": "PossiblyNullReference",
             "message": "Cannot call method requireIdWishlist on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/Wishlist/src/Spryker/Zed/Wishlist/Business/Model/Reader.php",
@@ -280,8 +256,8 @@
         },
         {
             "severity": "info",
-            "line_from": 308,
-            "line_to": 308,
+            "line_from": 306,
+            "line_to": 306,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\Wishlist\\Persistence\\WishlistQueryContainerInterface::queryItemsByWishlistId cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Wishlist/src/Spryker/Zed/Wishlist/Business/Model/Reader.php",
@@ -292,8 +268,8 @@
         },
         {
             "severity": "info",
-            "line_from": 308,
-            "line_to": 308,
+            "line_from": 306,
+            "line_to": 306,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getIdWishlist on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/Wishlist/src/Spryker/Zed/Wishlist/Business/Model/Reader.php",
@@ -304,8 +280,8 @@
         },
         {
             "severity": "info",
-            "line_from": 322,
-            "line_to": 322,
+            "line_from": 320,
+            "line_to": 320,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getFkCustomer on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/Wishlist/src/Spryker/Zed/Wishlist/Business/Model/Reader.php",
@@ -316,8 +292,8 @@
         },
         {
             "severity": "info",
-            "line_from": 323,
-            "line_to": 323,
+            "line_from": 321,
+            "line_to": 321,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getIdWishlist on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/Wishlist/src/Spryker/Zed/Wishlist/Business/Model/Reader.php",
@@ -328,8 +304,8 @@
         },
         {
             "severity": "info",
-            "line_from": 326,
-            "line_to": 326,
+            "line_from": 324,
+            "line_to": 324,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\Wishlist\\Business\\Model\\Reader::getCollectionByIdCustomer cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Wishlist/src/Spryker/Zed/Wishlist/Business/Model/Reader.php",
@@ -340,8 +316,8 @@
         },
         {
             "severity": "info",
-            "line_from": 327,
-            "line_to": 327,
+            "line_from": 325,
+            "line_to": 325,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\Wishlist\\Business\\Model\\Reader::createWishlistItemMetaCollection cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Wishlist/src/Spryker/Zed/Wishlist/Business/Model/Reader.php",
@@ -352,8 +328,8 @@
         },
         {
             "severity": "info",
-            "line_from": 368,
-            "line_to": 368,
+            "line_from": 366,
+            "line_to": 366,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of mb_strtolower cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Wishlist/src/Spryker/Zed/Wishlist/Business/Model/Reader.php",
@@ -364,8 +340,32 @@
         },
         {
             "severity": "info",
-            "line_from": 476,
-            "line_to": 476,
+            "line_from": 378,
+            "line_to": 378,
+            "type": "MoreSpecificReturnType",
+            "message": "The declared return type 'Propel\\Runtime\\Collection\\ObjectCollection<Orm\\Zed\\Product\\Persistence\\SpyProduct>' for Spryker\\Zed\\Wishlist\\Business\\Model\\Reader::getProductCollection is more specific than the inferred return type 'Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\Product\\Persistence\\SpyProduct>'",
+            "file_name": "vendor/spryker/spryker/Bundles/Wishlist/src/Spryker/Zed/Wishlist/Business/Model/Reader.php",
+            "snippet": "     * @return \\Propel\\Runtime\\Collection\\ObjectCollection<\\Orm\\Zed\\Product\\Persistence\\SpyProduct>",
+            "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection<\\Orm\\Zed\\Product\\Persistence\\SpyProduct>",
+            "error_level": 3,
+            "shortcode": 70
+        },
+        {
+            "severity": "info",
+            "line_from": 384,
+            "line_to": 387,
+            "type": "LessSpecificReturnStatement",
+            "message": "The type 'Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\Product\\Persistence\\SpyProduct>' is more general than the declared return type 'Propel\\Runtime\\Collection\\ObjectCollection<Orm\\Zed\\Product\\Persistence\\SpyProduct>' for Spryker\\Zed\\Wishlist\\Business\\Model\\Reader::getProductCollection",
+            "file_name": "vendor/spryker/spryker/Bundles/Wishlist/src/Spryker/Zed/Wishlist/Business/Model/Reader.php",
+            "snippet": "        return $this->productQueryContainer\n            ->queryProduct()\n            ->filterBySku_In($skuCollection)\n            ->find();",
+            "selected_text": "$this->productQueryContainer\n            ->queryProduct()\n            ->filterBySku_In($skuCollection)\n            ->find()",
+            "error_level": 3,
+            "shortcode": 129
+        },
+        {
+            "severity": "info",
+            "line_from": 474,
+            "line_to": 474,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\Wishlist\\Business\\Model\\Reader::getCollectionByCustomerReference cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Wishlist/src/Spryker/Zed/Wishlist/Business/Model/Reader.php",
@@ -376,8 +376,8 @@
         },
         {
             "severity": "info",
-            "line_from": 483,
-            "line_to": 483,
+            "line_from": 481,
+            "line_to": 481,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\Wishlist\\Business\\Model\\Reader::getCollectionByIdCustomer cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Wishlist/src/Spryker/Zed/Wishlist/Business/Model/Reader.php",
@@ -472,8 +472,8 @@
         },
         {
             "severity": "info",
-            "line_from": 462,
-            "line_to": 462,
+            "line_from": 460,
+            "line_to": 460,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Wishlist/src/Spryker/Zed/Wishlist/Business/Model/Writer.php",
@@ -484,8 +484,8 @@
         },
         {
             "severity": "info",
-            "line_from": 463,
-            "line_to": 463,
+            "line_from": 461,
+            "line_to": 461,
             "type": "PossiblyNullArgument",
             "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Wishlist/src/Spryker/Zed/Wishlist/Business/Model/Writer.php",
@@ -496,8 +496,8 @@
         },
         {
             "severity": "info",
-            "line_from": 512,
-            "line_to": 512,
+            "line_from": 510,
+            "line_to": 510,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of preg_match cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Wishlist/src/Spryker/Zed/Wishlist/Business/Model/Writer.php",
@@ -505,78 +505,6 @@
             "selected_text": "$wishlistTransfer->getName()",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 49,
-            "line_to": 49,
-            "type": "MismatchingDocblockParamType",
-            "message": "Parameter $wishlistEntityCollection has wrong type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\Wishlist\\Persistence\\SpyWishlist>', should be 'Propel\\Runtime\\Collection\\ObjectCollection'",
-            "file_name": "vendor/spryker/spryker/Bundles/Wishlist/src/Spryker/Zed/Wishlist/Business/Transfer/WishlistTransferMapper.php",
-            "snippet": "     * @param \\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\Wishlist\\Persistence\\SpyWishlist[] $wishlistEntityCollection",
-            "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\Wishlist\\Persistence\\SpyWishlist[]",
-            "error_level": 4,
-            "shortcode": 141
-        },
-        {
-            "severity": "info",
-            "line_from": 81,
-            "line_to": 81,
-            "type": "MismatchingDocblockParamType",
-            "message": "Parameter $wishlistItemEntityCollection has wrong type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\Wishlist\\Persistence\\SpyWishlistItem>', should be 'Propel\\Runtime\\Collection\\ObjectCollection'",
-            "file_name": "vendor/spryker/spryker/Bundles/Wishlist/src/Spryker/Zed/Wishlist/Business/Transfer/WishlistTransferMapper.php",
-            "snippet": "     * @param \\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\Wishlist\\Persistence\\SpyWishlistItem[] $wishlistItemEntityCollection",
-            "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\Wishlist\\Persistence\\SpyWishlistItem[]",
-            "error_level": 4,
-            "shortcode": 141
-        },
-        {
-            "severity": "info",
-            "line_from": 27,
-            "line_to": 27,
-            "type": "MismatchingDocblockParamType",
-            "message": "Parameter $wishlistEntityCollection has wrong type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\Wishlist\\Persistence\\SpyWishlist>', should be 'Propel\\Runtime\\Collection\\ObjectCollection'",
-            "file_name": "vendor/spryker/spryker/Bundles/Wishlist/src/Spryker/Zed/Wishlist/Business/Transfer/WishlistTransferMapperInterface.php",
-            "snippet": "     * @param \\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\Wishlist\\Persistence\\SpyWishlist[] $wishlistEntityCollection",
-            "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\Wishlist\\Persistence\\SpyWishlist[]",
-            "error_level": 4,
-            "shortcode": 141
-        },
-        {
-            "severity": "info",
-            "line_from": 41,
-            "line_to": 41,
-            "type": "MismatchingDocblockParamType",
-            "message": "Parameter $wishlistItemEntityCollection has wrong type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\Wishlist\\Persistence\\SpyWishlistItem>', should be 'Propel\\Runtime\\Collection\\ObjectCollection'",
-            "file_name": "vendor/spryker/spryker/Bundles/Wishlist/src/Spryker/Zed/Wishlist/Business/Transfer/WishlistTransferMapperInterface.php",
-            "snippet": "     * @param \\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\Wishlist\\Persistence\\SpyWishlistItem[] $wishlistItemEntityCollection",
-            "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\Wishlist\\Persistence\\SpyWishlistItem[]",
-            "error_level": 4,
-            "shortcode": 141
-        },
-        {
-            "severity": "info",
-            "line_from": 20,
-            "line_to": 20,
-            "type": "MismatchingDocblockParamType",
-            "message": "Parameter $wishlistEntities has wrong type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\Wishlist\\Persistence\\SpyWishlist>', should be 'Propel\\Runtime\\Collection\\ObjectCollection'",
-            "file_name": "vendor/spryker/spryker/Bundles/Wishlist/src/Spryker/Zed/Wishlist/Persistence/Mapper/WishlistMapper.php",
-            "snippet": "     * @param \\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\Wishlist\\Persistence\\SpyWishlist[] $wishlistEntities",
-            "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\Wishlist\\Persistence\\SpyWishlist[]",
-            "error_level": 4,
-            "shortcode": 141
-        },
-        {
-            "severity": "info",
-            "line_from": 20,
-            "line_to": 20,
-            "type": "MismatchingDocblockParamType",
-            "message": "Parameter $wishlistEntities has wrong type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\Wishlist\\Persistence\\SpyWishlist>', should be 'Propel\\Runtime\\Collection\\ObjectCollection'",
-            "file_name": "vendor/spryker/spryker/Bundles/Wishlist/src/Spryker/Zed/Wishlist/Persistence/Mapper/WishlistMapperInterface.php",
-            "snippet": "     * @param \\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\Wishlist\\Persistence\\SpyWishlist[] $wishlistEntities",
-            "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\Wishlist\\Persistence\\SpyWishlist[]",
-            "error_level": 4,
-            "shortcode": 141
         },
         {
             "severity": "info",
@@ -589,6 +517,18 @@
             "selected_text": "$wishlistItemEntity",
             "error_level": 3,
             "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 50,
+            "line_to": 50,
+            "type": "ArgumentTypeCoercion",
+            "message": "Argument 1 of Spryker\\Zed\\Wishlist\\Persistence\\Mapper\\WishlistMapperInterface::mapWishlistEntitiesToWishlistCollectionTransfer expects Propel\\Runtime\\Collection\\ObjectCollection<Orm\\Zed\\Wishlist\\Persistence\\SpyWishlist>, parent type Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\Wishlist\\Persistence\\SpyWishlist> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Wishlist/src/Spryker/Zed/Wishlist/Persistence/WishlistRepository.php",
+            "snippet": "            ->mapWishlistEntitiesToWishlistCollectionTransfer($wishlistEntities, new WishlistCollectionTransfer());",
+            "selected_text": "$wishlistEntities",
+            "error_level": 3,
+            "shortcode": 193
         }
     ],
     "deprecation": [
@@ -630,8 +570,8 @@
         },
         {
             "severity": "info",
-            "line_from": 123,
-            "line_to": 123,
+            "line_from": 126,
+            "line_to": 126,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Zed\\Wishlist\\Business\\WishlistFacadeInterface::getWishlistByName has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Wishlist/src/Spryker/Zed/Wishlist/Communication/Controller/GatewayController.php",
@@ -640,5 +580,6 @@
             "error_level": 2,
             "shortcode": 1
         }
-    ]
+    ],
+    "count": 48
 }

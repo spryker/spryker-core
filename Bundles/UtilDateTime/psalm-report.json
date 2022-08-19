@@ -134,42 +134,6 @@
             "shortcode": 166
         }
     ],
-    "deprecation": [
-        {
-            "severity": "info",
-            "line_from": 30,
-            "line_to": 30,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Service\\Container\\Container::offsetSet has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/UtilDateTime/src/Spryker/Service/UtilDateTime/ServiceProvider/DateTimeFormatterServiceProvider.php",
-            "snippet": "        $app['twig'] = $app->share(",
-            "selected_text": "$app",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 30,
-            "line_to": 30,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Service\\Container\\Container::share has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/UtilDateTime/src/Spryker/Service/UtilDateTime/ServiceProvider/DateTimeFormatterServiceProvider.php",
-            "snippet": "        $app['twig'] = $app->share(",
-            "selected_text": "share",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 32,
-            "line_to": 32,
-            "type": "DeprecatedClass",
-            "message": "Spryker\\Service\\UtilDateTime\\Model\\DateTimeFormatterTwigExtension is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/UtilDateTime/src/Spryker/Service/UtilDateTime/ServiceProvider/DateTimeFormatterServiceProvider.php",
-            "snippet": "                $twig->addExtension(new DateTimeFormatterTwigExtension($utilDateTimeService));",
-            "selected_text": "new DateTimeFormatterTwigExtension($utilDateTimeService)",
-            "error_level": 2,
-            "shortcode": 98
-        }
-    ]
+    "deprecation": [],
+    "count": 11
 }

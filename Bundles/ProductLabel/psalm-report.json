@@ -654,30 +654,6 @@
         },
         {
             "severity": "info",
-            "line_from": 114,
-            "line_to": 114,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\ProductLabel\\Persistence\\ProductLabelQueryContainer::queryProductsLabelByIdProductAbstract has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductLabel/src/Spryker/Zed/ProductLabel/Persistence/ProductLabelQueryContainer.php",
-            "snippet": "        return $this->queryProductsLabelByIdProductAbstract($idProductAbstract)",
-            "selected_text": "queryProductsLabelByIdProductAbstract",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 165,
-            "line_to": 165,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\ProductLabel\\Persistence\\ProductLabelQueryContainer::queryLocalizedAttributesByIdProductLabel has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductLabel/src/Spryker/Zed/ProductLabel/Persistence/ProductLabelQueryContainer.php",
-            "snippet": "            ->queryLocalizedAttributesByIdProductLabel($idProductLabel)",
-            "selected_text": "queryLocalizedAttributesByIdProductLabel",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
             "line_from": 294,
             "line_to": 294,
             "type": "DeprecatedMethod",
@@ -688,5 +664,6 @@
             "error_level": 2,
             "shortcode": 1
         }
-    ]
+    ],
+    "count": 55
 }

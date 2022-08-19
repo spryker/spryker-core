@@ -1,5 +1,18 @@
 {
-    "error": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 254,
+            "line_to": 254,
+            "type": "NullArgument",
+            "message": "Argument 1 of ArrayObject::offsetSet cannot be null, null value provided to parameter with type int",
+            "file_name": "vendor/spryker/spryker/Bundles/NavigationStorage/src/Spryker/Zed/NavigationStorage/Business/Storage/NavigationStorageWriter.php",
+            "snippet": "            $nodes[] = $nodeTransfer;",
+            "selected_text": "$nodes",
+            "error_level": 6,
+            "shortcode": 57
+        }
+    ],
     "warning": [
         {
             "severity": "info",
@@ -207,8 +220,8 @@
         },
         {
             "severity": "info",
-            "line_from": 234,
-            "line_to": 234,
+            "line_from": 235,
+            "line_to": 235,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getNavigationNodeLocalizedAttributes on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/NavigationStorage/src/Spryker/Zed/NavigationStorage/Business/Storage/NavigationStorageWriter.php",
@@ -219,8 +232,8 @@
         },
         {
             "severity": "info",
-            "line_from": 234,
-            "line_to": 234,
+            "line_from": 235,
+            "line_to": 235,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\NavigationNodeLocalizedAttributesTransfer> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/NavigationStorage/src/Spryker/Zed/NavigationStorage/Business/Storage/NavigationStorageWriter.php",
@@ -231,8 +244,8 @@
         },
         {
             "severity": "info",
-            "line_from": 240,
-            "line_to": 240,
+            "line_from": 241,
+            "line_to": 241,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getIdNavigationNode on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/NavigationStorage/src/Spryker/Zed/NavigationStorage/Business/Storage/NavigationStorageWriter.php",
@@ -243,8 +256,8 @@
         },
         {
             "severity": "info",
-            "line_from": 244,
-            "line_to": 244,
+            "line_from": 245,
+            "line_to": 245,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getNodeType on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/NavigationStorage/src/Spryker/Zed/NavigationStorage/Business/Storage/NavigationStorageWriter.php",
@@ -255,8 +268,8 @@
         },
         {
             "severity": "info",
-            "line_from": 245,
-            "line_to": 245,
+            "line_from": 246,
+            "line_to": 246,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getIsActive on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/NavigationStorage/src/Spryker/Zed/NavigationStorage/Business/Storage/NavigationStorageWriter.php",
@@ -267,8 +280,8 @@
         },
         {
             "severity": "info",
-            "line_from": 246,
-            "line_to": 246,
+            "line_from": 247,
+            "line_to": 247,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getValidFrom on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/NavigationStorage/src/Spryker/Zed/NavigationStorage/Business/Storage/NavigationStorageWriter.php",
@@ -279,8 +292,8 @@
         },
         {
             "severity": "info",
-            "line_from": 247,
-            "line_to": 247,
+            "line_from": 248,
+            "line_to": 248,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getValidTo on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/NavigationStorage/src/Spryker/Zed/NavigationStorage/Business/Storage/NavigationStorageWriter.php",
@@ -291,8 +304,8 @@
         },
         {
             "severity": "info",
-            "line_from": 250,
-            "line_to": 250,
+            "line_from": 251,
+            "line_to": 251,
             "type": "PossiblyInvalidArgument",
             "message": "Argument 1 of Spryker\\Zed\\NavigationStorage\\Business\\Storage\\NavigationStorageWriter::mapToNavigationNodeStorageTransfer expects ArrayObject<int, Generated\\Shared\\Transfer\\NavigationTreeNodeTransfer>, possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\NavigationTreeNodeTransfer> provided",
             "file_name": "vendor/spryker/spryker/Bundles/NavigationStorage/src/Spryker/Zed/NavigationStorage/Business/Storage/NavigationStorageWriter.php",
@@ -300,30 +313,6 @@
             "selected_text": "$navigationTreeNodeTransfer->getChildren()",
             "error_level": 3,
             "shortcode": 92
-        },
-        {
-            "severity": "info",
-            "line_from": 37,
-            "line_to": 37,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/NavigationStorage/src/Spryker/Zed/NavigationStorage/Communication/Plugin/Event/Listener/NavigationNodeLocalizedAttributeStorageListener.php",
-            "snippet": "        $navigationIds = $this->getQueryContainer()->queryNavigationIdsByNavigationNodeIds($navigationNodeIds)->find()->getData();",
-            "selected_text": "getData",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 40,
-            "line_to": 40,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/NavigationStorage/src/Spryker/Zed/NavigationStorage/Communication/Plugin/Event/Listener/NavigationUrlRelationStorageListener.php",
-            "snippet": "            ->getData();",
-            "selected_text": "getData",
-            "error_level": 3,
-            "shortcode": 113
         },
         {
             "severity": "info",
@@ -398,78 +387,7 @@
             "selected_text": "$this->isSendingToQueue",
             "error_level": 2,
             "shortcode": 99
-        },
-        {
-            "severity": "info",
-            "line_from": 23,
-            "line_to": 23,
-            "type": "DeprecatedTrait",
-            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/NavigationStorage/src/Spryker/Zed/NavigationStorage/Communication/Plugin/Event/Listener/NavigationNodeLocalizedAttributeStorageListener.php",
-            "snippet": "    use DatabaseTransactionHandlerTrait;",
-            "selected_text": "DatabaseTransactionHandlerTrait",
-            "error_level": 2,
-            "shortcode": 171
-        },
-        {
-            "severity": "info",
-            "line_from": 23,
-            "line_to": 23,
-            "type": "DeprecatedTrait",
-            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/NavigationStorage/src/Spryker/Zed/NavigationStorage/Communication/Plugin/Event/Listener/NavigationNodeStorageListener.php",
-            "snippet": "    use DatabaseTransactionHandlerTrait;",
-            "selected_text": "DatabaseTransactionHandlerTrait",
-            "error_level": 2,
-            "shortcode": 171
-        },
-        {
-            "severity": "info",
-            "line_from": 26,
-            "line_to": 26,
-            "type": "DeprecatedTrait",
-            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/NavigationStorage/src/Spryker/Zed/NavigationStorage/Communication/Plugin/Event/Listener/NavigationStorageListener.php",
-            "snippet": "    use DatabaseTransactionHandlerTrait;",
-            "selected_text": "DatabaseTransactionHandlerTrait",
-            "error_level": 2,
-            "shortcode": 171
-        },
-        {
-            "severity": "info",
-            "line_from": 22,
-            "line_to": 22,
-            "type": "DeprecatedTrait",
-            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/NavigationStorage/src/Spryker/Zed/NavigationStorage/Communication/Plugin/Event/Listener/NavigationStoragePublishListener.php",
-            "snippet": "    use DatabaseTransactionHandlerTrait;",
-            "selected_text": "DatabaseTransactionHandlerTrait",
-            "error_level": 2,
-            "shortcode": 171
-        },
-        {
-            "severity": "info",
-            "line_from": 22,
-            "line_to": 22,
-            "type": "DeprecatedTrait",
-            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/NavigationStorage/src/Spryker/Zed/NavigationStorage/Communication/Plugin/Event/Listener/NavigationStorageUnpublishListener.php",
-            "snippet": "    use DatabaseTransactionHandlerTrait;",
-            "selected_text": "DatabaseTransactionHandlerTrait",
-            "error_level": 2,
-            "shortcode": 171
-        },
-        {
-            "severity": "info",
-            "line_from": 22,
-            "line_to": 22,
-            "type": "DeprecatedTrait",
-            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/NavigationStorage/src/Spryker/Zed/NavigationStorage/Communication/Plugin/Event/Listener/NavigationUrlRelationStorageListener.php",
-            "snippet": "    use DatabaseTransactionHandlerTrait;",
-            "selected_text": "DatabaseTransactionHandlerTrait",
-            "error_level": 2,
-            "shortcode": 171
         }
-    ]
+    ],
+    "count": 32
 }

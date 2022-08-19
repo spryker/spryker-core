@@ -14,30 +14,6 @@
             "shortcode": 83
         }
     ],
-    "deprecation": [
-        {
-            "severity": "info",
-            "line_from": 21,
-            "line_to": 21,
-            "type": "DeprecatedInterface",
-            "message": "Spryker\\Zed\\CategoryExtension\\Dependency\\Plugin\\CategoryFormPluginInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/CategoryImageGui/src/Spryker/Zed/CategoryImageGui/Communication/Plugin/CategoryImageFormPlugin.php",
-            "snippet": "class CategoryImageFormPlugin extends AbstractPlugin implements CategoryFormPluginInterface",
-            "selected_text": "CategoryImageFormPlugin",
-            "error_level": 2,
-            "shortcode": 152
-        },
-        {
-            "severity": "info",
-            "line_from": 21,
-            "line_to": 21,
-            "type": "DeprecatedInterface",
-            "message": "Spryker\\Zed\\CategoryExtension\\Dependency\\Plugin\\CategoryFormTabExpanderPluginInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/CategoryImageGui/src/Spryker/Zed/CategoryImageGui/Communication/Plugin/CategoryImageFormTabExpanderPlugin.php",
-            "snippet": "class CategoryImageFormTabExpanderPlugin extends AbstractPlugin implements CategoryFormTabExpanderPluginInterface",
-            "selected_text": "CategoryImageFormTabExpanderPlugin",
-            "error_level": 2,
-            "shortcode": 152
-        }
-    ]
+    "deprecation": [],
+    "count": 1
 }

@@ -134,30 +134,6 @@
             "shortcode": 78
         }
     ],
-    "deprecation": [
-        {
-            "severity": "info",
-            "line_from": 182,
-            "line_to": 182,
-            "type": "DeprecatedClass",
-            "message": "Spryker\\Zed\\Kernel\\Communication\\Plugin\\Pimple is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Mail/src/Spryker/Zed/Mail/MailDependencyProvider.php",
-            "snippet": "        $pimplePlugin = new Pimple();",
-            "selected_text": "new Pimple()",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 183,
-            "line_to": 183,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Service\\Container\\Container::offsetGet has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Mail/src/Spryker/Zed/Mail/MailDependencyProvider.php",
-            "snippet": "        $twig = $pimplePlugin->getApplication()['twig'];",
-            "selected_text": "$pimplePlugin->getApplication()",
-            "error_level": 2,
-            "shortcode": 1
-        }
-    ]
+    "deprecation": [],
+    "count": 11
 }

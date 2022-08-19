@@ -498,18 +498,6 @@
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 65,
-            "line_to": 65,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\Glossary\\Communication\\GlossaryCommunicationFactory::createTranslationForm has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Glossary/src/Spryker/Zed/Glossary/Communication/GlossaryCommunicationFactory.php",
-            "snippet": "        return $this->getFormFactory()->create($this->createTranslationForm(), null, [",
-            "selected_text": "createTranslationForm",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
             "line_from": 75,
             "line_to": 75,
             "type": "DeprecatedMethod",
@@ -517,18 +505,6 @@
             "file_name": "vendor/spryker/spryker/Bundles/Glossary/src/Spryker/Zed/Glossary/Communication/GlossaryCommunicationFactory.php",
             "snippet": "        return $this->createTranslationAddForm();",
             "selected_text": "createTranslationAddForm",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 87,
-            "line_to": 87,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\Glossary\\Communication\\GlossaryCommunicationFactory::createUpdateTranslationForm has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Glossary/src/Spryker/Zed/Glossary/Communication/GlossaryCommunicationFactory.php",
-            "snippet": "        return $this->getFormFactory()->create($this->createUpdateTranslationForm(), $formData, [",
-            "selected_text": "createUpdateTranslationForm",
             "error_level": 2,
             "shortcode": 1
         },
@@ -568,5 +544,6 @@
             "error_level": 2,
             "shortcode": 1
         }
-    ]
+    ],
+    "count": 45
 }

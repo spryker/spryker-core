@@ -150,102 +150,6 @@
         },
         {
             "severity": "info",
-            "line_from": 72,
-            "line_to": 72,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Service\\Container\\Container::offsetSet has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Config/src/Spryker/Shared/Config/Plugin/ServiceProvider/AbstractConfigProfilerServiceProvider.php",
-            "snippet": "        $app['data_collector.templates'] = $app->extend('data_collector.templates', function ($templates) {",
-            "selected_text": "$app",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 98,
-            "line_to": 98,
-            "type": "DeprecatedConstant",
-            "message": "Constant Spryker\\Shared\\Config\\ConfigConstants::ENABLE_WEB_PROFILER is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Config/src/Spryker/Shared/Config/Plugin/ServiceProvider/AbstractConfigProfilerServiceProvider.php",
-            "snippet": "        return (Config::get(ConfigConstants::ENABLE_WEB_PROFILER, false) && $this->loaderExists($app));",
-            "selected_text": "ConfigConstants::ENABLE_WEB_PROFILER",
-            "error_level": 2,
-            "shortcode": 170
-        },
-        {
-            "severity": "info",
-            "line_from": 108,
-            "line_to": 108,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Service\\Container\\Container::offsetGet has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Config/src/Spryker/Shared/Config/Plugin/ServiceProvider/AbstractConfigProfilerServiceProvider.php",
-            "snippet": "        return (isset($app[$this->getLoaderKey()]));",
-            "selected_text": "$app",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 127,
-            "line_to": 127,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Service\\Container\\Container::offsetSet has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Config/src/Spryker/Shared/Config/Plugin/ServiceProvider/AbstractConfigProfilerServiceProvider.php",
-            "snippet": "        $app[$loaderKey] = $app->extend($loaderKey, function (TwigFilesystemLoader $loader) {",
-            "selected_text": "$app",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 74,
-            "line_to": 74,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Service\\Container\\Container::offsetSet has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Config/src/Spryker/Shared/Config/Plugin/ServiceProvider/ConfigProfilerServiceProvider.php",
-            "snippet": "        $app['data_collector.templates'] = $app->extend('data_collector.templates', function ($templates) {",
-            "selected_text": "$app",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 90,
-            "line_to": 90,
-            "type": "DeprecatedConstant",
-            "message": "Constant Spryker\\Shared\\Config\\ConfigConstants::ENABLE_WEB_PROFILER is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Config/src/Spryker/Shared/Config/Plugin/ServiceProvider/ConfigProfilerServiceProvider.php",
-            "snippet": "        return (Config::get(ConfigConstants::ENABLE_WEB_PROFILER, false) && $this->loaderExists($app));",
-            "selected_text": "ConfigConstants::ENABLE_WEB_PROFILER",
-            "error_level": 2,
-            "shortcode": 170
-        },
-        {
-            "severity": "info",
-            "line_from": 100,
-            "line_to": 100,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Service\\Container\\Container::offsetGet has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Config/src/Spryker/Shared/Config/Plugin/ServiceProvider/ConfigProfilerServiceProvider.php",
-            "snippet": "        return (isset($app[$this->getLoaderKey()]));",
-            "selected_text": "$app",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 119,
-            "line_to": 119,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Service\\Container\\Container::offsetSet has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Config/src/Spryker/Shared/Config/Plugin/ServiceProvider/ConfigProfilerServiceProvider.php",
-            "snippet": "        $app[$loaderKey] = $app->extend($loaderKey, function (TwigFilesystemLoader $loader) {",
-            "selected_text": "$app",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
             "line_from": 15,
             "line_to": 15,
             "type": "DeprecatedInterface",
@@ -267,30 +171,7 @@
             "selected_text": "\\Spryker\\Shared\\Config\\Profiler\\ConfigProfilerCollectorInterface",
             "error_level": 2,
             "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 15,
-            "line_to": 15,
-            "type": "DeprecatedClass",
-            "message": "Spryker\\Shared\\Config\\Plugin\\ServiceProvider\\AbstractConfigProfilerServiceProvider is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Config/src/Spryker/Yves/Config/Plugin/ServiceProvider/ConfigProfilerServiceProvider.php",
-            "snippet": "class ConfigProfilerServiceProvider extends SharedConfigProfilerServiceProvider",
-            "selected_text": "SharedConfigProfilerServiceProvider",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 15,
-            "line_to": 15,
-            "type": "DeprecatedClass",
-            "message": "Spryker\\Shared\\Config\\Plugin\\ServiceProvider\\AbstractConfigProfilerServiceProvider is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Config/src/Spryker/Zed/Config/Communication/Plugin/ServiceProvider/ConfigProfilerServiceProvider.php",
-            "snippet": "class ConfigProfilerServiceProvider extends SharedConfigProfilerServiceProvider",
-            "selected_text": "SharedConfigProfilerServiceProvider",
-            "error_level": 2,
-            "shortcode": 98
         }
-    ]
+    ],
+    "count": 14
 }

@@ -2,8 +2,8 @@
     "error": [
         {
             "severity": "error",
-            "line_from": 182,
-            "line_to": 182,
+            "line_from": 186,
+            "line_to": 186,
             "type": "InvalidReturnType",
             "message": "The declared return type 'array<array-key, string>' for Spryker\\Zed\\SalesOrderThreshold\\Business\\Translation\\Hydrator\\SalesOrderThresholdTranslationHydrator::getGlossaryKeys is incorrect, got 'list<null|string>'",
             "file_name": "vendor/spryker/spryker/Bundles/SalesOrderThreshold/src/Spryker/Zed/SalesOrderThreshold/Business/Translation/Hydrator/SalesOrderThresholdTranslationHydrator.php",
@@ -14,8 +14,8 @@
         },
         {
             "severity": "error",
-            "line_from": 192,
-            "line_to": 192,
+            "line_from": 196,
+            "line_to": 196,
             "type": "InvalidReturnStatement",
             "message": "The inferred type 'list<null|string>' does not match the declared return type 'array<array-key, string>' for Spryker\\Zed\\SalesOrderThreshold\\Business\\Translation\\Hydrator\\SalesOrderThresholdTranslationHydrator::getGlossaryKeys",
             "file_name": "vendor/spryker/spryker/Bundles/SalesOrderThreshold/src/Spryker/Zed/SalesOrderThreshold/Business/Translation/Hydrator/SalesOrderThresholdTranslationHydrator.php",
@@ -29,7 +29,7 @@
             "line_from": 69,
             "line_to": 69,
             "type": "InvalidReturnType",
-            "message": "The declared return type 'array<array-key, string>' for Spryker\\Zed\\SalesOrderThreshold\\Business\\Translation\\SalesOrderThresholdTranslationWriter::createTranslationsLocaleMap is incorrect, got 'array<0|string, null|string>'",
+            "message": "The declared return type 'array<array-key, string>' for Spryker\\Zed\\SalesOrderThreshold\\Business\\Translation\\SalesOrderThresholdTranslationWriter::createTranslationsLocaleMap is incorrect, got 'array<string, null|string>'",
             "file_name": "vendor/spryker/spryker/Bundles/SalesOrderThreshold/src/Spryker/Zed/SalesOrderThreshold/Business/Translation/SalesOrderThresholdTranslationWriter.php",
             "snippet": "     * @return array<string>",
             "selected_text": "array<string>",
@@ -41,7 +41,7 @@
             "line_from": 78,
             "line_to": 78,
             "type": "InvalidReturnStatement",
-            "message": "The inferred type 'array<0|string, null|string>' does not match the declared return type 'array<array-key, string>' for Spryker\\Zed\\SalesOrderThreshold\\Business\\Translation\\SalesOrderThresholdTranslationWriter::createTranslationsLocaleMap",
+            "message": "The inferred type 'array<string, null|string>' does not match the declared return type 'array<array-key, string>' for Spryker\\Zed\\SalesOrderThreshold\\Business\\Translation\\SalesOrderThresholdTranslationWriter::createTranslationsLocaleMap",
             "file_name": "vendor/spryker/spryker/Bundles/SalesOrderThreshold/src/Spryker/Zed/SalesOrderThreshold/Business/Translation/SalesOrderThresholdTranslationWriter.php",
             "snippet": "        return $translationsByLocale;",
             "selected_text": "$translationsByLocale",
@@ -532,32 +532,20 @@
         },
         {
             "severity": "info",
-            "line_from": 103,
-            "line_to": 103,
+            "line_from": 85,
+            "line_to": 85,
             "type": "PossiblyNullArrayOffset",
-            "message": "Cannot access value on variable $indexedTranslationTransfers using possibly null offset int|null",
+            "message": "Cannot access value on variable $translationTransfers using possibly null offset int|null",
             "file_name": "vendor/spryker/spryker/Bundles/SalesOrderThreshold/src/Spryker/Zed/SalesOrderThreshold/Business/Translation/Hydrator/SalesOrderThresholdTranslationHydrator.php",
-            "snippet": "            $translationTransfer = $indexedTranslationTransfers[$localeTransfer->getIdLocale()] ?? null;",
-            "selected_text": "$indexedTranslationTransfers",
+            "snippet": "            $translationTransfer = $translationTransfers[$localeTransfer->getIdLocale()][$messageGlossaryKey] ?? null;",
+            "selected_text": "$translationTransfers",
             "error_level": 3,
             "shortcode": 125
         },
         {
             "severity": "info",
-            "line_from": 141,
-            "line_to": 141,
-            "type": "PossiblyNullArrayOffset",
-            "message": "Cannot access value on variable $indexedTranslationTransfers[int|null] using possibly null offset int|null",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesOrderThreshold/src/Spryker/Zed/SalesOrderThreshold/Business/Translation/Hydrator/SalesOrderThresholdTranslationHydrator.php",
-            "snippet": "            $indexedTranslationTransfers[$translationTransfer->getFkLocale()] = $translationTransfer;",
-            "selected_text": "$indexedTranslationTransfers",
-            "error_level": 3,
-            "shortcode": 125
-        },
-        {
-            "severity": "info",
-            "line_from": 176,
-            "line_to": 176,
+            "line_from": 180,
+            "line_to": 180,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getMessageGlossaryKey on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/SalesOrderThreshold/src/Spryker/Zed/SalesOrderThreshold/Business/Translation/Hydrator/SalesOrderThresholdTranslationHydrator.php",
@@ -856,8 +844,8 @@
         },
         {
             "severity": "info",
-            "line_from": 78,
-            "line_to": 78,
+            "line_from": 82,
+            "line_to": 82,
             "type": "PossiblyNullOperand",
             "message": "Left operand cannot be nullable, got int|null",
             "file_name": "vendor/spryker/spryker/Bundles/SalesOrderThreshold/src/Spryker/Zed/SalesOrderThreshold/Communication/Plugin/Strategy/SoftMinimumThresholdWithFlexibleFeeStrategyPlugin.php",
@@ -868,8 +856,8 @@
         },
         {
             "severity": "info",
-            "line_from": 78,
-            "line_to": 78,
+            "line_from": 82,
+            "line_to": 82,
             "type": "PossiblyNullOperand",
             "message": "Right operand cannot be nullable, got int|null",
             "file_name": "vendor/spryker/spryker/Bundles/SalesOrderThreshold/src/Spryker/Zed/SalesOrderThreshold/Communication/Plugin/Strategy/SoftMinimumThresholdWithFlexibleFeeStrategyPlugin.php",
@@ -1194,30 +1182,6 @@
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 26,
-            "line_to": 26,
-            "type": "DeprecatedClass",
-            "message": "Class Spryker\\Zed\\SalesOrderThreshold\\Business\\Translation\\SalesOrderThresholdTranslationReaderInterface is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesOrderThreshold/src/Spryker/Zed/SalesOrderThreshold/Business/SalesOrderThreshold/SalesOrderThresholdReader.php",
-            "snippet": "     * @var \\Spryker\\Zed\\SalesOrderThreshold\\Business\\Translation\\SalesOrderThresholdTranslationReaderInterface",
-            "selected_text": "\\Spryker\\Zed\\SalesOrderThreshold\\Business\\Translation\\SalesOrderThresholdTranslationReaderInterface",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 32,
-            "line_to": 32,
-            "type": "DeprecatedClass",
-            "message": "Class Spryker\\Zed\\SalesOrderThreshold\\Business\\Translation\\SalesOrderThresholdTranslationReaderInterface is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesOrderThreshold/src/Spryker/Zed/SalesOrderThreshold/Business/SalesOrderThreshold/SalesOrderThresholdReader.php",
-            "snippet": "     * @param \\Spryker\\Zed\\SalesOrderThreshold\\Business\\Translation\\SalesOrderThresholdTranslationReaderInterface $translationReader",
-            "selected_text": "\\Spryker\\Zed\\SalesOrderThreshold\\Business\\Translation\\SalesOrderThresholdTranslationReaderInterface",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
             "line_from": 121,
             "line_to": 121,
             "type": "DeprecatedClass",
@@ -1266,78 +1230,6 @@
         },
         {
             "severity": "info",
-            "line_from": 301,
-            "line_to": 301,
-            "type": "DeprecatedClass",
-            "message": "Class Spryker\\Zed\\SalesOrderThreshold\\Dependency\\Facade\\SalesOrderThresholdToStoreFacadeInterface is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesOrderThreshold/src/Spryker/Zed/SalesOrderThreshold/Business/SalesOrderThresholdBusinessFactory.php",
-            "snippet": "     * @return \\Spryker\\Zed\\SalesOrderThreshold\\Dependency\\Facade\\SalesOrderThresholdToStoreFacadeInterface",
-            "selected_text": "\\Spryker\\Zed\\SalesOrderThreshold\\Dependency\\Facade\\SalesOrderThresholdToStoreFacadeInterface",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 303,
-            "line_to": 303,
-            "type": "DeprecatedClass",
-            "message": "Class Spryker\\Zed\\SalesOrderThreshold\\Dependency\\Facade\\SalesOrderThresholdToStoreFacadeInterface is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesOrderThreshold/src/Spryker/Zed/SalesOrderThreshold/Business/SalesOrderThresholdBusinessFactory.php",
-            "snippet": "    public function getStoreFacade(): SalesOrderThresholdToStoreFacadeInterface",
-            "selected_text": "SalesOrderThresholdToStoreFacadeInterface",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 55,
-            "line_to": 55,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\SalesOrderThreshold\\Dependency\\Facade\\SalesOrderThresholdToGlossaryFacadeInterface::getTranslationsByGlossaryKeyAndLocales has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesOrderThreshold/src/Spryker/Zed/SalesOrderThreshold/Business/Translation/Hydrator/SalesOrderThresholdTranslationHydrator.php",
-            "snippet": "        $translationTransfers = $this->glossaryFacade->getTranslationsByGlossaryKeyAndLocales($glossaryKey, $availableLocaleTransfers);",
-            "selected_text": "getTranslationsByGlossaryKeyAndLocales",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 19,
-            "line_to": 19,
-            "type": "DeprecatedInterface",
-            "message": "Spryker\\Zed\\SalesOrderThreshold\\Business\\Translation\\SalesOrderThresholdTranslationReaderInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesOrderThreshold/src/Spryker/Zed/SalesOrderThreshold/Business/Translation/SalesOrderThresholdTranslationReader.php",
-            "snippet": "class SalesOrderThresholdTranslationReader implements SalesOrderThresholdTranslationReaderInterface",
-            "selected_text": "SalesOrderThresholdTranslationReader",
-            "error_level": 2,
-            "shortcode": 152
-        },
-        {
-            "severity": "info",
-            "line_from": 27,
-            "line_to": 27,
-            "type": "DeprecatedClass",
-            "message": "Class Spryker\\Zed\\SalesOrderThreshold\\Dependency\\Facade\\SalesOrderThresholdToStoreFacadeInterface is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesOrderThreshold/src/Spryker/Zed/SalesOrderThreshold/Business/Translation/SalesOrderThresholdTranslationReader.php",
-            "snippet": "     * @var \\Spryker\\Zed\\SalesOrderThreshold\\Dependency\\Facade\\SalesOrderThresholdToStoreFacadeInterface",
-            "selected_text": "\\Spryker\\Zed\\SalesOrderThreshold\\Dependency\\Facade\\SalesOrderThresholdToStoreFacadeInterface",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 33,
-            "line_to": 33,
-            "type": "DeprecatedClass",
-            "message": "Class Spryker\\Zed\\SalesOrderThreshold\\Dependency\\Facade\\SalesOrderThresholdToStoreFacadeInterface is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesOrderThreshold/src/Spryker/Zed/SalesOrderThreshold/Business/Translation/SalesOrderThresholdTranslationReader.php",
-            "snippet": "     * @param \\Spryker\\Zed\\SalesOrderThreshold\\Dependency\\Facade\\SalesOrderThresholdToStoreFacadeInterface $storeFacade",
-            "selected_text": "\\Spryker\\Zed\\SalesOrderThreshold\\Dependency\\Facade\\SalesOrderThresholdToStoreFacadeInterface",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
             "line_from": 19,
             "line_to": 19,
             "type": "DeprecatedInterface",
@@ -1345,18 +1237,6 @@
             "file_name": "vendor/spryker/spryker/Bundles/SalesOrderThreshold/src/Spryker/Zed/SalesOrderThreshold/Communication/Plugin/Checkout/SalesOrderThresholdCheckoutPreConditionPlugin.php",
             "snippet": "class SalesOrderThresholdCheckoutPreConditionPlugin extends AbstractPlugin implements CheckoutPreConditionInterface",
             "selected_text": "SalesOrderThresholdCheckoutPreConditionPlugin",
-            "error_level": 2,
-            "shortcode": 152
-        },
-        {
-            "severity": "info",
-            "line_from": 15,
-            "line_to": 15,
-            "type": "DeprecatedInterface",
-            "message": "Spryker\\Zed\\SalesOrderThreshold\\Dependency\\Facade\\SalesOrderThresholdToStoreFacadeInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesOrderThreshold/src/Spryker/Zed/SalesOrderThreshold/Dependency/Facade/SalesOrderThresholdToStoreFacadeBridge.php",
-            "snippet": "class SalesOrderThresholdToStoreFacadeBridge implements SalesOrderThresholdToStoreFacadeInterface",
-            "selected_text": "SalesOrderThresholdToStoreFacadeBridge",
             "error_level": 2,
             "shortcode": 152
         },
@@ -1371,18 +1251,7 @@
             "selected_text": "addStoreFacade",
             "error_level": 2,
             "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 144,
-            "line_to": 144,
-            "type": "DeprecatedClass",
-            "message": "Spryker\\Zed\\SalesOrderThreshold\\Dependency\\Facade\\SalesOrderThresholdToStoreFacadeBridge is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesOrderThreshold/src/Spryker/Zed/SalesOrderThreshold/SalesOrderThresholdDependencyProvider.php",
-            "snippet": "            return new SalesOrderThresholdToStoreFacadeBridge($container->getLocator()->store()->facade());",
-            "selected_text": "new SalesOrderThresholdToStoreFacadeBridge($container->getLocator()->store()->facade())",
-            "error_level": 2,
-            "shortcode": 98
         }
-    ]
+    ],
+    "count": 104
 }

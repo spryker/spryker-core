@@ -435,18 +435,7 @@
             "selected_text": "isEventRetryQueueExists",
             "error_level": 2,
             "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 133,
-            "line_to": 133,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\Event\\EventConfig::hasEventRetryQueueConfig has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Event/src/Spryker/Zed/Event/EventConfig.php",
-            "snippet": "            return $this->hasEventRetryQueueConfig($config);",
-            "selected_text": "hasEventRetryQueueConfig",
-            "error_level": 2,
-            "shortcode": 1
         }
-    ]
+    ],
+    "count": 36
 }

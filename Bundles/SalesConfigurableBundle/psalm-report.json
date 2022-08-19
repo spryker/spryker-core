@@ -414,30 +414,6 @@
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 20,
-            "line_to": 20,
-            "type": "DeprecatedInterface",
-            "message": "Spryker\\Zed\\SalesConfigurableBundle\\Business\\Expander\\SalesOrderConfiguredBundleExpanderInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesConfigurableBundle/src/Spryker/Zed/SalesConfigurableBundle/Business/Expander/SalesOrderConfiguredBundleExpander.php",
-            "snippet": "class SalesOrderConfiguredBundleExpander implements SalesOrderConfiguredBundleExpanderInterface",
-            "selected_text": "SalesOrderConfiguredBundleExpander",
-            "error_level": 2,
-            "shortcode": 152
-        },
-        {
-            "severity": "info",
-            "line_from": 62,
-            "line_to": 62,
-            "type": "DeprecatedMethod",
-            "message": "The method Generated\\Shared\\Transfer\\OrderTransfer::setSalesOrderConfiguredBundles has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesConfigurableBundle/src/Spryker/Zed/SalesConfigurableBundle/Business/Expander/SalesOrderConfiguredBundleExpander.php",
-            "snippet": "        $orderTransfer->setSalesOrderConfiguredBundles($salesOrderConfiguredBundleTransfers);",
-            "selected_text": "setSalesOrderConfiguredBundles",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
             "line_from": 40,
             "line_to": 40,
             "type": "DeprecatedClass",
@@ -471,18 +447,7 @@
             "selected_text": "new SalesOrderConfiguredBundleExpander(\n            $this->getRepository(),\n            $this->getGlossaryFacade(),\n        )",
             "error_level": 2,
             "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 37,
-            "line_to": 37,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\SalesConfigurableBundle\\Business\\SalesConfigurableBundleFacadeInterface::expandOrderWithConfiguredBundles has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/SalesConfigurableBundle/src/Spryker/Zed/SalesConfigurableBundle/Communication/Plugin/Sales/ConfiguredBundleOrderExpanderPlugin.php",
-            "snippet": "        return $this->getFacade()->expandOrderWithConfiguredBundles($orderTransfer);",
-            "selected_text": "expandOrderWithConfiguredBundles",
-            "error_level": 2,
-            "shortcode": 1
         }
-    ]
+    ],
+    "count": 37
 }

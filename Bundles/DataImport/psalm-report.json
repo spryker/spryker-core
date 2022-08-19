@@ -1,10 +1,23 @@
 {
-    "error": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 43,
+            "line_to": 43,
+            "type": "InvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\DataImportExtension\\Dependency\\Plugin\\DataSetWriterPluginInterface::write expects Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetInterface, Generated\\Shared\\Transfer\\DataSetItemTransfer provided",
+            "file_name": "vendor/spryker/spryker/Bundles/DataImport/src/Spryker/Zed/DataImport/Business/Model/DataSet/DataSetWriterCollection.php",
+            "snippet": "                $dataSetWriter->write($dataSet);",
+            "selected_text": "$dataSet",
+            "error_level": 6,
+            "shortcode": 4
+        }
+    ],
     "warning": [
         {
             "severity": "info",
-            "line_from": 203,
-            "line_to": 203,
+            "line_from": 208,
+            "line_to": 208,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\DataImport\\Business\\DataImportBusinessFactory::createQueueReaderFromConfig cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/DataImport/src/Spryker/Zed/DataImport/Business/DataImportBusinessFactory.php",
@@ -15,8 +28,8 @@
         },
         {
             "severity": "info",
-            "line_from": 207,
-            "line_to": 207,
+            "line_from": 212,
+            "line_to": 212,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\DataImport\\Business\\DataImporter\\Queue\\QueueDataImporter::__construct cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/DataImport/src/Spryker/Zed/DataImport/Business/DataImportBusinessFactory.php",
@@ -27,8 +40,8 @@
         },
         {
             "severity": "info",
-            "line_from": 241,
-            "line_to": 241,
+            "line_from": 246,
+            "line_to": 246,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\DataImport\\Business\\DataImportBusinessFactory::createCsvReaderFromConfig cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/DataImport/src/Spryker/Zed/DataImport/Business/DataImportBusinessFactory.php",
@@ -39,8 +52,8 @@
         },
         {
             "severity": "info",
-            "line_from": 243,
-            "line_to": 243,
+            "line_from": 248,
+            "line_to": 248,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\DataImport\\Business\\DataImportBusinessFactory::createDataImporter cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/DataImport/src/Spryker/Zed/DataImport/Business/DataImportBusinessFactory.php",
@@ -51,8 +64,8 @@
         },
         {
             "severity": "info",
-            "line_from": 253,
-            "line_to": 253,
+            "line_from": 258,
+            "line_to": 258,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\DataImport\\Business\\DataImportBusinessFactory::createCsvReaderFromConfig cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/DataImport/src/Spryker/Zed/DataImport/Business/DataImportBusinessFactory.php",
@@ -63,8 +76,8 @@
         },
         {
             "severity": "info",
-            "line_from": 255,
-            "line_to": 255,
+            "line_from": 260,
+            "line_to": 260,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\DataImport\\Business\\DataImportBusinessFactory::createDataImporterWriterAware cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/DataImport/src/Spryker/Zed/DataImport/Business/DataImportBusinessFactory.php",
@@ -171,66 +184,6 @@
         },
         {
             "severity": "info",
-            "line_from": 204,
-            "line_to": 204,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\QueueReceiveMessageTransfer> variable $this->queueReceiveMessageBuffer",
-            "file_name": "vendor/spryker/spryker/Bundles/DataImport/src/Spryker/Zed/DataImport/Business/DataImporter/Queue/QueueDataImporter.php",
-            "snippet": "        $this->queueReceiveMessageBuffer->enqueue($queueReceiveMessageTransfer);",
-            "selected_text": "enqueue",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 216,
-            "line_to": 216,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\QueueReceiveMessageTransfer> variable $this->queueReceiveMessageBuffer",
-            "file_name": "vendor/spryker/spryker/Bundles/DataImport/src/Spryker/Zed/DataImport/Business/DataImporter/Queue/QueueDataImporter.php",
-            "snippet": "        while ($this->queueReceiveMessageBuffer->count()) {",
-            "selected_text": "count",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 217,
-            "line_to": 217,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\QueueReceiveMessageTransfer> variable $this->queueReceiveMessageBuffer",
-            "file_name": "vendor/spryker/spryker/Bundles/DataImport/src/Spryker/Zed/DataImport/Business/DataImporter/Queue/QueueDataImporter.php",
-            "snippet": "            $queueReceiveMessageTransfer = $this->queueReceiveMessageBuffer->dequeue();",
-            "selected_text": "dequeue",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 233,
-            "line_to": 233,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\QueueReceiveMessageTransfer> variable $this->queueReceiveMessageBuffer",
-            "file_name": "vendor/spryker/spryker/Bundles/DataImport/src/Spryker/Zed/DataImport/Business/DataImporter/Queue/QueueDataImporter.php",
-            "snippet": "        while ($this->queueReceiveMessageBuffer->count()) {",
-            "selected_text": "count",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 234,
-            "line_to": 234,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\QueueReceiveMessageTransfer> variable $this->queueReceiveMessageBuffer",
-            "file_name": "vendor/spryker/spryker/Bundles/DataImport/src/Spryker/Zed/DataImport/Business/DataImporter/Queue/QueueDataImporter.php",
-            "snippet": "            $queueReceiveMessageTransfer = $this->queueReceiveMessageBuffer->dequeue();",
-            "selected_text": "dequeue",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
             "line_from": 256,
             "line_to": 256,
             "type": "PossiblyNullOperand",
@@ -240,18 +193,6 @@
             "selected_text": "$dataImporterReportTransfer->getImportedDataSetCount()",
             "error_level": 1,
             "shortcode": 80
-        },
-        {
-            "severity": "info",
-            "line_from": 256,
-            "line_to": 256,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\QueueReceiveMessageTransfer> variable $this->queueReceiveMessageBuffer",
-            "file_name": "vendor/spryker/spryker/Bundles/DataImport/src/Spryker/Zed/DataImport/Business/DataImporter/Queue/QueueDataImporter.php",
-            "snippet": "            $dataImporterReportTransfer->getImportedDataSetCount() - $this->queueReceiveMessageBuffer->count() + 1,",
-            "selected_text": "count",
-            "error_level": 3,
-            "shortcode": 113
         },
         {
             "severity": "info",
@@ -291,8 +232,8 @@
         },
         {
             "severity": "info",
-            "line_from": 111,
-            "line_to": 111,
+            "line_from": 112,
+            "line_to": 112,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\DataImport\\Dependency\\Client\\DataImportToQueueClientInterface::receiveMessages cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/DataImport/src/Spryker/Zed/DataImport/Business/DataReader/QueueReader/QueueReader.php",
@@ -303,8 +244,8 @@
         },
         {
             "severity": "info",
-            "line_from": 111,
-            "line_to": 111,
+            "line_from": 112,
+            "line_to": 112,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\DataImport\\Dependency\\Client\\DataImportToQueueClientInterface::receiveMessages cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/DataImport/src/Spryker/Zed/DataImport/Business/DataReader/QueueReader/QueueReader.php",
@@ -459,8 +400,8 @@
         },
         {
             "severity": "info",
-            "line_from": 87,
-            "line_to": 87,
+            "line_from": 88,
+            "line_to": 88,
             "type": "NullableReturnStatement",
             "message": "The declared return type 'string' for Spryker\\Zed\\DataImport\\Business\\Model\\DataReader\\CsvReader\\CsvReaderConfiguration::getDelimiter is not nullable, but the function returns 'null|string'",
             "file_name": "vendor/spryker/spryker/Bundles/DataImport/src/Spryker/Zed/DataImport/Business/Model/DataReader/CsvReader/CsvReaderConfiguration.php",
@@ -471,8 +412,8 @@
         },
         {
             "severity": "info",
-            "line_from": 99,
-            "line_to": 99,
+            "line_from": 100,
+            "line_to": 100,
             "type": "NullableReturnStatement",
             "message": "The declared return type 'string' for Spryker\\Zed\\DataImport\\Business\\Model\\DataReader\\CsvReader\\CsvReaderConfiguration::getEnclosure is not nullable, but the function returns 'null|string'",
             "file_name": "vendor/spryker/spryker/Bundles/DataImport/src/Spryker/Zed/DataImport/Business/Model/DataReader/CsvReader/CsvReaderConfiguration.php",
@@ -483,8 +424,8 @@
         },
         {
             "severity": "info",
-            "line_from": 111,
-            "line_to": 111,
+            "line_from": 112,
+            "line_to": 112,
             "type": "NullableReturnStatement",
             "message": "The declared return type 'string' for Spryker\\Zed\\DataImport\\Business\\Model\\DataReader\\CsvReader\\CsvReaderConfiguration::getEscape is not nullable, but the function returns 'null|string'",
             "file_name": "vendor/spryker/spryker/Bundles/DataImport/src/Spryker/Zed/DataImport/Business/Model/DataReader/CsvReader/CsvReaderConfiguration.php",
@@ -495,8 +436,8 @@
         },
         {
             "severity": "info",
-            "line_from": 123,
-            "line_to": 123,
+            "line_from": 124,
+            "line_to": 124,
             "type": "NullableReturnStatement",
             "message": "The declared return type 'int' for Spryker\\Zed\\DataImport\\Business\\Model\\DataReader\\CsvReader\\CsvReaderConfiguration::getFlags is not nullable, but the function returns 'int|null'",
             "file_name": "vendor/spryker/spryker/Bundles/DataImport/src/Spryker/Zed/DataImport/Business/Model/DataReader/CsvReader/CsvReaderConfiguration.php",
@@ -507,8 +448,8 @@
         },
         {
             "severity": "info",
-            "line_from": 135,
-            "line_to": 135,
+            "line_from": 136,
+            "line_to": 136,
             "type": "NullableReturnStatement",
             "message": "The declared return type 'bool' for Spryker\\Zed\\DataImport\\Business\\Model\\DataReader\\CsvReader\\CsvReaderConfiguration::hasHeader is not nullable, but the function returns 'bool|null'",
             "file_name": "vendor/spryker/spryker/Bundles/DataImport/src/Spryker/Zed/DataImport/Business/Model/DataReader/CsvReader/CsvReaderConfiguration.php",
@@ -543,6 +484,18 @@
         },
         {
             "severity": "info",
+            "line_from": 61,
+            "line_to": 61,
+            "type": "InvalidScalarArgument",
+            "message": "Argument 3 of Spryker\\Zed\\DataImport\\Business\\Exception\\DataSetBrokerTransactionFailedException::__construct expects int, int|string provided",
+            "file_name": "vendor/spryker/spryker/Bundles/DataImport/src/Spryker/Zed/DataImport/Business/Model/DataSet/DataSetStepBrokerElasticBatchTransactionAware.php",
+            "snippet": "            throw new DataSetBrokerTransactionFailedException($this->count, $exception->getMessage(), $exception->getCode(), $exception);",
+            "selected_text": "$exception->getCode()",
+            "error_level": 4,
+            "shortcode": 12
+        },
+        {
+            "severity": "info",
             "line_from": 59,
             "line_to": 59,
             "type": "InvalidScalarArgument",
@@ -552,6 +505,42 @@
             "selected_text": "$exception->getCode()",
             "error_level": 4,
             "shortcode": 12
+        },
+        {
+            "severity": "info",
+            "line_from": 50,
+            "line_to": 50,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method write on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/DataImport/src/Spryker/Zed/DataImport/Business/Model/DataSet/DataSetWriterCollection.php",
+            "snippet": "            $dataSetWriter->write($dataSetItemTransfer);",
+            "selected_text": "write",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 60,
+            "line_to": 60,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method flush on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/DataImport/src/Spryker/Zed/DataImport/Business/Model/DataSet/DataSetWriterCollection.php",
+            "snippet": "            $dataSetWriter->flush();",
+            "selected_text": "flush",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 37,
+            "line_to": 37,
+            "type": "RedundantCast",
+            "message": "Redundant cast to int",
+            "file_name": "vendor/spryker/spryker/Bundles/DataImport/src/Spryker/Zed/DataImport/Business/Model/Memory/PhpSystemMemory.php",
+            "snippet": "        return (int)$value;",
+            "selected_text": "(int)$value",
+            "error_level": 4,
+            "shortcode": 262
         },
         {
             "severity": "info",
@@ -845,8 +834,8 @@
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 133,
-            "line_to": 133,
+            "line_from": 138,
+            "line_to": 138,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\DataImportExtension\\Dependency\\Plugin\\DataSetWriterPluginInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/DataImport/src/Spryker/Zed/DataImport/Business/DataImportBusinessFactory.php",
@@ -854,30 +843,6 @@
             "selected_text": "array<\\Spryker\\Zed\\DataImportExtension\\Dependency\\Plugin\\DataSetWriterPluginInterface>",
             "error_level": 2,
             "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 155,
-            "line_to": 155,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\DataImport\\Business\\DataImportBusinessFactory::getEventFacade has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/DataImport/src/Spryker/Zed/DataImport/Business/DataImportBusinessFactory.php",
-            "snippet": "        return $this->getEventFacade();",
-            "selected_text": "getEventFacade",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 67,
-            "line_to": 67,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\DataImport\\Business\\Model\\Dump\\ImporterDumperInterface::dump has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/DataImport/src/Spryker/Zed/DataImport/Business/DataImportFacade.php",
-            "snippet": "        return $this->getFactory()->createImportDumper()->dump();",
-            "selected_text": "dump",
-            "error_level": 2,
-            "shortcode": 1
         },
         {
             "severity": "info",
@@ -929,18 +894,6 @@
         },
         {
             "severity": "info",
-            "line_from": 55,
-            "line_to": 55,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\DataImport\\Business\\DataImportFacadeInterface::import has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/DataImport/src/Spryker/Zed/DataImport/Communication/Console/Executor/DataImportExecutor.php",
-            "snippet": "        return $this->dataImportFacade->import($dataImporterConfigurationTransfer);",
-            "selected_text": "import",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
             "line_from": 267,
             "line_to": 267,
             "type": "DeprecatedClass",
@@ -951,5 +904,6 @@
             "error_level": 2,
             "shortcode": 98
         }
-    ]
+    ],
+    "count": 75
 }

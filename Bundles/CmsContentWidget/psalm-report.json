@@ -99,54 +99,6 @@
             "shortcode": 83
         }
     ],
-    "deprecation": [
-        {
-            "severity": "info",
-            "line_from": 64,
-            "line_to": 64,
-            "type": "DeprecatedClass",
-            "message": "Spryker\\Yves\\Kernel\\Plugin\\Pimple is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsContentWidget/src/Spryker/Yves/CmsContentWidget/CmsContentWidgetDependencyProvider.php",
-            "snippet": "        $pimplePlugin = new Pimple();",
-            "selected_text": "new Pimple()",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 31,
-            "line_to": 31,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Service\\Container\\Container::offsetSet has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsContentWidget/src/Spryker/Yves/CmsContentWidget/Plugin/CmsContentWidgetServiceProvider.php",
-            "snippet": "        $app['twig'] = $app->share(",
-            "selected_text": "$app",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 31,
-            "line_to": 31,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Service\\Container\\Container::share has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsContentWidget/src/Spryker/Yves/CmsContentWidget/Plugin/CmsContentWidgetServiceProvider.php",
-            "snippet": "        $app['twig'] = $app->share(",
-            "selected_text": "share",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 21,
-            "line_to": 21,
-            "type": "DeprecatedInterface",
-            "message": "Spryker\\Zed\\CmsCollector\\Dependency\\Plugin\\CmsPageCollectorDataExpanderPluginInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsContentWidget/src/Spryker/Zed/CmsContentWidget/Communication/Plugin/CmsPageCollector/CmsPageCollectorParameterMapExpanderPlugin.php",
-            "snippet": "class CmsPageCollectorParameterMapExpanderPlugin extends AbstractPlugin implements CmsPageCollectorDataExpanderPluginInterface",
-            "selected_text": "CmsPageCollectorParameterMapExpanderPlugin",
-            "error_level": 2,
-            "shortcode": 152
-        }
-    ]
+    "deprecation": [],
+    "count": 8
 }

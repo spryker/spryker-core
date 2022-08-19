@@ -48,30 +48,6 @@
             "selected_text": "delete",
             "error_level": 3,
             "shortcode": 83
-        },
-        {
-            "severity": "info",
-            "line_from": 17,
-            "line_to": 17,
-            "type": "MismatchingDocblockParamType",
-            "message": "Parameter $productAlternativeStorageEntityCollection has wrong type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\ProductAlternativeStorage\\Persistence\\SpyProductAlternativeStorage>', should be 'Propel\\Runtime\\Collection\\ObjectCollection'",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductAlternativeStorage/src/Spryker/Zed/ProductAlternativeStorage/Persistence/Propel/Mapper/ProductAlternativeStorageMapper.php",
-            "snippet": "     * @param \\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\ProductAlternativeStorage\\Persistence\\SpyProductAlternativeStorage[] $productAlternativeStorageEntityCollection",
-            "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\ProductAlternativeStorage\\Persistence\\SpyProductAlternativeStorage[]",
-            "error_level": 4,
-            "shortcode": 141
-        },
-        {
-            "severity": "info",
-            "line_from": 17,
-            "line_to": 17,
-            "type": "MismatchingDocblockParamType",
-            "message": "Parameter $productReplacementForStorageEntityCollection has wrong type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\ProductAlternativeStorage\\Persistence\\SpyProductReplacementForStorage>', should be 'Propel\\Runtime\\Collection\\ObjectCollection'",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductAlternativeStorage/src/Spryker/Zed/ProductAlternativeStorage/Persistence/Propel/Mapper/ProductReplacementStorageMapper.php",
-            "snippet": "     * @param \\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\ProductAlternativeStorage\\Persistence\\SpyProductReplacementForStorage[] $productReplacementForStorageEntityCollection",
-            "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\ProductAlternativeStorage\\Persistence\\SpyProductReplacementForStorage[]",
-            "error_level": 4,
-            "shortcode": 141
         }
     ],
     "deprecation": [
@@ -132,138 +108,6 @@
             "file_name": "vendor/spryker/spryker/Bundles/ProductAlternativeStorage/src/Spryker/Zed/ProductAlternativeStorage/Business/ProductAlternativePublisher/ProductReplacementPublisher.php",
             "snippet": "        $productReplacementStorageEntity->setIsSendingToQueue($this->productAlternativeStorageConfig->isSendingToQueue());",
             "selected_text": "isSendingToQueue",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 21,
-            "line_to": 21,
-            "type": "DeprecatedTrait",
-            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductAlternativeStorage/src/Spryker/Zed/ProductAlternativeStorage/Communication/Plugin/Event/Listener/ProductAbstractReplacementStorageListener.php",
-            "snippet": "    use DatabaseTransactionHandlerTrait;",
-            "selected_text": "DatabaseTransactionHandlerTrait",
-            "error_level": 2,
-            "shortcode": 171
-        },
-        {
-            "severity": "info",
-            "line_from": 21,
-            "line_to": 21,
-            "type": "DeprecatedTrait",
-            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductAlternativeStorage/src/Spryker/Zed/ProductAlternativeStorage/Communication/Plugin/Event/Listener/ProductAlternativePublishStorageListener.php",
-            "snippet": "    use DatabaseTransactionHandlerTrait;",
-            "selected_text": "DatabaseTransactionHandlerTrait",
-            "error_level": 2,
-            "shortcode": 171
-        },
-        {
-            "severity": "info",
-            "line_from": 22,
-            "line_to": 22,
-            "type": "DeprecatedTrait",
-            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductAlternativeStorage/src/Spryker/Zed/ProductAlternativeStorage/Communication/Plugin/Event/Listener/ProductAlternativeReplacementStorageListener.php",
-            "snippet": "    use DatabaseTransactionHandlerTrait;",
-            "selected_text": "DatabaseTransactionHandlerTrait",
-            "error_level": 2,
-            "shortcode": 171
-        },
-        {
-            "severity": "info",
-            "line_from": 22,
-            "line_to": 22,
-            "type": "DeprecatedTrait",
-            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductAlternativeStorage/src/Spryker/Zed/ProductAlternativeStorage/Communication/Plugin/Event/Listener/ProductAlternativeStorageListener.php",
-            "snippet": "    use DatabaseTransactionHandlerTrait;",
-            "selected_text": "DatabaseTransactionHandlerTrait",
-            "error_level": 2,
-            "shortcode": 171
-        },
-        {
-            "severity": "info",
-            "line_from": 21,
-            "line_to": 21,
-            "type": "DeprecatedTrait",
-            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductAlternativeStorage/src/Spryker/Zed/ProductAlternativeStorage/Communication/Plugin/Event/Listener/ProductConcreteReplacementStorageListener.php",
-            "snippet": "    use DatabaseTransactionHandlerTrait;",
-            "selected_text": "DatabaseTransactionHandlerTrait",
-            "error_level": 2,
-            "shortcode": 171
-        },
-        {
-            "severity": "info",
-            "line_from": 22,
-            "line_to": 22,
-            "type": "DeprecatedInterface",
-            "message": "Spryker\\Zed\\SynchronizationExtension\\Dependency\\Plugin\\SynchronizationDataRepositoryPluginInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductAlternativeStorage/src/Spryker/Zed/ProductAlternativeStorage/Communication/Plugin/Synchronization/ProductAlternativeSynchronizationDataPlugin.php",
-            "snippet": "class ProductAlternativeSynchronizationDataPlugin extends AbstractPlugin implements SynchronizationDataRepositoryPluginInterface",
-            "selected_text": "ProductAlternativeSynchronizationDataPlugin",
-            "error_level": 2,
-            "shortcode": 152
-        },
-        {
-            "severity": "info",
-            "line_from": 110,
-            "line_to": 110,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\ProductAlternativeStorage\\Persistence\\ProductAlternativeStorageRepositoryInterface::findAllProductAlternativeStorageEntities has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductAlternativeStorage/src/Spryker/Zed/ProductAlternativeStorage/Communication/Plugin/Synchronization/ProductAlternativeSynchronizationDataPlugin.php",
-            "snippet": "            return $this->getRepository()->findAllProductAlternativeStorageEntities();",
-            "selected_text": "findAllProductAlternativeStorageEntities",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 113,
-            "line_to": 113,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\ProductAlternativeStorage\\Persistence\\ProductAlternativeStorageRepositoryInterface::findProductAlternativeStorageEntitiesByIds has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductAlternativeStorage/src/Spryker/Zed/ProductAlternativeStorage/Communication/Plugin/Synchronization/ProductAlternativeSynchronizationDataPlugin.php",
-            "snippet": "        return $this->getRepository()->findProductAlternativeStorageEntitiesByIds($ids);",
-            "selected_text": "findProductAlternativeStorageEntitiesByIds",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 22,
-            "line_to": 22,
-            "type": "DeprecatedInterface",
-            "message": "Spryker\\Zed\\SynchronizationExtension\\Dependency\\Plugin\\SynchronizationDataRepositoryPluginInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductAlternativeStorage/src/Spryker/Zed/ProductAlternativeStorage/Communication/Plugin/Synchronization/ProductReplacementForSynchronizationDataPlugin.php",
-            "snippet": "class ProductReplacementForSynchronizationDataPlugin extends AbstractPlugin implements SynchronizationDataRepositoryPluginInterface",
-            "selected_text": "ProductReplacementForSynchronizationDataPlugin",
-            "error_level": 2,
-            "shortcode": 152
-        },
-        {
-            "severity": "info",
-            "line_from": 110,
-            "line_to": 110,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\ProductAlternativeStorage\\Persistence\\ProductAlternativeStorageRepositoryInterface::findAllProductReplacementForStorageEntities has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductAlternativeStorage/src/Spryker/Zed/ProductAlternativeStorage/Communication/Plugin/Synchronization/ProductReplacementForSynchronizationDataPlugin.php",
-            "snippet": "            return $this->getRepository()->findAllProductReplacementForStorageEntities();",
-            "selected_text": "findAllProductReplacementForStorageEntities",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 113,
-            "line_to": 113,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\ProductAlternativeStorage\\Persistence\\ProductAlternativeStorageRepositoryInterface::findProductReplacementForStorageEntitiesByIds has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductAlternativeStorage/src/Spryker/Zed/ProductAlternativeStorage/Communication/Plugin/Synchronization/ProductReplacementForSynchronizationDataPlugin.php",
-            "snippet": "        return $this->getRepository()->findProductReplacementForStorageEntitiesByIds($ids);",
-            "selected_text": "findProductReplacementForStorageEntitiesByIds",
             "error_level": 2,
             "shortcode": 1
         },
@@ -338,30 +182,7 @@
             "selected_text": "new ProductReplacementForStorageMapper()",
             "error_level": 2,
             "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 15,
-            "line_to": 15,
-            "type": "DeprecatedInterface",
-            "message": "Spryker\\Zed\\ProductAlternativeStorage\\Communication\\ProductAlternativeStorageMapper\\ProductAlternativeStorageMapperInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductAlternativeStorage/src/Spryker/Zed/ProductAlternativeStorage/Communication/ProductAlternativeStorageMapper/ProductAlternativeStorageMapper.php",
-            "snippet": "class ProductAlternativeStorageMapper implements ProductAlternativeStorageMapperInterface",
-            "selected_text": "ProductAlternativeStorageMapper",
-            "error_level": 2,
-            "shortcode": 152
-        },
-        {
-            "severity": "info",
-            "line_from": 15,
-            "line_to": 15,
-            "type": "DeprecatedInterface",
-            "message": "Spryker\\Zed\\ProductAlternativeStorage\\Communication\\ProductAlternativeStorageMapper\\ProductReplacementForStorageMapperInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductAlternativeStorage/src/Spryker/Zed/ProductAlternativeStorage/Communication/ProductAlternativeStorageMapper/ProductReplacementForStorageMapper.php",
-            "snippet": "class ProductReplacementForStorageMapper implements ProductReplacementForStorageMapperInterface",
-            "selected_text": "ProductReplacementForStorageMapper",
-            "error_level": 2,
-            "shortcode": 152
         }
-    ]
+    ],
+    "count": 15
 }

@@ -72,6 +72,18 @@
             "selected_text": "$localeCmsPageDataTransfer->getName()",
             "error_level": 3,
             "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 98,
+            "line_to": 98,
+            "type": "ArgumentTypeCoercion",
+            "message": "Argument 1 of Orm\\Zed\\Cms\\Persistence\\SpyCmsVersionQuery::where expects array<array-key, mixed>|literal-string, parent type string provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsCollector/src/Spryker/Zed/CmsCollector/Persistence/Collector/AbstractCmsVersionPageCollector.php",
+            "snippet": "            ->where(sprintf('%s = %s', SpyCmsVersionTableMap::COL_FK_CMS_PAGE, SpyCmsPageTableMap::COL_ID_CMS_PAGE));",
+            "selected_text": "sprintf('%s = %s', SpyCmsVersionTableMap::COL_FK_CMS_PAGE, SpyCmsPageTableMap::COL_ID_CMS_PAGE)",
+            "error_level": 3,
+            "shortcode": 193
         }
     ],
     "deprecation": [
@@ -197,8 +209,8 @@
         },
         {
             "severity": "info",
-            "line_from": 31,
-            "line_to": 31,
+            "line_from": 32,
+            "line_to": 32,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/CmsCollector/src/Spryker/Zed/CmsCollector/Communication/Plugin/CmsVersionPageCollectorSearchPlugin.php",
@@ -209,8 +221,8 @@
         },
         {
             "severity": "info",
-            "line_from": 31,
-            "line_to": 31,
+            "line_from": 32,
+            "line_to": 32,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\Collector\\Business\\Model\\BatchResultInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/CmsCollector/src/Spryker/Zed/CmsCollector/Communication/Plugin/CmsVersionPageCollectorStoragePlugin.php",
@@ -279,5 +291,6 @@
             "error_level": 2,
             "shortcode": 98
         }
-    ]
+    ],
+    "count": 24
 }

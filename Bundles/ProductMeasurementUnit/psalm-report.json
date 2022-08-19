@@ -774,66 +774,6 @@
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 22,
-            "line_to": 22,
-            "type": "DeprecatedInterface",
-            "message": "Spryker\\Zed\\ProductMeasurementUnit\\Business\\Model\\Order\\OrderExpanderInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductMeasurementUnit/src/Spryker/Zed/ProductMeasurementUnit/Business/Model/Order/OrderExpander.php",
-            "snippet": "class OrderExpander implements OrderExpanderInterface",
-            "selected_text": "OrderExpander",
-            "error_level": 2,
-            "shortcode": 152
-        },
-        {
-            "severity": "info",
-            "line_from": 133,
-            "line_to": 133,
-            "type": "DeprecatedClass",
-            "message": "Class Spryker\\Zed\\ProductMeasurementUnit\\Business\\Model\\Order\\OrderExpanderInterface is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductMeasurementUnit/src/Spryker/Zed/ProductMeasurementUnit/Business/ProductMeasurementUnitBusinessFactory.php",
-            "snippet": "     * @return \\Spryker\\Zed\\ProductMeasurementUnit\\Business\\Model\\Order\\OrderExpanderInterface",
-            "selected_text": "\\Spryker\\Zed\\ProductMeasurementUnit\\Business\\Model\\Order\\OrderExpanderInterface",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 135,
-            "line_to": 135,
-            "type": "DeprecatedClass",
-            "message": "Class Spryker\\Zed\\ProductMeasurementUnit\\Business\\Model\\Order\\OrderExpanderInterface is marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductMeasurementUnit/src/Spryker/Zed/ProductMeasurementUnit/Business/ProductMeasurementUnitBusinessFactory.php",
-            "snippet": "    public function createOrderExpander(): OrderExpanderInterface",
-            "selected_text": "OrderExpanderInterface",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 137,
-            "line_to": 140,
-            "type": "DeprecatedClass",
-            "message": "Spryker\\Zed\\ProductMeasurementUnit\\Business\\Model\\Order\\OrderExpander is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductMeasurementUnit/src/Spryker/Zed/ProductMeasurementUnit/Business/ProductMeasurementUnitBusinessFactory.php",
-            "snippet": "        return new OrderExpander(\n            $this->getRepository(),\n            $this->createProductMeasurementUnitTranslationExpander(),\n        );",
-            "selected_text": "new OrderExpander(\n            $this->getRepository(),\n            $this->createProductMeasurementUnitTranslationExpander(),\n        )",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 207,
-            "line_to": 207,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\ProductMeasurementUnit\\Business\\ProductMeasurementUnitBusinessFactory::createOrderExpander has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductMeasurementUnit/src/Spryker/Zed/ProductMeasurementUnit/Business/ProductMeasurementUnitFacade.php",
-            "snippet": "            ->createOrderExpander()",
-            "selected_text": "createOrderExpander",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
             "line_from": 19,
             "line_to": 19,
             "type": "DeprecatedInterface",
@@ -879,30 +819,7 @@
             "selected_text": "QuantitySalesUnitValuePostSavePlugin",
             "error_level": 2,
             "shortcode": 152
-        },
-        {
-            "severity": "info",
-            "line_from": 21,
-            "line_to": 21,
-            "type": "DeprecatedInterface",
-            "message": "Spryker\\Zed\\Sales\\Dependency\\Plugin\\HydrateOrderPluginInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductMeasurementUnit/src/Spryker/Zed/ProductMeasurementUnit/Communication/Plugin/Sales/QuantitySalesUnitHydrateOrderPlugin.php",
-            "snippet": "class QuantitySalesUnitHydrateOrderPlugin extends AbstractPlugin implements HydrateOrderPluginInterface",
-            "selected_text": "QuantitySalesUnitHydrateOrderPlugin",
-            "error_level": 2,
-            "shortcode": 152
-        },
-        {
-            "severity": "info",
-            "line_from": 34,
-            "line_to": 34,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\ProductMeasurementUnit\\Business\\ProductMeasurementUnitFacadeInterface::expandOrderWithQuantitySalesUnit has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductMeasurementUnit/src/Spryker/Zed/ProductMeasurementUnit/Communication/Plugin/Sales/QuantitySalesUnitHydrateOrderPlugin.php",
-            "snippet": "        return $this->getFacade()->expandOrderWithQuantitySalesUnit($orderTransfer);",
-            "selected_text": "expandOrderWithQuantitySalesUnit",
-            "error_level": 2,
-            "shortcode": 1
         }
-    ]
+    ],
+    "count": 68
 }

@@ -390,18 +390,6 @@
         },
         {
             "severity": "info",
-            "line_from": 297,
-            "line_to": 297,
-            "type": "DeprecatedMethod",
-            "message": "The method Generated\\Shared\\Transfer\\ItemTransfer::getForcedUnitGrossPrice has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/PriceCartConnector/src/Spryker/Zed/PriceCartConnector/Business/Manager/PriceManager.php",
-            "snippet": "        if ($itemTransfer->getForcedUnitGrossPrice() && $itemTransfer->getUnitGrossPrice() !== null) {",
-            "selected_text": "getForcedUnitGrossPrice",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
             "line_from": 19,
             "line_to": 19,
             "type": "DeprecatedInterface",
@@ -436,5 +424,6 @@
             "error_level": 2,
             "shortcode": 1
         }
-    ]
+    ],
+    "count": 35
 }

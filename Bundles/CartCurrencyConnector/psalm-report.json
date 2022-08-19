@@ -38,18 +38,6 @@
             "shortcode": 139
         }
     ],
-    "deprecation": [
-        {
-            "severity": "info",
-            "line_from": 18,
-            "line_to": 18,
-            "type": "DeprecatedInterface",
-            "message": "Spryker\\Yves\\Currency\\Dependency\\CurrencyPostChangePluginInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/CartCurrencyConnector/src/Spryker/Yves/CartCurrencyConnector/CurrencyChange/RebuildCartOnCurrencyChangePlugin.php",
-            "snippet": "class RebuildCartOnCurrencyChangePlugin extends AbstractPlugin implements CurrencyPostChangePluginInterface",
-            "selected_text": "RebuildCartOnCurrencyChangePlugin",
-            "error_level": 2,
-            "shortcode": 152
-        }
-    ]
+    "deprecation": [],
+    "count": 3
 }

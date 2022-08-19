@@ -2,6 +2,18 @@
     "error": [
         {
             "severity": "error",
+            "line_from": 215,
+            "line_to": 215,
+            "type": "NullArgument",
+            "message": "Argument 1 of ArrayObject::offsetSet cannot be null, null value provided to parameter with type int",
+            "file_name": "vendor/spryker/spryker/Bundles/SharedCart/src/Spryker/Client/SharedCart/CartSharer/CartSharer.php",
+            "snippet": "            $filteredShareDetails[] = $shareDetail;",
+            "selected_text": "$filteredShareDetails",
+            "error_level": 6,
+            "shortcode": 57
+        },
+        {
+            "severity": "error",
             "line_from": 95,
             "line_to": 95,
             "type": "InvalidPropertyAssignmentValue",
@@ -53,7 +65,7 @@
             "line_from": 190,
             "line_to": 190,
             "type": "InvalidReturnStatement",
-            "message": "The inferred type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed' does not match the declared return type 'array<array-key, Generated\\Shared\\Transfer\\SpyCompanyUserEntityTransfer>' for Spryker\\Zed\\SharedCart\\Persistence\\SharedCartRepository::findShareInformationCustomer",
+            "message": "The inferred type 'Propel\\Runtime\\Collection\\Collection<Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed' does not match the declared return type 'array<array-key, Generated\\Shared\\Transfer\\SpyCompanyUserEntityTransfer>' for Spryker\\Zed\\SharedCart\\Persistence\\SharedCartRepository::findShareInformationCustomer",
             "file_name": "vendor/spryker/spryker/Bundles/SharedCart/src/Spryker/Zed/SharedCart/Persistence/SharedCartRepository.php",
             "snippet": "        return $this->buildQueryFromCriteria($companyUserQuery)->find();",
             "selected_text": "$this->buildQueryFromCriteria($companyUserQuery)->find()",
@@ -208,8 +220,8 @@
         },
         {
             "severity": "info",
-            "line_from": 269,
-            "line_to": 269,
+            "line_from": 270,
+            "line_to": 270,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Client\\SharedCart\\CartSharer\\CartSharer::findQuotePermissionGroup cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/SharedCart/src/Spryker/Client/SharedCart/CartSharer/CartSharer.php",
@@ -1735,7 +1747,7 @@
             "line_from": 218,
             "line_to": 218,
             "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of Spryker\\Zed\\SharedCart\\Persistence\\SharedCartRepository::mapQuotePermissionGroupList expects array<array-key, Generated\\Shared\\Transfer\\SpyQuotePermissionGroupEntityTransfer>, possibly different type Propel\\Runtime\\Collection\\ObjectCollection|mixed|non-empty-array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface> provided",
+            "message": "Argument 1 of Spryker\\Zed\\SharedCart\\Persistence\\SharedCartRepository::mapQuotePermissionGroupList expects array<array-key, Generated\\Shared\\Transfer\\SpyQuotePermissionGroupEntityTransfer>, possibly different type Propel\\Runtime\\Collection\\Collection<Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed provided",
             "file_name": "vendor/spryker/spryker/Bundles/SharedCart/src/Spryker/Zed/SharedCart/Persistence/SharedCartRepository.php",
             "snippet": "        return $this->mapQuotePermissionGroupList($quotePermissionGroupEntityTransferList);",
             "selected_text": "$quotePermissionGroupEntityTransferList",
@@ -1753,13 +1765,61 @@
             "selected_text": "getIdCustomer",
             "error_level": 3,
             "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 398,
+            "line_to": 398,
+            "type": "MoreSpecificReturnType",
+            "message": "The declared return type 'Propel\\Runtime\\Collection\\ObjectCollection' for Spryker\\Zed\\SharedCart\\Persistence\\SharedCartRepository::getQuoteCompanyUserEntities is more specific than the inferred return type 'Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\CompanyBusinessUnit\\Persistence\\SpyCompanyBusinessUnit>|Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\CompanyRole\\Persistence\\SpyCompanyRoleToCompanyUser>|Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\CompanyUserInvitation\\Persistence\\SpyCompanyUserInvitation>|Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\Company\\Persistence\\SpyCompany>|Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\Customer\\Persistence\\SpyCustomer>|Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\QuoteApproval\\Persistence\\SpyQuoteApproval>|Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\QuoteRequest\\Persistence\\SpyQuoteRequest>|Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\SharedCart\\Persistence\\SpyQuoteCompanyUser>|Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\ShoppingList\\Persistence\\SpyShoppingListCompanyBusinessUnitBlacklist>|Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\ShoppingList\\Persistence\\SpyShoppingListCompanyUser>'",
+            "file_name": "vendor/spryker/spryker/Bundles/SharedCart/src/Spryker/Zed/SharedCart/Persistence/SharedCartRepository.php",
+            "snippet": "     * @return \\Propel\\Runtime\\Collection\\ObjectCollection",
+            "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection",
+            "error_level": 3,
+            "shortcode": 70
+        },
+        {
+            "severity": "info",
+            "line_from": 405,
+            "line_to": 411,
+            "type": "LessSpecificReturnStatement",
+            "message": "The type 'Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\CompanyBusinessUnit\\Persistence\\SpyCompanyBusinessUnit>|Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\CompanyRole\\Persistence\\SpyCompanyRoleToCompanyUser>|Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\CompanyUserInvitation\\Persistence\\SpyCompanyUserInvitation>|Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\Company\\Persistence\\SpyCompany>|Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\Customer\\Persistence\\SpyCustomer>|Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\QuoteApproval\\Persistence\\SpyQuoteApproval>|Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\QuoteRequest\\Persistence\\SpyQuoteRequest>|Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\SharedCart\\Persistence\\SpyQuoteCompanyUser>|Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\ShoppingList\\Persistence\\SpyShoppingListCompanyBusinessUnitBlacklist>|Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\ShoppingList\\Persistence\\SpyShoppingListCompanyUser>' is more general than the declared return type 'Propel\\Runtime\\Collection\\ObjectCollection' for Spryker\\Zed\\SharedCart\\Persistence\\SharedCartRepository::getQuoteCompanyUserEntities",
+            "file_name": "vendor/spryker/spryker/Bundles/SharedCart/src/Spryker/Zed/SharedCart/Persistence/SharedCartRepository.php",
+            "snippet": "        return $quoteCompanyUserQuery\n            ->filterByFkQuote_In($quoteIds)\n            ->joinWithSpyCompanyUser()\n            ->useSpyCompanyUserQuery(null, Criteria::LEFT_JOIN)\n            ->joinWithCustomer()\n            ->endUse()\n            ->find();",
+            "selected_text": "$quoteCompanyUserQuery\n            ->filterByFkQuote_In($quoteIds)\n            ->joinWithSpyCompanyUser()\n            ->useSpyCompanyUserQuery(null, Criteria::LEFT_JOIN)\n            ->joinWithCustomer()\n            ->endUse()\n            ->find()",
+            "error_level": 3,
+            "shortcode": 129
+        },
+        {
+            "severity": "info",
+            "line_from": 491,
+            "line_to": 491,
+            "type": "ArgumentTypeCoercion",
+            "message": "Argument 1 of Spryker\\Zed\\SharedCart\\Persistence\\Propel\\Mapper\\QuoteShareDetailMapperInterface::mapShareDetailCollection expects Propel\\Runtime\\Collection\\ObjectCollection<Orm\\Zed\\SharedCart\\Persistence\\SpyQuoteCompanyUser>, parent type Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\SharedCart\\Persistence\\SpyQuoteCompanyUser> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/SharedCart/src/Spryker/Zed/SharedCart/Persistence/SharedCartRepository.php",
+            "snippet": "            ->mapShareDetailCollection($quoteCompanyUserEntities, $this->findQuotePermissionGroupList(new QuotePermissionGroupCriteriaFilterTransfer()));",
+            "selected_text": "$quoteCompanyUserEntities",
+            "error_level": 3,
+            "shortcode": 193
+        },
+        {
+            "severity": "info",
+            "line_from": 585,
+            "line_to": 585,
+            "type": "ArgumentTypeCoercion",
+            "message": "Argument 1 of Spryker\\Zed\\SharedCart\\Persistence\\Propel\\Mapper\\CustomerMapper::mapCustomerEntityCollectionToCustomerTransferCollection expects Propel\\Runtime\\Collection\\ObjectCollection<Orm\\Zed\\Customer\\Persistence\\SpyCustomer>, parent type Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\CompanyBusinessUnit\\Persistence\\SpyCompanyBusinessUnit>|Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\CompanyRole\\Persistence\\SpyCompanyRoleToCompanyUser>|Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\CompanyUserInvitation\\Persistence\\SpyCompanyUserInvitation>|Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\Company\\Persistence\\SpyCompany>|Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\Customer\\Persistence\\SpyCustomer>|Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\QuoteApproval\\Persistence\\SpyQuoteApproval>|Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\QuoteRequest\\Persistence\\SpyQuoteRequest>|Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\SharedCart\\Persistence\\SpyQuoteCompanyUser>|Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\SharedCart\\Persistence\\SpyQuotePermissionGroupToPermission>|Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\ShoppingList\\Persistence\\SpyShoppingListCompanyBusinessUnitBlacklist>|Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\ShoppingList\\Persistence\\SpyShoppingListCompanyUser>|Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\Store\\Persistence\\SpyStore> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/SharedCart/src/Spryker/Zed/SharedCart/Persistence/SharedCartRepository.php",
+            "snippet": "                $customerEntityCollection,",
+            "selected_text": "$customerEntityCollection",
+            "error_level": 3,
+            "shortcode": 193
         }
     ],
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 269,
-            "line_to": 269,
+            "line_from": 270,
+            "line_to": 270,
             "type": "DeprecatedMethod",
             "message": "The method Generated\\Shared\\Transfer\\ShareCartRequestTransfer::getIdQuotePermissionGroup has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/SharedCart/src/Spryker/Client/SharedCart/CartSharer/CartSharer.php",
@@ -1767,18 +1827,7 @@
             "selected_text": "getIdQuotePermissionGroup",
             "error_level": 2,
             "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 54,
-            "line_to": 54,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Client\\SharedCart\\CartSharer\\CartSharerInterface::addShareCart has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/SharedCart/src/Spryker/Client/SharedCart/SharedCartClient.php",
-            "snippet": "        return $this->getFactory()->createCartSharer()->addShareCart($shareCartRequestTransfer);",
-            "selected_text": "addShareCart",
-            "error_level": 2,
-            "shortcode": 1
         }
-    ]
+    ],
+    "count": 152
 }

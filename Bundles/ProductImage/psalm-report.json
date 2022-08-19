@@ -306,30 +306,6 @@
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 22,
-            "line_to": 22,
-            "type": "DeprecatedInterface",
-            "message": "Spryker\\Zed\\Product\\Dependency\\Plugin\\ProductAbstractPluginCreateInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductImage/src/Spryker/Zed/ProductImage/Communication/Plugin/ProductAbstractAfterCreatePlugin.php",
-            "snippet": "class ProductAbstractAfterCreatePlugin extends AbstractPlugin implements ProductAbstractPluginCreateInterface",
-            "selected_text": "ProductAbstractAfterCreatePlugin",
-            "error_level": 2,
-            "shortcode": 152
-        },
-        {
-            "severity": "info",
-            "line_from": 22,
-            "line_to": 22,
-            "type": "DeprecatedInterface",
-            "message": "Spryker\\Zed\\Product\\Dependency\\Plugin\\ProductAbstractPluginReadInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductImage/src/Spryker/Zed/ProductImage/Communication/Plugin/ProductAbstractReadPlugin.php",
-            "snippet": "class ProductAbstractReadPlugin extends AbstractPlugin implements ProductAbstractPluginReadInterface",
-            "selected_text": "ProductAbstractReadPlugin",
-            "error_level": 2,
-            "shortcode": 152
-        },
-        {
-            "severity": "info",
             "line_from": 20,
             "line_to": 20,
             "type": "DeprecatedInterface",
@@ -340,5 +316,6 @@
             "error_level": 2,
             "shortcode": 152
         }
-    ]
+    ],
+    "count": 26
 }

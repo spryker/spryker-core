@@ -183,18 +183,6 @@
             "shortcode": 113
         }
     ],
-    "deprecation": [
-        {
-            "severity": "info",
-            "line_from": 20,
-            "line_to": 20,
-            "type": "DeprecatedInterface",
-            "message": "Spryker\\Zed\\ProductListGuiExtension\\Dependency\\Plugin\\ProductListOwnerTypeFormExpanderPluginInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipProductListGui/src/Spryker/Zed/MerchantRelationshipProductListGui/Communication/Plugin/ProductListGuiExtension/MerchantRelationshipProductListOwnerTypeFormExpanderPlugin.php",
-            "snippet": "class MerchantRelationshipProductListOwnerTypeFormExpanderPlugin extends AbstractPlugin implements ProductListOwnerTypeFormExpanderPluginInterface",
-            "selected_text": "MerchantRelationshipProductListOwnerTypeFormExpanderPlugin",
-            "error_level": 2,
-            "shortcode": 152
-        }
-    ]
+    "deprecation": [],
+    "count": 15
 }

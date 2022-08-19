@@ -137,18 +137,6 @@
         },
         {
             "severity": "info",
-            "line_from": 143,
-            "line_to": 143,
-            "type": "DeprecatedConstant",
-            "message": "Constant Spryker\\Shared\\SessionRedis\\SessionRedisConstants::YVES_SESSION_REDIS_PROTOCOL is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/SessionRedis/src/Spryker/Yves/SessionRedis/SessionRedisConfig.php",
-            "snippet": "            $this->get(SessionRedisConstants::YVES_SESSION_REDIS_PROTOCOL);",
-            "selected_text": "SessionRedisConstants::YVES_SESSION_REDIS_PROTOCOL",
-            "error_level": 2,
-            "shortcode": 170
-        },
-        {
-            "severity": "info",
             "line_from": 162,
             "line_to": 162,
             "type": "DeprecatedMethod",
@@ -161,18 +149,6 @@
         },
         {
             "severity": "info",
-            "line_from": 177,
-            "line_to": 177,
-            "type": "DeprecatedConstant",
-            "message": "Constant Spryker\\Shared\\SessionRedis\\SessionRedisConstants::ZED_SESSION_REDIS_PROTOCOL is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/SessionRedis/src/Spryker/Zed/SessionRedis/SessionRedisConfig.php",
-            "snippet": "            $this->get(SessionRedisConstants::ZED_SESSION_REDIS_PROTOCOL);",
-            "selected_text": "SessionRedisConstants::ZED_SESSION_REDIS_PROTOCOL",
-            "error_level": 2,
-            "shortcode": 170
-        },
-        {
-            "severity": "info",
             "line_from": 202,
             "line_to": 202,
             "type": "DeprecatedMethod",
@@ -182,18 +158,7 @@
             "selected_text": "getYvesScheme",
             "error_level": 2,
             "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 217,
-            "line_to": 217,
-            "type": "DeprecatedConstant",
-            "message": "Constant Spryker\\Shared\\SessionRedis\\SessionRedisConstants::YVES_SESSION_REDIS_PROTOCOL is deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/SessionRedis/src/Spryker/Zed/SessionRedis/SessionRedisConfig.php",
-            "snippet": "            $this->get(SessionRedisConstants::YVES_SESSION_REDIS_PROTOCOL);",
-            "selected_text": "SessionRedisConstants::YVES_SESSION_REDIS_PROTOCOL",
-            "error_level": 2,
-            "shortcode": 170
         }
-    ]
+    ],
+    "count": 13
 }

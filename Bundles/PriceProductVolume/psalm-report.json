@@ -135,8 +135,8 @@
         },
         {
             "severity": "info",
-            "line_from": 101,
-            "line_to": 101,
+            "line_from": 100,
+            "line_to": 100,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getPriceData on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/PriceProductVolume/src/Spryker/Zed/PriceProductVolume/Business/VolumePriceExtractor/VolumePriceExtractor.php",
@@ -147,8 +147,8 @@
         },
         {
             "severity": "info",
-            "line_from": 106,
-            "line_to": 106,
+            "line_from": 105,
+            "line_to": 105,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\PriceProductVolume\\Dependency\\Service\\PriceProductVolumeToUtilEncodingServiceInterface::decodeJson cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/PriceProductVolume/src/Spryker/Zed/PriceProductVolume/Business/VolumePriceExtractor/VolumePriceExtractor.php",
@@ -159,8 +159,8 @@
         },
         {
             "severity": "info",
-            "line_from": 106,
-            "line_to": 106,
+            "line_from": 105,
+            "line_to": 105,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getPriceData on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/PriceProductVolume/src/Spryker/Zed/PriceProductVolume/Business/VolumePriceExtractor/VolumePriceExtractor.php",
@@ -171,8 +171,8 @@
         },
         {
             "severity": "info",
-            "line_from": 135,
-            "line_to": 135,
+            "line_from": 134,
+            "line_to": 134,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/PriceProductVolume/src/Spryker/Zed/PriceProductVolume/Business/VolumePriceExtractor/VolumePriceExtractor.php",
@@ -183,8 +183,8 @@
         },
         {
             "severity": "info",
-            "line_from": 141,
-            "line_to": 141,
+            "line_from": 140,
+            "line_to": 140,
             "type": "PossiblyNullReference",
             "message": "Cannot call method setGrossAmount on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/PriceProductVolume/src/Spryker/Zed/PriceProductVolume/Business/VolumePriceExtractor/VolumePriceExtractor.php",
@@ -195,8 +195,8 @@
         },
         {
             "severity": "info",
-            "line_from": 159,
-            "line_to": 159,
+            "line_from": 158,
+            "line_to": 158,
             "type": "PossiblyNullReference",
             "message": "Cannot call method setPriceData on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/PriceProductVolume/src/Spryker/Zed/PriceProductVolume/Business/VolumePriceExtractor/VolumePriceExtractor.php",
@@ -207,18 +207,6 @@
         }
     ],
     "deprecation": [
-        {
-            "severity": "info",
-            "line_from": 35,
-            "line_to": 35,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Client\\ProductStorage\\ProductStorageClientInterface::getProductConcreteStorageData has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/PriceProductVolume/src/Spryker/Client/PriceProductVolume/Dependency/Client/PriceProductVolumeToProductStorageClientBridge.php",
-            "snippet": "        return $this->productStorageClient->getProductConcreteStorageData($idProductConcrete, $localeName);",
-            "selected_text": "getProductConcreteStorageData",
-            "error_level": 2,
-            "shortcode": 1
-        },
         {
             "severity": "info",
             "line_from": 179,
@@ -233,8 +221,8 @@
         },
         {
             "severity": "info",
-            "line_from": 144,
-            "line_to": 144,
+            "line_from": 143,
+            "line_to": 143,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Zed\\PriceProductVolume\\Business\\VolumePriceExtractor\\VolumePriceExtractor::setPriceData has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/PriceProductVolume/src/Spryker/Zed/PriceProductVolume/Business/VolumePriceExtractor/VolumePriceExtractor.php",
@@ -243,5 +231,6 @@
             "error_level": 2,
             "shortcode": 1
         }
-    ]
+    ],
+    "count": 19
 }

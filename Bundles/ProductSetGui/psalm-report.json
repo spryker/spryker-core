@@ -294,18 +294,6 @@
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 66,
-            "line_to": 66,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\ProductSetGui\\Communication\\ProductSetGuiCommunicationFactory::createCreateProductSetFormType has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductSetGui/src/Spryker/Zed/ProductSetGui/Communication/ProductSetGuiCommunicationFactory.php",
-            "snippet": "        return $this->getFormFactory()->create($this->createCreateProductSetFormType(), $data, $options);",
-            "selected_text": "createCreateProductSetFormType",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
             "line_from": 93,
             "line_to": 93,
             "type": "DeprecatedMethod",
@@ -313,18 +301,6 @@
             "file_name": "vendor/spryker/spryker/Bundles/ProductSetGui/src/Spryker/Zed/ProductSetGui/Communication/ProductSetGuiCommunicationFactory.php",
             "snippet": "        return $this->createCreateProductSetForm($data, $options);",
             "selected_text": "createCreateProductSetForm",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 106,
-            "line_to": 106,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\ProductSetGui\\Communication\\ProductSetGuiCommunicationFactory::createUpdateProductSetFormType has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductSetGui/src/Spryker/Zed/ProductSetGui/Communication/ProductSetGuiCommunicationFactory.php",
-            "snippet": "        return $this->getFormFactory()->create($this->createUpdateProductSetFormType(), $data, $options);",
-            "selected_text": "createUpdateProductSetFormType",
             "error_level": 2,
             "shortcode": 1
         },
@@ -342,18 +318,6 @@
         },
         {
             "severity": "info",
-            "line_from": 235,
-            "line_to": 235,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\ProductSetGui\\Communication\\ProductSetGuiCommunicationFactory::createReorderProductSetsFormType has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductSetGui/src/Spryker/Zed/ProductSetGui/Communication/ProductSetGuiCommunicationFactory.php",
-            "snippet": "        return $this->getFormFactory()->create($this->createReorderProductSetsFormType(), $data, $options);",
-            "selected_text": "createReorderProductSetsFormType",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
             "line_from": 246,
             "line_to": 246,
             "type": "DeprecatedMethod",
@@ -364,5 +328,6 @@
             "error_level": 2,
             "shortcode": 1
         }
-    ]
+    ],
+    "count": 27
 }

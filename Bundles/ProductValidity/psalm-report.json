@@ -16,8 +16,8 @@
         },
         {
             "severity": "info",
-            "line_from": 18,
-            "line_to": 18,
+            "line_from": 19,
+            "line_to": 19,
             "type": "DeprecatedInterface",
             "message": "Spryker\\Zed\\Product\\Dependency\\Plugin\\ProductConcretePluginCreateInterface is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductValidity/src/Spryker/Zed/ProductValidity/Communication/Plugin/ProductValidityCreatePlugin.php",
@@ -26,5 +26,6 @@
             "error_level": 2,
             "shortcode": 152
         }
-    ]
+    ],
+    "count": 2
 }

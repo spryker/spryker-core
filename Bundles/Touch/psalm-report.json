@@ -25,18 +25,7 @@
             "selected_text": "getPropelBatchIterator",
             "error_level": 2,
             "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 51,
-            "line_to": 51,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\Touch\\Business\\TouchFacadeInterface::removeTouchEntriesMarkedAsDeleted has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Touch/src/Spryker/Zed/Touch/Communication/Console/TouchCleanUpConsole.php",
-            "snippet": "        $deleteCount = $this->getFacade()->removeTouchEntriesMarkedAsDeleted();",
-            "selected_text": "removeTouchEntriesMarkedAsDeleted",
-            "error_level": 2,
-            "shortcode": 1
         }
-    ]
+    ],
+    "count": 2
 }

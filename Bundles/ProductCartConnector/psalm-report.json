@@ -351,18 +351,7 @@
             "selected_text": "RemoveInactiveItemsPreReloadPlugin",
             "error_level": 2,
             "shortcode": 152
-        },
-        {
-            "severity": "info",
-            "line_from": 49,
-            "line_to": 49,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\Product\\Business\\ProductFacadeInterface::getRawProductConcreteBySku has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductCartConnector/src/Spryker/Zed/ProductCartConnector/Dependency/Facade/ProductCartConnectorToProductBridge.php",
-            "snippet": "        return $this->productFacade->getRawProductConcreteBySku($productConcreteSku);",
-            "selected_text": "getRawProductConcreteBySku",
-            "error_level": 2,
-            "shortcode": 1
         }
-    ]
+    ],
+    "count": 29
 }

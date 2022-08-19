@@ -40,30 +40,6 @@
         },
         {
             "severity": "info",
-            "line_from": 88,
-            "line_to": 88,
-            "type": "InvalidScalarArgument",
-            "message": "Argument 1 of Spryker\\Zed\\CmsGui\\Communication\\Autocomplete\\AutocompleteDataProviderInterface::getAutocompleteDataForTranslationKey expects string, scalar provided",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsGui/src/Spryker/Zed/CmsGui/Communication/Controller/CreateGlossaryController.php",
-            "snippet": "                ->getAutocompleteDataForTranslationKey($key);",
-            "selected_text": "$key",
-            "error_level": 4,
-            "shortcode": 12
-        },
-        {
-            "severity": "info",
-            "line_from": 92,
-            "line_to": 92,
-            "type": "InvalidScalarArgument",
-            "message": "Argument 1 of Spryker\\Zed\\CmsGui\\Communication\\Autocomplete\\AutocompleteDataProviderInterface::getAutocompleteDataForTranslationValue expects string, non-empty-scalar provided",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsGui/src/Spryker/Zed/CmsGui/Communication/Controller/CreateGlossaryController.php",
-            "snippet": "                ->getAutocompleteDataForTranslationValue($value);",
-            "selected_text": "$value",
-            "error_level": 4,
-            "shortcode": 12
-        },
-        {
-            "severity": "info",
             "line_from": 106,
             "line_to": 106,
             "type": "PossiblyInvalidMethodCall",
@@ -424,8 +400,8 @@
         },
         {
             "severity": "info",
-            "line_from": 594,
-            "line_to": 594,
+            "line_from": 595,
+            "line_to": 595,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getStoreRelation on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/CmsGui/src/Spryker/Zed/CmsGui/Communication/Table/CmsPageTable.php",
@@ -436,8 +412,8 @@
         },
         {
             "severity": "info",
-            "line_from": 613,
-            "line_to": 613,
+            "line_from": 614,
+            "line_to": 614,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CmsGui/src/Spryker/Zed/CmsGui/Communication/Table/CmsPageTable.php",
@@ -474,32 +450,8 @@
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 150,
-            "line_to": 150,
-            "type": "DeprecatedClass",
-            "message": "Spryker\\Zed\\Kernel\\Communication\\Plugin\\Pimple is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsGui/src/Spryker/Zed/CmsGui/CmsGuiDependencyProvider.php",
-            "snippet": "        $pimplePlugin = new Pimple();",
-            "selected_text": "new Pimple()",
-            "error_level": 2,
-            "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 152,
-            "line_to": 152,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Service\\Container\\Container::offsetGet has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsGui/src/Spryker/Zed/CmsGui/CmsGuiDependencyProvider.php",
-            "snippet": "        return $pimplePlugin->getApplication()['twig'];",
-            "selected_text": "$pimplePlugin->getApplication()",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 125,
-            "line_to": 125,
+            "line_from": 127,
+            "line_to": 127,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Zed\\CmsGui\\Communication\\CmsGuiCommunicationFactory::createCmsGlossaryForm has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/CmsGui/src/Spryker/Zed/CmsGui/Communication/Controller/CreateGlossaryController.php",
@@ -507,30 +459,7 @@
             "selected_text": "createCmsGlossaryForm",
             "error_level": 2,
             "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 56,
-            "line_to": 56,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\CmsGui\\Communication\\CmsGuiCommunicationFactory::createCmsPageForm has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsGui/src/Spryker/Zed/CmsGui/Communication/Controller/CreatePageController.php",
-            "snippet": "            ->createCmsPageForm($cmsPageFormTypeDataProvider)",
-            "selected_text": "createCmsPageForm",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 85,
-            "line_to": 85,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\CmsGui\\Communication\\CmsGuiCommunicationFactory::createCmsPageForm has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/CmsGui/src/Spryker/Zed/CmsGui/Communication/Controller/EditPageController.php",
-            "snippet": "            ->createCmsPageForm($cmsPageFormTypeDataProvider, $idCmsPage, $cmsPageTransfer)",
-            "selected_text": "createCmsPageForm",
-            "error_level": 2,
-            "shortcode": 1
         }
-    ]
+    ],
+    "count": 38
 }

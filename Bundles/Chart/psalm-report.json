@@ -49,30 +49,7 @@
             "selected_text": "new TwigChartPlugin()",
             "error_level": 2,
             "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 31,
-            "line_to": 31,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Service\\Container\\Container::offsetSet has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Chart/src/Spryker/Zed/Chart/Communication/Plugin/ServiceProvider/TwigChartFunctionServiceProvider.php",
-            "snippet": "        $app['twig'] = $app->share(",
-            "selected_text": "$app",
-            "error_level": 2,
-            "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 31,
-            "line_to": 31,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Service\\Container\\Container::share has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Chart/src/Spryker/Zed/Chart/Communication/Plugin/ServiceProvider/TwigChartFunctionServiceProvider.php",
-            "snippet": "        $app['twig'] = $app->share(",
-            "selected_text": "share",
-            "error_level": 2,
-            "shortcode": 1
         }
-    ]
+    ],
+    "count": 4
 }
