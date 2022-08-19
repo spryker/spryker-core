@@ -42,6 +42,11 @@ class CartsRestApiConfig extends AbstractBundleConfig
     protected const MESSAGE_PRICE_MODE_DATA_IS_INCORRECT = 'quote.validation.error.price_mode_is_incorrect';
 
     /**
+     * @var bool
+     */
+    protected const IS_QUOTE_CREATION_WHILE_QUOTE_MERGING_ENABLED = false;
+
+    /**
      * @api
      *
      * @return array<string, string>
@@ -68,5 +73,18 @@ class CartsRestApiConfig extends AbstractBundleConfig
     public function isQuoteReloadEnabled(): bool
     {
         return $this->get(CartsRestApiConstants::IS_QUOTE_RELOAD_ENABLED, false);
+    }
+
+    /**
+     * Specification:
+     * - Enables creating customer quote while quote merging if it doesn't exist at Persistence.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isQuoteCreationWhileQuoteMergingEnabled(): bool
+    {
+        return static::IS_QUOTE_CREATION_WHILE_QUOTE_MERGING_ENABLED;
     }
 }

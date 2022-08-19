@@ -5,16 +5,24 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\CartsRestApisRestApi\Business;
+namespace SprykerTest\Zed\CartsRestApi\Business;
 
+use Codeception\Stub;
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\CartsRestApi\Business\CartsRestApiBusinessFactory;
+use Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade;
+use Spryker\Zed\CartsRestApi\Business\CartsRestApiFacadeInterface;
+use Spryker\Zed\CartsRestApi\CartsRestApiConfig;
+use Spryker\Zed\Quote\QuoteDependencyProvider;
+use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface;
 
 /**
  * Auto-generated group annotations
  *
  * @group SprykerTest
  * @group Zed
- * @group CartsRestApisRestApi
+ * @group CartsRestApi
  * @group Business
  * @group MergeGuestQuoteAndCustomerQuoteTest
  * Add your own group annotations below this line
@@ -143,5 +151,113 @@ class MergeGuestQuoteAndCustomerQuoteTest extends Unit
         // Assert
         $this->assertEmpty($findQuoteResponseTransfer->getQuoteTransfer()->getItems());
         $this->assertTrue($findGuestQuoteResponseTransfer->getIsSuccessful());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCustomerQuoteWillBeCreatedIfNotExistsByEnableMergingWithGuestQuote(): void
+    {
+        // Arrange
+        $this->tester->setDependency(
+            QuoteDependencyProvider::PLUGINS_QUOTE_CREATE_BEFORE,
+            [$this->getAddDefaultNameBeforeQuoteSavePluginMock()],
+        );
+        $cartsRestApiFacade = $this->createCartsRestApiFacadeWithMockedConfig(true);
+
+        $customerTransfer = $this->tester->haveCustomer();
+        $cartsRestApiFacade->createQuote($this->tester->prepareQuoteTransferForGuest());
+        $oauthResponseTransfer = $this->tester->buildOauthResponseTransfer($customerTransfer->getCustomerReference());
+
+        // Act
+        $cartsRestApiFacade->mergeGuestQuoteAndCustomerQuote($oauthResponseTransfer);
+        $guestQuoteCollectionTransfer = $cartsRestApiFacade
+            ->getQuoteCollection($this->tester->prepareQuoteCriteriaFilterTransferForGuest());
+
+        $quoteCriteriaFilterTransfer = $this->tester
+            ->createQuoteCriteriaFilterTransfer($oauthResponseTransfer->getCustomerReference());
+        $customerQuoteCollectionTransfer = $cartsRestApiFacade->getQuoteCollection($quoteCriteriaFilterTransfer);
+
+        // Assert
+        $this->assertNotEmpty($customerQuoteCollectionTransfer->getQuotes());
+        $this->assertEmpty($guestQuoteCollectionTransfer->getQuotes());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCustomerQuoteWillNotBeCreatedIfNotExistsByDisableMergingWithGuestQuote(): void
+    {
+        // Arrange
+        $cartsRestApiFacade = $this->createCartsRestApiFacadeWithMockedConfig(false);
+
+        $customerTransfer = $this->tester->haveCustomer();
+        $cartsRestApiFacade->createQuote($this->tester->prepareQuoteTransferForGuest());
+        $oauthResponseTransfer = $this->tester->buildOauthResponseTransfer($customerTransfer->getCustomerReference());
+
+        // Act
+        $cartsRestApiFacade->mergeGuestQuoteAndCustomerQuote($oauthResponseTransfer);
+        $guestQuoteCollectionTransfer = $cartsRestApiFacade
+            ->getQuoteCollection($this->tester->prepareQuoteCriteriaFilterTransferForGuest());
+
+        $quoteCriteriaFilterTransfer = $this->tester
+            ->createQuoteCriteriaFilterTransfer($oauthResponseTransfer->getCustomerReference());
+        $customerQuoteCollectionTransfer = $cartsRestApiFacade->getQuoteCollection($quoteCriteriaFilterTransfer);
+
+        // Assert
+        $this->assertEmpty($customerQuoteCollectionTransfer->getQuotes());
+        $this->assertNotEmpty($guestQuoteCollectionTransfer->getQuotes());
+    }
+
+    /**
+     * @param bool $isQuoteCreationWhileQuoteMergingEnabled
+     *
+     * @return \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacadeInterface
+     */
+    protected function createCartsRestApiFacadeWithMockedConfig(
+        bool $isQuoteCreationWhileQuoteMergingEnabled
+    ): CartsRestApiFacadeInterface {
+        $cartRestApiConfigMock = $this->getCartRestApiConfigMock($isQuoteCreationWhileQuoteMergingEnabled);
+        $cartsRestApiBusinessFactory = new CartsRestApiBusinessFactory();
+        $cartsRestApiBusinessFactory->setConfig($cartRestApiConfigMock);
+
+        $cartsRestApiFacade = new CartsRestApiFacade();
+        $cartsRestApiFacade->setFactory($cartsRestApiBusinessFactory);
+
+        return $cartsRestApiFacade;
+    }
+
+    /**
+     * @param bool $isQuoteCreationWhileQuoteMergingEnabled
+     *
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\CartsRestApi\CartsRestApiConfig
+     */
+    protected function getCartRestApiConfigMock(bool $isQuoteCreationWhileQuoteMergingEnabled): CartsRestApiConfig
+    {
+        $configMock = Stub::make(CartsRestApiConfig::class, [
+            'isQuoteCreationWhileQuoteMergingEnabled' => function () use ($isQuoteCreationWhileQuoteMergingEnabled) {
+                return $isQuoteCreationWhileQuoteMergingEnabled;
+            },
+        ]);
+
+        return $configMock;
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface
+     */
+    protected function getAddDefaultNameBeforeQuoteSavePluginMock(): QuoteWritePluginInterface
+    {
+        $addDefaultNameBeforeQuoteSavePluginMock = Stub::makeEmpty(QuoteWritePluginInterface::class, [
+            'execute' => function (QuoteTransfer $quoteTransfer) {
+                if (!$quoteTransfer->getName()) {
+                    $quoteTransfer->setName('Shopping Cart Test');
+                }
+
+                return $quoteTransfer;
+            },
+        ]);
+
+        return $addDefaultNameBeforeQuoteSavePluginMock;
     }
 }

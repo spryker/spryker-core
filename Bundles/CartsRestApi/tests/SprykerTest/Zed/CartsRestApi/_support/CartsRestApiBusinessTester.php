@@ -566,4 +566,14 @@ class CartsRestApiBusinessTester extends Actor
             ],
         ))->build();
     }
+
+    /**
+     * @param string $customerReference
+     *
+     * @return \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer
+     */
+    public function createQuoteCriteriaFilterTransfer(string $customerReference): QuoteCriteriaFilterTransfer
+    {
+        return (new QuoteCriteriaFilterTransfer())->setCustomerReference($customerReference);
+    }
 }

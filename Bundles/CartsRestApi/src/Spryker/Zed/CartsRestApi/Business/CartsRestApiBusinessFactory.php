@@ -139,6 +139,7 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
             $this->createQuoteReader(),
             $this->getPersistentCartFacade(),
             $this->getQuoteFacade(),
+            $this->getConfig(),
         );
     }
 

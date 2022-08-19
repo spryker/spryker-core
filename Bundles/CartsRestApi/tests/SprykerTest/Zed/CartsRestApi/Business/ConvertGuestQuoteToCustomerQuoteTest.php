@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\CartsRestApisRestApi\Business;
+namespace SprykerTest\Zed\CartsRestApi\Business;
 
 use Codeception\Test\Unit;
 
@@ -14,7 +14,7 @@ use Codeception\Test\Unit;
  *
  * @group SprykerTest
  * @group Zed
- * @group CartsRestApisRestApi
+ * @group CartsRestApi
  * @group Business
  * @group ConvertGuestQuoteToCustomerQuoteTest
  * Add your own group annotations below this line
