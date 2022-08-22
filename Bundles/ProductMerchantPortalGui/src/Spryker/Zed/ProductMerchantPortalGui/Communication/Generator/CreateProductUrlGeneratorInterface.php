@@ -20,10 +20,11 @@ interface CreateProductUrlGeneratorInterface
     /**
      * @param string $sku
      * @param string $name
+     * @param bool $isSingleConcrete
      *
      * @return string
      */
-    public function getCreateProductAbstractUrl(string $sku, string $name): string;
+    public function getCreateProductAbstractUrl(string $sku, string $name, bool $isSingleConcrete): string;
 
     /**
      * @deprecated Will be removed without replacement.

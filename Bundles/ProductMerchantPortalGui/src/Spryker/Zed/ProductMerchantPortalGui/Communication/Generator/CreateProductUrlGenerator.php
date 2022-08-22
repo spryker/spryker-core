@@ -52,6 +52,13 @@ class CreateProductUrlGenerator implements CreateProductUrlGeneratorInterface
     protected const FIELD_SKU = 'sku';
 
     /**
+     * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\CreateProductAbstractForm::FIELD_IS_SINGLE_CONCRETE
+     *
+     * @var string
+     */
+    protected const FIELD_IS_SINGLE_CONCRETE = 'isSingleConcrete';
+
+    /**
      * @var string
      */
     protected const FIELD_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
@@ -73,6 +80,7 @@ class CreateProductUrlGenerator implements CreateProductUrlGeneratorInterface
             [
                 static::FIELD_SKU => $formData[static::FIELD_SKU],
                 static::FIELD_NAME => $formData[static::FIELD_NAME],
+                static::FIELD_IS_SINGLE_CONCRETE => $isSingleConcrete,
             ],
         );
 
@@ -86,15 +94,17 @@ class CreateProductUrlGenerator implements CreateProductUrlGeneratorInterface
     /**
      * @param string $sku
      * @param string $name
+     * @param bool $isSingleConcrete
      *
      * @return string
      */
-    public function getCreateProductAbstractUrl(string $sku, string $name): string
+    public function getCreateProductAbstractUrl(string $sku, string $name, bool $isSingleConcrete): string
     {
         $getParams = http_build_query(
             [
                 static::FIELD_SKU => $sku,
                 static::FIELD_NAME => $name,
+                static::FIELD_IS_SINGLE_CONCRETE => $isSingleConcrete,
             ],
         );
 

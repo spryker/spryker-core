@@ -141,12 +141,17 @@ class CreateProductAbstractController extends AbstractController
     {
         $abstractProductName = $request->get(static::REQUEST_PARAM_NAME);
         $abstractProductSku = $request->get(static::REQUEST_PARAM_SKU);
+        $isSingleConcrete = $request->get(static::FIELD_IS_SINGLE_CONCRETE);
 
         if ($request->request->get(static::REQUEST_PARAM_BACK)) {
             return new RedirectResponse(
                 $this->getFactory()
                     ->createCreateProductUrlGenerator()
-                    ->getCreateProductAbstractUrl($abstractProductSku, $abstractProductName),
+                    ->getCreateProductAbstractUrl(
+                        $abstractProductSku,
+                        $abstractProductName,
+                        $isSingleConcrete,
+                    ),
             );
         }
 
@@ -200,12 +205,17 @@ class CreateProductAbstractController extends AbstractController
     {
         $abstractProductName = $request->get(static::REQUEST_PARAM_NAME);
         $abstractProductSku = $request->get(static::REQUEST_PARAM_SKU);
+        $abstractProductIsSingleConcrete = $request->get(static::FIELD_IS_SINGLE_CONCRETE);
 
         if ($request->request->get(static::REQUEST_PARAM_BACK)) {
             return new RedirectResponse(
                 $this->getFactory()
                     ->createCreateProductUrlGenerator()
-                    ->getCreateProductAbstractUrl($abstractProductSku, $abstractProductName),
+                    ->getCreateProductAbstractUrl(
+                        $abstractProductSku,
+                        $abstractProductName,
+                        $abstractProductIsSingleConcrete,
+                    ),
             );
         }
 
