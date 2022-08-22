@@ -569,7 +569,7 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
                 static::KEY_FK_PARENT_CATEGORY_NODE,
             ]);
 
-        return $categoryNodeQuery->find()->toArray(static::KEY_FK_CATEGORY_NODE_DESCENDANT);
+        return $categoryNodeQuery->find()->toArray();
     }
 
     /**

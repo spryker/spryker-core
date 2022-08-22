@@ -22,18 +22,11 @@ class UrlPathGenerator implements UrlPathGeneratorInterface
     public const CATEGORY_NAME = 'name';
 
     /**
-     * @uses \Spryker\Zed\Category\Persistence\CategoryRepository::KEY_ID_CATEGORY_NODE
+     * @uses \Spryker\Zed\Category\Persistence\CategoryRepository::KEY_FK_CATEGORY_NODE_DESCENDANT
      *
      * @var string
      */
-    protected const KEY_ID_CATEGORY_NODE = 'id_category_node';
-
-    /**
-     * @uses \Spryker\Zed\Category\Persistence\CategoryRepository::KEY_FK_PARENT_CATEGORY_NODE
-     *
-     * @var string
-     */
-    protected const KEY_FK_PARENT_CATEGORY_NODE = 'fk_parent_category_node';
+    protected const KEY_FK_CATEGORY_NODE_DESCENDANT = 'fk_category_node_descendant';
 
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface
@@ -117,48 +110,11 @@ class UrlPathGenerator implements UrlPathGeneratorInterface
         $indexedCategoryUrlPathParts = [];
 
         foreach ($categoryUrlPathParts as $categoryUrlPathPart) {
-            $idCategoryNode = (int)$categoryUrlPathPart[static::KEY_ID_CATEGORY_NODE];
+            $idCategoryNode = (int)$categoryUrlPathPart[static::KEY_FK_CATEGORY_NODE_DESCENDANT];
             $indexedCategoryUrlPathParts[$idCategoryNode][] = $categoryUrlPathPart;
-
-            $indexedCategoryUrlPathParts = $this->addParentCategoryUrlPathParts(
-                $idCategoryNode,
-                $categoryUrlPathPart,
-                $indexedCategoryUrlPathParts,
-                $categoryUrlPathParts,
-            );
         }
 
         return $indexedCategoryUrlPathParts;
-    }
-
-    /**
-     * @param int $idCategoryNode
-     * @param array $categoryUrlPathPart
-     * @param array $indexedCategoryUrlPathParts
-     * @param array $categoryUrlPathParts
-     *
-     * @return array
-     */
-    protected function addParentCategoryUrlPathParts(
-        int $idCategoryNode,
-        array $categoryUrlPathPart,
-        array $indexedCategoryUrlPathParts,
-        array $categoryUrlPathParts
-    ): array {
-        $parentCategoryUrlPathPart = $categoryUrlPathParts[(int)$categoryUrlPathPart[static::KEY_FK_PARENT_CATEGORY_NODE]] ?? null;
-
-        if (!$parentCategoryUrlPathPart) {
-            return $indexedCategoryUrlPathParts;
-        }
-
-        array_unshift($indexedCategoryUrlPathParts[$idCategoryNode], $parentCategoryUrlPathPart);
-
-        return $this->addParentCategoryUrlPathParts(
-            $idCategoryNode,
-            $parentCategoryUrlPathPart,
-            $indexedCategoryUrlPathParts,
-            $categoryUrlPathParts,
-        );
     }
 
     /**
