@@ -11,6 +11,9 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\MessageAttributesTransfer;
 use Generated\Shared\Transfer\MessageBrokerAwsTestMessageWithoutMessageAttributesTransfer;
 use Generated\Shared\Transfer\MessageBrokerTestMessageTransfer;
+use Generated\Shared\Transfer\MessageBrokerTestMessageWithArrayTransfer;
+use Generated\Shared\Transfer\MessageBrokerTestMessageWithNestedArrayTransfer;
+use SprykerTest\Zed\MessageBrokerAws\MessageBrokerAwsBusinessTester;
 use stdClass;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\Exception\MessageDecodingFailedException;
@@ -116,30 +119,131 @@ class TransferSerializerTest extends Unit
     /**
      * @return void
      */
-    public function testDecodeReturnsEnvelopeWhenMessageIsSuccessfullyDeserialized(): void
+    public function testDecodeReturnsEnvelopeWhenMessageWithPlainTransferIsSuccessfullyDeserialized(): void
     {
         // Arrange
+        $messageAttributesTransfer = $this->tester->createMessageAttributesTransfer([
+            MessageAttributesTransfer::TRANSFER_NAME => 'MessageBrokerTestMessage',
+            MessageAttributesTransfer::EMITTER => MessageBrokerAwsBusinessTester::PUBLISHER,
+        ]);
+
+        $messageBrokerTestMessageTransfer = $this->tester->createMessageBrokerTestMessageTransfer([
+            MessageBrokerTestMessageTransfer::MESSAGE_ATTRIBUTES => $messageAttributesTransfer,
+        ]);
+
+        $payload = $this->tester->createPayload($messageBrokerTestMessageTransfer);
+
         $transferSerializer = $this->tester->getFactory()->createSerializer();
 
         // Act
-        $envelope = $transferSerializer->decode(
-            [
-                'body' => '{"key": "value"}',
-                'headers' => [
-                    'transferName' => 'MessageBrokerTestMessage',
-                    'publisher' => 'publisher',
-                ],
-            ],
-        );
+        $envelope = $transferSerializer->decode($payload);
 
         // Assert
         $this->assertInstanceOf(Envelope::class, $envelope);
+        $this->assertSame($messageBrokerTestMessageTransfer->toArray(), $envelope->getMessage()->toArray());
     }
 
     /**
      * @return void
      */
-    public function testEncodeReturnsThrowsExceptionWhenMessageIsNotAInstanceOfAbstractTransfer(): void
+    public function testDecodeReturnsEnvelopeWhenMessageWithEmptyArrayTransferIsSuccessfullyDeserialized(): void
+    {
+        // Arrange
+        $messageAttributesTransfer = $this->tester->createMessageAttributesTransfer([
+            MessageAttributesTransfer::TRANSFER_NAME => 'MessageBrokerTestMessageWithArray',
+            MessageAttributesTransfer::EMITTER => MessageBrokerAwsBusinessTester::PUBLISHER,
+        ]);
+
+        $messageBrokerTestMessageWithArrayTransfer = $this->tester->createMessageBrokerTestMessageWithArrayTransfer([
+            MessageBrokerTestMessageTransfer::MESSAGE_ATTRIBUTES => $messageAttributesTransfer,
+            MessageBrokerTestMessageWithArrayTransfer::ATTRIBUTES => [],
+        ]);
+
+        $payload = $this->tester->createPayload($messageBrokerTestMessageWithArrayTransfer);
+
+        $transferSerializer = $this->tester->getFactory()->createSerializer();
+
+        // Act
+        $envelope = $transferSerializer->decode($payload);
+
+        // Assert
+        $this->assertInstanceOf(Envelope::class, $envelope);
+        $this->assertSame($messageBrokerTestMessageWithArrayTransfer->toArray(), $envelope->getMessage()->toArray());
+    }
+
+    /**
+     * @return void
+     */
+    public function testDecodeReturnsEnvelopeWhenMessageWithArrayTransferIsSuccessfullyDeserialized(): void
+    {
+        // Arrange
+        $messageAttributesTransfer = $this->tester->createMessageAttributesTransfer([
+            MessageAttributesTransfer::TRANSFER_NAME => 'MessageBrokerTestMessageWithArray',
+            MessageAttributesTransfer::EMITTER => MessageBrokerAwsBusinessTester::PUBLISHER,
+        ]);
+
+        $messageBrokerTestMessageTransfer1 = $this->tester->createMessageBrokerTestMessageTransfer();
+        $messageBrokerTestMessageTransfer2 = $this->tester->createMessageBrokerTestMessageTransfer();
+
+        $messageBrokerTestMessageWithArrayTransfer = $this->tester->createMessageBrokerTestMessageWithArrayTransfer([
+            MessageBrokerTestMessageTransfer::MESSAGE_ATTRIBUTES => $messageAttributesTransfer,
+        ])->addAttribute($messageBrokerTestMessageTransfer1)
+            ->addAttribute($messageBrokerTestMessageTransfer2);
+
+        $payload = $this->tester->createPayload($messageBrokerTestMessageWithArrayTransfer);
+
+        $transferSerializer = $this->tester->getFactory()->createSerializer();
+
+        // Act
+        $envelope = $transferSerializer->decode($payload);
+
+        // Assert
+        $this->assertInstanceOf(Envelope::class, $envelope);
+        $this->assertSame($messageBrokerTestMessageWithArrayTransfer->toArray(), $envelope->getMessage()->toArray());
+    }
+
+    /**
+     * @return void
+     */
+    public function testDecodeReturnsEnvelopeWhenMessageWithNestedArrayTransferIsSuccessfullyDeserialized(): void
+    {
+        // Arrange
+        $messageAttributesTransfer = $this->tester->createMessageAttributesTransfer([
+            MessageAttributesTransfer::TRANSFER_NAME => 'MessageBrokerTestMessageWithNestedArray',
+            MessageAttributesTransfer::EMITTER => MessageBrokerAwsBusinessTester::PUBLISHER,
+        ]);
+
+        $messageBrokerTestMessageTransfer = $this->tester->createMessageBrokerTestMessageTransfer();
+
+        $messageBrokerTestMessageWithArrayTransfer = $this->tester->createMessageBrokerTestMessageWithArrayTransfer()
+            ->addAttribute($messageBrokerTestMessageTransfer);
+
+        $messageBrokerTestMessageWithNestedArrayTransfer = $this->tester
+            ->createMessageBrokerTestMessageWithNestedArrayTransfer([
+                MessageBrokerTestMessageWithNestedArrayTransfer::MESSAGE_ATTRIBUTES => $messageAttributesTransfer,
+            ])->addAttribute($messageBrokerTestMessageTransfer)
+            ->addArrayAttribute($messageBrokerTestMessageWithArrayTransfer)
+            ->addArrayAttribute($messageBrokerTestMessageWithArrayTransfer);
+
+        $payload = $this->tester->createPayload($messageBrokerTestMessageWithNestedArrayTransfer);
+
+        $transferSerializer = $this->tester->getFactory()->createSerializer();
+
+        // Act
+        $envelope = $transferSerializer->decode($payload);
+
+        // Assert
+        $this->assertInstanceOf(Envelope::class, $envelope);
+        $this->assertSame(
+            $messageBrokerTestMessageWithNestedArrayTransfer->toArray(),
+            $envelope->getMessage()->toArray(),
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testEncodeThrowsExceptionWhenMessageIsNotAInstanceOfAbstractTransfer(): void
     {
         // Arrange
         $transferSerializer = $this->tester->getFactory()->createSerializer();
@@ -156,7 +260,7 @@ class TransferSerializerTest extends Unit
     /**
      * @return void
      */
-    public function testEncodeReturnsThrowsExceptionWhenMessageTransferDoesNotHaveMessageAttributesAttribute(): void
+    public function testEncodeThrowsExceptionWhenMessageTransferDoesNotHaveMessageAttributesAttribute(): void
     {
         // Arrange
         $transferSerializer = $this->tester->getFactory()->createSerializer();
@@ -173,7 +277,7 @@ class TransferSerializerTest extends Unit
     /**
      * @return void
      */
-    public function testEncodeReturnsThrowsExceptionWhenMessageTransferDoesNotHaveMessageAttributesSet(): void
+    public function testEncodeThrowsExceptionWhenMessageTransferDoesNotHaveMessageAttributesSet(): void
     {
         // Arrange
         $transferSerializer = $this->tester->getFactory()->createSerializer();

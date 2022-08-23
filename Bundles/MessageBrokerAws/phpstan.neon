@@ -1,3 +1,5 @@
 parameters:
     level: 8
     ignoreErrors:
+    excludePaths:
+        - '%rootDir%/../../../vendor/spryker/spryker/Bundles/MessageBrokerAws/src/Spryker/Zed/MessageBrokerAws/Business/Normalizer/TransferNormalizer.php'

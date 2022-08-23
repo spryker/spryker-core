@@ -7,6 +7,17 @@
         <property name="messageAttributes" type="MessageAttributes"/>
     </transfer>
 
+    <transfer name="MessageBrokerTestMessageWithArray">
+        <property name="attributes" type="MessageBrokerTestMessage[]" singular="attribute"/>
+        <property name="messageAttributes" type="MessageAttributes"/>
+    </transfer>
+
+    <transfer name="MessageBrokerTestMessageWithNestedArray">
+        <property name="arrayAttributes" type="MessageBrokerTestMessageWithArray[]" singular="arrayAttribute"/>
+        <property name="attributes" type="MessageBrokerTestMessage[]" singular="attribute"/>
+        <property name="messageAttributes" type="MessageAttributes"/>
+    </transfer>
+
     <transfer name="MessageBrokerAwsTestMessageWithoutMessageAttributes">
         <property name="key" type="string"/>
         <property name="empty" type="string"/>

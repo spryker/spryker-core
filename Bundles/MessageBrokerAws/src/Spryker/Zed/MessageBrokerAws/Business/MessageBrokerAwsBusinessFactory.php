@@ -12,6 +12,7 @@ use Aws\Sqs\SqsClient;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\MessageBrokerAws\Business\Config\ConfigFormatterInterface;
 use Spryker\Zed\MessageBrokerAws\Business\Config\JsonToArrayConfigFormatter;
+use Spryker\Zed\MessageBrokerAws\Business\Normalizer\TransferNormalizer;
 use Spryker\Zed\MessageBrokerAws\Business\Queue\AwsSqsQueuesCreator;
 use Spryker\Zed\MessageBrokerAws\Business\Queue\AwsSqsQueuesCreatorInterface;
 use Spryker\Zed\MessageBrokerAws\Business\Queue\AwsSqsQueuesSubscriber;
@@ -42,7 +43,6 @@ use Symfony\Component\Messenger\Transport\Serialization\SerializerInterface;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
 use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer as SymfonySerializer;
 
 /**
@@ -197,7 +197,7 @@ class MessageBrokerAwsBusinessFactory extends AbstractBusinessFactory
     {
         return [
             $this->createArrayDenormalizer(),
-            $this->createObjectNormalizer(),
+            $this->createTransferNormalizer(),
         ];
     }
 
@@ -212,9 +212,9 @@ class MessageBrokerAwsBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Symfony\Component\Serializer\Normalizer\NormalizerInterface
      */
-    public function createObjectNormalizer(): NormalizerInterface
+    public function createTransferNormalizer(): NormalizerInterface
     {
-        return new ObjectNormalizer();
+        return new TransferNormalizer();
     }
 
     /**
