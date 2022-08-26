@@ -70,7 +70,7 @@ class ConfigurationProvider implements ConfigurationProviderInterface
                 $schedulerJenkinsConfiguration,
             )
         ) {
-            throw new InvalidJenkinsConfiguration('');
+            throw new InvalidJenkinsConfiguration('Base URL has not been configured for Jenkins server.');
         }
 
         return rtrim($schedulerJenkinsConfiguration[SharedSchedulerJenkinsConfig::SCHEDULER_JENKINS_BASE_URL], '/') . '/' . $urlPath;
