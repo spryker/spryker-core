@@ -7,15 +7,15 @@
 
 namespace Spryker\Glue\DocumentationGeneratorOpenApi\Formatter\Processor;
 
-use Generated\Shared\Transfer\PathAnnotationTransfer;
+use Generated\Shared\Transfer\ResourceContextTransfer;
 
 interface PathMethodFormatterInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\PathAnnotationTransfer $pathAnnotationTransfer
+     * @param \Generated\Shared\Transfer\ResourceContextTransfer $resourceContextTransfer
      * @param array<mixed> $formattedData
      *
      * @return array<mixed>
      */
-    public function format(PathAnnotationTransfer $pathAnnotationTransfer, array $formattedData): array;
+    public function format(ResourceContextTransfer $resourceContextTransfer, array $formattedData): array;
 }

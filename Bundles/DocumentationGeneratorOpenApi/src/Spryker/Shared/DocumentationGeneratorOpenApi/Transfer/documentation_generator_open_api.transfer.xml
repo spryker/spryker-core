@@ -27,6 +27,7 @@
         <property name="resourceType" type="string"/>
         <property name="pathAnnotation" type="PathAnnotation"/>
         <property name="relationships" type="string"/>
+        <property name="declaredMethods" type="GlueResourceMethodCollection"/>
     </transfer>
 
     <transfer name="Annotation">
@@ -45,6 +46,7 @@
         <property name="pathAnnotation" type="PathAnnotation"/>
         <property name="defaults" type="array" singular="default"/>
         <property name="path" type="string"/>
+        <property name="isProtected" type="bool"/>
     </transfer>
 
     <transfer name="Parameter">
@@ -123,5 +125,18 @@
         <property name="defaultResponseCode" type="int"/>
         <property name="isGetCollection" type="bool"/>
         <property name="pathName" type="string"/>
+        <property name="isProtected" type="bool"/>
+    </transfer>
+
+    <transfer name="GlueResourceMethodCollection">
+        <property name="delete" type="GlueResourceMethodConfiguration"/>
+        <property name="getCollection" type="GlueResourceMethodConfiguration"/>
+        <property name="get" type="GlueResourceMethodConfiguration"/>
+        <property name="patch" type="GlueResourceMethodConfiguration"/>
+        <property name="post" type="GlueResourceMethodConfiguration"/>
+    </transfer>
+
+    <transfer name="GlueResourceMethodConfiguration">
+        <property name="isProtected" type="bool"/>
     </transfer>
 </transfers>

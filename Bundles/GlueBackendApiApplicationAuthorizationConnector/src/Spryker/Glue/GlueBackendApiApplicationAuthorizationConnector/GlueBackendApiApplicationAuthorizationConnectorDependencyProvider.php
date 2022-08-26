@@ -11,6 +11,9 @@ use Spryker\Glue\GlueBackendApiApplicationAuthorizationConnector\Dependency\Faca
 use Spryker\Glue\Kernel\Backend\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Backend\Container;
 
+/**
+ * @method \Spryker\Glue\GlueBackendApiApplicationAuthorizationConnector\GlueBackendApiApplicationAuthorizationConnectorConfig getConfig()
+ */
 class GlueBackendApiApplicationAuthorizationConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**

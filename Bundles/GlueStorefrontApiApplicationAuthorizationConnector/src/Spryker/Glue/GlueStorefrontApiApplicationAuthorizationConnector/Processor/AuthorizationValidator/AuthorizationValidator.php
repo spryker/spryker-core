@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\GlueRequestValidationTransfer;
 use Generated\Shared\Transfer\RouteAuthorizationConfigTransfer;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface;
 use Spryker\Glue\GlueStorefrontApiApplicationAuthorizationConnector\Dependency\Client\GlueStorefrontApiApplicationAuthorizationConnectorToAuthorizationClientInterface;
+use Spryker\Glue\GlueStorefrontApiApplicationAuthorizationConnector\GlueStorefrontApiApplicationAuthorizationConnectorConfig;
 use Symfony\Component\HttpFoundation\Response;
 
 class AuthorizationValidator implements AuthorizationValidatorInterface
@@ -25,6 +26,26 @@ class AuthorizationValidator implements AuthorizationValidatorInterface
      * @var string
      */
     protected const ERROR_MESSAGE_UNAUTHORIZED_REQUEST = 'Unauthorized request.';
+
+    /**
+     * @var string
+     */
+    protected const PROTECTED_PATH_STRATEGY_NAME = 'ProtectedPath';
+
+    /**
+     * @var string
+     */
+    protected const METHOD = 'method';
+
+    /**
+     * @var string
+     */
+    protected const PATH = 'path';
+
+    /**
+     * @var string
+     */
+    protected const GLUE_REQUEST_CUSTOMER = 'glueRequestCustomer';
 
     /**
      * @var \Spryker\Glue\GlueStorefrontApiApplicationAuthorizationConnector\Dependency\Client\GlueStorefrontApiApplicationAuthorizationConnectorToAuthorizationClientInterface
@@ -37,15 +58,23 @@ class AuthorizationValidator implements AuthorizationValidatorInterface
     protected $configExtractorStrategies = [];
 
     /**
+     * @var \Spryker\Glue\GlueStorefrontApiApplicationAuthorizationConnector\GlueStorefrontApiApplicationAuthorizationConnectorConfig
+     */
+    protected $glueStorefrontApiApplicationAuthorizationConfig;
+
+    /**
      * @param \Spryker\Glue\GlueStorefrontApiApplicationAuthorizationConnector\Dependency\Client\GlueStorefrontApiApplicationAuthorizationConnectorToAuthorizationClientInterface $authorizationClient
      * @param array<\Spryker\Glue\GlueStorefrontApiApplicationAuthorizationConnector\ConfigExtractorStrategy\ConfigExtractorStrategyInterface> $configExtractorStrategies
+     * @param \Spryker\Glue\GlueStorefrontApiApplicationAuthorizationConnector\GlueStorefrontApiApplicationAuthorizationConnectorConfig $glueStorefrontApiApplicationAuthorizationConfig
      */
     public function __construct(
         GlueStorefrontApiApplicationAuthorizationConnectorToAuthorizationClientInterface $authorizationClient,
-        array $configExtractorStrategies
+        array $configExtractorStrategies,
+        GlueStorefrontApiApplicationAuthorizationConnectorConfig $glueStorefrontApiApplicationAuthorizationConfig
     ) {
         $this->authorizationClient = $authorizationClient;
         $this->configExtractorStrategies = $configExtractorStrategies;
+        $this->glueStorefrontApiApplicationAuthorizationConfig = $glueStorefrontApiApplicationAuthorizationConfig;
     }
 
     /**
@@ -56,32 +85,25 @@ class AuthorizationValidator implements AuthorizationValidatorInterface
      */
     public function validate(GlueRequestTransfer $glueRequestTransfer, ResourceInterface $resource): GlueRequestValidationTransfer
     {
-        $routeAuthorizationConfigTransfer = $this->extractRouteAuthorizationDefaultConfiguration($glueRequestTransfer, $resource);
+        $routeAuthorizationConfigTransfers = $this->extractRouteAuthorizationDefaultConfiguration($glueRequestTransfer, $resource);
 
-        if ($routeAuthorizationConfigTransfer === null) {
-            return $this->createDefaultGlueRequestValidationTransfer();
-        }
-        if (!$glueRequestTransfer->getRequestCustomer()) {
-            return $this->createDefaultGlueRequestNotValidationTransfer();
-        }
-
-        $authorizationRequestTransfer = $this->createAuthorizationRequestTransfer($routeAuthorizationConfigTransfer->getStrategyOrFail(), $glueRequestTransfer);
+        $authorizationRequestTransfer = $this->createAuthorizationRequestTransfer($routeAuthorizationConfigTransfers, $glueRequestTransfer);
         $authorizationResponseTransfer = $this->authorizationClient->authorize($authorizationRequestTransfer);
 
-        return $this->createGlueRequestValidationTransfer($authorizationResponseTransfer, $routeAuthorizationConfigTransfer);
+        return $this->createGlueRequestValidationTransfer($authorizationResponseTransfer, $routeAuthorizationConfigTransfers);
     }
 
     /**
      * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface $resource
      *
-     * @return \Generated\Shared\Transfer\RouteAuthorizationConfigTransfer|null
+     * @return array<\Generated\Shared\Transfer\RouteAuthorizationConfigTransfer>
      */
     protected function extractRouteAuthorizationDefaultConfiguration(
         GlueRequestTransfer $glueRequestTransfer,
         ResourceInterface $resource
-    ): ?RouteAuthorizationConfigTransfer {
-        $routeAuthorizationConfigTransfer = null;
+    ): array {
+        $routeAuthorizationConfigTransfers = [];
 
         foreach ($this->configExtractorStrategies as $configExtractorStrategy) {
             if ($configExtractorStrategy->isApplicable($resource)) {
@@ -91,62 +113,119 @@ class AuthorizationValidator implements AuthorizationValidatorInterface
                 );
 
                 if ($routeAuthorizationConfigTransfer !== null) {
-                    return $routeAuthorizationConfigTransfer;
+                    $routeAuthorizationConfigTransfers[] = $routeAuthorizationConfigTransfer;
                 }
             }
+        }
+
+        if ($this->glueStorefrontApiApplicationAuthorizationConfig->getProtectedPaths() !== null) {
+            $routeAuthorizationConfigTransfers[] = (new RouteAuthorizationConfigTransfer())
+                ->addStrategy(static::PROTECTED_PATH_STRATEGY_NAME)
+                ->setApiMessage(static::ERROR_MESSAGE_UNAUTHORIZED_REQUEST)
+                ->setHttpStatusCode(Response::HTTP_FORBIDDEN);
+        }
+
+        return $routeAuthorizationConfigTransfers;
+    }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\RouteAuthorizationConfigTransfer> $routeAuthorizationConfigTransfers
+     * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
+     *
+     * @return mixed
+     */
+    protected function createAuthorizationRequestTransfer(array $routeAuthorizationConfigTransfers, GlueRequestTransfer $glueRequestTransfer)
+    {
+        $authorizationEntityTransfer = (new AuthorizationEntityTransfer())->setData([
+            static::METHOD => $glueRequestTransfer->getMethod(),
+            static::PATH => $glueRequestTransfer->getPath(),
+            static::GLUE_REQUEST_CUSTOMER => $glueRequestTransfer->getRequestCustomer(),
+        ]);
+        $authorizationIdentityTransfer = new AuthorizationIdentityTransfer();
+        if ($glueRequestTransfer->getRequestCustomer() !== null) {
+            $authorizationIdentityTransfer->setIdentifier($glueRequestTransfer->getRequestCustomer()->getNaturalIdentifier());
+        }
+
+        $glueResourceTransfer = $glueRequestTransfer->getResource();
+
+        if ($glueResourceTransfer !== null) {
+            $authorizationEntityTransfer
+                ->setIdentifier($glueResourceTransfer->getId())
+                ->setEntityType($glueResourceTransfer->getType());
+        }
+        $strategies = [];
+        foreach ($routeAuthorizationConfigTransfers as $routeAuthorizationConfigTransfer) {
+            $routeAuthorizationConfigTransfer = $this->addDefaultStrategy($routeAuthorizationConfigTransfer);
+            $strategies = array_merge($strategies, $routeAuthorizationConfigTransfer->getStrategies());
+        }
+
+        $authorizationRequestTransfer = (new AuthorizationRequestTransfer())
+            ->setIdentity($authorizationIdentityTransfer)
+            ->setStrategies(array_unique($strategies))
+            ->setEntity($authorizationEntityTransfer);
+
+        return $authorizationRequestTransfer;
+    }
+
+    /**
+     * @deprecated Exists for BC reasons. Will be removed in the next major release.
+     *
+     * @param \Generated\Shared\Transfer\RouteAuthorizationConfigTransfer $routeAuthorizationConfigTransfer
+     *
+     * @return \Generated\Shared\Transfer\RouteAuthorizationConfigTransfer
+     */
+    protected function addDefaultStrategy(RouteAuthorizationConfigTransfer $routeAuthorizationConfigTransfer): RouteAuthorizationConfigTransfer
+    {
+        if ($routeAuthorizationConfigTransfer->getStrategy() !== null) {
+            $routeAuthorizationConfigTransfer->addStrategy($routeAuthorizationConfigTransfer->getStrategy());
         }
 
         return $routeAuthorizationConfigTransfer;
     }
 
     /**
-     * @param string $strategy
-     * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
-     *
-     * @return mixed
-     */
-    protected function createAuthorizationRequestTransfer(string $strategy, GlueRequestTransfer $glueRequestTransfer)
-    {
-        $authorizationEntityTransfer = new AuthorizationEntityTransfer();
-        $authorizationIdentityTransfer = (new AuthorizationIdentityTransfer())
-            ->setIdentifier($glueRequestTransfer->getRequestCustomerOrFail()->getNaturalIdentifierOrFail());
-
-        $glueResourceTransfer = $glueRequestTransfer->getResource();
-
-        if ($glueResourceTransfer !== null) {
-            $authorizationEntityTransfer
-                ->setIdentifier($glueResourceTransfer->getIdOrFail())
-                ->setEntityType($glueResourceTransfer->getTypeOrFail());
-        }
-
-        return (new AuthorizationRequestTransfer())
-            ->setIdentity($authorizationIdentityTransfer)
-            ->setStrategy($strategy)
-            ->setEntity($authorizationEntityTransfer);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\AuthorizationResponseTransfer $authorizationResponseTransfer
-     * @param \Generated\Shared\Transfer\RouteAuthorizationConfigTransfer $routeAuthorizationConfigTransfer
+     * @param array<\Generated\Shared\Transfer\RouteAuthorizationConfigTransfer> $routeAuthorizationConfigTransfers
      *
      * @return \Generated\Shared\Transfer\GlueRequestValidationTransfer
      */
     protected function createGlueRequestValidationTransfer(
         AuthorizationResponseTransfer $authorizationResponseTransfer,
-        RouteAuthorizationConfigTransfer $routeAuthorizationConfigTransfer
+        array $routeAuthorizationConfigTransfers
     ): GlueRequestValidationTransfer {
-        $glueRequestValidationTransfer = new GlueRequestValidationTransfer();
-
-        if ($authorizationResponseTransfer->getIsAuthorized()) {
-            $glueRequestValidationTransfer->setIsValid(true);
-
-            return $glueRequestValidationTransfer;
+        if (!$authorizationResponseTransfer->getIsAuthorized()) {
+            return $this->getGlueRequestValidationTransferFromConfig($authorizationResponseTransfer, $routeAuthorizationConfigTransfers);
         }
 
-        return $this->createDefaultGlueRequestNotValidationTransfer(
-            $routeAuthorizationConfigTransfer->getApiMessage(),
-            $routeAuthorizationConfigTransfer->getHttpStatusCode(),
-        );
+        $glueRequestValidationTransfer = new GlueRequestValidationTransfer();
+        $glueRequestValidationTransfer->setIsValid(true);
+
+        return $glueRequestValidationTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AuthorizationResponseTransfer $authorizationResponseTransfer
+     * @param array<\Generated\Shared\Transfer\RouteAuthorizationConfigTransfer> $routeAuthorizationConfigTransfers
+     *
+     * @return \Generated\Shared\Transfer\GlueRequestValidationTransfer
+     */
+    protected function getGlueRequestValidationTransferFromConfig(
+        AuthorizationResponseTransfer $authorizationResponseTransfer,
+        array $routeAuthorizationConfigTransfers
+    ): GlueRequestValidationTransfer {
+        foreach ($routeAuthorizationConfigTransfers as $routeAuthorizationConfigTransfer) {
+            if (
+                $routeAuthorizationConfigTransfer->getStrategy() === $authorizationResponseTransfer->getFailedStrategyOrFail()
+                || in_array($authorizationResponseTransfer->getFailedStrategyOrFail(), $routeAuthorizationConfigTransfer->getStrategies())
+            ) {
+                return $this->createDefaultGlueRequestNotValidationTransfer(
+                    $routeAuthorizationConfigTransfer->getApiMessage(),
+                    $routeAuthorizationConfigTransfer->getHttpStatusCode(),
+                );
+            }
+        }
+
+        return $this->createDefaultGlueRequestNotValidationTransfer();
     }
 
     /**

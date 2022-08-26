@@ -55,6 +55,8 @@ class CustomerOrdersResourceRoutePlugin extends AbstractPlugin implements Resour
     }
 
     /**
+     * The method check for `method_exists` added for BC reason only.
+     *
      * {@inheritDoc}
      *
      * @api
@@ -63,9 +65,15 @@ class CustomerOrdersResourceRoutePlugin extends AbstractPlugin implements Resour
      */
     public function getRouteAuthorizationDefaultConfiguration(): RouteAuthorizationConfigTransfer
     {
-        return (new RouteAuthorizationConfigTransfer())
-            ->setStrategy(static::STRATEGY_NAME)
+        $routeAuthorizationConfigTransfer = (new RouteAuthorizationConfigTransfer())
             ->setApiCode(OrdersRestApiConfig::RESPONSE_CODE_CUSTOMER_UNAUTHORIZED);
+
+        // The check for `method_exists` added for BC reason only.
+        if (!method_exists($routeAuthorizationConfigTransfer, 'addStrategy')) {
+            return $this->setStrategy($routeAuthorizationConfigTransfer);
+        }
+
+        return $routeAuthorizationConfigTransfer->addStrategy(static::STRATEGY_NAME);
     }
 
     /**
@@ -102,5 +110,17 @@ class CustomerOrdersResourceRoutePlugin extends AbstractPlugin implements Resour
     public function getParentResourceType(): string
     {
         return OrdersRestApiConfig::RESOURCE_CUSTOMERS;
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @param \Generated\Shared\Transfer\RouteAuthorizationConfigTransfer $routeAuthorizationConfigTransfer
+     *
+     * @return \Generated\Shared\Transfer\RouteAuthorizationConfigTransfer
+     */
+    protected function setStrategy(RouteAuthorizationConfigTransfer $routeAuthorizationConfigTransfer): RouteAuthorizationConfigTransfer
+    {
+        return $routeAuthorizationConfigTransfer->setStrategy(static::STRATEGY_NAME);
     }
 }

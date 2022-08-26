@@ -63,13 +63,15 @@ class AuthorizationChecker implements AuthorizationCheckerInterface
             return null;
         }
 
+        $routeAuthorizationConfigTransfer = $this->addDefaultStrategy($routeAuthorizationConfigTransfer);
+
         $routeAuthorizationConfigTransfer
             ->requireApiCode()
-            ->requireStrategy();
+            ->requireStrategies();
 
-        /** @var string $strategy */
-        $strategy = $routeAuthorizationConfigTransfer->getStrategy();
-        $authorizationRequestTransfer = $this->createAuthorizationRequestTransfer($strategy, $restRequest);
+        /** @var array<string> $strategies */
+        $strategies = $routeAuthorizationConfigTransfer->getStrategies();
+        $authorizationRequestTransfer = $this->createAuthorizationRequestTransfer($strategies, $restRequest);
 
         if (
             $method === Request::METHOD_GET &&
@@ -98,12 +100,28 @@ class AuthorizationChecker implements AuthorizationCheckerInterface
     }
 
     /**
-     * @param string $strategy
+     * @deprecated Exists for BC reasons. Will be removed in the next major release.
+     *
+     * @param \Generated\Shared\Transfer\RouteAuthorizationConfigTransfer $routeAuthorizationConfigTransfer
+     *
+     * @return \Generated\Shared\Transfer\RouteAuthorizationConfigTransfer
+     */
+    protected function addDefaultStrategy(RouteAuthorizationConfigTransfer $routeAuthorizationConfigTransfer): RouteAuthorizationConfigTransfer
+    {
+        if ($routeAuthorizationConfigTransfer->getStrategy() !== null) {
+            $routeAuthorizationConfigTransfer->addStrategy($routeAuthorizationConfigTransfer->getStrategy());
+        }
+
+        return $routeAuthorizationConfigTransfer;
+    }
+
+    /**
+     * @param array<string> $strategies
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Generated\Shared\Transfer\AuthorizationRequestTransfer
      */
-    protected function createAuthorizationRequestTransfer(string $strategy, RestRequestInterface $restRequest): AuthorizationRequestTransfer
+    protected function createAuthorizationRequestTransfer(array $strategies, RestRequestInterface $restRequest): AuthorizationRequestTransfer
     {
         /** @var \Generated\Shared\Transfer\RestUserTransfer $restUser */
         $restUser = $restRequest->getRestUser();
@@ -122,7 +140,7 @@ class AuthorizationChecker implements AuthorizationCheckerInterface
         }
 
         return (new AuthorizationRequestTransfer())
-            ->setStrategy($strategy)
+            ->setStrategies($strategies)
             ->setEntity($authorizationEntityTransfer)
             ->setIdentity($authorizationIdentityTransfer);
     }

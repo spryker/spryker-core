@@ -17,7 +17,8 @@
         "spryker/code-sniffer": "*"
     },
     "suggest": {
-        "spryker/auth-rest-api": "If you want to authorize and authenticate customers via access tokens."
+        "spryker/auth-rest-api": "If you want to authorize and authenticate customers via access tokens.",
+        "spryker/authorization": "If you want to use multiple authorization strategies, minimum required version: 1.2.0."
     },
     "autoload": {
         "psr-4": {

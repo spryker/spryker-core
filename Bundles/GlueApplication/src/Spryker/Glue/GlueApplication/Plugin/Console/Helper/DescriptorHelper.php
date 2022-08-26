@@ -12,11 +12,14 @@ use Symfony\Component\Console\Helper\DescriptorHelper as BaseDescriptorHelper;
 
 class DescriptorHelper extends BaseDescriptorHelper
 {
-    public function __construct()
+    /**
+     * @param \Spryker\Glue\GlueApplication\Descriptor\TextDescriptor $textDescriptor
+     */
+    public function __construct(TextDescriptor $textDescriptor)
     {
         parent::__construct();
 
         $this
-            ->register('txt', new TextDescriptor());
+            ->register('txt', $textDescriptor);
     }
 }

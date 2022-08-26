@@ -1,0 +1,21 @@
+namespace: SprykerTest\Client\GlueStorefrontApiApplicationAuthorizationConnector
+
+paths:
+    tests: .
+    data: ../../../_data
+    support: _support
+    log: ../../../_output
+
+coverage:
+    enabled: true
+    remote: false
+    whitelist: { include: ['../../../../src/*'] }
+
+suites:
+    Client:
+        path: .
+        class_name: GlueStorefrontApiApplicationAuthorizationConnectorTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Client\Testify\Helper\ConfigHelper

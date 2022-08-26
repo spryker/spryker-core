@@ -17,11 +17,16 @@ use stdClass;
 class TestDefaultAuthorizationStrategyAwareResourceRoutePlugin implements DefaultAuthorizationStrategyAwareResourceRoutePluginInterface, ResourceInterface
 {
     /**
+     * @var string
+     */
+    protected const STRATEGY_NAME = 'test';
+
+    /**
      * @return \Generated\Shared\Transfer\RouteAuthorizationConfigTransfer
      */
     public function getRouteAuthorizationDefaultConfiguration(): RouteAuthorizationConfigTransfer
     {
-        return (new RouteAuthorizationConfigTransfer())->setStrategy('test');
+        return (new RouteAuthorizationConfigTransfer())->addStrategy(static::STRATEGY_NAME);
     }
 
     /**

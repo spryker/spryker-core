@@ -43,6 +43,13 @@ class AuthorizationRequestAfterRoutingValidatorPluginTest extends Unit
     protected const NATURAL_IDENTIFIER = 'test identifier';
 
     /**
+     * @uses \SprykerTest\Glue\GlueStorefrontApiApplicationAuthorizationConnector\Stub\TestDefaultAuthorizationStrategyAwareResourceRoutePlugin::STRATEGY_NAME
+     *
+     * @var string
+     */
+    protected const STRATEGY_NAME = 'test';
+
+    /**
      * @return void
      */
     public function testValidateRequestUseDefaultAuthorizationStrategyAwareResourceRoutePluginIsValid(): void
@@ -144,7 +151,7 @@ class AuthorizationRequestAfterRoutingValidatorPluginTest extends Unit
     /**
      * @return void
      */
-    public function testValidRequestWithUnsupportResourcePlugin(): void
+    public function testValidateRequestUnsupportedResourceRouteException(): void
     {
         //Arrange
         $this->tester->setDependency(
@@ -167,7 +174,7 @@ class AuthorizationRequestAfterRoutingValidatorPluginTest extends Unit
     /**
      * @return void
      */
-    public function testValidRequestWithoutConfigurationForHttpMethod(): void
+    public function testValidateRequestMissingRouteNotValid(): void
     {
         //Arrange
         $this->tester->setDependency(
@@ -184,7 +191,7 @@ class AuthorizationRequestAfterRoutingValidatorPluginTest extends Unit
         $glueRequestValidationTransfer = $plugin->validate($glueRequestTransfer, $stubResource);
 
         //Assert
-        $this->assertTrue($glueRequestValidationTransfer->getIsValid());
+        $this->assertFalse($glueRequestValidationTransfer->getIsValid());
     }
 
     /**
@@ -195,6 +202,9 @@ class AuthorizationRequestAfterRoutingValidatorPluginTest extends Unit
     protected function mockAuthorizationClientBridge(bool $isAuthorized): GlueStorefrontApiApplicationAuthorizationConnectorToAuthorizationClientInterface
     {
         $authorizationResponseTransfer = (new AuthorizationResponseTransfer())->setIsAuthorized($isAuthorized);
+        if (!$isAuthorized) {
+            $authorizationResponseTransfer->setFailedStrategy(static::STRATEGY_NAME);
+        }
         $authorizationClientBridge = $this->getMockBuilder(GlueStorefrontApiApplicationAuthorizationConnectorToAuthorizationClientBridge::class)
             ->disableOriginalConstructor()
             ->onlyMethods(['authorize'])

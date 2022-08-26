@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\GlueApplication\Plugin\Console;
 
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ApiApplicationEndpointProviderPluginInterface;
 use Spryker\Glue\Kernel\Console\Console;
 use Symfony\Component\Console\Exception\InvalidArgumentException;
 use Symfony\Component\Console\Input\InputArgument;
@@ -61,6 +62,11 @@ class RouterDebugGlueApplicationConsole extends Console
     protected const OPTION_ROUTE_NAME_SHORT = 'r';
 
     /**
+     * @var string
+     */
+    protected const TEMPLATE_GLUE_APPLICATION = 'Glue%sApiApplication';
+
+    /**
      * @var \Spryker\Glue\GlueApplication\Plugin\Console\Helper\DescriptorHelper
      */
     protected $descriptorHelper;
@@ -110,22 +116,35 @@ class RouterDebugGlueApplicationConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $argumentApplicationName = $this->input->getArgument(static::ARGUMENT_GLUE_APPLICATION_NAME);
-        $argumentApplicationName = $this->normalizeOption($argumentApplicationName);
-
         $routerProviderPlugins = $this->getFactory()->getGlueApplicationRouterProviderPlugins();
         foreach ($routerProviderPlugins as $plugin) {
-            $applicationName = $this->normalizeOption($plugin->getApiApplicationName());
-            if (strpos($applicationName, $argumentApplicationName) === false) {
+            if (!$this->matchApplicationName($plugin)) {
                 continue;
             }
 
             $routes = $plugin->getRouteCollection();
-
             $this->describeRoutes($routes);
         }
 
         return static::CODE_SUCCESS;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ApiApplicationEndpointProviderPluginInterface $routerProviderPlugin
+     *
+     * @return bool
+     */
+    protected function matchApplicationName(ApiApplicationEndpointProviderPluginInterface $routerProviderPlugin): bool
+    {
+        $applicationName = $this->normalizeOption($routerProviderPlugin->getApiApplicationName());
+
+        $argumentApplication = $this->input->getArgument(static::ARGUMENT_GLUE_APPLICATION_NAME);
+        $argumentApplicationName = sprintf(
+            static::TEMPLATE_GLUE_APPLICATION,
+            $this->normalizeOption($argumentApplication),
+        );
+
+        return $applicationName == $argumentApplicationName;
     }
 
     /**
@@ -139,11 +158,13 @@ class RouterDebugGlueApplicationConsole extends Console
     {
         /** @var string|null $routeName */
         $routeName = $this->input->getOption(static::OPTION_ROUTE_NAME);
+        $argumentApplicationName = $this->input->getArgument(static::ARGUMENT_GLUE_APPLICATION_NAME);
 
         if ($routeName === null) {
             $this->descriptorHelper->describe($this->io, $routes, [
                 'show_controllers' => $this->input->getOption(static::OPTION_SHOW_CONTROLLERS),
                 'output' => $this->io,
+                'application_name' => $argumentApplicationName,
             ]);
 
             return;
@@ -198,6 +219,6 @@ class RouterDebugGlueApplicationConsole extends Console
             return null;
         }
 
-        return strtolower($option);
+        return ucfirst($option);
     }
 }

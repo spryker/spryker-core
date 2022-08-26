@@ -15,6 +15,9 @@ use Spryker\Glue\GlueBackendApiApplicationAuthorizationConnector\Processor\Autho
 use Spryker\Glue\GlueBackendApiApplicationAuthorizationConnector\Processor\AuthorizationValidator\AuthorizationValidatorInterface;
 use Spryker\Glue\Kernel\Backend\AbstractFactory;
 
+/**
+ * @method \Spryker\Glue\GlueBackendApiApplicationAuthorizationConnector\GlueBackendApiApplicationAuthorizationConnectorConfig getConfig()
+ */
 class GlueBackendApiApplicationAuthorizationConnectorFactory extends AbstractFactory
 {
     /**
@@ -22,7 +25,11 @@ class GlueBackendApiApplicationAuthorizationConnectorFactory extends AbstractFac
      */
     public function createAuthorizationValidator(): AuthorizationValidatorInterface
     {
-        return new AuthorizationValidator($this->getAuthorizationFacade(), $this->getConfigExtractorStrategies());
+        return new AuthorizationValidator(
+            $this->getAuthorizationFacade(),
+            $this->getConfigExtractorStrategies(),
+            $this->getConfig(),
+        );
     }
 
     /**

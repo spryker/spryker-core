@@ -207,7 +207,8 @@
     </transfer>
 
     <transfer name="RouteAuthorizationConfig">
-        <property name="strategy" type="string"/>
+        <property name="strategy" type="string" deprecated="Use {@link \Generated\Shared\Transfer\RouteAuthorizationConfigTransfer::$strategies} instead."/>
+        <property name="strategies" type="string[]" singular="strategy"/>
         <property name="apiCode" type="string"/>
         <property name="httpStatusCode" type="int"/>
         <property name="apiMessage" type="string"/>

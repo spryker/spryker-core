@@ -9,7 +9,7 @@ namespace Spryker\Glue\DocumentationGeneratorOpenApi\Formatter;
 
 use Generated\Shared\Transfer\ApiApplicationSchemaContextTransfer;
 use Generated\Shared\Transfer\CustomRoutesContextTransfer;
-use Generated\Shared\Transfer\PathAnnotationTransfer;
+use Generated\Shared\Transfer\ResourceContextTransfer;
 
 class OpenApiSpecificationPathFormatter implements OpenApiSchemaFormatterInterface
 {
@@ -42,7 +42,7 @@ class OpenApiSpecificationPathFormatter implements OpenApiSchemaFormatterInterfa
     public function format(array $formattedData, ApiApplicationSchemaContextTransfer $apiApplicationSchemaContextTransfer): array
     {
         foreach ($apiApplicationSchemaContextTransfer->getResourceContexts() as $resourceContext) {
-            $formattedData = $this->applyPathMethodFormatters($formattedData, $resourceContext->getPathAnnotationOrFail());
+            $formattedData = $this->applyPathMethodFormatters($formattedData, $resourceContext);
         }
 
         foreach ($apiApplicationSchemaContextTransfer->getCustomRoutesContexts() as $customRoutesContext) {
@@ -54,14 +54,14 @@ class OpenApiSpecificationPathFormatter implements OpenApiSchemaFormatterInterfa
 
     /**
      * @param array<mixed> $formattedData
-     * @param \Generated\Shared\Transfer\PathAnnotationTransfer $pathAnnotationTransfer
+     * @param \Generated\Shared\Transfer\ResourceContextTransfer $resourceContextTransfer
      *
      * @return array<mixed>
      */
-    protected function applyPathMethodFormatters(array $formattedData, PathAnnotationTransfer $pathAnnotationTransfer): array
+    protected function applyPathMethodFormatters(array $formattedData, ResourceContextTransfer $resourceContextTransfer): array
     {
         foreach ($this->pathMethodFormatters as $formatterPlugin) {
-            $formattedData = $formatterPlugin->format($pathAnnotationTransfer, $formattedData);
+            $formattedData = $formatterPlugin->format($resourceContextTransfer, $formattedData);
         }
 
         return $formattedData;

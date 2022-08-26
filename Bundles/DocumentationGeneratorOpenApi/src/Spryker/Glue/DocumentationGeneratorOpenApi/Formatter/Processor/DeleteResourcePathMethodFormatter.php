@@ -7,8 +7,8 @@
 
 namespace Spryker\Glue\DocumentationGeneratorOpenApi\Formatter\Processor;
 
-use Generated\Shared\Transfer\PathAnnotationTransfer;
 use Generated\Shared\Transfer\PathMethodComponentDataTransfer;
+use Generated\Shared\Transfer\ResourceContextTransfer;
 use Spryker\Glue\DocumentationGeneratorOpenApi\Formatter\Paths\OpenApiSpecificationPathMethodFormatterInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -39,13 +39,14 @@ class DeleteResourcePathMethodFormatter implements PathMethodFormatterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PathAnnotationTransfer $pathAnnotationTransfer
+     * @param \Generated\Shared\Transfer\ResourceContextTransfer $resourceContextTransfer
      * @param array<mixed> $formattedData
      *
      * @return array<mixed>
      */
-    public function format(PathAnnotationTransfer $pathAnnotationTransfer, array $formattedData): array
+    public function format(ResourceContextTransfer $resourceContextTransfer, array $formattedData): array
     {
+        $pathAnnotationTransfer = $resourceContextTransfer->getPathAnnotationOrFail();
         if (!$pathAnnotationTransfer->getDelete()) {
             return $formattedData;
         }
@@ -59,7 +60,8 @@ class DeleteResourcePathMethodFormatter implements PathMethodFormatterInterface
             ->setPatternOperationIdResource(static::PATTERN_OPERATION_ID_DELETE_RESOURCE)
             ->setDefaultResponseCode(Response::HTTP_NO_CONTENT)
             ->setIsGetCollection(false)
-            ->setPathName($pathName);
+            ->setPathName($pathName)
+            ->setIsProtected($resourceContextTransfer->getDeclaredMethodsOrFail()->getDeleteOrFail()->getIsProtected());
 
         $pathMethodData = $this->openApiSpecificationPathMethodFormatter->getPathMethodComponentData(
             $pathMethodComponentDataTransfer,

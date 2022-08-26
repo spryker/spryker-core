@@ -199,6 +199,11 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_RESOURCES_PROVIDER = 'PLUGINS_RESOURCES_PROVIDER';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_TABLE_COLUMN_EXPANDER = 'PLUGINS_TABLE_COLUMN_EXPANDER';
+
+    /**
      * @param \Spryker\Glue\Kernel\Container $container
      *
      * @return \Spryker\Glue\Kernel\Container
@@ -235,6 +240,7 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addGlueApplicationRouterProviderPlugins($container);
         $container = $this->addRoutesProviderPlugins($container);
         $container = $this->addResourcesProviderPlugins($container);
+        $container = $this->addTableColumnExpanderPlugins($container);
 
         return $container;
     }
@@ -912,6 +918,28 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
      * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourcesProviderPluginInterface>
      */
     protected function getResourcesProviderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addTableColumnExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_TABLE_COLUMN_EXPANDER, function () {
+            return $this->getTableColumnExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\TableColumnExpanderPluginInterface>
+     */
+    protected function getTableColumnExpanderPlugins(): array
     {
         return [];
     }

@@ -21,7 +21,7 @@ class TestAuthorizationStrategyAwareResourceRoutePlugin implements Authorization
      */
     public function getRouteAuthorizationConfigurations(): array
     {
-        $routeAuthorizationConfigTransfer = (new RouteAuthorizationConfigTransfer())->setStrategy('test');
+        $routeAuthorizationConfigTransfer = (new RouteAuthorizationConfigTransfer())->addStrategy('test');
 
         return [
             'get' => $routeAuthorizationConfigTransfer,

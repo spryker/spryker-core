@@ -59,9 +59,15 @@ class CustomersResourceRoutePlugin extends AbstractPlugin implements ResourceRou
      */
     public function getRouteAuthorizationDefaultConfiguration(): RouteAuthorizationConfigTransfer
     {
-        return (new RouteAuthorizationConfigTransfer())
-            ->setStrategy(static::STRATEGY_NAME)
+        $routeAuthorizationConfigTransfer = (new RouteAuthorizationConfigTransfer())
             ->setApiCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_UNAUTHORIZED);
+
+        // The check for `method_exists` added for BC reason only.
+        if (!method_exists($routeAuthorizationConfigTransfer, 'addStrategy')) {
+            return $this->setStrategy($routeAuthorizationConfigTransfer);
+        }
+
+        return $routeAuthorizationConfigTransfer->addStrategy(static::STRATEGY_NAME);
     }
 
     /**
@@ -73,12 +79,18 @@ class CustomersResourceRoutePlugin extends AbstractPlugin implements ResourceRou
      */
     public function getRouteAuthorizationConfigurations(): array
     {
+        $routeAuthorizationConfigTransfer = (new RouteAuthorizationConfigTransfer())
+            ->setApiCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_NOT_FOUND)
+            ->setHttpStatusCode(Response::HTTP_NOT_FOUND)
+            ->setApiMessage(CustomersRestApiConfig::RESPONSE_DETAILS_CUSTOMER_NOT_FOUND);
+
+        // The check for `method_exists` added for BC reason only.
+        if (!method_exists($routeAuthorizationConfigTransfer, 'addStrategy')) {
+            return [Request::METHOD_GET => $this->setStrategy($routeAuthorizationConfigTransfer)];
+        }
+
         return [
-            Request::METHOD_GET => (new RouteAuthorizationConfigTransfer())
-                ->setStrategy(static::STRATEGY_NAME)
-                ->setApiCode(CustomersRestApiConfig::RESPONSE_CODE_CUSTOMER_NOT_FOUND)
-                ->setHttpStatusCode(Response::HTTP_NOT_FOUND)
-                ->setApiMessage(CustomersRestApiConfig::RESPONSE_DETAILS_CUSTOMER_NOT_FOUND),
+            Request::METHOD_GET => $routeAuthorizationConfigTransfer->addStrategy(static::STRATEGY_NAME),
         ];
     }
 
@@ -116,5 +128,17 @@ class CustomersResourceRoutePlugin extends AbstractPlugin implements ResourceRou
     public function getResourceAttributesClassName(): string
     {
         return RestCustomersAttributesTransfer::class;
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @param \Generated\Shared\Transfer\RouteAuthorizationConfigTransfer $routeAuthorizationConfigTransfer
+     *
+     * @return \Generated\Shared\Transfer\RouteAuthorizationConfigTransfer
+     */
+    protected function setStrategy(RouteAuthorizationConfigTransfer $routeAuthorizationConfigTransfer): RouteAuthorizationConfigTransfer
+    {
+        return $routeAuthorizationConfigTransfer->setStrategy(static::STRATEGY_NAME);
     }
 }

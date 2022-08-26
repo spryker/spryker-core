@@ -21,6 +21,7 @@ use Spryker\Glue\GlueApplication\Cache\Writer\ControllerCacheWriterInterface;
 use Spryker\Glue\GlueApplication\Dependency\Client\GlueApplicationToStoreClientInterface;
 use Spryker\Glue\GlueApplication\Dependency\External\GlueApplicationToSymfonyFilesystemInterface;
 use Spryker\Glue\GlueApplication\Dependency\Service\GlueApplicationToUtilEncodingServiceInterface;
+use Spryker\Glue\GlueApplication\Descriptor\TextDescriptor;
 use Spryker\Glue\GlueApplication\Executor\ResourceExecutor;
 use Spryker\Glue\GlueApplication\Executor\ResourceExecutorInterface;
 use Spryker\Glue\GlueApplication\Plugin\Console\Helper\DescriptorHelper;
@@ -807,7 +808,19 @@ class GlueApplicationFactory extends AbstractFactory
      */
     public function createDescriptorHelper(): DescriptorHelper
     {
-        return new DescriptorHelper();
+        return new DescriptorHelper(
+            $this->createTextDescriptor(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Descriptor\TextDescriptor
+     */
+    public function createTextDescriptor(): TextDescriptor
+    {
+        return new TextDescriptor(
+            $this->getTableColumnExpanderPlugins(),
+        );
     }
 
     /**
@@ -941,6 +954,14 @@ class GlueApplicationFactory extends AbstractFactory
     public function getResourcesProviderPlugins(): array
     {
         return $this->getProvidedDependency(GlueApplicationDependencyProvider::PLUGINS_RESOURCES_PROVIDER);
+    }
+
+    /**
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\TableColumnExpanderPluginInterface>
+     */
+    public function getTableColumnExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(GlueApplicationDependencyProvider::PLUGINS_TABLE_COLUMN_EXPANDER);
     }
 
     /**

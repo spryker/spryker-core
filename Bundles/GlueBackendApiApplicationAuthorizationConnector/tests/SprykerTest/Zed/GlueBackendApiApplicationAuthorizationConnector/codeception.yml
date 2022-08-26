@@ -1,0 +1,22 @@
+namespace: SprykerTest\Zed\GlueBackendApiApplicationAuthorizationConnector
+
+paths:
+    tests: .
+    data: ../../../_data
+    support: _support
+    log: ../../../_output
+
+coverage:
+    enabled: true
+    remote: false
+    whitelist: { include: ['../../../../src/*'] }
+
+suites:
+    Business:
+        path: Business
+        class_name: GlueBackendApiApplicationAuthorizationConnectorTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Zed\Testify\Helper\BusinessHelper

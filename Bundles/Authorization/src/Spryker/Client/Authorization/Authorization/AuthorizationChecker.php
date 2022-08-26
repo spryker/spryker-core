@@ -35,19 +35,48 @@ class AuthorizationChecker implements AuthorizationCheckerInterface
      */
     public function authorize(AuthorizationRequestTransfer $authorizationRequestTransfer): AuthorizationResponseTransfer
     {
+        $authorizationRequestTransfer = $this->addDefaultStrategy($authorizationRequestTransfer);
+
         $authorizationResponseTransfer = new AuthorizationResponseTransfer();
 
-        if (!$this->authorizationStrategyCollection->has((string)$authorizationRequestTransfer->getStrategy())) {
-            throw new AuthorizationStrategyNotFoundException(sprintf('Authorization strategy `%s` not found.', $authorizationRequestTransfer->getStrategy()));
+        if (!$authorizationRequestTransfer->getStrategies()) {
+            throw new AuthorizationStrategyNotFoundException('Authorization strategy not found.');
         }
 
-        $result = $this->authorizationStrategyCollection
-            ->get((string)$authorizationRequestTransfer->getStrategy())
-            ->authorize($authorizationRequestTransfer);
+        foreach ($authorizationRequestTransfer->getStrategies() as $strategy) {
+            if (!$this->authorizationStrategyCollection->has($strategy)) {
+                throw new AuthorizationStrategyNotFoundException(sprintf('Authorization strategy `%s` not found.', $strategy));
+            }
+            $isAuthorized = $this->authorizationStrategyCollection
+                ->get($strategy)
+                ->authorize($authorizationRequestTransfer);
 
-        $authorizationResponseTransfer
-            ->setIsAuthorized($result);
+            $authorizationResponseTransfer
+                ->setIsAuthorized($isAuthorized);
+
+            if (!$authorizationResponseTransfer->getIsAuthorized()) {
+                $authorizationResponseTransfer->setFailedStrategy($strategy);
+
+                return $authorizationResponseTransfer;
+            }
+        }
 
         return $authorizationResponseTransfer;
+    }
+
+    /**
+     * @deprecated Exists for BC reasons. Will be removed in the next major release.
+     *
+     * @param \Generated\Shared\Transfer\AuthorizationRequestTransfer $authorizationRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\AuthorizationRequestTransfer
+     */
+    protected function addDefaultStrategy(AuthorizationRequestTransfer $authorizationRequestTransfer): AuthorizationRequestTransfer
+    {
+        if ($authorizationRequestTransfer->getStrategy()) {
+            $authorizationRequestTransfer->addStrategy($authorizationRequestTransfer->getStrategy());
+        }
+
+        return $authorizationRequestTransfer;
     }
 }

@@ -1,6 +1,7 @@
 namespace: GlueStorefrontApiApplicationAuthorizationConnector
 include:
     - tests/SprykerTest/Glue/GlueStorefrontApiApplicationAuthorizationConnector
+    - tests/SprykerTest/Client/GlueStorefrontApiApplicationAuthorizationConnector
 paths:
     tests: tests
     log: tests/_output

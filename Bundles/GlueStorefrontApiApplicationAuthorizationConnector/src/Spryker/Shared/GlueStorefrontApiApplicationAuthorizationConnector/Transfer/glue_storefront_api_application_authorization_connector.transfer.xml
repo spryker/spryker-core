@@ -3,13 +3,15 @@
 
     <transfer name="RouteAuthorizationConfig">
         <property name="apiCode" type="string"/>
-        <property name="strategy" type="string"/>
+        <property name="strategy" type="string" deprecated="Use {@link \Generated\Shared\Transfer\RouteAuthorizationConfigTransfer::$strategies} instead."/>
+        <property name="strategies" type="string[]" singular="strategy"/>
         <property name="apiMessage" type="string"/>
         <property name="httpStatusCode" type="int"/>
     </transfer>
 
     <transfer name="AuthorizationResponse">
         <property name="isAuthorized" type="bool"/>
+        <property name="failedStrategy" type="string"/>
     </transfer>
 
     <transfer name="RestErrorMessage">
@@ -23,9 +25,12 @@
     </transfer>
 
     <transfer name="AuthorizationRequest">
-        <property name="strategy" type="string"/>
+        <property name="strategy" type="string" deprecated="Use {@link \Generated\Shared\Transfer\AuthorizationRequestTransfer::$strategies} instead."/>
+        <property name="strategies" type="string[]" singular="strategy"/>
         <property name="entity" type="AuthorizationEntity"/>
         <property name="identity" type="AuthorizationIdentity"/>
+        <property name="path" type="string"/>
+        <property name="method" type="string"/>
     </transfer>
 
     <transfer name="AuthorizationIdentity">
@@ -35,6 +40,7 @@
     <transfer name="AuthorizationEntity">
         <property name="identifier" type="string"/>
         <property name="entityType" type="string"/>
+        <property name="data" type="array" singular="data"/>
     </transfer>
 
     <transfer name="GlueRequest">
@@ -42,6 +48,7 @@
         <property name="requestUser" type="GlueRequestUser"/>
         <property name="resource" type="GlueResource"/>
         <property name="requestCustomer" type="GlueRequestCustomer"/>
+        <property name="path" type="string"/>
     </transfer>
 
     <transfer name="GlueRequestValidation">
@@ -67,6 +74,34 @@
     <transfer name="GlueError">
         <property name="status" type="int"/>
         <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="CustomRoutesContext">
+        <property name="path" type="string"/>
+        <property name="isProtected" type="bool"/>
+        <property name="defaults" type="array" singular="default"/>
+    </transfer>
+
+    <transfer name="GlueResourceMethodConfiguration">
+        <property name="isProtected" type="bool"/>
+    </transfer>
+
+    <transfer name="ApiApplicationSchemaContext">
+        <property name="customRoutesContexts" type="CustomRoutesContext[]" singular="customRoutesContext"/>
+        <property name="resourceContexts" type="ResourceContext[]" singular="resourceContext"/>
+    </transfer>
+
+    <transfer name="ResourceContext">
+        <property name="declaredMethods" type="GlueResourceMethodCollection"/>
+        <property name="resourceType" type="string"/>
+    </transfer>
+
+    <transfer name="GlueResourceMethodCollection">
+    </transfer>
+
+    <transfer name="Route">
+        <property name="route" type="string"/>
+        <property name="method" type="string"/>
     </transfer>
 
 </transfers>

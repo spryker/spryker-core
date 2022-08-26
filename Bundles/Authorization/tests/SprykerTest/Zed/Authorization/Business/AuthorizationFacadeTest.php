@@ -34,7 +34,7 @@ class AuthorizationFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAuthorizeSuccessful(): void
+    public function testAuthorizeWithAuthorizationStrategiesSuccessful(): void
     {
         // Arrange
         $this->tester->setDependency(
@@ -42,7 +42,7 @@ class AuthorizationFacadeTest extends Unit
             [$this->getAuthorizationStrategyPluginMock()],
         );
         $authorizationRequestTransfer = (new AuthorizationRequestTransfer())
-            ->setStrategy('test-strategy');
+            ->addStrategy('test-strategy');
 
         // Act
         $authorizationResponseTransfer = $this->tester->getFacade()->authorize($authorizationRequestTransfer);
@@ -54,7 +54,7 @@ class AuthorizationFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAuthorizeUnsuccessful(): void
+    public function testAuthorizeWithAuthorizationStrategiesUnsuccessful(): void
     {
         // Arrange
         $this->tester->setDependency(
@@ -62,7 +62,7 @@ class AuthorizationFacadeTest extends Unit
             [$this->getAuthorizationStrategyPluginMock(false)],
         );
         $authorizationRequestTransfer = (new AuthorizationRequestTransfer())
-            ->setStrategy('test-strategy');
+            ->addStrategy('test-strategy');
 
         // Act
         $authorizationResponseTransfer = $this->tester->getFacade()->authorize($authorizationRequestTransfer);
@@ -74,11 +74,11 @@ class AuthorizationFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAuthorizeException(): void
+    public function testAuthorizeWithAuthorizationStrategiesException(): void
     {
         // Arrange
         $authorizationRequestTransfer = (new AuthorizationRequestTransfer())
-            ->setStrategy('test-strategy');
+            ->addStrategy('test-strategy');
 
         // Assert
         $this->expectException(AuthorizationStrategyNotFoundException::class);

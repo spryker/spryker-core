@@ -68,6 +68,18 @@ class OpenApiSpecificationPathMethodFormatter implements OpenApiSpecificationPat
     protected const KEY_RESPONSE_ATTRIBUTES_CLASS_NAME = 'response_attributes_class_name';
 
     /**
+     * @var string
+     */
+    protected const KEY_SECURITY = 'security';
+
+    /**
+     * @uses \Spryker\Glue\DocumentationGeneratorOpenApi\Formatter\OpenApiSecuritySchemesFormatter::KEY_BEARER_AUTH
+     *
+     * @var string
+     */
+    protected const KEY_BEARER_AUTH = 'BearerAuth';
+
+    /**
      * @var \Spryker\Glue\DocumentationGeneratorOpenApi\Analyzer\ResourceTransferAnalyzerInterface
      */
     protected $resourceTransferAnalyzer;
@@ -154,6 +166,14 @@ class OpenApiSpecificationPathMethodFormatter implements OpenApiSpecificationPat
             array_merge($pathMethodData, [static::KEY_DEFAULT_RESPONSE_CODE => $pathMethodComponentDataTransfer->getDefaultResponseCode()]),
             $responseReference,
         );
+
+        if ($pathMethodComponentDataTransfer->getIsProtected()) {
+            $pathMethodData[static::KEY_SECURITY] = [
+                [
+                    static::KEY_BEARER_AUTH => [],
+                ],
+            ];
+        }
 
         return $pathMethodData;
     }

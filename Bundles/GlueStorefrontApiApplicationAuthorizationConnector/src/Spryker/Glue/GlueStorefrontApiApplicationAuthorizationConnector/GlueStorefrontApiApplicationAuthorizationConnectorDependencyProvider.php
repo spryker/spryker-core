@@ -11,6 +11,9 @@ use Spryker\Glue\GlueStorefrontApiApplicationAuthorizationConnector\Dependency\C
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
 
+/**
+ * @method \Spryker\Glue\GlueStorefrontApiApplicationAuthorizationConnector\GlueStorefrontApiApplicationAuthorizationConnectorConfig getConfig()
+ */
 class GlueStorefrontApiApplicationAuthorizationConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**

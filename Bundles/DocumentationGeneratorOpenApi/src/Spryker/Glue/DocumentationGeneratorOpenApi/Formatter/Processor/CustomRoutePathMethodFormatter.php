@@ -86,7 +86,8 @@ class CustomRoutePathMethodFormatter implements CustomPathMethodFormatterInterfa
             ->setAnnotation($this->getAnnotationTransfer($customRouteTransfer))
             ->setPatternOperationIdResource($operationIdPattern)
             ->setDefaultResponseCode(Response::HTTP_OK)
-            ->setPathName($customRouteTransfer->getPathOrFail());
+            ->setPathName($customRouteTransfer->getPathOrFail())
+            ->setIsProtected($customRouteTransfer->getIsProtected());
 
         $pathMethodData = $this->openApiSpecificationPathMethodFormatter->getPathMethodComponentData(
             $pathMethodComponentDataTransfer,
