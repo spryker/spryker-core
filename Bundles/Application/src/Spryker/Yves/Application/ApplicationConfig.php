@@ -119,7 +119,7 @@ class ApplicationConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array<string>
+     * @return array<string, string>
      */
     public function getSecurityHeaders(): array
     {

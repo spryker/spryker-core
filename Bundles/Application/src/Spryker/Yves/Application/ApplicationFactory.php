@@ -9,6 +9,8 @@ namespace Spryker\Yves\Application;
 
 use Spryker\Shared\Application\EventListener\KernelLogListener;
 use Spryker\Shared\Log\LoggerTrait;
+use Spryker\Yves\Application\Expander\SecurityHeaderExpander;
+use Spryker\Yves\Application\Expander\SecurityHeaderExpanderInterface;
 use Spryker\Yves\Application\Plugin\Provider\ExceptionService\DefaultExceptionHandler;
 use Spryker\Yves\Application\Plugin\Provider\ExceptionService\ExceptionHandlerDispatcher;
 use Spryker\Yves\Kernel\AbstractFactory;
@@ -45,5 +47,24 @@ class ApplicationFactory extends AbstractFactory
     public function createKernelLogListener()
     {
         return new KernelLogListener($this->getLogger());
+    }
+
+    /**
+     * @return \Spryker\Yves\Application\Expander\SecurityHeaderExpanderInterface
+     */
+    public function createSecurityHeaderExpander(): SecurityHeaderExpanderInterface
+    {
+        return new SecurityHeaderExpander(
+            $this->getConfig(),
+            $this->getSecurityHeaderExpanderPlugins(),
+        );
+    }
+
+    /**
+     * @return array<\Spryker\Yves\ApplicationExtension\Dependency\Plugin\SecurityHeaderExpanderPluginInterface>
+     */
+    public function getSecurityHeaderExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ApplicationDependencyProvider::PLUGINS_SECURITY_HEADER_EXPANDER);
     }
 }

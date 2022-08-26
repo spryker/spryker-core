@@ -11,16 +11,17 @@ use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\EventDispatcher\EventDispatcherInterface;
 use Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
-use Symfony\Component\HttpKernel\Event\ResponseEvent;
-use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
  * @method \Spryker\Yves\Application\ApplicationConfig getConfig()
+ * @method \Spryker\Yves\Application\ApplicationFactory getFactory()
  */
 class HeadersSecurityEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
 {
     /**
      * {@inheritDoc}
+     * - Gets a list of security headers from the config.
+     * - Executes {@link \Spryker\Yves\ApplicationExtension\Dependency\Plugin\SecurityHeaderExpanderPluginInterface}.
      * - Extends EventDispatch with a KernelEvents::RESPONSE event to add security headers from config.
      *
      * @api
@@ -32,19 +33,6 @@ class HeadersSecurityEventDispatcherPlugin extends AbstractPlugin implements Eve
      */
     public function extend(EventDispatcherInterface $eventDispatcher, ContainerInterface $container): EventDispatcherInterface
     {
-        $securityHeaders = $this->getConfig()->getSecurityHeaders();
-
-        $eventDispatcher->addListener(
-            KernelEvents::RESPONSE,
-            function (ResponseEvent $event) use ($securityHeaders) {
-                foreach ($securityHeaders as $securityHeaderName => $securityHeaderValue) {
-                    if ($securityHeaderValue) {
-                        $event->getResponse()->headers->set($securityHeaderName, $securityHeaderValue);
-                    }
-                }
-            },
-        );
-
-        return $eventDispatcher;
+        return $this->getFactory()->createSecurityHeaderExpander()->expand($eventDispatcher);
     }
 }
