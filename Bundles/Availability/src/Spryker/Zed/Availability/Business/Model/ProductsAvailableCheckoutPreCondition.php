@@ -15,7 +15,6 @@ use Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SellableItemRequestTransfer;
 use Generated\Shared\Transfer\SellableItemsRequestTransfer;
-use Generated\Shared\Transfer\SellableItemsResponseTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Availability\AvailabilityConfig;
@@ -83,9 +82,8 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
             $storeTransfer = $this->storeFacade->getStoreByName($storeTransfer->getNameOrFail());
         }
 
-        $sellableItemsResponseTransfer = $this->sellable->areProductConcretesSellableForStore(
+        $sellableItemsResponseTransfer = $this->sellable->areProductsSellableForStoreWithDefaultBatchStrategy(
             $this->createSellableItemsRequestTransfer($quoteTransfer, $storeTransfer),
-            new SellableItemsResponseTransfer(),
         );
 
         foreach ($sellableItemsResponseTransfer->getSellableItemResponses() as $sellableItemResponseTransfer) {

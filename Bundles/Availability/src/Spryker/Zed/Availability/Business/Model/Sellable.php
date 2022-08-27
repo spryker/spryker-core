@@ -94,6 +94,26 @@ class Sellable implements SellableInterface
     /**
      * @param \Generated\Shared\Transfer\SellableItemsRequestTransfer $sellableItemsRequestTransfer
      *
+     * @return \Generated\Shared\Transfer\SellableItemsResponseTransfer
+     */
+    public function areProductsSellableForStoreWithDefaultBatchStrategy(
+        SellableItemsRequestTransfer $sellableItemsRequestTransfer
+    ): SellableItemsResponseTransfer {
+        $sellableItemsResponseTransfer = $this->areProductsSellableForStore($sellableItemsRequestTransfer);
+
+        if ($this->batchAvailabilityStrategyPlugins !== []) {
+            return $sellableItemsResponseTransfer;
+        }
+
+        return $this->areProductConcretesSellableForStore(
+            $sellableItemsRequestTransfer,
+            $sellableItemsResponseTransfer,
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SellableItemsRequestTransfer $sellableItemsRequestTransfer
+     *
      * @return \Generated\Shared\Transfer\SellableItemsRequestTransfer
      */
     protected function assertStoreTransferInSellableItemsRequestTransfer(

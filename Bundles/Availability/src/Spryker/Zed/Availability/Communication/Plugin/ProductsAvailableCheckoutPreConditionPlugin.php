@@ -22,8 +22,12 @@ class ProductsAvailableCheckoutPreConditionPlugin extends AbstractPlugin impleme
 {
     /**
      * {@inheritDoc}
-     *  - Check if all items in cart are sellable.
-     *  - In case `ItemTransfer.amount` was defined, item availability check will be ignored.
+     * - Checks if all items in the cart are sellable.
+     * - Executes {@link \Spryker\Zed\AvailabilityExtension\Dependency\Plugin\AvailabilityStrategyPluginInterface} plugin stack.
+     * - Executes {@link \Spryker\Zed\AvailabilityExtension\Dependency\Plugin\BatchAvailabilityStrategyPluginInterface} plugin stack.
+     * - If plugins are not provided, executes default batch strategy.
+     * - In case `ItemTransfer.amount` was defined, item availability check will be ignored.
+     * - Writes error message into CheckoutResponseTransfer.
      *
      * @api
      *

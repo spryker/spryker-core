@@ -25,6 +25,18 @@ interface SellableInterface
     ): SellableItemsResponseTransfer;
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Availability\Business\Model\SellableInterface::areProductsSellableForStore()} instead.
+     * Exists for BC reasons and should be removed in the next major.
+     *
+     * @param \Generated\Shared\Transfer\SellableItemsRequestTransfer $sellableItemsRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\SellableItemsResponseTransfer
+     */
+    public function areProductsSellableForStoreWithDefaultBatchStrategy(
+        SellableItemsRequestTransfer $sellableItemsRequestTransfer
+    ): SellableItemsResponseTransfer;
+
+    /**
      * @param \Generated\Shared\Transfer\SellableItemsRequestTransfer $sellableItemsRequestTransfer
      * @param \Generated\Shared\Transfer\SellableItemsResponseTransfer $sellableItemsResponseTransfer
      *

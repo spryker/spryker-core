@@ -7,6 +7,7 @@
 
 namespace SprykerTest\Zed\Availability\Business;
 
+use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -14,6 +15,7 @@ use Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SellableItemsResponseTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
@@ -30,6 +32,8 @@ use Spryker\Zed\Availability\AvailabilityDependencyProvider;
 use Spryker\Zed\Availability\Business\AvailabilityBusinessFactory;
 use Spryker\Zed\Availability\Business\AvailabilityFacade;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockFacadeInterface;
+use Spryker\Zed\AvailabilityExtension\Dependency\Plugin\AvailabilityStrategyPluginInterface;
+use Spryker\Zed\AvailabilityExtension\Dependency\Plugin\BatchAvailabilityStrategyPluginInterface;
 use Spryker\Zed\Kernel\Container;
 
 /**
@@ -64,6 +68,11 @@ class AvailabilityFacadeTest extends Unit
      * @var string
      */
     public const STORE_NAME_DE = 'DE';
+
+    /**
+     * @var string
+     */
+    protected const COL_QUANTITY = 'quantity';
 
     /**
      * @var \SprykerTest\Zed\Availability\AvailabilityBusinessTester
@@ -177,7 +186,7 @@ class AvailabilityFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckAvailabilityPrecoditionShouldNotWriteErrorsWhenAvailabilityIsSatisfied(): void
+    public function testCheckAvailabilityPreConditionShouldNotWriteErrorsWhenAvailabilityIsSatisfied(): void
     {
         // Arrange
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
@@ -185,12 +194,12 @@ class AvailabilityFacadeTest extends Unit
         $this->createProductWithStock(
             static::ABSTRACT_SKU,
             static::CONCRETE_SKU,
-            ['quantity' => 5],
+            [static::COL_QUANTITY => 5],
             $quoteTransfer->getStore(),
         );
 
         // Act
-        $this->getAvailabilityFacade()
+        $this->tester->getFacade()
             ->checkoutAvailabilityPreCondition($quoteTransfer, $checkoutResponseTransfer);
 
         // Assert
@@ -200,7 +209,7 @@ class AvailabilityFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCheckAvailabilityPrecoditionShouldWriteErrorWhenAvailabilityIsNotSatisfied(): void
+    public function testCheckAvailabilityPreConditionShouldWriteErrorWhenAvailabilityIsNotSatisfied(): void
     {
         // Arrange
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
@@ -208,16 +217,86 @@ class AvailabilityFacadeTest extends Unit
         $this->createProductWithStock(
             static::ABSTRACT_SKU,
             static::CONCRETE_SKU,
-            ['quantity' => 0],
+            [static::COL_QUANTITY => 0],
             $quoteTransfer->getStore(),
         );
 
         // Act
-        $this->getAvailabilityFacade()
+        $this->tester->getFacade()
             ->checkoutAvailabilityPreCondition($quoteTransfer, $checkoutResponseTransfer);
 
         // Assert
-        $this->assertNotEmpty($checkoutResponseTransfer->getErrors());
+        $this->assertCount(1, $checkoutResponseTransfer->getErrors());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckAvailabilityPreConditionExecutesAvailabilityStrategyPluginStack(): void
+    {
+        // Arrange
+        $quoteTransfer = $this->createQuoteTransfer();
+        $this->createProductWithStock(
+            static::ABSTRACT_SKU,
+            static::CONCRETE_SKU,
+            [static::COL_QUANTITY => 1],
+            $quoteTransfer->getStore(),
+        );
+
+        $availabilityStrategyPluginMock = $this->getMockBuilder(AvailabilityStrategyPluginInterface::class)
+            ->getMock();
+
+        $availabilityStrategyPluginMock
+            ->expects($this->once())
+            ->method('isApplicable')
+            ->willReturn(true);
+
+        $availabilityStrategyPluginMock
+            ->expects($this->once())
+            ->method('findProductConcreteAvailabilityForStore');
+
+        $this->tester->setDependency(AvailabilityDependencyProvider::PLUGINS_AVAILABILITY_STRATEGY, [
+            $availabilityStrategyPluginMock,
+        ]);
+
+        // Act
+        $this->tester->getFacade()
+            ->checkoutAvailabilityPreCondition($quoteTransfer, new CheckoutResponseTransfer());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCheckAvailabilityPreConditionWillExecuteBatchAvailabilityStrategyPlugins(): void
+    {
+        // Arrange
+        $checkoutResponseTransfer = new CheckoutResponseTransfer();
+        $quoteTransfer = $this->createQuoteTransfer();
+        $this->createProductWithStock(
+            static::ABSTRACT_SKU,
+            static::CONCRETE_SKU,
+            [static::COL_QUANTITY => 0],
+            $quoteTransfer->getStore(),
+        );
+
+        $batchAvailabilityStrategyPluginMock = $this->getMockBuilder(BatchAvailabilityStrategyPluginInterface::class)
+            ->getMock();
+
+        $batchAvailabilityStrategyPluginMock
+            ->expects($this->once())
+            ->method('findItemsAvailabilityForStore')
+            ->willReturn((new SellableItemsResponseTransfer())->setSellableItemResponses(new ArrayObject()));
+
+        $this->tester->setDependency(AvailabilityDependencyProvider::PLUGINS_BATCH_AVAILABILITY_STRATEGY, [
+            $batchAvailabilityStrategyPluginMock,
+        ]);
+
+        // Act
+        $this->tester->getFacade()
+            ->checkoutAvailabilityPreCondition($quoteTransfer, $checkoutResponseTransfer);
+
+        // Assert
+        $this->assertEmpty($checkoutResponseTransfer->getErrors());
     }
 
     /**
