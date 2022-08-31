@@ -146,7 +146,7 @@ class MerchantOrderGuiTableConfigurationProvider implements MerchantOrderGuiTabl
             ->addColumnListChip(static::COL_KEY_ITEMS_STATES, 'Items States', false, true, 2, 'green')
             ->addColumnText(static::COL_KEY_GRAND_TOTAL, 'Grand Total', true, true)
             ->addColumnText(static::COL_KEY_NUMBER_OF_ITEMS, 'No. of Items', true, true)
-            ->addColumnChip(static::COL_KEY_STORE, 'Store', true, true, 'gray');
+            ->addColumnChip(static::COL_KEY_STORE, 'Store', false, true, 'gray');
 
         return $guiTableConfigurationBuilder;
     }
