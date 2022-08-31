@@ -101,7 +101,7 @@ class DiscountableItemTransformer implements DiscountableItemTransformerInterfac
         }
 
         foreach ($discountableItemTransfer->getOriginalItemCalculatedDiscounts() as $calculatedDiscountTransfer) {
-            if ($calculatedDiscountTransfer->getVoucherCode() === $distributedCalculatedDiscountTransfer->getVoucherCode()) {
+            if ($this->isSameVoucherCode($calculatedDiscountTransfer, $distributedCalculatedDiscountTransfer)) {
                 return false;
             }
 
@@ -173,5 +173,20 @@ class DiscountableItemTransformer implements DiscountableItemTransformerInterfac
         }
 
         return false;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CalculatedDiscountTransfer $calculatedDiscountTransfer
+     * @param \Generated\Shared\Transfer\CalculatedDiscountTransfer $distributedCalculatedDiscountTransfer
+     *
+     * @return bool
+     */
+    protected function isSameVoucherCode(
+        CalculatedDiscountTransfer $calculatedDiscountTransfer,
+        CalculatedDiscountTransfer $distributedCalculatedDiscountTransfer
+    ): bool {
+        return $calculatedDiscountTransfer->getVoucherCode() !== null
+            && $distributedCalculatedDiscountTransfer->getVoucherCode() !== null
+            && $calculatedDiscountTransfer->getVoucherCode() === $distributedCalculatedDiscountTransfer->getVoucherCode();
     }
 }

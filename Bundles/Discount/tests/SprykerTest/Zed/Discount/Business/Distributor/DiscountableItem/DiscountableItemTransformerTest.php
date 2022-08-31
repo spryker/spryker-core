@@ -145,11 +145,55 @@ class DiscountableItemTransformerTest extends Unit
                 1,
                 90,
             ],
+            'one calculated discount without original item (percentage)' => [
+                [DiscountTransfer::PRIORITY => 10, DiscountTransfer::CALCULATOR_PLUGIN => static::PLUGIN_CALCULATOR_PERCENTAGE],
+                [
+                    DiscountableItemTransfer::UNIT_PRICE => 1000,
+                    DiscountableItemTransfer::ORIGINAL_ITEM => null,
+                    DiscountableItemTransfer::ORIGINAL_ITEM_CALCULATED_DISCOUNTS => [
+                        [
+                            CalculatedDiscountTransfer::PRIORITY => 9,
+                            CalculatedDiscountTransfer::UNIT_AMOUNT => 100,
+                            CalculatedDiscountTransfer::ID_DISCOUNT => 1,
+                        ],
+                    ],
+                ],
+                [
+                    DiscountableItemTransformerTransfer::QUANTITY => 1,
+                    DiscountableItemTransformerTransfer::ROUNDING_ERROR => 0.0,
+                    DiscountableItemTransformerTransfer::TOTAL_AMOUNT => 1000,
+                    DiscountableItemTransformerTransfer::TOTAL_DISCOUNT_AMOUNT => 100,
+                ],
+                1,
+                90,
+            ],
             'one calculated discount (fixed)' => [
                 [DiscountTransfer::PRIORITY => 10, DiscountTransfer::CALCULATOR_PLUGIN => static::PLUGIN_CALCULATOR_FIXED],
                 [
                     DiscountableItemTransfer::UNIT_PRICE => 1000,
                     DiscountableItemTransfer::ORIGINAL_ITEM => new ItemTransfer(),
+                    DiscountableItemTransfer::ORIGINAL_ITEM_CALCULATED_DISCOUNTS => [
+                        [
+                            CalculatedDiscountTransfer::PRIORITY => 9,
+                            CalculatedDiscountTransfer::UNIT_AMOUNT => 100,
+                            CalculatedDiscountTransfer::ID_DISCOUNT => 1,
+                        ],
+                    ],
+                ],
+                [
+                    DiscountableItemTransformerTransfer::QUANTITY => 1,
+                    DiscountableItemTransformerTransfer::ROUNDING_ERROR => 0.0,
+                    DiscountableItemTransformerTransfer::TOTAL_AMOUNT => 1000,
+                    DiscountableItemTransformerTransfer::TOTAL_DISCOUNT_AMOUNT => 100,
+                ],
+                1,
+                100,
+            ],
+            'one calculated discount without original item (fixed)' => [
+                [DiscountTransfer::PRIORITY => 10, DiscountTransfer::CALCULATOR_PLUGIN => static::PLUGIN_CALCULATOR_FIXED],
+                [
+                    DiscountableItemTransfer::UNIT_PRICE => 1000,
+                    DiscountableItemTransfer::ORIGINAL_ITEM => null,
                     DiscountableItemTransfer::ORIGINAL_ITEM_CALCULATED_DISCOUNTS => [
                         [
                             CalculatedDiscountTransfer::PRIORITY => 9,
