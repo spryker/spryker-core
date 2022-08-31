@@ -253,9 +253,9 @@ class ShoppingListsRestApiConfig extends AbstractBundleConfig
                 RestErrorMessageTransfer::DETAIL => static::RESPONSE_DETAIL_SHOPPING_LIST_WRONG_QUANTITY,
             ],
             SharedShoppingListsRestApiConfig::ERROR_IDENTIFIER_SHOPPING_LIST_PRODUCT_NOT_FOUND => [
-                RestErrorMessageTransfer::CODE => static::RESPONSE_DETAIL_SHOPPING_LIST_PRODUCT_NOT_FOUND,
+                RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_SHOPPING_LIST_PRODUCT_NOT_FOUND,
                 RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
-                RestErrorMessageTransfer::DETAIL => static::RESPONSE_CODE_SHOPPING_LIST_PRODUCT_NOT_FOUND,
+                RestErrorMessageTransfer::DETAIL => static::RESPONSE_DETAIL_SHOPPING_LIST_PRODUCT_NOT_FOUND,
             ],
             SharedShoppingListsRestApiConfig::ERROR_IDENTIFIER_SHOPPING_LIST_ITEM_PRODUCT_NOT_ACTIVE => [
                 RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_LIST_ITEM_PRODUCT_NOT_ACTIVE,
