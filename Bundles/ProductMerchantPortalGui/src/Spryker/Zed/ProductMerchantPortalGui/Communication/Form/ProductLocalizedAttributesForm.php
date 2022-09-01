@@ -175,6 +175,11 @@ class ProductLocalizedAttributesForm extends AbstractType
             ],
             'label' => static::LABEL_META_TITLE,
             'required' => false,
+            'constraints' => [
+                new Length([
+                    'max' => 255,
+                ]),
+            ],
         ]);
 
         return $this;
