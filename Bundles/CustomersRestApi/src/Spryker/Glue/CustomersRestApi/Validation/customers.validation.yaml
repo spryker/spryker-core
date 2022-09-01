@@ -3,8 +3,14 @@ customers:
         email:
             - NotBlank
             - Email
+        gender:
+            - NotBlank
+            - Choice:
+                  choices: [Male, Female]
         salutation:
             - NotBlank
+            - Choice:
+                  choices: [Mr, Mrs, Ms, Dr]
         firstName:
             - NotBlank
             - Length:
@@ -31,10 +37,18 @@ customers:
                   constraints:
                       - NotBlank
                       - Email
+        gender:
+            - Optional:
+                  constraints:
+                      - NotBlank
+                      - Choice:
+                            choices: [Male, Female]
         salutation:
             - Optional:
                   constraints:
                       - NotBlank
+                      - Choice:
+                            choices: [Mr, Mrs, Ms, Dr]
         firstName:
             - Optional:
                   constraints:
@@ -56,6 +70,8 @@ addresses:
     post:
         salutation:
             - NotBlank
+            - Choice:
+                  choices: [Mr, Mrs, Ms, Dr]
         firstName:
             - NotBlank
             - Length:
@@ -106,6 +122,8 @@ addresses:
             - Optional:
                   constraints:
                       - NotBlank
+                      - Choice:
+                            choices: [Mr, Mrs, Ms, Dr]
         firstName:
             - Optional:
                   constraints:
