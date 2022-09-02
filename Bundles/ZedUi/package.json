@@ -82,9 +82,6 @@
         "@spryker/utils": "^0.3.5",
         "@spryker/utils.date.adapter.date-fns": "^0.2.2",
         "@spryker/web-components": "^0.3.3",
-        "classlist.js": "^1.1.20150312",
-        "css-vars-ponyfill": "^2.2.1",
-        "rxjs": "~7.4.0",
-        "url-search-params-polyfill": "^8.0.0"
+        "rxjs": "~7.4.0"
     }
 }

@@ -1,24 +1,28 @@
+{# @deprecated property "isWatchMode" is deprecated: use "isDifferentialMode" instead. #}
 {% set importConfig = {
     assetsPath: 'js/',
     bundleSubFolder: 'spy/',
     isWatchMode: false,
+    isDifferentialMode: false,
 } %}
 
+{% set importConfig = importConfig | merge({ isDifferentialMode: not importConfig.isWatchMode }) %}
+
 {% macro importJs(name, config) %}
-    {% if config.isWatchMode %}
-        <script src="{{ assetsPath(config.assetsPath ~ name ~ '.js') }}"></script>
-    {% else %}
+    {% if config.isDifferentialMode %}
         <script src="{{ assetsPath(config.assetsPath ~ name ~ '-es2015.js') }}" type="module"></script>
         <script src="{{ assetsPath(config.assetsPath ~ name ~ '-es5.js') }}" nomodule defer></script>
+    {% else %}
+        <script src="{{ assetsPath(config.assetsPath ~ name ~ '.js') }}"></script>
     {% endif %}
 {%- endmacro -%}
 
 {% macro importJsBundle(name, config) %}
-    {% if config.isWatchMode %}
-        <script src="{{ assetsPath(config.assetsPath ~ config.bundleSubFolder ~ name ~ '.js') }}"></script>
-    {% else %}
+    {% if config.isDifferentialMode %}
         <script src="{{ assetsPath(config.assetsPath ~ config.bundleSubFolder ~ name ~ '-es2015.js') }}" type="module"></script>
         <script src="{{ assetsPath(config.assetsPath ~ config.bundleSubFolder ~ name ~ '-es5.js') }}" nomodule defer></script>
+    {% else %}
+        <script src="{{ assetsPath(config.assetsPath ~ config.bundleSubFolder ~ name ~ '.js') }}"></script>
     {% endif %}
 {%- endmacro -%}
 
