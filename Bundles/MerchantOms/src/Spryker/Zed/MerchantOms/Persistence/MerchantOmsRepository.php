@@ -57,8 +57,11 @@ class MerchantOmsRepository extends AbstractRepository implements MerchantOmsRep
         if ($merchantSalesOrderItemEntity === null) {
             return null;
         }
-        /** @var \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemState $stateMachineItemState */
+        /** @var \Orm\Zed\StateMachine\Persistence\SpyStateMachineItemState|null $stateMachineItemState */
         $stateMachineItemState = $merchantSalesOrderItemEntity->getStateMachineItemState();
+        if ($stateMachineItemState === null) {
+            return null;
+        }
 
         return $this->getFactory()
             ->createStateMachineItemMapper()
