@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<statemachine
+    xmlns="spryker:oms-01"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="spryker:oms-01 http://static.spryker.com/oms-01.xsd"
+>
+
+    <process name="ForeignPaymentB2CStateMachine01" main="true">
+
+        <subprocesses>
+            <process>PaymentAuthorization</process>
+            <process>PaymentConfirmation</process>
+            <process>ItemSupply</process>
+            <process>ItemReturn</process>
+            <process>PaymentRefund</process>
+            <process>PaymentReservationCancel</process>
+            <process>ItemClose</process>
+        </subprocesses>
+
+        <states>
+            <state name="new" display="oms.state.new"/>
+            <state name="invoiced" reserved="true" display="oms.state.waiting">
+                <flag>cancellable</flag>
+            </state>
+        </states>
+
+        <transitions>
+            <transition happy="true">
+                <source>new</source>
+                <target>payment authorization pending</target>
+                <event>created</event>
+            </transition>
+
+            <transition happy="true">
+                <source>payment authorized</source>
+                <target>invoiced</target>
+                <event>invoice customer</event>
+            </transition>
+
+            <transition happy="true">
+                <source>invoiced</source>
+                <target>payment confirmation ready</target>
+                <event>ship</event>
+            </transition>
+
+            <transition>
+                <source>invoiced</source>
+                <target>reservation cancellation ready</target>
+                <event>cancel</event>
+            </transition>
+
+            <transition happy="true">
+                <source>payment confirmed</source>
+                <target>delivered</target>
+                <event>deliver</event>
+            </transition>
+
+            <transition>
+                <source>returned</source>
+                <target>payment refund ready</target>
+                <event>refund</event>
+            </transition>
+        </transitions>
+
+        <events>
+            <event name="created" onEnter="true"/>
+            <event name="invoice customer" manual="true"/>
+        </events>
+    </process>
+
+    <process name="PaymentAuthorization" file="Subprocess/PaymentAuthorization01.xml"/>
+    <process name="PaymentConfirmation" file="Subprocess/PaymentConfirmation01.xml"/>
+    <process name="ItemSupply" file="Subprocess/ItemSupply01.xml"/>
+    <process name="ItemReturn" file="Subprocess/ItemReturn01.xml"/>
+    <process name="PaymentRefund" file="Subprocess/PaymentRefund01.xml"/>
+    <process name="PaymentReservationCancel" file="Subprocess/PaymentReservationCancel01.xml"/>
+    <process name="ItemClose" file="Subprocess/ItemClose01.xml"/>
+
+</statemachine>

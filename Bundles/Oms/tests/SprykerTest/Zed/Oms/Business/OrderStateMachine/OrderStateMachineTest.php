@@ -8,19 +8,29 @@
 namespace SprykerTest\Zed\Oms\Business\OrderStateMachine;
 
 use Codeception\Test\Unit;
+use Exception;
 use Generated\Shared\Transfer\OmsCheckConditionsQueryCriteriaTransfer;
+use Generated\Shared\Transfer\OmsEventTriggerResponseTransfer;
+use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
+use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
+use Orm\Zed\Sales\Persistence\SpySalesOrder as ChildSpySalesOrder;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use ReflectionClass;
 use Spryker\Zed\Oms\Business\OmsBusinessFactory;
 use Spryker\Zed\Oms\Business\OrderStateMachine\BuilderInterface;
 use Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachine;
 use Spryker\Zed\Oms\Business\OrderStateMachine\TimeoutInterface;
+use Spryker\Zed\Oms\Business\Process\EventInterface;
+use Spryker\Zed\Oms\Business\Process\ProcessInterface;
 use Spryker\Zed\Oms\Business\Process\State;
+use Spryker\Zed\Oms\Business\Process\StateInterface;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use Spryker\Zed\Oms\Business\Util\ReservationInterface;
 use Spryker\Zed\Oms\Business\Util\TransitionLogInterface;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollection;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollectionInterface;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollection;
+use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByOrderInterface;
 use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface;
 use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionCollectionInterface;
 use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface;
@@ -267,6 +277,75 @@ class OrderStateMachineTest extends Unit
             ->onlyMethods($methods);
 
         return $orderStateMachineMockBuilder->getMock();
+    }
+
+    /**
+     * @dataProvider errorMessagesDataProvider()
+     *
+     * @param string $messageText
+     * @param \Exception $exception
+     *
+     * @return void
+     */
+    public function testTriggerEventReturnsCorrectErrorMessageInCaseOfCommandException(
+        string $messageText,
+        Exception $exception
+    ) {
+        // Arrange
+        $commandMock = $this->getMockBuilder(CommandByOrderInterface::class)->getMock();
+        $commandMock->method('run')->willThrowException($exception);
+
+        $spySalesOrderItemMock = $this->getMockBuilder(SpySalesOrderItem::class)->getMock();
+        $spyOmsOrderItemStateMock = $this->getMockBuilder(SpyOmsOrderItemState::class)->getMock();
+        $spyOmsOrderProcessMock = $this->getMockBuilder(SpyOmsOrderProcess::class)->getMock();
+        $spyOmsOrderProcessMock->method('getName')->willReturn('test');
+        $spySalesOrderItemMock->method('getState')->willReturn($spyOmsOrderItemStateMock);
+        $spySalesOrderItemMock->method('getProcess')->willReturn($spyOmsOrderProcessMock);
+        $spySalesOrderItemMock->method('getOrder')->willReturn(
+            $this->getMockBuilder(ChildSpySalesOrder::class)->getMock(),
+        );
+
+        $orderStateMachineMock = $this->getOrderStatemachineMockForConditionsWithCriteriaTest([
+            'getCommand',
+            'groupByOrderAndState',
+            'logSourceState',
+            'getProcesses',
+            'initTransitionLog',
+        ]);
+        $orderStateMachineMock->method('getCommand')->willReturn($commandMock);
+        $orderStateMachineMock->method('groupByOrderAndState')->willReturn(['key' => [$spySalesOrderItemMock]]);
+        $eventMock = $this->getMockBuilder(EventInterface::class)->getMock();
+        $eventMock->method('hasCommand')->willReturn(true);
+        $stateMock = $this->getMockBuilder(StateInterface::class)->getMock();
+        $stateMock->method('getEvent')->willReturn($eventMock);
+        $processMock = $this->getMockBuilder(ProcessInterface::class)->getMock();
+        $processMock->method('getStateFromAllProcesses')->willReturn($stateMock);
+        $orderStateMachineMock->method('getProcesses')->willReturn(['test' => $processMock]);
+        $transitionLogMock = $this->getMockBuilder(TransitionLogInterface::class)->getMock();
+        $orderStateMachineMock->method('initTransitionLog')->willReturn($transitionLogMock);
+
+        // Act
+        $triggerEventReturnData = $orderStateMachineMock->triggerEvent('test', [], []);
+
+        // Assert
+        $this->assertInstanceOf(
+            OmsEventTriggerResponseTransfer::class,
+            $triggerEventReturnData[OmsConfig::OMS_EVENT_TRIGGER_RESPONSE],
+        );
+        $this->assertFalse($triggerEventReturnData[OmsConfig::OMS_EVENT_TRIGGER_RESPONSE]->getIsSuccessful());
+        $this->assertCount(1, $triggerEventReturnData[OmsConfig::OMS_EVENT_TRIGGER_RESPONSE]->getMessages());
+        $this->assertEquals($messageText, $triggerEventReturnData[OmsConfig::OMS_EVENT_TRIGGER_RESPONSE]->getMessages()[0]->getValue());
+    }
+
+    /**
+     * @return array<array>
+     */
+    public function errorMessagesDataProvider(): array
+    {
+        return [
+            ['test exception', new Exception('test exception')],
+            ['Currently not executable.', new Exception()],
+        ];
     }
 
     /**

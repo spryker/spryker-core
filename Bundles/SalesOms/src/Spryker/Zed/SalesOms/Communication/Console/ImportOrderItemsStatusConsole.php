@@ -8,6 +8,7 @@
 namespace Spryker\Zed\SalesOms\Communication\Console;
 
 use Exception;
+use Generated\Shared\Transfer\OmsEventTriggerResponseTransfer;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
@@ -82,6 +83,13 @@ class ImportOrderItemsStatusConsole extends Console
      * @var string
      */
     protected const TABLE_HEADER_COLUMN_MESSAGE = 'message';
+
+    /**
+     * @uses \Spryker\Zed\Oms\OmsConfig::OMS_EVENT_TRIGGER_RESPONSE
+     *
+     * @var string
+     */
+    protected const OMS_EVENT_TRIGGER_RESPONSE = 'oms_event_trigger_response';
 
     /**
      * @var \Symfony\Component\Console\Output\ConsoleOutputInterface
@@ -181,7 +189,7 @@ class ImportOrderItemsStatusConsole extends Console
                 if (!$salesOrderItemTransfer) {
                     throw new Exception('Sales order item not found');
                 }
-                $manualEvents = $this->getFactory()->getOmsFacade()->getManualEvents($salesOrderItemTransfer->getIdSalesOrderItem());
+                $manualEvents = $this->getFactory()->getOmsFacade()->getManualEvents($salesOrderItemTransfer->getIdSalesOrderItemOrFail());
 
                 if (!in_array($rowData[static::TABLE_HEADER_COLUMN_ORDER_ITEM_EVENT_OMS], $manualEvents)) {
                     throw new Exception(sprintf(
@@ -191,8 +199,18 @@ class ImportOrderItemsStatusConsole extends Console
                 }
                 $result = $this->getFactory()->getOmsFacade()->triggerEventForOneOrderItem(
                     $rowData[static::TABLE_HEADER_COLUMN_ORDER_ITEM_EVENT_OMS],
-                    $salesOrderItemTransfer->getIdSalesOrderItem(),
+                    $salesOrderItemTransfer->getIdSalesOrderItemOrFail(),
                 );
+                $omsEventTriggerResponseTransfer = $result[static::OMS_EVENT_TRIGGER_RESPONSE] ?? null;
+
+                if (
+                    $omsEventTriggerResponseTransfer instanceof OmsEventTriggerResponseTransfer
+                    && $omsEventTriggerResponseTransfer->getIsSuccessful() === false
+                ) {
+                    $messageTransfer = $omsEventTriggerResponseTransfer->getMessages()->getIterator()->current();
+
+                    throw new Exception($messageTransfer->getValue());
+                }
 
                 if ($result === null) {
                     throw new Exception('Can\'t trigger event.');
@@ -231,7 +249,7 @@ class ImportOrderItemsStatusConsole extends Console
             ->resolveFilePath($filePath);
 
         if (!$filePathResolverResponseTransfer->getIsSuccessful()) {
-            $this->error($filePathResolverResponseTransfer->getMessage()->getMessage());
+            $this->error($filePathResolverResponseTransfer->getMessageOrFail()->getMessageOrFail());
 
             return null;
         }

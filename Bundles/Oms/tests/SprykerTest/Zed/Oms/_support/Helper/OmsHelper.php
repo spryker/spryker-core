@@ -9,7 +9,9 @@ namespace SprykerTest\Zed\Oms\Helper;
 
 use Codeception\Module;
 use DateInterval;
+use Generated\Shared\DataBuilder\OmsEventTriggerResponseBuilder;
 use Generated\Shared\DataBuilder\OmsProductReservationBuilder;
+use Generated\Shared\Transfer\OmsEventTriggerResponseTransfer;
 use Generated\Shared\Transfer\OmsProductReservationTransfer;
 use Orm\Zed\Oms\Persistence\SpyOmsEventTimeout;
 use Orm\Zed\Oms\Persistence\SpyOmsEventTimeoutQuery;
@@ -169,6 +171,16 @@ class OmsHelper extends Module
         });
 
         return $omsOrderItemState;
+    }
+
+    /**
+     * @param array<mixed> $seedData
+     *
+     * @return \Generated\Shared\Transfer\OmsEventTriggerResponseTransfer
+     */
+    public function getOmsEventTriggerResponseTransfer(array $seedData): OmsEventTriggerResponseTransfer
+    {
+        return (new OmsEventTriggerResponseBuilder($seedData))->build();
     }
 
     /**

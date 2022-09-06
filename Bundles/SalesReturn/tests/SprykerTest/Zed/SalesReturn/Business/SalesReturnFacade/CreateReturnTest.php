@@ -11,13 +11,17 @@ use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\CustomerBuilder;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\OmsEventTriggerResponseTransfer;
 use Generated\Shared\Transfer\ReturnCreateRequestTransfer;
 use Generated\Shared\Transfer\ReturnItemTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\Sales\Communication\Plugin\Sales\CurrencyIsoCodeOrderItemExpanderPlugin;
 use Spryker\Zed\Sales\SalesDependencyProvider;
 use Spryker\Zed\SalesReturn\Communication\Plugin\Sales\UpdateOrderItemIsReturnableByItemStatePlugin;
+use Spryker\Zed\SalesReturn\Dependency\Facade\SalesReturnToOmsFacadeInterface;
 use Spryker\Zed\SalesReturn\SalesReturnConfig;
+use Spryker\Zed\SalesReturn\SalesReturnDependencyProvider;
 
 /**
  * Auto-generated group annotations
@@ -98,6 +102,13 @@ class CreateReturnTest extends Unit
     protected const GLOSSARY_KEY_CREATE_RETURN_STORE_ERROR = 'return.create_return.validation.store_error';
 
     /**
+     * @uses \Spryker\Zed\SalesReturn\Business\Writer\ReturnWriter::OMS_EVENT_TRIGGER_RESPONSE
+     *
+     * @var string
+     */
+    protected const OMS_EVENT_TRIGGER_RESPONSE = 'oms_event_trigger_response';
+
+    /**
      * @var \SprykerTest\Zed\SalesReturn\SalesReturnBusinessTester
      */
     protected $tester;
@@ -122,19 +133,9 @@ class CreateReturnTest extends Unit
     public function testCreateReturnCreatesReturn(): void
     {
         // Arrange
-        $orderTransfer = $this->tester->createOrderByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME);
-        $itemTransfer = $orderTransfer->getItems()->getIterator()->current();
-
-        $returnItemTransfer = (new ReturnItemTransfer())
-            ->setReason(static::FAKE_RETURN_REASON)
-            ->setOrderItem((new ItemTransfer())->setIdSalesOrderItem($itemTransfer->getIdSalesOrderItem()));
-
-        $this->tester->setItemState($itemTransfer->getIdSalesOrderItem(), static::SHIPPED_STATE_NAME);
-
-        $returnCreateRequestTransfer = (new ReturnCreateRequestTransfer())
-            ->setCustomer($orderTransfer->getCustomer())
-            ->setStore($orderTransfer->getStore())
-            ->addReturnItem($returnItemTransfer);
+        $returnCreateRequestTransfer = $this->tester->getReturnCreateRequestTransfer(static::DEFAULT_OMS_PROCESS_NAME);
+        $returnItemTransfer = $returnCreateRequestTransfer->getReturnItems()->getIterator()->current();
+        $itemTransfer = $returnItemTransfer->getOrderItem();
 
         // Act
         $returnResponseTransfer = $this->tester
@@ -146,9 +147,9 @@ class CreateReturnTest extends Unit
 
         // Assert
         $this->assertTrue($returnResponseTransfer->getIsSuccessful());
-        $this->assertSame($orderTransfer->getStore(), $returnTransfer->getStore());
+        $this->assertSame($returnCreateRequestTransfer->getStore(), $returnTransfer->getStore());
         $this->assertSame(
-            $orderTransfer->getCustomer()->getCustomerReference(),
+            $returnCreateRequestTransfer->getCustomer()->getCustomerReference(),
             $returnTransfer->getCustomerReference(),
         );
 
@@ -157,7 +158,7 @@ class CreateReturnTest extends Unit
         $this->assertSame(
             sprintf(
                 $this->getConfig()->getReturnReferenceFormat(),
-                $orderTransfer->getCustomer()->getCustomerReference(),
+                $returnCreateRequestTransfer->getCustomer()->getCustomerReference(),
                 1,
             ),
             $returnTransfer->getReturnReference(),
@@ -564,6 +565,38 @@ class CreateReturnTest extends Unit
         $this->tester
             ->getFacade()
             ->createReturn($returnCreateRequestTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateReturnReturnsErrorMessageInCaseOfNotSuccessfulEventTriggering()
+    {
+        // Arrange
+        $returnCreateRequestTransfer = $this->tester->getReturnCreateRequestTransfer(static::DEFAULT_OMS_PROCESS_NAME);
+        $returnItemTransfer = $returnCreateRequestTransfer->getReturnItems()->getIterator()->current();
+        $itemTransfer = $returnItemTransfer->getOrderItem();
+
+        $messageText = 'test message';
+        $omsFacadeMock = $this->createMock(SalesReturnToOmsFacadeInterface::class);
+        $omsFacadeMock->expects($this->once())
+            ->method('triggerEventForOrderItems')
+            ->willReturn([
+                static::OMS_EVENT_TRIGGER_RESPONSE => $this->tester->getOmsEventTriggerResponseTransfer([
+                    OmsEventTriggerResponseTransfer::MESSAGES => [
+                        [MessageTransfer::VALUE => $messageText],
+                    ],
+                ]),
+            ]);
+        $this->tester->setDependency(SalesReturnDependencyProvider::FACADE_OMS, $omsFacadeMock);
+
+        // Act
+        $returnResponseTransfer = $this->tester->getFacade()->createReturn($returnCreateRequestTransfer);
+
+        // Assert
+        $this->assertFalse($returnResponseTransfer->getIsSuccessful());
+        $this->assertCount(1, $returnResponseTransfer->getMessages());
+        $this->assertEquals($messageText, $returnResponseTransfer->getMessages()[0]->getValue());
     }
 
     /**

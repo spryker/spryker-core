@@ -109,6 +109,10 @@
     <transfer name="Locale">
     </transfer>
 
+    <transfer name="Message">
+        <property name="value" type="string"/>
+    </transfer>
+
     <transfer name="OmsProductReservation">
         <property name="idOmsProductReservation" type="int"/>
         <property name="reservationQuantity" type="decimal"/>
@@ -168,6 +172,11 @@
 
     <transfer name="OmsEvent">
         <property name="timeout" type="string"/>
+    </transfer>
+
+    <transfer name="OmsEventTriggerResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
     </transfer>
 
     <transfer name="TimeoutProcessorTimeoutRequest">

@@ -14,7 +14,7 @@ interface OmsEventTriggererInterface
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return void
+     * @return array|null
      */
-    public function triggerOrderItemsCancelEvent(OrderTransfer $orderTransfer): void;
+    public function triggerOrderItemsCancelEvent(OrderTransfer $orderTransfer): ?array;
 }

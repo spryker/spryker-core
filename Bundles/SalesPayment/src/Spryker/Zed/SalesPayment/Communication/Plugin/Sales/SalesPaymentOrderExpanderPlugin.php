@@ -13,6 +13,7 @@ use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderExpanderPluginInterface;
 
 /**
  * @method \Spryker\Zed\SalesPayment\Business\SalesPaymentFacadeInterface getFacade()
+ * @method \Spryker\Zed\SalesPayment\Communication\SalesPaymentCommunicationFactory getFactory()
  * @method \Spryker\Zed\SalesPayment\SalesPaymentConfig getConfig()
  */
 class SalesPaymentOrderExpanderPlugin extends AbstractPlugin implements OrderExpanderPluginInterface

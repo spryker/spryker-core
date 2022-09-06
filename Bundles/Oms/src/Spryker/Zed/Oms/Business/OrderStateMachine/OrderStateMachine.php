@@ -9,7 +9,9 @@ namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 
 use DateTime;
 use Exception;
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\OmsCheckConditionsQueryCriteriaTransfer;
+use Generated\Shared\Transfer\OmsEventTriggerResponseTransfer;
 use Generated\Shared\Transfer\ReservationRequestTransfer;
 use LogicException;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
@@ -563,6 +565,9 @@ class OrderStateMachine implements OrderStateMachineInterface
 
             $log->addCommand($orderItemEntity, $command);
 
+            $omsEventTriggerResponseTransfer = (new OmsEventTriggerResponseTransfer())->setIsSuccessful(true);
+            $this->returnData[OmsConfig::OMS_EVENT_TRIGGER_RESPONSE] = $omsEventTriggerResponseTransfer;
+
             try {
                 if ($command instanceof CommandByOrderInterface) {
                     $returnData = $command->run($orderItems, $orderEntity, $data);
@@ -586,6 +591,14 @@ class OrderStateMachine implements OrderStateMachineInterface
                 $log->saveAll();
 
                 ErrorLogger::getInstance()->log($e);
+
+                $errorMessage = $e->getMessage() ?: 'Currently not executable.';
+                $omsEventTriggerResponseTransfer
+                    ->setIsSuccessful(false)
+                    ->addMessage(
+                        (new MessageTransfer())->setValue($errorMessage),
+                    );
+                $this->returnData[OmsConfig::OMS_EVENT_TRIGGER_RESPONSE] = $omsEventTriggerResponseTransfer;
 
                 if ($type === static::BY_ORDER) {
                     return null; // intercept the processing of a grouped order items for the current order state

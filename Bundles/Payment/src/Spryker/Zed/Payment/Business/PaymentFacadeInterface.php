@@ -337,6 +337,8 @@ interface PaymentFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\SalesPayment\Business\SalesPaymentFacade::sendEventPaymentCancelReservationPending()} instead.
+     *
      * @param array<int> $orderItemIds
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
@@ -350,6 +352,8 @@ interface PaymentFacadeInterface
      * - Uses orderTransfer.orderReference, orderTransfer.currencyIsoCode, order item ids and total count to send the event.
      *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\SalesPayment\Business\SalesPaymentFacade::sendEventPaymentConfirmationPending()} instead.
      *
      * @param array<int> $orderItemIds
      * @param int $orderItemsTotal
@@ -370,6 +374,8 @@ interface PaymentFacadeInterface
      * - Total items count will be a negative number.
      *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\SalesPayment\Business\SalesPaymentFacade::sendEventPaymentRefundPending()} instead.
      *
      * @param array<int> $orderItemIds
      * @param int $orderItemsTotal

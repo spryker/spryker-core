@@ -17,6 +17,11 @@
         <property name="message" type="Message"/>
     </transfer>
 
+    <transfer name="OmsEventTriggerResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
     <transfer name="Message">
         <property name="message" type="string"/>
     </transfer>

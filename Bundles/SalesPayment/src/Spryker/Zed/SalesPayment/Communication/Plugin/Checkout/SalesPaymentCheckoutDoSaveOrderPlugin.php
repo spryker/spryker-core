@@ -16,6 +16,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * Requires Checkout ^4.0.0
  *
  * @method \Spryker\Zed\SalesPayment\Business\SalesPaymentFacadeInterface getFacade()
+ * @method \Spryker\Zed\SalesPayment\Communication\SalesPaymentCommunicationFactory getFactory()
  * @method \Spryker\Zed\SalesPayment\SalesPaymentConfig getConfig()
  */
 class SalesPaymentCheckoutDoSaveOrderPlugin extends AbstractPlugin implements CheckoutDoSaveOrderInterface

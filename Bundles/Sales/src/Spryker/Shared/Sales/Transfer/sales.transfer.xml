@@ -397,6 +397,11 @@
         <property name="mergeOperator" type="string"/>
     </transfer>
 
+    <transfer name="OmsEventTriggerResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
     <transfer name="OrderCancelRequest">
         <property name="idSalesOrder" type="int"/>
         <property name="customer" type="Customer"/>

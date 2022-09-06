@@ -35,13 +35,13 @@ class OmsEventTriggerer implements OmsEventTriggererInterface
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return void
+     * @return array|null
      */
-    public function triggerOrderItemsCancelEvent(OrderTransfer $orderTransfer): void
+    public function triggerOrderItemsCancelEvent(OrderTransfer $orderTransfer): ?array
     {
         $salesOrderItemIds = $this->extractSalesOrderItemIds($orderTransfer);
 
-        $this->omsFacade->triggerEventForOrderItems(static::EVENT_CANCEL, $salesOrderItemIds);
+        return $this->omsFacade->triggerEventForOrderItems(static::EVENT_CANCEL, $salesOrderItemIds);
     }
 
     /**

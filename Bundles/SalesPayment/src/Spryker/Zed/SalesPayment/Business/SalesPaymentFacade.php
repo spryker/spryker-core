@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SalesPayment\Business;
 
+use Generated\Shared\Transfer\EventPaymentTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
@@ -50,5 +51,53 @@ class SalesPaymentFacade extends AbstractFacade implements SalesPaymentFacadeInt
         return $this->getFactory()
             ->createSalesOrderExpander()
             ->expandOrderWithPayments($orderTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventPaymentTransfer $eventPaymentTransfer
+     *
+     * @return void
+     */
+    public function sendEventPaymentConfirmationPending(EventPaymentTransfer $eventPaymentTransfer): void
+    {
+        $this->getFactory()
+            ->createMessageEmitter()
+            ->sendEventPaymentConfirmationPending($eventPaymentTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventPaymentTransfer $eventPaymentTransfer
+     *
+     * @return void
+     */
+    public function sendEventPaymentRefundPending(EventPaymentTransfer $eventPaymentTransfer): void
+    {
+        $this->getFactory()
+            ->createMessageEmitter()
+            ->sendEventPaymentRefundPending($eventPaymentTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventPaymentTransfer $eventPaymentTransfer
+     *
+     * @return void
+     */
+    public function sendEventPaymentCancelReservationPending(EventPaymentTransfer $eventPaymentTransfer): void
+    {
+        $this->getFactory()
+            ->createMessageEmitter()
+            ->sendEventPaymentCancelReservationPending($eventPaymentTransfer);
     }
 }

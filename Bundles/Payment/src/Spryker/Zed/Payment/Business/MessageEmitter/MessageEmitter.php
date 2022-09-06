@@ -13,6 +13,9 @@ use Generated\Shared\Transfer\PaymentConfirmationRequestedTransfer;
 use Generated\Shared\Transfer\PaymentRefundRequestedTransfer;
 use Spryker\Zed\Payment\Dependency\Facade\PaymentToMessageBrokerInterface;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class MessageEmitter implements MessageEmitterInterface
 {
     /**

@@ -14,7 +14,7 @@ interface OmsEventTriggererInterface
     /**
      * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
      *
-     * @return void
+     * @return array|null
      */
-    public function triggerOrderItemsReturnEvent(ReturnTransfer $returnTransfer): void;
+    public function triggerOrderItemsReturnEvent(ReturnTransfer $returnTransfer): ?array;
 }

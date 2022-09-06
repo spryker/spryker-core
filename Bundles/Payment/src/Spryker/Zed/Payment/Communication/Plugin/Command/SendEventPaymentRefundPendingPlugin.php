@@ -14,6 +14,8 @@ use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByOrderInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\SalesPayment\Communication\Plugin\Oms\SendEventPaymentRefundPendingPlugin} instead.
+ *
  * @method \Spryker\Zed\Payment\Business\PaymentFacadeInterface getFacade()
  * @method \Spryker\Zed\Payment\Communication\PaymentCommunicationFactory getFactory()
  * @method \Spryker\Zed\Payment\PaymentConfig getConfig()
@@ -23,6 +25,9 @@ class SendEventPaymentRefundPendingPlugin extends AbstractPlugin implements Comm
 {
     /**
      * {@inheritDoc}
+     * - Sends event if total count of order items above zero.
+     * - Uses orderTransfer.orderReference, orderTransfer.currencyIsoCode, order item ids and total count to send the event.
+     * - Total items count will be a negative number.
      *
      * @api
      *

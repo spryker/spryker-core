@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\Oms\Communication\Controller;
 
+use Generated\Shared\Transfer\OmsEventTriggerResponseTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Spryker\Zed\Oms\OmsConfig;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
@@ -84,8 +86,8 @@ class TriggerController extends AbstractController
 
         /** @var string $event */
         $event = $request->query->get(static::REQUEST_PARAMETER_EVENT);
-        $this->getFacade()->triggerEventForOrderItems($event, $idOrderItems);
-        $this->addInfoMessage(static::MESSAGE_STATUS_CHANGED_SUCCESSFULLY);
+        $triggerEventReturnData = $this->getFacade()->triggerEventForOrderItems($event, $idOrderItems);
+        $this->addOmsEventTriggerStatusMessage($triggerEventReturnData);
 
         return $this->redirectResponse($redirect);
     }
@@ -119,10 +121,33 @@ class TriggerController extends AbstractController
 
         $orderItems = $this->getOrderItemsToTriggerAction($idOrder, $itemsList);
 
-        $this->getFacade()->triggerEvent($event, $orderItems, []);
-        $this->addInfoMessage(static::MESSAGE_STATUS_CHANGED_SUCCESSFULLY);
+        $triggerEventReturnData = $this->getFacade()->triggerEvent($event, $orderItems, []);
+        $this->addOmsEventTriggerStatusMessage($triggerEventReturnData);
 
         return $this->redirectResponse($redirect);
+    }
+
+    /**
+     * @param array<mixed>|null $triggerEventReturnData
+     *
+     * @return void
+     */
+    protected function addOmsEventTriggerStatusMessage(?array $triggerEventReturnData): void
+    {
+        $omsEventTriggerResponseTransfer = $triggerEventReturnData[OmsConfig::OMS_EVENT_TRIGGER_RESPONSE] ?? null;
+
+        if (
+            $omsEventTriggerResponseTransfer instanceof OmsEventTriggerResponseTransfer
+            && $omsEventTriggerResponseTransfer->getIsSuccessful() === false
+        ) {
+            foreach ($omsEventTriggerResponseTransfer->getMessages() as $messageTransfer) {
+                $this->addErrorMessage($messageTransfer->getValue());
+            }
+
+            return;
+        }
+
+        $this->addInfoMessage(static::MESSAGE_STATUS_CHANGED_SUCCESSFULLY);
     }
 
     /**

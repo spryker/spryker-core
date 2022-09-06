@@ -8,12 +8,12 @@
 namespace SprykerTest\Zed\SalesOms\Communication\Console;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\OmsEventTriggerResponseTransfer;
 use Generated\Shared\Transfer\SalesOrderItemTransfer;
-use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\Oms\Business\OmsFacadeInterface;
 use Spryker\Zed\SalesOms\Business\SalesOmsFacade;
 use Spryker\Zed\SalesOms\Communication\Console\ImportOrderItemsStatusConsole;
-use Spryker\Zed\SalesOms\Dependency\Facade\SalesOmsToOmsFacadeBridge;
+use Spryker\Zed\SalesOms\Dependency\Facade\SalesOmsToOmsFacadeInterface;
 use Spryker\Zed\SalesOms\SalesOmsDependencyProvider;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\BufferedOutput;
@@ -45,6 +45,13 @@ class ImportOrderItemsStatusConsoleTest extends Unit
      * @var string
      */
     protected const ARGUMENT_FILE_PATH = 'file-path';
+
+    /**
+     * @uses \Spryker\Zed\SalesOms\Communication\Console\ImportOrderItemsStatusConsole::OMS_EVENT_TRIGGER_RESPONSE
+     *
+     * @var string
+     */
+    protected const OMS_EVENT_TRIGGER_RESPONSE = 'oms_event_trigger_response';
 
     /**
      * @var \SprykerTest\Zed\SalesOms\SalesOmsCommunicationTester
@@ -89,6 +96,36 @@ class ImportOrderItemsStatusConsoleTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testExecuteConsoleFinishedWithoutErrorsWhenTriggerEventForOneOrderItemIsNotSuccessful()
+    {
+        // Arrange
+        $omsFacadeMock = $this->createMock(SalesOmsToOmsFacadeInterface::class);
+        $omsFacadeMock->method('getManualEvents')->willReturn(['test', 'ship']);
+        $omsFacadeMock->expects($this->once())
+            ->method('triggerEventForOneOrderItem')
+            ->willReturn([
+                static::OMS_EVENT_TRIGGER_RESPONSE => $this->tester->getOmsEventTriggerResponseTransfer([
+                    OmsEventTriggerResponseTransfer::MESSAGES => [
+                        [MessageTransfer::VALUE => 'test message'],
+                    ],
+                ]),
+            ]);
+        $this->tester->setDependency(SalesOmsDependencyProvider::FACADE_OMS, $omsFacadeMock);
+
+        $importOrderItemsStatusConsole = (new ImportOrderItemsStatusConsole())->setFacade($this->getSalesOmsFacadeMock());
+        $input = new ArrayInput([static::ARGUMENT_FILE_PATH => codecept_data_dir() . 'import/valid_import.csv']);
+        $output = new BufferedOutput();
+
+        // Act
+        $outputCode = $importOrderItemsStatusConsole->run($input, $output);
+
+        // Assert
+        $this->assertSame($outputCode, static::CODE_SUCCESS);
+    }
+
+    /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\SalesOms\Business\SalesOmsFacade
      */
     protected function getSalesOmsFacadeMock(): SalesOmsFacade
@@ -96,7 +133,7 @@ class ImportOrderItemsStatusConsoleTest extends Unit
         $salesOmsFacadeMock = $this->createMock(SalesOmsFacade::class);
 
         $salesOmsFacadeMock->method('findSalesOrderItemByOrderItemReference')->willReturn(
-            (new SalesOrderItemTransfer()),
+            (new SalesOrderItemTransfer())->setIdSalesOrderItem(1),
         );
 
         return $salesOmsFacadeMock;
@@ -107,12 +144,10 @@ class ImportOrderItemsStatusConsoleTest extends Unit
      */
     protected function setOmsFacadeDependency(): void
     {
-        $this->tester->setDependency(SalesOmsDependencyProvider::FACADE_OMS, function (Container $container) {
-            $omsFacadeMock = $this->createMock(OmsFacadeInterface::class);
+        $omsFacadeMock = $this->createMock(SalesOmsToOmsFacadeInterface::class);
+        $omsFacadeMock->method('getManualEvents')->willReturn(['test', 'ship']);
+        $omsFacadeMock->method('triggerEventForOneOrderItem')->willReturn([]);
 
-            $omsFacadeMock->method('triggerEventForOneOrderItem')->willReturn([]);
-
-            return new SalesOmsToOmsFacadeBridge($omsFacadeMock);
-        });
+        $this->tester->setDependency(SalesOmsDependencyProvider::FACADE_OMS, $omsFacadeMock);
     }
 }

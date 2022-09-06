@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Zed\SalesPayment\SalesPaymentDependencyProvider;
 use Spryker\Zed\SalesPaymentExtension\Dependency\Plugin\OrderPaymentExpanderPluginInterface;
+use SprykerTest\Shared\Testify\Helper\DependencyHelperTrait;
 use SprykerTest\Zed\Sales\Helper\BusinessHelper;
 
 /**
@@ -34,6 +35,8 @@ use SprykerTest\Zed\Sales\Helper\BusinessHelper;
  */
 class SalesPaymentFacadeTest extends Unit
 {
+    use DependencyHelperTrait;
+
     /**
      * @var string
      */
@@ -129,7 +132,7 @@ class SalesPaymentFacadeTest extends Unit
                 return $paymentTransfer;
             });
 
-        $this->tester->setDependency(
+        $this->getDependencyHelper()->setDependency(
             SalesPaymentDependencyProvider::SALES_PAYMENT_EXPANDER_PLUGINS,
             [
                 $salesPaymentExpanderPluginMock,
@@ -177,7 +180,7 @@ class SalesPaymentFacadeTest extends Unit
                     ->setAvailableAmount($fakeAvailableAmount);
             });
 
-        $this->tester->setDependency(
+        $this->getDependencyHelper()->setDependency(
             SalesPaymentDependencyProvider::SALES_PAYMENT_EXPANDER_PLUGINS,
             [
                 $salesPaymentExpanderPluginMock,

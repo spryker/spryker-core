@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Sales\Business\Writer;
 
 use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\OmsEventTriggerResponseTransfer;
 use Generated\Shared\Transfer\OrderCancelRequestTransfer;
 use Generated\Shared\Transfer\OrderCancelResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
@@ -25,6 +26,13 @@ class OrderWriter implements OrderWriterInterface
      * @var string
      */
     protected const GLOSSARY_KEY_ORDER_CANNOT_BE_CANCELLED = 'sales.error.order_cannot_be_canceled_due_to_wrong_item_state';
+
+    /**
+     * @uses \Spryker\Zed\Oms\OmsConfig::OMS_EVENT_TRIGGER_RESPONSE
+     *
+     * @var string
+     */
+    protected const OMS_EVENT_TRIGGER_RESPONSE = 'oms_event_trigger_response';
 
     /**
      * @var \Spryker\Zed\Sales\Business\Triggerer\OmsEventTriggererInterface
@@ -66,7 +74,17 @@ class OrderWriter implements OrderWriterInterface
             return $this->getErrorResponse(static::GLOSSARY_KEY_ORDER_CANNOT_BE_CANCELLED);
         }
 
-        $this->omsEventTriggerer->triggerOrderItemsCancelEvent($orderTransfer);
+        $triggerEventReturnData = $this->omsEventTriggerer->triggerOrderItemsCancelEvent($orderTransfer);
+        $omsEventTriggerResponseTransfer = $triggerEventReturnData[static::OMS_EVENT_TRIGGER_RESPONSE] ?? null;
+
+        if (
+            $omsEventTriggerResponseTransfer instanceof OmsEventTriggerResponseTransfer
+            && $omsEventTriggerResponseTransfer->getIsSuccessful() === false
+        ) {
+            return (new OrderCancelResponseTransfer())
+                ->setIsSuccessful(false)
+                ->setMessages($omsEventTriggerResponseTransfer->getMessages());
+        }
 
         return (new OrderCancelResponseTransfer())
             ->setIsSuccessful(true)

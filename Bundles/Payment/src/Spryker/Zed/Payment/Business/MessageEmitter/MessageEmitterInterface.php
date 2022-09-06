@@ -9,6 +9,9 @@ namespace Spryker\Zed\Payment\Business\MessageEmitter;
 
 use Generated\Shared\Transfer\OrderTransfer;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 interface MessageEmitterInterface
 {
     /**

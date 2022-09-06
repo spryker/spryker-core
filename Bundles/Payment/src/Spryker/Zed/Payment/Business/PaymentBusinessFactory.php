@@ -337,6 +337,8 @@ class PaymentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Zed\Payment\Business\MessageEmitter\MessageEmitterInterface
      */
     public function createMessageEmitter(): MessageEmitterInterface

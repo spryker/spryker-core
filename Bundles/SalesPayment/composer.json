@@ -7,8 +7,10 @@
         "php": ">=7.4",
         "spryker/checkout-extension": "^1.2.0",
         "spryker/kernel": "^3.30.0",
+        "spryker/message-broker": "^1.2.0",
         "spryker/payment": "^5.0.0",
         "spryker/propel-orm": "^1.9.0",
+        "spryker/sales": "^8.15.0 || ^10.0.0 || ^11.0.0",
         "spryker/sales-extension": "^1.8.0",
         "spryker/sales-payment-extension": "^1.0.0",
         "spryker/transfer": "^3.27.0"
@@ -17,11 +19,11 @@
         "spryker/code-sniffer": "*",
         "spryker/oms": "*",
         "spryker/propel": "*",
-        "spryker/sales": "*",
         "spryker/testify": "*"
     },
     "suggest": {
-        "spryker/checkout": "If you want to use Checkout plugins."
+        "spryker/checkout": "If you want to use Checkout plugins.",
+        "spryker/oms": "If you want to use Oms command plugins."
     },
     "autoload": {
         "psr-4": {

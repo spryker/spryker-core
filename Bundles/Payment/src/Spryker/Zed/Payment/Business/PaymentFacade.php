@@ -371,6 +371,8 @@ class PaymentFacade extends AbstractFacade implements PaymentFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\SalesPayment\Business\SalesPaymentFacade::sendEventPaymentCancelReservationPending()} instead.
+     *
      * @param array<int> $orderItemIds
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
@@ -387,6 +389,8 @@ class PaymentFacade extends AbstractFacade implements PaymentFacadeInterface
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\SalesPayment\Business\SalesPaymentFacade::sendEventPaymentConfirmationPending()} instead.
      *
      * @param array<int> $orderItemIds
      * @param int $orderItemsTotal
@@ -419,6 +423,8 @@ class PaymentFacade extends AbstractFacade implements PaymentFacadeInterface
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\SalesPayment\Business\SalesPaymentFacade::sendEventPaymentRefundPending()} instead.
      *
      * @param array<int> $orderItemIds
      * @param int $orderItemsTotal

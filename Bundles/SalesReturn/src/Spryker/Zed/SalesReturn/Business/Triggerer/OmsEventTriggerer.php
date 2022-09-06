@@ -39,13 +39,13 @@ class OmsEventTriggerer implements OmsEventTriggererInterface
     /**
      * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
      *
-     * @return void
+     * @return array|null
      */
-    public function triggerOrderItemsReturnEvent(ReturnTransfer $returnTransfer): void
+    public function triggerOrderItemsReturnEvent(ReturnTransfer $returnTransfer): ?array
     {
         $salesOrderItemIds = $this->extractSalesOrderItemIds($returnTransfer);
 
-        $this->omsFacade->triggerEventForOrderItems($this->salesReturnConfig->getStartReturnEvent(), $salesOrderItemIds);
+        return $this->omsFacade->triggerEventForOrderItems($this->salesReturnConfig->getStartReturnEvent(), $salesOrderItemIds);
     }
 
     /**

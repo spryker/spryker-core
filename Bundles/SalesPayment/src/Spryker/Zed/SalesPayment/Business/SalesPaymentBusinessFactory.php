@@ -8,10 +8,18 @@
 namespace Spryker\Zed\SalesPayment\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\SalesPayment\Business\Calculator\CaptureAmountCalculator;
+use Spryker\Zed\SalesPayment\Business\Calculator\CaptureAmountCalculatorInterface;
+use Spryker\Zed\SalesPayment\Business\Calculator\RefundAmountCalculator;
+use Spryker\Zed\SalesPayment\Business\Calculator\RefundAmountCalculatorInterface;
 use Spryker\Zed\SalesPayment\Business\Expander\SalesOrderExpander;
 use Spryker\Zed\SalesPayment\Business\Expander\SalesOrderExpanderInterface;
+use Spryker\Zed\SalesPayment\Business\MessageEmitter\MessageEmitter;
+use Spryker\Zed\SalesPayment\Business\MessageEmitter\MessageEmitterInterface;
 use Spryker\Zed\SalesPayment\Business\Writer\SalesPaymentWriter;
 use Spryker\Zed\SalesPayment\Business\Writer\SalesPaymentWriterInterface;
+use Spryker\Zed\SalesPayment\Dependency\Facade\SalesPaymentToMessageBrokerFacadeInterface;
+use Spryker\Zed\SalesPayment\Dependency\Facade\SalesPaymentToSalesFacadeInterface;
 use Spryker\Zed\SalesPayment\SalesPaymentDependencyProvider;
 
 /**
@@ -46,5 +54,51 @@ class SalesPaymentBusinessFactory extends AbstractBusinessFactory
     public function getOrderPaymentExpanderPlugins(): array
     {
         return $this->getProvidedDependency(SalesPaymentDependencyProvider::SALES_PAYMENT_EXPANDER_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesPayment\Business\MessageEmitter\MessageEmitterInterface
+     */
+    public function createMessageEmitter(): MessageEmitterInterface
+    {
+        return new MessageEmitter(
+            $this->getMessageBrokerFacade(),
+            $this->getSalesFacade(),
+            $this->getConfig(),
+            $this->createCaptureAmountCalculator(),
+            $this->createRefundAmountCalculator(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesPayment\Business\Calculator\CaptureAmountCalculatorInterface
+     */
+    public function createCaptureAmountCalculator(): CaptureAmountCalculatorInterface
+    {
+        return new CaptureAmountCalculator($this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesPayment\Business\Calculator\RefundAmountCalculatorInterface
+     */
+    public function createRefundAmountCalculator(): RefundAmountCalculatorInterface
+    {
+        return new RefundAmountCalculator($this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesPayment\Dependency\Facade\SalesPaymentToMessageBrokerFacadeInterface
+     */
+    public function getMessageBrokerFacade(): SalesPaymentToMessageBrokerFacadeInterface
+    {
+        return $this->getProvidedDependency(SalesPaymentDependencyProvider::FACADE_MESSAGE_BROKER);
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesPayment\Dependency\Facade\SalesPaymentToSalesFacadeInterface
+     */
+    public function getSalesFacade(): SalesPaymentToSalesFacadeInterface
+    {
+        return $this->getProvidedDependency(SalesPaymentDependencyProvider::FACADE_SALES);
     }
 }

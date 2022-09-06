@@ -14,6 +14,8 @@ use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByOrderInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\SalesPayment\Communication\Plugin\Oms\SendEventPaymentCancelReservationPendingPlugin} instead.
+ *
  * @method \Spryker\Zed\Payment\Business\PaymentFacadeInterface getFacade()
  * @method \Spryker\Zed\Payment\Communication\PaymentCommunicationFactory getFactory()
  * @method \Spryker\Zed\Payment\PaymentConfig getConfig()
@@ -23,6 +25,7 @@ class SendEventPaymentCancelReservationPendingPlugin extends AbstractPlugin impl
 {
     /**
      * {@inheritDoc}
+     * - Uses OrderTransfer.orderReference, OrderTransfer.currencyIsoCode and order item ids to send the event.
      *
      * @api
      *

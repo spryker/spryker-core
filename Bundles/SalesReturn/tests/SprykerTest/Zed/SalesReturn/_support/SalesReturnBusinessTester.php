@@ -132,6 +132,27 @@ class SalesReturnBusinessTester extends Actor
     }
 
     /**
+     * @param string $omsProcessName
+     *
+     * @return \Generated\Shared\Transfer\ReturnCreateRequestTransfer
+     */
+    public function getReturnCreateRequestTransfer(string $omsProcessName): ReturnCreateRequestTransfer
+    {
+        $orderTransfer = $this->createOrderByStateMachineProcessName($omsProcessName);
+        $itemTransfer = $orderTransfer->getItems()->getIterator()->current();
+
+        $returnItemTransfer = (new ReturnItemTransfer())
+            ->setReason('FAKE_RETURN_REASON')
+            ->setOrderItem((new ItemTransfer())->setIdSalesOrderItem($itemTransfer->getIdSalesOrderItem()));
+        $this->setItemState($itemTransfer->getIdSalesOrderItem(), static::SHIPPED_STATE_NAME);
+
+        return (new ReturnCreateRequestTransfer())
+            ->setCustomer($orderTransfer->getCustomer())
+            ->setStore($orderTransfer->getStore())
+            ->addReturnItem($returnItemTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param array $currencyData

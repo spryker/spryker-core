@@ -9,6 +9,7 @@ namespace Spryker\Zed\SalesReturn\Business\Writer;
 
 use ArrayObject;
 use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\OmsEventTriggerResponseTransfer;
 use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Generated\Shared\Transfer\ReturnCreateRequestTransfer;
 use Generated\Shared\Transfer\ReturnFilterTransfer;
@@ -29,6 +30,13 @@ class ReturnWriter implements ReturnWriterInterface
      * @var string
      */
     protected const GLOSSARY_KEY_CREATE_RETURN_ITEM_REQUIRED_FIELDS_ERROR = 'return.create_return.validation.required_item_fields_error';
+
+    /**
+     * @uses \Spryker\Zed\Oms\OmsConfig::OMS_EVENT_TRIGGER_RESPONSE
+     *
+     * @var string
+     */
+    protected const OMS_EVENT_TRIGGER_RESPONSE = 'oms_event_trigger_response';
 
     /**
      * @var \Spryker\Zed\SalesReturn\Persistence\SalesReturnEntityManagerInterface
@@ -124,7 +132,17 @@ class ReturnWriter implements ReturnWriterInterface
         $returnTransfer = $this->createReturnTransfer($returnCreateRequestTransfer);
         $returnTransfer = $this->createReturnItemTransfers($returnTransfer, $itemTransfers);
 
-        $this->omsEventTriggerer->triggerOrderItemsReturnEvent($returnTransfer);
+        $triggerEventReturnData = $this->omsEventTriggerer->triggerOrderItemsReturnEvent($returnTransfer);
+        $omsEventTriggerResponseTransfer = $triggerEventReturnData[static::OMS_EVENT_TRIGGER_RESPONSE] ?? null;
+
+        if (
+            $omsEventTriggerResponseTransfer instanceof OmsEventTriggerResponseTransfer
+            && $omsEventTriggerResponseTransfer->getIsSuccessful() === false
+        ) {
+            return (new ReturnResponseTransfer())
+                ->setIsSuccessful(false)
+                ->setMessages($omsEventTriggerResponseTransfer->getMessages());
+        }
 
         return $this->returnReader->getReturn(
             (new ReturnFilterTransfer())->setReturnReference($returnTransfer->getReturnReference()),

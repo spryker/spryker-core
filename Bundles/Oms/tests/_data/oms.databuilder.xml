@@ -4,6 +4,15 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="spryker:databuilder-01 http://static.spryker.com/databuilder-01.xsd"
 >
+    <transfer name="Message">
+        <property name="value" dataBuilderRule="sentence(2)"/>
+    </transfer>
+
+    <transfer name="OmsEventTriggerResponse">
+        <property name="isSuccessful" dataBuilderRule="boolean(0)"/>
+        <property name="messages" dataBuilderRule="Message"/>
+    </transfer>
+
     <transfer name="OmsProductReservation">
         <property name="reservationQuantity" dataBuilderRule="randomNumber(5)"/>
         <property name="sku" dataBuilderRule="="/>

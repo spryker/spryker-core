@@ -9,9 +9,12 @@ namespace SprykerTest\Zed\Sales\Business\Facade;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\OmsEventTriggerResponseTransfer;
 use Generated\Shared\Transfer\OrderCancelRequestTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use Spryker\Zed\Sales\SalesDependencyProvider;
 use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderExpanderPluginInterface;
 
@@ -66,6 +69,13 @@ class CancelOrderTest extends Test
      * @var string
      */
     protected const GLOSSARY_KEY_ORDER_CANNOT_BE_CANCELLED = 'sales.error.order_cannot_be_canceled_due_to_wrong_item_state';
+
+    /**
+     * @uses \Spryker\Zed\Sales\Business\Writer\OrderWriter::OMS_EVENT_TRIGGER_RESPONSE
+     *
+     * @var string
+     */
+    protected const OMS_EVENT_TRIGGER_RESPONSE = 'oms_event_trigger_response';
 
     /**
      * @var \SprykerTest\Zed\Sales\SalesBusinessTester
@@ -211,6 +221,49 @@ class CancelOrderTest extends Test
         $this->tester
             ->getFacade()
             ->cancelOrder($orderCancelRequestTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCancelOrderReturnsErrorMessageInCaseOfNotSuccessfulEventTriggering()
+    {
+        // Arrange
+        if (!method_exists($this->tester, 'getOmsEventTriggerResponseTransfer')) {
+            $this->markTestSkipped('Sales does not support current OMS version.');
+        }
+
+        $orderTransfer = $this->tester->createOrderByStateMachineProcessName(
+            static::DEFAULT_OMS_PROCESS_NAME_WITH_CANCELLABLE_FLAGS,
+        );
+        $orderCancelRequestTransfer = (new OrderCancelRequestTransfer())
+            ->setIdSalesOrder($orderTransfer->getIdSalesOrder())
+            ->setCustomer($orderTransfer->getCustomer());
+
+        $messageText = 'test message';
+        $omsFacadeMock = $this->createMock(SalesToOmsInterface::class);
+        $omsFacadeMock->expects($this->once())
+            ->method('triggerEventForOrderItems')
+            ->willReturn([
+                static::OMS_EVENT_TRIGGER_RESPONSE => $this->tester->getOmsEventTriggerResponseTransfer([
+                    OmsEventTriggerResponseTransfer::MESSAGES => [
+                        [MessageTransfer::VALUE => $messageText],
+                    ],
+                ]),
+            ]);
+        $this->tester->setDependency(SalesDependencyProvider::FACADE_OMS, $omsFacadeMock);
+        $this->tester->setDependency(
+            SalesDependencyProvider::HYDRATE_ORDER_PLUGINS,
+            [$this->getOrderExpanderPluginMock()],
+        );
+
+        // Act
+        $orderCancelResponseTransfer = $this->tester->getFacade()->cancelOrder($orderCancelRequestTransfer);
+
+        // Assert
+        $this->assertFalse($orderCancelResponseTransfer->getIsSuccessful());
+        $this->assertCount(1, $orderCancelResponseTransfer->getMessages());
+        $this->assertEquals($messageText, $orderCancelResponseTransfer->getMessages()[0]->getValue());
     }
 
     /**

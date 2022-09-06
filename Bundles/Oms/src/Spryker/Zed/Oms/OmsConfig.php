@@ -20,6 +20,11 @@ class OmsConfig extends AbstractBundleConfig
     public const EVENT_CANCEL = 'cancel';
 
     /**
+     * @var string
+     */
+    public const OMS_EVENT_TRIGGER_RESPONSE = 'oms_event_trigger_response';
+
+    /**
      * @api
      *
      * @return string

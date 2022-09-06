@@ -8,6 +8,8 @@
 namespace SprykerTest\Zed\SalesPayment;
 
 use Codeception\Actor;
+use Generated\Shared\DataBuilder\OrderBuilder;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Orm\Zed\Payment\Persistence\SpySalesPaymentQuery;
 
@@ -32,6 +34,21 @@ class SalesPaymentBusinessTester extends Actor
     use _generated\SalesPaymentBusinessTesterActions;
 
     /**
+     * @var string
+     */
+    public const KEY_EXPECTED_AMOUNT = 'expectedAmount';
+
+    /**
+     * @var string
+     */
+    public const KEY_ORDER = 'order';
+
+    /**
+     * @var string
+     */
+    public const KEY_SENT_ITEM_IDS = 'sentItemIds';
+
+    /**
      * @param \Generated\Shared\Transfer\PaymentTransfer $paymentTransfer
      *
      * @return void
@@ -48,5 +65,15 @@ class SalesPaymentBusinessTester extends Actor
         $this->assertEquals($paymentTransfer->getPaymentProvider(), $salesPaymentMethodTypeEntity->getPaymentProvider());
         $this->assertEquals($paymentTransfer->getPaymentMethod(), $salesPaymentMethodTypeEntity->getPaymentMethod());
         $this->assertEquals($paymentTransfer->getAmount(), $salesPaymentEntity->getAmount());
+    }
+
+    /**
+     * @param array<mixed> $seedData
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function getOrderTransfer(array $seedData): OrderTransfer
+    {
+        return (new OrderBuilder($seedData))->build();
     }
 }

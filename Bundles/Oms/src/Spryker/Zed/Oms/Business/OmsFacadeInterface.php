@@ -87,7 +87,9 @@ interface OmsFacadeInterface
      *  - Sets timeouts for timeout events
      *  - Triggers item reservation plugins
      *  - Unlocks state machine trigger
-     *  - Returns data which was aggregated from state machine plugins
+     *  - Returns an array with data aggregated from the state machine plugins and an `OmsEventTriggerResponseTransfer` by the key `\Spryker\Zed\Oms\OmsConfig::OMS_EVENT_TRIGGER_RESPONSE`.
+     *  - If command plugins execution ends without issues `OmsEventTriggerResponse.isSuccessful = true`.
+     *  - In case of any error in command plugin `OmsEventTriggerResponse.isSuccessful = false` and `OmsEventTriggerResponse.messages` contains the errors description.
      *  - Returns NULL is case of an internal failure
      *
      * @api
@@ -112,7 +114,9 @@ interface OmsFacadeInterface
      *  - Sets timeouts for timeout events
      *  - Triggers item reservation plugins
      *  - Unlocks state machine trigger
-     *  - Returns data which was aggregated from state machine plugins
+     *  - Returns an array with data aggregated from the state machine plugins and an `OmsEventTriggerResponseTransfer` by the key `\Spryker\Zed\Oms\OmsConfig::OMS_EVENT_TRIGGER_RESPONSE`.
+     *  - If command plugins execution ends without issues `OmsEventTriggerResponse.isSuccessful = true`.
+     *  - In case of any error in command plugin `OmsEventTriggerResponse.isSuccessful = false` and `OmsEventTriggerResponse.messages` contains the errors description.
      *  - Returns NULL is case of an internal failure
      *
      * @api
@@ -135,7 +139,9 @@ interface OmsFacadeInterface
      *  - Sets timeouts for timeout events
      *  - Triggers item reservation plugins
      *  - Unlocks state machine trigger
-     *  - Returns data which was aggregated from state machine plugins
+     *  - Returns an array with data aggregated from the state machine plugins and an `OmsEventTriggerResponseTransfer` by the key `\Spryker\Zed\Oms\OmsConfig::OMS_EVENT_TRIGGER_RESPONSE`.
+     *  - If command plugins execution ends without issues `OmsEventTriggerResponse.isSuccessful = true`.
+     *  - In case of any error in command plugin `OmsEventTriggerResponse.isSuccessful = false` and `OmsEventTriggerResponse.messages` contains the errors description.
      *  - Returns NULL is case of an internal failure
      *
      * @api
@@ -365,7 +371,9 @@ interface OmsFacadeInterface
      *  - Sets timeouts for timeout events
      *  - Triggers item reservation plugins
      *  - Unlocks state machine trigger
-     *  - Returns data which was aggregated from state machine plugins
+     *  - Returns an array with data aggregated from the state machine plugins and an `OmsEventTriggerResponseTransfer` by the key `\Spryker\Zed\Oms\OmsConfig::OMS_EVENT_TRIGGER_RESPONSE`.
+     *  - If command plugins execution ends without issues `OmsEventTriggerResponse.isSuccessful = true`.
+     *  - In case of any error in command plugin `OmsEventTriggerResponse.isSuccessful = false` and `OmsEventTriggerResponse.messages` contains the errors description.
      *  - Returns NULL is case of an internal failure
      *
      * @api
@@ -390,7 +398,9 @@ interface OmsFacadeInterface
      *  - Sets timeouts for timeout events
      *  - Triggers item reservation plugins
      *  - Unlocks state machine trigger
-     *  - Returns data which was aggregated from state machine plugins
+     *  - Returns an array with data aggregated from the state machine plugins and an `OmsEventTriggerResponseTransfer` by the key `\Spryker\Zed\Oms\OmsConfig::OMS_EVENT_TRIGGER_RESPONSE`.
+     *  - If command plugins execution ends without issues `OmsEventTriggerResponse.isSuccessful = true`.
+     *  - In case of any error in command plugin `OmsEventTriggerResponse.isSuccessful = false` and `OmsEventTriggerResponse.messages` contains the errors description.
      *  - Returns NULL is case of an internal failure
      *
      * @api
@@ -414,7 +424,9 @@ interface OmsFacadeInterface
      *  - Sets timeouts for timeout events
      *  - Triggers item reservation plugins
      *  - Unlocks state machine trigger
-     *  - Returns data which was aggregated from state machine plugins
+     *  - Returns an array with data aggregated from the state machine plugins and an `OmsEventTriggerResponseTransfer` by the key `\Spryker\Zed\Oms\OmsConfig::OMS_EVENT_TRIGGER_RESPONSE`.
+     *  - If command plugins execution ends without issues `OmsEventTriggerResponse.isSuccessful = true`.
+     *  - In case of any error in command plugin `OmsEventTriggerResponse.isSuccessful = false` and `OmsEventTriggerResponse.messages` contains the errors description.
      *  - Returns NULL is case of an internal failure
      *
      * @api
