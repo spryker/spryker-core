@@ -22,6 +22,7 @@ class RequestCorsValidatorPlugin extends AbstractPlugin implements RequestAfterR
      * {@inheritDoc}
      * - Validates that the `access-control-request-method` header is present and allowed for the resource.
      * - Validates that the `access-control-request-headers` header is present and is allowed in the `\Spryker\Glue\GlueRestApiConvention\GlueRestApiConventionConfig::getCorsAllowedHeaders()`.
+     * - Validates that the `origin` header is present.
      * - Does nothing if the method used by the request is not OPTIONS.
      *
      * @api

@@ -40,6 +40,11 @@ class RequestCorsValidator implements RequestValidatorInterface
     /**
      * @var string
      */
+    protected const HEADER_ORIGIN = 'origin';
+
+    /**
+     * @var string
+     */
     protected const METHOD_GET_COLLECTION = 'get_collection';
 
     protected GlueBackendApiApplicationConfig $config;
@@ -84,6 +89,17 @@ class RequestCorsValidator implements RequestValidatorInterface
      */
     protected function validateHeaders(array $headers): GlueRequestValidationTransfer
     {
+        if (!isset($headers[static::HEADER_ORIGIN])) {
+            $glueErrorTransfer = (new GlueErrorTransfer())
+                ->setMessage('The required header `origin` for the options method is missing.')
+                ->setStatus(Response::HTTP_NOT_IMPLEMENTED);
+
+            return (new GlueRequestValidationTransfer())
+                ->setIsValid(false)
+                ->addError($glueErrorTransfer)
+                ->setStatus(Response::HTTP_NOT_IMPLEMENTED);
+        }
+
         if (empty($headers[static::HEADER_ACCESS_CONTROL_REQUEST_HEADERS])) {
             return (new GlueRequestValidationTransfer())->setIsValid(true);
         }

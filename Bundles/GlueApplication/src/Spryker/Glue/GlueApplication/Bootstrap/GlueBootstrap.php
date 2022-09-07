@@ -58,7 +58,25 @@ class GlueBootstrap
         $apiApplicationContext = new GlueApiContextTransfer();
 
         $contextExpanderPlugins = $this->getFactory()->getGlueContextExpanderPlugins();
+        if ($contextExpanderPlugins) {
+            return $this->expandContextWithContextExpanderPlugins($apiApplicationContext, $contextExpanderPlugins);
+        }
 
+        return $this->getFactory()->createContextHttpExpander()->expand($apiApplicationContext);
+    }
+
+    /**
+     * @deprecated Will be removed in the next major. Exists for BC-reason only.
+     *
+     * @param \Generated\Shared\Transfer\GlueApiContextTransfer $apiApplicationContext
+     * @param array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\GlueContextExpanderPluginInterface> $contextExpanderPlugins
+     *
+     * @return \Generated\Shared\Transfer\GlueApiContextTransfer
+     */
+    protected function expandContextWithContextExpanderPlugins(
+        GlueApiContextTransfer $apiApplicationContext,
+        array $contextExpanderPlugins
+    ): GlueApiContextTransfer {
         foreach ($contextExpanderPlugins as $contextExpanderPlugin) {
             $apiApplicationContext = $contextExpanderPlugin->expand($apiApplicationContext);
         }

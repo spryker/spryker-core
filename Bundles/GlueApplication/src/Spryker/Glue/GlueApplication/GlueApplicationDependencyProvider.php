@@ -154,11 +154,15 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_GLUE_APPLICATION_BOOTSTRAP = 'PLUGINS_GLUE_APPLICATION_BOOTSTRAP';
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @var string
      */
     public const PLUGIN_API_CONTEXT_EXPANDER = 'PLUGIN_API_CONTEXT_EXPANDER';
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @var string
      */
     public const PLUGINS_COMMUNICATION_PROTOCOL = 'PLUGINS_COMMUNICATION_PROTOCOL';
@@ -729,6 +733,8 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Spryker\Glue\Kernel\Container $container
      *
      * @return \Spryker\Glue\Kernel\Container
@@ -743,6 +749,8 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\GlueContextExpanderPluginInterface>
      */
     protected function getGlueContextExpanderPlugins(): array
@@ -751,6 +759,8 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Spryker\Glue\Kernel\Container $container
      *
      * @return \Spryker\Glue\Kernel\Container
@@ -765,6 +775,8 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\CommunicationProtocolPluginInterface>
      */
     protected function getCommunicationProtocolPlugins(): array

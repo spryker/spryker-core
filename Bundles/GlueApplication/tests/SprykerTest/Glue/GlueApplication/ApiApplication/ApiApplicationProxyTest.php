@@ -12,8 +12,9 @@ use Spryker\Glue\GlueApplication\ApiApplication\ApiApplicationProxy;
 use Spryker\Glue\GlueApplication\ApiApplication\RequestFlowExecutorInterface;
 use Spryker\Glue\GlueApplication\ApiApplication\Type\RequestFlowAgnosticApiApplication;
 use Spryker\Glue\GlueApplication\ApiApplication\Type\RequestFlowAwareApiApplication;
-use Spryker\Glue\GlueApplication\Exception\MissingCommunicationProtocolException;
 use Spryker\Glue\GlueApplication\Exception\UnknownRequestFlowImplementationException;
+use Spryker\Glue\GlueApplication\Http\Request\RequestBuilderInterface;
+use Spryker\Glue\GlueApplication\Http\Response\HttpSenderInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\CommunicationProtocolPluginInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ConventionPluginInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\GlueApplicationBootstrapPluginInterface;
@@ -51,11 +52,23 @@ class ApiApplicationProxyTest extends Unit
             ->method('getApplication')
             ->willReturn($applicationMock);
 
+        $requestBuilderMock = $this->createMock(RequestBuilderInterface::class);
+        $requestBuilderMock
+            ->expects($this->never())
+            ->method('extract');
+
+        $httpSenderMock = $this->createMock(HttpSenderInterface::class);
+        $httpSenderMock
+            ->expects($this->never())
+            ->method('sendResponse');
+
         $apiApplicationProxy = new ApiApplicationProxy(
             $bootstrapPluginMock,
             $requestFlowExecutorMock,
             [$communicationProtocolPluginMock],
             [$apiApplicationConventionMock],
+            $requestBuilderMock,
+            $httpSenderMock,
         );
         $apiApplicationProxy->boot();
     }
@@ -83,11 +96,23 @@ class ApiApplicationProxyTest extends Unit
             ->method('getApplication')
             ->willReturn($applicationMock);
 
+        $requestBuilderMock = $this->createMock(RequestBuilderInterface::class);
+        $requestBuilderMock
+            ->expects($this->never())
+            ->method('extract');
+
+        $httpSenderMock = $this->createMock(HttpSenderInterface::class);
+        $httpSenderMock
+            ->expects($this->never())
+            ->method('sendResponse');
+
         $apiApplicationProxy = new ApiApplicationProxy(
             $bootstrapPluginMock,
             $requestFlowExecutorMock,
             [$communicationProtocolPluginMock],
             [$apiApplicationConventionMock],
+            $requestBuilderMock,
+            $httpSenderMock,
         );
         $apiApplicationProxy->run();
     }
@@ -95,7 +120,7 @@ class ApiApplicationProxyTest extends Unit
     /**
      * @return void
      */
-    public function testExecuteRequestIsExecutedOnRequestFlowAwareApiApplicationPlugin(): void
+    public function testExecuteRequestIsExecutedOnRequestFlowAwareApiApplicationPluginIfCommunicationProtocolIsDefined(): void
     {
         $apiApplicationConventionMock = $this->createMock(ConventionPluginInterface::class);
         $apiApplicationConventionMock
@@ -125,11 +150,23 @@ class ApiApplicationProxyTest extends Unit
             ->method('getApplication')
             ->willReturn($applicationMock);
 
+        $requestBuilderMock = $this->createMock(RequestBuilderInterface::class);
+        $requestBuilderMock
+            ->expects($this->never())
+            ->method('extract');
+
+        $httpSenderMock = $this->createMock(HttpSenderInterface::class);
+        $httpSenderMock
+            ->expects($this->never())
+            ->method('sendResponse');
+
         $apiApplicationProxy = new ApiApplicationProxy(
             $bootstrapPluginMock,
             $requestFlowExecutorMock,
             [$communicationProtocolPluginMock],
             [$apiApplicationConventionMock],
+            $requestBuilderMock,
+            $httpSenderMock,
         );
         $apiApplicationProxy->run();
     }
@@ -137,7 +174,7 @@ class ApiApplicationProxyTest extends Unit
     /**
      * @return void
      */
-    public function testExceptionIsThrownIfCommunicationPluginNotApplicable(): void
+    public function testExecuteRequestIsExecutedOnRequestFlowAwareApiApplicationPluginThoughDefaultHttpProtocolIfCommunicationPluginNotApplicable(): void
     {
         $apiApplicationConventionMock = $this->createMock(ConventionPluginInterface::class);
 
@@ -149,7 +186,7 @@ class ApiApplicationProxyTest extends Unit
 
         $requestFlowExecutorMock = $this->createMock(RequestFlowExecutorInterface::class);
         $requestFlowExecutorMock
-            ->expects($this->never())
+            ->expects($this->once())
             ->method('executeRequestFlow');
 
         $applicationMock = $this->createMock(RequestFlowAwareApiApplication::class);
@@ -163,18 +200,71 @@ class ApiApplicationProxyTest extends Unit
             ->method('getApplication')
             ->willReturn($applicationMock);
 
-        $this->expectException(MissingCommunicationProtocolException::class);
-        $this->expectExceptionMessage(sprintf(
-            'No communication protocol that implements `%s` was found for the current request.
-                Please implement one and inject into `GlueApplicationDependencyProvider::getCommunicationProtocolPlugins()`',
-            CommunicationProtocolPluginInterface::class,
-        ));
+        $requestBuilderMock = $this->createMock(RequestBuilderInterface::class);
+        $requestBuilderMock
+            ->expects($this->once())
+            ->method('extract');
+
+        $httpSenderMock = $this->createMock(HttpSenderInterface::class);
+        $httpSenderMock
+            ->expects($this->once())
+            ->method('sendResponse');
 
         $apiApplicationProxy = new ApiApplicationProxy(
             $bootstrapPluginMock,
             $requestFlowExecutorMock,
             [$communicationProtocolPluginMock],
             [$apiApplicationConventionMock],
+            $requestBuilderMock,
+            $httpSenderMock,
+        );
+        $apiApplicationProxy->run();
+    }
+
+    /**
+     * @return void
+     */
+    public function testExecuteRequestIsExecutedOnRequestFlowAwareApiApplicationPluginThoughDefaultHttpProtocol(): void
+    {
+        $apiApplicationConventionMock = $this->createMock(ConventionPluginInterface::class);
+        $apiApplicationConventionMock
+            ->expects($this->once())
+            ->method('isApplicable')
+            ->willReturn(true);
+
+        $requestFlowExecutorMock = $this->createMock(RequestFlowExecutorInterface::class);
+        $requestFlowExecutorMock
+            ->expects($this->once())
+            ->method('executeRequestFlow');
+
+        $applicationMock = $this->createMock(RequestFlowAwareApiApplication::class);
+        $applicationMock
+            ->expects($this->never())
+            ->method('run');
+
+        $bootstrapPluginMock = $this->createMock(GlueApplicationBootstrapPluginInterface::class);
+        $bootstrapPluginMock
+            ->expects($this->once())
+            ->method('getApplication')
+            ->willReturn($applicationMock);
+
+        $requestBuilderMock = $this->createMock(RequestBuilderInterface::class);
+        $requestBuilderMock
+            ->expects($this->once())
+            ->method('extract');
+
+        $httpSenderMock = $this->createMock(HttpSenderInterface::class);
+        $httpSenderMock
+            ->expects($this->once())
+            ->method('sendResponse');
+
+        $apiApplicationProxy = new ApiApplicationProxy(
+            $bootstrapPluginMock,
+            $requestFlowExecutorMock,
+            [],
+            [$apiApplicationConventionMock],
+            $requestBuilderMock,
+            $httpSenderMock,
         );
         $apiApplicationProxy->run();
     }
@@ -185,17 +275,20 @@ class ApiApplicationProxyTest extends Unit
     public function testExceptionIsThrownIfNeitherRequestFlowAwareNorAgnosticIsImplemented(): void
     {
         $apiApplicationConventionMock = $this->createMock(ConventionPluginInterface::class);
-        $communicationProtocolPluginMock = $this->createMock(CommunicationProtocolPluginInterface::class);
         $bootstrapPluginMock = $this->createMock(GlueApplicationBootstrapPluginInterface::class);
         $requestFlowExecutorMock = $this->createMock(RequestFlowExecutorInterface::class);
+        $requestBuilderMock = $this->createMock(RequestBuilderInterface::class);
+        $httpSenderMock = $this->createMock(HttpSenderInterface::class);
 
         $this->expectException(UnknownRequestFlowImplementationException::class);
 
         $apiApplicationProxy = new ApiApplicationProxy(
             $bootstrapPluginMock,
             $requestFlowExecutorMock,
-            [$communicationProtocolPluginMock],
+            [],
             [$apiApplicationConventionMock],
+            $requestBuilderMock,
+            $httpSenderMock,
         );
         $apiApplicationProxy->run();
     }

@@ -10,6 +10,9 @@ namespace Spryker\Glue\GlueApplicationExtension\Dependency\Plugin;
 use Generated\Shared\Transfer\GlueApiContextTransfer;
 
 /**
+ * @deprecated Moved to {@link \Spryker\Glue\GlueApplication\Bootstrap\GlueBootstrap} and will be removed in the next major version.
+ * The context is being expanded by default.
+ *
  * Implement this interface to extend the `GlueApiContextTransfer` that is used to decide which API application to serve.
  */
 interface GlueContextExpanderPluginInterface

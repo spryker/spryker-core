@@ -24,6 +24,12 @@ use Spryker\Glue\GlueApplication\Dependency\Service\GlueApplicationToUtilEncodin
 use Spryker\Glue\GlueApplication\Descriptor\TextDescriptor;
 use Spryker\Glue\GlueApplication\Executor\ResourceExecutor;
 use Spryker\Glue\GlueApplication\Executor\ResourceExecutorInterface;
+use Spryker\Glue\GlueApplication\Http\Context\ContextHttpExpander;
+use Spryker\Glue\GlueApplication\Http\Context\ContextHttpExpanderInterface;
+use Spryker\Glue\GlueApplication\Http\Request\RequestBuilder;
+use Spryker\Glue\GlueApplication\Http\Request\RequestBuilderInterface;
+use Spryker\Glue\GlueApplication\Http\Response\HttpSender;
+use Spryker\Glue\GlueApplication\Http\Response\HttpSenderInterface;
 use Spryker\Glue\GlueApplication\Plugin\Console\Helper\DescriptorHelper;
 use Spryker\Glue\GlueApplication\Plugin\Rest\GlueControllerListenerPlugin;
 use Spryker\Glue\GlueApplication\Rest\ContentType\ContentTypeResolver;
@@ -111,6 +117,8 @@ use Spryker\Shared\Kernel\Container\ContainerProxy;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @method \Spryker\Glue\GlueApplication\GlueApplicationConfig getConfig()
@@ -700,6 +708,8 @@ class GlueApplicationFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\GlueContextExpanderPluginInterface>
      */
     public function getGlueContextExpanderPlugins(): array
@@ -737,6 +747,8 @@ class GlueApplicationFactory extends AbstractFactory
             $this->createRequestFlowExecutor(),
             $this->getCommunicationProtocolPlugins(),
             $this->getConventionPlugins(),
+            $this->createRequestBuilder(),
+            $this->createHttpSender(),
         );
     }
 
@@ -760,6 +772,8 @@ class GlueApplicationFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\CommunicationProtocolPluginInterface>
      */
     public function getCommunicationProtocolPlugins(): array
@@ -972,6 +986,52 @@ class GlueApplicationFactory extends AbstractFactory
         return new RouterCacheCollector(
             $this->createRouterBuilder(),
             $this->getRoutesProviderPlugins(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Http\Request\RequestBuilderInterface
+     */
+    public function createRequestBuilder(): RequestBuilderInterface
+    {
+        return new RequestBuilder(
+            $this->createRequest(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Http\Response\HttpSenderInterface;
+     */
+    public function createHttpSender(): HttpSenderInterface
+    {
+        return new HttpSender(
+            $this->createResponse(),
+        );
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function createResponse(): Response
+    {
+        return new Response();
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Request
+     */
+    public function createRequest(): Request
+    {
+        return Request::createFromGlobals();
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Http\Context\ContextHttpExpanderInterface
+     */
+    public function createContextHttpExpander(): ContextHttpExpanderInterface
+    {
+        return new ContextHttpExpander(
+            $this->createRequest(),
         );
     }
 }

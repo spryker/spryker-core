@@ -14,6 +14,7 @@ use Spryker\Glue\GlueApplication\ApiApplication\ApiApplicationBootstrapResolverI
 use Spryker\Glue\GlueApplication\ApiApplication\ApiApplicationProxy;
 use Spryker\Glue\GlueApplication\Bootstrap\GlueBootstrap;
 use Spryker\Glue\GlueApplication\GlueApplicationFactory;
+use Spryker\Glue\GlueApplication\Http\Context\ContextHttpExpanderInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\GlueApplicationBootstrapPluginInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\GlueContextExpanderPluginInterface;
 use Spryker\Shared\Application\ApplicationInterface;
@@ -47,6 +48,20 @@ class GlueBootstrapTest extends Unit
             null,
             null,
             [$apiContextExpanderPluginMock],
+        );
+
+        $this->assertInstanceOf(ApplicationInterface::class, $glueBootstrap->boot());
+    }
+
+    /**
+     * @return void
+     */
+    public function testEmptyApiContextWillBeAssembledByDefaultIfContextExpanderIsNotDefined(): void
+    {
+        $glueBootstrap = $this->createGlueBootstrap(
+            null,
+            null,
+            [],
         );
 
         $this->assertInstanceOf(ApplicationInterface::class, $glueBootstrap->boot());
@@ -121,10 +136,25 @@ class GlueBootstrapTest extends Unit
                 ->willReturn($apiApplicationPluginMock);
         }
 
+        $contextHttpExpanderMock = $this->createMock(ContextHttpExpanderInterface::class);
+        $contextHttpExpanderMock
+            ->expects(count($apiContextExpanderPluginMocks) > 0 ? $this->never() : $this->once())
+            ->method('expand')
+            ->willReturnCallback(function ($apiContextTransfer) {
+                $this->assertInstanceOf(GlueApiContextTransfer::class, $apiContextTransfer);
+
+                return $apiContextTransfer;
+            });
+
         $factoryMock = $this->createMock(GlueApplicationFactory::class);
-        $factoryMock->expects(count($apiContextExpanderPluginMocks) > 0 ? $this->once() : $this->never())
+        $factoryMock->expects($this->once())
             ->method('getGlueContextExpanderPlugins')
             ->willReturn($apiContextExpanderPluginMocks);
+        $factoryMock->expects(count($apiContextExpanderPluginMocks) > 0 ? $this->never() : $this->once())
+            ->method('createContextHttpExpander')
+            ->willReturn(
+                $contextHttpExpanderMock,
+            );
         $factoryMock->expects($this->once())
             ->method('createApiApplicationBootstrapResolver')
             ->willReturn($apiApplicationResolverMock);

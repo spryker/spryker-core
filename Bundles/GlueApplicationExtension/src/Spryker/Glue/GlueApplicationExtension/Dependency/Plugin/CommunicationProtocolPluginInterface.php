@@ -11,7 +11,10 @@ use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
 
 /**
- * Use this plugin for to implement an alternative communication protocol that can be used by API applications.
+ * @deprecated Moved to {@link \Spryker\Glue\GlueApplication\ApiApplication\ApiApplicationProxy} and will be removed in the next major version.
+ * HTTP communication protocol is being used by default.
+ *
+ * Use this plugin to implement an alternative communication protocol that can be used by API applications.
  */
 interface CommunicationProtocolPluginInterface
 {

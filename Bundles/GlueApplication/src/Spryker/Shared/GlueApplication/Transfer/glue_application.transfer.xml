@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 <transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
     <transfer name="GlueApiContext">
+        <property name="host" type="string"/>
+        <property name="path" type="string"/>
+        <property name="method" type="string"/>
     </transfer>
     <transfer name="GlueRequestValidation">
         <property name="isValid" type="bool"/>
@@ -27,6 +30,8 @@
         <property name="method" type="string"/>
         <property name="parametersString" type="string"/>
         <property name="parentResources" type="GlueResource[]" singular="parentResource" associative="true"/>
+        <property name="queryFields" type="array" associative="true" singular="queryField"/>
+        <property name="httpRequestAttributes" type="array" associative="true" singular="httpRequestAttribute"/>
     </transfer>
     <transfer name="GlueResponse">
         <property name="status" type="string" deprecated="Use `httpStatus` property for HTTP status."/>
@@ -36,6 +41,7 @@
         <property name="alternativePath" type="string"/>
         <property name="requestValidation" type="GlueRequestValidation"/>
         <property name="errors" type="GlueError[]" singular="error"/>
+        <property name="format" type="string"/>
     </transfer>
     <transfer name="RestPageOffsets" deprecated="Will be removed without replacement.">
         <property name="limit" type="int"/>
