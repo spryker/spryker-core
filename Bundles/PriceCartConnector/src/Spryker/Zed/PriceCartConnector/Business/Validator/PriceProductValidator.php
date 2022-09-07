@@ -11,9 +11,11 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Zed\PriceCartConnector\Business\Filter\PriceProductFilterInterface;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInterface;
+use Spryker\Zed\PriceCartConnector\PriceCartConnectorConfig;
 
 class PriceProductValidator implements PriceProductValidatorInterface
 {
@@ -28,20 +30,35 @@ class PriceProductValidator implements PriceProductValidatorInterface
     protected $priceProductFacade;
 
     /**
+     * @uses \Spryker\Shared\Price\PriceConfig::PRICE_MODE_GROSS
+     *
+     * @var string
+     */
+    protected const PRICE_MODE_GROSS = 'GROSS_MODE';
+
+    /**
      * @var \Spryker\Zed\PriceCartConnector\Business\Filter\PriceProductFilterInterface
      */
     protected $priceProductFilter;
 
     /**
+     * @var \Spryker\Zed\PriceCartConnector\PriceCartConnectorConfig
+     */
+    protected PriceCartConnectorConfig $priceCartConnectorConfig;
+
+    /**
      * @param \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInterface $priceProductFacade
      * @param \Spryker\Zed\PriceCartConnector\Business\Filter\PriceProductFilterInterface $priceProductFilter
+     * @param \Spryker\Zed\PriceCartConnector\PriceCartConnectorConfig $priceCartConnectorConfig
      */
     public function __construct(
         PriceCartToPriceProductInterface $priceProductFacade,
-        PriceProductFilterInterface $priceProductFilter
+        PriceProductFilterInterface $priceProductFilter,
+        PriceCartConnectorConfig $priceCartConnectorConfig
     ) {
         $this->priceProductFacade = $priceProductFacade;
         $this->priceProductFilter = $priceProductFilter;
+        $this->priceCartConnectorConfig = $priceCartConnectorConfig;
     }
 
     /**
@@ -49,28 +66,90 @@ class PriceProductValidator implements PriceProductValidatorInterface
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
-    public function validatePrices(CartChangeTransfer $cartChangeTransfer)
+    public function validatePrices(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
     {
         $cartPreCheckResponseTransfer = (new CartPreCheckResponseTransfer())->setIsSuccess(true);
-        $priceProductFilters = $this->createPriceProductFilters($cartChangeTransfer);
-        $validPriceProductTransfers = $this->priceProductFacade->getValidPrices($priceProductFilters);
+        $priceProductFilterTransfers = $this->createPriceProductFilters($cartChangeTransfer);
+        $validPriceProductTransfers = $this->priceProductFacade->getValidPrices($priceProductFilterTransfers);
+
+        if (!$this->priceCartConnectorConfig->isZeroPriceEnabledForCartActions()) {
+            $validPriceProductTransfers = $this->filterOutZeroPriceProductTransfers($validPriceProductTransfers, $priceProductFilterTransfers);
+        }
 
         return $this->checkProductWithoutPricesRestriction($validPriceProductTransfers, $cartChangeTransfer, $cartPreCheckResponseTransfer);
     }
 
     /**
-     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $validPriceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     * @param array<\Generated\Shared\Transfer\PriceProductFilterTransfer> $priceProductFilterTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
+     */
+    protected function filterOutZeroPriceProductTransfers(array $priceProductTransfers, array $priceProductFilterTransfers): array
+    {
+        $indexedPriceProductFilterTransfers = $this->getPriceProductFilterTransfersIndexedBySku($priceProductFilterTransfers);
+        $validPriceProductTransfers = [];
+
+        foreach ($priceProductTransfers as $priceProductTransfer) {
+            $priceProductFilter = $indexedPriceProductFilterTransfers[$priceProductTransfer->getSkuProduct()];
+            $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
+            $priceMode = $priceProductFilter->getPriceMode();
+            $priceValue = $this->getPriceValueByPriceMode($moneyValueTransfer, $priceMode);
+
+            if (!$priceValue) {
+                continue;
+            }
+
+            $validPriceProductTransfers[] = $priceProductTransfer;
+        }
+
+        return $validPriceProductTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer
+     * @param string $priceMode
+     *
+     * @return int|null
+     */
+    protected function getPriceValueByPriceMode(MoneyValueTransfer $moneyValueTransfer, string $priceMode): ?int
+    {
+        if ($priceMode === static::PRICE_MODE_GROSS) {
+            return $moneyValueTransfer->getGrossAmount();
+        }
+
+        return $moneyValueTransfer->getNetAmount();
+    }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\PriceProductFilterTransfer> $priceProductFilterTransfers
+     *
+     * @return array<string, \Generated\Shared\Transfer\PriceProductFilterTransfer>
+     */
+    protected function getPriceProductFilterTransfersIndexedBySku(array $priceProductFilterTransfers): array
+    {
+        $indexedPriceProductFilterTransfers = [];
+
+        foreach ($priceProductFilterTransfers as $priceProductFilterTransfer) {
+            $indexedPriceProductFilterTransfers[$priceProductFilterTransfer->getSku()] = $priceProductFilterTransfer;
+        }
+
+        return $indexedPriceProductFilterTransfers;
+    }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      * @param \Generated\Shared\Transfer\CartPreCheckResponseTransfer $cartPreCheckResponseTransfer
      *
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
     protected function checkProductWithoutPricesRestriction(
-        array $validPriceProductTransfers,
+        array $priceProductTransfers,
         CartChangeTransfer $cartChangeTransfer,
         CartPreCheckResponseTransfer $cartPreCheckResponseTransfer
     ): CartPreCheckResponseTransfer {
-        $productWithoutPriceSkus = $this->getProductWithoutPriceSkus($validPriceProductTransfers, $cartChangeTransfer->getItems()->getArrayCopy());
+        $productWithoutPriceSkus = $this->getProductWithoutPriceSkus($priceProductTransfers, $cartChangeTransfer->getItems()->getArrayCopy());
 
         if ($productWithoutPriceSkus) {
             return $cartPreCheckResponseTransfer

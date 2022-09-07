@@ -10,13 +10,26 @@ namespace SprykerTest\Zed\PriceCartConnector;
 use ArrayObject;
 use Codeception\Actor;
 use Generated\Shared\DataBuilder\QuoteBuilder;
+use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\PriceCartConnector\Business\PriceCartConnectorBusinessFactory;
+use Spryker\Zed\PriceCartConnector\Business\PriceCartConnectorFacade;
+use Spryker\Zed\PriceCartConnector\Business\PriceCartConnectorFacadeInterface;
+use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartConnectorToCurrencyFacadeInterface;
+use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface;
+use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInterface;
+use Spryker\Zed\PriceCartConnector\PriceCartConnectorConfig;
+use Spryker\Zed\PriceCartConnector\PriceCartConnectorDependencyProvider;
+use SprykerTest\Zed\PriceCartConnector\Business\Fixture\PriceProductFacadeStub;
 
 /**
  * @method void wantToTest($text)
@@ -29,6 +42,7 @@ use Generated\Shared\Transfer\StoreTransfer;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
+ * @method \Spryker\Zed\PriceCartConnector\Business\PriceCartConnectorFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
  */
@@ -42,9 +56,31 @@ class PriceCartConnectorBusinessTester extends Actor
     protected const STORE_DE = 'DE';
 
     /**
+     * @uses \Spryker\Shared\Price\PriceConfig::PRICE_MODE_GROSS
+     *
      * @var string
      */
     protected const PRICE_MODE_GROSS = 'GROSS_MODE';
+
+    /**
+     * @var string
+     */
+    protected const TEST_SKU_1 = 'TEST_SKU_1';
+
+    /**
+     * @var string
+     */
+    protected const TEST_CURRENCY_1 = 'TCF';
+
+    /**
+     * @var string
+     */
+    protected const TEST_STORE_NAME = 'DE';
+
+    /**
+     * @var int
+     */
+    protected const TEST_ITEM_ID = 123;
 
     /**
      * @param array $itemsData
@@ -100,5 +136,181 @@ class PriceCartConnectorBusinessTester extends Actor
         }
 
         return $itemsTransfers;
+    }
+
+    /**
+     * @param \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\PriceCartConnector\PriceCartConnectorConfig $priceCartConnectorConfigMock
+     * @param \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInterface $priceProductFacadeStub
+     * @param \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface $priceFacadeMock
+     * @param \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartConnectorToCurrencyFacadeInterface $currencyFacadeMock
+     * @param bool $isZeroPriceEnabledForCartActions
+     *
+     * @return \Spryker\Zed\PriceCartConnector\Business\PriceCartConnectorFacadeInterface
+     */
+    public function createAndConfigurePriceCartConnectorFacade(
+        PriceCartConnectorConfig $priceCartConnectorConfigMock,
+        PriceCartToPriceProductInterface $priceProductFacadeStub,
+        PriceCartToPriceInterface $priceFacadeMock,
+        PriceCartConnectorToCurrencyFacadeInterface $currencyFacadeMock,
+        bool $isZeroPriceEnabledForCartActions
+    ): PriceCartConnectorFacadeInterface {
+        $priceCartConnectorBusinessFactory = $this->createAndConfigurePriceCartConnectorBusinessFactory(
+            $priceCartConnectorConfigMock,
+            $priceProductFacadeStub,
+            $priceFacadeMock,
+            $currencyFacadeMock,
+            $isZeroPriceEnabledForCartActions,
+        );
+
+        $priceCartConnectorFacade = $this->createPriceCartConnectorFacade();
+        $priceCartConnectorFacade->setFactory($priceCartConnectorBusinessFactory);
+
+        return $priceCartConnectorFacade;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function createCartChangeTransferWithItem(): CartChangeTransfer
+    {
+        $currencyTransfer = (new CurrencyTransfer())->setCode(static::TEST_CURRENCY_1);
+        $storeTransfer = (new StoreTransfer())->setName(static::TEST_STORE_NAME);
+
+        $quoteTransfer = (new QuoteTransfer())
+            ->setCurrency($currencyTransfer)
+            ->setStore($storeTransfer)
+            ->setPriceMode(static::PRICE_MODE_GROSS);
+
+        $itemTransfer = (new ItemTransfer())
+            ->setSku(static::TEST_SKU_1)
+            ->setId(static::TEST_ITEM_ID);
+
+        return (new CartChangeTransfer())
+            ->setQuote($quoteTransfer)
+            ->addItem($itemTransfer);
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInterface
+     */
+    public function createPriceProductFacadeStub(): PriceCartToPriceProductInterface
+    {
+        return new PriceProductFacadeStub();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartPreCheckResponseTransfer $cartPreCheckResponseTransfer
+     *
+     * @return array<string>
+     */
+    public function getCartPreCheckResponseTransferMessages(CartPreCheckResponseTransfer $cartPreCheckResponseTransfer): array
+    {
+        return array_map(function (MessageTransfer $messageTransfer) {
+            return $messageTransfer->getValue();
+        }, $cartPreCheckResponseTransfer->getMessages()->getArrayCopy());
+    }
+
+    /**
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function createContainer(): Container
+    {
+        return new Container();
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     * @param \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInterface $priceProductFacadeStub
+     * @param \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface $priceFacadeMock
+     * @param \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartConnectorToCurrencyFacadeInterface $currencyFacadeMock
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function configureContainer(
+        Container $container,
+        PriceCartToPriceProductInterface $priceProductFacadeStub,
+        PriceCartToPriceInterface $priceFacadeMock,
+        PriceCartConnectorToCurrencyFacadeInterface $currencyFacadeMock
+    ): Container {
+        $container->set(PriceCartConnectorDependencyProvider::FACADE_PRICE_PRODUCT, function (Container $container) use ($priceProductFacadeStub) {
+            return $priceProductFacadeStub;
+        });
+
+        $container->set(PriceCartConnectorDependencyProvider::FACADE_PRICE, function (Container $container) use ($priceFacadeMock) {
+            return $priceFacadeMock;
+        });
+
+        $container->set(PriceCartConnectorDependencyProvider::FACADE_CURRENCY, function (Container $container) use ($currencyFacadeMock) {
+            return $currencyFacadeMock;
+        });
+
+        $container->set(PriceCartConnectorDependencyProvider::PLUGINS_CART_ITEM_QUANTITY_COUNTER_STRATEGY, function (Container $container) {
+            return [];
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceCartConnector\Business\PriceCartConnectorBusinessFactory
+     */
+    protected function createPriceCartConnectorBusinessFactory(): PriceCartConnectorBusinessFactory
+    {
+        return new PriceCartConnectorBusinessFactory();
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceCartConnector\Business\PriceCartConnectorFacadeInterface
+     */
+    protected function createPriceCartConnectorFacade(): PriceCartConnectorFacadeInterface
+    {
+        return new PriceCartConnectorFacade();
+    }
+
+    /**
+     * @param \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\PriceCartConnector\PriceCartConnectorConfig $priceCartConnectorConfigMock
+     * @param bool $isZeroPriceEnabledForCartActions
+     *
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\PriceCartConnector\PriceCartConnectorConfig
+     */
+    protected function configurePriceCartConnectorConfigMock(
+        PriceCartConnectorConfig $priceCartConnectorConfigMock,
+        bool $isZeroPriceEnabledForCartActions
+    ): PriceCartConnectorConfig {
+        $priceCartConnectorConfigMock
+            ->method('isZeroPriceEnabledForCartActions')
+            ->willReturn($isZeroPriceEnabledForCartActions);
+
+        $priceCartConnectorConfigMock
+            ->method('getItemFieldsForIsSameItemComparison')
+            ->willReturn(['sku']);
+
+        return $priceCartConnectorConfigMock;
+    }
+
+    /**
+     * @param \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\PriceCartConnector\PriceCartConnectorConfig $priceCartConnectorConfigMock
+     * @param \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInterface $priceProductFacadeStub
+     * @param \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface $priceFacadeMock
+     * @param \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartConnectorToCurrencyFacadeInterface $currencyFacadeMock
+     * @param bool $isZeroPriceEnabledForCartActions
+     *
+     * @return \Spryker\Zed\PriceCartConnector\Business\PriceCartConnectorBusinessFactory
+     */
+    protected function createAndConfigurePriceCartConnectorBusinessFactory(
+        PriceCartConnectorConfig $priceCartConnectorConfigMock,
+        PriceCartToPriceProductInterface $priceProductFacadeStub,
+        PriceCartToPriceInterface $priceFacadeMock,
+        PriceCartConnectorToCurrencyFacadeInterface $currencyFacadeMock,
+        bool $isZeroPriceEnabledForCartActions
+    ): PriceCartConnectorBusinessFactory {
+        $priceCartConnectorConfigMock = $this->configurePriceCartConnectorConfigMock($priceCartConnectorConfigMock, $isZeroPriceEnabledForCartActions);
+        $container = $this->createContainer();
+        $container = $this->configureContainer($container, $priceProductFacadeStub, $priceFacadeMock, $currencyFacadeMock);
+        $priceCartConnectorBusinessFactory = $this->createPriceCartConnectorBusinessFactory();
+        $priceCartConnectorBusinessFactory->setConfig($priceCartConnectorConfigMock);
+        $priceCartConnectorBusinessFactory->setContainer($container);
+
+        return $priceCartConnectorBusinessFactory;
     }
 }

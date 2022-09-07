@@ -31,6 +31,7 @@ interface PriceCartConnectorFacadeInterface
      * Specification:
      *  - Validates product prices, checks if prices are valid for current currency, price mode, price type combination
      *  - Writes error message to response transfer if not valid.
+     *  - Filters out price products with zero price if {@link \Spryker\Zed\PriceCartConnector\PriceCartConnectorConfig::isZeroPriceEnabledForCartActions()} set to `false`.
      *  - Executes CartItemQuantityCounterStrategyPluginInterface plugin stack.
      *
      * @api

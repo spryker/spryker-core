@@ -20,6 +20,11 @@ class PriceCartConnectorConfig extends AbstractBundleConfig
     public const OPERATION_REMOVE = 'remove';
 
     /**
+     * @var bool
+     */
+    protected const IS_ZERO_PRICE_ENABLED_FOR_CART_ACTIONS = true;
+
+    /**
      * @api
      *
      * @return array<string>
@@ -29,5 +34,19 @@ class PriceCartConnectorConfig extends AbstractBundleConfig
         return [
             ItemTransfer::SKU,
         ];
+    }
+
+    /**
+     * Specification:
+     * - Returns the configuration value if zero prices are enabled for cart actions.
+     * - The value should be set to `false` to avoid adding to cart items with zero price.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isZeroPriceEnabledForCartActions(): bool
+    {
+        return static::IS_ZERO_PRICE_ENABLED_FOR_CART_ACTIONS;
     }
 }
