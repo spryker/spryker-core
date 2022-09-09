@@ -70,6 +70,11 @@ class ShoppingListDependencyProvider extends AbstractDependencyProvider
     public const PLUGINS_ADD_ITEM_SHOPPING_LIST_ITEM_MAPPER = 'PLUGINS_ADD_ITEM_SHOPPING_LIST_ITEM_MAPPER';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_SHOPPING_LIST_EXPANDER = 'PLUGINS_SHOPPING_LIST_EXPANDER';
+
+    /**
      * @param \Spryker\Client\Kernel\Container $container
      *
      * @return \Spryker\Client\Kernel\Container
@@ -87,6 +92,7 @@ class ShoppingListDependencyProvider extends AbstractDependencyProvider
         $container = $this->addShoppingListItemToItemMapperPlugins($container);
         $container = $this->addQuoteItemToItemMapperPlugins($container);
         $container = $this->addAddItemShoppingListItemMapperPlugins($container);
+        $container = $this->addShoppingListExpanderPlugins($container);
 
         return $container;
     }
@@ -232,6 +238,20 @@ class ShoppingListDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addShoppingListExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_SHOPPING_LIST_EXPANDER, function () {
+            return $this->getShoppingListExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
      * @return array<\Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemToItemMapperPluginInterface>
      */
     protected function getShoppingListItemToItemMapperPlugins(): array
@@ -251,6 +271,14 @@ class ShoppingListDependencyProvider extends AbstractDependencyProvider
      * @return array<\Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemMapperPluginInterface>
      */
     protected function getAddItemShoppingListItemMapperPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return array<\Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListExpanderPluginInterface>
+     */
+    protected function getShoppingListExpanderPlugins(): array
     {
         return [];
     }

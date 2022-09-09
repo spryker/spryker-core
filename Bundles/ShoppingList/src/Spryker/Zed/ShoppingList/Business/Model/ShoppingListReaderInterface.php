@@ -57,6 +57,15 @@ interface ShoppingListReaderInterface
     ): ShoppingListItemCollectionTransfer;
 
     /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
+     */
+    public function getShoppingListItemCollectionByUuid(
+        ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+    ): ShoppingListItemCollectionTransfer;
+
+    /**
      * @return \Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer
      */
     public function getShoppingListPermissionGroups(): ShoppingListPermissionGroupCollectionTransfer;

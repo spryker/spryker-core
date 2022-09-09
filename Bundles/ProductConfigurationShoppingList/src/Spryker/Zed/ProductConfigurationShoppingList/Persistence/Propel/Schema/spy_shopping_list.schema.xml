@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\ShoppingList\Persistence" package="src.Orm.Zed.ShoppingList.Persistence">
+
+    <table name="spy_shopping_list_item">
+        <column name="product_configuration_instance_data" required="false" type="CLOB"/>
+        <column name="uuid" required="false" type="VARCHAR" size="36"/>
+        <unique name="spy_shopping_list_item-unique-uuid">
+            <unique-column name="uuid"/>
+        </unique>
+        <behavior name="uuid">
+            <parameter name="key_columns" value="id_shopping_list_item.fk_shopping_list"/>
+        </behavior>
+    </table>
+
+</database>

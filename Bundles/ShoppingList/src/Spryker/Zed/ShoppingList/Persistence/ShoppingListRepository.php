@@ -228,6 +228,25 @@ class ShoppingListRepository extends AbstractRepository implements ShoppingListR
     }
 
     /**
+     * @param array<string> $shoppingListItemUuids
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
+     */
+    public function getShoppingListItemsByUuids(array $shoppingListItemUuids): ShoppingListItemCollectionTransfer
+    {
+        $shoppingListsItemQuery = $this->getFactory()
+            ->createShoppingListItemQuery()
+            ->filterByUuid_In($shoppingListItemUuids);
+
+        return $this->getFactory()
+            ->createShoppingListItemMapper()
+            ->mapShoppingListItemEntitiesToShoppingListItemCollectionTransfer(
+                $shoppingListsItemQuery->find(),
+                new ShoppingListItemCollectionTransfer(),
+            );
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer
      */
     public function getShoppingListPermissionGroups(): ShoppingListPermissionGroupCollectionTransfer

@@ -437,4 +437,38 @@ class ShoppingListClient extends AbstractClient implements ShoppingListClientInt
     {
         return $this->getZedStub()->findShoppingListByUuid($shoppingListTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * {@internal will work if uuid field is provided.}
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
+     */
+    public function updateShoppingListItemByUuid(
+        ShoppingListItemTransfer $shoppingListItemTransfer
+    ): ShoppingListItemResponseTransfer {
+        return $this->getZedStub()->updateShoppingListItemByUuid($shoppingListItemTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * {@internal will work if uuid field is provided.}
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
+     */
+    public function getShoppingListItemCollectionByUuid(
+        ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+    ): ShoppingListItemCollectionTransfer {
+        return $this->getZedStub()->getShoppingListItemCollectionByUuid($shoppingListItemCollectionTransfer);
+    }
 }

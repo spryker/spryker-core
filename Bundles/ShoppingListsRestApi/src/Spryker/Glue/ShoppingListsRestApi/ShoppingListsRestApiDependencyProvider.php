@@ -28,6 +28,16 @@ class ShoppingListsRestApiDependencyProvider extends AbstractBundleDependencyPro
     public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_REST_SHOPPING_LIST_ITEMS_ATTRIBUTES_MAPPER = 'PLUGINS_REST_SHOPPING_LIST_ITEMS_ATTRIBUTES_MAPPER';
+
+    /**
+     * @var string
+     */
+    public const PLUGINS_SHOPPING_LIST_ITEM_REQUEST_MAPPER = 'PLUGINS_SHOPPING_LIST_ITEM_REQUEST_MAPPER';
+
+    /**
      * @param \Spryker\Glue\Kernel\Container $container
      *
      * @return \Spryker\Glue\Kernel\Container
@@ -37,6 +47,8 @@ class ShoppingListsRestApiDependencyProvider extends AbstractBundleDependencyPro
         $container = parent::provideDependencies($container);
         $container = $this->addShoppingListClient($container);
         $container = $this->addGlossaryStorageClient($container);
+        $container = $this->addRestShoppingListItemsAttributesMapperPlugins($container);
+        $container = $this->addShoppingListItemRequestMapperPlugins($container);
 
         return $container;
     }
@@ -71,5 +83,49 @@ class ShoppingListsRestApiDependencyProvider extends AbstractBundleDependencyPro
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addRestShoppingListItemsAttributesMapperPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_REST_SHOPPING_LIST_ITEMS_ATTRIBUTES_MAPPER, function () {
+            return $this->getRestShoppingListItemsAttributesMapperPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addShoppingListItemRequestMapperPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_SHOPPING_LIST_ITEM_REQUEST_MAPPER, function () {
+            return $this->getShoppingListItemRequestMapperPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Glue\ShoppingListsRestApiExtension\Dependency\Plugin\RestShoppingListItemsAttributesMapperPluginInterface>
+     */
+    protected function getRestShoppingListItemsAttributesMapperPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return array<\Spryker\Glue\ShoppingListsRestApiExtension\Dependency\Plugin\ShoppingListItemRequestMapperPluginInterface>
+     */
+    protected function getShoppingListItemRequestMapperPlugins(): array
+    {
+        return [];
     }
 }

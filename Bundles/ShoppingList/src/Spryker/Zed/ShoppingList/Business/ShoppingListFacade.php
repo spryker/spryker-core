@@ -465,4 +465,42 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
             ->createShoppingListItemChecker()
             ->checkShoppingListItemProductHasValidStore($shoppingListItemTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * {@internal will work if uuid field is provided.}
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
+     */
+    public function updateShoppingListItemByUuid(
+        ShoppingListItemTransfer $shoppingListItemTransfer
+    ): ShoppingListItemResponseTransfer {
+        return $this->getFactory()
+            ->createShoppingListItemOperation()
+            ->updateShoppingListItemByUuid($shoppingListItemTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * {@internal will work if uuid field is provided.}
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
+     */
+    public function getShoppingListItemCollectionByUuid(
+        ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+    ): ShoppingListItemCollectionTransfer {
+        return $this->getFactory()
+            ->createShoppingListReader()
+            ->getShoppingListItemCollectionByUuid($shoppingListItemCollectionTransfer);
+    }
 }

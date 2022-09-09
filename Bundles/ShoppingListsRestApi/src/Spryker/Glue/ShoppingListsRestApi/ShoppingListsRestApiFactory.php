@@ -155,7 +155,10 @@ class ShoppingListsRestApiFactory extends AbstractFactory
      */
     public function createShoppingListItemMapper(): ShoppingListItemMapperInterface
     {
-        return new ShoppingListItemMapper();
+        return new ShoppingListItemMapper(
+            $this->getRestShoppingListItemsAttributesMapperPlugins(),
+            $this->getShoppingListItemRequestMapperPlugins(),
+        );
     }
 
     /**
@@ -223,5 +226,21 @@ class ShoppingListsRestApiFactory extends AbstractFactory
     public function getGlossaryStorageClient(): ShoppingListsRestApiToGlossaryStorageClientInterface
     {
         return $this->getProvidedDependency(ShoppingListsRestApiDependencyProvider::CLIENT_GLOSSARY_STORAGE);
+    }
+
+    /**
+     * @return array<\Spryker\Glue\ShoppingListsRestApiExtension\Dependency\Plugin\RestShoppingListItemsAttributesMapperPluginInterface>
+     */
+    public function getRestShoppingListItemsAttributesMapperPlugins(): array
+    {
+        return $this->getProvidedDependency(ShoppingListsRestApiDependencyProvider::PLUGINS_REST_SHOPPING_LIST_ITEMS_ATTRIBUTES_MAPPER);
+    }
+
+    /**
+     * @return array<\Spryker\Glue\ShoppingListsRestApiExtension\Dependency\Plugin\ShoppingListItemRequestMapperPluginInterface>
+     */
+    public function getShoppingListItemRequestMapperPlugins(): array
+    {
+        return $this->getProvidedDependency(ShoppingListsRestApiDependencyProvider::PLUGINS_SHOPPING_LIST_ITEM_REQUEST_MAPPER);
     }
 }

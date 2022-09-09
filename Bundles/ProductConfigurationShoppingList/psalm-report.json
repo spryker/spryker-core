@@ -1,0 +1,42 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 28,
+            "line_to": 28,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\PriceProductTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductConfigurationShoppingList/src/Spryker/Client/ProductConfigurationShoppingList/Expander/ProductConfigurationPriceExpander.php",
+            "snippet": "        if (!$productViewTransfer->getProductConfigurationInstanceOrFail()->getPrices()->count()) {",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 34,
+            "line_to": 34,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\PriceProductTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductConfigurationShoppingList/src/Spryker/Client/ProductConfigurationShoppingList/Expander/ProductConfigurationPriceExpander.php",
+            "snippet": "            $productViewTransfer->getProductConfigurationInstanceOrFail()->getPrices()->getArrayCopy(),",
+            "selected_text": "getArrayCopy",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 72,
+            "line_to": 72,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ProductConfigurationTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductConfigurationShoppingList/src/Spryker/Zed/ProductConfigurationShoppingList/Business/Checker/ProductConfigurationChecker.php",
+            "snippet": "            ->count() > 0;",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        }
+    ],
+    "deprecation": []
+}

@@ -1,0 +1,7 @@
+{
+    "include": {
+        "spryker/product-configuration": "Defined for forward-compatibility reasons.",
+        "spryker/transfer": "Provides transfer objects definition with `::get*OrFail()` functionality.",
+        "spryker/shopping-list": "Defined for forward-compatibility reasons."
+    }
+}

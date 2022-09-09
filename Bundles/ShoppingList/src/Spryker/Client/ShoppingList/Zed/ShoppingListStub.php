@@ -412,4 +412,42 @@ class ShoppingListStub implements ShoppingListStubInterface
 
         return $shoppingListResponseTransfer;
     }
+
+    /**
+     * @uses \Spryker\Zed\ShoppingList\Communication\Controller\GatewayController::updateShoppingListItemByUuidAction()
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
+     */
+    public function updateShoppingListItemByUuid(
+        ShoppingListItemTransfer $shoppingListItemTransfer
+    ): ShoppingListItemResponseTransfer {
+        /** @var \Generated\Shared\Transfer\ShoppingListItemResponseTransfer $shoppingListItemResponseTransfer */
+        $shoppingListItemResponseTransfer = $this->zedRequestClient->call(
+            '/shopping-list/gateway/update-shopping-list-item-by-uuid',
+            $shoppingListItemTransfer,
+        );
+
+        return $shoppingListItemResponseTransfer;
+    }
+
+    /**
+     * @uses \Spryker\Zed\ShoppingList\Communication\Controller\GatewayController::getShoppingListItemCollectionByUuidAction()
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
+     */
+    public function getShoppingListItemCollectionByUuid(
+        ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+    ): ShoppingListItemCollectionTransfer {
+        /** @var \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer */
+        $shoppingListItemCollectionTransfer = $this->zedRequestClient->call(
+            '/shopping-list/gateway/get-shopping-list-item-collection-by-uuid',
+            $shoppingListItemCollectionTransfer,
+        );
+
+        return $shoppingListItemCollectionTransfer;
+    }
 }

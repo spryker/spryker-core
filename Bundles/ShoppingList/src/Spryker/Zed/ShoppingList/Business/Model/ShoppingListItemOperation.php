@@ -266,6 +266,49 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
     /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
+     */
+    public function updateShoppingListItemByUuid(
+        ShoppingListItemTransfer $shoppingListItemTransfer
+    ): ShoppingListItemResponseTransfer {
+        $shoppingListItemTransfer
+            ->requireUuid()
+            ->requireFkShoppingList()
+            ->requireQuantity();
+
+        return $this->getTransactionHandler()->handleTransaction(function () use ($shoppingListItemTransfer) {
+            return $this->executeUpdateShoppingListItemByUuidTransaction($shoppingListItemTransfer);
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
+     */
+    protected function executeUpdateShoppingListItemByUuidTransaction(
+        ShoppingListItemTransfer $shoppingListItemTransfer
+    ): ShoppingListItemResponseTransfer {
+        $validatedShoppingListItemResponseTransfer = $this->shoppingListItemOperationValidator
+            ->validateItemUpdateRequest($shoppingListItemTransfer, new ShoppingListItemResponseTransfer());
+
+        if (!$validatedShoppingListItemResponseTransfer->getIsSuccess()) {
+            return $validatedShoppingListItemResponseTransfer;
+        }
+
+        $shoppingListItemTransfer = $this->shoppingListEntityManager->saveShoppingListItemByUuid($shoppingListItemTransfer);
+
+        $shoppingListItemCollectionTransfer = (new ShoppingListItemCollectionTransfer())->addItem($shoppingListItemTransfer);
+        $shoppingListItemCollectionTransfer = $this->pluginExecutor->executeBulkPostSavePlugins($shoppingListItemCollectionTransfer);
+
+        return (new ShoppingListItemResponseTransfer())
+            ->setShoppingListItem($shoppingListItemCollectionTransfer->getItems()->getIterator()->current())
+            ->setIsSuccess(true);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
     public function saveShoppingListItemWithoutPermissionsCheck(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer

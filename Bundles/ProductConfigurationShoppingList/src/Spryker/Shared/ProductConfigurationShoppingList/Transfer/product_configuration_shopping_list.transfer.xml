@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="ShoppingListItem">
+        <property name="productConfigurationInstance" type="ProductConfigurationInstance"/>
+        <property name="productConfigurationInstanceData" type="string"/>
+        <property name="sku" type="string"/>
+        <property name="idCompanyUser" type="int"/>
+        <property name="quantity" type="int"/>
+        <property name="uuid" type="string"/>
+        <property name="fkShoppingList" type="int"/>
+    </transfer>
+
+    <transfer name="ProductConfigurationInstance">
+        <property name="prices" type="PriceProduct[]" singular="price"/>
+        <property name="availableQuantity" type="int"/>
+        <property name="quantity" type="int"/>
+    </transfer>
+
+    <transfer name="ProductConfiguratorRequestData">
+        <property name="shoppingListItemUuid" type="string"/>
+    </transfer>
+
+    <transfer name="ProductConfiguratorResponse">
+        <property name="shoppingListItemUuid" type="string"/>
+        <property name="productConfigurationInstance" type="ProductConfigurationInstance"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="productConfigurationInstance" type="ProductConfigurationInstance"/>
+    </transfer>
+
+    <transfer name="ProductConfiguratorResponseProcessorResponse">
+        <property name="idShoppingList" type="int"/>
+        <property name="isSuccessful" type="bool"/>
+        <property name="productConfiguratorResponse" type="ProductConfiguratorResponse"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
+    <transfer name="ProductConfigurationCollection">
+        <property name="productConfigurations" type="ProductConfiguration[]" singular="productConfiguration"/>
+    </transfer>
+
+    <transfer name="ProductConfigurationFilter">
+        <property name="skus" type="string[]" singular="sku"/>
+        <property name="filter" type="Filter"/>
+    </transfer>
+
+    <transfer name="ShoppingListPreAddItemCheckResponse">
+        <property name="isSuccess" type="bool"/>
+    </transfer>
+
+    <transfer name="ShoppingListItemCollection">
+        <property name="items" type="ShoppingListItem[]" singular="item"/>
+    </transfer>
+
+    <transfer name="ShoppingListItemResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="shoppingListItem" type="ShoppingListItem"/>
+        <property name="errors" type="array" singular="error"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="companyUserTransfer" type="CompanyUser"/>
+    </transfer>
+
+    <transfer name="ProductConfiguratorRedirect">
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
+    <transfer name="ProductConfiguratorRequest">
+        <property name="productConfiguratorRequestData" type="ProductConfiguratorRequestData"/>
+    </transfer>
+
+    <transfer name="ShoppingList">
+        <property name="items" type="ShoppingListItem[]" singular="item"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
+        <property name="parameters" type="array" singular="parameters"/>
+    </transfer>
+
+    <transfer name="PriceProduct">
+    </transfer>
+
+    <transfer name="CompanyUser">
+        <property name="idCompanyUser" type="int"/>
+    </transfer>
+
+    <transfer name="ProductConfiguration">
+    </transfer>
+
+    <transfer name="Filter">
+        <property name="limit" type="int"/>
+    </transfer>
+
+</transfers>

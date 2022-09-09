@@ -20,7 +20,6 @@ use Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyBusinessUnitBlacklist
 use Orm\Zed\ShoppingList\Persistence\SpyShoppingListCompanyUser;
 use Orm\Zed\ShoppingList\Persistence\SpyShoppingListItem;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -90,6 +89,25 @@ class ShoppingListEntityManager extends AbstractEntityManager implements Shoppin
         $shoppingListItemEntity = $this->getFactory()
             ->createShoppingListItemQuery()
             ->filterByIdShoppingListItem($shoppingListItemTransfer->getIdShoppingListItem())
+            ->findOne();
+
+        if ($shoppingListItemEntity !== null) {
+            return $this->updateShoppingListItem($shoppingListItemTransfer, $shoppingListItemEntity);
+        }
+
+        return $this->createShoppingListItem($shoppingListItemTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
+     */
+    public function saveShoppingListItemByUuid(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
+    {
+        $shoppingListItemEntity = $this->getFactory()
+            ->createShoppingListItemQuery()
+            ->filterByUuid($shoppingListItemTransfer->getUuidOrFail())
             ->findOne();
 
         if ($shoppingListItemEntity !== null) {
@@ -419,7 +437,7 @@ class ShoppingListEntityManager extends AbstractEntityManager implements Shoppin
         $shoppingListCompanyBusinessUnitBlacklistEntities = $this->getFactory()
             ->createShoppingListCompanyBusinessUnitBlacklistPropelQuery()
             ->useSpyShoppingListCompanyBusinessUnitQuery(null, Criteria::LEFT_JOIN)
-                ->filterByFkShoppingList($idShoppingList)
+            ->filterByFkShoppingList($idShoppingList)
             ->endUse()
             ->find();
         foreach ($shoppingListCompanyBusinessUnitBlacklistEntities as $shoppingListCompanyBusinessUnitBlacklistEntity) {
@@ -437,7 +455,7 @@ class ShoppingListEntityManager extends AbstractEntityManager implements Shoppin
         $shoppingListCompanyBusinessUnitBlacklistEntities = $this->getFactory()
             ->createShoppingListCompanyBusinessUnitBlacklistPropelQuery()
             ->useSpyShoppingListCompanyBusinessUnitQuery(null, Criteria::LEFT_JOIN)
-                ->filterByFkCompanyBusinessUnit($idCompanyBusinessUnit)
+            ->filterByFkCompanyBusinessUnit($idCompanyBusinessUnit)
             ->endUse()
             ->find();
         foreach ($shoppingListCompanyBusinessUnitBlacklistEntities as $shoppingListCompanyBusinessUnitBlacklistEntity) {
@@ -460,40 +478,20 @@ class ShoppingListEntityManager extends AbstractEntityManager implements Shoppin
         }
 
         $shoppingListItemMapper = $this->getFactory()->createShoppingListItemMapper();
+        $persistedShoppingListItemCollectionTransfer = new ShoppingListItemCollectionTransfer();
 
-        /**
-         * @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ShoppingList\Persistence\SpyShoppingListItem> $shoppingListItemEntityCollection
-         */
-        $shoppingListItemEntityCollection = new ObjectCollection();
-        $shoppingListItemEntityCollection->setModel(SpyShoppingListItem::class);
         foreach ($shoppingListItemCollectionTransfer->getItems() as $shoppingListItemTransfer) {
             $shoppingListItemEntity = $shoppingListItemMapper->mapTransferToEntity($shoppingListItemTransfer, new SpyShoppingListItem());
-            $shoppingListItemEntityCollection->append($shoppingListItemEntity);
-        }
-        $shoppingListItemEntityCollection->save();
+            $shoppingListItemEntity->save();
 
-        return $this->mapShoppingListItemEntitiesToShoppingListItemCollectionTransfer($shoppingListItemEntityCollection);
-    }
-
-    /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ShoppingList\Persistence\SpyShoppingListItem> $shoppingListItemEntityCollection
-     *
-     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
-     */
-    protected function mapShoppingListItemEntitiesToShoppingListItemCollectionTransfer(
-        ObjectCollection $shoppingListItemEntityCollection
-    ): ShoppingListItemCollectionTransfer {
-        $shoppingListItemMapper = $this->getFactory()->createShoppingListItemMapper();
-
-        $savedShoppingListItemCollectionTransfer = new ShoppingListItemCollectionTransfer();
-        foreach ($shoppingListItemEntityCollection as $shoppingListItemEntity) {
             $shoppingListItemTransfer = $shoppingListItemMapper->mapSpyShoppingListItemEntityToShoppingListItemTransfer(
                 $shoppingListItemEntity,
-                new ShoppingListItemTransfer(),
+                $shoppingListItemTransfer,
             );
-            $savedShoppingListItemCollectionTransfer->addItem($shoppingListItemTransfer);
+
+            $persistedShoppingListItemCollectionTransfer->addItem($shoppingListItemTransfer);
         }
 
-        return $savedShoppingListItemCollectionTransfer;
+        return $persistedShoppingListItemCollectionTransfer;
     }
 }

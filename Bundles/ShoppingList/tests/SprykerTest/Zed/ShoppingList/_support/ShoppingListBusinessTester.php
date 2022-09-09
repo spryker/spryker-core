@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 
 /**
@@ -90,5 +91,40 @@ class ShoppingListBusinessTester extends Actor
         ];
 
         return $this->haveFullProduct($productConcreteOverride);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer|null $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
+     */
+    public function createShoppingListItem(?ProductConcreteTransfer $productConcreteTransfer = null): ShoppingListItemTransfer
+    {
+        $productConcreteTransfer = $productConcreteTransfer ?? $this->haveProduct();
+        $customerTransfer = $this->haveCustomer();
+
+        $companyTransfer = $this->haveCompany([CompanyTransfer::IS_ACTIVE => true]);
+        $companyBusinessUnitTransfer = $this->haveCompanyBusinessUnit([
+            CompanyBusinessUnitTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+        ]);
+
+        $companyUserTransfer = $this->haveCompanyUser([
+            CompanyUserTransfer::IS_ACTIVE => true,
+            CompanyUserTransfer::CUSTOMER => $customerTransfer,
+            CompanyUserTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
+            CompanyUserTransfer::FK_COMPANY_BUSINESS_UNIT => $companyBusinessUnitTransfer->getIdCompanyBusinessUnit(),
+        ]);
+
+        $shoppingListTransfer = $this->haveShoppingList([
+            ShoppingListTransfer::CUSTOMER_REFERENCE => $customerTransfer->getCustomerReference(),
+            ShoppingListTransfer::ID_COMPANY_USER => $companyUserTransfer->getIdCompanyUser(),
+        ]);
+
+        return $this->haveShoppingListItem([
+            ShoppingListItemTransfer::ID_COMPANY_USER => $companyUserTransfer->getIdCompanyUser(),
+            ShoppingListItemTransfer::FK_SHOPPING_LIST => $shoppingListTransfer->getIdShoppingList(),
+            ShoppingListItemTransfer::QUANTITY => 1,
+            ShoppingListItemTransfer::SKU => $productConcreteTransfer->getSku(),
+        ]);
     }
 }

@@ -47,6 +47,13 @@ interface ShoppingListEntityManagerInterface
     public function saveShoppingListItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer;
 
     /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
+     */
+    public function saveShoppingListItemByUuid(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer;
+
+    /**
      * @param int $idShoppingListItem
      *
      * @return void

@@ -1,0 +1,15 @@
+namespace: SprykerTest
+include:
+    - tests/SprykerTest/Client/ProductConfigurationShoppingList
+    - tests/SprykerTest/Zed/ProductConfigurationShoppingList
+paths:
+    tests: tests/
+    log: tests/_output/
+    data: tests/_data/
+    support: tests/_support/
+    envs: tests/_envs/
+settings:
+    suite_class: \PHPUnit\Framework\TestSuite
+    colors: true
+    memory_limit: 1024M
+    log: true

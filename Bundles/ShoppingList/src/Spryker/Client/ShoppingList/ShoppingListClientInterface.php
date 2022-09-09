@@ -134,6 +134,7 @@ interface ShoppingListClientInterface
      * Specification:
      * - Requires `ShoppingListTransfer.idCompanyUser` to be set.
      * - Requires `ShoppingListTransfer.customerReference` to be set.
+     * - Executes {@link \Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListExpanderPluginInterface} plugin stack.
      * - Makes Zed request.
      * - Adds items to shopping list.
      * - Updates customer permissions.
@@ -415,4 +416,46 @@ interface ShoppingListClientInterface
      * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
      */
     public function findShoppingListByUuid(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer;
+
+    /**
+     * Specification:
+     * - Makes Zed request.
+     * - Requires `ShoppingListItemTransfer.uuid` to be set.
+     * - Requires `ShoppingListItemTransfer.fkShoppingList` to be set.
+     * - Requires `ShoppingListItemTransfer.quantity` to be set.
+     * - Expects `ShoppingListItemTransfer.idCompanyUser` to be provided.
+     * - Updates shopping list item by UUID.
+     * - Checks shopping list write permissions.
+     * - Executes {@link \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemBulkPostSavePluginInterface} plugin stack.
+     *
+     * @api
+     *
+     * {@internal will work if uuid field is provided.}
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
+     */
+    public function updateShoppingListItemByUuid(
+        ShoppingListItemTransfer $shoppingListItemTransfer
+    ): ShoppingListItemResponseTransfer;
+
+    /**
+     * Specification:
+     * - Makes Zed request.
+     * - Requires `ShoppingListItemTransfer.uuid` to be set.
+     * - Gets shopping list item collection by UUIDs.
+     * - Executes {@link \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemCollectionExpanderPluginInterface} plugin stack.
+     *
+     * @api
+     *
+     * {@internal will work if uuid field is provided.}
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
+     */
+    public function getShoppingListItemCollectionByUuid(
+        ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+    ): ShoppingListItemCollectionTransfer;
 }

@@ -45,24 +45,32 @@ class ShoppingListItemCreator implements ShoppingListItemCreatorInterface
     protected $shoppingListAddItemExpander;
 
     /**
+     * @var array<\Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListExpanderPluginInterface>
+     */
+    protected array $shoppingListExpanderPlugins;
+
+    /**
      * @param \Spryker\Client\ShoppingList\Zed\ShoppingListStubInterface $shoppingListStub
      * @param \Spryker\Client\ShoppingList\Dependency\Client\ShoppingListToZedRequestClientInterface $zedRequestClient
      * @param \Spryker\Client\ShoppingList\PermissionUpdater\PermissionUpdaterInterface $permissionUpdater
      * @param \Spryker\Client\ShoppingList\Remover\ShoppingListSessionRemoverInterface $shoppingListSessionRemover
      * @param \Spryker\Client\ShoppingList\ShoppingList\ShoppingListAddItemExpanderInterface $shoppingListAddItemExpander
+     * @param array<\Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListExpanderPluginInterface> $shoppingListExpanderPlugins
      */
     public function __construct(
         ShoppingListStubInterface $shoppingListStub,
         ShoppingListToZedRequestClientInterface $zedRequestClient,
         PermissionUpdaterInterface $permissionUpdater,
         ShoppingListSessionRemoverInterface $shoppingListSessionRemover,
-        ShoppingListAddItemExpanderInterface $shoppingListAddItemExpander
+        ShoppingListAddItemExpanderInterface $shoppingListAddItemExpander,
+        array $shoppingListExpanderPlugins
     ) {
         $this->shoppingListStub = $shoppingListStub;
         $this->zedRequestClient = $zedRequestClient;
         $this->permissionUpdater = $permissionUpdater;
         $this->shoppingListSessionRemover = $shoppingListSessionRemover;
         $this->shoppingListAddItemExpander = $shoppingListAddItemExpander;
+        $this->shoppingListExpanderPlugins = $shoppingListExpanderPlugins;
     }
 
     /**
@@ -97,6 +105,7 @@ class ShoppingListItemCreator implements ShoppingListItemCreatorInterface
      */
     public function addItems(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer
     {
+        $shoppingListTransfer = $this->executeShoppingListExpanderPlugins($shoppingListTransfer);
         $shoppingListResponseTransfer = $this->shoppingListStub->addItems($shoppingListTransfer);
 
         $this->zedRequestClient->addFlashMessagesFromLastZedRequest();
@@ -107,5 +116,19 @@ class ShoppingListItemCreator implements ShoppingListItemCreatorInterface
         }
 
         return $shoppingListResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListTransfer
+     */
+    protected function executeShoppingListExpanderPlugins(ShoppingListTransfer $shoppingListTransfer): ShoppingListTransfer
+    {
+        foreach ($this->shoppingListExpanderPlugins as $shoppingListExpanderPlugin) {
+            $shoppingListTransfer = $shoppingListExpanderPlugin->expand($shoppingListTransfer);
+        }
+
+        return $shoppingListTransfer;
     }
 }

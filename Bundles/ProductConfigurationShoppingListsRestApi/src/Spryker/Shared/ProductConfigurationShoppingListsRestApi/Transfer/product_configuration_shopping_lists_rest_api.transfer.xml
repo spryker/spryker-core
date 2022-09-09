@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="RestShoppingListItemProductConfigurationInstanceAttributes">
+        <property name="displayData" type="string"/>
+        <property name="configuration" type="string"/>
+        <property name="configuratorKey" type="string"/>
+        <property name="isComplete" type="bool"/>
+        <property name="quantity" type="int"/>
+        <property name="availableQuantity" type="int"/>
+        <property name="prices" type="RestProductConfigurationPriceAttributes[]" singular="price"/>
+    </transfer>
+
+    <transfer name="RestProductPriceVolumesAttributes">
+        <property name="netAmount" type="int"/>
+        <property name="grossAmount" type="int"/>
+        <property name="quantity" type="int"/>
+    </transfer>
+
+    <transfer name="RestShoppingListItemsAttributes">
+        <property name="productConfigurationInstance" type="RestShoppingListItemProductConfigurationInstanceAttributes" restRequestParameter="yes"/>
+    </transfer>
+
+    <transfer name="ShoppingListItem">
+        <property name="productConfigurationInstance" type="ProductConfigurationInstance"/>
+    </transfer>
+
+    <transfer name="ShoppingListItemRequest">
+        <property name="shoppingListItem" type="ShoppingListItem"/>
+    </transfer>
+
+    <transfer name="ProductConfigurationInstance">
+        <property name="prices" type="PriceProduct[]" singular="price"/>
+    </transfer>
+
+    <transfer name="RestProductConfigurationPriceAttributes">
+        <property name="currency" type="RestCurrency"/>
+        <property name="netAmount" type="int"/>
+        <property name="grossAmount" type="int"/>
+        <property name="priceTypeName" type="string"/>
+    </transfer>
+
+    <transfer name="MoneyValue">
+        <property name="currency" type="Currency"/>
+        <property name="netAmount" type="int"/>
+        <property name="grossAmount" type="int"/>
+    </transfer>
+
+    <transfer name="PriceProduct">
+        <property name="moneyValue" type="MoneyValue"/>
+    </transfer>
+
+    <transfer name="RestCurrency">
+        <property name="code" type="string"/>
+        <property name="name" type="string"/>
+        <property name="symbol" type="string"/>
+    </transfer>
+
+    <transfer name="Currency">
+    </transfer>
+
+</transfers>

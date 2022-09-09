@@ -125,17 +125,76 @@ class ProductConfiguratorRedirectResolverTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testResolveProductConfiguratorAccessTokenRedirectEnsureStaticQuantity(): void
+    {
+        // Arrange
+        $productConfiguratorRequestTransfer = (new ProductConfiguratorRequestTransfer())
+            ->setProductConfiguratorRequestData(
+                (new ProductConfiguratorRequestDataTransfer())
+                    ->setIdWishlistItem(static::FAKE_ID_WISHLIST_ITEM),
+            );
+
+        $wishlistItemTransfer = (new WishlistItemTransfer())
+            ->setProductConfigurationInstance((new ProductConfigurationInstanceTransfer()));
+
+        // Assert
+        $returnCallbackFunction = function (ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer) {
+            $this->assertSame(1, $productConfiguratorRequestTransfer->getProductConfiguratorRequestData()->getQuantity());
+
+            return (new ProductConfiguratorRedirectTransfer())->setIsSuccessful(true);
+        };
+
+        // Act
+        $this
+            ->createProductConfiguratorRedirectResolverMock($wishlistItemTransfer, $returnCallbackFunction)
+            ->resolveProductConfiguratorAccessTokenRedirect($productConfiguratorRequestTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testResolveProductConfiguratorAccessTokenRedirectEnsureStaticQuantityForAnyItems(): void
+    {
+        // Arrange
+        $productConfiguratorRequestTransfer = (new ProductConfiguratorRequestTransfer())
+            ->setProductConfiguratorRequestData(
+                (new ProductConfiguratorRequestDataTransfer())
+                    ->setIdWishlistItem(static::FAKE_ID_WISHLIST_ITEM)
+                    ->setQuantity(12),
+            );
+
+        $wishlistItemTransfer = (new WishlistItemTransfer())
+            ->setProductConfigurationInstance((new ProductConfigurationInstanceTransfer()));
+
+        // Assert
+        $returnCallbackFunction = function (ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer) {
+            $this->assertSame(1, $productConfiguratorRequestTransfer->getProductConfiguratorRequestData()->getQuantity());
+
+            return (new ProductConfiguratorRedirectTransfer())->setIsSuccessful(true);
+        };
+
+        // Act
+        $this
+            ->createProductConfiguratorRedirectResolverMock($wishlistItemTransfer, $returnCallbackFunction)
+            ->resolveProductConfiguratorAccessTokenRedirect($productConfiguratorRequestTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\WishlistItemTransfer|null $wishlistItemTransfer
+     * @param callable|null $returnCallbackFunction
      *
      * @return \Spryker\Client\ProductConfigurationWishlist\Resolver\ProductConfiguratorRedirectResolver|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function createProductConfiguratorRedirectResolverMock(
-        ?WishlistItemTransfer $wishlistItemTransfer = null
+        ?WishlistItemTransfer $wishlistItemTransfer = null,
+        ?callable $returnCallbackFunction = null
     ): ProductConfiguratorRedirectResolver {
         return $this->getMockBuilder(ProductConfiguratorRedirectResolver::class)
             ->setConstructorArgs([
                 $this->createProductConfigurationWishlistToWishlistClientInterfaceMock($wishlistItemTransfer),
-                $this->createProductConfigurationWishlistToProductConfigurationClientInterfaceMock(),
+                $this->createProductConfigurationWishlistToProductConfigurationClientInterfaceMock($returnCallbackFunction),
             ])
             ->onlyMethods([])
             ->getMock();
@@ -167,10 +226,13 @@ class ProductConfiguratorRedirectResolverTest extends Unit
     }
 
     /**
+     * @param callable|null $returnCallbackFunction
+     *
      * @return \Spryker\Client\ProductConfigurationWishlist\Dependency\Client\ProductConfigurationWishlistToProductConfigurationClientInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createProductConfigurationWishlistToProductConfigurationClientInterfaceMock(): ProductConfigurationWishlistToProductConfigurationClientInterface
-    {
+    protected function createProductConfigurationWishlistToProductConfigurationClientInterfaceMock(
+        ?callable $returnCallbackFunction = null
+    ): ProductConfigurationWishlistToProductConfigurationClientInterface {
         $productConfigurationWishlistToProductConfigurationClientInterfaceMock = $this
             ->getMockBuilder(ProductConfigurationWishlistToProductConfigurationClientInterface::class)
             ->disableOriginalConstructor()
@@ -181,9 +243,15 @@ class ProductConfiguratorRedirectResolverTest extends Unit
             ])
             ->getMock();
 
+        if (!$returnCallbackFunction) {
+            $returnCallbackFunction = function () {
+                return (new ProductConfiguratorRedirectTransfer())->setIsSuccessful(true);
+            };
+        }
+
         $productConfigurationWishlistToProductConfigurationClientInterfaceMock->expects($this->any())
             ->method('sendProductConfiguratorAccessTokenRequest')
-            ->willReturn((new ProductConfiguratorRedirectTransfer())->setIsSuccessful(true));
+            ->willReturnCallback($returnCallbackFunction);
 
         return $productConfigurationWishlistToProductConfigurationClientInterfaceMock;
     }

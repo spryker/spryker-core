@@ -24,6 +24,7 @@
         <property name="displayData" type="string"/>
         <property name="configuration" type="string"/>
         <property name="prices" type="PriceProduct[]" singular="price"/>
+        <property name="quantity" type="int"/>
     </transfer>
 
     <transfer name="CheckoutResponse">

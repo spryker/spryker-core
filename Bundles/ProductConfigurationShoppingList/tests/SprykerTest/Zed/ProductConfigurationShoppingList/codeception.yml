@@ -1,0 +1,32 @@
+namespace: SprykerTest\Zed\ProductConfigurationShoppingList
+paths:
+    tests: .
+    data: ../../../_data
+    support: _support
+    log: ../../../_output
+coverage:
+    enabled: true
+    remote: false
+    whitelist:
+        include:
+            - '../../../../src/*'
+suites:
+    Business:
+        path: Business
+        class_name: ProductConfigurationShoppingListBusinessTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Shared\ShoppingList\Helper\ShoppingListHelper
+                - \SprykerTest\Shared\Product\Helper\ProductDataHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Shared\Customer\Helper\CustomerDataHelper
+                - \SprykerTest\Shared\ProductConfiguration\Helper\ProductConfigurationHelper
+                - \SprykerTest\Zed\Company\Helper\CompanyHelper
+                - \SprykerTest\Zed\CompanyBusinessUnit\Helper\CompanyBusinessUnitHelper
+                - \SprykerTest\Shared\CompanyUser\Helper\CompanyUserHelper

@@ -243,4 +243,25 @@ class GatewayController extends AbstractGatewayController
     {
         return $this->getFacade()->findShoppingListByUuid($shoppingListTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
+     */
+    public function updateShoppingListItemByUuidAction(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemResponseTransfer
+    {
+        return $this->getFacade()->updateShoppingListItemByUuid($shoppingListItemTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
+     */
+    public function getShoppingListItemCollectionByUuidAction(
+        ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+    ): ShoppingListItemCollectionTransfer {
+        return $this->getFacade()->getShoppingListItemCollectionByUuid($shoppingListItemCollectionTransfer);
+    }
 }

@@ -14,6 +14,28 @@ use Generated\Shared\Transfer\ShoppingListItemTransfer;
 class ShoppingListItemMapper implements ShoppingListItemMapperInterface
 {
     /**
+     * @var array<\Spryker\Glue\ShoppingListsRestApiExtension\Dependency\Plugin\RestShoppingListItemsAttributesMapperPluginInterface>
+     */
+    protected array $restShoppingListItemsAttributesMapperPlugins;
+
+    /**
+     * @var array<\Spryker\Glue\ShoppingListsRestApiExtension\Dependency\Plugin\ShoppingListItemRequestMapperPluginInterface>
+     */
+    protected array $shoppingListItemRequestMapperPlugins;
+
+    /**
+     * @param array<\Spryker\Glue\ShoppingListsRestApiExtension\Dependency\Plugin\RestShoppingListItemsAttributesMapperPluginInterface> $restShoppingListItemsAttributesMapperPlugins
+     * @param array<\Spryker\Glue\ShoppingListsRestApiExtension\Dependency\Plugin\ShoppingListItemRequestMapperPluginInterface> $shoppingListItemRequestMapperPlugins
+     */
+    public function __construct(
+        array $restShoppingListItemsAttributesMapperPlugins,
+        array $shoppingListItemRequestMapperPlugins
+    ) {
+        $this->restShoppingListItemsAttributesMapperPlugins = $restShoppingListItemsAttributesMapperPlugins;
+        $this->shoppingListItemRequestMapperPlugins = $shoppingListItemRequestMapperPlugins;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      * @param \Generated\Shared\Transfer\RestShoppingListItemsAttributesTransfer $restShoppingListItemsAttributesTransfer
      *
@@ -23,9 +45,14 @@ class ShoppingListItemMapper implements ShoppingListItemMapperInterface
         ShoppingListItemTransfer $shoppingListItemTransfer,
         RestShoppingListItemsAttributesTransfer $restShoppingListItemsAttributesTransfer
     ): RestShoppingListItemsAttributesTransfer {
-        return $restShoppingListItemsAttributesTransfer->fromArray(
+        $restShoppingListItemsAttributesTransfer->fromArray(
             $shoppingListItemTransfer->toArray(),
             true,
+        );
+
+        return $this->executeRestShoppingListItemsAttributesMapperPlugis(
+            $shoppingListItemTransfer,
+            $restShoppingListItemsAttributesTransfer,
         );
     }
 
@@ -43,6 +70,49 @@ class ShoppingListItemMapper implements ShoppingListItemMapperInterface
             $restShoppingListItemsAttributesTransfer->modifiedToArray(),
             true,
         );
+
+        return $this->executeShoppingListItemRequestMapperPlugins(
+            $restShoppingListItemsAttributesTransfer,
+            $shoppingListItemRequestTransfer,
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     * @param \Generated\Shared\Transfer\RestShoppingListItemsAttributesTransfer $restShoppingListItemsAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestShoppingListItemsAttributesTransfer
+     */
+    protected function executeRestShoppingListItemsAttributesMapperPlugis(
+        ShoppingListItemTransfer $shoppingListItemTransfer,
+        RestShoppingListItemsAttributesTransfer $restShoppingListItemsAttributesTransfer
+    ): RestShoppingListItemsAttributesTransfer {
+        foreach ($this->restShoppingListItemsAttributesMapperPlugins as $restShoppingListItemsAttributesMapperPlugin) {
+            $restShoppingListItemsAttributesTransfer = $restShoppingListItemsAttributesMapperPlugin->map(
+                $shoppingListItemTransfer,
+                $restShoppingListItemsAttributesTransfer,
+            );
+        }
+
+        return $restShoppingListItemsAttributesTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestShoppingListItemsAttributesTransfer $restShoppingListItemsAttributesTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListItemRequestTransfer $shoppingListItemRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemRequestTransfer
+     */
+    protected function executeShoppingListItemRequestMapperPlugins(
+        RestShoppingListItemsAttributesTransfer $restShoppingListItemsAttributesTransfer,
+        ShoppingListItemRequestTransfer $shoppingListItemRequestTransfer
+    ): ShoppingListItemRequestTransfer {
+        foreach ($this->shoppingListItemRequestMapperPlugins as $shoppingListItemRequestMapperPlugin) {
+            $shoppingListItemRequestTransfer = $shoppingListItemRequestMapperPlugin->map(
+                $restShoppingListItemsAttributesTransfer,
+                $shoppingListItemRequestTransfer,
+            );
+        }
 
         return $shoppingListItemRequestTransfer;
     }

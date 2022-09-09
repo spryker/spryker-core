@@ -29,6 +29,11 @@ class ProductConfiguratorRedirectResolver implements ProductConfiguratorRedirect
     protected const GLOSSARY_KEY_PARAM_ID = '%id%';
 
     /**
+     * @var int
+     */
+    protected const WISHLIST_ITEM_QUANITY = 1;
+
+    /**
      * @var \Spryker\Client\ProductConfigurationWishlist\Dependency\Client\ProductConfigurationWishlistToWishlistClientInterface
      */
     protected $wishlistClient;
@@ -97,6 +102,10 @@ class ProductConfiguratorRedirectResolver implements ProductConfiguratorRedirect
         if (!$wishlistItemTransfer || !$wishlistItemTransfer->getProductConfigurationInstance()) {
             return null;
         }
+
+        $wishlistItemTransfer
+            ->getProductConfigurationInstanceOrFail()
+            ->setQuantity(static::WISHLIST_ITEM_QUANITY);
 
         return $wishlistItemTransfer->getProductConfigurationInstanceOrFail();
     }

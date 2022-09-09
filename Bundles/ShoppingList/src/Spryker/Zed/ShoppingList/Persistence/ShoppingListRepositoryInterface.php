@@ -89,6 +89,13 @@ interface ShoppingListRepositoryInterface
     public function findShoppingListItemsByIds(array $shoppingListItemIds): ShoppingListItemCollectionTransfer;
 
     /**
+     * @param array<string> $shoppingListItemUuids
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
+     */
+    public function getShoppingListItemsByUuids(array $shoppingListItemUuids): ShoppingListItemCollectionTransfer;
+
+    /**
      * @return \Generated\Shared\Transfer\ShoppingListPermissionGroupCollectionTransfer
      */
     public function getShoppingListPermissionGroups(): ShoppingListPermissionGroupCollectionTransfer;

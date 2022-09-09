@@ -215,6 +215,7 @@ class ShoppingListFactory extends AbstractFactory
             $this->createPermissionUpdater(),
             $this->createShoppingListSessionRemover(),
             $this->createShoppingListAddItemExpander(),
+            $this->getShoppingListExpanderPlugins(),
         );
     }
 
@@ -254,5 +255,13 @@ class ShoppingListFactory extends AbstractFactory
             $this->getZedRequestClient(),
             $this->createShoppingListSessionRemover(),
         );
+    }
+
+    /**
+     * @return array<\Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListExpanderPluginInterface>
+     */
+    public function getShoppingListExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ShoppingListDependencyProvider::PLUGINS_SHOPPING_LIST_EXPANDER);
     }
 }
