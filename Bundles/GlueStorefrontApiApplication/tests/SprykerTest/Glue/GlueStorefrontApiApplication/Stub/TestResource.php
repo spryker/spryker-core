@@ -45,6 +45,22 @@ class TestResource extends AbstractResourcePlugin implements JsonApiResourceInte
             ->setGetCollection(
                 (new GlueResourceMethodConfigurationTransfer())
                     ->setAction('getCollectionAction')->setAttributes('\Generated\Shared\Transfer\TestAttributesTransfer'),
+            )
+            ->setGet(
+                (new GlueResourceMethodConfigurationTransfer())
+                    ->setAction('getAction')->setAttributes('\Generated\Shared\Transfer\StoresRestAttributesTransfer'),
+            )
+            ->setPost(
+                (new GlueResourceMethodConfigurationTransfer())
+                    ->setAction('postAction')->setAttributes('\Generated\Shared\Transfer\StoresRestAttributesTransfer'),
+            )
+            ->setPatch(
+                (new GlueResourceMethodConfigurationTransfer())
+                    ->setAction('patchAction')->setAttributes('\Generated\Shared\Transfer\StoresRestAttributesTransfer'),
+            )
+            ->setDelete(
+                (new GlueResourceMethodConfigurationTransfer())
+                    ->setAction('deleteAction'),
             );
     }
 

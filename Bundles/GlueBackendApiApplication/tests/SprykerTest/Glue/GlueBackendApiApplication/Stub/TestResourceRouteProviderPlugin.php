@@ -9,26 +9,22 @@ namespace SprykerTest\Glue\GlueBackendApiApplication\Stub;
 
 use Generated\Shared\Transfer\GlueResourceMethodCollectionTransfer;
 use Generated\Shared\Transfer\GlueResourceMethodConfigurationTransfer;
-use Spryker\Glue\GlueApplication\Plugin\GlueApplication\Backend\AbstractResourcePlugin;
+use Spryker\Glue\GlueApplication\Plugin\GlueApplication\AbstractResourcePlugin;
 use Spryker\Glue\GlueJsonApiConventionExtension\Dependency\Plugin\JsonApiResourceInterface;
-use Spryker\Glue\OauthExtension\Dependency\Plugin\ScopeDefinitionPluginInterface;
 
-class TestResource extends AbstractResourcePlugin implements JsonApiResourceInterface, ScopeDefinitionPluginInterface
+class TestResourceRouteProviderPlugin extends AbstractResourcePlugin implements JsonApiResourceInterface
 {
-    /**
-     * @var string
-     */
-    protected const RESOURCE_NAME = 'test';
-
     /**
      * @return string
      */
     public function getType(): string
     {
-        return static::RESOURCE_NAME;
+        return 'test';
     }
 
     /**
+     * @uses \SprykerTest\Glue\GlueBackendApiApplication\Stub\ResourceController
+     *
      * @return string
      */
     public function getController(): string
@@ -44,7 +40,7 @@ class TestResource extends AbstractResourcePlugin implements JsonApiResourceInte
         return (new GlueResourceMethodCollectionTransfer())
             ->setGetCollection(
                 (new GlueResourceMethodConfigurationTransfer())
-                    ->setAction('getCollectionAction')->setAttributes('\Generated\Shared\Transfer\TestAttributesTransfer'),
+                    ->setAction('getCollectionAction')->setAttributes('\Generated\Shared\Transfer\StoresRestAttributesTransfer'),
             )
             ->setGet(
                 (new GlueResourceMethodConfigurationTransfer())
@@ -58,19 +54,6 @@ class TestResource extends AbstractResourcePlugin implements JsonApiResourceInte
                 (new GlueResourceMethodConfigurationTransfer())
                     ->setAction('patchAction')->setAttributes('\Generated\Shared\Transfer\StoresRestAttributesTransfer'),
             )
-            ->setDelete(
-                (new GlueResourceMethodConfigurationTransfer())
-                    ->setAction('deleteAction'),
-            );
-    }
-
-    /**
-     * @return array<string, string>
-     */
-    public function getScopes(): array
-    {
-        return [
-            'get' => 'backend:test:read',
-        ];
+            ->setDelete((new GlueResourceMethodConfigurationTransfer())->setAction('deleteAction'));
     }
 }

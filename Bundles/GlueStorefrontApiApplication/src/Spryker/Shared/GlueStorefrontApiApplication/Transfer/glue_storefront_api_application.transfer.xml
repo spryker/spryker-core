@@ -58,6 +58,8 @@
     </transfer>
 
     <transfer name="GlueResourceMethodConfiguration">
+        <property name="action" type="string"/>
+        <property name="controller" type="string"/>
     </transfer>
 
     <transfer name="OauthScopeFind">

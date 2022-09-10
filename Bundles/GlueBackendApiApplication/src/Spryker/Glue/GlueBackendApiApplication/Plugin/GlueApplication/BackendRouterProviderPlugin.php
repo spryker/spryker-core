@@ -27,10 +27,8 @@ class BackendRouterProviderPlugin extends AbstractPlugin implements ApiApplicati
     public function getRouteCollection(): RouteCollection
     {
         $routeCollection = new RouteCollection();
-        $routeProviderPlugins = $this->getFactory()->getRouteProviderPlugins();
-        foreach ($routeProviderPlugins as $routeProviderPlugin) {
-            $routeCollection = $routeProviderPlugin->addRoutes($routeCollection);
-        }
+        $routeCollection = $this->addCustomRoutesCollection($routeCollection);
+        $routeCollection = $this->addResourceRoutesCollection($routeCollection);
 
         return $routeCollection;
     }
@@ -46,5 +44,53 @@ class BackendRouterProviderPlugin extends AbstractPlugin implements ApiApplicati
     public function getApiApplicationName(): string
     {
         return 'GlueBackendApiApplication';
+    }
+
+    /**
+     * @param \Symfony\Component\Routing\RouteCollection $routeCollection
+     *
+     * @return \Symfony\Component\Routing\RouteCollection
+     */
+    protected function addCustomRoutesCollection(RouteCollection $routeCollection): RouteCollection
+    {
+        $routeProviderPlugins = $this->getFactory()->getRouteProviderPlugins();
+        foreach ($routeProviderPlugins as $routeProviderPlugin) {
+            $routeCollection = $routeProviderPlugin->addRoutes($routeCollection);
+        }
+
+        return $routeCollection;
+    }
+
+    /**
+     * @param \Symfony\Component\Routing\RouteCollection $routeCollection
+     *
+     * @return \Symfony\Component\Routing\RouteCollection
+     */
+    protected function addResourceRoutesCollection(RouteCollection $routeCollection): RouteCollection
+    {
+        $resourcePlugins = $this->getFactory()->getResourcePlugins();
+        $resourceRouteBuilder = $this->getFactory()->createResourceRouteBuilder();
+
+        foreach ($resourcePlugins as $resourcePlugin) {
+            $resourceRoutes = $resourceRouteBuilder->buildRoutes($resourcePlugin);
+            $routeCollection = $this->addRoutesToCollection($routeCollection, $resourceRoutes);
+        }
+
+        return $routeCollection;
+    }
+
+    /**
+     * @param \Symfony\Component\Routing\RouteCollection $routeCollection
+     * @param array<string, \Symfony\Component\Routing\Route> $resourceRoutes
+     *
+     * @return \Symfony\Component\Routing\RouteCollection
+     */
+    protected function addRoutesToCollection(RouteCollection $routeCollection, array $resourceRoutes): RouteCollection
+    {
+        foreach ($resourceRoutes as $routeKey => $route) {
+            $routeCollection->add($routeKey, $route);
+        }
+
+        return $routeCollection;
     }
 }

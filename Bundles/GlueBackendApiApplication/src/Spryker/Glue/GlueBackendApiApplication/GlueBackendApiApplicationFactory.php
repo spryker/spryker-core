@@ -27,6 +27,8 @@ use Spryker\Glue\GlueBackendApiApplication\RequestBuilder\LocaleRequestBuilderIn
 use Spryker\Glue\GlueBackendApiApplication\RequestValidator\RequestCorsValidator;
 use Spryker\Glue\GlueBackendApiApplication\RequestValidator\RequestValidatorInterface;
 use Spryker\Glue\GlueBackendApiApplication\RequestValidator\ScopeRequestAfterRoutingValidator;
+use Spryker\Glue\GlueBackendApiApplication\ResourceRouteBuilder\ResourceRouteBuilder;
+use Spryker\Glue\GlueBackendApiApplication\ResourceRouteBuilder\ResourceRouteBuilderInterface;
 use Spryker\Glue\Kernel\Backend\AbstractFactory;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\Application\ApplicationInterface;
@@ -229,5 +231,13 @@ class GlueBackendApiApplicationFactory extends AbstractFactory
     public function createRouteCollection(): RouteCollection
     {
         return new RouteCollection();
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueBackendApiApplication\ResourceRouteBuilder\ResourceRouteBuilderInterface
+     */
+    public function createResourceRouteBuilder(): ResourceRouteBuilderInterface
+    {
+        return new ResourceRouteBuilder();
     }
 }
