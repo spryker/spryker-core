@@ -154,6 +154,7 @@ class AttributeController extends AbstractController
             return $this->viewResponse([
                 'form' => $attributeTranslateFormCollection->createView(),
                 'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
+                'idProductAttribute' => $idProductManagementAttribute,
             ]);
         }
 
@@ -212,6 +213,7 @@ class AttributeController extends AbstractController
         if (!$attributeForm->isSubmitted() || !$attributeForm->isValid()) {
             return $this->viewResponse([
                 'form' => $attributeForm->createView(),
+                'idProductAttribute' => $idProductManagementAttribute,
             ]);
         }
 

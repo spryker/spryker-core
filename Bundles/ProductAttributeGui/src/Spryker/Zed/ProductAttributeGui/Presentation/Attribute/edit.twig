@@ -9,7 +9,7 @@
 
 {% block content %}
 
-    {% include '@ProductAttributeGui/Attribute/partials/attribute-form.twig' %}
+    {% include '@ProductAttributeGui/Attribute/partials/attribute-form.twig' with { 'idProductAttribute': idProductAttribute }  %}
 
 {% endblock %}
 
