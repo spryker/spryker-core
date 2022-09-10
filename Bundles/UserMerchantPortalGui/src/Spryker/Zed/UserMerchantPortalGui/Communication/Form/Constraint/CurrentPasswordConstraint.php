@@ -35,6 +35,6 @@ class CurrentPasswordConstraint extends Constraint
      */
     public function getMessage(): string
     {
-        return 'The current password is invalid.';
+        return 'The value is incorrect. Please try again.';
     }
 }

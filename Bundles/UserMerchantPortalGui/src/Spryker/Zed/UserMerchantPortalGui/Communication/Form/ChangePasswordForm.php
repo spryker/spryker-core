@@ -52,7 +52,7 @@ class ChangePasswordForm extends AbstractType
     /**
      * @var string
      */
-    protected const LABEL_NEW_PASSWORD_REPEAT = 'Repeat new password';
+    protected const LABEL_NEW_PASSWORD_REPEAT = 'Re-enter new password';
 
     /**
      * @var string
@@ -101,9 +101,6 @@ class ChangePasswordForm extends AbstractType
                 'constraints' => [
                     new NotBlank(),
                     $this->getFactory()->createCurrentPasswordConstraint(),
-                ],
-                'attr' => [
-                    'placeholder' => static::LABEL_CURRENT_PASSWORD,
                 ],
             ],
         );

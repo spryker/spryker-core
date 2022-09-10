@@ -16,6 +16,7 @@ Password,Password
 "Current password","Current password"
 "New password","New password"
 "Repeat new password","Repeat new password"
-"The current password is invalid.","The current password is invalid."
+"Re-enter new password","Re-enter new password"
+"The value is incorrect. Please try again.","The value is incorrect. Please try again."
 "The value needs to match the New Password input.","The value needs to match the New Password input."
 "Success! The Password is updated.","Success! The Password is updated."

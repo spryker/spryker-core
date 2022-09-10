@@ -16,6 +16,7 @@ Password,Passwort
 "Current password","Aktuelles Passwort"
 "New password","Neues Passwort"
 "Repeat new password","Neues Passwort wiederholen"
-"The current password is invalid.","Das aktuelle Passwort ist nicht korrekt."
+"Re-enter new password","Geben Sie das neue Passwort erneut ein."
+"The value is incorrect. Please try again.","Die Eingabe ist falsch. Bitte versuchen Sie es nochmal."
 "The value needs to match the New Password input.","Die Werte für das neue Passwort müssen gleich sein."
 "Success! The Password is updated.","Das Passwort wurde erfolgreich geändert."
