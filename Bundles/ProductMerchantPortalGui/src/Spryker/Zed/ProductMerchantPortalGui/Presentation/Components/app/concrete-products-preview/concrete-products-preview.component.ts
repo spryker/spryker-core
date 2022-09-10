@@ -41,6 +41,8 @@ export class ConcreteProductsPreviewComponent implements OnChanges {
     @Input() @ToJson() existingProducts?: ConcreteProductPreview[];
     @Input() @ToJson() errors?: ConcreteProductPreviewErrors[];
     @Input() name?: string;
+    @Input() skuPlaceholder?: string;
+    @Input() namePlaceholder?: string;
     @Output() generatedProductsChange = new EventEmitter<ConcreteProductPreview[]>();
     @Output() attributesChange = new EventEmitter<ProductAttribute[]>();
 

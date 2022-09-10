@@ -27,6 +27,10 @@
                 selected-attributes="{{ selectedAttributes }}"
                 generated-products="{{ concreteProducts }}"
                 generated-product-errors="{{ errors | json_encode }}"
+                attributes-placeholder="{{ 'Select' | trans }}"
+                values-placeholder="{{ 'Select at least one value' | trans }}"
+                sku-placeholder="{{ 'Enter SKU' | trans }}"
+                name-placeholder="{{ 'Enter name' | trans }}"
             >
                 {{ form_start(form, { attr: { excludeFormTag: true } }) }}
                     {% block title %}

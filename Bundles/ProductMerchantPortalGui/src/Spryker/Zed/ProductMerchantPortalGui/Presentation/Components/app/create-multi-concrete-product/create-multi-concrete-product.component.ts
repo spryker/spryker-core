@@ -18,5 +18,9 @@ export class CreateMultiConcreteProductComponent {
     @Input() @ToJson() generatedProductErrors?: ConcreteProductPreviewErrors[];
     @Input() productsName = '';
     @Input() attributesName = '';
+    @Input() attributesPlaceholder = '';
+    @Input() valuesPlaceholder = '';
+    @Input() skuPlaceholder = '';
+    @Input() namePlaceholder = '';
     titleLevel = Level.H5;
 }

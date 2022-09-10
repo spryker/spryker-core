@@ -18,6 +18,7 @@
                     [options]="superAttributeOptions"
                     [value]="attribute?.value"
                     (valueChange)="superAttributeChange($event, i)"
+                    [placeholder]="attributesPlaceholder"
                 >
                 </spy-select>
             </div>
@@ -32,6 +33,7 @@
                     [value]="getSelectedAttributes | spyInvoke: i:selectedAttributes"
                     [disabled]="!(getAttributes | spyInvoke: i:attributeOptions)"
                     (valueChange)="attributesChange($event, i, attribute)"
+                    [placeholder]="valuesPlaceholder"
                     multiple
                     class="mp-product-attributes-selector__content-row-values-name-select"
                 >

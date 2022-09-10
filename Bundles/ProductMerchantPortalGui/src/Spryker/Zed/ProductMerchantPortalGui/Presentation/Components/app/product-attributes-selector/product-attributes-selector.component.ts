@@ -28,6 +28,8 @@ export class ProductAttributesSelectorComponent implements OnChanges, OnInit {
     @Input() @ToJson() attributes: ProductAttribute[] = [];
     @Input() @ToJson() selectedAttributes: ProductAttribute[] = [];
     @Input() name?: string;
+    @Input() attributesPlaceholder?: string;
+    @Input() valuesPlaceholder?: string;
     @Output() selectedAttributesChange = new EventEmitter<ProductAttribute[]>();
 
     deleteIcon = IconDeleteModule.icon;

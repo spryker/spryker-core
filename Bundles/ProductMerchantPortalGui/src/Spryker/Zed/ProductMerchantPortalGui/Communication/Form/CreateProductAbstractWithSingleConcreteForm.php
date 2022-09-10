@@ -79,12 +79,12 @@ class CreateProductAbstractWithSingleConcreteForm extends AbstractType
     /**
      * @var string
      */
-    protected const PLACEHOLDER_CONCRETE_SKU = 'Enter concrete product SKU';
+    protected const PLACEHOLDER_CONCRETE_SKU = 'Enter SKU';
 
     /**
      * @var string
      */
-    protected const PLACEHOLDER_CONCRETE_NAME = 'Enter concrete product name';
+    protected const PLACEHOLDER_CONCRETE_NAME = 'Enter name';
 
     /**
      * @var string
