@@ -17,6 +17,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 
 /**
  * @method \Spryker\Zed\MerchantProfileMerchantPortalGui\MerchantProfileMerchantPortalGuiConfig getConfig()
@@ -125,6 +126,16 @@ class BusinessInfoMerchantProfileForm extends AbstractType
     protected const LABEL_CONTACT_PERSON_PHONE = 'Phone Number';
 
     /**
+     * @var string
+     */
+    protected const PATTERN_FIRST_NAME = '/^[^:\/<>]+$/';
+
+    /**
+     * @var string
+     */
+    protected const PATTERN_LAST_NAME = '/^[^:\/<>]+$/';
+
+    /**
      * @return string
      */
     public function getBlockPrefix(): string
@@ -180,7 +191,11 @@ class BusinessInfoMerchantProfileForm extends AbstractType
     {
         $builder->add(static::FIELD_CONTACT_PERSON_FIRST_NAME, TextType::class, [
             'label' => static::LABEL_CONTACT_PERSON_FIRST_NAME,
-            'constraints' => $this->getRequiredTextFieldConstraints(),
+            'constraints' => [
+                $this->createNotBlankConstraint(),
+                $this->createLengthConstraint(),
+                $this->createFirstNameRegexConstraint(),
+            ],
             'required' => true,
             'property_path' => 'merchantProfile.contactPersonFirstName',
         ]);
@@ -197,7 +212,11 @@ class BusinessInfoMerchantProfileForm extends AbstractType
     {
         $builder->add(static::FIELD_CONTACT_PERSON_LAST_NAME, TextType::class, [
             'label' => static::LABEL_CONTACT_PERSON_LAST_NAME,
-            'constraints' => $this->getRequiredTextFieldConstraints(),
+            'constraints' => [
+                $this->createNotBlankConstraint(),
+                $this->createLengthConstraint(),
+                $this->createLastNameRegexConstraint(),
+            ],
             'required' => true,
             'property_path' => 'merchantProfile.contactPersonLastName',
         ]);
@@ -231,7 +250,10 @@ class BusinessInfoMerchantProfileForm extends AbstractType
     {
         $builder->add(static::FIELD_NAME, TextType::class, [
             'label' => static::LABEL_NAME,
-            'constraints' => $this->getRequiredTextFieldConstraints(),
+            'constraints' => [
+                $this->createNotBlankConstraint(),
+                $this->createLengthConstraint(),
+            ],
         ]);
 
         return $this;
@@ -327,14 +349,39 @@ class BusinessInfoMerchantProfileForm extends AbstractType
     }
 
     /**
-     * @return array<\Symfony\Component\Validator\Constraint>
+     * @return \Symfony\Component\Validator\Constraints\NotBlank
      */
-    protected function getRequiredTextFieldConstraints(): array
+    protected function createNotBlankConstraint(): NotBlank
     {
-        return [
-            new NotBlank(),
-            new Length(['max' => 255]),
-        ];
+        return new NotBlank();
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\Length
+     */
+    protected function createLengthConstraint(): Length
+    {
+        return new Length(['max' => 255]);
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\Regex
+     */
+    protected function createFirstNameRegexConstraint(): Regex
+    {
+        return new Regex([
+            'pattern' => static::PATTERN_FIRST_NAME,
+        ]);
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\Regex
+     */
+    protected function createLastNameRegexConstraint(): Regex
+    {
+        return new Regex([
+            'pattern' => static::PATTERN_LAST_NAME,
+        ]);
     }
 
     /**

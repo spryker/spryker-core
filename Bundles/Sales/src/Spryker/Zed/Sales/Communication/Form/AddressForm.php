@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Sales\Communication\Form;
 
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Spryker\Zed\Sales\SalesConfig;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -15,6 +16,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 
 /**
  * @method \Spryker\Zed\Sales\Business\SalesFacadeInterface getFacade()
@@ -211,7 +213,8 @@ class AddressForm extends AbstractType
         $builder->add(static::FIELD_FIRST_NAME, TextType::class, [
             'label' => 'First name',
             'constraints' => [
-                new NotBlank(),
+                $this->createNotBlankConstraint(),
+                $this->createFirstNameRegexConstraint(),
             ],
         ]);
 
@@ -242,7 +245,8 @@ class AddressForm extends AbstractType
         $builder->add(static::FIELD_LAST_NAME, TextType::class, [
             'label' => 'Last name',
             'constraints' => [
-                new NotBlank(),
+                $this->createNotBlankConstraint(),
+                $this->createLastNameRegexConstraint(),
             ],
         ]);
 
@@ -416,5 +420,33 @@ class AddressForm extends AbstractType
         $builder->add(static::FIELD_COMMENT, TextareaType::class, ['required' => false]);
 
         return $this;
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\NotBlank
+     */
+    protected function createNotBlankConstraint(): NotBlank
+    {
+        return new NotBlank();
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\Regex
+     */
+    protected function createFirstNameRegexConstraint(): Regex
+    {
+        return new Regex([
+            'pattern' => SalesConfig::PATTERN_FIRST_NAME,
+        ]);
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\Regex
+     */
+    protected function createLastNameRegexConstraint(): Regex
+    {
+        return new Regex([
+            'pattern' => SalesConfig::PATTERN_LAST_NAME,
+        ]);
     }
 }

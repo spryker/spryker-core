@@ -41,6 +41,26 @@ class CustomerConfig extends AbstractBundleConfig
     public const CUSTOMER_REGISTRATION_WITH_CONFIRMATION_MAIL_TYPE = 'customer registration confirmation mail';
 
     /**
+     * Specification:
+     * - Regular expression to validate Customer First Name field.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const PATTERN_FIRST_NAME = '/^[^:\/<>]+$/';
+
+    /**
+     * Specification:
+     * - Regular expression to validate Customer Last Name field.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const PATTERN_LAST_NAME = '/^[^:\/<>]+$/';
+
+    /**
      * @var int
      */
     protected const MIN_LENGTH_CUSTOMER_PASSWORD = 1;

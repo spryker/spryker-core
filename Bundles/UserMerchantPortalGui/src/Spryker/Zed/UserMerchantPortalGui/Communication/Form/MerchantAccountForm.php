@@ -18,6 +18,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 
 /**
  * @method \Spryker\Zed\UserMerchantPortalGui\Communication\UserMerchantPortalGuiCommunicationFactory getFactory()
@@ -91,6 +92,16 @@ class MerchantAccountForm extends AbstractType
     protected const LABEL_SAVE = 'Save';
 
     /**
+     * @var string
+     */
+    protected const PATTERN_FIRST_NAME = '/^[^:\/<>]+$/';
+
+    /**
+     * @var string
+     */
+    protected const PATTERN_LAST_NAME = '/^[^:\/<>]+$/';
+
+    /**
      * @return string
      */
     public function getBlockPrefix(): string
@@ -155,7 +166,8 @@ class MerchantAccountForm extends AbstractType
             ->add(static::FIELD_FIRST_NAME, TextType::class, [
                 'label' => static::LABEL_FIRST_NAME,
                 'constraints' => [
-                    new NotBlank(),
+                    $this->createNotBlankConstraint(),
+                    $this->createFirstNameRegexConstraint(),
                 ],
             ]);
 
@@ -173,7 +185,8 @@ class MerchantAccountForm extends AbstractType
             ->add(static::FIELD_LAST_NAME, TextType::class, [
                 'label' => static::LABEL_LAST_NAME,
                 'constraints' => [
-                    new NotBlank(),
+                    $this->createNotBlankConstraint(),
+                    $this->createLastNameRegexConstraint(),
                 ],
             ]);
 
@@ -230,5 +243,33 @@ class MerchantAccountForm extends AbstractType
         ]);
 
         return $this;
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\NotBlank
+     */
+    protected function createNotBlankConstraint(): NotBlank
+    {
+        return new NotBlank();
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\Regex
+     */
+    protected function createFirstNameRegexConstraint(): Regex
+    {
+        return new Regex([
+            'pattern' => static::PATTERN_FIRST_NAME,
+        ]);
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\Regex
+     */
+    protected function createLastNameRegexConstraint(): Regex
+    {
+        return new Regex([
+            'pattern' => static::PATTERN_LAST_NAME,
+        ]);
     }
 }

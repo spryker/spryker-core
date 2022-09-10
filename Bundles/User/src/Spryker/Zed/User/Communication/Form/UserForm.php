@@ -22,6 +22,7 @@ use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotCompromisedPassword;
+use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
@@ -71,6 +72,16 @@ class UserForm extends AbstractType
      * @var string
      */
     public const FIELD_STATUS = 'status';
+
+    /**
+     * @var string
+     */
+    protected const PATTERN_FIRST_NAME = '/^[^:\/<>]+$/';
+
+    /**
+     * @var string
+     */
+    protected const PATTERN_LAST_NAME = '/^[^:\/<>]+$/';
 
     /**
      * @return string
@@ -216,12 +227,12 @@ class UserForm extends AbstractType
      */
     protected function addFirstNameField(FormBuilderInterface $builder)
     {
-        $builder
-            ->add(static::FIELD_FIRST_NAME, TextType::class, [
-                'constraints' => [
-                    new NotBlank(),
-                ],
-            ]);
+        $builder->add(static::FIELD_FIRST_NAME, TextType::class, [
+            'constraints' => [
+                $this->createNotBlankConstraint(),
+                $this->createFirstNameRegexConstraint(),
+            ],
+        ]);
 
         return $this;
     }
@@ -233,12 +244,12 @@ class UserForm extends AbstractType
      */
     protected function addLastNameField(FormBuilderInterface $builder)
     {
-        $builder
-            ->add(static::FIELD_LAST_NAME, TextType::class, [
-                'constraints' => [
-                    new NotBlank(),
-                ],
-            ]);
+        $builder->add(static::FIELD_LAST_NAME, TextType::class, [
+            'constraints' => [
+                $this->createNotBlankConstraint(),
+                $this->createLastNameRegexConstraint(),
+            ],
+        ]);
 
         return $this;
     }
@@ -283,6 +294,34 @@ class UserForm extends AbstractType
                 }
             },
             'groups' => [static::GROUP_UNIQUE_USERNAME_CHECK],
+        ]);
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\NotBlank
+     */
+    protected function createNotBlankConstraint(): NotBlank
+    {
+        return new NotBlank();
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\Regex
+     */
+    protected function createFirstNameRegexConstraint(): Regex
+    {
+        return new Regex([
+            'pattern' => static::PATTERN_FIRST_NAME,
+        ]);
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\Regex
+     */
+    protected function createLastNameRegexConstraint(): Regex
+    {
+        return new Regex([
+            'pattern' => static::PATTERN_LAST_NAME,
         ]);
     }
 }

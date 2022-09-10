@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Customer\Communication\Form;
 
+use Spryker\Zed\Customer\CustomerConfig;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -16,6 +17,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 
 /**
  * @method \Spryker\Zed\Customer\Business\CustomerFacadeInterface getFacade()
@@ -203,7 +205,11 @@ class AddressForm extends AbstractType
     {
         $builder->add(static::FIELD_FIRST_NAME, TextType::class, [
             'label' => 'First Name',
-            'constraints' => $this->getTextFieldConstraints(),
+            'constraints' => [
+                $this->createNotBlankConstraint(),
+                $this->createLengthConstraint(),
+                $this->createFirstNameRegexConstraint(),
+            ],
         ]);
 
         return $this;
@@ -218,7 +224,11 @@ class AddressForm extends AbstractType
     {
         $builder->add(static::FIELD_LAST_NAME, TextType::class, [
             'label' => 'Last Name',
-            'constraints' => $this->getTextFieldConstraints(),
+            'constraints' => [
+                $this->createNotBlankConstraint(),
+                $this->createLengthConstraint(),
+                $this->createLastNameRegexConstraint(),
+            ],
         ]);
 
         return $this;
@@ -386,14 +396,39 @@ class AddressForm extends AbstractType
     }
 
     /**
-     * @return array
+     * @return \Symfony\Component\Validator\Constraints\NotBlank
      */
-    protected function getTextFieldConstraints()
+    protected function createNotBlankConstraint(): NotBlank
     {
-        return [
-            new NotBlank(),
-            new Length(['max' => 100]),
-        ];
+        return new NotBlank();
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\Length
+     */
+    protected function createLengthConstraint(): Length
+    {
+        return new Length(['max' => 100]);
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\Regex
+     */
+    protected function createFirstNameRegexConstraint(): Regex
+    {
+        return new Regex([
+            'pattern' => CustomerConfig::PATTERN_FIRST_NAME,
+        ]);
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\Regex
+     */
+    protected function createLastNameRegexConstraint(): Regex
+    {
+        return new Regex([
+            'pattern' => CustomerConfig::PATTERN_LAST_NAME,
+        ]);
     }
 
     /**

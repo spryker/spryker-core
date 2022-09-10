@@ -33,6 +33,26 @@ class SalesConfig extends AbstractBundleConfig
     public const TEST_CUSTOMER_FIRST_NAME = 'test order';
 
     /**
+     * Specification:
+     * - Regular expression to validate First Name field.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const PATTERN_FIRST_NAME = '/^[^:\/<>]+$/';
+
+    /**
+     * Specification:
+     * - Regular expression to validate Last Name field.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const PATTERN_LAST_NAME = '/^[^:\/<>]+$/';
+
+    /**
      * Separator for the sequence number
      *
      * @api

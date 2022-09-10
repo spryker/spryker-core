@@ -22,6 +22,7 @@ use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
@@ -91,6 +92,16 @@ class CompanyUserCustomerForm extends AbstractType
      * @var string
      */
     public const FIELD_DATE_OF_BIRTH = 'date_of_birth';
+
+    /**
+     * @var string
+     */
+    protected const PATTERN_FIRST_NAME = '/^[^:\/<>]+$/';
+
+    /**
+     * @var string
+     */
+    protected const PATTERN_LAST_NAME = '/^[^:\/<>]+$/';
 
     /**
      * @return string
@@ -185,7 +196,11 @@ class CompanyUserCustomerForm extends AbstractType
     {
         $builder->add(static::FIELD_FIRST_NAME, TextType::class, [
             'label' => 'First Name',
-            'constraints' => $this->getTextFieldConstraints(),
+            'constraints' => [
+                $this->createNotBlankConstraint(),
+                $this->createLengthConstraint(),
+                $this->createFirstNameRegexConstraint(),
+            ],
         ]);
 
         return $this;
@@ -200,7 +215,11 @@ class CompanyUserCustomerForm extends AbstractType
     {
         $builder->add(static::FIELD_LAST_NAME, TextType::class, [
             'label' => 'Last Name',
-            'constraints' => $this->getTextFieldConstraints(),
+            'constraints' => [
+                $this->createNotBlankConstraint(),
+                $this->createLengthConstraint(),
+                $this->createLastNameRegexConstraint(),
+            ],
         ]);
 
         return $this;
@@ -305,14 +324,39 @@ class CompanyUserCustomerForm extends AbstractType
     }
 
     /**
-     * @return array
+     * @return \Symfony\Component\Validator\Constraints\NotBlank
      */
-    protected function getTextFieldConstraints(): array
+    protected function createNotBlankConstraint(): NotBlank
     {
-        return [
-            new NotBlank(),
-            new Length(['max' => 100]),
-        ];
+        return new NotBlank();
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\Length
+     */
+    protected function createLengthConstraint(): Length
+    {
+        return new Length(['max' => 100]);
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\Regex
+     */
+    protected function createFirstNameRegexConstraint(): Regex
+    {
+        return new Regex([
+            'pattern' => static::PATTERN_FIRST_NAME,
+        ]);
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraints\Regex
+     */
+    protected function createLastNameRegexConstraint(): Regex
+    {
+        return new Regex([
+            'pattern' => static::PATTERN_LAST_NAME,
+        ]);
     }
 
     /**
