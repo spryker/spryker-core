@@ -118,6 +118,7 @@ class JsonApiSchemaParametersFormatter implements JsonApiSchemaParametersFormatt
             'name' => 'page',
             'in' => 'query',
             'required' => false,
+            'description' => 'Parameter is used to limit requested items.',
             'style' => 'deepObject',
             'explode' => true,
             'schema' => [
@@ -153,6 +154,7 @@ class JsonApiSchemaParametersFormatter implements JsonApiSchemaParametersFormatt
             'name' => 'fields',
             'in' => 'query',
             'required' => false,
+            'description' => 'Parameter is used to extract specified items\` fields.',
             'style' => 'deepObject',
             'explode' => true,
             'schema' => [
@@ -186,6 +188,7 @@ class JsonApiSchemaParametersFormatter implements JsonApiSchemaParametersFormatt
             'name' => 'filter',
             'in' => 'query',
             'required' => false,
+            'description' => 'Parameter is used to sort items by specified values.',
             'style' => 'deepObject',
             'explode' => true,
             'schema' => [

@@ -49,6 +49,11 @@ class CustomRoutePathMethodFormatter implements CustomPathMethodFormatterInterfa
     /**
      * @var string
      */
+    protected const REQUEST_METHOD_GET_COLLECTION = 'get-collection';
+
+    /**
+     * @var string
+     */
     protected const METHOD_GET_COLLECTION = 'getCollection';
 
     /**
@@ -98,7 +103,7 @@ class CustomRoutePathMethodFormatter implements CustomPathMethodFormatterInterfa
         return $this->openApiSpecificationPathMethodFormatter->addPath(
             $pathMethodData,
             $customRouteTransfer->getPathOrFail(),
-            $requestMethodName,
+            $requestMethodName === static::REQUEST_METHOD_GET_COLLECTION ? static::REQUEST_METHOD_GET : $requestMethodName,
             $formattedData,
         );
     }
@@ -147,7 +152,7 @@ class CustomRoutePathMethodFormatter implements CustomPathMethodFormatterInterfa
         $defaultsData = $customRouteTransfer->getDefaults();
         $method = $defaultsData[static::DEFAULT_METHOD_FIELD] ?? Request::METHOD_GET;
 
-        return ($method === static::METHOD_GET_COLLECTION) ? static::REQUEST_METHOD_GET : strtolower($method);
+        return ($method === static::METHOD_GET_COLLECTION) ? static::REQUEST_METHOD_GET_COLLECTION : strtolower($method);
     }
 
     /**

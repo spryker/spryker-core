@@ -80,6 +80,11 @@ class OpenApiSpecificationPathMethodFormatter implements OpenApiSpecificationPat
     protected const KEY_BEARER_AUTH = 'BearerAuth';
 
     /**
+     * @var string
+     */
+    protected const KEY_TAGS = 'tags';
+
+    /**
      * @var \Spryker\Glue\DocumentationGeneratorOpenApi\Analyzer\ResourceTransferAnalyzerInterface
      */
     protected $resourceTransferAnalyzer;
@@ -174,6 +179,8 @@ class OpenApiSpecificationPathMethodFormatter implements OpenApiSpecificationPat
                 ],
             ];
         }
+
+        $pathMethodData[static::KEY_TAGS][] = $pathMethodComponentDataTransfer->getResourceTypeOrFail();
 
         return $pathMethodData;
     }
