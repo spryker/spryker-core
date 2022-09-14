@@ -64,6 +64,8 @@ class CustomerAccessRequestFormatter implements CustomerAccessRequestFormatterIn
 
         $customerAccessTransfer = $this->customerAccessStorageClient->getAuthenticatedCustomerAccess();
 
+        $request->attributes->set(static::REQUEST_ATTRIBUTE_IS_PROTECTED, false);
+
         foreach ($customerAccessTransfer->getContentTypeAccess() as $contentTypeAccessTransfer) {
             if ($this->isCustomerAccessContentTypeRestricted($contentTypeAccessTransfer, $currentResourceCustomerAccessContentType)) {
                 $request->attributes->set(static::REQUEST_ATTRIBUTE_IS_PROTECTED, true);
