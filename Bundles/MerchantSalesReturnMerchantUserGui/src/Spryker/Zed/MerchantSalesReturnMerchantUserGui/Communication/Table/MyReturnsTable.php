@@ -19,6 +19,7 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Facade\MerchantSalesReturnMerchantUserGuiToMerchantUserFacadeInterface;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\Dependency\Service\MerchantSalesReturnMerchantUserGuiToUtilDateTimeServiceInterface;
 use Spryker\Zed\MerchantSalesReturnMerchantUserGui\MerchantSalesReturnMerchantUserGuiConfig;
+use Spryker\Zed\MerchantUser\Business\Exception\CurrentMerchantUserNotFoundException;
 
 class MyReturnsTable extends AbstractTable
 {
@@ -170,9 +171,15 @@ class MyReturnsTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config): array
     {
+        $query = $this->prepareQuery();
+
+        if (!$query) {
+            return [];
+        }
+
         /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\SalesReturn\Persistence\SpySalesReturn> $salesReturnEntityCollection */
         $salesReturnEntityCollection = $this->runQuery(
-            $this->prepareQuery(),
+            $query,
             $config,
             true,
         );
@@ -187,14 +194,21 @@ class MyReturnsTable extends AbstractTable
     }
 
     /**
-     * @return \Orm\Zed\SalesReturn\Persistence\SpySalesReturnQuery
+     * @return \Orm\Zed\SalesReturn\Persistence\SpySalesReturnQuery|null
      */
-    protected function prepareQuery(): SpySalesReturnQuery
+    protected function prepareQuery(): ?SpySalesReturnQuery
     {
-        $merchantTransfer = $this->merchantUserFacade
-            ->getCurrentMerchantUser()
-            ->requireMerchant()
-            ->getMerchantOrFail();
+        try {
+            $merchantTransfer = $this->merchantUserFacade
+                ->getCurrentMerchantUser()
+                ->getMerchant();
+        } catch (CurrentMerchantUserNotFoundException $currentMerchantUserNotFoundException) {
+            return null;
+        }
+
+        if (!$merchantTransfer) {
+            return null;
+        }
 
         $merchantReference = $merchantTransfer
             ->requireMerchantReference()

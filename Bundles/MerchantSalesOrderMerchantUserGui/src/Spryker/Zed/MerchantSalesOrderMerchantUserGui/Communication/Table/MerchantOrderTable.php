@@ -21,6 +21,7 @@ use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Facade\MerchantSale
 use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Facade\MerchantSalesOrderMerchantUserGuiToMoneyFacadeInterface;
 use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Service\MerchantSalesOrderMerchantUserGuiToUtilDateTimeServiceInterface;
 use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Service\MerchantSalesOrderMerchantUserGuiToUtilSanitizeInterface;
+use Spryker\Zed\MerchantUser\Business\Exception\CurrentMerchantUserNotFoundException;
 
 class MerchantOrderTable extends AbstractTable
 {
@@ -182,10 +183,13 @@ class MerchantOrderTable extends AbstractTable
      */
     protected function prepareQuery(): ?SpyMerchantSalesOrderQuery
     {
-        $merchantTransfer = $this->merchantUserFacade
-            ->getCurrentMerchantUser()
-            ->requireMerchant()
-            ->getMerchant();
+        try {
+            $merchantTransfer = $this->merchantUserFacade
+                ->getCurrentMerchantUser()
+                ->getMerchant();
+        } catch (CurrentMerchantUserNotFoundException $currentMerchantUserNotFoundException) {
+            return null;
+        }
 
         if (!$merchantTransfer) {
             return null;
