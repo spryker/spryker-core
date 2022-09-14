@@ -15,17 +15,17 @@ class DataBuilderClassGenerator implements GeneratorInterface
     /**
      * @var string
      */
-    public const TWIG_TEMPLATES_LOCATION = '/Templates/';
+    public const TWIG_TEMPLATES_LOCATION = '/../../../../../../../templates/generator/';
 
     /**
      * @var string
      */
-    protected $targetDirectory;
+    protected string $targetDirectory;
 
     /**
      * @var \Twig\Environment
      */
-    protected $twig;
+    protected Environment $twig;
 
     /**
      * @param string $targetDirectory
@@ -33,8 +33,7 @@ class DataBuilderClassGenerator implements GeneratorInterface
     public function __construct($targetDirectory)
     {
         $this->targetDirectory = $targetDirectory;
-
-        $loader = new FilesystemLoader(__DIR__ . static::TWIG_TEMPLATES_LOCATION);
+        $loader = new FilesystemLoader((string)realpath(__DIR__ . static::TWIG_TEMPLATES_LOCATION));
         $this->twig = new Environment($loader, []);
     }
 

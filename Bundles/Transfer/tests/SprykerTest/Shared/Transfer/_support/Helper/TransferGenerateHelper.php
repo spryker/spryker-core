@@ -34,6 +34,11 @@ class TransferGenerateHelper extends Module
     /**
      * @var string
      */
+    protected const CONFIG_DATA_BUILDER_SCHEMA_DIRECTORIES = 'dataBuilderSchemaDirectories';
+
+    /**
+     * @var string
+     */
     protected const TRANSFER_SCHEMA_FILENAME_PATTERN = '*.transfer.xml';
 
     /**
@@ -44,7 +49,17 @@ class TransferGenerateHelper extends Module
     /**
      * @var string
      */
+    protected const DATA_BUILDER_SCHEMA_FILENAME_PATTERN = '*.databuilder.xml';
+
+    /**
+     * @var string
+     */
     protected const CONFIG_IS_ISOLATED_MODULE_TEST = 'isolated';
+
+    /**
+     * @var string
+     */
+    protected const DEFAULT_TRANSFER_SCHEMA_TARGET_DIRECTORY = 'src/Spryker/Shared/Testify/Transfer/';
 
     /**
      * @var array
@@ -55,6 +70,9 @@ class TransferGenerateHelper extends Module
         ],
         self::CONFIG_ENTITY_SCHEMA_DIRECTORIES => [
             'src/Orm/Propel/Schema/',
+        ],
+        self::CONFIG_DATA_BUILDER_SCHEMA_DIRECTORIES => [
+            'tests/_data/',
         ],
         self::CONFIG_IS_ISOLATED_MODULE_TEST => false,
     ];
@@ -79,22 +97,23 @@ class TransferGenerateHelper extends Module
     {
         $transferFacade = $this->getFacade();
 
-        $this->copySchemasFromDefinedSchemaDirectories();
-
         $transferFacade->deleteGeneratedDataTransferObjects();
         $transferFacade->deleteGeneratedDataBuilderObjects();
         $transferFacade->deleteGeneratedEntityTransferObjects();
-
-        $this->debug('Generating Transfer Objects ...');
+        $this->copySchemasFromDefinedSchemaDirectories(
+            $this->config[static::CONFIG_SCHEMA_DIRECTORIES],
+            static::TRANSFER_SCHEMA_FILENAME_PATTERN,
+        );
+        $this->copySchemasFromDefinedSchemaDirectories(
+            $this->config[static::CONFIG_DATA_BUILDER_SCHEMA_DIRECTORIES],
+            static::DATA_BUILDER_SCHEMA_FILENAME_PATTERN,
+        );
         $transferFacade->generateTransferObjects(new NullLogger());
+        $transferFacade->generateDataBuilders(new NullLogger());
 
-        if ($this->hasEntityTransferSchemaFiles()) {
-            $this->debug('Generating Entity Transfer Objects ...');
+        if ($this->hasEntityTransferSchemaDefinitionFiles()) {
             $transferFacade->generateEntityTransferObjects(new NullLogger());
         }
-
-        $this->debug('Generating DataBuilders ...');
-        $transferFacade->generateDataBuilders(new NullLogger());
     }
 
     /**
@@ -122,32 +141,36 @@ class TransferGenerateHelper extends Module
      *
      * ```
      *
+     * @param array<string> $schemaDirectoryList
+     * @param string $fileNamePattern
+     *
      * @return void
      */
-    protected function copySchemasFromDefinedSchemaDirectories(): void
+    protected function copySchemasFromDefinedSchemaDirectories(array $schemaDirectoryList, string $fileNamePattern): void
     {
-        $finder = $this->createTransferSchemaFinder(
-            $this->config[static::CONFIG_SCHEMA_DIRECTORIES],
-            static::TRANSFER_SCHEMA_FILENAME_PATTERN,
-        );
+        $finder = $this->createSchemaDefinitionFinder($schemaDirectoryList, $fileNamePattern);
 
-        if ($finder->count() > 0) {
-            $pathForTransferSchemas = $this->getTargetSchemaDirectory();
-            $filesystem = new Filesystem();
-            foreach ($finder as $file) {
-                $path = $pathForTransferSchemas . 'Transfer' . DIRECTORY_SEPARATOR . $file->getFileName();
-                $filesystem->dumpFile($path, $file->getContents());
-            }
+        if (!$finder->hasResults()) {
+            return;
+        }
+
+        $filesystem = new Filesystem();
+
+        foreach ($finder as $file) {
+            $filesystem->dumpFile(
+                $this->getTargetSchemaDirectory() . $file->getFileName(),
+                $file->getContents(),
+            );
         }
     }
 
     /**
-     * @param array $schemaDirectories
+     * @param array<string> $schemaDirectories
      * @param string $filenamePattern
      *
      * @return \Symfony\Component\Finder\Finder<\Symfony\Component\Finder\SplFileInfo>
      */
-    protected function createTransferSchemaFinder(array $schemaDirectories, string $filenamePattern)
+    protected function createSchemaDefinitionFinder(array $schemaDirectories, string $filenamePattern): Finder
     {
         $schemaDirectories = array_map(function (string $schemaDirectory) {
             if (defined('MODULE_UNDER_TEST_ROOT_DIR') && MODULE_UNDER_TEST_ROOT_DIR !== null) {
@@ -157,19 +180,18 @@ class TransferGenerateHelper extends Module
             return rtrim(APPLICATION_ROOT_DIR, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . $schemaDirectory . DIRECTORY_SEPARATOR;
         }, $schemaDirectories);
 
-        $finder = new Finder();
-        $finder->files()->in($schemaDirectories)->name($filenamePattern);
-
-        return $finder;
+        return (new Finder())->files()
+            ->in($schemaDirectories)
+            ->name($filenamePattern);
     }
 
     /**
      * @return bool
      */
-    protected function hasEntityTransferSchemaFiles(): bool
+    protected function hasEntityTransferSchemaDefinitionFiles(): bool
     {
         try {
-            $finder = $this->createTransferSchemaFinder(
+            $finder = $this->createSchemaDefinitionFinder(
                 $this->config[static::CONFIG_ENTITY_SCHEMA_DIRECTORIES],
                 static::ENTITY_TRANSFER_SCHEMA_FILENAME_PATTERN,
             );
@@ -187,41 +209,38 @@ class TransferGenerateHelper extends Module
      */
     protected function getTargetSchemaDirectory(): string
     {
-        $pathForTransferSchemas = rtrim(APPLICATION_ROOT_DIR, '/') . '/src/Spryker/Shared/Testify/';
+        $targetSchemaDirectory = rtrim(APPLICATION_ROOT_DIR, '/') . DIRECTORY_SEPARATOR . static::DEFAULT_TRANSFER_SCHEMA_TARGET_DIRECTORY;
 
         if (isset($this->config[static::TARGET_DIRECTORY])) {
-            $pathForTransferSchemas = $this->config[static::TARGET_DIRECTORY];
+            $targetSchemaDirectory = $this->config[static::TARGET_DIRECTORY];
         }
 
-        if (!is_dir($pathForTransferSchemas)) {
-            mkdir($pathForTransferSchemas, 0775, true);
+        if (!is_dir($targetSchemaDirectory)) {
+            mkdir($targetSchemaDirectory, 0775, true);
         }
 
-        return $pathForTransferSchemas;
+        return $targetSchemaDirectory;
     }
 
     /**
-     * This will add autoloading for generated Transfer objects in isolated module tests.
-     *
      * @return void
      */
     protected function addAutoloader(): void
     {
         spl_autoload_register(function ($className) {
-            if (strrpos($className, 'Transfer') === false) {
+            if (strrpos($className, 'Transfer') === false && strrpos($className, 'Builder') === false) {
                 return false;
             }
 
             $classNameParts = explode('\\', $className);
+            $fileName = implode(DIRECTORY_SEPARATOR, $classNameParts) . '.php';
+            $filePath = APPLICATION_SOURCE_DIR . $fileName;
 
-            $transferFileName = implode(DIRECTORY_SEPARATOR, $classNameParts) . '.php';
-            $transferFilePath = APPLICATION_ROOT_DIR . 'src' . DIRECTORY_SEPARATOR . $transferFileName;
-
-            if (!file_exists($transferFilePath)) {
+            if (!file_exists($filePath)) {
                 return false;
             }
 
-            require_once $transferFilePath;
+            require_once $filePath;
 
             return true;
         });
