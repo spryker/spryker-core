@@ -215,7 +215,7 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
             return [];
         }
 
-        return $this->createRestResourcesFromAbstractProductStorageData($abstractProductCollection, $localeName);
+        return $this->createRestResourcesFromAbstractProductStorageDataIndexedByIdProductAbstract($abstractProductCollection, $localeName);
     }
 
     /**
@@ -278,6 +278,24 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
 
         foreach ($abstractProductData as $abstractProductDataItem) {
             $restResources[$abstractProductDataItem[static::KEY_SKU]] =
+                $this->createRestResourceFromAbstractProductStorageData($abstractProductDataItem, $localeName);
+        }
+
+        return $restResources;
+    }
+
+    /**
+     * @param array<mixed> $abstractProductData
+     * @param string $localeName
+     *
+     * @return array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
+     */
+    protected function createRestResourcesFromAbstractProductStorageDataIndexedByIdProductAbstract(array $abstractProductData, string $localeName): array
+    {
+        $restResources = [];
+
+        foreach ($abstractProductData as $abstractProductDataItem) {
+            $restResources[$abstractProductDataItem[static::KEY_ID_PRODUCT_ABSTRACT]] =
                 $this->createRestResourceFromAbstractProductStorageData($abstractProductDataItem, $localeName);
         }
 
