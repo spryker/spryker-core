@@ -61,7 +61,7 @@ class CustomersRestApiConfig extends AbstractBundleConfig
     /**
      * @var string
      */
-    public const RESPONSE_MESSAGE_CUSTOMER_ALREADY_EXISTS = 'Customer with this email already exists.';
+    public const RESPONSE_MESSAGE_CUSTOMER_ALREADY_EXISTS = 'If this email address is already in use, you will receive a password reset link. Otherwise you must first validate your e-mail address to finish registration. Please check your e-mail.';
 
     /**
      * @var string
