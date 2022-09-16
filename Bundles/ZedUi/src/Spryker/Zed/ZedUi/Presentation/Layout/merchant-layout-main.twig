@@ -35,7 +35,7 @@
                                                     <web-spy-user-menu-link
                                                         cloak
                                                         {% if userMenuNavigationItem.type is not empty %}type="{{ userMenuNavigationItem.type }}"{% endif %}>
-                                                        {{ userMenuNavigationItem.title }}
+                                                        {{ userMenuNavigationItem.title | trans }}
                                                     </web-spy-user-menu-link>
                                                 {% endblock %}
                                             </a>

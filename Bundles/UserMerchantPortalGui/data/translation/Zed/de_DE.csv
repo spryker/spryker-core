@@ -4,9 +4,9 @@
 E-mail,E-Mail
 Language,Sprache
 Save,Speichern
-"Change password","Passswort ändern"
+"Change password","Passwort ändern"
 "Success! The Account is updated.","Der Account wurde erfolgreich geändert."
-"Please resolve all errors.","Bitte beheben Sie alle Fehler."
+"Please resolve all errors.","Bitte alle Fehler beheben."
 "This value should not be blank.","Dieser Wert sollte nicht leer sein."
 "This value is not a valid email address.","Dies ist keine gültige E-Mail Adresse."
 "A user with this email already exists.","Es existiert bereits ein Benutzer mit dieser E-Mail."
@@ -20,3 +20,4 @@ Password,Passwort
 "The value is incorrect. Please try again.","Die Eingabe ist falsch. Bitte versuchen Sie es nochmal."
 "The value needs to match the New Password input.","Die Werte für das neue Passwort müssen gleich sein."
 "Success! The Password is updated.","Das Passwort wurde erfolgreich geändert."
+"The value cannot be empty","Dies ist ein Pflichtfeld"

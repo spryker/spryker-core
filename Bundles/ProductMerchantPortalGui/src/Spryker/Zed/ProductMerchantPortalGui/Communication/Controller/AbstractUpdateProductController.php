@@ -98,7 +98,11 @@ abstract class AbstractUpdateProductController extends AbstractController
             ->createZedUiFormResponseBuilder();
 
         if (!$form->isValid() || !$validationResponseTransfer->getIsSuccess()) {
-            $zedUiFormResponseBuilder->addErrorNotification(static::RESPONSE_NOTIFICATION_MESSAGE_ERROR);
+            $zedUiFormResponseBuilder->addErrorNotification(
+                $this->getFactory()
+                    ->getTranslatorFacade()
+                    ->trans(static::RESPONSE_NOTIFICATION_MESSAGE_ERROR),
+            );
         }
 
         if (!$validationResponseTransfer->getIsSuccess()) {

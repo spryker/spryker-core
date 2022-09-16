@@ -20,3 +20,4 @@ Password,Password
 "The value is incorrect. Please try again.","The value is incorrect. Please try again."
 "The value needs to match the New Password input.","The value needs to match the New Password input."
 "Success! The Password is updated.","Success! The Password is updated."
+"The value cannot be empty","The value cannot be empty"

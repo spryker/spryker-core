@@ -285,7 +285,7 @@ class CreateProductAbstractController extends AbstractController
         $zedUiFormResponseTransfer = $this->getFactory()
             ->getZedUiFactory()
             ->createZedUiFormResponseBuilder()
-            ->addErrorNotification($errorMessage)
+            ->addErrorNotification($this->getFactory()->getTranslatorFacade()->trans($errorMessage))
             ->createResponse();
 
         return array_merge($responseData, $zedUiFormResponseTransfer->toArray());
