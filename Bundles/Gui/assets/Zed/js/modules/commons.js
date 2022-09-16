@@ -43,6 +43,8 @@ require('codemirror/mode/htmlmixed/htmlmixed.js');
 require('summernote');
 require('sweetalert');
 
+XMLHttpRequest.prototype = Object.getPrototypeOf(new XMLHttpRequest());
+
 // inspinia
 require('../../../Inspinia/inspinia');
 
