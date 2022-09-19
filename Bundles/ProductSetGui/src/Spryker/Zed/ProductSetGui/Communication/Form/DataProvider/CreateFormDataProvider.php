@@ -38,7 +38,7 @@ class CreateFormDataProvider extends AbstractProductSetFormDataProvider
     /**
      * @return array
      */
-    public function getData()
+    public function getData(): array
     {
         return [
             CreateProductSetFormType::FIELD_GENERAL_FORM => $this->getGeneralFormData(),
@@ -50,15 +50,17 @@ class CreateFormDataProvider extends AbstractProductSetFormDataProvider
     /**
      * @return array<string, mixed>
      */
-    public function getOptions()
+    public function getOptions(): array
     {
-        return [];
+        return [
+            CreateProductSetFormType::OPTION_LOCALE => $this->localeFacade->getCurrentLocaleName(),
+        ];
     }
 
     /**
      * @return array
      */
-    protected function getGeneralFormData()
+    protected function getGeneralFormData(): array
     {
         return [
             GeneralFormType::FIELD_LOCALIZED_GENERAL_FORM_COLLECTION => $this->getLocalizedFormCollectionData(),
@@ -68,7 +70,7 @@ class CreateFormDataProvider extends AbstractProductSetFormDataProvider
     /**
      * @return array
      */
-    protected function getSeoFormData()
+    protected function getSeoFormData(): array
     {
         return [
             SeoFormType::FIELD_LOCALIZED_SEO_FORM_COLLECTION => $this->getLocalizedFormCollectionData(),
@@ -78,7 +80,7 @@ class CreateFormDataProvider extends AbstractProductSetFormDataProvider
     /**
      * @return array
      */
-    protected function getImagesFormData()
+    protected function getImagesFormData(): array
     {
         $results = [];
         $results[ImagesFormType::getImageSetFormName()][] = $this->getImagesDefaultFields();
@@ -94,7 +96,7 @@ class CreateFormDataProvider extends AbstractProductSetFormDataProvider
     /**
      * @return array
      */
-    protected function getLocalizedFormCollectionData()
+    protected function getLocalizedFormCollectionData(): array
     {
         $results = [];
         $localeCollection = $this->localeFacade->getLocaleCollection();
@@ -114,7 +116,7 @@ class CreateFormDataProvider extends AbstractProductSetFormDataProvider
      *
      * @return array
      */
-    protected function getImagesDefaultFields(?LocaleTransfer $localeTransfer = null)
+    protected function getImagesDefaultFields(?LocaleTransfer $localeTransfer = null): array
     {
         return [
             LocalizedProductImageSetFormType::FIELD_FK_LOCALE => ($localeTransfer ? $localeTransfer->getIdLocale() : null),

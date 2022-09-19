@@ -35,7 +35,7 @@
                 </tr>
                 <tr>
                     <td>{{ 'Percentage' | trans }}</td>
-                    <td>{{ taxRate.rate }} %</td>
+                    <td>{{ taxRate.rate | executeFilterIfExists('formatFloat', app.locale) }} %</td>
                 </tr>
                 <tr>
                     <td>{{ 'Created at' | trans }}</td>

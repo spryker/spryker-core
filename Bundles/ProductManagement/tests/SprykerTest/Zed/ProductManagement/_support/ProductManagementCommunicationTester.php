@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\ProductManagement;
 
 use Codeception\Actor;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
+use Spryker\Service\UtilNumber\UtilNumberServiceInterface;
 
 /**
  * @method void wantToTest($text)
@@ -34,6 +35,26 @@ class ProductManagementCommunicationTester extends Actor
     public function ensureProductAbstractTableIsEmpty(): void
     {
         $this->ensureDatabaseTableIsEmpty($this->getProductAbstractQuery());
+    }
+
+    /**
+     * @return \Spryker\Service\UtilNumber\UtilNumberServiceInterface
+     */
+    public function getUtilService(): UtilNumberServiceInterface
+    {
+        return $this->getLocator()->utilNumber()->service();
+    }
+
+    /**
+     * @return string
+     */
+    public function getCurrentLocaleName(): string
+    {
+        return $this->getLocator()
+            ->locale()
+            ->facade()
+            ->getCurrentLocale()
+            ->getLocaleName();
     }
 
     /**

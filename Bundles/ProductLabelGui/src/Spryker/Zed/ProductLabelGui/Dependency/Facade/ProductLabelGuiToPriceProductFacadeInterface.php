@@ -15,5 +15,5 @@ interface ProductLabelGuiToPriceProductFacadeInterface
      *
      * @return int|null
      */
-    public function findPriceBySku($sku, $priceTypeName = null);
+    public function findPriceBySku($sku, $priceTypeName = null): ?int;
 }

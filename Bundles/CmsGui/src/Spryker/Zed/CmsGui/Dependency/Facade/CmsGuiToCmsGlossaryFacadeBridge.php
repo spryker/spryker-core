@@ -27,7 +27,7 @@ class CmsGuiToCmsGlossaryFacadeBridge implements CmsGuiToCmsGlossaryFacadeInterf
      *
      * @return bool
      */
-    public function hasKey($keyName)
+    public function hasKey($keyName): bool
     {
         return $this->glossaryFacade->hasKey($keyName);
     }
@@ -37,7 +37,7 @@ class CmsGuiToCmsGlossaryFacadeBridge implements CmsGuiToCmsGlossaryFacadeInterf
      *
      * @return int
      */
-    public function getKeyIdentifier($keyName)
+    public function getKeyIdentifier($keyName): int
     {
         return $this->glossaryFacade->getKeyIdentifier($keyName);
     }

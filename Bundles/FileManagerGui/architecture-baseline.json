@@ -175,111 +175,6 @@
         "priority": "2"
     },
     {
-        "fileName": "src/Spryker/Zed/FileManagerGui/Dependency/Facade/FileManagerGuiToFileManagerFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `saveFile()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/FileManagerGui/Dependency/Facade/FileManagerGuiToFileManagerFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `saveDirectory()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/FileManagerGui/Dependency/Facade/FileManagerGuiToFileManagerFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `deleteFile()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/FileManagerGui/Dependency/Facade/FileManagerGuiToFileManagerFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `deleteFileInfo()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/FileManagerGui/Dependency/Facade/FileManagerGuiToFileManagerFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `deleteFileDirectory()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/FileManagerGui/Dependency/Facade/FileManagerGuiToFileManagerFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `findFileByIdFile()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/FileManagerGui/Dependency/Facade/FileManagerGuiToFileManagerFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `findFileByIdFileInfo()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/FileManagerGui/Dependency/Facade/FileManagerGuiToFileManagerFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `findFileDirectory()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/FileManagerGui/Dependency/Facade/FileManagerGuiToFileManagerFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `findFileDirectoryTree()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/FileManagerGui/Dependency/Facade/FileManagerGuiToFileManagerFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `updateFileDirectoryTreeHierarchy()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/FileManagerGui/Dependency/Facade/FileManagerGuiToFileManagerFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `updateMimeTypeSettings()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/FileManagerGui/Dependency/Facade/FileManagerGuiToFileManagerFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `findMimeType()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/FileManagerGui/Dependency/Facade/FileManagerGuiToFileManagerFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `saveMimeType()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/FileManagerGui/Dependency/Facade/FileManagerGuiToFileManagerFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `deleteMimeType()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/FileManagerGui/Dependency/Facade/FileManagerGuiToFileManagerFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `findAllowedMimeTypes()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
         "fileName": "src/Spryker/Zed/FileManagerGui/Dependency/Facade/FileManagerGuiToLocaleFacadeBridge.php",
         "description": "Bridges: Method `getCurrentLocale()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
@@ -290,20 +185,6 @@
         "fileName": "src/Spryker/Zed/FileManagerGui/Dependency/Facade/FileManagerGuiToLocaleFacadeBridge.php",
         "description": "Bridges: Method `getLocaleCollection()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/FileManagerGui/Dependency/Facade/FileManagerGuiToLocaleFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `getCurrentLocale()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/FileManagerGui/Dependency/Facade/FileManagerGuiToLocaleFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `getLocaleCollection()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
     }

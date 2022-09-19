@@ -234,7 +234,7 @@ class MerchantUserTable extends AbstractTable
             $item[static::MERCHANT_USER_STATUS] = $item[static::USER_PHP_TABLE_NAME][static::USER_COLUMN_STATUS];
 
             $results[] = [
-                static::MERCHANT_USER_ID => $item[SpyMerchantUserTableMap::COL_ID_MERCHANT_USER],
+                static::MERCHANT_USER_ID => $this->formatInt($item[SpyMerchantUserTableMap::COL_ID_MERCHANT_USER]),
                 static::MERCHANT_USER_NAME => $item[static::MERCHANT_USER_NAME],
                 static::MERCHANT_USER_FIRST_NAME => $item[static::MERCHANT_USER_FIRST_NAME],
                 static::MERCHANT_USER_LAST_NAME => $item[static::MERCHANT_USER_LAST_NAME],

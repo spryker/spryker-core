@@ -167,7 +167,7 @@ class ProductBarcodeTable extends AbstractTable
         $productName = $product->getVirtualColumn(static::COL_PRODUCT_NAME);
 
         return [
-            static::COL_ID_PRODUCT => $product->getIdProduct(),
+            static::COL_ID_PRODUCT => $this->formatInt($product->getIdProduct()),
             static::COL_PRODUCT_SKU => $sku,
             static::COL_PRODUCT_NAME => $productName,
             static::COL_BARCODE => $this->getBarcodeImageBySku($sku),

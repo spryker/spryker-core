@@ -15,7 +15,7 @@
                 </a>
             </div>
         </td>
-        <td>x {{ orderItem.quantity }}</td>
+        <td>x {{ orderItem.quantity | executeFilterIfExists('formatInt', app.locale) }}</td>
         <td>
             {% include '@Sales/Detail/boxes/discounted-price.twig' with {
                 subtotal: orderItem.sumPrice,

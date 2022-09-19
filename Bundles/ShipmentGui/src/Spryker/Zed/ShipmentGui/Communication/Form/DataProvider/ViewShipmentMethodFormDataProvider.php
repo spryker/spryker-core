@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ShipmentGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToLocaleFacadeInterface;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToTaxFacadeInterface;
 
 class ViewShipmentMethodFormDataProvider
@@ -33,16 +34,30 @@ class ViewShipmentMethodFormDataProvider
     public const OPTION_TAX_SET_DISABLED = 'option_tax_set_disabled';
 
     /**
+     * @var string
+     */
+    public const OPTION_LOCALE = 'locale';
+
+    /**
      * @var \Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToTaxFacadeInterface
      */
     protected $taxFacade;
 
     /**
-     * @param \Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToTaxFacadeInterface $taxFacade
+     * @var \Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToLocaleFacadeInterface
      */
-    public function __construct(ShipmentGuiToTaxFacadeInterface $taxFacade)
-    {
+    protected $localeFacade;
+
+    /**
+     * @param \Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToTaxFacadeInterface $taxFacade
+     * @param \Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToLocaleFacadeInterface $localeFacade
+     */
+    public function __construct(
+        ShipmentGuiToTaxFacadeInterface $taxFacade,
+        ShipmentGuiToLocaleFacadeInterface $localeFacade
+    ) {
         $this->taxFacade = $taxFacade;
+        $this->localeFacade = $localeFacade;
     }
 
     /**
@@ -65,6 +80,7 @@ class ViewShipmentMethodFormDataProvider
             static::OPTION_STORE_RELATION_DISABLED => true,
             static::OPTION_PRICES_DISABLED => true,
             static::OPTION_TAX_SET_DISABLED => true,
+            static::OPTION_LOCALE => $this->localeFacade->getCurrentLocaleName(),
         ];
     }
 

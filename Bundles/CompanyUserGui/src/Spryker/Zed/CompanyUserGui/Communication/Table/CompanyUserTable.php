@@ -189,7 +189,9 @@ class CompanyUserTable extends AbstractTable
     protected function mapCompanyUserDataItemToCompanyUserTableDataRow(array $companyUserDataItem): array
     {
         return [
-            CompanyUserGuiConfig::COL_ID_COMPANY_USER => $companyUserDataItem[SpyCompanyUserTableMap::COL_ID_COMPANY_USER],
+            CompanyUserGuiConfig::COL_ID_COMPANY_USER => $this->formatInt(
+                $companyUserDataItem[SpyCompanyUserTableMap::COL_ID_COMPANY_USER],
+            ),
             static::COL_COMPANY_USER_NAME => $companyUserDataItem[static::COL_COMPANY_USER_NAME],
             static::COL_COMPANY_NAME => $companyUserDataItem[static::COL_COMPANY_NAME],
             static::COL_IS_ACTIVE => $this->generateCompanyUserStatusLabel($companyUserDataItem),

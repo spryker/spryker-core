@@ -16,6 +16,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @method \Spryker\Zed\ProductManagement\Communication\ProductManagementCommunicationFactory getFactory()
@@ -51,6 +52,11 @@ class ProductMoneyCollectionType extends AbstractCollectionType
     /**
      * @var string
      */
+    protected const OPTION_LOCALE = 'locale';
+
+    /**
+     * @var string
+     */
     protected static $netPriceModeIdentifier;
 
     /**
@@ -69,6 +75,7 @@ class ProductMoneyCollectionType extends AbstractCollectionType
         $defaultOptions = [
             'entry_options' => [
                 'data_class' => MoneyValueTransfer::class,
+                'locale' => $options[static::OPTION_LOCALE],
             ],
             'entry_type' => $this->getFactory()->getMoneyFormTypePlugin()->getType(),
         ];
@@ -81,6 +88,20 @@ class ProductMoneyCollectionType extends AbstractCollectionType
         );
 
         parent::buildForm($builder, array_replace_recursive($defaultOptions, $options));
+    }
+
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        parent::configureOptions($resolver);
+
+        $resolver->setDefaults([
+            static::OPTION_LOCALE => null,
+        ]);
     }
 
     /**

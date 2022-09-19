@@ -16,5 +16,5 @@ interface SalesToSequenceNumberInterface
      *
      * @return string
      */
-    public function generate(SequenceNumberSettingsTransfer $sequenceNumberSettingsTransfer);
+    public function generate(SequenceNumberSettingsTransfer $sequenceNumberSettingsTransfer): string;
 }

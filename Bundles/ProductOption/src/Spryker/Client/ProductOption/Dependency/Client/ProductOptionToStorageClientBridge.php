@@ -27,7 +27,7 @@ class ProductOptionToStorageClientBridge implements ProductOptionToStorageClient
      *
      * @return array
      */
-    public function get($key)
+    public function get($key): array
     {
         return $this->storageClient->get($key);
     }

@@ -202,6 +202,8 @@ class OrdersTable extends AbstractTable
         $salesOrderRow[SpySalesOrderTableMap::COL_CREATED_AT] = $this->utilDateTimeService->formatDateTime($entity->getCreatedAt());
         $salesOrderRow[static::ITEM_STATE_NAMES_CSV] = $this->groupItemStateNamesForCsv($stateNames);
         $salesOrderRow[static::GRAND_TOTAL] = $this->formatGrandTotal((int)$grandTotal, $entity->getCurrencyIsoCode());
+        $salesOrderRow[SpySalesOrderTableMap::COL_ID_SALES_ORDER] = $this->formatInt($salesOrderRow[SpySalesOrderTableMap::COL_ID_SALES_ORDER]);
+        $salesOrderRow[static::NUMBER_OF_ORDER_ITEMS] = $this->formatInt((int)$salesOrderRow[static::NUMBER_OF_ORDER_ITEMS]);
 
         return $salesOrderRow;
     }
@@ -467,6 +469,10 @@ class OrdersTable extends AbstractTable
                 static::URL => implode(' ', $this->createActionUrls($item)),
             ];
             $itemLine = $this->applyUiPlugins($itemLine);
+
+            $itemLine[SpySalesOrderTableMap::COL_ID_SALES_ORDER] = $this->formatInt($itemLine[SpySalesOrderTableMap::COL_ID_SALES_ORDER]);
+            $itemLine[static::NUMBER_OF_ORDER_ITEMS] = $this->formatInt((int)$itemLine[static::NUMBER_OF_ORDER_ITEMS]);
+
             $results[] = $itemLine;
         }
 

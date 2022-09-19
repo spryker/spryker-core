@@ -16,19 +16,19 @@ interface ProductReviewGuiToProductReviewInterface
      *
      * @return \Generated\Shared\Transfer\ProductReviewTransfer|null
      */
-    public function findProductReview(ProductReviewTransfer $productReviewTransfer);
+    public function findProductReview(ProductReviewTransfer $productReviewTransfer): ?ProductReviewTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ProductReviewTransfer $productReviewTransfer
      *
      * @return \Generated\Shared\Transfer\ProductReviewTransfer
      */
-    public function updateProductReviewStatus(ProductReviewTransfer $productReviewTransfer);
+    public function updateProductReviewStatus(ProductReviewTransfer $productReviewTransfer): ProductReviewTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ProductReviewTransfer $productReviewTransfer
      *
      * @return void
      */
-    public function deleteProductReview(ProductReviewTransfer $productReviewTransfer);
+    public function deleteProductReview(ProductReviewTransfer $productReviewTransfer): void;
 }

@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductLabelGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
+use Spryker\Zed\ProductLabelGui\Communication\Form\ProductLabelFormType;
 use Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToLocaleInterface;
 use Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToProductLabelInterface;
 
@@ -90,6 +91,8 @@ class ProductLabelFormDataProvider
      */
     public function getOptions()
     {
-        return [];
+        return [
+            ProductLabelFormType::OPTION_LOCALE => $this->localeFacade->getCurrentLocaleName(),
+        ];
     }
 }

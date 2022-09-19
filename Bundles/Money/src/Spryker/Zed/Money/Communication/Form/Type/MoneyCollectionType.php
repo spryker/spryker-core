@@ -19,6 +19,8 @@ use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\MoneyGui\Communication\Form\Type\MoneyCollectionType} instead.
+ *
  * @method \Spryker\Zed\Money\Communication\MoneyCommunicationFactory getFactory()
  * @method \Spryker\Zed\Money\MoneyConfig getConfig()
  * @method \Spryker\Zed\Money\Business\MoneyFacadeInterface getFacade()

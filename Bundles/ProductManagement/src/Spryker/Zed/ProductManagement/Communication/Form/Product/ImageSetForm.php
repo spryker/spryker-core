@@ -64,6 +64,11 @@ class ImageSetForm extends AbstractSubForm
     public const VALIDATION_GROUP_IMAGE_COLLECTION = 'validation_group_image_collection';
 
     /**
+     * @var string
+     */
+    protected const OPTION_LOCALE = 'locale';
+
+    /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
      * @return void
@@ -84,6 +89,7 @@ class ImageSetForm extends AbstractSubForm
                 return $validationGroups;
             },
             'compound' => true,
+            static::OPTION_LOCALE => null,
         ]);
     }
 
@@ -208,6 +214,9 @@ class ImageSetForm extends AbstractSubForm
         $builder
             ->add(static::PRODUCT_IMAGES, CollectionType::class, [
                 'entry_type' => ImageCollectionForm::class,
+                'entry_options' => [
+                    'locale' => $options[static::OPTION_LOCALE],
+                ],
                 'label' => false,
                 'allow_add' => true,
                 'allow_delete' => true,

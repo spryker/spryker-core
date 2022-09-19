@@ -14,12 +14,12 @@ interface CmsGuiToCmsGlossaryFacadeInterface
      *
      * @return bool
      */
-    public function hasKey($keyName);
+    public function hasKey($keyName): bool;
 
     /**
      * @param string $keyName
      *
      * @return int
      */
-    public function getKeyIdentifier($keyName);
+    public function getKeyIdentifier($keyName): int;
 }

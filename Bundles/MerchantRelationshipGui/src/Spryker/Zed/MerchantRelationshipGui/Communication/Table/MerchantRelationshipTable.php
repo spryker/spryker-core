@@ -111,7 +111,9 @@ class MerchantRelationshipTable extends AbstractTable
 
         foreach ($queryResults as $item) {
             $rowData = [
-                MerchantRelationshipTableConstants::COL_ID_MERCHANT_RELATIONSHIP => $item[SpyMerchantRelationshipTableMap::COL_ID_MERCHANT_RELATIONSHIP],
+                MerchantRelationshipTableConstants::COL_ID_MERCHANT_RELATIONSHIP => $this->formatInt(
+                    $item[SpyMerchantRelationshipTableMap::COL_ID_MERCHANT_RELATIONSHIP],
+                ),
                 MerchantRelationshipTableConstants::COL_MERCHANT_NAME => $this->formatMerchantName($item),
                 MerchantRelationshipTableConstants::COL_BUSINESS_UNIT_OWNER => $item[MerchantRelationshipTableConstants::COL_BUSINESS_UNIT_OWNER],
                 MerchantRelationshipTableConstants::COL_ASSIGNED_BUSINESS_UNITS => $item[MerchantRelationshipTableConstants::COL_ASSIGNED_BUSINESS_UNITS],

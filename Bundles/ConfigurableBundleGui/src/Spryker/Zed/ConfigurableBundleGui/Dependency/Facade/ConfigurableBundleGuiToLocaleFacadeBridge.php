@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ConfigurableBundleGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+
 class ConfigurableBundleGuiToLocaleFacadeBridge implements ConfigurableBundleGuiToLocaleFacadeInterface
 {
     /**
@@ -25,7 +27,7 @@ class ConfigurableBundleGuiToLocaleFacadeBridge implements ConfigurableBundleGui
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getCurrentLocale()
+    public function getCurrentLocale(): LocaleTransfer
     {
         return $this->localeFacade->getCurrentLocale();
     }
@@ -33,7 +35,7 @@ class ConfigurableBundleGuiToLocaleFacadeBridge implements ConfigurableBundleGui
     /**
      * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
-    public function getLocaleCollection()
+    public function getLocaleCollection(): array
     {
         return $this->localeFacade->getLocaleCollection();
     }

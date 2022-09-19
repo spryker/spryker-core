@@ -22,7 +22,7 @@
                     {% for productOfferStock in productOfferStocks %}
                         <tr>
                             <td>{{ productOfferStock.name }} <span class="label label-info">{{ productOfferStock.storeName }}</span></td>
-                            <td>{{ productOfferStock.quantity.trim() }}</td>
+                            <td>{{ productOfferStock.quantity.trim().toFloat() | executeFilterIfExists('formatFloat', app.locale) }}</td>
 
                             {% if hasAdditionalColumns %}
                                 {% for column in productOfferStock.additionalColumns.columns %}

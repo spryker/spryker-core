@@ -6,6 +6,7 @@
 'use strict';
 
 var TranslationCopyFields = require('ZedGuiModules/libs/translation-copy-fields');
+var initFormattedMoney = require('ZedGuiModules/libs/formatted-money-input');
 require('./main');
 
 function OptionValueFormHandler() {
@@ -94,6 +95,8 @@ OptionValueFormHandler.prototype.addProductOptionValueForm = function () {
         valueLabelElement.text(self.optionValueCount + '. ' + currentLabelText);
 
         self.optionValueList.append(newOptionForm);
+
+        initFormattedMoney();
     });
 };
 

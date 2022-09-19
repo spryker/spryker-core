@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Sales\Dependency\Facade;
 
+use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
+use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 
 interface SalesToOmsInterface
@@ -14,21 +16,21 @@ interface SalesToOmsInterface
     /**
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemState
      */
-    public function getInitialStateEntity();
+    public function getInitialStateEntity(): SpyOmsOrderItemState;
 
     /**
      * @param string $processName
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderProcess
      */
-    public function getProcessEntity($processName);
+    public function getProcessEntity($processName): SpyOmsOrderProcess;
 
     /**
      * @param int $idOrderItem
      *
      * @return array<string>
      */
-    public function getManualEvents($idOrderItem);
+    public function getManualEvents($idOrderItem): array;
 
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
@@ -36,21 +38,21 @@ interface SalesToOmsInterface
      *
      * @return array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem>
      */
-    public function getItemsWithFlag(SpySalesOrder $order, $flag);
+    public function getItemsWithFlag(SpySalesOrder $order, $flag): array;
 
     /**
      * @param int $idSalesOrder
      *
      * @return array<array<string>>
      */
-    public function getManualEventsByIdSalesOrder($idSalesOrder);
+    public function getManualEventsByIdSalesOrder($idSalesOrder): array;
 
     /**
      * @param int $idSalesOrder
      *
      * @return array
      */
-    public function getDistinctManualEventsByIdSalesOrder($idSalesOrder);
+    public function getDistinctManualEventsByIdSalesOrder($idSalesOrder): array;
 
     /**
      * @param int $idSalesOrder
@@ -62,14 +64,14 @@ interface SalesToOmsInterface
     /**
      * @return array
      */
-    public function getOrderItemMatrix();
+    public function getOrderItemMatrix(): array;
 
     /**
      * @param int $idOrder
      *
      * @return bool
      */
-    public function isOrderFlaggedExcludeFromCustomer($idOrder);
+    public function isOrderFlaggedExcludeFromCustomer($idOrder): bool;
 
     /**
      * @param string $eventId
@@ -78,5 +80,5 @@ interface SalesToOmsInterface
      *
      * @return array|null
      */
-    public function triggerEventForOrderItems($eventId, array $orderItemIds, array $data = []);
+    public function triggerEventForOrderItems($eventId, array $orderItemIds, array $data = []): ?array;
 }

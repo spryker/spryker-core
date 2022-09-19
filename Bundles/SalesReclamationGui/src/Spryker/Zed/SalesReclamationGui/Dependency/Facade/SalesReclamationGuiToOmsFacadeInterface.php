@@ -14,5 +14,5 @@ interface SalesReclamationGuiToOmsFacadeInterface
      *
      * @return array<array<string>>
      */
-    public function getManualEventsByIdSalesOrder($idSalesOrder);
+    public function getManualEventsByIdSalesOrder($idSalesOrder): array;
 }

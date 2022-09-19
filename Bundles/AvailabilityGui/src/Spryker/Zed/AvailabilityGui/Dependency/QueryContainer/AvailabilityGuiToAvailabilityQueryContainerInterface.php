@@ -52,7 +52,12 @@ interface AvailabilityGuiToAvailabilityQueryContainerInterface
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
-    public function queryAvailabilityAbstractWithStockByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale, $idStore, array $stockNames = []);
+    public function queryAvailabilityAbstractWithStockByIdProductAbstractAndIdLocale(
+        $idProductAbstract,
+        $idLocale,
+        $idStore,
+        array $stockNames = []
+    ): SpyProductAbstractQuery;
 
     /**
      * @param array<int> $productAbstractIds

@@ -155,6 +155,11 @@ class ProductFormAdd extends AbstractType
     /**
      * @var string
      */
+    public const OPTION_LOCALE = 'locale';
+
+    /**
+     * @var string
+     */
     public const VALIDATION_GROUP_UNIQUE_SKU = 'validation_group_unique_sku';
 
     /**
@@ -244,6 +249,7 @@ class ProductFormAdd extends AbstractType
             },
             'compound' => true,
             static::OPTION_CURRENCY_ISO_CODE => null,
+            static::OPTION_LOCALE => null,
         ]);
     }
 
@@ -285,7 +291,7 @@ class ProductFormAdd extends AbstractType
             ->addPriceForm($builder, $options)
             ->addTaxRateField($builder, $options)
             ->addSeoLocalizedForms($builder)
-            ->addImageLocalizedForms($builder)
+            ->addImageLocalizedForms($builder, $options)
             ->addStoreRelationForm($builder);
 
         $this->executeProductAbstractFormExpanderPlugins($builder, $options);
@@ -356,15 +362,16 @@ class ProductFormAdd extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
-    protected function addImageLocalizedForms(FormBuilderInterface $builder)
+    protected function addImageLocalizedForms(FormBuilderInterface $builder, array $options)
     {
         $localeCollection = $this->getFactory()->createLocaleProvider()->getLocaleCollection(true);
         foreach ($localeCollection as $localeTransfer) {
             $name = static::getImagesFormName($localeTransfer->getLocaleName());
-            $this->addImageSetForm($builder, $name);
+            $this->addImageSetForm($builder, $name, $options);
         }
 
         $defaultName = static::getLocalizedPrefixName(
@@ -372,7 +379,7 @@ class ProductFormAdd extends AbstractType
             ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE,
         );
 
-        $this->addImageSetForm($builder, $defaultName);
+        $this->addImageSetForm($builder, $defaultName, $options);
 
         return $this;
     }
@@ -630,6 +637,7 @@ class ProductFormAdd extends AbstractType
                     'data_class' => PriceProductTransfer::class,
                 ],
                 'entry_type' => ProductMoneyType::class,
+                'locale' => $options[static::OPTION_LOCALE],
                 'constraints' => [
                     new ProductPriceNotBlank([
                         'groups' => [static::VALIDATION_GROUP_PRICE_SOURCE],
@@ -665,14 +673,18 @@ class ProductFormAdd extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param string $name
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
-    protected function addImageSetForm(FormBuilderInterface $builder, $name)
+    protected function addImageSetForm(FormBuilderInterface $builder, $name, array $options)
     {
         $builder
             ->add($name, CollectionType::class, [
                 'entry_type' => ImageSetForm::class,
+                'entry_options' => [
+                    'locale' => $options[static::OPTION_LOCALE],
+                ],
                 'label' => false,
                 'allow_add' => true,
                 'allow_delete' => true,

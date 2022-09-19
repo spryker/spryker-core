@@ -69,6 +69,11 @@ class ProductOptionGroupForm extends AbstractType
     /**
      * @var string
      */
+    public const OPTION_LOCALE = 'locale';
+
+    /**
+     * @var string
+     */
     public const PRODUCTS_TO_BE_ASSIGNED = 'products_to_be_assigned';
 
     /**
@@ -88,14 +93,14 @@ class ProductOptionGroupForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array<string> $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addNameField($builder)
-            ->addValuesFields($builder)
+            ->addValuesFields($builder, $options[static::OPTION_LOCALE])
             ->addValueTranslationFields($builder)
             ->addGroupNameTranslationFields($builder)
             ->addTaxSetField($builder, $options)
@@ -110,9 +115,15 @@ class ProductOptionGroupForm extends AbstractType
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
+        parent::configureOptions($resolver);
+
         $resolver->setRequired(static::OPTION_TAX_SETS);
+
+        $resolver->setDefaults([
+            static::OPTION_LOCALE => null,
+        ]);
     }
 
     /**
@@ -145,13 +156,17 @@ class ProductOptionGroupForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param string $currentLocale
      *
      * @return $this
      */
-    protected function addValuesFields(FormBuilderInterface $builder)
+    protected function addValuesFields(FormBuilderInterface $builder, string $currentLocale)
     {
         $builder->add(static::FIELD_VALUES, CollectionType::class, [
             'entry_type' => ProductOptionValueForm::class,
+            'entry_options' => [
+                static::OPTION_LOCALE => $currentLocale,
+            ],
             'allow_add' => true,
             'allow_delete' => true,
             'prototype' => true,

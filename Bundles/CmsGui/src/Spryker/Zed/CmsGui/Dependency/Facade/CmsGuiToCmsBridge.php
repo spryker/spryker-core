@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CmsGlossaryTransfer;
 use Generated\Shared\Transfer\CmsPageAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageTransfer;
 use Generated\Shared\Transfer\CmsVersionDataTransfer;
+use Generated\Shared\Transfer\CmsVersionTransfer;
 
 class CmsGuiToCmsBridge implements CmsGuiToCmsInterface
 {
@@ -33,7 +34,7 @@ class CmsGuiToCmsBridge implements CmsGuiToCmsInterface
      *
      * @return bool
      */
-    public function hasPagePlaceholderMapping($idPage, $placeholder)
+    public function hasPagePlaceholderMapping(int $idPage, string $placeholder): bool
     {
         return $this->cmsFacade->hasPagePlaceholderMapping($idPage, $placeholder);
     }
@@ -43,7 +44,7 @@ class CmsGuiToCmsBridge implements CmsGuiToCmsInterface
      *
      * @return int
      */
-    public function createPage(CmsPageTransfer $cmsPageTransfer)
+    public function createPage(CmsPageTransfer $cmsPageTransfer): int
     {
         return $this->cmsFacade->createPage($cmsPageTransfer);
     }
@@ -53,7 +54,7 @@ class CmsGuiToCmsBridge implements CmsGuiToCmsInterface
      *
      * @return \Generated\Shared\Transfer\CmsGlossaryTransfer|null
      */
-    public function findPageGlossaryAttributes($idCmsPage)
+    public function findPageGlossaryAttributes(int $idCmsPage): ?CmsGlossaryTransfer
     {
         return $this->cmsFacade->findPageGlossaryAttributes($idCmsPage);
     }
@@ -63,7 +64,7 @@ class CmsGuiToCmsBridge implements CmsGuiToCmsInterface
      *
      * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
      */
-    public function saveCmsGlossary(CmsGlossaryTransfer $cmsGlossaryTransfer)
+    public function saveCmsGlossary(CmsGlossaryTransfer $cmsGlossaryTransfer): CmsGlossaryTransfer
     {
         return $this->cmsFacade->saveCmsGlossary($cmsGlossaryTransfer);
     }
@@ -73,7 +74,7 @@ class CmsGuiToCmsBridge implements CmsGuiToCmsInterface
      *
      * @return \Generated\Shared\Transfer\CmsPageTransfer|null
      */
-    public function findCmsPageById($idCmsPage)
+    public function findCmsPageById(int $idCmsPage): ?CmsPageTransfer
     {
         return $this->cmsFacade->findCmsPageById($idCmsPage);
     }
@@ -83,7 +84,7 @@ class CmsGuiToCmsBridge implements CmsGuiToCmsInterface
      *
      * @return \Generated\Shared\Transfer\CmsPageTransfer
      */
-    public function updatePage(CmsPageTransfer $cmsPageTransfer)
+    public function updatePage(CmsPageTransfer $cmsPageTransfer): CmsPageTransfer
     {
         return $this->cmsFacade->updatePage($cmsPageTransfer);
     }
@@ -93,7 +94,7 @@ class CmsGuiToCmsBridge implements CmsGuiToCmsInterface
      *
      * @return void
      */
-    public function activatePage($idCmsPage)
+    public function activatePage(int $idCmsPage): void
     {
         $this->cmsFacade->activatePage($idCmsPage);
     }
@@ -103,7 +104,7 @@ class CmsGuiToCmsBridge implements CmsGuiToCmsInterface
      *
      * @return void
      */
-    public function deactivatePage($idCmsPage)
+    public function deactivatePage(int $idCmsPage): void
     {
         $this->cmsFacade->deactivatePage($idCmsPage);
     }
@@ -113,7 +114,7 @@ class CmsGuiToCmsBridge implements CmsGuiToCmsInterface
      *
      * @return string
      */
-    public function getPageUrlPrefix(CmsPageAttributesTransfer $cmsPageAttributesTransfer)
+    public function getPageUrlPrefix(CmsPageAttributesTransfer $cmsPageAttributesTransfer): string
     {
         return $this->cmsFacade->getPageUrlPrefix($cmsPageAttributesTransfer);
     }
@@ -123,7 +124,7 @@ class CmsGuiToCmsBridge implements CmsGuiToCmsInterface
      *
      * @return string
      */
-    public function buildPageUrl(CmsPageAttributesTransfer $cmsPageAttributesTransfer)
+    public function buildPageUrl(CmsPageAttributesTransfer $cmsPageAttributesTransfer): string
     {
         return $this->cmsFacade->buildPageUrl($cmsPageAttributesTransfer);
     }
@@ -134,7 +135,7 @@ class CmsGuiToCmsBridge implements CmsGuiToCmsInterface
      *
      * @return \Generated\Shared\Transfer\CmsVersionTransfer
      */
-    public function publishWithVersion($idCmsPage, $versionName = null)
+    public function publishWithVersion(int $idCmsPage, ?string $versionName = null): CmsVersionTransfer
     {
         return $this->cmsFacade->publishWithVersion($idCmsPage, $versionName);
     }
@@ -145,7 +146,7 @@ class CmsGuiToCmsBridge implements CmsGuiToCmsInterface
      *
      * @return \Generated\Shared\Transfer\CmsVersionTransfer
      */
-    public function rollback($idCmsPage, $version)
+    public function rollback(int $idCmsPage, int $version): CmsVersionTransfer
     {
         return $this->cmsFacade->rollback($idCmsPage, $version);
     }
@@ -155,7 +156,7 @@ class CmsGuiToCmsBridge implements CmsGuiToCmsInterface
      *
      * @return void
      */
-    public function revert($idCmsPage)
+    public function revert(int $idCmsPage): void
     {
         $this->cmsFacade->revert($idCmsPage);
     }
@@ -165,7 +166,7 @@ class CmsGuiToCmsBridge implements CmsGuiToCmsInterface
      *
      * @return \Generated\Shared\Transfer\CmsVersionTransfer|null
      */
-    public function findLatestCmsVersionByIdCmsPage($idCmsPage)
+    public function findLatestCmsVersionByIdCmsPage(int $idCmsPage): ?CmsVersionTransfer
     {
         return $this->cmsFacade->findLatestCmsVersionByIdCmsPage($idCmsPage);
     }
@@ -175,7 +176,7 @@ class CmsGuiToCmsBridge implements CmsGuiToCmsInterface
      *
      * @return array<\Generated\Shared\Transfer\CmsVersionTransfer>
      */
-    public function findAllCmsVersionByIdCmsPage($idCmsPage)
+    public function findAllCmsVersionByIdCmsPage(int $idCmsPage): array
     {
         return $this->cmsFacade->findAllCmsVersionByIdCmsPage($idCmsPage);
     }
@@ -186,7 +187,7 @@ class CmsGuiToCmsBridge implements CmsGuiToCmsInterface
      *
      * @return \Generated\Shared\Transfer\CmsVersionTransfer|null
      */
-    public function findCmsVersionByIdCmsPageAndVersion($idCmsPage, $version)
+    public function findCmsVersionByIdCmsPageAndVersion(int $idCmsPage, int $version): ?CmsVersionTransfer
     {
         return $this->cmsFacade->findCmsVersionByIdCmsPageAndVersion($idCmsPage, $version);
     }
@@ -196,7 +197,7 @@ class CmsGuiToCmsBridge implements CmsGuiToCmsInterface
      *
      * @return bool
      */
-    public function syncTemplate($cmsTemplateFolderPath)
+    public function syncTemplate(string $cmsTemplateFolderPath): bool
     {
         return $this->cmsFacade->syncTemplate($cmsTemplateFolderPath);
     }

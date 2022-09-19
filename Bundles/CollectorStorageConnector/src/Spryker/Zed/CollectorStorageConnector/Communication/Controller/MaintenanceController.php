@@ -8,7 +8,7 @@
 namespace Spryker\Zed\CollectorStorageConnector\Communication\Controller;
 
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Spryker\Zed\Storage\Communication\Controller\MaintenanceController as StorageMaintenanceController;
+use Spryker\Zed\StorageGui\Communication\Controller\MaintenanceController as StorageMaintenanceController;
 
 /**
  * @method \Spryker\Zed\CollectorStorageConnector\Communication\CollectorStorageConnectorCommunicationFactory getFactory()

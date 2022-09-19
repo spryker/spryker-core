@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductSetGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\LocalizedProductSetTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
 use Generated\Shared\Transfer\ProductSetTransfer;
 use Spryker\Zed\ProductSetGui\Communication\Form\CreateProductSetFormType;
@@ -56,7 +57,7 @@ class UpdateFormDataProvider extends AbstractProductSetFormDataProvider
      *
      * @return array
      */
-    public function getData($idProductSet)
+    public function getData($idProductSet): array
     {
         $productSetTransfer = new ProductSetTransfer();
         $productSetTransfer->setIdProductSet($idProductSet);
@@ -75,9 +76,11 @@ class UpdateFormDataProvider extends AbstractProductSetFormDataProvider
     /**
      * @return array<string, mixed>
      */
-    public function getOptions()
+    public function getOptions(): array
     {
-        return [];
+        return [
+            CreateProductSetFormType::OPTION_LOCALE => $this->localeFacade->getCurrentLocaleName(),
+        ];
     }
 
     /**
@@ -85,7 +88,7 @@ class UpdateFormDataProvider extends AbstractProductSetFormDataProvider
      *
      * @return array
      */
-    protected function getGeneralFormData(ProductSetTransfer $productSetTransfer)
+    protected function getGeneralFormData(ProductSetTransfer $productSetTransfer): array
     {
         return [
             GeneralFormType::FIELD_ID_PRODUCT_SET => $productSetTransfer->getIdProductSet(),
@@ -102,7 +105,7 @@ class UpdateFormDataProvider extends AbstractProductSetFormDataProvider
      *
      * @return array
      */
-    protected function getProductsFormData(ProductSetTransfer $productSetTransfer)
+    protected function getProductsFormData(ProductSetTransfer $productSetTransfer): array
     {
         return [
             UpdateProductsFormType::FIELD_ID_PRODUCT_ABSTRACTS => $productSetTransfer->getIdProductAbstracts(),
@@ -115,7 +118,7 @@ class UpdateFormDataProvider extends AbstractProductSetFormDataProvider
      *
      * @return array
      */
-    protected function getLocalizedGeneralFormCollectionData(ProductSetTransfer $productSetTransfer)
+    protected function getLocalizedGeneralFormCollectionData(ProductSetTransfer $productSetTransfer): array
     {
         $result = [];
         $localeCollection = $this->localeFacade->getLocaleCollection();
@@ -145,7 +148,7 @@ class UpdateFormDataProvider extends AbstractProductSetFormDataProvider
      *
      * @return array
      */
-    protected function getSeoFormData(ProductSetTransfer $productSetTransfer)
+    protected function getSeoFormData(ProductSetTransfer $productSetTransfer): array
     {
         return [
             SeoFormType::FIELD_LOCALIZED_SEO_FORM_COLLECTION => $this->getLocalizedSeoFormCollectionData($productSetTransfer),
@@ -157,7 +160,7 @@ class UpdateFormDataProvider extends AbstractProductSetFormDataProvider
      *
      * @return array
      */
-    protected function getLocalizedSeoFormCollectionData(ProductSetTransfer $productSetTransfer)
+    protected function getLocalizedSeoFormCollectionData(ProductSetTransfer $productSetTransfer): array
     {
         $result = [];
         $localeCollection = $this->localeFacade->getLocaleCollection();
@@ -186,7 +189,7 @@ class UpdateFormDataProvider extends AbstractProductSetFormDataProvider
      *
      * @return \Generated\Shared\Transfer\LocalizedProductSetTransfer|null
      */
-    protected function getLocalizeDataTransfer(ProductSetTransfer $productSetTransfer, $idLocale)
+    protected function getLocalizeDataTransfer(ProductSetTransfer $productSetTransfer, $idLocale): ?LocalizedProductSetTransfer
     {
         foreach ($productSetTransfer->getLocalizedData() as $localizedProductSetTransfer) {
             if ($localizedProductSetTransfer->getLocale()->getIdLocale() === $idLocale) {
@@ -202,7 +205,7 @@ class UpdateFormDataProvider extends AbstractProductSetFormDataProvider
      *
      * @return array
      */
-    protected function getImagesFormData(ProductSetTransfer $productSetTransfer)
+    protected function getImagesFormData(ProductSetTransfer $productSetTransfer): array
     {
         $results = [];
         $results[ImagesFormType::getImageSetFormName()] = $this->getImageSetFormData($productSetTransfer);
@@ -221,7 +224,7 @@ class UpdateFormDataProvider extends AbstractProductSetFormDataProvider
      *
      * @return array
      */
-    protected function getImageSetFormData(ProductSetTransfer $productSetTransfer, ?LocaleTransfer $localeTransfer = null)
+    protected function getImageSetFormData(ProductSetTransfer $productSetTransfer, ?LocaleTransfer $localeTransfer = null): array
     {
         $idLocale = $localeTransfer ? $localeTransfer->getIdLocale() : null;
         $productImageSetTransfers = $this->getLocalizeImageSetTransfers($productSetTransfer, $idLocale);
@@ -235,7 +238,7 @@ class UpdateFormDataProvider extends AbstractProductSetFormDataProvider
      *
      * @return array<\Generated\Shared\Transfer\ProductImageSetTransfer>
      */
-    protected function getLocalizeImageSetTransfers(ProductSetTransfer $productSetTransfer, $idLocale = null)
+    protected function getLocalizeImageSetTransfers(ProductSetTransfer $productSetTransfer, $idLocale = null): array
     {
         $imageSets = [];
         foreach ($productSetTransfer->getImageSets() as $productImageSetTransfer) {
@@ -261,7 +264,7 @@ class UpdateFormDataProvider extends AbstractProductSetFormDataProvider
      *
      * @return array
      */
-    protected function getImageSetData(array $productImageSetTransfers, $idLocale = null)
+    protected function getImageSetData(array $productImageSetTransfers, $idLocale = null): array
     {
         $result = [];
 
@@ -290,7 +293,7 @@ class UpdateFormDataProvider extends AbstractProductSetFormDataProvider
      *
      * @return array
      */
-    protected function setImagePreviewData(ProductImageTransfer $productImageTransfer, array $productImageData)
+    protected function setImagePreviewData(ProductImageTransfer $productImageTransfer, array $productImageData): array
     {
         $productImageData[ProductImageFormType::FIELD_IMAGE_PREVIEW] = $productImageTransfer->getExternalUrlSmall();
         $productImageData[ProductImageFormType::FIELD_IMAGE_PREVIEW_LARGE_URL] = $productImageTransfer->getExternalUrlLarge();

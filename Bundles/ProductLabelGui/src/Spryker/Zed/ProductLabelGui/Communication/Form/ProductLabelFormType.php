@@ -9,12 +9,12 @@ namespace Spryker\Zed\ProductLabelGui\Communication\Form;
 
 use DateTime;
 use Generated\Shared\Transfer\ProductLabelTransfer;
+use Spryker\Zed\Gui\Communication\Form\Type\FormattedNumberType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -82,6 +82,11 @@ class ProductLabelFormType extends AbstractType
     /**
      * @var string
      */
+    public const OPTION_LOCALE = 'locale';
+
+    /**
+     * @var string
+     */
     protected const VALIDITY_DATE_FORMAT = 'Y-m-d';
 
     /**
@@ -98,6 +103,7 @@ class ProductLabelFormType extends AbstractType
             'constraints' => [
                 $this->getFactory()->createUniqueProductLabelNameConstraint(),
             ],
+            static::OPTION_LOCALE => null,
         ]);
     }
 
@@ -114,7 +120,7 @@ class ProductLabelFormType extends AbstractType
             ->addStatusFlagField($builder)
             ->addExclusiveFlagField($builder)
             ->addValidFromField($builder)
-            ->addPriorityField($builder)
+            ->addPriorityField($builder, $options)
             ->addValidToField($builder)
             ->addFontEndReferenceField($builder)
             ->addLocalizedAttributesSubForm($builder)
@@ -207,16 +213,18 @@ class ProductLabelFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
-    protected function addPriorityField(FormBuilderInterface $builder)
+    protected function addPriorityField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(
             static::FIELD_PRIORITY,
-            NumberType::class,
+            FormattedNumberType::class,
             [
                 'label' => 'Priority',
+                'locale' => $options[static::OPTION_LOCALE],
                 'required' => true,
                 'constraints' => [
                     new NotBlank(),

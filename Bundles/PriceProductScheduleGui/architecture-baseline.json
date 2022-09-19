@@ -14,13 +14,6 @@
         "priority": "2"
     },
     {
-        "fileName": "src/Spryker/Zed/PriceProductScheduleGui/Dependency/Facade/PriceProductScheduleGuiToCurrencyFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `getAllStoresWithCurrencies()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
         "fileName": "src/Spryker/Zed/PriceProductScheduleGui/Dependency/Facade/PriceProductScheduleGuiToMoneyFacadeBridge.php",
         "description": "Bridges: Type should be defined for param `value` in method `Spryker\\Zed\\PriceProductScheduleGui\\Dependency\\Facade\\PriceProductScheduleGuiToMoneyFacadeBridge::convertDecimalToInteger()`.",
         "rule": "BridgeMethodsRule",
@@ -35,37 +28,9 @@
         "priority": "2"
     },
     {
-        "fileName": "src/Spryker/Zed/PriceProductScheduleGui/Dependency/Facade/PriceProductScheduleGuiToMoneyFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `formatWithoutSymbol()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/PriceProductScheduleGui/Dependency/Facade/PriceProductScheduleGuiToMoneyFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `convertIntegerToDecimal()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/PriceProductScheduleGui/Dependency/Facade/PriceProductScheduleGuiToMoneyFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `convertDecimalToInteger()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
         "fileName": "src/Spryker/Zed/PriceProductScheduleGui/Dependency/Facade/PriceProductScheduleGuiToPriceProductFacadeBridge.php",
         "description": "Bridges: Method `getPriceTypeValues()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/PriceProductScheduleGui/Dependency/Facade/PriceProductScheduleGuiToPriceProductFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `getPriceTypeValues()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -175,27 +140,6 @@
         "priority": "2"
     },
     {
-        "fileName": "src/Spryker/Zed/PriceProductScheduleGui/Dependency/Facade/PriceProductScheduleGuiToStoreFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `getStoreById()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/PriceProductScheduleGui/Dependency/Facade/PriceProductScheduleGuiToStoreFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `getAllStores()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/PriceProductScheduleGui/Dependency/Facade/PriceProductScheduleGuiToStoreFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `getCurrentStore()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
         "fileName": "src/Spryker/Zed/PriceProductScheduleGui/Dependency/Facade/PriceProductScheduleGuiToTranslatorFacadeBridge.php",
         "description": "Bridges: Type should be defined for param `id` in method `Spryker\\Zed\\PriceProductScheduleGui\\Dependency\\Facade\\PriceProductScheduleGuiToTranslatorFacadeBridge::trans()`.",
         "rule": "BridgeMethodsRule",
@@ -219,6 +163,20 @@
     {
         "fileName": "src/Spryker/Zed/PriceProductScheduleGui/Dependency/Facade/PriceProductScheduleGuiToTranslatorFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `trans()`. Got `$id` but expected to be `string $id`. Got `$domain` but expected to be `?string $domain`. Got `$locale` but expected to be `?string $locale`. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/PriceProductScheduleGui/Dependency/Facade/PriceProductScheduleGuiToLocaleFacadeBridge.php",
+        "description": "Bridges: Method `getCurrentLocaleName()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/PriceProductScheduleGui/Dependency/Facade/PriceProductScheduleGuiToTranslatorFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `trans()`. Got `$id` but expected to be `string $id`. Got `$domain` but expected to be `string $domain`. Got `$locale` but expected to be `string $locale`. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"

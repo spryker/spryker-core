@@ -26,10 +26,12 @@ use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\TimeDecisionRulePlugi
 use Spryker\Zed\Discount\Communication\Plugin\DecisionRule\TotalQuantityDecisionRulePlugin;
 use Spryker\Zed\Discount\Dependency\External\DiscountToSymfonyValidationAdapter;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToCurrencyBridge;
+use Spryker\Zed\Discount\Dependency\Facade\DiscountToLocaleFacadeBridge;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerBridge;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToMoneyBridge;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToStoreFacadeBridge;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToTranslatorFacadeBridge;
+use Spryker\Zed\Discount\Exception\MissingMoneyCollectionFormTypePluginException;
 use Spryker\Zed\Discount\Exception\MissingStoreRelationFormTypePluginException;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
@@ -59,6 +61,11 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_STORE = 'FACADE_STORE';
+
+    /**
+     * @var string
+     */
+    public const FACADE_LOCALE = 'FACADE_LOCALE';
 
     /**
      * @var string
@@ -129,6 +136,11 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PLUGIN_DISCOUNTABLE_ITEM_TRANSFORMER_STRATEGY = 'PLUGIN_DISCOUNTABLE_ITEM_TRANSFORMER_STRATEGY';
+
+    /**
+     * @var string
+     */
+    public const PLUGIN_MONEY_COLLECTION_FORM_TYPE = 'PLUGIN_MONEY_COLLECTION_FORM_TYPE';
 
     /**
      * @var string
@@ -205,7 +217,9 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addDiscountViewBlockProviderPlugins($container);
         $container = $this->addCurrencyFacade($container);
         $container = $this->addStoreRelationFormTypePlugin($container);
+        $container = $this->addLocaleFacade($container);
         $container = $this->addTranslatorFacade($container);
+        $container = $this->addMoneyCollectionFormTypePlugin($container);
 
         return $container;
     }
@@ -630,6 +644,22 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    protected function addLocaleFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
+            return new DiscountToLocaleFacadeBridge(
+                $container->getLocator()->locale()->facade(),
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addStoreRelationFormTypePlugin(Container $container)
     {
         $container->set(static::PLUGIN_STORE_RELATION_FORM_TYPE, function () {
@@ -684,5 +714,36 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMoneyCollectionFormTypePlugin(Container $container): Container
+    {
+        $container->set(static::PLUGIN_MONEY_COLLECTION_FORM_TYPE, function () {
+            return $this->getMoneyCollectionFormTypePlugin();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @throws \Spryker\Zed\Discount\Exception\MissingMoneyCollectionFormTypePluginException
+     *
+     * @return \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
+     */
+    protected function getMoneyCollectionFormTypePlugin(): FormTypeInterface
+    {
+        throw new MissingMoneyCollectionFormTypePluginException(
+            sprintf(
+                'Missing instance of %s! You need to configure MoneyCollectionFormType ' .
+                'in your own DiscountDependencyProvider::getMoneyCollectionFormTypePlugin() ' .
+                'to be able to discount prices.',
+                FormTypeInterface::class,
+            ),
+        );
     }
 }

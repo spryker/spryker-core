@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\PriceProductVolumeGui\Communication\Form;
 
+use Spryker\Zed\Gui\Communication\Form\Type\FormattedMoneyType;
+use Spryker\Zed\Gui\Communication\Form\Type\FormattedNumberType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\PriceProductVolumeGui\Communication\Form\DataProvider\PriceVolumeCollectionDataProvider;
 use Symfony\Component\Form\CallbackTransformer;
-use Symfony\Component\Form\Extension\Core\Type\MoneyType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
@@ -62,7 +62,7 @@ class PriceVolumeFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this
-            ->addQuantityField($builder)
+            ->addQuantityField($builder, $options)
             ->addGrossPriceField($builder, $options)
             ->addNetPriceField($builder, $options);
     }
@@ -74,21 +74,29 @@ class PriceVolumeFormType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
+        parent::configureOptions($resolver);
+
         $resolver->setRequired(PriceVolumeCollectionDataProvider::OPTION_CURRENCY_CODE);
         $resolver->setRequired(PriceVolumeCollectionDataProvider::OPTION_DIVISOR);
         $resolver->setRequired(PriceVolumeCollectionDataProvider::OPTION_FRACTION_DIGITS);
+
+        $resolver->setDefaults([
+            PriceVolumeCollectionDataProvider::OPTION_LOCALE => null,
+        ]);
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
-    protected function addQuantityField(FormBuilderInterface $builder)
+    protected function addQuantityField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_QUANTITY, TextType::class, [
+        $builder->add(static::FIELD_QUANTITY, FormattedNumberType::class, [
             'label' => false,
             'required' => false,
+            'locale' => $options[PriceVolumeCollectionDataProvider::OPTION_LOCALE],
             'constraints' => [
                 new Regex(['pattern' => '/[\d]+/', 'message' => static::MESSAGE_QUANTITY_ERROR]),
             ],
@@ -133,10 +141,11 @@ class PriceVolumeFormType extends AbstractType
      */
     protected function addPriceField(FormBuilderInterface $builder, array $options, string $name, string $label)
     {
-        $builder->add($name, MoneyType::class, [
+        $builder->add($name, FormattedMoneyType::class, [
             'label' => $label,
             'currency' => $options[PriceVolumeCollectionDataProvider::OPTION_CURRENCY_CODE],
             'required' => false,
+            'locale' => $options[PriceVolumeCollectionDataProvider::OPTION_LOCALE],
             'divisor' => $options[PriceVolumeCollectionDataProvider::OPTION_DIVISOR],
             'scale' => $options[PriceVolumeCollectionDataProvider::OPTION_FRACTION_DIGITS],
             'constraints' => [

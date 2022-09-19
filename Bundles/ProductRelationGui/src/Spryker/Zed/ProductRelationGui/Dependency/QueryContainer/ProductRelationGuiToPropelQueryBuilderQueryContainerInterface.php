@@ -22,5 +22,5 @@ interface ProductRelationGuiToPropelQueryBuilderQueryContainerInterface
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    public function createQuery(ModelCriteria $query, PropelQueryBuilderCriteriaTransfer $criteriaTransfer);
+    public function createQuery(ModelCriteria $query, PropelQueryBuilderCriteriaTransfer $criteriaTransfer): ModelCriteria;
 }

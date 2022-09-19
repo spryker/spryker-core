@@ -52,6 +52,11 @@ class DiscountConfig extends AbstractBundleConfig
     protected const PRIORITY_MAX_VALUE = 9999;
 
     /**
+     * @var bool
+     */
+    protected const IS_MONEY_COLLECTION_FORM_TYPE_PLUGIN_ENABLED = false;
+
+    /**
      * @api
      *
      * @return int
@@ -142,5 +147,18 @@ class DiscountConfig extends AbstractBundleConfig
     public function getPriorityMaxValue(): int
     {
         return static::PRIORITY_MAX_VALUE;
+    }
+
+    /**
+     * Specification:
+     * - Enables using money collection form type plugin.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isMoneyCollectionFormTypePluginEnabled(): bool
+    {
+        return static::IS_MONEY_COLLECTION_FORM_TYPE_PLUGIN_ENABLED;
     }
 }

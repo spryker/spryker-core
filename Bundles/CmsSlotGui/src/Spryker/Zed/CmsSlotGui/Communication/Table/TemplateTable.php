@@ -125,7 +125,7 @@ class TemplateTable extends AbstractTable
 
         foreach ($templateResults as $template) {
             $results[] = [
-                static::COL_ID => $template[SpyCmsSlotTemplateTableMap::COL_ID_CMS_SLOT_TEMPLATE],
+                static::COL_ID => $this->formatInt($template[SpyCmsSlotTemplateTableMap::COL_ID_CMS_SLOT_TEMPLATE]),
                 static::COL_NAME => $template[SpyCmsSlotTemplateTableMap::COL_NAME],
                 static::COL_DESCRIPTION => $template[SpyCmsSlotTemplateTableMap::COL_DESCRIPTION],
                 static::COL_SLOTS_NUMBER => $template[static::COL_SLOTS_NUMBER],

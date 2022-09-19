@@ -167,7 +167,7 @@ class MerchantRelationshipSalesOrderThresholdTable extends AbstractTable
     protected function prepareRowData(array $item): array
     {
         $baseData = [
-            static::COL_ID_MERCHANT_RELATIONSHIP => $item[static::COL_ID_MERCHANT_RELATIONSHIP],
+            static::COL_ID_MERCHANT_RELATIONSHIP => $this->formatInt($item[static::COL_ID_MERCHANT_RELATIONSHIP]),
             static::COL_COMPANY_NAME => $item[static::COL_COMPANY_NAME],
             static::COL_BUSINESS_UNIT_NAME => $item[static::COL_BUSINESS_UNIT_NAME],
             static::COL_MERCHANT_RELATIONSHIP_NAME => $item[static::COL_MERCHANT_RELATIONSHIP_NAME],

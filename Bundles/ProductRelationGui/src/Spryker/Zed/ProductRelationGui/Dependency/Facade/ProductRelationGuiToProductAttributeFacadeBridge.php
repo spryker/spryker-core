@@ -25,7 +25,7 @@ class ProductRelationGuiToProductAttributeFacadeBridge implements ProductRelatio
     /**
      * @return array<\Generated\Shared\Transfer\ProductManagementAttributeTransfer>
      */
-    public function getProductAttributeCollection()
+    public function getProductAttributeCollection(): array
     {
         return $this->productAttributeFacade->getProductAttributeCollection();
     }

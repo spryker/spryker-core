@@ -1,0 +1,30 @@
+[
+    {
+        "fileName": "src/Spryker/Zed/MoneyGui/Dependency/Facade/MoneyGuiToCurrencyFacadeBridge.php",
+        "description": "Bridges: Method `getAllStoresWithCurrencies()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MoneyGui/Dependency/Facade/MoneyGuiToCurrencyFacadeBridge.php",
+        "description": "Bridges: Method `getCurrentStoreWithCurrencies()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MoneyGui/Dependency/Facade/MoneyGuiToStoreFacadeBridge.php",
+        "description": "Bridges: Method `getStoreById()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/MoneyGui/Dependency/Facade/MoneyGuiToStoreFacadeBridge.php",
+        "description": "Bridges: Type should be defined for param `idStore` in method `Spryker\\Zed\\MoneyGui\\Dependency\\Facade\\MoneyGuiToStoreFacadeBridge::getStoreById()`.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

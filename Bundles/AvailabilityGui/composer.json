@@ -8,7 +8,7 @@
         "spryker/availability": "^9.11.0",
         "spryker/availability-gui-extension": "^1.0.0",
         "spryker/decimal-object": "^1.0.0",
-        "spryker/gui": "^3.30.0",
+        "spryker/gui": "^3.45.0",
         "spryker/kernel": "^3.30.0",
         "spryker/locale": "^3.0.0",
         "spryker/oms": "^11.0.0",
@@ -19,6 +19,7 @@
         "spryker/store": "^1.5.0",
         "spryker/symfony": "^3.0.0",
         "spryker/transfer": "^3.18.0",
+        "spryker/twig": "^3.16.0",
         "spryker/util-text": "^1.1.0"
     },
     "require-dev": {
@@ -31,7 +32,6 @@
         "spryker/propel": "*",
         "spryker/router": "*",
         "spryker/testify": "*",
-        "spryker/twig": "*",
         "spryker/validator": "*",
         "spryker/zed-navigation": "*"
     },

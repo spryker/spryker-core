@@ -29,7 +29,7 @@ class MerchantSalesOrderMerchantUserGuiToShipmentFacadeBridge implements Merchan
     /**
      * @return array<\Generated\Shared\Transfer\ShipmentMethodTransfer>
      */
-    public function getMethods()
+    public function getMethods(): array
     {
         return $this->shipmentFacade->getMethods();
     }

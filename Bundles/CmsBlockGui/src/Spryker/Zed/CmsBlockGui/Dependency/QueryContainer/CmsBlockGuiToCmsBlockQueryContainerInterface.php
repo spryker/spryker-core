@@ -7,6 +7,10 @@
 
 namespace Spryker\Zed\CmsBlockGui\Dependency\QueryContainer;
 
+use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery;
+use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockStoreQuery;
+use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplateQuery;
+
 interface CmsBlockGuiToCmsBlockQueryContainerInterface
 {
     /**
@@ -14,22 +18,22 @@ interface CmsBlockGuiToCmsBlockQueryContainerInterface
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
      */
-    public function queryCmsBlockByName($name);
+    public function queryCmsBlockByName($name): SpyCmsBlockQuery;
 
     /**
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
      */
-    public function queryCmsBlockWithTemplate();
+    public function queryCmsBlockWithTemplate(): SpyCmsBlockQuery;
 
     /**
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplateQuery
      */
-    public function queryTemplates();
+    public function queryTemplates(): SpyCmsBlockTemplateQuery;
 
     /**
      * @param int $idCmsBlock
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockStoreQuery
      */
-    public function queryCmsBlockStoreWithStoreByFkCmsBlock($idCmsBlock);
+    public function queryCmsBlockStoreWithStoreByFkCmsBlock($idCmsBlock): SpyCmsBlockStoreQuery;
 }

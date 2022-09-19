@@ -23,9 +23,11 @@ use Spryker\Zed\Discount\Communication\QueryBuilderTransformer\JavascriptQueryBu
 use Spryker\Zed\Discount\Communication\Table\DiscountsTable;
 use Spryker\Zed\Discount\Communication\Table\DiscountVoucherCodesTable;
 use Spryker\Zed\Discount\Communication\Tabs\DiscountFormTabs;
+use Spryker\Zed\Discount\Dependency\Facade\DiscountToLocaleFacadeInterface;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToTranslatorFacadeInterface;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\Money\Communication\Form\Type\MoneyCollectionType;
 use Spryker\Zed\Money\Communication\Form\Type\MoneyType;
 use Symfony\Component\Form\FormInterface;
@@ -50,9 +52,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
         return $this->getFormFactory()->create(
             DiscountForm::class,
             $discountConfiguratorTransfer ?: $this->createDiscountFormDataProvider()->getData($idDiscount),
-            [
-                'data_class' => DiscountConfiguratorTransfer::class,
-            ],
+            $this->createDiscountFormDataProvider()->getOptions(),
         );
     }
 
@@ -162,7 +162,7 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createDiscountFormDataProvider()
     {
-        $discountFormDataProvider = new DiscountFormDataProvider($this->getFacade());
+        $discountFormDataProvider = new DiscountFormDataProvider($this->getFacade(), $this->getLocaleFacade());
         $discountFormDataProvider->applyFormDataExpanderPlugins($this->getDiscountFormDataProviderExpanderPlugins());
 
         return $discountFormDataProvider;
@@ -256,6 +256,14 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Zed\Discount\Dependency\Facade\DiscountToLocaleFacadeInterface
+     */
+    public function getLocaleFacade(): DiscountToLocaleFacadeInterface
+    {
+        return $this->getProvidedDependency(DiscountDependencyProvider::FACADE_LOCALE);
+    }
+
+    /**
      * @return array<\Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface>
      */
     public function getCalculatorPlugins()
@@ -277,5 +285,13 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     public function getTranslatorFacade(): DiscountToTranslatorFacadeInterface
     {
         return $this->getProvidedDependency(DiscountDependencyProvider::FACADE_TRANSLATOR);
+    }
+
+    /**
+     * @return \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
+     */
+    public function getMoneyCollectionFormTypePlugin(): FormTypeInterface
+    {
+        return $this->getProvidedDependency(DiscountDependencyProvider::PLUGIN_MONEY_COLLECTION_FORM_TYPE);
     }
 }

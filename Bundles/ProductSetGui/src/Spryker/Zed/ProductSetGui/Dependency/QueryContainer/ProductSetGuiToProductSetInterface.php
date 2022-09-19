@@ -7,10 +7,12 @@
 
 namespace Spryker\Zed\ProductSetGui\Dependency\QueryContainer;
 
+use Orm\Zed\ProductSet\Persistence\SpyProductSetQuery;
+
 interface ProductSetGuiToProductSetInterface
 {
     /**
      * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetQuery
      */
-    public function queryProductSet();
+    public function queryProductSet(): SpyProductSetQuery;
 }

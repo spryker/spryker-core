@@ -7,10 +7,12 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form;
 
+use Spryker\Zed\Gui\Communication\Form\Type\FormattedNumberType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\GreaterThan;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -44,6 +46,11 @@ class BundledProductForm extends AbstractType
     public const NUMERIC_PATTERN = '/\d+/';
 
     /**
+     * @var string
+     */
+    protected const OPTION_LOCALE = 'locale';
+
+    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array<string, mixed> $options
      *
@@ -52,8 +59,22 @@ class BundledProductForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addNameField($builder)
-            ->addQuantityField($builder)
+            ->addQuantityField($builder, $options)
             ->addIdProductConcreteField($builder);
+    }
+
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        parent::configureOptions($resolver);
+
+        $resolver->setDefaults([
+            static::OPTION_LOCALE => null,
+        ]);
     }
 
     /**
@@ -76,13 +97,15 @@ class BundledProductForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
-    protected function addQuantityField(FormBuilderInterface $builder)
+    protected function addQuantityField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_QUANTITY, TextType::class, [
+        $builder->add(static::FIELD_QUANTITY, FormattedNumberType::class, [
             'label' => 'quantity',
+            'locale' => $options[static::OPTION_LOCALE],
             'required' => true,
             'constraints' => [
                 new NotBlank(),

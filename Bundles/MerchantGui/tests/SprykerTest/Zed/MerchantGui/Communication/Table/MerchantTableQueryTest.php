@@ -92,8 +92,8 @@ class MerchantTableQueryTest extends Unit
         // Assert
         $this->assertNotEmpty($result);
         $resultMerchantIds = array_column($result, SpyMerchantTableMap::COL_ID_MERCHANT);
-        $this->assertContains($merchantTransfer1->getIdMerchant(), $resultMerchantIds);
-        $this->assertContains($merchantTransfer2->getIdMerchant(), $resultMerchantIds);
+        $this->assertContains((string)$merchantTransfer1->getIdMerchant(), $resultMerchantIds);
+        $this->assertContains((string)$merchantTransfer2->getIdMerchant(), $resultMerchantIds);
     }
 
     /**

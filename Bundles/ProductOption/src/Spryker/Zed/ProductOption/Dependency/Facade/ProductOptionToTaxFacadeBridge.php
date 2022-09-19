@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\ProductOption\Dependency\Facade;
 
+use Generated\Shared\Transfer\TaxSetCollectionTransfer;
+use Generated\Shared\Transfer\TaxSetTransfer;
+
 class ProductOptionToTaxFacadeBridge implements ProductOptionToTaxFacadeInterface
 {
     /**
@@ -28,7 +31,7 @@ class ProductOptionToTaxFacadeBridge implements ProductOptionToTaxFacadeInterfac
      *
      * @return float
      */
-    public function getTaxAmountFromGrossPrice($grossPrice, $taxRate)
+    public function getTaxAmountFromGrossPrice($grossPrice, $taxRate): float
     {
         return $this->taxFacade->getTaxAmountFromGrossPrice($grossPrice, $taxRate);
     }
@@ -36,7 +39,7 @@ class ProductOptionToTaxFacadeBridge implements ProductOptionToTaxFacadeInterfac
     /**
      * @return string
      */
-    public function getDefaultTaxCountryIso2Code()
+    public function getDefaultTaxCountryIso2Code(): string
     {
         return $this->taxFacade->getDefaultTaxCountryIso2Code();
     }
@@ -44,7 +47,7 @@ class ProductOptionToTaxFacadeBridge implements ProductOptionToTaxFacadeInterfac
     /**
      * @return float
      */
-    public function getDefaultTaxRate()
+    public function getDefaultTaxRate(): float
     {
         return $this->taxFacade->getDefaultTaxRate();
     }
@@ -52,7 +55,7 @@ class ProductOptionToTaxFacadeBridge implements ProductOptionToTaxFacadeInterfac
     /**
      * @return \Generated\Shared\Transfer\TaxSetCollectionTransfer
      */
-    public function getTaxSets()
+    public function getTaxSets(): TaxSetCollectionTransfer
     {
         return $this->taxFacade->getTaxSets();
     }
@@ -62,7 +65,7 @@ class ProductOptionToTaxFacadeBridge implements ProductOptionToTaxFacadeInterfac
      *
      * @return \Generated\Shared\Transfer\TaxSetTransfer
      */
-    public function getTaxSet($id)
+    public function getTaxSet($id): TaxSetTransfer
     {
         return $this->taxFacade->getTaxSet($id);
     }

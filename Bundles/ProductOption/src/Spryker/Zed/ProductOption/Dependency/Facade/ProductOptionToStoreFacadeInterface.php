@@ -7,10 +7,12 @@
 
 namespace Spryker\Zed\ProductOption\Dependency\Facade;
 
+use Generated\Shared\Transfer\StoreTransfer;
+
 interface ProductOptionToStoreFacadeInterface
 {
     /**
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getCurrentStore();
+    public function getCurrentStore(): StoreTransfer;
 }

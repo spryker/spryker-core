@@ -17,26 +17,26 @@ interface ProductLabelGuiToProductLabelInterface
      *
      * @return \Generated\Shared\Transfer\ProductLabelTransfer|null
      */
-    public function findLabelById($idProductLabel);
+    public function findLabelById($idProductLabel): ?ProductLabelTransfer;
 
     /**
      * @return array<\Generated\Shared\Transfer\ProductLabelTransfer>
      */
-    public function findAllLabels();
+    public function findAllLabels(): array;
 
     /**
      * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
      *
      * @return void
      */
-    public function createLabel(ProductLabelTransfer $productLabelTransfer);
+    public function createLabel(ProductLabelTransfer $productLabelTransfer): void;
 
     /**
      * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
      *
      * @return void
      */
-    public function updateLabel(ProductLabelTransfer $productLabelTransfer);
+    public function updateLabel(ProductLabelTransfer $productLabelTransfer): void;
 
     /**
      * @param int $idProductLabel
@@ -44,7 +44,7 @@ interface ProductLabelGuiToProductLabelInterface
      *
      * @return void
      */
-    public function addAbstractProductRelationsForLabel($idProductLabel, array $idsProductAbstract);
+    public function addAbstractProductRelationsForLabel($idProductLabel, array $idsProductAbstract): void;
 
     /**
      * @param int $idProductLabel
@@ -52,7 +52,7 @@ interface ProductLabelGuiToProductLabelInterface
      *
      * @return void
      */
-    public function removeAbstractProductRelationsForLabel($idProductLabel, array $idsProductAbstract);
+    public function removeAbstractProductRelationsForLabel($idProductLabel, array $idsProductAbstract): void;
 
     /**
      * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
@@ -66,5 +66,5 @@ interface ProductLabelGuiToProductLabelInterface
      *
      * @return array<int>
      */
-    public function findProductAbstractRelationsByIdProductLabel($idProductLabel);
+    public function findProductAbstractRelationsByIdProductLabel($idProductLabel): array;
 }

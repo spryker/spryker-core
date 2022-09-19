@@ -100,7 +100,7 @@
               <tr>
                   <td style="width: 220px;">{{ 'The discount can be applied if the query applies for at least X item(s):' | trans }}</td>
                   <td>
-                      {{ discountConfigurator.discountCondition.minimumItemAmount }}
+                      {{ discountConfigurator.discountCondition.minimumItemAmount | executeFilterIfExists('formatInt', app.locale) }}
                   </td>
               </tr>
           </table>

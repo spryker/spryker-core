@@ -14,6 +14,7 @@ use Spryker\Zed\OfferGui\Dependency\Client\OfferGuiToSessionClientBridge;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToCartFacadeBridge;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToCurrencyFacadeBridge;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToCustomerFacadeBridge;
+use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToLocaleFacadeBridge;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToMessengerFacadeBridge;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToMoneyFacadeBridge;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToOfferFacadeBridge;
@@ -77,6 +78,11 @@ class OfferGuiDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
+    public const FACADE_LOCALE = 'FACADE_LOCALE';
+
+    /**
+     * @var string
+     */
     public const CLIENT_SESSION = 'CLIENT_SESSION';
 
     /**
@@ -122,6 +128,7 @@ class OfferGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addSessionClient($container);
         $container = $this->addCurrencyFacade($container);
         $container = $this->addPriceFacade($container);
+        $container = $this->addLocaleFacade($container);
 
         return $container;
     }
@@ -317,6 +324,20 @@ class OfferGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_OFFER, function (Container $container) {
             return new OfferGuiToOfferFacadeBridge($container->getLocator()->offer()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addLocaleFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
+            return new OfferGuiToLocaleFacadeBridge($container->getLocator()->locale()->facade());
         });
 
         return $container;

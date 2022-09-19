@@ -16,7 +16,7 @@ interface ProductCategoryFilterGuiToUtilEncodingServiceInterface
      *
      * @return string|null
      */
-    public function encodeJson($value, $options = null, $depth = null);
+    public function encodeJson($value, $options = null, $depth = null): ?string;
 
     /**
      * @param string $jsonValue
@@ -24,7 +24,7 @@ interface ProductCategoryFilterGuiToUtilEncodingServiceInterface
      * @param int|null $depth
      * @param int|null $options
      *
-     * @return array<mixed>|null
+     * @return mixed|null
      */
     public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null);
 }

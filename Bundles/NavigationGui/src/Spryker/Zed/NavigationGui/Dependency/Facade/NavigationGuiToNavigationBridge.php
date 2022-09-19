@@ -35,7 +35,7 @@ class NavigationGuiToNavigationBridge implements NavigationGuiToNavigationInterf
      *
      * @return \Generated\Shared\Transfer\NavigationTransfer
      */
-    public function createNavigation(NavigationTransfer $navigationTransfer)
+    public function createNavigation(NavigationTransfer $navigationTransfer): NavigationTransfer
     {
         return $this->navigationFacade->createNavigation($navigationTransfer);
     }
@@ -45,7 +45,7 @@ class NavigationGuiToNavigationBridge implements NavigationGuiToNavigationInterf
      *
      * @return \Generated\Shared\Transfer\NavigationTransfer
      */
-    public function updateNavigation(NavigationTransfer $navigationTransfer)
+    public function updateNavigation(NavigationTransfer $navigationTransfer): NavigationTransfer
     {
         return $this->navigationFacade->updateNavigation($navigationTransfer);
     }
@@ -55,7 +55,7 @@ class NavigationGuiToNavigationBridge implements NavigationGuiToNavigationInterf
      *
      * @return void
      */
-    public function deleteNavigation(NavigationTransfer $navigationTransfer)
+    public function deleteNavigation(NavigationTransfer $navigationTransfer): void
     {
         $this->navigationFacade->deleteNavigation($navigationTransfer);
     }
@@ -65,7 +65,7 @@ class NavigationGuiToNavigationBridge implements NavigationGuiToNavigationInterf
      *
      * @return \Generated\Shared\Transfer\NavigationNodeTransfer
      */
-    public function createNavigationNode(NavigationNodeTransfer $navigationNodeTransfer)
+    public function createNavigationNode(NavigationNodeTransfer $navigationNodeTransfer): NavigationNodeTransfer
     {
         return $this->navigationFacade->createNavigationNode($navigationNodeTransfer);
     }
@@ -75,7 +75,7 @@ class NavigationGuiToNavigationBridge implements NavigationGuiToNavigationInterf
      *
      * @return \Generated\Shared\Transfer\NavigationNodeTransfer
      */
-    public function updateNavigationNode(NavigationNodeTransfer $navigationNodeTransfer)
+    public function updateNavigationNode(NavigationNodeTransfer $navigationNodeTransfer): NavigationNodeTransfer
     {
         return $this->navigationFacade->updateNavigationNode($navigationNodeTransfer);
     }
@@ -95,7 +95,7 @@ class NavigationGuiToNavigationBridge implements NavigationGuiToNavigationInterf
      *
      * @return \Generated\Shared\Transfer\NavigationNodeTransfer|null
      */
-    public function findNavigationNode(NavigationNodeTransfer $navigationNodeTransfer)
+    public function findNavigationNode(NavigationNodeTransfer $navigationNodeTransfer): ?NavigationNodeTransfer
     {
         return $this->navigationFacade->findNavigationNode($navigationNodeTransfer);
     }
@@ -105,7 +105,7 @@ class NavigationGuiToNavigationBridge implements NavigationGuiToNavigationInterf
      *
      * @return void
      */
-    public function deleteNavigationNode(NavigationNodeTransfer $navigationNodeTransfer)
+    public function deleteNavigationNode(NavigationNodeTransfer $navigationNodeTransfer): void
     {
         $this->navigationFacade->deleteNavigationNode($navigationNodeTransfer);
     }
@@ -116,7 +116,7 @@ class NavigationGuiToNavigationBridge implements NavigationGuiToNavigationInterf
      *
      * @return \Generated\Shared\Transfer\NavigationTreeTransfer
      */
-    public function findNavigationTree(NavigationTransfer $navigationTransfer, ?LocaleTransfer $localeTransfer = null)
+    public function findNavigationTree(NavigationTransfer $navigationTransfer, ?LocaleTransfer $localeTransfer = null): NavigationTreeTransfer
     {
         return $this->navigationFacade->findNavigationTree($navigationTransfer, $localeTransfer);
     }
@@ -126,7 +126,7 @@ class NavigationGuiToNavigationBridge implements NavigationGuiToNavigationInterf
      *
      * @return void
      */
-    public function updateNavigationTreeHierarchy(NavigationTreeTransfer $navigationTreeTransfer)
+    public function updateNavigationTreeHierarchy(NavigationTreeTransfer $navigationTreeTransfer): void
     {
         $this->navigationFacade->updateNavigationTreeHierarchy($navigationTreeTransfer);
     }

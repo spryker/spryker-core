@@ -21,6 +21,7 @@ use Spryker\Zed\OfferGui\Dependency\Client\OfferGuiToSessionClientInterface;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToCartFacadeInterface;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToCurrencyFacadeInterface;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToCustomerFacadeInterface;
+use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToLocaleFacadeInterface;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToMessengerFacadeInterface;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToMoneyFacadeInterface;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToOfferFacadeInterface;
@@ -162,6 +163,7 @@ class OfferGuiCommunicationFactory extends AbstractCommunicationFactory
         return new OfferDataProvider(
             $this->getCurrencyFacade(),
             $this->getCustomerFacade(),
+            $this->getLocaleFacade(),
             $request,
         );
     }
@@ -222,5 +224,13 @@ class OfferGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createFlashMessageCleaner(): FlashMessageCleanerInterface
     {
         return new FlashMessageCleaner($this->getMessengerFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToLocaleFacadeInterface
+     */
+    public function getLocaleFacade(): OfferGuiToLocaleFacadeInterface
+    {
+        return $this->getProvidedDependency(OfferGuiDependencyProvider::FACADE_LOCALE);
     }
 }

@@ -53,7 +53,7 @@ class AvailabilityEditStockCest
 
         $i->see(AvailabilityPage::PAGE_AVAILABILITY_EDIT_HEADER);
 
-        $i->fillField('//*[@id="AvailabilityGui_stock_stocks_0_quantity"]', $example['quantity']);
+        $i->fillField('//*[@name="AvailabilityGui_stock[stocks][0][quantity]"]', $example['quantity']);
         $i->click('Save');
         $i->seeResponseCodeIs($example['expectedResponseCode']);
 

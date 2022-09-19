@@ -29,7 +29,7 @@ class ProductCategoryFilterGuiToProductCategoryFilterFacadeBridge implements Pro
      *
      * @return \Generated\Shared\Transfer\ProductCategoryFilterTransfer
      */
-    public function createProductCategoryFilter(ProductCategoryFilterTransfer $productCategoryFilterTransfer)
+    public function createProductCategoryFilter(ProductCategoryFilterTransfer $productCategoryFilterTransfer): ProductCategoryFilterTransfer
     {
         return $this->productCategoryFilterFacade->createProductCategoryFilter($productCategoryFilterTransfer);
     }
@@ -39,7 +39,7 @@ class ProductCategoryFilterGuiToProductCategoryFilterFacadeBridge implements Pro
      *
      * @return \Generated\Shared\Transfer\ProductCategoryFilterTransfer
      */
-    public function updateProductCategoryFilter(ProductCategoryFilterTransfer $productCategoryFilterTransfer)
+    public function updateProductCategoryFilter(ProductCategoryFilterTransfer $productCategoryFilterTransfer): ProductCategoryFilterTransfer
     {
         return $this->productCategoryFilterFacade->updateProductCategoryFilter($productCategoryFilterTransfer);
     }
@@ -49,7 +49,7 @@ class ProductCategoryFilterGuiToProductCategoryFilterFacadeBridge implements Pro
      *
      * @return void
      */
-    public function deleteProductCategoryFilterByCategoryId($categoryId)
+    public function deleteProductCategoryFilterByCategoryId($categoryId): void
     {
         $this->productCategoryFilterFacade->deleteProductCategoryFilterByCategoryId($categoryId);
     }
@@ -59,7 +59,7 @@ class ProductCategoryFilterGuiToProductCategoryFilterFacadeBridge implements Pro
      *
      * @return \Generated\Shared\Transfer\ProductCategoryFilterTransfer
      */
-    public function findProductCategoryFilterByCategoryId($categoryId)
+    public function findProductCategoryFilterByCategoryId($categoryId): ProductCategoryFilterTransfer
     {
         return $this->productCategoryFilterFacade->findProductCategoryFilterByCategoryId($categoryId);
     }
@@ -67,7 +67,7 @@ class ProductCategoryFilterGuiToProductCategoryFilterFacadeBridge implements Pro
     /**
      * @return array
      */
-    public function getAllProductCategoriesWithFilters()
+    public function getAllProductCategoriesWithFilters(): array
     {
         return $this->productCategoryFilterFacade->getAllProductCategoriesWithFilters();
     }

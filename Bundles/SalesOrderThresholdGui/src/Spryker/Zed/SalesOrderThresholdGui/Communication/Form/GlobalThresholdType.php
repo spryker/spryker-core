@@ -73,6 +73,11 @@ class GlobalThresholdType extends AbstractType
     public const OPTION_HARD_MAXIMUM_TYPES_ARRAY = 'option-hard-maximum-types-array';
 
     /**
+     * @var string
+     */
+    public const OPTION_LOCALE = 'locale';
+
+    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array<string, mixed> $options
      *
@@ -95,11 +100,17 @@ class GlobalThresholdType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
+        parent::configureOptions($resolver);
+
         $resolver->setRequired(static::OPTION_CURRENCY_CODE);
         $resolver->setRequired(static::OPTION_STORE_CURRENCY_ARRAY);
         $resolver->setRequired(static::OPTION_HARD_TYPES_ARRAY);
         $resolver->setRequired(static::OPTION_SOFT_TYPES_ARRAY);
         $resolver->setRequired(static::OPTION_HARD_MAXIMUM_TYPES_ARRAY);
+
+        $resolver->setDefaults([
+            static::OPTION_LOCALE => null,
+        ]);
     }
 
     /**
@@ -151,6 +162,7 @@ class GlobalThresholdType extends AbstractType
         $builder->add(static::FIELD_HARD, GlobalHardThresholdType::class, [
             static::OPTION_HARD_TYPES_ARRAY => $options[static::OPTION_HARD_TYPES_ARRAY],
             static::OPTION_CURRENCY_CODE => $options[static::OPTION_CURRENCY_CODE],
+            static::OPTION_LOCALE => $options[static::OPTION_LOCALE],
         ]);
 
         return $this;
@@ -167,6 +179,7 @@ class GlobalThresholdType extends AbstractType
         $builder->add(static::FIELD_HARD_MAXIMUM, GlobalHardMaximumThresholdType::class, [
             static::OPTION_HARD_MAXIMUM_TYPES_ARRAY => $options[static::OPTION_HARD_MAXIMUM_TYPES_ARRAY],
             static::OPTION_CURRENCY_CODE => $options[static::OPTION_CURRENCY_CODE],
+            static::OPTION_LOCALE => $options[static::OPTION_LOCALE],
         ]);
 
         return $this;
@@ -183,6 +196,7 @@ class GlobalThresholdType extends AbstractType
         $builder->add(static::FIELD_SOFT, GlobalSoftThresholdType::class, [
             static::OPTION_SOFT_TYPES_ARRAY => $options[static::OPTION_SOFT_TYPES_ARRAY],
             static::OPTION_CURRENCY_CODE => $options[static::OPTION_CURRENCY_CODE],
+            static::OPTION_LOCALE => $options[static::OPTION_LOCALE],
         ]);
 
         return $this;

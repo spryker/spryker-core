@@ -29,7 +29,7 @@ class ProductOptionToMoneyFacadeBridge implements ProductOptionToMoneyFacadeInte
      *
      * @return int
      */
-    public function convertDecimalToInteger($value)
+    public function convertDecimalToInteger($value): int
     {
         return $this->moneyFacade->convertDecimalToInteger($value);
     }
@@ -39,7 +39,7 @@ class ProductOptionToMoneyFacadeBridge implements ProductOptionToMoneyFacadeInte
      *
      * @return string
      */
-    public function formatWithSymbol(MoneyTransfer $moneyTransfer)
+    public function formatWithSymbol(MoneyTransfer $moneyTransfer): string
     {
         return $this->moneyFacade->formatWithSymbol($moneyTransfer);
     }
@@ -49,7 +49,7 @@ class ProductOptionToMoneyFacadeBridge implements ProductOptionToMoneyFacadeInte
      *
      * @return string
      */
-    public function formatWithoutSymbol(MoneyTransfer $moneyTransfer)
+    public function formatWithoutSymbol(MoneyTransfer $moneyTransfer): string
     {
         return $this->moneyFacade->formatWithoutSymbol($moneyTransfer);
     }
@@ -60,7 +60,7 @@ class ProductOptionToMoneyFacadeBridge implements ProductOptionToMoneyFacadeInte
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */
-    public function fromInteger($amount, $isoCode = null)
+    public function fromInteger($amount, $isoCode = null): MoneyTransfer
     {
         return $this->moneyFacade->fromInteger($amount, $isoCode);
     }
@@ -71,7 +71,7 @@ class ProductOptionToMoneyFacadeBridge implements ProductOptionToMoneyFacadeInte
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */
-    public function fromFloat($amount, $isoCode = null)
+    public function fromFloat($amount, $isoCode = null): MoneyTransfer
     {
         return $this->moneyFacade->fromFloat($amount, $isoCode);
     }
@@ -82,7 +82,7 @@ class ProductOptionToMoneyFacadeBridge implements ProductOptionToMoneyFacadeInte
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */
-    public function fromString($amount, $isoCode = null)
+    public function fromString($amount, $isoCode = null): MoneyTransfer
     {
         return $this->moneyFacade->fromString($amount, $isoCode);
     }

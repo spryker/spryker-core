@@ -39,7 +39,7 @@
                 {{ 'Retured Items' | trans }}
             </div>
             <div class="col-sm-6">
-                {{ return.returnItems | length }}
+                {{ return.returnItems | length | executeFilterIfExists('formatInt', app.locale) }}
             </div>
         </div>
 

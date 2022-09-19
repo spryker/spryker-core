@@ -12,6 +12,8 @@ use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\Money\Communication\Form\Type\MoneyType;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\MoneyGui\Communication\Plugin\Form\MoneyFormTypePlugin} instead.
+ *
  * @method \Spryker\Zed\Money\Business\MoneyFacadeInterface getFacade()
  * @method \Spryker\Zed\Money\Communication\MoneyCommunicationFactory getFactory()
  * @method \Spryker\Zed\Money\MoneyConfig getConfig()

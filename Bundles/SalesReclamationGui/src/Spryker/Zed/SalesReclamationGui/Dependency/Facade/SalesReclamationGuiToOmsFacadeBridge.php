@@ -27,7 +27,7 @@ class SalesReclamationGuiToOmsFacadeBridge implements SalesReclamationGuiToOmsFa
      *
      * @return array<array<string>>
      */
-    public function getManualEventsByIdSalesOrder($idSalesOrder)
+    public function getManualEventsByIdSalesOrder($idSalesOrder): array
     {
         return $this->omsFacade->getManualEventsByIdSalesOrder($idSalesOrder);
     }

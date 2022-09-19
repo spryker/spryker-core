@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
+
 interface MerchantRelationshipSalesOrderThresholdGuiToCurrencyFacadeInterface
 {
     /**
@@ -14,17 +16,17 @@ interface MerchantRelationshipSalesOrderThresholdGuiToCurrencyFacadeInterface
      *
      * @return array<\Generated\Shared\Transfer\StoreWithCurrencyTransfer>
      */
-    public function getAllStoresWithCurrencies();
+    public function getAllStoresWithCurrencies(): array;
 
     /**
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function getCurrent();
+    public function getCurrent(): CurrencyTransfer;
 
     /**
      * @param string $isoCode
      *
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function fromIsoCode($isoCode);
+    public function fromIsoCode($isoCode): CurrencyTransfer;
 }

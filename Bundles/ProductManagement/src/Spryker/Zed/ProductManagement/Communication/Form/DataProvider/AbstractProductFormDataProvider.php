@@ -246,6 +246,7 @@ class AbstractProductFormDataProvider
         $formOptions[ProductFormAdd::OPTION_ATTRIBUTE_ABSTRACT] = $localizedAttributeOptions;
 
         $formOptions[ProductFormAdd::OPTION_ID_LOCALE] = $this->currentLocale->getIdLocale();
+        $formOptions[ProductFormAdd::OPTION_LOCALE] = $this->currentLocale->getLocaleNameOrFail();
         $formOptions[ProductFormAdd::OPTION_TAX_RATES] = $this->taxCollection;
 
         return $formOptions;

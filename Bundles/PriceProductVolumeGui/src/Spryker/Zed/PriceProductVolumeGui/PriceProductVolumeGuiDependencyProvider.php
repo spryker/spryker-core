@@ -10,6 +10,7 @@ namespace Spryker\Zed\PriceProductVolumeGui;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\PriceProductVolumeGui\Dependency\Facade\PriceProductVolumeGuiToCurrencyFacadeBridge;
+use Spryker\Zed\PriceProductVolumeGui\Dependency\Facade\PriceProductVolumeGuiToLocaleFacadeBridge;
 use Spryker\Zed\PriceProductVolumeGui\Dependency\Facade\PriceProductVolumeGuiToPriceProductFacadeBridge;
 use Spryker\Zed\PriceProductVolumeGui\Dependency\Facade\PriceProductVolumeGuiToStoreFacadeBridge;
 use Spryker\Zed\PriceProductVolumeGui\Dependency\Service\PriceProductVolumeGuiToUtilEncodingServiceBridge;
@@ -37,6 +38,11 @@ class PriceProductVolumeGuiDependencyProvider extends AbstractBundleDependencyPr
     /**
      * @var string
      */
+    public const FACADE_LOCALE = 'FACADE_LOCALE';
+
+    /**
+     * @var string
+     */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**
@@ -50,6 +56,7 @@ class PriceProductVolumeGuiDependencyProvider extends AbstractBundleDependencyPr
         $container = $this->addCurrencyFacade($container);
         $container = $this->addPriceProductFacade($container);
         $container = $this->addStoreFacade($container);
+        $container = $this->addLocaleFacade($container);
 
         $container = $this->addUtilEncodingService($container);
 
@@ -107,6 +114,22 @@ class PriceProductVolumeGuiDependencyProvider extends AbstractBundleDependencyPr
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new PriceProductVolumeGuiToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addLocaleFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
+            return new PriceProductVolumeGuiToLocaleFacadeBridge(
+                $container->getLocator()->locale()->facade(),
+            );
         });
 
         return $container;

@@ -257,7 +257,7 @@ class MerchantOrderTable extends AbstractTable
                 SpySalesOrderTableMap::COL_EMAIL => $this->formatEmailAddress($item[SpySalesOrderTableMap::COL_EMAIL]),
                 static::COL_ORDER_STATE => $this->formatItemStatuses($item[static::COL_ORDER_STATE]),
                 SpyMerchantSalesOrderTotalsTableMap::COL_GRAND_TOTAL => $this->formatGrandTotal($item),
-                static::COL_ITEM_COUNT => $item[static::COL_ITEM_COUNT],
+                static::COL_ITEM_COUNT => $this->formatInt($item[static::COL_ITEM_COUNT]),
                 static::COL_ACTIONS => $this->buildLinks($item),
             ];
 

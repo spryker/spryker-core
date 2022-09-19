@@ -30,7 +30,7 @@ class ProductManagementToPriceProductBridge implements ProductManagementToPriceP
      *
      * @return int|null
      */
-    public function findPriceBySku($sku, $priceTypeName = null)
+    public function findPriceBySku($sku, $priceTypeName = null): ?int
     {
         return $this->priceProductFacade->findPriceBySku($sku, $priceTypeName);
     }
@@ -38,7 +38,7 @@ class ProductManagementToPriceProductBridge implements ProductManagementToPriceP
     /**
      * @return array<\Generated\Shared\Transfer\PriceTypeTransfer>
      */
-    public function getPriceTypeValues()
+    public function getPriceTypeValues(): array
     {
         return $this->priceProductFacade->getPriceTypeValues();
     }
@@ -46,7 +46,7 @@ class ProductManagementToPriceProductBridge implements ProductManagementToPriceP
     /**
      * @return string
      */
-    public function getDefaultPriceTypeName()
+    public function getDefaultPriceTypeName(): string
     {
         return $this->priceProductFacade->getDefaultPriceTypeName();
     }
@@ -57,7 +57,7 @@ class ProductManagementToPriceProductBridge implements ProductManagementToPriceP
      *
      * @return array<\Generated\Shared\Transfer\PriceProductTransfer>
      */
-    public function findProductConcretePrices($idProductConcrete, $idProductAbstract)
+    public function findProductConcretePrices(int $idProductConcrete, int $idProductAbstract): array
     {
         return $this->priceProductFacade->findProductConcretePrices($idProductConcrete, $idProductAbstract);
     }
@@ -65,7 +65,7 @@ class ProductManagementToPriceProductBridge implements ProductManagementToPriceP
     /**
      * @return string
      */
-    public function getPriceModeIdentifierForBothType()
+    public function getPriceModeIdentifierForBothType(): string
     {
         return $this->priceProductFacade->getPriceModeIdentifierForBothType();
     }

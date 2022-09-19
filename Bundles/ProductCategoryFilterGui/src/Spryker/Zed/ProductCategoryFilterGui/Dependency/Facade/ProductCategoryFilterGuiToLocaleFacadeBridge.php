@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductCategoryFilterGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+
 class ProductCategoryFilterGuiToLocaleFacadeBridge implements ProductCategoryFilterGuiToLocaleFacadeInterface
 {
     /**
@@ -25,7 +27,7 @@ class ProductCategoryFilterGuiToLocaleFacadeBridge implements ProductCategoryFil
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getCurrentLocale()
+    public function getCurrentLocale(): LocaleTransfer
     {
         return $this->localeFacade->getCurrentLocale();
     }

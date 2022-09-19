@@ -201,7 +201,7 @@ class VariantTable extends AbstractProductTable
     protected function generateItem(SpyProduct $productEntity)
     {
         return [
-            static::COL_ID_PRODUCT => $productEntity->getIdProduct(),
+            static::COL_ID_PRODUCT => $this->formatInt($productEntity->getIdProduct()),
             static::COL_SKU => $productEntity->getSku(),
             static::COL_NAME => $productEntity->getVirtualColumn(static::COL_NAME),
             static::COL_STATUS => $this->getStatusLabel($productEntity->getIsActive()),

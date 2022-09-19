@@ -16,7 +16,7 @@ interface MerchantSalesOrderMerchantUserGuiToShipmentFacadeInterface
     /**
      * @return array<\Generated\Shared\Transfer\ShipmentMethodTransfer>
      */
-    public function getMethods();
+    public function getMethods(): array;
 
     /**
      * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer

@@ -6,6 +6,7 @@
 'use strict';
 
 require('./main');
+var initFormattedNumber = require('ZedGuiModules/libs/formatted-number-input');
 
 var productOrder;
 var allProductsTable;
@@ -275,6 +276,8 @@ $(document).ready(function () {
     $('#product-category-table')
         .DataTable()
         .on('draw', function (event, settings) {
+            initFormattedNumber();
+
             $('.product_category_checkbox').off('change');
             $('.product_category_checkbox').on('change', function () {
                 var $checkbox = $(this);
@@ -292,7 +295,15 @@ $(document).ready(function () {
             $('.product_category_order').on('change', function () {
                 var $input = $(this);
                 var info = $.parseJSON($input.attr('data-info'));
-                productOrder[info.id] = $input.val();
+                var unformattedInputClassName = $input.attr('data-target');
+
+                if (unformattedInputClassName) {
+                    var $unformattedInput = $('.' + unformattedInputClassName);
+                    productOrder[info.id] = $unformattedInput.val();
+                } else {
+                    productOrder[info.id] = $input.val();
+                }
+
                 $('#assign_form_product_order').attr('value', JSON.stringify(productOrder));
             });
 

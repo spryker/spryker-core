@@ -220,14 +220,17 @@ class BundledProductTable extends AbstractTable
 
         $productAbstractCollection = [];
         foreach ($queryResults as $productEntity) {
+            $stockQuantity = (new Decimal($productEntity->getVirtualColumn(static::SPY_STOCK_PRODUCT_ALIAS_QUANTITY) ?? 0))->trim();
+            $availability = $this->getAvailability($productEntity)->trim();
+
             $productAbstractCollection[] = [
                 static::COL_SELECT => $this->addCheckBox($productEntity),
-                static::COL_ID_PRODUCT_CONCRETE => $productEntity->getIdProduct(),
+                static::COL_ID_PRODUCT_CONCRETE => $this->formatInt($productEntity->getIdProduct()),
                 SpyProductLocalizedAttributesTableMap::COL_NAME => $productEntity->getVirtualColumn(static::SPY_PRODUCT_LOCALIZED_ATTRIBUTE_ALIAS_NAME),
                 SpyProductTableMap::COL_SKU => $this->getProductEditPageLink($productEntity->getSku(), $productEntity->getFkProductAbstract(), $productEntity->getIdProduct()),
                 static::COL_PRICE => $this->getFormattedPrice($productEntity->getSku()),
-                static::SPY_STOCK_PRODUCT_ALIAS_QUANTITY => (new Decimal($productEntity->getVirtualColumn(static::SPY_STOCK_PRODUCT_ALIAS_QUANTITY) ?? 0))->trim(),
-                static::COL_AVAILABILITY => $this->getAvailability($productEntity)->trim(),
+                static::SPY_STOCK_PRODUCT_ALIAS_QUANTITY => $this->formatFloat($stockQuantity->toFloat()),
+                static::COL_AVAILABILITY => $this->formatFloat($availability->toFloat()),
                 SpyStockProductTableMap::COL_IS_NEVER_OUT_OF_STOCK => $productEntity->getIsNeverOutOfStock(),
             ];
         }

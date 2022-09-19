@@ -1,10 +1,10 @@
 {% if orderItem.amount and orderItem.amountSalesUnit %}
-    x {{ orderItem.amount.divide(orderItem.quantity, 10).trim }}
+    x {{ orderItem.amount.divide(orderItem.quantity, 10).trim.toFloat() | executeFilterIfExists('formatFloat', app.locale) }}
     {{ orderItem.amountSalesUnit.productMeasurementBaseUnit.productMeasurementUnit.name | trans }}
     ( =
-    {{ orderItem.amount.divide(orderItem.quantity, 10).divide(orderItem.amountSalesUnit.conversion, 10).trim }}
+    {{ orderItem.amount.divide(orderItem.quantity, 10).divide(orderItem.amountSalesUnit.conversion, 10).trim.toFloat() | executeFilterIfExists('formatFloat', app.locale) }}
     {{ orderItem.amountSalesUnit.productMeasurementUnit.name | trans }}
     )
-    = {{ orderItem.amount.trim }}
+    = {{ orderItem.amount.trim.toFloat() | executeFilterIfExists('formatFloat', app.locale) }}
     {{ orderItem.amountSalesUnit.productMeasurementBaseUnit.productMeasurementUnit.name | trans }}
 {% endif %}

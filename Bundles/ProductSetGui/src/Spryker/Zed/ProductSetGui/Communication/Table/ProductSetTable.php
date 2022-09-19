@@ -144,10 +144,10 @@ class ProductSetTable extends AbstractTable
     protected function generateItem(SpyProductSet $productSetEntity)
     {
         return [
-            static::COL_ID_PRODUCT_SET => $productSetEntity->getIdProductSet(),
+            static::COL_ID_PRODUCT_SET => $this->formatInt($productSetEntity->getIdProductSet()),
             static::COL_NAME => $productSetEntity->getVirtualColumn(static::COL_NAME),
-            static::COL_PRODUCT_COUNT => $productSetEntity->countSpyProductAbstractSets(),
-            static::COL_WEIGHT => $productSetEntity->getWeight(),
+            static::COL_PRODUCT_COUNT => $this->formatInt($productSetEntity->countSpyProductAbstractSets()),
+            static::COL_WEIGHT => $this->formatInt($productSetEntity->getWeight()),
             static::COL_IS_ACTIVE => $this->getStatusLabel($productSetEntity->getIsActive()),
             static::COL_ACTIONS => $this->createActionButtons($productSetEntity),
         ];

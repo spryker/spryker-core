@@ -24,6 +24,27 @@ use Spryker\Zed\PriceProductScheduleGui\PriceProductScheduleGuiConfig;
 class ImportSuccessListTable extends AbstractTable
 {
     /**
+     * @uses \Spryker\Zed\PriceProductScheduleGui\PriceProductScheduleGuiConfig::KEY_ID_PRICE_PRODUCT_SCHEDULE
+     *
+     * @var string
+     */
+    protected const KEY_ID_PRICE_PRODUCT_SCHEDULE = 'ID';
+
+    /**
+     * @uses \Spryker\Zed\PriceProductScheduleGui\PriceProductScheduleGuiConfig::KEY_VALUE_NET
+     *
+     * @var string
+     */
+    protected const KEY_VALUE_NET = 'value_net';
+
+    /**
+     * @uses \Spryker\Zed\PriceProductScheduleGui\PriceProductScheduleGuiConfig::KEY_VALUE_GROSS
+     *
+     * @var string
+     */
+    protected const KEY_VALUE_GROSS = 'value_gross';
+
+    /**
      * @var \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery
      */
     protected $priceProductScheduleQuery;
@@ -107,7 +128,15 @@ class ImportSuccessListTable extends AbstractTable
         $priceProductScheduleList = [];
 
         foreach ($priceProductScheduleCollection as $priceProductScheduleEntity) {
-            $priceProductScheduleList[] = $priceProductScheduleEntity->toArray();
+            $priceProductScheduleData = $priceProductScheduleEntity->toArray();
+
+            $priceProductScheduleData[static::KEY_ID_PRICE_PRODUCT_SCHEDULE] = $this->formatInt(
+                $priceProductScheduleData[static::KEY_ID_PRICE_PRODUCT_SCHEDULE],
+            );
+            $priceProductScheduleData[static::KEY_VALUE_NET] = $this->formatFloat($priceProductScheduleData[static::KEY_VALUE_NET]);
+            $priceProductScheduleData[static::KEY_VALUE_GROSS] = $this->formatFloat($priceProductScheduleData[static::KEY_VALUE_GROSS]);
+
+            $priceProductScheduleList[] = $priceProductScheduleData;
         }
 
         return $priceProductScheduleList;

@@ -29,7 +29,7 @@ class CustomerUserConnectorGuiToCustomerUserConnectorBridge implements CustomerU
      *
      * @return bool
      */
-    public function updateCustomerUserConnection(CustomerUserConnectionUpdateTransfer $customerUserConnectionUpdateTransfer)
+    public function updateCustomerUserConnection(CustomerUserConnectionUpdateTransfer $customerUserConnectionUpdateTransfer): bool
     {
         return $this->customerUserConnectorFacade->updateCustomerUserConnection($customerUserConnectionUpdateTransfer);
     }

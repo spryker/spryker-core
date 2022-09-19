@@ -191,7 +191,7 @@ class CompanyUnitAddressTable extends AbstractTable
     protected function prepareRowData(SpyCompanyUnitAddress $companyUnitAddressEntity): array
     {
         $baseData = [
-            static::COL_ID_COMPANY_UNIT_ADDRESS => $companyUnitAddressEntity->getIdCompanyUnitAddress(),
+            static::COL_ID_COMPANY_UNIT_ADDRESS => $this->formatInt($companyUnitAddressEntity->getIdCompanyUnitAddress()),
             static::COL_COUNTRY_RELATION => $this->getCountryName($companyUnitAddressEntity),
             static::COL_CITY => $companyUnitAddressEntity->getCity(),
             static::COL_ZIPCODE => $companyUnitAddressEntity->getZipCode(),

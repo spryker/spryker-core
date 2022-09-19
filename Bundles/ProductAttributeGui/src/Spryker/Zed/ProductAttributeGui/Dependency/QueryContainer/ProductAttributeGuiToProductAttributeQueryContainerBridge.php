@@ -7,6 +7,10 @@
 
 namespace Spryker\Zed\ProductAttributeGui\Dependency\QueryContainer;
 
+use Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery;
+use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeQuery;
+use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueQuery;
+
 class ProductAttributeGuiToProductAttributeQueryContainerBridge implements ProductAttributeGuiToProductAttributeQueryContainerInterface
 {
     /**
@@ -25,7 +29,7 @@ class ProductAttributeGuiToProductAttributeQueryContainerBridge implements Produ
     /**
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
      */
-    public function queryProductAttributeKey()
+    public function queryProductAttributeKey(): SpyProductAttributeKeyQuery
     {
         return $this->productAttributeQueryContainer
             ->queryProductAttributeKey();
@@ -36,7 +40,7 @@ class ProductAttributeGuiToProductAttributeQueryContainerBridge implements Produ
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
      */
-    public function queryProductAttributeKeyByKeys($keys)
+    public function queryProductAttributeKeyByKeys(array $keys): SpyProductAttributeKeyQuery
     {
         return $this->productAttributeQueryContainer
             ->queryProductAttributeKeyByKeys($keys);
@@ -45,7 +49,7 @@ class ProductAttributeGuiToProductAttributeQueryContainerBridge implements Produ
     /**
      * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeQuery
      */
-    public function queryProductManagementAttribute()
+    public function queryProductManagementAttribute(): SpyProductManagementAttributeQuery
     {
         return $this->productAttributeQueryContainer
             ->queryProductManagementAttribute();
@@ -54,7 +58,7 @@ class ProductAttributeGuiToProductAttributeQueryContainerBridge implements Produ
     /**
      * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueQuery
      */
-    public function queryProductManagementAttributeValue()
+    public function queryProductManagementAttributeValue(): SpyProductManagementAttributeValueQuery
     {
         return $this->productAttributeQueryContainer
             ->queryProductManagementAttributeValue();
@@ -75,7 +79,7 @@ class ProductAttributeGuiToProductAttributeQueryContainerBridge implements Produ
         $searchText = '',
         $offset = null,
         $limit = 10
-    ) {
+    ): SpyProductManagementAttributeValueQuery {
         return $this->productAttributeQueryContainer
             ->queryProductManagementAttributeValueWithTranslation(
                 $idProductManagementAttribute,

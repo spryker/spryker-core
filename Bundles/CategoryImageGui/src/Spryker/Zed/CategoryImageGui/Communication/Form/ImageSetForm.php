@@ -56,11 +56,16 @@ class ImageSetForm extends AbstractType
     public const VALIDATION_GROUP_IMAGE_COLLECTION = 'validation_group_image_collection';
 
     /**
+     * @var string
+     */
+    protected const OPTION_LOCALE = 'locale';
+
+    /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
 
@@ -77,13 +82,14 @@ class ImageSetForm extends AbstractType
                 return $validationGroups;
             },
             'compound' => true,
+            static::OPTION_LOCALE => null,
         ]);
     }
 
     /**
      * @return string
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'category_image_set';
     }
@@ -94,7 +100,7 @@ class ImageSetForm extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options = [])
+    public function buildForm(FormBuilderInterface $builder, array $options = []): void
     {
         parent::buildForm($builder, $options);
 
@@ -102,7 +108,7 @@ class ImageSetForm extends AbstractType
             ->addNameField($builder)
             ->addLocaleHiddenField($builder)
             ->addCategoryHiddenField($builder)
-            ->addImageCollectionForm($builder);
+            ->addImageCollectionForm($builder, $options);
     }
 
     /**
@@ -163,20 +169,24 @@ class ImageSetForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
-    protected function addImageCollectionForm(FormBuilderInterface $builder)
+    protected function addImageCollectionForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add(static::CATEGORY_IMAGES, CollectionType::class, [
                 'entry_type' => ImageCollectionForm::class,
+                'entry_options' => [
+                    'locale' => $options[static::OPTION_LOCALE],
+                ],
                 'label' => false,
                 'allow_add' => true,
                 'allow_delete' => true,
                 'prototype' => true,
                 'constraints' => [new Callback([
-                    'callback' => function ($images, ExecutionContextInterface $context) {
+                    'callback' => function ($images, ExecutionContextInterface $context): void {
                         $selectedAttributes = [];
                         foreach ($images as $valueSet) {
                             if (!empty($valueSet['value'])) {

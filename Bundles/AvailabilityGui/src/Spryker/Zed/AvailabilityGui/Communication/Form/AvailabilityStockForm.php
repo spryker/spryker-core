@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\StockProductTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
  * @method \Spryker\Zed\AvailabilityGui\Communication\AvailabilityGuiCommunicationFactory getFactory()
@@ -25,6 +26,11 @@ class AvailabilityStockForm extends AbstractType
     public const FIELD_STOCKS = 'stocks';
 
     /**
+     * @var string
+     */
+    public const OPTION_LOCALE = 'locale';
+
+    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array<string> $options
      *
@@ -32,31 +38,35 @@ class AvailabilityStockForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addStock($builder);
+        $this->addStockField($builder, $options);
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
-     * @return $this
+     * @return void
      */
-    protected function addStock(FormBuilderInterface $builder)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        $this->addStockField($builder);
+        parent::configureOptions($resolver);
 
-        return $this;
+        $resolver->setDefaults([
+            static::OPTION_LOCALE => null,
+        ]);
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array<string> $options
      *
      * @return $this
      */
-    protected function addStockField(FormBuilderInterface $builder)
+    protected function addStockField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_STOCKS, CollectionType::class, [
             'entry_type' => StockSubForm::class,
             'entry_options' => [
+                'locale' => $options[static::OPTION_LOCALE],
                 'data_class' => StockProductTransfer::class,
             ],
         ]);

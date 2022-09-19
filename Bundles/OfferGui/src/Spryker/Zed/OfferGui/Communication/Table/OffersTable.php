@@ -385,7 +385,7 @@ class OffersTable extends AbstractTable
             }
 
             $results[] = [
-                static::COL_ID_OFFER => $item[SpyOfferTableMap::COL_ID_OFFER],
+                static::COL_ID_OFFER => $this->formatInt($item[SpyOfferTableMap::COL_ID_OFFER]),
                 static::COL_CREATED_AT => $this->utilDateTimeService->formatDateTime($item[SpyOfferTableMap::COL_CREATED_AT]),
                 static::COL_CUSTOMER_REFERENCE => $this->formatCustomer($customerTransfer, $customerExists),
                 static::COL_EMAIL => $this->formatEmailAddress($customerTransfer),

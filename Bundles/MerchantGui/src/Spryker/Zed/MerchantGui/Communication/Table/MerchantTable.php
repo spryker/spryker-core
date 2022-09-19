@@ -243,7 +243,7 @@ class MerchantTable extends AbstractTable
 
         foreach ($queryResults as $item) {
             $rowData = array_merge([
-                SpyMerchantTableMap::COL_ID_MERCHANT => $item[SpyMerchantTableMap::COL_ID_MERCHANT],
+                SpyMerchantTableMap::COL_ID_MERCHANT => $this->formatInt($item[SpyMerchantTableMap::COL_ID_MERCHANT]),
                 SpyMerchantTableMap::COL_NAME => $item[SpyMerchantTableMap::COL_NAME],
                 SpyMerchantTableMap::COL_STATUS => $this->createStatusLabel($item),
                 SpyMerchantTableMap::COL_IS_ACTIVE => $this->getActiveLabel($item[SpyMerchantTableMap::COL_IS_ACTIVE]),

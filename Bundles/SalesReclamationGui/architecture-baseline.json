@@ -14,13 +14,6 @@
         "priority": "2"
     },
     {
-        "fileName": "src/Spryker/Zed/SalesReclamationGui/Dependency/Facade/SalesReclamationGuiToOmsFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `getManualEventsByIdSalesOrder()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
         "fileName": "src/Spryker/Zed/SalesReclamationGui/Dependency/Facade/SalesReclamationGuiToSalesFacadeBridge.php",
         "description": "Bridges: Type should be defined for param `idSalesOrder` in method `Spryker\\Zed\\SalesReclamationGui\\Dependency\\Facade\\SalesReclamationGuiToSalesFacadeBridge::getOrderByIdSalesOrder()`.",
         "rule": "BridgeMethodsRule",
@@ -31,13 +24,6 @@
         "fileName": "src/Spryker/Zed/SalesReclamationGui/Dependency/Facade/SalesReclamationGuiToSalesFacadeBridge.php",
         "description": "Bridges: Method `getOrderByIdSalesOrder()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/SalesReclamationGui/Dependency/Facade/SalesReclamationGuiToSalesFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `getOrderByIdSalesOrder()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -59,13 +45,6 @@
         "fileName": "src/Spryker/Zed/SalesReclamationGui/Dependency/Service/SalesReclamationGuiToUtilDateTimeServiceBridge.php",
         "description": "Bridges: Type should be defined for param `date` in method `Spryker\\Zed\\SalesReclamationGui\\Dependency\\Service\\SalesReclamationGuiToUtilDateTimeServiceBridge::formatDateTime()`.",
         "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/SalesReclamationGui/Dependency/Service/SalesReclamationGuiToUtilDateTimeServiceInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `formatDateTime()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
     }

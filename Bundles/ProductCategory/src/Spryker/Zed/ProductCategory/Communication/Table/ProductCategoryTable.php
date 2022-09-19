@@ -13,6 +13,7 @@ use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\ProductCategory\Communication\Form\OrderForm;
 use Spryker\Zed\ProductCategory\Dependency\Service\ProductCategoryToUtilEncodingInterface;
 use Spryker\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
 
@@ -157,17 +158,23 @@ class ProductCategoryTable extends AbstractTable
      *
      * @return string
      */
-    protected function getOrderHtml(array $productCategory)
+    protected function getOrderHtml(array $productCategory): string
     {
         $info = [
             'id' => $productCategory['id_product_abstract'],
         ];
 
-        return sprintf(
-            "<input type='text' value='%d' id='product_category_order_%d' class='product_category_order' size='4' data-info='%s'>",
-            $productCategory['product_order'],
-            $productCategory['id_product_abstract'],
-            $this->utilEncodingService->encodeJson($info),
+        return $this->generateFormField(
+            OrderForm::class,
+            OrderForm::FIELD_ORDER,
+            [
+                OrderForm::OPTION_LOCALE => $this->locale->getName(),
+                OrderForm::OPTION_ID => sprintf('product_category_order_%d', $productCategory['id_product_abstract']),
+                OrderForm::OPTION_DATA_INFO => $this->utilEncodingService->encodeJson($info),
+            ],
+            [
+                OrderForm::FIELD_ORDER => $productCategory['product_order'],
+            ],
         );
     }
 }

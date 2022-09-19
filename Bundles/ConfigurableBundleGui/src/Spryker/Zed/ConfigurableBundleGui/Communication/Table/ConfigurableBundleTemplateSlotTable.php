@@ -208,11 +208,17 @@ class ConfigurableBundleTemplateSlotTable extends AbstractTable
         ArrayCollection $configurableBundleTemplateSlotCollection
     ): ArrayCollection {
         foreach ($configurableBundleTemplateSlotCollection as $index => $configurableBundleTemplateSlotData) {
-            $configurableBundleTemplateSlotCollection[$index][static::COL_ACTIONS] = $this->buildLinks($configurableBundleTemplateSlotData);
-            $configurableBundleTemplateSlotCollection[$index][static::COL_NUMBER_OF_ITEMS] = count(
+            $numberOfItems = count(
                 $this->productListFacade->getProductConcreteIdsByProductListIds(
                     [$configurableBundleTemplateSlotData[SpyConfigurableBundleTemplateSlotTableMap::COL_FK_PRODUCT_LIST]],
                 ),
+            );
+
+            $configurableBundleTemplateSlotCollection[$index][static::COL_ACTIONS] = $this->buildLinks($configurableBundleTemplateSlotData);
+            $configurableBundleTemplateSlotCollection[$index][static::COL_NUMBER_OF_ITEMS] = $this->formatInt($numberOfItems);
+
+            $configurableBundleTemplateSlotCollection[$index][SpyConfigurableBundleTemplateSlotTableMap::COL_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT] = $this->formatInt(
+                $configurableBundleTemplateSlotCollection[$index][SpyConfigurableBundleTemplateSlotTableMap::COL_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT],
             );
         }
 

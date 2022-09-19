@@ -35,7 +35,7 @@ class ProductRelationGuiToPropelQueryBuilderQueryContainerBridge implements Prod
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    public function createQuery(ModelCriteria $query, PropelQueryBuilderCriteriaTransfer $criteriaTransfer)
+    public function createQuery(ModelCriteria $query, PropelQueryBuilderCriteriaTransfer $criteriaTransfer): ModelCriteria
     {
         return $this->propelQueryBuilderQueryContainer->createQuery($query, $criteriaTransfer);
     }

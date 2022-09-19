@@ -29,7 +29,7 @@ class PriceProductVolumeGuiToUtilEncodingServiceBridge implements PriceProductVo
      *
      * @return string|null
      */
-    public function encodeJson($value, $options = null, $depth = null)
+    public function encodeJson($value, $options = null, $depth = null): ?string
     {
         return $this->utilEncodingService
             ->encodeJson($value, $options, $depth);
@@ -41,7 +41,7 @@ class PriceProductVolumeGuiToUtilEncodingServiceBridge implements PriceProductVo
      * @param int|null $depth
      * @param int|null $options
      *
-     * @return array<mixed>|null
+     * @return mixed|null
      */
     public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null)
     {
@@ -49,7 +49,7 @@ class PriceProductVolumeGuiToUtilEncodingServiceBridge implements PriceProductVo
             trigger_error('Param #2 `$assoc` must be `true` as return of type `object` is not accepted.', E_USER_DEPRECATED);
         }
 
-        /** @phpstan-var array<mixed>|null */
+        /** @phpstan-var mixed|null */
         return $this->utilEncodingService
             ->decodeJson($jsonValue, $assoc, $depth, $options);
     }

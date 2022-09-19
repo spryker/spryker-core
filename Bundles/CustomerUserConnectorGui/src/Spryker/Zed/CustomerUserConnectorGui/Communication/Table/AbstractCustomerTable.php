@@ -181,7 +181,7 @@ abstract class AbstractCustomerTable extends AbstractTable
     protected function getRow(SpyCustomer $customerEntity)
     {
         return [
-            static::COL_ID => $customerEntity->getIdCustomer(),
+            static::COL_ID => $this->formatInt($customerEntity->getIdCustomer()),
             static::COL_FIRST_NAME => $customerEntity->getFirstName(),
             static::COL_LAST_NAME => $customerEntity->getLastName(),
             static::COL_EMAIL => $customerEntity->getEmail(),

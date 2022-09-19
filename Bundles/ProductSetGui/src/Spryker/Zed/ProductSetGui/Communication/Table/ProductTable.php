@@ -165,7 +165,7 @@ class ProductTable extends AbstractTable
     protected function formatRow(SpyProductAbstract $productAbstractEntity)
     {
         return [
-            static::COL_ID_PRODUCT_ABSTRACT => $productAbstractEntity->getIdProductAbstract(),
+            static::COL_ID_PRODUCT_ABSTRACT => $this->formatInt($productAbstractEntity->getIdProductAbstract()),
             static::COL_PREVIEW => $this->productAbstractTableHelper->getProductPreview($productAbstractEntity),
             static::COL_SKU => $productAbstractEntity->getSku(),
             static::COL_NAME => $productAbstractEntity->getVirtualColumn(static::COL_NAME),

@@ -28,7 +28,7 @@ class ProductManagementToTouchBridge implements ProductManagementToTouchInterfac
      *
      * @return bool
      */
-    public function touchActive($itemType, $idItem)
+    public function touchActive($itemType, $idItem): bool
     {
         return $this->touchFacade->touchActive($itemType, $idItem);
     }
@@ -39,7 +39,7 @@ class ProductManagementToTouchBridge implements ProductManagementToTouchInterfac
      *
      * @return bool
      */
-    public function touchDeleted($itemType, $idItem)
+    public function touchDeleted($itemType, $idItem): bool
     {
         return $this->touchFacade->touchDeleted($itemType, $idItem);
     }

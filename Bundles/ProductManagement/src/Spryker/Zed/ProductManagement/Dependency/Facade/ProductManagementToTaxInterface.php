@@ -7,22 +7,26 @@
 
 namespace Spryker\Zed\ProductManagement\Dependency\Facade;
 
+use Generated\Shared\Transfer\TaxRateCollectionTransfer;
+use Generated\Shared\Transfer\TaxSetCollectionTransfer;
+use Generated\Shared\Transfer\TaxSetTransfer;
+
 interface ProductManagementToTaxInterface
 {
     /**
      * @return \Generated\Shared\Transfer\TaxRateCollectionTransfer
      */
-    public function getTaxRates();
+    public function getTaxRates(): TaxRateCollectionTransfer;
 
     /**
      * @return \Generated\Shared\Transfer\TaxSetCollectionTransfer
      */
-    public function getTaxSets();
+    public function getTaxSets(): TaxSetCollectionTransfer;
 
     /**
      * @param int $idTaxSet
      *
      * @return \Generated\Shared\Transfer\TaxSetTransfer
      */
-    public function getTaxSet($idTaxSet);
+    public function getTaxSet($idTaxSet): TaxSetTransfer;
 }

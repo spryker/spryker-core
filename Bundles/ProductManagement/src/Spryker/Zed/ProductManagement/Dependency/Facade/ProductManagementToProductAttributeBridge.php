@@ -31,8 +31,9 @@ class ProductManagementToProductAttributeBridge implements ProductManagementToPr
      *
      * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer
      */
-    public function createProductManagementAttribute(ProductManagementAttributeTransfer $productManagementAttributeTransfer)
-    {
+    public function createProductManagementAttribute(
+        ProductManagementAttributeTransfer $productManagementAttributeTransfer
+    ): ProductManagementAttributeTransfer {
         return $this->productAttributeFacade->createProductManagementAttribute($productManagementAttributeTransfer);
     }
 
@@ -41,8 +42,9 @@ class ProductManagementToProductAttributeBridge implements ProductManagementToPr
      *
      * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer
      */
-    public function updateProductManagementAttribute(ProductManagementAttributeTransfer $productManagementAttributeTransfer)
-    {
+    public function updateProductManagementAttribute(
+        ProductManagementAttributeTransfer $productManagementAttributeTransfer
+    ): ProductManagementAttributeTransfer {
         return $this->productAttributeFacade->updateProductManagementAttribute($productManagementAttributeTransfer);
     }
 
@@ -51,7 +53,7 @@ class ProductManagementToProductAttributeBridge implements ProductManagementToPr
      *
      * @return void
      */
-    public function translateProductManagementAttribute(ProductManagementAttributeTransfer $productManagementAttributeTransfer)
+    public function translateProductManagementAttribute(ProductManagementAttributeTransfer $productManagementAttributeTransfer): void
     {
         $this->productAttributeFacade->translateProductManagementAttribute($productManagementAttributeTransfer);
     }
@@ -59,7 +61,7 @@ class ProductManagementToProductAttributeBridge implements ProductManagementToPr
     /**
      * @return array<\Generated\Shared\Transfer\ProductManagementAttributeTransfer>
      */
-    public function getProductAttributeCollection()
+    public function getProductAttributeCollection(): array
     {
         return $this->productAttributeFacade->getProductAttributeCollection();
     }

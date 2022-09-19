@@ -21,6 +21,8 @@ use Symfony\Component\Validator\Constraints\LessThanOrEqual;
 use Symfony\Component\Validator\Constraints\Regex;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\MoneyGui\Communication\Form\Type\MoneyType} instead.
+ *
  * @method \Spryker\Zed\Money\Communication\MoneyCommunicationFactory getFactory()
  * @method \Spryker\Zed\Money\MoneyConfig getConfig()
  * @method \Spryker\Zed\Money\Business\MoneyFacadeInterface getFacade()

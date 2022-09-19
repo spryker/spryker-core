@@ -288,6 +288,16 @@ class PriceProductScheduleListTable extends AbstractTable
         $priceProductScheduleListTableDataArray[static::COL_IMPORTED_BY] = $this->prepareImportedByField($priceProductScheduleListEntity);
         $priceProductScheduleListTableDataArray[static::COL_ACTIONS] = $this->buildLinks($priceProductScheduleListEntity);
 
+        $priceProductScheduleListTableDataArray[static::COL_IMPORT_ID] = $this->formatInt(
+            $priceProductScheduleListTableDataArray[static::COL_IMPORT_ID],
+        );
+        $priceProductScheduleListTableDataArray[static::COL_NUMBER_OF_PRICES] = $this->formatInt(
+            $priceProductScheduleListTableDataArray[static::COL_NUMBER_OF_PRICES],
+        );
+        $priceProductScheduleListTableDataArray[static::COL_NUMBER_OF_PRODUCTS] = $this->formatInt(
+            $priceProductScheduleListTableDataArray[static::COL_NUMBER_OF_PRODUCTS],
+        );
+
         return $priceProductScheduleListTableDataArray;
     }
 

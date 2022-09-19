@@ -29,7 +29,7 @@ class ProductLabelGuiToMoneyBridge implements ProductLabelGuiToMoneyInterface
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */
-    public function fromInteger($price)
+    public function fromInteger($price): MoneyTransfer
     {
         return $this
             ->moneyFacade
@@ -41,7 +41,7 @@ class ProductLabelGuiToMoneyBridge implements ProductLabelGuiToMoneyInterface
      *
      * @return string
      */
-    public function formatWithSymbol(MoneyTransfer $moneyTransfer)
+    public function formatWithSymbol(MoneyTransfer $moneyTransfer): string
     {
         return $this
             ->moneyFacade

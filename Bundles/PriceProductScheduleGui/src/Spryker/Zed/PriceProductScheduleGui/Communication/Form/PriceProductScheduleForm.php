@@ -66,6 +66,8 @@ class PriceProductScheduleForm extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
+        parent::configureOptions($resolver);
+
         $resolver->setDefined([
             PriceProductScheduleFormDataProvider::OPTION_CURRENCY_CHOICES,
             PriceProductScheduleFormDataProvider::OPTION_STORE_CHOICES,
@@ -90,6 +92,7 @@ class PriceProductScheduleForm extends AbstractType
                 $this->getFactory()->createPriceProductSchedulePriceConstraint(),
                 $this->getFactory()->createPriceProductScheduleUniqueConstraint(),
             ],
+            PriceProductScheduleFormDataProvider::OPTION_LOCALE => null,
         ]);
     }
 
@@ -122,6 +125,7 @@ class PriceProductScheduleForm extends AbstractType
             PriceProductScheduleFormDataProvider::OPTION_CURRENCY_CHOICES => $options[PriceProductScheduleFormDataProvider::OPTION_CURRENCY_CHOICES],
             PriceProductScheduleFormDataProvider::OPTION_PRICE_TYPE_CHOICES => $options[PriceProductScheduleFormDataProvider::OPTION_PRICE_TYPE_CHOICES],
             PriceProductScheduleFormDataProvider::OPTION_IS_PRICE_TYPE_DISABLED => $options[PriceProductScheduleFormDataProvider::OPTION_IS_PRICE_TYPE_DISABLED],
+            PriceProductScheduleFormDataProvider::OPTION_LOCALE => $options[PriceProductScheduleFormDataProvider::OPTION_LOCALE],
         ]);
 
         return $this;
@@ -154,9 +158,9 @@ class PriceProductScheduleForm extends AbstractType
     {
         $builder->add(static::FIELD_ACTIVE_FROM, DateTimeType::class, [
             'label' => 'Start from (included)',
+            'html5' => false,
             'date_widget' => 'single_text',
             'format' => static::PATTERN_DATE_FORMAT,
-            'html5' => false,
             'time_widget' => 'choice',
             'constraints' => [
                 new NotBlank(),
@@ -178,9 +182,9 @@ class PriceProductScheduleForm extends AbstractType
     {
         $builder->add(static::FIELD_ACTIVE_TO, DateTimeType::class, [
             'label' => 'Finish at (included)',
+            'html5' => false,
             'date_widget' => 'single_text',
             'format' => static::PATTERN_DATE_FORMAT,
-            'html5' => false,
             'time_widget' => 'choice',
             'constraints' => [
                 new NotBlank(),

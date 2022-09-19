@@ -14,5 +14,5 @@ interface ProductSetGuiToProductImageInterface
      *
      * @return array<\Generated\Shared\Transfer\ProductImageSetTransfer>
      */
-    public function getProductImagesSetCollectionByProductAbstractId($idProductAbstract);
+    public function getProductImagesSetCollectionByProductAbstractId($idProductAbstract): array;
 }

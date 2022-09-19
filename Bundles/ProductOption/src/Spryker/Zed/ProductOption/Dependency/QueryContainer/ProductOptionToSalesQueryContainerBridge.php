@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductOption\Dependency\QueryContainer;
 
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
+
 class ProductOptionToSalesQueryContainerBridge implements ProductOptionToSalesQueryContainerInterface
 {
     /**
@@ -25,7 +27,7 @@ class ProductOptionToSalesQueryContainerBridge implements ProductOptionToSalesQu
     /**
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
-    public function querySalesOrderItem()
+    public function querySalesOrderItem(): SpySalesOrderItemQuery
     {
         return $this->salesQueryContainer->querySalesOrderItem();
     }

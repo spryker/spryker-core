@@ -27,7 +27,7 @@ class PriceProductScheduleGuiToCurrencyFacadeBridge implements PriceProductSched
     /**
      * @return array<\Generated\Shared\Transfer\StoreWithCurrencyTransfer>
      */
-    public function getAllStoresWithCurrencies()
+    public function getAllStoresWithCurrencies(): array
     {
         return $this->currencyFacade->getAllStoresWithCurrencies();
     }

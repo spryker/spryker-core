@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\FileDirectoryTransfer;
 use Generated\Shared\Transfer\FileDirectoryTreeTransfer;
 use Generated\Shared\Transfer\FileManagerDataTransfer;
 use Generated\Shared\Transfer\MimeTypeCollectionTransfer;
+use Generated\Shared\Transfer\MimeTypeResponseTransfer;
 use Generated\Shared\Transfer\MimeTypeTransfer;
 
 class FileManagerGuiToFileManagerFacadeBridge implements FileManagerGuiToFileManagerFacadeInterface
@@ -33,7 +34,7 @@ class FileManagerGuiToFileManagerFacadeBridge implements FileManagerGuiToFileMan
      *
      * @return \Generated\Shared\Transfer\FileManagerDataTransfer
      */
-    public function saveFile(FileManagerDataTransfer $fileManagerDataTransfer)
+    public function saveFile(FileManagerDataTransfer $fileManagerDataTransfer): FileManagerDataTransfer
     {
         return $this->fileManagerFacade->saveFile($fileManagerDataTransfer);
     }
@@ -43,7 +44,7 @@ class FileManagerGuiToFileManagerFacadeBridge implements FileManagerGuiToFileMan
      *
      * @return int
      */
-    public function saveDirectory(FileDirectoryTransfer $fileDirectoryTransfer)
+    public function saveDirectory(FileDirectoryTransfer $fileDirectoryTransfer): int
     {
         return $this->fileManagerFacade->saveDirectory($fileDirectoryTransfer);
     }
@@ -55,7 +56,7 @@ class FileManagerGuiToFileManagerFacadeBridge implements FileManagerGuiToFileMan
      *
      * @return bool
      */
-    public function deleteFile($idFile)
+    public function deleteFile($idFile): bool
     {
         return $this->fileManagerFacade->deleteFile($idFile);
     }
@@ -67,7 +68,7 @@ class FileManagerGuiToFileManagerFacadeBridge implements FileManagerGuiToFileMan
      *
      * @return bool
      */
-    public function deleteFileInfo($idFileInfo)
+    public function deleteFileInfo($idFileInfo): bool
     {
         return $this->fileManagerFacade->deleteFileInfo($idFileInfo);
     }
@@ -79,7 +80,7 @@ class FileManagerGuiToFileManagerFacadeBridge implements FileManagerGuiToFileMan
      *
      * @return bool
      */
-    public function deleteFileDirectory($idFileDirectory)
+    public function deleteFileDirectory($idFileDirectory): bool
     {
         return $this->fileManagerFacade->deleteFileDirectory($idFileDirectory);
     }
@@ -91,7 +92,7 @@ class FileManagerGuiToFileManagerFacadeBridge implements FileManagerGuiToFileMan
      *
      * @return \Generated\Shared\Transfer\FileManagerDataTransfer
      */
-    public function findFileByIdFile($idFile)
+    public function findFileByIdFile($idFile): FileManagerDataTransfer
     {
         return $this->fileManagerFacade->findFileByIdFile($idFile);
     }
@@ -103,7 +104,7 @@ class FileManagerGuiToFileManagerFacadeBridge implements FileManagerGuiToFileMan
      *
      * @return \Generated\Shared\Transfer\FileManagerDataTransfer
      */
-    public function findFileByIdFileInfo($idFileInfo)
+    public function findFileByIdFileInfo($idFileInfo): FileManagerDataTransfer
     {
         return $this->fileManagerFacade->findFileByIdFileInfo($idFileInfo);
     }
@@ -113,7 +114,7 @@ class FileManagerGuiToFileManagerFacadeBridge implements FileManagerGuiToFileMan
      *
      * @return \Generated\Shared\Transfer\FileDirectoryTransfer|null
      */
-    public function findFileDirectory($idFileDirectory)
+    public function findFileDirectory($idFileDirectory): ?FileDirectoryTransfer
     {
         return $this->fileManagerFacade->findFileDirectory($idFileDirectory);
     }
@@ -123,7 +124,7 @@ class FileManagerGuiToFileManagerFacadeBridge implements FileManagerGuiToFileMan
      *
      * @return \Generated\Shared\Transfer\FileDirectoryTreeTransfer
      */
-    public function findFileDirectoryTree()
+    public function findFileDirectoryTree(): FileDirectoryTreeTransfer
     {
         return $this->fileManagerFacade->findFileDirectoryTree();
     }
@@ -135,7 +136,7 @@ class FileManagerGuiToFileManagerFacadeBridge implements FileManagerGuiToFileMan
      *
      * @return void
      */
-    public function updateFileDirectoryTreeHierarchy(FileDirectoryTreeTransfer $fileDirectoryTreeTransfer)
+    public function updateFileDirectoryTreeHierarchy(FileDirectoryTreeTransfer $fileDirectoryTreeTransfer): void
     {
         $this->fileManagerFacade->updateFileDirectoryTreeHierarchy($fileDirectoryTreeTransfer);
     }
@@ -147,7 +148,7 @@ class FileManagerGuiToFileManagerFacadeBridge implements FileManagerGuiToFileMan
      *
      * @return void
      */
-    public function updateMimeTypeSettings(MimeTypeCollectionTransfer $mimeTypeCollectionTransfer)
+    public function updateMimeTypeSettings(MimeTypeCollectionTransfer $mimeTypeCollectionTransfer): void
     {
         $this->fileManagerFacade->updateMimeTypeSettings($mimeTypeCollectionTransfer);
     }
@@ -159,7 +160,7 @@ class FileManagerGuiToFileManagerFacadeBridge implements FileManagerGuiToFileMan
      *
      * @return \Generated\Shared\Transfer\MimeTypeResponseTransfer
      */
-    public function findMimeType($idMimeType)
+    public function findMimeType($idMimeType): MimeTypeResponseTransfer
     {
         return $this->fileManagerFacade->findMimeType($idMimeType);
     }
@@ -171,7 +172,7 @@ class FileManagerGuiToFileManagerFacadeBridge implements FileManagerGuiToFileMan
      *
      * @return \Generated\Shared\Transfer\MimeTypeResponseTransfer
      */
-    public function saveMimeType(MimeTypeTransfer $mimeTypeTransfer)
+    public function saveMimeType(MimeTypeTransfer $mimeTypeTransfer): MimeTypeResponseTransfer
     {
         return $this->fileManagerFacade->saveMimeType($mimeTypeTransfer);
     }
@@ -183,7 +184,7 @@ class FileManagerGuiToFileManagerFacadeBridge implements FileManagerGuiToFileMan
      *
      * @return \Generated\Shared\Transfer\MimeTypeResponseTransfer
      */
-    public function deleteMimeType(MimeTypeTransfer $mimeTypeTransfer)
+    public function deleteMimeType(MimeTypeTransfer $mimeTypeTransfer): MimeTypeResponseTransfer
     {
         return $this->fileManagerFacade->deleteMimeType($mimeTypeTransfer);
     }
@@ -193,7 +194,7 @@ class FileManagerGuiToFileManagerFacadeBridge implements FileManagerGuiToFileMan
      *
      * @return \Generated\Shared\Transfer\MimeTypeCollectionTransfer
      */
-    public function findAllowedMimeTypes()
+    public function findAllowedMimeTypes(): MimeTypeCollectionTransfer
     {
         return $this->fileManagerFacade->findAllowedMimeTypes();
     }

@@ -252,7 +252,9 @@ class ProductTable extends AbstractProductTable
     protected function mapResults(array $item): array
     {
         $results = [
-            SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT => $item[SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT],
+            SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT => $this->formatInt(
+                $item[SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT],
+            ),
             SpyProductAbstractTableMap::COL_SKU => $item[SpyProductAbstractTableMap::COL_SKU],
             SpyProductAbstractLocalizedAttributesTableMap::COL_NAME => $item[SpyProductAbstractLocalizedAttributesTableMap::COL_NAME],
         ];

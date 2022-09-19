@@ -9,10 +9,10 @@ namespace Spryker\Zed\PriceProductVolumeGui\Communication\Form;
 
 use Closure;
 use Generated\Shared\Transfer\PriceProductVolumeItemTransfer;
+use Spryker\Zed\Gui\Communication\Form\Type\FormattedMoneyType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\PriceProductVolumeGui\Communication\Form\DataProvider\PriceVolumeCollectionDataProvider;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
@@ -86,6 +86,8 @@ class PriceVolumeCollectionFormType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
+        parent::configureOptions($resolver);
+
         $resolver->setRequired(PriceVolumeCollectionDataProvider::OPTION_CURRENCY_CODE);
         $resolver->setRequired(PriceVolumeCollectionDataProvider::OPTION_DIVISOR);
         $resolver->setRequired(PriceVolumeCollectionDataProvider::OPTION_FRACTION_DIGITS);
@@ -94,6 +96,7 @@ class PriceVolumeCollectionFormType extends AbstractType
             'validation_groups' => function () {
                 return [Constraint::DEFAULT_GROUP, static::VALIDATION_VOLUMES_GROUP];
             },
+            PriceVolumeCollectionDataProvider::OPTION_LOCALE => null,
         ]);
     }
 
@@ -115,6 +118,7 @@ class PriceVolumeCollectionFormType extends AbstractType
                 PriceVolumeCollectionDataProvider::OPTION_CURRENCY_CODE => $options[PriceVolumeCollectionDataProvider::OPTION_CURRENCY_CODE],
                 PriceVolumeCollectionDataProvider::OPTION_DIVISOR => $options[PriceVolumeCollectionDataProvider::OPTION_DIVISOR],
                 PriceVolumeCollectionDataProvider::OPTION_FRACTION_DIGITS => $options[PriceVolumeCollectionDataProvider::OPTION_FRACTION_DIGITS],
+                PriceVolumeCollectionDataProvider::OPTION_LOCALE => $options[PriceVolumeCollectionDataProvider::OPTION_LOCALE],
             ],
         ]);
 
@@ -156,9 +160,10 @@ class PriceVolumeCollectionFormType extends AbstractType
      */
     protected function addPriceField(FormBuilderInterface $builder, array $options, string $name)
     {
-        $builder->add($name, MoneyType::class, [
+        $builder->add($name, FormattedMoneyType::class, [
             'label' => false,
             'required' => false,
+            'locale' => $options[PriceVolumeCollectionDataProvider::OPTION_LOCALE],
             'divisor' => $options[PriceVolumeCollectionDataProvider::OPTION_DIVISOR],
             'scale' => $options[PriceVolumeCollectionDataProvider::OPTION_FRACTION_DIGITS],
             'currency' => $options[PriceVolumeCollectionDataProvider::OPTION_CURRENCY_CODE],

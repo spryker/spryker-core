@@ -16,21 +16,21 @@ interface ProductManagementToMoneyInterface
      *
      * @return int
      */
-    public function convertDecimalToInteger($value);
+    public function convertDecimalToInteger($value): int;
 
     /**
      * @param int $value
      *
      * @return float
      */
-    public function convertIntegerToDecimal($value);
+    public function convertIntegerToDecimal($value): float;
 
     /**
      * @param \Generated\Shared\Transfer\MoneyTransfer $moneyTransfer
      *
      * @return string
      */
-    public function formatWithSymbol(MoneyTransfer $moneyTransfer);
+    public function formatWithSymbol(MoneyTransfer $moneyTransfer): string;
 
     /**
      * @param int $amount
@@ -38,5 +38,5 @@ interface ProductManagementToMoneyInterface
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */
-    public function fromInteger($amount, $isoCode = null);
+    public function fromInteger($amount, $isoCode = null): MoneyTransfer;
 }

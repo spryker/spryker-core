@@ -32,7 +32,7 @@ class ProductManagementToProductBridge implements ProductManagementToProductInte
      *
      * @return bool
      */
-    public function hasProductAttributeKey($key)
+    public function hasProductAttributeKey($key): bool
     {
         return $this->productFacade->hasProductAttributeKey($key);
     }
@@ -42,7 +42,7 @@ class ProductManagementToProductBridge implements ProductManagementToProductInte
      *
      * @return \Generated\Shared\Transfer\ProductAttributeKeyTransfer|null
      */
-    public function findProductAttributeKey($key)
+    public function findProductAttributeKey($key): ?ProductAttributeKeyTransfer
     {
         return $this->productFacade->findProductAttributeKey($key);
     }
@@ -52,7 +52,7 @@ class ProductManagementToProductBridge implements ProductManagementToProductInte
      *
      * @return \Generated\Shared\Transfer\ProductAttributeKeyTransfer
      */
-    public function createProductAttributeKey(ProductAttributeKeyTransfer $productAttributeKeyTransfer)
+    public function createProductAttributeKey(ProductAttributeKeyTransfer $productAttributeKeyTransfer): ProductAttributeKeyTransfer
     {
         return $this->productFacade->createProductAttributeKey($productAttributeKeyTransfer);
     }
@@ -62,7 +62,7 @@ class ProductManagementToProductBridge implements ProductManagementToProductInte
      *
      * @return \Generated\Shared\Transfer\ProductAttributeKeyTransfer
      */
-    public function updateProductAttributeKey(ProductAttributeKeyTransfer $productAttributeKeyTransfer)
+    public function updateProductAttributeKey(ProductAttributeKeyTransfer $productAttributeKeyTransfer): ProductAttributeKeyTransfer
     {
         return $this->productFacade->updateProductAttributeKey($productAttributeKeyTransfer);
     }
@@ -72,7 +72,7 @@ class ProductManagementToProductBridge implements ProductManagementToProductInte
      *
      * @return bool
      */
-    public function hasProductAbstract($sku)
+    public function hasProductAbstract($sku): bool
     {
         return $this->productFacade->hasProductAbstract($sku);
     }
@@ -82,7 +82,7 @@ class ProductManagementToProductBridge implements ProductManagementToProductInte
      *
      * @return bool
      */
-    public function hasProductConcrete($sku)
+    public function hasProductConcrete($sku): bool
     {
         return $this->productFacade->hasProductConcrete($sku);
     }
@@ -93,7 +93,7 @@ class ProductManagementToProductBridge implements ProductManagementToProductInte
      *
      * @return int
      */
-    public function addProduct(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteCollection)
+    public function addProduct(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteCollection): int
     {
         return $this->productFacade->addProduct($productAbstractTransfer, $productConcreteCollection);
     }
@@ -104,7 +104,7 @@ class ProductManagementToProductBridge implements ProductManagementToProductInte
      *
      * @return int
      */
-    public function saveProduct(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteCollection)
+    public function saveProduct(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteCollection): int
     {
         return $this->productFacade->saveProduct($productAbstractTransfer, $productConcreteCollection);
     }
@@ -114,7 +114,7 @@ class ProductManagementToProductBridge implements ProductManagementToProductInte
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
      */
-    public function findProductAbstractById($idProductAbstract)
+    public function findProductAbstractById($idProductAbstract): ?ProductAbstractTransfer
     {
         return $this->productFacade->findProductAbstractById($idProductAbstract);
     }
@@ -124,7 +124,7 @@ class ProductManagementToProductBridge implements ProductManagementToProductInte
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
      */
-    public function findProductConcreteById($idProduct)
+    public function findProductConcreteById($idProduct): ?ProductConcreteTransfer
     {
         return $this->productFacade->findProductConcreteById($idProduct);
     }
@@ -134,7 +134,7 @@ class ProductManagementToProductBridge implements ProductManagementToProductInte
      *
      * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
-    public function getConcreteProductsByAbstractProductId($idProductAbstract)
+    public function getConcreteProductsByAbstractProductId($idProductAbstract): array
     {
         return $this->productFacade->getConcreteProductsByAbstractProductId($idProductAbstract);
     }
@@ -144,7 +144,7 @@ class ProductManagementToProductBridge implements ProductManagementToProductInte
      *
      * @return void
      */
-    public function activateProductConcrete($idProductConcrete)
+    public function activateProductConcrete($idProductConcrete): void
     {
         $this->productFacade->activateProductConcrete($idProductConcrete);
     }
@@ -154,7 +154,7 @@ class ProductManagementToProductBridge implements ProductManagementToProductInte
      *
      * @return void
      */
-    public function deactivateProductConcrete($idProductConcrete)
+    public function deactivateProductConcrete($idProductConcrete): void
     {
         $this->productFacade->deactivateProductConcrete($idProductConcrete);
     }
@@ -165,7 +165,7 @@ class ProductManagementToProductBridge implements ProductManagementToProductInte
      *
      * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
-    public function generateVariants(ProductAbstractTransfer $productAbstractTransfer, array $attributeCollection)
+    public function generateVariants(ProductAbstractTransfer $productAbstractTransfer, array $attributeCollection): array
     {
         return $this->productFacade->generateVariants($productAbstractTransfer, $attributeCollection);
     }
@@ -176,8 +176,10 @@ class ProductManagementToProductBridge implements ProductManagementToProductInte
      *
      * @return array
      */
-    public function getCombinedAbstractAttributeKeys(ProductAbstractTransfer $productAbstractTransfer, ?LocaleTransfer $localeTransfer = null)
-    {
+    public function getCombinedAbstractAttributeKeys(
+        ProductAbstractTransfer $productAbstractTransfer,
+        ?LocaleTransfer $localeTransfer = null
+    ): array {
         return $this->productFacade->getCombinedAbstractAttributeKeys($productAbstractTransfer, $localeTransfer);
     }
 
@@ -187,8 +189,10 @@ class ProductManagementToProductBridge implements ProductManagementToProductInte
      *
      * @return array
      */
-    public function getCombinedConcreteAttributes(ProductConcreteTransfer $productConcreteTransfer, ?LocaleTransfer $localeTransfer = null)
-    {
+    public function getCombinedConcreteAttributes(
+        ProductConcreteTransfer $productConcreteTransfer,
+        ?LocaleTransfer $localeTransfer = null
+    ): array {
         return $this->productFacade->getCombinedConcreteAttributes($productConcreteTransfer, $localeTransfer);
     }
 
@@ -197,7 +201,7 @@ class ProductManagementToProductBridge implements ProductManagementToProductInte
      *
      * @return void
      */
-    public function touchProductAbstract($idProductAbstract)
+    public function touchProductAbstract($idProductAbstract): void
     {
         $this->productFacade->touchProductAbstract($idProductAbstract);
     }
@@ -207,7 +211,7 @@ class ProductManagementToProductBridge implements ProductManagementToProductInte
      *
      * @return void
      */
-    public function touchProductConcrete($idProductConcrete)
+    public function touchProductConcrete($idProductConcrete): void
     {
         $this->productFacade->touchProductConcrete($idProductConcrete);
     }
@@ -217,7 +221,7 @@ class ProductManagementToProductBridge implements ProductManagementToProductInte
      *
      * @return int|null
      */
-    public function findProductConcreteIdBySku($sku)
+    public function findProductConcreteIdBySku($sku): ?int
     {
         return $this->productFacade->findProductConcreteIdBySku($sku);
     }
@@ -228,8 +232,10 @@ class ProductManagementToProductBridge implements ProductManagementToProductInte
      *
      * @return string
      */
-    public function generateProductConcreteSku(ProductAbstractTransfer $productAbstractTransfer, ProductConcreteTransfer $productConcreteTransfer)
-    {
+    public function generateProductConcreteSku(
+        ProductAbstractTransfer $productAbstractTransfer,
+        ProductConcreteTransfer $productConcreteTransfer
+    ): string {
         return $this->productFacade->generateProductConcreteSku($productAbstractTransfer, $productConcreteTransfer);
     }
 

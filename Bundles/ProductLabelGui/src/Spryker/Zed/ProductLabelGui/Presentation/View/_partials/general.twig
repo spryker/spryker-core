@@ -12,7 +12,7 @@
 
         <div class="row form-group">
             <div class="col-xs-2"><b>{{ 'Priority' | trans }}</b></div>
-            <div class="col-xs-10">{{ productLabelTransfer.position }}</div>
+            <div class="col-xs-10">{{ productLabelTransfer.position | executeFilterIfExists('formatInt', app.locale) }}</div>
         </div>
 
         <div class="row form-group">

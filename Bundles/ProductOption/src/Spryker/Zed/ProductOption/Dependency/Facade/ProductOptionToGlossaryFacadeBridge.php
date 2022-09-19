@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductOption\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\TranslationTransfer;
 
 class ProductOptionToGlossaryFacadeBridge implements ProductOptionToGlossaryFacadeInterface
 {
@@ -31,7 +32,7 @@ class ProductOptionToGlossaryFacadeBridge implements ProductOptionToGlossaryFaca
      *
      * @return string
      */
-    public function translate($keyName, array $data = [], ?LocaleTransfer $localeTransfer = null)
+    public function translate($keyName, array $data = [], ?LocaleTransfer $localeTransfer = null): string
     {
         return $this->glossaryFacade->translate($keyName, $data, $localeTransfer);
     }
@@ -42,7 +43,7 @@ class ProductOptionToGlossaryFacadeBridge implements ProductOptionToGlossaryFaca
      *
      * @return bool
      */
-    public function hasTranslation($keyName, ?LocaleTransfer $localeTransfer = null)
+    public function hasTranslation($keyName, ?LocaleTransfer $localeTransfer = null): bool
     {
         return $this->glossaryFacade->hasTranslation($keyName, $localeTransfer);
     }
@@ -55,7 +56,7 @@ class ProductOptionToGlossaryFacadeBridge implements ProductOptionToGlossaryFaca
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function createAndTouchTranslation($keyName, LocaleTransfer $localeTransfer, $value, $isActive = true)
+    public function createAndTouchTranslation($keyName, LocaleTransfer $localeTransfer, $value, $isActive = true): TranslationTransfer
     {
         return $this->glossaryFacade->createAndTouchTranslation($keyName, $localeTransfer, $value, $isActive);
     }
@@ -68,7 +69,7 @@ class ProductOptionToGlossaryFacadeBridge implements ProductOptionToGlossaryFaca
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function updateAndTouchTranslation($keyName, LocaleTransfer $localeTransfer, $value, $isActive = true)
+    public function updateAndTouchTranslation($keyName, LocaleTransfer $localeTransfer, $value, $isActive = true): TranslationTransfer
     {
         return $this->glossaryFacade->updateAndTouchTranslation($keyName, $localeTransfer, $value, $isActive);
     }
@@ -78,7 +79,7 @@ class ProductOptionToGlossaryFacadeBridge implements ProductOptionToGlossaryFaca
      *
      * @return bool
      */
-    public function hasKey($keyName)
+    public function hasKey($keyName): bool
     {
         return $this->glossaryFacade->hasKey($keyName);
     }
@@ -88,7 +89,7 @@ class ProductOptionToGlossaryFacadeBridge implements ProductOptionToGlossaryFaca
      *
      * @return int
      */
-    public function createKey($keyName)
+    public function createKey($keyName): int
     {
         return $this->glossaryFacade->createKey($keyName);
     }
@@ -99,7 +100,7 @@ class ProductOptionToGlossaryFacadeBridge implements ProductOptionToGlossaryFaca
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function getTranslation($keyName, LocaleTransfer $localeTransfer)
+    public function getTranslation($keyName, LocaleTransfer $localeTransfer): TranslationTransfer
     {
         return $this->glossaryFacade->getTranslation($keyName, $localeTransfer);
     }
@@ -109,7 +110,7 @@ class ProductOptionToGlossaryFacadeBridge implements ProductOptionToGlossaryFaca
      *
      * @return bool
      */
-    public function deleteKey($keyName)
+    public function deleteKey($keyName): bool
     {
         return $this->glossaryFacade->deleteKey($keyName);
     }

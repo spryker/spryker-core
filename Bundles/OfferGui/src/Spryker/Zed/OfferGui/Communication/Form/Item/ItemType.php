@@ -7,12 +7,13 @@
 
 namespace Spryker\Zed\OfferGui\Communication\Form\Item;
 
+use Spryker\Zed\Gui\Communication\Form\Type\FormattedNumberType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Range;
 use Symfony\Component\Validator\Constraints\Regex;
@@ -104,6 +105,11 @@ class ItemType extends AbstractType
     protected const PATTERN_MONEY = '/^\d*\.?\d{0,2}$/';
 
     /**
+     * @var string
+     */
+    protected const OPTION_LOCALE = 'locale';
+
+    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array<string, mixed> $options
      *
@@ -121,6 +127,20 @@ class ItemType extends AbstractType
             ->addQuantityField($builder, $options)
             ->addUnitSubtotalAggregationPriceField($builder, $options)
             ->addSumSubtotalAggregationPriceField($builder, $options);
+    }
+
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        parent::configureOptions($resolver);
+
+        $resolver->setDefaults([
+            static::OPTION_LOCALE => null,
+        ]);
     }
 
     /**
@@ -201,8 +221,9 @@ class ItemType extends AbstractType
      */
     protected function addUnitGrossPriceField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_UNIT_GROSS_PRICE, NumberType::class, [
+        $builder->add(static::FIELD_UNIT_GROSS_PRICE, FormattedNumberType::class, [
             'label' => 'Gross Price',
+            'locale' => $options[static::OPTION_LOCALE],
             'required' => false,
             'disabled' => true,
             'constraints' => [
@@ -225,8 +246,9 @@ class ItemType extends AbstractType
      */
     protected function addUnitNetPriceField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_UNIT_NET_PRICE, NumberType::class, [
+        $builder->add(static::FIELD_UNIT_NET_PRICE, FormattedNumberType::class, [
             'label' => 'Net Price',
+            'locale' => $options[static::OPTION_LOCALE],
             'required' => false,
             'disabled' => true,
             'constraints' => [
@@ -249,8 +271,9 @@ class ItemType extends AbstractType
      */
     protected function addManualGrossPriceField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_SOURCE_UNIT_GROSS_PRICE, NumberType::class, [
+        $builder->add(static::FIELD_SOURCE_UNIT_GROSS_PRICE, FormattedNumberType::class, [
             'label' => 'Manual Gross Price',
+            'locale' => $options[static::OPTION_LOCALE],
             'required' => false,
             'disabled' => !$this->isDefaultPriceModeGross(),
             'constraints' => [
@@ -273,8 +296,9 @@ class ItemType extends AbstractType
      */
     protected function addManualNetPriceField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_SOURCE_UNIT_NET_PRICE, NumberType::class, [
+        $builder->add(static::FIELD_SOURCE_UNIT_NET_PRICE, FormattedNumberType::class, [
             'label' => 'Manual Net Price',
+            'locale' => $options[static::OPTION_LOCALE],
             'required' => false,
             'disabled' => !$this->isDefaultPriceModeNet(),
             'constraints' => [
@@ -297,8 +321,9 @@ class ItemType extends AbstractType
      */
     protected function addOfferDiscountField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_OFFER_DISCOUNT, NumberType::class, [
+        $builder->add(static::FIELD_OFFER_DISCOUNT, FormattedNumberType::class, [
             'label' => 'Offer discount %',
+            'locale' => $options[static::OPTION_LOCALE],
             'required' => false,
             'constraints' => [
                 new Range([
@@ -339,8 +364,9 @@ class ItemType extends AbstractType
      */
     protected function addOfferFeeField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_OFFER_FEE, NumberType::class, [
+        $builder->add(static::FIELD_OFFER_FEE, FormattedNumberType::class, [
             'label' => 'Offer fee',
+            'locale' => $options[static::OPTION_LOCALE],
             'required' => false,
             'constraints' => [
                 $this->createMoneyConstraint($options),
@@ -362,8 +388,9 @@ class ItemType extends AbstractType
      */
     protected function addUnitSubtotalAggregationPriceField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_UNIT_SUBTOTAL_AGGREGATION, NumberType::class, [
+        $builder->add(static::FIELD_UNIT_SUBTOTAL_AGGREGATION, FormattedNumberType::class, [
             'label' => 'Unit Subtotal Price',
+            'locale' => $options[static::OPTION_LOCALE],
             'required' => false,
             'disabled' => true,
             'constraints' => [
@@ -386,8 +413,9 @@ class ItemType extends AbstractType
      */
     protected function addSumSubtotalAggregationPriceField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_SUM_SUBTOTAL_AGGREGATION, NumberType::class, [
+        $builder->add(static::FIELD_SUM_SUBTOTAL_AGGREGATION, FormattedNumberType::class, [
             'label' => 'Sum Subtotal Price',
+            'locale' => $options[static::OPTION_LOCALE],
             'required' => false,
             'disabled' => true,
             'constraints' => [

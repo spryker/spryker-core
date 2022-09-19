@@ -30,7 +30,7 @@ class SalesToMoneyBridge implements SalesToMoneyInterface
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */
-    public function fromInteger($amount, $isoCode = null)
+    public function fromInteger($amount, $isoCode = null): MoneyTransfer
     {
         return $this->moneyFacade->fromInteger($amount, $isoCode);
     }
@@ -40,7 +40,7 @@ class SalesToMoneyBridge implements SalesToMoneyInterface
      *
      * @return string
      */
-    public function formatWithSymbol(MoneyTransfer $moneyTransfer)
+    public function formatWithSymbol(MoneyTransfer $moneyTransfer): string
     {
         return $this->moneyFacade->formatWithSymbol($moneyTransfer);
     }
@@ -50,7 +50,7 @@ class SalesToMoneyBridge implements SalesToMoneyInterface
      *
      * @return string
      */
-    public function formatWithoutSymbol(MoneyTransfer $moneyTransfer)
+    public function formatWithoutSymbol(MoneyTransfer $moneyTransfer): string
     {
         return $this->moneyFacade->formatWithoutSymbol($moneyTransfer);
     }

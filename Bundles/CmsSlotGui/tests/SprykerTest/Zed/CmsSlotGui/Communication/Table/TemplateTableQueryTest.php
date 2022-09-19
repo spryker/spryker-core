@@ -64,7 +64,7 @@ class TemplateTableQueryTest extends Unit
         // Assert
         $this->assertNotEmpty($result);
         $resultCmsSlotTemplateIds = array_column($result, SpyCmsSlotTemplateTableMap::COL_ID_CMS_SLOT_TEMPLATE);
-        $this->assertContains($cmsSlotTemplateTransfer1->getIdCmsSlotTemplate(), $resultCmsSlotTemplateIds);
-        $this->assertContains($cmsSlotTemplateTransfer2->getIdCmsSlotTemplate(), $resultCmsSlotTemplateIds);
+        $this->assertContains((string)$cmsSlotTemplateTransfer1->getIdCmsSlotTemplate(), $resultCmsSlotTemplateIds);
+        $this->assertContains((string)$cmsSlotTemplateTransfer2->getIdCmsSlotTemplate(), $resultCmsSlotTemplateIds);
     }
 }

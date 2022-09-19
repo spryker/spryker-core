@@ -17,7 +17,7 @@
             </div>
         </td>
         <td class="{{ noBottomBorderClass }}">{{ (returnItem.orderItem.sumPrice - returnItem.orderItem.sumDiscountAmountFullAggregation) | money(true, currencyIsoCode) }}</td>
-        <td class="{{ noBottomBorderClass }}">{{ returnItem.orderItem.quantity }}</td>
+        <td class="{{ noBottomBorderClass }}">{{ returnItem.orderItem.quantity | executeFilterIfExists('formatInt', app.locale) }}</td>
         <td class="{{ noBottomBorderClass }}">{{ returnItem.orderItem.sumPriceToPayAggregation | money(true, currencyIsoCode) }}</td>
         <td class="{{ noBottomBorderClass }}">{{ returnItem.reason ?? '--' }}</td>
     </tr>

@@ -1,0 +1,40 @@
+{% block formatted_money_widget %}
+    {% set prepend = not (money_pattern starts with '{{') %}
+    {% set append = not (money_pattern ends with '}}') %}
+    {% if display_currency and (prepend or append) %}
+        <div class="input-group">
+            {% if prepend %}
+                <span class="input-group-addon">{{ money_pattern | form_encode_currency }}</span>
+            {% endif %}
+
+            {% block formatted_money_inner %}
+                {%- set targetClassName = 'js-' ~ id ~ '-' ~ random() -%}
+                {%- set cssClasses = ' js-formatted-money-input form-control formatted-money-input' -%}
+                {%- set attr = attr | merge({class: (attr.class | default ~ cssClasses) | trim}) -%}
+
+                <input
+                    id="{{ id }}"
+                    {%- if disabled %} disabled="disabled"{% endif -%}
+                    {%- if required %} required="required"{% endif -%}
+                    {{ block('attributes') }}
+                    data-target="{{ targetClassName }}"
+                    data-group-separator="{{ grouping_separator_symbol | default }}"
+                    data-decimal-separator="{{ decimal_separator_symbol | default('.') }}"
+                    data-decimal-rounding="2"
+                    data-decimal-filling>
+
+                <input
+                    type="hidden"
+                    class="{{ targetClassName }}"
+                    value="{{ value }}"
+                    name="{{ full_name }}">
+            {% endblock %}
+
+            {% if append %}
+                <span class="input-group-addon">{{ money_pattern | form_encode_currency }}</span>
+            {% endif %}
+        </div>
+    {% else %}
+        {{- block('formatted_money_inner') -}}
+    {% endif %}
+{% endblock %}

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Sales\Dependency\Facade;
 
+use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
+use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 
 class SalesToOmsBridge implements SalesToOmsInterface
@@ -27,7 +29,7 @@ class SalesToOmsBridge implements SalesToOmsInterface
     /**
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemState
      */
-    public function getInitialStateEntity()
+    public function getInitialStateEntity(): SpyOmsOrderItemState
     {
         return $this->omsFacade->getInitialStateEntity();
     }
@@ -37,7 +39,7 @@ class SalesToOmsBridge implements SalesToOmsInterface
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderProcess
      */
-    public function getProcessEntity($processName)
+    public function getProcessEntity($processName): SpyOmsOrderProcess
     {
         return $this->omsFacade->getProcessEntity($processName);
     }
@@ -45,7 +47,7 @@ class SalesToOmsBridge implements SalesToOmsInterface
     /**
      * @return array
      */
-    public function getOrderItemMatrix()
+    public function getOrderItemMatrix(): array
     {
         return $this->omsFacade->getOrderItemMatrix();
     }
@@ -55,7 +57,7 @@ class SalesToOmsBridge implements SalesToOmsInterface
      *
      * @return array<string>
      */
-    public function getManualEvents($idOrderItem)
+    public function getManualEvents($idOrderItem): array
     {
         return $this->omsFacade->getManualEvents($idOrderItem);
     }
@@ -66,7 +68,7 @@ class SalesToOmsBridge implements SalesToOmsInterface
      *
      * @return array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem>
      */
-    public function getItemsWithFlag(SpySalesOrder $order, $flag)
+    public function getItemsWithFlag(SpySalesOrder $order, $flag): array
     {
         return $this->omsFacade->getItemsWithFlag($order, $flag);
     }
@@ -76,7 +78,7 @@ class SalesToOmsBridge implements SalesToOmsInterface
      *
      * @return array<array<string>>
      */
-    public function getManualEventsByIdSalesOrder($idSalesOrder)
+    public function getManualEventsByIdSalesOrder($idSalesOrder): array
     {
         return $this->omsFacade->getManualEventsByIdSalesOrder($idSalesOrder);
     }
@@ -86,7 +88,7 @@ class SalesToOmsBridge implements SalesToOmsInterface
      *
      * @return array
      */
-    public function getDistinctManualEventsByIdSalesOrder($idSalesOrder)
+    public function getDistinctManualEventsByIdSalesOrder($idSalesOrder): array
     {
         return $this->omsFacade->getDistinctManualEventsByIdSalesOrder($idSalesOrder);
     }
@@ -106,7 +108,7 @@ class SalesToOmsBridge implements SalesToOmsInterface
      *
      * @return bool
      */
-    public function isOrderFlaggedExcludeFromCustomer($idOrder)
+    public function isOrderFlaggedExcludeFromCustomer($idOrder): bool
     {
         return $this->omsFacade->isOrderFlaggedExcludeFromCustomer($idOrder);
     }
@@ -118,7 +120,7 @@ class SalesToOmsBridge implements SalesToOmsInterface
      *
      * @return array|null
      */
-    public function triggerEventForOrderItems($eventId, array $orderItemIds, array $data = [])
+    public function triggerEventForOrderItems($eventId, array $orderItemIds, array $data = []): ?array
     {
         return $this->omsFacade->triggerEventForOrderItems($eventId, $orderItemIds, $data);
     }

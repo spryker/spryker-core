@@ -143,12 +143,12 @@ class ProductReviewTable extends AbstractTable
     protected function generateItem(SpyProductReview $productReviewEntity)
     {
         return [
-            ProductReviewTableConstants::COL_ID_PRODUCT_REVIEW => $productReviewEntity->getIdProductReview(),
+            ProductReviewTableConstants::COL_ID_PRODUCT_REVIEW => $this->formatInt($productReviewEntity->getIdProductReview()),
             ProductReviewTableConstants::COL_CREATED => $this->getCreatedAt($productReviewEntity),
             ProductReviewTableConstants::COL_CUSTOMER_NAME => $this->getCustomerName($productReviewEntity),
             ProductReviewTableConstants::COL_NICK_NAME => $productReviewEntity->getNickname(),
             ProductReviewTableConstants::COL_PRODUCT_NAME => $this->getProductName($productReviewEntity),
-            ProductReviewTableConstants::COL_RATING => $productReviewEntity->getRating(),
+            ProductReviewTableConstants::COL_RATING => $this->formatInt($productReviewEntity->getRating()),
             ProductReviewTableConstants::COL_STATUS => $this->getStatusLabel($productReviewEntity->getStatus()),
             ProductReviewTableConstants::COL_ACTIONS => $this->createActionButtons($productReviewEntity),
             ProductReviewTableConstants::COL_SHOW_DETAILS => $this->createShowDetailsButton(),

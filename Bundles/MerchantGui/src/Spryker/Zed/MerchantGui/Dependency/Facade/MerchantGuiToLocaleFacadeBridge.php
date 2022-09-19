@@ -25,7 +25,7 @@ class MerchantGuiToLocaleFacadeBridge implements MerchantGuiToLocaleFacadeInterf
     /**
      * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
-    public function getLocaleCollection()
+    public function getLocaleCollection(): array
     {
         return $this->localeFacade->getLocaleCollection();
     }

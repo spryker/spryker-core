@@ -31,6 +31,7 @@ class ProductLabelAggregateFormType extends AbstractType
 
         $resolver->setDefaults([
             'data_class' => ProductLabelAggregateFormTransfer::class,
+            ProductLabelFormType::OPTION_LOCALE => null,
         ]);
     }
 
@@ -43,22 +44,24 @@ class ProductLabelAggregateFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this
-            ->addProductLabelSubForm($builder)
+            ->addProductLabelSubForm($builder, $options)
             ->addRelatedProductSubForm($builder);
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
-    protected function addProductLabelSubForm(FormBuilderInterface $builder)
+    protected function addProductLabelSubForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add(
             ProductLabelAggregateFormTransfer::PRODUCT_LABEL,
             ProductLabelFormType::class,
             [
                 'label' => false,
+                'locale' => $options[ProductLabelFormType::OPTION_LOCALE],
             ],
         );
 

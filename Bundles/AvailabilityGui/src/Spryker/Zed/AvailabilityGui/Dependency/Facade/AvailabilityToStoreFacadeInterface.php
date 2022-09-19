@@ -14,31 +14,31 @@ interface AvailabilityToStoreFacadeInterface
     /**
      * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
-    public function getAllStores();
+    public function getAllStores(): array;
 
     /**
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getCurrentStore();
+    public function getCurrentStore(): StoreTransfer;
 
     /**
      * @param int $idStore
      *
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getStoreById($idStore);
+    public function getStoreById($idStore): StoreTransfer;
 
     /**
      * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getStoreByName($storeName);
+    public function getStoreByName($storeName): StoreTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
-    public function getStoresWithSharedPersistence(StoreTransfer $storeTransfer);
+    public function getStoresWithSharedPersistence(StoreTransfer $storeTransfer): array;
 }

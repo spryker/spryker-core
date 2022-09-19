@@ -16,5 +16,5 @@ interface CustomerUserConnectorGuiToCustomerUserConnectorInterface
      *
      * @return bool
      */
-    public function updateCustomerUserConnection(CustomerUserConnectionUpdateTransfer $customerUserConnectionUpdateTransfer);
+    public function updateCustomerUserConnection(CustomerUserConnectionUpdateTransfer $customerUserConnectionUpdateTransfer): bool;
 }

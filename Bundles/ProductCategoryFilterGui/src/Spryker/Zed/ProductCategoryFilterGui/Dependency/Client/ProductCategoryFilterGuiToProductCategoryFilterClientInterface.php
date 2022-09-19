@@ -15,5 +15,5 @@ interface ProductCategoryFilterGuiToProductCategoryFilterClientInterface
      *
      * @return array
      */
-    public function updateFacetsByCategory(array $facets, array $productCategoryFilters);
+    public function updateFacetsByCategory(array $facets, array $productCategoryFilters): array;
 }

@@ -23,7 +23,7 @@
         <td class="no-bottom-border">{{ productBundle.sku }}</td>
         <td class="no-bottom-border"><strong>{{ productBundle.name }}</strong></td>
         <td class="no-bottom-border">{{ (productBundle.sumPrice - productBundle.sumDiscountAmountFullAggregation) | money(true, currencyIsoCode) }}</td>
-        <td class="no-bottom-border">{{ productBundle.quantity }}</td>
+        <td class="no-bottom-border">{{ productBundle.quantity | executeFilterIfExists('formatInt', app.locale) }}</td>
         <td class="no-bottom-border">{{ productBundle.sumPriceToPayAggregation | money(true, currencyIsoCode) }}</td>
         <td class="no-bottom-border">{{ (mappedReturnItems['_' ~ productBundle.bundleItemIdentifier] | first).reason ?? '--' }}</td>
     </tr>
@@ -36,7 +36,7 @@
             <td class="no-top-border {{ noBottomBorderClass }}"></td>
             <td class="no-top-border {{ noBottomBorderClass }}">{{ returnItem.orderItem.name }}</td>
             <td class="no-top-border {{ noBottomBorderClass }}"></td>
-            <td class="no-top-border {{ noBottomBorderClass }}">{{ returnItem.orderItem.quantity }}</td>
+            <td class="no-top-border {{ noBottomBorderClass }}">{{ returnItem.orderItem.quantity | executeFilterIfExists('formatInt', app.locale) }}</td>
             <td class="no-top-border {{ noBottomBorderClass }}"></td>
             <td class="no-top-border {{ noBottomBorderClass }}"></td>
         </tr>

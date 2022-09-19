@@ -14,7 +14,7 @@
         {% endif %}
         <tr>
             <td>{{ 'Maximum Quantity:' | trans }}</td>
-            <td>{{ discountPromotion.quantity }}</td>
+            <td>{{ discountPromotion.quantity | executeFilterIfExists('formatInt', app.locale) }}</td>
         </tr>
     </table>
 {% endif %}

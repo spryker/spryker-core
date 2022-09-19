@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\Discount\Dependency\Facade;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\StoreWithCurrencyTransfer;
+
 interface DiscountToCurrencyInterface
 {
     /**
@@ -14,7 +17,7 @@ interface DiscountToCurrencyInterface
      *
      * @return \Generated\Shared\Transfer\StoreWithCurrencyTransfer
      */
-    public function getCurrentStoreWithCurrencies();
+    public function getCurrentStoreWithCurrencies(): StoreWithCurrencyTransfer;
 
     /**
      * @param int $idCurrency
@@ -23,10 +26,10 @@ interface DiscountToCurrencyInterface
      *
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function getByIdCurrency($idCurrency);
+    public function getByIdCurrency($idCurrency): CurrencyTransfer;
 
     /**
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function getCurrent();
+    public function getCurrent(): CurrencyTransfer;
 }

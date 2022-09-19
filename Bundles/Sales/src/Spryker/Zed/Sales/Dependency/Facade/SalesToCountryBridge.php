@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Sales\Dependency\Facade;
 
+use Generated\Shared\Transfer\CountryCollectionTransfer;
 use Generated\Shared\Transfer\CountryTransfer;
 
 class SalesToCountryBridge implements SalesToCountryInterface
@@ -39,7 +40,7 @@ class SalesToCountryBridge implements SalesToCountryInterface
      *
      * @return \Generated\Shared\Transfer\CountryCollectionTransfer
      */
-    public function getAvailableCountries()
+    public function getAvailableCountries(): CountryCollectionTransfer
     {
         return $this->countryFacade->getAvailableCountries();
     }

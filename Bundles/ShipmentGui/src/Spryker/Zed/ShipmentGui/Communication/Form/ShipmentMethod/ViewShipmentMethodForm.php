@@ -56,9 +56,13 @@ class ViewShipmentMethodForm extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
+        parent::configureOptions($resolver);
+
         $resolver->setDefaults([
             'data_class' => ShipmentMethodTransfer::class,
+            ViewShipmentMethodFormDataProvider::OPTION_LOCALE => null,
         ]);
+
         $resolver->setRequired([
             ViewShipmentMethodFormDataProvider::OPTION_TAX_SET_CHOICES,
             ViewShipmentMethodFormDataProvider::OPTION_STORE_RELATION_DISABLED,
@@ -116,6 +120,9 @@ class ViewShipmentMethodForm extends AbstractType
                 static::OPTION_AMOUNT_PER_STORE => true,
                 'required' => false,
                 'disabled' => $options[ViewShipmentMethodFormDataProvider::OPTION_PRICES_DISABLED],
+                'entry_options' => [
+                    ViewShipmentMethodFormDataProvider::OPTION_LOCALE => $options[ViewShipmentMethodFormDataProvider::OPTION_STORE_RELATION_DISABLED],
+                ],
             ],
         );
 

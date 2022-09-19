@@ -9,6 +9,9 @@ namespace Spryker\Zed\Gui\Communication\Table;
 
 use DateTime;
 use Generated\Shared\Transfer\DataTablesColumnTransfer;
+use Generated\Shared\Transfer\NumberFormatFilterTransfer;
+use Generated\Shared\Transfer\NumberFormatFloatRequestTransfer;
+use Generated\Shared\Transfer\NumberFormatIntRequestTransfer;
 use Laminas\Filter\FilterChain;
 use Laminas\Filter\StringToLower;
 use Laminas\Filter\Word\CamelCaseToDash;
@@ -20,6 +23,7 @@ use Propel\Runtime\Formatter\OnDemandFormatter;
 use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Propel;
 use ReflectionClass;
+use Spryker\Service\UtilNumber\UtilNumberServiceInterface;
 use Spryker\Service\UtilSanitize\UtilSanitizeService;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Shared\Kernel\Container\GlobalContainer;
@@ -107,6 +111,20 @@ abstract class AbstractTable
      * @var string
      */
     public const SERVICE_FORM_FACTORY = 'form.factory';
+
+    /**
+     * @uses \Spryker\Zed\UtilNumber\Communication\Plugin\Application\NumberFormatterApplicationPlugin::SERVICE_UTIL_NUMBER
+     *
+     * @var string
+     */
+    public const SERVICE_UTIL_NUMBER = 'SERVICE_UTIL_NUMBER';
+
+    /**
+     * @uses \Spryker\Zed\Locale\Communication\Plugin\Application\LocaleApplicationPlugin::SERVICE_LOCALE
+     *
+     * @var string
+     */
+    public const SERVICE_LOCALE = 'locale';
 
     /**
      * Defines delete form name suffix allowing to avoid non-unique attributes (e.g. form name or id) for delete forms on one page.
@@ -1336,16 +1354,21 @@ abstract class AbstractTable
      * @param string $formClassName
      * @param string|null $formName
      * @param array $formOptions
+     * @param array<string, mixed> $data
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    protected function createForm(string $formClassName, ?string $formName = null, array $formOptions = []): FormInterface
-    {
+    protected function createForm(
+        string $formClassName,
+        ?string $formName = null,
+        array $formOptions = [],
+        array $data = []
+    ): FormInterface {
         if (!$formName) {
-            return $this->getFormFactory()->create($formClassName, [], $formOptions);
+            return $this->getFormFactory()->create($formClassName, $data, $formOptions);
         }
 
-        return $this->getFormFactory()->createNamed($formName, $formClassName, [], $formOptions);
+        return $this->getFormFactory()->createNamed($formName, $formClassName, $data, $formOptions);
     }
 
     /**
@@ -1573,5 +1596,103 @@ abstract class AbstractTable
 
             $this->addQueryCondition($query, $searchColumns, $column);
         }
+    }
+
+    /**
+     * @return \Spryker\Service\UtilNumber\UtilNumberServiceInterface|null
+     */
+    protected function getUtilNumberService(): ?UtilNumberServiceInterface
+    {
+        $container = $this->getApplicationContainer();
+        if (!$container->has(static::SERVICE_UTIL_NUMBER)) {
+            return null;
+        }
+
+        return $this->getApplicationContainer()->get(static::SERVICE_UTIL_NUMBER);
+    }
+
+    /**
+     * @return string|null
+     */
+    protected function getCurrentLocaleName(): ?string
+    {
+        $container = $this->getApplicationContainer();
+        if (!$container->has(static::SERVICE_LOCALE)) {
+            return null;
+        }
+
+        return $container->get(static::SERVICE_LOCALE);
+    }
+
+    /**
+     * @param int $value
+     *
+     * @return string
+     */
+    protected function formatInt(int $value): string
+    {
+        $utilNumberService = $this->getUtilNumberService();
+        if (!$utilNumberService) {
+            return (string)$value;
+        }
+
+        $currentLocaleName = $this->getCurrentLocaleName();
+        if (!$currentLocaleName) {
+            return (string)$value;
+        }
+
+        $numberFormatIntRequestTransfer = (new NumberFormatIntRequestTransfer())
+            ->setNumber($value)
+            ->setNumberFormatFilter(
+                (new NumberFormatFilterTransfer())->setLocale($currentLocaleName),
+            );
+
+        return $utilNumberService->formatInt($numberFormatIntRequestTransfer);
+    }
+
+    /**
+     * @param float $value
+     *
+     * @return string
+     */
+    protected function formatFloat(float $value): string
+    {
+        $utilNumberService = $this->getUtilNumberService();
+        if (!$utilNumberService) {
+            return (string)$value;
+        }
+
+        $currentLocaleName = $this->getCurrentLocaleName();
+        if (!$currentLocaleName) {
+            return (string)$value;
+        }
+
+        $numberFormatFloatRequestTransfer = (new NumberFormatFloatRequestTransfer())
+            ->setNumber($value)
+            ->setNumberFormatFilter(
+                (new NumberFormatFilterTransfer())->setLocale($currentLocaleName),
+            );
+
+        return $utilNumberService->formatFloat($numberFormatFloatRequestTransfer);
+    }
+
+    /**
+     * @param string $formClassName
+     * @param string $fieldName
+     * @param array<string, mixed> $options
+     * @param array<string, mixed> $data
+     *
+     * @return string
+     */
+    protected function generateFormField(string $formClassName, string $fieldName, array $options = [], array $data = []): string
+    {
+        $formView = $this->createForm($formClassName, null, $options, $data)->createView();
+        if (!$formView->offsetExists($fieldName)) {
+            return '';
+        }
+
+        $options['field'] = $formView->offsetGet($fieldName);
+
+        return $this->twig->render('form-field.twig', $options);
     }
 }

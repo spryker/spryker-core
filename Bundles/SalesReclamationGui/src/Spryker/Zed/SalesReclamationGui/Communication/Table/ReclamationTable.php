@@ -126,7 +126,9 @@ class ReclamationTable extends AbstractTable
         $results = [];
         foreach ($queryResults as $item) {
             $results[] = [
-                SpySalesReclamationTableMap::COL_ID_SALES_RECLAMATION => $item[SpySalesReclamationTableMap::COL_ID_SALES_RECLAMATION],
+                SpySalesReclamationTableMap::COL_ID_SALES_RECLAMATION => $this->formatInt(
+                    $item[SpySalesReclamationTableMap::COL_ID_SALES_RECLAMATION],
+                ),
                 SpySalesReclamationTableMap::COL_CREATED_AT => $this->dateTimeService->formatDateTime(
                     $item[SpySalesReclamationTableMap::COL_CREATED_AT],
                 ),

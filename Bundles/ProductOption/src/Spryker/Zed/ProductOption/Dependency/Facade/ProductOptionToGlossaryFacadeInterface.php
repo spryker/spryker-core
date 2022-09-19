@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductOption\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\TranslationTransfer;
 
 interface ProductOptionToGlossaryFacadeInterface
 {
@@ -20,7 +21,7 @@ interface ProductOptionToGlossaryFacadeInterface
      *
      * @return string
      */
-    public function translate($keyName, array $data = [], ?LocaleTransfer $localeTransfer = null);
+    public function translate($keyName, array $data = [], ?LocaleTransfer $localeTransfer = null): string;
 
     /**
      * @param string $keyName
@@ -28,7 +29,7 @@ interface ProductOptionToGlossaryFacadeInterface
      *
      * @return bool
      */
-    public function hasTranslation($keyName, ?LocaleTransfer $localeTransfer = null);
+    public function hasTranslation($keyName, ?LocaleTransfer $localeTransfer = null): bool;
 
     /**
      * @param string $keyName
@@ -42,7 +43,7 @@ interface ProductOptionToGlossaryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function createAndTouchTranslation($keyName, LocaleTransfer $localeTransfer, $value, $isActive = true);
+    public function createAndTouchTranslation($keyName, LocaleTransfer $localeTransfer, $value, $isActive = true): TranslationTransfer;
 
     /**
      * @param string $keyName
@@ -54,21 +55,21 @@ interface ProductOptionToGlossaryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function updateAndTouchTranslation($keyName, LocaleTransfer $localeTransfer, $value, $isActive = true);
+    public function updateAndTouchTranslation($keyName, LocaleTransfer $localeTransfer, $value, $isActive = true): TranslationTransfer;
 
     /**
      * @param string $keyName
      *
      * @return bool
      */
-    public function hasKey($keyName);
+    public function hasKey($keyName): bool;
 
     /**
      * @param string $keyName
      *
      * @return int
      */
-    public function createKey($keyName);
+    public function createKey($keyName): int;
 
     /**
      * @param string $keyName
@@ -78,12 +79,12 @@ interface ProductOptionToGlossaryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function getTranslation($keyName, LocaleTransfer $localeTransfer);
+    public function getTranslation($keyName, LocaleTransfer $localeTransfer): TranslationTransfer;
 
     /**
      * @param string $keyName
      *
      * @return bool
      */
-    public function deleteKey($keyName);
+    public function deleteKey($keyName): bool;
 }

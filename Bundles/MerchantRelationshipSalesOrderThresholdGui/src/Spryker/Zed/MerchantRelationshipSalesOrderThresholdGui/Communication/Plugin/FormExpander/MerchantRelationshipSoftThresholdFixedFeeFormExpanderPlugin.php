@@ -9,11 +9,11 @@ namespace Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\P
 
 use Generated\Shared\Transfer\SalesOrderThresholdTypeTransfer;
 use Generated\Shared\Transfer\SalesOrderThresholdValueTransfer;
+use Spryker\Zed\Gui\Communication\Form\Type\FormattedMoneyType;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\MerchantRelationshipSalesOrderThresholdGuiConfig;
 use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGuiExtension\Dependency\Plugin\SalesOrderThresholdFormExpanderPluginInterface;
 use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGuiExtension\Dependency\Plugin\SalesOrderThresholdFormFieldDependenciesPluginInterface;
-use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Range;
 
@@ -128,10 +128,11 @@ class MerchantRelationshipSoftThresholdFixedFeeFormExpanderPlugin extends Abstra
      */
     protected function addSoftFixedFeeField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_SOFT_FIXED_FEE, MoneyType::class, [
+        $builder->add(static::FIELD_SOFT_FIXED_FEE, FormattedMoneyType::class, [
             'label' => 'Enter fixed fee',
             'currency' => $options[MerchantRelationshipSalesOrderThresholdGuiConfig::OPTION_CURRENCY_CODE],
             'divisor' => 100,
+            'locale' => $options[MerchantRelationshipSalesOrderThresholdGuiConfig::OPTION_LOCALE],
             'constraints' => [
                 new Range(['min' => 0]),
             ],

@@ -14,6 +14,7 @@ use Spryker\Zed\PriceProductVolumeGui\Communication\Form\DataProvider\PriceVolum
 use Spryker\Zed\PriceProductVolumeGui\Communication\Form\FormHandler\PriceVolumeCollectionFormHandler;
 use Spryker\Zed\PriceProductVolumeGui\Communication\Form\PriceVolumeCollectionFormType;
 use Spryker\Zed\PriceProductVolumeGui\Dependency\Facade\PriceProductVolumeGuiToCurrencyFacadeInterface;
+use Spryker\Zed\PriceProductVolumeGui\Dependency\Facade\PriceProductVolumeGuiToLocaleFacadeInterface;
 use Spryker\Zed\PriceProductVolumeGui\Dependency\Facade\PriceProductVolumeGuiToPriceProductFacadeInterface;
 use Spryker\Zed\PriceProductVolumeGui\Dependency\Facade\PriceProductVolumeGuiToStoreFacadeInterface;
 use Spryker\Zed\PriceProductVolumeGui\Dependency\Service\PriceProductVolumeGuiToUtilEncodingServiceInterface;
@@ -45,6 +46,7 @@ class PriceProductVolumeGuiCommunicationFactory extends AbstractCommunicationFac
             $this->getPriceProductFacade(),
             $this->getCurrencyFacade(),
             $this->getStoreFacade(),
+            $this->getLocaleFacade(),
             $this->getUtilEncodingService(),
             $this->getConfig(),
         );
@@ -94,6 +96,14 @@ class PriceProductVolumeGuiCommunicationFactory extends AbstractCommunicationFac
     public function getStoreFacade(): PriceProductVolumeGuiToStoreFacadeInterface
     {
         return $this->getProvidedDependency(PriceProductVolumeGuiDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductVolumeGui\Dependency\Facade\PriceProductVolumeGuiToLocaleFacadeInterface
+     */
+    public function getLocaleFacade(): PriceProductVolumeGuiToLocaleFacadeInterface
+    {
+        return $this->getProvidedDependency(PriceProductVolumeGuiDependencyProvider::FACADE_LOCALE);
     }
 
     /**

@@ -140,7 +140,7 @@ class CmsBlockTable extends AbstractTable
 
         foreach ($queryResults as $item) {
             $results[] = [
-                static::COL_ID_CMS_BLOCK => $item[SpyCmsBlockTableMap::COL_ID_CMS_BLOCK],
+                static::COL_ID_CMS_BLOCK => $this->formatInt($item[SpyCmsBlockTableMap::COL_ID_CMS_BLOCK]),
                 static::COL_NAME => $item[SpyCmsBlockTableMap::COL_NAME],
                 static::COL_TEMPLATE_NAME => $item[static::COL_TEMPLATE_NAME],
                 static::COL_IS_ACTIVE => $this->generateStatusLabels($item),

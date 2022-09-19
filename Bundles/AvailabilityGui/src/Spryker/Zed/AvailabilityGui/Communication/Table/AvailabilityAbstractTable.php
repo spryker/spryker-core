@@ -178,15 +178,20 @@ class AvailabilityAbstractTable extends AbstractTable
 
         foreach ($productAbstractEntities as $productAbstractEntity) {
             $haveBundledProducts = $this->haveBundledProducts($productAbstractEntity);
-
             $isNeverOutOfStock = $this->isNeverOutOfStock($productAbstractEntity);
+            $stockQuantity = $this->formatFloat(
+                $this->getStockQuantity($productAbstractEntity)->trim()->toFloat(),
+            );
+            $reservationQuantity = $haveBundledProducts ? 'N/A' : $this->formatFloat(
+                $this->calculateReservation($productAbstractEntity)->trim()->toFloat(),
+            );
 
             $result[] = [
                 SpyProductAbstractTableMap::COL_SKU => $this->getProductEditPageLink($productAbstractEntity->getSku(), $productAbstractEntity->getIdProductAbstract()),
                 AvailabilityQueryContainer::PRODUCT_NAME => $productAbstractEntity->getVirtualColumn(AvailabilityHelperInterface::PRODUCT_NAME),
                 SpyAvailabilityAbstractTableMap::COL_QUANTITY => $this->getAvailabilityLabel($productAbstractEntity, $isNeverOutOfStock),
-                AvailabilityHelperInterface::STOCK_QUANTITY => $this->getStockQuantity($productAbstractEntity)->trim(),
-                AvailabilityHelperInterface::RESERVATION_QUANTITY => ($haveBundledProducts) ? 'N/A' : $this->calculateReservation($productAbstractEntity)->trim(),
+                AvailabilityHelperInterface::STOCK_QUANTITY => $stockQuantity,
+                AvailabilityHelperInterface::RESERVATION_QUANTITY => $reservationQuantity,
                 static::IS_BUNDLE_PRODUCT => $this->generateLabel($haveBundledProducts ? 'Yes' : 'No', $haveBundledProducts ? 'label-primary' : ''),
                 AvailabilityHelperInterface::CONCRETE_NEVER_OUT_OF_STOCK_SET => $this->generateLabel($isNeverOutOfStock ? 'Yes' : 'No', $isNeverOutOfStock ? 'label-primary' : ''),
                 static::TABLE_COL_ACTION => $this->createViewButton($productAbstractEntity),

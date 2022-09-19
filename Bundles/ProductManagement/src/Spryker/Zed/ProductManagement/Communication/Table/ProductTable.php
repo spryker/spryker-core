@@ -286,11 +286,11 @@ class ProductTable extends AbstractProductTable
     protected function generateItem(SpyProductAbstract $productAbstractEntity, array $productAbstractLocalizedAttributeNames): array
     {
         $item = [
-            static::COL_ID_PRODUCT_ABSTRACT => $productAbstractEntity->getIdProductAbstract(),
+            static::COL_ID_PRODUCT_ABSTRACT => $this->formatInt($productAbstractEntity->getIdProductAbstract()),
             static::COL_SKU => $productAbstractEntity->getSku(),
             static::COL_NAME => $this->resolveProductName($productAbstractEntity, $productAbstractLocalizedAttributeNames),
             static::COL_TAX_SET => $productAbstractEntity->getVirtualColumn(static::COL_TAX_SET),
-            static::COL_VARIANT_COUNT => $productAbstractEntity->getSpyProducts()->count(),
+            static::COL_VARIANT_COUNT => $this->formatInt($productAbstractEntity->getSpyProducts()->count()),
             static::COL_STATUS => $this->getAbstractProductStatusLabel($productAbstractEntity),
             static::COL_PRODUCT_TYPES => $this->getTypeName($productAbstractEntity),
             static::COL_STORE_RELATION => $this->getStoreNames($productAbstractEntity->getIdProductAbstract()),

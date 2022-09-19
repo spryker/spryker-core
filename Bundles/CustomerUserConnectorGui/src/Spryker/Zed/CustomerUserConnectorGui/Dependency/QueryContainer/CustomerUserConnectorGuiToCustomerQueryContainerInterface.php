@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CustomerUserConnectorGui\Dependency\QueryContainer;
 
+use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
+
 interface CustomerUserConnectorGuiToCustomerQueryContainerInterface
 {
     /**
@@ -14,10 +16,10 @@ interface CustomerUserConnectorGuiToCustomerQueryContainerInterface
      *
      * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
      */
-    public function queryCustomerById($id);
+    public function queryCustomerById($id): SpyCustomerQuery;
 
     /**
      * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
      */
-    public function queryCustomers();
+    public function queryCustomers(): SpyCustomerQuery;
 }

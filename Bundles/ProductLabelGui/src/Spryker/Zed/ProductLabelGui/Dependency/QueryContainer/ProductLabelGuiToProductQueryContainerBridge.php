@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductLabelGui\Dependency\QueryContainer;
 
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
+
 class ProductLabelGuiToProductQueryContainerBridge implements ProductLabelGuiToProductQueryContainerInterface
 {
     /**
@@ -25,7 +27,7 @@ class ProductLabelGuiToProductQueryContainerBridge implements ProductLabelGuiToP
     /**
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
-    public function queryProductAbstract()
+    public function queryProductAbstract(): SpyProductAbstractQuery
     {
         return $this
             ->productQueryContainer

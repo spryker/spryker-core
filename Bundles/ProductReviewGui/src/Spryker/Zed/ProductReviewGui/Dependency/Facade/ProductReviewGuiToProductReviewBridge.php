@@ -29,7 +29,7 @@ class ProductReviewGuiToProductReviewBridge implements ProductReviewGuiToProduct
      *
      * @return \Generated\Shared\Transfer\ProductReviewTransfer|null
      */
-    public function findProductReview(ProductReviewTransfer $productReviewTransfer)
+    public function findProductReview(ProductReviewTransfer $productReviewTransfer): ?ProductReviewTransfer
     {
         return $this->productReviewFacade->findProductReview($productReviewTransfer);
     }
@@ -39,7 +39,7 @@ class ProductReviewGuiToProductReviewBridge implements ProductReviewGuiToProduct
      *
      * @return \Generated\Shared\Transfer\ProductReviewTransfer
      */
-    public function updateProductReviewStatus(ProductReviewTransfer $productReviewTransfer)
+    public function updateProductReviewStatus(ProductReviewTransfer $productReviewTransfer): ProductReviewTransfer
     {
         return $this->productReviewFacade->updateProductReviewStatus($productReviewTransfer);
     }
@@ -49,7 +49,7 @@ class ProductReviewGuiToProductReviewBridge implements ProductReviewGuiToProduct
      *
      * @return void
      */
-    public function deleteProductReview(ProductReviewTransfer $productReviewTransfer)
+    public function deleteProductReview(ProductReviewTransfer $productReviewTransfer): void
     {
         $this->productReviewFacade->deleteProductReview($productReviewTransfer);
     }

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\FileManagerGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+
 class FileManagerGuiToLocaleFacadeBridge implements FileManagerGuiToLocaleFacadeInterface
 {
     /**
@@ -25,7 +27,7 @@ class FileManagerGuiToLocaleFacadeBridge implements FileManagerGuiToLocaleFacade
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getCurrentLocale()
+    public function getCurrentLocale(): LocaleTransfer
     {
         return $this->localeFacade->getCurrentLocale();
     }
@@ -33,7 +35,7 @@ class FileManagerGuiToLocaleFacadeBridge implements FileManagerGuiToLocaleFacade
     /**
      * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
-    public function getLocaleCollection()
+    public function getLocaleCollection(): array
     {
         return $this->localeFacade->getLocaleCollection();
     }

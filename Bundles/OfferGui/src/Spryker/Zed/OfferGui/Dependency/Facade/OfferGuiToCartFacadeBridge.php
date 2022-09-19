@@ -30,7 +30,7 @@ class OfferGuiToCartFacadeBridge implements OfferGuiToCartFacadeInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function add(CartChangeTransfer $cartChangeTransfer)
+    public function add(CartChangeTransfer $cartChangeTransfer): QuoteTransfer
     {
         return $this->cartFacade->add($cartChangeTransfer);
     }
@@ -40,7 +40,7 @@ class OfferGuiToCartFacadeBridge implements OfferGuiToCartFacadeInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function remove(CartChangeTransfer $cartChangeTransfer)
+    public function remove(CartChangeTransfer $cartChangeTransfer): QuoteTransfer
     {
         return $this->cartFacade->remove($cartChangeTransfer);
     }
@@ -50,7 +50,7 @@ class OfferGuiToCartFacadeBridge implements OfferGuiToCartFacadeInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function reloadItems(QuoteTransfer $quoteTransfer)
+    public function reloadItems(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         return $this->cartFacade->reloadItems($quoteTransfer);
     }

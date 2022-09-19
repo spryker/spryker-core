@@ -7,12 +7,13 @@
 
 namespace Spryker\Zed\ProductSetGui\Communication\Form\Images;
 
+use Spryker\Zed\Gui\Communication\Form\Type\FormattedNumberType;
 use Spryker\Zed\Gui\Communication\Form\Type\ImageType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\LessThanOrEqual;
@@ -88,9 +89,14 @@ class ProductImageFormType extends AbstractType
     protected const OPTION_IMAGE_WIDTH = 'image_width';
 
     /**
+     * @var string
+     */
+    protected const OPTION_LOCALE = 'locale';
+
+    /**
      * @return string
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'product_image_collection';
     }
@@ -100,7 +106,7 @@ class ProductImageFormType extends AbstractType
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->getBlockPrefix();
     }
@@ -111,7 +117,7 @@ class ProductImageFormType extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this
             ->addProductImageIdHiddenField($builder)
@@ -120,7 +126,21 @@ class ProductImageFormType extends AbstractType
             ->addImagePreviewField($builder)
             ->addImageSmallField($builder)
             ->addImageBigField($builder)
-            ->addSortOrderField($builder);
+            ->addSortOrderField($builder, $options);
+    }
+
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        parent::configureOptions($resolver);
+
+        $resolver->setDefaults([
+            static::OPTION_LOCALE => null,
+        ]);
     }
 
     /**
@@ -223,12 +243,14 @@ class ProductImageFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
-    protected function addSortOrderField(FormBuilderInterface $builder)
+    protected function addSortOrderField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_SORT_ORDER, NumberType::class, [
+        $builder->add(static::FIELD_SORT_ORDER, FormattedNumberType::class, [
+            'locale' => $options[static::OPTION_LOCALE],
             'constraints' => [
                 new NotBlank(),
                 new LessThanOrEqual([

@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\ProductOption\Dependency\Client;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
+
 class ProductOptionToCurrencyClientBridge implements ProductOptionToCurrencyClientInterface
 {
     /**
@@ -25,7 +27,7 @@ class ProductOptionToCurrencyClientBridge implements ProductOptionToCurrencyClie
     /**
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function getCurrent()
+    public function getCurrent(): CurrencyTransfer
     {
         return $this->currencyClient->getCurrent();
     }

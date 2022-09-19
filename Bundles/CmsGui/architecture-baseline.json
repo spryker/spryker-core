@@ -36,29 +36,8 @@
     },
     {
         "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsBridge.php",
-        "description": "Bridges: Type should be defined for param `idPage` in method `Spryker\\Zed\\CmsGui\\Dependency\\Facade\\CmsGuiToCmsBridge::hasPagePlaceholderMapping()`.",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsBridge.php",
-        "description": "Bridges: Type should be defined for param `placeholder` in method `Spryker\\Zed\\CmsGui\\Dependency\\Facade\\CmsGuiToCmsBridge::hasPagePlaceholderMapping()`.",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsBridge.php",
         "description": "Bridges: Method `createPage()` must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsBridge.php",
-        "description": "Bridges: Type should be defined for param `idCmsPage` in method `Spryker\\Zed\\CmsGui\\Dependency\\Facade\\CmsGuiToCmsBridge::findPageGlossaryAttributes()`.",
-        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -78,13 +57,6 @@
     },
     {
         "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsBridge.php",
-        "description": "Bridges: Type should be defined for param `idCmsPage` in method `Spryker\\Zed\\CmsGui\\Dependency\\Facade\\CmsGuiToCmsBridge::findCmsPageById()`.",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsBridge.php",
         "description": "Bridges: Method `findCmsPageById()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
@@ -99,64 +71,8 @@
     },
     {
         "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsBridge.php",
-        "description": "Bridges: Type should be defined for param `idCmsPage` in method `Spryker\\Zed\\CmsGui\\Dependency\\Facade\\CmsGuiToCmsBridge::activatePage()`.",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsBridge.php",
-        "description": "Bridges: Type should be defined for param `idCmsPage` in method `Spryker\\Zed\\CmsGui\\Dependency\\Facade\\CmsGuiToCmsBridge::deactivatePage()`.",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsBridge.php",
         "description": "Bridges: Method `getPageUrlPrefix()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsBridge.php",
-        "description": "Bridges: Type should be defined for param `idCmsPage` in method `Spryker\\Zed\\CmsGui\\Dependency\\Facade\\CmsGuiToCmsBridge::publishWithVersion()`.",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsBridge.php",
-        "description": "Bridges: Type should be defined for param `versionName` in method `Spryker\\Zed\\CmsGui\\Dependency\\Facade\\CmsGuiToCmsBridge::publishWithVersion()`.",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsBridge.php",
-        "description": "Bridges: Type should be defined for param `idCmsPage` in method `Spryker\\Zed\\CmsGui\\Dependency\\Facade\\CmsGuiToCmsBridge::rollback()`.",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsBridge.php",
-        "description": "Bridges: Type should be defined for param `version` in method `Spryker\\Zed\\CmsGui\\Dependency\\Facade\\CmsGuiToCmsBridge::rollback()`.",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsBridge.php",
-        "description": "Bridges: Type should be defined for param `idCmsPage` in method `Spryker\\Zed\\CmsGui\\Dependency\\Facade\\CmsGuiToCmsBridge::revert()`.",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsBridge.php",
-        "description": "Bridges: Type should be defined for param `idCmsPage` in method `Spryker\\Zed\\CmsGui\\Dependency\\Facade\\CmsGuiToCmsBridge::findLatestCmsVersionByIdCmsPage()`.",
-        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -169,13 +85,6 @@
     },
     {
         "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsBridge.php",
-        "description": "Bridges: Type should be defined for param `idCmsPage` in method `Spryker\\Zed\\CmsGui\\Dependency\\Facade\\CmsGuiToCmsBridge::findAllCmsVersionByIdCmsPage()`.",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsBridge.php",
         "description": "Bridges: Method `findAllCmsVersionByIdCmsPage()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
@@ -183,29 +92,8 @@
     },
     {
         "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsBridge.php",
-        "description": "Bridges: Type should be defined for param `idCmsPage` in method `Spryker\\Zed\\CmsGui\\Dependency\\Facade\\CmsGuiToCmsBridge::findCmsVersionByIdCmsPageAndVersion()`.",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsBridge.php",
-        "description": "Bridges: Type should be defined for param `version` in method `Spryker\\Zed\\CmsGui\\Dependency\\Facade\\CmsGuiToCmsBridge::findCmsVersionByIdCmsPageAndVersion()`.",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsBridge.php",
         "description": "Bridges: Method `findCmsVersionByIdCmsPageAndVersion()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsBridge.php",
-        "description": "Bridges: Type should be defined for param `cmsTemplateFolderPath` in method `Spryker\\Zed\\CmsGui\\Dependency\\Facade\\CmsGuiToCmsBridge::syncTemplate()`.",
-        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -238,134 +126,8 @@
         "priority": "2"
     },
     {
-        "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsGlossaryFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `hasKey()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsGlossaryFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `getKeyIdentifier()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
         "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `hasPagePlaceholderMapping()`. Got `$idPage` but expected to be `int $idPage`. Got `$placeholder` but expected to be `string $placeholder`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `createPage()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `findPageGlossaryAttributes()`. Got `$idCmsPage` but expected to be `int $idCmsPage`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `saveCmsGlossary()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `findCmsPageById()`. Got `$idCmsPage` but expected to be `int $idCmsPage`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `updatePage()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `activatePage()`. Got `$idCmsPage` but expected to be `int $idCmsPage`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `deactivatePage()`. Got `$idCmsPage` but expected to be `int $idCmsPage`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `getPageUrlPrefix()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `buildPageUrl()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `publishWithVersion()`. Got `$idCmsPage` but expected to be `int $idCmsPage`. Got `$versionName` but expected to be `?string $versionName`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `rollback()`. Got `$idCmsPage` but expected to be `int $idCmsPage`. Got `$version` but expected to be `int $version`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `revert()`. Got `$idCmsPage` but expected to be `int $idCmsPage`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `findLatestCmsVersionByIdCmsPage()`. Got `$idCmsPage` but expected to be `int $idCmsPage`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `findAllCmsVersionByIdCmsPage()`. Got `$idCmsPage` but expected to be `int $idCmsPage`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `findCmsVersionByIdCmsPageAndVersion()`. Got `$idCmsPage` but expected to be `int $idCmsPage`. Got `$version` but expected to be `int $version`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToCmsInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `syncTemplate()`. Got `$cmsTemplateFolderPath` but expected to be `string $cmsTemplateFolderPath`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -385,23 +147,58 @@
         "priority": "2"
     },
     {
-        "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToLocaleInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `getLocaleCollection()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToLocaleInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `getCurrentLocale()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
         "fileName": "src/Spryker/Zed/CmsGui/Dependency/Facade/CmsGuiToUrlBridge.php",
         "description": "Bridges: Method `findUrlCaseInsensitive()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsGui/Dependency/Service/CmsGuiToUtilEncodingBridge.php",
+        "description": "Bridges: Type should be defined for param `value` in method `Spryker\\Zed\\CmsGui\\Dependency\\Service\\CmsGuiToUtilEncodingBridge::encodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsGui/Dependency/Service/CmsGuiToUtilEncodingBridge.php",
+        "description": "Bridges: Type should be defined for param `options` in method `Spryker\\Zed\\CmsGui\\Dependency\\Service\\CmsGuiToUtilEncodingBridge::encodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsGui/Dependency/Service/CmsGuiToUtilEncodingBridge.php",
+        "description": "Bridges: Type should be defined for param `depth` in method `Spryker\\Zed\\CmsGui\\Dependency\\Service\\CmsGuiToUtilEncodingBridge::encodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsGui/Dependency/Service/CmsGuiToUtilEncodingBridge.php",
+        "description": "Bridges: Type should be defined for param `jsonValue` in method `Spryker\\Zed\\CmsGui\\Dependency\\Service\\CmsGuiToUtilEncodingBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsGui/Dependency/Service/CmsGuiToUtilEncodingBridge.php",
+        "description": "Bridges: Type should be defined for param `assoc` in method `Spryker\\Zed\\CmsGui\\Dependency\\Service\\CmsGuiToUtilEncodingBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsGui/Dependency/Service/CmsGuiToUtilEncodingBridge.php",
+        "description": "Bridges: Type should be defined for param `depth` in method `Spryker\\Zed\\CmsGui\\Dependency\\Service\\CmsGuiToUtilEncodingBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/CmsGui/Dependency/Service/CmsGuiToUtilEncodingBridge.php",
+        "description": "Bridges: Type should be defined for param `options` in method `Spryker\\Zed\\CmsGui\\Dependency\\Service\\CmsGuiToUtilEncodingBridge::decodeJson()`.",
+        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -520,69 +317,6 @@
     {
         "fileName": "src/Spryker/Zed/CmsGui/Dependency/QueryContainer/CmsGuiToCmsQueryContainerInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `queryCmsPageLocalizedAttributes()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/CmsGui/Dependency/Service/CmsGuiToUtilEncodingBridge.php",
-        "description": "Bridges: Type should be defined for param `value` in method `Spryker\\Zed\\CmsGui\\Dependency\\Service\\CmsGuiToUtilEncodingBridge::encodeJson()`.",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/CmsGui/Dependency/Service/CmsGuiToUtilEncodingBridge.php",
-        "description": "Bridges: Type should be defined for param `options` in method `Spryker\\Zed\\CmsGui\\Dependency\\Service\\CmsGuiToUtilEncodingBridge::encodeJson()`.",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/CmsGui/Dependency/Service/CmsGuiToUtilEncodingBridge.php",
-        "description": "Bridges: Type should be defined for param `depth` in method `Spryker\\Zed\\CmsGui\\Dependency\\Service\\CmsGuiToUtilEncodingBridge::encodeJson()`.",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/CmsGui/Dependency/Service/CmsGuiToUtilEncodingBridge.php",
-        "description": "Bridges: Type should be defined for param `jsonValue` in method `Spryker\\Zed\\CmsGui\\Dependency\\Service\\CmsGuiToUtilEncodingBridge::decodeJson()`.",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/CmsGui/Dependency/Service/CmsGuiToUtilEncodingBridge.php",
-        "description": "Bridges: Type should be defined for param `assoc` in method `Spryker\\Zed\\CmsGui\\Dependency\\Service\\CmsGuiToUtilEncodingBridge::decodeJson()`.",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/CmsGui/Dependency/Service/CmsGuiToUtilEncodingBridge.php",
-        "description": "Bridges: Type should be defined for param `depth` in method `Spryker\\Zed\\CmsGui\\Dependency\\Service\\CmsGuiToUtilEncodingBridge::decodeJson()`.",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/CmsGui/Dependency/Service/CmsGuiToUtilEncodingBridge.php",
-        "description": "Bridges: Type should be defined for param `options` in method `Spryker\\Zed\\CmsGui\\Dependency\\Service\\CmsGuiToUtilEncodingBridge::decodeJson()`.",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/CmsGui/Dependency/Service/CmsGuiToUtilEncodingInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `encodeJson()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/CmsGui/Dependency/Service/CmsGuiToUtilEncodingInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `decodeJson()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"

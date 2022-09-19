@@ -30,7 +30,7 @@ class SalesToCustomerBridge implements SalesToCustomerInterface
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    public function findByReference($customerReference)
+    public function findByReference($customerReference): ?CustomerTransfer
     {
         return $this->customerFacade->findByReference($customerReference);
     }
@@ -50,7 +50,7 @@ class SalesToCustomerBridge implements SalesToCustomerInterface
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    public function findCustomerById(CustomerTransfer $customerTransfer)
+    public function findCustomerById(CustomerTransfer $customerTransfer): ?CustomerTransfer
     {
         return $this->customerFacade->findCustomerById($customerTransfer);
     }

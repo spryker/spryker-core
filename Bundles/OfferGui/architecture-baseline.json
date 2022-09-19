@@ -22,7 +22,7 @@
     },
     {
         "fileName": "src/Spryker/Zed/OfferGui/Dependency/Client/OfferGuiToSessionClientInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `set()`. Got `$name` but expected to be `string $name`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "description": "Bridges: The bridge interface has incorrect method signature for `set()`. Got `$name` but expected to be `string $name`. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -49,37 +49,9 @@
         "priority": "2"
     },
     {
-        "fileName": "src/Spryker/Zed/OfferGui/Dependency/Facade/OfferGuiToCartFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `add()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/OfferGui/Dependency/Facade/OfferGuiToCartFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `remove()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/OfferGui/Dependency/Facade/OfferGuiToCartFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `reloadItems()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
         "fileName": "src/Spryker/Zed/OfferGui/Dependency/Facade/OfferGuiToCurrencyFacadeBridge.php",
         "description": "Bridges: Method `getAllStoresWithCurrencies()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/OfferGui/Dependency/Facade/OfferGuiToCurrencyFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `getAllStoresWithCurrencies()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -140,34 +112,6 @@
         "priority": "2"
     },
     {
-        "fileName": "src/Spryker/Zed/OfferGui/Dependency/Facade/OfferGuiToMessengerFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `getStoredMessages()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/OfferGui/Dependency/Facade/OfferGuiToMessengerFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `addSuccessMessage()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/OfferGui/Dependency/Facade/OfferGuiToMessengerFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `addErrorMessage()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/OfferGui/Dependency/Facade/OfferGuiToMessengerFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `addInfoMessage()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
         "fileName": "src/Spryker/Zed/OfferGui/Dependency/Facade/OfferGuiToMoneyFacadeBridge.php",
         "description": "Bridges: Type should be defined for param `amount` in method `Spryker\\Zed\\OfferGui\\Dependency\\Facade\\OfferGuiToMoneyFacadeBridge::fromInteger()`.",
         "rule": "BridgeMethodsRule",
@@ -217,20 +161,6 @@
         "priority": "2"
     },
     {
-        "fileName": "src/Spryker/Zed/OfferGui/Dependency/Facade/OfferGuiToOmsFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `getManualEventsByIdSalesOrder()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/OfferGui/Dependency/Facade/OfferGuiToOmsFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `getDistinctManualEventsByIdSalesOrder()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
         "fileName": "src/Spryker/Zed/OfferGui/Dependency/Facade/OfferGuiToPriceFacadeBridge.php",
         "description": "Bridges: Method `getDefaultPriceMode()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
@@ -248,13 +178,6 @@
         "fileName": "src/Spryker/Zed/OfferGui/Dependency/Facade/OfferGuiToStoreFacadeBridge.php",
         "description": "Bridges: Method `getCountries()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/OfferGui/Dependency/Facade/OfferGuiToStoreFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `getCountries()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -308,20 +231,6 @@
         "priority": "2"
     },
     {
-        "fileName": "src/Spryker/Zed/OfferGui/Dependency/Service/OfferGuiToUtilEncodingServiceInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `encodeJson()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/OfferGui/Dependency/Service/OfferGuiToUtilEncodingServiceInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `decodeJson()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
         "fileName": "src/Spryker/Zed/OfferGui/Dependency/Service/OfferGuiToUtilSanitizeServiceBridge.php",
         "description": "Bridges: Type should be defined for param `text` in method `Spryker\\Zed\\OfferGui\\Dependency\\Service\\OfferGuiToUtilSanitizeServiceBridge::escapeHtml()`.",
         "rule": "BridgeMethodsRule",
@@ -343,9 +252,9 @@
         "priority": "2"
     },
     {
-        "fileName": "src/Spryker/Zed/OfferGui/Dependency/Service/OfferGuiToUtilSanitizeServiceInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `escapeHtml()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
+        "fileName": "src/Spryker/Zed/OfferGui/Dependency/Facade/OfferGuiToLocaleFacadeBridge.php",
+        "description": "Bridges: Method `getCurrentLocaleName()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     }

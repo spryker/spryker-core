@@ -14,6 +14,7 @@ use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\GlobalThresholdType;
 use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Type\ThresholdGroup\GlobalHardThresholdType;
 use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Type\ThresholdGroup\GlobalSoftThresholdType;
 use Spryker\Zed\SalesOrderThresholdGui\Dependency\Facade\SalesOrderThresholdGuiToCurrencyFacadeInterface;
+use Spryker\Zed\SalesOrderThresholdGui\Dependency\Facade\SalesOrderThresholdGuiToLocaleFacadeInterface;
 use Spryker\Zed\SalesOrderThresholdGui\Dependency\Facade\SalesOrderThresholdGuiToSalesOrderThresholdFacadeInterface;
 use Spryker\Zed\SalesOrderThresholdGui\SalesOrderThresholdGuiConfig;
 
@@ -40,6 +41,11 @@ class GlobalThresholdDataProvider
     protected $currencyFacade;
 
     /**
+     * @var \Spryker\Zed\SalesOrderThresholdGui\Dependency\Facade\SalesOrderThresholdGuiToLocaleFacadeInterface
+     */
+    protected $localeFacade;
+
+    /**
      * @var \Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\Resolver\GlobalThresholdDataProviderResolverInterface
      */
     protected $globalThresholdDataProviderResolver;
@@ -52,17 +58,20 @@ class GlobalThresholdDataProvider
     /**
      * @param \Spryker\Zed\SalesOrderThresholdGui\Dependency\Facade\SalesOrderThresholdGuiToSalesOrderThresholdFacadeInterface $salesOrderThresholdFacade
      * @param \Spryker\Zed\SalesOrderThresholdGui\Dependency\Facade\SalesOrderThresholdGuiToCurrencyFacadeInterface $currencyFacade
+     * @param \Spryker\Zed\SalesOrderThresholdGui\Dependency\Facade\SalesOrderThresholdGuiToLocaleFacadeInterface $localeFacade
      * @param \Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\Resolver\GlobalThresholdDataProviderResolverInterface $globalThresholdDataProviderResolver
      * @param array<\Spryker\Zed\SalesOrderThresholdGuiExtension\Dependency\Plugin\SalesOrderThresholdFormExpanderPluginInterface> $formExpanderPlugins
      */
     public function __construct(
         SalesOrderThresholdGuiToSalesOrderThresholdFacadeInterface $salesOrderThresholdFacade,
         SalesOrderThresholdGuiToCurrencyFacadeInterface $currencyFacade,
+        SalesOrderThresholdGuiToLocaleFacadeInterface $localeFacade,
         GlobalThresholdDataProviderResolverInterface $globalThresholdDataProviderResolver,
         array $formExpanderPlugins
     ) {
         $this->salesOrderThresholdFacade = $salesOrderThresholdFacade;
         $this->currencyFacade = $currencyFacade;
+        $this->localeFacade = $localeFacade;
         $this->globalThresholdDataProviderResolver = $globalThresholdDataProviderResolver;
         $this->formExpanderPlugins = $formExpanderPlugins;
     }
@@ -81,6 +90,7 @@ class GlobalThresholdDataProvider
             GlobalThresholdType::OPTION_HARD_MAXIMUM_TYPES_ARRAY => $this->getHardMaxTypesList(),
             GlobalThresholdType::OPTION_HARD_TYPES_ARRAY => $this->getHardTypesList(),
             GlobalThresholdType::OPTION_SOFT_TYPES_ARRAY => $this->getSoftTypesList(),
+            GlobalThresholdType::OPTION_LOCALE => $this->localeFacade->getCurrentLocaleName(),
         ];
     }
 

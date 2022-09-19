@@ -530,7 +530,7 @@ class CmsPageTable extends AbstractTable
         $actions = implode(' ', $this->buildLinks($item, $urlPrefix));
 
         return [
-            CmsPageTableConstants::COL_ID_CMS_PAGE => $item[CmsPageTableConstants::COL_ID_CMS_PAGE],
+            CmsPageTableConstants::COL_ID_CMS_PAGE => $this->formatInt($item[CmsPageTableConstants::COL_ID_CMS_PAGE]),
             CmsPageTableConstants::COL_NAME => $this->buildCmsPageName($item),
             CmsPageTableConstants::COL_URL => $this->buildUrlList($item),
             CmsPageTableConstants::COL_TEMPLATE => $item[CmsPageTableConstants::COL_TEMPLATE],

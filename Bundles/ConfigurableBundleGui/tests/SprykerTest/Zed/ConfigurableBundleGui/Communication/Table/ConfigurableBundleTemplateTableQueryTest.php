@@ -98,8 +98,8 @@ class ConfigurableBundleTemplateTableQueryTest extends Unit
         );
         $resultConfigurableBundleTemplateIds = array_column($result, $configurableBundleTemplateIdColName);
         $this->assertNotEmpty($result);
-        $this->assertContains($configurableBundleTemplate1->getIdConfigurableBundleTemplate(), $resultConfigurableBundleTemplateIds);
-        $this->assertContains($configurableBundleTemplate2->getIdConfigurableBundleTemplate(), $resultConfigurableBundleTemplateIds);
+        $this->assertContains((string)$configurableBundleTemplate1->getIdConfigurableBundleTemplate(), $resultConfigurableBundleTemplateIds);
+        $this->assertContains((string)$configurableBundleTemplate2->getIdConfigurableBundleTemplate(), $resultConfigurableBundleTemplateIds);
     }
 
     /**

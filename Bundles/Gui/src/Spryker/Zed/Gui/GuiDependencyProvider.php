@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Gui;
 
+use Spryker\Zed\Gui\Dependency\Service\GuiToUtilNumberServiceBridge;
 use Spryker\Zed\Gui\Dependency\Service\GuiToUtilSanitizeXssServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -20,6 +21,11 @@ class GuiDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const SERVICE_UTIL_SANITIZE_XSS = 'SERVICE_UTIL_SANITIZE_XSS';
+
+    /**
+     * @var string
+     */
+    public const SERVICE_UTIL_NUMBER = 'SERVICE_UTIL_NUMBER';
 
     /**
      * @var string
@@ -39,8 +45,10 @@ class GuiDependencyProvider extends AbstractBundleDependencyProvider
     public function provideCommunicationLayerDependencies(Container $container)
     {
         $container = parent::provideCommunicationLayerDependencies($container);
+
         $container = $this->addTwigFilter($container);
         $container = $this->addUtilSanitizeXssService($container);
+        $container = $this->addUtilNumberService($container);
 
         return $container;
     }
@@ -77,6 +85,22 @@ class GuiDependencyProvider extends AbstractBundleDependencyProvider
         $container->set(static::SERVICE_UTIL_SANITIZE_XSS, function (Container $container) {
             return new GuiToUtilSanitizeXssServiceBridge(
                 $container->getLocator()->utilSanitizeXss()->service(),
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilNumberService(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_NUMBER, function (Container $container) {
+            return new GuiToUtilNumberServiceBridge(
+                $container->getLocator()->utilNumber()->service(),
             );
         });
 

@@ -28,6 +28,11 @@ class ImageSetCollectionForm extends AbstractType
     /**
      * @var string
      */
+    public const OPTION_LOCALE = 'locale';
+
+    /**
+     * @var string
+     */
     public const OPTION_IS_RENDERED = 'is_rendered';
 
     /**
@@ -41,7 +46,7 @@ class ImageSetCollectionForm extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addImageLocalizedForms($builder, $options);
     }
@@ -51,14 +56,18 @@ class ImageSetCollectionForm extends AbstractType
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
+        parent::configureOptions($resolver);
+
         $resolver->setRequired([
             static::OPTION_LOCALES,
         ]);
+
         $resolver->setDefaults([
             static::OPTION_IS_RENDERED => true,
             static::OPTION_REQUIRED => false,
+            static::OPTION_LOCALE => null,
         ]);
     }
 
@@ -69,7 +78,7 @@ class ImageSetCollectionForm extends AbstractType
      *
      * @return void
      */
-    public function buildView(FormView $view, FormInterface $form, array $options)
+    public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         if ($options[static::OPTION_IS_RENDERED]) {
             $view->setRendered();
@@ -88,7 +97,7 @@ class ImageSetCollectionForm extends AbstractType
     protected function addImageLocalizedForms(FormBuilderInterface $builder, array $options)
     {
         foreach ($options['locales'] as $localeName) {
-            $this->addImageSetForm($builder, $localeName);
+            $this->addImageSetForm($builder, $localeName, $options);
         }
 
         return $this;
@@ -97,13 +106,17 @@ class ImageSetCollectionForm extends AbstractType
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param string $name
+     * @param array<string, mixed> $options
      *
      * @return void
      */
-    protected function addImageSetForm(FormBuilderInterface $builder, string $name): void
+    protected function addImageSetForm(FormBuilderInterface $builder, string $name, array $options): void
     {
         $builder->add($name, CollectionType::class, [
                 'entry_type' => ImageSetForm::class,
+                'entry_options' => [
+                    'locale' => $options[static::OPTION_LOCALE],
+                ],
                 'label' => false,
                 'allow_add' => true,
                 'allow_delete' => true,

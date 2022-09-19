@@ -9,6 +9,7 @@ namespace Spryker\Zed\PriceProductScheduleGui\Communication\Form\Provider;
 
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToCurrencyFacadeInterface;
+use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToLocaleFacadeInterface;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToPriceProductFacadeInterface;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToStoreFacadeInterface;
 
@@ -40,6 +41,11 @@ class PriceProductScheduleFormDataProvider
     public const OPTION_IS_PRICE_TYPE_DISABLED = 'option_is_price_type_disabled';
 
     /**
+     * @var string
+     */
+    public const OPTION_LOCALE = 'locale';
+
+    /**
      * @var \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToPriceProductFacadeInterface
      */
     protected $priceProductFacade;
@@ -55,18 +61,26 @@ class PriceProductScheduleFormDataProvider
     protected $currencyFacade;
 
     /**
+     * @var \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToLocaleFacadeInterface
+     */
+    protected $localeFacade;
+
+    /**
      * @param \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToPriceProductFacadeInterface $priceProductFacade
      * @param \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToCurrencyFacadeInterface $currencyFacade
+     * @param \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToLocaleFacadeInterface $localeFacade
      */
     public function __construct(
         PriceProductScheduleGuiToPriceProductFacadeInterface $priceProductFacade,
         PriceProductScheduleGuiToStoreFacadeInterface $storeFacade,
-        PriceProductScheduleGuiToCurrencyFacadeInterface $currencyFacade
+        PriceProductScheduleGuiToCurrencyFacadeInterface $currencyFacade,
+        PriceProductScheduleGuiToLocaleFacadeInterface $localeFacade
     ) {
         $this->priceProductFacade = $priceProductFacade;
         $this->storeFacade = $storeFacade;
         $this->currencyFacade = $currencyFacade;
+        $this->localeFacade = $localeFacade;
     }
 
     /**
@@ -155,6 +169,7 @@ class PriceProductScheduleFormDataProvider
             static::OPTION_CURRENCY_CHOICES => $this->getCurrencyValues($idStore),
             static::OPTION_PRICE_TYPE_CHOICES => $this->getPriceTypeValues(),
             static::OPTION_IS_PRICE_TYPE_DISABLED => $this->isPriceTypeDisabled($idPriceProductSchedule),
+            static::OPTION_LOCALE => $this->localeFacade->getCurrentLocaleName(),
         ];
     }
 

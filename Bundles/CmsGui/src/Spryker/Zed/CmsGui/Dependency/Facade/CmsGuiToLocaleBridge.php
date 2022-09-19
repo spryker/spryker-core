@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CmsGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+
 class CmsGuiToLocaleBridge implements CmsGuiToLocaleInterface
 {
     /**
@@ -25,7 +27,7 @@ class CmsGuiToLocaleBridge implements CmsGuiToLocaleInterface
     /**
      * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
-    public function getLocaleCollection()
+    public function getLocaleCollection(): array
     {
         return $this->localeFacade->getLocaleCollection();
     }
@@ -33,7 +35,7 @@ class CmsGuiToLocaleBridge implements CmsGuiToLocaleInterface
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getCurrentLocale()
+    public function getCurrentLocale(): LocaleTransfer
     {
         return $this->localeFacade->getCurrentLocale();
     }

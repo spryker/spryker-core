@@ -11,6 +11,7 @@ use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Tax\Dependency\Facade\TaxToCountryBridge;
+use Spryker\Zed\Tax\Dependency\Facade\TaxToLocaleFacadeBridge;
 
 /**
  * @method \Spryker\Zed\Tax\TaxConfig getConfig()
@@ -33,15 +34,20 @@ class TaxDependencyProvider extends AbstractBundleDependencyProvider
     public const SERVICE_DATE_FORMATTER = 'date formatter';
 
     /**
+     * @var string
+     */
+    public const FACADE_LOCALE = 'FACADE_LOCALE';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container->set(static::STORE_CONFIG, function (Container $container) {
-            return Store::getInstance();
-        });
+        $container = parent::provideBusinessLayerDependencies($container);
+
+        $container = $this->addStoreConfig($container);
 
         return $container;
     }
@@ -53,12 +59,68 @@ class TaxDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
+        $container = parent::provideCommunicationLayerDependencies($container);
+
+        $container = $this->addDateFormatterService($container);
+        $container = $this->addCountryFacade($container);
+        $container = $this->addLocaleFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreConfig(Container $container): Container
+    {
+        $container->set(static::STORE_CONFIG, function () {
+            return Store::getInstance();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addDateFormatterService(Container $container): Container
+    {
+        $container->set(static::SERVICE_DATE_FORMATTER, function (Container $container) {
+            return $container->getLocator()->utilDateTime()->service();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCountryFacade(Container $container): Container
+    {
         $container->set(static::FACADE_COUNTRY, function (Container $container) {
             return new TaxToCountryBridge($container->getLocator()->country()->facade());
         });
 
-        $container->set(static::SERVICE_DATE_FORMATTER, function (Container $container) {
-            return $container->getLocator()->utilDateTime()->service();
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addLocaleFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
+            return new TaxToLocaleFacadeBridge(
+                $container->getLocator()->locale()->facade(),
+            );
         });
 
         return $container;

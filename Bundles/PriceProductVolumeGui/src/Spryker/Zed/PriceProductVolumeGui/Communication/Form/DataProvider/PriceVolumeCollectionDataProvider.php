@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\PriceProductVolumeItemTransfer;
 use Spryker\Zed\PriceProductVolumeGui\Communication\Exception\PriceProductNotFoundException;
 use Spryker\Zed\PriceProductVolumeGui\Communication\Form\PriceVolumeCollectionFormType;
 use Spryker\Zed\PriceProductVolumeGui\Dependency\Facade\PriceProductVolumeGuiToCurrencyFacadeInterface;
+use Spryker\Zed\PriceProductVolumeGui\Dependency\Facade\PriceProductVolumeGuiToLocaleFacadeInterface;
 use Spryker\Zed\PriceProductVolumeGui\Dependency\Facade\PriceProductVolumeGuiToPriceProductFacadeInterface;
 use Spryker\Zed\PriceProductVolumeGui\Dependency\Facade\PriceProductVolumeGuiToStoreFacadeInterface;
 use Spryker\Zed\PriceProductVolumeGui\Dependency\Service\PriceProductVolumeGuiToUtilEncodingServiceInterface;
@@ -36,6 +37,11 @@ class PriceVolumeCollectionDataProvider
      * @var string
      */
     public const OPTION_FRACTION_DIGITS = 'fraction_digits';
+
+    /**
+     * @var string
+     */
+    public const OPTION_LOCALE = 'locale';
 
     /**
      * @var string
@@ -88,6 +94,11 @@ class PriceVolumeCollectionDataProvider
     protected $storeFacade;
 
     /**
+     * @var \Spryker\Zed\PriceProductVolumeGui\Dependency\Facade\PriceProductVolumeGuiToLocaleFacadeInterface
+     */
+    protected $localeFacade;
+
+    /**
      * @var \Spryker\Zed\PriceProductVolumeGui\Dependency\Service\PriceProductVolumeGuiToUtilEncodingServiceInterface
      */
     protected $utilEncodingService;
@@ -101,6 +112,7 @@ class PriceVolumeCollectionDataProvider
      * @param \Spryker\Zed\PriceProductVolumeGui\Dependency\Facade\PriceProductVolumeGuiToPriceProductFacadeInterface $priceProductFacade
      * @param \Spryker\Zed\PriceProductVolumeGui\Dependency\Facade\PriceProductVolumeGuiToCurrencyFacadeInterface $currencyFacade
      * @param \Spryker\Zed\PriceProductVolumeGui\Dependency\Facade\PriceProductVolumeGuiToStoreFacadeInterface $storeFacade
+     * @param \Spryker\Zed\PriceProductVolumeGui\Dependency\Facade\PriceProductVolumeGuiToLocaleFacadeInterface $localeFacade
      * @param \Spryker\Zed\PriceProductVolumeGui\Dependency\Service\PriceProductVolumeGuiToUtilEncodingServiceInterface $utilEncodingService
      * @param \Spryker\Zed\PriceProductVolumeGui\PriceProductVolumeGuiConfig $config
      */
@@ -108,12 +120,14 @@ class PriceVolumeCollectionDataProvider
         PriceProductVolumeGuiToPriceProductFacadeInterface $priceProductFacade,
         PriceProductVolumeGuiToCurrencyFacadeInterface $currencyFacade,
         PriceProductVolumeGuiToStoreFacadeInterface $storeFacade,
+        PriceProductVolumeGuiToLocaleFacadeInterface $localeFacade,
         PriceProductVolumeGuiToUtilEncodingServiceInterface $utilEncodingService,
         PriceProductVolumeGuiConfig $config
     ) {
         $this->priceProductFacade = $priceProductFacade;
         $this->currencyFacade = $currencyFacade;
         $this->storeFacade = $storeFacade;
+        $this->localeFacade = $localeFacade;
         $this->utilEncodingService = $utilEncodingService;
         $this->config = $config;
     }
@@ -195,6 +209,7 @@ class PriceVolumeCollectionDataProvider
             static::OPTION_CURRENCY_CODE => $currencyCode,
             static::OPTION_DIVISOR => $this->getDivisor($currencyTransfer),
             static::OPTION_FRACTION_DIGITS => $this->getFractionDigits($currencyTransfer),
+            static::OPTION_LOCALE => $this->localeFacade->getCurrentLocaleName(),
         ];
     }
 

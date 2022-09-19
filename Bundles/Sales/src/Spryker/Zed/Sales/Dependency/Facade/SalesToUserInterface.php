@@ -7,10 +7,12 @@
 
 namespace Spryker\Zed\Sales\Dependency\Facade;
 
+use Generated\Shared\Transfer\UserTransfer;
+
 interface SalesToUserInterface
 {
     /**
      * @return \Generated\Shared\Transfer\UserTransfer
      */
-    public function getCurrentUser();
+    public function getCurrentUser(): UserTransfer;
 }

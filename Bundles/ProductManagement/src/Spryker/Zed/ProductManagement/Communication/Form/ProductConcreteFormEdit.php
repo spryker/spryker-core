@@ -94,7 +94,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
             ->addPriceDimensionForm($builder)
             ->addPriceForm($builder, $options)
             ->addStockForm($builder, $options)
-            ->addImageLocalizedForms($builder)
+            ->addImageLocalizedForms($builder, $options)
             ->addAssignBundledProductForm($builder, $options)
             ->addBundledProductsToBeRemoved($builder);
 
@@ -294,6 +294,9 @@ class ProductConcreteFormEdit extends ProductFormAdd
             'allow_add' => true,
             'allow_delete' => true,
             'prototype' => true,
+            'entry_options' => [
+                'locale' => $options[static::OPTION_LOCALE],
+            ],
         ]);
 
         return $this;
@@ -315,6 +318,9 @@ class ProductConcreteFormEdit extends ProductFormAdd
             ->add(static::FORM_PRICE_AND_STOCK, CollectionType::class, [
                 'entry_type' => StockForm::class,
                 'label' => false,
+                'entry_options' => [
+                    'locale' => $options[static::OPTION_LOCALE],
+                ],
             ]);
 
         return $this;

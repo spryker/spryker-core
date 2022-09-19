@@ -30,7 +30,7 @@ class ProductCategoryFilterGuiToProductFacadeBridge implements ProductCategoryFi
      *
      * @return array
      */
-    public function getCombinedAbstractAttributeKeysForProductIds($productIds, ?LocaleTransfer $localeTransfer = null)
+    public function getCombinedAbstractAttributeKeysForProductIds($productIds, ?LocaleTransfer $localeTransfer = null): array
     {
         return $this->productFacade->getCombinedAbstractAttributeKeysForProductIds($productIds, $localeTransfer);
     }

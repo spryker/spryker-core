@@ -7,6 +7,10 @@
 
 namespace Spryker\Zed\CmsBlockGui\Dependency\QueryContainer;
 
+use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery;
+use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockStoreQuery;
+use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplateQuery;
+
 class CmsBlockGuiToCmsBlockQueryContainerBridge implements CmsBlockGuiToCmsBlockQueryContainerInterface
 {
     /**
@@ -27,7 +31,7 @@ class CmsBlockGuiToCmsBlockQueryContainerBridge implements CmsBlockGuiToCmsBlock
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
      */
-    public function queryCmsBlockByName($name)
+    public function queryCmsBlockByName($name): SpyCmsBlockQuery
     {
         return $this->cmsBlockQueryContainer->queryCmsBlockByName($name);
     }
@@ -35,7 +39,7 @@ class CmsBlockGuiToCmsBlockQueryContainerBridge implements CmsBlockGuiToCmsBlock
     /**
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
      */
-    public function queryCmsBlockWithTemplate()
+    public function queryCmsBlockWithTemplate(): SpyCmsBlockQuery
     {
         return $this->cmsBlockQueryContainer->queryCmsBlockWithTemplate();
     }
@@ -43,7 +47,7 @@ class CmsBlockGuiToCmsBlockQueryContainerBridge implements CmsBlockGuiToCmsBlock
     /**
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplateQuery
      */
-    public function queryTemplates()
+    public function queryTemplates(): SpyCmsBlockTemplateQuery
     {
         return $this->cmsBlockQueryContainer->queryTemplates();
     }
@@ -53,7 +57,7 @@ class CmsBlockGuiToCmsBlockQueryContainerBridge implements CmsBlockGuiToCmsBlock
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockStoreQuery
      */
-    public function queryCmsBlockStoreWithStoreByFkCmsBlock($idCmsBlock)
+    public function queryCmsBlockStoreWithStoreByFkCmsBlock($idCmsBlock): SpyCmsBlockStoreQuery
     {
         return $this->cmsBlockQueryContainer->queryCmsBlockStoreWithStoreByFkCmsBlock($idCmsBlock);
     }

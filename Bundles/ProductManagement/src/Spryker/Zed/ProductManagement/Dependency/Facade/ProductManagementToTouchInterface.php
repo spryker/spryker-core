@@ -15,7 +15,7 @@ interface ProductManagementToTouchInterface
      *
      * @return bool
      */
-    public function touchActive($itemType, $idItem);
+    public function touchActive($itemType, $idItem): bool;
 
     /**
      * @param string $itemType
@@ -23,5 +23,5 @@ interface ProductManagementToTouchInterface
      *
      * @return bool
      */
-    public function touchDeleted($itemType, $idItem);
+    public function touchDeleted($itemType, $idItem): bool;
 }

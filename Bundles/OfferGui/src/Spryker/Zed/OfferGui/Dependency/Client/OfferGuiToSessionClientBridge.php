@@ -28,7 +28,7 @@ class OfferGuiToSessionClientBridge implements OfferGuiToSessionClientInterface
      *
      * @return void
      */
-    public function set($name, $value)
+    public function set($name, $value): void
     {
         $this->sessionClient->set($name, $value);
     }

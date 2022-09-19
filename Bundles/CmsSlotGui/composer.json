@@ -6,7 +6,7 @@
     "require": {
         "php": ">=7.4",
         "spryker/cms-slot": "^1.0.0",
-        "spryker/gui": "^3.33.0",
+        "spryker/gui": "^3.45.0",
         "spryker/kernel": "^3.37.0",
         "spryker/symfony": "^3.3.0",
         "spryker/translator": "^1.1.0",

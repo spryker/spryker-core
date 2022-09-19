@@ -45,13 +45,13 @@
             <div class="row">
                 <div class="col-xs-12 col-md-6 col-lg-3">
                     <span><b>{{ 'Number of prices' | trans }}</b></span><br>
-                    <span>{{ priceProductScheduleList.metadata.numberOfPrices }}</span>
+                    <span>{{ priceProductScheduleList.metadata.numberOfPrices | executeFilterIfExists('formatInt', app.locale) }}</span>
                 </div>
             </div>
             <div class="row">
                 <div class="col-xs-12 col-md-6 col-lg-3">
                     <span><b>{{ 'Number of products' | trans }}</b></span><br>
-                    <span>{{ priceProductScheduleList.metadata.numberOfProducts }}</span>
+                    <span>{{ priceProductScheduleList.metadata.numberOfProducts | executeFilterIfExists('formatInt', app.locale) }}</span>
                 </div>
             </div>
         {% endblock %}

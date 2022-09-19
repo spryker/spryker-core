@@ -7,10 +7,12 @@
 
 namespace Spryker\Zed\Tax\Communication\Form;
 
+use Spryker\Zed\Gui\Communication\Form\Type\FormattedNumberType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\GreaterThan;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Range;
@@ -45,16 +47,41 @@ class TaxRateForm extends AbstractType
     public const FIELD_ID_TAX_RATE = 'idTaxRate';
 
     /**
+     * @var string
+     */
+    public const OPTION_COUNTRIES = 'countries';
+
+    /**
+     * @var string
+     */
+    public const OPTION_LOCALE = 'locale';
+
+    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array<string> $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addName($builder)
-            ->addCountry($builder)
-            ->addPercentage($builder);
+            ->addCountry($builder, $options)
+            ->addPercentage($builder, $options);
+    }
+
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        parent::configureOptions($resolver);
+
+        $resolver->setDefaults([
+            static::OPTION_COUNTRIES => [],
+            static::OPTION_LOCALE => null,
+        ]);
     }
 
     /**
@@ -81,16 +108,17 @@ class TaxRateForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
-    protected function addCountry(FormBuilderInterface $builder)
+    protected function addCountry(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_COUNTRY, ChoiceType::class, [
             'expanded' => false,
             'multiple' => false,
             'label' => 'Country',
-            'choices' => array_flip($this->getFactory()->createTaxRateFormDataProvider()->getOptions()[static::FIELD_COUNTRY]),
+            'choices' => $options[static::OPTION_COUNTRIES],
             'constraints' => [
                 new GreaterThan([
                     'value' => 0,
@@ -105,16 +133,18 @@ class TaxRateForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array<string> $options
      *
      * @return $this
      */
-    protected function addPercentage(FormBuilderInterface $builder)
+    protected function addPercentage(FormBuilderInterface $builder, array $options)
     {
         $builder->add(
             static::FIELD_RATE,
-            TextType::class,
+            FormattedNumberType::class,
             [
                 'label' => 'Percentage',
+                'locale' => $options[static::OPTION_LOCALE],
                 'required' => true,
                 'constraints' => [
                     new Range([
@@ -124,9 +154,6 @@ class TaxRateForm extends AbstractType
                 ],
             ],
         );
-
-        $builder->get(static::FIELD_RATE)
-            ->addModelTransformer($this->getFactory()->createPercentageTransformer());
 
         return $this;
     }

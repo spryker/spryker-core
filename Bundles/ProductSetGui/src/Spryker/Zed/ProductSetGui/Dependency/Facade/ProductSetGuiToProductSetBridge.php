@@ -29,7 +29,7 @@ class ProductSetGuiToProductSetBridge implements ProductSetGuiToProductSetInterf
      *
      * @return \Generated\Shared\Transfer\ProductSetTransfer
      */
-    public function createProductSet(ProductSetTransfer $productSetTransfer)
+    public function createProductSet(ProductSetTransfer $productSetTransfer): ProductSetTransfer
     {
         return $this->productSetFacade->createProductSet($productSetTransfer);
     }
@@ -39,7 +39,7 @@ class ProductSetGuiToProductSetBridge implements ProductSetGuiToProductSetInterf
      *
      * @return \Generated\Shared\Transfer\ProductSetTransfer|null
      */
-    public function findProductSet(ProductSetTransfer $productSetTransfer)
+    public function findProductSet(ProductSetTransfer $productSetTransfer): ?ProductSetTransfer
     {
         return $this->productSetFacade->findProductSet($productSetTransfer);
     }
@@ -49,7 +49,7 @@ class ProductSetGuiToProductSetBridge implements ProductSetGuiToProductSetInterf
      *
      * @return \Generated\Shared\Transfer\ProductSetTransfer
      */
-    public function updateProductSet(ProductSetTransfer $productSetTransfer)
+    public function updateProductSet(ProductSetTransfer $productSetTransfer): ProductSetTransfer
     {
         return $this->productSetFacade->updateProductSet($productSetTransfer);
     }
@@ -59,7 +59,7 @@ class ProductSetGuiToProductSetBridge implements ProductSetGuiToProductSetInterf
      *
      * @return void
      */
-    public function deleteProductSet(ProductSetTransfer $productSetTransfer)
+    public function deleteProductSet(ProductSetTransfer $productSetTransfer): void
     {
         $this->productSetFacade->deleteProductSet($productSetTransfer);
     }
@@ -69,7 +69,7 @@ class ProductSetGuiToProductSetBridge implements ProductSetGuiToProductSetInterf
      *
      * @return void
      */
-    public function reorderProductSets(array $productSetTransfers)
+    public function reorderProductSets(array $productSetTransfers): void
     {
         $this->productSetFacade->reorderProductSets($productSetTransfers);
     }

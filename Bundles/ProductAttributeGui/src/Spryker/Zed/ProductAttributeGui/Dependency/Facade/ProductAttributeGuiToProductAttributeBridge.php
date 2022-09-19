@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductAttributeGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\LocalizedProductManagementAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 
 class ProductAttributeGuiToProductAttributeBridge implements ProductAttributeGuiToProductAttributeInterface
@@ -30,7 +31,7 @@ class ProductAttributeGuiToProductAttributeBridge implements ProductAttributeGui
      *
      * @return array
      */
-    public function getProductAbstractAttributes($idProductAbstract)
+    public function getProductAbstractAttributes($idProductAbstract): array
     {
         return $this->productAttributeFacade->getProductAbstractAttributeValues($idProductAbstract);
     }
@@ -40,7 +41,7 @@ class ProductAttributeGuiToProductAttributeBridge implements ProductAttributeGui
      *
      * @return array
      */
-    public function getProductAttributeValues($idProduct)
+    public function getProductAttributeValues($idProduct): array
     {
         return $this->productAttributeFacade->getProductAttributeValues($idProduct);
     }
@@ -50,7 +51,7 @@ class ProductAttributeGuiToProductAttributeBridge implements ProductAttributeGui
      *
      * @return array
      */
-    public function getMetaAttributesForProductAbstract($idProductAbstract)
+    public function getMetaAttributesForProductAbstract($idProductAbstract): array
     {
         return $this->productAttributeFacade->getMetaAttributesForProductAbstract($idProductAbstract);
     }
@@ -60,7 +61,7 @@ class ProductAttributeGuiToProductAttributeBridge implements ProductAttributeGui
      *
      * @return array
      */
-    public function getMetaAttributesForProduct($idProduct)
+    public function getMetaAttributesForProduct($idProduct): array
     {
         return $this->productAttributeFacade->getMetaAttributesForProduct($idProduct);
     }
@@ -71,7 +72,7 @@ class ProductAttributeGuiToProductAttributeBridge implements ProductAttributeGui
      *
      * @return array
      */
-    public function suggestKeys($searchText = '', $limit = 10)
+    public function suggestKeys($searchText = '', $limit = 10): array
     {
         return $this->productAttributeFacade->suggestKeys($searchText, $limit);
     }
@@ -82,7 +83,7 @@ class ProductAttributeGuiToProductAttributeBridge implements ProductAttributeGui
      *
      * @return void
      */
-    public function saveAbstractAttributes($idProductAbstract, array $attributes)
+    public function saveAbstractAttributes($idProductAbstract, array $attributes): void
     {
         $this->productAttributeFacade->saveAbstractAttributes($idProductAbstract, $attributes);
     }
@@ -93,7 +94,7 @@ class ProductAttributeGuiToProductAttributeBridge implements ProductAttributeGui
      *
      * @return void
      */
-    public function saveConcreteAttributes($idProduct, array $attributes)
+    public function saveConcreteAttributes($idProduct, array $attributes): void
     {
         $this->productAttributeFacade->saveConcreteAttributes($idProduct, $attributes);
     }
@@ -103,7 +104,7 @@ class ProductAttributeGuiToProductAttributeBridge implements ProductAttributeGui
      *
      * @return array
      */
-    public function extractKeysFromAttributes(array $attributes)
+    public function extractKeysFromAttributes(array $attributes): array
     {
         return $this->productAttributeFacade->extractKeysFromAttributes($attributes);
     }
@@ -113,7 +114,7 @@ class ProductAttributeGuiToProductAttributeBridge implements ProductAttributeGui
      *
      * @return array
      */
-    public function extractValuesFromAttributes(array $attributes)
+    public function extractValuesFromAttributes(array $attributes): array
     {
         return $this->productAttributeFacade->extractValuesFromAttributes($attributes);
     }
@@ -125,7 +126,7 @@ class ProductAttributeGuiToProductAttributeBridge implements ProductAttributeGui
      *
      * @return int
      */
-    public function getAttributeValueSuggestionsCount($idProductManagementAttribute, $idLocale, $searchText = '')
+    public function getAttributeValueSuggestionsCount($idProductManagementAttribute, $idLocale, $searchText = ''): int
     {
         return $this->productAttributeFacade->getAttributeValueSuggestionsCount($idProductManagementAttribute, $idLocale, $searchText);
     }
@@ -145,7 +146,7 @@ class ProductAttributeGuiToProductAttributeBridge implements ProductAttributeGui
         $searchText = '',
         $offset = 0,
         $limit = 10
-    ) {
+    ): array {
         return $this->productAttributeFacade->getAttributeValueSuggestions(
             $idProductManagementAttribute,
             $idLocale,
@@ -160,7 +161,7 @@ class ProductAttributeGuiToProductAttributeBridge implements ProductAttributeGui
      *
      * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer|null
      */
-    public function getProductManagementAttribute($idProductManagementAttribute)
+    public function getProductManagementAttribute($idProductManagementAttribute): ?ProductManagementAttributeTransfer
     {
         return $this->productAttributeFacade->getProductManagementAttribute($idProductManagementAttribute);
     }
@@ -168,7 +169,7 @@ class ProductAttributeGuiToProductAttributeBridge implements ProductAttributeGui
     /**
      * @return array
      */
-    public function getAttributeAvailableTypes()
+    public function getAttributeAvailableTypes(): array
     {
         return $this->productAttributeFacade->getAttributeAvailableTypes();
     }
@@ -178,7 +179,7 @@ class ProductAttributeGuiToProductAttributeBridge implements ProductAttributeGui
      *
      * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer
      */
-    public function createProductManagementAttribute(ProductManagementAttributeTransfer $productManagementAttributeTransfer)
+    public function createProductManagementAttribute(ProductManagementAttributeTransfer $productManagementAttributeTransfer): ProductManagementAttributeTransfer
     {
         return $this->productAttributeFacade->createProductManagementAttribute($productManagementAttributeTransfer);
     }
@@ -189,7 +190,7 @@ class ProductAttributeGuiToProductAttributeBridge implements ProductAttributeGui
      *
      * @return \Generated\Shared\Transfer\LocalizedProductManagementAttributeKeyTransfer|null
      */
-    public function findAttributeTranslationByKey($attributeKey, LocaleTransfer $localeTransfer)
+    public function findAttributeTranslationByKey($attributeKey, LocaleTransfer $localeTransfer): ?LocalizedProductManagementAttributeKeyTransfer
     {
         return $this->productAttributeFacade->findAttributeTranslationByKey($attributeKey, $localeTransfer);
     }
@@ -201,7 +202,7 @@ class ProductAttributeGuiToProductAttributeBridge implements ProductAttributeGui
      */
     public function translateProductManagementAttribute(
         ProductManagementAttributeTransfer $productManagementAttributeTransfer
-    ) {
+    ): void {
         $this->productAttributeFacade->translateProductManagementAttribute($productManagementAttributeTransfer);
     }
 
@@ -211,7 +212,7 @@ class ProductAttributeGuiToProductAttributeBridge implements ProductAttributeGui
      *
      * @return array
      */
-    public function suggestUnusedAttributeKeys($searchText = '', $limit = 10)
+    public function suggestUnusedAttributeKeys($searchText = '', $limit = 10): array
     {
         return $this->productAttributeFacade->suggestUnusedAttributeKeys($searchText, $limit);
     }
@@ -223,7 +224,7 @@ class ProductAttributeGuiToProductAttributeBridge implements ProductAttributeGui
      */
     public function updateProductManagementAttribute(
         ProductManagementAttributeTransfer $productManagementAttributeTransfer
-    ) {
+    ): ProductManagementAttributeTransfer {
         return $this->productAttributeFacade->updateProductManagementAttribute($productManagementAttributeTransfer);
     }
 }

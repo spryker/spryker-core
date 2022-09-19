@@ -170,8 +170,10 @@ class ProductGroupTable extends AbstractProductTable
     protected function generateItem(SpyProductAbstract $productAbstractEntity)
     {
         return [
-            static::COL_ID_PRODUCT_GROUP => $productAbstractEntity->getVirtualColumn(static::COL_ID_PRODUCT_GROUP),
-            static::COL_ID_PRODUCT_ABSTRACT => $productAbstractEntity->getIdProductAbstract(),
+            static::COL_ID_PRODUCT_GROUP => $this->formatInt(
+                $productAbstractEntity->getVirtualColumn(static::COL_ID_PRODUCT_GROUP),
+            ),
+            static::COL_ID_PRODUCT_ABSTRACT => $this->formatInt($productAbstractEntity->getIdProductAbstract()),
             static::COL_SKU => $productAbstractEntity->getSku(),
             static::COL_NAME => $productAbstractEntity->getVirtualColumn(static::COL_NAME),
             static::COL_STATUS => $this->getAbstractProductStatusLabel($productAbstractEntity),

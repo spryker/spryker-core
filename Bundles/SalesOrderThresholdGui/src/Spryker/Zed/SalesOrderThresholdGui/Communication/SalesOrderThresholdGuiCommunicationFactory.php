@@ -87,6 +87,7 @@ class SalesOrderThresholdGuiCommunicationFactory extends AbstractCommunicationFa
         return new GlobalThresholdDataProvider(
             $this->getSalesOrderThresholdFacade(),
             $this->getCurrencyFacade(),
+            $this->getLocaleFacade(),
             $this->createGlobalSoftThresholdDataProviderResolver(),
             $this->getSalesOrderThresholdFormExpanderPlugins(),
         );

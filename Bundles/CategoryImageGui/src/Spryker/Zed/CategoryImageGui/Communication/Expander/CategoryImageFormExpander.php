@@ -50,6 +50,7 @@ class CategoryImageFormExpander implements CategoryImageFormExpanderInterface
     {
         $builder->add(static::FIELD_IMAGE_SETS, ImageSetCollectionForm::class, [
             ImageSetCollectionForm::OPTION_LOCALES => $this->localeFacade->getAvailableLocales(),
+            ImageSetCollectionForm::OPTION_LOCALE => $this->localeFacade->getCurrentLocaleName(),
         ]);
 
         $builder->get(static::FIELD_IMAGE_SETS)->addModelTransformer(

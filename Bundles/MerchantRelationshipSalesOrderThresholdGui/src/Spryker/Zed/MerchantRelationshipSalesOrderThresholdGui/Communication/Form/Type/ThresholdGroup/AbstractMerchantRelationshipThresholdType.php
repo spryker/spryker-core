@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\Type\ThresholdGroup;
 
+use Spryker\Zed\Gui\Communication\Form\Type\FormattedMoneyType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\LocalizedMessagesType;
 use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\MerchantRelationshipThresholdType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Range;
@@ -45,6 +45,10 @@ abstract class AbstractMerchantRelationshipThresholdType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setRequired(MerchantRelationshipThresholdType::OPTION_CURRENCY_CODE);
+
+        $resolver->setDefaults([
+            MerchantRelationshipThresholdType::OPTION_LOCALE => null,
+        ]);
     }
 
     /**
@@ -73,10 +77,11 @@ abstract class AbstractMerchantRelationshipThresholdType extends AbstractType
      */
     protected function addThresholdValueField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_THRESHOLD, MoneyType::class, [
+        $builder->add(static::FIELD_THRESHOLD, FormattedMoneyType::class, [
             'label' => 'Enter threshold value',
             'currency' => $options[MerchantRelationshipThresholdType::OPTION_CURRENCY_CODE],
             'divisor' => 100,
+            'locale' => $options[MerchantRelationshipThresholdType::OPTION_LOCALE],
             'constraints' => [
                 new Range(['min' => 0]),
                 $this->getFactory()->createThresholdStrategyConstraint(),

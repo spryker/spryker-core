@@ -11,33 +11,45 @@ use Generated\Shared\Transfer\TaxRateTransfer;
 use Spryker\Zed\Tax\Business\TaxFacadeInterface;
 use Spryker\Zed\Tax\Communication\Form\TaxRateForm;
 use Spryker\Zed\Tax\Dependency\Facade\TaxToCountryBridgeInterface;
+use Spryker\Zed\Tax\Dependency\Facade\TaxToLocaleFacadeInterface;
 
 class TaxRateFormDataProvider
 {
     /**
      * @var \Spryker\Zed\Tax\Dependency\Facade\TaxToCountryBridgeInterface
      */
-    protected $countryFacade;
+    protected TaxToCountryBridgeInterface $countryFacade;
 
     /**
      * @var \Spryker\Zed\Tax\Business\TaxFacadeInterface
      */
-    protected $taxFacade;
+    protected TaxFacadeInterface $taxFacade;
 
     /**
-     * @var \Generated\Shared\Transfer\TaxRateTransfer
+     * @var \Spryker\Zed\Tax\Dependency\Facade\TaxToLocaleFacadeInterface
      */
-    protected $taxRateTransfer;
+    protected TaxToLocaleFacadeInterface $localeFacade;
+
+    /**
+     * @var \Generated\Shared\Transfer\TaxRateTransfer|null
+     */
+    protected ?TaxRateTransfer $taxRateTransfer;
 
     /**
      * @param \Spryker\Zed\Tax\Dependency\Facade\TaxToCountryBridgeInterface $countryFacade
      * @param \Spryker\Zed\Tax\Business\TaxFacadeInterface $taxFacade
+     * @param \Spryker\Zed\Tax\Dependency\Facade\TaxToLocaleFacadeInterface $localeFacade
      * @param \Generated\Shared\Transfer\TaxRateTransfer|null $taxRateTransfer
      */
-    public function __construct(TaxToCountryBridgeInterface $countryFacade, TaxFacadeInterface $taxFacade, ?TaxRateTransfer $taxRateTransfer = null)
-    {
+    public function __construct(
+        TaxToCountryBridgeInterface $countryFacade,
+        TaxFacadeInterface $taxFacade,
+        TaxToLocaleFacadeInterface $localeFacade,
+        ?TaxRateTransfer $taxRateTransfer = null
+    ) {
         $this->countryFacade = $countryFacade;
         $this->taxFacade = $taxFacade;
+        $this->localeFacade = $localeFacade;
         $this->taxRateTransfer = $taxRateTransfer;
     }
 
@@ -46,7 +58,7 @@ class TaxRateFormDataProvider
      *
      * @return \Generated\Shared\Transfer\TaxRateTransfer|null
      */
-    public function getData(?int $idTaxRate = null)
+    public function getData(?int $idTaxRate = null): ?TaxRateTransfer
     {
         if (!$idTaxRate) {
             return $this->taxRateTransfer;
@@ -58,10 +70,12 @@ class TaxRateFormDataProvider
     /**
      * @return array<string, mixed>
      */
-    public function getOptions()
+    public function getOptions(): array
     {
         return [
-            TaxRateForm::FIELD_COUNTRY => $this->createCountryList(),
+            TaxRateForm::OPTION_COUNTRIES => array_flip($this->createCountryList()),
+            TaxRateForm::OPTION_LOCALE => $this->localeFacade->getCurrentLocaleName(),
+            'data_class' => TaxRateTransfer::class,
         ];
     }
 

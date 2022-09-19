@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Tax\Dependency\Facade;
 
+use Generated\Shared\Transfer\CountryCollectionTransfer;
+
 class TaxToCountryBridge implements TaxToCountryBridgeInterface
 {
     /**
@@ -27,7 +29,7 @@ class TaxToCountryBridge implements TaxToCountryBridgeInterface
      *
      * @return \Generated\Shared\Transfer\CountryCollectionTransfer
      */
-    public function getAvailableCountries()
+    public function getAvailableCountries(): CountryCollectionTransfer
     {
         return $this->countryFacade->getAvailableCountries();
     }

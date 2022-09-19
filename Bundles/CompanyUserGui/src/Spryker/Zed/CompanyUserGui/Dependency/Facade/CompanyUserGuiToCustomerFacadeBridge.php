@@ -29,7 +29,7 @@ class CompanyUserGuiToCustomerFacadeBridge implements CompanyUserGuiToCustomerFa
      *
      * @return bool
      */
-    public function hasEmail($email)
+    public function hasEmail($email): bool
     {
         return $this->customerFacade->hasEmail($email);
     }
@@ -39,7 +39,7 @@ class CompanyUserGuiToCustomerFacadeBridge implements CompanyUserGuiToCustomerFa
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    public function findCustomerById(CustomerTransfer $customerTransfer)
+    public function findCustomerById(CustomerTransfer $customerTransfer): ?CustomerTransfer
     {
         return $this->customerFacade->findCustomerById($customerTransfer);
     }

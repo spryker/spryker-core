@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 
@@ -53,9 +54,14 @@ class LocalizedProductImageSetFormType extends AbstractType
     public const VALIDATION_GROUP_IMAGE_COLLECTION = 'validation_group_image_collection';
 
     /**
+     * @var string
+     */
+    protected const OPTION_LOCALE = 'locale';
+
+    /**
      * @return string
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'product_image_set';
     }
@@ -65,7 +71,7 @@ class LocalizedProductImageSetFormType extends AbstractType
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->getBlockPrefix();
     }
@@ -76,7 +82,7 @@ class LocalizedProductImageSetFormType extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options = [])
+    public function buildForm(FormBuilderInterface $builder, array $options = []): void
     {
         parent::buildForm($builder, $options);
 
@@ -85,7 +91,21 @@ class LocalizedProductImageSetFormType extends AbstractType
             ->addNameField($builder)
             ->addFkLocaleField($builder)
             ->addFkResourceProductSetField($builder)
-            ->addProductImageCollectionForm($builder);
+            ->addProductImageCollectionForm($builder, $options);
+    }
+
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        parent::configureOptions($resolver);
+
+        $resolver->setDefaults([
+            static::OPTION_LOCALE => null,
+        ]);
     }
 
     /**
@@ -151,14 +171,18 @@ class LocalizedProductImageSetFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
-    protected function addProductImageCollectionForm(FormBuilderInterface $builder)
+    protected function addProductImageCollectionForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             ->add(static::FIELD_PRODUCT_IMAGE_COLLECTION, CollectionType::class, [
                 'entry_type' => ProductImageFormType::class,
+                'entry_options' => [
+                    'locale' => $options[static::OPTION_LOCALE],
+                ],
                 'label' => false,
                 'allow_add' => true,
                 'allow_delete' => true,

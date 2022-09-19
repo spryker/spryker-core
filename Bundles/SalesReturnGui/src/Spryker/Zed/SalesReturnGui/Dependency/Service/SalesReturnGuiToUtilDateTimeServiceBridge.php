@@ -27,7 +27,7 @@ class SalesReturnGuiToUtilDateTimeServiceBridge implements SalesReturnGuiToUtilD
      *
      * @return string
      */
-    public function formatDateTime($date)
+    public function formatDateTime($date): string
     {
         return $this->utilDateTimeService->formatDateTime($date);
     }

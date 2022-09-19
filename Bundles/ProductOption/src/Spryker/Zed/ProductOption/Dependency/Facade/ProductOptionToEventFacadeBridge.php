@@ -30,7 +30,7 @@ class ProductOptionToEventFacadeBridge implements ProductOptionToEventFacadeInte
      *
      * @return void
      */
-    public function trigger($eventName, TransferInterface $transfer)
+    public function trigger($eventName, TransferInterface $transfer): void
     {
         $this->eventFacade->trigger($eventName, $transfer);
     }

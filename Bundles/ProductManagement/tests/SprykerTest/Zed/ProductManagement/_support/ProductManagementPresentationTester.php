@@ -9,7 +9,7 @@ namespace SprykerTest\Zed\ProductManagement;
 
 use Codeception\Actor;
 use Codeception\Scenario;
-use Spryker\Zed\Money\Communication\Plugin\Form\MoneyFormTypePlugin;
+use Spryker\Zed\MoneyGui\Communication\Plugin\Form\MoneyFormTypePlugin;
 use Spryker\Zed\ProductManagement\ProductManagementDependencyProvider;
 use Spryker\Zed\Store\Communication\Plugin\Form\StoreRelationToggleFormTypePlugin;
 

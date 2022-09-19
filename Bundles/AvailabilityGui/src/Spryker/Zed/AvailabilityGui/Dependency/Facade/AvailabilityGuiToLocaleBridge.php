@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\AvailabilityGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+
 class AvailabilityGuiToLocaleBridge implements AvailabilityGuiToLocaleInterface
 {
     /**
@@ -25,8 +27,16 @@ class AvailabilityGuiToLocaleBridge implements AvailabilityGuiToLocaleInterface
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getCurrentLocale()
+    public function getCurrentLocale(): LocaleTransfer
     {
         return $this->localeFacade->getCurrentLocale();
+    }
+
+    /**
+     * @return string
+     */
+    public function getCurrentLocaleName(): string
+    {
+        return $this->localeFacade->getCurrentLocaleName();
     }
 }

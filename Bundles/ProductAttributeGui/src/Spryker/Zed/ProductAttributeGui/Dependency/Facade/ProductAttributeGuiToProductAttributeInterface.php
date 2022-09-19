@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductAttributeGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\LocalizedProductManagementAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 
 interface ProductAttributeGuiToProductAttributeInterface
@@ -17,28 +18,28 @@ interface ProductAttributeGuiToProductAttributeInterface
      *
      * @return array
      */
-    public function getProductAbstractAttributes($idProductAbstract);
+    public function getProductAbstractAttributes($idProductAbstract): array;
 
     /**
      * @param int $idProduct
      *
      * @return array
      */
-    public function getProductAttributeValues($idProduct);
+    public function getProductAttributeValues($idProduct): array;
 
     /**
      * @param int $idProductAbstract
      *
      * @return array
      */
-    public function getMetaAttributesForProductAbstract($idProductAbstract);
+    public function getMetaAttributesForProductAbstract($idProductAbstract): array;
 
     /**
      * @param int $idProduct
      *
      * @return array
      */
-    public function getMetaAttributesForProduct($idProduct);
+    public function getMetaAttributesForProduct($idProduct): array;
 
     /**
      * @param string $searchText
@@ -46,7 +47,7 @@ interface ProductAttributeGuiToProductAttributeInterface
      *
      * @return array
      */
-    public function suggestKeys($searchText = '', $limit = 10);
+    public function suggestKeys($searchText = '', $limit = 10): array;
 
     /**
      * @param int $idProductAbstract
@@ -54,7 +55,7 @@ interface ProductAttributeGuiToProductAttributeInterface
      *
      * @return void
      */
-    public function saveAbstractAttributes($idProductAbstract, array $attributes);
+    public function saveAbstractAttributes($idProductAbstract, array $attributes): void;
 
     /**
      * @param int $idProduct
@@ -62,21 +63,21 @@ interface ProductAttributeGuiToProductAttributeInterface
      *
      * @return void
      */
-    public function saveConcreteAttributes($idProduct, array $attributes);
+    public function saveConcreteAttributes($idProduct, array $attributes): void;
 
     /**
      * @param array $attributes
      *
      * @return array
      */
-    public function extractKeysFromAttributes(array $attributes);
+    public function extractKeysFromAttributes(array $attributes): array;
 
     /**
      * @param array $attributes
      *
      * @return array
      */
-    public function extractValuesFromAttributes(array $attributes);
+    public function extractValuesFromAttributes(array $attributes): array;
 
     /**
      * @param int $idProductManagementAttribute
@@ -85,7 +86,7 @@ interface ProductAttributeGuiToProductAttributeInterface
      *
      * @return int
      */
-    public function getAttributeValueSuggestionsCount($idProductManagementAttribute, $idLocale, $searchText = '');
+    public function getAttributeValueSuggestionsCount($idProductManagementAttribute, $idLocale, $searchText = ''): int;
 
     /**
      * @param int $idProductManagementAttribute
@@ -102,26 +103,28 @@ interface ProductAttributeGuiToProductAttributeInterface
         $searchText = '',
         $offset = 0,
         $limit = 10
-    );
+    ): array;
 
     /**
      * @param int $idProductManagementAttribute
      *
      * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer|null
      */
-    public function getProductManagementAttribute($idProductManagementAttribute);
+    public function getProductManagementAttribute($idProductManagementAttribute): ?ProductManagementAttributeTransfer;
 
     /**
      * @return array
      */
-    public function getAttributeAvailableTypes();
+    public function getAttributeAvailableTypes(): array;
 
     /**
      * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer $productManagementAttributeTransfer
      *
      * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer
      */
-    public function createProductManagementAttribute(ProductManagementAttributeTransfer $productManagementAttributeTransfer);
+    public function createProductManagementAttribute(
+        ProductManagementAttributeTransfer $productManagementAttributeTransfer
+    ): ProductManagementAttributeTransfer;
 
     /**
      * @param string $attributeKey
@@ -129,7 +132,7 @@ interface ProductAttributeGuiToProductAttributeInterface
      *
      * @return \Generated\Shared\Transfer\LocalizedProductManagementAttributeKeyTransfer|null
      */
-    public function findAttributeTranslationByKey($attributeKey, LocaleTransfer $localeTransfer);
+    public function findAttributeTranslationByKey($attributeKey, LocaleTransfer $localeTransfer): ?LocalizedProductManagementAttributeKeyTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer $productManagementAttributeTransfer
@@ -138,7 +141,7 @@ interface ProductAttributeGuiToProductAttributeInterface
      */
     public function translateProductManagementAttribute(
         ProductManagementAttributeTransfer $productManagementAttributeTransfer
-    );
+    ): void;
 
     /**
      * @param string $searchText
@@ -146,7 +149,7 @@ interface ProductAttributeGuiToProductAttributeInterface
      *
      * @return array
      */
-    public function suggestUnusedAttributeKeys($searchText = '', $limit = 10);
+    public function suggestUnusedAttributeKeys($searchText = '', $limit = 10): array;
 
     /**
      * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer $productManagementAttributeTransfer
@@ -155,5 +158,5 @@ interface ProductAttributeGuiToProductAttributeInterface
      */
     public function updateProductManagementAttribute(
         ProductManagementAttributeTransfer $productManagementAttributeTransfer
-    );
+    ): ProductManagementAttributeTransfer;
 }

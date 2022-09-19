@@ -53,7 +53,7 @@
     } %}
 </td>
 <td>
-    x {{ orderItem.quantity }}
+    x {{ orderItem.quantity | executeFilterIfExists('formatInt', app.locale) }}
 
     {% include '@Sales/Detail/boxes/item-measurement-unit.twig' with {
         orderItem: orderItem,

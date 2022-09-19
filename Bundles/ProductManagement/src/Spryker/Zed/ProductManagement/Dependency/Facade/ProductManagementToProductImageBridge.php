@@ -30,7 +30,7 @@ class ProductManagementToProductImageBridge implements ProductManagementToProduc
      *
      * @return \Generated\Shared\Transfer\ProductImageTransfer
      */
-    public function saveProductImage(ProductImageTransfer $productImageTransfer)
+    public function saveProductImage(ProductImageTransfer $productImageTransfer): ProductImageTransfer
     {
         return $this->productImageFacade->saveProductImage($productImageTransfer);
     }
@@ -40,7 +40,7 @@ class ProductManagementToProductImageBridge implements ProductManagementToProduc
      *
      * @return \Generated\Shared\Transfer\ProductImageSetTransfer
      */
-    public function saveProductImageSet(ProductImageSetTransfer $productImageSetTransfer)
+    public function saveProductImageSet(ProductImageSetTransfer $productImageSetTransfer): ProductImageSetTransfer
     {
         return $this->productImageFacade->saveProductImageSet($productImageSetTransfer);
     }
@@ -50,7 +50,7 @@ class ProductManagementToProductImageBridge implements ProductManagementToProduc
      *
      * @return array<\Generated\Shared\Transfer\ProductImageSetTransfer>
      */
-    public function getProductImagesSetCollectionByProductAbstractId($idProductAbstract)
+    public function getProductImagesSetCollectionByProductAbstractId($idProductAbstract): array
     {
         return $this->productImageFacade->getProductImagesSetCollectionByProductAbstractId($idProductAbstract);
     }
@@ -60,7 +60,7 @@ class ProductManagementToProductImageBridge implements ProductManagementToProduc
      *
      * @return array<\Generated\Shared\Transfer\ProductImageSetTransfer>
      */
-    public function getProductImagesSetCollectionByProductId($idProduct)
+    public function getProductImagesSetCollectionByProductId($idProduct): array
     {
         return $this->productImageFacade->getProductImagesSetCollectionByProductId($idProduct);
     }

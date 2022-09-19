@@ -35,7 +35,7 @@
                     {{ stock.stock_type }}
                 </div>
                 <div class="col-xs-4">
-                    {{ stock.quantity }}
+                    {{ stock.quantity.toFloat() | executeFilterIfExists('formatFloat', app.locale) }}
                 </div>
                 <div class="col-xs-4">
                     {{ is_never_out_of_stock | trans }}

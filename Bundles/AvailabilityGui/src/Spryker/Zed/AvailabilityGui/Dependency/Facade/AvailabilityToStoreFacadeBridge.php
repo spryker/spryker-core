@@ -27,7 +27,7 @@ class AvailabilityToStoreFacadeBridge implements AvailabilityToStoreFacadeInterf
     /**
      * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
-    public function getAllStores()
+    public function getAllStores(): array
     {
         return $this->storeFacade->getAllStores();
     }
@@ -35,7 +35,7 @@ class AvailabilityToStoreFacadeBridge implements AvailabilityToStoreFacadeInterf
     /**
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getCurrentStore()
+    public function getCurrentStore(): StoreTransfer
     {
         return $this->storeFacade->getCurrentStore();
     }
@@ -45,7 +45,7 @@ class AvailabilityToStoreFacadeBridge implements AvailabilityToStoreFacadeInterf
      *
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getStoreById($idStore)
+    public function getStoreById($idStore): StoreTransfer
     {
         return $this->storeFacade->getStoreById($idStore);
     }
@@ -55,7 +55,7 @@ class AvailabilityToStoreFacadeBridge implements AvailabilityToStoreFacadeInterf
      *
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getStoreByName($storeName)
+    public function getStoreByName($storeName): StoreTransfer
     {
         return $this->storeFacade->getStoreByName($storeName);
     }
@@ -65,7 +65,7 @@ class AvailabilityToStoreFacadeBridge implements AvailabilityToStoreFacadeInterf
      *
      * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
-    public function getStoresWithSharedPersistence(StoreTransfer $storeTransfer)
+    public function getStoresWithSharedPersistence(StoreTransfer $storeTransfer): array
     {
         return $this->storeFacade->getStoresWithSharedPersistence($storeTransfer);
     }

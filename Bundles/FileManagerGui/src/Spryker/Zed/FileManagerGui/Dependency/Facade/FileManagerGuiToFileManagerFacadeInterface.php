@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\FileDirectoryTransfer;
 use Generated\Shared\Transfer\FileDirectoryTreeTransfer;
 use Generated\Shared\Transfer\FileManagerDataTransfer;
 use Generated\Shared\Transfer\MimeTypeCollectionTransfer;
+use Generated\Shared\Transfer\MimeTypeResponseTransfer;
 use Generated\Shared\Transfer\MimeTypeTransfer;
 
 interface FileManagerGuiToFileManagerFacadeInterface
@@ -20,14 +21,14 @@ interface FileManagerGuiToFileManagerFacadeInterface
      *
      * @return \Generated\Shared\Transfer\FileManagerDataTransfer
      */
-    public function saveFile(FileManagerDataTransfer $fileManagerDataTransfer);
+    public function saveFile(FileManagerDataTransfer $fileManagerDataTransfer): FileManagerDataTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\FileDirectoryTransfer $fileDirectoryTransfer
      *
      * @return int
      */
-    public function saveDirectory(FileDirectoryTransfer $fileDirectoryTransfer);
+    public function saveDirectory(FileDirectoryTransfer $fileDirectoryTransfer): int;
 
     /**
      * @api
@@ -36,7 +37,7 @@ interface FileManagerGuiToFileManagerFacadeInterface
      *
      * @return bool
      */
-    public function deleteFile($idFile);
+    public function deleteFile($idFile): bool;
 
     /**
      * @api
@@ -45,7 +46,7 @@ interface FileManagerGuiToFileManagerFacadeInterface
      *
      * @return bool
      */
-    public function deleteFileInfo($idFileInfo);
+    public function deleteFileInfo($idFileInfo): bool;
 
     /**
      * @api
@@ -54,7 +55,7 @@ interface FileManagerGuiToFileManagerFacadeInterface
      *
      * @return bool
      */
-    public function deleteFileDirectory($idFileDirectory);
+    public function deleteFileDirectory($idFileDirectory): bool;
 
     /**
      * @api
@@ -63,7 +64,7 @@ interface FileManagerGuiToFileManagerFacadeInterface
      *
      * @return \Generated\Shared\Transfer\FileManagerDataTransfer
      */
-    public function findFileByIdFile($idFile);
+    public function findFileByIdFile($idFile): FileManagerDataTransfer;
 
     /**
      * @api
@@ -72,7 +73,7 @@ interface FileManagerGuiToFileManagerFacadeInterface
      *
      * @return \Generated\Shared\Transfer\FileManagerDataTransfer
      */
-    public function findFileByIdFileInfo($idFileInfo);
+    public function findFileByIdFileInfo($idFileInfo): FileManagerDataTransfer;
 
     /**
      * Specification:
@@ -82,7 +83,7 @@ interface FileManagerGuiToFileManagerFacadeInterface
      *
      * @return \Generated\Shared\Transfer\FileDirectoryTransfer|null
      */
-    public function findFileDirectory($idFileDirectory);
+    public function findFileDirectory($idFileDirectory): ?FileDirectoryTransfer;
 
     /**
      * Specification:
@@ -92,7 +93,7 @@ interface FileManagerGuiToFileManagerFacadeInterface
      *
      * @return \Generated\Shared\Transfer\FileDirectoryTreeTransfer
      */
-    public function findFileDirectoryTree();
+    public function findFileDirectoryTree(): FileDirectoryTreeTransfer;
 
     /**
      * Specification:
@@ -107,7 +108,7 @@ interface FileManagerGuiToFileManagerFacadeInterface
      *
      * @return void
      */
-    public function updateFileDirectoryTreeHierarchy(FileDirectoryTreeTransfer $fileDirectoryTreeTransfer);
+    public function updateFileDirectoryTreeHierarchy(FileDirectoryTreeTransfer $fileDirectoryTreeTransfer): void;
 
     /**
      * Specification:
@@ -119,7 +120,7 @@ interface FileManagerGuiToFileManagerFacadeInterface
      *
      * @return void
      */
-    public function updateMimeTypeSettings(MimeTypeCollectionTransfer $mimeTypeCollectionTransfer);
+    public function updateMimeTypeSettings(MimeTypeCollectionTransfer $mimeTypeCollectionTransfer): void;
 
     /**
      * Specification:
@@ -131,7 +132,7 @@ interface FileManagerGuiToFileManagerFacadeInterface
      *
      * @return \Generated\Shared\Transfer\MimeTypeResponseTransfer
      */
-    public function findMimeType($idMimeType);
+    public function findMimeType($idMimeType): MimeTypeResponseTransfer;
 
     /**
      * Specification:
@@ -143,7 +144,7 @@ interface FileManagerGuiToFileManagerFacadeInterface
      *
      * @return \Generated\Shared\Transfer\MimeTypeResponseTransfer
      */
-    public function saveMimeType(MimeTypeTransfer $mimeTypeTransfer);
+    public function saveMimeType(MimeTypeTransfer $mimeTypeTransfer): MimeTypeResponseTransfer;
 
     /**
      * Specification:
@@ -155,7 +156,7 @@ interface FileManagerGuiToFileManagerFacadeInterface
      *
      * @return \Generated\Shared\Transfer\MimeTypeResponseTransfer
      */
-    public function deleteMimeType(MimeTypeTransfer $mimeTypeTransfer);
+    public function deleteMimeType(MimeTypeTransfer $mimeTypeTransfer): MimeTypeResponseTransfer;
 
     /**
      * Specification:
@@ -165,7 +166,7 @@ interface FileManagerGuiToFileManagerFacadeInterface
      *
      * @return \Generated\Shared\Transfer\MimeTypeCollectionTransfer
      */
-    public function findAllowedMimeTypes();
+    public function findAllowedMimeTypes(): MimeTypeCollectionTransfer;
 
     /**
      * @param int $idFile

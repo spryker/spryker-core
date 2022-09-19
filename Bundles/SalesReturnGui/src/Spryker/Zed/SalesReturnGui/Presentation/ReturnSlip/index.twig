@@ -147,7 +147,7 @@
             <tbody>
                 <tr>
                     <td width="120" class="th"><strong>{{ 'Items to Return' | trans }}</strong></td>
-                    <td width="90">{{ return.returnItems | length }}</td>
+                    <td width="90">{{ return.returnItems | length | executeFilterIfExists('formatInt', app.locale) }}</td>
                 </tr>
                 <tr>
                     <td width="120" class="th"><strong>{{ 'Remuneration Total' | trans }}</strong></td>

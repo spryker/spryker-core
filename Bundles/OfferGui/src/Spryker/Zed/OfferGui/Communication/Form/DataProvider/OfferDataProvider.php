@@ -19,6 +19,7 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\OfferGui\Communication\Form\Offer\EditOfferType;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToCurrencyFacadeInterface;
 use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToCustomerFacadeInterface;
+use Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToLocaleFacadeInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class OfferDataProvider
@@ -34,6 +35,11 @@ class OfferDataProvider
     protected $customerFacade;
 
     /**
+     * @var \Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToLocaleFacadeInterface
+     */
+    protected $localeFacade;
+
+    /**
      * @var \Symfony\Component\HttpFoundation\Request
      */
     protected $request;
@@ -41,15 +47,18 @@ class OfferDataProvider
     /**
      * @param \Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToCurrencyFacadeInterface $currencyFacade
      * @param \Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToCustomerFacadeInterface $customerFacade
+     * @param \Spryker\Zed\OfferGui\Dependency\Facade\OfferGuiToLocaleFacadeInterface $localeFacade
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
     public function __construct(
         OfferGuiToCurrencyFacadeInterface $currencyFacade,
         OfferGuiToCustomerFacadeInterface $customerFacade,
+        OfferGuiToLocaleFacadeInterface $localeFacade,
         Request $request
     ) {
         $this->currencyFacade = $currencyFacade;
         $this->customerFacade = $customerFacade;
+        $this->localeFacade = $localeFacade;
         $this->request = $request;
     }
 
@@ -63,6 +72,7 @@ class OfferDataProvider
             EditOfferType::OPTION_CUSTOMER_LIST => $this->getCustomerList(),
             EditOfferType::OPTION_STORE_CURRENCY_LIST => $this->getStoreCurrencyChoiceList(),
             EditOfferType::OPTION_OFFER_STATUS_LIST => $this->getStatusList(),
+            EditOfferType::OPTION_LOCALE => $this->localeFacade->getCurrentLocaleName(),
         ];
     }
 

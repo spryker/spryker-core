@@ -78,8 +78,8 @@ class MerchantRelationshipTableQueryTest extends Unit
         // Assert
         $this->assertNotEmpty($result);
         $resultMerchantRelationshipIds = array_column($result, MerchantRelationshipTableConstants::COL_ID_MERCHANT_RELATIONSHIP);
-        $this->assertContains($merchantRelationshipTransfer1->getIdMerchantRelationship(), $resultMerchantRelationshipIds);
-        $this->assertContains($merchantRelationshipTransfer2->getIdMerchantRelationship(), $resultMerchantRelationshipIds);
+        $this->assertContains((string)$merchantRelationshipTransfer1->getIdMerchantRelationship(), $resultMerchantRelationshipIds);
+        $this->assertContains((string)$merchantRelationshipTransfer2->getIdMerchantRelationship(), $resultMerchantRelationshipIds);
     }
 
     /**

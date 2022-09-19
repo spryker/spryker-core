@@ -8,6 +8,7 @@
 namespace Spryker\Zed\DiscountPromotion;
 
 use Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToAvailabilityBridge;
+use Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToLocaleFacadeBridge;
 use Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToProductBridge;
 use Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToTranslatorFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
@@ -32,6 +33,11 @@ class DiscountPromotionDependencyProvider extends AbstractBundleDependencyProvid
      * @var string
      */
     public const FACADE_TRANSLATOR = 'FACADE_TRANSLATOR';
+
+    /**
+     * @var string
+     */
+    public const FACADE_LOCALE = 'FACADE_LOCALE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -59,6 +65,7 @@ class DiscountPromotionDependencyProvider extends AbstractBundleDependencyProvid
 
         $container = $this->addProductFacade($container);
         $container = $this->addTranslatorFacade($container);
+        $container = $this->addLocaleFacade($container);
 
         return $container;
     }
@@ -101,6 +108,22 @@ class DiscountPromotionDependencyProvider extends AbstractBundleDependencyProvid
         $container->set(static::FACADE_TRANSLATOR, function (Container $container) {
             return new DiscountPromotionToTranslatorFacadeBridge(
                 $container->getLocator()->translator()->facade(),
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addLocaleFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
+            return new DiscountPromotionToLocaleFacadeBridge(
+                $container->getLocator()->locale()->facade(),
             );
         });
 

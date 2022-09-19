@@ -203,4 +203,8 @@
         <property name="defaultOptions" type="array" singular="defaultOptions"/>
         <property name="customOptions" type="array" singular="customOptions"/>
     </transfer>
+
+    <transfer name="TaxRateCollection">
+    </transfer>
+
 </transfers>

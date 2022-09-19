@@ -35,20 +35,6 @@
         "priority": "2"
     },
     {
-        "fileName": "src/Spryker/Zed/MerchantSalesOrderMerchantUserGui/Dependency/Facade/MerchantSalesOrderMerchantUserGuiToCustomerFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `findByReference()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/MerchantSalesOrderMerchantUserGui/Dependency/Facade/MerchantSalesOrderMerchantUserGuiToCustomerFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `getAddresses()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
         "fileName": "src/Spryker/Zed/MerchantSalesOrderMerchantUserGui/Dependency/Facade/MerchantSalesOrderMerchantUserGuiToMerchantOmsFacadeBridge.php",
         "description": "Bridges: Method `getMerchantOrderItemsStateHistory()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
@@ -98,27 +84,6 @@
         "priority": "2"
     },
     {
-        "fileName": "src/Spryker/Zed/MerchantSalesOrderMerchantUserGui/Dependency/Facade/MerchantSalesOrderMerchantUserGuiToMoneyFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `fromInteger()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/MerchantSalesOrderMerchantUserGui/Dependency/Facade/MerchantSalesOrderMerchantUserGuiToMoneyFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `formatWithSymbol()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/MerchantSalesOrderMerchantUserGui/Dependency/Facade/MerchantSalesOrderMerchantUserGuiToMoneyFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `formatWithoutSymbol()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
         "fileName": "src/Spryker/Zed/MerchantSalesOrderMerchantUserGui/Dependency/Facade/MerchantSalesOrderMerchantUserGuiToShipmentFacadeBridge.php",
         "description": "Bridges: Method `getMethods()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
@@ -140,20 +105,6 @@
         "priority": "2"
     },
     {
-        "fileName": "src/Spryker/Zed/MerchantSalesOrderMerchantUserGui/Dependency/Facade/MerchantSalesOrderMerchantUserGuiToShipmentFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `getMethods()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/MerchantSalesOrderMerchantUserGui/Dependency/Service/MerchantSalesOrderMerchantUserGuiToUtilDateTimeServiceInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `formatDateTime()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
         "fileName": "src/Spryker/Zed/MerchantSalesOrderMerchantUserGui/Dependency/Service/MerchantSalesOrderMerchantUserGuiToUtilSanitizeBridge.php",
         "description": "Bridges: Type should be defined for param `text` in method `Spryker\\Zed\\MerchantSalesOrderMerchantUserGui\\Dependency\\Service\\MerchantSalesOrderMerchantUserGuiToUtilSanitizeBridge::escapeHtml()`.",
         "rule": "BridgeMethodsRule",
@@ -171,13 +122,6 @@
         "fileName": "src/Spryker/Zed/MerchantSalesOrderMerchantUserGui/Dependency/Service/MerchantSalesOrderMerchantUserGuiToUtilSanitizeBridge.php",
         "description": "Bridges: Type should be defined for param `charset` in method `Spryker\\Zed\\MerchantSalesOrderMerchantUserGui\\Dependency\\Service\\MerchantSalesOrderMerchantUserGuiToUtilSanitizeBridge::escapeHtml()`.",
         "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/MerchantSalesOrderMerchantUserGui/Dependency/Service/MerchantSalesOrderMerchantUserGuiToUtilSanitizeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `escapeHtml()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
     }

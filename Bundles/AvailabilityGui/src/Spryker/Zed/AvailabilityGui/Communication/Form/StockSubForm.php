@@ -7,13 +7,14 @@
 
 namespace Spryker\Zed\AvailabilityGui\Communication\Form;
 
+use Spryker\Zed\Gui\Communication\Form\Type\FormattedNumberType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\Type;
 
@@ -42,6 +43,11 @@ class StockSubForm extends AbstractType
     /**
      * @var string
      */
+    protected const OPTION_LOCALE = 'locale';
+
+    /**
+     * @var string
+     */
     protected const DECIMAL_QUANTITY_VALIDATION_PATTERN = '/^\d{1,10}(\.\d{1,20})?$/';
 
     /**
@@ -52,22 +58,38 @@ class StockSubForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $this->addQuantityField($builder)
+        $this->addQuantityField($builder, $options)
             ->addStockTypeField($builder)
             ->addIsNeverOutOfStockCheckbox($builder);
     }
 
     /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        parent::configureOptions($resolver);
+
+        $resolver->setDefaults([
+            static::OPTION_LOCALE => null,
+        ]);
+    }
+
+    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
-    protected function addQuantityField(FormBuilderInterface $builder)
+    protected function addQuantityField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_QUANTITY, NumberType::class, [
+        $builder->add(static::FIELD_QUANTITY, FormattedNumberType::class, [
+            'locale' => $options[static::OPTION_LOCALE],
             'label' => 'Quantity',
             'attr' => ['min' => PHP_INT_MIN, 'max' => PHP_INT_MAX],
-            'html5' => true,
+            'html5' => false,
             'constraints' => [
                 new Type('numeric'),
                 new Regex([

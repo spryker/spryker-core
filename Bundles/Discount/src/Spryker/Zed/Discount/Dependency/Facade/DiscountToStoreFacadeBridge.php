@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Discount\Dependency\Facade;
 
+use Generated\Shared\Transfer\StoreTransfer;
+
 class DiscountToStoreFacadeBridge implements DiscountToStoreFacadeInterface
 {
     /**
@@ -27,7 +29,7 @@ class DiscountToStoreFacadeBridge implements DiscountToStoreFacadeInterface
      *
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getStoreByName($storeName)
+    public function getStoreByName($storeName): StoreTransfer
     {
         return $this->storeFacade->getStoreByName($storeName);
     }

@@ -9,14 +9,17 @@
         "spryker/cart-extension": "^1.5.0 || ^2.1.0 || ^4.0.0",
         "spryker/discount": "^7.2.4 || ^9.0.0",
         "spryker/discount-extension": "^1.3.0",
+        "spryker/gui": "^3.45.0",
         "spryker/kernel": "^3.30.0",
+        "spryker/locale": "^3.0.0",
         "spryker/persistent-cart-extension": "^1.0.0",
         "spryker/product": "^5.10.0 || ^6.19.0",
         "spryker/propel-orm": "^1.0.0",
         "spryker/sales-quantity-extension": "^1.0.0",
         "spryker/symfony": "^3.0.0",
         "spryker/transfer": "^3.25.0",
-        "spryker/translator": "^1.1.0"
+        "spryker/translator": "^1.1.0",
+        "spryker/twig": "^3.16.0"
     },
     "require-dev": {
         "spryker/calculation": "*",

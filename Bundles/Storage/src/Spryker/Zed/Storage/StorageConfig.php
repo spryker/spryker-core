@@ -59,6 +59,8 @@ class StorageConfig extends AbstractBundleConfig
     /**
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\StorageGui\StorageGuiConfig::getGuiDefaultPageLength()} instead.
+     *
      * @return int
      */
     public function getGuiDefaultPageLength(): int

@@ -12,5 +12,5 @@ interface ProductManagementToStockInterface
     /**
      * @return array
      */
-    public function getWarehouseToStoreMapping();
+    public function getWarehouseToStoreMapping(): array;
 }

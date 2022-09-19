@@ -208,6 +208,8 @@ class ReturnTable extends AbstractTable
 
         foreach ($salesReturnEntityCollection as $salesReturnEntity) {
             $returnData = $salesReturnEntity->toArray();
+            $returnData[static::COL_RETURN_ID] = $this->formatInt($returnData[static::COL_RETURN_ID]);
+            $returnData[static::COL_RETURNED_PRODUCTS] = $this->formatInt($returnData[static::COL_RETURNED_PRODUCTS]);
             $returnData[static::COL_RETURN_DATE] = $this->utilDateTimeService->formatDateTime($salesReturnEntity->getCreatedAt());
             $returnData[static::COL_ACTIONS] = $this->buildLinks($salesReturnEntity);
 

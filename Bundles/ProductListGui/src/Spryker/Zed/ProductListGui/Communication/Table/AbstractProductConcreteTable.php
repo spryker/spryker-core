@@ -141,7 +141,7 @@ abstract class AbstractProductConcreteTable extends AbstractTable
     protected function buildDataRow(array $product): array
     {
         return [
-            static::COLUMN_ID => $product[SpyProductTableMap::COL_ID_PRODUCT],
+            static::COLUMN_ID => $this->formatInt((int)$product[SpyProductTableMap::COL_ID_PRODUCT]),
             static::COLUMN_SKU => $product[SpyProductTableMap::COL_SKU],
             static::COLUMN_NAME => $product[SpyProductLocalizedAttributesTableMap::COL_NAME],
             static::COLUMN_ACTION => sprintf(

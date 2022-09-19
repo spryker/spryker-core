@@ -7,29 +7,33 @@
 
 namespace Spryker\Zed\ProductAttributeGui\Dependency\QueryContainer;
 
+use Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery;
+use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeQuery;
+use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueQuery;
+
 interface ProductAttributeGuiToProductAttributeQueryContainerInterface
 {
     /**
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
      */
-    public function queryProductAttributeKey();
+    public function queryProductAttributeKey(): SpyProductAttributeKeyQuery;
 
     /**
      * @param array<string> $keys
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
      */
-    public function queryProductAttributeKeyByKeys($keys);
+    public function queryProductAttributeKeyByKeys(array $keys): SpyProductAttributeKeyQuery;
 
     /**
      * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeQuery
      */
-    public function queryProductManagementAttribute();
+    public function queryProductManagementAttribute(): SpyProductManagementAttributeQuery;
 
     /**
      * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueQuery
      */
-    public function queryProductManagementAttributeValue();
+    public function queryProductManagementAttributeValue(): SpyProductManagementAttributeValueQuery;
 
     /**
      * @param int $idProductManagementAttribute
@@ -46,5 +50,5 @@ interface ProductAttributeGuiToProductAttributeQueryContainerInterface
         $searchText = '',
         $offset = null,
         $limit = 10
-    );
+    ): SpyProductManagementAttributeValueQuery;
 }

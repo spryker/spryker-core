@@ -28,7 +28,7 @@ class ProductSetGuiToPriceProductBridgeProductFacade implements ProductSetGuiToP
      *
      * @return int|null
      */
-    public function findPriceBySku($sku, $priceTypeName = null)
+    public function findPriceBySku($sku, $priceTypeName = null): ?int
     {
         return $this->priceProductFacade->findPriceBySku($sku, $priceTypeName);
     }

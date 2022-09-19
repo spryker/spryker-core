@@ -7,17 +7,19 @@
 
 namespace Spryker\Zed\ProductCategoryFilterGui\Dependency\QueryContainer;
 
+use Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery;
+
 interface ProductCategoryFilterGuiToCategoryQueryContainerInterface
 {
     /**
      * @return \Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery
      */
-    public function queryRootNodes();
+    public function queryRootNodes(): SpyCategoryAttributeQuery;
 
     /**
      * @param int $idNode
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery
      */
-    public function queryAttributeByCategoryId($idNode);
+    public function queryAttributeByCategoryId($idNode): SpyCategoryAttributeQuery;
 }

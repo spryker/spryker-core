@@ -17,7 +17,7 @@ interface SalesToCustomerInterface
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    public function findByReference($customerReference);
+    public function findByReference($customerReference): ?CustomerTransfer;
 
     /**
      * @param int $idCustomerAddress
@@ -31,5 +31,5 @@ interface SalesToCustomerInterface
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    public function findCustomerById(CustomerTransfer $customerTransfer);
+    public function findCustomerById(CustomerTransfer $customerTransfer): ?CustomerTransfer;
 }

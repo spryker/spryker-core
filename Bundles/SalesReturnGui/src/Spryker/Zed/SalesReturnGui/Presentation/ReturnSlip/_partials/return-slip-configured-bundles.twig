@@ -23,7 +23,7 @@
             <strong>{{ (configuredBundle.translations[0].name ?? configuredBundle.name) | trans }}</strong> {# Fallback name display is kept for BC reasons. #}
         </td>
         <td class="no-bottom-border"></td>
-        <td class="no-bottom-border">{{ configuredBundle.quantity }}</td>
+        <td class="no-bottom-border">{{ configuredBundle.quantity | executeFilterIfExists('formatInt', app.locale) }}</td>
         <td class="no-bottom-border">
             {% set bundleSumPriceToPayAggregation = 0 %}
 
@@ -44,7 +44,7 @@
             <td class="no-top-border {{ noBottomBorderClass }}">{{ returnItem.orderItem.sku }}</td>
             <td class="no-top-border {{ noBottomBorderClass }}">{{ returnItem.orderItem.name }}</td>
             <td class="no-top-border {{ noBottomBorderClass }}">{{ (returnItem.orderItem.sumPrice - returnItem.orderItem.sumDiscountAmountFullAggregation) | money(true, currencyIsoCode) }}</td>
-            <td class="no-top-border {{ noBottomBorderClass }}">{{ returnItem.orderItem.quantity }}</td>
+            <td class="no-top-border {{ noBottomBorderClass }}">{{ returnItem.orderItem.quantity | executeFilterIfExists('formatInt', app.locale) }}</td>
             <td class="no-top-border {{ noBottomBorderClass }}">{{ returnItem.orderItem.sumPriceToPayAggregation | money(true, currencyIsoCode) }}</td>
             <td class="no-top-border {{ noBottomBorderClass }}">{{ returnItem.reason ?? '--' }}</td>
         </tr>

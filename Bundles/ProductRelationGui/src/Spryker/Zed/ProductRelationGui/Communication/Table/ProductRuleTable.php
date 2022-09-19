@@ -210,7 +210,7 @@ class ProductRuleTable extends AbstractProductTable
     protected function getRowData(array $data): array
     {
         return [
-            SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT => $data[static::COL_ID_PRODUCT_ABSTRACT],
+            SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT => $this->formatInt($data[static::COL_ID_PRODUCT_ABSTRACT]),
             SpyProductAbstractLocalizedAttributesTableMap::COL_NAME => $data[static::COL_NAME],
             SpyProductAbstractTableMap::COL_SKU => $data[static::COL_SKU],
             static::COL_STATUS => $this->getStatusLabel($data),

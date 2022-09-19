@@ -18,5 +18,5 @@ interface ProductOptionToTouchFacadeInterface
      *
      * @return bool
      */
-    public function touchActive($itemType, $idItem, $keyChange = false);
+    public function touchActive($itemType, $idItem, $keyChange = false): bool;
 }

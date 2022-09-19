@@ -12,15 +12,15 @@ interface ProductOptionToPriceFacadeInterface
     /**
      * @return string
      */
-    public function getGrossPriceModeIdentifier();
+    public function getGrossPriceModeIdentifier(): string;
 
     /**
      * @return string
      */
-    public function getNetPriceModeIdentifier();
+    public function getNetPriceModeIdentifier(): string;
 
     /**
      * @return string
      */
-    public function getDefaultPriceMode();
+    public function getDefaultPriceMode(): string;
 }

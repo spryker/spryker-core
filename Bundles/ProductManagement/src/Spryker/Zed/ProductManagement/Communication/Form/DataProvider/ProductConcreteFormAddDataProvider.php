@@ -173,6 +173,7 @@ class ProductConcreteFormAddDataProvider
         $formOptions = [];
         $formOptions[ProductConcreteFormAdd::OPTION_ATTRIBUTE_ABSTRACT] = $localizedAttributeOptions;
         $formOptions[ProductConcreteFormAdd::OPTION_ID_LOCALE] = $this->currentLocale->getIdLocale();
+        $formOptions[ProductConcreteFormAdd::OPTION_LOCALE] = $this->currentLocale->getLocaleNameOrFail();
         $formOptions[ProductConcreteFormAdd::OPTION_ATTRIBUTE_SUPER] = [];
         $formOptions[ProductConcreteFormAdd::OPTION_TAX_RATES] = $this->taxCollection;
 

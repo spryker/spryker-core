@@ -29,7 +29,7 @@ class SalesToSequenceNumberBridge implements SalesToSequenceNumberInterface
      *
      * @return string
      */
-    public function generate(SequenceNumberSettingsTransfer $sequenceNumberSettingsTransfer)
+    public function generate(SequenceNumberSettingsTransfer $sequenceNumberSettingsTransfer): string
     {
         return $this->sequenceNumberFacade->generate($sequenceNumberSettingsTransfer);
     }

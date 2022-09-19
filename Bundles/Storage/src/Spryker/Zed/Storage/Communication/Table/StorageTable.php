@@ -14,6 +14,9 @@ use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\Storage\Dependency\Service\StorageToUtilSanitizeServiceInterface;
 
+/**
+ * @deprecated Use {@link \Spryker\Zed\StorageGui\Communication\Table\StorageTable} instead.
+ */
 class StorageTable extends AbstractTable
 {
     /**

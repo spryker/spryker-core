@@ -179,12 +179,12 @@ class CustomerOrdersTable extends OrdersTable
         $results = [];
         foreach ($queryResults as $item) {
             $results[] = [
-                SpySalesOrderTableMap::COL_ID_SALES_ORDER => $item[SpySalesOrderTableMap::COL_ID_SALES_ORDER],
+                SpySalesOrderTableMap::COL_ID_SALES_ORDER => $this->formatInt($item[SpySalesOrderTableMap::COL_ID_SALES_ORDER]),
                 SpySalesOrderTableMap::COL_ORDER_REFERENCE => $item[SpySalesOrderTableMap::COL_ORDER_REFERENCE],
                 SpySalesOrderTableMap::COL_CREATED_AT => $this->utilDateTimeService->formatDateTime($item[SpySalesOrderTableMap::COL_CREATED_AT]),
                 static::ITEM_STATE_NAMES_CSV => $this->groupItemStateNames($item[OrdersTableQueryBuilder::FIELD_ITEM_STATE_NAMES_CSV]),
                 static::GRAND_TOTAL => $this->getGrandTotal($item),
-                static::NUMBER_OF_ORDER_ITEMS => $item[OrdersTableQueryBuilder::FIELD_NUMBER_OF_ORDER_ITEMS],
+                static::NUMBER_OF_ORDER_ITEMS => $this->formatInt((int)$item[OrdersTableQueryBuilder::FIELD_NUMBER_OF_ORDER_ITEMS]),
                 static::URL => implode(' ', $this->createActionUrls($item)),
             ];
         }

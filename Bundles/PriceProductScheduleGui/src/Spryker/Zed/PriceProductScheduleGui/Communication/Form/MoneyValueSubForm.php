@@ -10,9 +10,9 @@ namespace Spryker\Zed\PriceProductScheduleGui\Communication\Form;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Gui\Communication\Form\Constraint\IntegerMoneyConstraint;
+use Spryker\Zed\Gui\Communication\Form\Type\FormattedNumberType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\PriceProductScheduleGui\Communication\Form\Provider\PriceProductScheduleFormDataProvider;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -50,14 +50,21 @@ class MoneyValueSubForm extends AbstractType
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
+        parent::configureOptions($resolver);
+
         $resolver->setDefined([
             PriceProductScheduleFormDataProvider::OPTION_CURRENCY_CHOICES,
             PriceProductScheduleFormDataProvider::OPTION_STORE_CHOICES,
         ]);
+
         $resolver->setRequired([
             PriceProductScheduleFormDataProvider::OPTION_STORE_CHOICES,
+        ]);
+
+        $resolver->setDefaults([
+            PriceProductScheduleFormDataProvider::OPTION_LOCALE => null,
         ]);
     }
 
@@ -103,8 +110,8 @@ class MoneyValueSubForm extends AbstractType
     {
         $this->addStore($builder, $options)
             ->addCurrency($builder)
-            ->addNetPrice($builder)
-            ->addGrossPrice($builder);
+            ->addNetPrice($builder, $options)
+            ->addGrossPrice($builder, $options);
 
         $builder->addEventListener(FormEvents::POST_SUBMIT, [$this, 'onPostSubmit']);
     }
@@ -127,13 +134,15 @@ class MoneyValueSubForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
-    protected function addNetPrice(FormBuilderInterface $builder)
+    protected function addNetPrice(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_NET_AMOUNT, NumberType::class, [
+        $builder->add(static::FIELD_NET_AMOUNT, FormattedNumberType::class, [
             'label' => 'Net price',
+            'locale' => $options[PriceProductScheduleFormDataProvider::OPTION_LOCALE],
             'required' => false,
             'constraints' => [
                 new GreaterThanOrEqual(['value' => 0]),
@@ -149,13 +158,15 @@ class MoneyValueSubForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
-    protected function addGrossPrice(FormBuilderInterface $builder)
+    protected function addGrossPrice(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_GROSS_AMOUNT, NumberType::class, [
+        $builder->add(static::FIELD_GROSS_AMOUNT, FormattedNumberType::class, [
             'label' => 'Gross price',
+            'locale' => $options[PriceProductScheduleFormDataProvider::OPTION_LOCALE],
             'required' => false,
             'constraints' => [
                 new GreaterThanOrEqual(['value' => 0]),

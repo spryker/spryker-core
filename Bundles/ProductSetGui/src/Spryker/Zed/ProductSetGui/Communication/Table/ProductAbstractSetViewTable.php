@@ -144,10 +144,10 @@ class ProductAbstractSetViewTable extends AbstractTable
     protected function formatRow(SpyProductAbstract $productAbstractEntity)
     {
         return [
-            static::COL_ID_PRODUCT_ABSTRACT => $productAbstractEntity->getIdProductAbstract(),
+            static::COL_ID_PRODUCT_ABSTRACT => $this->formatInt($productAbstractEntity->getIdProductAbstract()),
             static::COL_IMAGE => $this->productAbstractTableHelper->getProductPreview($productAbstractEntity),
             static::COL_DETAILS => $this->generateDetailsColumn($productAbstractEntity),
-            static::COL_POSITION => $productAbstractEntity->getVirtualColumn(static::COL_POSITION),
+            static::COL_POSITION => $this->formatInt($productAbstractEntity->getVirtualColumn(static::COL_POSITION)),
         ];
     }
 

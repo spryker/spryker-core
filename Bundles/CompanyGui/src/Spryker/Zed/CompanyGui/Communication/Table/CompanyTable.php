@@ -151,7 +151,7 @@ class CompanyTable extends AbstractTable
 
         foreach ($queryResults as $item) {
             $rowData = [
-                static::COL_ID_COMPANY => $item[SpyCompanyTableMap::COL_ID_COMPANY],
+                static::COL_ID_COMPANY => $this->formatInt($item[SpyCompanyTableMap::COL_ID_COMPANY]),
                 static::COL_NAME => $item[SpyCompanyTableMap::COL_NAME],
                 static::COL_IS_ACTIVE => $this->generateStatusLabels($item),
                 static::COL_STATUS => $this->generateCompanyStatusLabels($item),

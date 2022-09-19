@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ShipmentGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\TaxSetCollectionTransfer;
+
 class ShipmentGuiToTaxFacadeBridge implements ShipmentGuiToTaxFacadeInterface
 {
     /**
@@ -25,7 +27,7 @@ class ShipmentGuiToTaxFacadeBridge implements ShipmentGuiToTaxFacadeInterface
     /**
      * @return \Generated\Shared\Transfer\TaxSetCollectionTransfer
      */
-    public function getTaxSets()
+    public function getTaxSets(): TaxSetCollectionTransfer
     {
         return $this->taxFacade->getTaxSets();
     }

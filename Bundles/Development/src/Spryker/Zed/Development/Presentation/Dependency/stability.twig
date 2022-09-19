@@ -26,13 +26,13 @@
                             <td>
                                 <a href="/development/dependency/outgoing-graph?bundle={{ bundle }}" target="_blank">{{ bundle }}</a>
                             </td>
-                            <td align="right">{{ info.in | length }}</td>
-                            <td align="right">{{ info.out | length }}</td>
-                            <td align="right">{{ info.stability }}</td>
-                            <td align="right">{{ info.indirectIn | length }}</td>
-                            <td align="right">{{ info.indirectOut | length }}</td>
-                            <td align="right">{{ info.indirectStability }}</td>
-                            <td{% if info.sprykerStability > 150 %} style="color: red"{% endif %} align="right">{{ info.sprykerStability }}</td>
+                            <td align="right">{{ info.in | length | executeFilterIfExists('formatInt', app.locale) }}</td>
+                            <td align="right">{{ info.out | length | executeFilterIfExists('formatInt', app.locale) }}</td>
+                            <td align="right">{{ info.stabilityNotFormatted | executeFilterIfExists('formatFloat', app.locale) }}</td>
+                            <td align="right">{{ info.indirectIn | length | executeFilterIfExists('formatInt', app.locale) }}</td>
+                            <td align="right">{{ info.indirectOut | length | executeFilterIfExists('formatInt', app.locale) }}</td>
+                            <td align="right">{{ info.indirectStabilityNotFormatted | executeFilterIfExists('formatFloat', app.locale) }}</td>
+                            <td{% if info.sprykerStabilityNotFormatted > 150 %} style="color: red"{% endif %} align="right">{{ info.sprykerStabilityNotFormatted | executeFilterIfExists('formatFloat', app.locale) }}</td>
                         </tr>
                     {% endfor %}
                 </table>

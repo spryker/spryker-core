@@ -10,6 +10,8 @@ namespace Spryker\Zed\AvailabilityGui\Communication\Form\DataProvider;
 use Generated\Shared\Transfer\AvailabilityStockTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Zed\AvailabilityGui\Communication\Form\AvailabilityStockForm;
+use Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToLocaleInterface;
 use Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToStockInterface;
 
 class AvailabilityStockFormDataProvider
@@ -25,17 +27,27 @@ class AvailabilityStockFormDataProvider
     protected $stockFacade;
 
     /**
+     * @var \Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToLocaleInterface
+     */
+    protected $localeFacade;
+
+    /**
      * @var \Generated\Shared\Transfer\StoreTransfer
      */
     protected $storeTransfer;
 
     /**
      * @param \Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToStockInterface $stockFacade
+     * @param \Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityGuiToLocaleInterface $localeFacade
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      */
-    public function __construct(AvailabilityGuiToStockInterface $stockFacade, StoreTransfer $storeTransfer)
-    {
+    public function __construct(
+        AvailabilityGuiToStockInterface $stockFacade,
+        AvailabilityGuiToLocaleInterface $localeFacade,
+        StoreTransfer $storeTransfer
+    ) {
         $this->stockFacade = $stockFacade;
+        $this->localeFacade = $localeFacade;
         $this->storeTransfer = $storeTransfer;
     }
 
@@ -69,6 +81,7 @@ class AvailabilityStockFormDataProvider
     {
         return [
             static::DATA_CLASS => AvailabilityStockTransfer::class,
+            AvailabilityStockForm::OPTION_LOCALE => $this->localeFacade->getCurrentLocaleName(),
         ];
     }
 

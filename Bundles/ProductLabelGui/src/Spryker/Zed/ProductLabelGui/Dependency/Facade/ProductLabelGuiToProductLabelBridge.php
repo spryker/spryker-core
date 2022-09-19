@@ -30,7 +30,7 @@ class ProductLabelGuiToProductLabelBridge implements ProductLabelGuiToProductLab
      *
      * @return \Generated\Shared\Transfer\ProductLabelTransfer|null
      */
-    public function findLabelById($idProductLabel)
+    public function findLabelById($idProductLabel): ?ProductLabelTransfer
     {
         return $this->productLabelFacade->findLabelById($idProductLabel);
     }
@@ -38,7 +38,7 @@ class ProductLabelGuiToProductLabelBridge implements ProductLabelGuiToProductLab
     /**
      * @return array<\Generated\Shared\Transfer\ProductLabelTransfer>
      */
-    public function findAllLabels()
+    public function findAllLabels(): array
     {
         return $this->productLabelFacade->findAllLabels();
     }
@@ -48,7 +48,7 @@ class ProductLabelGuiToProductLabelBridge implements ProductLabelGuiToProductLab
      *
      * @return void
      */
-    public function createLabel(ProductLabelTransfer $productLabelTransfer)
+    public function createLabel(ProductLabelTransfer $productLabelTransfer): void
     {
         $this->productLabelFacade->createLabel($productLabelTransfer);
     }
@@ -58,7 +58,7 @@ class ProductLabelGuiToProductLabelBridge implements ProductLabelGuiToProductLab
      *
      * @return void
      */
-    public function updateLabel(ProductLabelTransfer $productLabelTransfer)
+    public function updateLabel(ProductLabelTransfer $productLabelTransfer): void
     {
         $this->productLabelFacade->updateLabel($productLabelTransfer);
     }
@@ -69,7 +69,7 @@ class ProductLabelGuiToProductLabelBridge implements ProductLabelGuiToProductLab
      *
      * @return void
      */
-    public function addAbstractProductRelationsForLabel($idProductLabel, array $idsProductAbstract)
+    public function addAbstractProductRelationsForLabel($idProductLabel, array $idsProductAbstract): void
     {
         $this->productLabelFacade->addAbstractProductRelationsForLabel($idProductLabel, $idsProductAbstract);
     }
@@ -80,7 +80,7 @@ class ProductLabelGuiToProductLabelBridge implements ProductLabelGuiToProductLab
      *
      * @return void
      */
-    public function removeAbstractProductRelationsForLabel($idProductLabel, array $idsProductAbstract)
+    public function removeAbstractProductRelationsForLabel($idProductLabel, array $idsProductAbstract): void
     {
         $this->productLabelFacade->removeProductAbstractRelationsForLabel($idProductLabel, $idsProductAbstract);
     }
@@ -100,7 +100,7 @@ class ProductLabelGuiToProductLabelBridge implements ProductLabelGuiToProductLab
      *
      * @return array<int>
      */
-    public function findProductAbstractRelationsByIdProductLabel($idProductLabel)
+    public function findProductAbstractRelationsByIdProductLabel($idProductLabel): array
     {
         return $this->productLabelFacade->findProductAbstractRelationsByIdProductLabel($idProductLabel);
     }

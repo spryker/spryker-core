@@ -37,6 +37,7 @@
     <transfer name="Locale">
         <property name="idLocale" type="int"/>
         <property name="localeName" type="string"/>
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="CategoryLocalizedAttributes">

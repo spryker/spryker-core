@@ -77,7 +77,7 @@ class ProductConcreteFormAdd extends ProductConcreteFormEdit
             ->addPriceDimensionForm($builder)
             ->addPriceForm($builder, $options)
             ->addStockForm($builder, $options)
-            ->addImageLocalizedForms($builder)
+            ->addImageLocalizedForms($builder, $options)
             ->addAssignBundledProductForm($builder, $options)
             ->addBundledProductsToBeRemoved($builder)
             ->addProductConcreteSuperAttributeForm($builder, $options)

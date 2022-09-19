@@ -10,17 +10,18 @@ namespace Spryker\Zed\Discount\Communication\Form;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Communication\Form\Constraint\Sequentially;
 use Spryker\Zed\Discount\Communication\Form\Constraint\UniqueDiscountName;
+use Spryker\Zed\Gui\Communication\Form\Type\FormattedNumberType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Component\Validator\Constraints\GreaterThan;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Range;
-use Symfony\Component\Validator\Constraints\Regex;
 
 /**
  * @method \Spryker\Zed\Discount\Business\DiscountFacadeInterface getFacade()
@@ -102,8 +103,13 @@ class GeneralForm extends AbstractType
     protected const FORMAT_DATE_TIME = 'dd.MM.yyyy HH:mm';
 
     /**
+     * @var string
+     */
+    protected const OPTION_LOCALE = 'locale';
+
+    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array<string> $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -119,8 +125,22 @@ class GeneralForm extends AbstractType
             ->addValidToField($builder);
 
         if ($this->getRepository()->hasPriorityField()) {
-            $this->addPriorityField($builder);
+            $this->addPriorityField($builder, $options);
         }
+    }
+
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        parent::configureOptions($resolver);
+
+        $resolver->setDefaults([
+            static::OPTION_LOCALE => null,
+        ]);
     }
 
     /**
@@ -299,10 +319,11 @@ class GeneralForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
-    protected function addPriorityField(FormBuilderInterface $builder)
+    protected function addPriorityField(FormBuilderInterface $builder, array $options)
     {
         $minValue = $this->getConfig()->getPriorityMinValue();
         $maxValue = $this->getConfig()->getPriorityMaxValue();
@@ -322,15 +343,12 @@ class GeneralForm extends AbstractType
                     'notInRangeMessage' => $priorityRangeErrorMessage,
                     'invalidMessage' => $priorityRangeErrorMessage,
                 ]),
-                new Regex([
-                    'pattern' => '/^\d+$/',
-                    'message' => $priorityRangeErrorMessage,
-                ]),
             ],
         ];
 
-        $builder->add(static::FIELD_PRIORITY, TextType::class, [
+        $builder->add(static::FIELD_PRIORITY, FormattedNumberType::class, [
             'label' => static::FIELD_PRIORITY_LABEL,
+            'locale' => $options[static::OPTION_LOCALE],
             'required' => false,
             'help' => $translatorFacade->trans(static::FIELD_PRIORITY_HELP_MESSAGE, [
                 '%min%' => $minValue,
@@ -340,7 +358,7 @@ class GeneralForm extends AbstractType
                 'min' => $minValue,
                 'max' => $maxValue,
             ],
-            'empty_data' => $maxValue,
+            'empty_data' => (string)$maxValue,
             'constraints' => [
                 new Sequentially($constraints),
             ],

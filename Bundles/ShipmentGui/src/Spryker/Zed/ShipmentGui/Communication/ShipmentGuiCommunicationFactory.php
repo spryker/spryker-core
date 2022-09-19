@@ -32,6 +32,7 @@ use Spryker\Zed\ShipmentGui\Communication\Provider\ShipmentOrderItemTemplateProv
 use Spryker\Zed\ShipmentGui\Communication\Table\ShipmentMethodTable;
 use Spryker\Zed\ShipmentGui\Communication\Tabs\ShipmentMethodTabs;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToCustomerFacadeInterface;
+use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToLocaleFacadeInterface;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToSalesFacadeInterface;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToShipmentFacadeInterface;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToTaxFacadeInterface;
@@ -117,6 +118,7 @@ class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new ViewShipmentMethodFormDataProvider(
             $this->getTaxFacade(),
+            $this->getLocaleFacade(),
         );
     }
 
@@ -181,6 +183,7 @@ class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
         return new ShipmentMethodFormDataProvider(
             $this->getShipmentFacade(),
             $this->getTaxFacade(),
+            $this->getLocaleFacade(),
         );
     }
 
@@ -285,6 +288,14 @@ class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getTaxFacade(): ShipmentGuiToTaxFacadeInterface
     {
         return $this->getProvidedDependency(ShipmentGuiDependencyProvider::FACADE_TAX);
+    }
+
+    /**
+     * @return \Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToLocaleFacadeInterface
+     */
+    public function getLocaleFacade(): ShipmentGuiToLocaleFacadeInterface
+    {
+        return $this->getProvidedDependency(ShipmentGuiDependencyProvider::FACADE_LOCALE);
     }
 
     /**

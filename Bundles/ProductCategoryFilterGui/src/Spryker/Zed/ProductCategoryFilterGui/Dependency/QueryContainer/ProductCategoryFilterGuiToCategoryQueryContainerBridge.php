@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductCategoryFilterGui\Dependency\QueryContainer;
 
+use Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery;
+
 class ProductCategoryFilterGuiToCategoryQueryContainerBridge implements ProductCategoryFilterGuiToCategoryQueryContainerInterface
 {
     /**
@@ -25,7 +27,7 @@ class ProductCategoryFilterGuiToCategoryQueryContainerBridge implements ProductC
     /**
      * @return \Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery
      */
-    public function queryRootNodes()
+    public function queryRootNodes(): SpyCategoryAttributeQuery
     {
         return $this->categoryQueryContainer->queryRootNodes();
     }
@@ -35,7 +37,7 @@ class ProductCategoryFilterGuiToCategoryQueryContainerBridge implements ProductC
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery
      */
-    public function queryAttributeByCategoryId($idNode)
+    public function queryAttributeByCategoryId($idNode): SpyCategoryAttributeQuery
     {
         return $this->categoryQueryContainer->queryAttributeByCategoryId($idNode);
     }

@@ -96,8 +96,8 @@ class ProductOfferTableQueryTest extends Unit
         // Assert
         $resultProductOffersIds = array_column($result, SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER);
         $this->assertNotEmpty($result);
-        $this->assertContains($productOffer1->getIdProductOffer(), $resultProductOffersIds);
-        $this->assertContains($productOffer2->getIdProductOffer(), $resultProductOffersIds);
+        $this->assertContains((string)$productOffer1->getIdProductOffer(), $resultProductOffersIds);
+        $this->assertContains((string)$productOffer2->getIdProductOffer(), $resultProductOffersIds);
     }
 
     /**

@@ -80,7 +80,7 @@ class AvailabilityTable extends AbstractTable
     protected $availabilityHelper;
 
     /**
-     * @var \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     * @var \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery|\Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     protected $queryProductAbstractAvailability;
 
@@ -177,15 +177,23 @@ class AvailabilityTable extends AbstractTable
 
         foreach ($queryResult as $productItem) {
             $isBundleProduct = $this->availabilityHelper->isBundleProduct($productItem[AvailabilityQueryContainer::ID_PRODUCT]);
-
             $isNeverOutOfStock = $this->availabilityHelper->isNeverOutOfStock($productItem[AvailabilityHelperInterface::CONCRETE_NEVER_OUT_OF_STOCK_SET] ?? static::NEVER_OUT_OF_STOCK_DEFAULT_VALUE);
+            $concreteAvailability = $isNeverOutOfStock ? static::NOT_APPLICABLE : $this->formatFloat(
+                (new Decimal($productItem[AvailabilityHelperInterface::CONCRETE_AVAILABILITY] ?? 0))->trim()->toFloat(),
+            );
+            $stockQuantity = $this->formatFloat(
+                (new Decimal($productItem[AvailabilityHelperInterface::STOCK_QUANTITY] ?? 0))->trim()->toFloat(),
+            );
+            $reservationQuantity = $isBundleProduct ? static::NOT_APPLICABLE : $this->formatFloat(
+                $this->calculateReservation($productItem)->trim()->toFloat(),
+            );
 
             $result[] = [
                 AvailabilityHelperInterface::CONCRETE_SKU => $productItem[AvailabilityHelperInterface::CONCRETE_SKU],
                 AvailabilityHelperInterface::CONCRETE_NAME => $productItem[AvailabilityHelperInterface::CONCRETE_NAME],
-                AvailabilityHelperInterface::CONCRETE_AVAILABILITY => $isNeverOutOfStock ? static::NOT_APPLICABLE : (new Decimal($productItem[AvailabilityHelperInterface::CONCRETE_AVAILABILITY] ?? 0))->trim(),
-                AvailabilityHelperInterface::STOCK_QUANTITY => (new Decimal($productItem[AvailabilityHelperInterface::STOCK_QUANTITY] ?? 0))->trim(),
-                AvailabilityHelperInterface::RESERVATION_QUANTITY => $isBundleProduct ? static::NOT_APPLICABLE : $this->calculateReservation($productItem)->trim(),
+                AvailabilityHelperInterface::CONCRETE_AVAILABILITY => $concreteAvailability,
+                AvailabilityHelperInterface::STOCK_QUANTITY => $stockQuantity,
+                AvailabilityHelperInterface::RESERVATION_QUANTITY => $reservationQuantity,
                 static::IS_BUNDLE_PRODUCT => $this->generateLabel($isBundleProduct ? 'Yes' : 'No', null),
                 AvailabilityHelperInterface::CONCRETE_NEVER_OUT_OF_STOCK_SET => $this->generateLabel($isNeverOutOfStock ? 'Yes' : 'No', null),
                 static::TABLE_COL_ACTION => $this->createButtons($productItem, $isBundleProduct),

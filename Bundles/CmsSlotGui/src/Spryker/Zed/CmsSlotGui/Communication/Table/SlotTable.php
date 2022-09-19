@@ -246,7 +246,7 @@ class SlotTable extends AbstractTable
 
         foreach ($slotResults as $slot) {
             $results[] = [
-                static::COL_ID_CMS_SLOT => $slot[SpyCmsSlotTableMap::COL_ID_CMS_SLOT],
+                static::COL_ID_CMS_SLOT => $this->formatInt($slot[SpyCmsSlotTableMap::COL_ID_CMS_SLOT]),
                 static::COL_NAME => $this->getName($slot),
                 static::COL_DESCRIPTION => $slot[SpyCmsSlotTableMap::COL_DESCRIPTION],
                 static::COL_CONTENT_PROVIDER => $this->getContentProvider($slot),

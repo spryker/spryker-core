@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductOption\Dependency\Facade;
 
+use Generated\Shared\Transfer\StoreTransfer;
+
 class ProductOptionToStoreFacadeBridge implements ProductOptionToStoreFacadeInterface
 {
     /**
@@ -25,7 +27,7 @@ class ProductOptionToStoreFacadeBridge implements ProductOptionToStoreFacadeInte
     /**
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getCurrentStore()
+    public function getCurrentStore(): StoreTransfer
     {
         return $this->storeFacade->getCurrentStore();
     }

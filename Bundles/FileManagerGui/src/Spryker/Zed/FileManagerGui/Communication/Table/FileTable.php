@@ -132,7 +132,7 @@ class FileTable extends AbstractTable
         $actions = implode(' ', $this->buildLinks($item));
 
         return [
-            static::COL_ID_FILE => $item[static::COL_ID_FILE],
+            static::COL_ID_FILE => $this->formatInt($item[static::COL_ID_FILE]),
             static::COL_FILE_NAME => $item[static::COL_FILE_NAME],
             static::COL_ACTIONS => $actions,
         ];

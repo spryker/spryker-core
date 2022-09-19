@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\Discount\Dependency\Facade;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\StoreWithCurrencyTransfer;
+
 class DiscountToCurrencyBridge implements DiscountToCurrencyInterface
 {
     /**
@@ -25,7 +28,7 @@ class DiscountToCurrencyBridge implements DiscountToCurrencyInterface
     /**
      * @return \Generated\Shared\Transfer\StoreWithCurrencyTransfer
      */
-    public function getCurrentStoreWithCurrencies()
+    public function getCurrentStoreWithCurrencies(): StoreWithCurrencyTransfer
     {
         return $this->currencyFacade->getCurrentStoreWithCurrencies();
     }
@@ -35,7 +38,7 @@ class DiscountToCurrencyBridge implements DiscountToCurrencyInterface
      *
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function getByIdCurrency($idCurrency)
+    public function getByIdCurrency($idCurrency): CurrencyTransfer
     {
         return $this->currencyFacade->getByIdCurrency($idCurrency);
     }
@@ -43,7 +46,7 @@ class DiscountToCurrencyBridge implements DiscountToCurrencyInterface
     /**
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function getCurrent()
+    public function getCurrent(): CurrencyTransfer
     {
         return $this->currencyFacade->getCurrent();
     }

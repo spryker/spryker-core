@@ -19,6 +19,7 @@ use Spryker\Zed\Tax\Communication\Form\TaxSetForm;
 use Spryker\Zed\Tax\Communication\Form\Transform\PercentageTransformer;
 use Spryker\Zed\Tax\Communication\Table\RateTable;
 use Spryker\Zed\Tax\Communication\Table\SetTable;
+use Spryker\Zed\Tax\Dependency\Facade\TaxToLocaleFacadeInterface;
 use Spryker\Zed\Tax\TaxDependencyProvider;
 use Symfony\Component\Form\FormInterface;
 
@@ -41,9 +42,7 @@ class TaxCommunicationFactory extends AbstractCommunicationFactory
         return $this->getFormFactory()->create(
             TaxRateForm::class,
             $taxRateTransfer ?: $this->getTaxRateFormData($taxRateFormDataProvider),
-            [
-                'data_class' => TaxRateTransfer::class,
-            ],
+            $this->createTaxRateFormDataProvider()->getOptions(),
         );
     }
 
@@ -130,6 +129,7 @@ class TaxCommunicationFactory extends AbstractCommunicationFactory
         return new TaxRateFormDataProvider(
             $this->getCountryFacade(),
             $this->getFacade(),
+            $this->getLocaleFacade(),
             $taxRateTransfer,
         );
     }
@@ -192,5 +192,13 @@ class TaxCommunicationFactory extends AbstractCommunicationFactory
     protected function getDateTimeService()
     {
         return $this->getProvidedDependency(TaxDependencyProvider::SERVICE_DATE_FORMATTER);
+    }
+
+    /**
+     * @return \Spryker\Zed\Tax\Dependency\Facade\TaxToLocaleFacadeInterface
+     */
+    public function getLocaleFacade(): TaxToLocaleFacadeInterface
+    {
+        return $this->getProvidedDependency(TaxDependencyProvider::FACADE_LOCALE);
     }
 }

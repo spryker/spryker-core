@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\AvailabilityGui\Dependency\QueryContainer;
 
+use Orm\Zed\ProductBundle\Persistence\SpyProductBundleQuery;
+
 interface AvailabilityGuiToProductBundleQueryContainerInterface
 {
     /**
@@ -14,5 +16,5 @@ interface AvailabilityGuiToProductBundleQueryContainerInterface
      *
      * @return \Orm\Zed\ProductBundle\Persistence\SpyProductBundleQuery
      */
-    public function queryBundleProduct($idProductConcrete);
+    public function queryBundleProduct($idProductConcrete): SpyProductBundleQuery;
 }

@@ -11,6 +11,8 @@ var TranslationCopyFields = require('./libs/translation-copy-fields');
 var Ibox = require('./libs/ibox');
 var dataTable = require('./libs/data-table');
 var safeChecks = require('./libs/safe-checks');
+var initFormattedNumber = require('./libs/formatted-number-input');
+var initFormattedMoney = require('./libs/formatted-money-input');
 var select2combobox = require('./libs/select2-combobox');
 
 var dataTablesSearchDelay = function () {
@@ -173,6 +175,9 @@ $(document).ready(function () {
 
     safeChecks.addSafeSubmitCheck();
     safeChecks.addSafeDatetimeCheck();
+
+    initFormattedNumber();
+    initFormattedMoney();
 });
 
 $(window).on('load', function () {

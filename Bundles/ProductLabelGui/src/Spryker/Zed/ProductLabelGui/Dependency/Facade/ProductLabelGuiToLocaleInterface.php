@@ -7,22 +7,29 @@
 
 namespace Spryker\Zed\ProductLabelGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+
 interface ProductLabelGuiToLocaleInterface
 {
     /**
      * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
-    public function getLocaleCollection();
+    public function getLocaleCollection(): array;
 
     /**
      * @param int $idLocale
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getLocaleById($idLocale);
+    public function getLocaleById($idLocale): LocaleTransfer;
 
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getCurrentLocale();
+    public function getCurrentLocale(): LocaleTransfer;
+
+    /**
+     * @return string
+     */
+    public function getCurrentLocaleName(): string;
 }

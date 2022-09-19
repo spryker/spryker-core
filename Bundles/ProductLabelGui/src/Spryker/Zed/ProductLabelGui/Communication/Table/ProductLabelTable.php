@@ -196,14 +196,16 @@ class ProductLabelTable extends AbstractTable
 
         foreach ($productLabelEntities as $productLabelEntity) {
             $tableRows[] = [
-                static::COL_ID_PRODUCT_LABEL => $productLabelEntity->getIdProductLabel(),
+                static::COL_ID_PRODUCT_LABEL => $this->formatInt($productLabelEntity->getIdProductLabel()),
                 static::COL_NAME => $productLabelEntity->getName(),
                 static::COL_IS_EXCLUSIVE => $this->getIsExclusiveLabel($productLabelEntity),
                 static::COL_IS_DYNAMIC => $this->getIsDynamicLabel($productLabelEntity),
                 static::COL_STATUS => $this->createStatusMarker($productLabelEntity->getIsActive()),
                 static::COL_STORES => $this->getStoreNames($productLabelEntity),
-                static::COL_PRIORITY => $productLabelEntity->getPosition(),
-                static::COL_ABSTRACT_PRODUCT_RELATION_COUNT => $productLabelEntity->getVirtualColumn(static::COL_ABSTRACT_PRODUCT_RELATION_COUNT),
+                static::COL_PRIORITY => $this->formatInt($productLabelEntity->getPosition()),
+                static::COL_ABSTRACT_PRODUCT_RELATION_COUNT => $this->formatInt(
+                    $productLabelEntity->getVirtualColumn(static::COL_ABSTRACT_PRODUCT_RELATION_COUNT),
+                ),
                 static::COL_ACTIONS => $this->createActionButtons($productLabelEntity),
             ];
         }

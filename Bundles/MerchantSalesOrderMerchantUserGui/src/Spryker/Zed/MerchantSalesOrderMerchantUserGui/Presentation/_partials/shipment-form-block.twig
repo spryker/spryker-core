@@ -59,7 +59,7 @@
                                 </div>
                             </td>
                             <td>
-                                x {{ itemData.quantity }}
+                                x {{ itemData.quantity | executeFilterIfExists('formatInt', app.locale) }}
                             </td>
                             <td class="state-history">
                                 {% set merchantOrderItem = groupedMerchantOrderItems[itemData.IdSalesOrderItem] %}

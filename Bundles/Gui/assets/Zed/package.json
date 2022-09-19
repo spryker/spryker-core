@@ -6,6 +6,7 @@
         "@fortawesome/fontawesome-free": "~5.15.3",
         "@spryker/nestable": "~1.1.1",
         "animate.css": "~3.5.1",
+        "autonumeric": "~4.6.0",
         "bootstrap-sass": "~3.4.1",
         "codemirror": "~5.63.0",
         "datatables.net": "~1.10.23",

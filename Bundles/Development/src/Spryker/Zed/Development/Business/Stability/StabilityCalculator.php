@@ -118,6 +118,9 @@ class StabilityCalculator implements StabilityCalculatorInterface
     {
         foreach ($this->bundles as &$bundle) {
             $stability = count($bundle['out']) / (count($bundle['in']) + count($bundle['out']));
+            $bundle['stabilityNotFormatted'] = $stability;
+
+            /** @deprecated Exists for Backward Compatibility reasons only. Use `stabilityNotFormatted` instead. */
             $bundle['stability'] = number_format($stability, 3);
         }
     }
@@ -145,6 +148,9 @@ class StabilityCalculator implements StabilityCalculatorInterface
             $divisor = (count($this->bundles[$bundle]['indirectIn']) + count($this->bundles[$bundle]['indirectOut']));
             $indirectStability = ($divisor > 0) ? count($this->bundles[$bundle]['indirectOut']) / $divisor : 0;
 
+            $this->bundles[$bundle]['indirectStabilityNotFormatted'] = $indirectStability;
+
+            /** @deprecated Exists for Backward Compatibility reasons only. Use `indirectStabilityNotFormatted` instead. */
             $this->bundles[$bundle]['indirectStability'] = number_format($indirectStability, 3);
         }
     }
@@ -156,6 +162,9 @@ class StabilityCalculator implements StabilityCalculatorInterface
     {
         foreach ($this->bundles as $bundle => $info) {
             $sprykerStability = (count($info['indirectIn']) * count($info['indirectOut'])) * (1 - abs(0.5 - $info['indirectStability']));
+            $this->bundles[$bundle]['sprykerStabilityNotFormatted'] = $sprykerStability;
+
+            /** @deprecated Exists for Backward Compatibility reasons only. Use `sprykerStabilityNotFormatted` instead. */
             $this->bundles[$bundle]['sprykerStability'] = number_format($sprykerStability, 3);
         }
     }

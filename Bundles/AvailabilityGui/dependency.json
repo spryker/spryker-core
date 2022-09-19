@@ -1,5 +1,6 @@
 {
     "include": {
-        "spryker/transfer": "Provides transfer objects decimal property type functionality."
+        "spryker/transfer": "Provides transfer objects decimal property type functionality.",
+        "spryker/twig": "Provides `executeFilterIfExists` filter functionality."
     }
 }

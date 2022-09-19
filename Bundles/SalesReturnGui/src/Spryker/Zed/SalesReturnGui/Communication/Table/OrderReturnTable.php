@@ -158,7 +158,7 @@ class OrderReturnTable extends AbstractTable
         foreach ($returnResults as $return) {
             $results[] = [
                 static::COL_RETURN_REFERENCE => $return[SpySalesReturnTableMap::COL_RETURN_REFERENCE],
-                static::COL_ITEMS => $return[static::COL_ITEMS],
+                static::COL_ITEMS => $this->formatInt($return[static::COL_ITEMS]),
                 static::COL_REMUNERATION_TOTAL => $this->getRemunerationTotal($return),
                 static::COL_ACTIONS => $this->buildLinks($return),
             ];

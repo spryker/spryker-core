@@ -29,7 +29,7 @@ class MerchantSalesOrderMerchantUserGuiToUtilSanitizeBridge implements MerchantS
      *
      * @return string
      */
-    public function escapeHtml($text, $double = true, $charset = null)
+    public function escapeHtml($text, $double = true, $charset = null): string
     {
         return $this->utilSanitizeService->escapeHtml($text, $double, $charset);
     }

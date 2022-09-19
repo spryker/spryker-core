@@ -7,12 +7,12 @@
 
 namespace Spryker\Zed\ProductSetGui\Communication\Form\General;
 
+use Spryker\Zed\Gui\Communication\Form\Type\FormattedNumberType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
@@ -65,12 +65,19 @@ class GeneralFormType extends AbstractType
     public const GROUP_UNIQUE_KEY_CHECK = 'unique_key_check';
 
     /**
+     * @var string
+     */
+    protected const OPTION_LOCALE = 'locale';
+
+    /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
      * @return void
      */
     public function configureOptions(OptionsResolver $resolver)
     {
+        parent::configureOptions($resolver);
+
         $resolver->setDefaults([
             'validation_groups' => function (FormInterface $form) {
                 $originalKey = $form->get(static::FIELD_PRODUCT_SET_KEY_ORIGINAL)->getData();
@@ -82,6 +89,7 @@ class GeneralFormType extends AbstractType
 
                 return [Constraint::DEFAULT_GROUP];
             },
+            static::OPTION_LOCALE => null,
         ]);
     }
 
@@ -96,7 +104,7 @@ class GeneralFormType extends AbstractType
         $this->addProductSetDataFieldCollection($builder)
             ->addProductSetKeyField($builder)
             ->addProductSetKeyOriginalField($builder)
-            ->addWeightField($builder)
+            ->addWeightField($builder, $options)
             ->addIsActiveField($builder)
             ->addIdProductSetField($builder);
     }
@@ -156,13 +164,15 @@ class GeneralFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
-    protected function addWeightField(FormBuilderInterface $builder)
+    protected function addWeightField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_WEIGHT, NumberType::class, [
+        $builder->add(static::FIELD_WEIGHT, FormattedNumberType::class, [
             'label' => 'Weight',
+            'locale' => $options[static::OPTION_LOCALE],
             'attr' => [
                 'placeholder' => 'Defines sorting order. Product Sets with higher numbers listed first.',
             ],

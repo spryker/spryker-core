@@ -73,7 +73,7 @@ class BundledProductAvailabilityTable extends AbstractTable
     protected $availabilityHelper;
 
     /**
-     * @var \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     * @var \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery|\Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
     protected $productAbstractQuery;
 
@@ -213,13 +213,24 @@ class BundledProductAvailabilityTable extends AbstractTable
                 $neverOutOfStockFlag = $this->availabilityHelper->isNeverOutOfStock($productItem[AvailabilityHelperInterface::CONCRETE_NEVER_OUT_OF_STOCK_SET]) ? 'Yes' : 'No';
             }
 
+            $concreteAvailability = $this->formatFloat(
+                $this->getConcreteAvailability($productItem)->trim()->toFloat(),
+            );
+            $stockQuantity = $this->formatFloat(
+                $this->getStockQuantity($productItem)->trim()->toFloat(),
+            );
+            $reservationQuantity = $this->formatFloat(
+                $this->calculateReservation($productItem)->trim()->toFloat(),
+            );
+            $bundledProductsQuantity = $this->formatInt($productItem[static::COL_BUNDLED_ITEMS]);
+
             $result[] = [
                 AvailabilityQueryContainer::CONCRETE_SKU => $productItem[AvailabilityQueryContainer::CONCRETE_SKU],
                 AvailabilityQueryContainer::CONCRETE_NAME => $productItem[AvailabilityQueryContainer::CONCRETE_NAME],
-                AvailabilityQueryContainer::CONCRETE_AVAILABILITY => $this->getConcreteAvailability($productItem)->trim(),
-                AvailabilityHelperInterface::STOCK_QUANTITY => $this->getStockQuantity($productItem)->trim(),
-                AvailabilityHelperInterface::RESERVATION_QUANTITY => $this->calculateReservation($productItem)->trim(),
-                SpyProductBundleTableMap::COL_QUANTITY => $productItem[static::COL_BUNDLED_ITEMS],
+                AvailabilityQueryContainer::CONCRETE_AVAILABILITY => $concreteAvailability,
+                AvailabilityHelperInterface::STOCK_QUANTITY => $stockQuantity,
+                AvailabilityHelperInterface::RESERVATION_QUANTITY => $reservationQuantity,
+                SpyProductBundleTableMap::COL_QUANTITY => $bundledProductsQuantity,
                 AvailabilityHelperInterface::CONCRETE_NEVER_OUT_OF_STOCK_SET => $neverOutOfStockFlag,
                 static::TABLE_COL_ACTION => $this->createEditButton($productItem),
             ];

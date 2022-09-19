@@ -12,5 +12,10 @@ interface MerchantRelationshipSalesOrderThresholdGuiToLocaleFacadeInterface
     /**
      * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
-    public function getLocaleCollection();
+    public function getLocaleCollection(): array;
+
+    /**
+     * @return string
+     */
+    public function getCurrentLocaleName(): string;
 }

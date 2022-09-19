@@ -138,7 +138,7 @@ class CompanyBusinessUnitTable extends AbstractTable
             $parent = $item->getParentCompanyBusinessUnit();
 
             $results[] = [
-                static::COL_ID_COMPANY_BUSINESS_UNIT => $item->getIdCompanyBusinessUnit(),
+                static::COL_ID_COMPANY_BUSINESS_UNIT => $this->formatInt($item->getIdCompanyBusinessUnit()),
                 static::COL_COMPANY_NAME => $item->getCompany()->getName(),
                 static::COL_NAME => $item->getName(),
                 static::COL_PARENT_NAME => $parent ? $parent->getName() : '',

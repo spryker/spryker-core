@@ -7,10 +7,12 @@
 
 namespace Spryker\Zed\SalesOrderThresholdGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\TaxSetCollectionTransfer;
+
 interface SalesOrderThresholdGuiToTaxFacadeInterface
 {
     /**
      * @return \Generated\Shared\Transfer\TaxSetCollectionTransfer
      */
-    public function getTaxSets();
+    public function getTaxSets(): TaxSetCollectionTransfer;
 }

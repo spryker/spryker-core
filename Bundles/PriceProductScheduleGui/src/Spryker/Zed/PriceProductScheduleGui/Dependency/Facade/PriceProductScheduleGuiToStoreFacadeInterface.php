@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\PriceProductScheduleGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\StoreTransfer;
+
 interface PriceProductScheduleGuiToStoreFacadeInterface
 {
     /**
@@ -16,15 +18,15 @@ interface PriceProductScheduleGuiToStoreFacadeInterface
      *
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getStoreById($idStore);
+    public function getStoreById($idStore): StoreTransfer;
 
     /**
      * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
-    public function getAllStores();
+    public function getAllStores(): array;
 
     /**
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getCurrentStore();
+    public function getCurrentStore(): StoreTransfer;
 }

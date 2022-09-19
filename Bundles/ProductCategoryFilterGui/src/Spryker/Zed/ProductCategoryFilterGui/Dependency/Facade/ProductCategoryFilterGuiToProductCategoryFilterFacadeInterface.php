@@ -16,31 +16,31 @@ interface ProductCategoryFilterGuiToProductCategoryFilterFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductCategoryFilterTransfer
      */
-    public function createProductCategoryFilter(ProductCategoryFilterTransfer $productCategoryFilterTransfer);
+    public function createProductCategoryFilter(ProductCategoryFilterTransfer $productCategoryFilterTransfer): ProductCategoryFilterTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ProductCategoryFilterTransfer $productCategoryFilterTransfer
      *
      * @return \Generated\Shared\Transfer\ProductCategoryFilterTransfer
      */
-    public function updateProductCategoryFilter(ProductCategoryFilterTransfer $productCategoryFilterTransfer);
+    public function updateProductCategoryFilter(ProductCategoryFilterTransfer $productCategoryFilterTransfer): ProductCategoryFilterTransfer;
 
     /**
      * @param int $categoryId
      *
      * @return void
      */
-    public function deleteProductCategoryFilterByCategoryId($categoryId);
+    public function deleteProductCategoryFilterByCategoryId($categoryId): void;
 
     /**
      * @param int $categoryId
      *
      * @return \Generated\Shared\Transfer\ProductCategoryFilterTransfer
      */
-    public function findProductCategoryFilterByCategoryId($categoryId);
+    public function findProductCategoryFilterByCategoryId($categoryId): ProductCategoryFilterTransfer;
 
     /**
      * @return array
      */
-    public function getAllProductCategoriesWithFilters();
+    public function getAllProductCategoriesWithFilters(): array;
 }

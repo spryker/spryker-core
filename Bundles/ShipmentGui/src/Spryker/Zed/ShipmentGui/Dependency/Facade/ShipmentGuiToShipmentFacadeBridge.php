@@ -35,7 +35,7 @@ class ShipmentGuiToShipmentFacadeBridge implements ShipmentGuiToShipmentFacadeIn
     /**
      * @return array<\Generated\Shared\Transfer\ShipmentMethodTransfer>
      */
-    public function getMethods()
+    public function getMethods(): array
     {
         return $this->shipmentFacade->getMethods();
     }
@@ -113,7 +113,7 @@ class ShipmentGuiToShipmentFacadeBridge implements ShipmentGuiToShipmentFacadeIn
      *
      * @return int
      */
-    public function createCarrier(ShipmentCarrierTransfer $carrierTransfer)
+    public function createCarrier(ShipmentCarrierTransfer $carrierTransfer): int
     {
         return $this->shipmentFacade->createCarrier($carrierTransfer);
     }
@@ -163,7 +163,7 @@ class ShipmentGuiToShipmentFacadeBridge implements ShipmentGuiToShipmentFacadeIn
      *
      * @return bool
      */
-    public function deleteMethod($idMethod)
+    public function deleteMethod($idMethod): bool
     {
         return $this->shipmentFacade->deleteMethod($idMethod);
     }

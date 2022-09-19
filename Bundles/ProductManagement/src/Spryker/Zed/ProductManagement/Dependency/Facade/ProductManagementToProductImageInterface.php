@@ -17,26 +17,26 @@ interface ProductManagementToProductImageInterface
      *
      * @return \Generated\Shared\Transfer\ProductImageTransfer
      */
-    public function saveProductImage(ProductImageTransfer $productImageTransfer);
+    public function saveProductImage(ProductImageTransfer $productImageTransfer): ProductImageTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ProductImageSetTransfer $productImageSetTransfer
      *
      * @return \Generated\Shared\Transfer\ProductImageSetTransfer
      */
-    public function saveProductImageSet(ProductImageSetTransfer $productImageSetTransfer);
+    public function saveProductImageSet(ProductImageSetTransfer $productImageSetTransfer): ProductImageSetTransfer;
 
     /**
      * @param int $idProductAbstract
      *
      * @return array<\Generated\Shared\Transfer\ProductImageSetTransfer>
      */
-    public function getProductImagesSetCollectionByProductAbstractId($idProductAbstract);
+    public function getProductImagesSetCollectionByProductAbstractId($idProductAbstract): array;
 
     /**
      * @param int $idProduct
      *
      * @return array<\Generated\Shared\Transfer\ProductImageSetTransfer>
      */
-    public function getProductImagesSetCollectionByProductId($idProduct);
+    public function getProductImagesSetCollectionByProductId($idProduct): array;
 }

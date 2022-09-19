@@ -271,7 +271,7 @@ class ProductSupplierTable extends AbstractTable
                     static::PRICE_FORMAT,
                     $this->storeFacade->getStoreById($priceProductEntity->getFkStore())->getName(),
                     $this->currencyFacade->getByIdCurrency($priceProductEntity->getFkCurrency())->getSymbol(),
-                    $this->moneyFacade->convertIntegerToDecimal($priceProductEntity->getGrossPrice()),
+                    $this->formatFloat($this->moneyFacade->convertIntegerToDecimal($priceProductEntity->getGrossPrice())),
                 );
             }
         }

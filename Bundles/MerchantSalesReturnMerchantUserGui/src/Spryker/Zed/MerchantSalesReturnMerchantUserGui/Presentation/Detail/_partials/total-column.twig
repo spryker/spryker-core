@@ -1,7 +1,7 @@
 {% embed '@SalesReturnGui/_partials/column.twig' %}
     {% block title %}
         <h5>{{ 'Total' | trans }}</h5>
-        <h5 class="pull-right">{{ return.returnItems | length ~ ' ' ~ 'items' | trans }}</h5>
+        <h5 class="pull-right">{{ return.returnItems | length | executeFilterIfExists('formatInt', app.locale) ~ ' ' ~ 'items' | trans }}</h5>
     {% endblock %}
 
     {% block content %}

@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\ProductManagement\Communication\Table;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Zed\Product\Persistence\ProductQueryContainer;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Communication\Helper\ProductTypeHelper;
@@ -41,6 +42,20 @@ class ProductTableTest extends Unit
     protected const SERVICE_TWIG = 'twig';
 
     /**
+     * @uses \Spryker\Zed\UtilNumber\Communication\Plugin\Application\NumberFormatterApplicationPlugin::SERVICE_UTIL_NUMBER
+     *
+     * @var string
+     */
+    public const SERVICE_UTIL_NUMBER = 'SERVICE_UTIL_NUMBER';
+
+    /**
+     * @uses \Spryker\Zed\Locale\Communication\Plugin\Application\LocaleApplicationPlugin::SERVICE_LOCALE
+     *
+     * @var string
+     */
+    public const SERVICE_LOCALE = 'locale';
+
+    /**
      * @var array<string, string>
      */
     protected const PRODUCT_NAME = [
@@ -64,6 +79,16 @@ class ProductTableTest extends Unit
     protected const RENDERED_STRING = 'output';
 
     /**
+     * @var int
+     */
+    protected const ID_PRODUCT_ABSTRACT = 999;
+
+    /**
+     * @var int
+     */
+    protected const ID_PRODUCT_ABSTRACT_2 = 777;
+
+    /**
      * @var \SprykerTest\Zed\ProductManagement\ProductManagementCommunicationTester
      */
     protected $tester;
@@ -83,6 +108,8 @@ class ProductTableTest extends Unit
         $this->tester->ensureProductAbstractTableIsEmpty();
         $this->setupLocales();
         $this->registerTwigServiceMock();
+        $this->registerUtilNumberService();
+        $this->registerLocaleService();
     }
 
     /**
@@ -91,8 +118,12 @@ class ProductTableTest extends Unit
     public function testFetchDataShouldReturnProductsWithDefaultLocale(): void
     {
         // Arrange
-        $productAbstractTransfer1 = $this->tester->haveProductAbstract();
-        $productAbstractTransfer2 = $this->tester->haveProductAbstract();
+        $productAbstractTransfer1 = $this->tester->haveProductAbstract([
+            ProductAbstractTransfer::ID_PRODUCT_ABSTRACT => static::ID_PRODUCT_ABSTRACT,
+        ]);
+        $productAbstractTransfer2 = $this->tester->haveProductAbstract([
+            ProductAbstractTransfer::ID_PRODUCT_ABSTRACT => static::ID_PRODUCT_ABSTRACT_2,
+        ]);
 
         $localizedAttributeDE1 = $this->createLocalizedAttributesTransfer(static::PRODUCT_NAME[static::LOCALE_NAME_DE], $this->localeTransfers[static::LOCALE_NAME_DE]);
         $localizedAttributeDE2 = $this->createLocalizedAttributesTransfer(static::PRODUCT_NAME[static::LOCALE_NAME_DE], $this->localeTransfers[static::LOCALE_NAME_DE]);
@@ -108,11 +139,11 @@ class ProductTableTest extends Unit
         $productTableData = $productTable->fetchData();
 
         // Assert
-        $expectedproductTableData = [
+        $expectedProductTableData = [
             $this->buildExpectedRow($productAbstractTransfer1->getIdProductAbstract(), $productAbstractTransfer1->getSku(), static::PRODUCT_NAME[static::LOCALE_NAME_DE]),
             $this->buildExpectedRow($productAbstractTransfer2->getIdProductAbstract(), $productAbstractTransfer2->getSku(), static::PRODUCT_NAME[static::LOCALE_NAME_DE]),
         ];
-        $this->assertEqualsCanonicalizing($expectedproductTableData, $productTableData);
+        $this->assertEqualsCanonicalizing($expectedProductTableData, $productTableData);
     }
 
     /**
@@ -121,8 +152,12 @@ class ProductTableTest extends Unit
     public function testFetchDataShouldReturnProductsWithNotDefaultLocaleWhenDefaultLocaleDoesNotPresentForTheProduct(): void
     {
         // Arrange
-        $productAbstractTransfer1 = $this->tester->haveProductAbstract();
-        $productAbstractTransfer2 = $this->tester->haveProductAbstract();
+        $productAbstractTransfer1 = $this->tester->haveProductAbstract([
+            ProductAbstractTransfer::ID_PRODUCT_ABSTRACT => static::ID_PRODUCT_ABSTRACT,
+        ]);
+        $productAbstractTransfer2 = $this->tester->haveProductAbstract([
+            ProductAbstractTransfer::ID_PRODUCT_ABSTRACT => static::ID_PRODUCT_ABSTRACT_2,
+        ]);
 
         $localizedAttributeDE1 = $this->createLocalizedAttributesTransfer(static::PRODUCT_NAME[static::LOCALE_NAME_DE], $this->localeTransfers[static::LOCALE_NAME_DE]);
         $localizedAttributeEN1 = $this->createLocalizedAttributesTransfer(static::PRODUCT_NAME[static::LOCALE_NAME_EN], $this->localeTransfers[static::LOCALE_NAME_EN]);
@@ -137,12 +172,12 @@ class ProductTableTest extends Unit
         $productTableData = $productTable->fetchData();
 
         // Assert
-        $expectedproductTableData = [
+        $expectedProductTableData = [
             $this->buildExpectedRow($productAbstractTransfer1->getIdProductAbstract(), $productAbstractTransfer1->getSku(), static::PRODUCT_NAME[static::LOCALE_NAME_EN]),
             $this->buildExpectedRow($productAbstractTransfer2->getIdProductAbstract(), $productAbstractTransfer2->getSku(), static::PRODUCT_NAME[static::LOCALE_NAME_DE]),
         ];
 
-        $this->assertEqualsCanonicalizing($expectedproductTableData, $productTableData);
+        $this->assertEqualsCanonicalizing($expectedProductTableData, $productTableData);
     }
 
     /**
@@ -152,6 +187,24 @@ class ProductTableTest extends Unit
     {
         $this->tester->getContainer()
             ->set(static::SERVICE_TWIG, $this->getTwigMock());
+    }
+
+    /**
+     * @return void
+     */
+    protected function registerUtilNumberService(): void
+    {
+        $this->tester->getContainer()
+            ->set(static::SERVICE_UTIL_NUMBER, $this->tester->getUtilService());
+    }
+
+    /**
+     * @return void
+     */
+    protected function registerLocaleService(): void
+    {
+        $this->tester->getContainer()
+            ->set(static::SERVICE_LOCALE, $this->tester->getCurrentLocaleName());
     }
 
     /**
@@ -290,11 +343,11 @@ class ProductTableTest extends Unit
     protected function buildExpectedRow(int $idProductAbstract, string $sku, string $name): array
     {
         return [
-            ProductTableMock::COL_ID_PRODUCT_ABSTRACT => $idProductAbstract,
+            ProductTableMock::COL_ID_PRODUCT_ABSTRACT => (string)$idProductAbstract,
             ProductTableMock::COL_SKU => $sku,
             ProductTableMock::COL_NAME => $name,
             ProductTableMock::COL_TAX_SET => null,
-            ProductTableMock::COL_VARIANT_COUNT => 0,
+            ProductTableMock::COL_VARIANT_COUNT => '0',
             ProductTableMock::COL_STATUS => static::RENDERED_STRING,
             ProductTableMock::COL_PRODUCT_TYPES => 'Product',
             ProductTableMock::COL_STORE_RELATION => '',

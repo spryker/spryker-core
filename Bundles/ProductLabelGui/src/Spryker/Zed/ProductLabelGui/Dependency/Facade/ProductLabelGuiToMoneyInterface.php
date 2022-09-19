@@ -16,12 +16,12 @@ interface ProductLabelGuiToMoneyInterface
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */
-    public function fromInteger($price);
+    public function fromInteger($price): MoneyTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\MoneyTransfer $moneyTransfer
      *
      * @return string
      */
-    public function formatWithSymbol(MoneyTransfer $moneyTransfer);
+    public function formatWithSymbol(MoneyTransfer $moneyTransfer): string;
 }

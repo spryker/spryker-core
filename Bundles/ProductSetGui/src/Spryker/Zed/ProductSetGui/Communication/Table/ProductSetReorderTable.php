@@ -135,7 +135,7 @@ class ProductSetReorderTable extends AbstractTable
     protected function generateItem(SpyProductSet $productSetEntity)
     {
         return [
-            static::COL_ID_PRODUCT_SET => $productSetEntity->getIdProductSet(),
+            static::COL_ID_PRODUCT_SET => $this->formatInt($productSetEntity->getIdProductSet()),
             static::COL_NAME => $productSetEntity->getVirtualColumn(static::COL_NAME),
             static::COL_PRODUCT_COUNT => $productSetEntity->countSpyProductAbstractSets(),
             static::COL_WEIGHT => $this->getWeightField($productSetEntity),

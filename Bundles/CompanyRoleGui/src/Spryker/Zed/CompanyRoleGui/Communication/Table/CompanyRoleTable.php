@@ -122,7 +122,7 @@ class CompanyRoleTable extends AbstractTable
 
         foreach ($queryResults as $companyRole) {
             $results[] = [
-                SpyCompanyRoleTableMap::COL_ID_COMPANY_ROLE => $companyRole[SpyCompanyRoleTableMap::COL_ID_COMPANY_ROLE],
+                SpyCompanyRoleTableMap::COL_ID_COMPANY_ROLE => $this->formatInt($companyRole[SpyCompanyRoleTableMap::COL_ID_COMPANY_ROLE]),
                 SpyCompanyTableMap::COL_NAME => $companyRole[SpyCompanyTableMap::COL_NAME],
                 SpyCompanyRoleTableMap::COL_NAME => $companyRole[SpyCompanyRoleTableMap::COL_NAME],
                 static::COL_ACTIONS => implode(' ', $this->createTableActions($companyRole)),

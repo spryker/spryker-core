@@ -45,4 +45,25 @@
         <property name="customOptions" type="array" singular="customOptions"/>
     </transfer>
 
+    <transfer name="NumberFormatConfig">
+        <property name="groupingSeparatorSymbol" type="string"/>
+        <property name="decimalSeparatorSymbol" type="string"/>
+    </transfer>
+
+    <transfer name="NumberFormatIntRequest">
+        <property name="number" type="int"/>
+        <property name="numberFormatFilter" type="NumberFormatFilter"/>
+    </transfer>
+
+    <transfer name="NumberFormatFloatRequest">
+        <property name="number" type="float"/>
+        <property name="numberFormatFilter" type="NumberFormatFilter"/>
+    </transfer>
+
+    <transfer name="NumberFormatFilter">
+        <property name="maxFractionDigits" type="int"/>
+        <property name="numberFormatStyle" type="int"/>
+        <property name="locale" type="string"/>
+    </transfer>
+
 </transfers>

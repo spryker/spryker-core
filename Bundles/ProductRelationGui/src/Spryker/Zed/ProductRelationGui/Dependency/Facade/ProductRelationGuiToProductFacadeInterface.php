@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductRelationGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductUrlTransfer;
 
 interface ProductRelationGuiToProductFacadeInterface
 {
@@ -16,12 +17,12 @@ interface ProductRelationGuiToProductFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductUrlTransfer
      */
-    public function getProductUrl(ProductAbstractTransfer $productAbstractTransfer);
+    public function getProductUrl(ProductAbstractTransfer $productAbstractTransfer): ProductUrlTransfer;
 
     /**
      * @param int $idProductAbstract
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
      */
-    public function findProductAbstractById($idProductAbstract);
+    public function findProductAbstractById($idProductAbstract): ?ProductAbstractTransfer;
 }

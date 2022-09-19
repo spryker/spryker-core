@@ -47,7 +47,7 @@
     } %}
 </td>
 <td>
-    x {{ orderItem.quantity }}
+    x {{ orderItem.quantity | executeFilterIfExists('formatInt', app.locale)  }}
 
     {% include '@MerchantSalesOrderMerchantUserGui/Detail/boxes/item-measurement-unit.twig' with {
         orderItem: orderItem,

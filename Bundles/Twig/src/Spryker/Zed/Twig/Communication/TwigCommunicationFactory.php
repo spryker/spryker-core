@@ -16,6 +16,10 @@ use Spryker\Shared\Twig\Loader\FilesystemLoaderInterface;
 use Spryker\Shared\Twig\TemplateNameExtractor\TemplateNameExtractor;
 use Spryker\Shared\Twig\TwigFilesystemLoader;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\Twig\Communication\Extender\FilterExtender;
+use Spryker\Zed\Twig\Communication\Extender\FilterExtenderInterface;
+use Spryker\Zed\Twig\Communication\Filter\FilterFactory;
+use Spryker\Zed\Twig\Communication\Filter\FilterFactoryInterface;
 use Spryker\Zed\Twig\Communication\RouteResolver\RouteResolver;
 use Spryker\Zed\Twig\Communication\RouteResolver\RouteResolverInterface;
 use Spryker\Zed\Twig\Communication\Subscriber\TwigEventSubscriber;
@@ -138,5 +142,23 @@ class TwigCommunicationFactory extends AbstractCommunicationFactory
     protected function getUtilTextService()
     {
         return $this->getProvidedDependency(TwigDependencyProvider::SERVICE_UTIL_TEXT);
+    }
+
+    /**
+     * @return \Spryker\Zed\Twig\Communication\Extender\FilterExtenderInterface
+     */
+    public function createFilterExtender(): FilterExtenderInterface
+    {
+        return new FilterExtender(
+            $this->createFilterFactory(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Twig\Communication\Filter\FilterFactoryInterface
+     */
+    public function createFilterFactory(): FilterFactoryInterface
+    {
+        return new FilterFactory();
     }
 }

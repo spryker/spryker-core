@@ -231,6 +231,12 @@ class ConfigurableBundleTemplateTable extends AbstractTable
     protected function mapConfigurableBundleTemplate(SpyConfigurableBundleTemplate $configurableBundleTemplateEntity): array
     {
         $configurableBundleTemplateRow = $configurableBundleTemplateEntity->toArray();
+        $configurableBundleTemplateRow[static::COL_ID_CONFIGURABLE_BUNDLE_TEMPLATE] = $this->formatInt(
+            $configurableBundleTemplateRow[static::COL_ID_CONFIGURABLE_BUNDLE_TEMPLATE],
+        );
+        $configurableBundleTemplateRow[static::COL_COUNT_OF_SLOTS] = $this->formatInt(
+            $configurableBundleTemplateRow[static::COL_COUNT_OF_SLOTS],
+        );
 
         $configurableBundleTemplateRow[static::COL_ACTIONS] = $this->buildLinks($configurableBundleTemplateEntity);
         $configurableBundleTemplateRow[static::COL_STATUS] = $this->getStatusLabel($configurableBundleTemplateEntity);

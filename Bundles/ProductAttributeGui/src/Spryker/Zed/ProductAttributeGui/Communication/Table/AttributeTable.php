@@ -97,7 +97,7 @@ class AttributeTable extends AbstractTable
         $productAbstractCollection = [];
         foreach ($queryResults as $item) {
             $productAbstractCollection[] = [
-                static::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE => $item[static::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE],
+                static::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE => $this->formatInt($item[static::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE]),
                 SpyProductAttributeKeyTableMap::COL_KEY => $item[SpyProductAttributeKeyTableMap::COL_KEY],
                 SpyProductAttributeKeyTableMap::COL_IS_SUPER => $item[SpyProductAttributeKeyTableMap::COL_IS_SUPER],
                 static::COL_INPUT_TYPE => $item[static::COL_INPUT_TYPE],

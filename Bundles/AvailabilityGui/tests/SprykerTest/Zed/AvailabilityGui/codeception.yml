@@ -44,9 +44,11 @@ suites:
                       twigPlugins:
                           - \Spryker\Zed\Translator\Communication\Plugin\Twig\TranslatorTwigPlugin
                           - \Spryker\Zed\ZedNavigation\Communication\Plugin\Twig\ZedNavigationTwigPlugin
+                          - \Spryker\Zed\Gui\Communication\Plugin\Twig\NumberFormatterTwigPlugin
                 - \SprykerTest\Zed\Gui\Helper\GuiTwigPluginHelper
                 - \SprykerTest\Zed\Router\Helper\RouterHelper
                 - \SprykerTest\Zed\Application\Helper\ApplicationHelper
+                - \SprykerTest\Zed\Locale\Helper\LocaleHelper
 
     Presentation:
         path: Presentation

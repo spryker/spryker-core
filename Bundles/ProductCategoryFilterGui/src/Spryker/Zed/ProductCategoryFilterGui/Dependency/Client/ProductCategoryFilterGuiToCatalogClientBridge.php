@@ -28,7 +28,7 @@ class ProductCategoryFilterGuiToCatalogClientBridge implements ProductCategoryFi
      *
      * @return array
      */
-    public function catalogSearch($searchString, array $requestParameters)
+    public function catalogSearch($searchString, array $requestParameters): array
     {
         return $this->catalogClient->catalogSearch($searchString, $requestParameters);
     }

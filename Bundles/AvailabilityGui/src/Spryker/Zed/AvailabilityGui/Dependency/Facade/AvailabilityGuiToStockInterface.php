@@ -17,14 +17,14 @@ interface AvailabilityGuiToStockInterface
      *
      * @return int
      */
-    public function createStockProduct(StockProductTransfer $transferStockProduct);
+    public function createStockProduct(StockProductTransfer $transferStockProduct): int;
 
     /**
      * @param \Generated\Shared\Transfer\StockProductTransfer $stockProductTransfer
      *
      * @return int
      */
-    public function updateStockProduct(StockProductTransfer $stockProductTransfer);
+    public function updateStockProduct(StockProductTransfer $stockProductTransfer): int;
 
     /**
      * @param int $idProductConcrete
@@ -32,24 +32,24 @@ interface AvailabilityGuiToStockInterface
      *
      * @return array<\Generated\Shared\Transfer\StockProductTransfer>
      */
-    public function findStockProductsByIdProductForStore($idProductConcrete, StoreTransfer $storeTransfer);
+    public function findStockProductsByIdProductForStore($idProductConcrete, StoreTransfer $storeTransfer): array;
 
     /**
      * @return array<array<string>>
      */
-    public function getWarehouseToStoreMapping();
+    public function getWarehouseToStoreMapping(): array;
 
     /**
      * @return array<array<string>>
      */
-    public function getStoreToWarehouseMapping();
+    public function getStoreToWarehouseMapping(): array;
 
     /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return array<string>
      */
-    public function getStockTypesForStore(StoreTransfer $storeTransfer);
+    public function getStockTypesForStore(StoreTransfer $storeTransfer): array;
 
     /**
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer

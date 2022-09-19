@@ -75,6 +75,7 @@ class MerchantRelationshipSalesOrderThresholdGuiCommunicationFactory extends Abs
         return new MerchantRelationshipThresholdDataProvider(
             $this->getMerchantRelationshipSalesOrderThresholdFacade(),
             $this->getCurrencyFacade(),
+            $this->getLocaleFacade(),
             $this->createMerchantRelationshipThresholdDataProviderResolver(),
             $this->getSalesOrderThresholdFormExpanderPlugins(),
         );

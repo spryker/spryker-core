@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\ProductOption\Dependency\Facade;
 
+use Generated\Shared\Transfer\TaxSetCollectionTransfer;
+use Generated\Shared\Transfer\TaxSetTransfer;
+
 interface ProductOptionToTaxFacadeInterface
 {
     /**
@@ -15,27 +18,27 @@ interface ProductOptionToTaxFacadeInterface
      *
      * @return float
      */
-    public function getTaxAmountFromGrossPrice($grossPrice, $taxRate);
+    public function getTaxAmountFromGrossPrice($grossPrice, $taxRate): float;
 
     /**
      * @return string
      */
-    public function getDefaultTaxCountryIso2Code();
+    public function getDefaultTaxCountryIso2Code(): string;
 
     /**
      * @return float
      */
-    public function getDefaultTaxRate();
+    public function getDefaultTaxRate(): float;
 
     /**
      * @return \Generated\Shared\Transfer\TaxSetCollectionTransfer
      */
-    public function getTaxSets();
+    public function getTaxSets(): TaxSetCollectionTransfer;
 
     /**
      * @param int $id
      *
      * @return \Generated\Shared\Transfer\TaxSetTransfer
      */
-    public function getTaxSet($id);
+    public function getTaxSet($id): TaxSetTransfer;
 }

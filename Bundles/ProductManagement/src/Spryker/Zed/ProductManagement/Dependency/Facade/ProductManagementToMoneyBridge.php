@@ -29,7 +29,7 @@ class ProductManagementToMoneyBridge implements ProductManagementToMoneyInterfac
      *
      * @return int
      */
-    public function convertDecimalToInteger($value)
+    public function convertDecimalToInteger($value): int
     {
         return $this->moneyFacade->convertDecimalToInteger($value);
     }
@@ -39,7 +39,7 @@ class ProductManagementToMoneyBridge implements ProductManagementToMoneyInterfac
      *
      * @return float
      */
-    public function convertIntegerToDecimal($value)
+    public function convertIntegerToDecimal($value): float
     {
         return $this->moneyFacade->convertIntegerToDecimal($value);
     }
@@ -49,7 +49,7 @@ class ProductManagementToMoneyBridge implements ProductManagementToMoneyInterfac
      *
      * @return string
      */
-    public function formatWithSymbol(MoneyTransfer $moneyTransfer)
+    public function formatWithSymbol(MoneyTransfer $moneyTransfer): string
     {
         return $this->moneyFacade->formatWithSymbol($moneyTransfer);
     }
@@ -60,7 +60,7 @@ class ProductManagementToMoneyBridge implements ProductManagementToMoneyInterfac
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */
-    public function fromInteger($amount, $isoCode = null)
+    public function fromInteger($amount, $isoCode = null): MoneyTransfer
     {
         return $this->moneyFacade->fromInteger($amount, $isoCode);
     }

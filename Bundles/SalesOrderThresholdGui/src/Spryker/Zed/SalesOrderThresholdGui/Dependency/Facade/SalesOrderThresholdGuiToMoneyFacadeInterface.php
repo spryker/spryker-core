@@ -14,12 +14,12 @@ interface SalesOrderThresholdGuiToMoneyFacadeInterface
      *
      * @return float
      */
-    public function convertIntegerToDecimal($value);
+    public function convertIntegerToDecimal($value): float;
 
     /**
      * @param float $value
      *
      * @return int
      */
-    public function convertDecimalToInteger($value);
+    public function convertDecimalToInteger($value): int;
 }

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductOption\Dependency\Facade;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
+
 interface ProductOptionToCurrencyFacadeInterface
 {
     /**
@@ -14,17 +16,17 @@ interface ProductOptionToCurrencyFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function getByIdCurrency($idCurrency);
+    public function getByIdCurrency($idCurrency): CurrencyTransfer;
 
     /**
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function getCurrent();
+    public function getCurrent(): CurrencyTransfer;
 
     /**
      * @param string $isoCode
      *
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function fromIsoCode($isoCode);
+    public function fromIsoCode($isoCode): CurrencyTransfer;
 }

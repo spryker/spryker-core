@@ -16,12 +16,12 @@ interface CompanyUserGuiToCustomerFacadeInterface
      *
      * @return bool
      */
-    public function hasEmail($email);
+    public function hasEmail($email): bool;
 
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    public function findCustomerById(CustomerTransfer $customerTransfer);
+    public function findCustomerById(CustomerTransfer $customerTransfer): ?CustomerTransfer;
 }

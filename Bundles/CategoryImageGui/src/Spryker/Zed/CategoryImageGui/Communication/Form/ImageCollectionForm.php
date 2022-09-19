@@ -8,10 +8,10 @@
 namespace Spryker\Zed\CategoryImageGui\Communication\Form;
 
 use Generated\Shared\Transfer\CategoryImageTransfer;
+use Spryker\Zed\Gui\Communication\Form\Type\FormattedNumberType;
 use Spryker\Zed\Gui\Communication\Form\Type\ImageType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -94,12 +94,17 @@ class ImageCollectionForm extends AbstractType
     protected const OPTION_IMAGE_WIDTH = 'image_width';
 
     /**
+     * @var string
+     */
+    protected const OPTION_LOCALE = 'locale';
+
+    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array<string, mixed> $options
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         parent::buildForm($builder, $options);
 
@@ -109,7 +114,7 @@ class ImageCollectionForm extends AbstractType
             ->addImageSmallField($builder)
             ->addImagePreviewLargeField($builder)
             ->addImageBigField($builder)
-            ->addSortOrderField($builder);
+            ->addSortOrderField($builder, $options);
     }
 
     /**
@@ -135,6 +140,7 @@ class ImageCollectionForm extends AbstractType
 
         $resolver->setDefaults([
             'data_class' => CategoryImageTransfer::class,
+            static::OPTION_LOCALE => null,
         ]);
     }
 
@@ -230,12 +236,14 @@ class ImageCollectionForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
-    protected function addSortOrderField(FormBuilderInterface $builder)
+    protected function addSortOrderField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_SORT_ORDER, NumberType::class, [
+        $builder->add(static::FIELD_SORT_ORDER, FormattedNumberType::class, [
+            'locale' => $options[static::OPTION_LOCALE],
             'constraints' => [
                 new NotBlank(),
                 new LessThanOrEqual([

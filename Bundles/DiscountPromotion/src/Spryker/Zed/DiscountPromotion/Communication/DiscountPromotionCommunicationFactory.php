@@ -7,9 +7,12 @@
 
 namespace Spryker\Zed\DiscountPromotion\Communication;
 
+use Spryker\Zed\DiscountPromotion\Communication\Expander\DiscountPromotionFormExpander;
+use Spryker\Zed\DiscountPromotion\Communication\Expander\DiscountPromotionFormExpanderInterface;
 use Spryker\Zed\DiscountPromotion\Communication\Form\Constraint\AbstractSkusExistConstraint;
 use Spryker\Zed\DiscountPromotion\Communication\Form\DiscountPromotionFormType;
 use Spryker\Zed\DiscountPromotion\Communication\Form\Transformer\AbstractSkusTransformer;
+use Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToLocaleFacadeInterface;
 use Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToProductInterface;
 use Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToTranslatorFacadeInterface;
 use Spryker\Zed\DiscountPromotion\DiscountPromotionDependencyProvider;
@@ -56,6 +59,14 @@ class DiscountPromotionCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Zed\DiscountPromotion\Communication\Expander\DiscountPromotionFormExpanderInterface
+     */
+    public function createDiscountPromotionFormExpander(): DiscountPromotionFormExpanderInterface
+    {
+        return new DiscountPromotionFormExpander($this->getLocaleFacade());
+    }
+
+    /**
      * @return \Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToProductInterface
      */
     public function getProductFacade(): DiscountPromotionToProductInterface
@@ -69,5 +80,13 @@ class DiscountPromotionCommunicationFactory extends AbstractCommunicationFactory
     public function getTranslatorFacade(): DiscountPromotionToTranslatorFacadeInterface
     {
         return $this->getProvidedDependency(DiscountPromotionDependencyProvider::FACADE_TRANSLATOR);
+    }
+
+    /**
+     * @return \Spryker\Zed\DiscountPromotion\Dependency\Facade\DiscountPromotionToLocaleFacadeInterface
+     */
+    public function getLocaleFacade(): DiscountPromotionToLocaleFacadeInterface
+    {
+        return $this->getProvidedDependency(DiscountPromotionDependencyProvider::FACADE_LOCALE);
     }
 }

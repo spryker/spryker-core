@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductCategoryFilterGui\Dependency\QueryContainer;
 
+use Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery;
+
 class ProductCategoryFilterGuiToProductCategoryQueryContainerBridge implements ProductCategoryFilterGuiToProductCategoryQueryContainerInterface
 {
     /**
@@ -25,7 +27,7 @@ class ProductCategoryFilterGuiToProductCategoryQueryContainerBridge implements P
     /**
      * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
      */
-    public function queryProductCategoryMappings()
+    public function queryProductCategoryMappings(): SpyProductCategoryQuery
     {
         return $this->productCategoryQueryContainer->queryProductCategoryMappings();
     }

@@ -25,7 +25,7 @@ class StorageToLocaleClientBridge implements StorageToLocaleClientInterface
     /**
      * @return string
      */
-    public function getCurrentLocale()
+    public function getCurrentLocale(): string
     {
         return $this->localeClient->getCurrentLocale();
     }

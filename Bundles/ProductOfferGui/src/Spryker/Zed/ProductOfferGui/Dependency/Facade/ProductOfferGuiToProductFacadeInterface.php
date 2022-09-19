@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductOfferGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\ProductConcreteTransfer;
+
 interface ProductOfferGuiToProductFacadeInterface
 {
     /**
@@ -16,5 +18,5 @@ interface ProductOfferGuiToProductFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function getProductConcrete($concreteSku);
+    public function getProductConcrete($concreteSku): ProductConcreteTransfer;
 }

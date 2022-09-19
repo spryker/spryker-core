@@ -49,4 +49,12 @@ class CategoryImageGuiToLocaleBridge implements CategoryImageGuiToLocaleInterfac
     {
         return $this->localeFacade->getAvailableLocales();
     }
+
+    /**
+     * @return string
+     */
+    public function getCurrentLocaleName(): string
+    {
+        return $this->localeFacade->getCurrentLocaleName();
+    }
 }

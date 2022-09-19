@@ -11,10 +11,11 @@ use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaProviderFactory;
 use Spryker\Zed\Discount\Communication\Form\Constraint\QueryString;
 use Spryker\Zed\Discount\DiscountConfig;
+use Spryker\Zed\Gui\Communication\Form\Type\FormattedNumberType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -38,15 +39,34 @@ class ConditionsForm extends AbstractType
     public const FIELD_MINIMUM_ITEM_AMOUNT = 'minimum_item_amount';
 
     /**
+     * @var string
+     */
+    protected const OPTION_LOCALE = 'locale';
+
+    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array<string> $options
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addDecisionRuleQueryString($builder);
-        $this->addMinimumItemAmount($builder);
+        $this->addMinimumItemAmount($builder, $options);
+    }
+
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        parent::configureOptions($resolver);
+
+        $resolver->setDefaults([
+            static::OPTION_LOCALE => null,
+        ]);
     }
 
     /**
@@ -82,15 +102,17 @@ class ConditionsForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array<string> $options
      *
      * @return $this
      */
-    protected function addMinimumItemAmount(FormBuilderInterface $builder)
+    protected function addMinimumItemAmount(FormBuilderInterface $builder, array $options)
     {
         $label = 'The discount can be applied if the query applies for at least X item(s).';
 
-        $builder->add(static::FIELD_MINIMUM_ITEM_AMOUNT, NumberType::class, [
+        $builder->add(static::FIELD_MINIMUM_ITEM_AMOUNT, FormattedNumberType::class, [
             'label' => $label,
+            'locale' => $options[static::OPTION_LOCALE],
             'constraints' => [
                 new NotBlank(),
                 new GreaterThanOrEqual(DiscountConfig::DEFAULT_MINIMUM_ITEM_AMOUNT),
@@ -107,7 +129,7 @@ class ConditionsForm extends AbstractType
     /**
      * @return string
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'discount_conditions';
     }

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Sales\Dependency\Facade;
 
+use Generated\Shared\Transfer\UserTransfer;
+
 class SalesToUserBridge implements SalesToUserInterface
 {
     /**
@@ -25,7 +27,7 @@ class SalesToUserBridge implements SalesToUserInterface
     /**
      * @return \Generated\Shared\Transfer\UserTransfer
      */
-    public function getCurrentUser()
+    public function getCurrentUser(): UserTransfer
     {
         return $this->userFacade->getCurrentUser();
     }

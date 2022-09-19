@@ -16,5 +16,5 @@ interface SalesToUtilSanitizeInterface
      *
      * @return string
      */
-    public function escapeHtml($text, $double = true, $charset = null);
+    public function escapeHtml($text, $double = true, $charset = null): string;
 }

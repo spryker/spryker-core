@@ -22,7 +22,7 @@ interface ShipmentGuiToShipmentFacadeInterface
     /**
      * @return array<\Generated\Shared\Transfer\ShipmentMethodTransfer>
      */
-    public function getMethods();
+    public function getMethods(): array;
 
     /**
      * @param int $idShipmentMethod
@@ -80,7 +80,7 @@ interface ShipmentGuiToShipmentFacadeInterface
      *
      * @return int
      */
-    public function createCarrier(ShipmentCarrierTransfer $carrierTransfer);
+    public function createCarrier(ShipmentCarrierTransfer $carrierTransfer): int;
 
     /**
      * @param string $shipmentMethodName
@@ -115,7 +115,7 @@ interface ShipmentGuiToShipmentFacadeInterface
      *
      * @return bool
      */
-    public function deleteMethod($idMethod);
+    public function deleteMethod($idMethod): bool;
 
     /**
      * @return \Generated\Shared\Transfer\ShipmentMethodPluginCollectionTransfer

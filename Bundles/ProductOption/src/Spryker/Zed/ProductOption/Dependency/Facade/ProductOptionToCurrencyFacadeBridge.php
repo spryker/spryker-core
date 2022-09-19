@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductOption\Dependency\Facade;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
+
 class ProductOptionToCurrencyFacadeBridge implements ProductOptionToCurrencyFacadeInterface
 {
     /**
@@ -27,7 +29,7 @@ class ProductOptionToCurrencyFacadeBridge implements ProductOptionToCurrencyFaca
      *
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function getByIdCurrency($idCurrency)
+    public function getByIdCurrency($idCurrency): CurrencyTransfer
     {
         return $this->currencyFacade->getByIdCurrency($idCurrency);
     }
@@ -35,7 +37,7 @@ class ProductOptionToCurrencyFacadeBridge implements ProductOptionToCurrencyFaca
     /**
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function getCurrent()
+    public function getCurrent(): CurrencyTransfer
     {
         return $this->currencyFacade->getCurrent();
     }
@@ -45,7 +47,7 @@ class ProductOptionToCurrencyFacadeBridge implements ProductOptionToCurrencyFaca
      *
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function fromIsoCode($isoCode)
+    public function fromIsoCode($isoCode): CurrencyTransfer
     {
         return $this->currencyFacade->fromIsoCode($isoCode);
     }

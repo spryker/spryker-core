@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductManagement\Dependency\Facade;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
+
 class ProductManagementToCurrencyBridge implements ProductManagementToCurrencyInterface
 {
     /**
@@ -25,7 +27,7 @@ class ProductManagementToCurrencyBridge implements ProductManagementToCurrencyIn
     /**
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function getCurrent()
+    public function getCurrent(): CurrencyTransfer
     {
         return $this->currencyFacade->getCurrent();
     }
@@ -33,7 +35,7 @@ class ProductManagementToCurrencyBridge implements ProductManagementToCurrencyIn
     /**
      * @return array<\Generated\Shared\Transfer\StoreWithCurrencyTransfer>
      */
-    public function getAllStoresWithCurrencies()
+    public function getAllStoresWithCurrencies(): array
     {
         return $this->currencyFacade->getAllStoresWithCurrencies();
     }
@@ -41,7 +43,7 @@ class ProductManagementToCurrencyBridge implements ProductManagementToCurrencyIn
     /**
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function getDefaultCurrencyForCurrentStore()
+    public function getDefaultCurrencyForCurrentStore(): CurrencyTransfer
     {
         return $this->currencyFacade->getDefaultCurrencyForCurrentStore();
     }

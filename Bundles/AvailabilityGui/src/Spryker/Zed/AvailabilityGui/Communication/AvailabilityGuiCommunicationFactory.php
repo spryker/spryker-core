@@ -127,7 +127,11 @@ class AvailabilityGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createAvailabilityGuiStockFormDataProvider(StoreTransfer $storeTransfer)
     {
-        return new AvailabilityStockFormDataProvider($this->getStockFacade(), $storeTransfer);
+        return new AvailabilityStockFormDataProvider(
+            $this->getStockFacade(),
+            $this->getLocalFacade(),
+            $storeTransfer,
+        );
     }
 
     /**

@@ -46,8 +46,10 @@ class PriceProductSubForm extends AbstractType
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
+        parent::configureOptions($resolver);
+
         $resolver->setDefined([
             PriceProductScheduleFormDataProvider::OPTION_PRICE_TYPE_CHOICES,
             PriceProductScheduleFormDataProvider::OPTION_STORE_CHOICES,
@@ -59,6 +61,10 @@ class PriceProductSubForm extends AbstractType
             PriceProductScheduleFormDataProvider::OPTION_PRICE_TYPE_CHOICES,
             PriceProductScheduleFormDataProvider::OPTION_STORE_CHOICES,
             PriceProductScheduleFormDataProvider::OPTION_IS_PRICE_TYPE_DISABLED,
+        ]);
+
+        $resolver->setDefaults([
+            PriceProductScheduleFormDataProvider::OPTION_LOCALE => null,
         ]);
     }
 
@@ -107,6 +113,7 @@ class PriceProductSubForm extends AbstractType
             'data_class' => MoneyValueTransfer::class,
             PriceProductScheduleFormDataProvider::OPTION_STORE_CHOICES => $options[PriceProductScheduleFormDataProvider::OPTION_STORE_CHOICES],
             PriceProductScheduleFormDataProvider::OPTION_CURRENCY_CHOICES => $options[PriceProductScheduleFormDataProvider::OPTION_CURRENCY_CHOICES],
+            PriceProductScheduleFormDataProvider::OPTION_LOCALE => $options[PriceProductScheduleFormDataProvider::OPTION_LOCALE],
         ]);
 
         return $this;

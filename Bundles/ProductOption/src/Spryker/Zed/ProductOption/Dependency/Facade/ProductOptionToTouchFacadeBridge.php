@@ -29,7 +29,7 @@ class ProductOptionToTouchFacadeBridge implements ProductOptionToTouchFacadeInte
      *
      * @return bool
      */
-    public function touchActive($itemType, $idItem, $keyChange = false)
+    public function touchActive($itemType, $idItem, $keyChange = false): bool
     {
         return $this->touchFacade->touchActive($itemType, $idItem, $keyChange);
     }

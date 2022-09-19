@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductOption\Dependency\Facade;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+
 class ProductOptionToLocaleFacadeBridge implements ProductOptionToLocaleFacadeInterface
 {
     /**
@@ -27,7 +29,7 @@ class ProductOptionToLocaleFacadeBridge implements ProductOptionToLocaleFacadeIn
      *
      * @return bool
      */
-    public function hasLocale($localeName)
+    public function hasLocale($localeName): bool
     {
         return $this->localeFacade->hasLocale($localeName);
     }
@@ -37,7 +39,7 @@ class ProductOptionToLocaleFacadeBridge implements ProductOptionToLocaleFacadeIn
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getLocale($localeName)
+    public function getLocale($localeName): LocaleTransfer
     {
         return $this->localeFacade->getLocale($localeName);
     }
@@ -47,7 +49,7 @@ class ProductOptionToLocaleFacadeBridge implements ProductOptionToLocaleFacadeIn
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getLocaleByCode($localeCode)
+    public function getLocaleByCode($localeCode): LocaleTransfer
     {
         return $this->localeFacade->getLocaleByCode($localeCode);
     }
@@ -55,7 +57,7 @@ class ProductOptionToLocaleFacadeBridge implements ProductOptionToLocaleFacadeIn
     /**
      * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
-    public function getLocaleCollection()
+    public function getLocaleCollection(): array
     {
         return $this->localeFacade->getLocaleCollection();
     }
@@ -63,8 +65,16 @@ class ProductOptionToLocaleFacadeBridge implements ProductOptionToLocaleFacadeIn
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getCurrentLocale()
+    public function getCurrentLocale(): LocaleTransfer
     {
         return $this->localeFacade->getCurrentLocale();
+    }
+
+    /**
+     * @return string
+     */
+    public function getCurrentLocaleName(): string
+    {
+        return $this->localeFacade->getCurrentLocaleName();
     }
 }

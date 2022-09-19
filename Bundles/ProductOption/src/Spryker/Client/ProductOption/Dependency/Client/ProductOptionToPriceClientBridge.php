@@ -25,7 +25,7 @@ class ProductOptionToPriceClientBridge implements ProductOptionToPriceClientInte
     /**
      * @return string
      */
-    public function getCurrentPriceMode()
+    public function getCurrentPriceMode(): string
     {
         return $this->priceClient->getCurrentPriceMode();
     }

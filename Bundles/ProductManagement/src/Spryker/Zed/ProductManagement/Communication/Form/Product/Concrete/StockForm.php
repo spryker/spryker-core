@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form\Product\Concrete;
 
+use Spryker\Zed\Gui\Communication\Form\Type\FormattedNumberType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -14,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
@@ -51,6 +53,11 @@ class StockForm extends AbstractType
     public const FIELD_IS_NEVER_OUT_OF_STOCK = 'is_never_out_of_stock';
 
     /**
+     * @var string
+     */
+    protected const OPTION_LOCALE = 'locale';
+
+    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array<string, mixed> $options
      *
@@ -64,6 +71,20 @@ class StockForm extends AbstractType
             ->addTypeField($builder, $options)
             ->addQuantityField($builder, $options)
             ->addIsNeverOutOfStockCheckbox($builder);
+    }
+
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        parent::configureOptions($resolver);
+
+        $resolver->setDefaults([
+            static::OPTION_LOCALE => null,
+        ]);
     }
 
     /**
@@ -122,8 +143,9 @@ class StockForm extends AbstractType
      */
     protected function addQuantityField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_QUANTITY, TextType::class, [
+        $builder->add(static::FIELD_QUANTITY, FormattedNumberType::class, [
             'label' => 'Quantity',
+            'locale' => $options[static::OPTION_LOCALE],
             'required' => true,
             'constraints' => [
                 new NotBlank(),

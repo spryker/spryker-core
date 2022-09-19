@@ -74,8 +74,12 @@ class AvailabilityGuiToAvailabilityQueryContainerBridge implements AvailabilityG
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
      */
-    public function queryAvailabilityAbstractWithStockByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale, $idStore, array $stockNames = [])
-    {
+    public function queryAvailabilityAbstractWithStockByIdProductAbstractAndIdLocale(
+        $idProductAbstract,
+        $idLocale,
+        $idStore,
+        array $stockNames = []
+    ): SpyProductAbstractQuery {
         return $this->availabilityQueryContainer->queryAvailabilityAbstractWithStockByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale, $idStore, $stockNames);
     }
 

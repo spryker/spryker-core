@@ -9,7 +9,8 @@
         "spryker/product-offer-gui-extension": "^1.0.0",
         "spryker/product-offer-stock": "^1.0.0",
         "spryker/product-offer-stock-gui-extension": "^1.0.0",
-        "spryker/transfer": "^3.18.0"
+        "spryker/transfer": "^3.18.0",
+        "spryker/twig": "^3.16.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*"

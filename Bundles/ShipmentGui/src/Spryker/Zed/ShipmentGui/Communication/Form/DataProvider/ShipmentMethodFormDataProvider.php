@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ShipmentGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\ShipmentMethodPluginCollectionTransfer;
+use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToLocaleFacadeInterface;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToShipmentFacadeInterface;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToTaxFacadeInterface;
 
@@ -61,12 +62,14 @@ class ShipmentMethodFormDataProvider extends ViewShipmentMethodFormDataProvider
     /**
      * @param \Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToShipmentFacadeInterface $shipmentFacade
      * @param \Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToTaxFacadeInterface $taxFacade
+     * @param \Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToLocaleFacadeInterface $localeFacade
      */
     public function __construct(
         ShipmentGuiToShipmentFacadeInterface $shipmentFacade,
-        ShipmentGuiToTaxFacadeInterface $taxFacade
+        ShipmentGuiToTaxFacadeInterface $taxFacade,
+        ShipmentGuiToLocaleFacadeInterface $localeFacade
     ) {
-        parent::__construct($taxFacade);
+        parent::__construct($taxFacade, $localeFacade);
         $this->shipmentFacade = $shipmentFacade;
     }
 

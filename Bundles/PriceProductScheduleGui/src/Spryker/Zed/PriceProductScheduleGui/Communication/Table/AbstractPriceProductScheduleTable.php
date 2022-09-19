@@ -143,7 +143,7 @@ abstract class AbstractPriceProductScheduleTable extends AbstractTable
      *
      * @return array
      */
-    protected function prepareData(TableConfiguration $config)
+    protected function prepareData(TableConfiguration $config): array
     {
         $query = $this->prepareQuery();
         $queryResults = $this->runQuery($query, $config, true);

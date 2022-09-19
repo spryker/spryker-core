@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ShipmentGui\Communication\Exception\MissingMoneyCollectionFormTypePluginException;
 use Spryker\Zed\ShipmentGui\Communication\Exception\MissingStoreRelationFormTypePluginException;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToCustomerFacadeBridge;
+use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToLocaleFacadeBridge;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToSalesFacadeBridge;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToShipmentFacadeBridge;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToTaxFacadeBridge;
@@ -43,6 +44,11 @@ class ShipmentGuiDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_TAX = 'FACADE_TAX';
+
+    /**
+     * @var string
+     */
+    public const FACADE_LOCALE = 'FACADE_LOCALE';
 
     /**
      * @var string
@@ -80,6 +86,7 @@ class ShipmentGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addShipmentFacade($container);
         $container = $this->addCustomerFacade($container);
         $container = $this->addTaxFacade($container);
+        $container = $this->addLocaleFacade($container);
         $container = $this->addShipmentService($container);
         $container = $this->addShipmentMethodQuery($container);
         $container = $this->addMoneyCollectionFormTypePlugin($container);
@@ -206,6 +213,20 @@ class ShipmentGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_CUSTOMER, function (Container $container) {
             return new ShipmentGuiToCustomerFacadeBridge($container->getLocator()->customer()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addLocaleFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
+            return new ShipmentGuiToLocaleFacadeBridge($container->getLocator()->locale()->facade());
         });
 
         return $container;

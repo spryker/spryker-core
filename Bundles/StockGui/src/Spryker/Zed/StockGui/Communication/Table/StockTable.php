@@ -128,7 +128,7 @@ class StockTable extends AbstractTable
     protected function generateItem(SpyStock $stockEntity, array $stockToStoreMapping): array
     {
         return [
-            static::COL_ID_STOCK => $stockEntity->getIdStock(),
+            static::COL_ID_STOCK => $this->formatInt($stockEntity->getIdStock()),
             static::COL_NAME => $stockEntity->getName(),
             static::COL_IS_ACTIVE => $this->getStatusLabel((bool)$stockEntity->getIsActive()),
             static::COL_AVAILABLE_IN_STORE => $this->formatStoreNames($stockToStoreMapping[$stockEntity->getName()]),

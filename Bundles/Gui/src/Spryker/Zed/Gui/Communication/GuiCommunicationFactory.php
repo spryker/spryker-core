@@ -9,8 +9,13 @@ namespace Spryker\Zed\Gui\Communication;
 
 use Spryker\Shared\Twig\Loader\FilesystemLoader;
 use Spryker\Shared\Twig\Loader\FilesystemLoaderInterface;
+use Spryker\Zed\Gui\Communication\Extender\NumberFormatterTwigFilterExtender;
+use Spryker\Zed\Gui\Communication\Extender\NumberFormatterTwigFilterExtenderInterface;
+use Spryker\Zed\Gui\Communication\Filter\NumberFormatterTwigFilterFactory;
+use Spryker\Zed\Gui\Communication\Filter\NumberFormatterTwigFilterFactoryInterface;
 use Spryker\Zed\Gui\Communication\Form\Type\Extension\NoValidateTypeExtension;
 use Spryker\Zed\Gui\Communication\Form\Type\Extension\SanitizeXssTypeExtension;
+use Spryker\Zed\Gui\Dependency\Service\GuiToUtilNumberServiceInterface;
 use Spryker\Zed\Gui\Dependency\Service\GuiToUtilSanitizeXssServiceInterface;
 use Spryker\Zed\Gui\GuiDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
@@ -54,10 +59,38 @@ class GuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Zed\Gui\Communication\Extender\NumberFormatterTwigFilterExtenderInterface
+     */
+    public function createNumberFormatterTwigFilterExtender(): NumberFormatterTwigFilterExtenderInterface
+    {
+        return new NumberFormatterTwigFilterExtender(
+            $this->createNumberFormatterTwigFilterFactory(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Gui\Communication\Filter\NumberFormatterTwigFilterFactoryInterface
+     */
+    public function createNumberFormatterTwigFilterFactory(): NumberFormatterTwigFilterFactoryInterface
+    {
+        return new NumberFormatterTwigFilterFactory(
+            $this->getUtilNumberService(),
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\Gui\Dependency\Service\GuiToUtilSanitizeXssServiceInterface
      */
     public function getUtilSanitizeXssService(): GuiToUtilSanitizeXssServiceInterface
     {
         return $this->getProvidedDependency(GuiDependencyProvider::SERVICE_UTIL_SANITIZE_XSS);
+    }
+
+    /**
+     * @return \Spryker\Zed\Gui\Dependency\Service\GuiToUtilNumberServiceInterface
+     */
+    public function getUtilNumberService(): GuiToUtilNumberServiceInterface
+    {
+        return $this->getProvidedDependency(GuiDependencyProvider::SERVICE_UTIL_NUMBER);
     }
 }

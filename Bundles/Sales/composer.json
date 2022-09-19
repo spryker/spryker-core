@@ -22,6 +22,7 @@
         "spryker/store": "^1.0.0",
         "spryker/symfony": "^3.0.0",
         "spryker/transfer": "^3.25.0",
+        "spryker/twig": "^3.16.0",
         "spryker/user": "^3.0.0",
         "spryker/util-date-time": "^1.0.0",
         "spryker/util-sanitize": "^2.0.0",

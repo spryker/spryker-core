@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\PriceProductVolumeGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
+
 class PriceProductVolumeGuiToCurrencyFacadeBridge implements PriceProductVolumeGuiToCurrencyFacadeInterface
 {
     /**
@@ -27,7 +29,7 @@ class PriceProductVolumeGuiToCurrencyFacadeBridge implements PriceProductVolumeG
      *
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function fromIsoCode($isoCode)
+    public function fromIsoCode($isoCode): CurrencyTransfer
     {
         return $this->currencyFacade->fromIsoCode($isoCode);
     }

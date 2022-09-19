@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductSetGui\Dependency\QueryContainer;
 
+use Orm\Zed\ProductSet\Persistence\SpyProductSetQuery;
+
 class ProductSetGuiToProductSetBridge implements ProductSetGuiToProductSetInterface
 {
     /**
@@ -25,7 +27,7 @@ class ProductSetGuiToProductSetBridge implements ProductSetGuiToProductSetInterf
     /**
      * @return \Orm\Zed\ProductSet\Persistence\SpyProductSetQuery
      */
-    public function queryProductSet()
+    public function queryProductSet(): SpyProductSetQuery
     {
         return $this->productSetQueryContainer->queryProductSet();
     }

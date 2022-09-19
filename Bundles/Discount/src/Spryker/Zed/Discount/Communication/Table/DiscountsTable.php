@@ -196,7 +196,7 @@ class DiscountsTable extends AbstractTable
             ];
 
             if ($hasPriorityField) {
-                $rowData[static::TABLE_COL_PRIORITY] = $discountEntity->getPriority();
+                $rowData[static::TABLE_COL_PRIORITY] = $this->formatInt((int)$discountEntity->getPriority());
             }
 
             $result[] = $rowData;

@@ -7,9 +7,6 @@
 
 namespace Spryker\Zed\DiscountPromotion\Communication\Plugin\Discount;
 
-use Generated\Shared\Transfer\DiscountCalculatorTransfer;
-use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
-use Generated\Shared\Transfer\DiscountPromotionTransfer;
 use Spryker\Zed\Discount\Dependency\Plugin\Form\DiscountFormExpanderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -24,6 +21,7 @@ class DiscountPromotionCalculationFormExpanderPlugin extends AbstractPlugin impl
 {
     /**
      * {@inheritDoc}
+     * - Expands discount form with discount promotion sub form.
      *
      * @api
      *
@@ -34,15 +32,8 @@ class DiscountPromotionCalculationFormExpanderPlugin extends AbstractPlugin impl
      */
     public function expandFormType(FormBuilderInterface $builder, array $options)
     {
-        $calculatorFormTypeBuilder = $builder->get(DiscountConfiguratorTransfer::DISCOUNT_CALCULATOR);
-
-        return $calculatorFormTypeBuilder->add(
-            DiscountCalculatorTransfer::DISCOUNT_PROMOTION,
-            $this->getFactory()->createDiscountFormPromotionType(),
-            [
-                'data_class' => DiscountPromotionTransfer::class,
-                'label' => false,
-            ],
-        );
+        return $this->getFactory()
+            ->createDiscountPromotionFormExpander()
+            ->expandFormType($builder, $options);
     }
 }

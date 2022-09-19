@@ -1,0 +1,20 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Storage overview' %}
+
+{% block head_title widget_title | trans %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' %}
+        {% block widget_content %}
+            <div class="row">
+                <div class="col-md-12">
+                    <dl class="row">
+                        <dt class="col-xs-3">{{ "Number of entries:" | trans }}</dt>
+                        <dd class="col-xs-9"><a href="/storage-gui/maintenance/list">{{ totalCount | executeFilterIfExists('formatInt', app.locale) }}</a></dd>
+                    </dl>
+                </div>
+            </div>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

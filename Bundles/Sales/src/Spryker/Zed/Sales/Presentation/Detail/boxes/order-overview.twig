@@ -10,7 +10,7 @@
                         <dt>{{ 'Order date' | trans }}</dt>
                         <dd>{{ order.createdAt | formatDateTime }}</dd>
                         <dt>{{ 'Unique Product Quantity' | trans }}</dt>
-                        <dd>{{ order.uniqueProductQuantity }}</dd>
+                        <dd>{{ order.uniqueProductQuantity | executeFilterIfExists('formatInt', app.locale) }}</dd>
                     </dl>
                 </div>
             </div>
@@ -20,7 +20,7 @@
 
                 <div class="row">
                     {% for orderItem in groupedOrderItems %}
-                        <div class="col-sm-10"><p>{{ orderItem.name }} x {{ orderItem.quantity }}</p></div>
+                        <div class="col-sm-10"><p>{{ orderItem.name }} x {{ orderItem.quantity | executeFilterIfExists('formatInt', app.locale) }}</p></div>
                         <div class="col-sm-2">{{ orderItem.sumPrice | money(true, order.currencyIsoCode) }}</div>
 
                         {% for orderItemOption in orderItem.productOptions %}

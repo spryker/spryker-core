@@ -31,7 +31,7 @@ class MerchantSalesReturnMerchantUserGuiToGlossaryFacadeBridge implements Mercha
      *
      * @return string
      */
-    public function translate($keyName, array $data = [], ?LocaleTransfer $localeTransfer = null)
+    public function translate($keyName, array $data = [], ?LocaleTransfer $localeTransfer = null): string
     {
         return $this->glossaryFacade->translate($keyName, $data, $localeTransfer);
     }

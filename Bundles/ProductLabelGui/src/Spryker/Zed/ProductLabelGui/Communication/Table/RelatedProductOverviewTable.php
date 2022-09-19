@@ -13,7 +13,6 @@ use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-use Spryker\Zed\ProductManagement\Communication\Controller\ViewController;
 
 class RelatedProductOverviewTable extends AbstractRelatedProductTable
 {
@@ -41,6 +40,13 @@ class RelatedProductOverviewTable extends AbstractRelatedProductTable
      * @var string
      */
     public const COL_ACTIONS = 'actions';
+
+    /**
+     * @uses \Spryker\Zed\ProductManagement\Communication\Controller\ViewController::PARAM_ID_PRODUCT_ABSTRACT
+     *
+     * @var string
+     */
+    protected const PARAM_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
 
     /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
@@ -220,7 +226,7 @@ class RelatedProductOverviewTable extends AbstractRelatedProductTable
             Url::generate(
                 '/product-management/view',
                 [
-                    ViewController::PARAM_ID_PRODUCT_ABSTRACT => $productAbstractEntity->getIdProductAbstract(),
+                    static::PARAM_ID_PRODUCT_ABSTRACT => $productAbstractEntity->getIdProductAbstract(),
                 ],
             ),
             'View',

@@ -83,7 +83,9 @@ class CategoryRootNodeTable extends AbstractTable
         $results = [];
         foreach ($queryResults as $rootNode) {
             $results[] = [
-                SpyCategoryAttributeTableMap::COL_FK_CATEGORY => $rootNode[SpyCategoryAttributeTableMap::COL_FK_CATEGORY],
+                SpyCategoryAttributeTableMap::COL_FK_CATEGORY => $this->formatInt(
+                    $rootNode[SpyCategoryAttributeTableMap::COL_FK_CATEGORY],
+                ),
                 SpyCategoryAttributeTableMap::COL_NAME => $rootNode[SpyCategoryAttributeTableMap::COL_NAME],
             ];
         }

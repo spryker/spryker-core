@@ -1,0 +1,24 @@
+{% extends '@Application/Layout/layout.twig' %}
+
+{% block body_class %}spy-page{% endblock %}
+
+{% block action %}
+    {{ viewActionButton('/storage-gui/maintenance', 'All Keys' | trans) }}
+{% endblock %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Search Key' } %}
+
+        {% block widget_content %}
+
+            <h1>{{ key }}</h1>
+            {% if referenceKey %}
+            <a href="/storage-gui/maintenance/key?key={{ referenceKey }}">{{ referenceKey }}</a>
+            {% endif %}
+            <pre>{{ value }}</pre>
+
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}

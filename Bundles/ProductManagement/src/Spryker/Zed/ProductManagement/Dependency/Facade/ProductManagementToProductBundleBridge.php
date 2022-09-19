@@ -29,7 +29,7 @@ class ProductManagementToProductBundleBridge implements ProductManagementToProdu
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function saveBundledProducts(ProductConcreteTransfer $productConcreteTransfer)
+    public function saveBundledProducts(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
     {
         return $this->productBundleFacade->saveBundledProducts($productConcreteTransfer);
     }

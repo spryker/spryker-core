@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CustomerUserConnectorGui\Dependency\QueryContainer;
 
+use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
+
 class CustomerUserConnectorGuiToCustomerQueryContainerBridge implements CustomerUserConnectorGuiToCustomerQueryContainerInterface
 {
     /**
@@ -27,7 +29,7 @@ class CustomerUserConnectorGuiToCustomerQueryContainerBridge implements Customer
      *
      * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
      */
-    public function queryCustomerById($id)
+    public function queryCustomerById($id): SpyCustomerQuery
     {
         return $this->customerQueryContainer->queryCustomerById($id);
     }
@@ -35,7 +37,7 @@ class CustomerUserConnectorGuiToCustomerQueryContainerBridge implements Customer
     /**
      * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
      */
-    public function queryCustomers()
+    public function queryCustomers(): SpyCustomerQuery
     {
         return $this->customerQueryContainer->queryCustomers();
     }

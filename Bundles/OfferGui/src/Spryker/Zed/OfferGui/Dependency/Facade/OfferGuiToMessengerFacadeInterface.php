@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\OfferGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\FlashMessagesTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 
 interface OfferGuiToMessengerFacadeInterface
@@ -14,26 +15,26 @@ interface OfferGuiToMessengerFacadeInterface
     /**
      * @return \Generated\Shared\Transfer\FlashMessagesTransfer
      */
-    public function getStoredMessages();
+    public function getStoredMessages(): FlashMessagesTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\MessageTransfer $message
      *
      * @return void
      */
-    public function addSuccessMessage(MessageTransfer $message);
+    public function addSuccessMessage(MessageTransfer $message): void;
 
     /**
      * @param \Generated\Shared\Transfer\MessageTransfer $message
      *
      * @return void
      */
-    public function addErrorMessage(MessageTransfer $message);
+    public function addErrorMessage(MessageTransfer $message): void;
 
     /**
      * @param \Generated\Shared\Transfer\MessageTransfer $message
      *
      * @return void
      */
-    public function addInfoMessage(MessageTransfer $message);
+    public function addInfoMessage(MessageTransfer $message): void;
 }

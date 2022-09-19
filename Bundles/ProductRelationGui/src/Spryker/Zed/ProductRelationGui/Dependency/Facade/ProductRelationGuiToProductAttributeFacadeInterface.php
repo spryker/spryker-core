@@ -12,5 +12,5 @@ interface ProductRelationGuiToProductAttributeFacadeInterface
     /**
      * @return array<\Generated\Shared\Transfer\ProductManagementAttributeTransfer>
      */
-    public function getProductAttributeCollection();
+    public function getProductAttributeCollection(): array;
 }

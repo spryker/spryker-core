@@ -30,7 +30,7 @@ class DiscountToMoneyBridge implements DiscountToMoneyInterface
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */
-    public function fromInteger($amount, $isoCode = null)
+    public function fromInteger($amount, $isoCode = null): MoneyTransfer
     {
         return $this->moneyFacade->fromInteger($amount, $isoCode);
     }
@@ -40,7 +40,7 @@ class DiscountToMoneyBridge implements DiscountToMoneyInterface
      *
      * @return string
      */
-    public function formatWithoutSymbol(MoneyTransfer $moneyTransfer)
+    public function formatWithoutSymbol(MoneyTransfer $moneyTransfer): string
     {
         return $this->moneyFacade->formatWithoutSymbol($moneyTransfer);
     }
@@ -50,7 +50,7 @@ class DiscountToMoneyBridge implements DiscountToMoneyInterface
      *
      * @return string
      */
-    public function formatWithSymbol(MoneyTransfer $moneyTransfer)
+    public function formatWithSymbol(MoneyTransfer $moneyTransfer): string
     {
         return $this->moneyFacade->formatWithSymbol($moneyTransfer);
     }
@@ -60,7 +60,7 @@ class DiscountToMoneyBridge implements DiscountToMoneyInterface
      *
      * @return int
      */
-    public function convertDecimalToInteger($value)
+    public function convertDecimalToInteger($value): int
     {
         return $this->moneyFacade->convertDecimalToInteger($value);
     }
@@ -70,7 +70,7 @@ class DiscountToMoneyBridge implements DiscountToMoneyInterface
      *
      * @return float
      */
-    public function convertIntegerToDecimal($value)
+    public function convertIntegerToDecimal($value): float
     {
         return $this->moneyFacade->convertIntegerToDecimal($value);
     }

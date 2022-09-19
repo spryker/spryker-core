@@ -27,4 +27,9 @@ interface CategoryImageGuiToLocaleInterface
      * @return array<string>
      */
     public function getAvailableLocales(): array;
+
+    /**
+     * @return string
+     */
+    public function getCurrentLocaleName(): string;
 }

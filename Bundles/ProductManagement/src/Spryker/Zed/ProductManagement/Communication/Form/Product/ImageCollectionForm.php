@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\ProductManagement\Communication\Form\Product;
 
+use Spryker\Zed\Gui\Communication\Form\Type\FormattedNumberType;
 use Spryker\Zed\Gui\Communication\Form\Type\ImageType;
 use Spryker\Zed\ProductManagement\Communication\Form\AbstractSubForm;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -67,6 +67,11 @@ class ImageCollectionForm extends AbstractSubForm
      * @var string
      */
     public const OPTION_IMAGE_PREVIEW_LARGE_URL = 'option_image_preview_large_url';
+
+    /**
+     * @var string
+     */
+    protected const OPTION_LOCALE = 'locale';
 
     /**
      * @var int
@@ -131,6 +136,7 @@ class ImageCollectionForm extends AbstractSubForm
             'attr' => [
                 'class' => 'image-collection',
             ],
+            static::OPTION_LOCALE => null,
         ]);
     }
 
@@ -253,7 +259,8 @@ class ImageCollectionForm extends AbstractSubForm
     protected function addSortOrderField(FormBuilderInterface $builder, array $options = [])
     {
         $builder
-            ->add(static::FIELD_SORT_ORDER, NumberType::class, [
+            ->add(static::FIELD_SORT_ORDER, FormattedNumberType::class, [
+                'locale' => $options[static::OPTION_LOCALE],
                 'constraints' => [
                     new NotBlank(),
                     new LessThanOrEqual([

@@ -30,7 +30,7 @@ class SalesReturnGuiToMoneyFacadeBridge implements SalesReturnGuiToMoneyFacadeIn
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */
-    public function fromInteger($amount, $isoCode = null)
+    public function fromInteger($amount, $isoCode = null): MoneyTransfer
     {
         return $this->moneyFacade->fromInteger($amount, $isoCode);
     }
@@ -40,7 +40,7 @@ class SalesReturnGuiToMoneyFacadeBridge implements SalesReturnGuiToMoneyFacadeIn
      *
      * @return string
      */
-    public function formatWithSymbol(MoneyTransfer $moneyTransfer)
+    public function formatWithSymbol(MoneyTransfer $moneyTransfer): string
     {
         return $this->moneyFacade->formatWithSymbol($moneyTransfer);
     }

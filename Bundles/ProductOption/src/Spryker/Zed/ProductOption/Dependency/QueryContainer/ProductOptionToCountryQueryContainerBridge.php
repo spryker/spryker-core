@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductOption\Dependency\QueryContainer;
 
+use Orm\Zed\Country\Persistence\SpyCountryQuery;
+
 class ProductOptionToCountryQueryContainerBridge implements ProductOptionToCountryQueryContainerInterface
 {
     /**
@@ -25,7 +27,7 @@ class ProductOptionToCountryQueryContainerBridge implements ProductOptionToCount
     /**
      * @return \Orm\Zed\Country\Persistence\SpyCountryQuery
      */
-    public function queryCountries()
+    public function queryCountries(): SpyCountryQuery
     {
         return $this->countryQueryContainer->queryCountries();
     }

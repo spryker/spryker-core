@@ -10,6 +10,7 @@ namespace Spryker\Zed\OfferGui\Communication\Form\Offer;
 use DateTime;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Spryker\Zed\Gui\Communication\Form\Type\FormattedNumberType;
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\OfferGui\Communication\Form\Address\AddressType;
@@ -20,7 +21,6 @@ use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -132,6 +132,11 @@ class EditOfferType extends AbstractType
     /**
      * @var string
      */
+    public const OPTION_LOCALE = 'locale';
+
+    /**
+     * @var string
+     */
     protected const ERROR_MESSAGE_PRICE = 'Invalid Price.';
 
     /**
@@ -144,12 +149,18 @@ class EditOfferType extends AbstractType
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
+        parent::configureOptions($resolver);
+
         $resolver
             ->setRequired(static::OPTION_CUSTOMER_LIST)
             ->setRequired(static::OPTION_OFFER_STATUS_LIST)
             ->setRequired(static::OPTION_STORE_CURRENCY_LIST);
+
+        $resolver->setDefaults([
+            static::OPTION_LOCALE => null,
+        ]);
     }
 
     /**
@@ -158,7 +169,7 @@ class EditOfferType extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this
             ->addIdOfferField($builder)
@@ -169,9 +180,9 @@ class EditOfferType extends AbstractType
             ->addCustomerChoiceField($builder, $options)
             ->addShippingAddressField($builder, $options)
             ->addBillingAddressField($builder, $options)
-            ->addItemsField($builder)
+            ->addItemsField($builder, $options)
             ->addIncomingItemsField($builder)
-            ->addVoucherDiscountsField($builder)
+            ->addVoucherDiscountsField($builder, $options)
             ->addOfferFeeField($builder, $options)
             ->addContactPersonField($builder)
             ->addContactDateField($builder)
@@ -201,7 +212,7 @@ class EditOfferType extends AbstractType
      */
     protected function addStatusOfferList(FormBuilderInterface $builder, array $options)
     {
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($options) {
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($options): void {
             /** @var \Generated\Shared\Transfer\OfferTransfer $offerTransfer */
             $offerTransfer = $event->getData();
             if ($offerTransfer->getIdOffer() === null) {
@@ -259,7 +270,7 @@ class EditOfferType extends AbstractType
 
         $builder->addEventListener(
             FormEvents::PRE_SUBMIT,
-            function (FormEvent $event) {
+            function (FormEvent $event): void {
                 $data = $event->getData();
 
                 $storeCurrency = $data[static::FIELD_STORE_CURRENCY];
@@ -343,10 +354,11 @@ class EditOfferType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
-    protected function addItemsField(FormBuilderInterface $builder)
+    protected function addItemsField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_ITEMS, CollectionType::class, [
             'entry_type' => ItemType::class,
@@ -358,6 +370,7 @@ class EditOfferType extends AbstractType
             'entry_options' => [
                 'label' => false,
                 'data_class' => ItemTransfer::class,
+                'locale' => $options[static::OPTION_LOCALE],
             ],
         ]);
 
@@ -383,7 +396,7 @@ class EditOfferType extends AbstractType
                 'data_class' => ItemTransfer::class,
             ],
             'constraints' => [
-                new Callback(function ($items, ExecutionContextInterface $context) {
+                new Callback(function ($items, ExecutionContextInterface $context): void {
                     /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
                     foreach ($items as $itemTransfer) {
                         if ($itemTransfer->getSku() && !$itemTransfer->getQuantity()) {
@@ -402,10 +415,11 @@ class EditOfferType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
-    protected function addVoucherDiscountsField(FormBuilderInterface $builder)
+    protected function addVoucherDiscountsField(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_VOUCHER_DISCOUNTS, CollectionType::class, [
             'label' => false,
@@ -417,6 +431,7 @@ class EditOfferType extends AbstractType
             'entry_options' => [
                 'label' => false,
                 'data_class' => DiscountTransfer::class,
+                'locale' => $options[static::OPTION_LOCALE],
             ],
         ]);
 
@@ -431,9 +446,10 @@ class EditOfferType extends AbstractType
      */
     protected function addOfferFeeField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_OFFER_FEE, NumberType::class, [
+        $builder->add(static::FIELD_OFFER_FEE, FormattedNumberType::class, [
             'property_path' => 'quote.offerFee',
             'label' => 'Offer fee',
+            'locale' => $options[static::OPTION_LOCALE],
             'required' => false,
             'constraints' => [
                 $this->createMoneyConstraint($options),
@@ -504,7 +520,7 @@ class EditOfferType extends AbstractType
      *
      * @return string
      */
-    private function getSelectedStoreCurrency(FormBuilderInterface $builder)
+    private function getSelectedStoreCurrency(FormBuilderInterface $builder): string
     {
         /** @var \Generated\Shared\Transfer\OfferTransfer $offerTransfer */
         $offerTransfer = $builder->getData();
@@ -520,7 +536,7 @@ class EditOfferType extends AbstractType
      *
      * @return array<string>
      */
-    private function getStoreAndCurrency(string $storeCurrency)
+    private function getStoreAndCurrency(string $storeCurrency): array
     {
         return explode(';', $storeCurrency);
     }
@@ -530,7 +546,7 @@ class EditOfferType extends AbstractType
      *
      * @return \Symfony\Component\Validator\Constraints\Regex
      */
-    protected function createMoneyConstraint(array $options)
+    protected function createMoneyConstraint(array $options): Regex
     {
         $validationGroup = $this->getValidationGroup($options);
 
@@ -546,7 +562,7 @@ class EditOfferType extends AbstractType
      *
      * @return string
      */
-    protected function getValidationGroup(array $options)
+    protected function getValidationGroup(array $options): string
     {
         $validationGroup = Constraint::DEFAULT_GROUP;
         if (!empty($options['validation_group'])) {
@@ -559,7 +575,7 @@ class EditOfferType extends AbstractType
     /**
      * @return \Symfony\Component\Form\CallbackTransformer
      */
-    protected function createMoneyModelTransformer()
+    protected function createMoneyModelTransformer(): CallbackTransformer
     {
         return new CallbackTransformer(
             function ($value) {
@@ -576,7 +592,7 @@ class EditOfferType extends AbstractType
     /**
      * @return \Symfony\Component\Form\CallbackTransformer
      */
-    protected function createDateTimeModelTransformer()
+    protected function createDateTimeModelTransformer(): CallbackTransformer
     {
         return new CallbackTransformer(
             function ($value) {

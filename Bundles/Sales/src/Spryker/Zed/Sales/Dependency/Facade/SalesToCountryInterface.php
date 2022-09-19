@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Sales\Dependency\Facade;
 
+use Generated\Shared\Transfer\CountryCollectionTransfer;
 use Generated\Shared\Transfer\CountryTransfer;
 
 interface SalesToCountryInterface
@@ -23,5 +24,5 @@ interface SalesToCountryInterface
      *
      * @return \Generated\Shared\Transfer\CountryCollectionTransfer
      */
-    public function getAvailableCountries();
+    public function getAvailableCountries(): CountryCollectionTransfer;
 }

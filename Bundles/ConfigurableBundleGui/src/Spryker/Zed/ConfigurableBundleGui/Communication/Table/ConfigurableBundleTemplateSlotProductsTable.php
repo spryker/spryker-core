@@ -11,6 +11,7 @@ use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateSlotQuer
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToLocaleFacadeInterface;
 use Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToProductListFacadeInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
@@ -119,14 +120,33 @@ class ConfigurableBundleTemplateSlotProductsTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config): array
     {
-        /** @var \Propel\Runtime\Collection\ObjectCollection $configurableBundleTemplateSlotProducts */
-        $configurableBundleTemplateSlotProducts = $this->runQuery(
+        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\SpyProduct> $productEntityCollection */
+        $productEntityCollection = $this->runQuery(
             $this->prepareQuery(),
             $config,
             true,
         );
 
-        return $configurableBundleTemplateSlotProducts->getData();
+        return $this->mapProductEntityCollectionToTableData($productEntityCollection);
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\SpyProduct> $productEntityCollection
+     *
+     * @return array
+     */
+    protected function mapProductEntityCollectionToTableData(
+        ObjectCollection $productEntityCollection
+    ): array {
+        $productEntityCollection = $productEntityCollection->toArray();
+
+        foreach ($productEntityCollection as $productEntity) {
+            $productEntity[SpyProductTableMap::COL_ID_PRODUCT] = $this->formatInt(
+                $productEntity[SpyProductTableMap::COL_ID_PRODUCT],
+            );
+        }
+
+        return $productEntityCollection;
     }
 
     /**

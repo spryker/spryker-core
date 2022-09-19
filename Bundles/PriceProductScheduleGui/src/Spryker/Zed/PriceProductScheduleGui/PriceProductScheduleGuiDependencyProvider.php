@@ -12,6 +12,7 @@ use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToCurrencyFacadeBridge;
+use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToLocaleFacadeBridge;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToMoneyFacadeBridge;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToPriceProductFacadeBridge;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToPriceProductScheduleFacadeBridge;
@@ -63,6 +64,11 @@ class PriceProductScheduleGuiDependencyProvider extends AbstractBundleDependency
     /**
      * @var string
      */
+    public const FACADE_LOCALE = 'FACADE_LOCALE';
+
+    /**
+     * @var string
+     */
     public const PROPEL_QUERY_PRICE_PRODUCT_SCHEDULE = 'PROPEL_QUERY_PRICE_PRODUCT_SCHEDULE';
 
     /**
@@ -92,6 +98,7 @@ class PriceProductScheduleGuiDependencyProvider extends AbstractBundleDependency
         $container = $this->addUtilCsvService($container);
         $container = $this->addCurrencyFacade($container);
         $container = $this->addProductFacade($container);
+        $container = $this->addLocaleFacade($container);
 
         return $container;
     }
@@ -219,6 +226,20 @@ class PriceProductScheduleGuiDependencyProvider extends AbstractBundleDependency
             return new PriceProductScheduleGuiToPriceProductScheduleFacadeBridge(
                 $container->getLocator()->priceProductSchedule()->facade(),
             );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addLocaleFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
+            return new PriceProductScheduleGuiToLocaleFacadeBridge($container->getLocator()->locale()->facade());
         });
 
         return $container;

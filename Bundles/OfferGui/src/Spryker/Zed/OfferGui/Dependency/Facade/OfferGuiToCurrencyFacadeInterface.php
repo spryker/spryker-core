@@ -14,5 +14,5 @@ interface OfferGuiToCurrencyFacadeInterface
      *
      * @return array<\Generated\Shared\Transfer\StoreWithCurrencyTransfer>
      */
-    public function getAllStoresWithCurrencies();
+    public function getAllStoresWithCurrencies(): array;
 }

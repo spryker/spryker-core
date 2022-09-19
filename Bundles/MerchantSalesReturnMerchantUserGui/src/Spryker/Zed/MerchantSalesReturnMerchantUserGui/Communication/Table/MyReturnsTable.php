@@ -248,8 +248,10 @@ class MyReturnsTable extends AbstractTable
             $createdAt = $salesReturnEntity->getCreatedAt() ?? '';
 
             $returnData = $salesReturnEntity->toArray();
+            $returnData[static::COL_RETURN_ID] = $this->formatInt($returnData[static::COL_RETURN_ID]);
             $returnData[static::COL_RETURN_DATE] = $this->utilDateTimeService->formatDateTime($createdAt);
             $returnData[static::COL_ACTIONS] = $this->buildLinks($salesReturnEntity);
+            $returnData[static::COL_RETURNED_PRODUCTS] = $this->formatInt($returnData[static::COL_RETURNED_PRODUCTS]);
 
             $returns[] = $returnData;
         }

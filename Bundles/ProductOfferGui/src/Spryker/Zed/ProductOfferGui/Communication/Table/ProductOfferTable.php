@@ -238,7 +238,9 @@ class ProductOfferTable extends AbstractTable
 
         foreach ($queryResults as $item) {
             $rowData = [
-                SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER => $item[SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER],
+                SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER => $this->formatInt(
+                    $item[SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER],
+                ),
                 SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE => $item[SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE],
                 SpyProductOfferTableMap::COL_CONCRETE_SKU => $item[SpyProductOfferTableMap::COL_CONCRETE_SKU],
                 static::COL_PRODUCT_NAME => $item[static::COL_PRODUCT_NAME],

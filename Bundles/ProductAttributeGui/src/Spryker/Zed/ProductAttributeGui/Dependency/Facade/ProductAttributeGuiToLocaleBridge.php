@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductAttributeGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+
 class ProductAttributeGuiToLocaleBridge implements ProductAttributeGuiToLocaleInterface
 {
     /**
@@ -25,7 +27,7 @@ class ProductAttributeGuiToLocaleBridge implements ProductAttributeGuiToLocaleIn
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getCurrentLocale()
+    public function getCurrentLocale(): LocaleTransfer
     {
         return $this->localeFacade->getCurrentLocale();
     }
@@ -35,7 +37,7 @@ class ProductAttributeGuiToLocaleBridge implements ProductAttributeGuiToLocaleIn
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getLocale($localeName)
+    public function getLocale($localeName): LocaleTransfer
     {
         return $this->localeFacade->getLocale($localeName);
     }
@@ -45,7 +47,7 @@ class ProductAttributeGuiToLocaleBridge implements ProductAttributeGuiToLocaleIn
      *
      * @return bool
      */
-    public function hasLocale($localeName)
+    public function hasLocale($localeName): bool
     {
         return $this->localeFacade->hasLocale($localeName);
     }
@@ -53,7 +55,7 @@ class ProductAttributeGuiToLocaleBridge implements ProductAttributeGuiToLocaleIn
     /**
      * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
-    public function getLocaleCollection()
+    public function getLocaleCollection(): array
     {
         return $this->localeFacade->getLocaleCollection();
     }
@@ -63,7 +65,7 @@ class ProductAttributeGuiToLocaleBridge implements ProductAttributeGuiToLocaleIn
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getLocaleById($idLocale)
+    public function getLocaleById($idLocale): LocaleTransfer
     {
         return $this->localeFacade->getLocaleById($idLocale);
     }

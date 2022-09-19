@@ -30,7 +30,7 @@ class AvailabilityGuiToStockBridge implements AvailabilityGuiToStockInterface
      *
      * @return int
      */
-    public function createStockProduct(StockProductTransfer $transferStockProduct)
+    public function createStockProduct(StockProductTransfer $transferStockProduct): int
     {
         return $this->stockFacade->createStockProduct($transferStockProduct);
     }
@@ -40,7 +40,7 @@ class AvailabilityGuiToStockBridge implements AvailabilityGuiToStockInterface
      *
      * @return int
      */
-    public function updateStockProduct(StockProductTransfer $stockProductTransfer)
+    public function updateStockProduct(StockProductTransfer $stockProductTransfer): int
     {
         return $this->stockFacade->updateStockProduct($stockProductTransfer);
     }
@@ -51,7 +51,7 @@ class AvailabilityGuiToStockBridge implements AvailabilityGuiToStockInterface
      *
      * @return array<\Generated\Shared\Transfer\StockProductTransfer>
      */
-    public function findStockProductsByIdProductForStore($idProductConcrete, StoreTransfer $storeTransfer)
+    public function findStockProductsByIdProductForStore($idProductConcrete, StoreTransfer $storeTransfer): array
     {
         return $this->stockFacade->findStockProductsByIdProductForStore($idProductConcrete, $storeTransfer);
     }
@@ -59,7 +59,7 @@ class AvailabilityGuiToStockBridge implements AvailabilityGuiToStockInterface
     /**
      * @return array<array<string>>
      */
-    public function getWarehouseToStoreMapping()
+    public function getWarehouseToStoreMapping(): array
     {
         return $this->stockFacade->getWarehouseToStoreMapping();
     }
@@ -67,7 +67,7 @@ class AvailabilityGuiToStockBridge implements AvailabilityGuiToStockInterface
     /**
      * @return array<array<string>>
      */
-    public function getStoreToWarehouseMapping()
+    public function getStoreToWarehouseMapping(): array
     {
         return $this->stockFacade->getStoreToWarehouseMapping();
     }
@@ -77,7 +77,7 @@ class AvailabilityGuiToStockBridge implements AvailabilityGuiToStockInterface
      *
      * @return array<string>
      */
-    public function getStockTypesForStore(StoreTransfer $storeTransfer)
+    public function getStockTypesForStore(StoreTransfer $storeTransfer): array
     {
         return $this->stockFacade->getStockTypesForStore($storeTransfer);
     }

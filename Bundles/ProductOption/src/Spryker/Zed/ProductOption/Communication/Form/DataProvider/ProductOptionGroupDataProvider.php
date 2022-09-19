@@ -53,10 +53,11 @@ class ProductOptionGroupDataProvider
     /**
      * @return array<string, mixed>
      */
-    public function getOptions()
+    public function getOptions(): array
     {
         return [
             ProductOptionGroupForm::OPTION_TAX_SETS => $this->createTaxSetsList(),
+            ProductOptionGroupForm::OPTION_LOCALE => $this->localeFacade->getCurrentLocaleName(),
         ];
     }
 

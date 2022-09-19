@@ -20,7 +20,7 @@
 
             <div class="row">
                 {% for orderItem in merchantOrder.order.items %}
-                    <div class="col-sm-10"><p>{{ orderItem.name }} x {{ orderItem.quantity }}</p></div>
+                    <div class="col-sm-10"><p>{{ orderItem.name }} x {{ orderItem.quantity | executeFilterIfExists('formatInt', app.locale) }}</p></div>
                     <div class="col-sm-2">{{ orderItem.sumPrice | money(true, merchantOrder.order.currencyIsoCode) }}</div>
 
                     {% for orderItemOption in orderItem.productOptions %}

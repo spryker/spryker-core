@@ -25,6 +25,13 @@ class MerchantRelationshipSalesOrderThresholdGuiConfig extends AbstractBundleCon
     public const OPTION_CURRENCY_CODE = 'option-currency-code';
 
     /**
+     * @uses \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\MerchantRelationshipThresholdType::OPTION_LOCALE
+     *
+     * @var string
+     */
+    public const OPTION_LOCALE = 'locale';
+
+    /**
      * @uses \Spryker\Shared\SalesOrderThreshold\SalesOrderThresholdConfig::GROUP_HARD
      *
      * @var string

@@ -16,5 +16,5 @@ interface ProductManagementToProductBundleInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function saveBundledProducts(ProductConcreteTransfer $productConcreteTransfer);
+    public function saveBundledProducts(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
 }

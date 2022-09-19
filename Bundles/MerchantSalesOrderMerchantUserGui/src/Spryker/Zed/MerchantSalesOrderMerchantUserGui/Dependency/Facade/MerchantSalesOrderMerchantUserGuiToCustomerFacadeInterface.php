@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 
@@ -17,7 +18,7 @@ interface MerchantSalesOrderMerchantUserGuiToCustomerFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    public function findByReference($customerReference);
+    public function findByReference($customerReference): ?CustomerTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
@@ -31,7 +32,7 @@ interface MerchantSalesOrderMerchantUserGuiToCustomerFacadeInterface
      *
      * @return \Generated\Shared\Transfer\AddressesTransfer
      */
-    public function getAddresses(CustomerTransfer $customerTransfer);
+    public function getAddresses(CustomerTransfer $customerTransfer): AddressesTransfer;
 
     /**
      * @return array<mixed>

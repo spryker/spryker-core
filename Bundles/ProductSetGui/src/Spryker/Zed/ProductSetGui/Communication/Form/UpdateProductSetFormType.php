@@ -43,9 +43,14 @@ class UpdateProductSetFormType extends AbstractType
     public const FIELD_PRODUCTS_FORM = 'products_form';
 
     /**
+     * @var string
+     */
+    protected const OPTION_LOCALE = 'locale';
+
+    /**
      * @return string
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'product_set_form';
     }
@@ -55,7 +60,7 @@ class UpdateProductSetFormType extends AbstractType
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->getBlockPrefix();
     }
@@ -65,10 +70,13 @@ class UpdateProductSetFormType extends AbstractType
      *
      * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
+        parent::configureOptions($resolver);
+
         $resolver->setDefaults([
             'required' => false,
+            static::OPTION_LOCALE => null,
         ]);
     }
 
@@ -78,23 +86,26 @@ class UpdateProductSetFormType extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this
-            ->addGeneralForm($builder)
+            ->addGeneralForm($builder, $options)
             ->addProductsForm($builder)
             ->addSeoForm($builder)
-            ->addImagesForm($builder);
+            ->addImagesForm($builder, $options);
     }
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
-    protected function addGeneralForm(FormBuilderInterface $builder)
+    protected function addGeneralForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_GENERAL_FORM, GeneralFormType::class);
+        $builder->add(static::FIELD_GENERAL_FORM, GeneralFormType::class, [
+            'locale' => $options[static::OPTION_LOCALE],
+        ]);
 
         return $this;
     }
@@ -125,12 +136,15 @@ class UpdateProductSetFormType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
-    protected function addImagesForm(FormBuilderInterface $builder)
+    protected function addImagesForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_IMAGES_FORM, ImagesFormType::class);
+        $builder->add(static::FIELD_IMAGES_FORM, ImagesFormType::class, [
+            'locale' => $options[static::OPTION_LOCALE],
+        ]);
 
         return $this;
     }

@@ -13,6 +13,8 @@ use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\DiscountGeneralTransfer;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Business\DiscountFacadeInterface;
+use Spryker\Zed\Discount\Communication\Form\DiscountForm;
+use Spryker\Zed\Discount\Dependency\Facade\DiscountToLocaleFacadeInterface;
 use Spryker\Zed\Discount\DiscountConfig;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 
@@ -24,11 +26,20 @@ class DiscountFormDataProvider extends BaseDiscountFormDataProvider
     protected $discountFacade;
 
     /**
-     * @param \Spryker\Zed\Discount\Business\DiscountFacadeInterface $discountFacade
+     * @var \Spryker\Zed\Discount\Dependency\Facade\DiscountToLocaleFacadeInterface
      */
-    public function __construct(DiscountFacadeInterface $discountFacade)
-    {
+    protected $localeFacade;
+
+    /**
+     * @param \Spryker\Zed\Discount\Business\DiscountFacadeInterface $discountFacade
+     * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToLocaleFacadeInterface $localeFacade
+     */
+    public function __construct(
+        DiscountFacadeInterface $discountFacade,
+        DiscountToLocaleFacadeInterface $localeFacade
+    ) {
         $this->discountFacade = $discountFacade;
+        $this->localeFacade = $localeFacade;
     }
 
     /**
@@ -43,6 +54,17 @@ class DiscountFormDataProvider extends BaseDiscountFormDataProvider
         }
 
         return $this->discountFacade->findHydratedDiscountConfiguratorByIdDiscount($idDiscount);
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    public function getOptions(): array
+    {
+        return [
+            'data_class' => DiscountConfiguratorTransfer::class,
+            DiscountForm::OPTION_LOCALE => $this->localeFacade->getCurrentLocaleName(),
+        ];
     }
 
     /**

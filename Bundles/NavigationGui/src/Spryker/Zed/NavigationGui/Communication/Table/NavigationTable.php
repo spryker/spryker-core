@@ -94,7 +94,7 @@ class NavigationTable extends AbstractTable
         /** @var \Orm\Zed\Navigation\Persistence\SpyNavigation $navigationEntity */
         foreach ($queryResults as $navigationEntity) {
             $results[] = [
-                SpyNavigationTableMap::COL_ID_NAVIGATION => $navigationEntity->getIdNavigation(),
+                SpyNavigationTableMap::COL_ID_NAVIGATION => $this->formatInt($navigationEntity->getIdNavigation()),
                 SpyNavigationTableMap::COL_NAME => $navigationEntity->getName(),
                 SpyNavigationTableMap::COL_KEY => $navigationEntity->getKey(),
                 SpyNavigationTableMap::COL_IS_ACTIVE => $this->getStatus($navigationEntity),

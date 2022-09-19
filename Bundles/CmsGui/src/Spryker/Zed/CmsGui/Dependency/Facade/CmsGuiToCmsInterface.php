@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CmsGlossaryTransfer;
 use Generated\Shared\Transfer\CmsPageAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageTransfer;
 use Generated\Shared\Transfer\CmsVersionDataTransfer;
+use Generated\Shared\Transfer\CmsVersionTransfer;
 
 interface CmsGuiToCmsInterface
 {
@@ -20,14 +21,14 @@ interface CmsGuiToCmsInterface
      *
      * @return bool
      */
-    public function hasPagePlaceholderMapping($idPage, $placeholder);
+    public function hasPagePlaceholderMapping(int $idPage, string $placeholder): bool;
 
     /**
      * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
      *
      * @return int
      */
-    public function createPage(CmsPageTransfer $cmsPageTransfer);
+    public function createPage(CmsPageTransfer $cmsPageTransfer): int;
 
     /**
      * @param int $idCmsPage
@@ -36,56 +37,56 @@ interface CmsGuiToCmsInterface
      *
      * @return \Generated\Shared\Transfer\CmsGlossaryTransfer|null
      */
-    public function findPageGlossaryAttributes($idCmsPage);
+    public function findPageGlossaryAttributes(int $idCmsPage): ?CmsGlossaryTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CmsGlossaryTransfer $cmsGlossaryTransfer
      *
      * @return \Generated\Shared\Transfer\CmsGlossaryTransfer
      */
-    public function saveCmsGlossary(CmsGlossaryTransfer $cmsGlossaryTransfer);
+    public function saveCmsGlossary(CmsGlossaryTransfer $cmsGlossaryTransfer): CmsGlossaryTransfer;
 
     /**
      * @param int $idCmsPage
      *
      * @return \Generated\Shared\Transfer\CmsPageTransfer|null
      */
-    public function findCmsPageById($idCmsPage);
+    public function findCmsPageById(int $idCmsPage): ?CmsPageTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CmsPageTransfer $cmsPageTransfer
      *
      * @return \Generated\Shared\Transfer\CmsPageTransfer
      */
-    public function updatePage(CmsPageTransfer $cmsPageTransfer);
+    public function updatePage(CmsPageTransfer $cmsPageTransfer): CmsPageTransfer;
 
     /**
      * @param int $idCmsPage
      *
      * @return void
      */
-    public function activatePage($idCmsPage);
+    public function activatePage(int $idCmsPage): void;
 
     /**
      * @param int $idCmsPage
      *
      * @return void
      */
-    public function deactivatePage($idCmsPage);
+    public function deactivatePage(int $idCmsPage): void;
 
     /**
      * @param \Generated\Shared\Transfer\CmsPageAttributesTransfer $cmsPageAttributesTransfer
      *
      * @return string
      */
-    public function getPageUrlPrefix(CmsPageAttributesTransfer $cmsPageAttributesTransfer);
+    public function getPageUrlPrefix(CmsPageAttributesTransfer $cmsPageAttributesTransfer): string;
 
     /**
      * @param \Generated\Shared\Transfer\CmsPageAttributesTransfer $cmsPageAttributesTransfer
      *
      * @return string
      */
-    public function buildPageUrl(CmsPageAttributesTransfer $cmsPageAttributesTransfer);
+    public function buildPageUrl(CmsPageAttributesTransfer $cmsPageAttributesTransfer): string;
 
     /**
      * @param int $idCmsPage
@@ -93,7 +94,7 @@ interface CmsGuiToCmsInterface
      *
      * @return \Generated\Shared\Transfer\CmsVersionTransfer
      */
-    public function publishWithVersion($idCmsPage, $versionName = null);
+    public function publishWithVersion(int $idCmsPage, ?string $versionName = null): CmsVersionTransfer;
 
     /**
      * @param int $idCmsPage
@@ -101,28 +102,28 @@ interface CmsGuiToCmsInterface
      *
      * @return \Generated\Shared\Transfer\CmsVersionTransfer
      */
-    public function rollback($idCmsPage, $version);
+    public function rollback(int $idCmsPage, int $version): CmsVersionTransfer;
 
     /**
      * @param int $idCmsPage
      *
      * @return void
      */
-    public function revert($idCmsPage);
+    public function revert(int $idCmsPage): void;
 
     /**
      * @param int $idCmsPage
      *
      * @return \Generated\Shared\Transfer\CmsVersionTransfer|null
      */
-    public function findLatestCmsVersionByIdCmsPage($idCmsPage);
+    public function findLatestCmsVersionByIdCmsPage(int $idCmsPage): ?CmsVersionTransfer;
 
     /**
      * @param int $idCmsPage
      *
      * @return array<\Generated\Shared\Transfer\CmsVersionTransfer>
      */
-    public function findAllCmsVersionByIdCmsPage($idCmsPage);
+    public function findAllCmsVersionByIdCmsPage(int $idCmsPage): array;
 
     /**
      * @param int $idCmsPage
@@ -130,14 +131,14 @@ interface CmsGuiToCmsInterface
      *
      * @return \Generated\Shared\Transfer\CmsVersionTransfer|null
      */
-    public function findCmsVersionByIdCmsPageAndVersion($idCmsPage, $version);
+    public function findCmsVersionByIdCmsPageAndVersion(int $idCmsPage, int $version): ?CmsVersionTransfer;
 
     /**
      * @param string $cmsTemplateFolderPath
      *
      * @return bool
      */
-    public function syncTemplate($cmsTemplateFolderPath);
+    public function syncTemplate(string $cmsTemplateFolderPath): bool;
 
     /**
      * @param int $idCmsPage

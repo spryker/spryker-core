@@ -61,6 +61,7 @@ use Spryker\Zed\PriceProductScheduleGui\Communication\ViewExpander\ConcreteProdu
 use Spryker\Zed\PriceProductScheduleGui\Communication\ViewExpander\ConcreteProductViewExpanderInterface;
 use Spryker\Zed\PriceProductScheduleGui\Communication\ViewExpander\ViewExpanderTableFactoryInterface;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToCurrencyFacadeInterface;
+use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToLocaleFacadeInterface;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToMoneyFacadeInterface;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToPriceProductFacadeInterface;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToPriceProductScheduleFacadeInterface;
@@ -255,6 +256,7 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
             $this->getPriceProductFacade(),
             $this->getStoreFacade(),
             $this->getCurrencyFacade(),
+            $this->getLocaleFacade(),
         );
     }
 
@@ -547,5 +549,13 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
     public function getProductFacade(): PriceProductScheduleGuiToProductFacadeInterface
     {
         return $this->getProvidedDependency(PriceProductScheduleGuiDependencyProvider::FACADE_PRODUCT);
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToLocaleFacadeInterface
+     */
+    public function getLocaleFacade(): PriceProductScheduleGuiToLocaleFacadeInterface
+    {
+        return $this->getProvidedDependency(PriceProductScheduleGuiDependencyProvider::FACADE_LOCALE);
     }
 }
