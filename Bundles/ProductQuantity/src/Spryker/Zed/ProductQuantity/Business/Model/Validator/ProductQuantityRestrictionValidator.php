@@ -73,37 +73,23 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
         $responseTransfer = (new CartPreCheckResponseTransfer())->setIsSuccess(true);
 
         $changedSkuMapByGroupKey = $this->getChangedSkuMap($cartChangeTransfer);
+        $itemQuantitiesIndexedBySku = $this->getItemQuantitiesIndexedBySku($cartChangeTransfer);
         $cartQuantityMapByGroupKey = $this->getItemAddCartQuantityMap($cartChangeTransfer);
         $productQuantityTransferMapBySku = $this->getProductQuantityTransferMap($cartChangeTransfer);
 
         foreach ($cartQuantityMapByGroupKey as $productGroupKey => $productQuantity) {
             $productSku = $changedSkuMapByGroupKey[$productGroupKey];
-            if (!$this->validateQuantityIsPositiveNumber($productSku, $productQuantity, $responseTransfer)) {
+            $cartItemQuantity = $itemQuantitiesIndexedBySku[$productSku];
+            if (
+                !$this->validateQuantityIsNonNegativeInteger($productSku, $cartItemQuantity, $responseTransfer) ||
+                !$this->validateQuantityIsPositiveInteger($productSku, $productQuantity, $responseTransfer)
+            ) {
                 continue;
             }
             $this->validateItem($productSku, $productQuantity, $productQuantityTransferMapBySku[$productSku], $responseTransfer);
         }
 
         return $responseTransfer;
-    }
-
-    /**
-     * @param string $sku
-     * @param string|float|int $quantity
-     * @param \Generated\Shared\Transfer\CartPreCheckResponseTransfer $responseTransfer
-     *
-     * @return bool
-     */
-    protected function validateQuantityIsPositiveNumber(string $sku, $quantity, CartPreCheckResponseTransfer $responseTransfer): bool
-    {
-        if ($quantity <= 0 || !ctype_digit((string)$quantity)) {
-            /** @phpstan-var int $quantity */
-            $this->addViolation(static::ERROR_QUANTITY_INCORRECT, $sku, 1, $quantity, $responseTransfer);
-
-            return false;
-        }
-
-        return true;
     }
 
     /**
@@ -116,11 +102,19 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
         $responseTransfer = (new CartPreCheckResponseTransfer())->setIsSuccess(true);
 
         $changedSkuMapByGroupKey = $this->getChangedSkuMap($cartChangeTransfer);
+        $itemQuantitiesIndexedBySku = $this->getItemQuantitiesIndexedBySku($cartChangeTransfer);
         $cartQuantityMapByGroupKey = $this->getItemRemoveCartQuantityMap($cartChangeTransfer);
         $productQuantityTransferMap = $this->getProductQuantityTransferMap($cartChangeTransfer);
 
         foreach ($cartQuantityMapByGroupKey as $productGroupKey => $productQuantity) {
             $productSku = $changedSkuMapByGroupKey[$productGroupKey];
+            $cartItemQuantity = $itemQuantitiesIndexedBySku[$productSku];
+            if (
+                !$this->validateQuantityIsNonNegativeInteger($productSku, $cartItemQuantity, $responseTransfer) ||
+                !$this->validateQuantityIsNonNegativeInteger($productSku, $productQuantity, $responseTransfer)
+            ) {
+                continue;
+            }
             $this->validateItem($productSku, $productQuantity, $productQuantityTransferMap[$productSku], $responseTransfer);
         }
 
@@ -206,7 +200,7 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return array
+     * @return array<string, int>
      */
     protected function getQuoteQuantityMap(CartChangeTransfer $cartChangeTransfer): array
     {
@@ -216,6 +210,21 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
         }
 
         return $quoteQuantityMap;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return array<string, int|string|float>
+     */
+    protected function getItemQuantitiesIndexedBySku(CartChangeTransfer $cartChangeTransfer): array
+    {
+        $itemQuantitiesIndexedBySku = [];
+        foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
+            $itemQuantitiesIndexedBySku[$itemTransfer->getSku()] = $itemTransfer->getQuantity();
+        }
+
+        return $itemQuantitiesIndexedBySku;
     }
 
     /**
@@ -296,15 +305,51 @@ class ProductQuantityRestrictionValidator implements ProductQuantityRestrictionV
     }
 
     /**
+     * @param string $sku
+     * @param string|float|int $quantity
+     * @param \Generated\Shared\Transfer\CartPreCheckResponseTransfer $responseTransfer
+     *
+     * @return bool
+     */
+    protected function validateQuantityIsPositiveInteger(string $sku, $quantity, CartPreCheckResponseTransfer $responseTransfer): bool
+    {
+        if ($quantity <= 0 || !ctype_digit((string)$quantity)) {
+            $this->addViolation(static::ERROR_QUANTITY_INCORRECT, $sku, 1, $quantity, $responseTransfer);
+
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @param string $sku
+     * @param string|float|int $quantity
+     * @param \Generated\Shared\Transfer\CartPreCheckResponseTransfer $responseTransfer
+     *
+     * @return bool
+     */
+    protected function validateQuantityIsNonNegativeInteger(string $sku, $quantity, CartPreCheckResponseTransfer $responseTransfer): bool
+    {
+        if ($quantity < 0 || !ctype_digit((string)$quantity)) {
+            $this->addViolation(static::ERROR_QUANTITY_INCORRECT, $sku, 1, $quantity, $responseTransfer);
+
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
      * @param string $message
      * @param string $sku
      * @param int $restrictionValue
-     * @param int $actualValue
+     * @param string|float|int $actualValue
      * @param \Generated\Shared\Transfer\CartPreCheckResponseTransfer $responseTransfer
      *
      * @return void
      */
-    protected function addViolation(string $message, string $sku, int $restrictionValue, int $actualValue, CartPreCheckResponseTransfer $responseTransfer): void
+    protected function addViolation(string $message, string $sku, int $restrictionValue, $actualValue, CartPreCheckResponseTransfer $responseTransfer): void
     {
         $responseTransfer->setIsSuccess(false);
         $responseTransfer->addMessage(

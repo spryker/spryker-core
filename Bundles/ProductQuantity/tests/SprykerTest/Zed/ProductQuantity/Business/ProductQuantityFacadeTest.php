@@ -107,14 +107,14 @@ class ProductQuantityFacadeTest extends Unit
      *
      * @param bool $expectedIsSuccess
      * @param int $quoteQuantity
-     * @param int $changeQuantity
+     * @param string|float|int $changeQuantity
      *
      * @return void
      */
     public function testValidateItemRemoveProductQuantityRestrictionsValidatesProductsWithoutProductQuantityRestrictions(
         bool $expectedIsSuccess,
         int $quoteQuantity,
-        int $changeQuantity
+        $changeQuantity
     ): void {
         // Assign
         $productTransfer = $this->tester->haveProduct();
@@ -141,8 +141,12 @@ class ProductQuantityFacadeTest extends Unit
         return [
             [true, 5, 4],
             [true, 5, 5],
+            [true, 2, 0],
             [false, 0, 1],
             [false, 5, 6],
+            [false, 5, 0.5],
+            [false, 2, '0.5'],
+            [false, 2, -1],
         ];
     }
 
@@ -249,6 +253,7 @@ class ProductQuantityFacadeTest extends Unit
             [true, 2, '4'],
             [false, 0, 0],
             [false, 0, -1],
+            [false, 2, -1],
             [false, 0, 0.99],
             [false, 1, 0.99],
             [false, 1, '0.5'],
