@@ -52,7 +52,7 @@ class GetResourceByIdPathMethodFormatter implements PathMethodFormatterInterface
         }
 
         $resourceType = $pathAnnotationTransfer->getResourceTypeOrFail();
-        $pathName = $this->openApiSpecificationPathMethodFormatter->getPathFromResourceType($resourceType);
+        $pathName = $this->openApiSpecificationPathMethodFormatter->getPathFromResourceType($resourceContextTransfer);
 
         $pathMethodComponentDataTransfer = (new PathMethodComponentDataTransfer())
             ->setResourceType($resourceType)

@@ -8,6 +8,7 @@
 namespace Spryker\Glue\GlueApplication\Router\ResourceRouter;
 
 use Generated\Shared\Transfer\GlueRequestTransfer;
+use Generated\Shared\Transfer\GlueResourceTransfer;
 use Spryker\Glue\GlueApplication\Exception\AmbiguousResourceException;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface;
 
@@ -29,18 +30,22 @@ class RequestResourcePluginFilter implements RequestResourcePluginFilterInterfac
     /**
      * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
      * @param array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface> $resourcePlugins
+     * @param \Generated\Shared\Transfer\GlueResourceTransfer $glueResourceTransfer
      *
      * @throws \Spryker\Glue\GlueApplication\Exception\AmbiguousResourceException
      *
      * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface|null
      */
-    public function filterResourcePlugins(GlueRequestTransfer $glueRequestTransfer, array $resourcePlugins): ?ResourceInterface
-    {
+    public function filterResourcePlugins(
+        GlueRequestTransfer $glueRequestTransfer,
+        array $resourcePlugins,
+        GlueResourceTransfer $glueResourceTransfer
+    ): ?ResourceInterface {
         if (!$glueRequestTransfer->getResource()) {
             return null;
         }
 
-        $filteredResourcePlugins = $this->filterByResource($resourcePlugins, $glueRequestTransfer);
+        $filteredResourcePlugins = $this->filterByResource($resourcePlugins, $glueResourceTransfer);
         $filteredResourcePlugins = $this->conventionResourceFilter->filter($glueRequestTransfer, $filteredResourcePlugins);
 
         if (count($filteredResourcePlugins) > 1) {
@@ -55,16 +60,16 @@ class RequestResourcePluginFilter implements RequestResourcePluginFilterInterfac
 
     /**
      * @param array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface> $resourcePlugins
-     * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
+     * @param \Generated\Shared\Transfer\GlueResourceTransfer $glueResourceTransfer
      *
      * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface>
      */
-    protected function filterByResource(array $resourcePlugins, GlueRequestTransfer $glueRequestTransfer): array
+    protected function filterByResource(array $resourcePlugins, GlueResourceTransfer $glueResourceTransfer): array
     {
         return array_filter(
             $resourcePlugins,
-            function (ResourceInterface $resourcePlugin) use ($glueRequestTransfer): bool {
-                return $glueRequestTransfer->getResource()->getResourceName() === $resourcePlugin->getType();
+            function (ResourceInterface $resourcePlugin) use ($glueResourceTransfer): bool {
+                return $glueResourceTransfer->getResourceName() === $resourcePlugin->getType();
             },
         );
     }

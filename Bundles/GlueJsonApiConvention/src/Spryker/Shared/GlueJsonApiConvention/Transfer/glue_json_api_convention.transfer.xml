@@ -15,6 +15,7 @@
         <property name="pagination" type="Pagination"/>
         <property name="sortings" type="Sort[]" singular="sorting"/>
         <property name="method" type="string"/>
+        <property name="parentResources" type="GlueResource[]" singular="parentResource" associative="true"/>
     </transfer>
 
     <transfer name="GlueResource">

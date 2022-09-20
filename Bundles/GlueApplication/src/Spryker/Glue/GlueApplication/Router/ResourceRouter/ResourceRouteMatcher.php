@@ -15,10 +15,21 @@ use Spryker\Glue\GlueApplication\Router\ResourceRouter\Uri\UriParserInterface;
 use Spryker\Glue\GlueApplication\Router\RouteMatcherInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourcesProviderPluginInterface;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPluginInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class ResourceRouteMatcher implements RouteMatcherInterface
 {
+    /**
+     * @var string
+     */
+    protected const RESOURCE_TYPE_KEY = 'type';
+
+    /**
+     * @var string
+     */
+    protected const RESOURCE_ID_KEY = 'id';
+
     /**
      * @var \Spryker\Glue\GlueApplication\Router\ResourceRouter\Uri\UriParserInterface
      */
@@ -66,47 +77,97 @@ class ResourceRouteMatcher implements RouteMatcherInterface
         }
         $mainResource = array_pop($resources);
         $mainGlueResourceTransfer = (new GlueResourceTransfer())
-            ->setResourceName($mainResource['type'])
-            ->setType($mainResource['type'])
-            ->setId($mainResource['id'])
+            ->setResourceName($mainResource[static::RESOURCE_TYPE_KEY])
+            ->setType($mainResource[static::RESOURCE_TYPE_KEY])
+            ->setId($mainResource[static::RESOURCE_ID_KEY])
             ->setMethod(strtolower($glueRequestTransfer->getMethod()));
         if ($mainGlueResourceTransfer->getMethod() === strtolower(Request::METHOD_GET) && !$mainGlueResourceTransfer->getId()) {
             $mainGlueResourceTransfer->setMethod('getCollection');
         }
         $glueRequestTransfer->setResource($mainGlueResourceTransfer);
 
-        foreach ($resources as $resource) {
-            $glueRequestTransfer->addParentResource(
-                $resource['type'],
-                (new GlueResourceTransfer())
-                    ->setResourceName($resource['type'])
-                    ->setType($resource['type'])
-                    ->setId($resource['id'])
-                    ->setMethod(strtolower($glueRequestTransfer->getMethod())),
-            );
-        }
-
         $resourceProviderPlugin = $this->findResourcesProvider($glueRequestTransfer->getApplicationOrFail());
 
-        if (!$resourceProviderPlugin) {
+        if ($resourceProviderPlugin === null) {
             return new MissingResource(
                 GlueApplicationConfig::ERROR_CODE_RESOURCE_NOT_FOUND,
                 GlueApplicationConfig::ERROR_MESSAGE_RESOURCE_NOT_FOUND,
             );
         }
 
-        return $this->loadResource($glueRequestTransfer, $resourceProviderPlugin->getResources());
+        foreach ($resources as $resource) {
+            $parentResourceTransfer = (new GlueResourceTransfer())
+                ->setResourceName($resource[static::RESOURCE_TYPE_KEY])
+                ->setType($resource[static::RESOURCE_TYPE_KEY])
+                ->setId($resource[static::RESOURCE_ID_KEY])
+                ->setMethod(strtolower($glueRequestTransfer->getMethod()));
+
+            $parentResource = $this->loadResource($glueRequestTransfer, $resourceProviderPlugin->getResources(), $parentResourceTransfer);
+
+            if ($parentResource instanceof MissingResource) {
+                return $parentResource;
+            }
+
+            if (!$this->isParentResourceMatching($parentResource, $glueRequestTransfer)) {
+                return new MissingResource(
+                    GlueApplicationConfig::ERROR_CODE_PARENT_RESOURCE_NOT_FOUND,
+                    GlueApplicationConfig::ERROR_MESSAGE_PARENT_RESOURCE_NOT_FOUND,
+                );
+            }
+
+            $glueRequestTransfer->addParentResource(
+                $resource[static::RESOURCE_TYPE_KEY],
+                $parentResourceTransfer,
+            );
+        }
+
+        $mainResource = $this->loadResource($glueRequestTransfer, $resourceProviderPlugin->getResources(), $mainGlueResourceTransfer);
+
+        if (!$this->isParentResourceMatching($mainResource, $glueRequestTransfer)) {
+            return new MissingResource(
+                GlueApplicationConfig::ERROR_CODE_PARENT_RESOURCE_NOT_FOUND,
+                GlueApplicationConfig::ERROR_MESSAGE_PARENT_RESOURCE_NOT_FOUND,
+            );
+        }
+
+        return $mainResource;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface $resource
+     * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
+     *
+     * @return bool
+     */
+    protected function isParentResourceMatching(ResourceInterface $resource, GlueRequestTransfer $glueRequestTransfer): bool
+    {
+        if (!$resource instanceof ResourceWithParentPluginInterface) {
+            return true;
+        }
+
+        $parentResourceTransfers = $glueRequestTransfer->getParentResources()->getArrayCopy();
+        /** @var \Generated\Shared\Transfer\GlueResourceTransfer $previousParentTransfer */
+        $previousParentTransfer = end($parentResourceTransfers);
+        if ($resource->getParentResourceType() === $previousParentTransfer->getTypeOrFail()) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
      * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
      * @param array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface> $resourcePlugins
+     * @param \Generated\Shared\Transfer\GlueResourceTransfer $glueResourceTransfer
      *
      * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface
      */
-    protected function loadResource(GlueRequestTransfer $glueRequestTransfer, array $resourcePlugins): ResourceInterface
-    {
-        $resourcePlugin = $this->requestResourcePluginFilter->filterResourcePlugins($glueRequestTransfer, $resourcePlugins);
+    protected function loadResource(
+        GlueRequestTransfer $glueRequestTransfer,
+        array $resourcePlugins,
+        GlueResourceTransfer $glueResourceTransfer
+    ): ResourceInterface {
+        $resourcePlugin = $this->requestResourcePluginFilter->filterResourcePlugins($glueRequestTransfer, $resourcePlugins, $glueResourceTransfer);
 
         if (!$resourcePlugin) {
             return new MissingResource(
@@ -118,7 +179,7 @@ class ResourceRouteMatcher implements RouteMatcherInterface
         $glueResourceMethodCollectionTransfer = $resourcePlugin->getDeclaredMethods();
 
         if (
-            !$glueResourceMethodCollectionTransfer->offsetGet($glueRequestTransfer->getResource()->getMethod()) &&
+            !$glueResourceMethodCollectionTransfer->offsetGet($glueResourceTransfer->getMethod()) &&
             $glueRequestTransfer->getMethod() !== Request::METHOD_OPTIONS
         ) {
             return new MissingResource(

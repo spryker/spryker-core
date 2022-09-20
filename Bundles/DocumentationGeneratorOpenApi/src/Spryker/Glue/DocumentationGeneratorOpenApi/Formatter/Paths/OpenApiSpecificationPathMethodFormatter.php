@@ -9,6 +9,7 @@ namespace Spryker\Glue\DocumentationGeneratorOpenApi\Formatter\Paths;
 
 use Generated\Shared\Transfer\AnnotationTransfer;
 use Generated\Shared\Transfer\PathMethodComponentDataTransfer;
+use Generated\Shared\Transfer\ResourceContextTransfer;
 use Spryker\Glue\DocumentationGeneratorOpenApi\Analyzer\ResourceTransferAnalyzerInterface;
 use Spryker\Glue\DocumentationGeneratorOpenApi\Dependency\External\DocumentationGeneratorOpenApiToInflectorInterface;
 use Spryker\Glue\DocumentationGeneratorOpenApi\Formatter\Component\PathParameterSpecificationComponentInterface;
@@ -78,6 +79,16 @@ class OpenApiSpecificationPathMethodFormatter implements OpenApiSpecificationPat
      * @var string
      */
     protected const KEY_BEARER_AUTH = 'BearerAuth';
+
+    /**
+     * @var string
+     */
+    protected const KEY_NAME = 'name';
+
+    /**
+     * @var string
+     */
+    protected const KEY_PARENT = 'parent';
 
     /**
      * @var string
@@ -223,11 +234,41 @@ class OpenApiSpecificationPathMethodFormatter implements OpenApiSpecificationPat
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ResourceContextTransfer $resourceContextTransfer
+     *
+     * @return string
+     */
+    public function getPathFromResourceType(ResourceContextTransfer $resourceContextTransfer): string
+    {
+        $path = $this->getPathFromParentResourceType('', $resourceContextTransfer->getParentResources());
+        $path .= $this->buildPathByResourceType($resourceContextTransfer->getResourceTypeOrFail());
+
+        return $path;
+    }
+
+    /**
+     * @param string $path
+     * @param array<string, mixed> $parentResources
+     *
+     * @return string
+     */
+    protected function getPathFromParentResourceType(string $path, array $parentResources): string
+    {
+        if ($parentResources === []) {
+            return $path;
+        }
+
+        $path .= $this->buildPathByResourceType($parentResources[static::KEY_NAME]);
+
+        return $this->getPathFromParentResourceType($path, $parentResources[static::KEY_PARENT]);
+    }
+
+    /**
      * @param string $resourceType
      *
      * @return string
      */
-    public function getPathFromResourceType(string $resourceType): string
+    protected function buildPathByResourceType(string $resourceType): string
     {
         $resourceTypeExploded = explode('-', $resourceType);
         $resourceTypeCamelCased = array_map(function ($value) {

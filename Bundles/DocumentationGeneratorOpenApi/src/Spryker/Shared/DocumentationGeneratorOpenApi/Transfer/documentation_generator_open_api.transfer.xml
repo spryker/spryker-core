@@ -28,6 +28,7 @@
         <property name="pathAnnotation" type="PathAnnotation"/>
         <property name="relationships" type="string"/>
         <property name="declaredMethods" type="GlueResourceMethodCollection"/>
+        <property name="parentResources" type="string[]" singular="parentResource"/>
     </transfer>
 
     <transfer name="Annotation">

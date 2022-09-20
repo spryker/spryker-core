@@ -46,6 +46,20 @@ class GlueApplicationConfig extends AbstractBundleConfig
      *
      * @var string
      */
+    public const ERROR_CODE_PARENT_RESOURCE_NOT_FOUND = '009';
+
+    /**
+     * @api
+     *
+     * @var string
+     */
+    public const ERROR_MESSAGE_PARENT_RESOURCE_NOT_FOUND = 'Not found';
+
+    /**
+     * @api
+     *
+     * @var string
+     */
     public const ERROR_MESSAGE_METHOD_NOT_FOUND = 'Method does not exist';
 
     /**

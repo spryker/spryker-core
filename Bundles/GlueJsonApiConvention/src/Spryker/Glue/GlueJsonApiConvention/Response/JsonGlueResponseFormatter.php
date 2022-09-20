@@ -178,6 +178,10 @@ class JsonGlueResponseFormatter implements JsonGlueResponseFormatterInterface
 
         if ($glueRequestTransfer->getMethod() === Request::METHOD_GET && $idResource === null) {
             $linkParts = [];
+
+            foreach ($glueRequestTransfer->getParentResources() as $parentResource) {
+                $linkParts[] = $parentResource->getTypeOrFail() . '/' . $parentResource->getIdOrFail();
+            }
             $linkParts[] = $glueRequestTransfer->getResourceOrFail()->getResourceName();
             $queryString = $this->buildQueryString($glueRequestTransfer);
 
@@ -248,7 +252,12 @@ class JsonGlueResponseFormatter implements JsonGlueResponseFormatterInterface
      */
     protected function getResourceSelfLink(array $resource, GlueRequestTransfer $glueRequestTransfer): array
     {
-        $link = $resource[static::RESOURCE_TYPE];
+        $link = '';
+        foreach ($glueRequestTransfer->getParentResources() as $parentResource) {
+            $link .= sprintf('%s/%s/', $parentResource->getTypeOrFail(), $parentResource->getIdOrFail());
+        }
+
+        $link .= $resource[static::RESOURCE_TYPE];
         if (isset($resource[static::RESOURCE_ID]) && $resource[static::RESOURCE_ID]) {
             $link .= '/' . $resource[static::RESOURCE_ID];
         }

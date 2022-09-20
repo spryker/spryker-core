@@ -80,6 +80,7 @@
         <property name="resourceType" type="string"/>
         <property name="controller" type="string"/>
         <property name="declaredMethods" type="GlueResourceMethodCollection"/>
+        <property name="parentResources" type="string[]" singular="parentResource"/>
     </transfer>
 
     <transfer name="CustomRoutesContext">

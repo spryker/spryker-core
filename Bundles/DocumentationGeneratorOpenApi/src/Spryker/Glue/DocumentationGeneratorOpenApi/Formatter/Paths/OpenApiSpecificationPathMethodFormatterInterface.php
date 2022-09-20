@@ -8,6 +8,7 @@
 namespace Spryker\Glue\DocumentationGeneratorOpenApi\Formatter\Paths;
 
 use Generated\Shared\Transfer\PathMethodComponentDataTransfer;
+use Generated\Shared\Transfer\ResourceContextTransfer;
 
 interface OpenApiSpecificationPathMethodFormatterInterface
 {
@@ -37,9 +38,9 @@ interface OpenApiSpecificationPathMethodFormatterInterface
     public function addPath(array $pathMethodData, string $pathName, string $methodName, array $formattedData): array;
 
     /**
-     * @param string $resourceType
+     * @param \Generated\Shared\Transfer\ResourceContextTransfer $resourceContextTransfer
      *
      * @return string
      */
-    public function getPathFromResourceType(string $resourceType): string;
+    public function getPathFromResourceType(ResourceContextTransfer $resourceContextTransfer): string;
 }

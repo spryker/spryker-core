@@ -85,7 +85,7 @@ class ProtectedPathAuthorizationChecker implements ProtectedPathAuthorizationChe
     {
         $protectedPaths = $this->glueBackendApiApplicationAuthorizationConfig->getProtectedPaths();
         if ($protectedPaths === []) {
-            return true;
+            return false;
         }
         $path = $routeTransfer->getRouteOrFail();
         $method = $routeTransfer->getMethodOrFail();
