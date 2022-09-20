@@ -15,6 +15,18 @@ use Symfony\Component\HttpKernel\KernelEvents;
 class SecurityHeaderExpander implements SecurityHeaderExpanderInterface
 {
     /**
+     * @see {@link \Spryker\Yves\Application\ApplicationConfig::getSecurityHeaders()}
+     *
+     * @var string
+     */
+    protected const HEADER_CONTENT_SECURITY_POLICY = 'Content-Security-Policy';
+
+    /**
+     * @var string
+     */
+    protected const ATTRIBUTE_FORM_ACTION = 'form-action';
+
+    /**
      * @var \Spryker\Yves\Application\ApplicationConfig
      */
     protected ApplicationConfig $applicationConfig;
@@ -42,6 +54,7 @@ class SecurityHeaderExpander implements SecurityHeaderExpanderInterface
     public function expand(EventDispatcherInterface $eventDispatcher): EventDispatcherInterface
     {
         $securityHeaders = $this->applicationConfig->getSecurityHeaders();
+        $securityHeaders = $this->expandContentSecurityPolicyHeaderWithDomainWhitelist($securityHeaders);
         $securityHeaders = $this->executeSecurityHeaderExpanderPlugins($securityHeaders);
 
         $eventDispatcher->addListener(
@@ -56,6 +69,36 @@ class SecurityHeaderExpander implements SecurityHeaderExpanderInterface
         );
 
         return $eventDispatcher;
+    }
+
+    /**
+     * @param array<string, string> $securityHeaders
+     *
+     * @return array<string, string>
+     */
+    protected function expandContentSecurityPolicyHeaderWithDomainWhitelist(array $securityHeaders): array
+    {
+        $contentSecurityPolicyHeader = $securityHeaders[static::HEADER_CONTENT_SECURITY_POLICY] ?? null;
+        if (!$contentSecurityPolicyHeader) {
+            return $securityHeaders;
+        }
+
+        $domainWhitelist = $this->applicationConfig->getDomainWhitelist();
+        if (!$domainWhitelist) {
+            return $securityHeaders;
+        }
+
+        $securityHeaders[static::HEADER_CONTENT_SECURITY_POLICY] = str_replace(
+            static::ATTRIBUTE_FORM_ACTION,
+            sprintf(
+                '%s %s',
+                static::ATTRIBUTE_FORM_ACTION,
+                implode(' ', array_unique($domainWhitelist)),
+            ),
+            $contentSecurityPolicyHeader,
+        );
+
+        return $securityHeaders;
     }
 
     /**

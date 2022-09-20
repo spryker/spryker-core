@@ -8,6 +8,7 @@
 namespace Spryker\Yves\Application;
 
 use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Yves\Kernel\AbstractBundleConfig;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -159,5 +160,15 @@ class ApplicationConfig extends AbstractBundleConfig
     public function isDebugModeEnabled(): bool
     {
         return $this->getSharedConfig()->isDebugModeEnabled();
+    }
+
+    /**
+     * @api
+     *
+     * @return array<int, string>
+     */
+    public function getDomainWhitelist(): array
+    {
+        return $this->get(KernelConstants::DOMAIN_WHITELIST, []);
     }
 }
