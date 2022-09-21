@@ -8,6 +8,7 @@
 namespace Spryker\Client\ProductBundleStorage;
 
 use Generated\Shared\Transfer\ProductBundleStorageCriteriaTransfer;
+use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -29,5 +30,28 @@ class ProductBundleStorageClient extends AbstractClient implements ProductBundle
         return $this->getFactory()
             ->createProductBundleStorageReader()
             ->getProductBundles($productBundleStorageCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param array $productData
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
+     */
+    public function expandProductViewTransferWithBundledProducts(
+        ProductViewTransfer $productViewTransfer,
+        array $productData,
+        string $localeName
+    ): ProductViewTransfer {
+        return $this->getFactory()->createProductViewProductBundleExpander()->expandProductViewTransfer(
+            $productViewTransfer,
+            $productData,
+            $localeName,
+        );
     }
 }

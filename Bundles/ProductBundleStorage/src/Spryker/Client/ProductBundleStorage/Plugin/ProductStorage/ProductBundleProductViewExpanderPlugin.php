@@ -5,28 +5,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ProductBundleStorage;
+namespace Spryker\Client\ProductBundleStorage\Plugin\ProductStorage;
 
-use Generated\Shared\Transfer\ProductBundleStorageCriteriaTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
+use Spryker\Client\Kernel\AbstractPlugin;
+use Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductViewExpanderPluginInterface;
 
-interface ProductBundleStorageClientInterface
+/**
+ * @method \Spryker\Client\ProductBundleStorage\ProductBundleStorageFactory getFactory()
+ * @method \Spryker\Client\ProductBundleStorage\ProductBundleStorageClientInterface getClient()
+ */
+class ProductBundleProductViewExpanderPlugin extends AbstractPlugin implements ProductViewExpanderPluginInterface
 {
     /**
-     * Specification:
-     * - Retrieves bundled products from storage by provided criteria.
-     * - Returns `ProductBundleStorageTransfer` collection indexed by bundle product concrete id.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ProductBundleStorageCriteriaTransfer $productBundleStorageCriteriaTransfer
-     *
-     * @return array<\Generated\Shared\Transfer\ProductBundleStorageTransfer>
-     */
-    public function getProductBundles(ProductBundleStorageCriteriaTransfer $productBundleStorageCriteriaTransfer): array;
-
-    /**
-     * Specification:
+     * {@inheritDoc}
      * - Expects `ProductViewTransfer.idProductConcrete` to be set.
      * - Checks if `ProductViewTransfer.idProductConcrete` is specified, otherwise skips the extension.
      * - Reads bundled products from the storage.
@@ -37,14 +29,16 @@ interface ProductBundleStorageClientInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     * @param array $productData
+     * @param array<string, mixed> $productData
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    public function expandProductViewTransferWithBundledProducts(
+    public function expandProductViewTransfer(
         ProductViewTransfer $productViewTransfer,
         array $productData,
-        string $localeName
-    ): ProductViewTransfer;
+        $localeName
+    ): ProductViewTransfer {
+        return $this->getClient()->expandProductViewTransferWithBundledProducts($productViewTransfer, $productData, $localeName);
+    }
 }

@@ -10,6 +10,9 @@
         <property name="idProductConcrete" type="int"/>
         <property name="sku" type="string"/>
         <property name="quantity" type="int"/>
+        <property name="name" type="string"/>
+        <property name="productImages" singular="image" type="ProductImageStorage[]"/>
+        <property name="url" type="string"/>
     </transfer>
 
     <transfer name="SynchronizationData">
@@ -46,6 +49,17 @@
 
     <transfer name="ProductForBundle">
         <property name="isActive" type="bool"/>
+    </transfer>
+
+    <transfer name="ProductView">
+        <property name="bundledProducts" type="ProductForProductBundleStorage[]" singular="bundledProduct"/>
+        <property name="idProductConcrete" type="int"/>
+        <property name="name" type="string"/>
+        <property name="images" singular="image" type="ProductImageStorage[]"/>
+        <property name="url" type="string"/>
+    </transfer>
+
+    <transfer name="ProductImageStorage">
     </transfer>
 
 </transfers>
