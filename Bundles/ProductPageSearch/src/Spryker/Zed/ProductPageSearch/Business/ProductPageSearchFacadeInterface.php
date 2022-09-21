@@ -65,8 +65,8 @@ interface ProductPageSearchFacadeInterface
 
     /**
      * Specification:
-     * - Publishes concrete products with given ids.
-     * - Executes `ProductConcreteCollectionFilterPluginInterface` stack of plugins.
+     * - Publishes searchable concrete products with given ids.
+     * - Executes a stack of {@link \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductConcreteCollectionFilterPluginInterface} plugins.
      *
      * @api
      *
@@ -115,7 +115,7 @@ interface ProductPageSearchFacadeInterface
 
     /**
      * Specification:
-     * - Publishes concrete products by given abstract product ids.
+     * - Publishes searchable concrete products by given abstract product ids.
      * - Executes `ProductConcreteCollectionFilterPluginInterface` stack of plugins.
      *
      * @api
@@ -217,4 +217,20 @@ interface ProductPageSearchFacadeInterface
      * @return void
      */
     public function refreshProductAbstractPage(): void;
+
+    /**
+     * Specification:
+     * - Extracts product search IDs from the $eventTransfers.
+     * - Finds all product IDs related to product search IDs.
+     * - Finds concrete products by product IDs.
+     * - Executes a stack of {@link \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductConcreteCollectionFilterPluginInterface} plugins.
+     * - Publishes searchable concrete products.
+     *
+     * @api
+     *
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeProductConcretePageSearchCollectionByProductEvents(array $eventEntityTransfers): void;
 }

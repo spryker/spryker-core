@@ -61,4 +61,11 @@ interface ProductPageSearchToProductInterface
      * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function getRawProductConcreteTransfersByFilter(FilterTransfer $filterTransfer): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
+     */
+    public function getProductConcretesByFilter(FilterTransfer $filterTransfer): array;
 }

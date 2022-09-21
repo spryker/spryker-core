@@ -20,6 +20,7 @@ use Spryker\Zed\ProductPageSearch\Business\Exception\ProductConcretePageSearchNo
 use Spryker\Zed\ProductPageSearch\Business\ProductConcretePageSearchReader\ProductConcretePageSearchReaderInterface;
 use Spryker\Zed\ProductPageSearch\Business\ProductConcretePageSearchWriter\ProductConcretePageSearchWriterInterface;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductInterface;
+use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductSearchInterface;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToStoreFacadeInterface;
 use Spryker\Zed\ProductPageSearch\Dependency\Service\ProductPageSearchToUtilEncodingInterface;
 use Spryker\Zed\ProductPageSearch\ProductPageSearchConfig;
@@ -70,6 +71,11 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
     protected $storeFacade;
 
     /**
+     * @var \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductSearchInterface
+     */
+    protected ProductPageSearchToProductSearchInterface $productSearchFacade;
+
+    /**
      * @var \Spryker\Zed\ProductPageSearch\ProductPageSearchConfig
      */
     protected $productPageSearchConfig;
@@ -82,7 +88,7 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
     /**
      * @var array<\Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductConcreteCollectionFilterPluginInterface>
      */
-    protected $productConcreteCollectionFilterPlugins;
+    protected array $productConcreteCollectionFilterPlugins;
 
     /**
      * @param \Spryker\Zed\ProductPageSearch\Business\ProductConcretePageSearchReader\ProductConcretePageSearchReaderInterface $productConcretePageSearchReader
@@ -91,6 +97,7 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
      * @param \Spryker\Zed\ProductPageSearch\Dependency\Service\ProductPageSearchToUtilEncodingInterface $utilEncoding
      * @param \Spryker\Zed\ProductPageSearch\Business\DataMapper\AbstractProductSearchDataMapper $productConcreteSearchDataMapper
      * @param \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToStoreFacadeInterface $storeFacade
+     * @param \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductSearchInterface $productPageSearchFacade
      * @param \Spryker\Zed\ProductPageSearch\ProductPageSearchConfig $productPageSearchConfig
      * @param array<\Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductConcretePageDataExpanderPluginInterface> $pageDataExpanderPlugins
      * @param array<\Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductConcreteCollectionFilterPluginInterface> $productConcreteCollectionFilterPlugins
@@ -102,6 +109,7 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
         ProductPageSearchToUtilEncodingInterface $utilEncoding,
         AbstractProductSearchDataMapper $productConcreteSearchDataMapper,
         ProductPageSearchToStoreFacadeInterface $storeFacade,
+        ProductPageSearchToProductSearchInterface $productPageSearchFacade,
         ProductPageSearchConfig $productPageSearchConfig,
         array $pageDataExpanderPlugins,
         array $productConcreteCollectionFilterPlugins
@@ -114,6 +122,7 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
         $this->productConcreteSearchDataMapper = $productConcreteSearchDataMapper;
         $this->utilEncoding = $utilEncoding;
         $this->storeFacade = $storeFacade;
+        $this->productSearchFacade = $productPageSearchFacade;
         $this->productConcreteCollectionFilterPlugins = $productConcreteCollectionFilterPlugins;
     }
 
@@ -207,6 +216,9 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
     {
         $filteredProductConcreteTransfers = $this->executeProductConcreteCollectionFilterPlugins($productConcreteTransfers);
         $filteredProductIds = $this->getProductIdsListFromProductConcreteTransfers($filteredProductConcreteTransfers);
+        $productConcreteTransfers = $this->productSearchFacade->expandProductConcreteTransfersWithIsSearchable(
+            $productConcreteTransfers,
+        );
 
         foreach ($productConcreteTransfers as $productConcreteTransfer) {
             foreach ($productConcreteTransfer->getStores() as $storeTransfer) {
@@ -288,6 +300,14 @@ class ProductConcretePageSearchPublisher implements ProductConcretePageSearchPub
         }
 
         if (!$this->isValidStoreLocale($storeTransfer->getName(), $localizedAttributesTransfer->getLocale()->getLocaleName())) {
+            if ($productConcretePageSearchTransfer->getIdProductConcretePageSearch() !== null) {
+                $this->deleteProductConcretePageSearch($productConcretePageSearchTransfer);
+            }
+
+            return;
+        }
+
+        if ($localizedAttributesTransfer->getIsSearchable() === false) {
             if ($productConcretePageSearchTransfer->getIdProductConcretePageSearch() !== null) {
                 $this->deleteProductConcretePageSearch($productConcretePageSearchTransfer);
             }

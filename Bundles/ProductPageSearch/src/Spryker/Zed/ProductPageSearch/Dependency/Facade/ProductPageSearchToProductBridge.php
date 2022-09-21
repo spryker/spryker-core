@@ -95,4 +95,14 @@ class ProductPageSearchToProductBridge implements ProductPageSearchToProductInte
     {
         return $this->productFacade->getRawProductConcreteTransfersByFilter($filterTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
+     */
+    public function getProductConcretesByFilter(FilterTransfer $filterTransfer): array
+    {
+        return $this->productFacade->getProductConcretesByFilter($filterTransfer);
+    }
 }

@@ -11,6 +11,9 @@ use Codeception\Actor;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
+use Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearch;
+use Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearchQuery;
+use Orm\Zed\ProductSearch\Persistence\SpyProductSearch;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Zed\Kernel\Container as ZedContainer;
@@ -99,6 +102,56 @@ class ProductPageSearchBusinessTester extends Actor
     }
 
     /**
+     * @param bool $isSearchable
+     *
+     * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearch
+     */
+    public function getLocalizedProductSearchEntity(bool $isSearchable = true): SpyProductSearch
+    {
+        $productConcreteTransfer = $this->haveFullProduct();
+        $localizedAttributeTransfers = $productConcreteTransfer->getLocalizedAttributes();
+        $localeTransfer = $localizedAttributeTransfers->getIterator()->current()->getLocaleOrFail();
+
+        return $this->persistProductSearchEntity(
+            $localeTransfer->getIdLocaleOrFail(),
+            $productConcreteTransfer->getIdProductConcreteOrFail(),
+            $isSearchable,
+        );
+    }
+
+    /**
+     * @param int $idLocale
+     * @param int $idProductConcrete
+     * @param bool $isSearchable
+     *
+     * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearch
+     */
+    public function persistProductSearchEntity(int $idLocale, int $idProductConcrete, bool $isSearchable): SpyProductSearch
+    {
+        $productSearchEntity = (new SpyProductSearch())
+            ->setFkLocale($idLocale)
+            ->setFkProduct($idProductConcrete)
+            ->setIsSearchable($isSearchable);
+
+        $productSearchEntity->save();
+
+        return $productSearchEntity;
+    }
+
+    /**
+     * @param \Orm\Zed\ProductSearch\Persistence\SpyProductSearch $productSearchEntity
+     *
+     * @return \Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearch|null
+     */
+    public function findProductConcretePageSearchEntityByLocalizedProductSearchEntity(SpyProductSearch $productSearchEntity): ?SpyProductConcretePageSearch
+    {
+        return SpyProductConcretePageSearchQuery::create()
+            ->filterByFkProduct($productSearchEntity->getFkProduct())
+            ->filterByLocale($productSearchEntity->getSpyLocale()->getLocaleName())
+            ->findOne();
+    }
+
+    /**
      * @return void
      */
     protected function setUpData(): void
@@ -112,6 +165,15 @@ class ProductPageSearchBusinessTester extends Actor
         $this->addLocalizedAttributesToProductAbstract($this->productAbstractTransfer, $localizedAttributes);
         $this->addStoreRelationToProductAbstracts($this->productAbstractTransfer);
         $this->addLocalizedAttributesToProductConcrete($this->productConcreteTransfer, $localizedAttributes);
+        $this->getLocator()->productSearch()->facade()->activateProductSearch(
+            $this->productConcreteTransfer->getIdProductConcrete(),
+            array_map(
+                function ($localizedAttribute) {
+                    return $localizedAttribute->getLocale();
+                },
+                $this->productConcreteTransfer->getLocalizedAttributes()->getArrayCopy(),
+            ),
+        );
     }
 
     /**

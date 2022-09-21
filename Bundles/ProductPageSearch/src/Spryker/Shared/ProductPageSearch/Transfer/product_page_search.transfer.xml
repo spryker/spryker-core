@@ -116,6 +116,7 @@
     <transfer name="LocalizedAttributes">
         <property name="locale" type="Locale"/>
         <property name="name" type="string"/>
+        <property name="isSearchable" type="bool"/>
     </transfer>
 
     <transfer name="Node">
@@ -192,5 +193,9 @@
 
     <transfer name="PriceProductDimension">
         <property name="type" type="string"/>
+    </transfer>
+
+    <transfer name="EventEntity">
+        <property name="modifiedColumns" type="array" singular="modifiedColumns"/>
     </transfer>
 </transfers>

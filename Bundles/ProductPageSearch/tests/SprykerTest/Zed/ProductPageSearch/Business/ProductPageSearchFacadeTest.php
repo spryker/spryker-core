@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\ProductPageSearch\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CategoryMapTransfer;
+use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\IntegerSortMapTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;
@@ -298,6 +299,40 @@ class ProductPageSearchFacadeTest extends Unit
 
         // Act
         $this->productPageSearchFacade->refreshProductAbstractPage();
+    }
+
+    /**
+     * @return void
+     */
+    public function testWriteProductConcretePageSearchCollectionByProductEventsWritesSearchDataForSearchableProduct(): void
+    {
+        // Arrange
+        $productSearchEntity = $this->tester->getLocalizedProductSearchEntity();
+        $eventEntityTransfer = (new EventEntityTransfer())->setId($productSearchEntity->getIdProductSearch());
+
+        // Act
+        $this->productPageSearchFacade->writeProductConcretePageSearchCollectionByProductEvents([$eventEntityTransfer]);
+        $productConcretePageSearchEntity = $this->tester->findProductConcretePageSearchEntityByLocalizedProductSearchEntity($productSearchEntity);
+
+        // Assert
+        $this->assertNotNull($productConcretePageSearchEntity, 'ProductConcretePageSearchEntity should exist.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testWriteProductConcretePageSearchCollectionByProductEventsDoesntWriteSearchDataForNotSearchableProduct(): void
+    {
+        // Arrange
+        $productSearchEntity = $this->tester->getLocalizedProductSearchEntity(false);
+        $eventEntityTransfer = (new EventEntityTransfer())->setId($productSearchEntity->getIdProductSearch());
+
+        // Act
+        $this->productPageSearchFacade->writeProductConcretePageSearchCollectionByProductEvents([$eventEntityTransfer]);
+        $productConcretePageSearchEntity = $this->tester->findProductConcretePageSearchEntityByLocalizedProductSearchEntity($productSearchEntity);
+
+        // Assert
+        $this->assertNull($productConcretePageSearchEntity, 'ProductConcretePageSearchEntity shouldn\'t exist.');
     }
 
     /**

@@ -326,6 +326,7 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
         });
 
         $container = $this->addStoreFacade($container);
+        $container = $this->addEventBehaviorFacade($container);
         $container = $this->addProductImageFacade($container);
         $container = $this->addProductSearchFacade($container);
         $container = $this->addProductConcreteMapExpanderPlugins($container);
@@ -455,6 +456,20 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container->set(static::FACADE_STORE, function (Container $container): ProductPageSearchToStoreFacadeInterface {
             return new ProductPageSearchToStoreFacadeBridge($container->getLocator()->store()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addEventBehaviorFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
+            return new ProductPageSearchToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
         });
 
         return $container;

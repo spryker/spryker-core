@@ -12,6 +12,13 @@ use Generated\Shared\Transfer\FilterTransfer;
 interface ProductPageSearchRepositoryInterface
 {
     /**
+     * @param array<int> $productSearchIds
+     *
+     * @return array<int>
+     */
+    public function getProductConcreteIdsByProductSearchIds(array $productSearchIds): array;
+
+    /**
      * @param array<int> $productIds
      *
      * @return array<\Generated\Shared\Transfer\ProductConcretePageSearchTransfer>

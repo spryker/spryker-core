@@ -69,4 +69,14 @@ class ProductPageSearchConfig extends AbstractSharedConfig
      * @var string
      */
     public const PUBLISH_PRODUCT_CONCRETE_PAGE = 'publish.page_product_concrete';
+
+    /**
+     * Specification:
+     * - This event will be used for product concrete publishing.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const PRODUCT_CONCRETE_PUBLISH = 'Product.product_concrete.publish';
 }

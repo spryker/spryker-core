@@ -54,4 +54,14 @@ class ProductPageSearchToProductSearchBridge implements ProductPageSearchToProdu
     ) {
         return $this->productSearchFacade->mapDynamicProductAttributesToSearchData($pageMapBuilder, $pageMapTransfer, $attributes);
     }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
+     */
+    public function expandProductConcreteTransfersWithIsSearchable(array $productConcreteTransfers): array
+    {
+        return $this->productSearchFacade->expandProductConcreteTransfersWithIsSearchable($productConcreteTransfers);
+    }
 }

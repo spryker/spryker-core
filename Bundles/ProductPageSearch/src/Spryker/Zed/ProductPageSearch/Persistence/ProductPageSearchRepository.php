@@ -14,6 +14,7 @@ use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\ProductPageSearch\Persistence\Map\SpyProductConcretePageSearchTableMap;
 use Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearchQuery;
+use Orm\Zed\ProductSearch\Persistence\Map\SpyProductSearchTableMap;
 use PDO;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Formatter\ObjectFormatter;
@@ -28,6 +29,26 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
      * @var string
      */
     protected const FK_PRODUCT_ABSTRACT = 'fkProductAbstract';
+
+    /**
+     * @param array<int> $productSearchIds
+     *
+     * @return array<int>
+     */
+    public function getProductConcreteIdsByProductSearchIds(array $productSearchIds): array
+    {
+        if (!$productSearchIds) {
+            return [];
+        }
+
+        return $this->getFactory()
+            ->getProductSearchQuery()
+            ->filterByIdProductSearch_In($productSearchIds)
+            ->select(SpyProductSearchTableMap::COL_FK_PRODUCT)
+            ->distinct()
+            ->find()
+            ->getData();
+    }
 
     /**
      * @param array<int> $productIds

@@ -34,6 +34,9 @@ use Spryker\Zed\ProductPageSearch\Business\Refresher\ProductAbstractPageRefreshe
 use Spryker\Zed\ProductPageSearch\Business\Refresher\ProductPageRefresherInterface;
 use Spryker\Zed\ProductPageSearch\Business\Unpublisher\ProductConcretePageSearchUnpublisher;
 use Spryker\Zed\ProductPageSearch\Business\Unpublisher\ProductConcretePageSearchUnpublisherInterface;
+use Spryker\Zed\ProductPageSearch\Business\Writer\ProductConcretePageSearchByProductEventsWriter;
+use Spryker\Zed\ProductPageSearch\Business\Writer\ProductConcretePageSearchByProductEventsWriterInterface;
+use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToEventBehaviorFacadeInterface;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToPriceProductInterface;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToProductImageFacadeInterface;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToStoreFacadeInterface;
@@ -78,6 +81,7 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
             $this->getUtilEncoding(),
             $this->createProductConcreteSearchDataMapper(),
             $this->getStoreFacade(),
+            $this->getProductSearchFacade(),
             $this->getConfig(),
             $this->getProductConcretePageDataExpanderPlugins(),
             $this->getProductConcreteCollectionFilterPlugins(),
@@ -178,6 +182,18 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
         return new AddToCartSkuReader(
             $this->getRepository(),
             $this->getProductAbstractAddToCartPlugins(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPageSearch\Business\Writer\ProductConcretePageSearchByProductEventsWriterInterface
+     */
+    public function createProductConcretePageSearchByProductEventsWriter(): ProductConcretePageSearchByProductEventsWriterInterface
+    {
+        return new ProductConcretePageSearchByProductEventsWriter(
+            $this->createProductConcretePageSearchPublisher(),
+            $this->getEventBehaviorFacade(),
+            $this->getRepository(),
         );
     }
 
@@ -334,6 +350,14 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
     public function getPriceProductFacade(): ProductPageSearchToPriceProductInterface
     {
         return $this->getProvidedDependency(ProductPageSearchDependencyProvider::FACADE_PRICE_PRODUCT);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToEventBehaviorFacadeInterface
+     */
+    public function getEventBehaviorFacade(): ProductPageSearchToEventBehaviorFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductPageSearchDependencyProvider::FACADE_EVENT_BEHAVIOR);
     }
 
     /**

@@ -38,4 +38,11 @@ interface ProductPageSearchToProductSearchInterface
         PageMapTransfer $pageMapTransfer,
         array $attributes
     );
+
+    /**
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
+     */
+    public function expandProductConcreteTransfersWithIsSearchable(array $productConcreteTransfers): array;
 }

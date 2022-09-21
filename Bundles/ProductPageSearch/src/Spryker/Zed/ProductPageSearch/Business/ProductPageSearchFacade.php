@@ -253,4 +253,20 @@ class ProductPageSearchFacade extends AbstractFacade implements ProductPageSearc
             ->createProductAbstractPageRefresher()
             ->refresh();
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventEntityTransfers
+     *
+     * @return void
+     */
+    public function writeProductConcretePageSearchCollectionByProductEvents(array $eventEntityTransfers): void
+    {
+        $this->getFactory()
+            ->createProductConcretePageSearchByProductEventsWriter()
+            ->writeProductConcretePageSearchCollectionByProductEvents($eventEntityTransfers);
+    }
 }
