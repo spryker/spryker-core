@@ -49,27 +49,12 @@ class Router extends SymfonyRouter implements RouterInterface, WarmableInterface
             ->setControllerExecutable($matchResult['_controller'] ?? null)
             ->setAction($matchResult['_action'] ?? null)
             ->setScope($matchResult['scope'] ?? null)
-            ->setParameters($this->filterParameters($matchResult));
+            ->setId($matchResult['id'] ?? null)
+            ->setParameters($matchResult);
 
         $glueRequestTransfer->setResource($glueResourceTransfer);
 
         return $glueRequestTransfer;
-    }
-
-    /**
-     * @param array<mixed> $matchResult
-     *
-     * @return array<mixed>
-     */
-    protected function filterParameters(array $matchResult): array
-    {
-        return array_filter(
-            $matchResult,
-            function (string $parameter) {
-                return strpos($parameter, '_') === 0;
-            },
-            ARRAY_FILTER_USE_KEY,
-        );
     }
 
     /**
