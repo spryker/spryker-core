@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Transfer\Business\Model\Generator;
 
+use RuntimeException;
 use Spryker\Shared\Kernel\Transfer\AbstractAttributesTransfer;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
@@ -30,11 +31,18 @@ class ClassGenerator implements GeneratorInterface
 
     /**
      * @param string $targetDirectory
+     *
+     * @throws \RuntimeException
      */
     public function __construct($targetDirectory)
     {
         $this->targetDirectory = $targetDirectory;
-        $loader = new FilesystemLoader((string)realpath(__DIR__ . static::TWIG_TEMPLATES_LOCATION));
+
+        $path = realpath(__DIR__ . DIRECTORY_SEPARATOR . static::TWIG_TEMPLATES_LOCATION);
+        if (!$path) {
+            throw new RuntimeException(sprintf('Cannot find templates path `%s`', __DIR__ . DIRECTORY_SEPARATOR . static::TWIG_TEMPLATES_LOCATION));
+        }
+        $loader = new FilesystemLoader($path);
         $this->twig = new Environment($loader, []);
     }
 
