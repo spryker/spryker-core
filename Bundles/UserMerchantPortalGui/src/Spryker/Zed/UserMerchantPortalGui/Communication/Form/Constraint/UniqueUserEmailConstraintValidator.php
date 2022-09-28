@@ -49,6 +49,11 @@ class UniqueUserEmailConstraintValidator extends ConstraintValidator
 
         $userCriteriaTransfer = (new UserCriteriaTransfer())->setEmail($email);
 
-        return !$constraint->getMerchantUserFacade()->findUser($userCriteriaTransfer);
+        $userTransfer = $constraint->getMerchantUserFacade()->findUser($userCriteriaTransfer);
+        if ($userTransfer === null) {
+            return true;
+        }
+
+        return $constraint->getIdUser() === $userTransfer->getIdUser();
     }
 }

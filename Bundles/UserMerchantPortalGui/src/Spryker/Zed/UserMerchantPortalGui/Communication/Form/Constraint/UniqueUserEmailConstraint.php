@@ -15,6 +15,11 @@ class UniqueUserEmailConstraint extends Constraint
     /**
      * @var string
      */
+    public const ID_USER = 'idUser';
+
+    /**
+     * @var string
+     */
     public const OPTION_MERCHANT_USER_FACADE = 'merchantUserFacade';
 
     /**
@@ -33,6 +38,11 @@ class UniqueUserEmailConstraint extends Constraint
     protected $merchantUserFacade;
 
     /**
+     * @var int|null
+     */
+    protected ?int $idUser = null;
+
+    /**
      * @return \Spryker\Zed\UserMerchantPortalGui\Dependency\Facade\UserMerchantPortalGuiToMerchantUserFacadeInterface
      */
     public function getMerchantUserFacade(): UserMerchantPortalGuiToMerchantUserFacadeInterface
@@ -46,5 +56,13 @@ class UniqueUserEmailConstraint extends Constraint
     public function getMessage(): string
     {
         return 'A user with this email already exists.';
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getIdUser(): ?int
+    {
+        return $this->idUser;
     }
 }

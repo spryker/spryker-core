@@ -49,12 +49,15 @@ class UserMerchantPortalGuiCommunicationFactory extends AbstractCommunicationFac
     }
 
     /**
+     * @param int $idUser
+     *
      * @return \Symfony\Component\Validator\Constraint
      */
-    public function createUniqueUserEmailConstraint(): Constraint
+    public function createUniqueUserEmailConstraint(int $idUser): Constraint
     {
         return new UniqueUserEmailConstraint([
             UniqueUserEmailConstraint::OPTION_MERCHANT_USER_FACADE => $this->getMerchantUserFacade(),
+            UniqueUserEmailConstraint::ID_USER => $idUser,
         ]);
     }
 

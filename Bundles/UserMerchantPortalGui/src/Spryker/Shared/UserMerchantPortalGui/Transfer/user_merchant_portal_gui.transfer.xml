@@ -20,6 +20,7 @@
         <property name="localeName" type="string"/>
         <property name="username" type="string"/>
         <property name="password" type="string"/>
+        <property name="idUser" type="int"/>
     </transfer>
 
     <transfer name="UserCriteria">

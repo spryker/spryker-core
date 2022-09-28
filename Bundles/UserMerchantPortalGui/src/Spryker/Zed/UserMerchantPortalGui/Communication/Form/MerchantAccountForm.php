@@ -29,6 +29,11 @@ class MerchantAccountForm extends AbstractType
     /**
      * @var string
      */
+    protected const KEY_ID_USER = 'id_user';
+
+    /**
+     * @var string
+     */
     protected const FORM_NAME = 'user-merchant-portal-gui_merchant-account';
 
     /**
@@ -200,13 +205,14 @@ class MerchantAccountForm extends AbstractType
      */
     protected function addEmailField(FormBuilderInterface $builder)
     {
+        $formData = $builder->getData();
         $builder
             ->add(static::FIELD_USERNAME, TextType::class, [
                 'label' => static::LABEL_USERNAME,
                 'constraints' => [
                     new NotBlank(),
                     new Email(),
-                    $this->getFactory()->createUniqueUserEmailConstraint(),
+                    $this->getFactory()->createUniqueUserEmailConstraint($formData[static::KEY_ID_USER]),
                 ],
             ]);
 

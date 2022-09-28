@@ -61,7 +61,44 @@ class UniqueUserEmailConstraintValidatorTest extends ConstraintValidatorTestCase
     {
         // Arrange
         $uniqueUserEmailConstraint = $this->createUniqueUserEmailConstraint(
-            $this->createMerchantUserFacadeMock(new UserTransfer()),
+            $this->createMerchantUserFacadeMock((new UserTransfer())->setIdUser(1)),
+        );
+
+        // Act
+        $this->validator->validate('someone@spryker.com', $uniqueUserEmailConstraint);
+
+        // Assert
+        $this->buildViolation($uniqueUserEmailConstraint->getMessage())
+            ->assertRaised();
+    }
+
+    /**
+     * @return void
+     */
+    public function testReturnsSuccessWhenUserIsSameForExistingEmail(): void
+    {
+        // Arrange
+        $uniqueUserEmailConstraint = $this->createUniqueUserEmailConstraint(
+            $this->createMerchantUserFacadeMock((new UserTransfer())->setIdUser(12)),
+            12,
+        );
+
+        // Act
+        $this->validator->validate('someone@spryker.com', $uniqueUserEmailConstraint);
+
+        // Assert
+        $this->assertNoViolation();
+    }
+
+    /**
+     * @return void
+     */
+    public function testReturnsErrorWhenUserIsNotSameForExistingEmail(): void
+    {
+        // Arrange
+        $uniqueUserEmailConstraint = $this->createUniqueUserEmailConstraint(
+            $this->createMerchantUserFacadeMock((new UserTransfer())->setIdUser(13)),
+            12,
         );
 
         // Act
@@ -74,14 +111,17 @@ class UniqueUserEmailConstraintValidatorTest extends ConstraintValidatorTestCase
 
     /**
      * @param \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\UserMerchantPortalGui\Dependency\Facade\UserMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade
+     * @param int|null $idUser
      *
      * @return \Spryker\Zed\UserMerchantPortalGui\Communication\Form\Constraint\UniqueUserEmailConstraint
      */
     protected function createUniqueUserEmailConstraint(
-        MockObject $merchantUserFacade
+        MockObject $merchantUserFacade,
+        ?int $idUser = null
     ): UniqueUserEmailConstraint {
         return new UniqueUserEmailConstraint([
             UniqueUserEmailConstraint::OPTION_MERCHANT_USER_FACADE => $merchantUserFacade,
+            UniqueUserEmailConstraint::ID_USER => $idUser,
         ]);
     }
 
