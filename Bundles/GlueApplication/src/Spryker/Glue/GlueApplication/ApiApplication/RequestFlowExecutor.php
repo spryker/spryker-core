@@ -11,11 +11,13 @@ use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueRequestValidationTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
 use Spryker\Glue\GlueApplication\ApiApplication\Type\RequestFlowAwareApiApplication;
+use Spryker\Glue\GlueApplication\Builder\RequestBuilderInterface;
 use Spryker\Glue\GlueApplication\Executor\ResourceExecutorInterface;
+use Spryker\Glue\GlueApplication\Formatter\ResponseFormatterInterface;
 use Spryker\Glue\GlueApplication\Router\RouteMatcherInterface;
+use Spryker\Glue\GlueApplication\Validator\RequestValidatorInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ConventionPluginInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\MissingResourceInterface;
-use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface;
 
 class RequestFlowExecutor implements RequestFlowExecutorInterface
 {
@@ -30,15 +32,39 @@ class RequestFlowExecutor implements RequestFlowExecutorInterface
     protected RouteMatcherInterface $routeMatcher;
 
     /**
+     * @var \Spryker\Glue\GlueApplication\Builder\RequestBuilderInterface
+     */
+    protected RequestBuilderInterface $requestBuilder;
+
+    /**
+     * @var \Spryker\Glue\GlueApplication\Validator\RequestValidatorInterface
+     */
+    protected RequestValidatorInterface $requestValidator;
+
+    /**
+     * @var \Spryker\Glue\GlueApplication\Formatter\ResponseFormatterInterface
+     */
+    protected ResponseFormatterInterface $responseFormatter;
+
+    /**
      * @param \Spryker\Glue\GlueApplication\Executor\ResourceExecutorInterface $resourceExecutor
      * @param \Spryker\Glue\GlueApplication\Router\RouteMatcherInterface $routeMatcher
+     * @param \Spryker\Glue\GlueApplication\Builder\RequestBuilderInterface $requestBuilder
+     * @param \Spryker\Glue\GlueApplication\Validator\RequestValidatorInterface $requestValidator
+     * @param \Spryker\Glue\GlueApplication\Formatter\ResponseFormatterInterface $responseFormatter
      */
     public function __construct(
         ResourceExecutorInterface $resourceExecutor,
-        RouteMatcherInterface $routeMatcher
+        RouteMatcherInterface $routeMatcher,
+        RequestBuilderInterface $requestBuilder,
+        RequestValidatorInterface $requestValidator,
+        ResponseFormatterInterface $responseFormatter
     ) {
         $this->resourceExecutor = $resourceExecutor;
         $this->routeMatcher = $routeMatcher;
+        $this->requestBuilder = $requestBuilder;
+        $this->requestValidator = $requestValidator;
+        $this->responseFormatter = $responseFormatter;
     }
 
     /**
@@ -53,13 +79,13 @@ class RequestFlowExecutor implements RequestFlowExecutorInterface
         RequestFlowAwareApiApplication $apiApplication,
         ?ConventionPluginInterface $conventionPlugin = null
     ): GlueResponseTransfer {
-        $glueRequestTransfer = $this->executeRequestBuilderPlugins(
+        $glueRequestTransfer = $this->requestBuilder->build(
             $glueRequestTransfer,
             $apiApplication,
             $conventionPlugin,
         );
 
-        $glueRequestValidationTransfer = $this->executeRequestValidatorPlugins(
+        $glueRequestValidationTransfer = $this->requestValidator->validate(
             $glueRequestTransfer,
             $apiApplication,
             $conventionPlugin,
@@ -73,19 +99,20 @@ class RequestFlowExecutor implements RequestFlowExecutorInterface
             return $this->sendMissingResourceResponse($glueRequestTransfer, $resource, $apiApplication, $conventionPlugin);
         }
 
-        $glueRequestValidationTransfer = $this->executeRequestAfterRoutingValidatorPlugins(
+        $glueRequestValidationTransfer = $this->requestValidator->validateAfterRouting(
             $glueRequestTransfer,
             $resource,
             $apiApplication,
             $conventionPlugin,
         );
+
         if (!$glueRequestValidationTransfer->getIsValid()) {
             return $this->sendValidationErrorResponse($glueRequestTransfer, $glueRequestValidationTransfer, $apiApplication, $conventionPlugin);
         }
 
         $glueResponseTransfer = $this->resourceExecutor->executeResource($resource, $glueRequestTransfer);
 
-        $glueResponseTransfer = $this->executeResponseFormatterPlugins(
+        $glueResponseTransfer = $this->responseFormatter->format(
             $glueResponseTransfer,
             $glueRequestTransfer,
             $apiApplication,
@@ -113,7 +140,7 @@ class RequestFlowExecutor implements RequestFlowExecutorInterface
             ->setHttpStatus($glueRequestValidationTransfer->getStatus())
             ->setErrors($glueRequestValidationTransfer->getErrors());
 
-        return $this->executeResponseFormatterPlugins(
+        return $this->responseFormatter->format(
             $glueResponseTransfer,
             $glueRequestTransfer,
             $apiApplication,
@@ -125,7 +152,7 @@ class RequestFlowExecutor implements RequestFlowExecutorInterface
      * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\MissingResourceInterface $missingResource
      * @param \Spryker\Glue\GlueApplication\ApiApplication\Type\RequestFlowAwareApiApplication $apiApplication
-     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ConventionPluginInterface $apiConvention
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ConventionPluginInterface|null $apiConvention
      *
      * @return \Generated\Shared\Transfer\GlueResponseTransfer
      */
@@ -133,135 +160,15 @@ class RequestFlowExecutor implements RequestFlowExecutorInterface
         GlueRequestTransfer $glueRequestTransfer,
         MissingResourceInterface $missingResource,
         RequestFlowAwareApiApplication $apiApplication,
-        ConventionPluginInterface $apiConvention
+        ?ConventionPluginInterface $apiConvention
     ): GlueResponseTransfer {
         $glueResponseTransfer = $this->resourceExecutor->executeResource($missingResource, $glueRequestTransfer);
 
-        return $this->executeResponseFormatterPlugins(
+        return $this->responseFormatter->format(
             $glueResponseTransfer,
             $glueRequestTransfer,
             $apiApplication,
             $apiConvention,
         );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
-     * @param \Spryker\Glue\GlueApplication\ApiApplication\Type\RequestFlowAwareApiApplication $apiApplication
-     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ConventionPluginInterface|null $apiConventionPlugin
-     *
-     * @return \Generated\Shared\Transfer\GlueRequestTransfer
-     */
-    protected function executeRequestBuilderPlugins(
-        GlueRequestTransfer $glueRequestTransfer,
-        RequestFlowAwareApiApplication $apiApplication,
-        ?ConventionPluginInterface $apiConventionPlugin
-    ): GlueRequestTransfer {
-        $requestBuilderPlugins = [];
-        if ($apiConventionPlugin) {
-            $requestBuilderPlugins = $apiConventionPlugin->provideRequestBuilderPlugins();
-        }
-
-        $requestBuilderPlugins = array_merge($requestBuilderPlugins, $apiApplication->provideRequestBuilderPlugins());
-
-        foreach ($requestBuilderPlugins as $requestBuilderPlugin) {
-            $glueRequestTransfer = $requestBuilderPlugin->build($glueRequestTransfer);
-        }
-
-        return $glueRequestTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
-     * @param \Spryker\Glue\GlueApplication\ApiApplication\Type\RequestFlowAwareApiApplication $apiApplication
-     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ConventionPluginInterface|null $apiConventionPlugin
-     *
-     * @return \Generated\Shared\Transfer\GlueRequestValidationTransfer
-     */
-    protected function executeRequestValidatorPlugins(
-        GlueRequestTransfer $glueRequestTransfer,
-        RequestFlowAwareApiApplication $apiApplication,
-        ?ConventionPluginInterface $apiConventionPlugin
-    ): GlueRequestValidationTransfer {
-        $requestValidatorPlugins = [];
-        if ($apiConventionPlugin) {
-            $requestValidatorPlugins = $apiConventionPlugin->provideRequestValidatorPlugins();
-        }
-
-        $requestValidatorPlugins = array_merge($requestValidatorPlugins, $apiApplication->provideRequestValidatorPlugins());
-
-        foreach ($requestValidatorPlugins as $requestValidatorPlugin) {
-            $glueRequestValidationTransfer = $requestValidatorPlugin->validate($glueRequestTransfer);
-
-            if ($glueRequestValidationTransfer->getIsValid()) {
-                continue;
-            }
-
-            return $glueRequestValidationTransfer;
-        }
-
-        return (new GlueRequestValidationTransfer())->setIsValid(true);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
-     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface $resource
-     * @param \Spryker\Glue\GlueApplication\ApiApplication\Type\RequestFlowAwareApiApplication $apiApplication
-     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ConventionPluginInterface|null $apiConventionPlugin
-     *
-     * @return \Generated\Shared\Transfer\GlueRequestValidationTransfer
-     */
-    protected function executeRequestAfterRoutingValidatorPlugins(
-        GlueRequestTransfer $glueRequestTransfer,
-        ResourceInterface $resource,
-        RequestFlowAwareApiApplication $apiApplication,
-        ?ConventionPluginInterface $apiConventionPlugin
-    ): GlueRequestValidationTransfer {
-        $requestAfterRoutingValidatorPlugins = [];
-        if ($apiConventionPlugin) {
-            $requestAfterRoutingValidatorPlugins = $apiConventionPlugin->provideRequestAfterRoutingValidatorPlugins();
-        }
-
-        $requestAfterRoutingValidatorPlugins = array_merge($requestAfterRoutingValidatorPlugins, $apiApplication->provideRequestAfterRoutingValidatorPlugins());
-
-        foreach ($requestAfterRoutingValidatorPlugins as $requestAfterRoutingValidatorPlugin) {
-            $glueRequestValidationTransfer = $requestAfterRoutingValidatorPlugin->validate($glueRequestTransfer, $resource);
-
-            if ($glueRequestValidationTransfer->getIsValid()) {
-                continue;
-            }
-
-            return $glueRequestValidationTransfer;
-        }
-
-        return (new GlueRequestValidationTransfer())->setIsValid(true);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\GlueResponseTransfer $glueResponseTransfer
-     * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
-     * @param \Spryker\Glue\GlueApplication\ApiApplication\Type\RequestFlowAwareApiApplication $apiApplication
-     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ConventionPluginInterface|null $apiConventionPlugin
-     *
-     * @return \Generated\Shared\Transfer\GlueResponseTransfer
-     */
-    protected function executeResponseFormatterPlugins(
-        GlueResponseTransfer $glueResponseTransfer,
-        GlueRequestTransfer $glueRequestTransfer,
-        RequestFlowAwareApiApplication $apiApplication,
-        ?ConventionPluginInterface $apiConventionPlugin
-    ): GlueResponseTransfer {
-        $responseFormatterPlugins = [];
-        if ($apiConventionPlugin) {
-            $responseFormatterPlugins = $apiConventionPlugin->provideResponseFormatterPlugins();
-        }
-
-        $responseFormatterPlugins = array_merge($responseFormatterPlugins, $apiApplication->provideResponseFormatterPlugins());
-
-        foreach ($responseFormatterPlugins as $responseFormatterPlugin) {
-            $glueResponseTransfer = $responseFormatterPlugin->format($glueResponseTransfer, $glueRequestTransfer);
-        }
-
-        return $glueResponseTransfer;
     }
 }

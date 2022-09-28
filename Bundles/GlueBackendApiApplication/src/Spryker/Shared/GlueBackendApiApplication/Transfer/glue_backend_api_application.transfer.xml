@@ -37,7 +37,6 @@
 
     <transfer name="GlueResponse">
         <property name="meta" type="array" associative="true" singular="meta"/>
-        <property name="status" type="string" deprecated="Use `httpStatus` property for HTTP status."/>
         <property name="httpStatus" type="int"/>
         <property name="errors" type="GlueError[]" singular="error"/>
     </transfer>

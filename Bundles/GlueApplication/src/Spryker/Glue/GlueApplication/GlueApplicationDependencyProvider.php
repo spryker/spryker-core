@@ -8,6 +8,7 @@
 namespace Spryker\Glue\GlueApplication;
 
 use Spryker\Glue\GlueApplication\Dependency\Client\GlueApplicationToStoreClientBridge;
+use Spryker\Glue\GlueApplication\Dependency\External\GlueApplicationToInflectorAdapter;
 use Spryker\Glue\GlueApplication\Dependency\External\GlueApplicationToSymfonyFilesystemAdapter;
 use Spryker\Glue\GlueApplication\Dependency\Service\GlueApplicationToUtilEncodingServiceBridge;
 use Spryker\Glue\GlueApplication\Plugin\GlueApplication\FallbackStorefrontApiGlueApplicationBootstrapPlugin;
@@ -128,8 +129,6 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_ROUTER_PARAMETER_EXPANDER = 'PLUGINS_ROUTER_PARAMETER_EXPANDER';
 
     /**
-     * @deprecated Will be removed without replacement.
-     *
      * @var string
      */
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
@@ -208,6 +207,31 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_TABLE_COLUMN_EXPANDER = 'PLUGINS_TABLE_COLUMN_EXPANDER';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_REQUEST_BUILDER = 'PLUGINS_REQUEST_BUILDER';
+
+    /**
+     * @var string
+     */
+    public const PLUGINS_REQUEST_VALIDATOR = 'PLUGINS_REQUEST_VALIDATOR';
+
+    /**
+     * @var string
+     */
+    public const PLUGINS_REQUEST_AFTER_ROUTING_VALIDATOR = 'PLUGINS_REQUEST_AFTER_ROUTING_VALIDATOR';
+
+    /**
+     * @var string
+     */
+    public const PLUGINS_RESPONSE_FORMATTER = 'PLUGINS_RESPONSE_FORMATTER';
+
+    /**
+     * @var string
+     */
+    public const INFLECTOR = 'INFLECTOR';
+
+    /**
      * @param \Spryker\Glue\Kernel\Container $container
      *
      * @return \Spryker\Glue\Kernel\Container
@@ -232,12 +256,12 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addApplicationPlugins($container);
         $container = $this->addRestUserFinderPlugins($container);
         $container = $this->addRouterParameterExpanderPlugins($container);
+        $container = $this->addApiConventionPlugins($container);
 
         $container = $this->addGlueContextExpanderPlugins($container);
         $container = $this->addGlueApplicationBootstrapPlugins($container);
         $container = $this->addGlueContextExpanderPlugins($container);
         $container = $this->addCommunicationProtocolPlugins($container);
-        $container = $this->addApiConventionPlugins($container);
         $container = $this->addConventionPlugins($container);
         $container = $this->addControllerCacheCollectorPlugins($container);
         $container = $this->addFilesystem($container);
@@ -245,6 +269,12 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addRoutesProviderPlugins($container);
         $container = $this->addResourcesProviderPlugins($container);
         $container = $this->addTableColumnExpanderPlugins($container);
+        $container = $this->addInflector($container);
+
+        $container = $this->addRequestBuilderPlugins($container);
+        $container = $this->addRequestValidatorPlugins($container);
+        $container = $this->addRequestAfterRoutingValidatorPlugins($container);
+        $container = $this->addResponseFormatterPlugins($container);
 
         return $container;
     }
@@ -266,8 +296,6 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @deprecated Will be removed without replacement.
-     *
      * @param \Spryker\Glue\Kernel\Container $container
      *
      * @return \Spryker\Glue\Kernel\Container
@@ -954,5 +982,107 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
     protected function getTableColumnExpanderPlugins(): array
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addRequestBuilderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_REQUEST_BUILDER, function () {
+            return $this->getRequestBuilderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RequestBuilderPluginInterface>
+     */
+    protected function getRequestBuilderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addRequestValidatorPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_REQUEST_VALIDATOR, function () {
+            return $this->getRequestValidatorPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RequestValidatorPluginInterface>
+     */
+    protected function getRequestValidatorPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addRequestAfterRoutingValidatorPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_REQUEST_AFTER_ROUTING_VALIDATOR, function () {
+            return $this->getRequestAfterRoutingValidatorPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RequestAfterRoutingValidatorPluginInterface>
+     */
+    protected function getRequestAfterRoutingValidatorPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addResponseFormatterPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_RESPONSE_FORMATTER, function () {
+            return $this->getResponseFormatterPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResponseFormatterPluginInterface>
+     */
+    protected function getResponseFormatterPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addInflector(Container $container): Container
+    {
+        $container->set(static::INFLECTOR, function () {
+            return new GlueApplicationToInflectorAdapter();
+        });
+
+        return $container;
     }
 }

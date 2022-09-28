@@ -8,6 +8,7 @@
 namespace Spryker\Glue\GlueApplication\Router\ResourceRouter;
 
 use Generated\Shared\Transfer\GlueRequestTransfer;
+use ReflectionClass;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ConventionPluginInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface;
 
@@ -17,6 +18,11 @@ class ConventionResourceFilter implements ConventionResourceFilterInterface
      * @var array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ConventionPluginInterface>
      */
     protected array $conventionPlugins;
+
+    /**
+     * @var string
+     */
+    protected const RESOURCE_INTERFACE_SEARCH_PATTERN = '/\\\ResourceInterface/i';
 
     /**
      * @param array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ConventionPluginInterface> $conventionPlugins
@@ -35,7 +41,7 @@ class ConventionResourceFilter implements ConventionResourceFilterInterface
     public function filter(GlueRequestTransfer $glueRequestTransfer, array $resources): array
     {
         if (!$glueRequestTransfer->getConvention()) {
-            return $resources;
+            return $this->getDefaultConventionResource($resources);
         }
 
         $apiConventionPlugin = $this->findApiConventionPluginClassName($glueRequestTransfer->getConvention());
@@ -68,5 +74,44 @@ class ConventionResourceFilter implements ConventionResourceFilterInterface
         }
 
         return null;
+    }
+
+    /**
+     * @param array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface> $resources
+     *
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface>
+     */
+    protected function getDefaultConventionResource($resources): array
+    {
+        foreach ($resources as $resource) {
+            if ($this->checkIfResourceHasConvention($resource) === false) {
+                return [$resource];
+            }
+        }
+
+        return $resources;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface $resource
+     *
+     * @return bool
+     */
+    protected function checkIfResourceHasConvention(ResourceInterface $resource): bool
+    {
+        $reflectionObject = new ReflectionClass($resource);
+        $interfaces = $reflectionObject->getInterfaceNames();
+        foreach ($interfaces as $interface) {
+            $reflectionObject = new ReflectionClass($interface);
+            $parentInterfaces = $reflectionObject->getInterfaceNames();
+            if (
+                $parentInterfaces !== []
+                && preg_grep(static::RESOURCE_INTERFACE_SEARCH_PATTERN, $parentInterfaces)
+            ) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

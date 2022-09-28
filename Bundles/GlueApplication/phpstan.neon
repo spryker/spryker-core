@@ -10,3 +10,4 @@ parameters:
         - '#Method .+AbstractResourcePlugin::getResource\(\) should return callable\(\): mixed but returns array{.+AbstractController, string}.#'
         - '#Method .+AbstractResourcePlugin::createControllerInstance\(\) should return .+AbstractController but returns object.#'
         - '#Method .+CustomRouteMatcher::createControllerInstance\(\) should return .+AbstractController but returns object.#'
+        - '#Parameter \#1 \$[a-zA-Z]* of class ReflectionClass constructor expects class-string<T of object>\|T of object, string given.#'

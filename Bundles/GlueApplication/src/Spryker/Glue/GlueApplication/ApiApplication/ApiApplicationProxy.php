@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
 use Spryker\Glue\GlueApplication\ApiApplication\Type\RequestFlowAgnosticApiApplication;
 use Spryker\Glue\GlueApplication\ApiApplication\Type\RequestFlowAwareApiApplication;
+use Spryker\Glue\GlueApplication\ContentNegotiator\ContentNegotiatorInterface;
 use Spryker\Glue\GlueApplication\Exception\UnknownRequestFlowImplementationException;
 use Spryker\Glue\GlueApplication\Http\Request\RequestBuilderInterface;
 use Spryker\Glue\GlueApplication\Http\Response\HttpSenderInterface;
@@ -52,12 +53,18 @@ class ApiApplicationProxy implements ApplicationInterface
     protected HttpSenderInterface $httpSender;
 
     /**
+     * @var \Spryker\Glue\GlueApplication\ContentNegotiator\ContentNegotiatorInterface
+     */
+    protected ContentNegotiatorInterface $contentNegotiator;
+
+    /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\GlueApplicationBootstrapPluginInterface $glueApplicationBootstrapPlugin
      * @param \Spryker\Glue\GlueApplication\ApiApplication\RequestFlowExecutorInterface $requestFlowExecutor
      * @param array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\CommunicationProtocolPluginInterface> $communicationProtocolPlugins
      * @param array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ConventionPluginInterface> $apiConventionPlugins
      * @param \Spryker\Glue\GlueApplication\Http\Request\RequestBuilderInterface $requestBuilder
      * @param \Spryker\Glue\GlueApplication\Http\Response\HttpSenderInterface $httpSender
+     * @param \Spryker\Glue\GlueApplication\ContentNegotiator\ContentNegotiatorInterface $contentNegotiator
      */
     public function __construct(
         GlueApplicationBootstrapPluginInterface $glueApplicationBootstrapPlugin,
@@ -65,7 +72,8 @@ class ApiApplicationProxy implements ApplicationInterface
         array $communicationProtocolPlugins,
         array $apiConventionPlugins,
         RequestBuilderInterface $requestBuilder,
-        HttpSenderInterface $httpSender
+        HttpSenderInterface $httpSender,
+        ContentNegotiatorInterface $contentNegotiator
     ) {
         $this->glueApplicationBootstrapPlugin = $glueApplicationBootstrapPlugin;
         $this->communicationProtocolPlugins = $communicationProtocolPlugins;
@@ -73,6 +81,7 @@ class ApiApplicationProxy implements ApplicationInterface
         $this->conventionPlugins = $apiConventionPlugins;
         $this->requestBuilder = $requestBuilder;
         $this->httpSender = $httpSender;
+        $this->contentNegotiator = $contentNegotiator;
     }
 
     /**
@@ -103,8 +112,12 @@ class ApiApplicationProxy implements ApplicationInterface
         if ($bootstrapApplication instanceof RequestFlowAwareApiApplication) {
             $communicationProtocolPlugin = $this->resolveCommunicationPlugin($this->communicationProtocolPlugins);
             $glueRequestTransfer = $this->extractRequest($communicationProtocolPlugin);
+            $glueRequestTransfer = $this->contentNegotiator->negotiate($glueRequestTransfer);
 
-            $apiConventionPlugin = $this->resolveConvention($this->conventionPlugins, $glueRequestTransfer);
+            $apiConventionPlugin = null;
+            if ($glueRequestTransfer->getConvention() !== null) {
+                $apiConventionPlugin = $this->resolveConvention($this->conventionPlugins, $glueRequestTransfer);
+            }
 
             $glueResponseTransfer = $this->requestFlowExecutor->executeRequestFlow(
                 $glueRequestTransfer,
@@ -134,7 +147,7 @@ class ApiApplicationProxy implements ApplicationInterface
     protected function resolveConvention(array $apiConventionPlugins, GlueRequestTransfer $glueRequestTransfer): ?ConventionPluginInterface
     {
         foreach ($apiConventionPlugins as $apiConventionPlugin) {
-            if ($apiConventionPlugin->isApplicable($glueRequestTransfer)) {
+            if ($apiConventionPlugin->getName() === $glueRequestTransfer->getConvention()) {
                 return $apiConventionPlugin;
             }
         }

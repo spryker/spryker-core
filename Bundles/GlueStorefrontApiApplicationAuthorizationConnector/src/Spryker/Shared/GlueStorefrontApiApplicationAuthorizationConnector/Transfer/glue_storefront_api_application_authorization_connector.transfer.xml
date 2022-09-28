@@ -3,7 +3,6 @@
 
     <transfer name="RouteAuthorizationConfig">
         <property name="apiCode" type="string"/>
-        <property name="strategy" type="string" deprecated="Use {@link \Generated\Shared\Transfer\RouteAuthorizationConfigTransfer::$strategies} instead."/>
         <property name="strategies" type="string[]" singular="strategy"/>
         <property name="apiMessage" type="string"/>
         <property name="httpStatusCode" type="int"/>
@@ -25,7 +24,6 @@
     </transfer>
 
     <transfer name="AuthorizationRequest">
-        <property name="strategy" type="string" deprecated="Use {@link \Generated\Shared\Transfer\AuthorizationRequestTransfer::$strategies} instead."/>
         <property name="strategies" type="string[]" singular="strategy"/>
         <property name="entity" type="AuthorizationEntity"/>
         <property name="identity" type="AuthorizationIdentity"/>

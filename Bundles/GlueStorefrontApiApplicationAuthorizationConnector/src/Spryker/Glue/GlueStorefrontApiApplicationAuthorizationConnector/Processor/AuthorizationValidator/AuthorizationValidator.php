@@ -155,7 +155,6 @@ class AuthorizationValidator implements AuthorizationValidatorInterface
         }
         $strategies = [];
         foreach ($routeAuthorizationConfigTransfers as $routeAuthorizationConfigTransfer) {
-            $routeAuthorizationConfigTransfer = $this->addDefaultStrategy($routeAuthorizationConfigTransfer);
             $strategies = array_merge($strategies, $routeAuthorizationConfigTransfer->getStrategies());
         }
 
@@ -165,22 +164,6 @@ class AuthorizationValidator implements AuthorizationValidatorInterface
             ->setEntity($authorizationEntityTransfer);
 
         return $authorizationRequestTransfer;
-    }
-
-    /**
-     * @deprecated Exists for BC reasons. Will be removed in the next major release.
-     *
-     * @param \Generated\Shared\Transfer\RouteAuthorizationConfigTransfer $routeAuthorizationConfigTransfer
-     *
-     * @return \Generated\Shared\Transfer\RouteAuthorizationConfigTransfer
-     */
-    protected function addDefaultStrategy(RouteAuthorizationConfigTransfer $routeAuthorizationConfigTransfer): RouteAuthorizationConfigTransfer
-    {
-        if ($routeAuthorizationConfigTransfer->getStrategy() !== null) {
-            $routeAuthorizationConfigTransfer->addStrategy($routeAuthorizationConfigTransfer->getStrategy());
-        }
-
-        return $routeAuthorizationConfigTransfer;
     }
 
     /**
@@ -214,10 +197,9 @@ class AuthorizationValidator implements AuthorizationValidatorInterface
         array $routeAuthorizationConfigTransfers
     ): GlueRequestValidationTransfer {
         foreach ($routeAuthorizationConfigTransfers as $routeAuthorizationConfigTransfer) {
-            if (
-                $routeAuthorizationConfigTransfer->getStrategy() === $authorizationResponseTransfer->getFailedStrategyOrFail()
-                || in_array($authorizationResponseTransfer->getFailedStrategyOrFail(), $routeAuthorizationConfigTransfer->getStrategies())
-            ) {
+            $failedStrategy = $authorizationResponseTransfer->getFailedStrategyOrFail();
+
+            if (in_array($failedStrategy, $routeAuthorizationConfigTransfer->getStrategies())) {
                 return $this->createDefaultGlueRequestNotValidationTransfer(
                     $routeAuthorizationConfigTransfer->getApiMessage(),
                     $routeAuthorizationConfigTransfer->getHttpStatusCode(),

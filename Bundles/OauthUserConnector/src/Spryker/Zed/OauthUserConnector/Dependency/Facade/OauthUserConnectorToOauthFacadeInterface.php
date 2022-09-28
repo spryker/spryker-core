@@ -20,15 +20,6 @@ interface OauthUserConnectorToOauthFacadeInterface
     public function saveScope(OauthScopeTransfer $oauthScopeTransfer): OauthScopeTransfer;
 
     /**
-     * @deprecated Will be removed in the next major.
-     *
-     * @param \Generated\Shared\Transfer\OauthClientTransfer $oauthClientTransfer
-     *
-     * @return \Generated\Shared\Transfer\OauthClientTransfer
-     */
-    public function saveClient(OauthClientTransfer $oauthClientTransfer): OauthClientTransfer;
-
-    /**
      * @param \Generated\Shared\Transfer\OauthScopeTransfer $oauthScopeTransfer
      *
      * @return \Generated\Shared\Transfer\OauthScopeTransfer|null

@@ -7,9 +7,6 @@
 
 namespace Spryker\Glue\GlueApplication\Dependency\Service;
 
-/**
- * @deprecated Will be removed without replacement.
- */
 interface GlueApplicationToUtilEncodingServiceInterface
 {
     /**

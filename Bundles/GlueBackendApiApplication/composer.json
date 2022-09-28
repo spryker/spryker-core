@@ -7,7 +7,7 @@
         "php": ">=7.4",
         "spryker/application": "^3.28.0",
         "spryker/container": "^1.4.5",
-        "spryker/documentation-generator-api-extension": "^0.1.0",
+        "spryker/documentation-generator-api-extension": "^1.0.0",
         "spryker/glue-application": "^1.39.0",
         "spryker/glue-application-extension": "^1.13.0",
         "spryker/kernel": "^3.66.0",

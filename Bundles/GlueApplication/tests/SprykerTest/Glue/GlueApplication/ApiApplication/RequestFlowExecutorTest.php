@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\GlueResponseTransfer;
 use Spryker\Glue\GlueApplication\ApiApplication\RequestFlowExecutor;
 use Spryker\Glue\GlueApplication\ApiApplication\Type\RequestFlowAwareApiApplication;
 use Spryker\Glue\GlueApplication\Executor\ResourceExecutorInterface;
+use Spryker\Glue\GlueApplication\GlueApplicationFactory;
 use Spryker\Glue\GlueApplication\Router\RouteMatcherInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ConventionPluginInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\MissingResourceInterface;
@@ -39,13 +40,13 @@ class RequestFlowExecutorTest extends Unit
      */
     public function testRequestFlowIsExecutedOnRequestFlowAwareApiApplicationPlugin(): void
     {
-        $apiConventionPluginMock = $this->createBaseApiConventionPluginMock($this->createResourceMock());
+        $apiConventionPluginMock = $this->createBaseApiConventionPluginMock();
         $apiConventionPluginMock
             ->expects($this->once())
             ->method('provideRequestAfterRoutingValidatorPlugins')
             ->willReturn([]);
 
-        $apiApplicationPluginMock = $this->createBaseApiApplicationPluginMock($this->createResourceMock());
+        $apiApplicationPluginMock = $this->createBaseApiApplicationPluginMock();
         $apiApplicationPluginMock
             ->expects($this->once())
             ->method('provideRequestAfterRoutingValidatorPlugins')
@@ -62,7 +63,7 @@ class RequestFlowExecutorTest extends Unit
             ->method('route')
             ->willReturn($this->createMock(ResourceInterface::class));
 
-        $requestFlowExecutor = new RequestFlowExecutor($resourceExecutorMock, $routeMatcherMock);
+        $requestFlowExecutor = $this->createRequestFlowExecutor($resourceExecutorMock, $routeMatcherMock);
         $requestFlowExecutor->executeRequestFlow(
             new GlueRequestTransfer(),
             $apiApplicationPluginMock,
@@ -118,7 +119,7 @@ class RequestFlowExecutorTest extends Unit
             ->method('route')
             ->willReturn($this->createMock(ResourceInterface::class));
 
-        $requestFlowExecutor = new RequestFlowExecutor($resourceExecutorMock, $routeMatcherMock);
+        $requestFlowExecutor = $this->createRequestFlowExecutor($resourceExecutorMock, $routeMatcherMock);
         $requestFlowExecutor->executeRequestFlow(
             new GlueRequestTransfer(),
             $apiApplicationPluginMock,
@@ -174,7 +175,7 @@ class RequestFlowExecutorTest extends Unit
             ->method('route')
             ->willReturn($this->createMock(ResourceInterface::class));
 
-        $requestFlowExecutor = new RequestFlowExecutor($resourceExecutorMock, $routeMatcherMock);
+        $requestFlowExecutor = $this->createRequestFlowExecutor($resourceExecutorMock, $routeMatcherMock);
         $requestFlowExecutor->executeRequestFlow(
             new GlueRequestTransfer(),
             $apiApplicationPluginMock,
@@ -199,7 +200,7 @@ class RequestFlowExecutorTest extends Unit
      */
     protected function executeRequestFlowExecutorWithRoutingError(MissingResourceInterface $expectedResource): void
     {
-        $apiConventionPluginMock = $this->createBaseApiConventionPluginMock($this->createResourceMock());
+        $apiConventionPluginMock = $this->createBaseApiConventionPluginMock();
 
         $requestValidatorPluginMock = $this->createMock(RequestValidatorPluginInterface::class);
         $requestValidatorPluginMock->method('validate')
@@ -230,7 +231,7 @@ class RequestFlowExecutorTest extends Unit
             ->method('route')
             ->willReturn($this->createMock(MissingResourceInterface::class));
 
-        $requestFlowExecutor = new RequestFlowExecutor($resourceExecutorMock, $routeMatcherMock);
+        $requestFlowExecutor = $this->createRequestFlowExecutor($resourceExecutorMock, $routeMatcherMock);
         $requestFlowExecutor->executeRequestFlow(
             new GlueRequestTransfer(),
             $apiApplicationPluginMock,
@@ -256,13 +257,13 @@ class RequestFlowExecutorTest extends Unit
         $anotherRequestAfterRoutingValidatorPluginMock->expects($this->never())
             ->method('validate');
 
-        $apiConventionPluginMock = $this->createBaseApiConventionPluginMock($this->createResourceMock());
+        $apiConventionPluginMock = $this->createBaseApiConventionPluginMock();
         $apiConventionPluginMock
             ->expects($this->once())
             ->method('provideRequestAfterRoutingValidatorPlugins')
             ->willReturn([$requestAfterRoutingValidatorPluginMock]);
 
-        $apiApplicationPluginMock = $this->createBaseApiApplicationPluginMock($this->createResourceMock());
+        $apiApplicationPluginMock = $this->createBaseApiApplicationPluginMock();
         $apiApplicationPluginMock
             ->expects($this->once())
             ->method('provideRequestAfterRoutingValidatorPlugins')
@@ -278,7 +279,7 @@ class RequestFlowExecutorTest extends Unit
             ->method('route')
             ->willReturn($this->createMock(ResourceInterface::class));
 
-        $requestFlowExecutor = new RequestFlowExecutor($resourceExecutorMock, $routeMatcherMock);
+        $requestFlowExecutor = $this->createRequestFlowExecutor($resourceExecutorMock, $routeMatcherMock);
         $requestFlowExecutor->executeRequestFlow(
             new GlueRequestTransfer(),
             $apiApplicationPluginMock,
@@ -304,7 +305,7 @@ class RequestFlowExecutorTest extends Unit
         $anotherRequestAfterRoutingValidatorPluginMock->method('validate')
             ->willReturn($expectedValidationResult);
 
-        $apiConventionPluginMock = $this->createBaseApiConventionPluginMock($this->createResourceMock());
+        $apiConventionPluginMock = $this->createBaseApiConventionPluginMock();
         $apiConventionPluginMock
             ->expects($this->once())
             ->method('provideRequestAfterRoutingValidatorPlugins')
@@ -316,7 +317,7 @@ class RequestFlowExecutorTest extends Unit
             ->method('route')
             ->willReturn($this->createMock(ResourceInterface::class));
 
-        $apiApplicationPluginMock = $this->createBaseApiApplicationPluginMock($this->createResourceMock());
+        $apiApplicationPluginMock = $this->createBaseApiApplicationPluginMock();
         $apiApplicationPluginMock
             ->expects($this->once())
             ->method('provideRequestAfterRoutingValidatorPlugins')
@@ -326,7 +327,7 @@ class RequestFlowExecutorTest extends Unit
         $resourceExecutorMock->expects($this->never())
             ->method('executeResource');
 
-        $requestFlowExecutor = new RequestFlowExecutor($resourceExecutorMock, $routeMatcherMock);
+        $requestFlowExecutor = $this->createRequestFlowExecutor($resourceExecutorMock, $routeMatcherMock);
         $requestFlowExecutor->executeRequestFlow(
             new GlueRequestTransfer(),
             $apiApplicationPluginMock,
@@ -335,25 +336,9 @@ class RequestFlowExecutorTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface
-     */
-    protected function createResourceMock(): ResourceInterface
-    {
-        $resourceMock = $this->createMock(ResourceInterface::class);
-        $resourceMock->expects($this->never())
-            ->method('getResource')
-            ->willReturn(function (): void {
-            });
-
-        return $resourceMock;
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface $resourceMock
-     *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Glue\GlueApplication\ApiApplication\Type\RequestFlowAwareApiApplication
      */
-    protected function createBaseApiApplicationPluginMock(ResourceInterface $resourceMock): RequestFlowAwareApiApplication
+    protected function createBaseApiApplicationPluginMock(): RequestFlowAwareApiApplication
     {
         $apiApplicationPluginMock = $this->createMock(RequestFlowAwareApiApplication::class);
         $apiApplicationPluginMock
@@ -373,11 +358,9 @@ class RequestFlowExecutorTest extends Unit
     }
 
     /**
-     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface $resourceMock
-     *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ApiConventionPluginInterface
      */
-    protected function createBaseApiConventionPluginMock(ResourceInterface $resourceMock): ConventionPluginInterface
+    protected function createBaseApiConventionPluginMock(): ConventionPluginInterface
     {
         $apiConventionPluginMock = $this->createMock(ConventionPluginInterface::class);
         $apiConventionPluginMock
@@ -394,5 +377,32 @@ class RequestFlowExecutorTest extends Unit
             ->willReturn([]);
 
         return $apiConventionPluginMock;
+    }
+
+    /**
+     * @param \PHPUnit\Framework\MockObject\MockObject|\Spryker\Glue\GlueApplication\Executor\ResourceExecutorInterface $resourceExecutorMock
+     * @param \PHPUnit\Framework\MockObject\MockObject|\Spryker\Glue\GlueApplication\Router\RouteMatcherInterface $routeMatcherMock
+     *
+     * @return \Spryker\Glue\GlueApplication\ApiApplication\RequestFlowExecutor
+     */
+    protected function createRequestFlowExecutor($resourceExecutorMock, $routeMatcherMock): RequestFlowExecutor
+    {
+        $factory = $this->createFactory();
+
+        return new RequestFlowExecutor(
+            $resourceExecutorMock,
+            $routeMatcherMock,
+            $factory->createRequestBuilder(),
+            $factory->createRequestValidator(),
+            $factory->createResponseFormatter(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\GlueApplicationFactory
+     */
+    protected function createFactory(): GlueApplicationFactory
+    {
+        return new GlueApplicationFactory();
     }
 }

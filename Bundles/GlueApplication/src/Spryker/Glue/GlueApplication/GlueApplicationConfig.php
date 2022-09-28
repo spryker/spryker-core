@@ -53,6 +53,13 @@ class GlueApplicationConfig extends AbstractBundleConfig
      *
      * @var string
      */
+    public const ERROR_CODE_UNSUPPORTED_ACCEPT_FORMAT = '010';
+
+    /**
+     * @api
+     *
+     * @var string
+     */
     public const ERROR_MESSAGE_PARENT_RESOURCE_NOT_FOUND = 'Not found';
 
     /**
@@ -61,6 +68,18 @@ class GlueApplicationConfig extends AbstractBundleConfig
      * @var string
      */
     public const ERROR_MESSAGE_METHOD_NOT_FOUND = 'Method does not exist';
+
+    /**
+     * @api
+     *
+     * @var string
+     */
+    public const ERROR_MESSAGE_UNSUPPORTED_ACCEPT_FORMAT = 'Unsupported `Accept` format used.';
+
+    /**
+     * @var string
+     */
+    protected const DEFAULT_RESPONSE_FORMAT = 'application/json';
 
     /**
      * @deprecated Will be removed without replacement.
@@ -344,5 +363,18 @@ class GlueApplicationConfig extends AbstractBundleConfig
     public function isDevelopmentMode(): bool
     {
         return APPLICATION_ENV === 'development' || APPLICATION_ENV === 'docker.dev';
+    }
+
+    /**
+     * Specification:
+     * - Returns the default response format `application/json` that will be used if none could be negotiated.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getDefaultResponseFormat(): string
+    {
+        return static::DEFAULT_RESPONSE_FORMAT;
     }
 }

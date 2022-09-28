@@ -14,20 +14,41 @@ use Spryker\Glue\GlueApplication\ApiApplication\ApiApplicationProxy;
 use Spryker\Glue\GlueApplication\ApiApplication\GlueStorefrontFallbackApiApplication;
 use Spryker\Glue\GlueApplication\ApiApplication\RequestFlowExecutor;
 use Spryker\Glue\GlueApplication\ApiApplication\RequestFlowExecutorInterface;
+use Spryker\Glue\GlueApplication\Builder\Request\AttributesRequestBuilder;
+use Spryker\Glue\GlueApplication\Builder\Request\FilterFieldRequestBuilder;
+use Spryker\Glue\GlueApplication\Builder\Request\PaginationParameterRequestBuilder;
+use Spryker\Glue\GlueApplication\Builder\Request\RequestBuilderInterface;
+use Spryker\Glue\GlueApplication\Builder\Request\SortParameterRequestBuilder;
+use Spryker\Glue\GlueApplication\Builder\Request\SparseFieldRequestBuilder;
+use Spryker\Glue\GlueApplication\Builder\RequestBuilder as RequestBuilderWrapper;
+use Spryker\Glue\GlueApplication\Builder\RequestBuilderInterface as RequestBuilderWrapperInterface;
 use Spryker\Glue\GlueApplication\Cache\Reader\ControllerCacheReader;
 use Spryker\Glue\GlueApplication\Cache\Reader\ControllerCacheReaderInterface;
 use Spryker\Glue\GlueApplication\Cache\Writer\ControllerCacheWriter;
 use Spryker\Glue\GlueApplication\Cache\Writer\ControllerCacheWriterInterface;
+use Spryker\Glue\GlueApplication\ContentNegotiator\ContentNegotiator;
+use Spryker\Glue\GlueApplication\ContentNegotiator\ContentNegotiatorInterface;
 use Spryker\Glue\GlueApplication\Dependency\Client\GlueApplicationToStoreClientInterface;
+use Spryker\Glue\GlueApplication\Dependency\External\GlueApplicationToInflectorInterface;
 use Spryker\Glue\GlueApplication\Dependency\External\GlueApplicationToSymfonyFilesystemInterface;
 use Spryker\Glue\GlueApplication\Dependency\Service\GlueApplicationToUtilEncodingServiceInterface;
 use Spryker\Glue\GlueApplication\Descriptor\TextDescriptor;
+use Spryker\Glue\GlueApplication\Encoder\Response\JsonResponseEncoderStrategy;
+use Spryker\Glue\GlueApplication\Encoder\Response\ResponseEncoderStrategyInterface;
 use Spryker\Glue\GlueApplication\Executor\ResourceExecutor;
 use Spryker\Glue\GlueApplication\Executor\ResourceExecutorInterface;
+use Spryker\Glue\GlueApplication\Formatter\Response\ResponseFormatter as DefaultConventionResponseFormatter;
+use Spryker\Glue\GlueApplication\Formatter\Response\ResponseFormatterInterface as DefaultConventionResponseFormatterInterface;
+use Spryker\Glue\GlueApplication\Formatter\ResponseFormatter;
+use Spryker\Glue\GlueApplication\Formatter\ResponseFormatterInterface;
+use Spryker\Glue\GlueApplication\Formatter\Schema\RestApiSchemaFormatter;
+use Spryker\Glue\GlueApplication\Formatter\Schema\RestApiSchemaParametersFormatter;
+use Spryker\Glue\GlueApplication\Formatter\Schema\RestApiSchemaParametersFormatterInterface;
+use Spryker\Glue\GlueApplication\Formatter\Schema\SchemaFormatterInterface;
 use Spryker\Glue\GlueApplication\Http\Context\ContextHttpExpander;
 use Spryker\Glue\GlueApplication\Http\Context\ContextHttpExpanderInterface;
-use Spryker\Glue\GlueApplication\Http\Request\RequestBuilder;
-use Spryker\Glue\GlueApplication\Http\Request\RequestBuilderInterface;
+use Spryker\Glue\GlueApplication\Http\Request\RequestBuilder as HttpRequestBuilder;
+use Spryker\Glue\GlueApplication\Http\Request\RequestBuilderInterface as HttpRequestBuilderInterface;
 use Spryker\Glue\GlueApplication\Http\Response\HttpSender;
 use Spryker\Glue\GlueApplication\Http\Response\HttpSenderInterface;
 use Spryker\Glue\GlueApplication\Plugin\Console\Helper\DescriptorHelper;
@@ -70,8 +91,8 @@ use Spryker\Glue\GlueApplication\Rest\ResourceRouter as RestResourceRouter;
 use Spryker\Glue\GlueApplication\Rest\ResourceRouterInterface as RestResourceRouterInterface;
 use Spryker\Glue\GlueApplication\Rest\Response\ResponseBuilder;
 use Spryker\Glue\GlueApplication\Rest\Response\ResponseBuilderInterface;
-use Spryker\Glue\GlueApplication\Rest\Response\ResponseFormatter;
-use Spryker\Glue\GlueApplication\Rest\Response\ResponseFormatterInterface;
+use Spryker\Glue\GlueApplication\Rest\Response\ResponseFormatter as RestResponseFormatter;
+use Spryker\Glue\GlueApplication\Rest\Response\ResponseFormatterInterface as RestResponseFormatterInterface;
 use Spryker\Glue\GlueApplication\Rest\Response\ResponseHeaders;
 use Spryker\Glue\GlueApplication\Rest\Response\ResponseHeadersInterface;
 use Spryker\Glue\GlueApplication\Rest\Response\ResponsePagination;
@@ -108,6 +129,10 @@ use Spryker\Glue\GlueApplication\Serialize\Decoder\DecoderInterface;
 use Spryker\Glue\GlueApplication\Serialize\Decoder\JsonDecoder;
 use Spryker\Glue\GlueApplication\Serialize\Encoder\EncoderInterface;
 use Spryker\Glue\GlueApplication\Serialize\Encoder\JsonEncoder;
+use Spryker\Glue\GlueApplication\Validator\Request\AcceptedFormatValidator;
+use Spryker\Glue\GlueApplication\Validator\Request\RequestValidatorInterface as RequestRequestValidatorInterface;
+use Spryker\Glue\GlueApplication\Validator\RequestValidator;
+use Spryker\Glue\GlueApplication\Validator\RequestValidatorInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\GlueApplicationBootstrapPluginInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipCollectionInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
@@ -167,9 +192,9 @@ class GlueApplicationFactory extends AbstractFactory
      *
      * @return \Spryker\Glue\GlueApplication\Rest\Response\ResponseFormatterInterface
      */
-    public function createRestResponseFormatter(): ResponseFormatterInterface
+    public function createRestResponseFormatter(): RestResponseFormatterInterface
     {
-        return new ResponseFormatter(
+        return new RestResponseFormatter(
             $this->createRestEncoderMatcher(),
             $this->createRestResponseBuilder(),
             $this->getFormatResponseDataPlugins(),
@@ -558,8 +583,6 @@ class GlueApplicationFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Will be removed without replacement.
-     *
      * @return \Spryker\Glue\GlueApplication\Dependency\Service\GlueApplicationToUtilEncodingServiceInterface
      */
     public function getUtilEncodingService(): GlueApplicationToUtilEncodingServiceInterface
@@ -747,8 +770,9 @@ class GlueApplicationFactory extends AbstractFactory
             $this->createRequestFlowExecutor(),
             $this->getCommunicationProtocolPlugins(),
             $this->getConventionPlugins(),
-            $this->createRequestBuilder(),
+            $this->createHttpRequestBuilder(),
             $this->createHttpSender(),
+            $this->createContentNegotiator(),
         );
     }
 
@@ -768,6 +792,43 @@ class GlueApplicationFactory extends AbstractFactory
         return new RequestFlowExecutor(
             $this->createResourceExecutor(),
             $this->createRouteMatcher(),
+            $this->createRequestBuilder(),
+            $this->createRequestValidator(),
+            $this->createResponseFormatter(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Builder\RequestBuilderInterface
+     */
+    public function createRequestBuilder(): RequestBuilderWrapperInterface
+    {
+        return new RequestBuilderWrapper(
+            $this->getRequestBuilderPlugins(),
+            $this->createRequestBuilders(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Validator\RequestValidatorInterface
+     */
+    public function createRequestValidator(): RequestValidatorInterface
+    {
+        return new RequestValidator(
+            $this->getRequestValidatorPlugins(),
+            $this->getRequestAfterRoutingValidatorPlugins(),
+            $this->createRequestValidators(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Formatter\ResponseFormatterInterface
+     */
+    public function createResponseFormatter(): ResponseFormatterInterface
+    {
+        return new ResponseFormatter(
+            $this->getResponseFormatterPlugins(),
+            $this->createResponseFormatters(),
         );
     }
 
@@ -990,11 +1051,104 @@ class GlueApplicationFactory extends AbstractFactory
     }
 
     /**
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RequestBuilderPluginInterface>
+     */
+    public function getRequestBuilderPlugins(): array
+    {
+        return $this->getProvidedDependency(GlueApplicationDependencyProvider::PLUGINS_REQUEST_BUILDER);
+    }
+
+    /**
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RequestValidatorPluginInterface>
+     */
+    public function getRequestValidatorPlugins(): array
+    {
+        return $this->getProvidedDependency(GlueApplicationDependencyProvider::PLUGINS_REQUEST_VALIDATOR);
+    }
+
+    /**
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RequestAfterRoutingValidatorPluginInterface>
+     */
+    public function getRequestAfterRoutingValidatorPlugins(): array
+    {
+        return $this->getProvidedDependency(GlueApplicationDependencyProvider::PLUGINS_REQUEST_AFTER_ROUTING_VALIDATOR);
+    }
+
+    /**
+     * @return array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResponseFormatterPluginInterface>
+     */
+    public function getResponseFormatterPlugins(): array
+    {
+        return $this->getProvidedDependency(GlueApplicationDependencyProvider::PLUGINS_RESPONSE_FORMATTER);
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Dependency\External\GlueApplicationToInflectorInterface
+     */
+    public function getInflector(): GlueApplicationToInflectorInterface
+    {
+        return $this->getProvidedDependency(GlueApplicationDependencyProvider::INFLECTOR);
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Formatter\Schema\RestApiSchemaParametersFormatterInterface
+     */
+    public function createRestApiSchemaParametersFormatter(): RestApiSchemaParametersFormatterInterface
+    {
+        return new RestApiSchemaParametersFormatter();
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Validator\Request\RequestValidatorInterface
+     */
+    public function createAcceptedFormatValidator(): RequestRequestValidatorInterface
+    {
+        return new AcceptedFormatValidator($this->getResponseEncoderStrategies());
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Builder\Request\RequestBuilderInterface
+     */
+    public function createFilterFieldRequestBuilder(): RequestBuilderInterface
+    {
+        return new FilterFieldRequestBuilder();
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Builder\Request\RequestBuilderInterface
+     */
+    public function createSparseFieldRequestBuilder(): RequestBuilderInterface
+    {
+        return new SparseFieldRequestBuilder();
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Builder\Request\RequestBuilderInterface
+     */
+    public function createAttributesRequestBuilder(): RequestBuilderInterface
+    {
+        return new AttributesRequestBuilder(
+            $this->getUtilEncodingService(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Formatter\Response\ResponseFormatterInterface
+     */
+    public function createDefaultResponseFormatter(): DefaultConventionResponseFormatterInterface
+    {
+        return new DefaultConventionResponseFormatter(
+            $this->getResponseEncoderStrategies(),
+            $this->getConfig(),
+        );
+    }
+
+    /**
      * @return \Spryker\Glue\GlueApplication\Http\Request\RequestBuilderInterface
      */
-    public function createRequestBuilder(): RequestBuilderInterface
+    public function createHttpRequestBuilder(): HttpRequestBuilderInterface
     {
-        return new RequestBuilder(
+        return new HttpRequestBuilder(
             $this->createRequest(),
         );
     }
@@ -1032,6 +1186,97 @@ class GlueApplicationFactory extends AbstractFactory
     {
         return new ContextHttpExpander(
             $this->createRequest(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Formatter\Schema\SchemaFormatterInterface
+     */
+    public function createRestApiSchemaFormatter(): SchemaFormatterInterface
+    {
+        return new RestApiSchemaFormatter(
+            $this->getInflector(),
+            $this->createRestApiSchemaParametersFormatter(),
+            $this->getConfig(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Builder\Request\RequestBuilderInterface
+     */
+    public function createPaginationParameterRequestBuilder(): RequestBuilderInterface
+    {
+        return new PaginationParameterRequestBuilder();
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Builder\Request\RequestBuilderInterface
+     */
+    public function createSortParameterRequestBuilder(): RequestBuilderInterface
+    {
+        return new SortParameterRequestBuilder();
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Encoder\Response\ResponseEncoderStrategyInterface
+     */
+    public function createJsonResponseEncoderStrategy(): ResponseEncoderStrategyInterface
+    {
+        return new JsonResponseEncoderStrategy($this->getUtilEncodingService());
+    }
+
+    /**
+     * @return array<\Spryker\Glue\GlueApplication\Encoder\Response\ResponseEncoderStrategyInterface>
+     */
+    public function getResponseEncoderStrategies(): array
+    {
+        return [
+            $this->createJsonResponseEncoderStrategy(),
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Glue\GlueApplication\Builder\Request\RequestBuilderInterface>
+     */
+    public function createRequestBuilders(): array
+    {
+        return [
+            $this->createAttributesRequestBuilder(),
+            $this->createFilterFieldRequestBuilder(),
+            $this->createPaginationParameterRequestBuilder(),
+            $this->createSortParameterRequestBuilder(),
+            $this->createSparseFieldRequestBuilder(),
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Glue\GlueApplication\Validator\Request\RequestValidatorInterface>
+     */
+    public function createRequestValidators(): array
+    {
+        return [
+            $this->createAcceptedFormatValidator(),
+        ];
+    }
+
+    /**
+     * @return array<\Spryker\Glue\GlueApplication\Formatter\Response\ResponseFormatterInterface>
+     */
+    public function createResponseFormatters(): array
+    {
+        return [
+            $this->createDefaultResponseFormatter(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\ContentNegotiator\ContentNegotiatorInterface
+     */
+    public function createContentNegotiator(): ContentNegotiatorInterface
+    {
+        return new ContentNegotiator(
+            $this->getConventionPlugins(),
+            $this->getResponseEncoderStrategies(),
         );
     }
 }

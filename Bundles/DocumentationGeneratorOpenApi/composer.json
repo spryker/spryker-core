@@ -7,7 +7,7 @@
         "cebe/php-openapi": "^1.6.0",
         "php": ">=7.4",
         "spryker/doctrine-inflector": "^1.0.0",
-        "spryker/documentation-generator-api-extension": "^0.1.0",
+        "spryker/documentation-generator-api-extension": "^1.0.0",
         "spryker/kernel": "^3.30.0",
         "spryker/symfony": "^3.5.0",
         "spryker/transfer": "^3.25.0",

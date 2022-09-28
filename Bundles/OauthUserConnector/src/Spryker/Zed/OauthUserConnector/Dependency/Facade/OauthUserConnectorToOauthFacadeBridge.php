@@ -36,18 +36,6 @@ class OauthUserConnectorToOauthFacadeBridge implements OauthUserConnectorToOauth
     }
 
     /**
-     * @deprecated Will be removed in the next major.
-     *
-     * @param \Generated\Shared\Transfer\OauthClientTransfer $oauthClientTransfer
-     *
-     * @return \Generated\Shared\Transfer\OauthClientTransfer
-     */
-    public function saveClient(OauthClientTransfer $oauthClientTransfer): OauthClientTransfer
-    {
-        return $this->oauthFacade->saveClient($oauthClientTransfer);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\OauthScopeTransfer $oauthScopeTransfer
      *
      * @return \Generated\Shared\Transfer\OauthScopeTransfer|null

@@ -12,6 +12,7 @@ use Spryker\Glue\GlueApplication\ApiApplication\ApiApplicationProxy;
 use Spryker\Glue\GlueApplication\ApiApplication\RequestFlowExecutorInterface;
 use Spryker\Glue\GlueApplication\ApiApplication\Type\RequestFlowAgnosticApiApplication;
 use Spryker\Glue\GlueApplication\ApiApplication\Type\RequestFlowAwareApiApplication;
+use Spryker\Glue\GlueApplication\ContentNegotiator\ContentNegotiatorInterface;
 use Spryker\Glue\GlueApplication\Exception\UnknownRequestFlowImplementationException;
 use Spryker\Glue\GlueApplication\Http\Request\RequestBuilderInterface;
 use Spryker\Glue\GlueApplication\Http\Response\HttpSenderInterface;
@@ -69,6 +70,7 @@ class ApiApplicationProxyTest extends Unit
             [$apiApplicationConventionMock],
             $requestBuilderMock,
             $httpSenderMock,
+            $this->createContentNegotiatorMock(),
         );
         $apiApplicationProxy->boot();
     }
@@ -113,6 +115,7 @@ class ApiApplicationProxyTest extends Unit
             [$apiApplicationConventionMock],
             $requestBuilderMock,
             $httpSenderMock,
+            $this->createContentNegotiatorMock(),
         );
         $apiApplicationProxy->run();
     }
@@ -124,13 +127,13 @@ class ApiApplicationProxyTest extends Unit
     {
         $apiApplicationConventionMock = $this->createMock(ConventionPluginInterface::class);
         $apiApplicationConventionMock
-            ->expects($this->once())
+            ->expects($this->any())
             ->method('isApplicable')
             ->willReturn(true);
 
         $communicationProtocolPluginMock = $this->createMock(CommunicationProtocolPluginInterface::class);
         $communicationProtocolPluginMock
-            ->expects($this->once())
+            ->expects($this->any())
             ->method('isApplicable')
             ->willReturn(true);
 
@@ -167,6 +170,7 @@ class ApiApplicationProxyTest extends Unit
             [$apiApplicationConventionMock],
             $requestBuilderMock,
             $httpSenderMock,
+            $this->createContentNegotiatorMock(),
         );
         $apiApplicationProxy->run();
     }
@@ -180,7 +184,7 @@ class ApiApplicationProxyTest extends Unit
 
         $communicationProtocolPluginMock = $this->createMock(CommunicationProtocolPluginInterface::class);
         $communicationProtocolPluginMock
-            ->expects($this->once())
+            ->expects($this->any())
             ->method('isApplicable')
             ->willReturn(false);
 
@@ -217,6 +221,7 @@ class ApiApplicationProxyTest extends Unit
             [$apiApplicationConventionMock],
             $requestBuilderMock,
             $httpSenderMock,
+            $this->createContentNegotiatorMock(),
         );
         $apiApplicationProxy->run();
     }
@@ -228,7 +233,7 @@ class ApiApplicationProxyTest extends Unit
     {
         $apiApplicationConventionMock = $this->createMock(ConventionPluginInterface::class);
         $apiApplicationConventionMock
-            ->expects($this->once())
+            ->expects($this->any())
             ->method('isApplicable')
             ->willReturn(true);
 
@@ -265,6 +270,7 @@ class ApiApplicationProxyTest extends Unit
             [$apiApplicationConventionMock],
             $requestBuilderMock,
             $httpSenderMock,
+            $this->createContentNegotiatorMock(),
         );
         $apiApplicationProxy->run();
     }
@@ -289,7 +295,21 @@ class ApiApplicationProxyTest extends Unit
             [$apiApplicationConventionMock],
             $requestBuilderMock,
             $httpSenderMock,
+            $this->createContentNegotiatorMock(),
         );
         $apiApplicationProxy->run();
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\ContentNegotiator\ContentNegotiatorInterface
+     */
+    protected function createContentNegotiatorMock(): ContentNegotiatorInterface
+    {
+        $contentNegotiatorMock = $this->createMock(ContentNegotiatorInterface::class);
+        $contentNegotiatorMock
+            ->expects($this->any())
+            ->method('negotiate');
+
+        return $contentNegotiatorMock;
     }
 }

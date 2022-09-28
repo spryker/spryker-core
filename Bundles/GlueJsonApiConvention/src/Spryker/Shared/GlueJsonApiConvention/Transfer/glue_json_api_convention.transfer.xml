@@ -61,7 +61,6 @@
 
     <transfer name="GlueResponse">
         <property name="content" type="string"/>
-        <property name="status" type="string" deprecated="Use `httpStatus` property for HTTP status."/>
         <property name="httpStatus" type="int"/>
         <property name="format" type="string"/>
         <property name="resources" type="GlueResource[]" singular="resource"/>
