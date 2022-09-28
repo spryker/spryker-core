@@ -85,4 +85,8 @@
 
     <transfer name="Company">
     </transfer>
+
+    <transfer name="Address">
+        <property name="idCompanyUnitAddress" type="int"/>
+    </transfer>
 </transfers>

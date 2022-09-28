@@ -16,5 +16,5 @@ interface CustomerToUtilSanitizeServiceInterface
      *
      * @return string
      */
-    public function escapeHtml($text, $double = true, $charset = null);
+    public function escapeHtml(string $text, bool $double = true, ?string $charset = null): string;
 }

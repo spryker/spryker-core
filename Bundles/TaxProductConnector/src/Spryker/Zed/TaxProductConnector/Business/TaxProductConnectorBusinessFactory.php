@@ -108,6 +108,14 @@ class TaxProductConnectorBusinessFactory extends AbstractBusinessFactory
             return $this->createProductItemTaxRateCalculatorWithMultipleShipmentTaxRate();
         };
 
-        return new ProductItemTaxRateCalculatorStrategyResolver($strategyContainer);
+        return new ProductItemTaxRateCalculatorStrategyResolver($strategyContainer, $this->getShippingAddressValidatorPlugins());
+    }
+
+    /**
+     * @return array<\Spryker\Zed\TaxProductConnectorExtension\Communication\Dependency\Plugin\ShippingAddressValidatorPluginInterface>
+     */
+    public function getShippingAddressValidatorPlugins(): array
+    {
+        return $this->getProvidedDependency(TaxProductConnectorDependencyProvider::PLUGINS_SHIPPING_ADDRESS_VALIDATOR);
     }
 }

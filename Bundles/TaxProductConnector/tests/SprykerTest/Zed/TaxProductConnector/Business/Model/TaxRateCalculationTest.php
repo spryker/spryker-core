@@ -98,7 +98,7 @@ class TaxRateCalculationTest extends Unit
         $taxDefaultMock
             ->expects($this->any())
             ->method('getDefaultTaxRate')
-            ->willReturn(19);
+            ->willReturn(19.0);
 
         return $taxDefaultMock;
     }

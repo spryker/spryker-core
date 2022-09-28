@@ -55,6 +55,7 @@ interface TaxProductConnectorFacadeInterface
     /**
      * Specification:
      *  - Set tax rate for each item based on quote level (BC) or item level shipments.
+     *  - Executes the stack of {@link \Spryker\Zed\TaxProductConnectorExtension\Communication\Dependency\Plugin\ShippingAddressValidatorPluginInterface} plugins.
      *
      * @api
      *
@@ -67,6 +68,7 @@ interface TaxProductConnectorFacadeInterface
     /**
      * Specification:
      *  - Set tax rate for each item based on quote level (BC) or item level shipments.
+     *  - Executes the stack of {@link \Spryker\Zed\TaxProductConnectorExtension\Communication\Dependency\Plugin\ShippingAddressValidatorPluginInterface} plugins.
      *
      * @api
      *

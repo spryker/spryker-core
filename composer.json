@@ -874,6 +874,7 @@
         "spryker/tax": "*",
         "spryker/tax-merchant-portal-gui": "*",
         "spryker/tax-product-connector": "*",
+        "spryker/tax-product-connector-extension": "*",
         "spryker/tax-product-storage": "*",
         "spryker/tax-storage": "*",
         "spryker/testify": "*",

@@ -16,5 +16,5 @@ interface CustomerToMailInterface
      *
      * @return void
      */
-    public function handleMail(MailTransfer $mailTransfer);
+    public function handleMail(MailTransfer $mailTransfer): void;
 }

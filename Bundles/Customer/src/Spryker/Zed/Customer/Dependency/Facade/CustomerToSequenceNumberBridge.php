@@ -29,7 +29,7 @@ class CustomerToSequenceNumberBridge implements CustomerToSequenceNumberInterfac
      *
      * @return string
      */
-    public function generate(SequenceNumberSettingsTransfer $sequenceNumberSettings)
+    public function generate(SequenceNumberSettingsTransfer $sequenceNumberSettings): string
     {
         return $this->sequenceNumberFacade->generate($sequenceNumberSettings);
     }

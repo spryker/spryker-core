@@ -27,7 +27,7 @@ class TaxProductConnectorToProductBridge implements TaxProductConnectorToProduct
      *
      * @return void
      */
-    public function touchProductActive($idProductAbstract)
+    public function touchProductActive(int $idProductAbstract): void
     {
         $this->productFacade->touchProductActive($idProductAbstract);
     }

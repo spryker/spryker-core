@@ -29,7 +29,7 @@ class CustomerToUtilSanitizeServiceBridge implements CustomerToUtilSanitizeServi
      *
      * @return string
      */
-    public function escapeHtml($text, $double = true, $charset = null)
+    public function escapeHtml(string $text, bool $double = true, ?string $charset = null): string
     {
         return $this->utilSanitizeService->escapeHtml($text, $double, $charset);
     }

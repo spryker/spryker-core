@@ -14,5 +14,5 @@ interface TaxProductConnectorToProductInterface
      *
      * @return void
      */
-    public function touchProductActive($idProductAbstract);
+    public function touchProductActive(int $idProductAbstract): void;
 }

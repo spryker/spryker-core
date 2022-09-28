@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\Customer\Dependency\Facade;
 
+use Generated\Shared\Transfer\CountryCollectionTransfer;
+use Generated\Shared\Transfer\CountryTransfer;
+
 class CustomerToCountryBridge implements CustomerToCountryInterface
 {
     /**
@@ -27,7 +30,7 @@ class CustomerToCountryBridge implements CustomerToCountryInterface
      *
      * @return \Generated\Shared\Transfer\CountryTransfer
      */
-    public function getPreferredCountryByName($countryName)
+    public function getPreferredCountryByName(string $countryName): CountryTransfer
     {
         return $this->countryFacade->getPreferredCountryByName($countryName);
     }
@@ -35,7 +38,7 @@ class CustomerToCountryBridge implements CustomerToCountryInterface
     /**
      * @return \Generated\Shared\Transfer\CountryCollectionTransfer
      */
-    public function getAvailableCountries()
+    public function getAvailableCountries(): CountryCollectionTransfer
     {
         return $this->countryFacade->getAvailableCountries();
     }
@@ -45,7 +48,7 @@ class CustomerToCountryBridge implements CustomerToCountryInterface
      *
      * @return \Generated\Shared\Transfer\CountryTransfer
      */
-    public function getCountryByIso2Code($iso2Code)
+    public function getCountryByIso2Code(string $iso2Code): CountryTransfer
     {
         return $this->countryFacade->getCountryByIso2Code($iso2Code);
     }

@@ -31,14 +31,21 @@ class ProductItemTaxRateCalculatorStrategyResolver implements ProductItemTaxRate
     /**
      * @var array<\Closure>
      */
-    protected $strategyContainer;
+    protected array $strategyContainer;
+
+    /**
+     * @var array<\Spryker\Zed\TaxProductConnectorExtension\Communication\Dependency\Plugin\ShippingAddressValidatorPluginInterface>
+     */
+    protected array $shippingAddressValidatorPlugins;
 
     /**
      * @param array<\Closure> $strategyContainer
+     * @param array<\Spryker\Zed\TaxProductConnectorExtension\Communication\Dependency\Plugin\ShippingAddressValidatorPluginInterface> $shippingAddressValidatorPlugins
      */
-    public function __construct(array $strategyContainer)
+    public function __construct(array $strategyContainer, array $shippingAddressValidatorPlugins)
     {
         $this->strategyContainer = $strategyContainer;
+        $this->shippingAddressValidatorPlugins = $shippingAddressValidatorPlugins;
     }
 
     /**
@@ -49,7 +56,7 @@ class ProductItemTaxRateCalculatorStrategyResolver implements ProductItemTaxRate
      */
     public function resolve(ArrayObject $itemTransfers, ?AddressTransfer $shippingAddressTransfer): CalculatorInterface
     {
-        if ($shippingAddressTransfer !== null) {
+        if ($this->isShippingAddressValid($shippingAddressTransfer)) {
             $this->assertRequiredStrategyWithoutMultiShipmentContainerItems();
 
             return call_user_func($this->strategyContainer[static::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT]);
@@ -96,5 +103,35 @@ class ProductItemTaxRateCalculatorStrategyResolver implements ProductItemTaxRate
         ) {
             throw new ContainerKeyNotFoundException($this, static::STRATEGY_KEY_WITH_MULTI_SHIPMENT);
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer|null $shippingAddressTransfer
+     *
+     * @return bool
+     */
+    protected function isShippingAddressValid(?AddressTransfer $shippingAddressTransfer): bool
+    {
+        if ($shippingAddressTransfer === null) {
+            return false;
+        }
+
+        return $this->executeShippingAddressValidatorPlugins($shippingAddressTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $shippingAddressTransfer
+     *
+     * @return bool
+     */
+    protected function executeShippingAddressValidatorPlugins(AddressTransfer $shippingAddressTransfer): bool
+    {
+        foreach ($this->shippingAddressValidatorPlugins as $shippingAddressValidatorPlugin) {
+            if ($shippingAddressValidatorPlugin->isValid($shippingAddressTransfer)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

@@ -12,10 +12,10 @@ interface TaxProductConnectorToTaxInterface
     /**
      * @return string
      */
-    public function getDefaultTaxCountryIso2Code();
+    public function getDefaultTaxCountryIso2Code(): string;
 
     /**
      * @return float
      */
-    public function getDefaultTaxRate();
+    public function getDefaultTaxRate(): float;
 }

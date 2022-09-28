@@ -14,5 +14,5 @@ interface CustomerToUtilValidateServiceInterface
      *
      * @return bool
      */
-    public function isEmailFormatValid($email);
+    public function isEmailFormatValid(string $email): bool;
 }

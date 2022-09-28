@@ -28,6 +28,13 @@ class TaxProductConnectorDependencyProvider extends AbstractBundleDependencyProv
     public const FACADE_TAX = 'facade tax';
 
     /**
+     * @deprecated Exists for Backward Compatibility reasons only.
+     *
+     * @var string
+     */
+    public const PLUGINS_SHIPPING_ADDRESS_VALIDATOR = 'PLUGINS_SHIPPING_ADDRESS_VALIDATOR';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -36,6 +43,7 @@ class TaxProductConnectorDependencyProvider extends AbstractBundleDependencyProv
     {
         $container = $this->addProductFacade($container);
         $container = $this->addTaxFacade($container);
+        $container = $this->addShippingAddressValidatorPlugins($container);
 
         return $container;
     }
@@ -66,5 +74,31 @@ class TaxProductConnectorDependencyProvider extends AbstractBundleDependencyProv
         });
 
         return $container;
+    }
+
+    /**
+     * @deprecated Exists for Backward Compatibility reasons only.
+     *
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addShippingAddressValidatorPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_SHIPPING_ADDRESS_VALIDATOR, function () {
+            return $this->getShippingAddressValidatorPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @deprecated Exists for Backward Compatibility reasons only.
+     *
+     * @return array<\Spryker\Zed\TaxProductConnectorExtension\Communication\Dependency\Plugin\ShippingAddressValidatorPluginInterface>
+     */
+    protected function getShippingAddressValidatorPlugins(): array
+    {
+        return [];
     }
 }

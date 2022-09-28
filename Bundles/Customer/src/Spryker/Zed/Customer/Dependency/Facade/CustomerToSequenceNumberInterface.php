@@ -16,5 +16,5 @@ interface CustomerToSequenceNumberInterface
      *
      * @return string
      */
-    public function generate(SequenceNumberSettingsTransfer $sequenceNumberSettings);
+    public function generate(SequenceNumberSettingsTransfer $sequenceNumberSettings): string;
 }

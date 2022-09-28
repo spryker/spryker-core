@@ -29,7 +29,7 @@ class CustomerToMailBridge implements CustomerToMailInterface
      *
      * @return void
      */
-    public function handleMail(MailTransfer $mailTransfer)
+    public function handleMail(MailTransfer $mailTransfer): void
     {
         $this->mailFacade->handleMail($mailTransfer);
     }
