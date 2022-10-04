@@ -77,6 +77,7 @@ class ConfiguredBundleTemplateSlotChecker implements ConfiguredBundleTemplateSlo
      */
     protected function getConfiguredBundlesData(CartChangeTransfer $cartChangeTransfer): array
     {
+        /** @var array<string, mixed> $configuredBundlesData */
         $configuredBundlesData = [];
 
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
@@ -88,7 +89,6 @@ class ConfiguredBundleTemplateSlotChecker implements ConfiguredBundleTemplateSlo
             $configuredBundleGroupKey = $configuredBundleTransfer->getGroupKey();
 
             if (!isset($configuredBundlesData[$configuredBundleGroupKey])) {
-                /** @var array<string, array<string, array<string>>> $configuredBundlesData */
                 $configuredBundlesData[$configuredBundleGroupKey] = [
                     static::KEY_CONFIGURABLE_BUNDLE_TEMPLATE_UUID => $configuredBundleTransfer->getTemplate()->getUuid(),
                 ];
