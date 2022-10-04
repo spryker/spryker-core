@@ -72,7 +72,7 @@ class MerchantPortalBuildFrontendConsole extends Console
         $this->info('Build Merchant Portal frontend');
         $setupFrontendConfigurationTransfer = new SetupFrontendConfigurationTransfer();
         if ($input->getOption(static::OPTION_ENVIRONMENT)) {
-            /** @var string $environment */
+            /** @var string|null $environment */
             $environment = $input->getOption(static::OPTION_ENVIRONMENT);
             $setupFrontendConfigurationTransfer->setEnvironment((string)$environment);
         }
