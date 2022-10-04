@@ -88,12 +88,12 @@ class ConfiguredBundleTemplateSlotChecker implements ConfiguredBundleTemplateSlo
             $configuredBundleGroupKey = $configuredBundleTransfer->getGroupKey();
 
             if (!isset($configuredBundlesData[$configuredBundleGroupKey])) {
+                /** @var array<string, array<string, array<string>>> $configuredBundlesData */
                 $configuredBundlesData[$configuredBundleGroupKey] = [
                     static::KEY_CONFIGURABLE_BUNDLE_TEMPLATE_UUID => $configuredBundleTransfer->getTemplate()->getUuid(),
                 ];
             }
 
-            /** @var array<string, array<string, array<string>>> $configuredBundlesData */
             $configuredBundlesData[$configuredBundleGroupKey][static::KEY_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_UUIDS][] = $itemTransfer->getConfiguredBundleItem()->getSlot()->getUuid();
         }
 

@@ -151,6 +151,7 @@ class PaymentForm extends AbstractType
             $subFormName = ucfirst($paymentMethodSubForm->getName());
 
             if (!$paymentMethodSubForm instanceof SubFormProviderNameInterface) {
+                /** @var array<string, mixed> $choices */
                 $choices[$subFormName] = $paymentMethodSubForm->getPropertyPath();
 
                 continue;
@@ -160,7 +161,6 @@ class PaymentForm extends AbstractType
                 $choices[$paymentMethodSubForm->getProviderName()] = [];
             }
 
-            /** @var array<string, mixed> $choices */
             $choices[$paymentMethodSubForm->getProviderName()][$subFormName] = $paymentMethodSubForm->getPropertyPath();
         }
 
