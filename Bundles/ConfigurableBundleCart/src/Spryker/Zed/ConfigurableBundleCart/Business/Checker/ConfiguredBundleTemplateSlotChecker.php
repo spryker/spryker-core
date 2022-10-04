@@ -93,6 +93,7 @@ class ConfiguredBundleTemplateSlotChecker implements ConfiguredBundleTemplateSlo
                 ];
             }
 
+            /** @var array<string, array<string, array<string>>> $configuredBundlesData */
             $configuredBundlesData[$configuredBundleGroupKey][static::KEY_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_UUIDS][] = $itemTransfer->getConfiguredBundleItem()->getSlot()->getUuid();
         }
 

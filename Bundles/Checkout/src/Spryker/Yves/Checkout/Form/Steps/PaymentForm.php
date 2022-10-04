@@ -160,6 +160,7 @@ class PaymentForm extends AbstractType
                 $choices[$paymentMethodSubForm->getProviderName()] = [];
             }
 
+            /** @var array<string, mixed> $choices */
             $choices[$paymentMethodSubForm->getProviderName()][$subFormName] = $paymentMethodSubForm->getPropertyPath();
         }
 
