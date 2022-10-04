@@ -23,6 +23,11 @@ trait ModuleNameTrait
         }
 
         $config = Configuration::config();
+
+        if (isset($config['module'])) {
+            return $config['module'];
+        }
+
         $namespaceParts = explode('\\', $config['namespace']);
 
         return $namespaceParts[2];

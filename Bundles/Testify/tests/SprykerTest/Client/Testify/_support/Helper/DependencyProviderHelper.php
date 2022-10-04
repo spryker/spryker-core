@@ -7,7 +7,6 @@
 
 namespace SprykerTest\Client\Testify\Helper;
 
-use Codeception\Configuration;
 use Codeception\Module;
 use Codeception\Stub;
 use Codeception\TestInterface;
@@ -17,21 +16,18 @@ use Spryker\Client\Kernel\Container;
 use Spryker\Shared\Kernel\ContainerMocker\ContainerGlobals;
 use Spryker\Shared\Kernel\ContainerMocker\ContainerMocker;
 use SprykerTest\Shared\Testify\Helper\ClassResolverTrait;
+use SprykerTest\Shared\Testify\Helper\ModuleNameTrait;
 
 class DependencyProviderHelper extends Module
 {
     use ContainerMocker;
     use ClassResolverTrait;
+    use ModuleNameTrait;
 
     /**
      * @var string
      */
     protected const DEPENDENCY_PROVIDER_CLASS_NAME_PATTERN = '\%1$s\Client\%3$s\%3$sDependencyProvider';
-
-    /**
-     * @var int
-     */
-    protected const MODULE_NAME_POSITION = 2;
 
     /**
      * @var \Spryker\Client\Kernel\AbstractDependencyProvider|null
@@ -115,23 +111,6 @@ class DependencyProviderHelper extends Module
         $container = $this->overwriteForTesting($container);
 
         return $container;
-    }
-
-    /**
-     * @param string|null $moduleName
-     *
-     * @return string
-     */
-    protected function getModuleName(?string $moduleName = null): string
-    {
-        if ($moduleName) {
-            return $moduleName;
-        }
-
-        $config = Configuration::config();
-        $namespaceParts = explode('\\', $config['namespace']);
-
-        return $namespaceParts[static::MODULE_NAME_POSITION];
     }
 
     /**

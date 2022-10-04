@@ -64,23 +64,45 @@ trait ClassResolverTrait
     /**
      * @param string $classNamePattern
      * @param string $moduleName
-     * @param string|null $applicationName
      *
      * @return array<string>
      */
-    protected function getClassNameCandidates(string $classNamePattern, string $moduleName, ?string $applicationName = null): array
+    protected function getClassNameCandidates(string $classNamePattern, string $moduleName): array
     {
+        $classNameFromConfiguration = $this->getClassNameFromConfiguration($classNamePattern, $moduleName);
+
         $config = Configuration::config();
         $namespaceParts = explode('\\', $config['namespace']);
+
+        // When `application` is configured in the codeception.yml use this value instead of guessing it.
+        $application = $config['application'] ?? $namespaceParts[1];
+
         $classNameCandidates = [];
-        $application = $applicationName ?? $namespaceParts[1];
-        $classNameCandidates[] = sprintf($classNamePattern, $this->trimTestNamespacePostfix($namespaceParts[0]), $application, $moduleName);
+        $classNameCandidates[] = $classNameFromConfiguration;
 
         foreach ($this->coreNamespaces as $coreNamespace) {
             $classNameCandidates[] = sprintf($classNamePattern, $coreNamespace, $application, $moduleName);
         }
 
         return $classNameCandidates;
+    }
+
+    /**
+     * @param string $classNamePattern
+     * @param string $moduleName
+     *
+     * @return string
+     */
+    protected function getClassNameFromConfiguration(string $classNamePattern, string $moduleName): string
+    {
+        $config = Configuration::config();
+        $namespaceParts = explode('\\', $config['namespace']);
+
+        // When `organization` and or `application` is configured in the codeception.yml use these value instead of guessing them.
+        $organization = $config['organization'] ?? $namespaceParts[0];
+        $application = $config['application'] ?? $namespaceParts[1];
+
+        return sprintf($classNamePattern, $this->trimTestNamespacePostfix($organization), $application, $moduleName);
     }
 
     /**

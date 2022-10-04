@@ -7,7 +7,6 @@
 
 namespace SprykerTest\Client\Testify\Helper;
 
-use Codeception\Configuration;
 use Codeception\Module;
 use Codeception\Stub;
 use Codeception\TestInterface;
@@ -18,22 +17,19 @@ use Spryker\Client\Kernel\Container;
 use SprykerTest\Shared\Testify\Helper\ClassResolverTrait;
 use SprykerTest\Shared\Testify\Helper\ConfigHelper;
 use SprykerTest\Shared\Testify\Helper\ConfigHelperTrait;
+use SprykerTest\Shared\Testify\Helper\ModuleNameTrait;
 
 class FactoryHelper extends Module
 {
     use DependencyProviderHelperTrait;
     use ConfigHelperTrait;
     use ClassResolverTrait;
+    use ModuleNameTrait;
 
     /**
      * @var string
      */
     protected const FACTORY_CLASS_NAME_PATTERN = '\%1$s\Client\%3$s\%3$sFactory';
-
-    /**
-     * @var int
-     */
-    protected const MODULE_NAME_POSITION = 2;
 
     /**
      * @var array<\Spryker\Client\Kernel\AbstractFactory>
@@ -97,23 +93,6 @@ class FactoryHelper extends Module
         $moduleFactory = $this->injectContainer($moduleFactory, $moduleName);
 
         return $moduleFactory;
-    }
-
-    /**
-     * @param string|null $moduleName
-     *
-     * @return string
-     */
-    protected function getModuleName(?string $moduleName = null): string
-    {
-        if ($moduleName) {
-            return $moduleName;
-        }
-
-        $config = Configuration::config();
-        $namespaceParts = explode('\\', $config['namespace']);
-
-        return $namespaceParts[static::MODULE_NAME_POSITION];
     }
 
     /**

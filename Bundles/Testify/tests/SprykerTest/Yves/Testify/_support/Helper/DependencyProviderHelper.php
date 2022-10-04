@@ -16,20 +16,17 @@ use Spryker\Shared\Kernel\ContainerMocker\ContainerGlobals;
 use Spryker\Shared\Kernel\ContainerMocker\ContainerMocker;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
+use SprykerTest\Shared\Testify\Helper\ModuleNameTrait;
 
 class DependencyProviderHelper extends Module
 {
     use ContainerMocker;
+    use ModuleNameTrait;
 
     /**
      * @var string
      */
     protected const DEPENDENCY_PROVIDER_CLASS_NAME_PATTERN = '\%1$s\Yves\%2$s\%2$sDependencyProvider';
-
-    /**
-     * @var int
-     */
-    protected const MODULE_NAME_POSITION = 2;
 
     /**
      * @var \Spryker\Yves\Kernel\AbstractBundleDependencyProvider|null
@@ -113,23 +110,6 @@ class DependencyProviderHelper extends Module
         $container = $this->overwriteForTesting($container);
 
         return $container;
-    }
-
-    /**
-     * @param string|null $moduleName
-     *
-     * @return string
-     */
-    protected function getModuleName(?string $moduleName = null): string
-    {
-        if ($moduleName) {
-            return $moduleName;
-        }
-
-        $config = Configuration::config();
-        $namespaceParts = explode('\\', $config['namespace']);
-
-        return $namespaceParts[static::MODULE_NAME_POSITION];
     }
 
     /**

@@ -7,7 +7,6 @@
 
 namespace SprykerTest\Zed\Testify\Helper\Business;
 
-use Codeception\Configuration;
 use Codeception\Stub;
 use Codeception\TestInterface;
 use Exception;
@@ -17,11 +16,14 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
+use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use SprykerTest\Shared\Testify\Helper\AbstractHelper;
 use SprykerTest\Shared\Testify\Helper\ClassResolverTrait;
 use SprykerTest\Shared\Testify\Helper\ConfigHelper;
 use SprykerTest\Shared\Testify\Helper\ConfigHelperTrait;
+use SprykerTest\Shared\Testify\Helper\ModuleNameTrait;
 use Throwable;
 
 class BusinessHelper extends AbstractHelper
@@ -29,6 +31,7 @@ class BusinessHelper extends AbstractHelper
     use ConfigHelperTrait;
     use ClassResolverTrait;
     use DependencyProviderHelperTrait;
+    use ModuleNameTrait;
 
     /**
      * @var string
@@ -44,6 +47,16 @@ class BusinessHelper extends AbstractHelper
      * @var string
      */
     protected const QUERY_CONTAINER_CLASS_NAME_PATTERN = '\%1$s\Zed\%3$s\Persistence\%3$sQueryContainer';
+
+    /**
+     * @var string
+     */
+    protected const ENTITY_MANAGER_CLASS_NAME_PATTERN = '\%1$s\Zed\%3$s\Persistence\%3$sEntityManager';
+
+    /**
+     * @var string
+     */
+    protected const REPOSITORY_CLASS_NAME_PATTERN = '\%1$s\Zed\%3$s\Persistence\%3$sRepository';
 
     /**
      * @var string
@@ -152,23 +165,6 @@ class BusinessHelper extends AbstractHelper
     }
 
     /**
-     * @param string|null $moduleName
-     *
-     * @return string
-     */
-    protected function getModuleName(?string $moduleName = null): string
-    {
-        if ($moduleName) {
-            return $moduleName;
-        }
-
-        $config = Configuration::config();
-        $namespaceParts = explode('\\', $config['namespace']);
-
-        return $namespaceParts[2];
-    }
-
-    /**
      * @param string $moduleName
      *
      * @return \Spryker\Zed\Kernel\Business\AbstractFacade
@@ -254,6 +250,8 @@ class BusinessHelper extends AbstractHelper
             $this->factoryStubs[$moduleName] = $this->injectContainer($this->factoryStubs[$moduleName], $moduleName);
             $this->factoryStubs[$moduleName] = $this->injectQueryContainer($this->factoryStubs[$moduleName], $moduleName);
             $this->factoryStubs[$moduleName] = $this->injectSharedFactory($this->factoryStubs[$moduleName], $moduleName);
+            $this->factoryStubs[$moduleName] = $this->injectEntityManager($this->factoryStubs[$moduleName], $moduleName);
+            $this->factoryStubs[$moduleName] = $this->injectRepository($this->factoryStubs[$moduleName], $moduleName);
 
             return $this->factoryStubs[$moduleName];
         }
@@ -264,6 +262,8 @@ class BusinessHelper extends AbstractHelper
         $moduleFactory = $this->injectContainer($moduleFactory, $moduleName);
         $moduleFactory = $this->injectQueryContainer($moduleFactory, $moduleName);
         $moduleFactory = $this->injectSharedFactory($moduleFactory, $moduleName);
+        $moduleFactory = $this->injectEntityManager($moduleFactory, $moduleName);
+        $moduleFactory = $this->injectRepository($moduleFactory, $moduleName);
 
         return $moduleFactory;
     }
@@ -455,6 +455,66 @@ class BusinessHelper extends AbstractHelper
         $queryContainer = $this->resolveClass(static::QUERY_CONTAINER_CLASS_NAME_PATTERN, $moduleName);
 
         return $queryContainer;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Business\AbstractBusinessFactory $businessFactory
+     * @param string $moduleName
+     *
+     * @return \Spryker\Zed\Kernel\Business\AbstractBusinessFactory
+     */
+    protected function injectEntityManager(AbstractBusinessFactory $businessFactory, string $moduleName): AbstractBusinessFactory
+    {
+        $entityManager = $this->createEntityManager($moduleName);
+
+        if ($entityManager !== null) {
+            $businessFactory->setEntityManager($entityManager);
+        }
+
+        return $businessFactory;
+    }
+
+    /**
+     * @param string $moduleName
+     *
+     * @return \Spryker\Zed\Kernel\Persistence\AbstractEntityManager|null
+     */
+    protected function createEntityManager(string $moduleName): ?AbstractEntityManager
+    {
+        /** @var \Spryker\Zed\Kernel\Persistence\AbstractEntityManager $entityManager */
+        $entityManager = $this->resolveClass(static::ENTITY_MANAGER_CLASS_NAME_PATTERN, $moduleName);
+
+        return $entityManager;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Business\AbstractBusinessFactory $businessFactory
+     * @param string $moduleName
+     *
+     * @return \Spryker\Zed\Kernel\Business\AbstractBusinessFactory
+     */
+    protected function injectRepository(AbstractBusinessFactory $businessFactory, string $moduleName): AbstractBusinessFactory
+    {
+        $repository = $this->createRepository($moduleName);
+
+        if ($repository !== null) {
+            $businessFactory->setRepository($repository);
+        }
+
+        return $businessFactory;
+    }
+
+    /**
+     * @param string $moduleName
+     *
+     * @return \Spryker\Zed\Kernel\Persistence\AbstractRepository|null
+     */
+    protected function createRepository(string $moduleName): ?AbstractRepository
+    {
+        /** @var \Spryker\Zed\Kernel\Persistence\AbstractRepository $repository */
+        $repository = $this->resolveClass(static::REPOSITORY_CLASS_NAME_PATTERN, $moduleName);
+
+        return $repository;
     }
 
     /**
