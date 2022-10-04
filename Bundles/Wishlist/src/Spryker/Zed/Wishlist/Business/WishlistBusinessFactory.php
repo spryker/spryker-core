@@ -15,6 +15,8 @@ use Spryker\Zed\Wishlist\Business\Model\Writer;
 use Spryker\Zed\Wishlist\Business\Transfer\WishlistTransferMapper;
 use Spryker\Zed\Wishlist\Business\Updater\WishlistItemUpdater;
 use Spryker\Zed\Wishlist\Business\Updater\WishlistItemUpdaterInterface;
+use Spryker\Zed\Wishlist\Business\Validator\WishlistItemValidator;
+use Spryker\Zed\Wishlist\Business\Validator\WishlistItemValidatorInterface;
 use Spryker\Zed\Wishlist\WishlistDependencyProvider;
 
 /**
@@ -88,6 +90,14 @@ class WishlistBusinessFactory extends AbstractBusinessFactory
             $this->getUpdateItemPreCheckPlugins(),
             $this->getWishlistPreUpdateItemPlugins(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Wishlist\Business\Validator\WishlistItemValidatorInterface
+     */
+    public function createWishlistItemValidator(): WishlistItemValidatorInterface
+    {
+        return new WishlistItemValidator($this->getRepository());
     }
 
     /**

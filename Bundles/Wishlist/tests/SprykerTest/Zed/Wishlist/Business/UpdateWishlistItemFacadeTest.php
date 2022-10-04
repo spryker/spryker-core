@@ -54,6 +54,11 @@ class UpdateWishlistItemFacadeTest extends Test
     protected const GLOSSARY_KEY_WISHLIST_ITEM_CANNOT_BE_UPDATED = 'wishlist.validation.error.wishlist_item_cannot_be_updated';
 
     /**
+     * @var string
+     */
+    protected const NEW_WISHLIST_MANE = 'new_wishlist_name';
+
+    /**
      * @var \SprykerTest\Zed\Wishlist\WishlistBusinessTester
      */
     protected $tester;
@@ -85,6 +90,7 @@ class UpdateWishlistItemFacadeTest extends Test
 
         $this->wishlistTransfer = $this->tester->haveWishlist([
             WishlistTransfer::FK_CUSTOMER => $this->customerTransfer->getIdCustomer(),
+            WishlistTransfer::NAME => static::NEW_WISHLIST_MANE,
         ]);
     }
 
@@ -298,6 +304,7 @@ class UpdateWishlistItemFacadeTest extends Test
     {
         return $this->tester->haveItemInWishlist([
             WishlistItemTransfer::FK_WISHLIST => $this->wishlistTransfer->getIdWishlist(),
+            WishlistItemTransfer::WISHLIST_NAME => $this->wishlistTransfer->getName(),
             WishlistItemTransfer::SKU => $this->productConcreteTransfer->getSku(),
             WishlistItemTransfer::FK_CUSTOMER => $this->customerTransfer->getIdCustomer(),
         ]);

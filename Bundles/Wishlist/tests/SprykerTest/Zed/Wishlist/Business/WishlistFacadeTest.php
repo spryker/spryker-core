@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\WishlistItemCollectionTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistOverviewResponseTransfer;
+use Generated\Shared\Transfer\WishlistPreAddItemCheckResponseTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Orm\Zed\Wishlist\Persistence\Map\SpyWishlistItemTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
@@ -32,6 +33,23 @@ use Spryker\Zed\Wishlist\Persistence\WishlistQueryContainer;
  */
 class WishlistFacadeTest extends Test
 {
+    /**
+     * @var string
+     */
+    protected const NON_EXISTING_WISHLIST_NAME = 'non_existing_wishlist_name';
+
+    /**
+     * @uses \Spryker\Zed\Wishlist\Business\Model\Writer::DEFAULT_NAME
+     *
+     * @var string
+     */
+    protected const DEFAULT_WISHLIST_NAME = 'default';
+
+    /**
+     * @var string
+     */
+    protected const NOT_VALID_WISHLIST_NAME = 'not/valid.wishlist-name';
+
     /**
      * @var \SprykerTest\Zed\Wishlist\WishlistBusinessTester
      */
@@ -132,12 +150,15 @@ class WishlistFacadeTest extends Test
      */
     public function testGetWishListByName(): void
     {
+        // Arrange
         $wishlistTransfer = (new WishlistTransfer())
             ->setFkCustomer($this->customer->getIdCustomer())
             ->setName($this->wishlist->getName());
 
+        // Act
         $wishlistTransfer = $this->wishlistFacade->getWishlistByName($wishlistTransfer);
 
+        // Assert
         $this->assertInstanceOf(WishlistTransfer::class, $wishlistTransfer);
         $this->assertSame($this->wishlist->getName(), $wishlistTransfer->getName());
     }
@@ -147,16 +168,19 @@ class WishlistFacadeTest extends Test
      */
     public function testAddItemShouldAddItem(): void
     {
-        $WishlistItemTransfer = (new WishlistItemTransfer())
+        // Arrange
+        $wishlistItemTransfer = (new WishlistItemTransfer())
             ->setWishlistName($this->wishlist->getName())
             ->setFkCustomer($this->customer->getIdCustomer())
             ->setSku($this->product_3->getSku());
 
-        $WishlistItemTransfer = $this->wishlistFacade->addItem($WishlistItemTransfer);
+        // Act
+        $wishlistItemTransfer = $this->wishlistFacade->addItem($wishlistItemTransfer);
 
-        $this->assertInstanceOf(WishlistItemTransfer::class, $WishlistItemTransfer);
+        // Assert
+        $this->assertInstanceOf(WishlistItemTransfer::class, $wishlistItemTransfer);
         $this->assertWishlistItemCount(3);
-        $this->assertNotEmpty($WishlistItemTransfer->getIdWishlistItem());
+        $this->assertNotEmpty($wishlistItemTransfer->getIdWishlistItem());
     }
 
     /**
@@ -164,13 +188,16 @@ class WishlistFacadeTest extends Test
      */
     public function testAddNonExistingItemShouldSkipItem(): void
     {
+        // Arrange
         $WishlistItemTransfer = (new WishlistItemTransfer())
             ->setWishlistName($this->wishlist->getName())
             ->setFkCustomer($this->customer->getIdCustomer())
             ->setSku('non-existing-sku');
 
+        // Act
         $WishlistItemTransfer = $this->wishlistFacade->addItem($WishlistItemTransfer);
 
+        // Assert
         $this->assertInstanceOf(WishlistItemTransfer::class, $WishlistItemTransfer);
         $this->assertEmpty($WishlistItemTransfer->getIdWishlistItem());
     }
@@ -178,15 +205,43 @@ class WishlistFacadeTest extends Test
     /**
      * @return void
      */
+    public function testAddItemToTheWishlistWithInvalidNameDoesNotCreateWishlist(): void
+    {
+        // Arrange
+        $wishlistItemTransfer = (new WishlistItemTransfer())
+            ->setWishlistName(static::NOT_VALID_WISHLIST_NAME)
+            ->setFkCustomer($this->customer->getIdCustomer())
+            ->setSku($this->product_1->getSku());
+
+        // Act
+        $wishlistItemTransfer = $this->wishlistFacade->addItem($wishlistItemTransfer);
+        $wishlistTransfer = $this->tester->findWishlistByFilter(
+            (new WishlistFilterTransfer())
+                ->setName(static::NOT_VALID_WISHLIST_NAME)
+                ->setIdCustomer($this->customer->getIdCustomer()),
+        );
+
+        // Assert
+        $this->assertInstanceOf(WishlistItemTransfer::class, $wishlistItemTransfer);
+        $this->assertEmpty($wishlistItemTransfer->getIdWishlistItem());
+        $this->assertNull($wishlistTransfer);
+    }
+
+    /**
+     * @return void
+     */
     public function testAddItemShouldNotThrowExceptionWhenItemAlreadyExists(): void
     {
+        // Arrange
         $wishlistItemUpdateRequestTransfer = (new WishlistItemTransfer())
             ->setWishlistName($this->wishlist->getName())
             ->setFkCustomer($this->customer->getIdCustomer())
             ->setSku($this->product_1->getSku());
 
+        // Act
         $wishlistItemUpdateRequestTransfer = $this->wishlistFacade->addItem($wishlistItemUpdateRequestTransfer);
 
+        // Assert
         $this->assertInstanceOf(WishlistItemTransfer::class, $wishlistItemUpdateRequestTransfer);
         $this->assertWishlistItemCount(2);
     }
@@ -196,6 +251,7 @@ class WishlistFacadeTest extends Test
      */
     public function testRemoveItemShouldNotThrowExceptionWhenItemIsAlreadyRemoved(): void
     {
+        // Arrange
         $this->wishlistQueryContainer
             ->queryItemsByWishlistId($this->wishlist->getIdWishlist())
             ->filterBySku($this->product_1->getSku())
@@ -207,8 +263,10 @@ class WishlistFacadeTest extends Test
             ->setSku($this->product_1->getSku())
             ->setIdWishlistItem($this->wishlistItem_1->getIdWishlistItem());
 
+        // Act
         $wishlistItemUpdateRequestTransfer = $this->wishlistFacade->removeItem($wishlistItemUpdateRequestTransfer);
 
+        // Assert
         $this->assertInstanceOf(WishlistItemTransfer::class, $wishlistItemUpdateRequestTransfer);
         $this->assertWishlistItemCount(1);
     }
@@ -218,6 +276,7 @@ class WishlistFacadeTest extends Test
      */
     public function testRemoveItemShouldNotThrowExceptionWhenListIsEmpty(): void
     {
+        // Arrange
         $this->wishlistQueryContainer
             ->queryItemsByWishlistId($this->wishlist->getIdWishlist())
             ->delete();
@@ -228,8 +287,10 @@ class WishlistFacadeTest extends Test
             ->setSku($this->product_1->getSku())
             ->setIdWishlistItem($this->wishlistItem_1->getIdWishlistItem());
 
+        // Act
         $wishlistItemUpdateRequestTransfer = $this->wishlistFacade->removeItem($wishlistItemUpdateRequestTransfer);
 
+        // Assert
         $this->assertInstanceOf(WishlistItemTransfer::class, $wishlistItemUpdateRequestTransfer);
         $this->assertWishlistItemCount(0);
     }
@@ -239,14 +300,17 @@ class WishlistFacadeTest extends Test
      */
     public function testRemoveItemShouldRemoveItem(): void
     {
+        // Arrange
         $wishlistItemUpdateRequestTransfer = (new WishlistItemTransfer())
             ->setWishlistName($this->wishlist->getName())
             ->setFkCustomer($this->customer->getIdCustomer())
             ->setSku($this->product_1->getSku())
             ->setIdWishlistItem($this->wishlistItem_1->getIdWishlistItem());
 
+        // Act
         $wishlistItemUpdateRequestTransfer = $this->wishlistFacade->removeItem($wishlistItemUpdateRequestTransfer);
 
+        // Assert
         $this->assertInstanceOf(WishlistItemTransfer::class, $wishlistItemUpdateRequestTransfer);
         $this->assertWishlistItemCount(1);
     }
@@ -256,13 +320,16 @@ class WishlistFacadeTest extends Test
      */
     public function testCreateWishlistShouldCreateWishlist(): void
     {
+        // Arrange
         $wishlistTransfer = new WishlistTransfer();
         $wishlistTransfer
             ->setName('foo')
             ->setFkCustomer($this->customer->getIdCustomer());
 
+        // Act
         $wishlistTransfer = $this->wishlistFacade->createWishlist($wishlistTransfer);
 
+        // Assert
         $this->assertNotNull($wishlistTransfer->getIdWishlist());
         $this->assertWishlistCount(2);
         $this->assertWishlistItemCount(0, $wishlistTransfer->getIdWishlist());
@@ -273,13 +340,16 @@ class WishlistFacadeTest extends Test
      */
     public function testValidateAndCreateWishlistShouldCreateWishlist(): void
     {
+        // Arrange
         $wishlistTransfer = new WishlistTransfer();
         $wishlistTransfer
             ->setName('foo')
             ->setFkCustomer($this->customer->getIdCustomer());
 
+        // Act
         $wishlistTransferResponseTransfer = $this->wishlistFacade->validateAndCreateWishlist($wishlistTransfer);
 
+        // Assert
         $this->assertTrue($wishlistTransferResponseTransfer->getIsSuccess());
 
         $wishlistTransfer = $wishlistTransferResponseTransfer->getWishlist();
@@ -293,13 +363,16 @@ class WishlistFacadeTest extends Test
      */
     public function testValidateAndCreateWishlistShouldFailWhenNameIsNotUnique(): void
     {
+        // Arrange
         $wishlistTransfer = new WishlistTransfer();
         $wishlistTransfer
             ->setName($this->wishlist->getName())
             ->setFkCustomer($this->customer->getIdCustomer());
 
+        // Act
         $wishlistTransferResponseTransfer = $this->wishlistFacade->validateAndCreateWishlist($wishlistTransfer);
 
+        // Assert
         $this->assertFalse($wishlistTransferResponseTransfer->getIsSuccess());
         $this->assertCount(1, $wishlistTransferResponseTransfer->getErrors());
     }
@@ -309,6 +382,7 @@ class WishlistFacadeTest extends Test
      */
     public function testUpdateWishlistShouldUpdateWishlist(): void
     {
+        // Arrange
         $wishlistTransfer = new WishlistTransfer();
         $wishlistTransfer->fromArray(
             $this->wishlist->toArray(),
@@ -317,8 +391,10 @@ class WishlistFacadeTest extends Test
 
         $wishlistTransfer->setName('new name');
 
+        // Act
         $wishlistTransfer = $this->wishlistFacade->updateWishlist($wishlistTransfer);
 
+        // Assert
         $this->assertSame('new name', $wishlistTransfer->getName());
         $this->assertSame($this->wishlist->getIdWishlist(), $wishlistTransfer->getIdWishlist());
         $this->assertWishlistItemCount(2, $wishlistTransfer->getIdWishlist());
@@ -329,6 +405,7 @@ class WishlistFacadeTest extends Test
      */
     public function testValidateAndUpdateWishlistShouldUpdateWishlist(): void
     {
+        // Arrange
         $wishlistTransfer = new WishlistTransfer();
         $wishlistTransfer->fromArray(
             $this->wishlist->toArray(),
@@ -337,8 +414,10 @@ class WishlistFacadeTest extends Test
 
         $wishlistTransfer->setName('new name');
 
+        // Act
         $wishlistTransferResponseTransfer = $this->wishlistFacade->validateAndUpdateWishlist($wishlistTransfer);
 
+        // Assert
         $this->assertTrue($wishlistTransferResponseTransfer->getIsSuccess());
 
         $wishlistTransfer = $wishlistTransferResponseTransfer->getWishlist();
@@ -352,6 +431,7 @@ class WishlistFacadeTest extends Test
      */
     public function testValidateAndUpdateWishlistShouldFailWhenNameIsNotUnique(): void
     {
+        // Arrange
         $wishlistTransfer = new WishlistTransfer();
 
         $newWishlistId = $this->wishlist->getIdWishlist() + 1;
@@ -361,8 +441,10 @@ class WishlistFacadeTest extends Test
             ->setName($this->wishlist->getName())
             ->setFkCustomer($this->customer->getIdCustomer());
 
+        // Act
         $wishlistTransferResponseTransfer = $this->wishlistFacade->validateAndUpdateWishlist($wishlistTransfer);
 
+        // Assert
         $this->assertFalse($wishlistTransferResponseTransfer->getIsSuccess());
         $this->assertCount(1, $wishlistTransferResponseTransfer->getErrors());
     }
@@ -372,14 +454,17 @@ class WishlistFacadeTest extends Test
      */
     public function testRemoveWishlistShouldRemoveItemsAsWell(): void
     {
+        // Arrange
         $wishlistTransfer = new WishlistTransfer();
         $wishlistTransfer->fromArray(
             $this->wishlist->toArray(),
             true,
         );
 
+        // Act
         $wishlistTransfer = $this->wishlistFacade->removeWishlist($wishlistTransfer);
 
+        // Assert
         $this->assertWishlistCount(0);
         $this->assertWishlistItemCount(0, $wishlistTransfer->getIdWishlist());
     }
@@ -389,13 +474,16 @@ class WishlistFacadeTest extends Test
      */
     public function testRemoveWishlistByNameShouldRemoveItemsAsWell(): void
     {
+        // Arrange
         $wishlistTransfer = new WishlistTransfer();
         $wishlistTransfer
             ->setName($this->wishlist->getName())
             ->setFkCustomer($this->customer->getIdCustomer());
 
+        // Act
         $wishlistTransfer = $this->wishlistFacade->removeWishlistByName($wishlistTransfer);
 
+        // Assert
         $this->assertWishlistCount(0);
         $this->assertWishlistItemCount(0, $wishlistTransfer->getIdWishlist());
     }
@@ -405,14 +493,17 @@ class WishlistFacadeTest extends Test
      */
     public function testEmptyWishlistShouldRemoveItems(): void
     {
+        // Arrange
         $wishlistTransfer = new WishlistTransfer();
         $wishlistTransfer->fromArray(
             $this->wishlist->toArray(),
             true,
         );
 
+        // Act
         $this->wishlistFacade->emptyWishlist($wishlistTransfer);
 
+        // Assert
         $this->assertWishlistCount(1);
         $this->assertWishlistItemCount(0);
     }
@@ -422,6 +513,7 @@ class WishlistFacadeTest extends Test
      */
     public function testAddItemCollectionShouldAddItemCollection(): void
     {
+        // Arrange
         $this->removeItemsFromWishlist();
         $wishlistTransfer = (new WishlistTransfer())
             ->fromArray($this->wishlist->toArray(), true);
@@ -438,8 +530,10 @@ class WishlistFacadeTest extends Test
             ->setWishlistName($this->wishlist->getName())
             ->setSku($this->product_3->getSku());
 
+        // Act
         $this->wishlistFacade->addItemCollection($wishlistTransfer, [$wishlistItemTransfer_1, $wishlistItemTransfer_2, $wishlistItemTransfer_3]);
 
+        // Assert
         $this->assertWishlistItemCount(3);
     }
 
@@ -448,6 +542,7 @@ class WishlistFacadeTest extends Test
      */
     public function testRemoveItemCollectionShouldRemoveOnlySelectedItems(): void
     {
+        // Arrange
         $this->removeItemsFromWishlist();
         $wishlistTransfer = (new WishlistTransfer())
             ->fromArray($this->wishlist->toArray(), true);
@@ -464,6 +559,7 @@ class WishlistFacadeTest extends Test
             ->setWishlistName($this->wishlist->getName())
             ->setSku($this->product_3->getSku());
 
+        // Act
         $this->wishlistFacade->addItemCollection($wishlistTransfer, [$wishlistItemTransfer_1, $wishlistItemTransfer_2, $wishlistItemTransfer_3]);
 
         $this->assertWishlistItemCount(3);
@@ -475,6 +571,7 @@ class WishlistFacadeTest extends Test
 
         $this->wishlistFacade->removeItemCollection($wishlistItemCollectionTransfer);
 
+        // Assert
         $this->assertWishlistItemCount(1);
     }
 
@@ -659,6 +756,81 @@ class WishlistFacadeTest extends Test
         $this->assertCount(1, $wishlistResponseTransfer->getErrors(), 'Exactly 1 error is expected');
         $this->assertNull($wishlistResponseTransfer->getErrorIdentifier(), 'Error identifier is supposed to be empty.');
         $this->assertNull($wishlistResponseTransfer->getWishlist(), 'No wishlist should be returned.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateWishlistItemBeforeCreationReturnsSuccessfullResponseIfWishlistExists(): void
+    {
+        // Act
+        $wishlistPreAddItemCheckResponseTransfer = $this->wishlistFacade->validateWishlistItemBeforeCreation($this->wishlistItem_1);
+
+        // Assert
+        $this->assertInstanceOf(WishlistPreAddItemCheckResponseTransfer::class, $wishlistPreAddItemCheckResponseTransfer);
+        $this->assertTrue($wishlistPreAddItemCheckResponseTransfer->getIsSuccess());
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateWishlistItemBeforeCreationtReturnsSuccessfullResponseIfWishlistHasDefaultName(): void
+    {
+        // Arrange
+        $wishlistItemTransfer = (new WishlistItemTransfer())
+            ->setWishlistName(static::DEFAULT_WISHLIST_NAME)
+            ->setFkCustomer($this->customer->getIdCustomer());
+
+        // Act
+        $wishlistPreAddItemCheckResponseTransfer = $this->wishlistFacade->validateWishlistItemBeforeCreation($wishlistItemTransfer);
+
+        // Assert
+        $this->assertInstanceOf(WishlistPreAddItemCheckResponseTransfer::class, $wishlistPreAddItemCheckResponseTransfer);
+        $this->assertTrue($wishlistPreAddItemCheckResponseTransfer->getIsSuccess());
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateWishlistItemBeforeCreationReturnsSuccessfullResponseIfWishlistNameIsAnEmptyString(): void
+    {
+        // Arrange
+        $wishlistItemTransfer = (new WishlistItemTransfer())
+            ->setWishlistName('')
+            ->setFkCustomer($this->customer->getIdCustomer());
+
+        // Act
+        $wishlistPreAddItemCheckResponseTransfer = $this->wishlistFacade->validateWishlistItemBeforeCreation($wishlistItemTransfer);
+
+        // Assert
+        $this->assertInstanceOf(WishlistPreAddItemCheckResponseTransfer::class, $wishlistPreAddItemCheckResponseTransfer);
+        $this->assertTrue($wishlistPreAddItemCheckResponseTransfer->getIsSuccess());
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateWishlistItemBeforeCreationReturnsNotSuccessfullResponseIfWishlistDoesNotExist(): void
+    {
+        // Arrange
+        $wishlistResponseTransfer = $this->wishlistFacade->getWishlistByFilter(
+            (new WishlistFilterTransfer())
+                ->setName(static::NON_EXISTING_WISHLIST_NAME)
+                ->setIdCustomer($this->customer->getIdCustomer()),
+        );
+        if ($wishlistResponseTransfer->getIsSuccess()) {
+            $this->wishlistFacade->removeWishlist($wishlistResponseTransfer->getWishlist());
+        }
+        $wishlistItemTransfer = (new WishlistItemTransfer())
+            ->setWishlistName(static::NON_EXISTING_WISHLIST_NAME)
+            ->setFkCustomer($this->customer->getIdCustomer());
+
+        // Act
+        $wishlistPreAddItemCheckResponseTransfer = $this->wishlistFacade->validateWishlistItemBeforeCreation($wishlistItemTransfer);
+
+        // Assert
+        $this->assertInstanceOf(WishlistPreAddItemCheckResponseTransfer::class, $wishlistPreAddItemCheckResponseTransfer);
+        $this->assertFalse($wishlistPreAddItemCheckResponseTransfer->getIsSuccess());
     }
 
     /**

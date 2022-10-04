@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\WishlistItemCriteriaTransfer;
 use Generated\Shared\Transfer\WishlistItemResponseTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
+use Generated\Shared\Transfer\WishlistPreAddItemCheckResponseTransfer;
 use Generated\Shared\Transfer\WishlistResponseTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -297,5 +298,22 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
         return $this->getFactory()
             ->createWishlistItemUpdater()
             ->updateWishlistItem($wishlistItemTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistPreAddItemCheckResponseTransfer
+     */
+    public function validateWishlistItemBeforeCreation(
+        WishlistItemTransfer $wishlistItemTransfer
+    ): WishlistPreAddItemCheckResponseTransfer {
+        return $this->getFactory()
+            ->createWishlistItemValidator()
+            ->validateWishlistItemBeforeCreation($wishlistItemTransfer);
     }
 }

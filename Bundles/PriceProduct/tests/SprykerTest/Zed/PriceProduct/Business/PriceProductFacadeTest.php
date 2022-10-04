@@ -1612,6 +1612,7 @@ class PriceProductFacadeTest extends Unit
         $wishlistItem = [
             WishlistItemTransfer::FK_CUSTOMER => $customer->getIdCustomer(),
             WishlistItemTransfer::FK_WISHLIST => $wishlistTransfer->getIdWishlist(),
+            WishlistItemTransfer::WISHLIST_NAME => $wishlistTransfer->getName(),
             WishlistItemTransfer::SKU => $productConcreteTransfer->getSku(),
         ];
 

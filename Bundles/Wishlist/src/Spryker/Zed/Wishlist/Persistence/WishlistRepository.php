@@ -124,7 +124,7 @@ class WishlistRepository extends AbstractRepository implements WishlistRepositor
         if ($wishlistFilterTransfer->getIdCustomer()) {
             $wishlistQuery->filterByFkCustomer($wishlistFilterTransfer->getIdCustomer());
         }
-        if ($wishlistFilterTransfer->getName()) {
+        if ($wishlistFilterTransfer->getName() !== null) {
             $wishlistQuery->filterByName($wishlistFilterTransfer->getName());
         }
         if ($wishlistFilterTransfer->getUuid()) {

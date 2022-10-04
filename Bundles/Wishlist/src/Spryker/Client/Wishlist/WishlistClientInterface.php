@@ -98,7 +98,10 @@ interface WishlistClientInterface
 
     /**
      * Specification:
-     * - TODO: Add method specification.
+     * - Makes Zed request.
+     * - Adds item to wishlist.
+     * - Required values of `WishlistItemTransfer`: `fkCustomer`, `fkProduct`, `wishlistName`.
+     * - In case wishlist name is not provided the default value will be used.
      *
      * @api
      *

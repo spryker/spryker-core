@@ -271,6 +271,7 @@ class MerchantSwitcherFacadeTest extends Unit
 
         $wishlistItemTransfer1 = $this->tester->haveItemInWishlist([
             WishlistItemTransfer::FK_WISHLIST => $wishlistTransfer->getIdWishlist(),
+            WishlistItemTransfer::WISHLIST_NAME => $wishlistTransfer->getName(),
             WishlistItemTransfer::FK_CUSTOMER => $customerTransfer->getIdCustomer(),
             WishlistItemTransfer::MERCHANT_REFERENCE => $oldMerchantTransfer->getMerchantReference(),
             WishlistItemTransfer::SKU => $productOfferTransfer1->getConcreteSku(),
@@ -278,6 +279,7 @@ class MerchantSwitcherFacadeTest extends Unit
 
         $wishlistItemTransfer2 = $this->tester->haveItemInWishlist([
             WishlistItemTransfer::FK_WISHLIST => $wishlistTransfer->getIdWishlist(),
+            WishlistItemTransfer::WISHLIST_NAME => $wishlistTransfer->getName(),
             WishlistItemTransfer::FK_CUSTOMER => $customerTransfer->getIdCustomer(),
             WishlistItemTransfer::MERCHANT_REFERENCE => $oldMerchantTransfer->getMerchantReference(),
             WishlistItemTransfer::SKU => $productOfferTransfer2->getConcreteSku(),
@@ -323,6 +325,8 @@ class MerchantSwitcherFacadeTest extends Unit
         // Arrange
         $oldMerchantTransfer = $this->tester->haveMerchant();
         $newMerchantTransfer = $this->tester->haveMerchant();
+        $productConcreteTransfer1 = $this->tester->haveProduct();
+        $productConcreteTransfer2 = $this->tester->haveProduct();
 
         $customerTransfer = $this->tester->haveCustomer();
 
@@ -333,14 +337,18 @@ class MerchantSwitcherFacadeTest extends Unit
 
         $wishlistItemTransfer1 = $this->tester->haveItemInWishlist([
             WishlistItemTransfer::FK_WISHLIST => $wishlistTransfer->getIdWishlist(),
+            WishlistItemTransfer::WISHLIST_NAME => $wishlistTransfer->getName(),
             WishlistItemTransfer::FK_CUSTOMER => $customerTransfer->getIdCustomer(),
             WishlistItemTransfer::MERCHANT_REFERENCE => $oldMerchantTransfer->getMerchantReference(),
+            WishlistItemTransfer::SKU => $productConcreteTransfer1->getSku(),
         ]);
 
         $wishlistItemTransfer2 = $this->tester->haveItemInWishlist([
             WishlistItemTransfer::FK_WISHLIST => $wishlistTransfer->getIdWishlist(),
+            WishlistItemTransfer::WISHLIST_NAME => $wishlistTransfer->getName(),
             WishlistItemTransfer::FK_CUSTOMER => $customerTransfer->getIdCustomer(),
             WishlistItemTransfer::MERCHANT_REFERENCE => $oldMerchantTransfer->getMerchantReference(),
+            WishlistItemTransfer::SKU => $productConcreteTransfer2->getSku(),
         ]);
 
         $wishlistTransfer->addWishlistItem($wishlistItemTransfer1);
@@ -383,6 +391,8 @@ class MerchantSwitcherFacadeTest extends Unit
         // Arrange
         $merchantTransfer = $this->tester->haveMerchant();
         $customerTransfer = $this->tester->haveCustomer();
+        $productConcreteTransfer1 = $this->tester->haveProduct();
+        $productConcreteTransfer2 = $this->tester->haveProduct();
 
         $wishlistTransfer = $this->tester->haveWishlist([
             WishlistTransfer::MERCHANT_REFERENCE => $merchantTransfer->getMerchantReference(),
@@ -391,14 +401,18 @@ class MerchantSwitcherFacadeTest extends Unit
 
         $wishlistItemTransfer1 = $this->tester->haveItemInWishlist([
             WishlistItemTransfer::FK_WISHLIST => $wishlistTransfer->getIdWishlist(),
+            WishlistItemTransfer::WISHLIST_NAME => $wishlistTransfer->getName(),
             WishlistItemTransfer::FK_CUSTOMER => $customerTransfer->getIdCustomer(),
             WishlistItemTransfer::MERCHANT_REFERENCE => $merchantTransfer->getMerchantReference(),
+            WishlistItemTransfer::SKU => $productConcreteTransfer1->getSku(),
         ]);
 
         $wishlistItemTransfer2 = $this->tester->haveItemInWishlist([
             WishlistItemTransfer::FK_WISHLIST => $wishlistTransfer->getIdWishlist(),
+            WishlistItemTransfer::WISHLIST_NAME => $wishlistTransfer->getName(),
             WishlistItemTransfer::FK_CUSTOMER => $customerTransfer->getIdCustomer(),
             WishlistItemTransfer::MERCHANT_REFERENCE => $merchantTransfer->getMerchantReference(),
+            WishlistItemTransfer::SKU => $productConcreteTransfer2->getSku(),
         ]);
 
         $wishlistTransfer->addWishlistItem($wishlistItemTransfer1);
@@ -422,6 +436,8 @@ class MerchantSwitcherFacadeTest extends Unit
         // Arrange
         $merchantTransfer = $this->tester->haveMerchant();
         $customerTransfer = $this->tester->haveCustomer();
+        $productConcreteTransfer1 = $this->tester->haveProduct();
+        $productConcreteTransfer2 = $this->tester->haveProduct();
 
         $wishlistTransfer = $this->tester->haveWishlist([
             WishlistTransfer::MERCHANT_REFERENCE => $merchantTransfer->getMerchantReference(),
@@ -430,12 +446,16 @@ class MerchantSwitcherFacadeTest extends Unit
 
         $wishlistItemTransfer1 = $this->tester->haveItemInWishlist([
             WishlistItemTransfer::FK_WISHLIST => $wishlistTransfer->getIdWishlist(),
+            WishlistItemTransfer::WISHLIST_NAME => $wishlistTransfer->getName(),
             WishlistItemTransfer::FK_CUSTOMER => $customerTransfer->getIdCustomer(),
+            WishlistItemTransfer::SKU => $productConcreteTransfer1->getSku(),
         ]);
 
         $wishlistItemTransfer2 = $this->tester->haveItemInWishlist([
             WishlistItemTransfer::FK_WISHLIST => $wishlistTransfer->getIdWishlist(),
+            WishlistItemTransfer::WISHLIST_NAME => $wishlistTransfer->getName(),
             WishlistItemTransfer::FK_CUSTOMER => $customerTransfer->getIdCustomer(),
+            WishlistItemTransfer::SKU => $productConcreteTransfer2->getSku(),
         ]);
 
         $wishlistTransfer->addWishlistItem($wishlistItemTransfer1);

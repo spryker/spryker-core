@@ -84,10 +84,12 @@ class ProductConfigurationWishlistClientTester extends Actor
         $wishlistTransfer = $this->haveWishlist([
             WishlistTransfer::FK_CUSTOMER => $customerTransfer->getIdCustomer(),
         ]);
+        $productConcreteTransfer = $this->haveProduct();
 
         $wishlistItemTransfer = $this->haveItemInWishlist([
             WishlistItemTransfer::FK_WISHLIST => $wishlistTransfer->getIdWishlist(),
             WishlistItemTransfer::WISHLIST_NAME => $wishlistTransfer->getName(),
+            WishlistItemTransfer::SKU => $productConcreteTransfer->getSku(),
             WishlistItemTransfer::FK_CUSTOMER => $customerTransfer->getIdCustomer(),
         ]);
 

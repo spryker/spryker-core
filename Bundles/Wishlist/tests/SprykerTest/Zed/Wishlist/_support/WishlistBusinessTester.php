@@ -8,8 +8,11 @@
 namespace SprykerTest\Zed\Wishlist;
 
 use Codeception\Actor;
+use Generated\Shared\Transfer\WishlistFilterTransfer;
 use Generated\Shared\Transfer\WishlistItemCriteriaTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
+use Generated\Shared\Transfer\WishlistTransfer;
+use Orm\Zed\Wishlist\Persistence\SpyWishlistQuery;
 
 /**
  * @method void wantToTest($text)
@@ -43,5 +46,29 @@ class WishlistBusinessTester extends Actor
         return $this->getFacade()
             ->getWishlistItem($wishlistItemCriteriaTransfer)
             ->getWishlistItemOrFail();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistFilterTransfer $wishlistFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistTransfer|null
+     */
+    public function findWishlistByFilter(WishlistFilterTransfer $wishlistFilterTransfer): ?WishlistTransfer
+    {
+        $wishlistQuery = SpyWishlistQuery::create();
+
+        if ($wishlistFilterTransfer->getIdCustomer()) {
+            $wishlistQuery->filterByFkCustomer($wishlistFilterTransfer->getIdCustomer());
+        }
+        if ($wishlistFilterTransfer->getName()) {
+            $wishlistQuery->filterByName($wishlistFilterTransfer->getName());
+        }
+        $wishlistEntityTransfer = $wishlistQuery->findOne();
+
+        if ($wishlistEntityTransfer) {
+            return (new WishlistTransfer())->fromArray($wishlistEntityTransfer->toArray());
+        }
+
+        return null;
     }
 }

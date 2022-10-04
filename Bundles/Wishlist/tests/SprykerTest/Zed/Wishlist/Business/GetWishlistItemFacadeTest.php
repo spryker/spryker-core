@@ -31,6 +31,11 @@ class GetWishlistItemFacadeTest extends Test
     protected const FAKE_ID_WISHLIST_ITEM = 77777;
 
     /**
+     * @var string
+     */
+    protected const NEW_WISHLIST_MANE = 'new_wishlist_name';
+
+    /**
      * @var \SprykerTest\Zed\Wishlist\WishlistBusinessTester
      */
     protected $tester;
@@ -62,6 +67,7 @@ class GetWishlistItemFacadeTest extends Test
 
         $this->wishlistTransfer = $this->tester->haveWishlist([
             WishlistTransfer::FK_CUSTOMER => $this->customerTransfer->getIdCustomer(),
+            WishlistTransfer::NAME => static::NEW_WISHLIST_MANE,
         ]);
     }
 
@@ -115,6 +121,7 @@ class GetWishlistItemFacadeTest extends Test
     {
         return $this->tester->haveItemInWishlist([
             WishlistItemTransfer::FK_WISHLIST => $this->wishlistTransfer->getIdWishlist(),
+            WishlistItemTransfer::WISHLIST_NAME => $this->wishlistTransfer->getName(),
             WishlistItemTransfer::SKU => $this->productConcreteTransfer->getSku(),
             WishlistItemTransfer::FK_CUSTOMER => $this->customerTransfer->getIdCustomer(),
         ]);

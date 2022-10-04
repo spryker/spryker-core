@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\WishlistItemCriteriaTransfer;
 use Generated\Shared\Transfer\WishlistItemResponseTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
+use Generated\Shared\Transfer\WishlistPreAddItemCheckResponseTransfer;
 use Generated\Shared\Transfer\WishlistResponseTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 
@@ -107,9 +108,16 @@ interface WishlistFacadeInterface
 
     /**
      * Specification:
-     *  - Adds collection of items to a wishlist
-     *  - Required values of WishlistTransfer: fkCustomer, name
-     *  - Required values of WishlistItemTransfer: fkProduct
+     * - Adds collection of items to a wishlist.
+     * - Requires `WishlistTransfer.fkCustomer` and `WishlistTransfer.name` to be set.
+     * - Requires `WishlistItemTransfer.fkCustomer`, `WishlistItemTransfer.sku ` and `WishlistItemTransfer.wishlistName`
+     *   for each item in collection to be set.
+     * - In case `WishlistItemTransfer.wishlistName === ''` the default value will be used.
+     * - Validates wishlist name for each item in collection.
+     * - If wishlist name validation for item failed, the corresponding product is inactive or does not exist - item will not be added.
+     * - Executes `AddItemPreCheckPluginInterface` plugin stack for each item in collection.
+     * - If one of `AddItemPreCheckPluginInterface` stack plugins will return `WishlistPreAddItemCheckResponseTransfer.success=false`- item will not be added.
+     * - Executes `WishlistPreAddItemPluginInterface`plugin stack.
      *
      * @api
      *
@@ -136,10 +144,16 @@ interface WishlistFacadeInterface
 
     /**
      * Specification:
-     *  - Adds item to wishlist
-     *  - Required values of WishlistItemTransfer: fkCustomer, fkProduct. Optional: wishlistName
-     *    In case wishlist name is not provided the default value will be used
-     *  - Returns WishlistItemTransfer
+     * - Adds item to wishlist.
+     * - Requires `WishlistItemTransfer.fkCustomer`, `WishlistItemTransfer.sku` and `WishlistItemTransfer.wishlistName` to be set.
+     * - In case `WishlistItemTransfer.wishlistName === ''` the default value will be used.
+     * - Validates wishlist name.
+     * - If wishlist name validation for item failed, the corresponding product is inactive or does not exist - item will not be added
+     *   and the same `WishlistItemTransfer` will be returned.
+     * - Executes `AddItemPreCheckPluginInterface` plugin stack.
+     * - If one of `AddItemPreCheckPluginInterface` stack plugins will return `WishlistPreAddItemCheckResponseTransfer.success=false`-
+     *   item will not be added.
+     * - Executes `WishlistPreAddItemPluginInterface` plugin stack.
      *
      * @api
      *
@@ -265,4 +279,24 @@ interface WishlistFacadeInterface
      * @return \Generated\Shared\Transfer\WishlistItemResponseTransfer
      */
     public function updateWishlistItem(WishlistItemTransfer $wishlistItemTransfer): WishlistItemResponseTransfer;
+
+    /**
+     * Specification:
+     * - Requires `WishlistItemTransfer.wishlistName` to be set.
+     * - Requires `WishlistItemTransfer.fkCustomer` to be set.
+     * - Validates wishlist item's wishlist before creation.
+     * - Checks wishlist existence by `WishlistItemTransfer.wishlistName` and `WishlistItemTransfer.fkCustomer`.
+     * - Returns `WishlistPreAddItemCheckResponseTransfer.isSuccess = true` if wishlist exists, is default or
+     *   `WishlistItemTransfer.wishlistName` is an empty string.
+     * - Returns `WishlistPreAddItemCheckResponseTransfer.isSuccess = false` otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistPreAddItemCheckResponseTransfer
+     */
+    public function validateWishlistItemBeforeCreation(
+        WishlistItemTransfer $wishlistItemTransfer
+    ): WishlistPreAddItemCheckResponseTransfer;
 }

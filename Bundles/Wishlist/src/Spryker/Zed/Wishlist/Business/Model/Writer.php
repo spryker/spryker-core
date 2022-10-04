@@ -326,11 +326,16 @@ class Writer implements WriterInterface
             return $wishlistItemTransfer;
         }
 
-        if (!$this->preAddItemCheck($wishlistItemTransfer)) {
+        $wishlistTransfer = (new WishlistTransfer())->setName($wishlistItemTransfer->getWishlistName());
+
+        if (
+            !$this->preAddItemCheck($wishlistItemTransfer)
+            || !$this->isWishListNameValid($wishlistTransfer)
+        ) {
             return $wishlistItemTransfer;
         }
 
-        $idWishlist = $this->getDefaultWishlistIdByName(
+        $idWishlist = $this->getWishlistIdByNameAndFkCustomer(
             $wishlistItemTransfer->getWishlistName(),
             $wishlistItemTransfer->getFkCustomer(),
         );
@@ -364,7 +369,7 @@ class Writer implements WriterInterface
      *
      * @return int
      */
-    protected function getDefaultWishlistIdByName($name, $fkCustomer)
+    protected function getWishlistIdByNameAndFkCustomer($name, $fkCustomer)
     {
         $name = trim($name);
         if ($name === '') {
@@ -518,8 +523,8 @@ class Writer implements WriterInterface
     protected function preAddItemCheck(WishlistItemTransfer $wishlistItemTransfer): bool
     {
         foreach ($this->addItemPreCheckPlugins as $preAddItemCheckPlugin) {
-            $shoppingListPreAddItemCheckResponseTransfer = $preAddItemCheckPlugin->check($wishlistItemTransfer);
-            if (!$shoppingListPreAddItemCheckResponseTransfer->getIsSuccess()) {
+            $wishlistPreAddItemCheckResponseTransfer = $preAddItemCheckPlugin->check($wishlistItemTransfer);
+            if (!$wishlistPreAddItemCheckResponseTransfer->getIsSuccess()) {
                 return false;
             }
         }
