@@ -74,7 +74,6 @@
         <property name="billingSameAsShipping" type="bool"/>
         <property name="customer" type="Customer"/>
         <property name="orderReference" type="string"/>
-        <property name="payment" type="Payment" deprecated="Use payments property instead."/>
     </transfer>
 
     <transfer name="QuoteValidationResponse">
@@ -92,7 +91,6 @@
     </transfer>
 
     <transfer name="Payment">
-        <property name="paymentSelection" type="string"/>
     </transfer>
 
     <transfer name="Customer">
