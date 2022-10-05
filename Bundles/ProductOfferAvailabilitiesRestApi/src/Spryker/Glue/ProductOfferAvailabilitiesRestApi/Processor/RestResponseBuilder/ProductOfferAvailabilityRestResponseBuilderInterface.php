@@ -35,4 +35,9 @@ interface ProductOfferAvailabilityRestResponseBuilderInterface
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createProductOfferIdNotSpecifiedErrorResponse(): RestResponseInterface;
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createProductOfferNotFoundErrorResponse(): RestResponseInterface;
 }

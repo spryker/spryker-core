@@ -91,6 +91,19 @@ class ProductOfferAvailabilityRestResponseBuilder implements ProductOfferAvailab
     }
 
     /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createProductOfferNotFoundErrorResponse(): RestResponseInterface
+    {
+        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
+            ->setCode(ProductOfferAvailabilitiesRestApiConfig::RESPONSE_CODE_PRODUCT_OFFER_NOT_FOUND)
+            ->setDetail(ProductOfferAvailabilitiesRestApiConfig::RESPONSE_DETAIL_PRODUCT_OFFER_NOT_FOUND)
+            ->setStatus(Response::HTTP_NOT_FOUND);
+
+        return $this->restResourceBuilder->createRestResponse()->addError($restErrorMessageTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductOfferAvailabilityStorageTransfer $productOfferAvailabilityStorageTransfer
      * @param string $productOfferReference
      *

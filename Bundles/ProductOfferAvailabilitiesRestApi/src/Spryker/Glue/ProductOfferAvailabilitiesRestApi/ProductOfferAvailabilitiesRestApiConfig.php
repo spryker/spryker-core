@@ -24,6 +24,24 @@ class ProductOfferAvailabilitiesRestApiConfig extends AbstractBundleConfig
     public const RESOURCE_PRODUCT_OFFERS = 'product-offers';
 
     /**
+     * @api
+     *
+     * @uses \Spryker\Glue\MerchantProductOffersRestApi\MerchantProductOffersRestApiConfig::RESPONSE_CODE_PRODUCT_OFFER_NOT_FOUND
+     *
+     * @var string
+     */
+    public const RESPONSE_CODE_PRODUCT_OFFER_NOT_FOUND = '3701';
+
+    /**
+     * @api
+     *
+     * @uses \Spryker\Glue\MerchantProductOffersRestApi\MerchantProductOffersRestApiConfig::RESPONSE_DETAIL_PRODUCT_OFFER_NOT_FOUND
+     *
+     * @var string
+     */
+    public const RESPONSE_DETAIL_PRODUCT_OFFER_NOT_FOUND = 'Product offer was not found.';
+
+    /**
      * @uses \Spryker\Glue\MerchantProductOffersRestApi\MerchantProductOffersRestApiConfig::RESPONSE_CODE_PRODUCT_OFFER_ID_IS_NOT_SPECIFIED
      *
      * @var string
