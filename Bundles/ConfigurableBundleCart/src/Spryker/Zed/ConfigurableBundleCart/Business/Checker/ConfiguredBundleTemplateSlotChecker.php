@@ -77,6 +77,7 @@ class ConfiguredBundleTemplateSlotChecker implements ConfiguredBundleTemplateSlo
      */
     protected function getConfiguredBundlesData(CartChangeTransfer $cartChangeTransfer): array
     {
+        /** @var array<string, mixed> $configuredBundlesData */
         $configuredBundlesData = [];
 
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {

@@ -3,4 +3,3 @@ parameters:
     checkMissingIterableValueType: false
     ignoreErrors:
         - '#Call to an undefined method .+Criteria::.+\(\).#'
-        - '#Binary operation .+ between \(array\|float\|int\) and array results in an error.#'

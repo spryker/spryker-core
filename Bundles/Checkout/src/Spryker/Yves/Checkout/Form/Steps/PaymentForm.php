@@ -145,6 +145,7 @@ class PaymentForm extends AbstractType
      */
     protected function getPaymentMethodChoices(array $paymentMethodSubForms)
     {
+        /** @var array<string, mixed> $choices */
         $choices = [];
 
         foreach ($paymentMethodSubForms as $paymentMethodSubForm) {

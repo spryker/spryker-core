@@ -15,3 +15,5 @@ parameters:
         - '#Comparison operation "<" between int<1, max> and 1 is always false.#'
         - '#Cannot access offset non-empty-string on Spryker\\Service\\Container\\ContainerInterface.#'
         - '#Parameter \#2 \$callable of class Twig\\TwigFunction constructor expects \(callable\(\): mixed\)\|null, string given.#'
+    excludePaths:
+        - '%rootDir%/../../../vendor/spryker/spryker/Bundles/Application/src/Spryker/Shared/Application/Communication/ControllerServiceBuilder.php'
