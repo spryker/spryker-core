@@ -158,4 +158,43 @@ class ProductCategoryFacadeTest extends Unit
     {
         return $this->tester->getLocator()->productCategory()->facade();
     }
+
+    /**
+     * @return void
+     */
+    public function testExpandProductConcreteTransfersWithProductCategories()
+    {
+        // Arrange
+        $localeTransferEn = $this->tester->haveLocale([LocaleTransfer::LOCALE_NAME => static::LOCALE_EN]);
+        $localeTransferDe = $this->tester->haveLocale([LocaleTransfer::LOCALE_NAME => static::LOCALE_DE]);
+
+        $categoryTransfer = $this->tester->haveCategory();
+
+        $categoryLocalizedAttributesDataEn = (new CategoryLocalizedAttributesBuilder())->build()->toArray();
+        $categoryLocalizedAttributesDataEn[LocalizedAttributesTransfer::LOCALE] = $localeTransferEn;
+        $this->tester->haveCategoryLocalizedAttributeForCategory(
+            $categoryTransfer->getIdCategory(),
+            $categoryLocalizedAttributesDataEn,
+        );
+
+        $categoryLocalizedAttributesDataDe = (new CategoryLocalizedAttributesBuilder())->build()->toArray();
+        $categoryLocalizedAttributesDataDe[LocalizedAttributesTransfer::LOCALE] = $localeTransferDe;
+        $this->tester->haveCategoryLocalizedAttributeForCategory(
+            $categoryTransfer->getIdCategory(),
+            $categoryLocalizedAttributesDataDe,
+        );
+
+        $productTransfer = $this->tester->haveProduct();
+        $this->tester->assignProductToCategory($categoryTransfer->getIdCategory(), $productTransfer->getFkProductAbstract());
+
+        // Act
+        $productTransfers = $this->getProductCategoryFacade()->expandProductConcreteTransfersWithProductCategories([$productTransfer]);
+
+        // Assert
+        $this->assertNotEmpty($productTransfers);
+        $this->assertSame(
+            $productTransfers[0]->getProductCategories()[0]->getCategory()->getIdCategory(),
+            $categoryTransfer->getIdCategory(),
+        );
+    }
 }

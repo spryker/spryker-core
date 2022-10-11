@@ -158,4 +158,7 @@
     <transfer name="PriceProductCollectionResponse">
     </transfer>
 
+    <transfer name="EventEntity">
+        <property name="id" type="int"/>
+    </transfer>
 </transfers>

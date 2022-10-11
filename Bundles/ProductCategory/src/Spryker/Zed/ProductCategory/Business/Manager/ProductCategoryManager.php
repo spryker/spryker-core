@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductCategory\Business\Manager;
 
 use Generated\Shared\Transfer\CategoryTransfer;
+use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
@@ -132,6 +133,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
             $mapping->delete();
 
             $this->triggerEvent(ProductCategoryEvents::PRODUCT_CATEGORY_UNASSIGNED, $idCategory, $idProductAbstract);
+            $this->triggerProductUpdateEvents([$idProductAbstract]);
 
             $this->touchProductAbstractActive($idProductAbstract);
         }
@@ -156,6 +158,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
             $mapping->save();
 
             $this->triggerEvent(ProductCategoryEvents::PRODUCT_CATEGORY_ASSIGNED, $idCategory, $idProductAbstract);
+            $this->triggerProductUpdateEvents([$idProductAbstract]);
 
             $this->touchProductAbstractActive($idProductAbstract);
         }
@@ -185,6 +188,8 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
             $mapping->save();
 
             $this->touchProductAbstractActive($idProduct);
+
+            $this->triggerProductUpdateEvents([$idProduct]);
         }
 
         $this->touchCategoryActive($idCategory);
@@ -206,6 +211,8 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
             $productIdsToUnAssign[] = $mapping->getFkProductAbstract();
         }
         $this->removeProductCategoryMappings($idCategory, $productIdsToUnAssign);
+
+        $this->triggerProductUpdateEvents($productIdsToUnAssign);
     }
 
     /**
@@ -261,6 +268,26 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     }
 
     /**
+     * @param array<int> $productAbstractIds
+     *
+     * @return void
+     */
+    protected function triggerProductUpdateEvents(array $productAbstractIds): void
+    {
+        if ($this->eventFacade === null) {
+            return;
+        }
+
+        $productUpdatedEvents = [];
+
+        foreach ($productAbstractIds as $productAbstractId) {
+            $productUpdatedEvents[] = (new EventEntityTransfer())->setForeignKeys(['fk_product_abstract' => $productAbstractId]);
+        }
+
+        $this->eventFacade->triggerBulk(ProductCategoryEvents::PRODUCT_CONCRETE_UPDATE, $productUpdatedEvents);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
      * @return void
@@ -270,9 +297,15 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
         $idCategoryNode = $categoryTransfer->getCategoryNode()->getIdCategoryNode();
         $productMappings = $this->findProductMappingsOfChildCategories($idCategoryNode);
 
+        $productAbstractIds = [];
+
         foreach ($productMappings as $productMappingEntity) {
             $this->touchProductAbstractActive($productMappingEntity->getFkProductAbstract());
+
+            $productAbstractIds[] = $productMappingEntity->getFkProductAbstract();
         }
+
+        $this->triggerProductUpdateEvents($productAbstractIds);
     }
 
     /**

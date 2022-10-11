@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ProductImage\Business\Resolver;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 class ProductImageSetResolver implements ProductImageSetResolverInterface
 {
@@ -23,6 +25,23 @@ class ProductImageSetResolver implements ProductImageSetResolverInterface
         $resolvedProductImageSetTransfers += $this->extractDefaultProductImageSets($productImageSetTransfers);
 
         return new ArrayObject($resolvedProductImageSetTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function mergeProductAbstractImagesIntoProductConcrete(
+        ProductConcreteTransfer $productConcreteTransfer,
+        ProductAbstractTransfer $productAbstractTransfer
+    ): ProductConcreteTransfer {
+        if ($productConcreteTransfer->getImageSets()->count() === 0) {
+            $productConcreteTransfer->setImageSets($productAbstractTransfer->getImageSets());
+        }
+
+        return $productConcreteTransfer;
     }
 
     /**

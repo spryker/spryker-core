@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\Store\Business;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Zed\Store\Business\Exception\StoreReferenceNotFoundException;
 use Spryker\Zed\Store\Business\StoreFacade;
 
 /**
@@ -31,9 +32,32 @@ class StoreFacadeTest extends Unit
     public const DEFAULT_STORE_NAME = 'DE';
 
     /**
+     * @var string
+     */
+    public const ALTERNATIVE_STORE_NAME = 'AT';
+
+    /**
+     * @var string
+     */
+    public const DEFAULT_STORE_REFERENCE = 'dev-DE';
+
+    /**
      * @var \SprykerTest\Zed\Store\StoreBusinessTester
      */
     protected $tester;
+
+    /**
+     * @return void
+     */
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->tester->setStoreReferenceData([
+            'DE' => 'dev-DE',
+            'AT' => 'dev-AT',
+        ]);
+    }
 
     /**
      * @return void
@@ -47,6 +71,7 @@ class StoreFacadeTest extends Unit
         $this->assertInstanceOf(StoreTransfer::class, $storeTransfer);
         $this->assertNotEmpty($storeTransfer->getName());
         $this->assertNotEmpty($storeTransfer->getIdStore());
+        $this->assertNotEmpty($storeTransfer->getStoreReference());
     }
 
     /**
@@ -73,6 +98,7 @@ class StoreFacadeTest extends Unit
         $this->assertInstanceOf(StoreTransfer::class, $storeTransfer);
         $this->assertNotEmpty($storeTransfer->getName());
         $this->assertNotEmpty($storeTransfer->getIdStore());
+        $this->assertNotEmpty($storeTransfer->getStoreReference());
     }
 
     /**
@@ -86,6 +112,7 @@ class StoreFacadeTest extends Unit
         $this->assertInstanceOf(StoreTransfer::class, $storeTransfer);
 
         $this->assertSame(static::DEFAULT_STORE_NAME, $storeTransfer->getName());
+        $this->assertSame(static::DEFAULT_STORE_REFERENCE, $storeTransfer->getStoreReference());
         $this->assertNotEmpty($storeTransfer->getIdStore());
     }
 
@@ -177,6 +204,125 @@ class StoreFacadeTest extends Unit
         }, $availableStoreTransfers);
 
         $this->assertSame($expectedStoreNames, $availableStoreNames, 'Available stores should contain stores with shared persistence.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetStoreByStoreReferenceReturnsExpectedTransferWhenInputArgumentIsCorrect(): void
+    {
+        // Arrange
+        $this->tester->setStoreReferenceData([static::DEFAULT_STORE_NAME => static::DEFAULT_STORE_REFERENCE]);
+
+        // Act
+        $storeTransfer = $this->tester->getFacade()->getStoreByStoreReference(static::DEFAULT_STORE_REFERENCE);
+
+        // Assert
+        $this->assertSame(static::DEFAULT_STORE_REFERENCE, $storeTransfer->getStoreReference());
+        $this->assertSame(static::DEFAULT_STORE_NAME, $storeTransfer->getName());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetStoreByStoreReferenceThrowsExceptionWhenInputArgumentIsNotCorrect(): void
+    {
+        // Arrange
+        $invalidStoreReference = '1';
+
+        // Assert
+        $this->expectException(StoreReferenceNotFoundException::class);
+
+        // Act
+        $this->tester->getFacade()->getStoreByStoreReference($invalidStoreReference);
+    }
+
+    /**
+     * @return void
+     */
+    public function testMessageTransferValidationIsSuccessful(): void
+    {
+        // Arrange
+        $storeFacade = $this->createStoreFacade();
+        $storeTransfer = $storeFacade->getStoreByName(static::DEFAULT_STORE_NAME);
+        $messageTransfer = $this->tester->createMessageBrokerTestMessageTransfer($storeTransfer->getStoreReference());
+
+        // Act
+        $messageValidationResponseTransfer = $this->tester->getFacade()->validateMessageTransfer($messageTransfer);
+
+        // Assert
+        $this->assertTrue($messageValidationResponseTransfer->getIsValid());
+    }
+
+    /**
+     * @return void
+     */
+    public function testMessageTransferValidationFailsWhenCurrentStoreIsMissing(): void
+    {
+        // Arrange
+        $messageTransfer = $this->tester->createMessageBrokerTestMessageTransfer();
+
+        // Act
+        $messageValidationResponseTransfer = $this->tester->getFacade()->validateMessageTransfer($messageTransfer);
+
+        // Assert
+        $this->assertFalse($messageValidationResponseTransfer->getIsValid());
+    }
+
+    /**
+     * @return void
+     */
+    public function testMessageTransferValidationFailsWhenStoreReferenceMismatch(): void
+    {
+        // Arrange
+        $storeFacade = $this->createStoreFacade();
+        $storeTransfer = $storeFacade->getStoreByName(static::ALTERNATIVE_STORE_NAME);
+        $messageTransfer = $this->tester->createMessageBrokerTestMessageTransfer($storeTransfer->getStoreReference());
+
+        // Act
+        $messageValidationResponseTransfer = $this->tester->getFacade()->validateMessageTransfer($messageTransfer);
+
+        // Assert
+        $this->assertFalse($messageValidationResponseTransfer->getIsValid());
+    }
+
+    /**
+     * @return void
+     */
+    public function testMessageAttributesSuccessfullyExpandedWithStoreReference(): void
+    {
+        // Arrange
+        $messageAttributesTransfer = $this->tester->createMessageAttributesTransfer();
+
+        // Act
+        $messageAttributesTransfer = $this->tester->getFacade()->expandMessageAttributes($messageAttributesTransfer);
+
+        // Assert
+        $this->assertEquals(static::DEFAULT_STORE_REFERENCE, $messageAttributesTransfer->getStoreReference());
+        $this->assertNotEquals(static::DEFAULT_STORE_REFERENCE, $messageAttributesTransfer->getEmitter());
+    }
+
+    /**
+     * @return void
+     */
+    public function testMessageAttributesNotExpandedWithStoreReferenceWhenItsMissing(): void
+    {
+        // Arrange
+        $this->tester->setStoreReferenceData([]);
+
+        $messageAttributesTransfer = $this->tester->createMessageAttributesTransfer(
+            [
+                'storeReference' => null,
+                'emitter' => null,
+            ],
+        );
+
+        // Act
+        $messageAttributesTransfer = $this->tester->getFacade()->expandMessageAttributes($messageAttributesTransfer);
+
+        // Assert
+        $this->assertNull($messageAttributesTransfer->getStoreReference());
+        $this->assertNull($messageAttributesTransfer->getEmitter());
     }
 
     /**

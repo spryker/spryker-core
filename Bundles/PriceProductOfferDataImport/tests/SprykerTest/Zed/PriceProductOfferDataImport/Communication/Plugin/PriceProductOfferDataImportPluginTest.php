@@ -48,6 +48,7 @@ class PriceProductOfferDataImportPluginTest extends Unit
 
         $this->tester->haveProductOffer([
             ProductOfferTransfer::PRODUCT_OFFER_REFERENCE => static::PRODUCT_OFFER_REFERENCE,
+            ProductOfferTransfer::ID_PRODUCT_CONCRETE => $productConcreteTransfer->getIdProductConcrete(),
             ProductOfferTransfer::CONCRETE_SKU => $productConcreteTransfer->getSku(),
         ]);
 

@@ -1267,4 +1267,47 @@ class ProductImageFacadeTest extends Unit
         //Assert
         $this->assertEmpty($productConcreteIds);
     }
+
+    /**
+     * @return void
+     */
+    public function testMergeProductAbstractImageSetsIntoProductConcreteTakenFromProductAbstractIfEmpty(): void
+    {
+        // Arrange
+        $productAbstractImageSet = (new ProductImageSetTransfer())->setIdProduct(2)->toArray();
+
+        $productConcrete = new ProductConcreteTransfer();
+        $productAbstract = (new ProductAbstractTransfer())->fromArray(['imageSets' => [$productAbstractImageSet]]);
+
+        // Act
+        $productConcreteResult = $this->productImageFacade->mergeProductAbstractImageSetsIntoProductConcrete(
+            $productConcrete,
+            $productAbstract,
+        );
+
+        // Assert
+        $this->assertEquals($productAbstractImageSet, $productConcreteResult->getImageSets()[0]->toArray());
+    }
+
+    /**
+     * @return void
+     */
+    public function testMergeProductAbstractImageSetsIntoProductConcreteNotTakenFromProductAbstractIfExist(): void
+    {
+        // Arrange
+        $productConcreteImageSet = (new ProductImageSetTransfer())->setIdProduct(1)->toArray();
+        $productAbstractImageSet = (new ProductImageSetTransfer())->setIdProduct(2)->toArray();
+
+        $productConcrete = (new ProductConcreteTransfer())->fromArray(['imageSets' => [$productConcreteImageSet]]);
+        $productAbstract = (new ProductAbstractTransfer())->fromArray(['imageSets' => [$productAbstractImageSet]]);
+
+        // Act
+        $productConcreteResult = $this->productImageFacade->mergeProductAbstractImageSetsIntoProductConcrete(
+            $productConcrete,
+            $productAbstract,
+        );
+
+        // Assert
+        $this->assertEquals($productConcreteImageSet, $productConcreteResult->getImageSets()[0]->toArray());
+    }
 }

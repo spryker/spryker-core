@@ -157,4 +157,16 @@ interface ProductCategoryFacadeInterface
      * @return \Generated\Shared\Transfer\ProductCategoryCollectionTransfer
      */
     public function getProductCategoryCollection(ProductCategoryCriteriaTransfer $productCategoryCriteriaTransfer): ProductCategoryCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Expands product concrete transfers with product categories.
+     *
+     * @api
+     *
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
+     */
+    public function expandProductConcreteTransfersWithProductCategories(array $productConcreteTransfers): array;
 }

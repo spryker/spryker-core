@@ -10,6 +10,7 @@
         <property name="abstractSku" type="string"/>
         <property name="localizedAttributes" type="LocalizedAttributes[]" singular="localizedAttributes"/>
         <property name="stores" type="Store[]" singular="stores"/>
+        <property name="url" type="ProductUrl"/>
     </transfer>
 
     <transfer name="ProductAbstract">
@@ -91,6 +92,8 @@
 
     <transfer name="Store">
         <property name="idStore" type="int"/>
+        <property name="name" type="string"/>
+        <property name="storeReference" type="string"/>
     </transfer>
 
     <transfer name="ProductAbstractSuggestionCollection">
@@ -123,6 +126,50 @@
 
     <transfer name="ProductConcreteCollection">
         <property name="products" type="ProductConcrete[]" singular="product"/>
+    </transfer>
+
+    <transfer name="ProductExported">
+        <property name="productsConcrete" type="ProductConcrete[]" singular="productConcrete"/>
+        <property name="messageAttributes" type="MessageAttributes"/>
+    </transfer>
+
+    <transfer name="ProductCreated">
+        <property name="productsConcrete" type="ProductConcrete[]" singular="productConcrete"/>
+        <property name="messageAttributes" type="MessageAttributes"/>
+    </transfer>
+
+    <transfer name="ProductUpdated">
+        <property name="productsConcrete" type="ProductConcrete[]" singular="productConcrete"/>
+        <property name="messageAttributes" type="MessageAttributes"/>
+    </transfer>
+
+    <transfer name="ProductDeleted">
+        <property name="sku" type="string"/>
+        <property name="messageAttributes" type="MessageAttributes"/>
+    </transfer>
+
+    <transfer name="ProductPublisherConfig">
+        <property name="productIds" type="int[]" singular="productId"/>
+        <property name="productAbstractIds" type="int[]" singular="productAbstractId"/>
+        <property name="eventName" type="string"/>
+    </transfer>
+
+    <transfer name="InitializeProductExport">
+        <property name="messageAttributes" type="MessageAttributes"/>
+    </transfer>
+
+    <transfer name="ProductExportCriteria">
+        <property name="storeReference" type="string"/>
+    </transfer>
+
+    <transfer name="MessageAttributes">
+    </transfer>
+
+    <transfer name="EventEntity">
+        <property name="id" type="int"/>
+    </transfer>
+
+    <transfer name="MessageResponse">
     </transfer>
 
 </transfers>

@@ -8,7 +8,6 @@
 namespace Spryker\Zed\AppCatalogGui\Communication\Controller;
 
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Spryker\Zed\StoreReference\Business\Exception\StoreReferenceNotFoundException;
 
 /**
  * @method \Spryker\Zed\AppCatalogGui\Communication\AppCatalogGuiCommunicationFactory getFactory()
@@ -17,28 +16,16 @@ use Spryker\Zed\StoreReference\Business\Exception\StoreReferenceNotFoundExceptio
 class IndexController extends AbstractController
 {
     /**
-     * @return array<mixed>
+     * @return array<string, mixed>
      */
     public function indexAction(): array
     {
-        $localeTransfer = $this->getFactory()->getLocaleFacade()
-            ->getCurrentLocale();
-
-        try {
-            $storeTransfer = $this->getFactory()->getStoreReferenceFacade()->getStoreByStoreName(
-                $this->getFactory()->getStoreFacade()->getCurrentStore()->getNameOrFail(),
-            );
-        } catch (StoreReferenceNotFoundException $e) {
-            return $this->viewResponse([
-                'localeName' => mb_substr($localeTransfer->getLocaleNameOrFail(), 0, 2),
-                'storeReference' => '',
-                'appCatalogScriptUrl' => $this->getFactory()->getConfig()->getAppCatalogScriptUrl(),
-            ]);
-        }
+        $localeTransfer = $this->getFactory()->getLocaleFacade()->getCurrentLocale();
+        $storeTransfer = $this->getFactory()->getStoreFacade()->getCurrentStore();
 
         return $this->viewResponse([
             'localeName' => mb_substr($localeTransfer->getLocaleNameOrFail(), 0, 2),
-            'storeReference' => $storeTransfer->getStoreReference(),
+            'storeReference' => $storeTransfer->getStoreReference() ?? '',
             'appCatalogScriptUrl' => $this->getFactory()->getConfig()->getAppCatalogScriptUrl(),
         ]);
     }

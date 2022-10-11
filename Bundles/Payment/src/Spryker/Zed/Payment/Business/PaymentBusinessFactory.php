@@ -63,7 +63,6 @@ use Spryker\Zed\Payment\Dependency\Facade\PaymentToLocaleFacadeInterface;
 use Spryker\Zed\Payment\Dependency\Facade\PaymentToMessageBrokerInterface;
 use Spryker\Zed\Payment\Dependency\Facade\PaymentToOmsFacadeInterface;
 use Spryker\Zed\Payment\Dependency\Facade\PaymentToStoreFacadeInterface;
-use Spryker\Zed\Payment\Dependency\Facade\PaymentToStoreReferenceFacadeInterface;
 use Spryker\Zed\Payment\Dependency\Service\PaymentToUtilTextServiceInterface;
 use Spryker\Zed\Payment\PaymentDependencyProvider;
 
@@ -99,18 +98,10 @@ class PaymentBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getPaymentClient(),
             $this->getConfig(),
-            $this->getStoreReferenceFacade(),
+            $this->getStoreFacade(),
             $this->getPaymentService(),
             $this->getPaymentAuthorizeRequestExpanderPlugins(),
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\Payment\Dependency\Facade\PaymentToStoreReferenceFacadeInterface
-     */
-    public function getStoreReferenceFacade(): PaymentToStoreReferenceFacadeInterface
-    {
-        return $this->getProvidedDependency(PaymentDependencyProvider::FACADE_STORE_REFERENCE);
     }
 
     /**
@@ -203,7 +194,7 @@ class PaymentBusinessFactory extends AbstractBusinessFactory
             $this->createPaymentWriter(),
             $this->createPaymentMethodKeyGenerator(),
             $this->createPaymentMethodEventMapper(),
-            $this->getStoreReferenceFacade(),
+            $this->getStoreFacade(),
         );
     }
 

@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\Product;
 
+use Spryker\Shared\Product\ProductConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
+use Spryker\Zed\Product\Dependency\ProductEvents;
 
 class ProductConfig extends AbstractBundleConfig
 {
@@ -24,5 +26,61 @@ class ProductConfig extends AbstractBundleConfig
     public function getFilteredProductsLimitDefault(): int
     {
         return static::FILTERED_PRODUCTS_LIMIT_DEFAULT;
+    }
+
+    /**
+     * @api
+     *
+     * @return int
+     */
+    public function getProductExportPublishChunkSize(): int
+    {
+        return 5000;
+    }
+
+    /**
+     * @api
+     *
+     * @return int
+     */
+    public function getProductPublishToMessageBrokerChunkSize(): int
+    {
+        return 10;
+    }
+
+    /**
+     * @api
+     *
+     * @return array<string>
+     */
+    public function getProductAbstractUpdateMessageBrokerPublisherSubscribedEvents(): array
+    {
+        return [
+            ProductEvents::PRODUCT_ABSTRACT_PUBLISH,
+        ];
+    }
+
+    /**
+     * @api
+     *
+     * @return array<string>
+     */
+    public function getProductUpdateMessageBrokerPublisherSubscribedEvents(): array
+    {
+        return [
+            ProductEvents::ENTITY_SPY_PRODUCT_UPDATE,
+            ProductEvents::PRODUCT_CONCRETE_UPDATE,
+            ProductEvents::PRODUCT_CONCRETE_PUBLISH,
+        ];
+    }
+
+    /**
+     * @api
+     *
+     * @return bool
+     */
+    public function isPublishingToMessageBrokerEnabled(): bool
+    {
+        return (bool)$this->get(ProductConstants::PUBLISHING_TO_MESSAGE_BROKER_ENABLED, true);
     }
 }

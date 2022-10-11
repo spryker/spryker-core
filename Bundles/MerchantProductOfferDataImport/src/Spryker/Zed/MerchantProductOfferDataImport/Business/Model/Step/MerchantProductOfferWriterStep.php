@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantProductOfferDataImport\Business\Model\Step;
 
 use Generated\Shared\Transfer\EventEntityTransfer;
+use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOffer;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
@@ -17,6 +18,7 @@ use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\DataImport\Dependency\Facade\DataImportToEventFacadeInterface;
 use Spryker\Zed\MerchantProductOfferDataImport\Business\Model\DataSet\MerchantProductOfferDataSetInterface;
+use Spryker\Zed\MerchantProductOfferDataImport\Dependency\MerchantProductOfferDataImportEvents;
 
 class MerchantProductOfferWriterStep implements DataImportStepInterface, DataImportStepAfterExecuteInterface
 {
@@ -51,7 +53,12 @@ class MerchantProductOfferWriterStep implements DataImportStepInterface, DataImp
     /**
      * @var array<\Generated\Shared\Transfer\EventEntityTransfer>
      */
-    protected $entityEventTransfers = [];
+    protected $productOfferEventTransfers = [];
+
+    /**
+     * @var array<\Generated\Shared\Transfer\EventEntityTransfer>
+     */
+    protected $productEventTransfers = [];
 
     /**
      * @var \Spryker\Zed\DataImport\Dependency\Facade\DataImportToEventFacadeInterface
@@ -90,6 +97,7 @@ class MerchantProductOfferWriterStep implements DataImportStepInterface, DataImp
         $productOfferEntity->save();
 
         $this->addPublishEvent($productOfferEntity);
+        $this->addProductUpdateEvent($productOfferEntity->getConcreteSku());
     }
 
     /**
@@ -97,11 +105,15 @@ class MerchantProductOfferWriterStep implements DataImportStepInterface, DataImp
      */
     public function afterExecute(): void
     {
-        foreach ($this->entityEventTransfers as $entityEventTransfer) {
-            $this->eventFacade->trigger(static::PRODUCT_OFFER_PUBLISH, $entityEventTransfer);
-        }
+        $this->eventFacade->triggerBulk(static::PRODUCT_OFFER_PUBLISH, $this->productOfferEventTransfers);
+        $this->productOfferEventTransfers = [];
 
-        $this->entityEventTransfers = [];
+        $this->eventFacade->triggerBulk(
+            MerchantProductOfferDataImportEvents::PRODUCT_CONCRETE_UPDATE,
+            $this->productEventTransfers,
+        );
+
+        $this->productEventTransfers = [];
     }
 
     /**
@@ -118,6 +130,23 @@ class MerchantProductOfferWriterStep implements DataImportStepInterface, DataImp
             SpyProductOfferTableMap::COL_CONCRETE_SKU => $productOfferEntity->getConcreteSku(),
         ]);
 
-        $this->entityEventTransfers[] = $eventEntityTransfer;
+        $this->productOfferEventTransfers[] = $eventEntityTransfer;
+    }
+
+    /**
+     * @param string $concreteProductSku
+     *
+     * @return void
+     */
+    protected function addProductUpdateEvent(string $concreteProductSku): void
+    {
+        $spyProduct = SpyProductQuery::create()
+            ->filterBySku($concreteProductSku)
+            ->findOne();
+
+        $eventEntityTransfer = new EventEntityTransfer();
+        $eventEntityTransfer->setId($spyProduct->getIdProduct());
+
+        $this->productEventTransfers[] = $eventEntityTransfer;
     }
 }

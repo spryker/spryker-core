@@ -51,15 +51,23 @@ class TransferSerializer implements SerializerInterface
     protected array $context = [];
 
     /**
+     * @var array<\Spryker\Zed\MessageBrokerAws\Business\MessageDataFilter\MessageDataFilterInterface>
+     */
+    protected array $messageDataFilters;
+
+    /**
      * @param \Symfony\Component\Serializer\SerializerInterface $serializer
      * @param \Spryker\Zed\MessageBrokerAws\Dependency\Service\MessageBrokerAwsToUtilEncodingServiceInterface $utilEncodingService
+     * @param array<\Spryker\Zed\MessageBrokerAws\Business\MessageDataFilter\MessageDataFilterInterface> $messageDataFilters
      */
     public function __construct(
         SymfonySerializerInterface $serializer,
-        MessageBrokerAwsToUtilEncodingServiceInterface $utilEncodingService
+        MessageBrokerAwsToUtilEncodingServiceInterface $utilEncodingService,
+        array $messageDataFilters = []
     ) {
         $this->serializer = $serializer;
         $this->utilEncodingService = $utilEncodingService;
+        $this->messageDataFilters = $messageDataFilters;
     }
 
     /**
@@ -144,9 +152,7 @@ class TransferSerializer implements SerializerInterface
         }
         $messageAttributesTransfer->getTransferNameOrFail();
 
-        $messageData = $messageTransfer->modifiedToArray(true, true);
-
-        unset($messageData['messageAttributes']);
+        $messageData = $this->extractMessageData($messageTransfer);
 
         $headers = $messageAttributesTransfer->modifiedToArray(true, true);
 
@@ -162,5 +168,27 @@ class TransferSerializer implements SerializerInterface
             'bodyRaw' => $messageData,
             'headers' => $headers,
         ];
+    }
+
+    /**
+     * Extract and filter fields from message transfer
+     *
+     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $messageTransfer
+     *
+     * @return array<string, mixed>
+     */
+    protected function extractMessageData(AbstractTransfer $messageTransfer): array
+    {
+        $messageData = $messageTransfer->modifiedToArray(true, true);
+        unset(
+            $messageData['messageAttributes'],
+            $messageData['dataFilterConfiguration'],
+        );
+
+        foreach ($this->messageDataFilters as $messageDataFilter) {
+            $messageData = $messageDataFilter->filter($messageData, $messageTransfer);
+        }
+
+        return $messageData;
     }
 }

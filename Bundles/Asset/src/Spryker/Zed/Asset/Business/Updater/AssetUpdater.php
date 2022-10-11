@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\EventEntityTransfer;
 use Spryker\Shared\Asset\AssetConfig;
 use Spryker\Zed\Asset\Business\Exception\InvalidAssetException;
 use Spryker\Zed\Asset\Dependency\Facade\AssetToEventFacadeInterface;
-use Spryker\Zed\Asset\Dependency\Facade\AssetToStoreReferenceInterface;
+use Spryker\Zed\Asset\Dependency\Facade\AssetToStoreInterface;
 use Spryker\Zed\Asset\Persistence\AssetEntityManagerInterface;
 use Spryker\Zed\Asset\Persistence\AssetRepositoryInterface;
 
@@ -30,9 +30,9 @@ class AssetUpdater implements AssetUpdaterInterface
     protected $assetEntityManager;
 
     /**
-     * @var \Spryker\Zed\Asset\Dependency\Facade\AssetToStoreReferenceInterface
+     * @var \Spryker\Zed\Asset\Dependency\Facade\AssetToStoreInterface
      */
-    protected $storeReferenceFacade;
+    protected $storeFacade;
 
     /**
      * @var \Spryker\Zed\Asset\Dependency\Facade\AssetToEventFacadeInterface
@@ -42,18 +42,18 @@ class AssetUpdater implements AssetUpdaterInterface
     /**
      * @param \Spryker\Zed\Asset\Persistence\AssetRepositoryInterface $assetRepository
      * @param \Spryker\Zed\Asset\Persistence\AssetEntityManagerInterface $assetEntityManager
-     * @param \Spryker\Zed\Asset\Dependency\Facade\AssetToStoreReferenceInterface $storeReferenceFacade
+     * @param \Spryker\Zed\Asset\Dependency\Facade\AssetToStoreInterface $storeFacade
      * @param \Spryker\Zed\Asset\Dependency\Facade\AssetToEventFacadeInterface $eventFacade
      */
     public function __construct(
         AssetRepositoryInterface $assetRepository,
         AssetEntityManagerInterface $assetEntityManager,
-        AssetToStoreReferenceInterface $storeReferenceFacade,
+        AssetToStoreInterface $storeFacade,
         AssetToEventFacadeInterface $eventFacade
     ) {
         $this->assetRepository = $assetRepository;
         $this->assetEntityManager = $assetEntityManager;
-        $this->storeReferenceFacade = $storeReferenceFacade;
+        $this->storeFacade = $storeFacade;
         $this->eventFacade = $eventFacade;
     }
 
@@ -73,7 +73,7 @@ class AssetUpdater implements AssetUpdaterInterface
             ->requireAssetIdentifier()
             ->requireAssetSlot();
 
-        $storeTransfer = $this->storeReferenceFacade->getStoreByStoreReference($messageAttributes->getStoreReferenceOrFail());
+        $storeTransfer = $this->storeFacade->getStoreByStoreReference($messageAttributes->getStoreReferenceOrFail());
         $assetTransfer = $this->assetRepository
             ->findAssetByAssetUuid((string)$assetUpdatedTransfer->getAssetIdentifier());
 

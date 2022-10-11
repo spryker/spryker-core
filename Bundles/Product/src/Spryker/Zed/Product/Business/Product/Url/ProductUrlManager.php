@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductUrlTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
+use Spryker\Zed\Product\Business\Product\Trigger\ProductEventTriggerInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface;
@@ -47,24 +48,32 @@ class ProductUrlManager implements ProductUrlManagerInterface
     protected $urlGenerator;
 
     /**
+     * @var \Spryker\Zed\Product\Business\Product\Trigger\ProductEventTriggerInterface
+     */
+    protected $productEventTrigger;
+
+    /**
      * @param \Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface $urlFacade
      * @param \Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface $touchFacade
      * @param \Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface $localeFacade
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      * @param \Spryker\Zed\Product\Business\Product\Url\ProductUrlGeneratorInterface $urlGenerator
+     * @param \Spryker\Zed\Product\Business\Product\Trigger\ProductEventTriggerInterface $productEventTrigger
      */
     public function __construct(
         ProductToUrlInterface $urlFacade,
         ProductToTouchInterface $touchFacade,
         ProductToLocaleInterface $localeFacade,
         ProductQueryContainerInterface $productQueryContainer,
-        ProductUrlGeneratorInterface $urlGenerator
+        ProductUrlGeneratorInterface $urlGenerator,
+        ProductEventTriggerInterface $productEventTrigger
     ) {
         $this->urlFacade = $urlFacade;
         $this->touchFacade = $touchFacade;
         $this->localeFacade = $localeFacade;
         $this->productQueryContainer = $productQueryContainer;
         $this->urlGenerator = $urlGenerator;
+        $this->productEventTrigger = $productEventTrigger;
     }
 
     /**
@@ -171,6 +180,10 @@ class ProductUrlManager implements ProductUrlManagerInterface
                 ->setFkResourceProductAbstract($productAbstractTransfer->requireIdProductAbstract()->getIdProductAbstract());
 
             $this->urlFacade->createUrl($urlTransfer);
+        }
+
+        if ($productAbstractTransfer->getIdProductAbstract() !== null) {
+            $this->productEventTrigger->triggerProductUpdateEvents([$productAbstractTransfer->getIdProductAbstract()]);
         }
 
         return $productUrl;

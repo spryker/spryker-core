@@ -55,4 +55,13 @@
     <transfer name="ProductAbstract">
     </transfer>
 
+    <transfer name="ProductConcrete">
+        <property name="productCategories" type="ProductCategory[]" singular="productCategory"/>
+        <property name="fkProductAbstract" type="int"/>
+    </transfer>
+
+    <transfer name="EventEntity">
+        <property name="foreignKeys" type="array" singular="foreignKeys"/>
+    </transfer>
+
 </transfers>

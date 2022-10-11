@@ -168,4 +168,11 @@ interface PriceProductEvents
      * @var string
      */
     public const ENTITY_SPY_PRICE_PRODUCT_DEFAULT_DELETE = 'Entity.spy_price_product_default.delete';
+
+    /**
+     * @uses \Spryker\Zed\Product\Dependency\ProductEvents::PRODUCT_CONCRETE_UPDATE
+     *
+     * @var string
+     */
+    public const PRODUCT_CONCRETE_UPDATE = 'Product.product_concrete.update';
 }

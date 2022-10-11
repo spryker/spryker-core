@@ -20,6 +20,7 @@
         <property name="isActive" type="bool"/>
         <property name="approvalStatus" type="string"/>
         <property name="stores" type="Store[]" singular="store"/>
+        <property name="idProductConcrete" type="int"/>
     </transfer>
 
     <transfer name="ProductOfferStore">
@@ -102,6 +103,10 @@
 
     <transfer name="CartItemQuantity">
         <property name="quantity" type="int"/>
+    </transfer>
+
+    <transfer name="EventEntity">
+        <property name="id" type="int"/>
     </transfer>
 
 </transfers>

@@ -12,8 +12,12 @@ use Spryker\Zed\Product\Business\Attribute\AttributeEncoder;
 use Spryker\Zed\Product\Business\Attribute\AttributeKeyManager;
 use Spryker\Zed\Product\Business\Attribute\AttributeLoader;
 use Spryker\Zed\Product\Business\Attribute\AttributeMerger;
+use Spryker\Zed\Product\Business\Exporter\ProductEventBusExporter;
+use Spryker\Zed\Product\Business\Exporter\ProductExporterInterface;
 use Spryker\Zed\Product\Business\Product\Assertion\ProductAbstractAssertion;
 use Spryker\Zed\Product\Business\Product\Assertion\ProductConcreteAssertion;
+use Spryker\Zed\Product\Business\Product\Merger\ProductConcreteMerger;
+use Spryker\Zed\Product\Business\Product\Merger\ProductConcreteMergerInterface;
 use Spryker\Zed\Product\Business\Product\NameGenerator\ProductAbstractNameGenerator;
 use Spryker\Zed\Product\Business\Product\NameGenerator\ProductConcreteNameGenerator;
 use Spryker\Zed\Product\Business\Product\Plugin\ProductAbstractAfterCreateObserverPluginManager;
@@ -42,14 +46,21 @@ use Spryker\Zed\Product\Business\Product\Suggest\ProductSuggester;
 use Spryker\Zed\Product\Business\Product\Suggest\ProductSuggesterInterface;
 use Spryker\Zed\Product\Business\Product\Touch\ProductAbstractTouch;
 use Spryker\Zed\Product\Business\Product\Touch\ProductConcreteTouch;
+use Spryker\Zed\Product\Business\Product\Trigger\ProductEventTrigger;
+use Spryker\Zed\Product\Business\Product\Trigger\ProductEventTriggerInterface;
 use Spryker\Zed\Product\Business\Product\Url\ProductAbstractAfterUpdateUrlObserver;
 use Spryker\Zed\Product\Business\Product\Url\ProductUrlGenerator;
 use Spryker\Zed\Product\Business\Product\Url\ProductUrlManager;
 use Spryker\Zed\Product\Business\Product\Variant\AttributePermutationGenerator;
 use Spryker\Zed\Product\Business\Product\Variant\VariantGenerator;
+use Spryker\Zed\Product\Business\Publisher\ProductMessageBrokerPublisher;
+use Spryker\Zed\Product\Business\Publisher\ProductPublisherInterface;
+use Spryker\Zed\Product\Business\Reader\ProductConcreteReader;
+use Spryker\Zed\Product\Business\Reader\ProductConcreteReaderInterface;
 use Spryker\Zed\Product\Business\Transfer\ProductTransferMapper;
 use Spryker\Zed\Product\Business\Writer\ProductConcreteWriter;
 use Spryker\Zed\Product\Business\Writer\ProductConcreteWriterInterface;
+use Spryker\Zed\Product\Dependency\Facade\ProductToMessageBrokerInterfrace;
 use Spryker\Zed\Product\ProductDependencyProvider;
 
 /**
@@ -88,6 +99,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
             $this->createProductAbstractStoreRelationReader(),
             $this->createProductAbstractStoreRelationWriter(),
             $this->getProductAbstractPreCreatePlugins(),
+            $this->createProductEventTrigger(),
         );
 
         $productAbstractManager->setEventFacade($this->getEventFacade());
@@ -116,6 +128,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
             $this->createProductTransferMapper(),
             $this->getRepository(),
             $this->getProductConcreteExpanderPlugins(),
+            $this->createProductEventTrigger(),
         );
 
         $productConcreteManager->setEventFacade($this->getEventFacade());
@@ -155,6 +168,7 @@ class ProductBusinessFactory extends AbstractBusinessFactory
             $this->getLocaleFacade(),
             $this->getQueryContainer(),
             $this->createProductUrlGenerator(),
+            $this->createProductEventTrigger(),
         );
     }
 
@@ -310,7 +324,10 @@ class ProductBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductAbstractStoreRelationReader()
     {
-        return new ProductAbstractStoreRelationReader($this->getQueryContainer());
+        return new ProductAbstractStoreRelationReader(
+            $this->getQueryContainer(),
+            $this->getStoreFacade(),
+        );
     }
 
     /**
@@ -322,6 +339,14 @@ class ProductBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->createProductAbstractStoreRelationReader(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Dependency\Facade\ProductToStoreInterface
+     */
+    protected function getStoreFacade()
+    {
+        return $this->getProvidedDependency(ProductDependencyProvider::FACADE_STORE);
     }
 
     /**
@@ -630,5 +655,78 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     public function getProductAbstractPreCreatePlugins(): array
     {
         return $this->getProvidedDependency(ProductDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_PRE_CREATE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Exporter\ProductExporterInterface
+     */
+    public function createProductEventBusExporter(): ProductExporterInterface
+    {
+        return new ProductEventBusExporter(
+            $this->getEventFacade(),
+            $this->getStoreFacade(),
+            $this->createProductConcreteManager(),
+            $this->getConfig(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Reader\ProductConcreteReaderInterface
+     */
+    public function createProductConcreteReader(): ProductConcreteReaderInterface
+    {
+        return new ProductConcreteReader(
+            $this->createProductConcreteManager(),
+            $this->createProductAbstractManager(),
+            $this->createProductUrlManager(),
+            $this->createProductConcreteMerger(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Publisher\ProductPublisherInterface
+     */
+    public function createProductMessageBrokerPublisher(): ProductPublisherInterface
+    {
+        return new ProductMessageBrokerPublisher(
+            $this->createProductConcreteReader(),
+            $this->getMessageBrokerFacade(),
+            $this->getRepository(),
+            $this->getConfig(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Dependency\Facade\ProductToMessageBrokerInterfrace
+     */
+    public function getMessageBrokerFacade(): ProductToMessageBrokerInterfrace
+    {
+        return $this->getProvidedDependency(ProductDependencyProvider::FACADE_MESSAGE_BROKER);
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\Merger\ProductConcreteMergerInterface
+     */
+    public function createProductConcreteMerger(): ProductConcreteMergerInterface
+    {
+        return new ProductConcreteMerger($this->getProductConcreteMergerPlugins());
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\Trigger\ProductEventTriggerInterface
+     */
+    public function createProductEventTrigger(): ProductEventTriggerInterface
+    {
+        return new ProductEventTrigger(
+            $this->getEventFacade(),
+        );
+    }
+
+    /**
+     * @return array<\Spryker\Zed\ProductExtension\Dependency\Plugin\ProductConcreteMergerPluginInterface>
+     */
+    public function getProductConcreteMergerPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductDependencyProvider::PLUGINS_PRODUCT_CONCRETE_MERGER);
     }
 }

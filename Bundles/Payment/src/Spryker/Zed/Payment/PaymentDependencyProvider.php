@@ -13,7 +13,6 @@ use Spryker\Zed\Payment\Dependency\Facade\PaymentToLocaleFacadeBridge;
 use Spryker\Zed\Payment\Dependency\Facade\PaymentToMessageBrokerBridge;
 use Spryker\Zed\Payment\Dependency\Facade\PaymentToOmsFacadeBridge;
 use Spryker\Zed\Payment\Dependency\Facade\PaymentToStoreFacadeBridge;
-use Spryker\Zed\Payment\Dependency\Facade\PaymentToStoreReferenceFacadeBridge;
 use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginCollection;
 use Spryker\Zed\Payment\Dependency\Plugin\Sales\PaymentHydratorPluginCollection;
 use Spryker\Zed\Payment\Dependency\Service\PaymentToUtilTextServiceBridge;
@@ -103,11 +102,6 @@ class PaymentDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
-    public const FACADE_STORE_REFERENCE = 'FACADE_STORE_REFERENCE';
-
-    /**
-     * @var string
-     */
     public const FACADE_OMS = 'FACADE_OMS';
 
     /**
@@ -126,7 +120,6 @@ class PaymentDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addPaymentClient($container);
         $container = $this->addLocaleFacade($container);
         $container = $this->addUtilTextService($container);
-        $container = $this->addStoreReferenceFacade($container);
         $container = $this->addOmsFacade($container);
         $container = $this->addMessageBrokerFacade($container);
         $container = $this->addPaymentAuthorizeRequestExpanderPlugins($container);
@@ -200,7 +193,7 @@ class PaymentDependencyProvider extends AbstractBundleDependencyProvider
     public function provideCommunicationLayerDependencies(Container $container)
     {
         $container = $this->addMessageBrokerFacade($container);
-        $container = $this->addStoreReferenceFacade($container);
+        $container = $this->addStoreFacade($container);
         $container = $this->addOmsFacade($container);
 
         return $container;
@@ -318,22 +311,6 @@ class PaymentDependencyProvider extends AbstractBundleDependencyProvider
         $container->set(static::FACADE_MESSAGE_BROKER, function (Container $container) {
             return new PaymentToMessageBrokerBridge(
                 $container->getLocator()->messageBroker()->facade(),
-            );
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addStoreReferenceFacade(Container $container): Container
-    {
-        $container->set(static::FACADE_STORE_REFERENCE, function (Container $container) {
-            return new PaymentToStoreReferenceFacadeBridge(
-                $container->getLocator()->storeReference()->facade(),
             );
         });
 

@@ -69,4 +69,11 @@ interface StoreReaderInterface
      * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     public function getStoresAvailableForCurrentPersistence(): array;
+
+    /**
+     * @param string $storeReference
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    public function getStoreByStoreReference(string $storeReference): StoreTransfer;
 }

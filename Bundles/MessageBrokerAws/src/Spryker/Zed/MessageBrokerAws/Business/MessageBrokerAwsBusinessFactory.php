@@ -12,6 +12,10 @@ use Aws\Sqs\SqsClient;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\MessageBrokerAws\Business\Config\ConfigFormatterInterface;
 use Spryker\Zed\MessageBrokerAws\Business\Config\JsonToArrayConfigFormatter;
+use Spryker\Zed\MessageBrokerAws\Business\MessageDataFilter\IdFieldsMessageDataFilter;
+use Spryker\Zed\MessageBrokerAws\Business\MessageDataFilter\MessageDataFilterConfigurator;
+use Spryker\Zed\MessageBrokerAws\Business\MessageDataFilter\MessageDataFilterInterface;
+use Spryker\Zed\MessageBrokerAws\Business\MessageDataFilter\NullFieldsMessageDataFilter;
 use Spryker\Zed\MessageBrokerAws\Business\Normalizer\TransferNormalizer;
 use Spryker\Zed\MessageBrokerAws\Business\Queue\AwsSqsQueuesCreator;
 use Spryker\Zed\MessageBrokerAws\Business\Queue\AwsSqsQueuesCreatorInterface;
@@ -176,6 +180,7 @@ class MessageBrokerAwsBusinessFactory extends AbstractBusinessFactory
         return new TransferSerializer(
             $this->createSymfonySerializer(),
             $this->getUtilEncodingService(),
+            $this->getMessageDataFilters(),
         );
     }
 
@@ -306,7 +311,7 @@ class MessageBrokerAwsBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\MessageBrokerAws\Dependency\Facade\MessageBrokerAwsToStoreFacadeInterface
      */
-    protected function getStoreFacade(): MessageBrokerAwsToStoreFacadeInterface
+    public function getStoreFacade(): MessageBrokerAwsToStoreFacadeInterface
     {
         return $this->getProvidedDependency(MessageBrokerAwsDependencyProvider::FACADE_STORE);
     }
@@ -314,8 +319,49 @@ class MessageBrokerAwsBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\MessageBrokerAws\Dependency\Service\MessageBrokerAwsToUtilEncodingServiceInterface
      */
-    protected function getUtilEncodingService(): MessageBrokerAwsToUtilEncodingServiceInterface
+    public function getUtilEncodingService(): MessageBrokerAwsToUtilEncodingServiceInterface
     {
         return $this->getProvidedDependency(MessageBrokerAwsDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
+     * @return array<\Spryker\Zed\MessageBrokerAws\Business\MessageDataFilter\MessageDataFilterInterface>
+     */
+    public function getMessageDataFilters(): array
+    {
+        return [
+            $this->createStripIdFieldsMessageDataFilter(),
+            $this->createStripNullFieldsMessageDataFilter(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Zed\MessageBrokerAws\Business\MessageDataFilter\MessageDataFilterInterface
+     */
+    public function createStripIdFieldsMessageDataFilter(): MessageDataFilterInterface
+    {
+        return new IdFieldsMessageDataFilter(
+            $this->createMessageDataFilterConfiguration(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MessageBrokerAws\Business\MessageDataFilter\MessageDataFilterInterface
+     */
+    public function createStripNullFieldsMessageDataFilter(): MessageDataFilterInterface
+    {
+        return new NullFieldsMessageDataFilter(
+            $this->createMessageDataFilterConfiguration(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MessageBrokerAws\Business\MessageDataFilter\MessageDataFilterConfigurator
+     */
+    public function createMessageDataFilterConfiguration(): MessageDataFilterConfigurator
+    {
+        return new MessageDataFilterConfigurator(
+            $this->getConfig()->getDefaultMessageDataFilterConfiguration(),
+        );
     }
 }

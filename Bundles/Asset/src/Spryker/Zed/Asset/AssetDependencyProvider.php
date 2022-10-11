@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Asset;
 
 use Spryker\Zed\Asset\Dependency\Facade\AssetToEventFacadeBridge;
-use Spryker\Zed\Asset\Dependency\Facade\AssetToStoreReferenceFacadeBridge;
+use Spryker\Zed\Asset\Dependency\Facade\AssetToStoreFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -20,7 +20,7 @@ class AssetDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
-    public const FACADE_STORE_REFERENCE = 'FACADE_STORE_REFERENCE';
+    public const FACADE_STORE = 'FACADE_STORE';
 
     /**
      * @var string
@@ -35,7 +35,7 @@ class AssetDependencyProvider extends AbstractBundleDependencyProvider
     public function provideBusinessLayerDependencies(Container $container): Container
     {
         $container = parent::provideBusinessLayerDependencies($container);
-        $container = $this->addStoreReferenceFacade($container);
+        $container = $this->addStoreFacade($container);
         $container = $this->addEventFacade($container);
 
         return $container;
@@ -46,10 +46,10 @@ class AssetDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addStoreReferenceFacade(Container $container): Container
+    protected function addStoreFacade(Container $container): Container
     {
-        $container->set(static::FACADE_STORE_REFERENCE, function (Container $container) {
-            return new AssetToStoreReferenceFacadeBridge($container->getLocator()->storeReference()->facade());
+        $container->set(static::FACADE_STORE, function (Container $container) {
+            return new AssetToStoreFacadeBridge($container->getLocator()->store()->facade());
         });
 
         return $container;

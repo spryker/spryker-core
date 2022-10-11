@@ -18,6 +18,7 @@ use Spryker\Zed\Product\Business\Product\Observer\AbstractProductAbstractManager
 use Spryker\Zed\Product\Business\Product\Sku\SkuGeneratorInterface;
 use Spryker\Zed\Product\Business\Product\StoreRelation\ProductAbstractStoreRelationReaderInterface;
 use Spryker\Zed\Product\Business\Product\StoreRelation\ProductAbstractStoreRelationWriterInterface;
+use Spryker\Zed\Product\Business\Product\Trigger\ProductEventTriggerInterface;
 use Spryker\Zed\Product\Business\Transfer\ProductTransferMapperInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface;
@@ -78,6 +79,11 @@ class ProductAbstractManager extends AbstractProductAbstractManagerSubject imple
     protected $productAbstractPreCreatePlugins;
 
     /**
+     * @var \Spryker\Zed\Product\Business\Product\Trigger\ProductEventTriggerInterface
+     */
+    protected $productEventTrigger;
+
+    /**
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      * @param \Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface $touchFacade
      * @param \Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface $localeFacade
@@ -88,6 +94,7 @@ class ProductAbstractManager extends AbstractProductAbstractManagerSubject imple
      * @param \Spryker\Zed\Product\Business\Product\StoreRelation\ProductAbstractStoreRelationReaderInterface $productAbstractStoreRelationReader
      * @param \Spryker\Zed\Product\Business\Product\StoreRelation\ProductAbstractStoreRelationWriterInterface $productAbstractStoreRelationWriter
      * @param array<\Spryker\Zed\ProductExtension\Dependency\Plugin\ProductAbstractPreCreatePluginInterface> $productAbstractPreCreatePlugins
+     * @param \Spryker\Zed\Product\Business\Product\Trigger\ProductEventTriggerInterface $productEventTrigger
      */
     public function __construct(
         ProductQueryContainerInterface $productQueryContainer,
@@ -99,7 +106,8 @@ class ProductAbstractManager extends AbstractProductAbstractManagerSubject imple
         ProductTransferMapperInterface $productTransferMapper,
         ProductAbstractStoreRelationReaderInterface $productAbstractStoreRelationReader,
         ProductAbstractStoreRelationWriterInterface $productAbstractStoreRelationWriter,
-        array $productAbstractPreCreatePlugins
+        array $productAbstractPreCreatePlugins,
+        ProductEventTriggerInterface $productEventTrigger
     ) {
         $this->productQueryContainer = $productQueryContainer;
         $this->touchFacade = $touchFacade;
@@ -111,6 +119,7 @@ class ProductAbstractManager extends AbstractProductAbstractManagerSubject imple
         $this->productAbstractStoreRelationReader = $productAbstractStoreRelationReader;
         $this->productAbstractStoreRelationWriter = $productAbstractStoreRelationWriter;
         $this->productAbstractPreCreatePlugins = $productAbstractPreCreatePlugins;
+        $this->productEventTrigger = $productEventTrigger;
     }
 
     /**
@@ -285,9 +294,7 @@ class ProductAbstractManager extends AbstractProductAbstractManagerSubject imple
      */
     protected function executeUpdateProductAbstractTransaction(ProductAbstractTransfer $productAbstractTransfer): int
     {
-        $idProductAbstract = $productAbstractTransfer
-            ->requireIdProductAbstract()
-            ->getIdProductAbstract();
+        $idProductAbstract = $productAbstractTransfer->getIdProductAbstractOrFail();
 
         $this->productAbstractAssertion->assertProductExists($idProductAbstract);
         $this->productAbstractAssertion->assertSkuIsUniqueWhenUpdatingProduct($idProductAbstract, $productAbstractTransfer->getSku());
@@ -299,6 +306,8 @@ class ProductAbstractManager extends AbstractProductAbstractManagerSubject imple
         $this->persistProductAbstractStoreRelation($productAbstractTransfer, $idProductAbstract);
 
         $this->notifyAfterUpdateObservers($productAbstractTransfer);
+
+        $this->productEventTrigger->triggerProductUpdateEvents([$idProductAbstract]);
 
         return $idProductAbstract;
     }

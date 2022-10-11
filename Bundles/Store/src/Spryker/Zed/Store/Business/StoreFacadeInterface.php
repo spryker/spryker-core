@@ -7,9 +7,13 @@
 
 namespace Spryker\Zed\Store\Business;
 
+use Generated\Shared\Transfer\AccessTokenRequestTransfer;
+use Generated\Shared\Transfer\MessageAttributesTransfer;
+use Generated\Shared\Transfer\MessageValidationResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
 /**
  * @method \Spryker\Zed\Store\Business\StoreBusinessFactory getFactory()
@@ -146,4 +150,58 @@ interface StoreFacadeInterface
      * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     public function getStoresAvailableForCurrentPersistence(): array;
+
+    /**
+     * Specification:
+     * - Finds Store by storeReference.
+     * - Returns StoreTransfer if Store has provided storeReference, otherwise throws the exception.
+     *
+     * @api
+     *
+     * @param string $storeReference
+     *
+     * @throws \Spryker\Zed\Store\Business\Exception\StoreReferenceNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    public function getStoreByStoreReference(string $storeReference): StoreTransfer;
+
+    /**
+     * Specification:
+     * - Finds a store reference for currently selected store.
+     * - Expands `AccessTokenRequest.accessTokenRequestOptions` with found store reference.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AccessTokenRequestTransfer $accessTokenRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\AccessTokenRequestTransfer
+     */
+    public function expandAccessTokenRequest(AccessTokenRequestTransfer $accessTokenRequestTransfer): AccessTokenRequestTransfer;
+
+    /**
+     * Specification:
+     * - Validates is storeReference from message is equals to storeReference of current store.
+     *
+     * @api
+     *
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $messageTransfer
+     *
+     * @return \Generated\Shared\Transfer\MessageValidationResponseTransfer
+     */
+    public function validateMessageTransfer(TransferInterface $messageTransfer): MessageValidationResponseTransfer;
+
+    /**
+     * Specification:
+     * - Expands message attributes with store reference from a store set in the application environment.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MessageAttributesTransfer $messageAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\MessageAttributesTransfer
+     */
+    public function expandMessageAttributes(
+        MessageAttributesTransfer $messageAttributesTransfer
+    ): MessageAttributesTransfer;
 }

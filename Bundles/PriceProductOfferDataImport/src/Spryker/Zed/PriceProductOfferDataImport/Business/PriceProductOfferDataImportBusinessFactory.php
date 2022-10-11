@@ -126,7 +126,7 @@ class PriceProductOfferDataImportBusinessFactory extends DataImportBusinessFacto
      */
     public function createPriceProductOfferWriterStep(): DataImportStepInterface
     {
-        return new PriceProductOfferWriterStep();
+        return new PriceProductOfferWriterStep($this->getEventFacade());
     }
 
     /**

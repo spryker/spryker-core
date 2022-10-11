@@ -16,6 +16,8 @@ use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductCriteriaTransfer;
+use Generated\Shared\Transfer\ProductExportCriteriaTransfer;
+use Generated\Shared\Transfer\ProductPublisherConfigTransfer;
 use Generated\Shared\Transfer\ProductUrlCriteriaFilterTransfer;
 use Generated\Shared\Transfer\RawProductAttributesTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -1190,5 +1192,50 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     {
         return $this->getRepository()
             ->getProductAbstractLocalizedAttributeNamesIndexedByIdProductAbstract($productAbstractIds);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductPublisherConfigTransfer $productPublisherConfigTransfer
+     *
+     * @throws \Spryker\Zed\Product\Business\Exception\ProductPublisherEventNameMismatchException
+     * @throws \Spryker\Zed\Product\Business\Exception\ProductPublisherWrongChunkSizeException
+     *
+     * @return void
+     */
+    public function emitPublishProductToMessageBroker(ProductPublisherConfigTransfer $productPublisherConfigTransfer): void
+    {
+        $this->getFactory()->createProductMessageBrokerPublisher()->publish($productPublisherConfigTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductPublisherConfigTransfer $productPublisherConfigTransfer
+     *
+     * @return void
+     */
+    public function emitUnpublishProductToMessageBroker(ProductPublisherConfigTransfer $productPublisherConfigTransfer): void
+    {
+        $this->getFactory()->createProductMessageBrokerPublisher()->unpublish($productPublisherConfigTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductExportCriteriaTransfer $productExportCriteriaTransfer
+     *
+     * @return void
+     */
+    public function triggerProductExportEvents(ProductExportCriteriaTransfer $productExportCriteriaTransfer): void
+    {
+        $this->getFactory()->createProductEventBusExporter()->export($productExportCriteriaTransfer);
     }
 }

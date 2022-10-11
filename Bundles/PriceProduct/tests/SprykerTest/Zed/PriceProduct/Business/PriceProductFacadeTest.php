@@ -944,7 +944,8 @@ class PriceProductFacadeTest extends Unit
             ->setSkuProduct($productConcreteTransfer->getSku())
             ->setPriceTypeName($this->getPriceProductFacade()->getDefaultPriceTypeName())
             ->setPriceType($priceTypeTransfer)
-            ->setPriceDimension($priceDimensionTransfer);
+            ->setPriceDimension($priceDimensionTransfer)
+            ->setGroupKey('default');
 
         $currencyTransfer = $this->createCurrencyFacade()->fromIsoCode($currencyIsoCode);
         $storeTransfer = $this->createStoreFacade()->getCurrentStore();
@@ -1625,6 +1626,73 @@ class PriceProductFacadeTest extends Unit
         // Assert
         $this->assertSame($priceCountBefore + 1, $wishlistItemTransfer->getPrices()->count());
         $this->assertSame($priceProductTransfer->getSkuProduct(), $wishlistItemTransfer->getSku());
+    }
+
+    /**
+     * @return void
+     */
+    public function testMergeProductAbstractPricesIntoProductConcreteTakenFromProductAbstractIfEmpty(): void
+    {
+        // Arrange
+        $priceTypeTransfer = new PriceTypeTransfer();
+        $productConcrete = new ProductConcreteTransfer();
+
+        $productAbstractPrice = $this->createPriceProductTransfer(
+            $productConcrete,
+            $priceTypeTransfer,
+            10,
+            9,
+            static::EUR_ISO_CODE,
+        )->toArray();
+
+        $productAbstract = (new ProductAbstractTransfer())->fromArray(['prices' => [$productAbstractPrice]]);
+
+        // Act
+        $productConcreteResult = $this->getPriceProductFacade()->mergeProductAbstractPricesIntoProductConcrete(
+            $productConcrete,
+            $productAbstract,
+        );
+
+        // Assert
+        $this->assertEquals($productAbstractPrice, $productConcreteResult->getPrices()[0]->toArray());
+    }
+
+    /**
+     * @return void
+     */
+    public function testMergeProductAbstractPricesIntoProductConcretePricesNoTakenFromProductAbstractIfExist(): void
+    {
+        // Arrange
+        $priceTypeTransfer = new PriceTypeTransfer();
+        $productConcrete = new ProductConcreteTransfer();
+
+        $productAbstractPrice = $this->createPriceProductTransfer(
+            $productConcrete,
+            $priceTypeTransfer,
+            10,
+            9,
+            static::EUR_ISO_CODE,
+        )->toArray();
+
+        $productConcretePrice = $this->createPriceProductTransfer(
+            $productConcrete,
+            $priceTypeTransfer,
+            20,
+            12,
+            static::EUR_ISO_CODE,
+        )->toArray();
+
+        $productConcrete = $productConcrete->fromArray(['prices' => [$productConcretePrice]]);
+        $productAbstract = (new ProductAbstractTransfer())->fromArray(['prices' => [$productAbstractPrice]]);
+
+        // Act
+        $productConcreteResult = $this->getPriceProductFacade()->mergeProductAbstractPricesIntoProductConcrete(
+            $productConcrete,
+            $productAbstract,
+        );
+
+        // Assert
+        $this->assertEquals($productConcretePrice, $productConcreteResult->getPrices()[0]->toArray());
     }
 
     /**

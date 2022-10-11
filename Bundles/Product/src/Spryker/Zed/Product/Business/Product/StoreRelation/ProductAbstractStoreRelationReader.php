@@ -10,6 +10,7 @@ namespace Spryker\Zed\Product\Business\Product\StoreRelation;
 use ArrayObject;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Zed\Product\Dependency\Facade\ProductToStoreInterface;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
 class ProductAbstractStoreRelationReader implements ProductAbstractStoreRelationReaderInterface
@@ -20,11 +21,20 @@ class ProductAbstractStoreRelationReader implements ProductAbstractStoreRelation
     protected $productQueryContainer;
 
     /**
-     * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
+     * @var \Spryker\Zed\Product\Dependency\Facade\ProductToStoreInterface
      */
-    public function __construct(ProductQueryContainerInterface $productQueryContainer)
-    {
+    protected $storeFacade;
+
+    /**
+     * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
+     * @param \Spryker\Zed\Product\Dependency\Facade\ProductToStoreInterface $storeFacade
+     */
+    public function __construct(
+        ProductQueryContainerInterface $productQueryContainer,
+        ProductToStoreInterface $storeFacade
+    ) {
         $this->productQueryContainer = $productQueryContainer;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -53,19 +63,27 @@ class ProductAbstractStoreRelationReader implements ProductAbstractStoreRelation
      */
     protected function getRelatedStores($idProductAbstract)
     {
+        // Load full Store objects.
+        $storesByName = $this->getAllStoresIndexedByStoreName();
         $productAbstractStoreCollection = $this->productQueryContainer
             ->queryProductAbstractStoreWithStoresByFkProductAbstract($idProductAbstract)
             ->find();
 
         $relatedStores = new ArrayObject();
         foreach ($productAbstractStoreCollection as $productAbstractStoreEntity) {
-            $relatedStores->append(
-                (new StoreTransfer())
-                    ->fromArray(
-                        $productAbstractStoreEntity->getSpyStore()->toArray(),
-                        true,
-                    ),
-            );
+            $storeEntity = $productAbstractStoreEntity->getSpyStore();
+
+            if (isset($storesByName[$storeEntity->getName()])) {
+                $relatedStores->append($storesByName[$storeEntity->getName()]);
+            } else {
+                $relatedStores->append(
+                    (new StoreTransfer())
+                        ->fromArray(
+                            $storeEntity->toArray(),
+                            true,
+                        ),
+                );
+            }
         }
 
         return $relatedStores;
@@ -81,5 +99,19 @@ class ProductAbstractStoreRelationReader implements ProductAbstractStoreRelation
         return array_map(function (StoreTransfer $storeTransfer) {
             return $storeTransfer->getIdStore();
         }, $storeTransferCollection->getArrayCopy());
+    }
+
+    /**
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
+     */
+    protected function getAllStoresIndexedByStoreName(): array
+    {
+        $storesByName = [];
+
+        foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
+            $storesByName[$storeTransfer->getName()] = $storeTransfer;
+        }
+
+        return $storesByName;
     }
 }

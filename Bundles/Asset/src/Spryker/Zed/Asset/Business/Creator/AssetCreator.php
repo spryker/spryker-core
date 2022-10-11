@@ -14,7 +14,7 @@ use Spryker\Shared\Asset\AssetConfig;
 use Spryker\Zed\Asset\Business\Exception\InvalidAssetException;
 use Spryker\Zed\Asset\Business\Mapper\AssetMapperInterface;
 use Spryker\Zed\Asset\Dependency\Facade\AssetToEventFacadeInterface;
-use Spryker\Zed\Asset\Dependency\Facade\AssetToStoreReferenceInterface;
+use Spryker\Zed\Asset\Dependency\Facade\AssetToStoreInterface;
 use Spryker\Zed\Asset\Persistence\AssetEntityManagerInterface;
 use Spryker\Zed\Asset\Persistence\AssetRepositoryInterface;
 
@@ -36,9 +36,9 @@ class AssetCreator implements AssetCreatorInterface
     protected $assetMapper;
 
     /**
-     * @var \Spryker\Zed\Asset\Dependency\Facade\AssetToStoreReferenceInterface
+     * @var \Spryker\Zed\Asset\Dependency\Facade\AssetToStoreInterface
      */
-    protected $storeReferenceFacade;
+    protected $storeFacade;
 
     /**
      * @var \Spryker\Zed\Asset\Dependency\Facade\AssetToEventFacadeInterface
@@ -49,20 +49,20 @@ class AssetCreator implements AssetCreatorInterface
      * @param \Spryker\Zed\Asset\Persistence\AssetRepositoryInterface $assetRepository
      * @param \Spryker\Zed\Asset\Persistence\AssetEntityManagerInterface $assetEntityManager
      * @param \Spryker\Zed\Asset\Business\Mapper\AssetMapperInterface $assetMapper
-     * @param \Spryker\Zed\Asset\Dependency\Facade\AssetToStoreReferenceInterface $storeReferenceFacade
+     * @param \Spryker\Zed\Asset\Dependency\Facade\AssetToStoreInterface $storeFacade
      * @param \Spryker\Zed\Asset\Dependency\Facade\AssetToEventFacadeInterface $eventFacade
      */
     public function __construct(
         AssetRepositoryInterface $assetRepository,
         AssetEntityManagerInterface $assetEntityManager,
         AssetMapperInterface $assetMapper,
-        AssetToStoreReferenceInterface $storeReferenceFacade,
+        AssetToStoreInterface $storeFacade,
         AssetToEventFacadeInterface $eventFacade
     ) {
         $this->assetRepository = $assetRepository;
         $this->assetEntityManager = $assetEntityManager;
         $this->assetMapper = $assetMapper;
-        $this->storeReferenceFacade = $storeReferenceFacade;
+        $this->storeFacade = $storeFacade;
         $this->eventFacade = $eventFacade;
     }
 
@@ -83,7 +83,7 @@ class AssetCreator implements AssetCreatorInterface
             ->requireAssetIdentifier()
             ->requireAssetSlot();
 
-        $storeTransfer = $this->storeReferenceFacade->getStoreByStoreReference($messageAttributes->getStoreReferenceOrFail());
+        $storeTransfer = $this->storeFacade->getStoreByStoreReference($messageAttributes->getStoreReferenceOrFail());
         $assetTransfer = $this->assetRepository
             ->findAssetByAssetUuid((string)$assetAddedTransfer->getAssetIdentifier());
 

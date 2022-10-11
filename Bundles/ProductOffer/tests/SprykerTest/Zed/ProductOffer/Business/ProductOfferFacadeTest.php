@@ -103,8 +103,10 @@ class ProductOfferFacadeTest extends Unit
     public function testGet(): void
     {
         // Arrange
+        $productTransfer = $this->tester->haveFullProduct();
         $productOfferTransfer = $this->tester->haveProductOffer([
             ProductOfferTransfer::FK_MERCHANT => $this->tester->haveMerchant()->getIdMerchant(),
+            ProductOfferTransfer::ID_PRODUCT_CONCRETE => $productTransfer->getIdProductConcrete(),
         ]);
         $productOfferCriteriaTransfer = new ProductOfferCriteriaTransfer();
         $productOfferCriteriaTransfer->setProductOfferReference($productOfferTransfer->getProductOfferReference());
@@ -122,7 +124,12 @@ class ProductOfferFacadeTest extends Unit
     public function testGetAddsStoresToProductOffer(): void
     {
         // Arrange
-        $productOfferTransfer = $this->tester->haveProductOffer();
+        $productOfferFacade = $this->tester->createProductOfferFacadeWithMockedStoreFacade();
+
+        $productTransfer = $this->tester->haveFullProduct();
+        $productOfferTransfer = $this->tester->haveProductOffer([
+            ProductOfferTransfer::ID_PRODUCT_CONCRETE => $productTransfer->getIdProductConcrete(),
+        ]);
         $storeTransfer1 = $this->tester->haveStore();
         $storeTransfer2 = $this->tester->haveStore();
         $this->tester->haveProductOfferStore($productOfferTransfer, $storeTransfer1);
@@ -131,11 +138,16 @@ class ProductOfferFacadeTest extends Unit
             ->setProductOfferReference($productOfferTransfer->getProductOfferReference());
 
         // Act
-        $productOfferTransfer = $this->tester->getFacade()->get($productOfferCriteriaTransfer)->getProductOffers()[0];
+        $productOfferTransfer = $productOfferFacade->get($productOfferCriteriaTransfer)->getProductOffers()[0];
 
         // Assert
         $this->assertCount(2, $productOfferTransfer->getStores());
-        $this->assertEquals($productOfferTransfer->getStores(), new ArrayObject([$storeTransfer1, $storeTransfer2]));
+
+        $expectedStoreNames = array_map(function (StoreTransfer $storeTransfer) {
+            return $storeTransfer->getName();
+        }, $productOfferTransfer->getStores()->getArrayCopy());
+
+        $this->assertEquals([$storeTransfer1->getName(), $storeTransfer2->getName()], $expectedStoreNames);
     }
 
     /**
@@ -144,7 +156,10 @@ class ProductOfferFacadeTest extends Unit
     public function testFindOneFindsProductOfferByProductOfferReference(): void
     {
         // Arrange
-        $productOfferTransfer = $this->tester->haveProductOffer();
+        $productTransfer = $this->tester->haveFullProduct();
+        $productOfferTransfer = $this->tester->haveProductOffer([
+            ProductOfferTransfer::ID_PRODUCT_CONCRETE => $productTransfer->getIdProductConcrete(),
+        ]);
         $productOfferCriteriaTransfer = (new ProductOfferCriteriaTransfer())
             ->setProductOfferReference($productOfferTransfer->getProductOfferReference());
 
@@ -161,7 +176,10 @@ class ProductOfferFacadeTest extends Unit
     public function testFindOneFindsProductOfferByProductOfferId(): void
     {
         // Arrange
-        $productOfferTransfer = $this->tester->haveProductOffer();
+        $productTransfer = $this->tester->haveFullProduct();
+        $productOfferTransfer = $this->tester->haveProductOffer([
+            ProductOfferTransfer::ID_PRODUCT_CONCRETE => $productTransfer->getIdProductConcrete(),
+        ]);
         $productOfferCriteriaTransfer = (new ProductOfferCriteriaTransfer())
             ->setIdProductOffer($productOfferTransfer->getIdProductOffer());
 
@@ -178,7 +196,10 @@ class ProductOfferFacadeTest extends Unit
     public function testFindOneAddsStoresToProductOffer(): void
     {
         // Arrange
-        $productOfferTransfer = $this->tester->haveProductOffer();
+        $productTransfer = $this->tester->haveFullProduct();
+        $productOfferTransfer = $this->tester->haveProductOffer([
+            ProductOfferTransfer::ID_PRODUCT_CONCRETE => $productTransfer->getIdProductConcrete(),
+        ]);
         $storeTransfer1 = $this->tester->haveStore();
         $storeTransfer2 = $this->tester->haveStore();
         $this->tester->haveProductOfferStore($productOfferTransfer, $storeTransfer1);
@@ -200,9 +221,11 @@ class ProductOfferFacadeTest extends Unit
     public function testCreate(): void
     {
         // Arrange
+        $productTransfer = $this->tester->haveFullProduct();
         $merchantTransfer = $this->tester->haveMerchant();
         $productOfferTransfer = (new ProductOfferBuilder([
             ProductOfferTransfer::FK_MERCHANT => $merchantTransfer->getIdMerchant(),
+            ProductOfferTransfer::ID_PRODUCT_CONCRETE => $productTransfer->getIdProductConcrete(),
         ]))->build();
         $productOfferTransfer->setIdProductOffer(null);
 
@@ -219,8 +242,10 @@ class ProductOfferFacadeTest extends Unit
     public function testCreateCreatesRelationsBetweenProductOffersAndStores(): void
     {
         // Arrange
+        $productTransfer = $this->tester->haveFullProduct();
         $productOfferTransfer = (new ProductOfferBuilder([
             ProductOfferTransfer::FK_MERCHANT => $this->tester->haveMerchant()->getIdMerchant(),
+            ProductOfferTransfer::ID_PRODUCT_CONCRETE => $productTransfer->getIdProductConcrete(),
             ProductOfferTransfer::ID_PRODUCT_OFFER => null,
         ]))->build();
         $productOfferTransfer->addStore($this->tester->haveStore());
@@ -244,10 +269,12 @@ class ProductOfferFacadeTest extends Unit
     public function testActivateProductOfferById(): void
     {
         // Arrange
+        $productTransfer = $this->tester->haveFullProduct();
         $merchantTransfer = $this->tester->haveMerchant();
         $productOfferTransfer = $this->tester->haveProductOffer([
             ProductOfferTransfer::IS_ACTIVE => false,
             ProductOfferTransfer::FK_MERCHANT => $merchantTransfer->getIdMerchant(),
+            ProductOfferTransfer::ID_PRODUCT_CONCRETE => $productTransfer->getIdProductConcrete(),
         ]);
 
         // Act
@@ -265,10 +292,12 @@ class ProductOfferFacadeTest extends Unit
     public function testDeactivateProductOfferById(): void
     {
         // Arrange
+        $productTransfer = $this->tester->haveFullProduct();
         $merchantTransfer = $this->tester->haveMerchant();
         $productOfferTransfer = $this->tester->haveProductOffer([
             ProductOfferTransfer::IS_ACTIVE => true,
             ProductOfferTransfer::FK_MERCHANT => $merchantTransfer->getIdMerchant(),
+            ProductOfferTransfer::ID_PRODUCT_CONCRETE => $productTransfer->getIdProductConcrete(),
         ]);
 
         // Act
@@ -336,7 +365,10 @@ class ProductOfferFacadeTest extends Unit
     public function testCheckItemProductOfferWithValidProductOfferReturnsSuccess(): void
     {
         // Arrange
-        $productOfferTransfer = $this->tester->haveProductOffer();
+        $productTransfer = $this->tester->haveFullProduct();
+        $productOfferTransfer = $this->tester->haveProductOffer([
+            ProductOfferTransfer::ID_PRODUCT_CONCRETE => $productTransfer->getIdProductConcrete(),
+        ]);
         $itemTransfer = (new ItemTransfer())
             ->setSku($productOfferTransfer->getConcreteSku())
             ->setProductOfferReference($productOfferTransfer->getProductOfferReference());
@@ -358,8 +390,13 @@ class ProductOfferFacadeTest extends Unit
     public function testCheckItemProductOfferWithInValidProductOfferReturnsError(): void
     {
         // Arrange
-        $productOfferTransfer = $this->tester->haveProductOffer();
-        $productOfferTransfer2 = $this->tester->haveProductOffer();
+        $productTransfer = $this->tester->haveFullProduct();
+        $productOfferTransfer = $this->tester->haveProductOffer([
+            ProductOfferTransfer::ID_PRODUCT_CONCRETE => $productTransfer->getIdProductConcrete(),
+        ]);
+        $productOfferTransfer2 = $this->tester->haveProductOffer([
+            ProductOfferTransfer::ID_PRODUCT_CONCRETE => $productTransfer->getIdProductConcrete(),
+        ]);
         $itemTransfer = (new ItemTransfer())
             ->setSku($productOfferTransfer->getConcreteSku())
             ->setProductOfferReference($productOfferTransfer2->getProductOfferReference());
@@ -382,7 +419,9 @@ class ProductOfferFacadeTest extends Unit
     {
         // Arrange
         $productConcreteTransfer = $this->tester->haveProduct();
-        $productOfferTransfer = $this->tester->haveProductOffer();
+        $productOfferTransfer = $this->tester->haveProductOffer([
+            ProductOfferTransfer::ID_PRODUCT_CONCRETE => $productConcreteTransfer->getIdProductConcrete(),
+        ]);
 
         $itemTransfer = (new ItemTransfer())
             ->setSku($productConcreteTransfer->getSku())
@@ -405,7 +444,10 @@ class ProductOfferFacadeTest extends Unit
     public function testUpdateAddsRelationsBetweenProductOffersAndStores(): void
     {
         // Arrange
-        $productOfferTransfer = $this->tester->haveProductOffer();
+        $productTransfer = $this->tester->haveFullProduct();
+        $productOfferTransfer = $this->tester->haveProductOffer([
+            ProductOfferTransfer::ID_PRODUCT_CONCRETE => $productTransfer->getIdProductConcrete(),
+        ]);
         $storeTransfer = $this->tester->haveStore();
         $this->tester->haveProductOfferStore($productOfferTransfer, $storeTransfer);
         $productOfferTransfer->addStore($storeTransfer);
@@ -431,7 +473,10 @@ class ProductOfferFacadeTest extends Unit
     public function testUpdateDeletesRelationsBetweenProductOffersAndStores(): void
     {
         // Arrange
-        $productOfferTransfer = $this->tester->haveProductOffer();
+        $productTransfer = $this->tester->haveFullProduct();
+        $productOfferTransfer = $this->tester->haveProductOffer([
+            ProductOfferTransfer::ID_PRODUCT_CONCRETE => $productTransfer->getIdProductConcrete(),
+        ]);
         $storeTransfer1 = $this->tester->haveStore();
         $storeTransfer2 = $this->tester->haveStore();
         $this->tester->haveProductOfferStore($productOfferTransfer, $storeTransfer1);
@@ -505,9 +550,11 @@ class ProductOfferFacadeTest extends Unit
     public function testIsQuoteReadyForCheckoutWithValidProductOffer(): void
     {
         // Arrange
+        $productTransfer = $this->tester->haveFullProduct();
         $productOfferTransfer = $this->tester->haveProductOffer([
             ProductOfferTransfer::IS_ACTIVE => true,
             ProductOfferTransfer::APPROVAL_STATUS => 'approved',
+            ProductOfferTransfer::ID_PRODUCT_CONCRETE => $productTransfer->getIdProductConcrete(),
         ]);
 
         $itemTransfer = (new ItemBuilder([
@@ -533,9 +580,11 @@ class ProductOfferFacadeTest extends Unit
     public function testIsQuoteReadyForCheckoutWithInactiveProductOffer(): void
     {
         // Arrange
+        $productTransfer = $this->tester->haveFullProduct();
         $productOfferTransfer = $this->tester->haveProductOffer([
             ProductOfferTransfer::IS_ACTIVE => false,
             ProductOfferTransfer::APPROVAL_STATUS => 'approved',
+            ProductOfferTransfer::ID_PRODUCT_CONCRETE => $productTransfer->getIdProductConcrete(),
         ]);
 
         $itemTransfer = (new ItemBuilder([
@@ -561,9 +610,11 @@ class ProductOfferFacadeTest extends Unit
     public function testIsQuoteReadyForCheckoutWithNotApprovedProductOffer(): void
     {
         // Arrange
+        $productTransfer = $this->tester->haveFullProduct();
         $productOfferTransfer = $this->tester->haveProductOffer([
             ProductOfferTransfer::IS_ACTIVE => true,
             ProductOfferTransfer::APPROVAL_STATUS => 'waiting_for_approval',
+            ProductOfferTransfer::ID_PRODUCT_CONCRETE => $productTransfer->getIdProductConcrete(),
         ]);
 
         $itemTransfer = (new ItemBuilder([

@@ -11,6 +11,8 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Product\Dependency\Facade\ProductToEventBridge;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleBridge;
+use Spryker\Zed\Product\Dependency\Facade\ProductToMessageBrokerBridge;
+use Spryker\Zed\Product\Dependency\Facade\ProductToStoreBridge;
 use Spryker\Zed\Product\Dependency\Facade\ProductToTouchBridge;
 use Spryker\Zed\Product\Dependency\Facade\ProductToUrlBridge;
 use Spryker\Zed\Product\Dependency\QueryContainer\ProductToUrlBridge as ProductToUrlQueryContainerBridge;
@@ -22,6 +24,11 @@ use Spryker\Zed\Product\Dependency\Service\ProductToUtilTextBridge;
  */
 class ProductDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
+    public const FACADE_STORE = 'FACADE_STORE';
+
     /**
      * @var string
      */
@@ -136,12 +143,23 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_PRODUCT_ABSTRACT_PRE_CREATE = 'PLUGINS_PRODUCT_ABSTRACT_PRE_CREATE';
 
     /**
+     * @var string
+     */
+    public const FACADE_MESSAGE_BROKER = 'FACADE_MESSAGE_BROKER';
+
+    /**
+     * @var string
+     */
+    public const PLUGINS_PRODUCT_CONCRETE_MERGER = 'PLUGINS_PRODUCT_CONCRETE_MERGER';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
      */
     public function provideBusinessLayerDependencies(Container $container): Container
     {
+        $container = $this->addStoreFacade($container);
         $container = $this->addLocaleFacade($container);
         $container = $this->addUrlFacade($container);
         $container = $this->addTouchFacade($container);
@@ -162,6 +180,8 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addProductConcreteAfterUpdatePlugins($container);
         $container = $this->addProductAbstractPreCreatePlugins($container);
         $container = $this->addProductConcreteExpanderPlugins($container);
+        $container = $this->addMessageBrokerFacade($container);
+        $container = $this->addProductConcreteMergerPlugins($container);
 
         return $container;
     }
@@ -175,6 +195,20 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new ProductToLocaleBridge($container->getLocator()->locale()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_STORE, function (Container $container) {
+            return new ProductToStoreBridge($container->getLocator()->store()->facade());
         });
 
         return $container;
@@ -629,6 +663,42 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
      * @return array<\Spryker\Zed\ProductExtension\Dependency\Plugin\ProductAbstractPreCreatePluginInterface>
      */
     protected function getProductAbstractPreCreatePlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMessageBrokerFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_MESSAGE_BROKER, function (Container $container) {
+            return new ProductToMessageBrokerBridge($container->getLocator()->messageBroker()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductConcreteMergerPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRODUCT_CONCRETE_MERGER, function () {
+            return $this->getProductConcreteMergerPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Zed\ProductExtension\Dependency\Plugin\ProductConcreteMergerPluginInterface>
+     */
+    protected function getProductConcreteMergerPlugins(): array
     {
         return [];
     }

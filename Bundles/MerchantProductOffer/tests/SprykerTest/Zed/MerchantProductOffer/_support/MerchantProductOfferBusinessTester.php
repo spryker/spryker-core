@@ -28,4 +28,22 @@ use Codeception\Actor;
 class MerchantProductOfferBusinessTester extends Actor
 {
     use _generated\MerchantProductOfferBusinessTesterActions;
+
+    /**
+     * @var array
+     */
+    public const FIELDS_TO_REMOVE = [
+        'created_at',
+        'updated_at',
+    ];
+
+    /**
+     * @param array $productOffer
+     *
+     * @return array
+     */
+    public function removeDynamicProductOfferFields(array $productOffer): array
+    {
+        return array_diff_key($productOffer, array_flip(static::FIELDS_TO_REMOVE));
+    }
 }

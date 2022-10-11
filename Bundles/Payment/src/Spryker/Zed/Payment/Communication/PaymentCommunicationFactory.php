@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Payment\Communication\Mapper\OrderMapper;
 use Spryker\Zed\Payment\Communication\Mapper\OrderMapperInterface;
 use Spryker\Zed\Payment\Dependency\Facade\PaymentToStoreFacadeBridge;
-use Spryker\Zed\Payment\Dependency\Facade\PaymentToStoreReferenceFacadeInterface;
 use Spryker\Zed\Payment\PaymentDependencyProvider;
 
 /**
@@ -29,14 +28,6 @@ class PaymentCommunicationFactory extends AbstractCommunicationFactory
     public function getStoreFacade(): PaymentToStoreFacadeBridge
     {
         return $this->getProvidedDependency(PaymentDependencyProvider::FACADE_STORE);
-    }
-
-    /**
-     * @return \Spryker\Zed\Payment\Dependency\Facade\PaymentToStoreReferenceFacadeInterface
-     */
-    public function getStoreReferenceFacade(): PaymentToStoreReferenceFacadeInterface
-    {
-        return $this->getProvidedDependency(PaymentDependencyProvider::FACADE_STORE_REFERENCE);
     }
 
     /**

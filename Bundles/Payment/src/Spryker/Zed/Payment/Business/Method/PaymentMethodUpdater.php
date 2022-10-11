@@ -17,7 +17,7 @@ use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\Payment\Business\Generator\PaymentMethodKeyGeneratorInterface;
 use Spryker\Zed\Payment\Business\Mapper\PaymentMethodEventMapperInterface;
 use Spryker\Zed\Payment\Business\Writer\PaymentWriterInterface;
-use Spryker\Zed\Payment\Dependency\Facade\PaymentToStoreReferenceFacadeInterface;
+use Spryker\Zed\Payment\Dependency\Facade\PaymentToStoreFacadeInterface;
 use Spryker\Zed\Payment\Persistence\PaymentEntityManagerInterface;
 use Spryker\Zed\Payment\Persistence\PaymentRepositoryInterface;
 
@@ -58,12 +58,12 @@ class PaymentMethodUpdater implements PaymentMethodUpdaterInterface
     /**
      * @var \Spryker\Zed\Payment\Business\Mapper\PaymentMethodEventMapperInterface
      */
-    protected PaymentMethodEventMapperInterface $paymentMethodEventMapper;
+    protected $paymentMethodEventMapper;
 
     /**
-     * @var \Spryker\Zed\Payment\Dependency\Facade\PaymentToStoreReferenceFacadeInterface
+     * @var \Spryker\Zed\Payment\Dependency\Facade\PaymentToStoreFacadeInterface
      */
-    protected PaymentToStoreReferenceFacadeInterface $storeReferenceFacade;
+    protected $storeFacade;
 
     /**
      * @param \Spryker\Zed\Payment\Persistence\PaymentEntityManagerInterface $paymentEntityManager
@@ -72,7 +72,7 @@ class PaymentMethodUpdater implements PaymentMethodUpdaterInterface
      * @param \Spryker\Zed\Payment\Business\Writer\PaymentWriterInterface $paymentWriter
      * @param \Spryker\Zed\Payment\Business\Generator\PaymentMethodKeyGeneratorInterface $paymentMethodKeyGenerator
      * @param \Spryker\Zed\Payment\Business\Mapper\PaymentMethodEventMapperInterface $paymentMethodEventMapper
-     * @param \Spryker\Zed\Payment\Dependency\Facade\PaymentToStoreReferenceFacadeInterface $storeReferenceFacade
+     * @param \Spryker\Zed\Payment\Dependency\Facade\PaymentToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         PaymentEntityManagerInterface $paymentEntityManager,
@@ -81,7 +81,7 @@ class PaymentMethodUpdater implements PaymentMethodUpdaterInterface
         PaymentWriterInterface $paymentWriter,
         PaymentMethodKeyGeneratorInterface $paymentMethodKeyGenerator,
         PaymentMethodEventMapperInterface $paymentMethodEventMapper,
-        PaymentToStoreReferenceFacadeInterface $storeReferenceFacade
+        PaymentToStoreFacadeInterface $storeFacade
     ) {
         $this->paymentEntityManager = $paymentEntityManager;
         $this->storeRelationUpdater = $storeRelationUpdater;
@@ -89,7 +89,7 @@ class PaymentMethodUpdater implements PaymentMethodUpdaterInterface
         $this->paymentWriter = $paymentWriter;
         $this->paymentMethodKeyGenerator = $paymentMethodKeyGenerator;
         $this->paymentMethodEventMapper = $paymentMethodEventMapper;
-        $this->storeReferenceFacade = $storeReferenceFacade;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -119,7 +119,7 @@ class PaymentMethodUpdater implements PaymentMethodUpdaterInterface
             new PaymentMethodTransfer(),
         );
 
-        $storeTransfer = $this->storeReferenceFacade->getStoreByStoreReference(
+        $storeTransfer = $this->storeFacade->getStoreByStoreReference(
             $paymentMethodAddedTransfer->getMessageAttributesOrFail()->getStoreReferenceOrFail(),
         );
 
@@ -167,7 +167,7 @@ class PaymentMethodUpdater implements PaymentMethodUpdaterInterface
         $paymentMethodTransfer->requireLabelName()
             ->requireGroupName();
 
-        $storeTransfer = $this->storeReferenceFacade->getStoreByStoreReference(
+        $storeTransfer = $this->storeFacade->getStoreByStoreReference(
             $paymentMethodDeletedTransfer->getMessageAttributesOrFail()->getStoreReferenceOrFail(),
         );
 

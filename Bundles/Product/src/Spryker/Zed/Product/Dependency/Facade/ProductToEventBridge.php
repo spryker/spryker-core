@@ -34,4 +34,23 @@ class ProductToEventBridge implements ProductToEventInterface
     {
         $this->eventFacade->trigger($eventName, $transfer);
     }
+
+    /**
+     * @param string $eventName
+     * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $transfers
+     *
+     * @return void
+     */
+    public function triggerBulk(string $eventName, array $transfers): void
+    {
+        if (method_exists($this->eventFacade, 'triggerBulk')) {
+            $this->eventFacade->triggerBulk($eventName, $transfers);
+
+            return;
+        }
+
+        foreach ($transfers as $transfer) {
+            $this->eventFacade->trigger($eventName, $transfer);
+        }
+    }
 }

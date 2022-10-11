@@ -5,6 +5,7 @@
         <property name="key" type="string"/>
         <property name="empty" type="string"/>
         <property name="messageAttributes" type="MessageAttributes"/>
+        <property name="dataFilterConfiguration" type="MessageDataFilterConfiguration"/>
     </transfer>
 
     <transfer name="MessageBrokerTestMessageWithArray">
@@ -34,6 +35,20 @@
     </transfer>
 
     <transfer name="Publisher" deprecated="Will be removed in next major.">
+    </transfer>
+
+    <transfer name="TestMessageWithDataFilterConfiguration">
+        <property name="dataFilterConfiguration" type="MessageDataFilterConfiguration"/>
+    </transfer>
+
+    <transfer name="MessageDataFilterConfiguration">
+        <property name="stripIdFieldsConfiguration" type="MessageDataFilterItemConfiguration"/>
+        <property name="stripNullFieldsConfiguration" type="MessageDataFilterItemConfiguration"/>
+    </transfer>
+
+    <transfer name="MessageDataFilterItemConfiguration">
+        <property name="disabled" type="bool"/>
+        <property name="patterns" type="string[]" singular="pattern"/>
     </transfer>
 
 </transfers>

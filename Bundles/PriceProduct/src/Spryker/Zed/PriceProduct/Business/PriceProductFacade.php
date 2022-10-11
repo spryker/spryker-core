@@ -688,4 +688,23 @@ class PriceProductFacade extends AbstractFacade implements PriceProductFacadeInt
             ->createPriceProductWishlsitItemExpander()
             ->expandWishlistItem($wishlistItemTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function mergeProductAbstractPricesIntoProductConcrete(
+        ProductConcreteTransfer $productConcreteTransfer,
+        ProductAbstractTransfer $productAbstractTransfer
+    ): ProductConcreteTransfer {
+        return $this->getFactory()
+            ->createPriceProductExpander()
+            ->mergeProductAbstractPricesIntoProductConcrete($productConcreteTransfer, $productAbstractTransfer);
+    }
 }

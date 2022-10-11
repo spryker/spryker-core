@@ -96,6 +96,11 @@ class PaymentFacadeTest extends Unit
         $paymentBusinessFactory = new PaymentBusinessFactory();
         $paymentBusinessFactory->setConfig($configMock);
         $this->paymentFacade->setFactory($paymentBusinessFactory);
+
+        $this->tester->setStoreReferenceData([
+            'DE' => 'dev-DE',
+            'AT' => 'dev-AT',
+        ]);
     }
 
     /**

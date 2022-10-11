@@ -236,6 +236,7 @@ interface PriceProductFacadeInterface
      * - Deletes orphan spy_price_product_store records based on {@link \Spryker\Zed\PriceProductExtension\Dependency\Plugin\OrphanPriceProductStoreRemovalVoterPluginInterface} plugin stack execution or configuration.
      * - Executes PriceDimensionConcreteSaverPluginInterface plugin stack after saving.
      * - If price type wasn't explicitly specified, then the default price type will be used.
+     * - Triggers event 'Product.product_concrete.update'.
      *
      * @api
      *
@@ -668,4 +669,20 @@ interface PriceProductFacadeInterface
      * @return \Generated\Shared\Transfer\WishlistItemTransfer
      */
     public function expandWishlistItem(WishlistItemTransfer $wishlistItemTransfer): WishlistItemTransfer;
+
+    /**
+     * Specification:
+     * - Merges price data from ProductAbstractTransfer into ProductConcreteTransfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function mergeProductAbstractPricesIntoProductConcrete(
+        ProductConcreteTransfer $productConcreteTransfer,
+        ProductAbstractTransfer $productAbstractTransfer
+    ): ProductConcreteTransfer;
 }

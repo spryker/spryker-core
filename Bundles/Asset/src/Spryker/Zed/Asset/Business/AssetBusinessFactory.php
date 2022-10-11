@@ -17,7 +17,7 @@ use Spryker\Zed\Asset\Business\Mapper\AssetMapperInterface;
 use Spryker\Zed\Asset\Business\Updater\AssetUpdater;
 use Spryker\Zed\Asset\Business\Updater\AssetUpdaterInterface;
 use Spryker\Zed\Asset\Dependency\Facade\AssetToEventFacadeInterface;
-use Spryker\Zed\Asset\Dependency\Facade\AssetToStoreReferenceInterface;
+use Spryker\Zed\Asset\Dependency\Facade\AssetToStoreInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -36,7 +36,7 @@ class AssetBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getEntityManager(),
             $this->createAssetMapper(),
-            $this->getStoreReferenceFacade(),
+            $this->getStoreFacade(),
             $this->getEventFacade(),
         );
     }
@@ -49,7 +49,7 @@ class AssetBusinessFactory extends AbstractBusinessFactory
         return new AssetUpdater(
             $this->getRepository(),
             $this->getEntityManager(),
-            $this->getStoreReferenceFacade(),
+            $this->getStoreFacade(),
             $this->getEventFacade(),
         );
     }
@@ -62,17 +62,17 @@ class AssetBusinessFactory extends AbstractBusinessFactory
         return new AssetDeleter(
             $this->getRepository(),
             $this->getEntityManager(),
-            $this->getStoreReferenceFacade(),
+            $this->getStoreFacade(),
             $this->getEventFacade(),
         );
     }
 
     /**
-     * @return \Spryker\Zed\Asset\Dependency\Facade\AssetToStoreReferenceInterface
+     * @return \Spryker\Zed\Asset\Dependency\Facade\AssetToStoreInterface
      */
-    public function getStoreReferenceFacade(): AssetToStoreReferenceInterface
+    public function getStoreFacade(): AssetToStoreInterface
     {
-        return $this->getProvidedDependency(AssetDependencyProvider::FACADE_STORE_REFERENCE);
+        return $this->getProvidedDependency(AssetDependencyProvider::FACADE_STORE);
     }
 
     /**

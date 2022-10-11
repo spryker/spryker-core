@@ -16,6 +16,7 @@ interface ProductReviewFacadeInterface
      * - Stores provided product review in persistent storage with pending status.
      *   - Checks if provided rating in transfer object does not exceed configured limit
      * - Returns the provided transfer object updated with the stored entity's data.
+     * - Triggers event 'Product.product_concrete.update'.
      *
      * @api
      *
@@ -49,6 +50,7 @@ interface ProductReviewFacadeInterface
      *   - Touches abstract product and all its variants.
      *   - Touches related "product_abstract", "product_concrete", and "attribute_map" entries.
      *   - Used touch event status (active, inactive) depends on the current status of the product and its variants.
+     *   - Triggers event 'Product.product_concrete.update'.
      *
      * @api
      *
@@ -75,4 +77,16 @@ interface ProductReviewFacadeInterface
      * @return void
      */
     public function deleteProductReview(ProductReviewTransfer $productReviewTransfer);
+
+    /**
+     * Specification:
+     * - Expands product concrete collection with rating.
+     *
+     * @api
+     *
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
+     */
+    public function expandProductConcretesWithRating(array $productConcreteTransfers): array;
 }

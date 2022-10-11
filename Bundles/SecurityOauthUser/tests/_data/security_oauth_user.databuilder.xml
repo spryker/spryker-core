@@ -14,7 +14,7 @@
     </transfer>
 
     <transfer name="User">
-        <property name="username" dataBuilderRule="unique()->word"/>
+        <property name="username" dataBuilderRule="unique()->bothify('???????????')"/>
     </transfer>
 
 </transfers>

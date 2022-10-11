@@ -11,4 +11,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductReviewConfig extends AbstractBundleConfig
 {
+    /**
+     * @var int
+     */
+    public const RATING_PRECISION = 1;
 }

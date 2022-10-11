@@ -33,6 +33,7 @@
 
     <transfer name="MessageAttributes">
         <property name="authorization" type="string"/>
+        <property name="storeReference" type="string"/>
     </transfer>
 
     <transfer name="PaymentAuthorizeRequest">

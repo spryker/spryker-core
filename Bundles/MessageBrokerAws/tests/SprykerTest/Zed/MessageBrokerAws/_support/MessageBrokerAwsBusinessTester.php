@@ -100,6 +100,13 @@ class MessageBrokerAwsBusinessTester extends Actor
      */
     public function createPayload(AbstractTransfer $transfer): array
     {
+        $storeReference = '';
+        if (method_exists($transfer, 'getMessageAttributes')) {
+            /** @var \Generated\Shared\Transfer\MessageAttributesTransfer $messageAttributes */
+            $messageAttributes = $transfer->getMessageAttributes();
+            $storeReference = $messageAttributes->getStoreReference();
+        }
+
         $filteredTransferData = $this->unsetMessageAttributesRecursive($transfer->toArray());
 
         return [
@@ -107,6 +114,7 @@ class MessageBrokerAwsBusinessTester extends Actor
             'headers' => [
                 'transferName' => $this->getTransferName($transfer),
                 'publisher' => static::PUBLISHER,
+                'storeReference' => $storeReference,
             ],
         ];
     }

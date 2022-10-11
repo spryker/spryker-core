@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ProductCategory\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductCategory\Business\Expander\ProductConcreteExpander;
+use Spryker\Zed\ProductCategory\Business\Expander\ProductConcreteExpanderInterface;
 use Spryker\Zed\ProductCategory\Business\Manager\ProductCategoryManager;
 use Spryker\Zed\ProductCategory\Business\Model\CategoryReader;
 use Spryker\Zed\ProductCategory\Business\Model\CategoryReaderInterface;
@@ -78,5 +80,13 @@ class ProductCategoryBusinessFactory extends AbstractBusinessFactory
         return new ProductCategoryReader(
             $this->createProductCategoryManager(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductCategory\Business\Expander\ProductConcreteExpanderInterface
+     */
+    public function createProductConcreteExpander(): ProductConcreteExpanderInterface
+    {
+        return new ProductConcreteExpander($this->getRepository());
     }
 }

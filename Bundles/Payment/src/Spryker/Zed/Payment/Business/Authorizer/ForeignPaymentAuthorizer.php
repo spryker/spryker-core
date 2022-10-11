@@ -21,7 +21,7 @@ use Spryker\Service\Payment\PaymentServiceInterface;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Payment\Business\Mapper\QuoteDataMapperInterface;
 use Spryker\Zed\Payment\Dependency\Facade\PaymentToLocaleFacadeInterface;
-use Spryker\Zed\Payment\Dependency\Facade\PaymentToStoreReferenceFacadeInterface;
+use Spryker\Zed\Payment\Dependency\Facade\PaymentToStoreFacadeInterface;
 use Spryker\Zed\Payment\PaymentConfig;
 use Spryker\Zed\Payment\Persistence\PaymentRepositoryInterface;
 
@@ -58,9 +58,9 @@ class ForeignPaymentAuthorizer implements ForeignPaymentAuthorizerInterface
     protected $paymentConfig;
 
     /**
-     * @var \Spryker\Zed\Payment\Dependency\Facade\PaymentToStoreReferenceFacadeInterface
+     * @var \Spryker\Zed\Payment\Dependency\Facade\PaymentToStoreFacadeInterface
      */
-    protected $storeReferenceFacade;
+    protected $storeFacade;
 
     /**
      * @var \Spryker\Service\Payment\PaymentServiceInterface
@@ -78,7 +78,7 @@ class ForeignPaymentAuthorizer implements ForeignPaymentAuthorizerInterface
      * @param \Spryker\Zed\Payment\Persistence\PaymentRepositoryInterface $paymentRepository
      * @param \Spryker\Client\Payment\PaymentClientInterface $paymentClient
      * @param \Spryker\Zed\Payment\PaymentConfig $paymentConfig
-     * @param \Spryker\Zed\Payment\Dependency\Facade\PaymentToStoreReferenceFacadeInterface $storeReferenceFacade
+     * @param \Spryker\Zed\Payment\Dependency\Facade\PaymentToStoreFacadeInterface $storeFacade
      * @param \Spryker\Service\Payment\PaymentServiceInterface $paymentService
      * @param array<int, \Spryker\Zed\PaymentExtension\Dependency\Plugin\PaymentAuthorizeRequestExpanderPluginInterface> $paymentAuthorizeRequestExpanderPlugins
      */
@@ -88,7 +88,7 @@ class ForeignPaymentAuthorizer implements ForeignPaymentAuthorizerInterface
         PaymentRepositoryInterface $paymentRepository,
         PaymentClientInterface $paymentClient,
         PaymentConfig $paymentConfig,
-        PaymentToStoreReferenceFacadeInterface $storeReferenceFacade,
+        PaymentToStoreFacadeInterface $storeFacade,
         PaymentServiceInterface $paymentService,
         array $paymentAuthorizeRequestExpanderPlugins
     ) {
@@ -97,7 +97,7 @@ class ForeignPaymentAuthorizer implements ForeignPaymentAuthorizerInterface
         $this->paymentRepository = $paymentRepository;
         $this->paymentClient = $paymentClient;
         $this->paymentConfig = $paymentConfig;
-        $this->storeReferenceFacade = $storeReferenceFacade;
+        $this->storeFacade = $storeFacade;
         $this->paymentService = $paymentService;
         $this->paymentAuthorizeRequestExpanderPlugins = $paymentAuthorizeRequestExpanderPlugins;
     }
@@ -248,8 +248,8 @@ class ForeignPaymentAuthorizer implements ForeignPaymentAuthorizerInterface
      */
     protected function getCurrentStoreReference(QuoteTransfer $quoteTransfer): string
     {
-        return $this->storeReferenceFacade
-            ->getStoreByStoreName($quoteTransfer->getStoreOrFail()->getNameOrFail())
+        return $this->storeFacade
+            ->getStoreByName($quoteTransfer->getStoreOrFail()->getNameOrFail())
             ->getStoreReferenceOrFail();
     }
 

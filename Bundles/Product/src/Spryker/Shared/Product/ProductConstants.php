@@ -12,4 +12,8 @@ namespace Spryker\Shared\Product;
  */
 interface ProductConstants
 {
+    /**
+     * @var string
+     */
+    public const PUBLISHING_TO_MESSAGE_BROKER_ENABLED = 'PRODUCT:PUBLISHING_TO_MESSAGE_BROKER_ENABLED';
 }

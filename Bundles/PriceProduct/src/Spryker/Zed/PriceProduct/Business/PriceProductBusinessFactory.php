@@ -67,6 +67,7 @@ use Spryker\Zed\PriceProduct\Business\Validator\PriceProductValidator;
 use Spryker\Zed\PriceProduct\Business\Validator\PriceProductValidatorInterface;
 use Spryker\Zed\PriceProduct\Dependency\External\PriceProductToValidationAdapterInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyFacadeInterface;
+use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToEventInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToPriceFacadeInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductFacadeInterface;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToStoreFacadeInterface;
@@ -186,6 +187,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
             $this->getConfig(),
             $this->getPriceProductService(),
             $this->getCurrencyFacade(),
+            $this->getStoreFacade(),
         );
     }
 
@@ -302,6 +304,7 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getConfig(),
             $this->createPriceProductStoreWriter(),
+            $this->getEventFacade(),
         );
     }
 
@@ -597,5 +600,13 @@ class PriceProductBusinessFactory extends AbstractBusinessFactory
     public function getValidationAdapter(): PriceProductToValidationAdapterInterface
     {
         return $this->getProvidedDependency(PriceProductDependencyProvider::EXTERNAL_ADAPTER_VALIDATION);
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToEventInterface
+     */
+    protected function getEventFacade(): PriceProductToEventInterface
+    {
+        return $this->getProvidedDependency(PriceProductDependencyProvider::FACADE_EVENT);
     }
 }

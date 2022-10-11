@@ -8,15 +8,27 @@
 namespace SprykerTest\Zed\Product\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductCreatedTransfer;
 use Generated\Shared\Transfer\ProductCriteriaTransfer;
+use Generated\Shared\Transfer\ProductDeletedTransfer;
+use Generated\Shared\Transfer\ProductExportCriteriaTransfer;
+use Generated\Shared\Transfer\ProductExportedTransfer;
+use Generated\Shared\Transfer\ProductPublisherConfigTransfer;
+use Generated\Shared\Transfer\ProductUpdatedTransfer;
 use Generated\Shared\Transfer\ProductUrlCriteriaFilterTransfer;
 use Spryker\Zed\Product\Business\Exception\ProductConcreteExistsException;
+use Spryker\Zed\Product\Business\Exception\ProductPublisherEventNameMismatchException;
 use Spryker\Zed\Product\Business\Product\Sku\SkuGenerator;
+use Spryker\Zed\Product\Dependency\Facade\ProductToEventInterface;
+use Spryker\Zed\Product\Dependency\Facade\ProductToMessageBrokerInterfrace;
+use Spryker\Zed\Product\Dependency\ProductEvents;
+use Spryker\Zed\Product\ProductDependencyProvider;
 
 /**
  * Auto-generated group annotations
@@ -70,6 +82,21 @@ class ProductFacadeTest extends Unit
     protected const LOCALIZED_ATTRIBUTE_NAME = 'name';
 
     /**
+     * @var string
+     */
+    protected const UNEXISTING_STORE_REFERENCE = 'store-doesnt-exists';
+
+    /**
+     * @var \Spryker\Zed\Product\Dependency\Facade\ProductToMessageBrokerInterfrace
+     */
+    protected $messageBrokerFacade;
+
+    /**
+     * @var \Spryker\Zed\Product\Dependency\Facade\ProductToEventInterface
+     */
+    protected $eventFacade;
+
+    /**
      * @return void
      */
     protected function setUp(): void
@@ -77,6 +104,25 @@ class ProductFacadeTest extends Unit
         parent::setUp();
 
         $this->tester->setUpDatabase();
+
+        $this->messageBrokerFacade = $this->createMock(ProductToMessageBrokerInterfrace::class);
+
+        $this->tester->setDependency(
+            ProductDependencyProvider::FACADE_MESSAGE_BROKER,
+            $this->messageBrokerFacade,
+        );
+
+        $this->eventFacade = $this->createMock(ProductToEventInterface::class);
+
+        $this->tester->setDependency(
+            ProductDependencyProvider::FACADE_EVENT,
+            $this->eventFacade,
+        );
+
+        $this->tester->setStoreReferenceData([
+            'DE' => 'dev-DE',
+            'AT' => 'dev-AT',
+        ]);
     }
 
     /**
@@ -382,6 +428,249 @@ class ProductFacadeTest extends Unit
 
         // Assert
         $this->assertEmpty($productAbstractLocalizedAttributeNames);
+    }
+
+    /**
+     * @return void
+     */
+    public function testProductsNotPublishedToMessageBrokerIfProductIdsIsEmpty(): void
+    {
+        // Arrange
+        $productPublisherConfigTransfer = (new ProductPublisherConfigTransfer())
+            ->setEventName(ProductExportedTransfer::class);
+
+        // Assert
+        $this->messageBrokerFacade
+            ->expects($this->never())
+            ->method('sendMessage');
+
+        // Act
+        $this->tester->getProductFacade()->emitPublishProductToMessageBroker($productPublisherConfigTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testProductsSuccessfullyPublishedToMessageBroker(): void
+    {
+        // Arrange
+        $concreteProduct = $this->tester->haveFullProduct();
+
+        $productPublisherConfigTransfer = (new ProductPublisherConfigTransfer())
+            ->setProductIds([$concreteProduct->getIdProductConcrete()])
+            ->setEventName(ProductExportedTransfer::class);
+
+        // Assert
+        $this->tester->assertProductSuccessfullyPublishedViaMessageBroker(
+            $this->messageBrokerFacade,
+            $concreteProduct,
+            ProductExportedTransfer::class,
+        );
+
+        // Act
+        $this->tester->getProductFacade()->emitPublishProductToMessageBroker($productPublisherConfigTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testProductCreatedEventSuccessfullyPublishedToMessageBroker(): void
+    {
+        // Arrange
+        $concreteProduct = $this->tester->haveFullProduct();
+
+        $productPublisherConfigTransfer = (new ProductPublisherConfigTransfer())
+            ->setProductIds([$concreteProduct->getIdProductConcrete()])
+            ->setEventName(ProductCreatedTransfer::class);
+
+        // Assert
+        $this->tester->assertProductSuccessfullyPublishedViaMessageBroker(
+            $this->messageBrokerFacade,
+            $concreteProduct,
+            ProductCreatedTransfer::class,
+        );
+
+        // Act
+        $this->tester->getProductFacade()->emitPublishProductToMessageBroker($productPublisherConfigTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testProductUpdatedEventSuccessfullyPublishedToMessageBroker(): void
+    {
+        // Arrange
+        $concreteProduct = $this->tester->haveFullProduct();
+
+        $productPublisherConfigTransfer = (new ProductPublisherConfigTransfer())
+            ->setProductIds([$concreteProduct->getIdProductConcrete()])
+            ->setEventName(ProductUpdatedTransfer::class);
+
+        // Assert
+        $this->tester->assertProductSuccessfullyPublishedViaMessageBroker(
+            $this->messageBrokerFacade,
+            $concreteProduct,
+            ProductUpdatedTransfer::class,
+        );
+
+        // Act
+        $this->tester->getProductFacade()->emitPublishProductToMessageBroker($productPublisherConfigTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testProductMessageBrokerPublisherThrowsExceptionOnPublishWhenEventNameIsWrong()
+    {
+        // Arrange
+        $concreteProduct = $this->tester->haveFullProduct();
+        $productPublisherConfigTransfer = (new ProductPublisherConfigTransfer())
+            ->setProductIds([$concreteProduct->getIdProductConcrete()])
+            ->setEventName('unknown');
+
+        // Assert
+        $this->tester->expectThrowable(
+            ProductPublisherEventNameMismatchException::class,
+            function () use ($productPublisherConfigTransfer) {
+                // Act
+                $this->tester->getProductFacade()->emitPublishProductToMessageBroker($productPublisherConfigTransfer);
+            },
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testProductDeletedEventSuccessfullyPublishedToMessageBroker(): void
+    {
+        // Arrange
+        $concreteProduct = $this->tester->haveFullProduct();
+
+        $productPublisherConfigTransfer = (new ProductPublisherConfigTransfer())
+            ->setProductIds([$concreteProduct->getIdProductConcrete()])
+            ->setEventName(ProductDeletedTransfer::class);
+
+        // Assert
+        $this->tester->assertProductSuccessfullyUnpublishedViaMessageBroker(
+            $this->messageBrokerFacade,
+            $concreteProduct->getSku(),
+            ProductDeletedTransfer::class,
+        );
+
+        // Act
+        $this->tester->getProductFacade()->emitUnpublishProductToMessageBroker($productPublisherConfigTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testProductMessageBrokerPublisherThrowsExceptionOnUnpublishWhenEventNameIsWrong(): void
+    {
+        // Arrange
+        $concreteProduct = $this->tester->haveFullProduct();
+
+        $productPublisherConfigTransfer = (new ProductPublisherConfigTransfer())
+            ->setProductIds([$concreteProduct->getIdProductConcrete()])
+            ->setEventName('unknown');
+
+        // Assert
+        $this->tester->expectThrowable(
+            ProductPublisherEventNameMismatchException::class,
+            function () use ($productPublisherConfigTransfer) {
+                // Act
+                $this->tester->getProductFacade()->emitUnpublishProductToMessageBroker($productPublisherConfigTransfer);
+            },
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testProductDeletedEventNotPublishedToMessageBrokerIfProductsListIsEmpty(): void
+    {
+        // Arrange
+        $productPublisherConfigTransfer = (new ProductPublisherConfigTransfer())
+            ->setEventName(ProductDeletedTransfer::class);
+
+        // Assert
+        $this->messageBrokerFacade
+            ->expects($this->never())
+            ->method('sendMessage');
+
+        // Act
+        $this->tester->getProductFacade()->emitUnpublishProductToMessageBroker($productPublisherConfigTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testProductExportEventsSuccessfullyTriggered(): void
+    {
+        // Arrange
+        $productConcreteTransfer1 = $this->tester->haveFullProduct();
+        $productConcreteTransfer2 = $this->tester->haveFullProduct();
+
+        /** @var \Generated\Shared\Transfer\StoreTransfer $storeTransfer */
+        $storeTransfer = $this->tester->getStoreFacade()->getCurrentStore();
+
+        $this->tester->deleteProductFromStore($productConcreteTransfer2, $storeTransfer);
+
+        $productExportCriteriaTransfer = (new ProductExportCriteriaTransfer())
+            ->setStoreReference($storeTransfer->getStoreReference());
+
+        // Assert
+        $this->eventFacade
+            ->expects($this->atLeastOnce())
+            ->method('triggerBulk')
+            ->with(ProductEvents::PRODUCT_CONCRETE_EXPORT, $this->callback(
+                function ($transfers) use ($productConcreteTransfer2) {
+                    $this->assertNotEmpty($transfers);
+                    $this->assertInstanceOf(EventEntityTransfer::class, $transfers[0]);
+                    $this->assertNotContains($productConcreteTransfer2, $transfers);
+
+                    return true;
+                },
+            ));
+
+        // Act
+        $this->tester->getProductFacade()->triggerProductExportEvents($productExportCriteriaTransfer);
+    }
+
+    /**
+     * @dataProvider triggerProductExportEventsTriggerFailsDataProvider()
+     *
+     * @param \Generated\Shared\Transfer\ProductExportCriteriaTransfer $productExportCriteriaTransfer
+     *
+     * @return void
+     */
+    public function testTriggerProductExportEventsTriggerFails(
+        ProductExportCriteriaTransfer $productExportCriteriaTransfer
+    ): void {
+        // Arrange
+        $productConcreteTransfer = $this->tester->haveFullProduct();
+
+        // Assert
+        $this->eventFacade->expects($this->never())
+            ->method('triggerBulk');
+
+        // Act
+        $this->tester->getProductFacade()->triggerProductExportEvents($productExportCriteriaTransfer);
+    }
+
+    /**
+     * @return array<string, array<string, \Generated\Shared\Transfer\ProductExportCriteriaTransfer>>
+     */
+    public function triggerProductExportEventsTriggerFailsDataProvider(): array
+    {
+        return [
+            'store reference is missing' => [
+                'export criteria' => new ProductExportCriteriaTransfer(),
+            ],
+            'store with given reference doesn\'t exist' => [
+                'export criteria' => (new ProductExportCriteriaTransfer())
+                    ->setStoreReference(static::UNEXISTING_STORE_REFERENCE),
+            ],
+        ];
     }
 
     /**

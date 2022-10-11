@@ -12,11 +12,19 @@ use Spryker\Shared\Store\Reader\StoreReader as SharedStoreReader;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Store\Business\Cache\StoreCache;
 use Spryker\Zed\Store\Business\Cache\StoreCacheInterface;
+use Spryker\Zed\Store\Business\Expander\CurrentStoreReferenceAccessTokenRequestExpander;
+use Spryker\Zed\Store\Business\Expander\CurrentStoreReferenceAccessTokenRequestExpanderInterface;
+use Spryker\Zed\Store\Business\Expander\CurrentStoreReferenceMessageAttributesExpander;
+use Spryker\Zed\Store\Business\Expander\CurrentStoreReferenceMessageAttributesExpanderInterface;
 use Spryker\Zed\Store\Business\Model\Configuration\StoreConfigurationProvider;
 use Spryker\Zed\Store\Business\Model\StoreMapper;
 use Spryker\Zed\Store\Business\Model\StoreReader;
 use Spryker\Zed\Store\Business\Model\StoreValidator;
 use Spryker\Zed\Store\Business\Model\StoreValidatorInterface;
+use Spryker\Zed\Store\Business\Reader\StoreReferenceReader;
+use Spryker\Zed\Store\Business\Reader\StoreReferenceReaderInterface;
+use Spryker\Zed\Store\Business\Validator\MessageValidator;
+use Spryker\Zed\Store\Business\Validator\MessageValidatorInterface;
 use Spryker\Zed\Store\StoreDependencyProvider;
 
 /**
@@ -37,6 +45,7 @@ class StoreBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->createStoreMapper(),
             $this->createStoreCache(),
+            $this->createStoreReferenceReader(),
         );
     }
 
@@ -98,5 +107,39 @@ class StoreBusinessFactory extends AbstractBusinessFactory
     protected function getStore()
     {
         return Store::getInstance();
+    }
+
+    /**
+     * @return \Spryker\Zed\Store\Business\Reader\StoreReferenceReaderInterface
+     */
+    public function createStoreReferenceReader(): StoreReferenceReaderInterface
+    {
+        return new StoreReferenceReader($this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Zed\Store\Business\Expander\CurrentStoreReferenceAccessTokenRequestExpanderInterface
+     */
+    public function createStoreReferenceAccessTokenRequestExpander(): CurrentStoreReferenceAccessTokenRequestExpanderInterface
+    {
+        return new CurrentStoreReferenceAccessTokenRequestExpander(
+            $this->createStoreReader(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Store\Business\Validator\MessageValidatorInterface
+     */
+    public function createMessageTransferValidator(): MessageValidatorInterface
+    {
+        return new MessageValidator($this->createStoreReader());
+    }
+
+    /**
+     * @return \Spryker\Zed\Store\Business\Expander\CurrentStoreReferenceMessageAttributesExpanderInterface
+     */
+    public function createCurrentStoreReferenceMessageAttributesExpander(): CurrentStoreReferenceMessageAttributesExpanderInterface
+    {
+        return new CurrentStoreReferenceMessageAttributesExpander($this->createStoreReader());
     }
 }

@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\AssetTransfer;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Spryker\Shared\Asset\AssetConfig;
 use Spryker\Zed\Asset\Dependency\Facade\AssetToEventFacadeInterface;
-use Spryker\Zed\Asset\Dependency\Facade\AssetToStoreReferenceInterface;
+use Spryker\Zed\Asset\Dependency\Facade\AssetToStoreInterface;
 use Spryker\Zed\Asset\Persistence\AssetEntityManagerInterface;
 use Spryker\Zed\Asset\Persistence\AssetRepositoryInterface;
 
@@ -29,9 +29,9 @@ class AssetDeleter implements AssetDeleterInterface
     protected $assetEntityManager;
 
     /**
-     * @var \Spryker\Zed\Asset\Dependency\Facade\AssetToStoreReferenceInterface
+     * @var \Spryker\Zed\Asset\Dependency\Facade\AssetToStoreInterface
      */
-    protected $storeReferenceFacade;
+    protected $storeFacade;
 
     /**
      * @var \Spryker\Zed\Asset\Dependency\Facade\AssetToEventFacadeInterface
@@ -41,18 +41,18 @@ class AssetDeleter implements AssetDeleterInterface
     /**
      * @param \Spryker\Zed\Asset\Persistence\AssetRepositoryInterface $assetRepository
      * @param \Spryker\Zed\Asset\Persistence\AssetEntityManagerInterface $assetEntityManager
-     * @param \Spryker\Zed\Asset\Dependency\Facade\AssetToStoreReferenceInterface $storeReferenceFacade
+     * @param \Spryker\Zed\Asset\Dependency\Facade\AssetToStoreInterface $storeFacade
      * @param \Spryker\Zed\Asset\Dependency\Facade\AssetToEventFacadeInterface $eventFacade
      */
     public function __construct(
         AssetRepositoryInterface $assetRepository,
         AssetEntityManagerInterface $assetEntityManager,
-        AssetToStoreReferenceInterface $storeReferenceFacade,
+        AssetToStoreInterface $storeFacade,
         AssetToEventFacadeInterface $eventFacade
     ) {
         $this->assetRepository = $assetRepository;
         $this->assetEntityManager = $assetEntityManager;
-        $this->storeReferenceFacade = $storeReferenceFacade;
+        $this->storeFacade = $storeFacade;
         $this->eventFacade = $eventFacade;
     }
 
@@ -65,7 +65,7 @@ class AssetDeleter implements AssetDeleterInterface
     {
         $assetDeletedTransfer->requireAssetIdentifier();
 
-        $storeTransfer = $this->storeReferenceFacade->getStoreByStoreReference(
+        $storeTransfer = $this->storeFacade->getStoreByStoreReference(
             $assetDeletedTransfer->getMessageAttributesOrFail()->getStoreReferenceOrFail(),
         );
         $assetTransfer = $this->assetRepository->findAssetByAssetUuid(

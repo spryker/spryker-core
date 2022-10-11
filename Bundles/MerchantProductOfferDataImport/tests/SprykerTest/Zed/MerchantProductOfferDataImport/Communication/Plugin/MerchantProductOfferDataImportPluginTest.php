@@ -107,10 +107,12 @@ class MerchantProductOfferDataImportPluginTest extends Unit
         // Arrange
         $merchantSku = uniqid();
         $merchantTransfer = $this->tester->haveMerchant();
+        $productTransfer = $this->tester->haveFullProduct();
 
         $productOfferTransfer = $this->tester->haveProductOffer([
             ProductOfferTransfer::MERCHANT_SKU => $merchantSku,
             ProductOfferTransfer::MERCHANT_REFERENCE => $merchantTransfer->getMerchantReference(),
+            ProductOfferTransfer::ID_PRODUCT_CONCRETE => $productTransfer->getIdProductConcrete(),
         ]);
 
         $merchantSkuValidationStep = new MerchantSkuValidationStep();

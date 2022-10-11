@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\MessageBrokerAws;
 
+use Generated\Shared\Transfer\MessageDataFilterConfigurationTransfer;
+use Generated\Shared\Transfer\MessageDataFilterItemConfigurationTransfer;
 use Spryker\Shared\MessageBrokerAws\MessageBrokerAwsConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
@@ -277,5 +279,29 @@ class MessageBrokerAwsConfig extends AbstractBundleConfig
         return [
             'Authorization',
         ];
+    }
+
+    /**
+     * Get default configuration for message data filters
+     *
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\MessageDataFilterConfigurationTransfer
+     */
+    public function getDefaultMessageDataFilterConfiguration(): MessageDataFilterConfigurationTransfer
+    {
+        $config = new MessageDataFilterConfigurationTransfer();
+        $config->setStripIdFieldsConfiguration(
+            (new MessageDataFilterItemConfigurationTransfer())
+                ->setPatterns([
+                    '/^id[A-Z]/',
+                    '/^fk[A-Z]/',
+                ]),
+        );
+        $config->setStripNullFieldsConfiguration(
+            (new MessageDataFilterItemConfigurationTransfer()),
+        );
+
+        return $config;
     }
 }

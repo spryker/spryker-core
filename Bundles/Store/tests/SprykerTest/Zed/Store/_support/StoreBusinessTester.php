@@ -8,6 +8,11 @@
 namespace SprykerTest\Zed\Store;
 
 use Codeception\Actor;
+use Codeception\Test\Feature\Stub;
+use Generated\Shared\DataBuilder\MessageAttributesBuilder;
+use Generated\Shared\DataBuilder\MessageBrokerTestMessageBuilder;
+use Generated\Shared\Transfer\MessageAttributesTransfer;
+use Generated\Shared\Transfer\MessageBrokerTestMessageTransfer;
 
 /**
  * @method void wantToTest($text)
@@ -26,4 +31,34 @@ use Codeception\Actor;
 class StoreBusinessTester extends Actor
 {
     use _generated\StoreBusinessTesterActions;
+
+    use Stub;
+
+    /**
+     * @param string|null $storeReference
+     *
+     * @return \Generated\Shared\Transfer\MessageBrokerTestMessageTransfer
+     */
+    public function createMessageBrokerTestMessageTransfer(?string $storeReference = null): MessageBrokerTestMessageTransfer
+    {
+        return (new MessageBrokerTestMessageBuilder())
+            ->withMessageAttributes(
+                new MessageAttributesBuilder(
+                    [
+                        'storeReference' => $storeReference,
+                    ],
+                ),
+            )
+            ->build();
+    }
+
+    /**
+     * @param array $seed
+     *
+     * @return \Generated\Shared\Transfer\MessageAttributesTransfer
+     */
+    public function createMessageAttributesTransfer(array $seed = []): MessageAttributesTransfer
+    {
+        return (new MessageAttributesBuilder($seed))->build();
+    }
 }

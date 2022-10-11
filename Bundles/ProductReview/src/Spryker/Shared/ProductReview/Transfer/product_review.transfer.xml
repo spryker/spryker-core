@@ -114,4 +114,12 @@
         <property name="ratingAggregation" type="int[]" singular="ratingAggregation"/>
     </transfer>
 
+    <transfer name="EventEntity">
+        <property name="foreignKeys" type="array" singular="foreignKeys"/>
+    </transfer>
+
+    <transfer name="ProductConcrete">
+        <property name="rating" type="float"/>
+    </transfer>
+
 </transfers>

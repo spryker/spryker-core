@@ -7,8 +7,11 @@
 
 namespace Spryker\Zed\ProductOffer\Business\Reader;
 
+use ArrayObject;
+use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
+use Spryker\Zed\ProductOffer\Dependency\Facade\ProductOfferToStoreFacadeInterface;
 use Spryker\Zed\ProductOffer\Persistence\ProductOfferRepositoryInterface;
 
 class ProductOfferReader implements ProductOfferReaderInterface
@@ -24,15 +27,23 @@ class ProductOfferReader implements ProductOfferReaderInterface
     protected $productOfferExpanderPlugins;
 
     /**
+     * @var \Spryker\Zed\ProductOffer\Dependency\Facade\ProductOfferToStoreFacadeInterface
+     */
+    protected $storeFacade;
+
+    /**
      * @param \Spryker\Zed\ProductOffer\Persistence\ProductOfferRepositoryInterface $productOfferRepository
-     * @param array<\Spryker\Zed\ProductOfferExtension\Dependency\Plugin\ProductOfferExpanderPluginInterface> $productOfferExpanderPlugins
+     * @param \Spryker\Zed\ProductOffer\Dependency\Facade\ProductOfferToStoreFacadeInterface $storeFacade
+     * @param array $productOfferExpanderPlugins
      */
     public function __construct(
         ProductOfferRepositoryInterface $productOfferRepository,
+        ProductOfferToStoreFacadeInterface $storeFacade,
         array $productOfferExpanderPlugins = []
     ) {
         $this->productOfferRepository = $productOfferRepository;
         $this->productOfferExpanderPlugins = $productOfferExpanderPlugins;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -51,6 +62,28 @@ class ProductOfferReader implements ProductOfferReaderInterface
         $productOfferTransfer = $this->executeProductOfferExpanderPlugins($productOfferTransfer);
 
         return $productOfferTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferCriteriaTransfer $productOfferCriteria
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
+     */
+    public function get(ProductOfferCriteriaTransfer $productOfferCriteria): ProductOfferCollectionTransfer
+    {
+        $productOfferCollectionTransfer = $this->productOfferRepository->get($productOfferCriteria);
+
+        // Load full Store transfers
+        foreach ($productOfferCollectionTransfer->getProductOffers() as $productOfferTransfer) {
+            $storeTransfers = new ArrayObject();
+            foreach ($productOfferTransfer->getStores() as $storeTransfer) {
+                $storeTransfers->append($this->storeFacade->getStoreByName($storeTransfer->getName()));
+            }
+
+            $productOfferTransfer->setStores($storeTransfers);
+        }
+
+        return $productOfferCollectionTransfer;
     }
 
     /**

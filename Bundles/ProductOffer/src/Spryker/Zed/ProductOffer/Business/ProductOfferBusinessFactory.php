@@ -20,10 +20,13 @@ use Spryker\Zed\ProductOffer\Business\Reader\ProductOfferReader;
 use Spryker\Zed\ProductOffer\Business\Reader\ProductOfferReaderInterface;
 use Spryker\Zed\ProductOffer\Business\Reader\ProductOfferStatusReader;
 use Spryker\Zed\ProductOffer\Business\Reader\ProductOfferStatusReaderInterface;
+use Spryker\Zed\ProductOffer\Business\Trigger\ProductEventTrigger;
+use Spryker\Zed\ProductOffer\Business\Trigger\ProductEventTriggerInterface;
 use Spryker\Zed\ProductOffer\Business\Validator\ProductOfferCheckoutValidator;
 use Spryker\Zed\ProductOffer\Business\Validator\ProductOfferCheckoutValidatorInterface;
 use Spryker\Zed\ProductOffer\Business\Writer\ProductOfferWriter;
 use Spryker\Zed\ProductOffer\Business\Writer\ProductOfferWriterInterface;
+use Spryker\Zed\ProductOffer\Dependency\Facade\ProductOfferToEventInterface;
 use Spryker\Zed\ProductOffer\Dependency\Facade\ProductOfferToMessengerFacadeInterface;
 use Spryker\Zed\ProductOffer\Dependency\Facade\ProductOfferToStoreFacadeInterface;
 use Spryker\Zed\ProductOffer\ProductOfferDependencyProvider;
@@ -36,6 +39,14 @@ use Spryker\Zed\ProductOffer\ProductOfferDependencyProvider;
 class ProductOfferBusinessFactory extends AbstractBusinessFactory
 {
     /**
+     * @return \Spryker\Zed\ProductOffer\Business\Trigger\ProductEventTriggerInterface
+     */
+    public function createProductEventTrigger(): ProductEventTriggerInterface
+    {
+        return new ProductEventTrigger($this->getEventFacade());
+    }
+
+    /**
      * @return \Spryker\Zed\ProductOffer\Business\Writer\ProductOfferWriterInterface
      */
     public function createProductOfferWriter(): ProductOfferWriterInterface
@@ -44,6 +55,7 @@ class ProductOfferBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getEntityManager(),
             $this->createProductOfferReferenceGenerator(),
+            $this->createProductEventTrigger(),
             $this->getConfig(),
             $this->getProductOfferPostCreatePlugins(),
             $this->getProductOfferPostUpdatePlugins(),
@@ -79,6 +91,14 @@ class ProductOfferBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\ProductOffer\Dependency\Facade\ProductOfferToEventInterface
+     */
+    protected function getEventFacade(): ProductOfferToEventInterface
+    {
+        return $this->getProvidedDependency(ProductOfferDependencyProvider::FACADE_EVENT);
+    }
+
+    /**
      * @return \Spryker\Zed\ProductOffer\Dependency\Facade\ProductOfferToMessengerFacadeInterface
      */
     public function getMessengerFacade(): ProductOfferToMessengerFacadeInterface
@@ -101,6 +121,7 @@ class ProductOfferBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductOfferReader(
             $this->getRepository(),
+            $this->getStoreFacade(),
             $this->getProductOfferExpanderPlugins(),
         );
     }

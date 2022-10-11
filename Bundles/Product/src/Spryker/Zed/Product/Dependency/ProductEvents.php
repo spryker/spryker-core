@@ -60,6 +60,16 @@ interface ProductEvents
     public const PRODUCT_CONCRETE_READ = 'Product.product_concrete.read';
 
     /**
+     * @var string
+     */
+    public const PRODUCT_CONCRETE_EXPORT = 'Product.product_concrete.export';
+
+    /**
+     * @var string
+     */
+    public const PRODUCT_CONCRETE_UPDATE = 'Product.product_concrete.update';
+
+    /**
      * Specification
      * - This events will be used for product_abstract publishing
      *

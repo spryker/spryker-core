@@ -9,4 +9,13 @@
         <property name="name" dataBuilderRule="isbn10"/>
     </transfer>
 
+    <transfer name="MessageBrokerTestMessage">
+        <property name="messageAttributes" dataBuilderRule="MessageAttributes"/>
+    </transfer>
+
+    <transfer name="MessageAttributes">
+        <property name="storeReference" dataBuilderRule="word()"/>
+        <property name="emitter" dataBuilderRule="word"/>
+        <!-- word instead of word() due to compitability with existed modules -->
+    </transfer>
 </transfers>

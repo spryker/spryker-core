@@ -17,6 +17,7 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
  * @method \Spryker\Zed\ProductReview\Business\ProductReviewFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductReview\Communication\ProductReviewCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductReview\Persistence\ProductReviewQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductReview\Persistence\ProductReviewRepositoryInterface getRepository()
  */
 class GatewayController extends AbstractGatewayController
 {

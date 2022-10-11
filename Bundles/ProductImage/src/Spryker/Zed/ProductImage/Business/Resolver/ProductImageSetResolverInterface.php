@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ProductImage\Business\Resolver;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 interface ProductImageSetResolverInterface
 {
@@ -18,4 +20,15 @@ interface ProductImageSetResolverInterface
      * @return \ArrayObject<int, \Generated\Shared\Transfer\ProductImageSetTransfer>
      */
     public function resolveProductImageSetsForLocale(ArrayObject $productImageSetTransfers, string $localeName): ArrayObject;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function mergeProductAbstractImagesIntoProductConcrete(
+        ProductConcreteTransfer $productConcreteTransfer,
+        ProductAbstractTransfer $productAbstractTransfer
+    ): ProductConcreteTransfer;
 }

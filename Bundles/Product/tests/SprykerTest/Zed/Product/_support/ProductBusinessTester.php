@@ -13,14 +13,20 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductDeletedTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
+use Orm\Zed\Product\Persistence\SpyProductAbstractStoreQuery;
 use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributesQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
+use PHPUnit\Framework\Constraint\Callback;
+use PHPUnit\Framework\MockObject\Rule\InvokedCount as InvokedCountMatcher;
 use Spryker\Zed\Locale\Business\LocaleFacadeInterface;
 use Spryker\Zed\Product\Business\ProductFacadeInterface;
+use Spryker\Zed\Product\Dependency\Facade\ProductToMessageBrokerInterfrace;
 use Spryker\Zed\Store\Business\StoreFacadeInterface;
 
 /**
@@ -178,6 +184,22 @@ class ProductBusinessTester extends Actor
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return int
+     */
+    public function deleteProductFromStore(
+        ProductConcreteTransfer $productConcreteTransfer,
+        StoreTransfer $storeTransfer
+    ): int {
+        return SpyProductAbstractStoreQuery::create()
+            ->filterByFkProductAbstract($productConcreteTransfer->getFkProductAbstract())
+            ->filterByFkStore($storeTransfer->getIdStore())
+            ->delete();
+    }
+
+    /**
      * @return bool
      */
     public function isPhp8(): bool
@@ -304,5 +326,103 @@ class ProductBusinessTester extends Actor
     protected function getProductAbstractQuery(): SpyProductAbstractQuery
     {
         return SpyProductAbstractQuery::create();
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\Rule\InvokedCount
+     */
+    protected function once(): InvokedCountMatcher
+    {
+        return new InvokedCountMatcher(1);
+    }
+
+    /**
+     * @param int $numberOfInvokations
+     *
+     * @return \PHPUnit\Framework\MockObject\Rule\InvokedCount
+     */
+    protected function exactly(int $numberOfInvokations): InvokedCountMatcher
+    {
+        return new InvokedCountMatcher($numberOfInvokations);
+    }
+
+    /**
+     * @param callable $callback
+     *
+     * @return \PHPUnit\Framework\Constraint\Callback
+     */
+    protected static function callback(callable $callback): Callback
+    {
+        return new Callback($callback);
+    }
+
+    /**
+     * @param \Spryker\Zed\Product\Dependency\Facade\ProductToMessageBrokerInterfrace|\PHPUnit\Framework\MockObject\MockObject $messageBrokerFacade
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param string $messageType
+     *
+     * @return void
+     */
+    public function assertProductSuccessfullyPublishedViaMessageBroker(
+        ProductToMessageBrokerInterfrace $messageBrokerFacade,
+        ProductConcreteTransfer $productConcreteTransfer,
+        string $messageType
+    ): void {
+        $storeReferences = [];
+        foreach ($this->getStoreFacade()->getAllStores() as $storeTransfer) {
+            if ($storeTransfer->getStoreReference()) {
+                $storeReferences[] = $storeTransfer->getStoreReference();
+            }
+        }
+
+        $messageBrokerFacade
+            ->expects($this->exactly(2))
+            ->method('sendMessage')
+            ->with($this->callback(function ($message) use ($productConcreteTransfer, $messageType, $storeReferences) {
+                $this->assertInstanceOf($messageType, $message);
+
+                $productConcreteFromMessage = $message->getProductsConcrete()->offsetGet(0);
+
+                $this->assertEquals(
+                    $productConcreteTransfer->getIdProductConcrete(),
+                    $productConcreteFromMessage->getIdProductConcrete(),
+                );
+                $this->assertEquals(
+                    $productConcreteTransfer->getSku(),
+                    $productConcreteFromMessage->getSku(),
+                );
+                $this->assertNotEmpty($message->getMessageAttributes()->getStoreReference());
+                $this->assertContains($message->getMessageAttributes()->getStoreReference(), $storeReferences);
+
+                return true;
+            }));
+    }
+
+    /**
+     * @param \Spryker\Zed\Product\Dependency\Facade\ProductToMessageBrokerInterfrace|\PHPUnit\Framework\MockObject\MockObject $messageBrokerFacade
+     * @param string $productConcreteSku
+     * @param string $messageType
+     *
+     * @return void
+     */
+    public function assertProductSuccessfullyUnpublishedViaMessageBroker(
+        ProductToMessageBrokerInterfrace $messageBrokerFacade,
+        string $productConcreteSku,
+        string $messageType
+    ): void {
+        $stores = $this->getStoreFacade()->getAllStores();
+
+        $messageBrokerFacade
+            ->expects($this->exactly(count($stores)))
+            ->method('sendMessage')
+            ->with($this->callback(function (ProductDeletedTransfer $message) use ($productConcreteSku, $messageType) {
+                $this->assertInstanceOf($messageType, $message);
+                $this->assertEquals(
+                    $productConcreteSku,
+                    $message->getSku(),
+                );
+
+                return true;
+            }));
     }
 }

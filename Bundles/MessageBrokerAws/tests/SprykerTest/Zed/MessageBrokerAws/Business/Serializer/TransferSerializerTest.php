@@ -13,6 +13,8 @@ use Generated\Shared\Transfer\MessageBrokerAwsTestMessageWithoutMessageAttribute
 use Generated\Shared\Transfer\MessageBrokerTestMessageTransfer;
 use Generated\Shared\Transfer\MessageBrokerTestMessageWithArrayTransfer;
 use Generated\Shared\Transfer\MessageBrokerTestMessageWithNestedArrayTransfer;
+use Generated\Shared\Transfer\MessageDataFilterConfigurationTransfer;
+use Spryker\Zed\MessageBrokerAws\Business\MessageDataFilter\MessageDataFilterInterface;
 use SprykerTest\Zed\MessageBrokerAws\MessageBrokerAwsBusinessTester;
 use stdClass;
 use Symfony\Component\Messenger\Envelope;
@@ -312,5 +314,70 @@ class TransferSerializerTest extends Unit
         $this->assertArrayHasKey('body', $decodedData);
         $this->assertArrayHasKey('bodyRaw', $decodedData);
         $this->assertArrayHasKey('headers', $decodedData);
+    }
+
+    /**
+     * @return void
+     */
+    public function testEncodeUsesFilterReturnValues(): void
+    {
+        $key = 'key';
+        $empty = null;
+
+        $message = (new MessageBrokerTestMessageTransfer())
+            ->setKey($key)
+            ->setEmpty($empty)
+            ->setDataFilterConfiguration(new MessageDataFilterConfigurationTransfer());
+
+        $filterData = [
+            MessageBrokerTestMessageTransfer::KEY => $key,
+            MessageBrokerTestMessageTransfer::EMPTY => $empty,
+        ];
+
+        $return1 = [
+            MessageBrokerTestMessageTransfer::KEY => $key,
+            MessageBrokerTestMessageTransfer::EMPTY => $empty,
+        ];
+        $return2 = [
+            MessageBrokerTestMessageTransfer::KEY => $key,
+        ];
+
+        $filterMock = $this->createMock(MessageDataFilterInterface::class);
+        $filterMock->expects($this->exactly(2))
+            ->method('filter')
+            ->withConsecutive(
+                [$filterData, $message],
+                [$return1, $message],
+            )
+            ->willReturn($return1, $return2);
+
+        $this->tester->mockFactoryMethod('getMessageDataFilters', [
+            $filterMock,
+            $filterMock,
+        ]);
+
+        $result = $this->encodeMessage($message);
+
+        $this->assertSame($return2, $result['bodyRaw']);
+    }
+
+    /**
+     * Helper function to encode message successfully
+     *
+     * @param \Generated\Shared\Transfer\MessageBrokerTestMessageTransfer $messageTransfer
+     *
+     * @return array<mixed> Encoded message
+     */
+    public function encodeMessage(MessageBrokerTestMessageTransfer $messageTransfer): array
+    {
+        $transferSerializer = $this->tester->getFactory()->createSerializer();
+
+        $messageAttributes = new MessageAttributesTransfer();
+        $messageAttributes->setTransferName('MessageBrokerTestMessage');
+        $messageTransfer->setMessageAttributes($messageAttributes);
+
+        $envelope = new Envelope($messageTransfer);
+
+        return $transferSerializer->encode($envelope);
     }
 }

@@ -58,4 +58,16 @@ interface MerchantProductOfferFacadeInterface
      * @return \Generated\Shared\Transfer\ShoppingListPreAddItemCheckResponseTransfer
      */
     public function checkShoppingListItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListPreAddItemCheckResponseTransfer;
+
+    /**
+     * Specification:
+     * - Expands product concrete collection with offers.
+     *
+     * @api
+     *
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
+     */
+    public function expandProductConcretesWithOffers(array $productConcreteTransfers): array;
 }

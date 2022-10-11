@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\ProductOfferResponseTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\ProductOffer\Business\Generator\ProductOfferReferenceGeneratorInterface;
+use Spryker\Zed\ProductOffer\Business\Trigger\ProductEventTriggerInterface;
 use Spryker\Zed\ProductOffer\Persistence\ProductOfferEntityManagerInterface;
 use Spryker\Zed\ProductOffer\Persistence\ProductOfferRepositoryInterface;
 use Spryker\Zed\ProductOffer\ProductOfferConfig;
@@ -43,6 +44,11 @@ class ProductOfferWriter implements ProductOfferWriterInterface
     protected $productOfferReferenceGenerator;
 
     /**
+     * @var \Spryker\Zed\ProductOffer\Business\Trigger\ProductEventTriggerInterface
+     */
+    protected $productEventTrigger;
+
+    /**
      * @var \Spryker\Zed\ProductOffer\ProductOfferConfig
      */
     protected $productOfferConfig;
@@ -61,6 +67,7 @@ class ProductOfferWriter implements ProductOfferWriterInterface
      * @param \Spryker\Zed\ProductOffer\Persistence\ProductOfferRepositoryInterface $productOfferRepository
      * @param \Spryker\Zed\ProductOffer\Persistence\ProductOfferEntityManagerInterface $productOfferEntityManager
      * @param \Spryker\Zed\ProductOffer\Business\Generator\ProductOfferReferenceGeneratorInterface $productOfferReferenceGenerator
+     * @param \Spryker\Zed\ProductOffer\Business\Trigger\ProductEventTriggerInterface $productEventTrigger
      * @param \Spryker\Zed\ProductOffer\ProductOfferConfig $productOfferConfig
      * @param array<\Spryker\Zed\ProductOfferExtension\Dependency\Plugin\ProductOfferPostCreatePluginInterface> $productOfferPostCreatePlugins
      * @param array<\Spryker\Zed\ProductOfferExtension\Dependency\Plugin\ProductOfferPostUpdatePluginInterface> $productOfferPostUpdatePlugins
@@ -69,6 +76,7 @@ class ProductOfferWriter implements ProductOfferWriterInterface
         ProductOfferRepositoryInterface $productOfferRepository,
         ProductOfferEntityManagerInterface $productOfferEntityManager,
         ProductOfferReferenceGeneratorInterface $productOfferReferenceGenerator,
+        ProductEventTriggerInterface $productEventTrigger,
         ProductOfferConfig $productOfferConfig,
         array $productOfferPostCreatePlugins = [],
         array $productOfferPostUpdatePlugins = []
@@ -76,6 +84,7 @@ class ProductOfferWriter implements ProductOfferWriterInterface
         $this->productOfferRepository = $productOfferRepository;
         $this->productOfferEntityManager = $productOfferEntityManager;
         $this->productOfferReferenceGenerator = $productOfferReferenceGenerator;
+        $this->productEventTrigger = $productEventTrigger;
         $this->productOfferConfig = $productOfferConfig;
         $this->productOfferPostCreatePlugins = $productOfferPostCreatePlugins;
         $this->productOfferPostUpdatePlugins = $productOfferPostUpdatePlugins;
@@ -89,10 +98,13 @@ class ProductOfferWriter implements ProductOfferWriterInterface
     public function create(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer
     {
         $productOfferTransfer = $this->setDefaultValues($productOfferTransfer);
-
-        return $this->getTransactionHandler()->handleTransaction(function () use ($productOfferTransfer) {
+        $productOfferTransfer = $this->getTransactionHandler()->handleTransaction(function () use ($productOfferTransfer) {
             return $this->executeCreateTransaction($productOfferTransfer);
         });
+
+        $this->productEventTrigger->triggerProductUpdateEvent($productOfferTransfer);
+
+        return $productOfferTransfer;
     }
 
     /**
@@ -116,6 +128,8 @@ class ProductOfferWriter implements ProductOfferWriterInterface
         $productOfferTransfer = $this->getTransactionHandler()->handleTransaction(function () use ($productOfferTransfer) {
             return $this->executeUpdateTransaction($productOfferTransfer);
         });
+
+        $this->productEventTrigger->triggerProductUpdateEvent($productOfferTransfer);
 
         return (new ProductOfferResponseTransfer())
             ->setIsSuccessful(true)

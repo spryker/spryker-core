@@ -13,7 +13,7 @@ use Spryker\Zed\Asset\Business\AssetBusinessFactory;
 use Spryker\Zed\Asset\Business\AssetFacadeInterface;
 use Spryker\Zed\Asset\Business\Exception\InvalidAssetException;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\StoreReference\Business\Exception\StoreReferenceNotFoundException;
+use Spryker\Zed\Store\Business\Exception\StoreReferenceNotFoundException;
 use SprykerTest\Zed\Asset\AssetBusinessTester;
 
 /**

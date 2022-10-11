@@ -78,4 +78,11 @@ interface ProductReviewEvents
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_REVIEW_DELETE = 'Entity.spy_product_review.delete';
+
+    /**
+     * @uses \Spryker\Zed\Product\Dependency\ProductEvents::PRODUCT_CONCRETE_UPDATE
+     *
+     * @var string
+     */
+    public const PRODUCT_CONCRETE_UPDATE = 'Product.product_concrete.update';
 }

@@ -10,7 +10,6 @@ namespace Spryker\Zed\AppCatalogGui;
 use Spryker\Zed\AppCatalogGui\Dependency\Facade\AppCatalogGuiToLocaleFacadeBridge;
 use Spryker\Zed\AppCatalogGui\Dependency\Facade\AppCatalogGuiToOauthClientFacadeBridge;
 use Spryker\Zed\AppCatalogGui\Dependency\Facade\AppCatalogGuiToStoreFacadeBridge;
-use Spryker\Zed\AppCatalogGui\Dependency\Facade\AppCatalogGuiToStoreReferenceFacadeBridge;
 use Spryker\Zed\AppCatalogGui\Dependency\Facade\AppCatalogGuiToTranslatorFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -41,11 +40,6 @@ class AppCatalogGuiDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_STORE = 'FACADE_STORE';
 
     /**
-     * @var string
-     */
-    public const FACADE_STORE_REFERENCE = 'FACADE_STORE_REFERENCE';
-
-    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -68,7 +62,6 @@ class AppCatalogGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addLocaleFacade($container);
         $container = $this->addTranslatorFacade($container);
         $container = $this->addStoreFacade($container);
-        $container = $this->addStoreReferenceFacade($container);
 
         return $container;
     }
@@ -82,20 +75,6 @@ class AppCatalogGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_STORE, function (Container $container) {
             return new AppCatalogGuiToStoreFacadeBridge($container->getLocator()->store()->facade());
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addStoreReferenceFacade(Container $container): Container
-    {
-        $container->set(static::FACADE_STORE_REFERENCE, function (Container $container) {
-            return new AppCatalogGuiToStoreReferenceFacadeBridge($container->getLocator()->storeReference()->facade());
         });
 
         return $container;

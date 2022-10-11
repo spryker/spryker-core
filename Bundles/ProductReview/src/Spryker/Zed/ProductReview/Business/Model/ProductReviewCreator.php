@@ -12,6 +12,7 @@ use Orm\Zed\ProductReview\Persistence\Map\SpyProductReviewTableMap;
 use Orm\Zed\ProductReview\Persistence\SpyProductReview;
 use Spryker\Client\ProductReview\ProductReviewClientInterface;
 use Spryker\Shared\ProductReview\Exception\RatingOutOfRangeException;
+use Spryker\Zed\ProductReview\Business\Trigger\ProductEventTriggerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class ProductReviewCreator implements ProductReviewCreatorInterface
@@ -24,11 +25,20 @@ class ProductReviewCreator implements ProductReviewCreatorInterface
     protected $productReviewClient;
 
     /**
-     * @param \Spryker\Client\ProductReview\ProductReviewClientInterface $productReviewClient
+     * @var \Spryker\Zed\ProductReview\Business\Trigger\ProductEventTriggerInterface
      */
-    public function __construct(ProductReviewClientInterface $productReviewClient)
-    {
+    protected $productEventTrigger;
+
+    /**
+     * @param \Spryker\Client\ProductReview\ProductReviewClientInterface $productReviewClient
+     * @param \Spryker\Zed\ProductReview\Business\Trigger\ProductEventTriggerInterface $productEventTrigger
+     */
+    public function __construct(
+        ProductReviewClientInterface $productReviewClient,
+        ProductEventTriggerInterface $productEventTrigger
+    ) {
         $this->productReviewClient = $productReviewClient;
+        $this->productEventTrigger = $productEventTrigger;
     }
 
     /**
@@ -55,6 +65,8 @@ class ProductReviewCreator implements ProductReviewCreatorInterface
         $productReviewEntity = $this->createProductReviewEntity($productReviewTransfer);
 
         $this->mapEntityToTransfer($productReviewTransfer, $productReviewEntity);
+
+        $this->productEventTrigger->triggerProductUpdateEvent($productReviewTransfer);
 
         return $productReviewTransfer;
     }

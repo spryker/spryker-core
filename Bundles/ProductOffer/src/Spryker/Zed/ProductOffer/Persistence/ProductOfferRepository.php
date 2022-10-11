@@ -48,6 +48,9 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
         $productOfferIds = [];
 
         foreach ($productOfferEntities as $productOfferEntity) {
+            $idProductConcrete = $productOfferEntity->getVirtualColumn(static::ID_PRODUCT_CONCRETE);
+            $productOfferEntity->setVirtualColumn(static::ID_PRODUCT_CONCRETE, (int)$idProductConcrete);
+
             $productOfferIds[] = $productOfferEntity->getIdProductOffer();
         }
 

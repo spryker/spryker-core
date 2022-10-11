@@ -864,7 +864,6 @@
         "spryker/storage-redis": "*",
         "spryker/store": "*",
         "spryker/store-gui": "*",
-        "spryker/store-reference": "*",
         "spryker/stores-rest-api": "*",
         "spryker/symfony": "*",
         "spryker/synchronization": "*",

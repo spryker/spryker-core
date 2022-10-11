@@ -8,9 +8,16 @@
 namespace SprykerTest\Zed\ProductOffer;
 
 use Codeception\Actor;
+use Codeception\Stub;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
+use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\ProductOffer\Business\ProductOfferFacade;
+use Spryker\Zed\ProductOffer\Business\ProductOfferFacadeInterface;
+use Spryker\Zed\ProductOffer\Dependency\Facade\ProductOfferToStoreFacadeInterface;
 use Spryker\Zed\ProductOffer\Persistence\ProductOfferRepository;
 use Spryker\Zed\ProductOffer\Persistence\ProductOfferRepositoryInterface;
+use Spryker\Zed\ProductOffer\ProductOfferDependencyProvider;
 
 /**
  * @method void wantToTest($text)
@@ -53,5 +60,27 @@ class ProductOfferBusinessTester extends Actor
     public function getProductOfferRepository(): ProductOfferRepositoryInterface
     {
         return new ProductOfferRepository();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOffer\Business\ProductOfferFacadeInterface
+     */
+    public function createProductOfferFacadeWithMockedStoreFacade(): ProductOfferFacadeInterface
+    {
+        $storeFacadeMock = Stub::makeEmpty(ProductOfferToStoreFacadeInterface::class);
+        $storeFacadeMock->method('getStoreByName')
+            ->willReturnCallback(function (string $storeName) {
+                return (new StoreTransfer())->setName($storeName);
+            });
+
+        $this->mockFactoryMethod('getStoreFacade', $storeFacadeMock);
+        $factory = $this->mockFactoryMethod('getRepository', $this->getProductOfferRepository());
+        $factory->setConfig($this->getModuleConfig());
+
+        $container = new Container();
+        $container->set(ProductOfferDependencyProvider::PLUGINS_PRODUCT_OFFER_EXPANDER, []);
+        $factory->setContainer($container);
+
+        return (new ProductOfferFacade())->setFactory($factory);
     }
 }

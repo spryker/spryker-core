@@ -213,6 +213,21 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
     }
 
     /**
+     * @param array<int> $productAbstractIds
+     *
+     * @return array<int>
+     */
+    public function findProductConcreteIdsByProductAbstractIds(array $productAbstractIds): array
+    {
+        return $this->getFactory()
+            ->createProductQuery()
+            ->filterByFkProductAbstract_In($productAbstractIds)
+            ->select([SpyProductTableMap::COL_ID_PRODUCT])
+            ->find()
+            ->toArray();
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return bool
@@ -786,5 +801,32 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
         }
 
         return $result;
+    }
+
+    /**
+     * @param int $productExportPublishChunkSize
+     * @param int $idStore
+     * @param int $lastProductId
+     *
+     * @return array<int>
+     */
+    public function getAllProductConcreteIdsWithLimit(
+        int $productExportPublishChunkSize,
+        int $idStore,
+        int $lastProductId
+    ): array {
+        return $this->getFactory()
+            ->createProductQuery()
+            ->select(SpyProductTableMap::COL_ID_PRODUCT)
+            ->where(SpyProductTableMap::COL_ID_PRODUCT . ' > ?', $lastProductId)
+            ->useSpyProductAbstractQuery()
+                ->useSpyProductAbstractStoreQuery()
+                    ->filterByFkStore($idStore)
+                ->endUse()
+            ->endUse()
+            ->limit($productExportPublishChunkSize)
+            ->orderBy(SpyProductTableMap::COL_ID_PRODUCT)
+            ->find()
+            ->toArray();
     }
 }

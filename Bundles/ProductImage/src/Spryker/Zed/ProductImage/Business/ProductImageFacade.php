@@ -329,4 +329,23 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
             ->createProductImageSetResolver()
             ->resolveProductImageSetsForLocale($productImageSetTransfers, $localeName);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function mergeProductAbstractImageSetsIntoProductConcrete(
+        ProductConcreteTransfer $productConcreteTransfer,
+        ProductAbstractTransfer $productAbstractTransfer
+    ): ProductConcreteTransfer {
+        return $this->getFactory()
+            ->createProductImageSetResolver()
+            ->mergeProductAbstractImagesIntoProductConcrete($productConcreteTransfer, $productAbstractTransfer);
+    }
 }

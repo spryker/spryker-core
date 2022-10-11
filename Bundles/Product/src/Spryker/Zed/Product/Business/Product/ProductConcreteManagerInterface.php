@@ -9,6 +9,7 @@ namespace Spryker\Zed\Product\Business\Product;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generator;
 
 interface ProductConcreteManagerInterface
 {
@@ -166,4 +167,12 @@ interface ProductConcreteManagerInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function notifyAfterCreateObservers(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer;
+
+    /**
+     * @param int $chunkSize
+     * @param int $idStore
+     *
+     * @return \Generator
+     */
+    public function getAllProductConcreteIdsByChunks(int $chunkSize, int $idStore): Generator;
 }

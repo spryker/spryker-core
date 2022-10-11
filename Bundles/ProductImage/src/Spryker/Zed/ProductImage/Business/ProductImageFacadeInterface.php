@@ -266,4 +266,20 @@ interface ProductImageFacadeInterface
      * @return \ArrayObject<int, \Generated\Shared\Transfer\ProductImageSetTransfer>
      */
     public function resolveProductImageSetsForLocale(ArrayObject $productImageSetTransfers, string $localeName): ArrayObject;
+
+    /**
+     * Specification:
+     * - Merges image data from ProductAbstractTransfer into ProductConcreteTransfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function mergeProductAbstractImageSetsIntoProductConcrete(
+        ProductConcreteTransfer $productConcreteTransfer,
+        ProductAbstractTransfer $productAbstractTransfer
+    ): ProductConcreteTransfer;
 }

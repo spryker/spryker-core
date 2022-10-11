@@ -38,4 +38,11 @@ interface ProductOfferEvents
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_OFFER_UPDATE = 'Entity.spy_product_offer.update';
+
+    /**
+     * @uses \Spryker\Zed\Product\Dependency\ProductEvents::PRODUCT_CONCRETE_UPDATE
+     *
+     * @var string
+     */
+    public const PRODUCT_CONCRETE_UPDATE = 'Product.product_concrete.update';
 }

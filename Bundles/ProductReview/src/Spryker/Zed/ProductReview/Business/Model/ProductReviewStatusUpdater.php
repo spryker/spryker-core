@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductReview\Business\Model;
 use Generated\Shared\Transfer\ProductReviewTransfer;
 use Orm\Zed\ProductReview\Persistence\Base\SpyProductReview;
 use Spryker\Zed\ProductReview\Business\Model\Touch\ProductReviewTouchInterface;
+use Spryker\Zed\ProductReview\Business\Trigger\ProductEventTriggerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 class ProductReviewStatusUpdater implements ProductReviewStatusUpdaterInterface
@@ -27,13 +28,23 @@ class ProductReviewStatusUpdater implements ProductReviewStatusUpdaterInterface
     protected $productReviewTouch;
 
     /**
+     * @var \Spryker\Zed\ProductReview\Business\Trigger\ProductEventTriggerInterface
+     */
+    protected $productEventTrigger;
+
+    /**
      * @param \Spryker\Zed\ProductReview\Business\Model\ProductReviewEntityReaderInterface $productReviewEntityReader
      * @param \Spryker\Zed\ProductReview\Business\Model\Touch\ProductReviewTouchInterface $productReviewTouch
+     * @param \Spryker\Zed\ProductReview\Business\Trigger\ProductEventTriggerInterface $productEventTrigger
      */
-    public function __construct(ProductReviewEntityReaderInterface $productReviewEntityReader, ProductReviewTouchInterface $productReviewTouch)
-    {
+    public function __construct(
+        ProductReviewEntityReaderInterface $productReviewEntityReader,
+        ProductReviewTouchInterface $productReviewTouch,
+        ProductEventTriggerInterface $productEventTrigger
+    ) {
         $this->productReviewEntityReader = $productReviewEntityReader;
         $this->productReviewTouch = $productReviewTouch;
+        $this->productEventTrigger = $productEventTrigger;
     }
 
     /**
@@ -64,6 +75,8 @@ class ProductReviewStatusUpdater implements ProductReviewStatusUpdaterInterface
         $this->mapEntityToTransfer($productReviewTransfer, $productReviewEntity);
 
         $this->touchProductReviewEntity($productReviewTransfer);
+
+        $this->productEventTrigger->triggerProductUpdateEvent($productReviewTransfer);
 
         return $productReviewTransfer;
     }

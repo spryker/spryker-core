@@ -7,9 +7,13 @@
 
 namespace Spryker\Zed\Store\Business;
 
+use Generated\Shared\Transfer\AccessTokenRequestTransfer;
+use Generated\Shared\Transfer\MessageAttributesTransfer;
+use Generated\Shared\Transfer\MessageValidationResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -178,5 +182,70 @@ class StoreFacade extends AbstractFacade implements StoreFacadeInterface
         return $this->getFactory()
             ->createStoreReader()
             ->getStoresAvailableForCurrentPersistence();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $storeReference
+     *
+     * @throws \Spryker\Zed\Store\Business\Exception\StoreReferenceNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    public function getStoreByStoreReference(string $storeReference): StoreTransfer
+    {
+        return $this->getFactory()->createStoreReader()->getStoreByStoreReference($storeReference);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AccessTokenRequestTransfer $accessTokenRequestTransfer
+
+     * @throws \Spryker\Zed\Store\Business\Exception\StoreReferenceNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\AccessTokenRequestTransfer
+     */
+    public function expandAccessTokenRequest(AccessTokenRequestTransfer $accessTokenRequestTransfer): AccessTokenRequestTransfer
+    {
+        return $this->getFactory()
+            ->createStoreReferenceAccessTokenRequestExpander()
+            ->expand($accessTokenRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $messageTransfer
+     *
+     * @return \Generated\Shared\Transfer\MessageValidationResponseTransfer
+     */
+    public function validateMessageTransfer(TransferInterface $messageTransfer): MessageValidationResponseTransfer
+    {
+        return $this->getFactory()->createMessageTransferValidator()->validate($messageTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MessageAttributesTransfer $messageAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\MessageAttributesTransfer
+     */
+    public function expandMessageAttributes(
+        MessageAttributesTransfer $messageAttributesTransfer
+    ): MessageAttributesTransfer {
+        return $this->getFactory()
+            ->createCurrentStoreReferenceMessageAttributesExpander()
+            ->expand($messageAttributesTransfer);
     }
 }

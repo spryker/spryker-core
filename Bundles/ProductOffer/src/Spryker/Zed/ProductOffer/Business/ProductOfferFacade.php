@@ -38,7 +38,7 @@ class ProductOfferFacade extends AbstractFacade implements ProductOfferFacadeInt
      */
     public function get(ProductOfferCriteriaTransfer $productOfferCriteria): ProductOfferCollectionTransfer
     {
-        return $this->getRepository()->get($productOfferCriteria);
+        return $this->getFactory()->createProductOfferReader()->get($productOfferCriteria);
     }
 
     /**

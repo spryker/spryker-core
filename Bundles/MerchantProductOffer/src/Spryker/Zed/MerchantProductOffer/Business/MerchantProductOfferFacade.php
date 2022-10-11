@@ -69,4 +69,20 @@ class MerchantProductOfferFacade extends AbstractFacade implements MerchantProdu
             ->createMerchantProductOfferChecker()
             ->check($shoppingListItemTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
+     */
+    public function expandProductConcretesWithOffers(array $productConcreteTransfers): array
+    {
+        return $this->getFactory()
+            ->createProductConcreteOfferExpander()
+            ->expandProductConcretesWithOffers($productConcreteTransfers);
+    }
 }

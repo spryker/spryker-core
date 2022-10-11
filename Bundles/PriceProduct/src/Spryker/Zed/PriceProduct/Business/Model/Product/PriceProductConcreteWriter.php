@@ -7,10 +7,13 @@
 
 namespace Spryker\Zed\PriceProduct\Business\Model\Product;
 
+use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReaderInterface;
+use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToEventInterface;
+use Spryker\Zed\PriceProduct\Dependency\PriceProductEvents;
 use Spryker\Zed\PriceProduct\Persistence\PriceProductEntityManagerInterface;
 use Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface;
 use Spryker\Zed\PriceProduct\PriceProductConfig;
@@ -56,6 +59,11 @@ class PriceProductConcreteWriter extends BaseProductPriceWriter implements Price
     protected $priceProductStoreWriter;
 
     /**
+     * @var \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToEventInterface
+     */
+    protected $eventFacade;
+
+    /**
      * @param \Spryker\Zed\PriceProduct\Business\Model\PriceType\PriceProductTypeReaderInterface $priceTypeReader
      * @param \Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface $priceProductQueryContainer
      * @param \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductDefaultWriterInterface $priceProductDefaultWriter
@@ -63,6 +71,7 @@ class PriceProductConcreteWriter extends BaseProductPriceWriter implements Price
      * @param \Spryker\Zed\PriceProduct\Persistence\PriceProductEntityManagerInterface $priceProductEntityManager
      * @param \Spryker\Zed\PriceProduct\PriceProductConfig $config
      * @param \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductStoreWriterInterface $priceProductStoreWriter
+     * @param \Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToEventInterface $eventFacade
      */
     public function __construct(
         PriceProductTypeReaderInterface $priceTypeReader,
@@ -71,7 +80,8 @@ class PriceProductConcreteWriter extends BaseProductPriceWriter implements Price
         array $priceDimensionConcreteSaverPlugins,
         PriceProductEntityManagerInterface $priceProductEntityManager,
         PriceProductConfig $config,
-        PriceProductStoreWriterInterface $priceProductStoreWriter
+        PriceProductStoreWriterInterface $priceProductStoreWriter,
+        PriceProductToEventInterface $eventFacade
     ) {
         $this->priceTypeReader = $priceTypeReader;
         $this->priceProductQueryContainer = $priceProductQueryContainer;
@@ -80,6 +90,7 @@ class PriceProductConcreteWriter extends BaseProductPriceWriter implements Price
         $this->priceProductEntityManager = $priceProductEntityManager;
         $this->config = $config;
         $this->priceProductStoreWriter = $priceProductStoreWriter;
+        $this->eventFacade = $eventFacade;
     }
 
     /**
@@ -112,6 +123,8 @@ class PriceProductConcreteWriter extends BaseProductPriceWriter implements Price
 
             $this->executePersistProductConcretePrice($productConcreteTransfer, $priceProductTransfer);
         }
+
+        $this->triggerProductUpdateEvent($productConcreteTransfer->getIdProductConcreteOrFail());
 
         return $productConcreteTransfer;
     }
@@ -210,5 +223,17 @@ class PriceProductConcreteWriter extends BaseProductPriceWriter implements Price
         $priceProductTransfer->setIdPriceProduct($priceProductEntity->getIdPriceProduct());
 
         return $priceProductTransfer;
+    }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return void
+     */
+    protected function triggerProductUpdateEvent(int $idProductConcrete): void
+    {
+        $productUpdatedEvent = (new EventEntityTransfer())->setId($idProductConcrete);
+
+        $this->eventFacade->trigger(PriceProductEvents::PRODUCT_CONCRETE_UPDATE, $productUpdatedEvent);
     }
 }

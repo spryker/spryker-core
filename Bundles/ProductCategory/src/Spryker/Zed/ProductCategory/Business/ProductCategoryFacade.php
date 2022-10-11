@@ -185,4 +185,20 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
     {
         return $this->getRepository()->getProductCategoryCollection($productCategoryCriteriaTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
+     */
+    public function expandProductConcreteTransfersWithProductCategories(array $productConcreteTransfers): array
+    {
+        return $this->getFactory()
+            ->createProductConcreteExpander()
+            ->expandProductConcreteWithProductCategories($productConcreteTransfers);
+    }
 }

@@ -56,6 +56,7 @@ class ProductReviewDataHelper extends Module
      * @param string $customerReference
      * @param int $idProductAbstract
      * @param string $productReviewStatus
+     * @param int|null $productReviewRating
      *
      * @return \Generated\Shared\Transfer\ProductReviewTransfer
      */
@@ -63,7 +64,8 @@ class ProductReviewDataHelper extends Module
         int $idLocale,
         string $customerReference,
         int $idProductAbstract,
-        string $productReviewStatus = SpyProductReviewTableMap::COL_STATUS_PENDING
+        string $productReviewStatus = SpyProductReviewTableMap::COL_STATUS_PENDING,
+        ?int $productReviewRating = null
     ): ProductReviewTransfer {
         $productReviewTransfer = (new ProductReviewBuilder([
             ProductReviewTransfer::STATUS => $productReviewStatus,
@@ -71,6 +73,10 @@ class ProductReviewDataHelper extends Module
             ProductReviewTransfer::CUSTOMER_REFERENCE => $customerReference,
             ProductReviewTransfer::FK_PRODUCT_ABSTRACT => $idProductAbstract,
         ]))->build();
+
+        if ($productReviewRating) {
+            $productReviewTransfer->setRating($productReviewRating);
+        }
 
         $productReviewTransfer = $this->saveProductReview($productReviewTransfer);
 

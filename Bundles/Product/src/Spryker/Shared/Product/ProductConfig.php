@@ -33,4 +33,9 @@ interface ProductConfig
      * @var string
      */
     public const VARIANT_LEAF_NODE_ID = 'id_product_concrete';
+
+    /**
+     * @var string
+     */
+    public const COLUMN_FK_PRODUCT_ABSTRACT = 'fk_product_abstract';
 }

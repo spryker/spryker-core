@@ -12,6 +12,7 @@
         <property name="storesWithSharedPersistence" type="array" singular="storeWithSharedPersistence"/>
         <property name="countries" type="array" singular="country"/>
         <property name="timezone" type="string"/>
+        <property name="storeReference" type="string"/>
     </transfer>
 
     <transfer name="StoreRelation">
@@ -30,6 +31,27 @@
 
     <transfer name="QuoteError">
         <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="MessageBrokerTestMessage">
+        <property name="messageAttributes" type="MessageAttributes"/>
+    </transfer>
+
+    <transfer name="MessageAttributes">
+        <property name="storeReference" type="string"/>
+        <property name="emitter" type="string"/>
+    </transfer>
+
+    <transfer name="AccessTokenRequest">
+        <property name="accessTokenRequestOptions" type="AccessTokenRequestOptions"/>
+    </transfer>
+
+    <transfer name="AccessTokenRequestOptions">
+        <property name="storeReference" type="string"/>
+    </transfer>
+
+    <transfer name="MessageValidationResponse">
+        <property name="isValid" type="bool"/>
     </transfer>
 
 </transfers>

@@ -14,15 +14,8 @@
         "priority": "2"
     },
     {
-        "fileName": "src/Spryker/Zed/Payment/Dependency/Facade/PaymentToStoreReferenceFacadeBridge.php",
+        "fileName": "src/Spryker/Zed/Payment/Dependency/Facade/PaymentToStoreFacadeBridge.php",
         "description": "Bridges: Method `getStoreByStoreReference()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
-        "rule": "BridgeFacadeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/Payment/Dependency/Facade/PaymentToStoreReferenceFacadeBridge.php",
-        "description": "Bridges: Method `getStoreByStoreName()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"

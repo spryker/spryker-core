@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\PriceProduct\Communication\Plugin\DefaultPriceQueryCriteriaPlugin;
 use Spryker\Zed\PriceProduct\Dependency\External\PriceProductToValidationAdapter;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToCurrencyFacadeBridge;
+use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToEventBridge;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToPriceFacadeBridge;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToProductFacadeBridge;
 use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToStoreFacadeBridge;
@@ -23,6 +24,11 @@ use Spryker\Zed\PriceProduct\Dependency\Service\PriceProductToUtilEncodingServic
  */
 class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
+    public const FACADE_EVENT = 'FACADE_EVENT';
+
     /**
      * @var string
      */
@@ -120,6 +126,7 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
+        $container = $this->addEventFacade($container);
         $container = $this->addTouchFacade($container);
         $container = $this->addProductFacade($container);
         $container = $this->addCurrencyFacade($container);
@@ -149,6 +156,20 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
     public function providePersistenceLayerDependencies(Container $container)
     {
         $container = $this->addPriceDimensionQueryCriteriaPlugins($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addEventFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_EVENT, function (Container $container) {
+            return new PriceProductToEventBridge($container->getLocator()->event()->facade());
+        });
 
         return $container;
     }

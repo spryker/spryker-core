@@ -72,6 +72,13 @@ interface ProductRepositoryInterface
     public function findProductConcreteIdsByAbstractProductId(int $idProductAbstract): array;
 
     /**
+     * @param array<int> $productAbstractIds
+     *
+     * @return array<int>
+     */
+    public function findProductConcreteIdsByProductAbstractIds(array $productAbstractIds): array;
+
+    /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return bool
@@ -194,4 +201,17 @@ interface ProductRepositoryInterface
      * @return array<int, array<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer>>
      */
     public function getLocalizedAttributesGroupedByIdProduct(array $productIds): array;
+
+    /**
+     * @param int $productExportPublishChunkSize
+     * @param int $idStore
+     * @param int $lastProductId
+     *
+     * @return array<int>
+     */
+    public function getAllProductConcreteIdsWithLimit(
+        int $productExportPublishChunkSize,
+        int $idStore,
+        int $lastProductId
+    ): array;
 }

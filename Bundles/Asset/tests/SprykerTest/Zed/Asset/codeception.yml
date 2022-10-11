@@ -25,4 +25,4 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
                 - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
-                - \SprykerTest\Zed\StoreReference\Helper\StoreReferenceHelper
+                - \SprykerTest\Shared\Store\Helper\StoreReferenceHelper

@@ -12,12 +12,14 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\SpyProductEntityTransfer;
+use Generator;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
 use Spryker\Zed\Product\Business\Product\Assertion\ProductAbstractAssertionInterface;
 use Spryker\Zed\Product\Business\Product\Assertion\ProductConcreteAssertionInterface;
 use Spryker\Zed\Product\Business\Product\Observer\AbstractProductConcreteManagerSubject;
+use Spryker\Zed\Product\Business\Product\Trigger\ProductEventTriggerInterface;
 use Spryker\Zed\Product\Business\Transfer\ProductTransferMapperInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface;
@@ -80,6 +82,11 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     protected $productConcreteExpanderPlugins;
 
     /**
+     * @var \Spryker\Zed\Product\Business\Product\Trigger\ProductEventTriggerInterface
+     */
+    protected $productEventTrigger;
+
+    /**
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      * @param \Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface $touchFacade
      * @param \Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface $localeFacade
@@ -89,6 +96,7 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
      * @param \Spryker\Zed\Product\Business\Transfer\ProductTransferMapperInterface $productTransferMapper
      * @param \Spryker\Zed\Product\Persistence\ProductRepositoryInterface $productRepository
      * @param array<\Spryker\Zed\ProductExtension\Dependency\Plugin\ProductConcreteExpanderPluginInterface> $productConcreteExpanderPlugins
+     * @param \Spryker\Zed\Product\Business\Product\Trigger\ProductEventTriggerInterface $productEventTrigger
      */
     public function __construct(
         ProductQueryContainerInterface $productQueryContainer,
@@ -99,7 +107,8 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
         AttributeEncoderInterface $attributeEncoder,
         ProductTransferMapperInterface $productTransferMapper,
         ProductRepositoryInterface $productRepository,
-        array $productConcreteExpanderPlugins
+        array $productConcreteExpanderPlugins,
+        ProductEventTriggerInterface $productEventTrigger
     ) {
         $this->productQueryContainer = $productQueryContainer;
         $this->touchFacade = $touchFacade;
@@ -110,6 +119,7 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
         $this->productTransferMapper = $productTransferMapper;
         $this->productRepository = $productRepository;
         $this->productConcreteExpanderPlugins = $productConcreteExpanderPlugins;
+        $this->productEventTrigger = $productEventTrigger;
     }
 
     /**
@@ -450,9 +460,7 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
             ->requireIdProductConcrete()
             ->getIdProductConcrete();
 
-        $idProductAbstract = $productConcreteTransfer
-            ->requireFkProductAbstract()
-            ->getFkProductAbstract();
+        $idProductAbstract = $productConcreteTransfer->getFkProductAbstractOrFail();
 
         $this->productAbstractAssertion->assertProductExists($idProductAbstract);
         $this->productConcreteAssertion->assertProductExists($idProduct);
@@ -468,6 +476,8 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
         $this->persistProductConcreteLocalizedAttributes($productConcreteTransfer);
 
         $this->notifyAfterUpdateObservers($productConcreteTransfer);
+
+        $this->productEventTrigger->triggerProductUpdateEvents([$idProductAbstract]);
 
         return $idProductConcrete;
     }
@@ -662,6 +672,33 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     public function getProductConcretesByConcreteSkus(array $productConcreteSkus): array
     {
         return $this->productRepository->getProductConcretesByConcreteSkus($productConcreteSkus);
+    }
+
+    /**
+     * @param int $chunkSize
+     * @param int $idStore
+     *
+     * @return \Generator
+     */
+    public function getAllProductConcreteIdsByChunks(int $chunkSize, int $idStore): Generator
+    {
+        $lastProductId = 0;
+
+        while (true) {
+            $productIds = $this->productRepository->getAllProductConcreteIdsWithLimit(
+                $chunkSize,
+                $idStore,
+                $lastProductId,
+            );
+
+            if (!$productIds) {
+                break;
+            }
+
+            $lastProductId = end($productIds);
+
+            yield $productIds;
+        }
     }
 
     /**

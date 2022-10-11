@@ -68,4 +68,11 @@ interface ProductCategoryEvents
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_CATEGORY_DELETE = 'Entity.spy_product_category.delete';
+
+    /**
+     * @uses \Spryker\Zed\Product\Dependency\ProductEvents::PRODUCT_CONCRETE_UPDATE
+     *
+     * @var string
+     */
+    public const PRODUCT_CONCRETE_UPDATE = 'Product.product_concrete.update';
 }

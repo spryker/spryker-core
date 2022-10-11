@@ -15,12 +15,15 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Spryker\Service\UtilText\UtilTextService;
+use Spryker\Zed\Event\Business\EventFacade;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\Product\Business\Product\ProductManager;
+use Spryker\Zed\Product\Business\Product\Trigger\ProductEventTrigger;
 use Spryker\Zed\Product\Business\Product\Url\ProductUrlManager;
 use Spryker\Zed\Product\Business\ProductBusinessFactory;
 use Spryker\Zed\Product\Business\ProductFacade;
+use Spryker\Zed\Product\Dependency\Facade\ProductToEventBridge;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleBridge;
 use Spryker\Zed\Product\Dependency\Facade\ProductToTouchBridge;
 use Spryker\Zed\Product\Dependency\Facade\ProductToUrlBridge;
@@ -122,6 +125,11 @@ class FacadeTestAbstract extends Unit
     protected $touchFacade;
 
     /**
+     * @var \Spryker\Zed\Event\Business\EventFacade
+     */
+    protected $eventFacade;
+
+    /**
      * @var \Spryker\Zed\Product\Business\Product\ProductManagerInterface
      */
     protected $productManager;
@@ -150,6 +158,11 @@ class FacadeTestAbstract extends Unit
      * @var \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     protected $productConcreteTransfer;
+
+    /**
+     * @var \Spryker\Zed\Product\Business\Product\Trigger\ProductEventTrigger
+     */
+    protected $productEventTrigger;
 
     /**
      * @var \SprykerTest\Zed\Product\ProductBusinessTester
@@ -183,12 +196,16 @@ class FacadeTestAbstract extends Unit
         $this->utilTextService = new UtilTextService();
         $this->productQueryContainer = new ProductQueryContainer();
         $this->touchQueryContainer = new TouchQueryContainer();
+        $this->eventFacade = new EventFacade();
 
         $this->productFacade->setFactory($productBusinessFactory);
 
         $urlBridge = new ProductToUrlBridge($this->urlFacade);
         $touchBridge = new ProductToTouchBridge($this->touchFacade);
         $localeBridge = new ProductToLocaleBridge($this->localeFacade);
+        $eventBridge = new ProductToEventBridge($this->eventFacade);
+
+        $this->productEventTrigger = new ProductEventTrigger($eventBridge);
 
         $this->productConcreteManager = $productBusinessFactory->createProductConcreteManager();
 
@@ -202,12 +219,14 @@ class FacadeTestAbstract extends Unit
             $localeBridge,
             $this->productQueryContainer,
             $urlGenerator,
+            $this->productEventTrigger,
         );
 
         $this->productManager = new ProductManager(
             $this->productAbstractManager,
             $this->productConcreteManager,
             $this->productQueryContainer,
+            $this->productEventTrigger,
         );
     }
 

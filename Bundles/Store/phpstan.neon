@@ -3,3 +3,4 @@ parameters:
     checkMissingIterableValueType: false
     ignoreErrors:
         - '#Cannot access offset string on Spryker\\Service\\Container\\ContainerInterface.#'
+        - '#Call to an undefined method Spryker\\Shared\\Kernel\\Transfer\\TransferInterface::getMessageAttributes\(\).#'

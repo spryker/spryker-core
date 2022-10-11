@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\ProductReview\Business\ProductReviewBusinessFactory getFactory()
+ * @method \Spryker\Zed\ProductReview\Persistence\ProductReviewRepositoryInterface getRepository()
  */
 class ProductReviewFacade extends AbstractFacade implements ProductReviewFacadeInterface
 {
@@ -77,5 +78,21 @@ class ProductReviewFacade extends AbstractFacade implements ProductReviewFacadeI
         $this->getFactory()
             ->createProductReviewDeleter()
             ->deleteProductReview($productReviewTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
+     */
+    public function expandProductConcretesWithRating(array $productConcreteTransfers): array
+    {
+        return $this->getFactory()
+            ->createProductConcreteRatingExpander()
+            ->expandProductConcretesWithRating($productConcreteTransfers);
     }
 }

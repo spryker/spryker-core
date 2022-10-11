@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\ProductOffer;
 
+use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
 use Orm\Zed\Store\Persistence\SpyStoreQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\ProductOffer\Dependency\Facade\ProductOfferToEventBridge;
 use Spryker\Zed\ProductOffer\Dependency\Facade\ProductOfferToMessengerFacadeBridge;
 use Spryker\Zed\ProductOffer\Dependency\Facade\ProductOfferToStoreFacadeBridge;
 
@@ -18,6 +20,11 @@ use Spryker\Zed\ProductOffer\Dependency\Facade\ProductOfferToStoreFacadeBridge;
  */
 class ProductOfferDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
+    public const FACADE_EVENT = 'FACADE_EVENT';
+
     /**
      * @var string
      */
@@ -32,6 +39,11 @@ class ProductOfferDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PROPEL_QUERY_STORE = 'PROPEL_QUERY_STORE';
+
+    /**
+     * @var string
+     */
+    public const PROPEL_QUERY_MERCHANT = 'PROPEL_QUERY_MERCHANT';
 
     /**
      * @var string
@@ -58,6 +70,7 @@ class ProductOfferDependencyProvider extends AbstractBundleDependencyProvider
         $container = parent::providePersistenceLayerDependencies($container);
 
         $container = $this->addStorePropelQuery($container);
+        $container = $this->addMerchantPropelQuery($container);
 
         return $container;
     }
@@ -71,6 +84,7 @@ class ProductOfferDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = parent::provideBusinessLayerDependencies($container);
 
+        $container = $this->addEventFacade($container);
         $container = $this->addMessengerFacade($container);
         $container = $this->addStoreFacade($container);
         $container = $this->addProductOfferPostCreatePlugins($container);
@@ -90,6 +104,34 @@ class ProductOfferDependencyProvider extends AbstractBundleDependencyProvider
         $container->set(static::PROPEL_QUERY_STORE, $container->factory(function () {
             return SpyStoreQuery::create();
         }));
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMerchantPropelQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_QUERY_MERCHANT, $container->factory(function () {
+            return SpyMerchantQuery::create();
+        }));
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addEventFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_EVENT, function (Container $container) {
+            return new ProductOfferToEventBridge($container->getLocator()->event()->facade());
+        });
 
         return $container;
     }

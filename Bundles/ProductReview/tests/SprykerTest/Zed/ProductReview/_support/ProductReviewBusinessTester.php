@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\ProductReview;
 
 use Codeception\Actor;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 /**
  * @method void wantToTest($text)
@@ -48,5 +49,37 @@ class ProductReviewBusinessTester extends Actor
     public function removeProductReviewDateFields(array $productReview): array
     {
         return array_diff_key($productReview, array_flip(static::DATE_FIELDS));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param int $numberOfReviews
+     * @param string $status
+     * @param array<int> $ratings
+     *
+     * @return array<\Generated\Shared\Transfer\ProductReviewTransfer>
+     */
+    public function createReviewsForProduct(
+        ProductConcreteTransfer $productConcreteTransfer,
+        int $numberOfReviews,
+        string $status,
+        array $ratings
+    ): array {
+        $localeTransfer = $this->haveLocale();
+        $productReviewTransfers = [];
+
+        for ($i = 0; $i < $numberOfReviews; $i++) {
+            $customerTransfer = $this->haveCustomer();
+
+            $productReviewTransfers[] = $this->haveApprovedCustomerReviewForAbstractProduct(
+                $localeTransfer->getIdLocale(),
+                $customerTransfer->getCustomerReference(),
+                $productConcreteTransfer->getFkProductAbstract(),
+                $status,
+                $ratings[$i],
+            );
+        }
+
+        return $productReviewTransfers;
     }
 }

@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Shared\Store\Dependency\Adapter\StoreToStoreInterface;
 use Spryker\Zed\Store\Business\Cache\StoreCacheInterface;
 use Spryker\Zed\Store\Business\Model\Exception\StoreNotFoundException;
+use Spryker\Zed\Store\Business\Reader\StoreReferenceReaderInterface;
 use Spryker\Zed\Store\Persistence\StoreQueryContainerInterface;
 use Spryker\Zed\Store\Persistence\StoreRepositoryInterface;
 
@@ -49,18 +50,25 @@ class StoreReader implements StoreReaderInterface
     protected $storeCache;
 
     /**
+     * @var \Spryker\Zed\Store\Business\Reader\StoreReferenceReaderInterface
+     */
+    protected $storeReferenceReader;
+
+    /**
      * @param \Spryker\Shared\Store\Dependency\Adapter\StoreToStoreInterface $store
      * @param \Spryker\Zed\Store\Persistence\StoreQueryContainerInterface $storeQueryContainer
      * @param \Spryker\Zed\Store\Persistence\StoreRepositoryInterface $storeRepository
      * @param \Spryker\Zed\Store\Business\Model\StoreMapperInterface $storeMapper
      * @param \Spryker\Zed\Store\Business\Cache\StoreCacheInterface $storeCache
+     * @param \Spryker\Zed\Store\Business\Reader\StoreReferenceReaderInterface $storeReferenceReader
      */
     public function __construct(
         StoreToStoreInterface $store,
         StoreQueryContainerInterface $storeQueryContainer,
         StoreRepositoryInterface $storeRepository,
         StoreMapperInterface $storeMapper,
-        StoreCacheInterface $storeCache
+        StoreCacheInterface $storeCache,
+        StoreReferenceReaderInterface $storeReferenceReader
     ) {
         $this->store = $store;
         $this->storeConfigurationProvider = $store;
@@ -68,6 +76,7 @@ class StoreReader implements StoreReaderInterface
         $this->storeRepository = $storeRepository;
         $this->storeMapper = $storeMapper;
         $this->storeCache = $storeCache;
+        $this->storeReferenceReader = $storeReferenceReader;
     }
 
     /**
@@ -114,6 +123,7 @@ class StoreReader implements StoreReaderInterface
         }
 
         $storeTransfer = $this->storeMapper->mapEntityToTransfer($storeEntity);
+        $storeTransfer = $this->storeReferenceReader->extendStoreByStoreReference($storeTransfer);
 
         $this->storeCache->cacheStore($storeTransfer);
 
@@ -144,6 +154,7 @@ class StoreReader implements StoreReaderInterface
         }
 
         $storeTransfer = $this->storeMapper->mapEntityToTransfer($storeEntity);
+        $storeTransfer = $this->storeReferenceReader->extendStoreByStoreReference($storeTransfer);
 
         $this->storeCache->cacheStore($storeTransfer);
 
@@ -204,7 +215,12 @@ class StoreReader implements StoreReaderInterface
 
         if ($unresolvedStoreNames) {
             $storeTransfers = $this->storeRepository->getStoreTransfersByStoreNames($unresolvedStoreNames);
+
             $resolvedStoreTransfers = array_merge($resolvedStoreTransfers, $storeTransfers);
+            $resolvedStoreTransfers = array_map(function (StoreTransfer $storeTransfer) {
+                return $this->storeReferenceReader->extendStoreByStoreReference($storeTransfer);
+            }, $resolvedStoreTransfers);
+
             $this->cacheStoreTransfers($storeTransfers);
         }
 
@@ -221,6 +237,18 @@ class StoreReader implements StoreReaderInterface
         return array_merge([
             $currentStoreTransfer,
         ], $this->getStoresWithSharedPersistence($currentStoreTransfer));
+    }
+
+    /**
+     * @param string $storeReference
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    public function getStoreByStoreReference(string $storeReference): StoreTransfer
+    {
+        $storeName = $this->storeReferenceReader->getStoreNameByStoreReference($storeReference);
+
+        return $this->getStoreByName($storeName);
     }
 
     /**

@@ -16,6 +16,8 @@ use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductCriteriaTransfer;
+use Generated\Shared\Transfer\ProductExportCriteriaTransfer;
+use Generated\Shared\Transfer\ProductPublisherConfigTransfer;
 use Generated\Shared\Transfer\ProductUrlCriteriaFilterTransfer;
 use Generated\Shared\Transfer\RawProductAttributesTransfer;
 
@@ -1038,4 +1040,47 @@ interface ProductFacadeInterface
      * @return array<int, string>
      */
     public function getProductAbstractLocalizedAttributeNamesIndexedByIdProductAbstract(array $productAbstractIds): array;
+
+    /**
+     * Specification:
+     * - Retrieves ProductConcrete entities from the DB by the provided IDs.
+     * - Requires ProductPublisherConfigTransfer.productIds.
+     * - Requires ProductPublisherConfigTransfer.eventName.
+     * - Throws ProductPublisherEventNameMismatchException if ProductPublisherConfigTransfer.eventName contents unsupported event name.
+     * - Sends ProductPublisherConfigTransfer.eventName event to the event bus.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductPublisherConfigTransfer $productPublisherConfigTransfer
+     *
+     * @throws \Spryker\Zed\Product\Business\Exception\ProductPublisherEventNameMismatchException
+     *
+     * @return void
+     */
+    public function emitPublishProductToMessageBroker(ProductPublisherConfigTransfer $productPublisherConfigTransfer): void;
+
+    /**
+     * Specification:
+     * - Requires ProductPublisherConfigTransfer.productIds.
+     * - Sends ProductDeletedTransfer event to the event bus.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductPublisherConfigTransfer $productPublisherConfigTransfer
+     *
+     * @return void
+     */
+    public function emitUnpublishProductToMessageBroker(ProductPublisherConfigTransfer $productPublisherConfigTransfer): void;
+
+    /**
+     * Specification:
+     * - Triggers Product.product_concrete.export event for concrete products filtered by the criteria.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductExportCriteriaTransfer $productExportCriteriaTransfer
+     *
+     * @return void
+     */
+    public function triggerProductExportEvents(ProductExportCriteriaTransfer $productExportCriteriaTransfer): void;
 }
