@@ -89,7 +89,7 @@ class ConventionResourceFilter implements ConventionResourceFilterInterface
             }
         }
 
-        return $resources;
+        return [];
     }
 
     /**
