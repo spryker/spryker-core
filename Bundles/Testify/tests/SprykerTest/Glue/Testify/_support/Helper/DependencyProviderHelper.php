@@ -17,11 +17,13 @@ use Spryker\Glue\Kernel\Container;
 use Spryker\Shared\Kernel\ContainerMocker\ContainerGlobals;
 use Spryker\Shared\Kernel\ContainerMocker\ContainerMocker;
 use SprykerTest\Shared\Testify\Helper\ModuleNameTrait;
+use SprykerTest\Shared\Testify\Helper\SourceNamespaceTrait;
 
 class DependencyProviderHelper extends Module
 {
     use ContainerMocker;
     use ModuleNameTrait;
+    use SourceNamespaceTrait;
 
     /**
      * @var string
@@ -134,7 +136,7 @@ class DependencyProviderHelper extends Module
         $config = Configuration::config();
         $namespaceParts = explode('\\', $config['namespace']);
 
-        return sprintf(static::DEPENDENCY_PROVIDER_CLASS_NAME_PATTERN, rtrim($namespaceParts[0], 'Test'), $moduleName);
+        return sprintf(static::DEPENDENCY_PROVIDER_CLASS_NAME_PATTERN, $this->removeTestSuffix($namespaceParts[0]), $moduleName);
     }
 
     /**

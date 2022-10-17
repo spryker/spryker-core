@@ -17,6 +17,8 @@ use Spryker\Shared\Kernel\AbstractSharedFactory;
 
 class FactoryHelper extends Module
 {
+    use SourceNamespaceTrait;
+
     /**
      * @var string
      */
@@ -91,7 +93,7 @@ class FactoryHelper extends Module
         $config = Configuration::config();
         $namespaceParts = explode('\\', $config['namespace']);
 
-        return sprintf(static::SHARED_FACTORY_CLASS_NAME_PATTERN, rtrim($namespaceParts[0], 'Test'), $namespaceParts[2]);
+        return sprintf(static::SHARED_FACTORY_CLASS_NAME_PATTERN, $this->removeTestSuffix($namespaceParts[0]), $namespaceParts[2]);
     }
 
     /**

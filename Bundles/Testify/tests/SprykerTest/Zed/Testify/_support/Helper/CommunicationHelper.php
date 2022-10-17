@@ -17,12 +17,15 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Testify\Locator\Business\BusinessLocator as Locator;
 use SprykerTest\Shared\Testify\Helper\ConfigHelper;
+use SprykerTest\Shared\Testify\Helper\SourceNamespaceTrait;
 
 /**
  * @deprecated Use {@link \SprykerTest\Zed\Testify\Helper\Communication\CommunicationHelper} instead.
  */
 class CommunicationHelper extends Module
 {
+    use SourceNamespaceTrait;
+
     /**
      * @var string
      */
@@ -123,7 +126,7 @@ class CommunicationHelper extends Module
         $config = Configuration::config();
         $namespaceParts = explode('\\', $config['namespace']);
 
-        return sprintf(static::COMMUNICATION_FACTORY_CLASS_NAME_PATTERN, rtrim($namespaceParts[0], 'Test'), $namespaceParts[1], $namespaceParts[2]);
+        return sprintf(static::COMMUNICATION_FACTORY_CLASS_NAME_PATTERN, $this->removeTestSuffix($namespaceParts[0]), $namespaceParts[1], $namespaceParts[2]);
     }
 
     /**

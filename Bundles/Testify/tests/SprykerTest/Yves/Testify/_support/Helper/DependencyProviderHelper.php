@@ -17,11 +17,13 @@ use Spryker\Shared\Kernel\ContainerMocker\ContainerMocker;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use SprykerTest\Shared\Testify\Helper\ModuleNameTrait;
+use SprykerTest\Shared\Testify\Helper\SourceNamespaceTrait;
 
 class DependencyProviderHelper extends Module
 {
     use ContainerMocker;
     use ModuleNameTrait;
+    use SourceNamespaceTrait;
 
     /**
      * @var string
@@ -140,7 +142,7 @@ class DependencyProviderHelper extends Module
             return $classNameCandidate;
         }
 
-        return sprintf(static::DEPENDENCY_PROVIDER_CLASS_NAME_PATTERN, rtrim($namespaceParts[0], 'Test'), $moduleName);
+        return sprintf(static::DEPENDENCY_PROVIDER_CLASS_NAME_PATTERN, $this->removeTestSuffix($namespaceParts[0]), $moduleName);
     }
 
     /**

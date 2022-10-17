@@ -18,12 +18,14 @@ use Spryker\Glue\Kernel\Container;
 use SprykerTest\Shared\Testify\Helper\ConfigHelper;
 use SprykerTest\Shared\Testify\Helper\ConfigHelperTrait;
 use SprykerTest\Shared\Testify\Helper\ModuleNameTrait;
+use SprykerTest\Shared\Testify\Helper\SourceNamespaceTrait;
 
 class FactoryHelper extends Module
 {
     use DependencyProviderHelperTrait;
     use ConfigHelperTrait;
     use ModuleNameTrait;
+    use SourceNamespaceTrait;
 
     /**
      * @var string
@@ -118,7 +120,7 @@ class FactoryHelper extends Module
         $namespaceParts = explode('\\', $config['namespace']);
         $factoryClassNameCandidate = sprintf(static::FACTORY_CLASS_NAME_PATTERN, 'Spryker', $moduleName);
 
-        return sprintf(static::FACTORY_CLASS_NAME_PATTERN, rtrim($namespaceParts[0], 'Test'), $moduleName);
+        return sprintf(static::FACTORY_CLASS_NAME_PATTERN, $this->removeTestSuffix($namespaceParts[0]), $moduleName);
     }
 
     /**
