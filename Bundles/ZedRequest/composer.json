@@ -4,7 +4,7 @@
     "description": "ZedRequest module",
     "license": "proprietary",
     "require": {
-        "php": ">=7.4",
+        "php": ">=8.0",
         "psr/http-message": "^1.0.0",
         "spryker/config": "^3.0.0",
         "spryker/error-handler": "^2.1.0",

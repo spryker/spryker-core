@@ -4,7 +4,7 @@
     "description": "MerchantProductOfferGui module",
     "license": "proprietary",
     "require": {
-        "php": ">=7.4",
+        "php": ">=8.0",
         "spryker/gui": "^3.33.0",
         "spryker/kernel": "^3.33.0",
         "spryker/merchant": "^3.0.0",

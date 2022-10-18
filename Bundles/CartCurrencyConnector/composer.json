@@ -4,7 +4,7 @@
     "description": "CartCurrencyConnector module",
     "license": "proprietary",
     "require": {
-        "php": ">=7.4",
+        "php": ">=8.0",
         "spryker/cart": "^5.1.0 || ^7.0.0",
         "spryker/currency": "^3.1.0",
         "spryker/currency-extension": "^1.0.0",

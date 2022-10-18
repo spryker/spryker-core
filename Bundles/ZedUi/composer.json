@@ -4,7 +4,7 @@
     "description": "ZedUi module",
     "license": "proprietary",
     "require": {
-        "php": ">=7.4",
+        "php": ">=8.0",
         "spryker/application-extension": "^1.0.0",
         "spryker/kernel": "^3.33.0",
         "spryker/translator": "^1.1.0",

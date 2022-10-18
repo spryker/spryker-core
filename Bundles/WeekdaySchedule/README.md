@@ -1,6 +1,6 @@
 # WeekdaySchedule Module
 [![Latest Stable Version](https://poser.pugx.org/spryker/weekday-schedule/v/stable.svg)](https://packagist.org/packages/spryker/weekday-schedule)
-[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.4-8892BF.svg)](https://php.net/)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.0-8892BF.svg)](https://php.net/)
 
 WeekdaySchedule module provides ability to configure a scheduling of weekdays and dates.
 

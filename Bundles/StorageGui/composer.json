@@ -4,7 +4,7 @@
     "description": "StorageGui module",
     "license": "proprietary",
     "require": {
-        "php": ">=7.4",
+        "php": ">=8.0",
         "spryker/gui": "^3.45.0",
         "spryker/kernel": "^3.30.0",
         "spryker/storage": "^3.9.0",

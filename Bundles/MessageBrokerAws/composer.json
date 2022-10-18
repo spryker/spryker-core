@@ -4,11 +4,11 @@
     "description": "MessageBrokerAws module",
     "license": "proprietary",
     "require": {
-        "async-aws/core": "^1.5.0",
+        "async-aws/core": "^1.10.0",
         "async-aws/sns": "^1.0.0",
         "async-aws/sqs": "^1.0.0",
         "aws/aws-sdk-php": "^3.132.4",
-        "php": ">=7.4",
+        "php": ">=8.0",
         "spryker/guzzle": "^2.0.0",
         "spryker/kernel": "^3.30.0",
         "spryker/message-broker-extension": "^1.0.0",
@@ -16,7 +16,7 @@
         "spryker/symfony": "^3.7.0",
         "spryker/transfer": "^3.25.0",
         "spryker/util-encoding": "^1.0.0 || ^2.0.0",
-        "symfony/amazon-sqs-messenger": "^5.0.0 || ^6.0.0"
+        "symfony/amazon-sqs-messenger": "^5.1.0 || ^6.0.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*",

@@ -4,7 +4,7 @@
     "description": "ProductLabelGui module",
     "license": "proprietary",
     "require": {
-        "php": ">=7.4",
+        "php": ">=8.0",
         "spryker/category": "^3.2.0 || ^4.0.0 || ^5.0.0",
         "spryker/gui": "^3.45.0",
         "spryker/kernel": "^3.30.0",

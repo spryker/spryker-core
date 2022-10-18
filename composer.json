@@ -3,7 +3,7 @@
     "description": "Spryker Framework",
     "license": "proprietary",
     "require": {
-        "php": ">=7.4"
+        "php": ">=8.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "dev-master"

@@ -4,7 +4,7 @@
     "description": "AclMerchantPortal module",
     "license": "proprietary",
     "require": {
-        "php": ">=7.4",
+        "php": ">=8.0",
         "spryker/acl": "^3.12.0",
         "spryker/acl-entity": "^1.0.0",
         "spryker/acl-entity-extension": "^1.0.0",

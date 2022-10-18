@@ -4,7 +4,7 @@
     "description": "ApiQueryBuilder module",
     "license": "proprietary",
     "require": {
-        "php": ">=7.4",
+        "php": ">=8.0",
         "spryker/kernel": "^3.30.0",
         "spryker/propel-orm": "^1.2.0",
         "spryker/propel-query-builder": "^0.3.0",

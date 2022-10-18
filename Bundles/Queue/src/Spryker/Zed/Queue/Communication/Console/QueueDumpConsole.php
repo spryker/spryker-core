@@ -109,8 +109,8 @@ class QueueDumpConsole extends Console
         $this->setName(static::COMMAND_NAME);
         $this->setDescription(static::DESCRIPTION);
         $this->addArgument(static::ARGUMENT_QUEUE, InputArgument::REQUIRED, static::DESCRIPTION);
-        $this->addOption(static::OPTION_ACK, static::OPTION_ACK_SHORT, InputOption::VALUE_OPTIONAL, static::OPTION_ACK_DESCRIPTION, static::OPTION_ACK_DEFAULT);
-        $this->addOption(static::OPTION_LIMIT, static::OPTION_LIMIT_SHORT, InputOption::VALUE_OPTIONAL, static::OPTION_LIMIT_DESCRIPTION, static::OPTION_LIMIT_DEFAULT);
+        $this->addOption(static::OPTION_ACK, static::OPTION_ACK_SHORT, InputOption::VALUE_OPTIONAL, static::OPTION_ACK_DESCRIPTION, (string)static::OPTION_ACK_DEFAULT);
+        $this->addOption(static::OPTION_LIMIT, static::OPTION_LIMIT_SHORT, InputOption::VALUE_OPTIONAL, static::OPTION_LIMIT_DESCRIPTION, (string)static::OPTION_LIMIT_DEFAULT);
         $this->addOption(static::OPTION_FORMAT, static::OPTION_FORMAT_SHORT, InputOption::VALUE_OPTIONAL, static::OPTION_FORMAT_DESCRIPTION, static::OPTION_FORMAT_DEFAULT);
 
         parent::configure();

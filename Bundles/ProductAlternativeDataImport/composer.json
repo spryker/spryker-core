@@ -4,7 +4,7 @@
     "description": "ProductAlternativeDataImport module",
     "license": "MIT",
     "require": {
-        "php": ">=7.4",
+        "php": ">=8.0",
         "spryker/data-import": "^1.2.0",
         "spryker/kernel": "^3.30.0",
         "spryker/product": "^6.0.0",

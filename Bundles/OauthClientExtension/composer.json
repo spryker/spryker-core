@@ -4,7 +4,7 @@
     "description": "OauthClientExtension module",
     "license": "proprietary",
     "require": {
-        "php": ">=7.4",
+        "php": ">=8.0",
         "spryker/transfer": "^3.27.0"
     },
     "require-dev": {

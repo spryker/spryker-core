@@ -5,7 +5,7 @@
     "license": "proprietary",
     "require": {
         "cebe/php-openapi": "^1.6.0",
-        "php": ">=7.4",
+        "php": ">=8.0",
         "spryker/doctrine-inflector": "^1.0.0",
         "spryker/documentation-generator-api-extension": "^1.0.0",
         "spryker/kernel": "^3.30.0",

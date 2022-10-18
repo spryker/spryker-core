@@ -4,8 +4,8 @@
     "description": "DoctrineInflector module",
     "license": "proprietary",
     "require": {
-        "doctrine/inflector": "~1.4.0 || ~2.0.0",
-        "php": ">=7.4"
+        "doctrine/inflector": "~1.4.2 || ~2.0.0",
+        "php": ">=8.0"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,

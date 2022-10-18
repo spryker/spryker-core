@@ -4,7 +4,7 @@
     "description": "PropelReplicationCache module",
     "license": "proprietary",
     "require": {
-        "php": ">=7.4",
+        "php": ">=8.0",
         "spryker/kernel": "^3.67.0",
         "spryker/propel-orm-extension": "^1.1.0",
         "spryker/storage-redis": "^1.3.0"

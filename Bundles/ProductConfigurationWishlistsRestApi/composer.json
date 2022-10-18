@@ -4,7 +4,7 @@
     "description": "ProductConfigurationWishlistsRestApi module",
     "license": "proprietary",
     "require": {
-        "php": ">=7.4",
+        "php": ">=8.0",
         "spryker/kernel": "^3.30.0",
         "spryker/product-configuration": "^0.2.0",
         "spryker/product-configuration-wishlists-rest-api-extension": "^0.1.0",

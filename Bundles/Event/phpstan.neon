@@ -5,4 +5,4 @@ parameters:
     ignoreErrors:
         - '#PHPDoc tag \@param for parameter \$transfer with type array<.+EventEntityTransfer> is incompatible with native type .+TransferInterface#'
         - '#Method .+EventDispatcher::extractEventListeners\(\) should return iterable<.+EventListenerContextInterface>\&SplPriorityQueue but returns array#'
-        - '#Parameter \#2 \$size of function array_chunk expects int<1, max>, int given.#'
+        - '#Parameter \#2 \$length of function array_chunk expects int<1, max>, int given.#'

@@ -4,7 +4,7 @@
     "description": "OauthApi module",
     "license": "proprietary",
     "require": {
-        "php": ">=7.4",
+        "php": ">=8.0",
         "spryker/authentication": "^1.0.0",
         "spryker/glue-application-extension": "^1.10.0",
         "spryker/kernel": "^3.58.0",

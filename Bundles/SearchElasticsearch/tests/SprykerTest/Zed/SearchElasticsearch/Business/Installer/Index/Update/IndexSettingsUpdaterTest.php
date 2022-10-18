@@ -68,7 +68,7 @@ class IndexSettingsUpdaterTest extends Unit
     public function testCanByAppliedForIndex(bool $expectedResult, bool $indexExists, array $settings): void
     {
         // Arrange
-        /** @var \Elastica\Index\|\PHPUnit\Framework\MockObject\MockObject $index */
+        /** @var \Elastica\Index|\PHPUnit\Framework\MockObject\MockObject $index */
         $index = $this->clientMock->getIndex('index');
         $index->method('exists')->willReturn($indexExists);
         $indexDefinitionTransfer = $this->createIndexDefinitionTransfer($settings);
@@ -120,7 +120,7 @@ class IndexSettingsUpdaterTest extends Unit
      */
     public function testSetsCorrectSettings(array $expectedSettings, string $indexState, array $settings): void
     {
-        /** @var \Elastica\Index\|\PHPUnit\Framework\MockObject\MockObject $indexMock */
+        /** @var \Elastica\Index|\PHPUnit\Framework\MockObject\MockObject $indexMock */
         $indexMock = $this->clientMock->getIndex('index');
         $indexMock->expects($this->once())->method('setSettings')->with($expectedSettings);
         $indexDefinitionTransfer = $this->createIndexDefinitionTransfer($settings);

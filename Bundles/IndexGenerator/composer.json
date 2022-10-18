@@ -4,7 +4,7 @@
     "description": "IndexGenerator module",
     "license": "proprietary",
     "require": {
-        "php": ">=7.4",
+        "php": ">=8.0",
         "spryker/kernel": "^3.30.0",
         "spryker/propel": "^3.21.0",
         "spryker/symfony": "^3.0.0"

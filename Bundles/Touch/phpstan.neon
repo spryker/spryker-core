@@ -3,4 +3,4 @@ parameters:
     checkMissingIterableValueType: false
     reportUnmatchedIgnoredErrors: false
     ignoreErrors:
-        - '#Parameter \#2 \$size of function array_chunk expects int<1, max>, int given.#'
+        - '#Parameter \#2 \$length of function array_chunk expects int<1, max>, int given.#'

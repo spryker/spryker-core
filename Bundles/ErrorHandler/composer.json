@@ -4,7 +4,7 @@
     "description": "ErrorHandler module",
     "license": "proprietary",
     "require": {
-        "php": ">=7.4",
+        "php": ">=8.0",
         "spryker/application-extension": "^1.0.0",
         "spryker/config": "^3.0.0",
         "spryker/error-handler-extension": "^1.0.0",

@@ -4,8 +4,8 @@
     "description": "OauthAuth0 module",
     "license": "proprietary",
     "require": {
-        "league/oauth2-client": "^2.5.0",
-        "php": ">=7.4",
+        "league/oauth2-client": "^2.6.0",
+        "php": ">=8.0",
         "riskio/oauth2-auth0": "^2.4.0",
         "spryker/kernel": "^3.30.0",
         "spryker/oauth-client-extension": "^1.0.0",

@@ -4,7 +4,7 @@
     "description": "Offer module",
     "license": "proprietary",
     "require": {
-        "php": ">=7.4",
+        "php": ">=8.0",
         "spryker/cart": "^5.0.0 || ^7.0.0",
         "spryker/customer": "^7.0.0",
         "spryker/kernel": "^3.30.0",

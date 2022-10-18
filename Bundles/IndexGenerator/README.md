@@ -1,6 +1,6 @@
 # IndexGenerator Module
 [![Latest Stable Version](https://poser.pugx.org/spryker/index-generator/v/stable.svg)](https://packagist.org/packages/spryker/index-generator)
-[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.4-8892BF.svg)](https://php.net/)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%208.0-8892BF.svg)](https://php.net/)
 
 Postgres does not auto create indexes for foreign-key columns. This module provides a console command to create schema files with index definitions for all tables and their foreign-key columns which do not have an index definition.
 

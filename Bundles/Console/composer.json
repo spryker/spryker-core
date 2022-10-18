@@ -4,7 +4,7 @@
     "description": "Console module",
     "license": "proprietary",
     "require": {
-        "php": ">=7.4",
+        "php": ">=8.0",
         "spryker/acl-entity-extension": "^0.1.0 || ^0.2.0 || ^1.0.0",
         "spryker/application": "^3.23.0",
         "spryker/application-extension": "^1.0.0",

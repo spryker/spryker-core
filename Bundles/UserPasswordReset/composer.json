@@ -4,7 +4,7 @@
     "description": "UserPasswordReset module",
     "license": "proprietary",
     "require": {
-        "php": ">=7.4",
+        "php": ">=8.0",
         "spryker/kernel": "^3.30.0",
         "spryker/user": "^3.9.0",
         "spryker/user-password-reset-extension": "^1.0.0",

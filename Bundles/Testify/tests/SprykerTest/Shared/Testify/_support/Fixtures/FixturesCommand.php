@@ -128,7 +128,7 @@ class FixturesCommand extends Run implements CustomCommandInterface
         $userOptions = array_intersect_key($this->options, array_flip($this->passedOptionKeys($input)));
         $userOptions['verbosity'] = $output->getVerbosity();
         $userOptions['seed'] = (int)$this->options['seed'] ?: mt_rand();
-        $userOptions['colors'] = $this->options['no-colors'] || $input->getOption('no-ansi') ? false : $config['settings']['colors'];
+        $userOptions['colors'] = $this->options['no-colors'] || ($input->hasOption('no-ansi') && $input->getOption('no-ansi')) ? false : $config['settings']['colors'];
         $userOptions['groups'] = $this->options['group'];
         $userOptions['excludeGroups'] = $this->options['skip-group'];
 

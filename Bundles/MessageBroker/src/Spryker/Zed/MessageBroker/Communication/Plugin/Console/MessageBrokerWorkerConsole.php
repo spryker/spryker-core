@@ -104,7 +104,13 @@ class MessageBrokerWorkerConsole extends Console
             new InputOption(static::OPTION_FAILURE_LIMIT, static::OPTION_FAILURE_LIMIT_SHORT, InputOption::VALUE_REQUIRED, 'The number of failed messages the worker can consume.'),
             new InputOption(static::OPTION_MEMORY_LIMIT, static::OPTION_MEMORY_LIMIT_SHORT, InputOption::VALUE_REQUIRED, 'The memory limit the worker can consume.'),
             new InputOption(static::OPTION_TIME_LIMIT, static::OPTION_TIME_LIMIT_SHORT, InputOption::VALUE_REQUIRED, 'The time limit in seconds the worker can handle new messages.'),
-            new InputOption(static::OPTION_SLEEP, static::OPTION_SLEEP_SHORT, InputOption::VALUE_REQUIRED, 'Seconds to sleep before asking for new messages after no messages were found.', static::DEFAULT_VALUE_OPTION_SLEEP),
+            new InputOption(
+                static::OPTION_SLEEP,
+                static::OPTION_SLEEP_SHORT,
+                InputOption::VALUE_REQUIRED,
+                'Seconds to sleep before asking for new messages after no messages were found.',
+                (string)static::DEFAULT_VALUE_OPTION_SLEEP,
+            ),
         ]);
     }
 

@@ -4,7 +4,7 @@
     "description": "OrderCustomReferenceGui module",
     "license": "proprietary",
     "require": {
-        "php": ">=7.4",
+        "php": ">=8.0",
         "spryker/gui": "^3.0.0",
         "spryker/kernel": "^3.30.0",
         "spryker/order-custom-reference": "^1.0.0",

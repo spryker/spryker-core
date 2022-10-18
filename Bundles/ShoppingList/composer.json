@@ -4,7 +4,7 @@
     "description": "ShoppingList module",
     "license": "proprietary",
     "require": {
-        "php": ">=7.4",
+        "php": ">=8.0",
         "spryker/cart": "^5.1.0 || ^7.0.0",
         "spryker/company-business-unit": "^1.0.0 || ^2.0.0",
         "spryker/company-business-unit-extension": "^1.1.0",

@@ -4,7 +4,7 @@
     "description": "MerchantRelationship module",
     "license": "proprietary",
     "require": {
-        "php": ">=7.4",
+        "php": ">=8.0",
         "spryker/company-business-unit": "^1.6.0 || ^2.9.0",
         "spryker/company-user-extension": "^1.0.0",
         "spryker/kernel": "^3.33.0",

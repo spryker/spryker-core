@@ -11,3 +11,4 @@ parameters:
         - '#Call to an undefined method ReflectionType::isBuiltin\(\)#'
         - '#Comparison operation ">" between int<2, max> and 1 is always true.#'
         - '#Parameter \#1 \$[a-zA-Z]* of class ReflectionClass constructor expects class-string<T of object>\|T of object, string given.#'
+        - '#Parameter \#1 \$callback of function spl_autoload_unregister expects callable\(\): mixed, array given.#'

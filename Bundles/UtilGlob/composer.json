@@ -4,7 +4,7 @@
     "description": "UtilGlob module",
     "license": "proprietary",
     "require": {
-        "php": ">=7.4",
+        "php": ">=8.0",
         "spryker/kernel": "^3.30.0",
         "webmozart/glob": "^4.0.0"
     },

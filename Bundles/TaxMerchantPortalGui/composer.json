@@ -4,7 +4,7 @@
     "description": "TaxMerchantPortalGui module",
     "license": "proprietary",
     "require": {
-        "php": ">=7.4",
+        "php": ">=8.0",
         "spryker/kernel": "^3.33.0",
         "spryker/product-merchant-portal-gui-extension": "^1.0.0",
         "spryker/tax": "^4.0.0 || ^5.0.0"
