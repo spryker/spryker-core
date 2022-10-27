@@ -165,9 +165,7 @@ class ReturnTable extends AbstractTable
             return [];
         }
 
-        $returns = $this->mapReturns($salesReturnEntityCollection);
-
-        return $this->expandReturnsWithItemStates($returns);
+        return $this->mapReturns($salesReturnEntityCollection);
     }
 
     /**
@@ -208,26 +206,13 @@ class ReturnTable extends AbstractTable
 
         foreach ($salesReturnEntityCollection as $salesReturnEntity) {
             $returnData = $salesReturnEntity->toArray();
+            $returnData[static::COL_STATE] = implode(' ', $this->getItemStateLabelsByIdSalesReturn($returnData[static::COL_RETURN_ID]));
             $returnData[static::COL_RETURN_ID] = $this->formatInt($returnData[static::COL_RETURN_ID]);
             $returnData[static::COL_RETURNED_PRODUCTS] = $this->formatInt($returnData[static::COL_RETURNED_PRODUCTS]);
             $returnData[static::COL_RETURN_DATE] = $this->utilDateTimeService->formatDateTime($salesReturnEntity->getCreatedAt());
             $returnData[static::COL_ACTIONS] = $this->buildLinks($salesReturnEntity);
 
             $returns[] = $returnData;
-        }
-
-        return $returns;
-    }
-
-    /**
-     * @param array $returns
-     *
-     * @return array
-     */
-    protected function expandReturnsWithItemStates(array $returns): array
-    {
-        foreach ($returns as &$return) {
-            $return[static::COL_STATE] = implode(' ', $this->getItemStateLabelsByIdSalesReturn($return[static::COL_RETURN_ID]));
         }
 
         return $returns;
