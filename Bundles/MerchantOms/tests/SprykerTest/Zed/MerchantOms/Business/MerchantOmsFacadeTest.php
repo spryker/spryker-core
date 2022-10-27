@@ -23,8 +23,10 @@ use Spryker\Zed\MerchantOms\Dependency\Facade\MerchantOmsToMerchantFacadeBridge;
 use Spryker\Zed\MerchantOms\Dependency\Facade\MerchantOmsToMerchantFacadeInterface;
 use Spryker\Zed\MerchantOms\Dependency\Facade\MerchantOmsToStateMachineFacadeBridge;
 use Spryker\Zed\MerchantOms\Dependency\Facade\MerchantOmsToStateMachineFacadeInterface;
+use Spryker\Zed\MerchantOms\MerchantOmsConfig;
 use Spryker\Zed\MerchantOms\MerchantOmsDependencyProvider;
 use Spryker\Zed\StateMachine\Business\StateMachineFacade;
+use SprykerTest\Zed\MerchantOms\MerchantOmsBusinessTester;
 
 /**
  * Auto-generated group annotations
@@ -79,9 +81,14 @@ class MerchantOmsFacadeTest extends Unit
     ];
 
     /**
+     * @var int
+     */
+    protected const TEST_ID_STATE_MACHINE_PROCESS = 888;
+
+    /**
      * @var \SprykerTest\Zed\MerchantOms\MerchantOmsBusinessTester
      */
-    protected $tester;
+    protected MerchantOmsBusinessTester $tester;
 
     /**
      * @return void
@@ -253,8 +260,10 @@ class MerchantOmsFacadeTest extends Unit
         $stateMachineProcessTransfer = (new StateMachineProcessTransfer())
             ->setProcessName(static::TEST_PROCESS_NAME)
             ->setStateMachineName(static::TEST_STATE_MACHINE);
-        $this->setMerchantFacadeMockDependency(new MerchantTransfer());
         $this->setStateMachineFacadeMockDependency(static::TEST_STATE_NAMES, $stateMachineProcessTransfer);
+
+        $this->setMerchantFacadeMockDependency((new MerchantTransfer())
+            ->setFkStateMachineProcess(static::TEST_ID_STATE_MACHINE_PROCESS));
 
         // Act
         $stateMachineProcessTransfer = $this->tester->getFacade()->getMerchantOmsProcessByMerchant(new MerchantCriteriaTransfer());
@@ -271,8 +280,6 @@ class MerchantOmsFacadeTest extends Unit
     public function testGetMerchantOmsProcessByMerchantReturnsDefaultStateMachineProcessWithStateNames(): void
     {
         // Arrange
-        /** @var \Spryker\Zed\MerchantOms\MerchantOmsConfig $merchantOmsConfig */
-        $merchantOmsConfig = $this->tester->getModuleConfig();
         $this->setMerchantFacadeMockDependency(new MerchantTransfer());
         $this->setStateMachineFacadeMockDependency(static::TEST_STATE_NAMES);
 
@@ -281,8 +288,28 @@ class MerchantOmsFacadeTest extends Unit
 
         // Assert
         $this->assertSame(static::TEST_STATE_NAMES, $stateMachineProcessTransfer->getStateNames());
-        $this->assertSame($merchantOmsConfig->getMerchantOmsDefaultProcessName(), $stateMachineProcessTransfer->getProcessName());
-        $this->assertSame($merchantOmsConfig::MERCHANT_OMS_STATE_MACHINE_NAME, $stateMachineProcessTransfer->getStateMachineName());
+        $this->assertSame($this->tester->getModuleConfig()->getMerchantOmsDefaultProcessName(), $stateMachineProcessTransfer->getProcessName());
+        $this->assertSame(MerchantOmsConfig::MERCHANT_OMS_STATE_MACHINE_NAME, $stateMachineProcessTransfer->getStateMachineName());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetMerchantOmsProcessByMerchantReturnsDefaultStateMachineProcessWhenProcessIsNotFoundById(): void
+    {
+        // Arrange
+        $this->setMerchantFacadeMockDependency((new MerchantTransfer())
+            ->setFkStateMachineProcess(static::TEST_ID_STATE_MACHINE_PROCESS));
+        $this->setStateMachineFacadeMockDependency(static::TEST_STATE_NAMES);
+
+        // Act
+        $stateMachineProcessTransfer = $this->tester->getFacade()
+            ->getMerchantOmsProcessByMerchant(new MerchantCriteriaTransfer());
+
+        // Assert
+        $this->assertSame(static::TEST_STATE_NAMES, $stateMachineProcessTransfer->getStateNames());
+        $this->assertSame($this->tester->getModuleConfig()->getMerchantOmsDefaultProcessName(), $stateMachineProcessTransfer->getProcessName());
+        $this->assertSame(MerchantOmsConfig::MERCHANT_OMS_STATE_MACHINE_NAME, $stateMachineProcessTransfer->getStateMachineName());
     }
 
     /**

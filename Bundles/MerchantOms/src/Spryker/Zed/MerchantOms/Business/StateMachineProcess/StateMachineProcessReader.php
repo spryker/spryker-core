@@ -73,18 +73,24 @@ class StateMachineProcessReader implements StateMachineProcessReaderInterface
     {
         $merchantTransfer = $this->getMerchantByCriteria($merchantCriteriaTransfer);
 
+        $defaultStateMachineProcessTransfer = (new StateMachineProcessTransfer())
+            ->setStateMachineName(MerchantOmsConfig::MERCHANT_OMS_STATE_MACHINE_NAME)
+            ->setProcessName($this->merchantOmsConfig->getMerchantOmsDefaultProcessName());
+
+        if (!$merchantTransfer->getFkStateMachineProcess()) {
+            return $defaultStateMachineProcessTransfer;
+        }
+
         $stateMachineProcessTransfer = $this->stateMachineFacade->findStateMachineProcess(
             (new StateMachineProcessCriteriaTransfer())
                 ->setIdStateMachineProcess($merchantTransfer->getFkStateMachineProcess()),
         );
 
-        if (!$stateMachineProcessTransfer) {
-            $stateMachineProcessTransfer = (new StateMachineProcessTransfer())
-                ->setStateMachineName(MerchantOmsConfig::MERCHANT_OMS_STATE_MACHINE_NAME)
-                ->setProcessName($this->merchantOmsConfig->getMerchantOmsDefaultProcessName());
+        if ($stateMachineProcessTransfer !== null) {
+            return $stateMachineProcessTransfer;
         }
 
-        return $stateMachineProcessTransfer;
+        return $defaultStateMachineProcessTransfer;
     }
 
     /**

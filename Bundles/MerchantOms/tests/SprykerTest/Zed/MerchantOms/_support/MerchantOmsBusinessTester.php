@@ -27,6 +27,7 @@ use Generated\Shared\Transfer\StateMachineItemStateTransfer;
  * @method void comment($description)
  * @method void pause()
  * @method \Spryker\Zed\MerchantOms\Business\MerchantOmsFacadeInterface getFacade()
+ * @method \Spryker\Zed\MerchantOms\MerchantOmsConfig getModuleConfig()
  *
  * @SuppressWarnings(PHPMD)
  */
