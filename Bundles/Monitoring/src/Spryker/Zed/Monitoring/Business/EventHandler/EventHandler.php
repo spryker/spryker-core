@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Monitoring\Business\EventHandler;
 
+use Error;
 use Generated\Shared\Transfer\MonitoringTransactionEventTransfer;
 use Spryker\Service\Monitoring\MonitoringServiceInterface;
 use Spryker\Zed\Monitoring\Dependency\Service\MonitoringToUtilNetworkServiceInterface;
@@ -76,7 +77,12 @@ class EventHandler implements EventHandlerInterface
      */
     protected function getTransactionName(ConsoleTerminateEvent $event): string
     {
-        $monitoringTransactionEventTransfer = $this->mapConsoleTerminateEventToMonitoringTransactionEventTransfer($event);
+        try {
+            $monitoringTransactionEventTransfer = $this->mapConsoleTerminateEventToMonitoringTransactionEventTransfer($event);
+        } catch (Error $e) {
+            return static::TRANSACTION_NAME_PREFIX . $event->getCommand()->getName();
+        }
+
         foreach ($this->monitoringTransactionNamingStrategies as $monitoringTransactionNamingStrategy) {
             if ($monitoringTransactionNamingStrategy->isApplicable($monitoringTransactionEventTransfer)) {
                 return $monitoringTransactionNamingStrategy->getMonitoringTransactionName($monitoringTransactionEventTransfer);
