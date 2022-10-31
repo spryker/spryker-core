@@ -24,6 +24,8 @@ use Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemUpdater;
 use Spryker\Glue\CartsRestApi\Processor\CartItem\CartItemUpdaterInterface;
 use Spryker\Glue\CartsRestApi\Processor\Expander\CartItemByQuoteResourceRelationshipExpander;
 use Spryker\Glue\CartsRestApi\Processor\Expander\CartItemByQuoteResourceRelationshipExpanderInterface;
+use Spryker\Glue\CartsRestApi\Processor\Expander\RequestExpander;
+use Spryker\Glue\CartsRestApi\Processor\Expander\RequestExpanderInterface;
 use Spryker\Glue\CartsRestApi\Processor\GuestCart\AnonymousCustomerUniqueIdValidator;
 use Spryker\Glue\CartsRestApi\Processor\GuestCart\AnonymousCustomerUniqueIdValidatorInterface;
 use Spryker\Glue\CartsRestApi\Processor\GuestCart\GuestCartReader;
@@ -267,6 +269,14 @@ class CartsRestApiFactory extends AbstractFactory
             $this->createCartReader(),
             $this->getClient(),
         );
+    }
+
+    /**
+     * @return \Spryker\Glue\CartsRestApi\Processor\Expander\RequestExpanderInterface
+     */
+    public function createRequestExpander(): RequestExpanderInterface
+    {
+        return new RequestExpander($this->getPersistentCartClient());
     }
 
     /**
