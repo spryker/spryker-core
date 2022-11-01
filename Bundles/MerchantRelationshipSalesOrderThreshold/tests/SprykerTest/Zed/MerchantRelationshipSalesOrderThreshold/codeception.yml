@@ -30,3 +30,5 @@ suites:
                 - \SprykerTest\Zed\MerchantRelationship\Helper\MerchantRelationshipHelper
                 - \SprykerTest\Zed\MerchantRelationshipSalesOrderThreshold\Helper\MerchantRelationshipSalesOrderThresholdHelper
                 - \SprykerTest\Zed\SalesOrderThreshold\Helper\SalesOrderThresholdHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDataHelper
+                - \SprykerTest\Shared\Currency\Helper\CurrencyDataHelper

@@ -8,8 +8,11 @@
 namespace Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Persistence;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdCollectionTransfer;
+use Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Orm\Zed\MerchantRelationshipSalesOrderThreshold\Persistence\SpyMerchantRelationshipSalesOrderThresholdQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -89,5 +92,57 @@ class MerchantRelationshipSalesOrderThresholdRepository extends AbstractReposito
                 $merchantRelationshipSalesOrderThresholdEntity,
                 new MerchantRelationshipSalesOrderThresholdTransfer(),
             );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdCriteriaTransfer $merchantRelationshipSalesOrderThresholdCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdCollectionTransfer
+     */
+    public function getMerchantRelationshipSalesOrderThresholdCollection(
+        MerchantRelationshipSalesOrderThresholdCriteriaTransfer $merchantRelationshipSalesOrderThresholdCriteriaTransfer
+    ): MerchantRelationshipSalesOrderThresholdCollectionTransfer {
+        $merchantRelationshipSalesOrderThresholdQuery = $this->getFactory()
+            ->createMerchantRelationshipSalesOrderThresholdQuery();
+
+        $merchantRelationshipSalesOrderThresholdQuery = $this->applyMerchantRelationshipSalesOrderThresholdFilters(
+            $merchantRelationshipSalesOrderThresholdQuery,
+            $merchantRelationshipSalesOrderThresholdCriteriaTransfer,
+        );
+
+        $merchantRelationshipSalesOrderThresholdEntities = $merchantRelationshipSalesOrderThresholdQuery->find();
+
+        return $this->getFactory()
+            ->createMerchantRelationshipSalesOrderThresholdMapper()
+            ->mapMerchantRelationshipSalesOrderThresholdEntitiesToMerchantRelationshipSalesOrderThresholdCollectionTransfer(
+                $merchantRelationshipSalesOrderThresholdEntities->getData(),
+                new MerchantRelationshipSalesOrderThresholdCollectionTransfer(),
+            );
+    }
+
+    /**
+     * @param \Orm\Zed\MerchantRelationshipSalesOrderThreshold\Persistence\SpyMerchantRelationshipSalesOrderThresholdQuery $merchantRelationshipSalesOrderThresholdQuery
+     * @param \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdCriteriaTransfer $merchantRelationshipSalesOrderThresholdCriteriaTransfer
+     *
+     * @return \Orm\Zed\MerchantRelationshipSalesOrderThreshold\Persistence\SpyMerchantRelationshipSalesOrderThresholdQuery
+     */
+    protected function applyMerchantRelationshipSalesOrderThresholdFilters(
+        SpyMerchantRelationshipSalesOrderThresholdQuery $merchantRelationshipSalesOrderThresholdQuery,
+        MerchantRelationshipSalesOrderThresholdCriteriaTransfer $merchantRelationshipSalesOrderThresholdCriteriaTransfer
+    ): SpyMerchantRelationshipSalesOrderThresholdQuery {
+        $merchantRelationshipSalesOrderThresholdConditions = $merchantRelationshipSalesOrderThresholdCriteriaTransfer
+            ->getMerchantRelationshipSalesOrderThresholdConditions();
+
+        if (!$merchantRelationshipSalesOrderThresholdConditions) {
+            return $merchantRelationshipSalesOrderThresholdQuery;
+        }
+
+        if ($merchantRelationshipSalesOrderThresholdConditions->getMerchantRelationshipIds()) {
+            $merchantRelationshipSalesOrderThresholdQuery->filterByFkMerchantRelationship_In(
+                $merchantRelationshipSalesOrderThresholdConditions->getMerchantRelationshipIds(),
+            );
+        }
+
+        return $merchantRelationshipSalesOrderThresholdQuery;
     }
 }

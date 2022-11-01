@@ -8,7 +8,10 @@
 namespace Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Business;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdCollectionDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdCollectionResponseTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer;
+use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 
@@ -83,4 +86,36 @@ interface MerchantRelationshipSalesOrderThresholdFacadeInterface
         CurrencyTransfer $currencyTransfer,
         array $merchantRelationshipIds
     ): array;
+
+    /**
+     * Specification:
+     * - Deletes collection of MerchantRelationshipSalesOrderThresholds by delete criteria.
+     * - Deactivates all localized messages and glossary keys for merchant relationship sales order thresholds.
+     * - Uses `MerchantRelationshipSalesOrderThresholdCollectionDeleteCriteriaTransfer.MerchantRelationshipIds` to filter by MerchantRelationshipIds.
+     * - Uses `MerchantRelationshipSalesOrderThresholdCollectionDeleteCriteriaTransfer.isTransactional` to make transactional delete that is defaulted to true.
+     * - Returns `MerchantRelationshipSalesOrderThresholdCollectionResponseTransfer.MerchantRelationshipSalesOrderThresholds[]` filled with deleted items.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdCollectionDeleteCriteriaTransfer $merchantRelationshipSalesOrderThresholdCollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdCollectionResponseTransfer
+     */
+    public function deleteMerchantRelationshipSalesOrderThresholdCollection(
+        MerchantRelationshipSalesOrderThresholdCollectionDeleteCriteriaTransfer $merchantRelationshipSalesOrderThresholdCollectionDeleteCriteriaTransfer
+    ): MerchantRelationshipSalesOrderThresholdCollectionResponseTransfer;
+
+    /**
+     * Specification:
+     * - Maps `MerchantRelationshipTransfer` to transactional `MerchantRelationshipSalesOrderThresholdCollectionDeleteCriteriaTransfer`.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdCollectionDeleteCriteriaTransfer
+     */
+    public function mapMerchantRelationshipToDeleteThresholdCollectionCriteria(
+        MerchantRelationshipTransfer $merchantRelationshipTransfer
+    ): MerchantRelationshipSalesOrderThresholdCollectionDeleteCriteriaTransfer;
 }

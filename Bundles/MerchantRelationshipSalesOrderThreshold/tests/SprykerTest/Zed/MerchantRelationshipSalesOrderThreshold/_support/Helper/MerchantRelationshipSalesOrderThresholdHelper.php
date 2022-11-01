@@ -8,11 +8,17 @@
 namespace SprykerTest\Zed\MerchantRelationshipSalesOrderThreshold\Helper;
 
 use Codeception\Module;
+use Generated\Shared\DataBuilder\MerchantRelationshipSalesOrderThresholdBuilder;
+use Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer;
 use Orm\Zed\MerchantRelationshipSalesOrderThreshold\Persistence\Map\SpyMerchantRelationshipSalesOrderThresholdTableMap;
 use Orm\Zed\MerchantRelationshipSalesOrderThreshold\Persistence\SpyMerchantRelationshipSalesOrderThresholdQuery;
+use Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Business\MerchantRelationshipSalesOrderThresholdFacadeInterface;
+use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class MerchantRelationshipSalesOrderThresholdHelper extends Module
 {
+    use LocatorHelperTrait;
+
     /**
      * @var string
      */
@@ -22,6 +28,20 @@ class MerchantRelationshipSalesOrderThresholdHelper extends Module
      * @var string
      */
     protected const ERROR_MESSAGE_EXPECTED = 'Expected at least one entry in the database table `%s` but table is empty.';
+
+    /**
+     * @param array<string, mixed> $seedData
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer
+     */
+    public function haveMerchantRelationshipSalesOrderThreshold(array $seedData = []): MerchantRelationshipSalesOrderThresholdTransfer
+    {
+        $merchantRelationshipSalesOrderThresholdTransfer = (new MerchantRelationshipSalesOrderThresholdBuilder($seedData))->build();
+
+        return $this->getMerchantRelationshipSalesOrderThresholdFacade()->saveMerchantRelationshipSalesOrderThreshold(
+            $merchantRelationshipSalesOrderThresholdTransfer,
+        );
+    }
 
     /**
      * @return void
@@ -59,5 +79,13 @@ class MerchantRelationshipSalesOrderThresholdHelper extends Module
     protected function getMerchantRelationshipSalesOrderThresholdQuery(): SpyMerchantRelationshipSalesOrderThresholdQuery
     {
         return SpyMerchantRelationshipSalesOrderThresholdQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Business\MerchantRelationshipSalesOrderThresholdFacadeInterface
+     */
+    protected function getMerchantRelationshipSalesOrderThresholdFacade(): MerchantRelationshipSalesOrderThresholdFacadeInterface
+    {
+        return $this->getLocatorHelper()->getLocator()->merchantRelationshipSalesOrderThreshold()->facade();
     }
 }

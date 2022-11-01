@@ -8,6 +8,8 @@
 namespace Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Persistence;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdCollectionTransfer;
+use Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 
@@ -34,4 +36,13 @@ interface MerchantRelationshipSalesOrderThresholdRepositoryInterface
     public function findMerchantRelationshipSalesOrderThreshold(
         MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer
     ): ?MerchantRelationshipSalesOrderThresholdTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdCriteriaTransfer $merchantRelationshipSalesOrderThresholdCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdCollectionTransfer
+     */
+    public function getMerchantRelationshipSalesOrderThresholdCollection(
+        MerchantRelationshipSalesOrderThresholdCriteriaTransfer $merchantRelationshipSalesOrderThresholdCriteriaTransfer
+    ): MerchantRelationshipSalesOrderThresholdCollectionTransfer;
 }

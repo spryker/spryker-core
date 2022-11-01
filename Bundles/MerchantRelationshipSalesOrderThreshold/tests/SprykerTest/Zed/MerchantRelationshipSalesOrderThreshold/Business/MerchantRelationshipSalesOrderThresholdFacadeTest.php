@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\MerchantRelationshipSalesOrderThreshold\Business;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdCollectionDeleteCriteriaTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Business\MerchantRelationshipSalesOrderThresholdFacadeInterface;
 use Spryker\Zed\SalesOrderThreshold\Communication\Plugin\Strategy\HardMinimumThresholdStrategyPlugin;
@@ -28,6 +29,11 @@ use Spryker\Zed\SalesOrderThreshold\SalesOrderThresholdDependencyProvider;
  */
 class MerchantRelationshipSalesOrderThresholdFacadeTest extends Test
 {
+    /**
+     * @var string
+     */
+    protected const STORE_NAME_DE = 'DE';
+
     /**
      * @var string
      */
@@ -134,6 +140,126 @@ class MerchantRelationshipSalesOrderThresholdFacadeTest extends Test
 
         // Act
         $this->getFacade()->findApplicableThresholds($quoteTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testMapMerchantRelationshipToDeleteThresholdCollectionCriteriaReturnsMerchantRelationshipSalesOrderThresholdCollectionResponseTransfer(): void
+    {
+        // Arrange
+        $merchantRelationshipTransfer = $this->tester->createTestMerchantRelationship(static::MERCHANT_RELATIONSHIP_KEY);
+
+        // Act
+        $merchantRelationshipSalesOrderThresholdCollectionResponseTransfer = $this->getFacade()
+            ->mapMerchantRelationshipToDeleteThresholdCollectionCriteria($merchantRelationshipTransfer);
+
+        // Assert
+        $this->assertInstanceOf(
+            MerchantRelationshipSalesOrderThresholdCollectionDeleteCriteriaTransfer::class,
+            $merchantRelationshipSalesOrderThresholdCollectionResponseTransfer,
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testMapMerchantRelationshipToDeleteThresholdCollectionCriteriaHasIsTransactionalIsTrue(): void
+    {
+        // Arrange
+        $merchantRelationshipTransfer = $this->tester->createTestMerchantRelationship(static::MERCHANT_RELATIONSHIP_KEY);
+
+        // Act
+        $merchantRelationshipSalesOrderThresholdCollectionResponseTransfer = $this->getFacade()
+            ->mapMerchantRelationshipToDeleteThresholdCollectionCriteria($merchantRelationshipTransfer);
+
+        // Assert
+        $this->assertTrue(
+            $merchantRelationshipSalesOrderThresholdCollectionResponseTransfer->getIsTransactional(),
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testMapMerchantRelationshipToDeleteThresholdCollectionCriteriaHasIdMerchantRelationship(): void
+    {
+        // Arrange
+        $merchantRelationshipTransfer = $this->tester->createTestMerchantRelationship(static::MERCHANT_RELATIONSHIP_KEY);
+
+        // Act
+        $merchantRelationshipSalesOrderThresholdCollectionResponseTransfer = $this->getFacade()
+            ->mapMerchantRelationshipToDeleteThresholdCollectionCriteria($merchantRelationshipTransfer);
+
+        // Assert
+        $merchantRelationshipIds = $merchantRelationshipSalesOrderThresholdCollectionResponseTransfer->getMerchantRelationshipIds();
+        $this->assertCount(1, $merchantRelationshipIds);
+        $this->assertSame($merchantRelationshipTransfer->getIdMerchantRelationship(), $merchantRelationshipIds[0] ?? null);
+    }
+
+    /**
+     * @return void
+     */
+    public function testDeleteMerchantRelationshipSalesOrderThresholdCollectionDeletesMerchantRelationshipSalesOrderThresholds(): void
+    {
+        // Arrange
+        $this->setupDependencies();
+
+        $merchantRelationshipTransfer = $this->tester->createTestMerchantRelationship(static::MERCHANT_RELATIONSHIP_KEY);
+        $merchantRelationshipSalesOrderThresholdTransfer = $this->tester->createTestMerchantRelationshipSalesOrderThresholdTransfer(
+            static::SOFT_STRATEGY_KEY,
+            $merchantRelationshipTransfer,
+            $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]),
+            $this->tester->createTestCurrencyTransfer(),
+            20000,
+        );
+
+        $this->tester->haveMerchantRelationshipSalesOrderThreshold(
+            $merchantRelationshipSalesOrderThresholdTransfer->toArray(),
+        );
+
+        // Act
+        $this->getFacade()->deleteMerchantRelationshipSalesOrderThresholdCollection(
+            $this->tester->createTestMerchantRelationshipSalesOrderThresholdCollectionDeleteCriteriaTransfer($merchantRelationshipTransfer),
+        );
+
+        // Assert
+        $this->assertSame(
+            0,
+            $this->tester->countMerchantRelationshipSalesOrderThresholds($merchantRelationshipTransfer),
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testDeleteMerchantRelationshipSalesOrderThresholdCollectionDeactivatesGlossaryKey(): void
+    {
+        // Arrange
+        $this->setupDependencies();
+
+        $merchantRelationshipTransfer = $this->tester->createTestMerchantRelationship(static::MERCHANT_RELATIONSHIP_KEY);
+        $merchantRelationshipSalesOrderThresholdTransfer = $this->tester->createTestMerchantRelationshipSalesOrderThresholdTransfer(
+            static::SOFT_STRATEGY_KEY,
+            $merchantRelationshipTransfer,
+            $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]),
+            $this->tester->createTestCurrencyTransfer(),
+            20000,
+        );
+
+        $this->tester->haveMerchantRelationshipSalesOrderThreshold(
+            $merchantRelationshipSalesOrderThresholdTransfer->toArray(),
+        );
+
+        // Act
+        $this->getFacade()->deleteMerchantRelationshipSalesOrderThresholdCollection(
+            $this->tester->createTestMerchantRelationshipSalesOrderThresholdCollectionDeleteCriteriaTransfer($merchantRelationshipTransfer),
+        );
+
+        // Assert
+        $glossaryKeyTransfer = $this->tester->findGlossaryKey($merchantRelationshipSalesOrderThresholdTransfer);
+        $this->assertNotNull($glossaryKeyTransfer);
+        $this->assertFalse($glossaryKeyTransfer->getIsActive());
     }
 
     /**

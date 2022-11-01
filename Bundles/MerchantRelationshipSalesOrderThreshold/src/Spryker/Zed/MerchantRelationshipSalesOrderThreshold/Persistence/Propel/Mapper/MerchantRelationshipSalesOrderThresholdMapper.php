@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdCollectionTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Generated\Shared\Transfer\SalesOrderThresholdTypeTransfer;
@@ -35,7 +36,7 @@ class MerchantRelationshipSalesOrderThresholdMapper implements MerchantRelations
         $merchantRelationshipSalesOrderThresholdTransfer->fromArray($salesOrderThresholdEntity->toArray(), true)
             ->setIdMerchantRelationshipSalesOrderThreshold($salesOrderThresholdEntity->getIdMerchantRelationshipSalesOrderThreshold())
             ->setSalesOrderThresholdValue(
-                $merchantRelationshipSalesOrderThresholdTransfer->getSalesOrderThresholdValue()->fromArray($salesOrderThresholdEntity->toArray(), true)
+                ($merchantRelationshipSalesOrderThresholdTransfer->getSalesOrderThresholdValue() ?? (new SalesOrderThresholdValueTransfer()))->fromArray($salesOrderThresholdEntity->toArray(), true)
                     ->setSalesOrderThresholdType(
                         (new SalesOrderThresholdTypeTransfer())->fromArray($salesOrderThresholdTypeEntity->toArray(), true)
                             ->setIdSalesOrderThresholdType($salesOrderThresholdTypeEntity->getIdSalesOrderThresholdType()),
@@ -50,5 +51,29 @@ class MerchantRelationshipSalesOrderThresholdMapper implements MerchantRelations
             );
 
         return $merchantRelationshipSalesOrderThresholdTransfer;
+    }
+
+    /**
+     * @param array<\Orm\Zed\MerchantRelationshipSalesOrderThreshold\Persistence\SpyMerchantRelationshipSalesOrderThreshold> $merchantRelationshipSalesOrderThresholdEntities
+     * @param \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdCollectionTransfer $merchantRelationshipSalesOrderThresholdCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdCollectionTransfer
+     */
+    public function mapMerchantRelationshipSalesOrderThresholdEntitiesToMerchantRelationshipSalesOrderThresholdCollectionTransfer(
+        array $merchantRelationshipSalesOrderThresholdEntities,
+        MerchantRelationshipSalesOrderThresholdCollectionTransfer $merchantRelationshipSalesOrderThresholdCollectionTransfer
+    ): MerchantRelationshipSalesOrderThresholdCollectionTransfer {
+        foreach ($merchantRelationshipSalesOrderThresholdEntities as $merchantRelationshipSalesOrderThresholdEntity) {
+            $merchantRelationshipSalesOrderThresholdTransfer = $this->mapMerchantRelationshipSalesOrderThresholdEntityToTransfer(
+                $merchantRelationshipSalesOrderThresholdEntity,
+                new MerchantRelationshipSalesOrderThresholdTransfer(),
+            );
+
+            $merchantRelationshipSalesOrderThresholdCollectionTransfer->addMerchantRelationshipSalesOrderThreshold(
+                $merchantRelationshipSalesOrderThresholdTransfer,
+            );
+        }
+
+        return $merchantRelationshipSalesOrderThresholdCollectionTransfer;
     }
 }

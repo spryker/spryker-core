@@ -8,7 +8,10 @@
 namespace Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Business;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdCollectionDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdCollectionResponseTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer;
+use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -96,6 +99,44 @@ class MerchantRelationshipSalesOrderThresholdFacade extends AbstractFacade imple
                 $storeTransfer,
                 $currencyTransfer,
                 $merchantRelationshipIds,
+            );
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdCollectionDeleteCriteriaTransfer $merchantRelationshipSalesOrderThresholdCollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdCollectionResponseTransfer
+     */
+    public function deleteMerchantRelationshipSalesOrderThresholdCollection(
+        MerchantRelationshipSalesOrderThresholdCollectionDeleteCriteriaTransfer $merchantRelationshipSalesOrderThresholdCollectionDeleteCriteriaTransfer
+    ): MerchantRelationshipSalesOrderThresholdCollectionResponseTransfer {
+        return $this->getFactory()
+            ->createMerchantRelationshipSalesOrderThresholdDeleter()
+            ->deleteMerchantRelationshipSalesOrderThresholdCollection(
+                $merchantRelationshipSalesOrderThresholdCollectionDeleteCriteriaTransfer,
+            );
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdCollectionDeleteCriteriaTransfer
+     */
+    public function mapMerchantRelationshipToDeleteThresholdCollectionCriteria(
+        MerchantRelationshipTransfer $merchantRelationshipTransfer
+    ): MerchantRelationshipSalesOrderThresholdCollectionDeleteCriteriaTransfer {
+        return $this->getFactory()
+            ->createMerchantRelationshipSalesOrderThresholdMapper()
+            ->mapMerchantRelationshipToDeleteThresholdCollectionCriteria(
+                $merchantRelationshipTransfer,
             );
     }
 }

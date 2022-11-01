@@ -10,6 +10,28 @@
         <property name="localizedMessages" type="SalesOrderThresholdLocalizedMessage[]" singular="localizedMessage"/>
     </transfer>
 
+    <transfer name="MerchantRelationshipSalesOrderThresholdCollection">
+        <property name="merchantRelationshipSalesOrderThresholds" type="MerchantRelationshipSalesOrderThreshold[]" singular="merchantRelationshipSalesOrderThreshold"/>
+    </transfer>
+
+    <transfer name="MerchantRelationshipSalesOrderThresholdCriteria">
+        <property name="merchantRelationshipSalesOrderThresholdConditions" type="MerchantRelationshipSalesOrderThresholdConditions"/>
+    </transfer>
+
+    <transfer name="MerchantRelationshipSalesOrderThresholdConditions">
+        <property name="merchantRelationshipIds" type="int[]" singular="merchantRelationshipId"/>
+    </transfer>
+
+    <transfer name="MerchantRelationshipSalesOrderThresholdCollectionDeleteCriteria">
+        <property name="isTransactional" type="bool"/>
+        <property name="merchantRelationshipIds" type="int[]" singular="merchantRelationshipId"/>
+    </transfer>
+
+    <transfer name="MerchantRelationshipSalesOrderThresholdCollectionResponse">
+        <property name="errors" type="Error[]" singular="error"/>
+        <property name="merchantRelationshipSalesOrderThresholds" type="MerchantRelationshipSalesOrderThreshold[]" singular="merchantRelationshipSalesOrderThreshold"/>
+    </transfer>
+
     <transfer name="PriceProductDimension">
         <property name="idMerchantRelationship" type="int"/>
     </transfer>
@@ -87,6 +109,11 @@
         <property name="thresholdGroup" type="string"/>
         <property name="idSalesOrderThresholdType" type="int"/>
         <property name="key" type="string"/>
+    </transfer>
+
+    <transfer name="Error">
+        <property name="message" type="string"/>
+        <property name="entityIdentifier" type="string"/>
     </transfer>
 
 </transfers>

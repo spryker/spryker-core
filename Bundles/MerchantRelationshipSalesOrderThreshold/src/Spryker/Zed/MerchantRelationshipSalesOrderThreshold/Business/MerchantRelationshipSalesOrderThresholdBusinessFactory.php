@@ -8,6 +8,10 @@
 namespace Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Business\MerchantRelationshipThreshold\MerchantRelationshipSalesOrderThresholdDeleter;
+use Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Business\MerchantRelationshipThreshold\MerchantRelationshipSalesOrderThresholdDeleterInterface;
+use Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Business\MerchantRelationshipThreshold\MerchantRelationshipSalesOrderThresholdMapper;
+use Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Business\MerchantRelationshipThreshold\MerchantRelationshipSalesOrderThresholdMapperInterface;
 use Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Business\MerchantRelationshipThreshold\MerchantRelationshipThresholdReader;
 use Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Business\MerchantRelationshipThreshold\MerchantRelationshipThresholdReaderInterface;
 use Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Business\MerchantRelationshipThreshold\MerchantRelationshipThresholdWriter;
@@ -80,6 +84,19 @@ class MerchantRelationshipSalesOrderThresholdBusinessFactory extends AbstractBus
     }
 
     /**
+     * @return \Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Business\MerchantRelationshipThreshold\MerchantRelationshipSalesOrderThresholdDeleterInterface
+     */
+    public function createMerchantRelationshipSalesOrderThresholdDeleter(): MerchantRelationshipSalesOrderThresholdDeleterInterface
+    {
+        return new MerchantRelationshipSalesOrderThresholdDeleter(
+            $this->getEntityManager(),
+            $this->getRepository(),
+            $this->createMerchantRelationshipSalesOrderThresholdTranslationWriter(),
+            $this->createMerchantRelationshipSalesOrderThresholdMapper(),
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Business\Translation\MerchantRelationshipSalesOrderThresholdGlossaryKeyGeneratorInterface
      */
     public function createMerchantRelationshipSalesOrderThresholdGlossaryKeyGenerator(): MerchantRelationshipSalesOrderThresholdGlossaryKeyGeneratorInterface
@@ -106,5 +123,13 @@ class MerchantRelationshipSalesOrderThresholdBusinessFactory extends AbstractBus
         return new MerchantRelationshipSalesOrderThresholdTranslationWriter(
             $this->getGlossaryFacade(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Business\MerchantRelationshipThreshold\MerchantRelationshipSalesOrderThresholdMapperInterface
+     */
+    public function createMerchantRelationshipSalesOrderThresholdMapper(): MerchantRelationshipSalesOrderThresholdMapperInterface
+    {
+        return new MerchantRelationshipSalesOrderThresholdMapper();
     }
 }

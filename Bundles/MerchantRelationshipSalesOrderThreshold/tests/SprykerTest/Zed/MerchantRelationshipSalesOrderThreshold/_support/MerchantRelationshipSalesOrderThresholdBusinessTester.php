@@ -10,6 +10,8 @@ namespace SprykerTest\Zed\MerchantRelationshipSalesOrderThreshold;
 use Codeception\Actor;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\GlossaryKeyTransfer;
+use Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdCollectionDeleteCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -17,6 +19,8 @@ use Generated\Shared\Transfer\SalesOrderThresholdTypeTransfer;
 use Generated\Shared\Transfer\SalesOrderThresholdValueTransfer;
 use Generated\Shared\Transfer\SpyMerchantRelationshipEntityTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery;
+use Orm\Zed\MerchantRelationshipSalesOrderThreshold\Persistence\SpyMerchantRelationshipSalesOrderThresholdQuery;
 
 /**
  * @method void wantToTest($text)
@@ -35,6 +39,11 @@ use Generated\Shared\Transfer\StoreTransfer;
 class MerchantRelationshipSalesOrderThresholdBusinessTester extends Actor
 {
     use _generated\MerchantRelationshipSalesOrderThresholdBusinessTesterActions;
+
+    /**
+     * @var string
+     */
+    protected const TEST_GLOSSARY_KEY = 'test_glossary_key';
 
     /**
      * @param string $key
@@ -83,8 +92,22 @@ class MerchantRelationshipSalesOrderThresholdBusinessTester extends Actor
                 (new SalesOrderThresholdValueTransfer())
                     ->setSalesOrderThresholdType($salesOrderThresholdTypeTransfer)
                     ->setThreshold($thresholdValue)
+                    ->setMessageGlossaryKey(static::TEST_GLOSSARY_KEY)
                     ->setFee($fee),
             );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdCollectionDeleteCriteriaTransfer
+     */
+    public function createTestMerchantRelationshipSalesOrderThresholdCollectionDeleteCriteriaTransfer(
+        MerchantRelationshipTransfer $merchantRelationshipTransfer
+    ): MerchantRelationshipSalesOrderThresholdCollectionDeleteCriteriaTransfer {
+        return (new MerchantRelationshipSalesOrderThresholdCollectionDeleteCriteriaTransfer())
+            ->setIsTransactional(true)
+            ->addMerchantRelationshipId($merchantRelationshipTransfer->getIdMerchantRelationship());
     }
 
     /**
@@ -126,5 +149,51 @@ class MerchantRelationshipSalesOrderThresholdBusinessTester extends Actor
         return (new CurrencyTransfer())
             ->setIdCurrency(1)
             ->setCode('EUR');
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
+     *
+     * @return int
+     */
+    public function countMerchantRelationshipSalesOrderThresholds(MerchantRelationshipTransfer $merchantRelationshipTransfer): int
+    {
+        return $this->getMerchantRelationshipSalesOrderThresholdQuery()
+            ->findByFkMerchantRelationship($merchantRelationshipTransfer->getIdMerchantRelationship())
+            ->count();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer
+     *
+     * @return \Generated\Shared\Transfer\GlossaryKeyTransfer|null
+     */
+    public function findGlossaryKey(MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer): ?GlossaryKeyTransfer
+    {
+        $glossaryKeyEntity = $this->getGlossaryKeyQuery()->findOneByKey(
+            $merchantRelationshipSalesOrderThresholdTransfer->getSalesOrderThresholdValue()->getMessageGlossaryKey(),
+        );
+
+        if ($glossaryKeyEntity === null) {
+            return null;
+        }
+
+        return (new GlossaryKeyTransfer())->fromArray($glossaryKeyEntity->toArray(), true);
+    }
+
+    /**
+     * @return \Orm\Zed\MerchantRelationshipSalesOrderThreshold\Persistence\SpyMerchantRelationshipSalesOrderThresholdQuery
+     */
+    protected function getMerchantRelationshipSalesOrderThresholdQuery(): SpyMerchantRelationshipSalesOrderThresholdQuery
+    {
+        return SpyMerchantRelationshipSalesOrderThresholdQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery
+     */
+    protected function getGlossaryKeyQuery(): SpyGlossaryKeyQuery
+    {
+        return SpyGlossaryKeyQuery::create();
     }
 }

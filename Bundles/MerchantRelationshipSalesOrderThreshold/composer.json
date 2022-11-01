@@ -9,9 +9,11 @@
         "spryker/glossary": "^3.1.0",
         "spryker/kernel": "^3.30.0",
         "spryker/merchant-relationship": "^1.0.0",
+        "spryker/merchant-relationship-extension": "^1.0.0",
         "spryker/sales-order-threshold": "^1.0.0",
         "spryker/sales-order-threshold-extension": "^1.0.0",
-        "spryker/store": "^1.2.0"
+        "spryker/store": "^1.2.0",
+        "spryker/transfer": "^3.25.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*",
