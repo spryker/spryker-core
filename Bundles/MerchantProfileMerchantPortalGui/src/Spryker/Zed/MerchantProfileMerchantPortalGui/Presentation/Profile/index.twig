@@ -37,18 +37,20 @@
     {% endfor %}
 {% endmacro %}
 
+{% set mainClass = 'mp-profile' %}
+
 {% block content %}
     {{ form_start(form, {attr: {novalidate: '', withMonitor: true}}) }}
         <web-mp-profile cloak>
             <h1 title>{{ 'Profile' | trans }}</h1>
 
-            {{ form_row(form.save, {attr: {class: 'mp-profile__submit', 'action': true, 'size': 'lg'}}) }}
+            {{ form_row(form.save, {attr: {class: mainClass ~ '__submit', action: true, size: 'lg'}}) }}
 
             <web-spy-tabs>
                 <web-spy-tab spy-title="{{ 'Business Info' | trans }}" has-warning="{{ (not businessInfoMerchantProfileForm.vars.valid) | boolToStr }}">
                     <div class="spy-row spy-row-gutter-md">
                         <div class="spy-col spy-col-gutter-md spy-col-7">
-                            <web-spy-card class="mp-profile__card" cloak spy-title="{{ 'Contact Person' | trans }}">
+                            <web-spy-card class="{{ mainClass }}__card" cloak spy-title="{{ 'Contact Person' | trans }}">
                                 {{ form_row(businessInfoMerchantProfileFields.contact_person_role) }}
                                 {{ form_row(businessInfoMerchantProfileFields.contact_person_title) }}
                                 {{ form_row(businessInfoMerchantProfileFields.contact_person_first_name) }}
@@ -61,14 +63,14 @@
                         </div>
 
                         <div class="spy-col spy-col-gutter-md spy-col-5">
-                            <web-spy-card class="mp-profile__card" cloak spy-title="{{ 'Company' | trans }}">
+                            <web-spy-card class="{{ mainClass }}__card" cloak spy-title="{{ 'Company' | trans }}">
                                 {{ form_row(businessInfoMerchantProfileFields.name) }}
                                 {{ form_row(businessInfoMerchantProfileFields.registration_number) }}
                                 {{ form_row(businessInfoMerchantProfileFields.merchant_reference, {
                                     row_attr: {'no-spaces': 'true', }
                                 }) }}
                             </web-spy-card>
-                            <web-spy-card class="mp-profile__card" cloak spy-title="{{ 'Stores' | trans }}">
+                            <web-spy-card class="{{ mainClass }}__card" cloak spy-title="{{ 'Stores' | trans }}">
                                 {% for store in stores %}
                                     <web-spy-chips color="blue">{{ store.name }}</web-spy-chips>
                                 {% endfor %}
@@ -80,7 +82,7 @@
                 <web-spy-tab spy-title="{{ 'Online Profile' | trans }}" has-warning="{{ (not onlineProfileMerchantProfileForm.vars.valid) | boolToStr }}">
                     <div class="spy-row spy-row-gutter-md">
                         <div class="spy-col spy-col-gutter-md spy-col-8">
-                            <web-spy-card class="mp-profile__card" cloak spy-title="{{ 'Store Profile URL' | trans }} *">
+                            <web-spy-card class="{{ mainClass }}__card" cloak spy-title="{{ 'Store Profile URL' | trans }} *">
                                 {% for urlForm in onlineProfileMerchantProfileFields.urlCollection %}
                                     {{ form_row(urlForm.children.url, {
                                         label: false,
@@ -94,18 +96,18 @@
                                 {% endfor %}
                             </web-spy-card>
 
-                            <web-spy-card class="mp-profile__card" cloak spy-title="{{ 'About Your Store' | trans }}">
+                            <web-spy-card class="{{ mainClass }}__card" cloak spy-title="{{ 'About Your Store' | trans }}">
                                 {{ _self.merchantProfileLocalizedGlossaryFields('descriptionGlossaryKey', glossaryCollectionFields) }}
                             </web-spy-card>
 
-                            <web-spy-card class="mp-profile__card" cloak spy-title="{{ 'Visual assets' | trans }}">
+                            <web-spy-card class="{{ mainClass }}__card" cloak spy-title="{{ 'Visual assets' | trans }}">
                                 {{ form_row(onlineProfileMerchantProfileFields.logo_url) }}
 
-                                <web-spy-label class="mp-profile__card--label" cloak>{{ 'Banner URL' | trans }}</web-spy-label>
+                                <web-spy-label class="{{ mainClass }}__card--label" cloak>{{ 'Banner URL' | trans }} *</web-spy-label>
                                 {{ _self.merchantProfileLocalizedGlossaryFields('bannerUrlGlossaryKey', glossaryCollectionFields) }}
                             </web-spy-card>
 
-                            <web-spy-card class="mp-profile__card" cloak spy-title="{{ 'Contact Details & Address' | trans }}">
+                            <web-spy-card class="{{ mainClass }}__card" cloak spy-title="{{ 'Contact Details & Address' | trans }}">
                                 <div class="spy-row spy-row-gutter-md">
                                     <div class="spy-col spy-col-gutter-md spy-col-6">
                                         {{ form_row(addressCollectionFields.address1) }}
@@ -143,45 +145,44 @@
                                 </div>
                             </web-spy-card>
 
-                            <web-spy-card class="mp-profile__card" cloak spy-title="{{ 'Average Delivery Time' | trans }}">
+                            <web-spy-card class="{{ mainClass }}__card" cloak spy-title="{{ 'Average Delivery Time' | trans }}">
                                 {{ _self.merchantProfileLocalizedGlossaryFields('deliveryTimeGlossaryKey', glossaryCollectionFields) }}
                             </web-spy-card>
 
-                            <web-spy-card class="mp-profile__card" cloak spy-title="{{ 'Terms & Conditions' | trans }}">
+                            <web-spy-card class="{{ mainClass }}__card" cloak spy-title="{{ 'Terms & Conditions' | trans }}">
                                 {{ _self.merchantProfileLocalizedGlossaryFields('termsConditionsGlossaryKey', glossaryCollectionFields) }}
                             </web-spy-card>
 
-                            <web-spy-card class="mp-profile__card" cloak spy-title="{{ 'Cancellation Policy' | trans }}">
+                            <web-spy-card class="{{ mainClass }}__card" cloak spy-title="{{ 'Cancellation Policy' | trans }}">
                                 {{ _self.merchantProfileLocalizedGlossaryFields('cancellationPolicyGlossaryKey', glossaryCollectionFields) }}
                             </web-spy-card>
 
-                            <web-spy-card class="mp-profile__card" cloak spy-title="{{ 'Imprint' | trans }}">
+                            <web-spy-card class="{{ mainClass }}__card" cloak spy-title="{{ 'Imprint' | trans }}">
                                 {{ _self.merchantProfileLocalizedGlossaryFields('imprintGlossaryKey', glossaryCollectionFields) }}
                             </web-spy-card>
 
-                            <web-spy-card class="mp-profile__card" cloak spy-title="{{ 'Data Privacy' | trans }}">
+                            <web-spy-card class="{{ mainClass }}__card" cloak spy-title="{{ 'Data Privacy' | trans }}">
                                 {{ _self.merchantProfileLocalizedGlossaryFields('dataPrivacyGlossaryKey', glossaryCollectionFields) }}
                             </web-spy-card>
                         </div>
 
                         <div class="spy-col spy-col-gutter-md spy-col-4">
-                            <web-spy-card class="mp-profile__card" cloak spy-title="{{ 'Store Status' | trans }}">
-                                <div class="mp-profile__status">
+                            <web-spy-card class="{{ mainClass }}__card" cloak spy-title="{{ 'Store Status' | trans }}">
+                                <div class="{{ mainClass }}__status">
                                     {% set isProfileMerchantActiveChecked = onlineProfileMerchantProfileFields.is_active.vars.checked %}
-                                    <div class="mp-profile__status-toggle">
+
+                                    <div class="{{ mainClass }}__status-toggle">
                                         {{ form_row(onlineProfileMerchantProfileFields.is_active, {
                                             label: false, row_attr: { 'no-spaces': 'true' },
                                         }) }}
-                                        <h3 class="mp-profile__status-title mp-profile__status-title--{{ isProfileMerchantActiveChecked ? 'online' : 'offline' }}">
-                                            {{ isProfileMerchantActiveChecked ? 'store.state.online' | trans : 'store.state.offline' | trans }}
+                                        <h3 class="{{ mainClass }}__status-title">
+                                            {{ (isProfileMerchantActiveChecked ? 'store.state.online' : 'store.state.offline') | trans }}
                                         </h3>
                                     </div>
 
-                                    <div>
-                                        {{ isProfileMerchantActiveChecked ?
-                                            'profile.status.message.online' | trans | raw :
-                                            'profile.status.message.offline' | trans | raw }}
-                                    </div>
+                                    <p class="{{ mainClass }}__status-message">
+                                        {{ (isProfileMerchantActiveChecked ? 'profile.status.message.online' : 'profile.status.message.offline') | trans }}
+                                    </p>
                                 </div>
                             </web-spy-card>
                         </div>

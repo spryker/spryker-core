@@ -73,7 +73,11 @@
 @edit-offer-stock-row-padding: var(--spy-edit-offer-stock-row-padding, 0 @edit-offer-indent-medium);
 @edit-offer-table-padding-inside-card: var(
     --spy-edit-offer-table-padding-inside-card,
-    3px calc(@edit-offer-indent-small / 2)
+    3px calc(@edit-offer-indent-small / 2) calc(@edit-offer-indent-small / 2)
+);
+@edit-offer-empty-table-border-top: var(
+    --spy-edit-offer-empty-table-border-top,
+    @border-width-base solid @gray-lighter
 );
 
 .@{ajax-form-prefix-cls}-container {
@@ -139,6 +143,10 @@
 
         .@{table-prefix-cls} {
             padding: @edit-offer-table-padding-inside-card;
+
+            &-empty {
+                border-top: @edit-offer-empty-table-border-top;
+            }
         }
     }
 

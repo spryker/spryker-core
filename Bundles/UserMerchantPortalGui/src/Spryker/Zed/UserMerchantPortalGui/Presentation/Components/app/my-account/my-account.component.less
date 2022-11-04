@@ -1,9 +1,14 @@
 @import '~@spryker/styles/src/lib/themes/default/variables/index.less';
 
+@my-account-content-max-width: var(--spy-my-account-content-max-width, 1170px);
+@my-account-content-margin: var(--spy-my-account-content-margin, 0 auto);
 @my-account-margin-bottom: var(--spy-my-account-margin-bottom, 20px);
 
 .mp-my-account {
     font-family: @font-family;
+    display: block;
+    max-width: @my-account-content-max-width;
+    margin: @my-account-content-margin;
 
     &__card {
         display: block;

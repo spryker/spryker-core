@@ -15,7 +15,6 @@ describe('LoginLayoutComponent', () => {
         template: `
             <mp-login-layout>
                 <div class="default-content"></div>
-                <div sub-title class="sub-title-content"></div>
                 <div title class="title-content"></div>
             </mp-login-layout>
         `,
@@ -42,14 +41,6 @@ describe('LoginLayoutComponent', () => {
         const logoElem = fixture.debugElement.query(By.css('spy-logo'));
 
         expect(logoElem).toBeTruthy();
-    });
-
-    it('should render sub-title content in the `.login__logo-text`', () => {
-        fixture.detectChanges();
-
-        const subTitleElem = fixture.debugElement.query(By.css('.login__logo-text .sub-title-content'));
-
-        expect(subTitleElem).toBeTruthy();
     });
 
     it('should render `spy-card` component', () => {

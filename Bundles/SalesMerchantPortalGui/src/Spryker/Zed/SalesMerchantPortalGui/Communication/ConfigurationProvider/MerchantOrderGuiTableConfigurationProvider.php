@@ -143,7 +143,7 @@ class MerchantOrderGuiTableConfigurationProvider implements MerchantOrderGuiTabl
             ->addColumnDate(static::COL_KEY_CREATED, 'Created', true, true)
             ->addColumnText(static::COL_KEY_CUSTOMER, 'Customer', true, true)
             ->addColumnText(static::COL_KEY_EMAIL, 'Email', true, true)
-            ->addColumnListChip(static::COL_KEY_ITEMS_STATES, 'Items States', false, true, 2, 'green')
+            ->addColumnListChip(static::COL_KEY_ITEMS_STATES, 'Order State', false, true, 2, 'green')
             ->addColumnText(static::COL_KEY_GRAND_TOTAL, 'Grand Total', true, true)
             ->addColumnText(static::COL_KEY_NUMBER_OF_ITEMS, 'No. of Items', true, true)
             ->addColumnChip(static::COL_KEY_STORE, 'Store', false, true, 'gray');
@@ -179,7 +179,7 @@ class MerchantOrderGuiTableConfigurationProvider implements MerchantOrderGuiTabl
     {
         $guiTableConfigurationBuilder->addFilterDateRange('created', 'Created')
             ->addFilterSelect('stores', 'Stores', true, $this->getStoreOptions())
-            ->addFilterSelect('orderItemStates', 'States', true, $this->getStatesOptions());
+            ->addFilterSelect('orderItemStates', 'State', true, $this->getStatesOptions());
 
         return $guiTableConfigurationBuilder;
     }

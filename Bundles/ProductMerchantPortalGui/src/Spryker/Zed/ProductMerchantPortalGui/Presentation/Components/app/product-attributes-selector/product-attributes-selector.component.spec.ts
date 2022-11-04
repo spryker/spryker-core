@@ -136,20 +136,16 @@ describe('ProductAttributesSelectorComponent', () => {
             expect(rowValuesNameSelect).toBeTruthy();
         });
 
-        it('should render <spy-button> with <spy-icon> components to the `.mp-product-attributes-selector__content-row-button` element', () => {
+        it('should render <spy-button-icon> component to the `.mp-product-attributes-selector__content-row-values-name` element', () => {
             component.attributes = mockAttributes;
             component.selectedAttributes = [...mockSelectedAttributes, {}];
             fixture.detectChanges();
 
             const rowValuesNameButton = fixture.debugElement.query(
-                By.css('.mp-product-attributes-selector__content-row-button spy-button'),
-            );
-            const rowValuesNameButtonIcon = fixture.debugElement.query(
-                By.css('.mp-product-attributes-selector__content-row-button spy-button spy-icon'),
+                By.css('.mp-product-attributes-selector__content-row-values-name spy-button-icon'),
             );
 
             expect(rowValuesNameButton).toBeTruthy();
-            expect(rowValuesNameButtonIcon).toBeTruthy();
         });
     });
 
@@ -198,7 +194,7 @@ describe('ProductAttributesSelectorComponent', () => {
             fixture.detectChanges();
 
             const buttonDeleteElems = fixture.debugElement.queryAll(
-                By.css('.mp-product-attributes-selector__content-row-button spy-button'),
+                By.css('.mp-product-attributes-selector__content-row-values-name spy-button-icon'),
             );
             const selectElems = fixture.debugElement.queryAll(
                 By.css('.mp-product-attributes-selector__content-row-name spy-select'),

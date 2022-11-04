@@ -30,7 +30,7 @@
                                 {% block userMenuList %}
                                     {% for userMenuNavigationItem in userMenuNavigationItems %}
                                         {% block userMenuLink %}
-                                            <a href="{{ userMenuNavigationItem.uri }}">
+                                            <a class="mp-header-menu__link" href="{{ userMenuNavigationItem.uri }}">
                                                 {% block userMenuLinkInner %}
                                                     <web-spy-user-menu-link
                                                         cloak
@@ -43,7 +43,7 @@
                                     {% endfor %}
 
                                     {% block logoutLink %}
-                                        <a href="/security-merchant-portal-gui/logout">
+                                        <a class="mp-header-menu__link" href="/security-merchant-portal-gui/logout">
                                             {% block logoutLinkInner %}
                                                 <web-spy-user-menu-link cloak type="danger">
                                                     {{ 'Logout' | trans }}

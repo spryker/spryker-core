@@ -31,8 +31,8 @@ Number,Number
 "Store Status","Store Status"
 "Phone Number","Phone Number"
 Profile,Profile
-profile.status.message.online,"<p><br>This means that your store is available online and people can see it.</p>"
-profile.status.message.offline,"<p><br>This means that your store is available online and people can see it.</p>"
+profile.status.message.online,"This means that your store is available online and people can see it."
+profile.status.message.offline,"This means that your store is available online and people can see it."
 "Provide a logo URL","Provide a logo URL"
 "Provide a banner URL","Provide a banner URL"
 "Provide Average Delivery Time","Provide Average Delivery Time"
@@ -46,8 +46,8 @@ Role,Role
 Save,Save
 select.default.placeholder,Select
 "Store Profile URL","Store Profile URL"
-store.state.online,"Your Store is online."
-store.state.offline,"Your Store is online."
+store.state.online,"Your Store is online"
+store.state.offline,"Your Store is online"
 Street,Street
 "Tell us about your store","Tell us about your store"
 "Terms & Conditions","Terms & Conditions"

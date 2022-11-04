@@ -1,14 +1,19 @@
 @import '~@spryker/styles/src/lib/themes/default/variables/index.less';
 
+@profile-content-max-width: var(--spy-profile-content-max-width, 1170px);
+@profile-content-margin: var(--spy-profile-content-margin, 0 auto);
 @profile-card-margin-bottom: var(--spy-profile-card-margin-bottom, 20px);
-@profile-card-label-margin-bottom: var(--spy-profile-card-label-margin-bottom, 9px);
+@profile-card-label-margin-bottom: var(--spy-profile-card-label-margin-bottom, @form-item-label-bottom-padding);
 @profile-collapsible-margin-bottom: var(--spy-profile-collapsible-margin-bottom, 18px);
 @profile-status-checkbox-status-title-padding-left: var(--spy-profile-status-checkbox-status-title-padding-left, 10px);
-@profile-status-checkbox-toggle-padding-top: var(--spy-profile-status-checkbox-toggle-padding-top, 10px);
-@profile-status-checkbox-toggle-padding-bottom: var(--spy-profile-status-checkbox-toggle-padding-bottom, 15px);
+@profile-status-checkbox-toggle-padding-top: var(--spy-profile-status-checkbox-toggle-padding-top, 0);
+@profile-status-checkbox-toggle-padding-bottom: var(--spy-profile-status-checkbox-toggle-padding-bottom, 20px);
 
 .mp-profile {
     font-family: @font-family;
+    display: block;
+    max-width: @profile-content-max-width;
+    margin: @profile-content-margin;
 
     &__card {
         display: block;
@@ -16,7 +21,13 @@
 
         &--label {
             display: block;
+            text-transform: uppercase;
+            height: auto;
+            font-weight: @font-weight-default;
+            font-size: @font-size-sm;
+            letter-spacing: @letter-spacing-base;
             margin-bottom: @profile-card-label-margin-bottom;
+            color: @ink;
         }
     }
 
@@ -30,6 +41,10 @@
         flex-wrap: wrap;
         flex-direction: column;
 
+        .@{form-item-prefix-cls}-control-input {
+            min-height: unset;
+        }
+
         &-toggle {
             display: flex;
             align-items: center;
@@ -37,24 +52,15 @@
             padding-bottom: @profile-status-checkbox-toggle-padding-bottom;
         }
 
-        br {
-            display: none;
+        &-title {
+            padding-left: @profile-status-checkbox-status-title-padding-left;
+            color: @ink;
         }
 
-        p {
+        &-message {
             margin: 0;
-        }
-    }
-
-    &__status-title {
-        padding-left: @profile-status-checkbox-status-title-padding-left;
-
-        &--online {
-            color: @green;
-        }
-
-        &--offline {
             color: @gray-darker;
+            font-size: @font-size-sm;
         }
     }
 }

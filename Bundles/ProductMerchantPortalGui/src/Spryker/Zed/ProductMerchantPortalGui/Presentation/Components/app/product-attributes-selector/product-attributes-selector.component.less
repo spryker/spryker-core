@@ -6,16 +6,15 @@
 @product-attributes-selector-col-padding: var(--spy-product-attributes-selector-col-padding, 0 8px);
 @product-attributes-selector-header-margin-bottom: var(--spy-product-attributes-selector-header-margin-bottom, 7px);
 @product-attributes-selector-row-margin-bottom: var(--spy-product-attributes-selector-row-margin-bottom, 15px);
-@product-attributes-selector-delete-icon-font-size: var(--spy-product-attributes-selector-delete-icon-font-size, 20px);
-@product-attributes-selector-add-icon-font-size: var(--spy-product-attributes-selector-add-icon-font-size, 20px);
 @product-attributes-selector-name-width: var(--spy-product-attributes-selector-name-width, 30%);
+@product-attributes-selector-value-full-width: var(--spy-product-attributes-selector-value-full-width, 70%);
 @product-attributes-selector-value-width: var(
     --spy-product-attributes-selector-value-width,
-    calc(@product-attributes-selector-value-full-width - @product-attributes-selector-button-width)
+    @product-attributes-selector-value-full-width
 );
-@product-attributes-selector-value-full-width: var(--spy-product-attributes-selector-value-full-width, 70%);
-@product-attributes-selector-button-width: var(--spy-product-attributes-selector-button-width, 40px);
+@product-attributes-selector-button-margin-left: var(--spy-product-attributes-selector-button-margin-left, 10px);
 @product-attributes-selector-button-add-padding: var(--spy-product-attributes-selector-button-add-padding, 0 8px);
+@product-attributes-selector-button-width: var(--spy-product-attributes-selector-button-width, auto);
 
 .mp-product-attributes-selector {
     display: block;
@@ -38,7 +37,7 @@
         }
 
         &-values-name {
-            width: @product-attributes-selector-value-full-width;
+            width: @product-attributes-selector-value-width;
         }
     }
 
@@ -67,10 +66,6 @@
             display: flex;
             flex: 1 0 auto;
 
-            &--full-width {
-                width: @product-attributes-selector-value-full-width;
-            }
-
             &-select {
                 flex-grow: 1;
                 max-width: 100%;
@@ -79,10 +74,7 @@
 
         &-button {
             width: @product-attributes-selector-button-width;
-        }
-
-        &-delete-icon {
-            font-size: @product-attributes-selector-delete-icon-font-size;
+            margin-left: @product-attributes-selector-button-margin-left;
         }
     }
 

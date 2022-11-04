@@ -1,6 +1,10 @@
 @import '~@spryker/styles/src/lib/themes/default/variables/index.less';
 
-@edit-abstract-product-variants-table-padding: var(--spy-edit-abstract-product-variants-table-padding, 2px 5px);
+@edit-abstract-product-variants-table-padding: var(--spy-edit-abstract-product-variants-table-padding, 3px 5px 5px);
+@edit-abstract-product-variants-empty-table-border-top: var(
+    --spy-edit-abstract-product-variants-empty-table-border-top,
+    @border-width-base solid @gray-lighter
+);
 
 .mp-edit-abstract-product-variants {
     .@{table-filters-feature-prefix-cls} {
@@ -10,5 +14,9 @@
     .@{table-prefix-cls} {
         background-color: @gray-lighter;
         padding: @edit-abstract-product-variants-table-padding;
+
+        &-empty {
+            border-top: @edit-abstract-product-variants-empty-table-border-top;
+        }
     }
 }

@@ -22,12 +22,7 @@
                 >
                 </spy-select>
             </div>
-            <div
-                class="mp-product-attributes-selector__content-row-values-name"
-                [class.mp-product-attributes-selector__content-row-values-name--full-width]="
-                    selectedAttributes.length == 1
-                "
-            >
+            <div class="mp-product-attributes-selector__content-row-values-name">
                 <spy-select
                     [options]="getAttributes | spyInvoke: i:attributeOptions"
                     [value]="getSelectedAttributes | spyInvoke: i:selectedAttributes"
@@ -38,12 +33,14 @@
                     class="mp-product-attributes-selector__content-row-values-name-select"
                 >
                 </spy-select>
-            </div>
-            <div class="mp-product-attributes-selector__content-row-button">
-                <spy-button variant="link" *ngIf="selectedAttributes.length > 1" (click)="delete(i)">
-                    <spy-icon [name]="deleteIcon" class="mp-product-attributes-selector__content-row-delete-icon">
-                    </spy-icon>
-                </spy-button>
+                <spy-button-icon
+                    *ngIf="selectedAttributes.length > 1"
+                    class="mp-product-attributes-selector__content-row-button"
+                    [size]="deleteIconSize"
+                    [iconName]="deleteIcon"
+                    (click)="delete(i)"
+                >
+                </spy-button-icon>
             </div>
         </div>
 

@@ -13,7 +13,14 @@
 @edit-abstract-product-card-padding-bottom: var(--spy-edit-abstract-product-card-padding-bottom, 20px);
 @edit-abstract-product-card-textarea-min-height: var(--spy-edit-abstract-product-card-textarea-min-height, 100px);
 @edit-abstract-product-card-last-padding-bottom: var(--spy-edit-abstract-product-card-last-padding-bottom, 0);
-@edit-abstract-product-table-padding-inside-card: var(--spy-edit-abstract-product-table-padding-inside-card, 3px 5px);
+@edit-abstract-product-table-padding-inside-card: var(
+    --spy-edit-abstract-product-table-padding-inside-card,
+    3px 5px 5px
+);
+@edit-abstract-product-empty-table-border-top: var(
+    --spy-edit-abstract-product-empty-table-border-top,
+    @border-width-base solid @gray-lighter
+);
 @edit-abstract-product-stores-field-max-width: var(--spy-edit-abstract-product-stores-field-max-width, 420px);
 @edit-abstract-product-form-item-width: var(--spy-edit-abstract-product-form-item-width, 130px);
 @edit-abstract-product-approval-status-margin-left: var(--spy-edit-abstract-product-approval-status-margin-left, 20px);
@@ -97,6 +104,10 @@
 
         .@{table-prefix-cls} {
             padding: @edit-abstract-product-table-padding-inside-card;
+
+            &-empty {
+                border-top: @edit-abstract-product-empty-table-border-top;
+            }
         }
 
         .@{textarea-prefix-cls}_textfield {

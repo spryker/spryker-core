@@ -69,7 +69,7 @@ export class ConcreteProductsPreviewComponent implements OnChanges {
     ngOnChanges(changes: SimpleChanges) {
         if ('attributes' in changes) {
             this.areAttributesComplete =
-                this.attributes?.every?.((attribute) => attribute?.attributes.length > 0) ?? false;
+                this.attributes?.every?.((attribute) => attribute?.attributes?.length > 0) ?? false;
             this.initialGeneratedProducts = this.generatedProducts?.length ? [...this.generatedProducts] : [];
 
             if (this.areAttributesComplete) {

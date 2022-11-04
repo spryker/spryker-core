@@ -10,9 +10,9 @@
         "@angular/elements": "^12.2.16",
         "@angular/platform-browser": "^12.2.16",
         "@spryker/button": "^0.6.2",
-        "@spryker/card": "^0.6.0",
-        "@spryker/logo": "^0.4.3",
-        "@spryker/styles": "^0.7.1",
+        "@spryker/card": "^0.6.3",
+        "@spryker/logo": "^0.4.6",
+        "@spryker/styles": "^0.7.4",
         "@spryker/web-components": "^0.3.3",
         "rxjs": "~7.4.0"
     }

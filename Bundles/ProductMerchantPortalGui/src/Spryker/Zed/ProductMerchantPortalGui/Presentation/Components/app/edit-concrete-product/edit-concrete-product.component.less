@@ -17,7 +17,14 @@
 @edit-concrete-product-card-textarea-min-height: var(--spy-edit-concrete-product-card-textarea-min-height, 100px);
 @edit-concrete-product-card-last-padding-bottom: var(--spy-edit-concrete-product-card-last-padding-bottom, 0);
 @edit-concrete-product-card-table-margin-top: var(--spy-edit-concrete-product-card-table-margin-top, 0);
-@edit-concrete-product-table-padding-inside-card: var(--spy-edit-concrete-product-table-padding-inside-card, 3px 5px);
+@edit-concrete-product-table-padding-inside-card: var(
+    --spy-edit-concrete-product-table-padding-inside-card,
+    3px 5px 5px
+);
+@edit-concrete-product-empty-table-border-top: var(
+    --spy-edit-concrete-product-empty-table-border-top,
+    @border-width-base solid @gray-lighter
+);
 @edit-concrete-product-status-control-min-height: var(--spy-edit-concrete-product-status-control-min-height, 0);
 @edit-concrete-product-stock-reserved-margin-bottom: var(
     --spy-edit-concrete-product-stock-reserved-margin-bottom,
@@ -106,6 +113,10 @@
 
         .@{table-prefix-cls} {
             padding: @edit-concrete-product-table-padding-inside-card;
+
+            &-empty {
+                border-top: @edit-concrete-product-empty-table-border-top;
+            }
         }
 
         .@{range-calendar-prefix-cls}-col {

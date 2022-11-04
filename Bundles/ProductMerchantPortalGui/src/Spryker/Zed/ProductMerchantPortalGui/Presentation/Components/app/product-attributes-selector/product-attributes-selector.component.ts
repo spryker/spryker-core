@@ -33,6 +33,7 @@ export class ProductAttributesSelectorComponent implements OnChanges, OnInit {
     @Output() selectedAttributesChange = new EventEmitter<ProductAttribute[]>();
 
     deleteIcon = IconDeleteModule.icon;
+    deleteIconSize = ButtonSize.Medium;
     addIcon = IconPlusModule.icon;
     superAttributeOptions: AttributeOptions[] = [];
     attributeOptions: AttributeOptions[][] = [];

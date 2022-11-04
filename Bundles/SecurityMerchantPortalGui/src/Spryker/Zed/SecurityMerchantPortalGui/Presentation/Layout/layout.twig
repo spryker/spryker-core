@@ -6,7 +6,6 @@
 {% endblock %}
 
 {% set layoutComponentClass = 'login' %}
-{% set subTitle = 'Merchant Portal' | trans %}
 {% set title = 'Login' | trans %}
 {% set submitButtonClass = layoutComponentClass ~ '__submit' %}
 {% set linkClass = layoutComponentClass ~ '__link' %}
@@ -18,10 +17,6 @@
         {% block notification %}
             {%- include '@ZedUi/Partials/StaticMessages/static-messages.twig' -%}
         {% endblock %}
-
-        {% if subTitle %}
-            <span sub-title>{{ subTitle }}</span>
-        {% endif %}
 
         {% if title %}
             <span title>{{ title }}</span>

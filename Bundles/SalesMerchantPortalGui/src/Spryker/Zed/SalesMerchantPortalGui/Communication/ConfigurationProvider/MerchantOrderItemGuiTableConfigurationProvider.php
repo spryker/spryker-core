@@ -160,7 +160,7 @@ class MerchantOrderItemGuiTableConfigurationProvider implements MerchantOrderIte
     {
         $guiTableConfigurationBuilder->addFilterSelect(
             'orderItemStates',
-            'States',
+            'State',
             true,
             $this->getStatesOptions(),
         );
