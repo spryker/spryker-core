@@ -41,6 +41,18 @@ interface DataImportConstants
      *
      * @var string
      */
+    public const BULK_MODE_MEMORY_TRESHOLD_PERCENT = 'DATA_IMPORT:BULK_MODE_MEMORY_TRESHOLD_PERCENT';
+
+    /**
+     * @deprecated Use {@link \Spryker\Shared\DataImport\DataImportConstants::BULK_MODE_MEMORY_TRESHOLD_PERCENT} instead.
+     *
+     * Specification:
+     * - Defines a percent from memory could be used for bulk import.
+     *
+     * @api
+     *
+     * @var string
+     */
     public const BULK_MODE_MEMORY_THESHOLD_PERCENT = 'DATA_IMPORT:BULK_MODE_MEMORY_THESHOLD_PERCENT';
 
     /**

@@ -87,7 +87,7 @@ class MemoryAllocatedElasticBatch implements ElasticBatchInterface
         $this->systemMemory = $systemMemory;
 
         static::$gradualityFactorCounter = $config->getBulkWriteGradualityFactor();
-        static::$memoryTresholdPercent = $config->getBulkWriteMemoryThesoldPercent();
+        static::$memoryTresholdPercent = $config->getBulkWriteMemoryTresholdPercent();
     }
 
     /**

@@ -58,9 +58,16 @@ class DataImportConfig extends AbstractBundleConfig
     protected const BULK_MODE_GRADUALITY_FACTOR = 5;
 
     /**
+     * @deprecated Use {@link \Spryker\Shared\DataImport\DataImportConstants::BULK_MODE_MEMORY_TRESHOLD_PERCENT} instead.
+     *
      * @var int
      */
-    protected const BULK_MODE_MEMORY_THESHOLD_PERCENT = 30;
+    protected const BULK_MODE_MEMORY_THESHOLD_PERCENT = self::BULK_MODE_MEMORY_TRESHOLD_PERCENT;
+
+    /**
+     * @var int
+     */
+    protected const BULK_MODE_MEMORY_TRESHOLD_PERCENT = 30;
 
     /**
      * @api
@@ -155,6 +162,21 @@ class DataImportConfig extends AbstractBundleConfig
      * - Returns memory threshold limit in percentage of total allowed memory.
      *
      * @api
+     *
+     * @return int
+     */
+    public function getBulkWriteMemoryTresholdPercent(): int
+    {
+        return $this->get(DataImportConstants::BULK_MODE_MEMORY_TRESHOLD_PERCENT, static::BULK_MODE_MEMORY_TRESHOLD_PERCENT);
+    }
+
+    /**
+     * @api
+     *
+     * @deprecated Use {@link \Spryker\Shared\DataImport\DataImportConfig::getBulkWriteMemoryTresholdPercent()} instead.
+     *
+     * Specification:
+     * - Returns memory threshold limit in percentage of total allowed memory.
      *
      * @return int
      */
