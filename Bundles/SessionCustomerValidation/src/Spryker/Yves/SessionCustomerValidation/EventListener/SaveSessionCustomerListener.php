@@ -62,6 +62,10 @@ class SaveSessionCustomerListener implements EventSubscriberInterface
             (new CustomerTransfer())->setEmail($user->getUsername()),
         );
 
+        if (!$customerTransfer->getIdCustomer()) {
+            return;
+        }
+
         $this->sessionCustomerSaverPlugin->saveSessionCustomer(
             (new SessionCustomerTransfer())
                 ->setIdCustomer($customerTransfer->getIdCustomerOrFail())

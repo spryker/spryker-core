@@ -55,4 +55,12 @@ class SecurityFactory extends AbstractFactory
     {
         return new SecurityConfiguration();
     }
+
+    /**
+     * @return list<\Spryker\Shared\SecurityExtension\Dependency\Plugin\SecurityAuthenticationListenerFactoryTypeExpanderPluginInterface>
+     */
+    public function getSecurityAuthenticationListenerFactoryTypeExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(SecurityDependencyProvider::PLUGINS_SECURITY_AUTHENTICATION_LISTENER_FACTORY_TYPE_EXPANDER);
+    }
 }

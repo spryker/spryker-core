@@ -314,14 +314,23 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
     protected const SERVICE_VALIDATOR = 'validator';
 
     /**
-     * @var array
+     * @var list<string>
      */
-    protected const POSITIONS = ['logout', 'pre_auth', 'guard', 'form', 'http', 'remember_me', 'anonymous', 'customer_session_validator'];
+    protected const DEFAULT_AUTHENTICATION_LISTENER_FACTORY_TYPES = [
+        'logout',
+        'pre_auth',
+        'guard',
+        'form',
+        'http',
+        'remember_me',
+        'anonymous',
+        'customer_session_validator',
+    ];
 
     /**
-     * @var array
+     * @var array<array<string>>
      */
-    protected $securityRoutes = [];
+    protected array $securityRoutes = [];
 
     /**
      * @var \Spryker\Shared\SecurityExtension\Configuration\SecurityConfigurationInterface|null
@@ -329,6 +338,17 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
     protected $securityConfiguration;
 
     /**
+     * @var list<string>
+     */
+    protected array $authenticationListenerFactoryTypes = [];
+
+    /**
+     * {@inheritDoc}
+     * - Executes the stack of {@link \Spryker\Shared\SecurityExtension\Dependency\Plugin\SecurityPluginInterface} plugins.
+     * - Executes the stack of {@link \Spryker\Shared\SecurityExtension\Dependency\Plugin\SecurityAuthenticationListenerFactoryTypeExpanderPluginInterface} plugins.
+     *
+     * @api
+     *
      * @param \Spryker\Service\Container\ContainerInterface $container
      *
      * @return \Spryker\Service\Container\ContainerInterface
@@ -612,8 +632,8 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
                 }
 
                 $factories = [];
-                foreach (static::POSITIONS as $position) {
-                    $factories[$position] = [];
+                foreach ($this->getAuthenticationListenerFactoryTypes() as $authenticationListenerFactoryType) {
+                    $factories[$authenticationListenerFactoryType] = [];
                 }
 
                 foreach ($firewallConfiguration as $type => $options) {
@@ -631,16 +651,16 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
                         throw new LogicException(sprintf('The "%s" authentication entry is not registered.', $type));
                     }
                     $options['stateless'] = $stateless;
-                    [$providerId, $listenerId, $entryPointId, $position] = $container->get('security.authentication_listener.factory.' . $type)($firewallName, $options);
+                    [$providerId, $listenerId, $entryPointId, $authenticationListenerFactoryType] = $container->get('security.authentication_listener.factory.' . $type)($firewallName, $options);
                     if ($entryPointId !== null) {
                         $entryPoint = $entryPointId;
                     }
-                    $factories[$position][] = $listenerId;
+                    $factories[$authenticationListenerFactoryType][] = $listenerId;
                     $providers[] = $providerId;
                 }
 
-                foreach (static::POSITIONS as $position) {
-                    foreach ($factories[$position] as $listener) {
+                foreach ($this->getAuthenticationListenerFactoryTypes() as $authenticationListenerFactoryType) {
+                    foreach ($factories[$authenticationListenerFactoryType] as $listener) {
                         $listeners[] = $listener;
                     }
                 }
@@ -784,7 +804,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
      */
     protected function addAuthenticationListenerFactories(ContainerInterface $container): ContainerInterface
     {
-        foreach (['logout', 'pre_auth', 'guard', 'form', 'http', 'remember_me', 'anonymous'] as $type) {
+        foreach ($this->getAuthenticationListenerFactoryTypes() as $type) {
             $entryPoint = $this->getEntryPoint($type);
 
             $container->set('security.authentication_listener.factory.' . $type, $container->protect(function ($firewallName, $options) use ($type, $container, $entryPoint) {
@@ -1719,5 +1739,31 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
         }
 
         return $requestMatcher;
+    }
+
+    /**
+     * @return list<string>
+     */
+    protected function getAuthenticationListenerFactoryTypes(): array
+    {
+        if ($this->authenticationListenerFactoryTypes === []) {
+            $this->initializeAuthenticationListenerFactoryTypes();
+        }
+
+        return $this->authenticationListenerFactoryTypes;
+    }
+
+    /**
+     * @return void
+     */
+    protected function initializeAuthenticationListenerFactoryTypes(): void
+    {
+        $this->authenticationListenerFactoryTypes = static::DEFAULT_AUTHENTICATION_LISTENER_FACTORY_TYPES;
+
+        foreach ($this->getFactory()->getSecurityAuthenticationListenerFactoryTypeExpanderPlugins() as $securityAuthenticationListenerFactoryTypeExpanderPlugin) {
+            $this->authenticationListenerFactoryTypes = $securityAuthenticationListenerFactoryTypeExpanderPlugin->expand(
+                $this->authenticationListenerFactoryTypes,
+            );
+        }
     }
 }

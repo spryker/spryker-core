@@ -7,6 +7,8 @@
 
 namespace Spryker\Shared\SessionRedis\Handler\KeyBuilder;
 
+use Generated\Shared\Transfer\SessionEntityRequestTransfer;
+
 interface SessionKeyBuilderInterface
 {
     /**
@@ -30,4 +32,11 @@ interface SessionKeyBuilderInterface
      * @return string
      */
     public function buildAccountKey(string $accountType, string $idAccount): string;
+
+    /**
+     * @param \Generated\Shared\Transfer\SessionEntityRequestTransfer $sessionEntityRequestTransfer
+     *
+     * @return string
+     */
+    public function buildEntityKey(SessionEntityRequestTransfer $sessionEntityRequestTransfer): string;
 }

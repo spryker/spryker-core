@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use Exception;
 use LogicException;
 use Spryker\Shared\Security\Configuration\SecurityConfiguration;
+use Spryker\Shared\SecurityExtension\Dependency\Plugin\SecurityAuthenticationListenerFactoryTypeExpanderPluginInterface;
 use Spryker\Yves\Security\Plugin\Application\SecurityApplicationPlugin;
 use SprykerTest\Yves\Security\Fixtures\TokenAuthenticator;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,6 +39,16 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerI
  */
 class SecurityApplicationPluginTest extends Unit
 {
+    /**
+     * @var string
+     */
+    protected const TEST_SECURITY_AUTHENTICATION_LISTENER_FACTORY_TYPE = 'test_security_type';
+
+    /**
+     * @var string
+     */
+    protected const TEST_SECURITY_AUTHENTICATION_LISTENER_FACTORY = 'security.authentication_listener.factory.test_security_type';
+
     /**
      * @uses \Spryker\Yves\Security\Plugin\Application\SecurityApplicationPlugin::SERVICE_SECURITY_AUTHORIZATION_CHECKER
      *
@@ -637,6 +648,35 @@ class SecurityApplicationPluginTest extends Unit
         $securityError = $container->get('security.last_error')($request);
 
         $this->assertSame('security error', $securityError);
+    }
+
+    /**
+     * @return void
+     */
+    public function testProvideShouldExecuteSecurityAuthenticationListenerFactoryTypeExpanderPluginStack(): void
+    {
+        // Arrange
+        $securityPositionExpanderPluginMock = $this->getMockBuilder(SecurityAuthenticationListenerFactoryTypeExpanderPluginInterface::class)
+            ->getMock();
+
+        $securityPositionExpanderPluginMock
+            ->method('expand')
+            ->willReturn([static::TEST_SECURITY_AUTHENTICATION_LISTENER_FACTORY_TYPE]);
+
+        $factoryMock = $this->tester->mockFactoryMethod('getSecurityAuthenticationListenerFactoryTypeExpanderPlugins', [
+            $securityPositionExpanderPluginMock,
+        ]);
+
+        $securityApplicationPlugin = new SecurityApplicationPlugin();
+        $securityApplicationPlugin->setFactory($factoryMock);
+
+        $container = $this->tester->getContainer();
+
+        // Act
+        $securityApplicationPlugin->provide($container);
+
+        // Assert
+        $this->assertTrue($container->has(static::TEST_SECURITY_AUTHENTICATION_LISTENER_FACTORY));
     }
 
     /**

@@ -30,4 +30,14 @@
         <property name="idSession" type="string"/>
     </transfer>
 
+    <transfer name="SessionEntityRequest">
+        <property name="idEntity" type="int"/>
+        <property name="idSession" type="string"/>
+        <property name="entityType" type="string"/>
+    </transfer>
+
+    <transfer name="SessionEntityResponse">
+        <property name="isSuccessfull" type="bool"/>
+    </transfer>
+
 </transfers>

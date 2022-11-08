@@ -90,6 +90,10 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
     {
         $this->assertNotFrozen();
 
+        if (array_key_exists($firewallName, $this->mergableFirewalls)) {
+            $configuration += $this->mergableFirewalls[$firewallName];
+        }
+
         $this->mergableFirewalls[$firewallName] = $configuration;
 
         return $this;

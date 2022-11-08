@@ -36,6 +36,21 @@ class SecurityConfigurationTest extends Unit
     protected const FIREWALL_SECONDARY = 'secondary';
 
     /**
+     * @var string
+     */
+    protected const TEST_FIREWALL_CONFIGURATION = 'test';
+
+    /**
+     * @var string
+     */
+    protected const TEST_FIREWALL_CONFIGURATION_2 = 'test_2';
+
+    /**
+     * @var string
+     */
+    protected const TEST_FIREWALL_CONFIGURATION_3 = 'test_3';
+
+    /**
      * @return void
      */
     public function testAddFirewallAddsAFirewallConfiguration(): void
@@ -87,6 +102,36 @@ class SecurityConfigurationTest extends Unit
 
         $this->expectException(FirewallNotFoundException::class);
         $securityConfiguration->getConfiguration();
+    }
+
+    /**
+     * @return void
+     */
+    public function testMergeFirewallShouldNotRemoveAlreadyAddedConfiguration(): void
+    {
+        // Arrange
+        $securityConfiguration = (new SecurityConfiguration())->addFirewall(static::FIREWALL_MAIN, [
+            static::TEST_FIREWALL_CONFIGURATION => static::TEST_FIREWALL_CONFIGURATION,
+        ]);
+
+        // Act
+        $securityConfiguration->mergeFirewall(static::FIREWALL_MAIN, [
+            static::TEST_FIREWALL_CONFIGURATION_2 => static::TEST_FIREWALL_CONFIGURATION_2,
+        ]);
+        $securityConfiguration->mergeFirewall(static::FIREWALL_MAIN, [
+            static::TEST_FIREWALL_CONFIGURATION_3 => static::TEST_FIREWALL_CONFIGURATION_3,
+        ]);
+
+        // Assert
+        $firewalls = $securityConfiguration->getConfiguration()->getFirewalls();
+
+        $this->assertArrayHasKey(static::FIREWALL_MAIN, $firewalls);
+        $this->assertCount(1, $securityConfiguration->getFirewalls());
+        $this->assertSame([
+            static::TEST_FIREWALL_CONFIGURATION => static::TEST_FIREWALL_CONFIGURATION,
+            static::TEST_FIREWALL_CONFIGURATION_3 => static::TEST_FIREWALL_CONFIGURATION_3,
+            static::TEST_FIREWALL_CONFIGURATION_2 => static::TEST_FIREWALL_CONFIGURATION_2,
+        ], $firewalls[static::FIREWALL_MAIN]);
     }
 
     /**

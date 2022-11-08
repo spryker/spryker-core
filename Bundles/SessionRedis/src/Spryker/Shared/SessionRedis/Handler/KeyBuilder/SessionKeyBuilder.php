@@ -7,6 +7,8 @@
 
 namespace Spryker\Shared\SessionRedis\Handler\KeyBuilder;
 
+use Generated\Shared\Transfer\SessionEntityRequestTransfer;
+
 class SessionKeyBuilder implements SessionKeyBuilderInterface
 {
     /**
@@ -23,6 +25,11 @@ class SessionKeyBuilder implements SessionKeyBuilderInterface
      * @var string
      */
     protected const SESSION_ACCOUNT_KEY_SUFFIX = 'account';
+
+    /**
+     * @var string
+     */
+    protected const SESSION_ENTITY_KEY_SUFFIX = 'entity';
 
     /**
      * By default generated session key has length = 32 symbols, if this const will be less than 32 there can be session collision.
@@ -64,5 +71,20 @@ class SessionKeyBuilder implements SessionKeyBuilderInterface
     public function buildAccountKey(string $accountType, string $idAccount): string
     {
         return sprintf('%s:%s:%s', $idAccount, $accountType, static::SESSION_ACCOUNT_KEY_SUFFIX);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SessionEntityRequestTransfer $sessionEntityRequestTransfer
+     *
+     * @return string
+     */
+    public function buildEntityKey(SessionEntityRequestTransfer $sessionEntityRequestTransfer): string
+    {
+        return sprintf(
+            '%s:%s:%s',
+            $sessionEntityRequestTransfer->getIdEntityOrFail(),
+            $sessionEntityRequestTransfer->getEntityTypeOrFail(),
+            static::SESSION_ENTITY_KEY_SUFFIX,
+        );
     }
 }

@@ -21,12 +21,31 @@ class SecurityDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_SECURITY = 'PLUGINS_SECURITY';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_SECURITY_AUTHENTICATION_LISTENER_FACTORY_TYPE_EXPANDER = 'PLUGINS_SECURITY_AUTHENTICATION_LISTENER_FACTORY_TYPE_EXPANDER';
+
+    /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
      * @return \Spryker\Yves\Kernel\Container
-     * @return \Spryker\Yves\Kernel\Container
      */
     public function provideDependencies(Container $container): Container
+    {
+        $container = parent::provideDependencies($container);
+
+        $container = $this->addSecurityPlugins($container);
+        $container = $this->addSecurityAuthenticationListenerFactoryTypeExpanderPlugins($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addSecurityPlugins(Container $container): Container
     {
         $container->set(static::PLUGINS_SECURITY, function () {
             return $this->getSecurityPlugins();
@@ -39,6 +58,28 @@ class SecurityDependencyProvider extends AbstractBundleDependencyProvider
      * @return array<\Spryker\Shared\SecurityExtension\Dependency\Plugin\SecurityPluginInterface>
      */
     protected function getSecurityPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addSecurityAuthenticationListenerFactoryTypeExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_SECURITY_AUTHENTICATION_LISTENER_FACTORY_TYPE_EXPANDER, function () {
+            return $this->getSecurityAuthenticationListenerFactoryTypeExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return list<\Spryker\Shared\SecurityExtension\Dependency\Plugin\SecurityAuthenticationListenerFactoryTypeExpanderPluginInterface>
+     */
+    protected function getSecurityAuthenticationListenerFactoryTypeExpanderPlugins(): array
     {
         return [];
     }
