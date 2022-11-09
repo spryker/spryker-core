@@ -4,7 +4,7 @@ paths:
     tests: .
     data: ../../../_data
     support: _support
-    log: ../../../_output
+    output: ../../../_output
 
 coverage:
     enabled: true
@@ -14,7 +14,7 @@ coverage:
 suites:
     Business:
         path: .
-        class_name: AssertionBusinessTester
+        actor: AssertionBusinessTester
         modules:
             enabled:
                 - Asserts
@@ -22,7 +22,7 @@ suites:
 
     Communication:
         path: .
-        class_name: AssertionCommunicationTester
+        actor: AssertionCommunicationTester
         modules:
             enabled:
                 - Asserts

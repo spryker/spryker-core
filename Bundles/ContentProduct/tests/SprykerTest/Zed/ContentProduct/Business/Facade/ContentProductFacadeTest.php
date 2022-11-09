@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\ContentProduct\Business\Facade;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ContentProductAbstractListTermTransfer;
 use Generated\Shared\Transfer\ContentValidationResponseTransfer;
 use Spryker\Zed\ContentProduct\ContentProductConfig;
@@ -24,7 +24,7 @@ use Spryker\Zed\ContentProduct\ContentProductConfig;
  * @group ContentProductFacadeTest
  * Add your own group annotations below this line
  */
-class ContentProductFacadeTest extends Test
+class ContentProductFacadeTest extends Unit
 {
     /**
      * @var \SprykerTest\Zed\ContentProduct\ContentProductBusinessTester

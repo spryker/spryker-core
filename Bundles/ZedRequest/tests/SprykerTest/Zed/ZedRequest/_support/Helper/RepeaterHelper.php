@@ -9,8 +9,8 @@ namespace SprykerTest\Zed\ZedRequest\Helper;
 
 use Codeception\Configuration;
 use Codeception\Module;
+use Codeception\Stub;
 use Codeception\TestInterface;
-use Codeception\Util\Stub;
 use Spryker\Shared\ZedRequest\Client\AbstractRequest;
 use Spryker\Shared\ZedRequest\ZedRequestConstants;
 use Spryker\Zed\ZedRequest\ZedRequestConfig;

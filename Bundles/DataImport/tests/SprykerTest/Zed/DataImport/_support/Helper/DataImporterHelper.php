@@ -8,8 +8,8 @@
 namespace SprykerTest\Zed\DataImport\Helper;
 
 use Codeception\Module;
+use Codeception\Stub;
 use Codeception\Stub\Expected;
-use Codeception\Util\Stub;
 use Faker\Factory;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Spryker\Zed\DataImport\Business\Exception\DataImportException;

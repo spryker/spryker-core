@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\PersistentCartShare\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use DateTime;
 use Generated\Shared\DataBuilder\ResourceShareBuilder;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
@@ -29,7 +29,7 @@ use Spryker\Shared\PersistentCartShare\PersistentCartShareConfig;
  * @group PersistentCartShareFacadeTest
  * Add your own group annotations below this line
  */
-class PersistentCartShareFacadeTest extends Test
+class PersistentCartShareFacadeTest extends Unit
 {
     /**
      * @uses \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareReader::GLOSSARY_KEY_RESOURCE_IS_NOT_FOUND_BY_PROVIDED_UUID

@@ -15,6 +15,8 @@ use SprykerTest\Shared\Testify\Exception\StoreNotFoundException;
 
 class Environment extends Module
 {
+    use ModuleHelperConfigTrait;
+
     /**
      * @var string
      */
@@ -24,13 +26,6 @@ class Environment extends Module
      * @var string
      */
     protected const CONFIG_IS_ISOLATED_MODULE_TEST = 'isolated';
-
-    /**
-     * @var array
-     */
-    protected $config = [
-        self::CONFIG_IS_ISOLATED_MODULE_TEST => false,
-    ];
 
     /**
      * @var string|null
@@ -60,6 +55,16 @@ class Environment extends Module
 
         defined('APPLICATION_CODE_BUCKET') || define('APPLICATION_CODE_BUCKET', $this->getCodeBucket());
         putenv('APPLICATION_CODE_BUCKET=' . APPLICATION_CODE_BUCKET);
+    }
+
+    /**
+     * @return void
+     */
+    protected function setDefaultConfig(): void
+    {
+        $this->config = [
+            static::CONFIG_IS_ISOLATED_MODULE_TEST => false,
+        ];
     }
 
     /**

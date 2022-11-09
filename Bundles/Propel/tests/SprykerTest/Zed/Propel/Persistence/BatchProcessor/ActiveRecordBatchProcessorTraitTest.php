@@ -111,7 +111,7 @@ class ActiveRecordBatchProcessorTraitTest extends Unit
     }
 
     /**
-     * @dataProvider dataProvider()
+     * @dataProvider dataProvider
      *
      * @group insert
      *
@@ -150,7 +150,7 @@ class ActiveRecordBatchProcessorTraitTest extends Unit
     }
 
     /**
-     * @dataProvider dataProvider()
+     * @dataProvider dataProvider
      *
      * @group insert
      *
@@ -201,7 +201,7 @@ class ActiveRecordBatchProcessorTraitTest extends Unit
     }
 
     /**
-     * @dataProvider dataProvider()
+     * @dataProvider dataProvider
      *
      * @group updateSmth
      *

@@ -38,11 +38,6 @@ abstract class AbstractApplicationHelper extends Framework
     protected const SERVICE_KERNEL = 'kernel';
 
     /**
-     * @var \Symfony\Component\BrowserKit\AbstractBrowser|null
-     */
-    public $client;
-
-    /**
      * @var \Spryker\Shared\Application\Application|null
      */
     protected $application;

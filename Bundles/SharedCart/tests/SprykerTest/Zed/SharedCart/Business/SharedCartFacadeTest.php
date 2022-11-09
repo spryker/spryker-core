@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\SharedCart\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ResourceShareDataTransfer;
@@ -28,7 +28,7 @@ use Spryker\Zed\SharedCart\Communication\Plugin\WriteSharedCartPermissionPlugin;
  * @group SharedCartFacadeTest
  * Add your own group annotations below this line
  */
-class SharedCartFacadeTest extends Test
+class SharedCartFacadeTest extends Unit
 {
     /**
      * @uses \Spryker\Zed\SharedCart\Business\ResourceShare\ResourceShareQuoteShare::GLOSSARY_KEY_CART_ACCESS_DENIED

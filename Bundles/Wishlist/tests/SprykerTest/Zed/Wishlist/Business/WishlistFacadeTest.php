@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Wishlist\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\WishlistFilterTransfer;
 use Generated\Shared\Transfer\WishlistItemCollectionTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
@@ -31,7 +31,7 @@ use Spryker\Zed\Wishlist\Persistence\WishlistQueryContainer;
  * @group WishlistFacadeTest
  * Add your own group annotations below this line
  */
-class WishlistFacadeTest extends Test
+class WishlistFacadeTest extends Unit
 {
     /**
      * @var string

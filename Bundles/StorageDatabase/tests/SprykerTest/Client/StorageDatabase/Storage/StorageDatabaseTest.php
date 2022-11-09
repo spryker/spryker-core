@@ -142,9 +142,9 @@ class StorageDatabaseTest extends Unit
     }
 
     /**
-     * @return array
+     * @return void
      */
-    public function testAddsReadAccessStatsForGetWhenDebugEnabled(): array
+    public function testAddsReadAccessStatsForGetWhenDebugEnabled(): void
     {
         // Arrange
         $this->storageDatabase->setDebug(true);
@@ -157,23 +157,23 @@ class StorageDatabaseTest extends Unit
         $this->assertSame(1, $accessStats['count']['read']);
         $this->assertCount(1, $accessStats['keys']['read']);
         $this->assertSame(static::DUMMY_KEY, $accessStats['keys']['read'][0]);
-
-        return $accessStats;
     }
 
     /**
-     * @depends testAddsReadAccessStatsForGetWhenDebugEnabled
-     *
-     * @param array $accessStats
-     *
      * @return void
      */
-    public function testCanResetAccessStats(array $accessStats): void
+    public function testCanResetAccessStats(): void
     {
+        // Arrange
+        $this->storageDatabase->setDebug(true);
+        $this->storageDatabase->get(static::DUMMY_KEY);
+        $accessStats = $this->storageDatabase->getAccessStats();
         $this->setAccessStats($accessStats);
-        $this->assertEquals($accessStats, $this->storageDatabase->getAccessStats());
 
+        // Act
         $this->storageDatabase->resetAccessStats();
+
+        // Assert
         $this->assertEquals($this->getEmptyAccessStats(), $this->storageDatabase->getAccessStats());
     }
 

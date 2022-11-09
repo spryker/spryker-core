@@ -1,4 +1,4 @@
-class_name: BusinessTester
+actor: BusinessTester
 modules:
     enabled:
         - Asserts

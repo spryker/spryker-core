@@ -3,7 +3,7 @@ paths:
     tests: .
     data: ../../../_data
     support: _support
-    log: ../../../_output
+    output: ../../../_output
 coverage:
     enabled: true
     remote: false
@@ -13,7 +13,7 @@ coverage:
 suites:
     Communication:
         path: Communication
-        class_name: MerchantCategoryCommunicationTester
+        actor: MerchantCategoryCommunicationTester
         modules:
             enabled:
                 - Asserts
@@ -23,7 +23,7 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
     Business:
         path: Business
-        class_name: MerchantCategoryBusinessTester
+        actor: MerchantCategoryBusinessTester
         modules:
             enabled:
                 - Asserts

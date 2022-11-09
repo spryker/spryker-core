@@ -1,4 +1,5 @@
 <?php
+// phpcs:ignoreFile
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
@@ -15,7 +16,7 @@ class FixturesSuiteManager extends SuiteManager
     /**
      * @inheritDoc
      */
-    public function loadTests($path = null)
+    public function loadTests(?string $path = null): void
     {
         $testLoader = new FixturesLoader($this->settings);
         $testLoader->loadTests($path);

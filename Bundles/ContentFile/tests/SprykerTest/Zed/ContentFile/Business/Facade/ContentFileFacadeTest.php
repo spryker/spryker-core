@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\ContentFile\Business\Facade;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ContentFileListTermTransfer;
 
 /**
@@ -22,7 +22,7 @@ use Generated\Shared\Transfer\ContentFileListTermTransfer;
  * @group ContentFileFacadeTest
  * Add your own group annotations below this line
  */
-class ContentFileFacadeTest extends Test
+class ContentFileFacadeTest extends Unit
 {
     /**
      * @var \SprykerTest\Zed\ContentFile\ContentFileBusinessTester

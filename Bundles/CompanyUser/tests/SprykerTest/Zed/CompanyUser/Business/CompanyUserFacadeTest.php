@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\CompanyUser\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use DateTime;
 use Generated\Shared\DataBuilder\CompanyResponseBuilder;
 use Generated\Shared\DataBuilder\CompanyUserBuilder;
@@ -31,7 +31,7 @@ use Generated\Shared\Transfer\CustomerTransfer;
  * @group CompanyUserFacadeTest
  * Add your own group annotations below this line
  */
-class CompanyUserFacadeTest extends Test
+class CompanyUserFacadeTest extends Unit
 {
     /**
      * @var string

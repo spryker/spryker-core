@@ -8,7 +8,7 @@
 namespace SprykerTest\Client\ZedRequest;
 
 use Codeception\Actor;
-use Codeception\Util\Stub;
+use Codeception\Stub;
 use Spryker\Shared\ZedRequest\Client\AbstractZedClient;
 use Spryker\Shared\ZedRequest\Client\AbstractZedClientInterface;
 

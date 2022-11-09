@@ -7,12 +7,12 @@
 
 namespace SprykerTest\Zed\SalesOrderThreshold\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Spryker\Zed\SalesOrderThreshold\Business\SalesOrderThresholdBusinessFactory;
 use Spryker\Zed\SalesOrderThreshold\Business\SalesOrderThresholdFacade;
 use Spryker\Zed\SalesOrderThreshold\Business\SalesOrderThresholdFacadeInterface;
 
-abstract class SalesOrderThresholdMocks extends Test
+abstract class SalesOrderThresholdMocks extends Unit
 {
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\SalesOrderThreshold\Business\SalesOrderThresholdBusinessFactory

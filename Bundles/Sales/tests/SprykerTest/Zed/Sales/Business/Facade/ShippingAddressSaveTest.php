@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Sales\Business\Facade;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\SequenceNumberSettingsBuilder;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -33,7 +33,7 @@ use Spryker\Zed\Sales\SalesConfig;
  * @group ShippingAddressSaveTest
  * Add your own group annotations below this line
  */
-class ShippingAddressSaveTest extends Test
+class ShippingAddressSaveTest extends Unit
 {
     /**
      * @var \SprykerTest\Zed\Sales\SalesBusinessTester

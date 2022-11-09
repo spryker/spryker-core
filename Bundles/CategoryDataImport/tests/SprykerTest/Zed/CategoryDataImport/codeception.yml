@@ -4,7 +4,7 @@ paths:
     tests: .
     data: ../../../_data
     support: _support
-    log: ../../../_output
+    output: ../../../_output
 
 coverage:
     enabled: true
@@ -14,10 +14,10 @@ coverage:
 suites:
     Business:
         path: Business
-        class_name: CategoryDataImportBusinessTester
+        actor: CategoryDataImportBusinessTester
     Communication:
         path: Communication
-        class_name: CategoryDataImportCommunicationTester
+        actor: CategoryDataImportCommunicationTester
         modules:
             enabled:
                 - Asserts

@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\TaxProductConnector\Business\Facade\ProductItemTaxRateCalculation;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Shared\Kernel\Store;
@@ -30,7 +30,7 @@ use Spryker\Zed\TaxProductConnector\TaxProductConnectorDependencyProvider;
  * @group ProductItemTaxRateCalculatorForDefaultTaxRatesTest
  * Add your own group annotations below this line
  */
-class ProductItemTaxRateCalculatorForDefaultTaxRatesTest extends Test
+class ProductItemTaxRateCalculatorForDefaultTaxRatesTest extends Unit
 {
     protected const FLOAT_COMPARISION_DELTA = 0.001;
 

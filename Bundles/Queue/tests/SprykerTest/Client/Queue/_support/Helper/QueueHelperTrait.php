@@ -7,6 +7,8 @@
 
 namespace SprykerTest\Client\Queue\Helper;
 
+use Codeception\Module;
+
 trait QueueHelperTrait
 {
     /**
@@ -25,5 +27,5 @@ trait QueueHelperTrait
      *
      * @return \Codeception\Module
      */
-    abstract protected function getModule($name);
+    abstract protected function getModule(string $name): Module;
 }

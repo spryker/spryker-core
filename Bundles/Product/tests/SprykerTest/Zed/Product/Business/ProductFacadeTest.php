@@ -637,7 +637,7 @@ class ProductFacadeTest extends Unit
     }
 
     /**
-     * @dataProvider triggerProductExportEventsTriggerFailsDataProvider()
+     * @dataProvider triggerProductExportEventsTriggerFailsDataProvider
      *
      * @param \Generated\Shared\Transfer\ProductExportCriteriaTransfer $productExportCriteriaTransfer
      *

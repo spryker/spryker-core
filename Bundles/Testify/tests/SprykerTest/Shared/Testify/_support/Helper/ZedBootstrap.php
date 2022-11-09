@@ -9,8 +9,8 @@ namespace SprykerTest\Shared\Testify\Helper;
 
 use Codeception\Lib\Framework;
 use Codeception\Lib\Interfaces\DependsOnModule;
+use Codeception\Stub;
 use Codeception\TestInterface;
-use Codeception\Util\Stub;
 use Spryker\Shared\Kernel\AbstractBundleConfig;
 use Spryker\Zed\Testify\Bootstrap\ZedBootstrap as TestifyBootstrap;
 use Spryker\Zed\Twig\TwigConfig;
@@ -20,6 +20,8 @@ use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
 class ZedBootstrap extends Framework implements DependsOnModule
 {
+    use ModuleHelperConfigTrait;
+
     /**
      * @var string
      */
@@ -39,14 +41,6 @@ class ZedBootstrap extends Framework implements DependsOnModule
      * @var \SprykerTest\Shared\Testify\Helper\BundleConfig
      */
     protected $bundleConfig;
-
-    /**
-     * @var array<string, array>
-     */
-    protected $config = [
-        self::CONFIG_KEY_SERVICE_PROVIDER => [],
-        self::CONFIG_KEY_APPLICATION_PLUGINS => [],
-    ];
 
     /**
      * @return array<string, string>
@@ -91,6 +85,17 @@ class ZedBootstrap extends Framework implements DependsOnModule
         }
 
         $this->client = new Client($this->application->boot());
+    }
+
+    /**
+     * @return void
+     */
+    protected function setDefaultConfig(): void
+    {
+        $this->config = [
+            static::CONFIG_KEY_SERVICE_PROVIDER => [],
+            static::CONFIG_KEY_APPLICATION_PLUGINS => [],
+        ];
     }
 
     /**

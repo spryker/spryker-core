@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Sales\Business\Facade;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Spryker\Zed\Sales\SalesDependencyProvider;
@@ -24,7 +24,7 @@ use Spryker\Zed\SalesExtension\Dependency\Plugin\SearchOrderExpanderPluginInterf
  * @group GetPaginatedCustomerOrdersOverviewTest
  * Add your own group annotations below this line
  */
-class GetPaginatedCustomerOrdersOverviewTest extends Test
+class GetPaginatedCustomerOrdersOverviewTest extends Unit
 {
     /**
      * @var string

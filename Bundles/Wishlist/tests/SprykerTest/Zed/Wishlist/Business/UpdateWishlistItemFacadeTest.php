@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Wishlist\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistPreUpdateItemCheckResponseTransfer;
@@ -27,7 +27,7 @@ use Spryker\Zed\WishlistExtension\Dependency\Plugin\WishlistPreUpdateItemPluginI
  * @group UpdateWishlistItemFacadeTest
  * Add your own group annotations below this line
  */
-class UpdateWishlistItemFacadeTest extends Test
+class UpdateWishlistItemFacadeTest extends Unit
 {
     /**
      * @var int

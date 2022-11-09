@@ -24,8 +24,6 @@ use SprykerTest\Zed\Sales\SalesPresentationTester;
 class SalesDetailCest
 {
     /**
-     * @skip Requires refactoring
-     *
      * @param \SprykerTest\Zed\Sales\SalesPresentationTester $i
      * @param \SprykerTest\Zed\Sales\PageObject\SalesListPage $salesListPage
      *
@@ -33,6 +31,7 @@ class SalesDetailCest
      */
     public function testThatOrderDetailPageIsVisibleWhenOrderExists(SalesPresentationTester $i, SalesListPage $salesListPage): void
     {
+        $i->markTestSkipped('Requires refactoring');
         $i->createOrderWithOneItem();
 
         $idSalesOrder = $salesListPage->grabLatestOrderId();

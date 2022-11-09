@@ -13,6 +13,7 @@ use Spryker\Zed\Propel\Communication\Console\BuildModelConsole;
 use Spryker\Zed\Propel\Communication\Console\DiffConsole;
 use Spryker\Zed\Propel\Communication\Console\MigrateConsole;
 use SprykerTest\Shared\Testify\Helper\ConfigHelperTrait;
+use SprykerTest\Shared\Testify\Helper\ModuleHelperConfigTrait;
 use SprykerTest\Zed\Testify\Helper\Business\BusinessHelperTrait;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -24,6 +25,7 @@ class PropelHelper extends Module
 {
     use ConfigHelperTrait;
     use BusinessHelperTrait;
+    use ModuleHelperConfigTrait;
 
     /**
      * @var string
@@ -61,16 +63,6 @@ class PropelHelper extends Module
     protected const SCHEMA_SOURCE_DIRECTORY_DEFAULT = 'src' . DIRECTORY_SEPARATOR . 'Spryker' . DIRECTORY_SEPARATOR . 'Zed' . DIRECTORY_SEPARATOR . '*' . DIRECTORY_SEPARATOR . 'Persistence' . DIRECTORY_SEPARATOR . 'Propel' . DIRECTORY_SEPARATOR . 'Schema' . DIRECTORY_SEPARATOR;
 
     /**
-     * @var array
-     */
-    protected $config = [
-        self::CONFIG_SCHEMA_SOURCE_DIRECTORY_LIST => [
-            self::SCHEMA_SOURCE_DIRECTORY_DEFAULT,
-        ],
-        self::CONFIG_IS_ISOLATED_MODULE_TEST => false,
-    ];
-
-    /**
      * @param array $settings
      *
      * @return void
@@ -84,6 +76,19 @@ class PropelHelper extends Module
             $this->getFacade()->copySchemaFilesToTargetDirectory();
             $this->runCommands();
         }
+    }
+
+    /**
+     * @return void
+     */
+    protected function setDefaultConfig(): void
+    {
+        $this->config = [
+            static::CONFIG_SCHEMA_SOURCE_DIRECTORY_LIST => [
+                static::SCHEMA_SOURCE_DIRECTORY_DEFAULT,
+            ],
+            static::CONFIG_IS_ISOLATED_MODULE_TEST => false,
+        ];
     }
 
     /**

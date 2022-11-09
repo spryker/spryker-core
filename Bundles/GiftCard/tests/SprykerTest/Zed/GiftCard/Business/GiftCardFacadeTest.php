@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\GiftCard\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\GiftCardBuilder;
 use Generated\Shared\DataBuilder\GiftCardMetadataBuilder;
 use Generated\Shared\DataBuilder\ItemBuilder;
@@ -43,7 +43,7 @@ use SprykerTest\Zed\Sales\Helper\BusinessHelper;
  * @group GiftCardFacadeTest
  * Add your own group annotations below this line
  */
-class GiftCardFacadeTest extends Test
+class GiftCardFacadeTest extends Unit
 {
     /**
      * @var string

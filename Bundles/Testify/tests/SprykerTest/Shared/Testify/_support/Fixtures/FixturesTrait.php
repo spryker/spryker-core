@@ -9,13 +9,14 @@ namespace SprykerTest\Shared\Testify\Fixtures;
 
 use Codeception\Configuration;
 use Codeception\Exception\ConfigurationException;
+use Codeception\Scenario;
 
 trait FixturesTrait
 {
     /**
      * @return \Codeception\Scenario
      */
-    abstract protected function getScenario();
+    abstract protected function getScenario(): Scenario;
 
     /**
      * @param string $className

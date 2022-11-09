@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\CompanyUsersRestApi\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
@@ -28,7 +28,7 @@ use Generated\Shared\Transfer\RestCustomerTransfer;
  * @group CompanyUsersRestApiFacadeTest
  * Add your own group annotations below this line
  */
-class CompanyUsersRestApiFacadeTest extends Test
+class CompanyUsersRestApiFacadeTest extends Unit
 {
     /**
      * @var \SprykerTest\Zed\CompanyUsersRestApi\CompanyUsersRestApiBusinessTester

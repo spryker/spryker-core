@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Sales\Business\Facade;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\OmsEventTriggerResponseTransfer;
@@ -29,7 +29,7 @@ use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderExpanderPluginInterface;
  * @group CancelOrderTest
  * Add your own group annotations below this line
  */
-class CancelOrderTest extends Test
+class CancelOrderTest extends Unit
 {
     /**
      * @var string

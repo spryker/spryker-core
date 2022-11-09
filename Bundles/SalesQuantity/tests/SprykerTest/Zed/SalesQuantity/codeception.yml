@@ -4,7 +4,7 @@ paths:
     tests: .
     data: ../../../_data
     support: _support
-    log: ../../../_output
+    output: ../../../_output
 
 coverage:
     enabled: true
@@ -14,7 +14,7 @@ coverage:
 suites:
     Business:
         path: Business
-        class_name: SalesQuantityBusinessTester
+        actor: SalesQuantityBusinessTester
         modules:
             enabled:
                 - \SprykerTest\Shared\Testify\Helper\Environment
@@ -25,4 +25,4 @@ suites:
 
     Communication:
         path: Communication
-        class_name: SalesQuantityCommunicationTester
+        actor: SalesQuantityCommunicationTester

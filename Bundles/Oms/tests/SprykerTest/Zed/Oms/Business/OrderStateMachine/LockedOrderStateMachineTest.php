@@ -44,7 +44,7 @@ class LockedOrderStateMachineTest extends Unit
     }
 
     /**
-     * @dataProvider methodsUnderTestDataProvider()
+     * @dataProvider methodsUnderTestDataProvider
      *
      * @param string $methodUnderTest
      *
@@ -64,7 +64,7 @@ class LockedOrderStateMachineTest extends Unit
     }
 
     /**
-     * @dataProvider methodsUnderTestDataProvider()
+     * @dataProvider methodsUnderTestDataProvider
      *
      * @param string $methodUnderTest
      *
@@ -84,7 +84,7 @@ class LockedOrderStateMachineTest extends Unit
     }
 
     /**
-     * @dataProvider methodsUnderTestDataProvider()
+     * @dataProvider methodsUnderTestDataProvider
      *
      * @param string $methodUnderTest
      *

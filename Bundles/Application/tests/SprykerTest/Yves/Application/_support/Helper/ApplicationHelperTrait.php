@@ -7,6 +7,8 @@
 
 namespace SprykerTest\Yves\Application\Helper;
 
+use Codeception\Module;
+
 trait ApplicationHelperTrait
 {
     /**
@@ -25,5 +27,5 @@ trait ApplicationHelperTrait
      *
      * @return \Codeception\Module
      */
-    abstract protected function getModule($name);
+    abstract protected function getModule(string $name): Module;
 }

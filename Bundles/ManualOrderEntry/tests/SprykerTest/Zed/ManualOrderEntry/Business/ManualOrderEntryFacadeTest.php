@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\ManualOrderEntry\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\OrderSourceTransfer;
 use Generated\Shared\Transfer\SpySalesOrderEntityTransfer;
 use Spryker\Zed\ManualOrderEntry\Business\ManualOrderEntryFacadeInterface;
@@ -23,7 +23,7 @@ use Spryker\Zed\ManualOrderEntry\Business\ManualOrderEntryFacadeInterface;
  * @group ManualOrderEntryFacadeTest
  * Add your own group annotations below this line
  */
-class ManualOrderEntryFacadeTest extends Test
+class ManualOrderEntryFacadeTest extends Unit
 {
     /**
      * @var \SprykerTest\Zed\ManualOrderEntry\ManualOrderEntryBusinessTester

@@ -116,7 +116,7 @@ class TimeoutTest extends Unit
      * - One DE order with one order item which has an event timeout.
      * - One US order with two order items which have an event timeout.
      *
-     * @dataProvider timeoutDataProvider()
+     * @dataProvider timeoutDataProvider
      *
      * @param int $expectedAffectedOrderItemsCount
      * @param string|null $storeName
@@ -173,7 +173,7 @@ class TimeoutTest extends Unit
     }
 
     /**
-     * @dataProvider dropEventsDataProvider()
+     * @dataProvider dropEventsDataProvider
      *
      * @param string|null $storeName
      * @param int|null $limit

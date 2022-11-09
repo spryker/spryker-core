@@ -22,17 +22,12 @@ use Spryker\Glue\Testify\OpenApi3\SchemaObject\Response;
 use Spryker\Glue\Testify\OpenApi3\SchemaObject\Schema;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Testify\TestifyConstants;
+use SprykerTest\Shared\Testify\Helper\ModuleHelperConfigTrait;
 
 class OpenApi3 extends Module
 {
     use LastConnectionConsumerTrait;
-
-    /**
-     * @var array
-     */
-    protected $config = [
-        'schema' => '',
-    ];
+    use ModuleHelperConfigTrait;
 
     /**
      * @var string
@@ -106,6 +101,16 @@ EOF;
     {
         $validator = new Validator();
         $validator->validate($responseData, $responseSchema, Constraint::CHECK_MODE_EXCEPTIONS);
+    }
+
+    /**
+     * @return void
+     */
+    protected function setDefaultConfig(): void
+    {
+        $this->config = [
+            'schema' => '',
+        ];
     }
 
     /**

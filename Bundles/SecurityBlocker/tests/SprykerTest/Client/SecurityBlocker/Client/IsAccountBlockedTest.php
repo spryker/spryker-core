@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Client\SecurityBlocker\Client;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\SecurityCheckAuthContextBuilder;
 use Generated\Shared\Transfer\SecurityCheckAuthContextTransfer;
 use Spryker\Client\SecurityBlocker\Dependency\Client\SecurityBlockerToRedisClientInterface;
@@ -25,7 +25,7 @@ use Spryker\Shared\Kernel\Transfer\Exception\NullValueException;
  * @group IsAccountBlockedTest
  * Add your own group annotations below this line
  */
-class IsAccountBlockedTest extends Test
+class IsAccountBlockedTest extends Unit
 {
     /**
      * @var \SprykerTest\Client\SecurityBlocker\SecurityBlockerClientTester

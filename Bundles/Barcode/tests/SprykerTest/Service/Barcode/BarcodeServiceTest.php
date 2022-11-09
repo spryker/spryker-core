@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Service\Barcode;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\BarcodeResponseTransfer;
 use Spryker\Service\Barcode\BarcodeDependencyProvider;
 use Spryker\Service\Barcode\Exception\BarcodeGeneratorPluginNotFoundException;
@@ -26,7 +26,7 @@ use SprykerTest\Service\Barcode\Mocks\BarcodeGeneratorPluginMockUnregistered;
  *
  * @property \SprykerTest\Service\Barcode\BarcodeServiceTester $tester
  */
-class BarcodeServiceTest extends Test
+class BarcodeServiceTest extends Unit
 {
     /**
      * @var string
@@ -137,7 +137,7 @@ class BarcodeServiceTest extends Test
     {
         $unregisteredPlugin = new BarcodeGeneratorPluginMockUnregistered();
 
-        $this->tester->expectException(BarcodeGeneratorPluginNotFoundException::class, function () use ($unregisteredPlugin): void {
+        $this->tester->expectThrowable(BarcodeGeneratorPluginNotFoundException::class, function () use ($unregisteredPlugin): void {
             $this->tester->generateBarcodeUsingBarcodeService(get_class($unregisteredPlugin));
         });
     }

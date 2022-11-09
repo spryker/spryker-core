@@ -9,7 +9,7 @@ namespace SprykerTest\Shared\Testify\Fixtures;
 
 use Codeception\Codecept;
 use Codeception\Command\Run;
-use Codeception\Command\Shared\Config as CommandConfig;
+use Codeception\Command\Shared\ConfigTrait;
 use Codeception\Configuration;
 use Codeception\CustomCommandInterface;
 use Codeception\Exception\TestRuntimeException;
@@ -20,7 +20,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class FixturesCommand extends Run implements CustomCommandInterface
 {
-    use CommandConfig;
+    use ConfigTrait;
 
     /**
      * @var int
@@ -129,8 +129,14 @@ class FixturesCommand extends Run implements CustomCommandInterface
         $userOptions['verbosity'] = $output->getVerbosity();
         $userOptions['seed'] = (int)$this->options['seed'] ?: mt_rand();
         $userOptions['colors'] = $this->options['no-colors'] || ($input->hasOption('no-ansi') && $input->getOption('no-ansi')) ? false : $config['settings']['colors'];
-        $userOptions['groups'] = $this->options['group'];
-        $userOptions['excludeGroups'] = $this->options['skip-group'];
+
+        if ($this->options['group'] !== []) {
+            $userOptions['groups'] = $this->options['group'];
+        }
+
+        if ($this->options['skip-group'] !== []) {
+            $userOptions['excludeGroups'] = $this->options['skip-group'];
+        }
 
         $this->codecept = new FixturesRunner($userOptions);
 
@@ -151,7 +157,7 @@ class FixturesCommand extends Run implements CustomCommandInterface
 
         $this->codecept->printResult();
 
-        if (!$input->getOption('no-exit') && !$this->codecept->getResult()->wasSuccessful()) {
+        if (!$input->getOption('no-exit') && !$this->codecept->getResultAggregator()->wasSuccessful()) {
             exit(1);
         }
 

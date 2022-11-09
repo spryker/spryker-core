@@ -26,7 +26,7 @@ use stdClass;
 class AssertionTest extends Unit
 {
     /**
-     * @dataProvider numeric()
+     * @dataProvider numeric
      *
      * @param mixed $value
      * @param bool $isValid
@@ -56,7 +56,7 @@ class AssertionTest extends Unit
     }
 
     /**
-     * @dataProvider numericNotZero()
+     * @dataProvider numericNotZero
      *
      * @param mixed $value
      * @param bool $isValid
@@ -86,7 +86,7 @@ class AssertionTest extends Unit
     }
 
     /**
-     * @dataProvider alphaNumeric()
+     * @dataProvider alphaNumeric
      *
      * @param mixed $value
      * @param bool $isValid
@@ -120,7 +120,7 @@ class AssertionTest extends Unit
     }
 
     /**
-     * @dataProvider alpha()
+     * @dataProvider alpha
      *
      * @param mixed $value
      * @param bool $isValid

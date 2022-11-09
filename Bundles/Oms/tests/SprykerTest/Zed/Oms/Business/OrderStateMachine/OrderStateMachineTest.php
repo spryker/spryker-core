@@ -193,7 +193,7 @@ class OrderStateMachineTest extends Unit
      * - One DE order with one order item in a defined state.
      * - One US order with two order items in a defined state.
      *
-     * @dataProvider conditionDataProvider()
+     * @dataProvider conditionDataProvider
      *
      * @param int $expectedAffectedOrderItemsCount
      * @param string|null $storeName
@@ -280,7 +280,7 @@ class OrderStateMachineTest extends Unit
     }
 
     /**
-     * @dataProvider errorMessagesDataProvider()
+     * @dataProvider errorMessagesDataProvider
      *
      * @param string $messageText
      * @param \Exception $exception
@@ -362,7 +362,7 @@ class OrderStateMachineTest extends Unit
     }
 
     /**
-     * @dataProvider transitionOrderItemsDataProvider()
+     * @dataProvider transitionOrderItemsDataProvider
      *
      * @param string|null $storeName
      * @param int|null $limit

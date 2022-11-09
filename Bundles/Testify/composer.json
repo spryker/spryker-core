@@ -4,7 +4,7 @@
     "description": "Testify module",
     "license": "proprietary",
     "require": {
-        "codeception/codeception": "^3.6.1 || ^4.0.0",
+        "codeception/codeception": "^5.0.2",
         "dms/phpunit-arraysubset-asserts": "^0.4.0",
         "fakerphp/faker": "^1.16.0",
         "mikey179/vfsstream": "^1.6.7",

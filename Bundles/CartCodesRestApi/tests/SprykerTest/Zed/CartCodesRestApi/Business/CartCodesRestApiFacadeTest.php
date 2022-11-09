@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\CartCodesRestApi\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CartCodeRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Spryker\Shared\CartCodesRestApi\CartCodesRestApiConfig;
@@ -30,7 +30,7 @@ use Spryker\Zed\Discount\Communication\Plugin\CartCode\VoucherCartCodePlugin;
  * @group CartCodesRestApiFacadeTest
  * Add your own group annotations below this line
  */
-class CartCodesRestApiFacadeTest extends Test
+class CartCodesRestApiFacadeTest extends Unit
 {
     /**
      * @var string

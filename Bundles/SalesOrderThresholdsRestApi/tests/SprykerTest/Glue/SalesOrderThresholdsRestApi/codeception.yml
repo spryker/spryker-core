@@ -4,7 +4,7 @@ paths:
     tests: .
     data: _data
     support: _support
-    log: _output
+    output: _output
 
 coverage:
     enabled: true
@@ -13,7 +13,7 @@ coverage:
 
 suites:
     Plugin:
-        class_name: SalesOrderThresholdsRestApiPluginTester
+        actor: SalesOrderThresholdsRestApiPluginTester
         modules:
             enabled:
                 - Asserts

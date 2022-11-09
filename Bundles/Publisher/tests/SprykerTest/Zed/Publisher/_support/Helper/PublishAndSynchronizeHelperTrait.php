@@ -7,6 +7,8 @@
 
 namespace SprykerTest\Zed\Publisher\Helper;
 
+use Codeception\Module;
+
 trait PublishAndSynchronizeHelperTrait
 {
     /**
@@ -25,5 +27,5 @@ trait PublishAndSynchronizeHelperTrait
      *
      * @return \Codeception\Module
      */
-    abstract protected function getModule($name);
+    abstract protected function getModule(string $name): Module;
 }

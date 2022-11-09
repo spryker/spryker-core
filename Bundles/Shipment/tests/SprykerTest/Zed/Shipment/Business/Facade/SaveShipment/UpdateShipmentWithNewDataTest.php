@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Shipment\Business\Facade\SaveShipment;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use DateTime;
 use Generated\Shared\DataBuilder\AddressBuilder;
 use Generated\Shared\DataBuilder\ItemBuilder;
@@ -31,7 +31,7 @@ use Spryker\Shared\Price\PriceConfig;
  * @group UpdateShipmentWithNewDataTest
  * Add your own group annotations below this line
  */
-class UpdateShipmentWithNewDataTest extends Test
+class UpdateShipmentWithNewDataTest extends Unit
 {
     /**
      * @var \SprykerTest\Zed\Shipment\ShipmentBusinessTester

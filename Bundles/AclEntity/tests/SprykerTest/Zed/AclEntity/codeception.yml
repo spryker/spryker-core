@@ -3,7 +3,7 @@ paths:
     tests: .
     data: ../../../_data
     support: _support
-    log: ../../../_output
+    output: ../../../_output
 coverage:
     enabled: true
     remote: false
@@ -13,7 +13,7 @@ coverage:
 suites:
     Business:
         path: Business
-        class_name: AclEntityBusinessTester
+        actor: AclEntityBusinessTester
         modules:
             enabled:
                 - Asserts
@@ -27,7 +27,7 @@ suites:
                 - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper
     Persistence:
         path: Persistence
-        class_name: AclEntityPersistenceTester
+        actor: AclEntityPersistenceTester
         modules:
             enabled:
                 - Asserts

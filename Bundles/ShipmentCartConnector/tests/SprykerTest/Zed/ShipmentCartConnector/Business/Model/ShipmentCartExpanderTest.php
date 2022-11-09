@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\ShipmentCartConnector\Business\Model;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\CartChangeBuilder;
 use Generated\Shared\DataBuilder\ExpenseBuilder;
 use Generated\Shared\DataBuilder\MoneyValueBuilder;
@@ -36,7 +36,7 @@ use Spryker\Shared\ShipmentCartConnector\ShipmentCartConnectorConfig;
  * @group ShipmentCartExpanderTest
  * Add your own group annotations below this line
  */
-class ShipmentCartExpanderTest extends Test
+class ShipmentCartExpanderTest extends Unit
 {
     /**
      * @var string

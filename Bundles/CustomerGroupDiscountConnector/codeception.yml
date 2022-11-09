@@ -4,7 +4,7 @@ include:
 paths:
     tests: tests
     support: .
-    log: tests/_output
+    output: tests/_output
     data: tests/_data
     envs: tests/_envs
 settings:

@@ -147,7 +147,6 @@ class SessionHandlerFile implements SessionHandlerInterface
      *
      * @return bool
      */
-    #[\ReturnTypeWillChange]
     public function gc($maxLifetime)
     {
         $time = time();

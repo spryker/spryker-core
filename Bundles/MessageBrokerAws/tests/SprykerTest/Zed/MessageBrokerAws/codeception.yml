@@ -3,7 +3,7 @@ paths:
     tests: .
     data: ../../../_data
     support: _support
-    log: ../../../_output
+    output: ../../../_output
 coverage:
     enabled: true
     remote: false
@@ -13,7 +13,7 @@ coverage:
 suites:
     Business:
         path: Business
-        class_name: MessageBrokerAwsBusinessTester
+        actor: MessageBrokerAwsBusinessTester
         modules:
             enabled:
                 - Asserts
@@ -26,7 +26,7 @@ suites:
                 - \SprykerTest\Zed\Testify\Helper\Business\DependencyProviderHelper
     Communication:
         path: Communication
-        class_name: MessageBrokerAwsCommunicationTester
+        actor: MessageBrokerAwsCommunicationTester
         modules:
             enabled:
                 - Asserts

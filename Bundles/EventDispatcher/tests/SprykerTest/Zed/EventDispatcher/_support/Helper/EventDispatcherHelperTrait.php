@@ -7,6 +7,8 @@
 
 namespace SprykerTest\Zed\EventDispatcher\Helper;
 
+use Codeception\Module;
+
 trait EventDispatcherHelperTrait
 {
     /**
@@ -25,5 +27,5 @@ trait EventDispatcherHelperTrait
      *
      * @return \Codeception\Module
      */
-    abstract protected function getModule($name);
+    abstract protected function getModule(string $name): Module;
 }

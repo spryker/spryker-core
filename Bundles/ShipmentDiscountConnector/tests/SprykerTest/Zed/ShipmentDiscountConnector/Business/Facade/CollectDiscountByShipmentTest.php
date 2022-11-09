@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\ShipmentDiscountConnector\Business\Facade;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ExpenseBuilder;
 use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
@@ -37,7 +37,7 @@ use Spryker\Zed\ShipmentDiscountConnector\Dependency\Service\ShipmentDiscountCon
  * @group CollectDiscountByShipmentTest
  * Add your own group annotations below this line
  */
-class CollectDiscountByShipmentTest extends Test
+class CollectDiscountByShipmentTest extends Unit
 {
     /**
      * @var \SprykerTest\Zed\ShipmentDiscountConnector\ShipmentDiscountConnectorBusinessTester
