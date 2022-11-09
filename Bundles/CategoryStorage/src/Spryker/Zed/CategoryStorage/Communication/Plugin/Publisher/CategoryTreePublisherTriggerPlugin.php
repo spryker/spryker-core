@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CategoryStorage\Communication\Plugin\Publisher;
 
+use Generated\Shared\Transfer\NodeTransfer;
+use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
 use Spryker\Shared\CategoryStorage\CategoryStorageConfig;
 use Spryker\Shared\CategoryStorage\CategoryStorageConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -23,17 +25,20 @@ class CategoryTreePublisherTriggerPlugin extends AbstractPlugin implements Publi
     /**
      * {@inheritDoc}
      * - Retrieves category trees by provided limit and offset.
+     * - For triggering events at least one transfer object with a filled id column should be provided.
+     * - But all categories shouldn't been provided because full category tree will be recalculated multiple time.
+     * - So for $offset === 0 one transfer object was provided.
      *
      * @api
      *
      * @param int $offset
      * @param int $limit
      *
-     * @return array<\Generated\Shared\Transfer\CategoryNodeStorageTransfer>
+     * @return array<\Generated\Shared\Transfer\NodeTransfer>
      */
     public function getData(int $offset, int $limit): array
     {
-        return [];
+        return $offset === 0 ? [$this->createEmptyNodeTransfer()] : [];
     }
 
     /**
@@ -69,6 +74,14 @@ class CategoryTreePublisherTriggerPlugin extends AbstractPlugin implements Publi
      */
     public function getIdColumnName(): ?string
     {
-        return null;
+        return SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\NodeTransfer
+     */
+    protected function createEmptyNodeTransfer(): NodeTransfer
+    {
+        return (new NodeTransfer())->setIdCategoryNode(0);
     }
 }
