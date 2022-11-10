@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\ContentBanner\Business\Facade;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ContentBannerTermTransfer;
 
 /**
@@ -22,7 +22,7 @@ use Generated\Shared\Transfer\ContentBannerTermTransfer;
  * @group ContentBannerFacadeTest
  * Add your own group annotations below this line
  */
-class ContentBannerFacadeTest extends Test
+class ContentBannerFacadeTest extends Unit
 {
     /**
      * @var \SprykerTest\Zed\ContentBanner\ContentBannerBusinessTester

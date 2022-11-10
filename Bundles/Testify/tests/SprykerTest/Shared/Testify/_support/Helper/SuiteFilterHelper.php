@@ -1,4 +1,7 @@
 <?php
+// phpcs:ignoreFile
+// PHPStan failed on this fail: An error occurred during processing; checking has been
+// aborted. The error message was: Undefined property:  PHPStan\PhpDocParser\Ast\PhpDoc\TypelessParamTagValueNode::$type
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
@@ -9,11 +12,12 @@ namespace SprykerTest\Shared\Testify\Helper;
 
 use Codeception\Event\SuiteEvent;
 use Codeception\Events;
-use Codeception\Platform\Extension;
+use Codeception\TestInterface;
 use PHPUnit\Runner\Filter\ExcludeGroupFilterIterator;
 use PHPUnit\Runner\Filter\Factory;
 use PHPUnit\Runner\Filter\IncludeGroupFilterIterator;
 use ReflectionClass;
+use Codeception\Extension;
 use SprykerTest\Shared\Testify\Filter\InclusiveGroupFilterIterator;
 
 class SuiteFilterHelper extends Extension
@@ -42,7 +46,7 @@ class SuiteFilterHelper extends Extension
      * @var array<string>
      */
     public static $events = [
-        Events::SUITE_BEFORE => 'filterSuiteByGroups',
+        'suite.start' => 'filterSuiteByGroupsCodeception5',
     ];
 
     /**
@@ -50,19 +54,22 @@ class SuiteFilterHelper extends Extension
      *
      * @return void
      */
-    public function filterSuiteByGroups(SuiteEvent $e): void
+    public function filterSuiteByGroupsCodeception5(SuiteEvent $e): void
     {
         $testSuite = $e->getSuite();
+        $tests = [];
 
-        $filterFactory = new Factory();
+        foreach ($testSuite->getTests() as $test) {
+            if ($test instanceof TestInterface) {
+                $groups = $test->getMetadata()->getGroups();
 
-        $filterFactory = $this->addExclusiveFilter($filterFactory);
-        $filterFactory = $this->addInclusiveFilter($filterFactory);
+                if ($this->isTestAllowedbyGroups($groups)) {
+                    $tests[] = $test;
+                }
+            }
+        }
 
-        $filterFactory = $this->addExcludeFilter($filterFactory);
-        $filterFactory = $this->addIncludeFilter($filterFactory);
-
-        $testSuite->injectFilter($filterFactory);
+        $this->setSuteTests($testSuite, $tests);
     }
 
     /**
@@ -201,5 +208,39 @@ class SuiteFilterHelper extends Extension
         );
 
         return $filterFactory;
+    }
+
+    /**
+     * @param $testSuite
+     * @param array $tests
+     * @return void
+     * @throws \ReflectionException
+     */
+    protected function setSuteTests($testSuite, array $tests)
+    {
+        $refClass = new ReflectionClass($testSuite);
+        $reflectionProperty = $refClass->getProperty('tests');
+        $reflectionProperty->setAccessible(true);
+        $reflectionProperty->setValue($testSuite, $tests);
+    }
+
+    /**
+     * @param array $groups
+     * @return bool
+     */
+    public function isTestAllowedbyGroups(array $groups): bool
+    {
+        $inclusiveGroups = $this->getInclusiveGroups();
+        $exclusiveGroups = $this->getExclusiveGroups();
+
+        if ($inclusiveGroups !== [] && count(array_intersect($groups, $inclusiveGroups)) !== count($inclusiveGroups)) {
+            return false;
+        }
+
+        if ($exclusiveGroups !== [] && count(array_intersect($groups, $exclusiveGroups)) > 0) {
+            return false;
+        }
+
+        return true;
     }
 }

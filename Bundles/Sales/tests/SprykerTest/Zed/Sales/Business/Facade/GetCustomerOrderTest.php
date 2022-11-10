@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Sales\Business\Facade;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\OrderTransfer;
 use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException;
@@ -25,7 +25,7 @@ use Spryker\Zed\SalesExtension\Dependency\Plugin\CustomerOrderAccessCheckPluginI
  * @group GetCustomerOrderTest
  * Add your own group annotations below this line
  */
-class GetCustomerOrderTest extends Test
+class GetCustomerOrderTest extends Unit
 {
     /**
      * @var int

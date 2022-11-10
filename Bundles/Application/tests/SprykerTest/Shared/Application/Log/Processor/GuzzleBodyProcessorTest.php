@@ -51,7 +51,7 @@ class GuzzleBodyProcessorTest extends Unit
     }
 
     /**
-     * @dataProvider guzzleBodies()
+     * @dataProvider guzzleBodies
      *
      * @param mixed $body
      * @param array $expected

@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Sales\Business\Facade;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\CurrencyBuilder;
 use Generated\Shared\DataBuilder\CustomerBuilder;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
@@ -28,7 +28,7 @@ use SprykerTest\Zed\Sales\Helper\BusinessHelper;
  * @group CheckDuplicateOrderTest
  * Add your own group annotations below this line
  */
-class CheckDuplicateOrderTest extends Test
+class CheckDuplicateOrderTest extends Unit
 {
     /**
      * @var string

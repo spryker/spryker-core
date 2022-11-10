@@ -7,8 +7,8 @@
 
 namespace SprykerTest\Zed\SalesInvoice\Business\SalesInvoiceFacade;
 
+use Codeception\Stub;
 use Codeception\Test\Unit;
-use Codeception\Util\Stub;
 use Generated\Shared\Transfer\OrderInvoiceSendRequestTransfer;
 use Spryker\Zed\Glossary\Communication\Plugin\TwigTranslatorPlugin;
 use Spryker\Zed\SalesInvoice\Dependency\Facade\SalesInvoiceToMailFacadeInterface;

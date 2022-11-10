@@ -25,6 +25,7 @@ use Spryker\Zed\Router\RouterDependencyProvider;
 use Spryker\Zed\RouterExtension\Dependency\Plugin\RouterPluginInterface;
 use SprykerTest\Service\Container\Helper\ContainerHelperTrait;
 use SprykerTest\Shared\Testify\Helper\ConfigHelperTrait;
+use SprykerTest\Shared\Testify\Helper\ModuleHelperConfigTrait;
 use SprykerTest\Zed\Application\Helper\ApplicationHelperTrait;
 use SprykerTest\Zed\EventDispatcher\Helper\EventDispatcherHelperTrait;
 use SprykerTest\Zed\Testify\Helper\Business\BusinessHelperTrait;
@@ -41,6 +42,7 @@ class RouterHelper extends Module
     use DependencyProviderHelperTrait;
     use EventDispatcherHelperTrait;
     use ContainerHelperTrait;
+    use ModuleHelperConfigTrait;
 
     /**
      * @var string
@@ -56,13 +58,6 @@ class RouterHelper extends Module
      * @var array<\Spryker\Zed\RouterExtension\Dependency\Plugin\RouterPluginInterface>
      */
     protected $routerPlugins = [];
-
-    /**
-     * @var array<string, mixed>
-     */
-    protected $config = [
-        self::CONFIG_KEY_ROUTER_PLUGINS => [],
-    ];
 
     /**
      * @uses \Spryker\Zed\Router\Communication\Plugin\Application\RouterApplicationPlugin::SERVICE_ROUTER
@@ -101,6 +96,16 @@ class RouterHelper extends Module
             return $request;
         };
         Request::setFactory($requestFactory);
+    }
+
+    /**
+     * @return void
+     */
+    protected function setDefaultConfig(): void
+    {
+        $this->config = [
+            static::CONFIG_KEY_ROUTER_PLUGINS => [],
+        ];
     }
 
     /**

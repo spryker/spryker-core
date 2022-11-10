@@ -9,7 +9,7 @@ namespace SprykerTest\Shared\Customer\Helper;
 
 use Codeception\Exception\TestRuntimeException;
 use Codeception\Module;
-use Codeception\Util\Stub;
+use Codeception\Stub;
 use Generated\Shared\DataBuilder\CustomerBuilder;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Zed\Customer\Business\CustomerFacadeInterface;

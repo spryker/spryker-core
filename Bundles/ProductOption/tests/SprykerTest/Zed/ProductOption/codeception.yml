@@ -4,7 +4,7 @@ paths:
     tests: .
     data: ../../../_data
     support: _support
-    log: ../../../_output
+    output: ../../../_output
 
 coverage:
     enabled: true
@@ -14,7 +14,7 @@ coverage:
 suites:
     Persistence:
         path: Persistence
-        class_name: ProductOptionPersistenceTester
+        actor: ProductOptionPersistenceTester
         modules:
             enabled:
                 - Asserts
@@ -29,7 +29,7 @@ suites:
                 - \SprykerTest\Shared\ProductOption\Helper\ProductOptionGroupDataHelper
     Business:
         path: Business
-        class_name: ProductOptionBusinessTester
+        actor: ProductOptionBusinessTester
         modules:
             enabled:
                 - Asserts
@@ -49,7 +49,7 @@ suites:
 
     Communication:
         path: Communication
-        class_name: ProductOptionCommunicationTester
+        actor: ProductOptionCommunicationTester
         modules:
             enabled:
                 - Asserts
@@ -84,7 +84,7 @@ suites:
 
     Presentation:
         path: Presentation
-        class_name: ProductOptionPresentationTester
+        actor: ProductOptionPresentationTester
         modules:
             enabled:
                 - Asserts

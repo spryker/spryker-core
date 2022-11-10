@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\ProductMerchantPortalGui;
 
 use Codeception\Actor;
-use Codeception\Util\Stub;
+use Codeception\Stub;
 use Generated\Shared\DataBuilder\CurrencyBuilder;
 use Generated\Shared\DataBuilder\MoneyValueBuilder;
 use Generated\Shared\DataBuilder\PriceProductBuilder;

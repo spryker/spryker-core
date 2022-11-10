@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\ProductAttribute\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeFilterTransfer;
 
@@ -21,7 +21,7 @@ use Generated\Shared\Transfer\ProductManagementAttributeFilterTransfer;
  * @group GetProductManagementAttributesTest
  * Add your own group annotations below this line
  */
-class GetProductManagementAttributesTest extends Test
+class GetProductManagementAttributesTest extends Unit
 {
     /**
      * @var \SprykerTest\Zed\ProductAttribute\ProductAttributeBusinessTester

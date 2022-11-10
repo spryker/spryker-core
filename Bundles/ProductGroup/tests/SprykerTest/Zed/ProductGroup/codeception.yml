@@ -4,7 +4,7 @@ paths:
     tests: .
     data: ../../../_data
     support: _support
-    log: ../../../_output
+    output: ../../../_output
 
 coverage:
     enabled: true
@@ -14,10 +14,10 @@ coverage:
 suites:
     Persistence:
         path: Persistence
-        class_name: ProductGroupPersistenceTester
+        actor: ProductGroupPersistenceTester
     Business:
         path: Business
-        class_name: ProductGroupBusinessTester
+        actor: ProductGroupBusinessTester
         modules:
             enabled:
                 - Asserts

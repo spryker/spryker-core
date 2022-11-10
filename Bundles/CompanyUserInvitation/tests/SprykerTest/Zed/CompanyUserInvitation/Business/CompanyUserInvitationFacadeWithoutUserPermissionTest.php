@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\CompanyUserInvitation\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\PermissionCollectionBuilder;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUserInvitationCollectionTransfer;
@@ -36,7 +36,7 @@ use Spryker\Zed\Permission\PermissionDependencyProvider;
  * @group CompanyUserInvitationFacadeWithoutUserPermissionTest
  * Add your own group annotations below this line
  */
-class CompanyUserInvitationFacadeWithoutUserPermissionTest extends Test
+class CompanyUserInvitationFacadeWithoutUserPermissionTest extends Unit
 {
     /**
      * @var array

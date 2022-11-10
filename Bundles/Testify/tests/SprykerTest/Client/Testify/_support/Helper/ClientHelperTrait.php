@@ -7,6 +7,8 @@
 
 namespace SprykerTest\Client\Testify\Helper;
 
+use Codeception\Module;
+
 trait ClientHelperTrait
 {
     /**
@@ -25,5 +27,5 @@ trait ClientHelperTrait
      *
      * @return \Codeception\Module
      */
-    abstract protected function getModule($name);
+    abstract protected function getModule(string $name): Module;
 }

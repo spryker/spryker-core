@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\Sales\Business\Facade;
 
 use ArrayObject;
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
@@ -24,7 +24,7 @@ use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
  * @group GetUniqueOrderItemsTest
  * Add your own group annotations below this line
  */
-class GetUniqueOrderItemsTest extends Test
+class GetUniqueOrderItemsTest extends Unit
 {
     /**
      * @var string

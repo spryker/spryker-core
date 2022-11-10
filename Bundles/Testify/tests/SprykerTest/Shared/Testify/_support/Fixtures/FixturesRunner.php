@@ -9,7 +9,6 @@ namespace SprykerTest\Shared\Testify\Fixtures;
 
 use Codeception\Codecept;
 use Codeception\Suite;
-use PHPUnit\Framework\TestResult;
 use ReflectionClass;
 
 class FixturesRunner extends Codecept
@@ -17,22 +16,17 @@ class FixturesRunner extends Codecept
     /**
      * @inheritDoc
      */
-    public function runSuite($settings, $suite, $test = null)
+    public function runSuite(array $settings, string $suite, ?string $test = null): void
     {
-        $suiteManager = new FixturesSuiteManager($this->dispatcher, $suite, $settings);
+        $settings['shard'] = $this->options['shard'];
+        $suiteManager = new FixturesSuiteManager($this->dispatcher, $suite, $settings, $this->options);
         $suiteManager->initialize();
 
         mt_srand($this->options['seed']);
         $suiteManager->loadTests($test);
         mt_srand();
 
-        if (!$this->suiteContainsFixtures($suiteManager->getSuite())) {
-            return new TestResult();
-        }
-
-        $suiteManager->run($this->runner, $this->result, $this->options);
-
-        return $this->result;
+        $suiteManager->run($this->resultAggregator);
     }
 
     /**

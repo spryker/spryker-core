@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Sales\Business\Facade;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Spryker\Zed\Sales\SalesDependencyProvider;
@@ -24,7 +24,7 @@ use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPluginInterfac
  * @group GetOrderItemsTest
  * Add your own group annotations below this line
  */
-class GetOrderItemsTest extends Test
+class GetOrderItemsTest extends Unit
 {
     /**
      * @var string

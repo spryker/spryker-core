@@ -24,8 +24,6 @@ use SprykerTest\Zed\Sales\SalesPresentationTester;
 class SalesListCest
 {
     /**
-     * @skip Requires refactoring
-     *
      * @param \SprykerTest\Zed\Sales\SalesPresentationTester $i
      * @param \SprykerTest\Zed\Sales\PageObject\SalesListPage $salesListPage
      *
@@ -33,13 +31,12 @@ class SalesListCest
      */
     public function testOrderListShouldContainOrders(SalesPresentationTester $i, SalesListPage $salesListPage): void
     {
+        $i->markTestSkipped('Requires refactoring');
         $i->createOrderWithOneItem();
         $salesListPage->seeListOfOrders();
     }
 
     /**
-     * @skip Requires refactoring
-     *
      * @param \SprykerTest\Zed\Sales\SalesPresentationTester $i
      * @param \SprykerTest\Zed\Sales\PageObject\SalesListPage $salesListPage
      *
@@ -47,6 +44,7 @@ class SalesListCest
      */
     public function testICanGoToLatestOrderDetailsPage(SalesPresentationTester $i, SalesListPage $salesListPage): void
     {
+        $i->markTestSkipped('Requires refactoring');
         $i->createOrderWithOneItem();
 
         $latestOrderId = $salesListPage->grabLatestOrderId();
@@ -57,8 +55,6 @@ class SalesListCest
     }
 
     /**
-     * @skip Requires refactoring
-     *
      * @param \SprykerTest\Zed\Sales\SalesPresentationTester $i
      * @param \SprykerTest\Zed\Sales\PageObject\SalesListPage $salesListPage
      *
@@ -66,6 +62,7 @@ class SalesListCest
      */
     public function breadcrumbIsVisible(SalesPresentationTester $i, SalesListPage $salesListPage): void
     {
+        $i->markTestSkipped('Requires refactoring');
         $i->createOrderWithOneItem();
 
         $latestOrderId = $salesListPage->grabLatestOrderId();

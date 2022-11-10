@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\Shipment\Business\Facade\ShipmentTotalCalculation;
 
 use ArrayObject;
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 
@@ -25,7 +25,7 @@ use Generated\Shared\Transfer\TotalsTransfer;
  * @group ShipmentFacadeCalculateShipmentTotalTest
  * Add your own group annotations below this line
  */
-class ShipmentFacadeCalculateShipmentTotalTest extends Test
+class ShipmentFacadeCalculateShipmentTotalTest extends Unit
 {
     /**
      * @var \SprykerTest\Zed\Shipment\ShipmentBusinessTester

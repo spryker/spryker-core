@@ -7,12 +7,12 @@
 
 namespace SprykerTest\Zed\ProductPackagingUnit\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Spryker\Zed\ProductPackagingUnit\Business\ProductPackagingUnitBusinessFactory;
 use Spryker\Zed\ProductPackagingUnit\Business\ProductPackagingUnitFacade;
 use Spryker\Zed\ProductPackagingUnit\ProductPackagingUnitConfig;
 
-abstract class ProductPackagingUnitMocks extends Test
+abstract class ProductPackagingUnitMocks extends Unit
 {
     /**
      * @var \PHPUnit\Framework\MockObject\MockObject

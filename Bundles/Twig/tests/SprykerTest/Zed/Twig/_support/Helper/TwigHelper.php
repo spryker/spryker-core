@@ -24,6 +24,7 @@ use Spryker\Zed\Twig\Communication\TwigCommunicationFactory;
 use Spryker\Zed\Twig\TwigConfig;
 use Spryker\Zed\Twig\TwigDependencyProvider;
 use SprykerTest\Shared\Testify\Helper\ConfigHelperTrait;
+use SprykerTest\Shared\Testify\Helper\ModuleHelperConfigTrait;
 use SprykerTest\Zed\Application\Helper\ApplicationHelperTrait;
 use SprykerTest\Zed\EventDispatcher\Helper\EventDispatcherHelperTrait;
 use SprykerTest\Zed\Testify\Helper\Business\BusinessHelperTrait;
@@ -38,6 +39,7 @@ class TwigHelper extends Module
     use ConfigHelperTrait;
     use DependencyProviderHelperTrait;
     use EventDispatcherHelperTrait;
+    use ModuleHelperConfigTrait;
 
     /**
      * @var string
@@ -63,14 +65,6 @@ class TwigHelper extends Module
      * @var array<\Spryker\Shared\TwigExtension\Dependency\Plugin\TwigLoaderPluginInterface>
      */
     protected $loaderPlugins = [];
-
-    /**
-     * @var array
-     */
-    protected $config = [
-        self::CONFIG_KEY_TWIG_PLUGINS => [],
-        self::CONFIG_KEY_LOADER_PLUGINS => [],
-    ];
 
     /**
      * @var array<string>
@@ -135,6 +129,17 @@ class TwigHelper extends Module
         );
 
         $this->addDependencies();
+    }
+
+    /**
+     * @return void
+     */
+    protected function setDefaultConfig(): void
+    {
+        $this->config = [
+            static::CONFIG_KEY_TWIG_PLUGINS => [],
+            static::CONFIG_KEY_LOADER_PLUGINS => [],
+        ];
     }
 
     /**

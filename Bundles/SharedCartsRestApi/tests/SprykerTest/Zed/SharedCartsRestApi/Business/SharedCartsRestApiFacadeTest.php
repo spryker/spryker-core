@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\SharedCartsRestApi\Business;
 
 use ArrayObject;
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\QuoteCompanyUserTransfer;
 use Generated\Shared\Transfer\QuotePermissionGroupTransfer;
@@ -30,7 +30,7 @@ use Spryker\Zed\SharedCart\Business\SharedCartFacadeInterface;
  * @group SharedCartsRestApiFacadeTest
  * Add your own group annotations below this line
  */
-class SharedCartsRestApiFacadeTest extends Test
+class SharedCartsRestApiFacadeTest extends Unit
 {
     /**
      * @var string

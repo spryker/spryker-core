@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\ProductReview\Business\Facade;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use Generated\Shared\DataBuilder\ProductReviewBuilder;
 
@@ -22,7 +22,7 @@ use Generated\Shared\DataBuilder\ProductReviewBuilder;
  * @group ReadProductReviewTest
  * Add your own group annotations below this line
  */
-class ReadProductReviewTest extends Test
+class ReadProductReviewTest extends Unit
 {
     use ArraySubsetAsserts;
 

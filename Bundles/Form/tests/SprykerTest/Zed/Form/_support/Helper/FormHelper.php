@@ -16,6 +16,7 @@ use Spryker\Zed\Form\Communication\Plugin\Application\FormApplicationPlugin;
 use Spryker\Zed\Form\FormConfig;
 use Spryker\Zed\Form\FormDependencyProvider;
 use SprykerTest\Shared\Testify\Helper\ConfigHelperTrait;
+use SprykerTest\Shared\Testify\Helper\ModuleHelperConfigTrait;
 use SprykerTest\Zed\Application\Helper\ApplicationHelperTrait;
 use SprykerTest\Zed\EventDispatcher\Helper\EventDispatcherHelperTrait;
 use SprykerTest\Zed\Testify\Helper\Business\BusinessHelperTrait;
@@ -30,6 +31,7 @@ class FormHelper extends Module
     use ConfigHelperTrait;
     use DependencyProviderHelperTrait;
     use EventDispatcherHelperTrait;
+    use ModuleHelperConfigTrait;
 
     /**
      * @var string
@@ -47,13 +49,6 @@ class FormHelper extends Module
     protected $formPlugins = [];
 
     /**
-     * @var array<string, mixed>
-     */
-    protected $config = [
-        self::CONFIG_KEY_FORM_PLUGINS => [],
-    ];
-
-    /**
      * @return void
      */
     public function _initialize(): void
@@ -61,6 +56,16 @@ class FormHelper extends Module
         foreach ($this->config[static::CONFIG_KEY_FORM_PLUGINS] as $formPlugin) {
             $this->formPlugins[$formPlugin] = new $formPlugin();
         }
+    }
+
+    /**
+     * @return void
+     */
+    protected function setDefaultConfig(): void
+    {
+        $this->config = [
+            static::CONFIG_KEY_FORM_PLUGINS => [],
+        ];
     }
 
     /**

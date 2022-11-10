@@ -8,7 +8,7 @@
 namespace SprykerTest\Shared\Collector\Helper;
 
 use Codeception\Module;
-use Codeception\Util\Stub;
+use Codeception\Stub;
 use DateTime;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;

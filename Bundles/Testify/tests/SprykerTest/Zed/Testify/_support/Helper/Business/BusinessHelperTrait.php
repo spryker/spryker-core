@@ -7,6 +7,8 @@
 
 namespace SprykerTest\Zed\Testify\Helper\Business;
 
+use Codeception\Module;
+
 trait BusinessHelperTrait
 {
     /**
@@ -25,5 +27,5 @@ trait BusinessHelperTrait
      *
      * @return \Codeception\Module
      */
-    abstract protected function getModule($name);
+    abstract protected function getModule(string $name): Module;
 }

@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\MerchantProductOffer\Business\Facade;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 
 /**
@@ -21,7 +21,7 @@ use Generated\Shared\Transfer\ProductOfferTransfer;
  * @group ExpandProductConcretesWithOffersTest
  * Add your own group annotations below this line
  */
-class ExpandProductConcretesWithOffersTest extends Test
+class ExpandProductConcretesWithOffersTest extends Unit
 {
     /**
      * @var \SprykerTest\Zed\MerchantProductOffer\MerchantProductOfferBusinessTester

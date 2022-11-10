@@ -4,7 +4,7 @@ paths:
     tests: .
     data: ../../../_data
     support: _support
-    log: ../../../_output
+    output: ../../../_output
 
 coverage:
     enabled: true
@@ -14,7 +14,7 @@ coverage:
 suites:
     Business:
         path: Business
-        class_name: PaymentBusinessTester
+        actor: PaymentBusinessTester
         modules:
             enabled:
                 - Asserts
@@ -29,7 +29,7 @@ suites:
 
     Dependency:
         path: Dependency
-        class_name: PaymentDependencyTester
+        actor: PaymentDependencyTester
         modules:
             enabled:
                 - Asserts

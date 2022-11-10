@@ -23,14 +23,15 @@ use SprykerTest\Zed\Refund\RefundPresentationTester;
 class RefundCest
 {
     /**
-     * @skip
-     *
      * @param \SprykerTest\Zed\Refund\RefundPresentationTester $i
+     * @param mixed $scenario
      *
      * @return void
      */
-    public function testRefundOneItemOfOrderRefundedAmountShouldBeSameAsItemGrandTotal(RefundPresentationTester $i): void
+    public function testRefundOneItemOfOrderRefundedAmountShouldBeSameAsItemGrandTotal(RefundPresentationTester $i, $scenario): void
     {
+        $scenario->skip('Refactoring requires.');
+
         $idSalesOrder = $i->createOrder();
         $idSalesOrderItemA = $i->createSalesOrderItemForOrder($idSalesOrder, ['process' => 'DummyPayment01'])->getIdSalesOrderItem();
         $idSalesOrderItemB = $i->createSalesOrderItemForOrder($idSalesOrder, ['process' => 'DummyPayment01'])->getIdSalesOrderItem();
@@ -49,16 +50,17 @@ class RefundCest
     }
 
     /**
-     * @skip
-     *
      * @group single
      *
      * @param \SprykerTest\Zed\Refund\RefundPresentationTester $i
+     * @param mixed $scenario
      *
      * @return void
      */
-    public function testRefundOneItemOfOrderWithDiscountRefundedAmountShouldBeSameAsItemGrandTotal(RefundPresentationTester $i): void
+    public function testRefundOneItemOfOrderWithDiscountRefundedAmountShouldBeSameAsItemGrandTotal(RefundPresentationTester $i, $scenario): void
     {
+        $scenario->skip('Refactoring requires.');
+
         $idSalesOrder = $i->createOrder();
         $idSalesOrderItemA = $i->createSalesOrderItemForOrder($idSalesOrder, ['process' => 'DummyPayment01'])->getIdSalesOrderItem();
         $idSalesOrderItemB = $i->createSalesOrderItemForOrder($idSalesOrder, ['process' => 'DummyPayment01'])->getIdSalesOrderItem();
@@ -79,14 +81,15 @@ class RefundCest
     }
 
     /**
-     * @skip
-     *
      * @param \SprykerTest\Zed\Refund\RefundPresentationTester $i
+     * @param mixed $scenario
      *
      * @return void
      */
-    public function testWhenRefundAllItemsOfOrderRefundedAmountShouldBeSameAsGrandTotal(RefundPresentationTester $i): void
+    public function testWhenRefundAllItemsOfOrderRefundedAmountShouldBeSameAsGrandTotal(RefundPresentationTester $i, $scenario): void
     {
+        $scenario->skip('Refactoring requires.');
+
         $idSalesOrder = $i->createOrder();
         $idSalesOrderItemA = $i->createSalesOrderItemForOrder($idSalesOrder, ['process' => 'DummyPayment01'])->getIdSalesOrderItem();
         $idSalesOrderItemB = $i->createSalesOrderItemForOrder($idSalesOrder, ['process' => 'DummyPayment01'])->getIdSalesOrderItem();

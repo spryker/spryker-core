@@ -4,7 +4,7 @@ paths:
     tests: .
     data: ../../../_data
     support: _support
-    log: ../../../_output
+    output: ../../../_output
 
 coverage:
     enabled: true
@@ -16,7 +16,7 @@ coverage:
 suites:
     Client:
         path: .
-        class_name: SecretsManagerAwsClientTester
+        actor: SecretsManagerAwsClientTester
         modules:
             enabled:
                 - Asserts

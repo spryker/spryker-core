@@ -3,7 +3,7 @@ paths:
     tests: .
     data: ../../../_data
     support: _support
-    log: ../../../_output
+    output: ../../../_output
 coverage:
     enabled: true
     remote: false
@@ -13,7 +13,7 @@ coverage:
 suites:
     Business:
         path: Business
-        class_name: ProductBundleCartsRestApiBusinessTester
+        actor: ProductBundleCartsRestApiBusinessTester
         modules:
             enabled:
                 - \SprykerTest\Shared\Testify\Helper\Environment

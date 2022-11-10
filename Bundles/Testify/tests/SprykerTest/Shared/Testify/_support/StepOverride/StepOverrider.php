@@ -9,6 +9,7 @@ namespace SprykerTest\Shared\Testify\StepOverride;
 
 use Codeception\Scenario;
 use Codeception\Step;
+use Codeception\Step\Meta;
 use Codeception\Test\Metadata;
 use ReflectionClass;
 use ReflectionObject;
@@ -60,7 +61,7 @@ class StepOverrider extends Scenario
      *
      * @return mixed
      */
-    public function runStep(Step $step)
+    public function runStep(Step $step): mixed
     {
         $className = __NAMESPACE__ . '\\' . basename((new ReflectionClass($step))->getShortName()) . 'Extender';
 
@@ -75,6 +76,110 @@ class StepOverrider extends Scenario
         ($this->releaseHook)();
 
         return $this->scenario->runStep($step);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setFeature(string $feature): void
+    {
+        $this->scenario->setFeature($feature);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getFeature(): string
+    {
+        return $this->scenario->getFeature();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getGroups(): array
+    {
+        return $this->scenario->getGroups();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function current(?string $key)
+    {
+        return $this->scenario->current($key);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function addStep(Step $step): void
+    {
+        $this->scenario->addStep($step);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getSteps(): array
+    {
+        return $this->scenario->getSteps();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getHtml(): string
+    {
+        return $this->scenario->getHtml();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getText(): string
+    {
+        return $this->scenario->getText();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function comment(string $comment): void
+    {
+        $this->scenario->comment($comment);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function skip(string $message = ''): void
+    {
+        $this->scenario->skip($message);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function incomplete(string $message = ''): void
+    {
+        $this->scenario->incomplete($message);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setMetaStep(?Meta $metaStep): void
+    {
+        $this->scenario->setMetaStep($metaStep);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getMetaStep(): ?Meta
+    {
+        return $this->scenario->getMetaStep();
     }
 
     /**
@@ -103,110 +208,6 @@ class StepOverrider extends Scenario
     public function getMetadata()
     {
         return new Metadata();
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function setFeature($feature)
-    {
-        $this->scenario->setFeature($feature);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getFeature()
-    {
-        return $this->scenario->getFeature();
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getGroups()
-    {
-        return $this->scenario->getGroups();
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function current($key)
-    {
-        return $this->scenario->current($key);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function addStep(Step $step)
-    {
-        $this->scenario->addStep($step);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getSteps()
-    {
-        return $this->scenario->getSteps();
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getHtml()
-    {
-        return $this->scenario->getHtml();
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getText()
-    {
-        return $this->scenario->getText();
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function comment($comment)
-    {
-        $this->scenario->comment($comment);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function skip($message = '')
-    {
-        $this->scenario->skip($message);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function incomplete($message = '')
-    {
-        $this->scenario->incomplete($message);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function setMetaStep($metaStep)
-    {
-        $this->scenario->setMetaStep($metaStep);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function getMetaStep()
-    {
-        return $this->scenario->getMetaStep();
     }
 
     /**

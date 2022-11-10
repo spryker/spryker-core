@@ -7,6 +7,8 @@
 
 namespace SprykerTest\Zed\Validator\Helper;
 
+use Codeception\Module;
+
 trait ValidatorHelperTrait
 {
     /**
@@ -25,5 +27,5 @@ trait ValidatorHelperTrait
      *
      * @return \Codeception\Module
      */
-    abstract protected function getModule($name);
+    abstract protected function getModule(string $name): Module;
 }

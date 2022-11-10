@@ -24,16 +24,7 @@ use Spryker\Zed\Testify\Locator\Business\BusinessLocator;
 
 class LocatorHelper extends Module
 {
-    /**
-     * @var array
-     */
-    protected $config = [
-        'projectNamespaces' => [],
-        'coreNamespaces' => [
-            'SprykerShop',
-            'Spryker',
-        ],
-    ];
+    use ModuleHelperConfigTrait;
 
     /**
      * @var array
@@ -48,6 +39,22 @@ class LocatorHelper extends Module
         Config::init();
         $reflectionProperty = $this->getConfigReflectionProperty();
         $this->configCache = $reflectionProperty->getValue()->getArrayCopy();
+    }
+
+    /**
+     * @return void
+     */
+    protected function setDefaultConfig(): void
+    {
+        $this->config = [
+            'projectNamespaces' => [],
+            'coreNamespaces' => [
+                'SprykerShop',
+                'Spryker',
+                'SprykerEco',
+                'SprykerSdk',
+            ],
+        ];
     }
 
     /**

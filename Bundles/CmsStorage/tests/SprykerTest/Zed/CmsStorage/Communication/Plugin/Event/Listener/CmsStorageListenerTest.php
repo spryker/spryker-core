@@ -51,12 +51,12 @@ class CmsStorageListenerTest extends Unit
     public const NUMBER_OF_STORES = 3;
 
     /**
-     * @skip Requires refactoring
-     *
      * @return void
      */
     public function testCmsPageVersionStorageListenerStoreData(): void
     {
+        $this->markTestSkipped('Requires refactoring');
+
         SpyCmsPageStorageQuery::create()->filterByFkCmsPage(1)->delete();
         $beforeCount = SpyCmsPageStorageQuery::create()->count();
 
@@ -75,12 +75,12 @@ class CmsStorageListenerTest extends Unit
     }
 
     /**
-     * @skip Requires refactoring
-     *
      * @return void
      */
     public function testCmsPageStorageListenerStoreData(): void
     {
+        $this->markTestSkipped('Requires refactoring');
+
         SpyCmsPageStorageQuery::create()->filterByFkCmsPage(1)->delete();
         $beforeCount = SpyCmsPageStorageQuery::create()->count();
 
@@ -97,12 +97,12 @@ class CmsStorageListenerTest extends Unit
     }
 
     /**
-     * @skip Requires refactoring
-     *
      * @return void
      */
     public function testCmsPageStoragePublishListener(): void
     {
+        $this->markTestSkipped('Requires refactoring');
+
         SpyCmsPageStorageQuery::create()->filterByFkCmsPage(1)->delete();
         $beforeCount = SpyCmsPageStorageQuery::create()->count();
 
@@ -119,12 +119,12 @@ class CmsStorageListenerTest extends Unit
     }
 
     /**
-     * @skip Requires refactoring
-     *
      * @return void
      */
     public function testCmsPageStorageUnpublishListener(): void
     {
+        $this->markTestSkipped('Requires refactoring');
+
         $cmsPageStorageUnpublishListener = new CmsPageStorageUnpublishListener();
         $cmsPageStorageUnpublishListener->setFacade($this->getCmsStorageFacade());
 
@@ -138,12 +138,12 @@ class CmsStorageListenerTest extends Unit
     }
 
     /**
-     * @skip Requires refactoring
-     *
      * @return void
      */
     public function testCmsPageUrlStorageListenerStoreData(): void
     {
+        $this->markTestSkipped('Requires refactoring');
+
         SpyCmsPageStorageQuery::create()->filterByFkCmsPage(1)->delete();
         $beforeCount = SpyCmsPageStorageQuery::create()->count();
 
@@ -162,12 +162,12 @@ class CmsStorageListenerTest extends Unit
     }
 
     /**
-     * @skip Requires refactoring
-     *
      * @return void
      */
     public function testCmsPageUrlStoragePublishListener(): void
     {
+        $this->markTestSkipped('Requires refactoring');
+
         SpyCmsPageStorageQuery::create()->filterByFkCmsPage(1)->delete();
         $beforeCount = SpyCmsPageStorageQuery::create()->count();
 
@@ -186,12 +186,12 @@ class CmsStorageListenerTest extends Unit
     }
 
     /**
-     * @skip Requires refactoring
-     *
      * @return void
      */
     public function testCmsPageUrlStorageUnpublishListener(): void
     {
+        $this->markTestSkipped('Requires refactoring');
+
         $cmsPageUrlStorageUnpublishListener = new CmsPageUrlStorageUnpublishListener();
         $cmsPageUrlStorageUnpublishListener->setFacade($this->getCmsStorageFacade());
 

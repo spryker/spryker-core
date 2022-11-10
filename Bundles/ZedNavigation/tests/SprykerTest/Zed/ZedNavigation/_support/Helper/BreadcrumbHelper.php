@@ -28,8 +28,8 @@ class BreadcrumbHelper extends Module
      */
     public function _beforeSuite($settings = []): void
     {
-        $className = $settings['class_name'];
-        if (preg_match('/CommunicationTester/', $className)) {
+        $actor = $settings['actor'] ?? $settings['class_name'];
+        if (preg_match('/CommunicationTester/', $actor)) {
             $this->isPresentationSuite = false;
         }
     }

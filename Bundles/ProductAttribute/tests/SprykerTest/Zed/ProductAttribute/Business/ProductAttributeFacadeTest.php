@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\ProductAttribute\Business;
 
 use ArrayObject;
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeValueTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeValueTranslationTransfer;
@@ -35,7 +35,7 @@ use SprykerTest\Zed\ProductAttribute\ProductAttributeBusinessTester;
  * @group ProductAttributeFacadeTest
  * Add your own group annotations below this line
  */
-class ProductAttributeFacadeTest extends Test
+class ProductAttributeFacadeTest extends Unit
 {
     /**
      * @var \Spryker\Zed\Product\Business\ProductFacade

@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\SharedCartsRestApi\Communication\Plugin;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Spryker\Zed\SharedCart\Communication\Plugin\ReadSharedCartPermissionPlugin;
 use Spryker\Zed\SharedCartsRestApi\Communication\Plugin\CartsRestApi\QuotePermissionGroupQuoteExpanderPlugin;
 
@@ -22,7 +22,7 @@ use Spryker\Zed\SharedCartsRestApi\Communication\Plugin\CartsRestApi\QuotePermis
  * @group QuotePermissionGroupQuoteExpanderPluginTest
  * Add your own group annotations below this line
  */
-class QuotePermissionGroupQuoteExpanderPluginTest extends Test
+class QuotePermissionGroupQuoteExpanderPluginTest extends Unit
 {
     /**
      * @var \SprykerTest\Zed\SharedCartsRestApi\QuotePermissionGroupQuoteExpanderPluginTester

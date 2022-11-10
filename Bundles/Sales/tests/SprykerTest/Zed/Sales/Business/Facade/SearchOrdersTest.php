@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Sales\Business\Facade;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\FilterFieldTransfer;
 use Generated\Shared\Transfer\OrderListFormatTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
@@ -24,7 +24,7 @@ use Generated\Shared\Transfer\PaginationTransfer;
  * @group SearchOrdersTest
  * Add your own group annotations below this line
  */
-class SearchOrdersTest extends Test
+class SearchOrdersTest extends Unit
 {
     /**
      * @var string

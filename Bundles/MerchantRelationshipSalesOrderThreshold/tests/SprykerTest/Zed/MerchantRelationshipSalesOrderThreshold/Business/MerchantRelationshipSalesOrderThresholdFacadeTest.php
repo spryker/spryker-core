@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\MerchantRelationshipSalesOrderThreshold\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdCollectionDeleteCriteriaTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -27,7 +27,7 @@ use Spryker\Zed\SalesOrderThreshold\SalesOrderThresholdDependencyProvider;
  * @group MerchantRelationshipSalesOrderThresholdFacadeTest
  * Add your own group annotations below this line
  */
-class MerchantRelationshipSalesOrderThresholdFacadeTest extends Test
+class MerchantRelationshipSalesOrderThresholdFacadeTest extends Unit
 {
     /**
      * @var string

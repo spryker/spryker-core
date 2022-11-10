@@ -16,6 +16,7 @@ use Spryker\Zed\Validator\Communication\Plugin\Application\ValidatorApplicationP
 use Spryker\Zed\Validator\Communication\ValidatorCommunicationFactory;
 use Spryker\Zed\Validator\ValidatorDependencyProvider;
 use SprykerTest\Shared\Testify\Helper\ConfigHelperTrait;
+use SprykerTest\Shared\Testify\Helper\ModuleHelperConfigTrait;
 use SprykerTest\Zed\Application\Helper\ApplicationHelperTrait;
 use SprykerTest\Zed\EventDispatcher\Helper\EventDispatcherHelperTrait;
 use SprykerTest\Zed\Testify\Helper\Business\BusinessHelperTrait;
@@ -30,6 +31,7 @@ class ValidatorHelper extends Module
     use ConfigHelperTrait;
     use DependencyProviderHelperTrait;
     use EventDispatcherHelperTrait;
+    use ModuleHelperConfigTrait;
 
     /**
      * @var string
@@ -55,14 +57,6 @@ class ValidatorHelper extends Module
      * @var array<\Spryker\Shared\ValidatorExtension\Dependency\Plugin\ConstraintPluginInterface>
      */
     protected $constraintPlugins = [];
-
-    /**
-     * @var array<string, mixed>
-     */
-    protected $config = [
-        self::CONFIG_KEY_VALIDATOR_PLUGINS => [],
-        self::CONFIG_KEY_CONSTRAINT_PLUGINS => [],
-    ];
 
     /**
      * @return void
@@ -100,6 +94,17 @@ class ValidatorHelper extends Module
         $this->getApplicationHelper()->addApplicationPlugin(
             $this->getValidatorApplicationPluginStub(),
         );
+    }
+
+    /**
+     * @return void
+     */
+    protected function setDefaultConfig(): void
+    {
+        $this->config = [
+            static::CONFIG_KEY_VALIDATOR_PLUGINS => [],
+            static::CONFIG_KEY_CONSTRAINT_PLUGINS => [],
+        ];
     }
 
     /**

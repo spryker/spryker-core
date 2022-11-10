@@ -7,6 +7,8 @@
 
 namespace SprykerTest\Shared\Testify\StepOverride;
 
+use Codeception\Scenario;
+
 trait StepOverrideTrait
 {
     /**
@@ -61,7 +63,7 @@ trait StepOverrideTrait
     /**
      * @inheritDoc
      */
-    protected function getScenario()
+    protected function getScenario(): Scenario
     {
         return $this->stepOverrider ?? parent::getScenario();
     }

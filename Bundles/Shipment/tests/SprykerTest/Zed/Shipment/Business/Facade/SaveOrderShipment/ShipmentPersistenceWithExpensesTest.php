@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Shipment\Business\Facade\SaveOrderShipment;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\AddressBuilder;
 use Generated\Shared\DataBuilder\ExpenseBuilder;
 use Generated\Shared\DataBuilder\ItemBuilder;
@@ -34,7 +34,7 @@ use Spryker\Shared\Shipment\ShipmentConfig;
  * @group ShipmentPersistenceWithExpensesTest
  * Add your own group annotations below this line
  */
-class ShipmentPersistenceWithExpensesTest extends Test
+class ShipmentPersistenceWithExpensesTest extends Unit
 {
     /**
      * @var \SprykerTest\Zed\Shipment\ShipmentBusinessTester

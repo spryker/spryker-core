@@ -13,9 +13,12 @@ use ReflectionProperty;
 use Spryker\Service\Container\Container;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\Kernel\Container\ContainerProxy;
+use SprykerTest\Shared\Testify\Helper\ModuleHelperConfigTrait;
 
 class ContainerHelper extends Module
 {
+    use ModuleHelperConfigTrait;
+
     /**
      * @var string
      */
@@ -25,13 +28,6 @@ class ContainerHelper extends Module
      * @var \Spryker\Service\Container\ContainerInterface|null
      */
     protected $container;
-
-    /**
-     * @var array
-     */
-    protected $config = [
-        self::CONFIG_KEY_DEBUG => false,
-    ];
 
     /**
      * @return \Spryker\Service\Container\ContainerInterface
@@ -69,6 +65,16 @@ class ContainerHelper extends Module
         if ($this->container !== null) {
             $this->resetStaticProperties();
         }
+    }
+
+    /**
+     * @return void
+     */
+    protected function setDefaultConfig(): void
+    {
+        $this->config = [
+            static::CONFIG_KEY_DEBUG => false,
+        ];
     }
 
     /**

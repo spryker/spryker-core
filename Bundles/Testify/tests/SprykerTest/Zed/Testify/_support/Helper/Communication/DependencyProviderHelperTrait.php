@@ -7,6 +7,8 @@
 
 namespace SprykerTest\Zed\Testify\Helper\Communication;
 
+use Codeception\Module;
+
 trait DependencyProviderHelperTrait
 {
     /**
@@ -25,5 +27,5 @@ trait DependencyProviderHelperTrait
      *
      * @return \Codeception\Module
      */
-    abstract protected function getModule($name);
+    abstract protected function getModule(string $name): Module;
 }
