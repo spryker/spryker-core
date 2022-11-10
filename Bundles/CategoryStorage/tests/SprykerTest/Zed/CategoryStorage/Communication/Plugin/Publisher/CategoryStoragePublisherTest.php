@@ -29,10 +29,13 @@ class CategoryStoragePublisherTest extends Unit
      */
     public function testCategoryTreePublisherTriggerPluginGetDataWithZeroOffset(): void
     {
+        // Arrange
         $plugin = new CategoryTreePublisherTriggerPlugin();
 
+        // Act
         $resultData = $plugin->getData(0, rand());
 
+        // Assert
         $this->assertNotEmpty($resultData);
     }
 
@@ -41,10 +44,13 @@ class CategoryStoragePublisherTest extends Unit
      */
     public function testCategoryTreePublisherTriggerPluginGetDataWithNotZeroOffset(): void
     {
+        // Arrange
         $plugin = new CategoryTreePublisherTriggerPlugin();
 
+        // Act
         $resultData = $plugin->getData(1, rand());
 
+        // Assert
         $this->assertEmpty($resultData);
     }
 }
