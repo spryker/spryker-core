@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\CompanyRole\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\CompanyRoleBuilder;
 use Generated\Shared\Transfer\CompanyResponseTransfer;
 use Generated\Shared\Transfer\CompanyRoleCriteriaFilterTransfer;
@@ -27,7 +27,7 @@ use Spryker\Zed\CompanyRole\Communication\Plugin\PermissionStoragePlugin;
  * @group CompanyRoleFacadeTest
  * Add your own group annotations below this line
  */
-class CompanyRoleFacadeTest extends Test
+class CompanyRoleFacadeTest extends Unit
 {
     /**
      * @var array

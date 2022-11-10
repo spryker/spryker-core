@@ -4,7 +4,7 @@ paths:
     tests: .
     data: ../../../_data
     support: _support
-    log: ../../../_output
+    output: ../../../_output
 
 coverage:
     enabled: true
@@ -14,7 +14,7 @@ coverage:
 suites:
     Client:
         path: Client
-        class_name: SalesProductConfigurationClientTester
+        actor: SalesProductConfigurationClientTester
         modules:
             enabled:
                 - Asserts

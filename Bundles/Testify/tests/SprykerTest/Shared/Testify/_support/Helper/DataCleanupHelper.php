@@ -13,15 +13,12 @@ use Exception;
 
 class DataCleanupHelper extends Module
 {
-    /**
-     * @var array
-     */
-    protected $cleanups = [];
+    use ModuleHelperConfigTrait;
 
     /**
      * @var array
      */
-    protected $config = ['cleanup' => true];
+    protected $cleanups = [];
 
     /**
      * @param \Closure $closure
@@ -61,5 +58,13 @@ class DataCleanupHelper extends Module
             }
         }
         $this->cleanups = [];
+    }
+
+    /**
+     * @return void
+     */
+    protected function setDefaultConfig(): void
+    {
+        $this->config = ['cleanup' => true];
     }
 }

@@ -47,6 +47,10 @@ class TwigConfigTest extends Unit
                 $this->tester->getPathSprykerShopShared(),
                 $this->tester->getPathSpryker(),
                 $this->tester->getPathSprykerShared(),
+                $this->tester->getPathSprykerEco(),
+                $this->tester->getPathSprykerEcoShared(),
+                $this->tester->getPathSprykerSdk(),
+                $this->tester->getPathSprykerSdkShared(),
             ],
         );
     }
@@ -73,6 +77,10 @@ class TwigConfigTest extends Unit
                 $this->tester->getPathSprykerShopShared(),
                 $this->tester->getPathSpryker(),
                 $this->tester->getPathSprykerShared(),
+                $this->tester->getPathSprykerEco(),
+                $this->tester->getPathSprykerEcoShared(),
+                $this->tester->getPathSprykerSdk(),
+                $this->tester->getPathSprykerSdkShared(),
             ],
         );
     }
@@ -104,6 +112,10 @@ class TwigConfigTest extends Unit
                 $this->tester->getPathSprykerShopShared(),
                 $this->tester->getPathSpryker(),
                 $this->tester->getPathSprykerShared(),
+                $this->tester->getPathSprykerEco(),
+                $this->tester->getPathSprykerEcoShared(),
+                $this->tester->getPathSprykerSdk(),
+                $this->tester->getPathSprykerSdkShared(),
             ],
         );
     }

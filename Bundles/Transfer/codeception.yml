@@ -6,7 +6,7 @@ include:
 paths:
     tests: tests
     support: tests/_support
-    log: tests/_output
+    output: tests/_output
     data: tests/_data
     envs: tests/_envs
 

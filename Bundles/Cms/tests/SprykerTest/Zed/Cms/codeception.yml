@@ -4,7 +4,7 @@ paths:
     tests: .
     data: ../../../_data
     support: _support
-    log: ../../../_output
+    output: ../../../_output
 
 coverage:
     enabled: true
@@ -14,7 +14,7 @@ coverage:
 suites:
     Persistence:
         path: Persistence
-        class_name: CmsPersistenceTester
+        actor: CmsPersistenceTester
         modules:
             enabled:
                 - Asserts
@@ -28,7 +28,7 @@ suites:
                 - \SprykerTest\Zed\Locale\Helper\LocaleDataHelper
     Business:
         path: Business
-        class_name: CmsBusinessTester
+        actor: CmsBusinessTester
         modules:
             enabled:
                 - Asserts
@@ -40,7 +40,7 @@ suites:
 
     Communication:
         path: Communication
-        class_name: CmsCommunicationTester
+        actor: CmsCommunicationTester
         modules:
             enabled:
                 - Asserts

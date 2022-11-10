@@ -4,7 +4,7 @@ paths:
     tests: .
     data: ../../../_data
     support: _support
-    log: ../../../_output
+    output: ../../../_output
 
 coverage:
     enabled: true
@@ -14,7 +14,7 @@ coverage:
 suites:
     Business:
         path: Business
-        class_name: GlossaryBusinessTester
+        actor: GlossaryBusinessTester
         modules:
             enabled:
                 - Asserts
@@ -27,7 +27,7 @@ suites:
 
     Communication:
         path: Communication
-        class_name: GlossaryCommunicationTester
+        actor: GlossaryCommunicationTester
         modules:
             enabled:
                 - Asserts
@@ -63,7 +63,7 @@ suites:
 
     Persistence:
         path: Persistence
-        class_name: GlossaryPersistenceTester
+        actor: GlossaryPersistenceTester
         modules:
             enabled:
                 - Asserts

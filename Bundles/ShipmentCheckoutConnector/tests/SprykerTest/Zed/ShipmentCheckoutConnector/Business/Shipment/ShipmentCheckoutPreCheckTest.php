@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\ShipmentCheckoutConnector\Business\Shipment;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\CheckoutResponseBuilder;
 use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
@@ -26,7 +26,7 @@ use Generated\Shared\Transfer\ShipmentTransfer;
  * @group ShipmentCheckoutPreCheckTest
  * Add your own group annotations below this line
  */
-class ShipmentCheckoutPreCheckTest extends Test
+class ShipmentCheckoutPreCheckTest extends Unit
 {
     /**
      * @var \SprykerTest\Zed\ShipmentCheckoutConnector\ShipmentCheckoutConnectorBusinessTester

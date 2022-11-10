@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitTreeBuilder;
 
 use ArrayObject;
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use ReflectionMethod;
 use Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitTreeBuilder\CompanyBusinessUnitTreeBuilder;
 use Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitRepositoryInterface;
@@ -24,7 +24,7 @@ use Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitRepositoryInt
  * @group CompanyBusinessUnitTreeBuilderTest
  * Add your own group annotations below this line
  */
-class CompanyBusinessUnitTreeBuilderTest extends Test
+class CompanyBusinessUnitTreeBuilderTest extends Unit
 {
     /**
      * @var \SprykerTest\Zed\CompanyBusinessUnit\CompanyBusinessUnitTester

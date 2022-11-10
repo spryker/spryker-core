@@ -32,7 +32,7 @@ class AbstractControllerTest extends Unit
     public const EXPECTED_INTERNAL_TYPE = 'int';
 
     /**
-     * @dataProvider getTestData()
+     * @dataProvider getTestData
      *
      * @param mixed $input
      * @param int $expected
@@ -50,7 +50,7 @@ class AbstractControllerTest extends Unit
     }
 
     /**
-     * @dataProvider getInvalidTestData()
+     * @dataProvider getInvalidTestData
      *
      * @param mixed $input
      *

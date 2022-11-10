@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Service\CmsSlotBlockStorage;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 
 /**
  * Auto-generated group annotations
@@ -20,7 +20,7 @@ use Codeception\TestCase\Test;
  *
  * @property \SprykerTest\Service\CmsSlotBlockStorage\CmsSlotBlockStorageServiceTester $tester
  */
-class CmsSlotBlockStorageServiceTest extends Test
+class CmsSlotBlockStorageServiceTest extends Unit
 {
     /**
      * @var string

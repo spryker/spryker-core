@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Customer\Business\Checkout;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\AddressBuilder;
 use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
@@ -29,7 +29,7 @@ use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailInterface;
  * @group CustomerOrderSaverWithItemLevelShippingAddressTest
  * Add your own group annotations below this line
  */
-class CustomerOrderSaverWithItemLevelShippingAddressTest extends Test
+class CustomerOrderSaverWithItemLevelShippingAddressTest extends Unit
 {
     /**
      * @var \SprykerTest\Zed\Customer\CustomerBusinessTester

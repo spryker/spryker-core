@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\ZedRequest\Business\Model;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Spryker\Zed\ZedRequest\Business\Exception\InvalidActionPathException;
 use Spryker\Zed\ZedRequest\Business\Model\Repeater;
 
@@ -24,7 +24,7 @@ use Spryker\Zed\ZedRequest\Business\Model\Repeater;
  *
  * @property \SprykerTest\Zed\ZedRequest\BusinessTester $tester
  */
-class RepeaterTest extends Test
+class RepeaterTest extends Unit
 {
     /**
      * @return void

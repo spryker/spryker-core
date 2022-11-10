@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Customer\Business\Checkout;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
@@ -26,7 +26,7 @@ use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailInterface;
  * @group CustomerOrderSaverWithQuoteLevelShippingAddressTest
  * Add your own group annotations below this line
  */
-class CustomerOrderSaverWithQuoteLevelShippingAddressTest extends Test
+class CustomerOrderSaverWithQuoteLevelShippingAddressTest extends Unit
 {
     /**
      * @var \SprykerTest\Zed\Customer\CustomerBusinessTester

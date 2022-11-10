@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacade;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 
 /**
@@ -21,7 +21,7 @@ use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
  * @group UpdateTest
  * Add your own group annotations below this line
  */
-class UpdateTest extends Test
+class UpdateTest extends Unit
 {
     /**
      * @var string

@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Translator\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Translator\Business\TranslatorBusinessFactory;
 use Spryker\Zed\Translator\Business\TranslatorFacadeInterface;
@@ -25,7 +25,7 @@ use Spryker\Zed\Translator\TranslatorConfig;
  * @group TranslatorFacadeTest
  * Add your own group annotations below this line
  */
-class TranslatorFacadeTest extends Test
+class TranslatorFacadeTest extends Unit
 {
     /**
      * @var \SprykerTest\Zed\Translator\TranslatorBusinessTester

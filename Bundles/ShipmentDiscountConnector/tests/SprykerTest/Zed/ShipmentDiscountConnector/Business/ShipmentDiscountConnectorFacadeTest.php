@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\ShipmentDiscountConnector\Business;
 
 use ArrayObject;
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -32,7 +32,7 @@ use Spryker\Zed\ShipmentDiscountConnector\Communication\Plugin\DecisionRule\Ship
  * @group ShipmentDiscountConnectorFacadeTest
  * Add your own group annotations below this line
  */
-class ShipmentDiscountConnectorFacadeTest extends Test
+class ShipmentDiscountConnectorFacadeTest extends Unit
 {
     /**
      * @var \SprykerTest\Zed\ShipmentDiscountConnector\ShipmentDiscountConnectorBusinessTester

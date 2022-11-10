@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\Sales\Business\Facade;
 
 use BadMethodCallException;
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -27,7 +27,7 @@ use Spryker\Zed\Sales\SalesConfig;
  * @group OrderStateMachineResolverTest
  * Add your own group annotations below this line
  */
-class OrderStateMachineResolverTest extends Test
+class OrderStateMachineResolverTest extends Unit
 {
     /**
      * @return void

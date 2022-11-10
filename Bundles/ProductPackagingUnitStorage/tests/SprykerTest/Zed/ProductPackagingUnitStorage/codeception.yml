@@ -4,7 +4,7 @@ paths:
     tests: .
     data: ../../../_data
     support: _support
-    log: ../../../_output
+    output: ../../../_output
 
 coverage:
     enabled: true
@@ -14,7 +14,7 @@ coverage:
 suites:
     Business:
         path: Business
-        class_name: ProductPackagingUnitStorageBusinessTester
+        actor: ProductPackagingUnitStorageBusinessTester
         modules:
             enabled:
                 - Asserts
@@ -30,7 +30,7 @@ suites:
                 - \SprykerTest\Zed\ProductPackagingUnit\Helper\ProductPackagingUnitTypeHelper
     Communication:
         path: Communication
-        class_name: ProductPackagingUnitStorageCommunicationTester
+        actor: ProductPackagingUnitStorageCommunicationTester
         modules:
             enabled:
                 - Asserts

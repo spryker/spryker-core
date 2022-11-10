@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\CompanyBusinessUnit\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\CompanyUserBuilder;
 use Generated\Shared\Transfer\CompanyBusinessUnitCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
@@ -26,7 +26,7 @@ use TypeError;
  * @group CompanyBusinessUnitFacadeTest
  * Add your own group annotations below this line
  */
-class CompanyBusinessUnitFacadeTest extends Test
+class CompanyBusinessUnitFacadeTest extends Unit
 {
     /**
      * @var string

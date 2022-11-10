@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Sales\Business\Facade;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\CurrencyBuilder;
 use Generated\Shared\DataBuilder\CustomerBuilder;
 use Generated\Shared\DataBuilder\ItemBuilder;
@@ -31,7 +31,7 @@ use SprykerTest\Zed\Sales\Helper\BusinessHelper;
  * @group SalesFacadeExpandItemsTest
  * Add your own group annotations below this line
  */
-class SalesFacadeExpandItemsTest extends Test
+class SalesFacadeExpandItemsTest extends Unit
 {
     /**
      * @var string

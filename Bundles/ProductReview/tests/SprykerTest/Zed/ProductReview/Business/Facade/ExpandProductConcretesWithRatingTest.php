@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\ProductReview\Business\Facade;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Orm\Zed\ProductReview\Persistence\Map\SpyProductReviewTableMap;
 
 /**
@@ -21,7 +21,7 @@ use Orm\Zed\ProductReview\Persistence\Map\SpyProductReviewTableMap;
  * @group ExpandProductConcretesWithRatingTest
  * Add your own group annotations below this line
  */
-class ExpandProductConcretesWithRatingTest extends Test
+class ExpandProductConcretesWithRatingTest extends Unit
 {
     /**
      * @var \SprykerTest\Zed\ProductReview\ProductReviewBusinessTester

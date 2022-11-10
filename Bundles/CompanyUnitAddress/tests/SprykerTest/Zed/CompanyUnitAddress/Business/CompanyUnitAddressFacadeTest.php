@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\CompanyUnitAddress\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\CompanyUnitAddressBuilder;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer;
@@ -25,7 +25,7 @@ use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
  * @group CompanyUnitAddressFacadeTest
  * Add your own group annotations below this line
  */
-class CompanyUnitAddressFacadeTest extends Test
+class CompanyUnitAddressFacadeTest extends Unit
 {
     /**
      * @var string

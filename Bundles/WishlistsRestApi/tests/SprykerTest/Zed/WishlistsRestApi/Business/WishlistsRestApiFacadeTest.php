@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\WishlistsRestApi\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\WishlistFilterTransfer;
 use Generated\Shared\Transfer\WishlistItemRequestTransfer;
 use Generated\Shared\Transfer\WishlistRequestTransfer;
@@ -26,7 +26,7 @@ use Spryker\Zed\Wishlist\Business\Exception\MissingWishlistException;
  * @group WishlistsRestApiFacadeTest
  * Add your own group annotations below this line
  */
-class WishlistsRestApiFacadeTest extends Test
+class WishlistsRestApiFacadeTest extends Unit
 {
     /**
      * @var \SprykerTest\Zed\WishlistsRestApi\WishlistsRestApiBusinessTester

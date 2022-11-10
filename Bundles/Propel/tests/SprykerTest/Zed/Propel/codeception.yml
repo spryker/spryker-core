@@ -4,7 +4,7 @@ paths:
     tests: .
     data: ../../../_data
     support: _support
-    log: ../../../_output
+    output: ../../../_output
 
 coverage:
     enabled: true
@@ -14,7 +14,7 @@ coverage:
 suites:
     Business:
         path: Business
-        class_name: PropelBusinessTester
+        actor: PropelBusinessTester
         modules:
             enabled:
                 - \SprykerTest\Shared\Testify\Helper\Environment
@@ -28,14 +28,14 @@ suites:
                 - \SprykerTest\Shared\Propel\Helper\TableHelper
     Persistence:
         path: Persistence
-        class_name: PropelPersistenceTester
+        actor: PropelPersistenceTester
         modules:
             enabled:
                 - \SprykerTest\Shared\Testify\Helper\Environment
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
     Communication:
         path: Communication
-        class_name: PropelCommunicationTester
+        actor: PropelCommunicationTester
         modules:
             enabled:
                 - Asserts

@@ -42,7 +42,9 @@ class PublishAndSynchronizeHealthCheckDataHelper extends AbstractHelper
                 $publishAndSynchronizeHealthCheckTransfer->getHealthCheckKey(),
             );
 
-            $publishAndSynchronizeHealthCheckEntity->delete();
+            if ($publishAndSynchronizeHealthCheckEntity !== null) {
+                $publishAndSynchronizeHealthCheckEntity->delete();
+            }
         });
 
         return $publishAndSynchronizeHealthCheckTransfer;

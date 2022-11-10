@@ -5,7 +5,7 @@ include:
     - tests/SprykerTest/Zed/Session
 paths:
     support: .
-    log: tests/_output
+    output: tests/_output
     data: tests/_data
     envs: tests/_envs
 settings:

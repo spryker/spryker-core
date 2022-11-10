@@ -3,12 +3,12 @@ paths:
     tests: .
     data: ../../../_data
     support: _support
-    log: ../../../_output
+    output: ../../../_output
 
 suites:
     Business:
         path: Business
-        class_name: ShoppingListStorageBusinessTester
+        actor: ShoppingListStorageBusinessTester
         modules:
             enabled:
                 - Asserts

@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\ConfigurableBundleNote\Business\ConfigurableBundleNoteFacade;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ConfiguredBundleNoteRequestTransfer;
 use Generated\Shared\Transfer\ConfiguredBundleTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -25,7 +25,7 @@ use SprykerTest\Zed\ConfigurableBundleNote\ConfigurableBundleNoteBusinessTester;
  * @group ConfigurableBundleNoteFacadeTest
  * Add your own group annotations below this line
  */
-class ConfigurableBundleNoteFacadeTest extends Test
+class ConfigurableBundleNoteFacadeTest extends Unit
 {
     /**
      * @var \SprykerTest\Zed\ConfigurableBundleNote\ConfigurableBundleNoteBusinessTester

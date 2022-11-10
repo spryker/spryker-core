@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Sales\Business\Facade;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Spryker\Zed\Sales\Business\SalesBusinessFactory;
 use Spryker\Zed\Sales\Business\SalesFacadeInterface;
 use Spryker\Zed\Sales\SalesConfig;
@@ -25,7 +25,7 @@ use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPluginInterfac
  * @group GetOrderByIdSalesOrderTest
  * Add your own group annotations below this line
  */
-class GetOrderByIdSalesOrderTest extends Test
+class GetOrderByIdSalesOrderTest extends Unit
 {
     /**
      * @var string

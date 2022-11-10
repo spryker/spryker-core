@@ -10,4 +10,4 @@ parameters:
         - '#Parameter \#1 \$categoryNodeData of method Spryker\\Zed\\ProductPageSearch\\Communication\\Plugin\\PageDataExpander\\ProductCategoryPageDataLoaderExpanderPlugin::mapCategoryNodesWithLocaleIdAndNodeId\(\) expects array, iterable<Orm\\Zed\\Category\\Persistence\\SpyCategoryNode>&Propel\\Runtime\\Collection\\ObjectCollection given\.#'
         - '#Parameter \#1 \$categoryNodeData of method Spryker\\Zed\\ProductPageSearch\\Communication\\Plugin\\PageDataExpander\\ProductCategoryPageDataLoaderExpanderPlugin::mapCategoryNodesWithLocaleIdAndNodeId\(\) expects array, Propel\\Runtime\\Collection\\ObjectCollection given\.#'
         - '#Property .+\\PricePageDataExpanderPlugin::\$idStoreMapBuffer \(array<int>\|null\) does not accept array<int\|null>.#'
-        - '#Parameter \#2 \$length of function array_chunk expects int<1, max>, int given.#'
+        - '#Parameter \#2 \$(size|length) of function array_chunk expects int<1, max>, int given.#'

@@ -4,7 +4,7 @@ paths:
     tests: .
     data: ../../../_data
     support: _support
-    log: ../../../_output
+    output: ../../../_output
 
 coverage:
     enabled: true
@@ -14,7 +14,7 @@ coverage:
 suites:
     Base:
         path: ./Root
-        class_name: RouterRootTester
+        actor: RouterRootTester
         modules:
             enabled:
                 - \SprykerTest\Shared\Testify\Helper\Environment
@@ -22,7 +22,7 @@ suites:
 
     Communication:
         path: ./Communication
-        class_name: RouterCommunicationTester
+        actor: RouterCommunicationTester
         modules:
             enabled:
                 - Asserts

@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\ShipmentDiscountConnector\Business\Facade;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ClauseBuilder;
 use Generated\Shared\DataBuilder\ExpenseBuilder;
 use Generated\Shared\DataBuilder\ItemBuilder;
@@ -32,7 +32,7 @@ use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
  * @group ShipmentPriceDecisionRuleTest
  * Add your own group annotations below this line
  */
-class ShipmentPriceDecisionRuleTest extends Test
+class ShipmentPriceDecisionRuleTest extends Unit
 {
     /**
      * @var \SprykerTest\Zed\ShipmentDiscountConnector\ShipmentDiscountConnectorBusinessTester

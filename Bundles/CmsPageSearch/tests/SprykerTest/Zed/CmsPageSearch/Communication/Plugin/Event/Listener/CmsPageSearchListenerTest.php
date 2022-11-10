@@ -46,12 +46,12 @@ class CmsPageSearchListenerTest extends Unit
     }
 
     /**
-     * @skip Requires refactoring
-     *
      * @return void
      */
     public function testCmsPageVersionSearchListenerStoreData(): void
     {
+        $this->markTestSkipped('Requires refactoring');
+
         SpyCmsPageSearchQuery::create()->filterByFkCmsPage(1)->delete();
         $beforeCount = SpyCmsPageSearchQuery::create()->count();
 
@@ -74,12 +74,12 @@ class CmsPageSearchListenerTest extends Unit
     }
 
     /**
-     * @skip Requires refactoring
-     *
      * @return void
      */
     public function testCmsPageUrlSearchListenerStoreData(): void
     {
+        $this->markTestSkipped('Requires refactoring');
+
         SpyCmsPageSearchQuery::create()->filterByFkCmsPage(1)->delete();
         $beforeCount = SpyCmsPageSearchQuery::create()->count();
 
@@ -103,12 +103,12 @@ class CmsPageSearchListenerTest extends Unit
     }
 
     /**
-     * @skip Requires refactoring
-     *
      * @return void
      */
     public function testCmsPageSearchListenerStoreData(): void
     {
+        $this->markTestSkipped('Requires refactoring');
+
         SpyCmsPageSearchQuery::create()->filterByFkCmsPage(1)->delete();
         $beforeCount = SpyCmsPageSearchQuery::create()->count();
 

@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Installer\Communication\Console;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Spryker\Zed\Installer\Communication\Console\InitializeDatabaseConsole;
 
 /**
@@ -21,7 +21,7 @@ use Spryker\Zed\Installer\Communication\Console\InitializeDatabaseConsole;
  * @group InitializeDatabaseConsoleTest
  * Add your own group annotations below this line
  */
-class InitializeDatabaseConsoleTest extends Test
+class InitializeDatabaseConsoleTest extends Unit
 {
     /**
      * @var \SprykerTest\Zed\Installer\InstallerCommunicationTester

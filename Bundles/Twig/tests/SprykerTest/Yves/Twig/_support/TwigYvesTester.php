@@ -134,4 +134,36 @@ class TwigYvesTester extends Actor
     {
         return rtrim(APPLICATION_VENDOR_DIR, '/') . '/*/*/src/Spryker/Shared/%s/Theme/default';
     }
+
+    /**
+     * @return string
+     */
+    public function getPathSprykerEco(): string
+    {
+        return rtrim(APPLICATION_VENDOR_DIR, '/') . '/*/*/src/SprykerEco/Yves/%s/Theme/default';
+    }
+
+    /**
+     * @return string
+     */
+    public function getPathSprykerEcoShared(): string
+    {
+        return rtrim(APPLICATION_VENDOR_DIR, '/') . '/*/*/src/SprykerEco/Shared/%s/Theme/default';
+    }
+
+    /**
+     * @return string
+     */
+    public function getPathSprykerSdk(): string
+    {
+        return rtrim(APPLICATION_VENDOR_DIR, '/') . '/*/*/src/SprykerSdk/Yves/%s/Theme/default';
+    }
+
+    /**
+     * @return string
+     */
+    public function getPathSprykerSdkShared(): string
+    {
+        return rtrim(APPLICATION_VENDOR_DIR, '/') . '/*/*/src/SprykerSdk/Shared/%s/Theme/default';
+    }
 }

@@ -7,8 +7,8 @@
 
 namespace SprykerTest\Client\Search;
 
+use Codeception\Stub;
 use Codeception\Test\Unit;
-use Codeception\Util\Stub;
 use Elastica\Client;
 use Elastica\ResultSet;
 use Elastica\Status;

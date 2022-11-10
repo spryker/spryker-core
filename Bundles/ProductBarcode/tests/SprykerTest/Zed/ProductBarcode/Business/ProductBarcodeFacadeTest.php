@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\ProductBarcode\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ProductConcreteBuilder;
 use Generated\Shared\Transfer\BarcodeResponseTransfer;
 use Spryker\Service\Barcode\BarcodeDependencyProvider;
@@ -27,7 +27,7 @@ use Spryker\Service\Barcode\BarcodeDependencyProvider;
  * @group Product
  * @property \SprykerTest\Zed\ProductBarcode\ProductBarcodeBusinessTester $tester
  */
-class ProductBarcodeFacadeTest extends Test
+class ProductBarcodeFacadeTest extends Unit
 {
     /**
      * @var string

@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\Shipment\Business;
 
 use ArrayObject;
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
@@ -38,7 +38,7 @@ use Spryker\Zed\Shipment\ShipmentDependencyProvider;
  * @group ShipmentFacadeTest
  * Add your own group annotations below this line
  */
-class ShipmentFacadeTest extends Test
+class ShipmentFacadeTest extends Unit
 {
     /**
      * @var string

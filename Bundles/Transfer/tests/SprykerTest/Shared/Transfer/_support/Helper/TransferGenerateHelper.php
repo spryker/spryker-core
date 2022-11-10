@@ -11,11 +11,14 @@ use Codeception\Module;
 use Exception;
 use Psr\Log\NullLogger;
 use Spryker\Zed\Transfer\Business\TransferFacade;
+use SprykerTest\Shared\Testify\Helper\ModuleHelperConfigTrait;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 
 class TransferGenerateHelper extends Module
 {
+    use ModuleHelperConfigTrait;
+
     /**
      * @var string
      */
@@ -62,22 +65,6 @@ class TransferGenerateHelper extends Module
     protected const DEFAULT_TRANSFER_SCHEMA_TARGET_DIRECTORY = 'src/Spryker/Shared/Testify/Transfer/';
 
     /**
-     * @var array
-     */
-    protected $config = [
-        self::CONFIG_SCHEMA_DIRECTORIES => [
-            'src/*/Shared/*/Transfer/',
-        ],
-        self::CONFIG_ENTITY_SCHEMA_DIRECTORIES => [
-            'src/Orm/Propel/Schema/',
-        ],
-        self::CONFIG_DATA_BUILDER_SCHEMA_DIRECTORIES => [
-            'tests/_data/',
-        ],
-        self::CONFIG_IS_ISOLATED_MODULE_TEST => false,
-    ];
-
-    /**
      * @param array $settings
      *
      * @return void
@@ -88,6 +75,25 @@ class TransferGenerateHelper extends Module
             $this->generateTransferObjects();
             $this->addAutoloader();
         }
+    }
+
+    /**
+     * @return void
+     */
+    protected function setDefaultConfig(): void
+    {
+        $this->config = [
+            static::CONFIG_SCHEMA_DIRECTORIES => [
+                'src/*/Shared/*/Transfer/',
+            ],
+            static::CONFIG_ENTITY_SCHEMA_DIRECTORIES => [
+                'src/Orm/Propel/Schema/',
+            ],
+            static::CONFIG_DATA_BUILDER_SCHEMA_DIRECTORIES => [
+                'tests/_data/',
+            ],
+            static::CONFIG_IS_ISOLATED_MODULE_TEST => false,
+        ];
     }
 
     /**

@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\ResourceShare\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use DateTime;
 use Generated\Shared\DataBuilder\ResourceShareBuilder;
 use Generated\Shared\Transfer\ResourceShareRequestTransfer;
@@ -28,7 +28,7 @@ use Spryker\Zed\ResourceShareExtension\Dependency\Plugin\ResourceShareZedActivat
  * @group ResourceShareFacadeTest
  * Add your own group annotations below this line
  */
-class ResourceShareFacadeTest extends Test
+class ResourceShareFacadeTest extends Unit
 {
     /**
      * @see \Spryker\Zed\ResourceShare\Business\ResourceShare\ResourceShareWriter::GLOSSARY_KEY_RESOURCE_TYPE_IS_NOT_DEFINED

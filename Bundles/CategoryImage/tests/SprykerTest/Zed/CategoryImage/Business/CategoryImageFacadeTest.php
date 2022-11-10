@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\CategoryImage\Business;
 
 use ArrayObject;
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CategoryImageSetTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 
@@ -25,7 +25,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
  *
  * @property \SprykerTest\Zed\CategoryImage\CategoryImageBusinessTester $tester
  */
-class CategoryImageFacadeTest extends Test
+class CategoryImageFacadeTest extends Unit
 {
     /**
      * @var int

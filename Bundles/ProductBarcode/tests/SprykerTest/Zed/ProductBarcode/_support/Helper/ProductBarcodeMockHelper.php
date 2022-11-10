@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\ProductBarcode\Helper;
 
 use Codeception\Module;
-use Codeception\Util\Stub;
+use Codeception\Stub;
 use Generated\Shared\Transfer\BarcodeResponseTransfer;
 use Spryker\Service\BarcodeExtension\Dependency\Plugin\BarcodeGeneratorPluginInterface;
 

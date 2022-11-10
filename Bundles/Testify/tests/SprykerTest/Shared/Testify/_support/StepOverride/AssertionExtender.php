@@ -18,6 +18,16 @@ class AssertionExtender extends Assertion implements StepDescriptionExtender
     protected $stepDescription;
 
     /**
+     * @param string $text
+     *
+     * @return string
+     */
+    protected function humanize(string $text): string
+    {
+        return $this->getStepDescription() . parent::humanize($text);
+    }
+
+    /**
      * @return string
      */
     protected function getStepDescription(): string
@@ -35,15 +45,5 @@ class AssertionExtender extends Assertion implements StepDescriptionExtender
         $this->stepDescription = $stepDescription;
 
         return $this;
-    }
-
-    /**
-     * @param string $text
-     *
-     * @return string
-     */
-    protected function humanize($text): string
-    {
-        return $this->getStepDescription() . parent::humanize($text);
     }
 }

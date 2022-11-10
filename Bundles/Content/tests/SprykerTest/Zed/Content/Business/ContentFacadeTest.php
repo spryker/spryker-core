@@ -7,7 +7,7 @@
 
 namespace SprykerTest\Zed\Content\Business;
 
-use Codeception\TestCase\Test;
+use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ContentBuilder;
 use Generated\Shared\Transfer\ContentTransfer;
 use Generated\Shared\Transfer\LocalizedContentTransfer;
@@ -23,7 +23,7 @@ use Generated\Shared\Transfer\LocalizedContentTransfer;
  * @group ContentFacadeTest
  * Add your own group annotations below this line
  */
-class ContentFacadeTest extends Test
+class ContentFacadeTest extends Unit
 {
     /**
      * @var string
