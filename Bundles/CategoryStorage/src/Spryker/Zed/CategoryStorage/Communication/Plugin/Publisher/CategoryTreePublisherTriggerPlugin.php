@@ -24,10 +24,7 @@ class CategoryTreePublisherTriggerPlugin extends AbstractPlugin implements Publi
 {
     /**
      * {@inheritDoc}
-     * - Retrieves category trees by provided limit and offset.
-     * - For triggering events at least one transfer object with a filled id column should be provided.
-     * - But all categories shouldn't been provided because full category tree will be recalculated multiple time.
-     * - So for $offset === 0 one transfer object was provided.
+     * - If $offset === 0 returns empty transfer object to trigger event.
      *
      * @api
      *
