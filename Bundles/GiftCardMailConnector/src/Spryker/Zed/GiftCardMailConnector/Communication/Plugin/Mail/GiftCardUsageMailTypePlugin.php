@@ -12,6 +12,8 @@ use Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface;
 use Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\GiftCardMailConnector\Communication\Plugin\Mail\GiftCardUsageMailTypeBuilderPlugin} instead.
+ *
  * @method \Spryker\Zed\GiftCardMailConnector\Business\GiftCardMailConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\GiftCardMailConnector\Communication\GiftCardMailConnectorCommunicationFactory getFactory()
  * @method \Spryker\Zed\GiftCardMailConnector\GiftCardMailConnectorConfig getConfig()

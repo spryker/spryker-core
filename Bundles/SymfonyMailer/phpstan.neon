@@ -1,0 +1,5 @@
+parameters:
+    level: 8
+    reportUnmatchedIgnoredErrors: false
+    ignoreErrors:
+        - '#Class .+Address constructor invoked with 2 parameters, 1 required.#'

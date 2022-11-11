@@ -16,6 +16,10 @@
         <property name="type" type="string"/>
         <property name="availabilityNotificationSubscriptionMailData" type="AvailabilityNotificationSubscriptionMailData"/>
         <property name="locale" type="Locale"/>
+        <property name="subject" type="string"/>
+        <property name="subjectTranslationParameters" type="string[]" associative="true" singular="subjectTranslationParameter"/>
+        <property name="templates" type="MailTemplate[]" singular="template"/>
+        <property name="recipients" type="MailRecipient[]" singular="recipient"/>
     </transfer>
 
     <transfer name="Store">
@@ -115,6 +119,15 @@
         <property name="lastPage" type="int"/>
         <property name="nextPage" type="int"/>
         <property name="previousPage" type="int"/>
+    </transfer>
+
+    <transfer name="MailRecipient">
+        <property name="email" type="string"/>
+    </transfer>
+
+    <transfer name="MailTemplate">
+        <property name="name" type="string"/>
+        <property name="isHtml" type="bool"/>
     </transfer>
 
 </transfers>

@@ -12,6 +12,8 @@ use Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface;
 use Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\MerchantUserPasswordResetMail\Communication\Plugin\Mail\MerchantUserPasswordResetMailTypeBuilderPlugin} instead.
+ *
  * @method \Spryker\Zed\MerchantUserPasswordResetMail\MerchantUserPasswordResetMailConfig getConfig()
  * @method \Spryker\Zed\MerchantUserPasswordResetMail\Communication\MerchantUserPasswordResetMailCommunicationFactory getFactory()
  */

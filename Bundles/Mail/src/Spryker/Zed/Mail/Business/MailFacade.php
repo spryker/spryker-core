@@ -34,6 +34,8 @@ class MailFacade extends AbstractFacade implements MailFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\SymfonyMailer\Business\SymfonyMailerFacade::send()} instead.
+     *
      * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
      *
      * @return void

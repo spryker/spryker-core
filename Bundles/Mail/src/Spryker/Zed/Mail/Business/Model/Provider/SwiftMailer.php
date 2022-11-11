@@ -10,9 +10,11 @@ namespace Spryker\Zed\Mail\Business\Model\Provider;
 use Generated\Shared\Transfer\MailTransfer;
 use Spryker\Zed\Mail\Business\Model\Renderer\RendererInterface;
 use Spryker\Zed\Mail\Dependency\Mailer\MailToMailerInterface;
-use Spryker\Zed\Mail\Dependency\Plugin\MailProviderPluginInterface;
 
-class SwiftMailer implements MailProviderPluginInterface
+/**
+ * @deprecated Will be removed without replacement.
+ */
+class SwiftMailer implements SwiftMailerInterface
 {
     /**
      * @var \Spryker\Zed\Mail\Business\Model\Renderer\RendererInterface

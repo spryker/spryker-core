@@ -11,8 +11,10 @@
         "spryker/customer-extension": "^1.0.0",
         "spryker/kernel": "^3.30.0",
         "spryker/mail": "^4.6.0",
+        "spryker/mail-extension": "^1.0.0",
         "spryker/permission-extension": "^1.0.0",
         "spryker/propel-orm": "^1.6.1",
+        "spryker/transfer": "^3.25.0",
         "spryker/util-text": "^1.2.1",
         "spryker/zed-request": "^3.4.0"
     },

@@ -12,6 +12,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Mail\Dependency\Plugin\MailProviderPluginInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\SymfonyMailer\Communication\Plugin\Mail\SymfonyMailerProviderPlugin} instead.
+ *
  * @method \Spryker\Zed\Mail\Business\MailFacadeInterface getFacade()
  * @method \Spryker\Zed\Mail\Communication\MailCommunicationFactory getFactory()
  * @method \Spryker\Zed\Mail\MailConfig getConfig()

@@ -12,6 +12,8 @@ use Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface;
 use Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\Customer\Communication\Plugin\Mail\CustomerRestoredPasswordConfirmationMailTypeBuilderPlugin} instead.
+ *
  * @method \Spryker\Zed\Customer\Business\CustomerFacadeInterface getFacade()
  * @method \Spryker\Zed\Customer\Communication\CustomerCommunicationFactory getFactory()
  * @method \Spryker\Zed\Customer\CustomerConfig getConfig()

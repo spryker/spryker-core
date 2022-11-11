@@ -46,6 +46,8 @@ class MailConfig extends AbstractBundleConfig
     /**
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\SymfonyMailer\SymfonyMailerConfig::getSmtpHost()} instead.
+     *
      * @return string
      */
     public function getSmtpHost(): string
@@ -55,6 +57,8 @@ class MailConfig extends AbstractBundleConfig
 
     /**
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\SymfonyMailer\SymfonyMailerConfig::getSmtpPort()} instead.
      *
      * @return int
      */
@@ -66,6 +70,8 @@ class MailConfig extends AbstractBundleConfig
     /**
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\SymfonyMailer\SymfonyMailerConfig::isSmtpEncrypted()} instead.
+     *
      * @return string
      */
     public function getSmtpEncryption(): string
@@ -75,6 +81,8 @@ class MailConfig extends AbstractBundleConfig
 
     /**
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\SymfonyMailer\SymfonyMailerConfig::getSmtpAuthMode()} instead.
      *
      * @return string
      */
@@ -86,6 +94,8 @@ class MailConfig extends AbstractBundleConfig
     /**
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\SymfonyMailer\SymfonyMailerConfig::getSmtpUsername()} instead.
+     *
      * @return string
      */
     public function getSmtpUsername(): string
@@ -95,6 +105,8 @@ class MailConfig extends AbstractBundleConfig
 
     /**
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\SymfonyMailer\SymfonyMailerConfig::getSmtpPassword()} instead.
      *
      * @return string
      */

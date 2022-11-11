@@ -12,6 +12,8 @@ use Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface;
 use Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\Oms\Communication\Plugin\Mail\OrderShippedMailTypeBuilderPlugin} instead.
+ *
  * @method \Spryker\Zed\Oms\Business\OmsFacadeInterface getFacade()
  * @method \Spryker\Zed\Oms\Communication\OmsCommunicationFactory getFactory()
  * @method \Spryker\Zed\Oms\OmsConfig getConfig()

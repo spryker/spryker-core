@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\MailTransfer;
 use Generated\Shared\Transfer\MerchantUserCriteriaTransfer;
 use Generated\Shared\Transfer\UserPasswordResetRequestTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\MerchantUserPasswordResetMail\Communication\Plugin\Mail\MerchantUserPasswordResetMailTypePlugin;
 use Spryker\Zed\UserPasswordResetExtension\Dependency\Plugin\UserPasswordResetRequestStrategyPluginInterface;
 
 /**
@@ -20,6 +19,13 @@ use Spryker\Zed\UserPasswordResetExtension\Dependency\Plugin\UserPasswordResetRe
  */
 class MailMerchantUserPasswordResetRequestStrategyPlugin extends AbstractPlugin implements UserPasswordResetRequestStrategyPluginInterface
 {
+    /**
+     * @uses {@link Spryker\Zed\MerchantUserPasswordResetMail\Communication\Plugin\MailMerchantUserPasswordResetMailTypeBuilderPlugin::MAIL_TYPE}
+     *
+     * @var string
+     */
+    protected const MAIL_TYPE = 'merchant restore password';
+
     /**
      * {@inheritDoc}
      * - Returns true if merchant user exists for `UserPasswordResetRequest.user`, false otherwise.
@@ -61,7 +67,7 @@ class MailMerchantUserPasswordResetRequestStrategyPlugin extends AbstractPlugin 
             ->handleMail(
                 (new MailTransfer())
                     ->fromArray($userPasswordResetRequestTransfer->toArray(), true)
-                    ->setType(MerchantUserPasswordResetMailTypePlugin::MAIL_TYPE),
+                    ->setType(static::MAIL_TYPE),
             );
     }
 }

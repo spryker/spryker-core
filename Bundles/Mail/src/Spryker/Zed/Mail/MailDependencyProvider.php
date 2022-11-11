@@ -33,6 +33,8 @@ class MailDependencyProvider extends AbstractBundleDependencyProvider
     public const MAIL_PROVIDER_COLLECTION = 'mail provider collection';
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Mail\MailDependencyProvider::PLUGINS_MAIL_TYPE_BUILDER} instead.
+     *
      * @var string
      */
     public const MAIL_TYPE_COLLECTION = 'mail collection';
@@ -53,11 +55,15 @@ class MailDependencyProvider extends AbstractBundleDependencyProvider
     public const RENDERER = 'twig';
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @var string
      */
     public const MAILER = 'mailer';
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @var string
      */
     protected const SWIFT_MAILER = 'SWIFT_MAILER';
@@ -68,6 +74,11 @@ class MailDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const SERVICE_TWIG = 'twig';
+
+    /**
+     * @var string
+     */
+    public const PLUGINS_MAIL_TYPE_BUILDER = 'PLUGINS_MAIL_TYPE_BUILDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -83,6 +94,7 @@ class MailDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addSwiftMailer($container);
         $container = $this->addMailer($container);
         $container = $this->addLocaleFacade($container);
+        $container = $this->addMailTypeBuilderPlugins($container);
 
         return $container;
     }
@@ -112,6 +124,8 @@ class MailDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Mail\MailDependencyProvider::addMailTypeBuilderPlugins()} instead.
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -128,6 +142,8 @@ class MailDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Mail\MailDependencyProvider::getMailTypeBuilderPlugins()} instead.
+     *
      * @return \Spryker\Zed\Mail\Business\Model\Mail\MailTypeCollectionAddInterface
      */
     protected function getMailCollection()
@@ -186,6 +202,8 @@ class MailDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -213,6 +231,8 @@ class MailDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -243,5 +263,27 @@ class MailDependencyProvider extends AbstractBundleDependencyProvider
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMailTypeBuilderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_MAIL_TYPE_BUILDER, function () {
+            return $this->getMailTypeBuilderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Zed\MailExtension\Dependency\Plugin\MailTypeBuilderPluginInterface>
+     */
+    protected function getMailTypeBuilderPlugins(): array
+    {
+        return [];
     }
 }

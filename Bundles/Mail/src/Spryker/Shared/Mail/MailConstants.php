@@ -18,16 +18,22 @@ interface MailConstants
     public const MAILCATCHER_GUI = 'MAILCATCHER_GUI';
 
     /**
+     * @deprecated Use {@link \Spryker\Shared\SymfonyMailer\SymfonyMailerConstants::SMTP_HOST} instead.
+     *
      * @var string
      */
     public const SMTP_HOST = 'MAIL_CONSTANTS:SMTP_HOST';
 
     /**
+     * @deprecated Use {@link \Spryker\Shared\SymfonyMailer\SymfonyMailerConstants::SMTP_PORT} instead.
+     *
      * @var string
      */
     public const SMTP_PORT = 'MAIL_CONSTANTS:SMTP_PORT';
 
     /**
+     * @deprecated Use {@link \Spryker\Shared\SymfonyMailer\SymfonyMailerConstants::SMTP_ENCRYPTION} instead.
+     *
      * Specification:
      * - Defines encryption mode for `SMTP`.
      * - Available values are "tls", "ssl" or "".
@@ -39,6 +45,8 @@ interface MailConstants
     public const SMTP_ENCRYPTION = 'MAIL:SMTP_ENCRYPTION';
 
     /**
+     * @deprecated Use {@link \Spryker\Shared\SymfonyMailer\SymfonyMailerConstants::SMTP_AUTH_MODE} instead.
+     *
      * Specification:
      * - Defines authentication mode for `SMTP`.
      * - Available values are "plain", "login", "cram-md5", or "".
@@ -50,6 +58,8 @@ interface MailConstants
     public const SMTP_AUTH_MODE = 'MAIL:SMTP_AUTH_MODE';
 
     /**
+     * @deprecated Use {@link \Spryker\Shared\SymfonyMailer\SymfonyMailerConstants::SMTP_USERNAME} instead.
+     *
      * Specification:
      * - Defines `username` for `SMTP`.
      *
@@ -60,6 +70,8 @@ interface MailConstants
     public const SMTP_USERNAME = 'MAIL:SMTP_USERNAME';
 
     /**
+     * @deprecated Use {@link \Spryker\Shared\SymfonyMailer\SymfonyMailerConstants::SMTP_PASSWORD} instead.
+     *
      * Specification:
      * - Defines `password` for `SMTP`.
      *

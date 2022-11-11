@@ -5,6 +5,9 @@
         <property name="customer" type="Customer"/>
         <property name="type" type="string"/>
         <property name="locale" type="Locale"/>
+        <property name="subject" type="string"/>
+        <property name="templates" type="MailTemplate[]" singular="template"/>
+        <property name="recipients" type="MailRecipient[]" singular="recipient"/>
     </transfer>
 
     <transfer name="Address">
@@ -217,6 +220,16 @@
 
     <transfer name="CountryCollection">
         <property name="countries" type="Country[]" singular="countries"/>
+    </transfer>
+
+    <transfer name="MailRecipient">
+        <property name="email" type="string"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="MailTemplate">
+        <property name="name" type="string"/>
+        <property name="isHtml" type="bool"/>
     </transfer>
 
 </transfers>

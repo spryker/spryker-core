@@ -7,10 +7,12 @@
 
 namespace Spryker\Zed\Mail\Business\Model\Mailer;
 
+use Generated\Shared\Transfer\MailSenderTransfer;
 use Generated\Shared\Transfer\MailTransfer;
 use Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface;
 use Spryker\Zed\Mail\Business\Model\Mail\MailTypeCollectionGetInterface;
 use Spryker\Zed\Mail\Business\Model\Provider\MailProviderCollectionGetInterface;
+use Spryker\Zed\Mail\MailConfig;
 
 class MailHandler implements MailHandlerInterface
 {
@@ -25,23 +27,41 @@ class MailHandler implements MailHandlerInterface
     protected $mailProviderCollection;
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Mail\Business\Model\Mailer\MailHandler::$mailTypeBuilderPlugins} instead.
+     *
      * @var \Spryker\Zed\Mail\Business\Model\Mail\MailTypeCollectionGetInterface
      */
     protected $mailTypeCollection;
 
     /**
+     * @var array<\Spryker\Zed\MailExtension\Dependency\Plugin\MailTypeBuilderPluginInterface>
+     */
+    protected $mailTypeBuilderPlugins = [];
+
+    /**
+     * @var \Spryker\Zed\Mail\MailConfig
+     */
+    protected $config;
+
+    /**
      * @param \Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface $mailBuilder
      * @param \Spryker\Zed\Mail\Business\Model\Mail\MailTypeCollectionGetInterface $mailCollection
      * @param \Spryker\Zed\Mail\Business\Model\Provider\MailProviderCollectionGetInterface $mailProviderCollection
+     * @param array<\Spryker\Zed\MailExtension\Dependency\Plugin\MailTypeBuilderPluginInterface> $mailTypeBuilderPlugins
+     * @param \Spryker\Zed\Mail\MailConfig $config
      */
     public function __construct(
         MailBuilderInterface $mailBuilder,
         MailTypeCollectionGetInterface $mailCollection,
-        MailProviderCollectionGetInterface $mailProviderCollection
+        MailProviderCollectionGetInterface $mailProviderCollection,
+        array $mailTypeBuilderPlugins,
+        MailConfig $config
     ) {
         $this->mailBuilder = $mailBuilder;
         $this->mailTypeCollection = $mailCollection;
         $this->mailProviderCollection = $mailProviderCollection;
+        $this->mailTypeBuilderPlugins = $mailTypeBuilderPlugins;
+        $this->config = $config;
     }
 
     /**
@@ -51,9 +71,48 @@ class MailHandler implements MailHandlerInterface
      */
     public function handleMail(MailTransfer $mailTransfer)
     {
-        $mailTypeName = $this->getMailTypeNameFromTransfer($mailTransfer);
+        $isMailTypeBuilderPluginExisted = false;
 
-        if ($this->mailTypeCollection->has($mailTypeName)) {
+        foreach ($this->mailTypeBuilderPlugins as $mailTypeBuilderPlugin) {
+            if ($mailTypeBuilderPlugin->getName() !== $this->getMailTypeNameFromTransfer($mailTransfer)) {
+                continue;
+            }
+
+            $isMailTypeBuilderPluginExisted = true;
+            $mailTransfer = $this->setDefaultSender($mailTransfer);
+            $mailTransfer = $mailTypeBuilderPlugin->build($mailTransfer);
+            $this->sendMail($mailTransfer);
+        }
+
+        if ($isMailTypeBuilderPluginExisted === false) {
+            $this->handleByMailTypePlugin($mailTransfer);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
+     *
+     * @return \Generated\Shared\Transfer\MailTransfer
+     */
+    protected function setDefaultSender(MailTransfer $mailTransfer): MailTransfer
+    {
+        $mailSenderTransfer = (new MailSenderTransfer())
+            ->setEmail($this->config->getSenderEmail())
+            ->setName($this->config->getSenderName());
+
+        return $mailTransfer->setSender($mailSenderTransfer);
+    }
+
+    /**
+     * @deprecated Will be removed in the next major. Exists for BC-reason only.
+     *
+     * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
+     *
+     * @return void
+     */
+    protected function handleByMailTypePlugin(MailTransfer $mailTransfer): void
+    {
+        if ($this->mailTypeCollection->has($this->getMailTypeNameFromTransfer($mailTransfer))) {
             $mailTransfer = $this->buildMail($mailTransfer);
             $this->sendMail($mailTransfer);
         }
@@ -105,7 +164,7 @@ class MailHandler implements MailHandlerInterface
     /**
      * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
      *
-     * @return array<\Spryker\Zed\Mail\Dependency\Plugin\MailProviderPluginInterface>
+     * @return array<\Spryker\Zed\MailExtension\Dependency\Plugin\MailProviderPluginInterface>
      */
     protected function getMailProviderByMailType(MailTransfer $mailTransfer)
     {

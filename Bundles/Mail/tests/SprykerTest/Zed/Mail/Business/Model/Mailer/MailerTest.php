@@ -16,6 +16,7 @@ use Spryker\Zed\Mail\Business\Model\Mailer\MailHandler;
 use Spryker\Zed\Mail\Business\Model\Provider\MailProviderCollectionGetInterface;
 use Spryker\Zed\Mail\Dependency\Plugin\MailProviderPluginInterface;
 use Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface;
+use Spryker\Zed\Mail\MailConfig;
 
 /**
  * Auto-generated group annotations
@@ -45,7 +46,13 @@ class MailerTest extends Unit
         $mailTypeCollectionMock = $this->getMailTypeCollectionMock();
         $mailProviderCollectionMock = $this->getMailProviderCollectionMock();
 
-        $instance = new MailHandler($mailBuilderMock, $mailTypeCollectionMock, $mailProviderCollectionMock);
+        $instance = new MailHandler(
+            $mailBuilderMock,
+            $mailTypeCollectionMock,
+            $mailProviderCollectionMock,
+            [],
+            $this->getMailConfigMock(),
+        );
 
         $this->assertInstanceOf(MailHandler::class, $instance);
     }
@@ -67,7 +74,13 @@ class MailerTest extends Unit
     public function testHandleMailWillCallBuildOnMailTypeWhenMailTypeInCollection(): void
     {
         $mailBuilderMock = $this->getMailBuilderMock();
-        $mailer = new MailHandler($mailBuilderMock, $this->getMailTypeCollectionWithMailMock(), $this->getMailProviderCollectionWithProviderMock());
+        $mailer = new MailHandler(
+            $mailBuilderMock,
+            $this->getMailTypeCollectionWithMailMock(),
+            $this->getMailProviderCollectionWithProviderMock(),
+            [],
+            $this->getMailConfigMock(),
+        );
         $mailTransfer = $this->getMailTransfer();
 
         $mailer->handleMail($mailTransfer);
@@ -79,7 +92,13 @@ class MailerTest extends Unit
     public function testHandleMailWillCallSendOnProviderWhenMailTypeInCollection(): void
     {
         $mailBuilderMock = $this->getMailBuilderMock();
-        $mailer = new MailHandler($mailBuilderMock, $this->getMailTypeCollectionWithMailMock(), $this->getMailProviderCollectionWithProviderMock());
+        $mailer = new MailHandler(
+            $mailBuilderMock,
+            $this->getMailTypeCollectionWithMailMock(),
+            $this->getMailProviderCollectionWithProviderMock(),
+            [],
+            $this->getMailConfigMock(),
+        );
         $mailTransfer = $this->getMailTransfer();
 
         $mailer->handleMail($mailTransfer);
@@ -96,6 +115,8 @@ class MailerTest extends Unit
                 $this->getMailBuilderMock(),
                 $this->getMailTypeCollectionWithoutMailMock(),
                 $this->getMailProviderCollectionMock(),
+                [],
+                $this->getMailConfigMock(),
             ])
             ->getMock();
 
@@ -202,5 +223,15 @@ class MailerTest extends Unit
         $mailTypeMock->expects($this->once())->method('build');
 
         return $mailTypeMock;
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Mail\MailConfig
+     */
+    protected function getMailConfigMock(): MailConfig
+    {
+        return $this->getMockBuilder(MailConfig::class)
+            ->disableOriginalConstructor()
+            ->getMock();
     }
 }
