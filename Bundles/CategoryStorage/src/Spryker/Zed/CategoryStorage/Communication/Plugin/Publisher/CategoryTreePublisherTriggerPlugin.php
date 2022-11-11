@@ -24,7 +24,7 @@ class CategoryTreePublisherTriggerPlugin extends AbstractPlugin implements Publi
 {
     /**
      * {@inheritDoc}
-     * - If $offset === 0 returns empty transfer object to trigger event.
+     * - Returns an array with `NodeTransfer` with not empty id column in case `$offset === 0` to trigger event, else - returns an empty array.
      *
      * @api
      *
@@ -35,7 +35,7 @@ class CategoryTreePublisherTriggerPlugin extends AbstractPlugin implements Publi
      */
     public function getData(int $offset, int $limit): array
     {
-        return $offset === 0 ? [$this->createEmptyNodeTransfer()] : [];
+        return $offset === 0 ? [(new NodeTransfer())->setIdCategoryNode(0)] : [];
     }
 
     /**
@@ -67,18 +67,10 @@ class CategoryTreePublisherTriggerPlugin extends AbstractPlugin implements Publi
      *
      * @api
      *
-     * @return string|null
+     * @return string
      */
-    public function getIdColumnName(): ?string
+    public function getIdColumnName(): string
     {
         return SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\NodeTransfer
-     */
-    protected function createEmptyNodeTransfer(): NodeTransfer
-    {
-        return (new NodeTransfer())->setIdCategoryNode(0);
     }
 }
