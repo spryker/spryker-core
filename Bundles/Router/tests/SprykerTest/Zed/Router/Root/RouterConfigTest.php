@@ -30,7 +30,7 @@ class RouterConfigTest extends Unit
     protected $tester;
 
     /**
-     * @return array
+     * @return array<array<string>>
      */
     public function coreNamespaceProvider(): array
     {
