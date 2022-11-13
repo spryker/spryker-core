@@ -10,7 +10,8 @@
         "spryker/locale": "^3.0.0",
         "spryker/mail-extension": "^1.0.0",
         "spryker/symfony": "^3.9.0",
-        "spryker/transfer": "^3.25.0"
+        "spryker/transfer": "^3.25.0",
+        "symfony/mailer": "^5.4.12"
     },
     "require-dev": {
         "spryker/code-sniffer": "*",

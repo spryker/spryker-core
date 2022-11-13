@@ -1,5 +1,6 @@
 {
     "include": {
-        "spryker/transfer": "Provides transfer objects definition with `::get*OrFail()` functionality."
+        "spryker/transfer": "Provides transfer objects definition with `::get*OrFail()` functionality.",
+        "symfony/mailer": "Provides basic email sending functionality."
     }
 }
