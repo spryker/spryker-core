@@ -67,9 +67,9 @@ class CategoryTreePublisherTriggerPlugin extends AbstractPlugin implements Publi
      *
      * @api
      *
-     * @return string
+     * @return string|null
      */
-    public function getIdColumnName(): string
+    public function getIdColumnName(): ?string
     {
         return SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE;
     }
