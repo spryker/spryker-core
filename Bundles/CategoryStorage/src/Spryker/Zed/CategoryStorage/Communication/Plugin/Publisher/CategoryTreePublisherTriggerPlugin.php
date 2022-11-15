@@ -8,7 +8,6 @@
 namespace Spryker\Zed\CategoryStorage\Communication\Plugin\Publisher;
 
 use Generated\Shared\Transfer\NodeTransfer;
-use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
 use Spryker\Shared\CategoryStorage\CategoryStorageConfig;
 use Spryker\Shared\CategoryStorage\CategoryStorageConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -23,8 +22,15 @@ use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherTriggerPluginInter
 class CategoryTreePublisherTriggerPlugin extends AbstractPlugin implements PublisherTriggerPluginInterface
 {
     /**
+     * @uses SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE
+     *
+     * @var string
+     */
+    protected const ID_COLUMN_NAME = 'spy_category_node.id_category_node';
+
+    /**
      * {@inheritDoc}
-     * - Returns an array with `NodeTransfer` with not empty id column in case `$offset === 0` to trigger event, else - returns an empty array.
+     * - Returns an array with `NodeTransfer` with not empty ID column in case `$offset === 0` to trigger event, else - returns an empty array.
      *
      * @api
      *
@@ -71,6 +77,6 @@ class CategoryTreePublisherTriggerPlugin extends AbstractPlugin implements Publi
      */
     public function getIdColumnName(): ?string
     {
-        return SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE;
+        return static::ID_COLUMN_NAME;
     }
 }

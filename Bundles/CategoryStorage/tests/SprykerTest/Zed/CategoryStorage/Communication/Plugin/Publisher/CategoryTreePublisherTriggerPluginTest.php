@@ -19,21 +19,21 @@ use Spryker\Zed\CategoryStorage\Communication\Plugin\Publisher\CategoryTreePubli
  * @group Communication
  * @group Plugin
  * @group Publisher
- * @group CategoryStoragePublisherTest
+ * @group CategoryTreePublisherTriggerPluginTest
  * Add your own group annotations below this line
  */
-class CategoryStoragePublisherTest extends Unit
+class CategoryTreePublisherTriggerPluginTest extends Unit
 {
     /**
      * @return void
      */
-    public function testCategoryTreePublisherTriggerPluginGetDataWithZeroOffset(): void
+    public function testGetDataReturnsNotEmptyArrayWithZeroOffset(): void
     {
         // Arrange
         $plugin = new CategoryTreePublisherTriggerPlugin();
 
         // Act
-        $resultData = $plugin->getData(0, rand());
+        $resultData = $plugin->getData(0, 1);
 
         // Assert
         $this->assertNotEmpty($resultData);
@@ -42,13 +42,13 @@ class CategoryStoragePublisherTest extends Unit
     /**
      * @return void
      */
-    public function testCategoryTreePublisherTriggerPluginGetDataWithNotZeroOffset(): void
+    public function testGetDataReturnsEmptyArrayWithNotZeroOffset(): void
     {
         // Arrange
         $plugin = new CategoryTreePublisherTriggerPlugin();
 
         // Act
-        $resultData = $plugin->getData(1, rand());
+        $resultData = $plugin->getData(1, 1);
 
         // Assert
         $this->assertEmpty($resultData);
