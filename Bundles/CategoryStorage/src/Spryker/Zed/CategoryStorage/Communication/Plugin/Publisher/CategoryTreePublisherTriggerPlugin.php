@@ -22,7 +22,7 @@ use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherTriggerPluginInter
 class CategoryTreePublisherTriggerPlugin extends AbstractPlugin implements PublisherTriggerPluginInterface
 {
     /**
-     * @uses SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE
+     * @uses \Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE
      *
      * @var string
      */
