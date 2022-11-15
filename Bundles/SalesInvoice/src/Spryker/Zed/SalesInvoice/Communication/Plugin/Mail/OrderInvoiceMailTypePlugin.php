@@ -14,6 +14,8 @@ use Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface;
 use Spryker\Zed\SalesInvoice\SalesInvoiceConfig;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\SalesInvoice\Communication\Plugin\Mail\OrderInvoiceMailTypeBuilderPlugin} instead.
+ *
  * @method \Spryker\Zed\SalesInvoice\SalesInvoiceConfig getConfig()
  * @method \Spryker\Zed\SalesInvoice\Business\SalesInvoiceFacadeInterface getFacade()
  * @method \Spryker\Zed\SalesInvoice\Communication\SalesInvoiceCommunicationFactory getFactory()

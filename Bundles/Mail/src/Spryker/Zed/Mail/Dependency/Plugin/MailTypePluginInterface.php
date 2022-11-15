@@ -9,6 +9,9 @@ namespace Spryker\Zed\Mail\Dependency\Plugin;
 
 use Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface;
 
+/**
+ * @deprecated Use {@link \Spryker\Zed\MailExtension\Dependency\Plugin\MailTypeBuilderPluginInterface} instead.
+ */
 interface MailTypePluginInterface
 {
     /**

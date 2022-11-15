@@ -7,12 +7,12 @@
 
 namespace Spryker\Zed\Mail\Business\Model\Provider;
 
-use Spryker\Zed\Mail\Dependency\Plugin\MailProviderPluginInterface;
+use Spryker\Zed\MailExtension\Dependency\Plugin\MailProviderPluginInterface;
 
 interface MailProviderCollectionAddInterface
 {
     /**
-     * @param \Spryker\Zed\Mail\Dependency\Plugin\MailProviderPluginInterface $mailProvider
+     * @param \Spryker\Zed\MailExtension\Dependency\Plugin\MailProviderPluginInterface $mailProvider
      * @param array|string $acceptedMailTypes
      *
      * @return $this

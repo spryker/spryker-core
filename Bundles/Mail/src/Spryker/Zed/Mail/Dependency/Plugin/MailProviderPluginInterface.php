@@ -7,20 +7,11 @@
 
 namespace Spryker\Zed\Mail\Dependency\Plugin;
 
-use Generated\Shared\Transfer\MailTransfer;
+use Spryker\Zed\MailExtension\Dependency\Plugin\MailProviderPluginInterface as ExtensionMailProviderPluginInterface;
 
-interface MailProviderPluginInterface
+/**
+ * @deprecated Use {@link \Spryker\Zed\MailExtension\Dependency\Plugin\MailProviderPluginInterface} instead.
+ */
+interface MailProviderPluginInterface extends ExtensionMailProviderPluginInterface
 {
-    /**
-     * Specification:
-     * - Receives the fully configured MailTransfer
-     * - Sends the mail
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
-     *
-     * @return void
-     */
-    public function sendMail(MailTransfer $mailTransfer);
 }

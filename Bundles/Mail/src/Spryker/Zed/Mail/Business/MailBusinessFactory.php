@@ -29,6 +29,8 @@ class MailBusinessFactory extends AbstractBusinessFactory
             $this->createMailBuilder(),
             $this->getMailTypeCollection(),
             $this->getMailProviderCollection(),
+            $this->getMailTypeBuilderPlugins(),
+            $this->getConfig(),
         );
     }
 
@@ -53,6 +55,8 @@ class MailBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Mail\Business\MailBusinessFactory::getMailTypeBuilderPlugins()} instead.
+     *
      * @return \Spryker\Zed\Mail\Business\Model\Mail\MailTypeCollectionGetInterface
      */
     protected function getMailTypeCollection()
@@ -61,6 +65,16 @@ class MailBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return array<\Spryker\Zed\MailExtension\Dependency\Plugin\MailTypeBuilderPluginInterface>
+     */
+    public function getMailTypeBuilderPlugins(): array
+    {
+        return $this->getProvidedDependency(MailDependencyProvider::PLUGINS_MAIL_TYPE_BUILDER);
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Zed\Mail\Business\Model\Provider\SwiftMailer
      */
     public function createMailer()
@@ -72,6 +86,8 @@ class MailBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Zed\Mail\Business\Model\Renderer\TwigRenderer
      */
     public function createRenderer()
@@ -91,6 +107,8 @@ class MailBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Zed\Mail\Dependency\Renderer\MailToRendererInterface
      */
     protected function getRenderer()
@@ -99,6 +117,8 @@ class MailBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Zed\Mail\Dependency\Mailer\MailToMailerInterface
      */
     protected function getMailer()

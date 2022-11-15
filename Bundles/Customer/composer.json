@@ -13,6 +13,7 @@
         "spryker/kernel": "^3.52.0",
         "spryker/locale": "^3.0.0",
         "spryker/mail": "^4.6.0",
+        "spryker/mail-extension": "^1.0.0",
         "spryker/propel": "^3.0.0",
         "spryker/propel-orm": "^1.16.0",
         "spryker/router": "^1.12.0",

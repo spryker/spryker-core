@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\Mail\Business\Model\Provider;
 
-use Spryker\Zed\Mail\Dependency\Plugin\MailProviderPluginInterface;
 use Spryker\Zed\Mail\MailConfig;
+use Spryker\Zed\MailExtension\Dependency\Plugin\MailProviderPluginInterface;
 
 class MailProviderCollection implements MailProviderCollectionAddInterface, MailProviderCollectionGetInterface
 {
@@ -28,7 +28,7 @@ class MailProviderCollection implements MailProviderCollectionAddInterface, Mail
     protected $mailProvider;
 
     /**
-     * @param \Spryker\Zed\Mail\Dependency\Plugin\MailProviderPluginInterface $mailProvider
+     * @param \Spryker\Zed\MailExtension\Dependency\Plugin\MailProviderPluginInterface $mailProvider
      * @param array|string $acceptedMailTypes
      *
      * @return $this
@@ -50,7 +50,7 @@ class MailProviderCollection implements MailProviderCollectionAddInterface, Mail
     /**
      * @param string $mailType
      *
-     * @return array<\Spryker\Zed\Mail\Dependency\Plugin\MailProviderPluginInterface>
+     * @return array<\Spryker\Zed\MailExtension\Dependency\Plugin\MailProviderPluginInterface>
      */
     public function getProviderForMailType($mailType)
     {

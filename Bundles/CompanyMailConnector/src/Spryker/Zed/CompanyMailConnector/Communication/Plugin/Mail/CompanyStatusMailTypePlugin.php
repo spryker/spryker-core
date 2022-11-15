@@ -12,6 +12,8 @@ use Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface;
 use Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\CompanyMailConnector\Communication\Plugin\Mail\CompanyStatusMailTypeBuilderPlugin} instead.
+ *
  * @method \Spryker\Zed\CompanyMailConnector\Business\CompanyMailConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\CompanyMailConnector\Communication\CompanyMailConnectorCommunicationFactory getFactory()
  */

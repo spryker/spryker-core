@@ -137,6 +137,9 @@
         <property name="type" type="string"/>
         <property name="invitationLink" type="string"/>
         <property name="companyUserInvitation" type="CompanyUserInvitation"/>
+        <property name="subject" type="string"/>
+        <property name="templates" type="MailTemplate[]" singular="template"/>
+        <property name="recipients" type="MailRecipient[]" singular="recipient"/>
     </transfer>
 
     <transfer name="CompanyBusinessUnitCriteriaFilter">
@@ -150,6 +153,16 @@
     <transfer name="CompanyUserResponse">
         <property name="isSuccessful" type="bool"/>
         <property name="companyUser" type="CompanyUser"/>
+    </transfer>
+
+    <transfer name="MailRecipient">
+        <property name="email" type="string"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="MailTemplate">
+        <property name="name" type="string"/>
+        <property name="isHtml" type="bool"/>
     </transfer>
 
 </transfers>

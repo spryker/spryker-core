@@ -12,7 +12,7 @@ interface MailProviderCollectionGetInterface
     /**
      * @param string $mailType
      *
-     * @return array<\Spryker\Zed\Mail\Dependency\Plugin\MailProviderPluginInterface>
+     * @return array<\Spryker\Zed\MailExtension\Dependency\Plugin\MailProviderPluginInterface>
      */
     public function getProviderForMailType($mailType);
 }

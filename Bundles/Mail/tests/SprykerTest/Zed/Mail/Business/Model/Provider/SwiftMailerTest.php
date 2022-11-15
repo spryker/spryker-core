@@ -15,9 +15,9 @@ use Generated\Shared\Transfer\MailTemplateTransfer;
 use Generated\Shared\Transfer\MailTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\Mail\Business\Model\Provider\SwiftMailer;
+use Spryker\Zed\Mail\Business\Model\Provider\SwiftMailerInterface;
 use Spryker\Zed\Mail\Business\Model\Renderer\RendererInterface;
 use Spryker\Zed\Mail\Dependency\Mailer\MailToMailerInterface;
-use Spryker\Zed\Mail\Dependency\Plugin\MailProviderPluginInterface;
 
 /**
  * Auto-generated group annotations
@@ -92,7 +92,7 @@ class SwiftMailerTest extends Unit
         $mailerMock = $this->getMailerMock();
         $swiftMailer = new SwiftMailer($rendererMock, $mailerMock);
 
-        $this->assertInstanceOf(MailProviderPluginInterface::class, $swiftMailer);
+        $this->assertInstanceOf(SwiftMailerInterface::class, $swiftMailer);
     }
 
     /**

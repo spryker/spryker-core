@@ -15,6 +15,7 @@ interface MailFacadeInterface
      * Specification:
      * - Prepares the mail before send
      * - Builds the needed MailTransfer by given MailType specification
+     * - Executes {@link Spryker\Zed\MailExtension\Dependency\Plugin\MailTypeBuilderPluginInterface} plugin stack.
      *
      * @api
      *
@@ -25,10 +26,12 @@ interface MailFacadeInterface
     public function handleMail(MailTransfer $mailTransfer);
 
     /**
-     * Specification:
-     * - Sends the mail
-     *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\SymfonyMailer\Business\SymfonyMailerFacadeInterface::send()} instead.
+     *
+     * Specification:
+     * - Sends the mail.
      *
      * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
      *

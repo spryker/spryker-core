@@ -12,6 +12,8 @@ use Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface;
 use Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\Newsletter\Communication\Plugin\Mail\NewsletterUnsubscribedMailTypeBuilderPlugin} instead.
+ *
  * @method \Spryker\Zed\Newsletter\Business\NewsletterFacadeInterface getFacade()
  * @method \Spryker\Zed\Newsletter\Communication\NewsletterCommunicationFactory getFactory()
  * @method \Spryker\Zed\Newsletter\NewsletterConfig getConfig()
