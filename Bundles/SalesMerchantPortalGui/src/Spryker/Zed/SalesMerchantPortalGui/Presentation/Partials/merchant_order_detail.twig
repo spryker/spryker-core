@@ -236,7 +236,7 @@
                                                         shippingAddress.city,
                                                         shippingAddress.country.name,
                                                     ] %}
-                                                    {% set fullAddress = addressArray | join(', ') %}
+                                                    {% set fullAddress = addressArray | filter(address => address | trim is not empty) | join(', ') %}
                                                     {% set addressItems = [
                                                         {
                                                             name: 'Delivery address' | trans | upper,
