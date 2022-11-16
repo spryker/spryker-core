@@ -20,9 +20,19 @@
                 {{ shipmentOrderItems.shipment.shippingAddress.firstName }},
                 {{ shipmentOrderItems.shipment.shippingAddress.lastName }},
                 {{ shipmentOrderItems.shipment.shippingAddress.address1 }},
-                {{ shipmentOrderItems.shipment.shippingAddress.address2 }},
-                {{ shipmentOrderItems.shipment.shippingAddress.address3 }},
-                {{ shipmentOrderItems.shipment.shippingAddress.company }},
+
+                {% if shipmentOrderItems.shipment.shippingAddress.address2 | trim is not empty %}
+                    {{ shipmentOrderItems.shipment.shippingAddress.address2 }},
+                {% endif %}
+
+                {% if shipmentOrderItems.shipment.shippingAddress.address3 | trim is not empty %}
+                    {{ shipmentOrderItems.shipment.shippingAddress.address3 }},
+                {% endif %}
+
+                {% if shipmentOrderItems.shipment.shippingAddress.company | trim is not empty %}
+                    {{ shipmentOrderItems.shipment.shippingAddress.company }},
+                {% endif %}
+
                 {{ shipmentOrderItems.shipment.shippingAddress.zipCode }},
                 {{ shipmentOrderItems.shipment.shippingAddress.city  }},
                 {{ shipmentOrderItems.shipment.shippingAddress.country.name}}
