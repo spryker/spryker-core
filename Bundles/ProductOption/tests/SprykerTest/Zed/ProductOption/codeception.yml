@@ -67,8 +67,10 @@ suites:
                 - \SprykerTest\Zed\Testify\Helper\Communication\CommunicationHelper
                 - \SprykerTest\Zed\Testify\Helper\Communication\Table\TableHelper
                 - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Zed\Validator\Helper\ValidatorHelper
                 - \SprykerTest\Zed\Form\Helper\FormHelper:
                       formPlugins:
+                          - \Spryker\Zed\Validator\Communication\Plugin\Form\ValidatorFormPlugin
                           - \Spryker\Zed\Http\Communication\Plugin\Form\HttpFoundationFormPlugin
                 - \SprykerTest\Zed\EventDispatcher\Helper\EventDispatcherHelper
                 - \SprykerTest\Zed\Twig\Helper\TwigHelper:

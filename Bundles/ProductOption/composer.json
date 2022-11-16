@@ -40,11 +40,13 @@
         "spryker/customer": "*",
         "spryker/event-dispatcher": "*",
         "spryker/form": "*",
+        "spryker/money-gui": "*",
         "spryker/oms": "*",
         "spryker/propel": "*",
         "spryker/router": "*",
         "spryker/testify": "*",
         "spryker/twig": "*",
+        "spryker/validator": "*",
         "spryker/zed-navigation": "*"
     },
     "suggest": {

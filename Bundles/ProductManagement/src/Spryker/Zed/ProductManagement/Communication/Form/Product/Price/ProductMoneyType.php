@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\MoneyValueTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -94,21 +96,52 @@ class ProductMoneyType extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array<string> $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
     protected function addMoneyValueField(FormBuilderInterface $builder, array $options)
     {
+        $moneyFormType = $this->getFactory()->getMoneyFormTypePlugin()->getType();
+
         $builder->add(
             static::FIELD_MONEY_VALUE,
-            $this->getFactory()->getMoneyFormTypePlugin()->getType(),
+            $moneyFormType,
             [
                 'data_class' => MoneyValueTransfer::class,
-                static::OPTION_LOCALE => $options[static::OPTION_LOCALE],
             ],
         );
 
+        $this->expandMoneyValueFieldWithLocale($builder, $options, $moneyFormType);
+
         return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array<string, mixed> $options
+     * @param string $moneyFormType
+     *
+     * @return void
+     */
+    protected function expandMoneyValueFieldWithLocale(
+        FormBuilderInterface $builder,
+        array $options,
+        string $moneyFormType
+    ): void {
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($options, $moneyFormType) {
+            $form = $event->getForm();
+
+            $moneyValueFieldConfig = $form->get(static::FIELD_MONEY_VALUE)->getConfig();
+            if (!$moneyValueFieldConfig->hasOption(static::OPTION_LOCALE)) {
+                return;
+            }
+
+            $moneyValueFieldOptions = $moneyValueFieldConfig->getOptions();
+            $moneyValueFieldOptions[static::OPTION_LOCALE] = $options[static::OPTION_LOCALE];
+
+            $form->remove(static::FIELD_MONEY_VALUE);
+            $form->add(static::FIELD_MONEY_VALUE, $moneyFormType, $moneyValueFieldOptions);
+        });
     }
 }

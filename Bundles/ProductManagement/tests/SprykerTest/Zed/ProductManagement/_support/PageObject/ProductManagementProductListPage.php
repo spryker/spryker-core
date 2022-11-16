@@ -13,4 +13,9 @@ class ProductManagementProductListPage
      * @var string
      */
     public const URL = '/product-management';
+
+    /**
+     * @var string
+     */
+    public const URL_TABLE = '/product-management/index/table';
 }

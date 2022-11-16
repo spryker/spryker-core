@@ -15,6 +15,8 @@ use Spryker\Zed\ProductOption\ProductOptionConfig;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
@@ -156,12 +158,11 @@ class ProductOptionValueForm extends AbstractType
             static::FIELD_PRICES,
             $this->getFactory()->getMoneyCollectionFormTypePlugin()->getType(),
             [
-                'entry_options' => [
-                    ProductOptionGroupForm::OPTION_LOCALE => $currentLocale,
-                ],
                 static::OPTION_AMOUNT_PER_STORE => true,
             ],
         );
+
+        $this->expandPricesFieldWithLocale($builder, $currentLocale);
 
         return $this;
     }
@@ -206,5 +207,30 @@ class ProductOptionValueForm extends AbstractType
     public function getName()
     {
         return $this->getBlockPrefix();
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param string $currentLocale
+     *
+     * @return void
+     */
+    protected function expandPricesFieldWithLocale(FormBuilderInterface $builder, string $currentLocale): void
+    {
+        $builder->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) use ($currentLocale) {
+            $pricesField = $event->getForm()->get(static::FIELD_PRICES);
+            foreach ($pricesField->all() as $childIndex => $childField) {
+                $childFieldConfig = $childField->getConfig();
+                if (!$childFieldConfig->hasOption(ProductOptionGroupForm::OPTION_LOCALE)) {
+                    continue;
+                }
+
+                $childFieldOptions = $childFieldConfig->getOptions();
+                $childFieldOptions[ProductOptionGroupForm::OPTION_LOCALE] = $currentLocale;
+
+                $pricesField->remove($childIndex);
+                $pricesField->add($childIndex, get_class($childFieldConfig->getType()->getInnerType()), $childFieldOptions);
+            }
+        });
     }
 }

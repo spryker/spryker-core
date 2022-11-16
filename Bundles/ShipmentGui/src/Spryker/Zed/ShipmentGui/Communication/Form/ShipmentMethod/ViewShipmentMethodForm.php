@@ -12,6 +12,8 @@ use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ViewShipmentMethodFormDataProvider;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -120,11 +122,10 @@ class ViewShipmentMethodForm extends AbstractType
                 static::OPTION_AMOUNT_PER_STORE => true,
                 'required' => false,
                 'disabled' => $options[ViewShipmentMethodFormDataProvider::OPTION_PRICES_DISABLED],
-                'entry_options' => [
-                    ViewShipmentMethodFormDataProvider::OPTION_LOCALE => $options[ViewShipmentMethodFormDataProvider::OPTION_STORE_RELATION_DISABLED],
-                ],
             ],
         );
+
+        $this->expandPricesFieldWithLocale($builder, $options);
 
         return $this;
     }
@@ -152,5 +153,31 @@ class ViewShipmentMethodForm extends AbstractType
         );
 
         return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array<string, mixed> $options
+     *
+     * @return void
+     */
+    protected function expandPricesFieldWithLocale(FormBuilderInterface $builder, array $options): void
+    {
+        $builder->addEventListener(FormEvents::POST_SET_DATA, function (FormEvent $event) use ($options) {
+            $pricesField = $event->getForm()->get(static::FIELD_PRICES);
+
+            foreach ($pricesField->all() as $childIndex => $childField) {
+                $childFieldConfig = $childField->getConfig();
+                if (!$childFieldConfig->hasOption(ViewShipmentMethodFormDataProvider::OPTION_LOCALE)) {
+                    continue;
+                }
+
+                $childFieldOptions = $childFieldConfig->getOptions();
+                $childFieldOptions[ViewShipmentMethodFormDataProvider::OPTION_LOCALE] = $options[ViewShipmentMethodFormDataProvider::OPTION_LOCALE];
+
+                $pricesField->remove($childIndex);
+                $pricesField->add($childIndex, get_class($childFieldConfig->getType()->getInnerType()), $childFieldOptions);
+            }
+        });
     }
 }

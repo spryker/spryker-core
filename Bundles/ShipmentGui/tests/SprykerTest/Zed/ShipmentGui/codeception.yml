@@ -1,4 +1,4 @@
-namespace: SprykerTest\Zed\ProductManagement
+namespace: SprykerTest\Zed\ShipmentGui
 
 paths:
     tests: .
@@ -14,56 +14,32 @@ coverage:
 suites:
     Communication:
         path: Communication
-        actor: ProductManagementCommunicationTester
+        actor: ShipmentGuiCommunicationTester
         modules:
             enabled:
                 - Asserts
                 - \SprykerTest\Shared\Testify\Helper\Environment
                 - \SprykerTest\Shared\Testify\Helper\ConfigHelper
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
-                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
-                - \SprykerTest\Shared\Product\Helper\ProductDataHelper
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
-                - \SprykerTest\Service\Container\Helper\ContainerHelper
-                - \SprykerTest\Shared\Testify\Helper\TableRelationsCleanupHelper
-                - \SprykerTest\Zed\Locale\Helper\LocaleDataHelper
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Zed\ZedNavigation\Helper\BreadcrumbHelper
                 - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper
                 - \SprykerTest\Zed\Testify\Helper\Communication\DependencyProviderHelper
                 - \SprykerTest\Zed\Testify\Helper\Communication\CommunicationHelper
                 - \SprykerTest\Zed\Testify\Helper\Communication\Table\TableHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
                 - \SprykerTest\Zed\Validator\Helper\ValidatorHelper
                 - \SprykerTest\Zed\Form\Helper\FormHelper:
                       formPlugins:
                           - \Spryker\Zed\Validator\Communication\Plugin\Form\ValidatorFormPlugin
                           - \Spryker\Zed\Http\Communication\Plugin\Form\HttpFoundationFormPlugin
-                          - \Spryker\Zed\Gui\Communication\Plugin\Form\SanitizeXssTypeExtensionFormPlugin
                 - \SprykerTest\Zed\EventDispatcher\Helper\EventDispatcherHelper
                 - \SprykerTest\Zed\Twig\Helper\TwigHelper:
                       twigPlugins:
+                          - \Spryker\Zed\Money\Communication\Plugin\Twig\MoneyTwigPlugin
                           - \Spryker\Zed\Translator\Communication\Plugin\Twig\TranslatorTwigPlugin
                           - Spryker\Zed\ZedNavigation\Communication\Plugin\Twig\ZedNavigationTwigPlugin
                 - \SprykerTest\Zed\Gui\Helper\GuiTwigPluginHelper
                 - \SprykerTest\Zed\Router\Helper\RouterHelper
                 - \SprykerTest\Zed\Application\Helper\ApplicationHelper
-
-    Presentation:
-        path: Presentation
-        actor: ProductManagementPresentationTester
-        modules:
-            enabled:
-                - Asserts
-                - \SprykerTest\Shared\Testify\Helper\Environment
-                - \SprykerTest\Shared\Config\Helper\ConfigInit
-                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
-                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
-                - WebDriver:
-                      url: ''
-                      browser: chrome
-                      window_size: 1920x1080
-                      host: 0.0.0.0
-                      restart: false
-                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
-                - \SprykerTest\Shared\Application\Helper\ZedHelper
-                - \SprykerTest\Zed\ZedNavigation\Helper\BreadcrumbHelper
-                - \SprykerTest\Zed\Gui\Helper\DataTableActionHelper

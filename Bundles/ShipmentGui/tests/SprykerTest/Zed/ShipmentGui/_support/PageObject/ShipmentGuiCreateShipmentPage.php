@@ -5,17 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\ProductOption\PageObject;
+namespace SprykerTest\Zed\ShipmentGui\PageObject;
 
-class ProductOptionListPage
+class ShipmentGuiCreateShipmentPage
 {
     /**
      * @var string
      */
-    public const URL = '/product-option/list';
-
-    /**
-     * @var string
-     */
-    public const URL_TABLE = '/product-option/list/list-table';
+    public const URL = '/shipment-gui/create-shipment-method';
 }

@@ -10,6 +10,9 @@ namespace SprykerTest\Zed\ProductManagement;
 use Codeception\Actor;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Spryker\Service\UtilNumber\UtilNumberServiceInterface;
+use Spryker\Zed\Money\Communication\Plugin\Form\MoneyFormTypePlugin;
+use Spryker\Zed\ProductManagement\ProductManagementDependencyProvider;
+use Spryker\Zed\Store\Communication\Plugin\Form\StoreRelationToggleFormTypePlugin;
 
 /**
  * @method void wantToTest($text)
@@ -63,5 +66,25 @@ class ProductManagementCommunicationTester extends Actor
     protected function getProductAbstractQuery(): SpyProductAbstractQuery
     {
         return SpyProductAbstractQuery::create();
+    }
+
+    /**
+     * @return void
+     */
+    public function registerProductManagementStoreRelationFormTypePlugin(): void
+    {
+        $this->setDependency(ProductManagementDependencyProvider::PLUGIN_STORE_RELATION_FORM_TYPE, function () {
+            return new StoreRelationToggleFormTypePlugin();
+        });
+    }
+
+    /**
+     * @return void
+     */
+    public function registerMoneyCollectionFormTypePluginWithoutLocale(): void
+    {
+        $this->setDependency(ProductManagementDependencyProvider::PLUGIN_MONEY_FORM_TYPE, function () {
+            return new MoneyFormTypePlugin();
+        });
     }
 }
