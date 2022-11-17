@@ -5,19 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\OauthBackendApi\Plugin\GlueApplication;
+namespace Spryker\Glue\OauthApi\Plugin\GlueApplication;
 
 use Generated\Shared\Transfer\GlueResourceMethodCollectionTransfer;
 use Generated\Shared\Transfer\GlueResourceMethodConfigurationTransfer;
-use Spryker\Glue\GlueApplication\Plugin\GlueApplication\Backend\AbstractResourcePlugin;
+use Spryker\Glue\GlueApplication\Plugin\GlueApplication\AbstractResourcePlugin;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface;
-use Spryker\Glue\OauthBackendApi\Controller\TokenResourceController;
-use Spryker\Glue\OauthBackendApi\OauthBackendApiConfig;
+use Spryker\Glue\OauthApi\Controller\TokenResourceController;
+use Spryker\Glue\OauthApi\OauthApiConfig;
 
-/**
- * @deprecated Use {@link \Spryker\Glue\OauthBackendApi\Plugin\GlueApplication\OauthBackendApiTokenResource} instead.
- */
-class OauthBackendTokenResource extends AbstractResourcePlugin implements ResourceInterface
+class OauthApiTokenResource extends AbstractResourcePlugin implements ResourceInterface
 {
     /**
      * {@inheritDoc}
@@ -28,7 +25,7 @@ class OauthBackendTokenResource extends AbstractResourcePlugin implements Resour
      */
     public function getType(): string
     {
-        return OauthBackendApiConfig::RESOURCE_TOKEN;
+        return OauthApiConfig::RESOURCE_TOKEN;
     }
 
     /**
@@ -36,7 +33,7 @@ class OauthBackendTokenResource extends AbstractResourcePlugin implements Resour
      *
      * @api
      *
-     * @uses \Spryker\Glue\OauthBackendApi\Controller\TokenResourceController
+     * @uses \Spryker\Glue\OauthApi\Controller\TokenResourceController
      *
      * @return string
      */
@@ -58,7 +55,8 @@ class OauthBackendTokenResource extends AbstractResourcePlugin implements Resour
             ->setPost(
                 (new GlueResourceMethodConfigurationTransfer())
                     ->setAction('postAction')
-                    ->setAttributes('\Generated\Shared\Transfer\ApiTokenAttributesTransfer'),
+                    ->setAttributes('\Generated\Shared\Transfer\ApiTokenAttributesTransfer')
+                    ->setIsSnakeCased(true),
             );
     }
 }

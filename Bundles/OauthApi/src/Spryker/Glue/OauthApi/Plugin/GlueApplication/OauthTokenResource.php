@@ -14,6 +14,9 @@ use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface;
 use Spryker\Glue\OauthApi\Controller\TokenResourceController;
 use Spryker\Glue\OauthApi\OauthApiConfig;
 
+/**
+ * @deprecated Use {@link \Spryker\Glue\OauthApi\Plugin\GlueApplication\OauthApiTokenResource} instead.
+ */
 class OauthTokenResource extends AbstractResourcePlugin implements ResourceInterface
 {
     /**

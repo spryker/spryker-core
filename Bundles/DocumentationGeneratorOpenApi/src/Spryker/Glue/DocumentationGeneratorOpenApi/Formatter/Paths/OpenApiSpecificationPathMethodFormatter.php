@@ -71,6 +71,11 @@ class OpenApiSpecificationPathMethodFormatter implements OpenApiSpecificationPat
     /**
      * @var string
      */
+    protected const KEY_REQUEST_ATTRIBUTES_CLASS_NAME = 'request_attributes_class_name';
+
+    /**
+     * @var string
+     */
     protected const KEY_SECURITY = 'security';
 
     /**
@@ -94,6 +99,16 @@ class OpenApiSpecificationPathMethodFormatter implements OpenApiSpecificationPat
      * @var string
      */
     protected const KEY_TAGS = 'tags';
+
+    /**
+     * @var string
+     */
+    protected const METHOD_GET = 'get';
+
+    /**
+     * @var string
+     */
+    protected const METHOD_DELETE = 'delete';
 
     /**
      * @var \Spryker\Glue\DocumentationGeneratorOpenApi\Analyzer\ResourceTransferAnalyzerInterface
@@ -169,9 +184,11 @@ class OpenApiSpecificationPathMethodFormatter implements OpenApiSpecificationPat
 
         if (
             !$this->isGetMethod($operationId) &&
-            $this->resourceTransferAnalyzer->isRequestSchemaRequired($annotationTransfer->getResponseAttributesClassNameOrFail())
+            !$this->isDeleteMethod($operationId) &&
+            $annotationTransfer->getRequestAttributesClassName() !== null &&
+            $this->resourceTransferAnalyzer->isRequestSchemaRequired($annotationTransfer->getRequestAttributesClassName())
         ) {
-            $requestReference = $this->getRequestName($annotationTransfer);
+            $requestReference = $this->getRequestName($annotationTransfer->getRequestAttributesClassName());
             $pathMethodData[static::KEY_REQUEST_BODY] = $this->pathRequestSpecificationComponent->getSpecificationComponentData($pathMethodData, $requestReference);
         }
 
@@ -227,6 +244,9 @@ class OpenApiSpecificationPathMethodFormatter implements OpenApiSpecificationPat
         if (isset($methodsData[$methodName][static::KEY_RESPONSE_ATTRIBUTES_CLASS_NAME])) {
             unset($methodsData[$methodName][static::KEY_RESPONSE_ATTRIBUTES_CLASS_NAME]);
         }
+        if (isset($methodsData[$methodName][static::KEY_REQUEST_ATTRIBUTES_CLASS_NAME])) {
+            unset($methodsData[$methodName][static::KEY_REQUEST_ATTRIBUTES_CLASS_NAME]);
+        }
 
         $formattedData[static::KEY_PATHS][$pathName] = $methodsData;
 
@@ -281,16 +301,15 @@ class OpenApiSpecificationPathMethodFormatter implements OpenApiSpecificationPat
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AnnotationTransfer $annotationTransfer
+     * @param string $requestAttributesTransferName
      *
      * @return string
      */
-    protected function getRequestName(AnnotationTransfer $annotationTransfer): string
+    protected function getRequestName(string $requestAttributesTransferName): string
     {
-        $requestSchemaName = $this->resourceTransferAnalyzer->createRequestAttributesSchemaNameFromTransferClassName($annotationTransfer->getResponseAttributesClassNameOrFail());
-        $requestSchemaName = sprintf(static::PATTERN_SCHEMA_REFERENCE, $requestSchemaName);
+        $requestSchemaName = $this->resourceTransferAnalyzer->createRequestSchemaNameFromTransferClassName($requestAttributesTransferName);
 
-        return $requestSchemaName;
+        return sprintf(static::PATTERN_SCHEMA_REFERENCE, $requestSchemaName);
     }
 
     /**
@@ -326,6 +345,16 @@ class OpenApiSpecificationPathMethodFormatter implements OpenApiSpecificationPat
      */
     protected function isGetMethod(string $operationId): bool
     {
-        return stripos($operationId, 'get') === 0;
+        return stripos($operationId, static::METHOD_GET) === 0;
+    }
+
+    /**
+     * @param string $operationId
+     *
+     * @return bool
+     */
+    protected function isDeleteMethod(string $operationId): bool
+    {
+        return stripos($operationId, static::METHOD_DELETE) === 0;
     }
 }

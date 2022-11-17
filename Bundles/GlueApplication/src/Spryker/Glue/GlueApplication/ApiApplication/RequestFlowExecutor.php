@@ -112,14 +112,13 @@ class RequestFlowExecutor implements RequestFlowExecutorInterface
 
         $glueResponseTransfer = $this->resourceExecutor->executeResource($resource, $glueRequestTransfer);
 
-        $glueResponseTransfer = $this->responseFormatter->format(
+        return $this->responseFormatter->format(
             $glueResponseTransfer,
             $glueRequestTransfer,
             $apiApplication,
             $conventionPlugin,
+            $resource,
         );
-
-        return $glueResponseTransfer;
     }
 
     /**

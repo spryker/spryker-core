@@ -30,10 +30,11 @@ interface SchemaBuilderInterface
     /**
      * @param string $schemaName
      * @param array<mixed> $transferMetadata
+     * @param bool $isSnakeCased
      *
      * @return \Generated\Shared\Transfer\SchemaDataTransfer
      */
-    public function createRequestDataAttributesSchema(string $schemaName, array $transferMetadata): SchemaDataTransfer;
+    public function createRequestDataAttributesSchema(string $schemaName, array $transferMetadata, bool $isSnakeCased): SchemaDataTransfer;
 
     /**
      * @param string $schemaName
@@ -55,10 +56,11 @@ interface SchemaBuilderInterface
     /**
      * @param string $schemaName
      * @param array<mixed> $transferMetadata
+     * @param bool $isSnakeCased
      *
      * @return \Generated\Shared\Transfer\SchemaDataTransfer
      */
-    public function createResponseDataAttributesSchema(string $schemaName, array $transferMetadata): SchemaDataTransfer;
+    public function createResponseDataAttributesSchema(string $schemaName, array $transferMetadata, bool $isSnakeCased): SchemaDataTransfer;
 
     /**
      * @param string $schemaName

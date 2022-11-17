@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
 use Spryker\Glue\GlueApplication\Encoder\Response\ResponseEncoderStrategyInterface;
 use Spryker\Glue\GlueApplication\GlueApplicationConfig;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -44,12 +45,14 @@ class ResponseFormatter implements ResponseFormatterInterface
     /**
      * @param \Generated\Shared\Transfer\GlueResponseTransfer $glueResponseTransfer
      * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface|null $resource
      *
      * @return \Generated\Shared\Transfer\GlueResponseTransfer
      */
     public function format(
         GlueResponseTransfer $glueResponseTransfer,
-        GlueRequestTransfer $glueRequestTransfer
+        GlueRequestTransfer $glueRequestTransfer,
+        ?ResourceInterface $resource = null
     ): GlueResponseTransfer {
         if (!$glueResponseTransfer->getHttpStatus()) {
             $glueResponseTransfer->setHttpStatus($this->getStatusCode($glueRequestTransfer));
@@ -64,8 +67,8 @@ class ResponseFormatter implements ResponseFormatterInterface
                 $this->glueApplicationConfig->getDefaultResponseFormat(),
             );
         }
-
-        $data = $this->expandData($glueResponseTransfer);
+        $isSnakeCased = $this->getIsSnakeCased($glueRequestTransfer, $resource);
+        $data = $this->expandData($glueResponseTransfer, $isSnakeCased);
 
         return $this->formatResponse($glueResponseTransfer, $glueRequestTransfer->getAcceptedFormat(), $data);
     }
@@ -91,15 +94,16 @@ class ResponseFormatter implements ResponseFormatterInterface
 
     /**
      * @param \Generated\Shared\Transfer\GlueResponseTransfer $glueResponseTransfer
+     * @param bool $isSnakeCased
      *
      * @return array<mixed>
      */
-    protected function expandData(GlueResponseTransfer $glueResponseTransfer): array
+    protected function expandData(GlueResponseTransfer $glueResponseTransfer, bool $isSnakeCased): array
     {
         $data = [];
         if ($glueResponseTransfer->getErrors()->count()) {
             foreach ($glueResponseTransfer->getErrors() as $glueErrorTransfer) {
-                $data[] = $glueErrorTransfer->toArray(true, true);
+                $data[] = $glueErrorTransfer->toArray(true, !$isSnakeCased);
             }
 
             return $data;
@@ -107,7 +111,7 @@ class ResponseFormatter implements ResponseFormatterInterface
 
         if ($glueResponseTransfer->getResources()->count() !== 0) {
             foreach ($glueResponseTransfer->getResources() as $resource) {
-                $data[] = $resource->getAttributesOrFail()->toArray(true, true);
+                $data[] = $resource->getAttributesOrFail()->toArray(true, !$isSnakeCased);
             }
         }
 
@@ -132,5 +136,31 @@ class ResponseFormatter implements ResponseFormatterInterface
         }
 
         return Response::HTTP_OK;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface|null $resource
+     *
+     * @return bool
+     */
+    protected function getIsSnakeCased(
+        GlueRequestTransfer $glueRequestTransfer,
+        ?ResourceInterface $resource = null
+    ): bool {
+        if ($resource === null) {
+            return false;
+        }
+        if ($glueRequestTransfer->getResource() === null) {
+            return false;
+        }
+        $method = $glueRequestTransfer->getResource()->getMethod();
+        $declaredMethods = $resource->getDeclaredMethods();
+
+        if (!$declaredMethods->offsetExists($method)) {
+            return false;
+        }
+
+        return (bool)$declaredMethods->offsetGet($method)->getIsSnakeCased();
     }
 }

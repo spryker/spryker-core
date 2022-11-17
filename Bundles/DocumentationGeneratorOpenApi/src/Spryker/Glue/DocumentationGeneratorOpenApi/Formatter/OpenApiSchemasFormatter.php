@@ -9,6 +9,7 @@ namespace Spryker\Glue\DocumentationGeneratorOpenApi\Formatter;
 
 use Generated\Shared\Transfer\AnnotationTransfer;
 use Generated\Shared\Transfer\ApiApplicationSchemaContextTransfer;
+use Generated\Shared\Transfer\GlueResourceMethodCollectionTransfer;
 use Generated\Shared\Transfer\PathAnnotationTransfer;
 use Generated\Shared\Transfer\ResourceContextTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
@@ -38,6 +39,31 @@ class OpenApiSchemasFormatter implements OpenApiSchemaFormatterInterface
      * @var string
      */
     protected const PATTERN_SCHEMA_REFERENCE = '#/components/schemas/%s';
+
+    /**
+     * @var string
+     */
+    protected const METHOD_GET = 'get';
+
+    /**
+     * @var string
+     */
+    protected const METHOD_GET_COLLECTION = 'getCollection';
+
+    /**
+     * @var string
+     */
+    protected const METHOD_POST = 'post';
+
+    /**
+     * @var string
+     */
+    protected const METHOD_PATCH = 'patch';
+
+    /**
+     * @var string
+     */
+    protected const METHOD_DELETE = 'delete';
 
     /**
      * @var array<mixed>
@@ -117,13 +143,19 @@ class OpenApiSchemasFormatter implements OpenApiSchemaFormatterInterface
 
     /**
      * @param \Generated\Shared\Transfer\AnnotationTransfer $annotationTransfer
+     * @param bool $isSnakeCased
      *
      * @return string
      */
-    protected function addRequestSchema(AnnotationTransfer $annotationTransfer): string
-    {
+    protected function addRequestSchema(
+        AnnotationTransfer $annotationTransfer,
+        bool $isSnakeCased
+    ): string {
+        if ($annotationTransfer->getRequestAttributesClassName() === null) {
+            return '';
+        }
         /** @phpstan-var class-string<\Spryker\Shared\Kernel\Transfer\AbstractTransfer> $transferClassName */
-        $transferClassName = $this->resolveTransferClassName($annotationTransfer);
+        $transferClassName = $this->resolveTransferClassName($annotationTransfer->getRequestAttributesClassName());
         if (!$this->resourceTransferAnalyzer->isRequestSchemaRequired($transferClassName)) {
             return '';
         }
@@ -134,21 +166,25 @@ class OpenApiSchemasFormatter implements OpenApiSchemaFormatterInterface
 
         $this->addSchemaData($this->schemaBuilder->createRequestBaseSchema($requestSchemaName, $requestDataSchemaName));
         $this->addSchemaData($this->schemaBuilder->createRequestDataSchema($requestDataSchemaName, $requestAttributesSchemaName));
-        $this->addRequestDataAttributesSchemaFromTransfer(new $transferClassName(), $requestAttributesSchemaName);
+        $this->addRequestDataAttributesSchemaFromTransfer(new $transferClassName(), $requestAttributesSchemaName, $isSnakeCased);
 
         return sprintf(static::PATTERN_SCHEMA_REFERENCE, $requestSchemaName);
     }
 
     /**
      * @param \Generated\Shared\Transfer\AnnotationTransfer $annotationTransfer
+     * @param bool $isSnakeCased
      * @param \Generated\Shared\Transfer\ResourceContextTransfer|null $resourceContextTransfer
      *
      * @return string
      */
-    protected function addResponseResourceSchema(AnnotationTransfer $annotationTransfer, ?ResourceContextTransfer $resourceContextTransfer): string
-    {
+    protected function addResponseResourceSchema(
+        AnnotationTransfer $annotationTransfer,
+        bool $isSnakeCased,
+        ?ResourceContextTransfer $resourceContextTransfer
+    ): string {
         /** @phpstan-var class-string<\Spryker\Shared\Kernel\Transfer\AbstractTransfer> $transferClassName */
-        $transferClassName = $this->resolveTransferClassName($annotationTransfer);
+        $transferClassName = $this->resolveTransferClassName($annotationTransfer->getResponseAttributesClassNameOrFail());
 
         $responseSchemaName = $this->resourceTransferAnalyzer->createResponseResourceSchemaNameFromTransferClassName($transferClassName);
         $responseDataSchemaName = $this->resourceTransferAnalyzer->createResponseResourceDataSchemaNameFromTransferClassName($transferClassName);
@@ -157,7 +193,7 @@ class OpenApiSchemasFormatter implements OpenApiSchemaFormatterInterface
         $isIdNullable = (bool)$annotationTransfer->getIsIdNullable();
         $this->addSchemaData($this->schemaBuilder->createResponseBaseSchema($responseSchemaName, $responseDataSchemaName));
         $this->addSchemaData($this->schemaBuilder->createResponseDataSchema($responseDataSchemaName, $responseAttributesSchemaName, $isIdNullable));
-        $this->addResponseDataAttributesSchemaFromTransfer(new $transferClassName(), $responseAttributesSchemaName);
+        $this->addResponseDataAttributesSchemaFromTransfer(new $transferClassName(), $responseAttributesSchemaName, $isSnakeCased);
 
         if ($resourceContextTransfer) {
             $relationShipResourceAttributesClassNames = $this->getRelationshipResourceAttributesClassNames($resourceContextTransfer);
@@ -172,14 +208,18 @@ class OpenApiSchemasFormatter implements OpenApiSchemaFormatterInterface
 
     /**
      * @param \Generated\Shared\Transfer\AnnotationTransfer $annotationTransfer
+     * @param bool $isSnakeCased
      * @param \Generated\Shared\Transfer\ResourceContextTransfer|null $resourceContextTransfer
      *
      * @return string
      */
-    protected function addResponseCollectionSchema(AnnotationTransfer $annotationTransfer, ?ResourceContextTransfer $resourceContextTransfer): string
-    {
+    protected function addResponseCollectionSchema(
+        AnnotationTransfer $annotationTransfer,
+        bool $isSnakeCased,
+        ?ResourceContextTransfer $resourceContextTransfer
+    ): string {
         /** @phpstan-var class-string<\Spryker\Shared\Kernel\Transfer\AbstractTransfer> $transferClassName */
-        $transferClassName = $this->resolveTransferClassName($annotationTransfer);
+        $transferClassName = $this->resolveTransferClassName($annotationTransfer->getResponseAttributesClassNameOrFail());
 
         $responseSchemaName = $this->resourceTransferAnalyzer->createResponseCollectionSchemaNameFromTransferClassName($transferClassName);
         $responseDataSchemaName = $this->resourceTransferAnalyzer->createResponseCollectionDataSchemaNameFromTransferClassName($transferClassName);
@@ -188,7 +228,7 @@ class OpenApiSchemasFormatter implements OpenApiSchemaFormatterInterface
         $isIdNullable = (bool)$annotationTransfer->getIsIdNullable();
         $this->addSchemaData($this->schemaBuilder->createCollectionResponseBaseSchema($responseSchemaName, $responseDataSchemaName));
         $this->addSchemaData($this->schemaBuilder->createResponseDataSchema($responseDataSchemaName, $responseAttributesSchemaName, $isIdNullable));
-        $this->addResponseDataAttributesSchemaFromTransfer(new $transferClassName(), $responseAttributesSchemaName);
+        $this->addResponseDataAttributesSchemaFromTransfer(new $transferClassName(), $responseAttributesSchemaName, $isSnakeCased);
 
         if ($resourceContextTransfer) {
             $relationShipResourceAttributesClassNames = $this->getRelationshipResourceAttributesClassNames($resourceContextTransfer);
@@ -219,18 +259,22 @@ class OpenApiSchemasFormatter implements OpenApiSchemaFormatterInterface
             $this->addSchemaData($this->schemaBuilder->createResponseDataSchema($responseDataSchemaName, $responseAttributesSchemaName, false));
             /** @var \Spryker\Shared\Kernel\Transfer\AbstractTransfer $transfer */
             $transfer = new $resourceAttributesClassName();
-            $this->addResponseDataAttributesSchemaFromTransfer($transfer, $responseAttributesSchemaName);
+            $this->addResponseDataAttributesSchemaFromTransfer($transfer, $responseAttributesSchemaName, false);
         }
     }
 
     /**
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $transfer
      * @param string $attributesSchemaName
+     * @param bool $isSnakeCased
      *
      * @return void
      */
-    protected function addResponseDataAttributesSchemaFromTransfer(AbstractTransfer $transfer, string $attributesSchemaName): void
-    {
+    protected function addResponseDataAttributesSchemaFromTransfer(
+        AbstractTransfer $transfer,
+        string $attributesSchemaName,
+        bool $isSnakeCased
+    ): void {
         if (array_key_exists($attributesSchemaName, $this->schemas)) {
             return;
         }
@@ -243,21 +287,25 @@ class OpenApiSchemasFormatter implements OpenApiSchemaFormatterInterface
                 $schemaName = $this->resourceTransferAnalyzer->createResponseAttributesSchemaNameFromTransferClassName($property[static::KEY_TYPE]);
                 /** @var \Spryker\Shared\Kernel\Transfer\AbstractTransfer $transfer */
                 $transfer = new $property[static::KEY_TYPE]();
-                $this->addResponseDataAttributesSchemaFromTransfer($transfer, $schemaName);
+                $this->addResponseDataAttributesSchemaFromTransfer($transfer, $schemaName, $isSnakeCased);
             }
         }
 
-        $this->addSchemaData($this->schemaBuilder->createResponseDataAttributesSchema($attributesSchemaName, $transferMetadata));
+        $this->addSchemaData($this->schemaBuilder->createResponseDataAttributesSchema($attributesSchemaName, $transferMetadata, $isSnakeCased));
     }
 
     /**
      * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $transfer
      * @param string $attributesSchemaName
+     * @param bool $isSnakeCased
      *
      * @return void
      */
-    protected function addRequestDataAttributesSchemaFromTransfer(AbstractTransfer $transfer, string $attributesSchemaName): void
-    {
+    protected function addRequestDataAttributesSchemaFromTransfer(
+        AbstractTransfer $transfer,
+        string $attributesSchemaName,
+        bool $isSnakeCased
+    ): void {
         if (array_key_exists($attributesSchemaName, $this->schemas)) {
             return;
         }
@@ -270,11 +318,11 @@ class OpenApiSchemasFormatter implements OpenApiSchemaFormatterInterface
                 $schemaName = $this->resourceTransferAnalyzer->createRequestAttributesSchemaNameFromTransferClassName($property[static::KEY_TYPE]);
                 /** @var \Spryker\Shared\Kernel\Transfer\AbstractTransfer $transfer */
                 $transfer = new $property[static::KEY_TYPE]();
-                $this->addRequestDataAttributesSchemaFromTransfer($transfer, $schemaName);
+                $this->addRequestDataAttributesSchemaFromTransfer($transfer, $schemaName, $isSnakeCased);
             }
         }
 
-        $this->addSchemaData($this->schemaBuilder->createRequestDataAttributesSchema($attributesSchemaName, $transferMetadata));
+        $this->addSchemaData($this->schemaBuilder->createRequestDataAttributesSchema($attributesSchemaName, $transferMetadata, $isSnakeCased));
     }
 
     /**
@@ -316,6 +364,7 @@ class OpenApiSchemasFormatter implements OpenApiSchemaFormatterInterface
         $this->addResponseDataAttributesSchemaFromTransfer(
             new RestErrorMessageTransfer(),
             $this->resourceTransferAnalyzer->createResponseAttributesSchemaNameFromTransferClassName(RestErrorMessageTransfer::class),
+            false,
         );
     }
 
@@ -369,13 +418,12 @@ class OpenApiSchemasFormatter implements OpenApiSchemaFormatterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\AnnotationTransfer $annotationTransfer
+     * @param string $transferClassName
      *
      * @return string
      */
-    protected function resolveTransferClassName(AnnotationTransfer $annotationTransfer): string
+    protected function resolveTransferClassName(string $transferClassName): string
     {
-        $transferClassName = $annotationTransfer->getResponseAttributesClassNameOrFail();
         $this->validateTransfer($transferClassName);
 
         return $transferClassName;
@@ -501,9 +549,8 @@ class OpenApiSchemasFormatter implements OpenApiSchemaFormatterInterface
     protected function getAnnotationsWithRequest(PathAnnotationTransfer $pathAnnotationTransfer): array
     {
         return array_filter([
-            $pathAnnotationTransfer->getPost(),
-            $pathAnnotationTransfer->getPatch(),
-            $pathAnnotationTransfer->getDelete(),
+            static::METHOD_POST => $pathAnnotationTransfer->getPost(),
+            static::METHOD_PATCH => $pathAnnotationTransfer->getPatch(),
         ]);
     }
 
@@ -515,10 +562,10 @@ class OpenApiSchemasFormatter implements OpenApiSchemaFormatterInterface
     protected function getNotCollectionPathAnnotations(PathAnnotationTransfer $pathAnnotationTransfer): array
     {
         return array_filter([
-            $pathAnnotationTransfer->getGetResourceById(),
-            $pathAnnotationTransfer->getPost(),
-            $pathAnnotationTransfer->getPatch(),
-            $pathAnnotationTransfer->getDelete(),
+            static::METHOD_GET => $pathAnnotationTransfer->getGetResourceById(),
+            static::METHOD_POST => $pathAnnotationTransfer->getPost(),
+            static::METHOD_PATCH => $pathAnnotationTransfer->getPatch(),
+            static::METHOD_DELETE => $pathAnnotationTransfer->getDelete(),
         ]);
     }
 
@@ -531,21 +578,46 @@ class OpenApiSchemasFormatter implements OpenApiSchemaFormatterInterface
     {
         foreach ($resourceContextTransfers as $resourceContextTransfer) {
             $pathAnnotationTransfer = $resourceContextTransfer->getPathAnnotationOrFail();
+            $declaredMethods = $resourceContextTransfer->getDeclaredMethods();
 
-            foreach ($this->getAnnotationsWithRequest($pathAnnotationTransfer) as $annotationTransfer) {
-                $this->addRequestSchema($annotationTransfer);
+            foreach ($this->getAnnotationsWithRequest($pathAnnotationTransfer) as $method => $annotationTransfer) {
+                $isSnakeCased = $this->getIsSnakeCased($method, $declaredMethods);
+                $this->addRequestSchema($annotationTransfer, $isSnakeCased);
             }
-            foreach ($this->getNotCollectionPathAnnotations($pathAnnotationTransfer) as $annotationTransfer) {
-                $this->addResponseResourceSchema($annotationTransfer, $resourceContextTransfer);
+            foreach ($this->getNotCollectionPathAnnotations($pathAnnotationTransfer) as $method => $annotationTransfer) {
+                $isSnakeCased = $this->getIsSnakeCased($method, $declaredMethods);
+                $this->addResponseResourceSchema($annotationTransfer, $isSnakeCased, $resourceContextTransfer);
             }
 
             if ($resourceContextTransfer->getPathAnnotationOrFail()->getGetCollection()) {
+                $isSnakeCased = $this->getIsSnakeCased(static::METHOD_GET_COLLECTION, $declaredMethods);
                 $this->addResponseCollectionSchema(
                     $resourceContextTransfer->getPathAnnotationOrFail()->getGetCollectionOrFail(),
+                    $isSnakeCased,
                     $resourceContextTransfer,
                 );
             }
         }
+    }
+
+    /**
+     * @param string $method
+     * @param \Generated\Shared\Transfer\GlueResourceMethodCollectionTransfer|null $declaredMethods
+     *
+     * @return bool
+     */
+    protected function getIsSnakeCased(
+        string $method,
+        ?GlueResourceMethodCollectionTransfer $declaredMethods
+    ): bool {
+        if (
+            $declaredMethods === null ||
+            !$declaredMethods->offsetExists($method)
+        ) {
+            return false;
+        }
+
+        return (bool)$declaredMethods->offsetGet($method)->getIsSnakeCased();
     }
 
     /**
@@ -563,15 +635,16 @@ class OpenApiSchemasFormatter implements OpenApiSchemaFormatterInterface
             $pathAnnotationTransfer = $customRoutesContextTransfer->getPathAnnotationOrFail();
 
             foreach ($this->getAnnotationsWithRequest($pathAnnotationTransfer) as $annotationTransfer) {
-                $this->addRequestSchema($annotationTransfer);
+                $this->addRequestSchema($annotationTransfer, false);
             }
             foreach ($this->getNotCollectionPathAnnotations($pathAnnotationTransfer) as $annotationTransfer) {
-                $this->addResponseResourceSchema($annotationTransfer, null);
+                $this->addResponseResourceSchema($annotationTransfer, false, null);
             }
 
             if ($pathAnnotationTransfer->getGetCollection()) {
                 $this->addResponseCollectionSchema(
                     $customRoutesContextTransfer->getPathAnnotationOrFail()->getGetCollectionOrFail(),
+                    false,
                     null,
                 );
             }

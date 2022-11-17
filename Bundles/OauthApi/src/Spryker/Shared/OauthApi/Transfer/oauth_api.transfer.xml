@@ -71,6 +71,7 @@
     <transfer name="GlueResourceMethodConfiguration">
         <property name="action" type="string"/>
         <property name="attributes" type="string"/>
+        <property name="isSnakeCased" type="bool"/>
     </transfer>
 
     <transfer name="GlueResource">
@@ -84,9 +85,9 @@
     </transfer>
 
     <transfer name="ApiTokenAttributes">
-        <property name="grantType" type="string"/>
-        <property name="username" type="string"/>
-        <property name="password" type="string"/>
+        <property name="grantType" type="string" restRequestParameter="required"/>
+        <property name="username" type="string" restRequestParameter="required"/>
+        <property name="password" type="string" restRequestParameter="required"/>
         <property name="scope" type="string"/>
     </transfer>
 

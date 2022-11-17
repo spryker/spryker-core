@@ -64,6 +64,11 @@ class OpenApiSpecificationSchemaBuilder implements SchemaBuilderInterface
     /**
      * @var string
      */
+    protected const KEY_NAME_UNDERSCORE = 'name_underscore';
+
+    /**
+     * @var string
+     */
     protected const VALUE_TYPE_STRING = 'string';
 
     /**
@@ -141,20 +146,24 @@ class OpenApiSpecificationSchemaBuilder implements SchemaBuilderInterface
     /**
      * @param string $schemaName
      * @param array<mixed> $transferMetadata
+     * @param bool $isSnakeCased
      *
      * @return \Generated\Shared\Transfer\SchemaDataTransfer
      */
-    public function createRequestDataAttributesSchema(string $schemaName, array $transferMetadata): SchemaDataTransfer
-    {
+    public function createRequestDataAttributesSchema(
+        string $schemaName,
+        array $transferMetadata,
+        bool $isSnakeCased
+    ): SchemaDataTransfer {
         $schemaData = $this->schemaComponentBuilder->createSchemaDataTransfer($schemaName);
         foreach ($transferMetadata as $key => $value) {
-            if ($value[static::KEY_REST_REQUEST_PARAMETER] === static::REST_REQUEST_BODY_PARAMETER_NOT_REQUIRED) {
-                continue;
+            if ($isSnakeCased) {
+                $key = $value[static::KEY_NAME_UNDERSCORE];
             }
+            $schemaData->addProperty($this->schemaComponentBuilder->createRequestSchemaPropertyTransfer($key, $value));
             if ($value[static::KEY_REST_REQUEST_PARAMETER] === static::REST_REQUEST_BODY_PARAMETER_REQUIRED) {
                 $schemaData->addRequired($key);
             }
-            $schemaData->addProperty($this->schemaComponentBuilder->createRequestSchemaPropertyTransfer($key, $value));
         }
 
         return $schemaData;
@@ -196,13 +205,20 @@ class OpenApiSpecificationSchemaBuilder implements SchemaBuilderInterface
     /**
      * @param string $schemaName
      * @param array<mixed> $transferMetadata
+     * @param bool $isSnakeCased
      *
      * @return \Generated\Shared\Transfer\SchemaDataTransfer
      */
-    public function createResponseDataAttributesSchema(string $schemaName, array $transferMetadata): SchemaDataTransfer
-    {
+    public function createResponseDataAttributesSchema(
+        string $schemaName,
+        array $transferMetadata,
+        bool $isSnakeCased
+    ): SchemaDataTransfer {
         $schemaData = $this->schemaComponentBuilder->createSchemaDataTransfer($schemaName);
         foreach ($transferMetadata as $key => $value) {
+            if ($isSnakeCased) {
+                $key = $value[static::KEY_NAME_UNDERSCORE];
+            }
             $schemaData->addProperty($this->schemaComponentBuilder->createResponseSchemaPropertyTransfer($key, $value));
         }
 

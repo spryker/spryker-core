@@ -32,6 +32,22 @@ class TokenResourceController extends AbstractStorefrontApiController
     protected const GLUE_STOREFRONT_API_APPLICATION = 'GLUE_STOREFRONT_API_APPLICATION';
 
     /**
+     * @Glue({
+     *     "post": {
+     *          "summary": [
+     *              "Creates access token for customer."
+     *          ],
+     *          "parameters": [{
+     *              "ref": "acceptLanguage"
+     *          }],
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\ApiTokenResponseAttributesTransfer",
+     *          "requestAttributesClassName": "Generated\\Shared\\Transfer\\ApiTokenAttributesTransfer",
+     *          "responses": {
+     *              "400": "Bad request"
+     *          }
+     *     }
+     * })
+     *
      * @param \Generated\Shared\Transfer\ApiTokenAttributesTransfer $apiTokenAttributesTransfer
      * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
      *

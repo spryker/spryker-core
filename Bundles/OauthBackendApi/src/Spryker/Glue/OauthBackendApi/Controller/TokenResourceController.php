@@ -32,6 +32,22 @@ class TokenResourceController extends AbstractBackendApiController
     protected const GLUE_BACKEND_API_APPLICATION = 'GLUE_BACKEND_API_APPLICATION';
 
     /**
+     * @Glue({
+     *     "post": {
+     *          "summary": [
+     *              "Creates access token for user."
+     *          ],
+     *          "parameters": [{
+     *              "ref": "acceptLanguage"
+     *          }],
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\ApiTokenResponseAttributesTransfer",
+     *          "requestAttributesClassName": "Generated\\Shared\\Transfer\\ApiTokenAttributesTransfer",
+     *          "responses": {
+     *              "400": "Bad request"
+     *          }
+     *     }
+     * })
+     *
      * @param \Generated\Shared\Transfer\ApiTokenAttributesTransfer $apiTokenAttributesTransfer
      * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
      *

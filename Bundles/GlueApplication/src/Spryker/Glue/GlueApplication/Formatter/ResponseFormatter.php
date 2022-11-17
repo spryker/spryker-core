@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
 use Spryker\Glue\GlueApplication\ApiApplication\Type\RequestFlowAwareApiApplication;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ConventionPluginInterface;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface;
 
 class ResponseFormatter implements ResponseFormatterInterface
 {
@@ -41,6 +42,7 @@ class ResponseFormatter implements ResponseFormatterInterface
      * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
      * @param \Spryker\Glue\GlueApplication\ApiApplication\Type\RequestFlowAwareApiApplication $apiApplication
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ConventionPluginInterface|null $apiConventionPlugin
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface|null $resource
      *
      * @return \Generated\Shared\Transfer\GlueResponseTransfer
      */
@@ -48,9 +50,10 @@ class ResponseFormatter implements ResponseFormatterInterface
         GlueResponseTransfer $glueResponseTransfer,
         GlueRequestTransfer $glueRequestTransfer,
         RequestFlowAwareApiApplication $apiApplication,
-        ?ConventionPluginInterface $apiConventionPlugin
+        ?ConventionPluginInterface $apiConventionPlugin,
+        ?ResourceInterface $resource = null
     ): GlueResponseTransfer {
-        $glueResponseTransfer = $this->formatResponse($glueResponseTransfer, $glueRequestTransfer, $apiConventionPlugin);
+        $glueResponseTransfer = $this->formatResponse($glueResponseTransfer, $glueRequestTransfer, $apiConventionPlugin, $resource);
         $responseFormatterPlugins = $this->provideResponseFormatterPlugins($apiApplication, $apiConventionPlugin);
 
         return $this->executeResponseFormatterPlugins($glueResponseTransfer, $glueRequestTransfer, $responseFormatterPlugins);
@@ -60,20 +63,22 @@ class ResponseFormatter implements ResponseFormatterInterface
      * @param \Generated\Shared\Transfer\GlueResponseTransfer $glueResponseTransfer
      * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ConventionPluginInterface|null $apiConventionPlugin
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface|null $resource
      *
      * @return \Generated\Shared\Transfer\GlueResponseTransfer
      */
     protected function formatResponse(
         GlueResponseTransfer $glueResponseTransfer,
         GlueRequestTransfer $glueRequestTransfer,
-        ?ConventionPluginInterface $apiConventionPlugin
+        ?ConventionPluginInterface $apiConventionPlugin,
+        ?ResourceInterface $resource = null
     ): GlueResponseTransfer {
         if ($apiConventionPlugin !== null) {
             return $glueResponseTransfer;
         }
 
         foreach ($this->responseFormatters as $responseFormatter) {
-            $glueResponseTransfer = $responseFormatter->format($glueResponseTransfer, $glueRequestTransfer);
+            $glueResponseTransfer = $responseFormatter->format($glueResponseTransfer, $glueRequestTransfer, $resource);
         }
 
         return $glueResponseTransfer;

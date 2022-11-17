@@ -14,10 +14,7 @@ use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface;
 use Spryker\Glue\OauthBackendApi\Controller\TokenResourceController;
 use Spryker\Glue\OauthBackendApi\OauthBackendApiConfig;
 
-/**
- * @deprecated Use {@link \Spryker\Glue\OauthBackendApi\Plugin\GlueApplication\OauthBackendApiTokenResource} instead.
- */
-class OauthBackendTokenResource extends AbstractResourcePlugin implements ResourceInterface
+class OauthBackendApiTokenResource extends AbstractResourcePlugin implements ResourceInterface
 {
     /**
      * {@inheritDoc}
@@ -58,7 +55,8 @@ class OauthBackendTokenResource extends AbstractResourcePlugin implements Resour
             ->setPost(
                 (new GlueResourceMethodConfigurationTransfer())
                     ->setAction('postAction')
-                    ->setAttributes('\Generated\Shared\Transfer\ApiTokenAttributesTransfer'),
+                    ->setAttributes('\Generated\Shared\Transfer\ApiTokenAttributesTransfer')
+                    ->setIsSnakeCased(true),
             );
     }
 }

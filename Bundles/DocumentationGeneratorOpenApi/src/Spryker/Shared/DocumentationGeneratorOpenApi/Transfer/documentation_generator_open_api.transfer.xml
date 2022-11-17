@@ -35,6 +35,7 @@
         <property name="deprecated" type="bool"/>
         <property name="responseAttributesClassName" type="string"/>
         <property name="isIdNullable" type="bool"/>
+        <property name="requestAttributesClassName" type="string"/>
     </transfer>
 
     <transfer name="RelationshipPluginsContext">
@@ -139,5 +140,6 @@
 
     <transfer name="GlueResourceMethodConfiguration">
         <property name="isProtected" type="bool"/>
+        <property name="isSnakeCased" type="bool"/>
     </transfer>
 </transfers>

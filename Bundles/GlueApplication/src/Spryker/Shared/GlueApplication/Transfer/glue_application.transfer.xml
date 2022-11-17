@@ -114,6 +114,7 @@
         <property name="attributes" type="string"/>
         <property name="controller" type="string"/>
         <property name="action" type="string"/>
+        <property name="isSnakeCased" type="bool"/>
     </transfer>
 
     <transfer name="ApiControllerConfiguration">
@@ -171,5 +172,6 @@
 
     <transfer name="Annotation">
         <property name="responseAttributesClassName" type="string"/>
+        <property name="requestAttributesClassName" type="string"/>
     </transfer>
 </transfers>

@@ -36,17 +36,7 @@ class RestApiSchemaFormatter implements SchemaFormatterInterface
     /**
      * @var string
      */
-    protected const REST_API_CONVENTION_NAME = 'RestApiConvention';
-
-    /**
-     * @var string
-     */
-    protected const PART_REQUEST = 'RestRequestAttributes';
-
-    /**
-     * @var string
-     */
-    protected const PART_ATTRIBUTES = 'RestAttributes';
+    protected const PART_ATTRIBUTES = 'Attributes';
 
     /**
      * @var string
@@ -72,6 +62,11 @@ class RestApiSchemaFormatter implements SchemaFormatterInterface
      * @var string
      */
     protected const TRANSFER_NAME_PARTIAL_TRANSFER = 'Transfer';
+
+    /**
+     * @var string
+     */
+    protected const SCHEMA_NAME_PARTIAL_REQUEST = 'Request';
 
     /**
      * @var string
@@ -196,13 +191,16 @@ class RestApiSchemaFormatter implements SchemaFormatterInterface
     protected function formatOperation(string $path, array $pathItem, ResourceContextTransfer $resourceContext): array
     {
         foreach ($pathItem as $key => $operation) {
-            if (isset($operation['requestBody'])) {
-                $operation = $this->formatRequestBody($operation, $resourceContext->getResourceTypeOrFail());
-            }
-
             $isGetCollection = $key === static::HTTP_METHOD_GET && $path === $this->getCollectionResourcePath($resourceContext->getResourceTypeOrFail());
 
-            $resourceAttributesClassName = $this->getResourceAttributesClassName($resourceContext->getPathAnnotationOrFail(), $key, $isGetCollection);
+            if (isset($operation['requestBody'])) {
+                $annotationTransfer = $this->resolveAnnotationTransfer($resourceContext->getPathAnnotationOrFail(), $key, $isGetCollection);
+                $requestAttributesClassName = $this->getRequestAttributesClassName($annotationTransfer);
+                $operation = $this->formatRequestBody($operation, $requestAttributesClassName);
+            }
+
+            $annotationTransfer = $this->resolveAnnotationTransfer($resourceContext->getPathAnnotationOrFail(), $key, $isGetCollection);
+            $resourceAttributesClassName = $this->getResponseAttributesClassName($annotationTransfer);
 
             $operation = $this->formatResponses($operation, $resourceAttributesClassName, $isGetCollection);
             $operation = $this->restApiSchemaParametersFormatter->setOperationParameters($operation, $resourceContext);
@@ -215,11 +213,11 @@ class RestApiSchemaFormatter implements SchemaFormatterInterface
 
     /**
      * @param array<mixed> $operation
-     * @param string $resourceType
+     * @param string $requestAttributesClassName
      *
      * @return array<mixed>
      */
-    protected function formatRequestBody(array $operation, string $resourceType): array
+    protected function formatRequestBody(array $operation, string $requestAttributesClassName): array
     {
         if (isset($operation['requestBody']) && isset($operation['requestBody']['content'])) {
             $contentTypes = [];
@@ -228,7 +226,7 @@ class RestApiSchemaFormatter implements SchemaFormatterInterface
             }
             $operation['requestBody']['content'] = $this->addContent(
                 $contentTypes,
-                ucfirst($resourceType) . static::PART_REQUEST,
+                $requestAttributesClassName,
             );
         }
 
@@ -337,19 +335,12 @@ class RestApiSchemaFormatter implements SchemaFormatterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PathAnnotationTransfer $pathAnnotationTransfer
-     * @param string $methodName
-     * @param bool $isCollection
+     * @param \Generated\Shared\Transfer\AnnotationTransfer $annotationTransfer
      *
      * @return string
      */
-    protected function getResourceAttributesClassName(
-        PathAnnotationTransfer $pathAnnotationTransfer,
-        string $methodName,
-        bool $isCollection
-    ): string {
-        $annotationTransfer = $this->resolveAnnotationTransfer($pathAnnotationTransfer, $methodName, $isCollection);
-
+    protected function getResponseAttributesClassName(AnnotationTransfer $annotationTransfer): string
+    {
         /** @var string $responseAttributesClassName */
         $responseAttributesClassName = $annotationTransfer->getResponseAttributesClassName();
         if ($responseAttributesClassName) {
@@ -357,6 +348,22 @@ class RestApiSchemaFormatter implements SchemaFormatterInterface
         }
 
         return $responseAttributesClassName;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AnnotationTransfer $annotationTransfer
+     *
+     * @return string
+     */
+    protected function getRequestAttributesClassName(AnnotationTransfer $annotationTransfer): string
+    {
+        /** @var string $requestAttributesClassName */
+        $requestAttributesClassName = $annotationTransfer->getRequestAttributesClassName();
+        if ($requestAttributesClassName) {
+            $requestAttributesClassName = $this->getRequestAttributesName($requestAttributesClassName);
+        }
+
+        return $requestAttributesClassName;
     }
 
     /**
@@ -393,6 +400,20 @@ class RestApiSchemaFormatter implements SchemaFormatterInterface
         return str_replace(
             static::TRANSFER_NAME_PARTIAL_TRANSFER,
             '',
+            $this->getTransferClassNamePartial($transferClassName),
+        );
+    }
+
+    /**
+     * @param string $transferClassName
+     *
+     * @return string
+     */
+    protected function getRequestAttributesName(string $transferClassName): string
+    {
+        return str_replace(
+            static::PART_ATTRIBUTES . static::TRANSFER_NAME_PARTIAL_TRANSFER,
+            static::SCHEMA_NAME_PARTIAL_REQUEST . static::PART_ATTRIBUTES,
             $this->getTransferClassNamePartial($transferClassName),
         );
     }
