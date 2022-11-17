@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductCategory\Persistence\Propel\Mapper;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\ProductCategoryCollectionTransfer;
 use Generated\Shared\Transfer\ProductCategoryTransfer;
+use Propel\Runtime\Collection\ArrayCollection;
 use Propel\Runtime\Collection\ObjectCollection;
 
 class ProductCategoryMapper
@@ -46,6 +47,35 @@ class ProductCategoryMapper
             $productCategoryTransfer = (new ProductCategoryTransfer())
                 ->fromArray($productCategoryEntity->toArray(), true)
                 ->setCategory($categoryTransfer);
+
+            $productCategoryCollectionTransfer->addProductCategory($productCategoryTransfer);
+        }
+
+        return $productCategoryCollectionTransfer;
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ArrayCollection<array> $productCategories
+     * @param \Generated\Shared\Transfer\ProductCategoryCollectionTransfer $productCategoryCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductCategoryCollectionTransfer
+     */
+    public function mapProductCategoryArrayToProductCategoryCollectionTransfer(
+        ArrayCollection $productCategories,
+        ProductCategoryCollectionTransfer $productCategoryCollectionTransfer
+    ): ProductCategoryCollectionTransfer {
+        foreach ($productCategories as $productCategory) {
+            $productCategoryTransfer = (new ProductCategoryTransfer())
+                ->fromArray($productCategory, true);
+
+            if (isset($productCategory['SpyCategory'])) {
+                $categoryTransfer = $this->categoryMapper->mapCategoryArrayToCategoryTransfer(
+                    $productCategory['SpyCategory'],
+                    new CategoryTransfer(),
+                );
+
+                $productCategoryTransfer->setCategory($categoryTransfer);
+            }
 
             $productCategoryCollectionTransfer->addProductCategory($productCategoryTransfer);
         }

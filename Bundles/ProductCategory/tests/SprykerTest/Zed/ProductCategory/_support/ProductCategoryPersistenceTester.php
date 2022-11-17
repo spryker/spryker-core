@@ -9,6 +9,10 @@ namespace SprykerTest\Zed\ProductCategory;
 
 use Codeception\Actor;
 use Generated\Shared\Transfer\CategoryTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\LocalizedAttributesTransfer;
+use Generated\Shared\Transfer\ProductCategoryConditionsTransfer;
+use Generated\Shared\Transfer\ProductCategoryCriteriaTransfer;
 use Orm\Zed\Category\Persistence\SpyCategoryAttribute;
 use Orm\Zed\Locale\Persistence\SpyLocale;
 use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
@@ -99,6 +103,54 @@ class ProductCategoryPersistenceTester extends Actor
         }
 
         return $productAbstractEntity;
+    }
+
+    /**
+     * @param string $sku
+     * @param string $productLocale
+     * @param array<string> $localeNamesForCategory
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstract
+     */
+    public function createProductAbstractEntityWithCategoryWithLocalizedAttributes(
+        string $sku,
+        string $productLocale,
+        array $localeNamesForCategory
+    ): SpyProductAbstract {
+        $productAbstractEntity = $this->createProductAbstractEntity($sku, $sku, $this->createLocaleEntity($productLocale));
+        $categoryTransfer = $this->haveCategory();
+        $this->assignProductToCategory($categoryTransfer->getIdCategory(), $productAbstractEntity->getIdProductAbstract());
+
+        foreach ($localeNamesForCategory as $localeName) {
+            $localeTransfer = $this->haveLocale([
+                LocaleTransfer::LOCALE_NAME => $localeName,
+            ]);
+            $categoryLocalizedAttributesTransfer = $this->haveCategoryLocalizedAttributeForCategory(
+                $categoryTransfer->getIdCategory(),
+                [
+                    LocalizedAttributesTransfer::NAME => 'test_' . $localeName,
+                    LocalizedAttributesTransfer::LOCALE => $localeTransfer,
+                ],
+            );
+
+            $categoryTransfer->addLocalizedAttributes($categoryLocalizedAttributesTransfer);
+        }
+
+        return $productAbstractEntity;
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\ProductCategoryCriteriaTransfer
+     */
+    public function createProductCategoryCriteriaTransferBy(int $idProductAbstract): ProductCategoryCriteriaTransfer
+    {
+        $productCategoryConditionsTransfer = (new ProductCategoryConditionsTransfer())
+            ->addIdProductAbstract($idProductAbstract);
+
+        return (new ProductCategoryCriteriaTransfer())
+            ->setProductCategoryConditions($productCategoryConditionsTransfer);
     }
 
     /**

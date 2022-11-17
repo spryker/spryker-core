@@ -14,6 +14,7 @@ use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
@@ -110,19 +111,19 @@ class ProductCategoryRepository extends AbstractRepository implements ProductCat
             ->createProductCategoryQuery()
             ->joinWithSpyCategory()
             ->useSpyCategoryQuery()
+                ->joinWithNode()
                 ->joinWithAttribute()
                 ->useAttributeQuery()
                     ->joinWithLocale()
                 ->endUse()
-            ->endUse();
-
-        $productCategoryQuery = $productCategoryQuery->groupByIdProductCategory();
+            ->endUse()
+            ->setFormatter(ModelCriteria::FORMAT_ARRAY);
 
         $productCategoryQuery = $this->applyProductCategoryFilters($productCategoryQuery, $productCategoryCriteriaTransfer);
 
         return $this->getFactory()
             ->createproductCategoryMapper()
-            ->mapProductCategoryEntitiesToProductCategoryCollectionTransfer(
+            ->mapProductCategoryArrayToProductCategoryCollectionTransfer(
                 $productCategoryQuery->find(),
                 new ProductCategoryCollectionTransfer(),
             );

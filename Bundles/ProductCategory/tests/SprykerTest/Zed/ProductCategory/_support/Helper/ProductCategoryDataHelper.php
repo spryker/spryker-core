@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\ProductCategory\Helper;
 
 use Codeception\Module;
 use Generated\Shared\DataBuilder\ProductCategoryBuilder;
+use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\ProductCategoryTransfer;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategory;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery;
@@ -66,5 +67,26 @@ class ProductCategoryDataHelper extends Module
         SpyProductCategoryQuery::create()
             ->filterByIdProductCategory($productCategoryEntity->getIdProductCategory())
             ->delete();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param array<string> $localeNames
+     *
+     * @return void
+     */
+    public function assertCategoryContainsNecessaryLocales(CategoryTransfer $categoryTransfer, array $localeNames): void
+    {
+        $localizedAttributeTransferCollection = $categoryTransfer->getLocalizedAttributes();
+
+        $this->assertCount(count($localeNames), $localizedAttributeTransferCollection);
+
+        $fetchedLocaleNames = [];
+        /** @var \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer $localizedAttribute */
+        foreach ($localizedAttributeTransferCollection as $localizedAttribute) {
+            $fetchedLocaleNames[] = $localizedAttribute->getLocale()->getLocaleName();
+        }
+
+        $this->assertEqualsCanonicalizing($localeNames, $fetchedLocaleNames);
     }
 }

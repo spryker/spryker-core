@@ -75,6 +75,45 @@ class CategoryMapper
     }
 
     /**
+     * @param array<array> $category
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer
+     */
+    public function mapCategoryArrayToCategoryTransfer(
+        array $category,
+        CategoryTransfer $categoryTransfer
+    ): CategoryTransfer {
+        $categoryTransfer = $categoryTransfer
+            ->fromArray($category, true);
+
+        if (!isset($category['Attributes'])) {
+            return $categoryTransfer;
+        }
+
+        foreach ($category['Attributes'] as $attribute) {
+            $localeTransfer = (new LocaleTransfer())
+                ->fromArray($attribute['Locale'], true);
+
+            $categoryLocalizedAttributesTransfer = (new CategoryLocalizedAttributesTransfer())
+                ->fromArray($attribute, true)
+                ->setLocale($localeTransfer);
+
+            $categoryTransfer->addLocalizedAttributes($categoryLocalizedAttributesTransfer);
+
+            $categoryTransfer->fromArray($categoryLocalizedAttributesTransfer->toArray(), true);
+        }
+
+        $categoryNode = $category['Nodes'][0] ?? null;
+
+        if ($categoryNode) {
+            $categoryTransfer->setCategoryNode((new NodeTransfer())->fromArray($categoryNode));
+        }
+
+        return $categoryTransfer;
+    }
+
+    /**
      * @param \Orm\Zed\Category\Persistence\SpyCategory $categoryEntity
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *

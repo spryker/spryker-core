@@ -61,3 +61,5 @@ suites:
                 - \SprykerTest\Zed\Category\Helper\CategoryDataHelper
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Zed\Locale\Helper\LocaleDataHelper
+                - \SprykerTest\Zed\ProductCategory\Helper\ProductCategoryDataHelper

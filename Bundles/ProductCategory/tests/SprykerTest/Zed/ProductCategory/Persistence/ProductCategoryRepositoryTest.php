@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\ProductCategory\Persistence;
 
 use Codeception\Test\Unit;
+use Propel\Runtime\Propel;
 use Spryker\Zed\ProductCategory\Persistence\ProductCategoryRepository;
 
 /**
@@ -23,9 +24,9 @@ use Spryker\Zed\ProductCategory\Persistence\ProductCategoryRepository;
 class ProductCategoryRepositoryTest extends Unit
 {
     /**
-     * @var string
+     * @var array<string>
      */
-    protected const LOCALE_NAME = 'en_US';
+    protected const LOCALE_NAMES = ['en_US', 'de_DE'];
 
     /**
      * @var string
@@ -73,7 +74,7 @@ class ProductCategoryRepositoryTest extends Unit
     public function testGetCategoryTransferCollectionByIdProductAbstractShouldReturnCategoryCollection(array $categoriesData, int $expectedCount): void
     {
         // Arrange
-        $localeEntity = $this->tester->createLocaleEntity(static::LOCALE_NAME);
+        $localeEntity = $this->tester->createLocaleEntity(static::LOCALE_NAMES[0]);
         $productAbstract = $this->tester->createProductAbstractEntityWithCategories(
             static::PRODUCT_ABSTRACT_SKU,
             $categoriesData,
@@ -132,5 +133,91 @@ class ProductCategoryRepositoryTest extends Unit
                 1,
             ],
         ];
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductCategoryCollectionContainsNecessaryLocales(): void
+    {
+        // Arrange
+        $productAbstract = $this->tester->createProductAbstractEntityWithCategoryWithLocalizedAttributes(
+            static::PRODUCT_ABSTRACT_SKU,
+            static::LOCALE_NAMES[0],
+            static::LOCALE_NAMES,
+        );
+
+        $productCategoryCriteriaTransfer = $this->tester
+            ->createProductCategoryCriteriaTransferBy(
+                $productAbstract->getIdProductAbstract(),
+            );
+
+        $productCategoryRepository = new ProductCategoryRepository();
+
+        // Act
+        $productCategoryTransferCollection = $productCategoryRepository->getProductCategoryCollection(
+            $productCategoryCriteriaTransfer,
+        );
+
+        // Assert
+        $this->assertCount(1, $productCategoryTransferCollection->getProductCategories());
+
+        $categoryTransfer = $productCategoryTransferCollection->getProductCategories()->offsetGet(0)->getCategory();
+
+        $this->tester->assertCategoryContainsNecessaryLocales($categoryTransfer, static::LOCALE_NAMES);
+    }
+
+    /**
+     * @return void
+     */
+    public function testUseSeveralRepositoryMethodsInOneRequestReturnDifferentResults(): void
+    {
+        // Arrange
+        $productAbstract = $this->tester->createProductAbstractEntityWithCategoryWithLocalizedAttributes(
+            static::PRODUCT_ABSTRACT_SKU,
+            static::LOCALE_NAMES[0],
+            static::LOCALE_NAMES,
+        );
+
+        $productCategoryCriteriaTransfer = $this->tester
+            ->createProductCategoryCriteriaTransferBy(
+                $productAbstract->getIdProductAbstract(),
+            );
+
+        $productCategoryRepository = new ProductCategoryRepository();
+
+        // Act
+
+        // It's necessary to have this code to populate the instance pool to emulate real conditions in what target
+        // method runs
+        // The $isPropelInstancePoolingEnabled is necessary to keep original Propel::isInstancePoolingEnabled state
+
+        $isPropelInstancePoolingEnabled = Propel::isInstancePoolingEnabled();
+
+        if (!$isPropelInstancePoolingEnabled) {
+            Propel::enableInstancePooling();
+        }
+
+        $productCategoryRepository->getProductCategoryCollection(
+            $productCategoryCriteriaTransfer,
+        );
+
+        $categoryCollectionTransfer = $productCategoryRepository
+            ->getCategoryTransferCollectionByIdProductAbstract(
+                $productAbstract->getIdProductAbstract(),
+                $this->tester->createLocaleEntity(static::LOCALE_NAMES[0])->getIdLocale(),
+            );
+
+        // Disable PropelInstancePooling if it was not initially enabled
+        if (!$isPropelInstancePoolingEnabled) {
+            Propel::disableInstancePooling();
+        }
+
+        // Assert
+        $this->assertCount(1, $categoryCollectionTransfer->getCategories());
+
+        $categoryTransfer = $categoryCollectionTransfer->getCategories()->offsetGet(0);
+
+        $this->tester->assertCategoryContainsNecessaryLocales($categoryTransfer, [static::LOCALE_NAMES[0]]);
     }
 }
