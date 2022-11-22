@@ -61,9 +61,12 @@ class CatalogSearchTranslationExpander implements CatalogSearchTranslationExpand
         RestCatalogSearchAttributesTransfer $restCatalogSearchAttributesTransfer,
         string $localName
     ): RestCatalogSearchAttributesTransfer {
-        $sortParamLocalizedNames = [];
         $sortTransfer = $restCatalogSearchAttributesTransfer->getSort();
+        if (!$sortTransfer) {
+            return $restCatalogSearchAttributesTransfer;
+        }
 
+        $sortParamLocalizedNames = [];
         foreach ($sortTransfer->getSortParamNames() as $sortParamName) {
             $sortParamLocalizedNames[$sortParamName] = $this->glossaryStorageClient
                 ->translate(static::GLOSSARY_SORT_PARAM_NAME_KEY_PREFIX . $sortParamName, $localName);

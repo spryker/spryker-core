@@ -117,14 +117,14 @@ class CatalogSearchResourceMapper implements CatalogSearchResourceMapperInterfac
         foreach ($facets as $facet) {
             if ($facet instanceof FacetSearchResultTransfer) {
                 $valueFacet = (new RestFacetSearchResultTransfer())->fromArray($facet->toArray(), true);
-                $valueFacet->setConfig($this->mapFacetConfigTransferToRestFacetConfigTransfer($facet->getConfig()));
+                $valueFacet->setConfig($this->mapFacetConfigTransferToRestFacetConfigTransfer($facet->getConfigOrFail()));
                 $restSearchAttributesTransfer->addValueFacet($valueFacet);
 
                 continue;
             }
             if ($facet instanceof RangeSearchResultTransfer) {
                 $rangeFacet = (new RestRangeSearchResultTransfer())->fromArray($facet->toArray(), true);
-                $rangeFacet->setConfig($this->mapFacetConfigTransferToRestFacetConfigTransfer($facet->getConfig()));
+                $rangeFacet->setConfig($this->mapFacetConfigTransferToRestFacetConfigTransfer($facet->getConfigOrFail()));
                 $restSearchAttributesTransfer->addRangeFacet($rangeFacet);
             }
         }

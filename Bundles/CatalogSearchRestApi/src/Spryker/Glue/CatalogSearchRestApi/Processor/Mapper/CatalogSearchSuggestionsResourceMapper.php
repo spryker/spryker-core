@@ -55,6 +55,11 @@ class CatalogSearchSuggestionsResourceMapper implements CatalogSearchSuggestions
     protected const SEARCH_RESPONSE_URL_KEY = 'url';
 
     /**
+     * @var string
+     */
+    protected const SEARCH_RESPONSE_ID_CATEGORY_KEY = 'id_category';
+
+    /**
      * @return array
      */
     public function getEmptySearchResponse(): array
@@ -132,7 +137,10 @@ class CatalogSearchSuggestionsResourceMapper implements CatalogSearchSuggestions
         $categoriesSuggestions = $this->mapSuggestions($restSearchResponse, $suggestionName, $suggestionKeysRequired);
         $restSearchSuggestionsAttributesTransfer->setCategories($categoriesSuggestions);
 
-        foreach ($categoriesSuggestions as $categoriesSuggestion) {
+        $suggestionCollectionKeysRequired = [static::SEARCH_RESPONSE_NAME_KEY, static::SEARCH_RESPONSE_URL_KEY, static::SEARCH_RESPONSE_ID_CATEGORY_KEY];
+        $categoriesSuggestionCollection = $this->mapSuggestions($restSearchResponse, $suggestionName, $suggestionCollectionKeysRequired);
+
+        foreach ($categoriesSuggestionCollection as $categoriesSuggestion) {
             $restSearchSuggestionsAttributesTransfer->addCategory(
                 (new RestCatalogSearchSuggestionCategoriesTransfer())->fromArray($categoriesSuggestion, true),
             );

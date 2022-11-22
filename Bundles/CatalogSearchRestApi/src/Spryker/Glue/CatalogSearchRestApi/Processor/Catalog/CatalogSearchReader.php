@@ -228,7 +228,12 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
             $restSearchAttributesTransfer,
         );
 
-        $response = $this->restResourceBuilder->createRestResponse($restSearchAttributesTransfer->getPagination()->getNumFound());
+        $totalItems = 0;
+        if ($restSearchAttributesTransfer->getPagination()) {
+            $totalItems = $restSearchAttributesTransfer->getPaginationOrFail()->getNumFound() ?? 0;
+        }
+
+        $response = $this->restResourceBuilder->createRestResponse($totalItems);
         if (!$restRequest->getPage()) {
             $restRequest->setPage(new Page(0, static::DEFAULT_ITEMS_PER_PAGE));
         }
