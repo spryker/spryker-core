@@ -38,9 +38,9 @@ class AuthorizationRequestAfterRoutingValidatorPluginTest extends Unit
     protected $tester;
 
     /**
-     * @var string
+     * @var int
      */
-    protected const NATURAL_IDENTIFIER = 'test identifier';
+    protected const SURROGATE_IDENTIFIER = 12345;
 
     /**
      * @uses \SprykerTest\Glue\GlueBackendApiApplicationAuthorizationConnector\Stub\TestDefaultAuthorizationStrategyAwareResourceRoutePlugin::STRATEGY_NAME
@@ -61,7 +61,7 @@ class AuthorizationRequestAfterRoutingValidatorPluginTest extends Unit
         );
         $plugin = new AuthorizationRequestAfterRoutingValidatorPlugin();
         $glueRequestTransfer = new GlueRequestTransfer();
-        $glueRequestUserTransfer = (new GlueRequestUserTransfer())->setNaturalIdentifier(static::NATURAL_IDENTIFIER);
+        $glueRequestUserTransfer = (new GlueRequestUserTransfer())->setSurrogateIdentifier(static::SURROGATE_IDENTIFIER);
         $glueRequestTransfer->setRequestUser($glueRequestUserTransfer);
 
         $stubResource = new TestDefaultAuthorizationStrategyAwareResourceRoutePlugin();
@@ -85,7 +85,7 @@ class AuthorizationRequestAfterRoutingValidatorPluginTest extends Unit
         );
         $plugin = new AuthorizationRequestAfterRoutingValidatorPlugin();
         $glueRequestTransfer = new GlueRequestTransfer();
-        $glueRequestUserTransfer = (new GlueRequestUserTransfer())->setNaturalIdentifier(static::NATURAL_IDENTIFIER);
+        $glueRequestUserTransfer = (new GlueRequestUserTransfer())->setSurrogateIdentifier(static::SURROGATE_IDENTIFIER);
         $glueRequestTransfer->setRequestUser($glueRequestUserTransfer);
         $stubResource = new TestDefaultAuthorizationStrategyAwareResourceRoutePlugin();
 
@@ -110,7 +110,7 @@ class AuthorizationRequestAfterRoutingValidatorPluginTest extends Unit
         );
         $plugin = new AuthorizationRequestAfterRoutingValidatorPlugin();
         $glueRequestTransfer = (new GlueRequestTransfer())->setMethod('get');
-        $glueRequestUserTransfer = (new GlueRequestUserTransfer())->setNaturalIdentifier(static::NATURAL_IDENTIFIER);
+        $glueRequestUserTransfer = (new GlueRequestUserTransfer())->setSurrogateIdentifier(static::SURROGATE_IDENTIFIER);
         $glueRequestTransfer->setRequestUser($glueRequestUserTransfer);
 
         $stubResource = new TestAuthorizationStrategyAwareResourceRoutePlugin();
@@ -135,7 +135,7 @@ class AuthorizationRequestAfterRoutingValidatorPluginTest extends Unit
         $plugin = new AuthorizationRequestAfterRoutingValidatorPlugin();
 
         $glueRequestTransfer = (new GlueRequestTransfer())->setMethod('get');
-        $glueRequestUserTransfer = (new GlueRequestUserTransfer())->setNaturalIdentifier(static::NATURAL_IDENTIFIER);
+        $glueRequestUserTransfer = (new GlueRequestUserTransfer())->setSurrogateIdentifier(static::SURROGATE_IDENTIFIER);
         $glueRequestTransfer->setRequestUser($glueRequestUserTransfer);
         $stubResource = new TestDefaultAuthorizationStrategyAwareResourceRoutePlugin();
 
@@ -160,7 +160,7 @@ class AuthorizationRequestAfterRoutingValidatorPluginTest extends Unit
         );
         $plugin = new AuthorizationRequestAfterRoutingValidatorPlugin();
         $glueRequestTransfer = new GlueRequestTransfer();
-        $glueRequestUserTransfer = (new GlueRequestUserTransfer())->setNaturalIdentifier(static::NATURAL_IDENTIFIER);
+        $glueRequestUserTransfer = (new GlueRequestUserTransfer())->setSurrogateIdentifier(static::SURROGATE_IDENTIFIER);
         $glueRequestTransfer->setRequestUser($glueRequestUserTransfer);
         $stubResource = new TestUnsupportResourcePlugin();
 
@@ -183,7 +183,7 @@ class AuthorizationRequestAfterRoutingValidatorPluginTest extends Unit
         );
         $plugin = new AuthorizationRequestAfterRoutingValidatorPlugin();
         $glueRequestTransfer = (new GlueRequestTransfer())->setMethod('post');
-        $glueRequestUserTransfer = (new GlueRequestUserTransfer())->setNaturalIdentifier(static::NATURAL_IDENTIFIER);
+        $glueRequestUserTransfer = (new GlueRequestUserTransfer())->setSurrogateIdentifier(static::SURROGATE_IDENTIFIER);
         $glueRequestTransfer->setRequestUser($glueRequestUserTransfer);
         $stubResource = new TestAuthorizationStrategyAwareResourceRoutePlugin();
 

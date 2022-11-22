@@ -73,7 +73,7 @@ class ProtectedPathAuthorizationChecker implements ProtectedPathAuthorizationChe
             return true;
         }
 
-        return isset($requestData[static::GLUE_REQUEST_CUSTOMER]);
+        return (bool)$authorizationRequestTransfer->getIdentityOrFail()->getIdentifier();
     }
 
     /**

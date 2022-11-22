@@ -142,7 +142,7 @@ class AuthorizationValidator implements AuthorizationValidatorInterface
         ]);
         $authorizationIdentityTransfer = new AuthorizationIdentityTransfer();
         if ($glueRequestTransfer->getRequestUser() !== null) {
-            $authorizationIdentityTransfer->setIdentifier($glueRequestTransfer->getRequestUser()->getNaturalIdentifier());
+            $authorizationIdentityTransfer->setIdentifier((string)$glueRequestTransfer->getRequestUser()->getSurrogateIdentifier());
         }
 
         $glueResourceTransfer = $glueRequestTransfer->getResource();

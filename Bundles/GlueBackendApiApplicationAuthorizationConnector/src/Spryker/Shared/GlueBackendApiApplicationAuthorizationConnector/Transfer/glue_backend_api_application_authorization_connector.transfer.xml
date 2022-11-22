@@ -15,6 +15,7 @@
 
     <transfer name="GlueRequestUser">
         <property name="naturalIdentifier" type="string"/>
+        <property name="surrogateIdentifier" type="int"/>
     </transfer>
 
     <transfer name="AuthorizationRequest">

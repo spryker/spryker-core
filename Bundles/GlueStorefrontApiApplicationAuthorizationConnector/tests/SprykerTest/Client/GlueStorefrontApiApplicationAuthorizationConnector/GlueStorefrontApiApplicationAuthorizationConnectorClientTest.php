@@ -9,6 +9,7 @@ namespace SprykerTest\Client\GlueStorefrontApiApplicationAuthorizationConnector;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ApiApplicationSchemaContextTransfer;
+use Generated\Shared\Transfer\AuthorizationIdentityTransfer;
 use Generated\Shared\Transfer\CustomRoutesContextTransfer;
 use Generated\Shared\Transfer\GlueRequestCustomerTransfer;
 use Generated\Shared\Transfer\GlueResourceMethodCollectionTransfer;
@@ -171,8 +172,7 @@ class GlueStorefrontApiApplicationAuthorizationConnectorClientTest extends Unit
         $authorizationRequestTransfer = $this->tester->createAuthorizationRequestTransfer([
             static::METHOD => 'post',
             static::PATH => '/testRoute',
-            static::GLUE_REQUEST_CUSTOMER => new GlueRequestCustomerTransfer(),
-        ]);
+        ], (new AuthorizationIdentityTransfer())->setIdentifier('fake identity'));
 
         // Act
         $result = $glueStorefrontApiApplicationAuthorizationConnectorClient->authorize($authorizationRequestTransfer);
@@ -224,8 +224,7 @@ class GlueStorefrontApiApplicationAuthorizationConnectorClientTest extends Unit
         $authorizationRequestTransfer = $this->tester->createAuthorizationRequestTransfer([
             static::METHOD => 'get',
             static::PATH => '/testRoute/testId',
-            static::GLUE_REQUEST_CUSTOMER => new GlueRequestCustomerTransfer(),
-        ]);
+        ], (new AuthorizationIdentityTransfer())->setIdentifier('fake identity'));
 
         // Act
         $result = $glueStorefrontApiApplicationAuthorizationConnectorClient->authorize($authorizationRequestTransfer);

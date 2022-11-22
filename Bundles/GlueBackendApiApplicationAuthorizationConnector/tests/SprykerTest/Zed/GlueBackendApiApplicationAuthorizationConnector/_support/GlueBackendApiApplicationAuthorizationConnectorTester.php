@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\GlueBackendApiApplicationAuthorizationConnector;
 
 use Codeception\Actor;
 use Generated\Shared\Transfer\AuthorizationEntityTransfer;
+use Generated\Shared\Transfer\AuthorizationIdentityTransfer;
 use Generated\Shared\Transfer\AuthorizationRequestTransfer;
 
 /**
@@ -34,12 +35,16 @@ class GlueBackendApiApplicationAuthorizationConnectorTester extends Actor
 
     /**
      * @param array<string, mixed> $data
+     * @param \Generated\Shared\Transfer\AuthorizationIdentityTransfer|null $authorizationIdentityTransfer
      *
      * @return \Generated\Shared\Transfer\AuthorizationRequestTransfer
      */
-    public function createAuthorizationRequestTransfer(array $data): AuthorizationRequestTransfer
-    {
+    public function createAuthorizationRequestTransfer(
+        array $data,
+        ?AuthorizationIdentityTransfer $authorizationIdentityTransfer = null
+    ): AuthorizationRequestTransfer {
         return (new AuthorizationRequestTransfer())
+            ->setIdentity($authorizationIdentityTransfer ?? new AuthorizationIdentityTransfer())
             ->setEntity(
                 (new AuthorizationEntityTransfer())
                     ->setData($data),

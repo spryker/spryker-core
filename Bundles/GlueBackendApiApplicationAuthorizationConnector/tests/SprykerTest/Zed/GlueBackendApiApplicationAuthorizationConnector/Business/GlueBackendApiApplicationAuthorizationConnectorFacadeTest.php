@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\GlueBackendApiApplicationAuthorizationConnector\Busine
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ApiApplicationSchemaContextTransfer;
+use Generated\Shared\Transfer\AuthorizationIdentityTransfer;
 use Generated\Shared\Transfer\CustomRoutesContextTransfer;
 use Generated\Shared\Transfer\GlueRequestUserTransfer;
 use Generated\Shared\Transfer\GlueResourceMethodCollectionTransfer;
@@ -171,8 +172,7 @@ class GlueBackendApiApplicationAuthorizationConnectorFacadeTest extends Unit
         $authorizationRequestTransfer = $this->tester->createAuthorizationRequestTransfer([
             static::METHOD => 'post',
             static::PATH => '/testRoute',
-            static::GLUE_REQUEST_USER => new GlueRequestUserTransfer(),
-        ]);
+        ], (new AuthorizationIdentityTransfer())->setIdentifier(1));
 
         // Act
         $result = $this->tester->getFacade()->authorize($authorizationRequestTransfer);
@@ -224,8 +224,7 @@ class GlueBackendApiApplicationAuthorizationConnectorFacadeTest extends Unit
         $authorizationRequestTransfer = $this->tester->createAuthorizationRequestTransfer([
             static::METHOD => 'get',
             static::PATH => '/testRoute/testId',
-            static::GLUE_REQUEST_USER => new GlueRequestUserTransfer(),
-        ]);
+        ], (new AuthorizationIdentityTransfer())->setIdentifier(1));
 
         // Act
         $result = $this->tester->getFacade()->authorize($authorizationRequestTransfer);
