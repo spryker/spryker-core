@@ -11,6 +11,7 @@
 
     <transfer name="Expense">
         <property name="sumGrossPrice" type="int"/>
+        <property name="sumPriceToPayAggregation" type="int"/>
         <property name="refundableAmount" type="int"/>
     </transfer>
 

@@ -144,7 +144,7 @@ class SendCaptureEventSalesPaymentFacadeTest extends Unit
                     ],
                     OrderTransfer::EXPENSES => [
                         [
-                            ExpenseTransfer::SUM_GROSS_PRICE => 5,
+                            ExpenseTransfer::SUM_PRICE_TO_PAY_AGGREGATION => 5,
                             ExpenseTransfer::REFUNDABLE_AMOUNT => 0,
                         ],
                     ],
@@ -176,7 +176,7 @@ class SendCaptureEventSalesPaymentFacadeTest extends Unit
                     ],
                     OrderTransfer::EXPENSES => [
                         [
-                            ExpenseTransfer::SUM_GROSS_PRICE => 5,
+                            ExpenseTransfer::SUM_PRICE_TO_PAY_AGGREGATION => 5,
                             ExpenseTransfer::REFUNDABLE_AMOUNT => 0,
                         ],
                     ],
@@ -225,7 +225,7 @@ class SendCaptureEventSalesPaymentFacadeTest extends Unit
                     ],
                     OrderTransfer::EXPENSES => [
                         [
-                            ExpenseTransfer::SUM_GROSS_PRICE => 5,
+                            ExpenseTransfer::SUM_PRICE_TO_PAY_AGGREGATION => 5,
                             ExpenseTransfer::REFUNDABLE_AMOUNT => 0,
                         ],
                     ],
@@ -274,7 +274,7 @@ class SendCaptureEventSalesPaymentFacadeTest extends Unit
                     ],
                     OrderTransfer::EXPENSES => [
                         [
-                            ExpenseTransfer::SUM_GROSS_PRICE => 5,
+                            ExpenseTransfer::SUM_PRICE_TO_PAY_AGGREGATION => 5,
                             ExpenseTransfer::REFUNDABLE_AMOUNT => 0,
                         ],
                     ],
@@ -323,7 +323,7 @@ class SendCaptureEventSalesPaymentFacadeTest extends Unit
                     ],
                     OrderTransfer::EXPENSES => [
                         [
-                            ExpenseTransfer::SUM_GROSS_PRICE => 5,
+                            ExpenseTransfer::SUM_PRICE_TO_PAY_AGGREGATION => 5,
                             ExpenseTransfer::REFUNDABLE_AMOUNT => 0,
                         ],
                     ],
@@ -372,7 +372,7 @@ class SendCaptureEventSalesPaymentFacadeTest extends Unit
                     ],
                     OrderTransfer::EXPENSES => [
                         [
-                            ExpenseTransfer::SUM_GROSS_PRICE => 5,
+                            ExpenseTransfer::SUM_PRICE_TO_PAY_AGGREGATION => 5,
                             ExpenseTransfer::REFUNDABLE_AMOUNT => 0,
                         ],
                     ],

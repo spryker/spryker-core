@@ -72,7 +72,7 @@ class CaptureAmountCalculator implements CaptureAmountCalculatorInterface
         }
 
         foreach ($orderTransfer->getExpenses() as $expenseTransfer) {
-            $expensesCost += $expenseTransfer->getSumGrossPrice();
+            $expensesCost += $expenseTransfer->getSumPriceToPayAggregation();
         }
 
         return $expensesCost;
