@@ -15,5 +15,5 @@ interface ProductConfigurationToUtilTextServiceInterface
      *
      * @return string
      */
-    public function hashValue($value, $algorithm);
+    public function hashValue($value, string $algorithm): string;
 }

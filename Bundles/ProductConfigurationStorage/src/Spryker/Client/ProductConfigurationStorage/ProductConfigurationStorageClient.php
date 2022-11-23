@@ -8,6 +8,8 @@
 namespace Spryker\Client\ProductConfigurationStorage;
 
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
+use Generated\Shared\Transfer\ProductConfigurationInstanceCollectionTransfer;
+use Generated\Shared\Transfer\ProductConfigurationInstanceCriteriaTransfer;
 use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 use Generated\Shared\Transfer\ProductStorageCriteriaTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
@@ -18,23 +20,6 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class ProductConfigurationStorageClient extends AbstractClient implements ProductConfigurationStorageClientInterface
 {
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param string $sku
-     *
-     * @return \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer|null
-     */
-    public function findProductConfigurationInstanceBySku(
-        string $sku
-    ): ?ProductConfigurationInstanceTransfer {
-        return $this->getFactory()
-            ->createProductConfigurationInstanceReader()
-            ->findProductConfigurationInstanceBySku($sku);
-    }
-
     /**
      * {@inheritDoc}
      *
@@ -154,15 +139,15 @@ class ProductConfigurationStorageClient extends AbstractClient implements Produc
      *
      * @api
      *
-     * @param array<string> $skus
+     * @param \Generated\Shared\Transfer\ProductConfigurationInstanceCriteriaTransfer $productConfigurationInstanceCriteriaTransfer
      *
-     * @return array<\Generated\Shared\Transfer\ProductConfigurationInstanceTransfer>
+     * @return \Generated\Shared\Transfer\ProductConfigurationInstanceCollectionTransfer
      */
-    public function findProductConfigurationInstancesIndexedBySku(
-        array $skus
-    ): array {
+    public function getProductConfigurationInstanceCollection(
+        ProductConfigurationInstanceCriteriaTransfer $productConfigurationInstanceCriteriaTransfer
+    ): ProductConfigurationInstanceCollectionTransfer {
         return $this->getFactory()
             ->createProductConfigurationInstanceReader()
-            ->findProductConfigurationInstancesIndexedBySku($skus);
+            ->getProductConfigurationInstanceCollection($productConfigurationInstanceCriteriaTransfer);
     }
 }

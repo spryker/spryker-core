@@ -7,6 +7,9 @@
 
 namespace Spryker\Client\ProductConfigurationPersistentCart\Dependency\Client;
 
+use Generated\Shared\Transfer\ProductConfigurationInstanceCollectionTransfer;
+use Generated\Shared\Transfer\ProductConfigurationInstanceCriteriaTransfer;
+
 class ProductConfigurationPersistentCartToProductConfigurationStorageClientBridge implements ProductConfigurationPersistentCartToProductConfigurationStorageClientInterface
 {
     /**
@@ -23,12 +26,14 @@ class ProductConfigurationPersistentCartToProductConfigurationStorageClientBridg
     }
 
     /**
-     * @param array<string> $skus
+     * @param \Generated\Shared\Transfer\ProductConfigurationInstanceCriteriaTransfer $productConfigurationInstanceCriteriaTransfer
      *
-     * @return array<\Generated\Shared\Transfer\ProductConfigurationInstanceTransfer>
+     * @return \Generated\Shared\Transfer\ProductConfigurationInstanceCollectionTransfer
      */
-    public function findProductConfigurationInstancesIndexedBySku(array $skus): array
-    {
-        return $this->productConfigurationStorageClient->findProductConfigurationInstancesIndexedBySku($skus);
+    public function getProductConfigurationInstanceCollection(
+        ProductConfigurationInstanceCriteriaTransfer $productConfigurationInstanceCriteriaTransfer
+    ): ProductConfigurationInstanceCollectionTransfer {
+        return $this->productConfigurationStorageClient
+            ->getProductConfigurationInstanceCollection($productConfigurationInstanceCriteriaTransfer);
     }
 }

@@ -7,6 +7,10 @@
 
 namespace Spryker\Client\ProductConfigurationShoppingList\Adder;
 
+use Generated\Shared\Transfer\ProductConfigurationInstanceCollectionTransfer;
+use Generated\Shared\Transfer\ProductConfigurationInstanceConditionsTransfer;
+use Generated\Shared\Transfer\ProductConfigurationInstanceCriteriaTransfer;
+use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Spryker\Client\ProductConfigurationShoppingList\Dependency\Client\ProductConfigurationShoppingListToProductConfigurationStorageClientInterface;
 
@@ -33,9 +37,45 @@ class ProductConfigurationAdder implements ProductConfigurationAdderInterface
      */
     public function addProductConfigurationToShoppingListItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
     {
-        $productConfigurationInstanceTransfer = $this->productConfigurationStorageClient
-            ->findProductConfigurationInstanceBySku($shoppingListItemTransfer->getSkuOrFail());
+        $productConfigurationInstanceTransfer = $this->findProductConfigurationInstance($shoppingListItemTransfer);
 
         return $shoppingListItemTransfer->setProductConfigurationInstance($productConfigurationInstanceTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer|null
+     */
+    protected function findProductConfigurationInstance(
+        ShoppingListItemTransfer $shoppingListItemTransfer
+    ): ?ProductConfigurationInstanceTransfer {
+        $productConfigurationInstanceCollectionTransfer = $this->getProductConfigurationInstanceCollection($shoppingListItemTransfer);
+
+        if (!$productConfigurationInstanceCollectionTransfer->getProductConfigurationInstances()->count()) {
+            return null;
+        }
+
+        return $productConfigurationInstanceCollectionTransfer->getProductConfigurationInstances()
+            ->getIterator()
+            ->current();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConfigurationInstanceCollectionTransfer
+     */
+    protected function getProductConfigurationInstanceCollection(
+        ShoppingListItemTransfer $shoppingListItemTransfer
+    ): ProductConfigurationInstanceCollectionTransfer {
+        $productConfigurationInstanceConditionsTransfer = (new ProductConfigurationInstanceConditionsTransfer())
+            ->addSku($shoppingListItemTransfer->getSkuOrFail());
+
+        $productConfigurationInstanceCriteriaTransfer = (new ProductConfigurationInstanceCriteriaTransfer())
+            ->setProductConfigurationInstanceConditions($productConfigurationInstanceConditionsTransfer);
+
+        return $this->productConfigurationStorageClient
+            ->getProductConfigurationInstanceCollection($productConfigurationInstanceCriteriaTransfer);
     }
 }

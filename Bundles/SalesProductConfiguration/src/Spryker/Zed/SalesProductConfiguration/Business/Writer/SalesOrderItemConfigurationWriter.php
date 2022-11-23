@@ -89,7 +89,7 @@ class SalesOrderItemConfigurationWriter implements SalesOrderItemConfigurationWr
         $this->assertItemRequirements($itemTransfer);
 
         $salesOrderItemConfigurationTransfer = (new SalesOrderItemConfigurationTransfer())
-            ->fromArray($itemTransfer->getProductConfigurationInstance()->toArray(), true)
+            ->fromArray($itemTransfer->getProductConfigurationInstanceOrFail()->toArray(), true)
             ->setIdSalesOrderItem($itemTransfer->getIdSalesOrderItem());
 
         if (!isset($salesOrderItemConfigurationTransfers[$itemTransfer->getIdSalesOrderItem()])) {
@@ -108,7 +108,7 @@ class SalesOrderItemConfigurationWriter implements SalesOrderItemConfigurationWr
     {
         $itemTransfer
             ->requireIdSalesOrderItem()
-            ->getProductConfigurationInstance()
+            ->getProductConfigurationInstanceOrFail()
                 ->requireConfiguratorKey();
     }
 }

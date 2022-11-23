@@ -7,7 +7,8 @@
 
 namespace Spryker\Client\ProductConfigurationShoppingList\Dependency\Client;
 
-use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
+use Generated\Shared\Transfer\ProductConfigurationInstanceCollectionTransfer;
+use Generated\Shared\Transfer\ProductConfigurationInstanceCriteriaTransfer;
 
 class ProductConfigurationShoppingListToProductConfigurationStorageClientBridge implements ProductConfigurationShoppingListToProductConfigurationStorageClientInterface
 {
@@ -25,12 +26,14 @@ class ProductConfigurationShoppingListToProductConfigurationStorageClientBridge 
     }
 
     /**
-     * @param string $sku
+     * @param \Generated\Shared\Transfer\ProductConfigurationInstanceCriteriaTransfer $productConfigurationInstanceCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer|null
+     * @return \Generated\Shared\Transfer\ProductConfigurationInstanceCollectionTransfer
      */
-    public function findProductConfigurationInstanceBySku(string $sku): ?ProductConfigurationInstanceTransfer
-    {
-        return $this->productConfigurationStorageClient->findProductConfigurationInstanceBySku($sku);
+    public function getProductConfigurationInstanceCollection(
+        ProductConfigurationInstanceCriteriaTransfer $productConfigurationInstanceCriteriaTransfer
+    ): ProductConfigurationInstanceCollectionTransfer {
+        return $this->productConfigurationStorageClient
+            ->getProductConfigurationInstanceCollection($productConfigurationInstanceCriteriaTransfer);
     }
 }

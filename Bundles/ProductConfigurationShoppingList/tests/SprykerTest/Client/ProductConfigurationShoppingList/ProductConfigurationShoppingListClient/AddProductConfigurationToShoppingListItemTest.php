@@ -7,7 +7,9 @@
 
 namespace SprykerTest\Client\ProductConfigurationShoppingList\ProductConfigurationShoppingListClient;
 
+use ArrayObject;
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\ProductConfigurationInstanceCollectionTransfer;
 use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Spryker\Client\ProductConfigurationShoppingList\Dependency\Client\ProductConfigurationShoppingListToProductConfigurationStorageClientInterface;
@@ -50,7 +52,13 @@ class AddProductConfigurationToShoppingListItemTest extends Unit
             ->setQuantity(5)
             ->setIsComplete(true);
 
-        $productConfigurationShoppingListFactory = $this->createProductConfigurationShoppingListFactoryMock($productConfigurationInstanceTransfer);
+        $productConfigurationInstanceCollectionTransfer = (new ProductConfigurationInstanceCollectionTransfer())->setProductConfigurationInstances(
+            new ArrayObject([
+                static::FAKE_SKU => $productConfigurationInstanceTransfer,
+            ]),
+        );
+
+        $productConfigurationShoppingListFactory = $this->createProductConfigurationShoppingListFactoryMock($productConfigurationInstanceCollectionTransfer);
         $productConfigurationShoppingListClient = $this->tester->getClient()->setFactory($productConfigurationShoppingListFactory);
 
         // Act
@@ -69,7 +77,7 @@ class AddProductConfigurationToShoppingListItemTest extends Unit
         $shoppingListItemTransfer = (new ShoppingListItemTransfer())
             ->setSku(static::FAKE_SKU);
 
-        $productConfigurationShoppingListFactory = $this->createProductConfigurationShoppingListFactoryMock();
+        $productConfigurationShoppingListFactory = $this->createProductConfigurationShoppingListFactoryMock(new ProductConfigurationInstanceCollectionTransfer());
         $productConfigurationShoppingListClient = $this->tester->getClient()->setFactory($productConfigurationShoppingListFactory);
 
         // Act
@@ -88,7 +96,7 @@ class AddProductConfigurationToShoppingListItemTest extends Unit
         $shoppingListItemTransfer = (new ShoppingListItemTransfer())
             ->setSku(null);
 
-        $productConfigurationShoppingListFactory = $this->createProductConfigurationShoppingListFactoryMock();
+        $productConfigurationShoppingListFactory = $this->createProductConfigurationShoppingListFactoryMock(new ProductConfigurationInstanceCollectionTransfer());
         $productConfigurationShoppingListClient = $this->tester->getClient()->setFactory($productConfigurationShoppingListFactory);
 
         // Assert
@@ -99,12 +107,12 @@ class AddProductConfigurationToShoppingListItemTest extends Unit
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer|null $productConfigurationInstanceTransfer
+     * @param \Generated\Shared\Transfer\ProductConfigurationInstanceCollectionTransfer $productConfigurationInstanceCollectionTransfer
      *
      * @return \Spryker\Client\ProductConfigurationShoppingList\ProductConfigurationShoppingListFactory|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function createProductConfigurationShoppingListFactoryMock(
-        ?ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer = null
+        ProductConfigurationInstanceCollectionTransfer $productConfigurationInstanceCollectionTransfer
     ): ProductConfigurationShoppingListFactory {
         $productConfigurationShoppingListMock = $this->getMockBuilder(ProductConfigurationShoppingListFactory::class)
             ->disableOriginalConstructor()
@@ -112,12 +120,12 @@ class AddProductConfigurationToShoppingListItemTest extends Unit
             ->getMock();
 
         $productConfigurationStorageClient = $this->getMockBuilder(ProductConfigurationShoppingListToProductConfigurationStorageClientInterface::class)
-            ->onlyMethods(['findProductConfigurationInstanceBySku'])
+            ->onlyMethods(['getProductConfigurationInstanceCollection'])
             ->getMockForAbstractClass();
 
         $productConfigurationStorageClient
-            ->method('findProductConfigurationInstanceBySku')
-            ->willReturn($productConfigurationInstanceTransfer);
+            ->method('getProductConfigurationInstanceCollection')
+            ->willReturn($productConfigurationInstanceCollectionTransfer);
 
         $productConfigurationShoppingListMock
             ->method('getProductConfigurationStorageClient')

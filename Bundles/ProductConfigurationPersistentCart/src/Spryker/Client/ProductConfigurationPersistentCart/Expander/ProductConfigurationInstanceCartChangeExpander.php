@@ -9,6 +9,9 @@ namespace Spryker\Client\ProductConfigurationPersistentCart\Expander;
 
 use ArrayObject;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
+use Generated\Shared\Transfer\ProductConfigurationInstanceCollectionTransfer;
+use Generated\Shared\Transfer\ProductConfigurationInstanceConditionsTransfer;
+use Generated\Shared\Transfer\ProductConfigurationInstanceCriteriaTransfer;
 use Spryker\Client\ProductConfigurationPersistentCart\Dependency\Client\ProductConfigurationPersistentCartToProductConfigurationStorageClientInterface;
 
 class ProductConfigurationInstanceCartChangeExpander implements ProductConfigurationInstanceCartChangeExpanderInterface
@@ -16,7 +19,7 @@ class ProductConfigurationInstanceCartChangeExpander implements ProductConfigura
     /**
      * @var \Spryker\Client\ProductConfigurationPersistentCart\Dependency\Client\ProductConfigurationPersistentCartToProductConfigurationStorageClientInterface
      */
-    protected $productConfigurationStorageClient;
+    protected ProductConfigurationPersistentCartToProductConfigurationStorageClientInterface $productConfigurationStorageClient;
 
     /**
      * @param \Spryker\Client\ProductConfigurationPersistentCart\Dependency\Client\ProductConfigurationPersistentCartToProductConfigurationStorageClientInterface $productConfigurationStorageClient
@@ -36,72 +39,70 @@ class ProductConfigurationInstanceCartChangeExpander implements ProductConfigura
         PersistentCartChangeTransfer $persistentCartChangeTransfer,
         array $params = []
     ): PersistentCartChangeTransfer {
-        $skus = $this->extractItemSkus($persistentCartChangeTransfer->getItems());
+        $productConfigurationInstanceCollectionTransfer = $this->getProductConfigurationInstanceCollection($persistentCartChangeTransfer);
 
-        if (!$skus) {
+        if (!$productConfigurationInstanceCollectionTransfer->getProductConfigurationInstances()->count()) {
             return $persistentCartChangeTransfer;
         }
 
-        $productConfigurationInstancesIndexedBySku = $this->productConfigurationStorageClient->findProductConfigurationInstancesIndexedBySku($skus);
-
-        if (!$productConfigurationInstancesIndexedBySku) {
-            return $persistentCartChangeTransfer;
-        }
-
-        $expandedItemTransfers = $this->expandItemsWithProductConfigurationInstance(
-            $productConfigurationInstancesIndexedBySku,
-            $persistentCartChangeTransfer->getItems(),
+        return $this->expandItemsWithProductConfigurationInstance(
+            $persistentCartChangeTransfer,
+            $productConfigurationInstanceCollectionTransfer,
         );
-
-        $persistentCartChangeTransfer->setItems($expandedItemTransfers);
-
-        return $persistentCartChangeTransfer;
     }
 
     /**
-     * @param array<\Generated\Shared\Transfer\ProductConfigurationInstanceTransfer> $productConfigurationInstancesIndexedBySku
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
+     * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer
      *
-     * @return \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer>
+     * @return \Generated\Shared\Transfer\ProductConfigurationInstanceCollectionTransfer
+     */
+    protected function getProductConfigurationInstanceCollection(
+        PersistentCartChangeTransfer $persistentCartChangeTransfer
+    ): ProductConfigurationInstanceCollectionTransfer {
+        $productConfigurationInstanceConditionsTransfer = new ProductConfigurationInstanceConditionsTransfer();
+
+        foreach ($persistentCartChangeTransfer->getItems() as $itemTransfer) {
+            if ($itemTransfer->getProductConfigurationInstance()) {
+                continue;
+            }
+
+            $productConfigurationInstanceConditionsTransfer->addSku($itemTransfer->getSkuOrFail());
+        }
+
+        if (!$productConfigurationInstanceConditionsTransfer->getSkus()) {
+            return new ProductConfigurationInstanceCollectionTransfer();
+        }
+
+        $productConfigurationInstanceCriteriaTransfer = (new ProductConfigurationInstanceCriteriaTransfer())
+            ->setProductConfigurationInstanceConditions($productConfigurationInstanceConditionsTransfer);
+
+        return $this->productConfigurationStorageClient
+            ->getProductConfigurationInstanceCollection($productConfigurationInstanceCriteriaTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer
+     * @param \Generated\Shared\Transfer\ProductConfigurationInstanceCollectionTransfer $productConfigurationInstanceCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\PersistentCartChangeTransfer
      */
     protected function expandItemsWithProductConfigurationInstance(
-        array $productConfigurationInstancesIndexedBySku,
-        ArrayObject $itemTransfers
-    ): ArrayObject {
-        foreach ($itemTransfers as $itemTransfer) {
-            if ($itemTransfer->getProductConfigurationInstance()) {
-                continue;
+        PersistentCartChangeTransfer $persistentCartChangeTransfer,
+        ProductConfigurationInstanceCollectionTransfer $productConfigurationInstanceCollectionTransfer
+    ): PersistentCartChangeTransfer {
+        $expandedPersistentCartChangeItemTransfers = new ArrayObject();
+        $productConfigurationInstanceTransfersIndexedBySku = $productConfigurationInstanceCollectionTransfer->getProductConfigurationInstances();
+
+        foreach ($persistentCartChangeTransfer->getItems() as $itemTransfer) {
+            $productConfigurationInstanceTransfer = $productConfigurationInstanceTransfersIndexedBySku[$itemTransfer->getSkuOrFail()] ?? null;
+
+            if (!$itemTransfer->getProductConfigurationInstance() && $productConfigurationInstanceTransfer) {
+                $itemTransfer->setProductConfigurationInstance($productConfigurationInstanceTransfer);
             }
 
-            $productConfigurationInstanceTransfer = $productConfigurationInstancesIndexedBySku[$itemTransfer->getSku()] ?? null;
-
-            if (!$productConfigurationInstanceTransfer) {
-                continue;
-            }
-
-            $itemTransfer->setProductConfigurationInstance($productConfigurationInstanceTransfer);
+            $expandedPersistentCartChangeItemTransfers->append($itemTransfer);
         }
 
-        return $itemTransfers;
-    }
-
-    /**
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
-     *
-     * @return array<string>
-     */
-    protected function extractItemSkus(ArrayObject $itemTransfers): array
-    {
-        $skus = [];
-
-        foreach ($itemTransfers as $itemTransfer) {
-            if ($itemTransfer->getProductConfigurationInstance()) {
-                continue;
-            }
-
-            $skus[] = $itemTransfer->getSkuOrFail();
-        }
-
-        return $skus;
+        return $persistentCartChangeTransfer->setItems($expandedPersistentCartChangeItemTransfers);
     }
 }

@@ -28,7 +28,7 @@ class ProductConfigurationStorageToSessionClientBridge implements ProductConfigu
      *
      * @return void
      */
-    public function set(string $name, $value)
+    public function set(string $name, $value): void
     {
         $this->sessionClient->set($name, $value);
     }

@@ -97,7 +97,6 @@ class ProductConfigurationVolumePriceRestProductConfigurationPriceMapperPluginTe
         $productConfigurationVolumePriceRestProductConfigurationPriceMapperPlugin = new ProductConfigurationVolumePriceRestProductConfigurationPriceMapperPlugin();
 
         // Act
-        /** @var array<\Generated\Shared\Transfer\RestProductConfigurationPriceAttributesTransfer> $restProductConfigurationPriceAttributesTransfers */
         $restProductConfigurationPriceAttributesTransfers = $productConfigurationVolumePriceRestProductConfigurationPriceMapperPlugin->map(
             $productConfigurationInstanceTransfer,
             [$restProductConfigurationPriceAttributesTransfer],

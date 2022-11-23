@@ -7,10 +7,12 @@
 
 namespace Spryker\Client\ProductConfiguration\Dependency\Client;
 
+use Generated\Shared\Transfer\StoreTransfer;
+
 interface ProductConfigurationToStoreClientInterface
 {
     /**
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getCurrentStore();
+    public function getCurrentStore(): StoreTransfer;
 }

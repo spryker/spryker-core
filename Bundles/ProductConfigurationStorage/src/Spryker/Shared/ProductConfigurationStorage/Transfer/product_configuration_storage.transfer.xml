@@ -16,11 +16,6 @@
         <property name="data" type="string"/>
     </transfer>
 
-    <transfer name="ProductConfigurationFilter">
-        <property name="productConfigurationIds" type="int[]" singular="productConfigurationId"/>
-        <property name="filter" type="Filter"/>
-    </transfer>
-
     <transfer name="Filter">
         <property name="orderBy" type="string"/>
         <property name="offset" type="int"/>
@@ -35,6 +30,7 @@
         <property name="quantity" type="int"/>
         <property name="availableQuantity" type="int"/>
         <property name="prices" type="PriceProduct[]" singular="price"/>
+        <property name="sku" type="string"/>
     </transfer>
 
     <transfer name="PriceProductFilter">
@@ -145,5 +141,31 @@
 
     <transfer name="QuoteError">
         <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="ProductConfigurationCriteria">
+        <property name="productConfigurationConditions" type="ProductConfigurationConditions"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="ProductConfigurationConditions">
+        <property name="productConfigurationIds" type="int[]" singular="idProductConfiguration"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
+    </transfer>
+
+    <transfer name="ProductConfigurationInstanceCollection">
+        <property name="productConfigurationInstances" type="ProductConfigurationInstance[]" singular="productConfigurationInstance"/>
+    </transfer>
+
+    <transfer name="ProductConfigurationInstanceCriteria">
+        <property name="productConfigurationInstanceConditions" type="ProductConfigurationInstanceConditions"/>
+    </transfer>
+
+    <transfer name="ProductConfigurationInstanceConditions">
+        <property name="skus" type="string[]" singular="sku"/>
     </transfer>
 </transfers>

@@ -9,6 +9,9 @@ namespace SprykerTest\Client\ProductConfigurationStorage\ProductConfigurationSto
 
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ProductConfigurationInstanceBuilder;
+use Generated\Shared\DataBuilder\ProductConfigurationInstanceCriteriaBuilder;
+use Generated\Shared\Transfer\ProductConfigurationInstanceCollectionTransfer;
+use Generated\Shared\Transfer\ProductConfigurationInstanceConditionsTransfer;
 use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 use Spryker\Client\ProductConfigurationStorage\Builder\ProductConfigurationSessionKeyBuilder;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToSessionClientBridge;
@@ -24,10 +27,10 @@ use Spryker\Client\ProductConfigurationStorage\ProductConfigurationStorageFactor
  * @group Client
  * @group ProductConfigurationStorage
  * @group ProductConfigurationStorageClient
- * @group FindProductConfigurationInstancesIndexedBySkuTest
+ * @group GetProductConfigurationInstanceCollectionTest
  * Add your own group annotations below this line
  */
-class FindProductConfigurationInstancesIndexedBySkuTest extends Unit
+class GetProductConfigurationInstanceCollectionTest extends Unit
 {
     /**
      * @var string
@@ -40,6 +43,11 @@ class FindProductConfigurationInstancesIndexedBySkuTest extends Unit
     protected const TEST_SKU_2 = 'test-sku-2';
 
     /**
+     * @var int
+     */
+    protected const TEST_SKU_3 = 888;
+
+    /**
      * @var \SprykerTest\Client\ProductConfigurationStorage\ProductConfigurationStorageClientTester
      */
     protected $tester;
@@ -47,55 +55,10 @@ class FindProductConfigurationInstancesIndexedBySkuTest extends Unit
     /**
      * @return void
      */
-    public function testFindProductConfigurationInstancesIndexedBySkuFromSession(): void
+    public function testGetProductConfigurationInstanceCollectionFromStorageWhileSkuCriteriaMatched(): void
     {
         // Arrange
-        /** @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\ProductConfigurationStorage\ProductConfigurationStorageFactory $productConfigurationStorageFactoryMock */
-        $productConfigurationStorageFactoryMock = $this->getMockBuilder(ProductConfigurationStorageFactory::class)
-            ->onlyMethods(['getSessionClient', 'createProductConfigurationSessionKeyBuilder'])
-            ->getMock();
-
-        $productConfigurationStorageFactoryMock
-            ->method('getSessionClient')
-            ->willReturn($this->getProductConfigurationStorageToSessionClientBridgeMock());
-
-        $productConfigurationStorageFactoryMock
-            ->method('createProductConfigurationSessionKeyBuilder')
-            ->willReturn($this->getProductConfigurationSessionKeyBuilder());
-
-        $skus = [static::TEST_SKU_1, static::TEST_SKU_2];
-
-        // Act
-        $productConfigurationInstanceTransfers = $this->tester
-            ->getClientMock($productConfigurationStorageFactoryMock)
-            ->findProductConfigurationInstancesIndexedBySku($skus);
-
-        // Assert
-        $this->assertNotNull(
-            $productConfigurationInstanceTransfers,
-            'Expects that product configuration instances will be found from session.',
-        );
-        $this->assertIsArray(
-            $productConfigurationInstanceTransfers,
-            'Expects that product configuration instances will be found from session.',
-        );
-
-        $this->assertEquals(2, count($productConfigurationInstanceTransfers));
-        foreach ($productConfigurationInstanceTransfers as $transfer) {
-            $this->assertInstanceOf(
-                ProductConfigurationInstanceTransfer::class,
-                $transfer,
-                'Expects that product configuration instances will be found from session.',
-            );
-        }
-    }
-
-    /**
-     * @return void
-     */
-    public function testFindProductConfigurationInstancesIndexedBySkuFromStorage(): void
-    {
-        // Arrange
+        $skus = [static::TEST_SKU_1, static::TEST_SKU_2, static::TEST_SKU_3];
         /** @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\ProductConfigurationStorage\ProductConfigurationStorageFactory $productConfigurationStorageFactoryMock */
         $productConfigurationStorageFactoryMock = $this->getMockBuilder(ProductConfigurationStorageFactory::class)
             ->onlyMethods(['getStorageClient'])
@@ -104,51 +67,93 @@ class FindProductConfigurationInstancesIndexedBySkuTest extends Unit
         $productConfigurationStorageFactoryMock
             ->method('getStorageClient')
             ->willReturn($this->getProductConfigurationStorageToStorageClientBridgeMock());
-        $skus = [static::TEST_SKU_1, static::TEST_SKU_2];
+
+        $productConfigurationInstanceCriteriaTransfer = (new ProductConfigurationInstanceCriteriaBuilder())
+            ->withProductConfigurationInstanceConditions([
+                ProductConfigurationInstanceConditionsTransfer::SKUS => $skus,
+            ])->build();
 
         // Act
-        $productConfigurationInstanceTransfers = $this->tester
+        $productConfigurationInstanceCollectionTransfer = $this->tester
             ->getClientMock($productConfigurationStorageFactoryMock)
-            ->findProductConfigurationInstancesIndexedBySku($skus);
+            ->getProductConfigurationInstanceCollection($productConfigurationInstanceCriteriaTransfer);
 
         // Assert
-        $this->assertNotNull(
-            $productConfigurationInstanceTransfers,
-            'Expects that product configuration instances will be found from session.',
+        $this->assertSame(
+            3,
+            $productConfigurationInstanceCollectionTransfer->getProductConfigurationInstances()->count(),
+            'Expects that product instance collection has two product configuration instances found from storage.',
         );
-        $this->assertIsArray(
-            $productConfigurationInstanceTransfers,
-            'Expects that product configuration instances will be found from session.',
+        $this->assertProductConfigurationInstanceTransfersIndexedBySku(
+            $productConfigurationInstanceCollectionTransfer,
+            $skus,
         );
-
-        $this->assertEquals(2, count($productConfigurationInstanceTransfers));
-        foreach ($productConfigurationInstanceTransfers as $transfer) {
-            $this->assertInstanceOf(
-                ProductConfigurationInstanceTransfer::class,
-                $transfer,
-                'Expects that product configuration instances will be found from session.',
-            );
-        }
     }
 
     /**
      * @return void
      */
-    public function testFindProductConfigurationInstancesIndexedBySkuFromSessionAndStorageClientsReturnsEmpty(): void
+    public function testGetProductConfigurationInstanceCollectionFromSessionAndStorageReturnsEmptyCollectionWhileNoCriteriaMatched(): void
     {
         // Arrange
-        $skus = [static::TEST_SKU_1, static::TEST_SKU_2];
+        $skus = [static::TEST_SKU_1, static::TEST_SKU_2, static::TEST_SKU_3];
+        $productConfigurationInstanceCriteriaTransfer = (new ProductConfigurationInstanceCriteriaBuilder())
+            ->withProductConfigurationInstanceConditions([
+                ProductConfigurationInstanceConditionsTransfer::SKUS => $skus,
+            ])->build();
 
         // Act
-        $productConfigurationInstanceTransfers = $this->tester
+        $productConfigurationInstanceCollectionTransfer = $this->tester
             ->getClient()
-            ->findProductConfigurationInstancesIndexedBySku($skus);
+            ->getProductConfigurationInstanceCollection($productConfigurationInstanceCriteriaTransfer);
 
         // Assert
         $this->assertEmpty(
-            $productConfigurationInstanceTransfers,
-            'Expects that product configuration instances wont be found.',
+            $productConfigurationInstanceCollectionTransfer->getProductConfigurationInstances(),
+            'Expects that product configuration instance collection is empty.',
         );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductConfigurationInstanceCollectionReturnsEmptyCollectionWhileNoCriteriaSpecified(): void
+    {
+        // Arrange
+        $productConfigurationInstanceCriteriaTransfer = (new ProductConfigurationInstanceCriteriaBuilder())->build();
+
+        // Act
+        $productConfigurationInstanceCollectionTransfer = $this->tester
+            ->getClient()
+            ->getProductConfigurationInstanceCollection($productConfigurationInstanceCriteriaTransfer);
+
+        // Assert
+        $this->assertEmpty(
+            $productConfigurationInstanceCollectionTransfer->getProductConfigurationInstances(),
+            'Expects that product configuration instance collection is empty.',
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConfigurationInstanceCollectionTransfer $productConfigurationInstanceCollectionTransfer
+     * @param array $skus
+     *
+     * @return void
+     */
+    protected function assertProductConfigurationInstanceTransfersIndexedBySku(
+        ProductConfigurationInstanceCollectionTransfer $productConfigurationInstanceCollectionTransfer,
+        array $skus
+    ) {
+        $productConfigurationInstanceTransfers = $productConfigurationInstanceCollectionTransfer->getProductConfigurationInstances();
+
+        foreach ($productConfigurationInstanceTransfers as $sku => $productConfigurationInstanceTransfer) {
+            $this->assertInstanceOf(
+                ProductConfigurationInstanceTransfer::class,
+                $productConfigurationInstanceTransfer,
+                'Expects that product configuration instances will be found from session.',
+            );
+            $this->assertTrue(in_array($sku, $skus, true), 'Expects that collection will be indexed by SKU');
+        }
     }
 
     /**
@@ -166,6 +171,7 @@ class FindProductConfigurationInstancesIndexedBySkuTest extends Unit
             ->willReturn([
                 static::TEST_SKU_1 => (new ProductConfigurationInstanceBuilder())->build(),
                 static::TEST_SKU_2 => (new ProductConfigurationInstanceBuilder())->build(),
+                static::TEST_SKU_3 => (new ProductConfigurationInstanceBuilder())->build(),
             ]);
 
         return $productConfigurationStorageToSessionClientBridgeMock;
@@ -180,6 +186,7 @@ class FindProductConfigurationInstancesIndexedBySkuTest extends Unit
             ->onlyMethods(['getProductConfigurationSessionKey'])
             ->disableOriginalConstructor()
             ->getMock();
+
         $productConfigurationSessionKeyBuilder
             ->method('getProductConfigurationSessionKey')
             ->willReturnCallback(function ($key) {
@@ -204,6 +211,7 @@ class FindProductConfigurationInstancesIndexedBySkuTest extends Unit
             ->willReturn([
                 static::TEST_SKU_1 => json_encode(array_merge((new ProductConfigurationInstanceBuilder())->build()->toArray(), ['sku' => static::TEST_SKU_1])),
                 static::TEST_SKU_2 => json_encode(array_merge((new ProductConfigurationInstanceBuilder())->build()->toArray(), ['sku' => static::TEST_SKU_2])),
+                static::TEST_SKU_3 => json_encode(array_merge((new ProductConfigurationInstanceBuilder())->build()->toArray(), ['sku' => static::TEST_SKU_3])),
             ]);
 
         return $productConfigurationStorageToStorageClientBridgeMock;

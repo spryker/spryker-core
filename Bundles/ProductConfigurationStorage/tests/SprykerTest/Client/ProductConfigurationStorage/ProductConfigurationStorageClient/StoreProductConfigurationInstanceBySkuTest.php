@@ -11,6 +11,8 @@ use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ProductConcreteBuilder;
 use Generated\Shared\DataBuilder\ProductConfigurationInstanceBuilder;
+use Generated\Shared\DataBuilder\ProductConfigurationInstanceCriteriaBuilder;
+use Generated\Shared\Transfer\ProductConfigurationInstanceConditionsTransfer;
 use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 
 /**
@@ -41,22 +43,29 @@ class StoreProductConfigurationInstanceBySkuTest extends Unit
             ProductConfigurationInstanceTransfer::PRICES => new ArrayObject(),
         ]))->build();
 
+        $productConfigurationInstanceCriteriaTransfer = (new ProductConfigurationInstanceCriteriaBuilder())
+            ->withProductConfigurationInstanceConditions([
+                    ProductConfigurationInstanceConditionsTransfer::SKUS => [$productConcreteTransfer->getSkuOrFail()],
+                ])->build();
+
         // Act
         $this->tester
             ->getClient()
             ->storeProductConfigurationInstanceBySku(
-                $productConcreteTransfer->getSku(),
+                $productConcreteTransfer->getSkuOrFail(),
                 $productConfigurationInstanceTransfer,
             );
 
         // Assert
-        $storedProductConfigurationInstanceTransfer = $this->tester
+        $productConfigurationInstanceCollectionTransfer = $this->tester
             ->getClient()
-            ->findProductConfigurationInstanceBySku($productConcreteTransfer->getSku());
+            ->getProductConfigurationInstanceCollection($productConfigurationInstanceCriteriaTransfer);
 
         $this->assertEquals(
+            $productConfigurationInstanceCollectionTransfer->getProductConfigurationInstances()
+                ->getIterator()
+                ->current(),
             $productConfigurationInstanceTransfer,
-            $storedProductConfigurationInstanceTransfer,
             'Expects that store product configuration in session.',
         );
     }
@@ -68,23 +77,28 @@ class StoreProductConfigurationInstanceBySkuTest extends Unit
     {
         // Arrange
         $productConcreteTransfer = (new ProductConcreteBuilder())->build();
-        $productConfigurationInstanceTransfer = new ProductConfigurationInstanceTransfer();
+        $productConfigurationInstanceCriteriaTransfer = (new ProductConfigurationInstanceCriteriaBuilder())
+            ->withProductConfigurationInstanceConditions([
+                ProductConfigurationInstanceConditionsTransfer::SKUS => [$productConcreteTransfer->getSkuOrFail()],
+            ])->build();
 
         // Act
         $this->tester
             ->getClient()
             ->storeProductConfigurationInstanceBySku(
-                $productConcreteTransfer->getSku(),
-                $productConfigurationInstanceTransfer,
+                $productConcreteTransfer->getSkuOrFail(),
+                new ProductConfigurationInstanceTransfer(),
             );
 
         // Assert
-        $storedProductConfigurationInstanceTransfer = $this->tester
+        $productConfigurationInstanceCollectionTransfer = $this->tester
             ->getClient()
-            ->findProductConfigurationInstanceBySku($productConcreteTransfer->getSku());
+            ->getProductConfigurationInstanceCollection($productConfigurationInstanceCriteriaTransfer);
 
         $this->assertNotNull(
-            $storedProductConfigurationInstanceTransfer,
+            $productConfigurationInstanceCollectionTransfer->getProductConfigurationInstances()
+                ->getIterator()
+                ->current(),
             'Expects that store empty product configuration in session.',
         );
     }

@@ -8,6 +8,9 @@
 namespace Spryker\Glue\ProductConfigurationsRestApi\Processor\Expander;
 
 use Generated\Shared\Transfer\CartItemRequestTransfer;
+use Generated\Shared\Transfer\ProductConfigurationInstanceCollectionTransfer;
+use Generated\Shared\Transfer\ProductConfigurationInstanceConditionsTransfer;
+use Generated\Shared\Transfer\ProductConfigurationInstanceCriteriaTransfer;
 use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
 use Spryker\Glue\ProductConfigurationsRestApi\Dependency\Client\ProductConfigurationsRestApiToProductConfigurationStorageClientInterface;
@@ -18,12 +21,12 @@ class ProductConfigurationCartItemExpander implements ProductConfigurationCartIt
     /**
      * @var \Spryker\Glue\ProductConfigurationsRestApi\Processor\Mapper\ProductConfigurationInstanceMapperInterface
      */
-    protected $productConfigurationInstanceMapper;
+    protected ProductConfigurationInstanceMapperInterface $productConfigurationInstanceMapper;
 
     /**
      * @var \Spryker\Glue\ProductConfigurationsRestApi\Dependency\Client\ProductConfigurationsRestApiToProductConfigurationStorageClientInterface
      */
-    protected $productConfigurationStorageClient;
+    protected ProductConfigurationsRestApiToProductConfigurationStorageClientInterface $productConfigurationStorageClient;
 
     /**
      * @param \Spryker\Glue\ProductConfigurationsRestApi\Processor\Mapper\ProductConfigurationInstanceMapperInterface $productConfigurationInstanceMapper
@@ -59,13 +62,45 @@ class ProductConfigurationCartItemExpander implements ProductConfigurationCartIt
             return $cartItemRequestTransfer->setProductConfigurationInstance($productConfigurationInstanceTransfer);
         }
 
-        $productConfigurationInstanceTransfer = $this->productConfigurationStorageClient
-            ->findProductConfigurationInstanceBySku($restCartItemsAttributesTransfer->getSkuOrFail());
-
-        if (!$productConfigurationInstanceTransfer) {
-            return $cartItemRequestTransfer;
-        }
+        $productConfigurationInstanceTransfer = $this->findProductConfigurationInstance($cartItemRequestTransfer);
 
         return $cartItemRequestTransfer->setProductConfigurationInstance($productConfigurationInstanceTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer|null
+     */
+    protected function findProductConfigurationInstance(
+        CartItemRequestTransfer $cartItemRequestTransfer
+    ): ?ProductConfigurationInstanceTransfer {
+        $productConfigurationInstanceCollectionTransfer = $this->getProductConfigurationInstanceCollection($cartItemRequestTransfer);
+
+        if (!$productConfigurationInstanceCollectionTransfer->getProductConfigurationInstances()->count()) {
+            return null;
+        }
+
+        return $productConfigurationInstanceCollectionTransfer->getProductConfigurationInstances()
+            ->getIterator()
+            ->current();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConfigurationInstanceCollectionTransfer
+     */
+    protected function getProductConfigurationInstanceCollection(
+        CartItemRequestTransfer $cartItemRequestTransfer
+    ): ProductConfigurationInstanceCollectionTransfer {
+        $productConfigurationInstanceConditionsTransfer = (new ProductConfigurationInstanceConditionsTransfer())
+            ->addSku($cartItemRequestTransfer->getSkuOrFail());
+
+        $productConfigurationInstanceCriteriaTransfer = (new ProductConfigurationInstanceCriteriaTransfer())
+            ->setProductConfigurationInstanceConditions($productConfigurationInstanceConditionsTransfer);
+
+        return $this->productConfigurationStorageClient
+            ->getProductConfigurationInstanceCollection($productConfigurationInstanceCriteriaTransfer);
     }
 }

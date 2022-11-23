@@ -10,7 +10,7 @@
         "spryker/kernel": "^3.30.0",
         "spryker/locale": "^3.0.0",
         "spryker/price-product-storage-extension": "^1.2.0",
-        "spryker/product-configuration": "^0.2.0",
+        "spryker/product-configuration": "^1.0.0",
         "spryker/product-storage": "^1.1.0",
         "spryker/product-storage-extension": "^1.4.0",
         "spryker/propel-orm": "^1.5.0",

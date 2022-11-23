@@ -45,7 +45,7 @@ class ProductConfigurationItemExpander implements ProductConfigurationItemExpand
         ItemTransfer $itemTransfer
     ): ProductConfigurationInstanceTransfer {
         return (new ProductConfigurationInstanceTransfer())
-            ->fromArray($itemTransfer->getSalesOrderItemConfiguration()->toArray(), true)
+            ->fromArray($itemTransfer->getSalesOrderItemConfigurationOrFail()->toArray(), true)
             ->setIsComplete(true);
     }
 

@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\ProductConfigurationStorage\Communication\Plugin\Publisher;
 
-use Generated\Shared\Transfer\FilterTransfer;
-use Generated\Shared\Transfer\ProductConfigurationFilterTransfer;
+use Generated\Shared\Transfer\PaginationTransfer;
+use Generated\Shared\Transfer\ProductConfigurationCriteriaTransfer;
 use Spryker\Shared\ProductConfigurationStorage\ProductConfigurationStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherTriggerPluginInterface;
@@ -52,13 +52,14 @@ class ProductConfigurationPublisherTriggerPlugin extends AbstractPlugin implemen
      */
     public function getData(int $offset, int $limit): array
     {
-        $productConfigurationCollection = $this->getFactory()
-            ->getProductConfigurationFacade()
-            ->getProductConfigurationCollection(
-                $this->createProductConfigurationFilterTransfer($offset, $limit),
-            );
+        $paginationTransfer = (new PaginationTransfer())->setLimit($limit)->setOffset($offset);
+        $productConfigurationCriteriaTransfer = (new ProductConfigurationCriteriaTransfer())->setPagination($paginationTransfer);
 
-        return $productConfigurationCollection->getProductConfigurations()->getArrayCopy();
+        return $this->getFactory()
+            ->getProductConfigurationFacade()
+            ->getProductConfigurationCollection($productConfigurationCriteriaTransfer)
+            ->getProductConfigurations()
+            ->getArrayCopy();
     }
 
     /**
@@ -83,23 +84,5 @@ class ProductConfigurationPublisherTriggerPlugin extends AbstractPlugin implemen
     public function getIdColumnName(): ?string
     {
         return static::COL_ID_PRODUCT_CONFIGURATION;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param int $offset
-     * @param int $limit
-     *
-     * @return \Generated\Shared\Transfer\ProductConfigurationFilterTransfer
-     */
-    public function createProductConfigurationFilterTransfer(int $offset, int $limit): ProductConfigurationFilterTransfer
-    {
-        $productConfigurationFilterTransfer = new ProductConfigurationFilterTransfer();
-        $productConfigurationFilterTransfer->setFilter((new FilterTransfer())->setLimit($limit)->setOffset($offset));
-
-        return $productConfigurationFilterTransfer;
     }
 }

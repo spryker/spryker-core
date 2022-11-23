@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\ProductConfiguration\Dependency\Client;
 
+use Generated\Shared\Transfer\StoreTransfer;
+
 class ProductConfigurationToStoreClientBridge implements ProductConfigurationToStoreClientInterface
 {
     /**
@@ -25,7 +27,7 @@ class ProductConfigurationToStoreClientBridge implements ProductConfigurationToS
     /**
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getCurrentStore()
+    public function getCurrentStore(): StoreTransfer
     {
         return $this->storeClient->getCurrentStore();
     }

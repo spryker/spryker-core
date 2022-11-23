@@ -59,7 +59,7 @@ class DeleteCollectionByProductConfigurationEventsTest extends Unit
     {
         // Arrange
         $productConcreteTransfer = $this->tester->haveProduct();
-        $productConfigurationTransfer = $this->tester->haveProductConfiguration(
+        $productConfigurationTransfer = $this->tester->haveProductConfigurationTransferPersisted(
             [ProductConfigurationTransfer::FK_PRODUCT => $productConcreteTransfer->getIdProductConcrete()],
         );
 
@@ -89,7 +89,7 @@ class DeleteCollectionByProductConfigurationEventsTest extends Unit
     {
         // Arrange
         $productConcreteTransfer = $this->tester->haveProduct();
-        $productConfigurationTransfer = $this->tester->haveProductConfiguration(
+        $productConfigurationTransfer = $this->tester->haveProductConfigurationTransferPersisted(
             [ProductConfigurationTransfer::FK_PRODUCT => $productConcreteTransfer->getIdProductConcrete()],
         );
 
@@ -121,7 +121,7 @@ class DeleteCollectionByProductConfigurationEventsTest extends Unit
     {
         // Arrange
         $productConcreteTransfer = $this->tester->haveProduct();
-        $productConfigurationTransfer = $this->tester->haveProductConfiguration(
+        $productConfigurationTransfer = $this->tester->haveProductConfigurationTransferPersisted(
             [ProductConfigurationTransfer::FK_PRODUCT => $productConcreteTransfer->getIdProductConcrete()],
         );
 

@@ -58,7 +58,7 @@ class IsQuoteProductConfigurationValidTest extends Unit
         parent::_setUp();
 
         $this->productConcreteTransfer = $this->tester->haveProduct();
-        $this->tester->haveProductConfiguration(
+        $this->tester->haveProductConfigurationTransferPersisted(
             [ProductConfigurationTransfer::FK_PRODUCT => $this->productConcreteTransfer->getIdProductConcrete()],
         );
     }

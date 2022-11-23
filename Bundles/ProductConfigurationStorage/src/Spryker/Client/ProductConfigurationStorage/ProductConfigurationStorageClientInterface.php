@@ -8,27 +8,14 @@
 namespace Spryker\Client\ProductConfigurationStorage;
 
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
+use Generated\Shared\Transfer\ProductConfigurationInstanceCollectionTransfer;
+use Generated\Shared\Transfer\ProductConfigurationInstanceCriteriaTransfer;
 use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 use Generated\Shared\Transfer\ProductStorageCriteriaTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 
 interface ProductConfigurationStorageClientInterface
 {
-    /**
-     * Specification:
-     * - Reads product configuration instance from session first then from storage if not found.
-     * - Returns null if configuration instance is not found neither sources.
-     *
-     * @api
-     *
-     * @param string $sku
-     *
-     * @return \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer|null
-     */
-    public function findProductConfigurationInstanceBySku(
-        string $sku
-    ): ?ProductConfigurationInstanceTransfer;
-
     /**
      * Specification:
      * - Stores ProductConfigurationInstanceTransfer in the session by SKU.
@@ -127,16 +114,18 @@ interface ProductConfigurationStorageClientInterface
 
     /**
      * Specification:
-     * - Reads product configuration instances from session first then from storage if not found.
-     * - Returns empty array if configuration instances is not found neither sources.
-
+     * - Fetches a collection of product configuration instances at first from session and then from storage if not found.
+     * - Uses `ProductConfigurationInstanceCriteriaTransfer.ProductConfigurationInstanceConditions.skus` to filter product configuration instances by skus.
+     * - Returns empty `ProductConfigurationInstanceCollectionTransfer` while no `ProductConfigurationInstanceCriteriaTransfer.ProductConfigurationInstanceConditions.skus` defined.
+     * - Returns `ProductConfigurationInstanceCollectionTransfer` filled with found product configuration instances indexed by `ProductConfigurationInstanceCriteriaTransfer.ProductConfigurationInstanceConditions.skus`.
+     *
      * @api
      *
-     * @param array<string> $skus
+     * @param \Generated\Shared\Transfer\ProductConfigurationInstanceCriteriaTransfer $productConfigurationInstanceCriteriaTransfer
      *
-     * @return array<\Generated\Shared\Transfer\ProductConfigurationInstanceTransfer>
+     * @return \Generated\Shared\Transfer\ProductConfigurationInstanceCollectionTransfer
      */
-    public function findProductConfigurationInstancesIndexedBySku(
-        array $skus
-    ): array;
+    public function getProductConfigurationInstanceCollection(
+        ProductConfigurationInstanceCriteriaTransfer $productConfigurationInstanceCriteriaTransfer
+    ): ProductConfigurationInstanceCollectionTransfer;
 }

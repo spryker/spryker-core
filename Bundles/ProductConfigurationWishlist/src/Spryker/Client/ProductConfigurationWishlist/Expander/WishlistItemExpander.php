@@ -7,6 +7,10 @@
 
 namespace Spryker\Client\ProductConfigurationWishlist\Expander;
 
+use Generated\Shared\Transfer\ProductConfigurationInstanceCollectionTransfer;
+use Generated\Shared\Transfer\ProductConfigurationInstanceConditionsTransfer;
+use Generated\Shared\Transfer\ProductConfigurationInstanceCriteriaTransfer;
+use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 use Generated\Shared\Transfer\WishlistItemCriteriaTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Spryker\Client\ProductConfigurationWishlist\Dependency\Client\ProductConfigurationWishlistToProductConfigurationStorageClientInterface;
@@ -27,12 +31,12 @@ class WishlistItemExpander implements WishlistItemExpanderInterface
     /**
      * @var \Spryker\Client\ProductConfigurationWishlist\Dependency\Client\ProductConfigurationWishlistToProductConfigurationStorageClientInterface
      */
-    protected $productConfigurationStorageClient;
+    protected ProductConfigurationWishlistToProductConfigurationStorageClientInterface $productConfigurationStorageClient;
 
     /**
      * @var \Spryker\Client\ProductConfigurationWishlist\Dependency\Client\ProductConfigurationWishlistToWishlistClientInterface
      */
-    protected $wishlistClient;
+    protected ProductConfigurationWishlistToWishlistClientInterface $wishlistClient;
 
     /**
      * @param \Spryker\Client\ProductConfigurationWishlist\Dependency\Client\ProductConfigurationWishlistToProductConfigurationStorageClientInterface $productConfigurationStorageClient
@@ -60,10 +64,46 @@ class WishlistItemExpander implements WishlistItemExpanderInterface
             return $this->setProductConfigurationByIdWishlistItem($wishlistItemTransfer);
         }
 
-        $productConfigurationInstanceTransfer = $this->productConfigurationStorageClient
-            ->findProductConfigurationInstanceBySku($wishlistItemTransfer->getSkuOrFail());
+        $productConfigurationInstanceTransfer = $this->findProductConfigurationInstance($wishlistItemTransfer);
 
         return $wishlistItemTransfer->setProductConfigurationInstance($productConfigurationInstanceTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer|null
+     */
+    protected function findProductConfigurationInstance(
+        WishlistItemTransfer $wishlistItemTransfer
+    ): ?ProductConfigurationInstanceTransfer {
+        $productConfigurationInstanceCollectionTransfer = $this->getProductConfigurationInstanceCollection($wishlistItemTransfer);
+
+        if (!$productConfigurationInstanceCollectionTransfer->getProductConfigurationInstances()->count()) {
+            return null;
+        }
+
+        return $productConfigurationInstanceCollectionTransfer->getProductConfigurationInstances()
+            ->getIterator()
+            ->current();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConfigurationInstanceCollectionTransfer
+     */
+    protected function getProductConfigurationInstanceCollection(
+        WishlistItemTransfer $wishlistItemTransfer
+    ): ProductConfigurationInstanceCollectionTransfer {
+        $productConfigurationInstanceConditionsTransfer = (new ProductConfigurationInstanceConditionsTransfer())
+            ->addSku($wishlistItemTransfer->getSkuOrFail());
+
+        $productConfigurationInstanceCriteriaTransfer = (new ProductConfigurationInstanceCriteriaTransfer())
+            ->setProductConfigurationInstanceConditions($productConfigurationInstanceConditionsTransfer);
+
+        return $this->productConfigurationStorageClient
+            ->getProductConfigurationInstanceCollection($productConfigurationInstanceCriteriaTransfer);
     }
 
     /**

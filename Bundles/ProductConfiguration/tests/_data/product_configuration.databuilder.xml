@@ -13,10 +13,15 @@
         <property name="isComplete" dataBuilderRule="boolean"/>
     </transfer>
 
-    <transfer name="Item">
-        <property name="sku" dataBuilderRule="isbn10"/>
-        <property name="unitGrossPrice" dataBuilderRule="randomNumber(5)"/>
-        <property name="sumGrossPrice" dataBuilderRule="randomNumber(5)"/>
-        <property name="quantity" dataBuilderRule="=1"/>
+    <transfer name="ProductConfigurationCriteria">
+        <property name="productConfigurationConditions" type="ProductConfigurationConditions"/>
+        <property name="sortCollection" type="Sort[]"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="ProductConfigurationConditions">
+        <property name="productConfigurationIds" type="int[]"/>
+        <property name="uuids" type="string[]"/>
+        <property name="skus" type="string[]"/>
     </transfer>
 </transfers>

@@ -7,6 +7,9 @@
 
 namespace Spryker\Client\ProductConfigurationStorage\Reader;
 
+use ArrayObject;
+use Generated\Shared\Transfer\ProductConfigurationInstanceCollectionTransfer;
+use Generated\Shared\Transfer\ProductConfigurationInstanceCriteriaTransfer;
 use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 use Spryker\Client\ProductConfigurationStorage\Builder\ProductConfigurationSessionKeyBuilderInterface;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToSessionClientInterface;
@@ -18,22 +21,22 @@ class ProductConfigurationInstanceReader implements ProductConfigurationInstance
     /**
      * @var \Spryker\Client\ProductConfigurationStorage\Storage\ProductConfigurationStorageReaderInterface
      */
-    protected $configurationStorageReader;
+    protected ProductConfigurationStorageReaderInterface $configurationStorageReader;
 
     /**
      * @var \Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToSessionClientInterface
      */
-    protected $sessionClient;
+    protected ProductConfigurationStorageToSessionClientInterface $sessionClient;
 
     /**
      * @var \Spryker\Client\ProductConfigurationStorage\Mapper\ProductConfigurationInstanceMapperInterface
      */
-    protected $productConfigurationStorageMapper;
+    protected ProductConfigurationInstanceMapperInterface $productConfigurationStorageMapper;
 
     /**
      * @var \Spryker\Client\ProductConfigurationStorage\Builder\ProductConfigurationSessionKeyBuilderInterface
      */
-    protected $productConfigurationSessionKeyBuilder;
+    protected ProductConfigurationSessionKeyBuilderInterface $productConfigurationSessionKeyBuilder;
 
     /**
      * @param \Spryker\Client\ProductConfigurationStorage\Storage\ProductConfigurationStorageReaderInterface $configurationStorageReader
@@ -94,33 +97,40 @@ class ProductConfigurationInstanceReader implements ProductConfigurationInstance
     }
 
     /**
-     * @param array<string> $skus
+     * @param \Generated\Shared\Transfer\ProductConfigurationInstanceCriteriaTransfer $productConfigurationInstanceCriteriaTransfer
      *
-     * @return array<\Generated\Shared\Transfer\ProductConfigurationInstanceTransfer>
+     * @return \Generated\Shared\Transfer\ProductConfigurationInstanceCollectionTransfer
      */
-    public function findProductConfigurationInstancesIndexedBySku(array $skus): array
-    {
-        $productConfigurationInstancesIndexedBySku = $this->getProductConfigurationInstancesFromSession($skus);
+    public function getProductConfigurationInstanceCollection(
+        ProductConfigurationInstanceCriteriaTransfer $productConfigurationInstanceCriteriaTransfer
+    ): ProductConfigurationInstanceCollectionTransfer {
+        $productConfigurationInstanceCollectionTransfer = new ProductConfigurationInstanceCollectionTransfer();
+        $productConfigurationInstanceConditionsTransfer = $productConfigurationInstanceCriteriaTransfer->getProductConfigurationInstanceConditions();
 
+        if (!$productConfigurationInstanceConditionsTransfer || !$productConfigurationInstanceConditionsTransfer->getSkus()) {
+            return $productConfigurationInstanceCollectionTransfer;
+        }
+
+        $skus = $productConfigurationInstanceConditionsTransfer->getSkus();
+        $productConfigurationInstancesIndexedBySku = $this->getProductConfigurationInstancesFromSession($skus);
         $notConfiguredProductSkus = $this->getNotConfiguredProductSkus(
             $skus,
             array_keys($productConfigurationInstancesIndexedBySku),
         );
 
         if ($notConfiguredProductSkus) {
-            $productConfigurationInstancesIndexedBySku = array_merge(
-                $productConfigurationInstancesIndexedBySku,
-                $this->findProductConfigurationInstancesInStorageIndexedBySku($notConfiguredProductSkus),
-            );
+            $productConfigurationInstancesIndexedBySku += $this->findProductConfigurationInstancesInStorageIndexedBySku($notConfiguredProductSkus);
         }
 
-        return $productConfigurationInstancesIndexedBySku;
+        return $productConfigurationInstanceCollectionTransfer->setProductConfigurationInstances(
+            new ArrayObject($productConfigurationInstancesIndexedBySku),
+        );
     }
 
     /**
      * @param array<string> $skus
      *
-     * @return array<\Generated\Shared\Transfer\ProductConfigurationInstanceTransfer>
+     * @return array<string, \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer>
      */
     protected function getProductConfigurationInstancesFromSession(array $skus): array
     {
@@ -155,7 +165,7 @@ class ProductConfigurationInstanceReader implements ProductConfigurationInstance
     /**
      * @param array<string> $skus
      *
-     * @return array<\Generated\Shared\Transfer\ProductConfigurationInstanceTransfer>
+     * @return array<string, \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer>
      */
     protected function findProductConfigurationInstancesInStorageIndexedBySku(array $skus): array
     {

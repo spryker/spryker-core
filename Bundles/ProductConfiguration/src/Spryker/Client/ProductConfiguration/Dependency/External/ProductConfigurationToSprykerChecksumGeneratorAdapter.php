@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\ProductConfiguration\Dependency\External;
 
+use Spryker\ChecksumGenerator\Checksum\ChecksumGeneratorInterface;
+
 class ProductConfigurationToSprykerChecksumGeneratorAdapter implements ProductConfigurationToChecksumGeneratorInterface
 {
     /**
@@ -17,7 +19,7 @@ class ProductConfigurationToSprykerChecksumGeneratorAdapter implements ProductCo
     /**
      * @param \Spryker\ChecksumGenerator\Checksum\ChecksumGeneratorInterface $checksumGenerator
      */
-    public function __construct($checksumGenerator)
+    public function __construct(ChecksumGeneratorInterface $checksumGenerator)
     {
         $this->checksumGenerator = $checksumGenerator;
     }

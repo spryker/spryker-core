@@ -7,10 +7,12 @@
 
 namespace SprykerTest\Glue\ProductConfigurationsRestApi\Plugin;
 
+use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ConcreteProductsRestAttributesBuilder;
 use Generated\Shared\DataBuilder\ProductConfigurationInstanceBuilder;
-use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
+use Generated\Shared\DataBuilder\ProductConfigurationInstanceCollectionBuilder;
+use Generated\Shared\Transfer\ProductConfigurationInstanceCollectionTransfer;
 use Generated\Shared\Transfer\RestProductConfigurationInstanceAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductConfigurationsRestApi\Dependency\Client\ProductConfigurationsRestApiToProductConfigurationStorageClientInterface;
@@ -51,9 +53,17 @@ class ProductConfigurationConcreteProductsResourceExpanderPluginTest extends Uni
             true,
         );
         $concreteProductsRestAttributesTransfer = (new ConcreteProductsRestAttributesBuilder())->build();
+        $productConfigurationInstanceCollectionTransfer = (new ProductConfigurationInstanceCollectionBuilder())
+            ->build()
+            ->setProductConfigurationInstances(
+                new ArrayObject([
+                    $concreteProductsRestAttributesTransfer->getSku() => $productConfigurationInstanceTransfer,
+                ]),
+            );
+
         $this->tester->setDependency(
             ProductConfigurationsRestApiDependencyProvider::CLIENT_PRODUCT_CONFIGURATION_STORAGE,
-            $this->createProductConfigurationStorageClientMock($productConfigurationInstanceTransfer),
+            $this->createProductConfigurationStorageClientMock($productConfigurationInstanceCollectionTransfer),
         );
 
         $productConfigurationConcreteProductsResourceExpanderPlugin = new ProductConfigurationConcreteProductsResourceExpanderPlugin();
@@ -79,10 +89,11 @@ class ProductConfigurationConcreteProductsResourceExpanderPluginTest extends Uni
     public function testExpandWillNotExpandConcreteProductsResourceWithoutProductConfiguration(): void
     {
         // Arrange
+        $productConfigurationInstanceCollectionTransfer = (new ProductConfigurationInstanceCollectionBuilder())->build();
         $concreteProductsRestAttributesTransfer = (new ConcreteProductsRestAttributesBuilder())->build();
         $this->tester->setDependency(
             ProductConfigurationsRestApiDependencyProvider::CLIENT_PRODUCT_CONFIGURATION_STORAGE,
-            $this->createProductConfigurationStorageClientMock(),
+            $this->createProductConfigurationStorageClientMock($productConfigurationInstanceCollectionTransfer),
         );
 
         $productConfigurationConcreteProductsResourceExpanderPlugin = new ProductConfigurationConcreteProductsResourceExpanderPlugin();
@@ -99,15 +110,15 @@ class ProductConfigurationConcreteProductsResourceExpanderPluginTest extends Uni
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer|null $productConfigurationInstanceTransfer
+     * @param \Generated\Shared\Transfer\ProductConfigurationInstanceCollectionTransfer $productConfigurationInstanceCollectionTransfer
      *
      * @return \Spryker\Glue\ProductConfigurationsRestApi\Dependency\Client\ProductConfigurationsRestApiToProductConfigurationStorageClientInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function createProductConfigurationStorageClientMock(
-        ?ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer = null
+        ProductConfigurationInstanceCollectionTransfer $productConfigurationInstanceCollectionTransfer
     ): ProductConfigurationsRestApiToProductConfigurationStorageClientInterface {
         $mock = $this->getMockBuilder(ProductConfigurationsRestApiToProductConfigurationStorageClientInterface::class)->getMock();
-        $mock->method('findProductConfigurationInstanceBySku')->willReturn($productConfigurationInstanceTransfer);
+        $mock->method('getProductConfigurationInstanceCollection')->willReturn($productConfigurationInstanceCollectionTransfer);
 
         return $mock;
     }

@@ -7,10 +7,12 @@
 
 namespace Spryker\Client\ProductConfiguration\Dependency\Client;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
+
 interface ProductConfigurationToCurrencyClientInterface
 {
     /**
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function getCurrent();
+    public function getCurrent(): CurrencyTransfer;
 }

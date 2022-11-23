@@ -8,6 +8,7 @@
         <property name="defaultConfiguration" type="string"/>
         <property name="configuratorKey" type="string"/>
         <property name="isComplete" type="bool"/>
+        <property name="uuid" type="string"/>
     </transfer>
 
     <transfer name="ProductConfigurationInstance">
@@ -18,48 +19,9 @@
         <property name="prices" type="PriceProduct[]" singular="price"/>
     </transfer>
 
-    <transfer name="Item">
-        <property name="productConfigurationInstance" type="ProductConfigurationInstance"/>
-        <property name="groupKey" type="string"/>
-        <property name="sku" type="string"/>
-        <property name="unitGrossPrice" type="int"/>
-        <property name="sumGrossPrice" type="int"/>
-        <property name="quantity" type="int"/>
-    </transfer>
-
-    <transfer name="ProductConfigurationFilter">
-        <property name="productConfigurationIds" type="int[]" singular="productConfigurationId"/>
-        <property name="skus" type="string[]" singular="sku"/>
-        <property name="filter" type="Filter"/>
-    </transfer>
-
-    <transfer name="Filter">
-        <property name="orderBy" type="string"/>
-        <property name="offset" type="int"/>
-        <property name="limit" type="int"/>
-    </transfer>
-
     <transfer name="ProductConfigurationCollection">
         <property name="productConfigurations" type="ProductConfiguration[]" singular="productConfiguration"/>
-    </transfer>
-
-    <transfer name="CartChange">
-        <property name="operation" type="string"/>
-        <property name="items" type="Item[]" singular="item"/>
-        <property name="quote" type="Quote"/>
-    </transfer>
-
-    <transfer name="Quote">
-        <property name="items" type="Item[]" singular="item"/>
-    </transfer>
-
-    <transfer name="CheckoutResponse">
-        <property name="errors" type="CheckoutError[]" singular="error"/>
-        <property name="isSuccess" type="bool"/>
-    </transfer>
-
-    <transfer name="CheckoutError">
-        <property name="message" type="string"/>
+        <property name="pagination" type="Pagination"/>
     </transfer>
 
     <transfer name="ProductConfiguratorResponseProcessorResponse">
@@ -125,10 +87,6 @@
         <property name="volumeQuantity" type="int"/>
     </transfer>
 
-    <transfer name="CartItemQuantity">
-        <property name="quantity" type="int"/>
-    </transfer>
-
     <transfer name="PriceProductDimension">
         <property name="type" type="string"/>
         <property name="productConfigurationInstanceHash" type="string"/>
@@ -147,26 +105,44 @@
         <property name="currency" type="Currency"/>
     </transfer>
 
-    <transfer name="ProductView">
-        <property name="productConfigurationInstance" type="ProductConfigurationInstance"/>
-    </transfer>
-
     <transfer name="PriceProductFilter">
         <property name="productConfigurationInstance" type="ProductConfigurationInstance"/>
         <property name="quantity" type="int"/>
     </transfer>
 
-    <transfer name="QuoteRequest">
-        <property name="latestVersion" type="QuoteRequestVersion"/>
+    <transfer name="ProductConfigurationCriteria">
+        <property name="productConfigurationConditions" type="ProductConfigurationConditions"/>
+        <property name="sortCollection" type="Sort[]" singular="sort"/>
+        <property name="pagination" type="Pagination"/>
     </transfer>
 
-    <transfer name="QuoteRequestResponse">
-        <property name="isSuccessful" type="bool"/>
-        <property name="messages" type="Message[]" singular="message"/>
+    <transfer name="ProductConfigurationConditions">
+        <property name="productConfigurationIds" type="int[]" singular="idProductConfiguration"/>
+        <property name="uuids" type="string[]" singular="uuid"/>
+        <property name="skus" type="string[]" singular="sku"/>
     </transfer>
 
-    <transfer name="QuoteRequestVersion">
-        <property name="quote" type="Quote"/>
+    <transfer name="Sort">
+        <property name="field" type="string"/>
+        <property name="isAscending" type="bool"/>
     </transfer>
 
+    <transfer name="Pagination">
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
+        <property name="page" type="int"/>
+        <property name="maxPerPage" type="int"/>
+        <property name="nbResults" type="int"/>
+        <property name="firstIndex" type="int"/>
+        <property name="lastIndex" type="int"/>
+        <property name="firstPage" type="int"/>
+        <property name="lastPage" type="int"/>
+        <property name="nextPage" type="int"/>
+        <property name="previousPage" type="int"/>
+    </transfer>
+
+    <transfer name="Error">
+        <property name="message" type="string"/>
+        <property name="entityIdentifier" type="string"/>
+    </transfer>
 </transfers>

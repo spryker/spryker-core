@@ -8,7 +8,9 @@
 namespace Spryker\Client\ProductConfigurationShoppingList\Expander;
 
 use ArrayObject;
-use Generated\Shared\Transfer\ShoppingListItemTransfer;
+use Generated\Shared\Transfer\ProductConfigurationInstanceCollectionTransfer;
+use Generated\Shared\Transfer\ProductConfigurationInstanceConditionsTransfer;
+use Generated\Shared\Transfer\ProductConfigurationInstanceCriteriaTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Client\ProductConfigurationShoppingList\Dependency\Client\ProductConfigurationShoppingListToProductConfigurationStorageClientInterface;
 use Spryker\Client\ProductConfigurationShoppingList\Dependency\Service\ProductConfigurationShoppingListToUtilEncodingServiceInterface;
@@ -44,34 +46,74 @@ class ProductConfigurationExpander implements ProductConfigurationExpanderInterf
      */
     public function expandShoppingListItemsWithProductConfiguration(ShoppingListTransfer $shoppingListTransfer): ShoppingListTransfer
     {
-        $expandedShoppingListItemTransfers = [];
+        $productConfigurationInstanceCollectionTransfer = $this->getProductConfigurationInstanceCollection($shoppingListTransfer);
 
-        foreach ($shoppingListTransfer->getItems() as $shoppingListItemTransfer) {
-            $expandedShoppingListItemTransfers[] = $this->expandShoppingListItemWithProductConfiguration($shoppingListItemTransfer);
+        if (!$productConfigurationInstanceCollectionTransfer->getProductConfigurationInstances()->count()) {
+            return $shoppingListTransfer;
         }
 
-        return $shoppingListTransfer->setItems(new ArrayObject($expandedShoppingListItemTransfers));
+        return $this->expandItemsWithProductConfigurationInstance(
+            $shoppingListTransfer,
+            $productConfigurationInstanceCollectionTransfer,
+        );
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *
-     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
+     * @return \Generated\Shared\Transfer\ProductConfigurationInstanceCollectionTransfer
      */
-    protected function expandShoppingListItemWithProductConfiguration(
-        ShoppingListItemTransfer $shoppingListItemTransfer
-    ): ShoppingListItemTransfer {
-        $productConfigurationInstanceTransfer = $this->productConfigurationStorageClient
-            ->findProductConfigurationInstanceBySku($shoppingListItemTransfer->getSkuOrFail());
+    protected function getProductConfigurationInstanceCollection(
+        ShoppingListTransfer $shoppingListTransfer
+    ): ProductConfigurationInstanceCollectionTransfer {
+        $productConfigurationInstanceConditionsTransfer = new ProductConfigurationInstanceConditionsTransfer();
 
-        if (!$productConfigurationInstanceTransfer) {
-            return $shoppingListItemTransfer;
+        foreach ($shoppingListTransfer->getItems() as $shoppingListItemTransfer) {
+            if ($shoppingListItemTransfer->getProductConfigurationInstance()) {
+                continue;
+            }
+
+            $productConfigurationInstanceConditionsTransfer->addSku($shoppingListItemTransfer->getSkuOrFail());
         }
 
-        $productConfigurationInstanceData = $this->utilEncodingService->encodeJson($productConfigurationInstanceTransfer->toArray());
+        if (!$productConfigurationInstanceConditionsTransfer->getSkus()) {
+            return new ProductConfigurationInstanceCollectionTransfer();
+        }
 
-        return $shoppingListItemTransfer
-            ->setProductConfigurationInstance($productConfigurationInstanceTransfer)
-            ->setProductConfigurationInstanceData($productConfigurationInstanceData);
+        $productConfigurationInstanceCriteriaTransfer = (new ProductConfigurationInstanceCriteriaTransfer())
+            ->setProductConfigurationInstanceConditions($productConfigurationInstanceConditionsTransfer);
+
+        return $this->productConfigurationStorageClient
+            ->getProductConfigurationInstanceCollection($productConfigurationInstanceCriteriaTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     * @param \Generated\Shared\Transfer\ProductConfigurationInstanceCollectionTransfer $productConfigurationInstanceCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListTransfer
+     */
+    protected function expandItemsWithProductConfigurationInstance(
+        ShoppingListTransfer $shoppingListTransfer,
+        ProductConfigurationInstanceCollectionTransfer $productConfigurationInstanceCollectionTransfer
+    ): ShoppingListTransfer {
+        $expandedShoppingListItemTransfers = new ArrayObject();
+        $productConfigurationInstanceTransfersIndexedBySku = $productConfigurationInstanceCollectionTransfer->getProductConfigurationInstances();
+
+        foreach ($shoppingListTransfer->getItems() as $shoppingListItemTransfer) {
+            $productConfigurationInstanceTransfer = $productConfigurationInstanceTransfersIndexedBySku[$shoppingListItemTransfer->getSkuOrFail()] ?? null;
+
+            if (!$shoppingListItemTransfer->getProductConfigurationInstance() && $productConfigurationInstanceTransfer) {
+                $productConfigurationInstanceData = $this->utilEncodingService
+                    ->encodeJson($productConfigurationInstanceTransfer->toArray());
+
+                $shoppingListItemTransfer->setProductConfigurationInstance($productConfigurationInstanceTransfer)
+                    ->setProductConfigurationInstanceData($productConfigurationInstanceData);
+            }
+
+            $expandedShoppingListItemTransfers->append($shoppingListItemTransfer);
+        }
+
+        return $shoppingListTransfer->setItems($expandedShoppingListItemTransfers);
     }
 }

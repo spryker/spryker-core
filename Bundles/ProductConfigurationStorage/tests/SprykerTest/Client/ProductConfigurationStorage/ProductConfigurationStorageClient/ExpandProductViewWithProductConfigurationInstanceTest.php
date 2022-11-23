@@ -49,6 +49,7 @@ class ExpandProductViewWithProductConfigurationInstanceTest extends Unit
         $productConcreteTransfer = $this->tester->haveProduct();
         $productConfigurationInstanceTransfer = (new ProductConfigurationInstanceBuilder([
             ProductConfigurationInstanceTransfer::PRICES => new ArrayObject(),
+            ProductConfigurationInstanceTransfer::SKU => $productConcreteTransfer->getSku(),
         ]))->build();
 
         $this->tester->getClient()->storeProductConfigurationInstanceBySku($productConcreteTransfer->getSku(), $productConfigurationInstanceTransfer);

@@ -25,7 +25,7 @@ class ProductConfigurationToLocaleBridge implements ProductConfigurationToLocale
     /**
      * @return string
      */
-    public function getCurrentLocale()
+    public function getCurrentLocale(): string
     {
         return $this->localeClient->getCurrentLocale();
     }

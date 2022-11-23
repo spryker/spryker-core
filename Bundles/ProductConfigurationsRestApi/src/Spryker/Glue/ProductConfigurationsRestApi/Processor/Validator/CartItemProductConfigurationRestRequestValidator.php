@@ -7,6 +7,9 @@
 
 namespace Spryker\Glue\ProductConfigurationsRestApi\Processor\Validator;
 
+use Generated\Shared\Transfer\ProductConfigurationInstanceCollectionTransfer;
+use Generated\Shared\Transfer\ProductConfigurationInstanceConditionsTransfer;
+use Generated\Shared\Transfer\ProductConfigurationInstanceCriteriaTransfer;
 use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 use Generated\Shared\Transfer\RestCartItemProductConfigurationInstanceAttributesTransfer;
 use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
@@ -52,7 +55,7 @@ class CartItemProductConfigurationRestRequestValidator implements CartItemProduc
     /**
      * @var \Spryker\Glue\ProductConfigurationsRestApi\Dependency\Client\ProductConfigurationsRestApiToProductConfigurationStorageClientInterface
      */
-    protected $productConfigurationStorageClient;
+    protected ProductConfigurationsRestApiToProductConfigurationStorageClientInterface $productConfigurationStorageClient;
 
     /**
      * @param \Spryker\Glue\ProductConfigurationsRestApi\Dependency\Client\ProductConfigurationsRestApiToProductConfigurationStorageClientInterface $productConfigurationStorageClient
@@ -92,8 +95,7 @@ class CartItemProductConfigurationRestRequestValidator implements CartItemProduc
             return null;
         }
 
-        $productConfigurationInstanceTransfer = $this->productConfigurationStorageClient->findProductConfigurationInstanceBySku($productConcreteSku);
-
+        $productConfigurationInstanceTransfer = $this->findProductConfigurationInstance($productConcreteSku);
         if ($this->isSameProductConfigurationInstance($restCartItemProductConfigurationInstanceAttributesTransfer, $productConfigurationInstanceTransfer)) {
             return null;
         }
@@ -103,6 +105,43 @@ class CartItemProductConfigurationRestRequestValidator implements CartItemProduc
                 $productConcreteSku,
                 $restCartItemProductConfigurationInstanceAttributesTransfer->getConfiguratorKey(),
             ));
+    }
+
+    /**
+     * @param string $productConcreteSku
+     *
+     * @return \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer|null
+     */
+    protected function findProductConfigurationInstance(
+        string $productConcreteSku
+    ): ?ProductConfigurationInstanceTransfer {
+        $productConfigurationInstanceCollectionTransfer = $this->getProductConfigurationInstanceCollection($productConcreteSku);
+
+        if (!$productConfigurationInstanceCollectionTransfer->getProductConfigurationInstances()->count()) {
+            return null;
+        }
+
+        return $productConfigurationInstanceCollectionTransfer->getProductConfigurationInstances()
+            ->getIterator()
+            ->current();
+    }
+
+    /**
+     * @param string $productConcreteSku
+     *
+     * @return \Generated\Shared\Transfer\ProductConfigurationInstanceCollectionTransfer
+     */
+    protected function getProductConfigurationInstanceCollection(
+        string $productConcreteSku
+    ): ProductConfigurationInstanceCollectionTransfer {
+        $productConfigurationInstanceConditionsTransfer = (new ProductConfigurationInstanceConditionsTransfer())
+            ->addSku($productConcreteSku);
+
+        $productConfigurationInstanceCriteriaTransfer = (new ProductConfigurationInstanceCriteriaTransfer())
+            ->setProductConfigurationInstanceConditions($productConfigurationInstanceConditionsTransfer);
+
+        return $this->productConfigurationStorageClient
+            ->getProductConfigurationInstanceCollection($productConfigurationInstanceCriteriaTransfer);
     }
 
     /**

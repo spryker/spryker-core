@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\ProductConfigurationStorage\Reader;
 
+use Generated\Shared\Transfer\ProductConfigurationInstanceCollectionTransfer;
+use Generated\Shared\Transfer\ProductConfigurationInstanceCriteriaTransfer;
 use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 
 interface ProductConfigurationInstanceReaderInterface
@@ -21,9 +23,11 @@ interface ProductConfigurationInstanceReaderInterface
     ): ?ProductConfigurationInstanceTransfer;
 
     /**
-     * @param array<string> $skus
+     * @param \Generated\Shared\Transfer\ProductConfigurationInstanceCriteriaTransfer $productConfigurationInstanceCriteriaTransfer
      *
-     * @return array<\Generated\Shared\Transfer\ProductConfigurationInstanceTransfer>
+     * @return \Generated\Shared\Transfer\ProductConfigurationInstanceCollectionTransfer
      */
-    public function findProductConfigurationInstancesIndexedBySku(array $skus): array;
+    public function getProductConfigurationInstanceCollection(
+        ProductConfigurationInstanceCriteriaTransfer $productConfigurationInstanceCriteriaTransfer
+    ): ProductConfigurationInstanceCollectionTransfer;
 }

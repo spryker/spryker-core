@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\ProductConfigurationWishlist\Business\Checker;
 
-use Generated\Shared\Transfer\ProductConfigurationFilterTransfer;
+use Generated\Shared\Transfer\ProductConfigurationCollectionTransfer;
+use Generated\Shared\Transfer\ProductConfigurationConditionsTransfer;
+use Generated\Shared\Transfer\ProductConfigurationCriteriaTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistPreAddItemCheckResponseTransfer;
 use Generated\Shared\Transfer\WishlistPreUpdateItemCheckResponseTransfer;
@@ -63,12 +65,21 @@ class ProductConfigurationChecker implements ProductConfigurationCheckerInterfac
             return true;
         }
 
-        $productConfigurationFilterTransfer = (new ProductConfigurationFilterTransfer())
-            ->addSku($wishlistItemTransfer->getSkuOrFail());
-
-        return $this->productConfigurationFacade
-            ->getProductConfigurationCollection($productConfigurationFilterTransfer)
+        return (bool)$this->getProductConfigurationCollection($wishlistItemTransfer)
             ->getProductConfigurations()
-            ->count() > 0;
+            ->count();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConfigurationCollectionTransfer
+     */
+    protected function getProductConfigurationCollection(WishlistItemTransfer $wishlistItemTransfer): ProductConfigurationCollectionTransfer
+    {
+        $productConfigurationConditionsTransfer = (new ProductConfigurationConditionsTransfer())->addSku($wishlistItemTransfer->getSkuOrFail());
+        $productConfigurationCriteriaTransfer = (new ProductConfigurationCriteriaTransfer())->setProductConfigurationConditions($productConfigurationConditionsTransfer);
+
+        return $this->productConfigurationFacade->getProductConfigurationCollection($productConfigurationCriteriaTransfer);
     }
 }

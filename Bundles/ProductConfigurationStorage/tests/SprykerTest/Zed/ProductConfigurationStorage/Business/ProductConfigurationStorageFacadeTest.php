@@ -81,7 +81,7 @@ class ProductConfigurationStorageFacadeTest extends Unit
         // Arrange
         $productTransfer = $this->tester->haveProduct();
 
-        $productConfigurationTransfer = $this->tester->haveProductConfiguration(
+        $productConfigurationTransfer = $this->tester->haveProductConfigurationTransferPersisted(
             [
                 ProductConfigurationTransfer::FK_PRODUCT => $productTransfer->getIdProductConcrete(),
             ],
@@ -121,7 +121,7 @@ class ProductConfigurationStorageFacadeTest extends Unit
         // Arrange
         $productTransfer = $this->tester->haveProduct();
 
-        $productConfigurationTransfer = $this->tester->haveProductConfiguration(
+        $productConfigurationTransfer = $this->tester->haveProductConfigurationTransferPersisted(
             [
                 ProductConfigurationTransfer::FK_PRODUCT => $productTransfer->getIdProductConcrete(),
             ],
@@ -159,7 +159,7 @@ class ProductConfigurationStorageFacadeTest extends Unit
         // Arrange
         $productTransfer = $this->tester->haveProduct();
 
-        $productConfigurationTransfer = $this->tester->haveProductConfiguration([
+        $productConfigurationTransfer = $this->tester->haveProductConfigurationTransferPersisted([
                 ProductConfigurationTransfer::FK_PRODUCT => $productTransfer->getIdProductConcrete(),
         ]);
 

@@ -6,8 +6,8 @@
     "require": {
         "php": ">=8.0",
         "spryker/kernel": "^3.30.0",
-        "spryker/product-configuration": "^0.2.0",
-        "spryker/product-configuration-wishlists-rest-api-extension": "^0.1.0",
+        "spryker/product-configuration": "^1.0.0",
+        "spryker/product-configuration-wishlists-rest-api-extension": "^1.0.0",
         "spryker/transfer": "^3.25.0",
         "spryker/wishlist": "^8.6.0",
         "spryker/wishlists-rest-api-extension": "^1.1.0"

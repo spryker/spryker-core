@@ -12,6 +12,18 @@
 
     <transfer name="ProductConfigurationInstance">
         <property name="isComplete" type="bool"/>
+        <property name="sku" type="string"/>
     </transfer>
 
+    <transfer name="ProductConfigurationInstanceCollection">
+        <property name="productConfigurationInstances" type="ProductConfigurationInstance[]" singular="productConfigurationInstance"/>
+    </transfer>
+
+    <transfer name="ProductConfigurationInstanceCriteria">
+        <property name="productConfigurationInstanceConditions" type="ProductConfigurationInstanceConditions"/>
+    </transfer>
+
+    <transfer name="ProductConfigurationInstanceConditions">
+        <property name="skus" type="string[]" singular="sku"/>
+    </transfer>
 </transfers>

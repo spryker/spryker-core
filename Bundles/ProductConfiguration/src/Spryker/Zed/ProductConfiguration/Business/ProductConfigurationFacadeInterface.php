@@ -8,24 +8,28 @@
 namespace Spryker\Zed\ProductConfiguration\Business;
 
 use Generated\Shared\Transfer\ProductConfigurationCollectionTransfer;
-use Generated\Shared\Transfer\ProductConfigurationFilterTransfer;
+use Generated\Shared\Transfer\ProductConfigurationCriteriaTransfer;
 
-/**
- * @method \Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinuedBusinessFactory getFactory()
- */
 interface ProductConfigurationFacadeInterface
 {
     /**
      * Specification:
-     *  - Retrieves product configurations from Persistence that match the given criteria.
+     * - Fetches a collection of product configurations from the storage.
+     * - Uses `ProductConfigurationCriteriaTransfer.ProductConfigurationConditions.productConfigurationIds` to filter product configurations by productConfigurationIds.
+     * - Uses `ProductConfigurationCriteriaTransfer.ProductConfigurationConditions.uuids` to filter product configurations by uuids.
+     * - Uses `ProductConfigurationCriteriaTransfer.SortTransfer.field` to set the `order by` field.
+     * - Uses `ProductConfigurationCriteriaTransfer.SortTransfer.isAscending` to set ascending order otherwise will be used descending order.
+     * - Uses `ProductConfigurationCriteriaTransfer.PaginationTransfer.{limit, offset}` to paginate result with limit and offset.
+     * - Uses `ProductConfigurationCriteriaTransfer.PaginationTransfer.{page, maxPerPage}` to paginate result with page and maxPerPage.
+     * - Returns `ProductConfigurationCollectionTransfer` filled with found product configurations.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductConfigurationFilterTransfer $productConfigurationFilterTransfer
+     * @param \Generated\Shared\Transfer\ProductConfigurationCriteriaTransfer $productConfigurationCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConfigurationCollectionTransfer
      */
     public function getProductConfigurationCollection(
-        ProductConfigurationFilterTransfer $productConfigurationFilterTransfer
+        ProductConfigurationCriteriaTransfer $productConfigurationCriteriaTransfer
     ): ProductConfigurationCollectionTransfer;
 }

@@ -129,7 +129,7 @@ class ProductConfigurationWishlistFacadeTest extends Unit
     {
         // Arrange
         $this->setUpData();
-        $this->tester->haveProductConfiguration(
+        $this->tester->haveProductConfigurationTransferPersisted(
             [
                 ProductConfigurationTransfer::FK_PRODUCT => $this->productConcreteTransfer->getIdProductConcrete(),
             ],
@@ -168,7 +168,7 @@ class ProductConfigurationWishlistFacadeTest extends Unit
     {
         // Arrange
         $this->setUpData();
-        $this->tester->haveProductConfiguration(
+        $this->tester->haveProductConfigurationTransferPersisted(
             [
                 ProductConfigurationTransfer::FK_PRODUCT => $this->productConcreteTransfer->getIdProductConcrete(),
             ],

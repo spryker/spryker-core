@@ -8,7 +8,8 @@
 namespace Spryker\Zed\ProductConfigurationStorage\Business\Writer;
 
 use Generated\Shared\Transfer\ProductConfigurationCollectionTransfer;
-use Generated\Shared\Transfer\ProductConfigurationFilterTransfer;
+use Generated\Shared\Transfer\ProductConfigurationConditionsTransfer;
+use Generated\Shared\Transfer\ProductConfigurationCriteriaTransfer;
 use Generated\Shared\Transfer\ProductConfigurationStorageTransfer;
 use Spryker\Zed\ProductConfigurationStorage\Business\Mapper\ProductConfigurationStorageMapperInterface;
 use Spryker\Zed\ProductConfigurationStorage\Dependency\Facade\ProductConfigurationStorageToEventBehaviorFacadeInterface;
@@ -90,8 +91,8 @@ class ProductConfigurationStorageWriter implements ProductConfigurationStorageWr
      */
     protected function getProductConfigurationCollection(array $productConfigurationIds): ProductConfigurationCollectionTransfer
     {
-        $productConfigurationCriteria = (new ProductConfigurationFilterTransfer())
-            ->setProductConfigurationIds($productConfigurationIds);
+        $productConfigurationConditionsTransfer = (new ProductConfigurationConditionsTransfer())->setProductConfigurationIds($productConfigurationIds);
+        $productConfigurationCriteria = (new ProductConfigurationCriteriaTransfer())->setProductConfigurationConditions($productConfigurationConditionsTransfer);
 
         return $this->configurationFacade->getProductConfigurationCollection($productConfigurationCriteria);
     }

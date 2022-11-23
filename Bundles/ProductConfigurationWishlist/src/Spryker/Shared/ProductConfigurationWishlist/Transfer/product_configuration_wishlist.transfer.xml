@@ -12,6 +12,7 @@
     <transfer name="ProductConfigurationInstance">
         <property name="prices" type="PriceProduct[]" singular="price"/>
         <property name="quantity" type="int"/>
+        <property name="sku" type="string"/>
     </transfer>
 
     <transfer name="WishlistItemMeta">
@@ -56,10 +57,6 @@
 
     <transfer name="WishlistPreAddItemCheckResponse">
         <property name="isSuccess" type="bool"/>
-    </transfer>
-
-    <transfer name="ProductConfigurationFilter">
-        <property name="skus" type="string[]" singular="sku"/>
     </transfer>
 
     <transfer name="ProductConfigurationCollection">
@@ -112,4 +109,23 @@
         <property name="isSuccess" type="bool"/>
     </transfer>
 
+    <transfer name="ProductConfigurationCriteria">
+        <property name="productConfigurationConditions" type="ProductConfigurationConditions"/>
+    </transfer>
+
+    <transfer name="ProductConfigurationConditions">
+        <property name="skus" type="string[]" singular="sku"/>
+    </transfer>
+
+    <transfer name="ProductConfigurationInstanceCollection">
+        <property name="productConfigurationInstances" type="ProductConfigurationInstance[]" singular="productConfigurationInstance"/>
+    </transfer>
+
+    <transfer name="ProductConfigurationInstanceCriteria">
+        <property name="productConfigurationInstanceConditions" type="ProductConfigurationInstanceConditions"/>
+    </transfer>
+
+    <transfer name="ProductConfigurationInstanceConditions">
+        <property name="skus" type="string[]" singular="sku"/>
+    </transfer>
 </transfers>

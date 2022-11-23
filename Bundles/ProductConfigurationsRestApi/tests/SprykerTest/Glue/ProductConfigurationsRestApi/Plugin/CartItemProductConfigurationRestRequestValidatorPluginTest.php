@@ -7,9 +7,11 @@
 
 namespace SprykerTest\Glue\ProductConfigurationsRestApi\Plugin;
 
+use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ProductConfigurationInstanceBuilder;
 use Generated\Shared\DataBuilder\RestCartItemsAttributesBuilder;
+use Generated\Shared\Transfer\ProductConfigurationInstanceCollectionTransfer;
 use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 use Generated\Shared\Transfer\RestCartItemProductConfigurationInstanceAttributesTransfer;
 use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
@@ -121,9 +123,14 @@ class CartItemProductConfigurationRestRequestValidatorPluginTest extends Unit
         $productConfigurationInstanceTransfer = (new ProductConfigurationInstanceBuilder([
             ProductConfigurationInstanceTransfer::CONFIGURATOR_KEY => static::PRODUCT_CONFIGURATION_KEY,
         ]))->build();
+        $productConfigurationInstanceCollectionTransfer = (new ProductConfigurationInstanceCollectionTransfer())->setProductConfigurationInstances(
+            new ArrayObject([
+                static::PRODUCT_CONCRETE_SKU => $productConfigurationInstanceTransfer,
+            ]),
+        );
         $this->tester->setDependency(
             ProductConfigurationsRestApiDependencyProvider::CLIENT_PRODUCT_CONFIGURATION_STORAGE,
-            $this->createProductConfigurationStorageClientMock($productConfigurationInstanceTransfer),
+            $this->createProductConfigurationStorageClientMock($productConfigurationInstanceCollectionTransfer),
         );
 
         $restCartItemsAttributesTransfer = (new RestCartItemsAttributesBuilder([RestCartItemsAttributesTransfer::SKU => static::PRODUCT_CONCRETE_SKU]))
@@ -154,7 +161,7 @@ class CartItemProductConfigurationRestRequestValidatorPluginTest extends Unit
         // Arrange
         $this->tester->setDependency(
             ProductConfigurationsRestApiDependencyProvider::CLIENT_PRODUCT_CONFIGURATION_STORAGE,
-            $this->createProductConfigurationStorageClientMock(),
+            $this->createProductConfigurationStorageClientMock(new ProductConfigurationInstanceCollectionTransfer()),
         );
 
         $restCartItemsAttributesTransfer = (new RestCartItemsAttributesBuilder([RestCartItemsAttributesTransfer::SKU => static::PRODUCT_CONCRETE_SKU]))
@@ -195,9 +202,16 @@ class CartItemProductConfigurationRestRequestValidatorPluginTest extends Unit
         $productConfigurationInstanceTransfer = (new ProductConfigurationInstanceBuilder([
             ProductConfigurationInstanceTransfer::CONFIGURATOR_KEY => static::PRODUCT_CONFIGURATION_KEY,
         ]))->build();
+
+        $productConfigurationInstanceCollectionTransfer = (new ProductConfigurationInstanceCollectionTransfer())->setProductConfigurationInstances(
+            new ArrayObject([
+                static::PRODUCT_CONCRETE_SKU => $productConfigurationInstanceTransfer,
+            ]),
+        );
+
         $this->tester->setDependency(
             ProductConfigurationsRestApiDependencyProvider::CLIENT_PRODUCT_CONFIGURATION_STORAGE,
-            $this->createProductConfigurationStorageClientMock($productConfigurationInstanceTransfer),
+            $this->createProductConfigurationStorageClientMock($productConfigurationInstanceCollectionTransfer),
         );
 
         $restCartItemsAttributesTransfer = (new RestCartItemsAttributesBuilder([RestCartItemsAttributesTransfer::SKU => static::PRODUCT_CONCRETE_SKU]))
@@ -271,15 +285,15 @@ class CartItemProductConfigurationRestRequestValidatorPluginTest extends Unit
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer|null $productConfigurationInstanceTransfer
+     * @param \Generated\Shared\Transfer\ProductConfigurationInstanceCollectionTransfer $productConfigurationInstanceCollectionTransfer
      *
      * @return \Spryker\Glue\ProductConfigurationsRestApi\Dependency\Client\ProductConfigurationsRestApiToProductConfigurationStorageClientInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected function createProductConfigurationStorageClientMock(
-        ?ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer = null
+        ProductConfigurationInstanceCollectionTransfer $productConfigurationInstanceCollectionTransfer
     ): ProductConfigurationsRestApiToProductConfigurationStorageClientInterface {
         $mock = $this->getMockBuilder(ProductConfigurationsRestApiToProductConfigurationStorageClientInterface::class)->getMock();
-        $mock->method('findProductConfigurationInstanceBySku')->willReturn($productConfigurationInstanceTransfer);
+        $mock->method('getProductConfigurationInstanceCollection')->willReturn($productConfigurationInstanceCollectionTransfer);
 
         return $mock;
     }

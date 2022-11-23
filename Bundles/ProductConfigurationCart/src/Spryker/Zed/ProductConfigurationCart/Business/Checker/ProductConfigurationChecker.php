@@ -9,7 +9,9 @@ namespace Spryker\Zed\ProductConfigurationCart\Business\Checker;
 
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use Generated\Shared\Transfer\ProductConfigurationFilterTransfer;
+use Generated\Shared\Transfer\ProductConfigurationCollectionTransfer;
+use Generated\Shared\Transfer\ProductConfigurationConditionsTransfer;
+use Generated\Shared\Transfer\ProductConfigurationCriteriaTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\ProductConfigurationCart\Dependency\Facade\ProductConfigurationCartToProductConfigurationFacadeInterface;
 
@@ -76,14 +78,10 @@ class ProductConfigurationChecker implements ProductConfigurationCheckerInterfac
     protected function getProductConfigurationsIndexedBySku(QuoteTransfer $quoteTransfer): array
     {
         $indexedProductConfigurations = [];
-        $productConfigurationFilterTransfer = (new ProductConfigurationFilterTransfer())
-            ->setSkus(array_unique($this->extractSkusFromQuote($quoteTransfer)));
+        $skusUniqueFromQuoteTransfer = $this->extractUniqueSkusFromQuote($quoteTransfer);
+        $productConfigurationCollectionTransfer = $this->getProductConfigurationCollection($skusUniqueFromQuoteTransfer);
 
-        $productConfigurationTransfers = $this->productConfigurationFacade
-            ->getProductConfigurationCollection($productConfigurationFilterTransfer)
-            ->getProductConfigurations();
-
-        foreach ($productConfigurationTransfers as $productConfigurationTransfer) {
+        foreach ($productConfigurationCollectionTransfer->getProductConfigurations() as $productConfigurationTransfer) {
             $indexedProductConfigurations[$productConfigurationTransfer->getSkuOrFail()] = $productConfigurationTransfer;
         }
 
@@ -91,11 +89,24 @@ class ProductConfigurationChecker implements ProductConfigurationCheckerInterfac
     }
 
     /**
+     * @param array<string> $skus
+     *
+     * @return \Generated\Shared\Transfer\ProductConfigurationCollectionTransfer
+     */
+    protected function getProductConfigurationCollection(array $skus): ProductConfigurationCollectionTransfer
+    {
+        $productConfigurationConditionsTransfer = (new ProductConfigurationConditionsTransfer())->setSkus($skus);
+        $productConfigurationCriteriaTransfer = (new ProductConfigurationCriteriaTransfer())->setProductConfigurationConditions($productConfigurationConditionsTransfer);
+
+        return $this->productConfigurationFacade->getProductConfigurationCollection($productConfigurationCriteriaTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return array<string>
      */
-    protected function extractSkusFromQuote(QuoteTransfer $quoteTransfer): array
+    protected function extractUniqueSkusFromQuote(QuoteTransfer $quoteTransfer): array
     {
         $skus = [];
 
@@ -103,7 +114,7 @@ class ProductConfigurationChecker implements ProductConfigurationCheckerInterfac
             $skus[] = $itemTransfer->getSkuOrFail();
         }
 
-        return $skus;
+        return array_unique($skus);
     }
 
     /**

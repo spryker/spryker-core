@@ -8,12 +8,13 @@
 namespace Spryker\Zed\ProductConfiguration\Business;
 
 use Generated\Shared\Transfer\ProductConfigurationCollectionTransfer;
-use Generated\Shared\Transfer\ProductConfigurationFilterTransfer;
+use Generated\Shared\Transfer\ProductConfigurationCriteriaTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\ProductConfiguration\Persistence\ProductConfigurationRepositoryInterface getRepository()
  * @method \Spryker\Zed\ProductConfiguration\Business\ProductConfigurationBusinessFactory getFactory()
+ * @method \Spryker\Zed\ProductConfiguration\Persistence\ProductConfigurationEntityManagerInterface getEntityManager()
  */
 class ProductConfigurationFacade extends AbstractFacade implements ProductConfigurationFacadeInterface
 {
@@ -22,13 +23,15 @@ class ProductConfigurationFacade extends AbstractFacade implements ProductConfig
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductConfigurationFilterTransfer $productConfigurationFilterTransfer
+     * @param \Generated\Shared\Transfer\ProductConfigurationCriteriaTransfer $productConfigurationCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConfigurationCollectionTransfer
      */
     public function getProductConfigurationCollection(
-        ProductConfigurationFilterTransfer $productConfigurationFilterTransfer
+        ProductConfigurationCriteriaTransfer $productConfigurationCriteriaTransfer
     ): ProductConfigurationCollectionTransfer {
-        return $this->getRepository()->getProductConfigurationCollection($productConfigurationFilterTransfer);
+        return $this->getFactory()
+            ->createProductConfigurationReader()
+            ->getProductConfigurationCollection($productConfigurationCriteriaTransfer);
     }
 }

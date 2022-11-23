@@ -13,6 +13,9 @@ interface SalesProductConfigurationFacadeInterface
 {
     /**
      * Specification:
+     * - Requires `QuoteTransfer.items.idSalesOrderItem` transfer property to be set.
+     * - Requires `QuoteTransfer.items.productConfigurationInstance` transfer property to be set.
+     * - Requires `QuoteTransfer.items.productConfigurationInstance.configuratorKey` transfer property to be set.
      * - Persists product configuration from ItemTransfer in Quote to sales_order_item_configuration table.
      * - Expects the product configuration instance to be provided.
      *

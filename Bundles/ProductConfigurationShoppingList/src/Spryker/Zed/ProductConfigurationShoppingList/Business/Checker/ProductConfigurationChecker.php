@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\ProductConfigurationShoppingList\Business\Checker;
 
-use Generated\Shared\Transfer\FilterTransfer;
-use Generated\Shared\Transfer\ProductConfigurationFilterTransfer;
+use Generated\Shared\Transfer\PaginationTransfer;
+use Generated\Shared\Transfer\ProductConfigurationCollectionTransfer;
+use Generated\Shared\Transfer\ProductConfigurationConditionsTransfer;
+use Generated\Shared\Transfer\ProductConfigurationCriteriaTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListPreAddItemCheckResponseTransfer;
 use Spryker\Zed\ProductConfigurationShoppingList\Dependency\Facade\ProductConfigurationShoppingListToProductConfigurationFacadeInterface;
@@ -53,13 +55,25 @@ class ProductConfigurationChecker implements ProductConfigurationCheckerInterfac
      */
     protected function hasProductConfiguration(ShoppingListItemTransfer $shoppingListItemTransfer): bool
     {
-        $productConfigurationFilterTransfer = (new ProductConfigurationFilterTransfer())
-            ->addSku($shoppingListItemTransfer->getSkuOrFail())
-            ->setFilter((new FilterTransfer())->setLimit(1));
+        return (bool)$this->getProductConfigurationCollection($shoppingListItemTransfer)
+            ->getProductConfigurations()
+            ->count();
+    }
 
-        return $this->productConfigurationFacade
-                ->getProductConfigurationCollection($productConfigurationFilterTransfer)
-                ->getProductConfigurations()
-                ->count() > 0;
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConfigurationCollectionTransfer
+     */
+    protected function getProductConfigurationCollection(
+        ShoppingListItemTransfer $shoppingListItemTransfer
+    ): ProductConfigurationCollectionTransfer {
+        $productConfigurationConditionsTransfer = (new ProductConfigurationConditionsTransfer())->addSku($shoppingListItemTransfer->getSkuOrFail());
+        $paginationTransfer = (new PaginationTransfer())->setLimit(1)->setOffset(0);
+        $productConfigurationCriteriaTransfer = (new ProductConfigurationCriteriaTransfer())
+            ->setPagination($paginationTransfer)
+            ->setProductConfigurationConditions($productConfigurationConditionsTransfer);
+
+        return $this->productConfigurationFacade->getProductConfigurationCollection($productConfigurationCriteriaTransfer);
     }
 }

@@ -12,5 +12,5 @@ interface ProductConfigurationToPriceClientInterface
     /**
      * @return string
      */
-    public function getCurrentPriceMode();
+    public function getCurrentPriceMode(): string;
 }

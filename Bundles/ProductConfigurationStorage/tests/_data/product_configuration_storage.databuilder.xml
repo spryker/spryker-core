@@ -43,4 +43,11 @@
         <property name="checkSum" dataBuilderRule="word"/>
     </transfer>
 
+    <transfer name="ProductConfigurationInstanceCriteria">
+        <property name="productConfigurationInstanceConditions" type="ProductConfigurationInstanceConditions"/>
+    </transfer>
+
+    <transfer name="ProductConfigurationInstanceConditions">
+        <property name="skus" type="string[]"/>
+    </transfer>
 </transfers>

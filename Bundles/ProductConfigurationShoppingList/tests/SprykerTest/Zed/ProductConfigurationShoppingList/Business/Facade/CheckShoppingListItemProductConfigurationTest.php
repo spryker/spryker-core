@@ -39,7 +39,7 @@ class CheckShoppingListItemProductConfigurationTest extends Unit
         $productConcreteTransfer = $this->tester->haveProduct();
         $shoppingListItemTransfer = $this->tester->createShoppingListItem($productConcreteTransfer);
 
-        $this->tester->haveProductConfiguration(
+        $this->tester->haveProductConfigurationTransferPersisted(
             [
                 ProductConfigurationTransfer::FK_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
             ],

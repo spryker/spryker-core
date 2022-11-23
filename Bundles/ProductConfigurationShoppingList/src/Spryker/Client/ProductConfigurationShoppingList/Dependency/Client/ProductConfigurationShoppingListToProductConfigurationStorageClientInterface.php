@@ -7,14 +7,17 @@
 
 namespace Spryker\Client\ProductConfigurationShoppingList\Dependency\Client;
 
-use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
+use Generated\Shared\Transfer\ProductConfigurationInstanceCollectionTransfer;
+use Generated\Shared\Transfer\ProductConfigurationInstanceCriteriaTransfer;
 
 interface ProductConfigurationShoppingListToProductConfigurationStorageClientInterface
 {
     /**
-     * @param string $sku
+     * @param \Generated\Shared\Transfer\ProductConfigurationInstanceCriteriaTransfer $productConfigurationInstanceCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer|null
+     * @return \Generated\Shared\Transfer\ProductConfigurationInstanceCollectionTransfer
      */
-    public function findProductConfigurationInstanceBySku(string $sku): ?ProductConfigurationInstanceTransfer;
+    public function getProductConfigurationInstanceCollection(
+        ProductConfigurationInstanceCriteriaTransfer $productConfigurationInstanceCriteriaTransfer
+    ): ProductConfigurationInstanceCollectionTransfer;
 }

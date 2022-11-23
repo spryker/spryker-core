@@ -9,11 +9,12 @@ namespace Spryker\Zed\ProductConfiguration\Persistence;
 
 use Orm\Zed\ProductConfiguration\Persistence\SpyProductConfigurationQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\ProductConfiguration\Persistence\Propel\Mapper\ProductConfigurationMapper;
+use Spryker\Zed\ProductConfiguration\Persistence\Propel\ProductConfiguration\Mapper\ProductConfigurationMapper;
 
 /**
  * @method \Spryker\Zed\ProductConfiguration\Persistence\ProductConfigurationRepositoryInterface getRepository()
  * @method \Spryker\Zed\ProductConfiguration\ProductConfigurationConfig getConfig()
+ * @method \Spryker\Zed\ProductConfiguration\Persistence\ProductConfigurationEntityManagerInterface getEntityManager()
  */
 class ProductConfigurationPersistenceFactory extends AbstractPersistenceFactory
 {
@@ -26,7 +27,7 @@ class ProductConfigurationPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductConfiguration\Persistence\Propel\Mapper\ProductConfigurationMapper
+     * @return \Spryker\Zed\ProductConfiguration\Persistence\Propel\ProductConfiguration\Mapper\ProductConfigurationMapper
      */
     public function createProductConfigurationMapper(): ProductConfigurationMapper
     {

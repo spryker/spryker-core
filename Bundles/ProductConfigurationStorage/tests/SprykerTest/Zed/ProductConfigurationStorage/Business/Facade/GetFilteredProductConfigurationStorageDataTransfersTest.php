@@ -69,7 +69,7 @@ class GetFilteredProductConfigurationStorageDataTransfersTest extends Unit
     {
         // Arrange
         $productConcreteTransfer = $this->tester->haveProduct();
-        $productConfigurationTransfer = $this->tester->haveProductConfiguration(
+        $productConfigurationTransfer = $this->tester->haveProductConfigurationTransferPersisted(
             [ProductConfigurationTransfer::FK_PRODUCT => $productConcreteTransfer->getIdProductConcrete()],
         );
 
@@ -130,7 +130,7 @@ class GetFilteredProductConfigurationStorageDataTransfersTest extends Unit
     {
         // Arrange
         $productConcreteTransfer = $this->tester->haveProduct();
-        $productConfigurationTransfer = $this->tester->haveProductConfiguration(
+        $productConfigurationTransfer = $this->tester->haveProductConfigurationTransferPersisted(
             [ProductConfigurationTransfer::FK_PRODUCT => $productConcreteTransfer->getIdProductConcrete()],
         );
 
@@ -163,10 +163,10 @@ class GetFilteredProductConfigurationStorageDataTransfersTest extends Unit
         // Arrange
         $firstProductConcreteTransfer = $this->tester->haveProduct();
         $secondProductConcreteTransfer = $this->tester->haveProduct();
-        $firstProductConfigurationTransfer = $this->tester->haveProductConfiguration(
+        $firstProductConfigurationTransfer = $this->tester->haveProductConfigurationTransferPersisted(
             [ProductConfigurationTransfer::FK_PRODUCT => $firstProductConcreteTransfer->getIdProductConcrete()],
         );
-        $secondProductConfigurationTransfer = $this->tester->haveProductConfiguration(
+        $secondProductConfigurationTransfer = $this->tester->haveProductConfigurationTransferPersisted(
             [ProductConfigurationTransfer::FK_PRODUCT => $secondProductConcreteTransfer->getIdProductConcrete()],
         );
 
@@ -203,10 +203,10 @@ class GetFilteredProductConfigurationStorageDataTransfersTest extends Unit
         // Arrange
         $firstProductConcreteTransfer = $this->tester->haveProduct();
         $secondProductConcreteTransfer = $this->tester->haveProduct();
-        $firstProductConfigurationTransfer = $this->tester->haveProductConfiguration(
+        $firstProductConfigurationTransfer = $this->tester->haveProductConfigurationTransferPersisted(
             [ProductConfigurationTransfer::FK_PRODUCT => $firstProductConcreteTransfer->getIdProductConcrete()],
         );
-        $secondProductConfigurationTransfer = $this->tester->haveProductConfiguration(
+        $secondProductConfigurationTransfer = $this->tester->haveProductConfigurationTransferPersisted(
             [ProductConfigurationTransfer::FK_PRODUCT => $secondProductConcreteTransfer->getIdProductConcrete()],
         );
 
@@ -248,10 +248,10 @@ class GetFilteredProductConfigurationStorageDataTransfersTest extends Unit
         // Arrange
         $firstProductConcreteTransfer = $this->tester->haveProduct();
         $secondProductConcreteTransfer = $this->tester->haveProduct();
-        $firstProductConfigurationTransfer = $this->tester->haveProductConfiguration(
+        $firstProductConfigurationTransfer = $this->tester->haveProductConfigurationTransferPersisted(
             [ProductConfigurationTransfer::FK_PRODUCT => $firstProductConcreteTransfer->getIdProductConcrete()],
         );
-        $secondProductConfigurationTransfer = $this->tester->haveProductConfiguration(
+        $secondProductConfigurationTransfer = $this->tester->haveProductConfigurationTransferPersisted(
             [ProductConfigurationTransfer::FK_PRODUCT => $secondProductConcreteTransfer->getIdProductConcrete()],
         );
 

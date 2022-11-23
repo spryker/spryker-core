@@ -26,6 +26,7 @@
     <transfer name="ProductConfigurationInstance">
         <property name="prices" type="PriceProduct[]" singular="price"/>
         <property name="configuratorKey" type="string"/>
+        <property name="sku" type="string"/>
     </transfer>
 
     <transfer name="RestCartItemProductConfigurationInstanceAttributes">
@@ -138,4 +139,15 @@
         <property name="detail" type="string"/>
     </transfer>
 
+    <transfer name="ProductConfigurationInstanceCollection">
+        <property name="productConfigurationInstances" type="ProductConfigurationInstance[]" singular="productConfigurationInstance"/>
+    </transfer>
+
+    <transfer name="ProductConfigurationInstanceCriteria">
+        <property name="productConfigurationInstanceConditions" type="ProductConfigurationInstanceConditions"/>
+    </transfer>
+
+    <transfer name="ProductConfigurationInstanceConditions">
+        <property name="skus" type="string[]" singular="sku"/>
+    </transfer>
 </transfers>

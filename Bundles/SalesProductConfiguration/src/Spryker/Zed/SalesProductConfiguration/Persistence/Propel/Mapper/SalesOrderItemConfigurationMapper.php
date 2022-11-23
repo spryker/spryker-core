@@ -24,7 +24,7 @@ class SalesOrderItemConfigurationMapper
         SpySalesOrderItemConfiguration $salesOrderItemConfigurationEntity
     ): SpySalesOrderItemConfiguration {
         $salesOrderItemConfigurationEntity->fromArray($salesOrderItemConfigurationTransfer->modifiedToArray());
-        $salesOrderItemConfigurationEntity->setFkSalesOrderItem($salesOrderItemConfigurationTransfer->getIdSalesOrderItem());
+        $salesOrderItemConfigurationEntity->setFkSalesOrderItem($salesOrderItemConfigurationTransfer->getIdSalesOrderItemOrFail());
 
         return $salesOrderItemConfigurationEntity;
     }
