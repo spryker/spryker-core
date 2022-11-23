@@ -119,7 +119,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
 
         $baseQuery = $this->getFactory()->getSalesQueryContainer()->querySalesOrderItem();
         $baseQuery->addSelectQuery($this->buildSubQueryForSalesOrderByItemStateQuery($idOmsOrderProcess, $omsOrderItemStateIds, $storeName, $limit, $omsProcessorIdentifiers), 't', false)
-            ->addSelectColumn('*')
+            ->addSelfSelectColumns()
             ->addSelectColumn('t.fk_sales_order')
             ->filterByFkOmsOrderProcess($idOmsOrderProcess)
             ->filterByFkOmsOrderItemState_In($omsOrderItemStateIds)
