@@ -64,6 +64,8 @@ class TwigApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
             $twig = new Environment($twigLoader, $twigOptions);
             $twig->addGlobal('app', $container);
 
+            $twig = $this->addGlobalTwigFilters($twig);
+
             $twig = $this->extendTwig($twig, $container);
 
             return $twig;
@@ -118,5 +120,15 @@ class TwigApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
         ];
 
         return array_replace($globalOptions, $twigOptions);
+    }
+
+    /**
+     * @param \Twig\Environment $twig
+     *
+     * @return \Twig\Environment
+     */
+    protected function addGlobalTwigFilters(Environment $twig): Environment
+    {
+        return $this->getFactory()->createFilterExtender()->extend($twig);
     }
 }

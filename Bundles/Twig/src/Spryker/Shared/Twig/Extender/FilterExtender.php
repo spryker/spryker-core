@@ -5,20 +5,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Twig\Communication\Extender;
+namespace Spryker\Shared\Twig\Extender;
 
-use Spryker\Zed\Twig\Communication\Filter\FilterFactoryInterface;
+use Spryker\Shared\Twig\Filter\FilterFactoryInterface;
 use Twig\Environment;
 
 class FilterExtender implements FilterExtenderInterface
 {
     /**
-     * @var \Spryker\Zed\Twig\Communication\Filter\FilterFactoryInterface
+     * @var \Spryker\Shared\Twig\Filter\FilterFactoryInterface
      */
-    protected $filterFactory;
+    protected FilterFactoryInterface $filterFactory;
 
     /**
-     * @param \Spryker\Zed\Twig\Communication\Filter\FilterFactoryInterface $filterFactory
+     * @param \Spryker\Shared\Twig\Filter\FilterFactoryInterface $filterFactory
      */
     public function __construct(FilterFactoryInterface $filterFactory)
     {

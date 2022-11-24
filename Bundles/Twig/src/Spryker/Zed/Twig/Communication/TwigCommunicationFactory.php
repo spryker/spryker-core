@@ -11,15 +11,15 @@ use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\Twig\Cache\Cache\FilesystemCache;
 use Spryker\Shared\Twig\Cache\CacheLoader\FilesystemCacheLoader;
 use Spryker\Shared\Twig\Cache\CacheWriter\FilesystemCacheWriter;
+use Spryker\Shared\Twig\Extender\FilterExtender;
+use Spryker\Shared\Twig\Extender\FilterExtenderInterface;
+use Spryker\Shared\Twig\Filter\FilterFactory;
+use Spryker\Shared\Twig\Filter\FilterFactoryInterface;
 use Spryker\Shared\Twig\Loader\FilesystemLoader;
 use Spryker\Shared\Twig\Loader\FilesystemLoaderInterface;
 use Spryker\Shared\Twig\TemplateNameExtractor\TemplateNameExtractor;
 use Spryker\Shared\Twig\TwigFilesystemLoader;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\Twig\Communication\Extender\FilterExtender;
-use Spryker\Zed\Twig\Communication\Extender\FilterExtenderInterface;
-use Spryker\Zed\Twig\Communication\Filter\FilterFactory;
-use Spryker\Zed\Twig\Communication\Filter\FilterFactoryInterface;
 use Spryker\Zed\Twig\Communication\RouteResolver\RouteResolver;
 use Spryker\Zed\Twig\Communication\RouteResolver\RouteResolverInterface;
 use Spryker\Zed\Twig\Communication\Subscriber\TwigEventSubscriber;
@@ -145,7 +145,7 @@ class TwigCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Twig\Communication\Extender\FilterExtenderInterface
+     * @return \Spryker\Shared\Twig\Extender\FilterExtenderInterface
      */
     public function createFilterExtender(): FilterExtenderInterface
     {
@@ -155,7 +155,7 @@ class TwigCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\Twig\Communication\Filter\FilterFactoryInterface
+     * @return \Spryker\Shared\Twig\Filter\FilterFactoryInterface
      */
     public function createFilterFactory(): FilterFactoryInterface
     {

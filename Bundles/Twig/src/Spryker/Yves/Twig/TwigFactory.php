@@ -10,6 +10,10 @@ namespace Spryker\Yves\Twig;
 use Spryker\Shared\Twig\Cache\Cache\FilesystemCache;
 use Spryker\Shared\Twig\Cache\CacheLoader\FilesystemCacheLoader;
 use Spryker\Shared\Twig\Cache\CacheWriter\FilesystemCacheWriter;
+use Spryker\Shared\Twig\Extender\FilterExtender;
+use Spryker\Shared\Twig\Extender\FilterExtenderInterface;
+use Spryker\Shared\Twig\Filter\FilterFactory;
+use Spryker\Shared\Twig\Filter\FilterFactoryInterface;
 use Spryker\Shared\Twig\Loader\FilesystemLoader;
 use Spryker\Shared\Twig\Loader\FilesystemLoaderInterface;
 use Spryker\Shared\Twig\TwigFilesystemLoader;
@@ -105,6 +109,24 @@ class TwigFactory extends AbstractFactory
     public function createTwigFilesystemLoader(): FilesystemLoaderInterface
     {
         return new FilesystemLoader($this->getConfig()->getFormTemplateDirectories());
+    }
+
+    /**
+     * @return \Spryker\Shared\Twig\Extender\FilterExtenderInterface
+     */
+    public function createFilterExtender(): FilterExtenderInterface
+    {
+        return new FilterExtender(
+            $this->createFilterFactory(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Shared\Twig\Filter\FilterFactoryInterface
+     */
+    public function createFilterFactory(): FilterFactoryInterface
+    {
+        return new FilterFactory();
     }
 
     /**

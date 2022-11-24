@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Twig\Communication\Extender;
+namespace Spryker\Shared\Twig\Extender;
 
 use Twig\Environment;
 
