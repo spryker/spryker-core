@@ -19,7 +19,7 @@ class ShipmentQuoteMapper implements ShipmentQuoteMapperInterface
     /**
      * @var \Spryker\Zed\ShipmentsRestApi\Dependency\Facade\ShipmentsRestApiToShipmentFacadeInterface
      */
-    protected $shipmentFacade;
+    protected ShipmentsRestApiToShipmentFacadeInterface $shipmentFacade;
 
     /**
      * @param \Spryker\Zed\ShipmentsRestApi\Dependency\Facade\ShipmentsRestApiToShipmentFacadeInterface $shipmentFacade
@@ -59,11 +59,9 @@ class ShipmentQuoteMapper implements ShipmentQuoteMapperInterface
             ->setShippingAddress($quoteTransfer->getShippingAddress());
 
         $quoteTransfer = $this->setShipmentTransferIntoQuote($quoteTransfer, $shipmentTransfer);
-
         $expenseTransfer = $this->createShippingExpenseTransfer($shipmentTransfer);
-        $quoteTransfer->addExpense($expenseTransfer);
 
-        return $quoteTransfer;
+        return $this->setShipmentExpense($quoteTransfer, $expenseTransfer);
     }
 
     /**
@@ -96,6 +94,27 @@ class ShipmentQuoteMapper implements ShipmentQuoteMapperInterface
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
             $itemTransfer->setShipment($shipmentTransfer);
         }
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function setShipmentExpense(QuoteTransfer $quoteTransfer, ExpenseTransfer $expenseTransfer): QuoteTransfer
+    {
+        foreach ($quoteTransfer->getExpenses() as $expenseKey => $quoteExpenseTransfer) {
+            if ($quoteExpenseTransfer->getType() === ShipmentsRestApiConfig::SHIPMENT_EXPENSE_TYPE) {
+                $quoteTransfer->getExpenses()->getIterator()->offsetSet($expenseKey, $expenseTransfer);
+
+                return $quoteTransfer;
+            }
+        }
+
+        $quoteTransfer->addExpense($expenseTransfer);
 
         return $quoteTransfer;
     }

@@ -19,6 +19,7 @@ interface ShipmentsRestApiFacadeInterface
      * Specification:
      * - Maps rest request shipment to quote.
      * - Finds shipment method by shipmentSelection from request.
+     * - Set new quote expense of type `ShipmentsRestApiConfig::SHIPMENT_EXPENSE_TYPE` based on found shipment method data.
      *
      * @api
      *

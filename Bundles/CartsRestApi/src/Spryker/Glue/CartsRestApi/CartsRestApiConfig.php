@@ -252,6 +252,11 @@ class CartsRestApiConfig extends AbstractBundleConfig
     public const HEADER_ANONYMOUS_CUSTOMER_UNIQUE_ID = 'X-Anonymous-Customer-Unique-Id';
 
     /**
+     * @var string
+     */
+    public const HEADER_AUTHORIZATION = 'authorization';
+
+    /**
      * @var array<string>
      */
     protected const GUEST_CART_RESOURCES = [

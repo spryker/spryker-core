@@ -12,7 +12,7 @@ use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
 use Spryker\Glue\CartsRestApi\CartsRestApiDependencyProvider;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClientInterface;
 use Spryker\Glue\CartsRestApi\Plugin\GlueApplication\ExpandRequestWithCustomerReferenceFormattedControllerBeforeActionPlugin;
-use SprykerTest\Glue\CartsRestApi\CartsRestApiTester;
+use SprykerTest\Glue\CartsRestApi\CartRestApiGlueTester;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -46,9 +46,11 @@ class ExpandRequestWithCustomerReferenceFormattedControllerBeforeActionPluginTes
     protected const TEST_HEADER_ANONYMOUS_CUSTOMER_UNIQUE_ID = 'testHeader';
 
     /**
-     * @var \SprykerTest\Glue\CartsRestApi\CartsRestApiTester
+     * /**
+     *
+     * @var \SprykerTest\Glue\CartsRestApi\CartRestApiGlueTester
      */
-    protected CartsRestApiTester $tester;
+    protected CartRestApiGlueTester $tester;
 
     /**
      * @return void

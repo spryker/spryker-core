@@ -9,17 +9,21 @@ namespace SprykerTest\Zed\ShipmentsRestApi;
 
 use Codeception\Actor;
 use Generated\Shared\DataBuilder\CheckoutDataBuilder;
+use Generated\Shared\DataBuilder\ExpenseBuilder;
 use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\RestCheckoutRequestAttributesBuilder;
 use Generated\Shared\DataBuilder\RestShipmentBuilder;
 use Generated\Shared\Transfer\CheckoutDataTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\RestShipmentTransfer;
+use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use PHPUnit\Framework\MockObject\MockObject;
+use Spryker\Shared\ShipmentsRestApi\ShipmentsRestApiConfig;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ShipmentsRestApi\Business\ShipmentsRestApiFacadeInterface;
 use Spryker\Zed\ShipmentsRestApi\ShipmentsRestApiDependencyProvider;
@@ -51,19 +55,22 @@ class ShipmentsRestApiBusinessTester extends Actor
     protected const PRICE_MODE_GROSS = 'GROSS_MODE';
 
     /**
+     * @var int
+     */
+    public const SHIPMENT_METHOD_ID_INVALID = -1;
+
+    /**
      * @var array
      */
     public const SHIPMENT_METHOD = [
-        'idShipmentMethod' => 745,
-        'storeCurrencyPrice' => 1800,
-        'currencyIsoCode' => 'EUR',
-        'name' => 'Test shipping',
-        'carrierName' => 'Test carrier',
-        'taxRate' => 19,
-        'isActive' => true,
+        ShipmentMethodTransfer::ID_SHIPMENT_METHOD => 745,
+        ShipmentMethodTransfer::STORE_CURRENCY_PRICE => 1800,
+        ShipmentMethodTransfer::CURRENCY_ISO_CODE => 'EUR',
+        ShipmentMethodTransfer::NAME => 'Test shipping',
+        ShipmentMethodTransfer::CARRIER_NAME => 'Test carrier',
+        ShipmentMethodTransfer::TAX_RATE => 19,
+        ShipmentMethodTransfer::IS_ACTIVE => true,
     ];
-
-    public const SHIPMENT_METHOD_ID_INVALID = -1;
 
     /**
      * @return \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer
@@ -83,7 +90,9 @@ class ShipmentsRestApiBusinessTester extends Actor
     {
         /** @var \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer */
         $restCheckoutRequestAttributesTransfer = (new RestCheckoutRequestAttributesBuilder())->build();
-        $restShipmentTransfer = (new RestShipmentBuilder(['idShipmentMethod' => static::SHIPMENT_METHOD['idShipmentMethod']]))->build();
+        $restShipmentTransfer = (new RestShipmentBuilder([
+            RestShipmentTransfer::ID_SHIPMENT_METHOD => static::SHIPMENT_METHOD[ShipmentMethodTransfer::ID_SHIPMENT_METHOD],
+        ]))->build();
         $restCheckoutRequestAttributesTransfer->setShipment($restShipmentTransfer);
 
         return $restCheckoutRequestAttributesTransfer;
@@ -96,7 +105,7 @@ class ShipmentsRestApiBusinessTester extends Actor
     {
         /** @var \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer */
         $restCheckoutRequestAttributesTransfer = (new RestCheckoutRequestAttributesBuilder())
-            ->withShipment(['idShipmentMethod' => static::SHIPMENT_METHOD['idShipmentMethod']])
+            ->withShipment([RestShipmentTransfer::ID_SHIPMENT_METHOD => static::SHIPMENT_METHOD[ShipmentMethodTransfer::ID_SHIPMENT_METHOD]])
             ->build();
 
         return $restCheckoutRequestAttributesTransfer;
@@ -110,7 +119,7 @@ class ShipmentsRestApiBusinessTester extends Actor
         /** @var \Generated\Shared\Transfer\CheckoutDataTransfer $checkoutDataTransfer */
         $checkoutDataTransfer = (new CheckoutDataBuilder([
             CheckoutDataTransfer::SHIPMENTS => [
-                ['idShipmentMethod' => static::SHIPMENT_METHOD['idShipmentMethod']],
+                [ShipmentMethodTransfer::ID_SHIPMENT_METHOD => static::SHIPMENT_METHOD[ShipmentMethodTransfer::ID_SHIPMENT_METHOD]],
             ],
         ]))->build();
 
@@ -153,6 +162,14 @@ class ShipmentsRestApiBusinessTester extends Actor
     }
 
     /**
+     * @return \Generated\Shared\Transfer\ExpenseTransfer
+     */
+    public function createShipmentExpenseTransfer(): ExpenseTransfer
+    {
+        return (new ExpenseBuilder([ExpenseTransfer::TYPE => ShipmentsRestApiConfig::SHIPMENT_EXPENSE_TYPE]))->build();
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function buildQuote(): QuoteTransfer
@@ -164,6 +181,22 @@ class ShipmentsRestApiBusinessTester extends Actor
             ->addItem((new ItemBuilder())->build())
             ->addItem((new ItemBuilder())->build())
             ->addItem((new ItemBuilder())->build());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
+     *
+     * @return void
+     */
+    public function assertSameShipmentMethod(ShipmentMethodTransfer $shipmentMethodTransfer): void
+    {
+        $this->assertSame(static::SHIPMENT_METHOD[ShipmentMethodTransfer::ID_SHIPMENT_METHOD], $shipmentMethodTransfer->getIdShipmentMethod());
+        $this->assertSame(static::SHIPMENT_METHOD[ShipmentMethodTransfer::STORE_CURRENCY_PRICE], $shipmentMethodTransfer->getStoreCurrencyPrice());
+        $this->assertSame(static::SHIPMENT_METHOD[ShipmentMethodTransfer::CURRENCY_ISO_CODE], $shipmentMethodTransfer->getCurrencyIsoCode());
+        $this->assertSame(static::SHIPMENT_METHOD[ShipmentMethodTransfer::NAME], $shipmentMethodTransfer->getName());
+        $this->assertSame(static::SHIPMENT_METHOD[ShipmentMethodTransfer::CARRIER_NAME], $shipmentMethodTransfer->getCarrierName());
+        $this->assertSame(static::SHIPMENT_METHOD[ShipmentMethodTransfer::TAX_RATE], $shipmentMethodTransfer->getTaxRate());
+        $this->assertSame(static::SHIPMENT_METHOD[ShipmentMethodTransfer::IS_ACTIVE], $shipmentMethodTransfer->getIsActive());
     }
 
     /**

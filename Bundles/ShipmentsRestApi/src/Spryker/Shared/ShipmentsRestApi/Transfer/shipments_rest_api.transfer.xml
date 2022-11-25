@@ -136,6 +136,10 @@
         <property name="availableShipmentMethods" type="ShipmentMethodsCollection"/>
     </transfer>
 
+    <transfer name="RestCartsTotals">
+        <property name="shipmentTotal" type="int"/>
+    </transfer>
+
     <transfer name="RestCheckoutDataResponseAttributes">
         <property name="selectedShipmentMethods" type="RestShipmentMethod[]" singular="selectedShipmentMethod"/>
     </transfer>

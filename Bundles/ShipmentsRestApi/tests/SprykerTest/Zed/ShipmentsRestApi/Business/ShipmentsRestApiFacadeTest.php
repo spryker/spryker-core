@@ -7,11 +7,14 @@
 
 namespace SprykerTest\Zed\ShipmentsRestApi\Business;
 
+use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ShipmentMethodBuilder;
+use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Spryker\Zed\Shipment\Business\ShipmentFacade;
 use Spryker\Zed\ShipmentsRestApi\Business\ShipmentsRestApiBusinessFactory;
 use Spryker\Zed\ShipmentsRestApi\Dependency\Facade\ShipmentsRestApiToShipmentFacadeAdapter;
+use SprykerTest\Zed\ShipmentsRestApi\ShipmentsRestApiBusinessTester;
 
 /**
  * Auto-generated group annotations
@@ -29,7 +32,7 @@ class ShipmentsRestApiFacadeTest extends Unit
     /**
      * @var \SprykerTest\Zed\ShipmentsRestApi\ShipmentsRestApiBusinessTester
      */
-    protected $tester;
+    protected ShipmentsRestApiBusinessTester $tester;
 
     /**
      * @return void
@@ -49,14 +52,32 @@ class ShipmentsRestApiFacadeTest extends Unit
         // Assert
         $this->assertNotNull($actualQuote->getShipment());
         $this->assertGreaterThan(0, $actualQuote->getExpenses()->count());
-        $actualShipmentMethodTransfer = $actualQuote->getShipment()->getMethod();
-        $this->assertSame($this->tester::SHIPMENT_METHOD['idShipmentMethod'], $actualShipmentMethodTransfer->getIdShipmentMethod());
-        $this->assertSame($this->tester::SHIPMENT_METHOD['storeCurrencyPrice'], $actualShipmentMethodTransfer->getStoreCurrencyPrice());
-        $this->assertSame($this->tester::SHIPMENT_METHOD['currencyIsoCode'], $actualShipmentMethodTransfer->getCurrencyIsoCode());
-        $this->assertSame($this->tester::SHIPMENT_METHOD['name'], $actualShipmentMethodTransfer->getName());
-        $this->assertSame($this->tester::SHIPMENT_METHOD['carrierName'], $actualShipmentMethodTransfer->getCarrierName());
-        $this->assertSame($this->tester::SHIPMENT_METHOD['taxRate'], $actualShipmentMethodTransfer->getTaxRate());
-        $this->assertSame($this->tester::SHIPMENT_METHOD['isActive'], $actualShipmentMethodTransfer->getIsActive());
+        $this->tester->assertSameShipmentMethod($actualQuote->getShipment()->getMethod());
+    }
+
+    /**
+     * @return void
+     */
+    public function testShipmentsRestApiFacadeWillMapShipmentToQuoteAndRewriteExistingQuoteShipmentExpense(): void
+    {
+        // Arrange
+        $shipmentRestApiFacade = $this->tester->getFacade();
+        $shipmentRestApiFacade->setFactory($this->getMockShipmentsRestApiFactory());
+
+        $restCheckoutRequestAttributesTransfer = $this->tester->prepareRestCheckoutRequestAttributesTransferWithShipment();
+        $quoteTransfer = $this->tester->prepareQuoteTransfer()->setExpenses(new ArrayObject([$this->tester->createShipmentExpenseTransfer()]));
+
+        // Act
+        $actualQuote = $shipmentRestApiFacade->mapShipmentToQuote($restCheckoutRequestAttributesTransfer, $quoteTransfer);
+
+        // Assert
+        $this->assertNotNull($actualQuote->getShipment());
+        $this->assertEquals(1, $actualQuote->getExpenses()->count());
+        $this->tester->assertSameShipmentMethod($actualQuote->getShipment()->getMethod());
+        $this->assertSame(
+            $this->tester::SHIPMENT_METHOD[ShipmentMethodTransfer::STORE_CURRENCY_PRICE],
+            $actualQuote->getExpenses()->getIterator()->current()->getStoreCurrencyPrice(),
+        );
     }
 
     /**
@@ -78,14 +99,7 @@ class ShipmentsRestApiFacadeTest extends Unit
         $this->assertGreaterThan(0, $actualQuote->getExpenses()->count());
         foreach ($actualQuote->getItems() as $itemTransfer) {
             $this->assertNotNull($itemTransfer->getShipment());
-            $actualShipmentMethodTransfer = $itemTransfer->getShipment()->getMethod();
-            $this->assertSame($this->tester::SHIPMENT_METHOD['idShipmentMethod'], $actualShipmentMethodTransfer->getIdShipmentMethod());
-            $this->assertSame($this->tester::SHIPMENT_METHOD['storeCurrencyPrice'], $actualShipmentMethodTransfer->getStoreCurrencyPrice());
-            $this->assertSame($this->tester::SHIPMENT_METHOD['currencyIsoCode'], $actualShipmentMethodTransfer->getCurrencyIsoCode());
-            $this->assertSame($this->tester::SHIPMENT_METHOD['name'], $actualShipmentMethodTransfer->getName());
-            $this->assertSame($this->tester::SHIPMENT_METHOD['carrierName'], $actualShipmentMethodTransfer->getCarrierName());
-            $this->assertSame($this->tester::SHIPMENT_METHOD['taxRate'], $actualShipmentMethodTransfer->getTaxRate());
-            $this->assertSame($this->tester::SHIPMENT_METHOD['isActive'], $actualShipmentMethodTransfer->getIsActive());
+            $this->tester->assertSameShipmentMethod($actualQuote->getShipment()->getMethod());
         }
     }
 
