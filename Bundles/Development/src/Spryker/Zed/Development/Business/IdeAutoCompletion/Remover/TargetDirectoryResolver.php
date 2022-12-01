@@ -74,7 +74,7 @@ class TargetDirectoryResolver
             case IdeAutoCompletionOptionConstants::SERVICE:
                 return $this->config->getServiceIdeAutoCompletionOptions();
             default:
-                throw new InvalidArgumentException("Unable to resolve ide autocompletion directory for application ${application}");
+                throw new InvalidArgumentException(sprintf('Unable to resolve IDE autocompletion directory for application `%s`', $application));
         }
     }
 }

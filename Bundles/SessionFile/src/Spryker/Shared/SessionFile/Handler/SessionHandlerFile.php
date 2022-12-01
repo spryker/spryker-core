@@ -12,6 +12,8 @@ use Spryker\Shared\SessionFile\Dependency\Service\SessionFileToMonitoringService
 
 class SessionHandlerFile implements SessionHandlerInterface
 {
+    use SessionHandlerFileTrait;
+
     /**
      * @var string
      */
@@ -60,12 +62,20 @@ class SessionHandlerFile implements SessionHandlerInterface
     }
 
     /**
+     * @return bool
+     */
+    public function close(): bool
+    {
+        return true;
+    }
+
+    /**
      * @param string $savePath
      * @param string $sessionName
      *
      * @return bool
      */
-    public function open($savePath, $sessionName)
+    protected function executeOpen(string $savePath, string $sessionName): bool
     {
         if (!is_dir($this->savePath)) {
             mkdir($this->savePath, 0775, true);
@@ -75,19 +85,11 @@ class SessionHandlerFile implements SessionHandlerInterface
     }
 
     /**
-     * @return bool
-     */
-    public function close(): bool
-    {
-        return true;
-    }
-
-    /**
      * @param string $sessionId
      *
      * @return string
      */
-    public function read($sessionId)
+    protected function executeRead(string $sessionId): string
     {
         $startTime = microtime(true);
         $sessionKey = $this->buildSessionKey($sessionId);
@@ -109,7 +111,7 @@ class SessionHandlerFile implements SessionHandlerInterface
      *
      * @return bool
      */
-    public function write($sessionId, $sessionData)
+    protected function executeWrite(string $sessionId, string $sessionData): bool
     {
         $sessionKey = $this->buildSessionKey($sessionId);
 
@@ -129,7 +131,7 @@ class SessionHandlerFile implements SessionHandlerInterface
      *
      * @return bool
      */
-    public function destroy($sessionId)
+    protected function executeDestroy(string $sessionId): bool
     {
         $sessionKey = $this->buildSessionKey($sessionId);
         $file = $this->savePath . DIRECTORY_SEPARATOR . $sessionKey;
@@ -145,10 +147,11 @@ class SessionHandlerFile implements SessionHandlerInterface
     /**
      * @param int $maxLifetime
      *
-     * @return bool
+     * @return int|false
      */
-    public function gc($maxLifetime)
+    protected function executeGc(int $maxLifetime): int|false
     {
+        $deletedSessionsCount = 0;
         $time = time();
         $files = glob($this->buildSessionFilePattern(), GLOB_NOSORT) ?: [];
         foreach ($files as $file) {
@@ -157,10 +160,11 @@ class SessionHandlerFile implements SessionHandlerInterface
             $fileExist = (bool)$fileTime;
             if ($fileExist && $fileExpired) {
                 unlink($file);
+                $deletedSessionsCount++;
             }
         }
 
-        return true;
+        return $deletedSessionsCount;
     }
 
     /**

@@ -22,16 +22,6 @@ class HtmlToTwigExpressionsConverter implements HtmlToTwigExpressionsConverterIn
     protected const ERROR_MESSAGE_MAX_WIDGET_NUMBER = 'Limit exceeded, maximum number of widgets %d';
 
     /**
-     * @var string
-     */
-    protected const HTML_OUTPUT_ENCODING = 'HTML-ENTITIES';
-
-    /**
-     * @var string
-     */
-    protected const HTML_INPUT_ENCODING = 'UTF-8';
-
-    /**
      * @var \DOMDocument
      */
     protected $domDocument;
@@ -87,7 +77,7 @@ class HtmlToTwigExpressionsConverter implements HtmlToTwigExpressionsConverterIn
      */
     protected function getHtmlForDomDocumentLoading(string $html): string
     {
-        return mb_convert_encoding("<html>$html</html>", static::HTML_OUTPUT_ENCODING, static::HTML_INPUT_ENCODING);
+        return htmlspecialchars_decode(htmlentities("<html>$html</html>"));
     }
 
     /**

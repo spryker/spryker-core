@@ -112,7 +112,7 @@ class StorageRedisWrapper implements StorageRedisWrapperInterface
         $value = $this->redisClient->get($this->connectionKey, $key);
         $this->addReadAccessStats($key);
 
-        $result = json_decode($value, true);
+        $result = json_decode((string)$value, true);
 
         if (json_last_error() === JSON_ERROR_SYNTAX) {
             return $value;

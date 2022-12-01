@@ -570,7 +570,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
      */
     protected function jsonDecode($value)
     {
-        $result = json_decode($value, true);
+        $result = json_decode((string)$value, true);
 
         if (json_last_error() === JSON_ERROR_SYNTAX) {
             return $value;

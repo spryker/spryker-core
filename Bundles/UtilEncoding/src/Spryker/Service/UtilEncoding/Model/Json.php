@@ -56,6 +56,6 @@ class Json implements JsonInterface
             $depth = static::DEFAULT_DEPTH;
         }
 
-        return json_decode($jsonValue, $assoc, $depth, $options);
+        return json_decode((string)$jsonValue, $assoc, $depth, $options);
     }
 }
