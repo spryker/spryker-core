@@ -17,6 +17,7 @@
         <property name="configuratorKey" type="string"/>
         <property name="isComplete" type="bool"/>
         <property name="prices" type="PriceProduct[]" singular="price"/>
+        <property name="sku" type="string" deprecated="Obsolete. Not used."/>
     </transfer>
 
     <transfer name="ProductConfigurationCollection">

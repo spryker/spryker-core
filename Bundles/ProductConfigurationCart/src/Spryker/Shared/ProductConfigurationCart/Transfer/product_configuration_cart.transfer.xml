@@ -25,7 +25,7 @@
         <property name="configuration" type="string"/>
         <property name="prices" type="PriceProduct[]" singular="price"/>
         <property name="quantity" type="int"/>
-        <property name="sku" type="string"/>
+        <property name="sku" type="string" deprecated="Obsolete. Not used."/>
     </transfer>
 
     <transfer name="CheckoutResponse">

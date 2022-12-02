@@ -15,7 +15,7 @@
         <property name="prices" type="PriceProduct[]" singular="price"/>
         <property name="availableQuantity" type="int"/>
         <property name="quantity" type="int"/>
-        <property name="sku" type="string"/>
+        <property name="sku" type="string" deprecated="Obsolete. Not used."/>
     </transfer>
 
     <transfer name="ProductConfiguratorRequestData">

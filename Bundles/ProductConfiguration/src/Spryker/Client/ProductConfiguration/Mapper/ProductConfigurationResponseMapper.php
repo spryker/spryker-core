@@ -40,6 +40,9 @@ class ProductConfigurationResponseMapper implements ProductConfigurationResponse
         ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer
     ): ProductConfiguratorResponseTransfer {
         $productConfiguratorResponseTransfer->fromArray($configuratorResponseData, true);
+        $productConfiguratorResponseTransfer->getProductConfigurationInstanceOrFail()->setSku(
+            $productConfiguratorResponseTransfer->getSku(),
+        );
 
         $productConfigurationInstanceTransfer = $this->productConfigurationInstancePriceMapper
             ->mapConfiguratorResponseDataPricesToProductConfigurationInstancePrices(

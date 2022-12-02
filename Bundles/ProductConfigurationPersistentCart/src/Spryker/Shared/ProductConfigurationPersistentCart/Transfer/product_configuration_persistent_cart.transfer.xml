@@ -12,7 +12,7 @@
 
     <transfer name="ProductConfigurationInstance">
         <property name="isComplete" type="bool"/>
-        <property name="sku" type="string"/>
+        <property name="sku" type="string" deprecated="Obsolete. Not used."/>
     </transfer>
 
     <transfer name="ProductConfigurationInstanceCollection">

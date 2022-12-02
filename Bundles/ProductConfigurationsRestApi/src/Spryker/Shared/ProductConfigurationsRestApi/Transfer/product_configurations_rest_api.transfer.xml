@@ -26,7 +26,7 @@
     <transfer name="ProductConfigurationInstance">
         <property name="prices" type="PriceProduct[]" singular="price"/>
         <property name="configuratorKey" type="string"/>
-        <property name="sku" type="string"/>
+        <property name="sku" type="string" deprecated="Obsolete. Not used."/>
     </transfer>
 
     <transfer name="RestCartItemProductConfigurationInstanceAttributes">
