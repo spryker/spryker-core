@@ -8,12 +8,15 @@
 namespace SprykerTest\Zed\WishlistsRestApi\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\WishlistFilterTransfer;
 use Generated\Shared\Transfer\WishlistItemRequestTransfer;
+use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistRequestTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Spryker\Shared\WishlistsRestApi\WishlistsRestApiConfig;
 use Spryker\Zed\Wishlist\Business\Exception\MissingWishlistException;
+use SprykerTest\Zed\WishlistsRestApi\WishlistsRestApiBusinessTester;
 
 /**
  * Auto-generated group annotations
@@ -29,14 +32,19 @@ use Spryker\Zed\Wishlist\Business\Exception\MissingWishlistException;
 class WishlistsRestApiFacadeTest extends Unit
 {
     /**
+     * @var string
+     */
+    protected const TEST_WISHLIST_NAME = 'name';
+
+    /**
      * @var \SprykerTest\Zed\WishlistsRestApi\WishlistsRestApiBusinessTester
      */
-    protected $tester;
+    protected WishlistsRestApiBusinessTester $tester;
 
     /**
      * @var \Generated\Shared\Transfer\CustomerTransfer
      */
-    protected $customer;
+    protected CustomerTransfer $customer;
 
     /**
      * @return void
@@ -53,7 +61,7 @@ class WishlistsRestApiFacadeTest extends Unit
      */
     public function testUpdateWishlistWillUpdateWishlistsName(): void
     {
-        //Arrange
+        // Arrange
         $newName = 'New';
         $originalName = 'Original';
         $originalWishlist = $this->tester->haveWishlist(
@@ -67,10 +75,10 @@ class WishlistsRestApiFacadeTest extends Unit
             ->setIdCustomer($this->customer->getIdCustomer())
             ->setWishlist((new WishlistTransfer())->setName($newName));
 
-        //Act
+        // Act
         $wishlistResponseTransfer = $this->tester->getWishlistsRestApiFacade()->updateWishlist($wishlistRequestTransfer);
 
-        //Assert
+        // Assert
         $wishlistTransfer = $this->tester->getWishlistByName($this->customer->getIdCustomer(), $newName);
 
         $actualWishlistTransfer = $wishlistResponseTransfer->getWishlist();
@@ -86,15 +94,15 @@ class WishlistsRestApiFacadeTest extends Unit
      */
     public function testUpdateNonExistingWishlistShouldReturnError(): void
     {
-        //Arrange
+        // Arrange
         $wishlistRequestTransfer = (new WishlistRequestTransfer())
             ->setUuid('uuid-does-not-exist')
             ->setIdCustomer($this->customer->getIdCustomer());
 
-        //Act
+        // Act
         $wishlistResponseTransfer = $this->tester->getWishlistsRestApiFacade()->updateWishlist($wishlistRequestTransfer);
 
-        //Assert
+        // Assert
         $this->assertFalse($wishlistResponseTransfer->getIsSuccess());
         $this->assertSame(
             $wishlistResponseTransfer->getErrorIdentifier(),
@@ -107,7 +115,7 @@ class WishlistsRestApiFacadeTest extends Unit
      */
     public function testUpdateWishlistWithWrongNameShouldReturnError(): void
     {
-        //Arrange
+        // Arrange
         $originalName = 'Original';
         $wrongName = '{{New';
         $wishlist = $this->tester->haveWishlist(
@@ -121,10 +129,10 @@ class WishlistsRestApiFacadeTest extends Unit
             ->setIdCustomer($this->customer->getIdCustomer())
             ->setWishlist((new WishlistTransfer())->setName($wrongName));
 
-        //Act
+        // Act
         $wishlistResponseTransfer = $this->tester->getWishlistsRestApiFacade()->updateWishlist($wishlistRequestTransfer);
 
-        //Assert
+        // Assert
         $this->assertFalse($wishlistResponseTransfer->getIsSuccess());
         $this->assertSame(
             $wishlistResponseTransfer->getErrorIdentifier(),
@@ -137,7 +145,7 @@ class WishlistsRestApiFacadeTest extends Unit
      */
     public function testUpdateWishlistWithDuplicateNameShouldReturnError(): void
     {
-        //Arrange
+        // Arrange
         $firstWishlistName = 'First';
         $secondWishlistName = 'Second';
         $wishlist1 = $this->tester->haveWishlist(
@@ -157,10 +165,10 @@ class WishlistsRestApiFacadeTest extends Unit
             ->setIdCustomer($this->customer->getIdCustomer())
             ->setWishlist((new WishlistTransfer())->setName($secondWishlistName));
 
-        //Act
+        // Act
         $wishlistResponseTransfer = $this->tester->getWishlistsRestApiFacade()->updateWishlist($wishlistRequestTransfer);
 
-        //Assert
+        // Assert
         $this->assertFalse($wishlistResponseTransfer->getIsSuccess());
         $this->assertSame(
             $wishlistResponseTransfer->getErrorIdentifier(),
@@ -173,24 +181,23 @@ class WishlistsRestApiFacadeTest extends Unit
      */
     public function testDeleteWishlistWillRemoveWishlist(): void
     {
-        //Arrange
-        $wishlistName = 'name';
+        // Arrange
         $wishlist = $this->tester->haveWishlist(
             [
-                'fkCustomer' => $this->customer->getIdCustomer(),
-                'name' => $wishlistName,
+                WishlistTransfer::FK_CUSTOMER => $this->customer->getIdCustomer(),
+                WishlistTransfer::NAME => static::TEST_WISHLIST_NAME,
             ],
         );
         $wishlistFilterTransfer = (new WishlistFilterTransfer())
             ->setUuid($wishlist->getUuid())
             ->setIdCustomer($this->customer->getIdCustomer());
 
-        //Act
+        // Act
         $this->tester->getWishlistsRestApiFacade()->deleteWishlist($wishlistFilterTransfer);
 
-        //Assert
+        // Assert
         $this->expectException(MissingWishlistException::class);
-        $this->tester->getWishlistByName($this->customer->getIdCustomer(), $wishlistName);
+        $this->tester->getWishlistByName($this->customer->getIdCustomer(), static::TEST_WISHLIST_NAME);
     }
 
     /**
@@ -198,15 +205,15 @@ class WishlistsRestApiFacadeTest extends Unit
      */
     public function testDeleteNonExistingWishlistShouldReturnError(): void
     {
-        //Arrange
+        // Arrange
         $wishlistRequestTransfer = (new WishlistFilterTransfer())
             ->setUuid('uuid-does-not-exist')
             ->setIdCustomer($this->customer->getIdCustomer());
 
-        //Act
+        // Act
         $wishlistResponseTransfer = $this->tester->getWishlistsRestApiFacade()->deleteWishlist($wishlistRequestTransfer);
 
-        //Assert
+        // Assert
         $this->assertFalse($wishlistResponseTransfer->getIsSuccess());
         $this->assertSame(
             $wishlistResponseTransfer->getErrorIdentifier(),
@@ -219,12 +226,11 @@ class WishlistsRestApiFacadeTest extends Unit
      */
     public function testAddWishlistItemShouldAddItem(): void
     {
-        //Arrange
-        $wishlistName = 'name';
+        // Arrange
         $wishlist = $this->tester->haveWishlist(
             [
-                'name' => $wishlistName,
-                'fkCustomer' => $this->customer->getIdCustomer(),
+                WishlistTransfer::FK_CUSTOMER => $this->customer->getIdCustomer(),
+                WishlistTransfer::NAME => static::TEST_WISHLIST_NAME,
             ],
         );
         $concreteProduct = $this->tester->haveProduct();
@@ -233,12 +239,11 @@ class WishlistsRestApiFacadeTest extends Unit
             ->setIdCustomer($this->customer->getIdCustomer())
             ->setSku($concreteProduct->getSku());
 
-        //Act
+        // Act
         $wishlistItemResponseTransfer = $this->tester->getWishlistsRestApiFacade()->addWishlistItem($wishlistItemRequestTransfer);
+        $wishlistTransfer = $this->tester->getWishlistByName($this->customer->getIdCustomer(), static::TEST_WISHLIST_NAME);
 
-        //Assert
-        $wishlistTransfer = $this->tester->getWishlistByName($this->customer->getIdCustomer(), $wishlistName);
-
+        // Assert
         $this->assertTrue($wishlistItemResponseTransfer->getIsSuccess());
         $this->assertEmpty($wishlistItemResponseTransfer->getErrors());
         $this->assertNull($wishlistItemResponseTransfer->getErrorIdentifier());
@@ -255,17 +260,17 @@ class WishlistsRestApiFacadeTest extends Unit
      */
     public function testAddWishlistItemToNonExistingWishlistShouldReturnError(): void
     {
-        //Arrange
+        // Arrange
         $concreteProduct = $this->tester->haveProduct();
         $wishlistItemRequestTransfer = (new WishlistItemRequestTransfer())
             ->setUuidWishlist('uuid-does-not-exist')
             ->setIdCustomer($this->customer->getIdCustomer())
             ->setSku($concreteProduct->getSku());
 
-        //Act
+        // Act
         $wishlistItemResponseTransfer = $this->tester->getWishlistsRestApiFacade()->addWishlistItem($wishlistItemRequestTransfer);
 
-        //Assert
+        // Assert
         $this->assertFalse($wishlistItemResponseTransfer->getIsSuccess());
         $this->assertSame(
             $wishlistItemResponseTransfer->getErrorIdentifier(),
@@ -278,11 +283,11 @@ class WishlistsRestApiFacadeTest extends Unit
      */
     public function testAddNonExistingProductToWishlistShouldReturnError(): void
     {
-        //Arrange
+        // Arrange
         $wishlist = $this->tester->haveWishlist(
             [
-                'name' => 'name',
-                'fkCustomer' => $this->customer->getIdCustomer(),
+                WishlistTransfer::FK_CUSTOMER => $this->customer->getIdCustomer(),
+                WishlistTransfer::NAME => static::TEST_WISHLIST_NAME,
             ],
         );
         $wishlistItemRequestTransfer = (new WishlistItemRequestTransfer())
@@ -290,10 +295,10 @@ class WishlistsRestApiFacadeTest extends Unit
             ->setIdCustomer($this->customer->getIdCustomer())
             ->setSku('non-existing-sku');
 
-        //Act
+        // Act
         $wishlistItemResponseTransfer = $this->tester->getWishlistsRestApiFacade()->addWishlistItem($wishlistItemRequestTransfer);
 
-        //Assert
+        // Assert
         $this->assertFalse($wishlistItemResponseTransfer->getIsSuccess());
         $this->assertSame(
             $wishlistItemResponseTransfer->getErrorIdentifier(),
@@ -306,12 +311,11 @@ class WishlistsRestApiFacadeTest extends Unit
      */
     public function testDeleteWishlistItemShouldDeleteItem(): void
     {
-        //Arrange
-        $wishlistName = 'name';
+        // Arrange
         $wishlist = $this->tester->haveWishlist(
             [
-                'fkCustomer' => $this->customer->getIdCustomer(),
-                'name' => $wishlistName,
+                WishlistTransfer::FK_CUSTOMER => $this->customer->getIdCustomer(),
+                WishlistTransfer::NAME => static::TEST_WISHLIST_NAME,
             ],
         );
         $concreteProduct = $this->tester->haveProduct();
@@ -329,12 +333,11 @@ class WishlistsRestApiFacadeTest extends Unit
             ->setSku($wishlistItem->getSku())
             ->setUuid($wishlistItem->getSku());
 
-        //Act
+        // Act
         $wishlistItemResponseTransfer = $this->tester->getWishlistsRestApiFacade()->deleteWishlistItem($wishlistItemRequestTransfer);
+        $wishlistTransfer = $this->tester->getWishlistByName($this->customer->getIdCustomer(), static::TEST_WISHLIST_NAME);
 
-        //Assert
-        $wishlistTransfer = $this->tester->getWishlistByName($this->customer->getIdCustomer(), $wishlistName);
-
+        // Assert
         $this->assertTrue($wishlistItemResponseTransfer->getIsSuccess());
         $this->assertNotNull($wishlistTransfer->getIdWishlist());
         $this->assertCount(0, $wishlistTransfer->getWishlistItems());
@@ -345,11 +348,11 @@ class WishlistsRestApiFacadeTest extends Unit
      */
     public function testDeleteWishlistItemInNonExistingWishlistShouldReturnError(): void
     {
-        //Arrange
+        // Arrange
         $wishlist = $this->tester->haveWishlist(
             [
-                'fkCustomer' => $this->customer->getIdCustomer(),
-                'name' => 'name',
+                WishlistTransfer::FK_CUSTOMER => $this->customer->getIdCustomer(),
+                WishlistTransfer::NAME => static::TEST_WISHLIST_NAME,
             ],
         );
         $concreteProduct = $this->tester->haveProduct();
@@ -367,10 +370,10 @@ class WishlistsRestApiFacadeTest extends Unit
             ->setSku($wishlistItem->getSku())
             ->setUuid($wishlistItem->getSku());
 
-        //Act
+        // Act
         $wishlistItemResponseTransfer = $this->tester->getWishlistsRestApiFacade()->deleteWishlistItem($wishlistItemRequestTransfer);
 
-        //Assert
+        // Assert
         $this->assertFalse($wishlistItemResponseTransfer->getIsSuccess());
         $this->assertSame(
             WishlistsRestApiConfig::ERROR_IDENTIFIER_WISHLIST_NOT_FOUND,
@@ -383,11 +386,11 @@ class WishlistsRestApiFacadeTest extends Unit
      */
     public function testDeleteNonExistingWishlistItemFromWishlistShouldReturnError(): void
     {
-        //Arrange
+        // Arrange
         $wishlist = $this->tester->haveWishlist(
             [
-                'fkCustomer' => $this->customer->getIdCustomer(),
-                'name' => 'name',
+                WishlistTransfer::FK_CUSTOMER => $this->customer->getIdCustomer(),
+                WishlistTransfer::NAME => static::TEST_WISHLIST_NAME,
             ],
         );
         $concreteProduct = $this->tester->haveProduct();
@@ -398,10 +401,10 @@ class WishlistsRestApiFacadeTest extends Unit
             ->setSku($concreteProduct->getSku())
             ->setUuid($concreteProduct->getSku());
 
-        //Act
+        // Act
         $wishlistItemResponseTransfer = $this->tester->getWishlistsRestApiFacade()->deleteWishlistItem($wishlistItemRequestTransfer);
 
-        //Assert
+        // Assert
         $this->assertFalse($wishlistItemResponseTransfer->getIsSuccess());
         $this->assertSame(
             WishlistsRestApiConfig::ERROR_IDENTIFIER_ITEM_WITH_SKU_NOT_FOUND_IN_WISHLIST,
@@ -414,12 +417,11 @@ class WishlistsRestApiFacadeTest extends Unit
      */
     public function testUpdateWishlistItemShouldUpdateItem(): void
     {
-        //Arrange
-        $wishlistName = 'name';
+        // Arrange
         $wishlist = $this->tester->haveWishlist(
             [
-                'name' => $wishlistName,
-                'fkCustomer' => $this->customer->getIdCustomer(),
+                WishlistTransfer::NAME => static::TEST_WISHLIST_NAME,
+                WishlistTransfer::FK_CUSTOMER => $this->customer->getIdCustomer(),
             ],
         );
 
@@ -442,12 +444,11 @@ class WishlistsRestApiFacadeTest extends Unit
             ->setSku($secondConcreteProduct->getSku())
             ->setUuid($wishlistItem->getSku());
 
-        //Act
+        // Act
         $wishlistItemResponseTransfer = $this->tester->getWishlistsRestApiFacade()->updateWishlistItem($wishlistItemRequestTransfer);
+        $wishlistTransfer = $this->tester->getWishlistByName($this->customer->getIdCustomer(), static::TEST_WISHLIST_NAME);
 
-        //Assert
-        $wishlistTransfer = $this->tester->getWishlistByName($this->customer->getIdCustomer(), $wishlistName);
-
+        // Assert
         $this->assertTrue($wishlistItemResponseTransfer->getIsSuccess());
         $this->assertEmpty($wishlistItemResponseTransfer->getErrors());
         $this->assertNull($wishlistItemResponseTransfer->getErrorIdentifier());
@@ -465,14 +466,57 @@ class WishlistsRestApiFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testUpdateWishlistItemShouldUpdateItemWhenSkuIsNotSetInRequest(): void
+    {
+        // Arrange
+        $wishlistTransfer = $this->tester->haveWishlist(
+            [
+                WishlistTransfer::NAME => static::TEST_WISHLIST_NAME,
+                WishlistTransfer::FK_CUSTOMER => $this->customer->getIdCustomer(),
+            ],
+        );
+
+        $concreteProduct = $this->tester->haveProduct();
+        $wishlistItem = $this->tester->haveItemInWishlist(
+            [
+                WishlistItemTransfer::FK_WISHLIST => $wishlistTransfer->getIdWishlist(),
+                WishlistItemTransfer::FK_CUSTOMER => $this->customer->getIdCustomer(),
+                WishlistItemTransfer::SKU => $concreteProduct->getSku(),
+                WishlistItemTransfer::WISHLIST_NAME => $wishlistTransfer->getName(),
+            ],
+        );
+
+        $wishlistItemRequestTransfer = (new WishlistItemRequestTransfer())
+            ->setUuidWishlist($wishlistTransfer->getUuid())
+            ->setIdCustomer($this->customer->getIdCustomer())
+            ->setUuid($wishlistItem->getSku());
+
+        // Act
+        $wishlistItemResponseTransfer = $this->tester->getWishlistsRestApiFacade()
+            ->updateWishlistItem($wishlistItemRequestTransfer);
+        $wishlistTransfer = $this->tester->getWishlistByName($this->customer->getIdCustomer(), static::TEST_WISHLIST_NAME);
+
+        // Assert
+        $this->assertTrue($wishlistItemResponseTransfer->getIsSuccess());
+        $this->assertEmpty($wishlistItemResponseTransfer->getErrors());
+        $this->assertNull($wishlistItemResponseTransfer->getErrorIdentifier());
+        $this->assertNotNull($wishlistTransfer->getIdWishlist());
+        $this->assertSame(
+            $concreteProduct->getSku(),
+            $wishlistItemResponseTransfer->getWishlistItem()->getSku(),
+        );
+    }
+
+    /**
+     * @return void
+     */
     public function testUpdateNonExistingWishlistItemShouldReturnError(): void
     {
-        //Arrange
-        $wishlistName = 'name';
+        // Arrange
         $wishlist = $this->tester->haveWishlist(
             [
-                'name' => $wishlistName,
-                'fkCustomer' => $this->customer->getIdCustomer(),
+                WishlistTransfer::FK_CUSTOMER => $this->customer->getIdCustomer(),
+                WishlistTransfer::NAME => static::TEST_WISHLIST_NAME,
             ],
         );
 
@@ -484,10 +528,10 @@ class WishlistsRestApiFacadeTest extends Unit
             ->setSku($secondConcreteProduct->getSku())
             ->setUuid('FAKE_SKU');
 
-        //Act
+        // Act
         $wishlistItemResponseTransfer = $this->tester->getWishlistsRestApiFacade()->updateWishlistItem($wishlistItemRequestTransfer);
 
-        //Assert
+        // Assert
         $this->assertFalse($wishlistItemResponseTransfer->getIsSuccess());
         $this->assertSame(
             WishlistsRestApiConfig::ERROR_IDENTIFIER_ITEM_WITH_SKU_NOT_FOUND_IN_WISHLIST,

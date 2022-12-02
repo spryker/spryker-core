@@ -51,8 +51,11 @@ interface ProductConfigurationWishlistsRestApiFacadeInterface
 
     /**
      * Specification:
-     * - Requires `WishlistItemRequestTransfer::sku` to be provided.
+     * - Requires `WishlistItemRequestTransfer.productConfigurationInstance` to be set.
+     * - Expects `WishlistItemRequestTransfer.sku` to be provided.
      * - Finds an item by product sku + product configuration instance hash in collection of `WishlistItem` transfer objects.
+     * - If sku in `WishlistItemRequestTransfer` is provided, sets sku to found wishlist item.
+     * - Otherwise, uses found wishlist item's sku.
      * - Updates found wishlist item.
      *
      * @api

@@ -54,9 +54,12 @@ class WishlistItemUpdater implements WishlistItemUpdaterInterface
             return (new WishlistItemResponseTransfer())->setIsSuccess(false);
         }
 
+        $sku = $wishlistItemRequestTransfer->getSku() ?? $wishlistItemTransfer->getSku();
+
         $wishlistItemTransfer = $wishlistItemTransfer
             ->fromArray($wishlistItemRequestTransfer->toArray(), true)
-            ->setProductConfigurationInstance($wishlistItemRequestTransfer->getProductConfigurationInstanceOrFail());
+            ->setProductConfigurationInstance($wishlistItemRequestTransfer->getProductConfigurationInstanceOrFail())
+            ->setSku($sku);
 
         return $this->wishlistFacade->updateWishlistItem($wishlistItemTransfer);
     }

@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\ProductConfigurationWishlistsRestApi;
 
 use Codeception\Actor;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 use Generated\Shared\Transfer\WishlistItemCriteriaTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
@@ -51,14 +52,21 @@ class ProductConfigurationWishlistsRestApiBusinessTester extends Actor
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      * @param \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer|null $productConfigurationInstanceTransfer
+     * @param string|null $sku
      *
      * @return \Generated\Shared\Transfer\WishlistItemTransfer
      */
     public function createWishlistItemWithProductConfigurationInstance(
         CustomerTransfer $customerTransfer,
-        ?ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer = null
+        ?ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer = null,
+        ?string $sku = null
     ): WishlistItemTransfer {
-        $productConcreteTransfer = $this->haveProduct();
+        $productConcreteOverride = [];
+        if ($sku) {
+            $productConcreteOverride[ProductConcreteTransfer::SKU] = $sku;
+        }
+
+        $productConcreteTransfer = $this->haveProduct($productConcreteOverride);
         $wishlistTransfer = $this->haveWishlist([
             WishlistTransfer::FK_CUSTOMER => $customerTransfer->getIdCustomer(),
         ]);

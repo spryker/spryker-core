@@ -74,7 +74,10 @@ class WishlistItemUpdater implements WishlistItemUpdaterInterface
             return $this->createWishlistItemNotFoundResponse();
         }
 
-        $wishlistItemTransfer = $originalWishlistItemTransfer->fromArray($wishlistItemRequestTransfer->toArray(), true);
+        $sku = $wishlistItemRequestTransfer->getSku() ?? $originalWishlistItemTransfer->getSku();
+
+        $wishlistItemTransfer = $originalWishlistItemTransfer->fromArray($wishlistItemRequestTransfer->toArray(), true)
+            ->setSku($sku);
 
         return $this->wishlistFacade->updateWishlistItem($wishlistItemTransfer);
     }
@@ -89,7 +92,6 @@ class WishlistItemUpdater implements WishlistItemUpdaterInterface
         $wishlistItemRequestTransfer
             ->requireIdCustomer()
             ->requireUuidWishlist()
-            ->requireSku()
             ->requireUuid();
     }
 

@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\WishlistItemRequestTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\NullValueException;
 use Spryker\Zed\ProductConfigurationWishlist\Communication\Plugin\Wishlist\ProductConfigurationWishlistPreUpdateItemPlugin;
 use Spryker\Zed\Wishlist\WishlistDependencyProvider;
+use SprykerTest\Zed\ProductConfigurationWishlistsRestApi\ProductConfigurationWishlistsRestApiBusinessTester;
 
 /**
  * Auto-generated group annotations
@@ -33,14 +34,23 @@ class UpdateWishlistItemTest extends Unit
     protected const FAKE_SKU_1 = 'FAKE_SKU_1';
 
     /**
-     * @var \SprykerTest\Zed\ProductConfigurationWishlistsRestApi\ProductConfigurationWishlistsRestApiBusinessTester
+     * @var string
      */
-    protected $tester;
+    protected const TEST_SKU = 'TEST_SKU';
 
     /**
+     * @var \SprykerTest\Zed\ProductConfigurationWishlistsRestApi\ProductConfigurationWishlistsRestApiBusinessTester
+     */
+    protected ProductConfigurationWishlistsRestApiBusinessTester $tester;
+
+    /**
+     * @dataProvider getUpdateWishlistItemDataProvider
+     *
+     * @param string|null $sku
+     *
      * @return void
      */
-    public function testUpdateWishlistItemUpdatesWishlistItem(): void
+    public function testUpdateWishlistItemUpdatesWishlistItem(?string $sku = null): void
     {
         // Arrange
         $this->tester->setDependency(WishlistDependencyProvider::PLUGINS_WISHLIST_PRE_UPDATE_ITEM, [
@@ -51,6 +61,7 @@ class UpdateWishlistItemTest extends Unit
         $wishlistItemTransfer = $this->tester->createWishlistItemWithProductConfigurationInstance(
             $customerTransfer,
             (new ProductConfigurationInstanceTransfer())->setDisplayData('{}'),
+            $sku,
         );
 
         $productConfigurationInstanceHash = $this->tester
@@ -60,7 +71,7 @@ class UpdateWishlistItemTest extends Unit
 
         $wishlistItemRequestTransfer = (new WishlistItemRequestTransfer())
             ->setUuid(sprintf('%s_%s', $wishlistItemTransfer->getSku(), $productConfigurationInstanceHash))
-            ->setSku($wishlistItemTransfer->getSku())
+            ->setSku($sku)
             ->setProductConfigurationInstance($newProductConfigurationInstance);
 
         // Act
@@ -134,5 +145,20 @@ class UpdateWishlistItemTest extends Unit
         $this->tester
             ->getFacade()
             ->updateWishlistItem($wishlistItemRequestTransfer, new ArrayObject([$wishlistItemTransfer]));
+    }
+
+    /**
+     * @return array<string, array<int, mixed>>
+     */
+    public function getUpdateWishlistItemDataProvider(): array
+    {
+        return [
+            'Wishlist item should be updated when SKU is provided in a request.' => [
+                static::TEST_SKU,
+            ],
+            'Wishlist item should be updated when SKU is not provided in a request.' => [
+                null,
+            ],
+        ];
     }
 }
