@@ -11,7 +11,6 @@ use Orm\Zed\ConfigurableBundle\Persistence\SpyConfigurableBundleTemplateSlotQuer
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
-use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToLocaleFacadeInterface;
 use Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToProductListFacadeInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
@@ -116,7 +115,7 @@ class ConfigurableBundleTemplateSlotProductsTable extends AbstractTable
     /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return array
+     * @return array<int, array<string, string>>
      */
     protected function prepareData(TableConfiguration $config): array
     {
@@ -127,26 +126,23 @@ class ConfigurableBundleTemplateSlotProductsTable extends AbstractTable
             true,
         );
 
-        return $this->mapProductEntityCollectionToTableData($productEntityCollection);
+        return $this->mapProductEntityCollectionToTableData($productEntityCollection->toArray());
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\SpyProduct> $productEntityCollection
+     * @param array<int, array<string, mixed>> $productEntityCollection
      *
-     * @return array
+     * @return array<int, array<string, string>>
      */
-    protected function mapProductEntityCollectionToTableData(
-        ObjectCollection $productEntityCollection
-    ): array {
-        $productEntityCollection = $productEntityCollection->toArray();
-
-        foreach ($productEntityCollection as $productEntity) {
+    protected function mapProductEntityCollectionToTableData(array $productEntityCollection): array
+    {
+        return array_map(function (array $productEntity) {
             $productEntity[SpyProductTableMap::COL_ID_PRODUCT] = $this->formatInt(
                 $productEntity[SpyProductTableMap::COL_ID_PRODUCT],
             );
-        }
 
-        return $productEntityCollection;
+            return $productEntity;
+        }, $productEntityCollection);
     }
 
     /**
