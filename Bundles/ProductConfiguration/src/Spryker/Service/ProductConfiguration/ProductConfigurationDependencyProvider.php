@@ -12,6 +12,9 @@ use Spryker\Service\Kernel\Container;
 use Spryker\Service\ProductConfiguration\Dependency\Service\ProductConfigurationToUtilEncodingServiceBridge;
 use Spryker\Service\ProductConfiguration\Dependency\Service\ProductConfigurationToUtilTextServiceBridge;
 
+/**
+ * @method \Spryker\Service\ProductConfiguration\ProductConfigurationConfig getConfig()
+ */
 class ProductConfigurationDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**

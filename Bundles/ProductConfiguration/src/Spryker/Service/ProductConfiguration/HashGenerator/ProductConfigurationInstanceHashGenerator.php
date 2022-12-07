@@ -10,29 +10,38 @@ namespace Spryker\Service\ProductConfiguration\HashGenerator;
 use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 use Spryker\Service\ProductConfiguration\Dependency\Service\ProductConfigurationToUtilEncodingServiceInterface;
 use Spryker\Service\ProductConfiguration\Dependency\Service\ProductConfigurationToUtilTextServiceInterface;
+use Spryker\Service\ProductConfiguration\ProductConfigurationConfig;
 
 class ProductConfigurationInstanceHashGenerator implements ProductConfigurationInstanceHashGeneratorInterface
 {
     /**
      * @var \Spryker\Service\ProductConfiguration\Dependency\Service\ProductConfigurationToUtilEncodingServiceInterface
      */
-    protected $utilEncodingService;
+    protected ProductConfigurationToUtilEncodingServiceInterface $utilEncodingService;
 
     /**
      * @var \Spryker\Service\ProductConfiguration\Dependency\Service\ProductConfigurationToUtilTextServiceInterface
      */
-    protected $utilTextService;
+    protected ProductConfigurationToUtilTextServiceInterface $utilTextService;
+
+    /**
+     * @var \Spryker\Service\ProductConfiguration\ProductConfigurationConfig
+     */
+    protected ProductConfigurationConfig $productConfigurationConfig;
 
     /**
      * @param \Spryker\Service\ProductConfiguration\Dependency\Service\ProductConfigurationToUtilEncodingServiceInterface $utilEncodingService
      * @param \Spryker\Service\ProductConfiguration\Dependency\Service\ProductConfigurationToUtilTextServiceInterface $utilTextService
+     * @param \Spryker\Service\ProductConfiguration\ProductConfigurationConfig $productConfigurationConfig
      */
     public function __construct(
         ProductConfigurationToUtilEncodingServiceInterface $utilEncodingService,
-        ProductConfigurationToUtilTextServiceInterface $utilTextService
+        ProductConfigurationToUtilTextServiceInterface $utilTextService,
+        ProductConfigurationConfig $productConfigurationConfig
     ) {
         $this->utilEncodingService = $utilEncodingService;
         $this->utilTextService = $utilTextService;
+        $this->productConfigurationConfig = $productConfigurationConfig;
     }
 
     /**
@@ -42,10 +51,30 @@ class ProductConfigurationInstanceHashGenerator implements ProductConfigurationI
      */
     public function getProductConfigurationInstanceHash(ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer): string
     {
-        $encodedProductConfigurationInstanceData = $this->utilEncodingService->encodeJson(
+        $productConfigurationInstanceData = $this->filterProductConfigurationInstanceData(
             $productConfigurationInstanceTransfer->toArray(),
         );
+        $encodedProductConfigurationInstanceData = $this->utilEncodingService->encodeJson($productConfigurationInstanceData);
 
         return $this->utilTextService->hashValue($encodedProductConfigurationInstanceData, 'md5');
+    }
+
+    /**
+     * @param array<string, mixed> $productConfigurationInstanceData
+     *
+     * @return array<string, mixed>
+     */
+    public function filterProductConfigurationInstanceData(array $productConfigurationInstanceData): array
+    {
+        $configurationFieldsNotAllowedForEncoding = $this->productConfigurationConfig->getConfigurationFieldsNotAllowedForEncoding();
+        if ($configurationFieldsNotAllowedForEncoding === []) {
+            return $productConfigurationInstanceData;
+        }
+
+        $configurationFieldsNotAllowedForEncoding = array_map(function (string $field) {
+            return $this->utilTextService->camelCaseToSeparator($field, '_');
+        }, $configurationFieldsNotAllowedForEncoding);
+
+        return array_diff_key($productConfigurationInstanceData, array_flip($configurationFieldsNotAllowedForEncoding));
     }
 }

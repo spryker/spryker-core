@@ -32,4 +32,15 @@ class ProductConfigurationToUtilTextServiceBridge implements ProductConfiguratio
     {
         return $this->utilTextService->hashValue($value, $algorithm);
     }
+
+    /**
+     * @param string $string
+     * @param string $separator
+     *
+     * @return string
+     */
+    public function camelCaseToSeparator(string $string, string $separator = '-'): string
+    {
+        return $this->utilTextService->camelCaseToSeparator($string, $separator);
+    }
 }

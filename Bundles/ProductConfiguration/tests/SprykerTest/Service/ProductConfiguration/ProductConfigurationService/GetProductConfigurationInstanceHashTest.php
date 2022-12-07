@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 use Spryker\Service\ProductConfiguration\ProductConfigurationService;
+use SprykerTest\Service\ProductConfiguration\ProductConfigurationServiceTester;
 
 /**
  * Auto-generated group annotations
@@ -27,7 +28,7 @@ class GetProductConfigurationInstanceHashTest extends Unit
     /**
      * @var \SprykerTest\Service\ProductConfiguration\ProductConfigurationServiceTester
      */
-    protected $tester;
+    protected ProductConfigurationServiceTester $tester;
 
     /**
      * @return void
@@ -88,5 +89,49 @@ class GetProductConfigurationInstanceHashTest extends Unit
 
         // Assert
         $this->assertNotSame($productConfigurationInstanceTransfer1Hash, $productConfigurationInstanceTransfer2Hash);
+    }
+
+    /**
+     * @return void
+     */
+    public function testWillReturnSameHashForProductConfigurationInstanceTransfersWhenDisabledFieldDifferent(): void
+    {
+        // Arrange
+        $productConfigurationInstanceData = [
+            ProductConfigurationInstanceTransfer::CONFIGURATION => 'foo',
+            ProductConfigurationInstanceTransfer::DISPLAY_DATA => 'bar',
+            ProductConfigurationInstanceTransfer::PRICES => [
+                [
+                    PriceProductTransfer::SKU_PRODUCT => 'biz',
+                    PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'baz',
+                ],
+            ],
+            ProductConfigurationInstanceTransfer::CONFIGURATOR_KEY => 'foobar',
+        ];
+
+        $productConfigurationInstanceTransfer1 = (new ProductConfigurationInstanceTransfer())
+            ->fromArray($productConfigurationInstanceData)
+            ->setIsComplete(false);
+        $productConfigurationInstanceTransfer2 = (new ProductConfigurationInstanceTransfer())
+            ->fromArray($productConfigurationInstanceData)
+            ->setIsComplete(true);
+
+        /** @var \Spryker\Service\Kernel\AbstractBundleConfig $productConfigurationConfig */
+        $productConfigurationConfig = $this->tester->mockConfigMethod('getConfigurationFieldsNotAllowedForEncoding', [
+            ProductConfigurationInstanceTransfer::IS_COMPLETE,
+        ]);
+
+        $productConfigurationServiceFactory = $this->tester->getFactory();
+        $productConfigurationServiceFactory->setConfig($productConfigurationConfig);
+
+        /** @var \Spryker\Service\ProductConfiguration\ProductConfigurationServiceInterface $productConfigurationService */
+        $productConfigurationService = $this->tester->getService()->setFactory($productConfigurationServiceFactory);
+
+        // Act
+        $productConfigurationInstanceTransfer1Hash = $productConfigurationService->getProductConfigurationInstanceHash($productConfigurationInstanceTransfer1);
+        $productConfigurationInstanceTransfer2Hash = $productConfigurationService->getProductConfigurationInstanceHash($productConfigurationInstanceTransfer2);
+
+        // Assert
+        $this->assertSame($productConfigurationInstanceTransfer1Hash, $productConfigurationInstanceTransfer2Hash);
     }
 }

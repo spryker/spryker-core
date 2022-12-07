@@ -17,6 +17,9 @@ use Spryker\Service\ProductConfiguration\Filter\PriceProductConfigurationVolumeF
 use Spryker\Service\ProductConfiguration\HashGenerator\ProductConfigurationInstanceHashGenerator;
 use Spryker\Service\ProductConfiguration\HashGenerator\ProductConfigurationInstanceHashGeneratorInterface;
 
+/**
+ * @method \Spryker\Service\ProductConfiguration\ProductConfigurationConfig getConfig()
+ */
 class ProductConfigurationServiceFactory extends AbstractServiceFactory
 {
     /**
@@ -27,6 +30,7 @@ class ProductConfigurationServiceFactory extends AbstractServiceFactory
         return new ProductConfigurationInstanceHashGenerator(
             $this->getUtilEncodingService(),
             $this->getUtilTextService(),
+            $this->getConfig(),
         );
     }
 

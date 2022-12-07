@@ -16,4 +16,12 @@ interface ProductConfigurationToUtilTextServiceInterface
      * @return string
      */
     public function hashValue($value, string $algorithm): string;
+
+    /**
+     * @param string $string
+     * @param string $separator
+     *
+     * @return string
+     */
+    public function camelCaseToSeparator(string $string, string $separator = '-'): string;
 }
