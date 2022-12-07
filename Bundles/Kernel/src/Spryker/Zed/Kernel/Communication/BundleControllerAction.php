@@ -28,7 +28,7 @@ class BundleControllerAction implements BundleControllerActionInterface
     protected $action;
 
     /**
-     * @var \Laminas\Filter\Word\DashToCamelCase
+     * @var \Laminas\Filter\Word\DashToCamelCase|null
      */
     protected $filter;
 

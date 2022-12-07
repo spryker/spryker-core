@@ -29,4 +29,5 @@ parameters:
         - { message: '#Instantiated class Elastica\\Type\\Mapping not found.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Zed/Search/Business/Model/Elasticsearch/IndexInstaller.php' }
         - { message: '#Call to method setParam\(\) on an unknown class Elastica\\Type\\Mapping.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Zed/Search/Business/Model/Elasticsearch/IndexInstaller.php' }
         - { message: '#Call to an undefined method Elastica\\Index::getType\(\).#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Zed/Search/Business/Model/Elasticsearch/SearchIndexManager.php' }
+        - '#Property .+::\$underscoreToDashFilter with generic class Laminas\\Filter\\Word\\UnderscoreToDash does not specify its types\: TOptions#'
     reportUnmatchedIgnoredErrors: false
