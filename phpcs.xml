@@ -10,7 +10,7 @@
     <arg name="tab-width" value="4"/>
     <arg value="nps"/>
 
-    <config name="php_version" value="70400"/>
+    <config name="php_version" value="80000"/>
 
     <file>Bundles/</file>
 
@@ -26,6 +26,16 @@
             <!-- We want to prevent 8.1+ functions to break 8.0 compatibility -->
             <property name="phpVersion" value="8.0"/>
         </properties>
+    </rule>
+
+    <rule ref="SlevomatCodingStandard.ControlStructures.DisallowNullSafeObjectOperator">
+        <severity>0</severity>
+    </rule>
+    <rule ref="SlevomatCodingStandard.Functions.DisallowTrailingCommaInDeclaration">
+        <severity>0</severity>
+    </rule>
+    <rule ref="SlevomatCodingStandard.Functions.DisallowTrailingCommaInClosureUse">
+        <severity>0</severity>
     </rule>
 
 </ruleset>
