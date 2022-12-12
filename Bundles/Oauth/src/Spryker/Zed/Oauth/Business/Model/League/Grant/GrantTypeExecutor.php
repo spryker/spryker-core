@@ -112,10 +112,10 @@ class GrantTypeExecutor implements GrantTypeExecutorInterface
      */
     protected function createOauthResponseTransfer(ResponseInterface $response): OauthResponseTransfer
     {
-        $data = (string)$response->getBody();
+        $data = json_decode((string)$response->getBody(), true);
 
         return (new OauthResponseTransfer())
-            ->fromArray(json_decode($data, true), true)
+            ->fromArray($data, true)
             ->setIsValid(true);
     }
 }

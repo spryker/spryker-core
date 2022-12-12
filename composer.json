@@ -483,6 +483,7 @@
         "spryker/oauth-backend-api": "*",
         "spryker/oauth-client": "*",
         "spryker/oauth-client-extension": "*",
+        "spryker/oauth-code-flow": "*",
         "spryker/oauth-company-user": "*",
         "spryker/oauth-company-user-extension": "*",
         "spryker/oauth-cryptography": "*",

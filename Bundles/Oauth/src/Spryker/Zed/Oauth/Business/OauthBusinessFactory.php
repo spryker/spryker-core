@@ -38,6 +38,8 @@ use Spryker\Zed\Oauth\Business\Model\League\Grant\PasswordGrant;
 use Spryker\Zed\Oauth\Business\Model\League\Grant\RefreshTokenGrant;
 use Spryker\Zed\Oauth\Business\Model\League\RepositoryBuilder;
 use Spryker\Zed\Oauth\Business\Model\League\RepositoryBuilderInterface;
+use Spryker\Zed\Oauth\Business\Model\League\RequestExecutor;
+use Spryker\Zed\Oauth\Business\Model\League\RequestExecutorInterface;
 use Spryker\Zed\Oauth\Business\Model\League\ResourceServerBuilder;
 use Spryker\Zed\Oauth\Business\Model\League\ResourceServerBuilderInterface;
 use Spryker\Zed\Oauth\Business\Model\OauthClientReader;
@@ -93,16 +95,26 @@ class OauthBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Oauth\Business\Model\League\RequestExecutorInterface
+     */
+    public function createRequestExecutor(): RequestExecutorInterface
+    {
+        return new RequestExecutor(
+            $this->createGrantTypeConfigurationLoader(),
+            $this->getConfig(),
+            $this->createOauthGrantTypeConfigurationLoader(),
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\Oauth\Business\Model\League\AccessTokenRequestExecutorInterface
      */
     public function createAccessTokenRequestExecutor(): AccessTokenRequestExecutorInterface
     {
         return new AccessTokenRequestExecutor(
-            $this->createGrantTypeConfigurationLoader(),
             $this->createGrantTypeBuilder(),
             $this->createGrantTypeExecutor(),
-            $this->getConfig(),
-            $this->createOauthGrantTypeConfigurationLoader(),
+            $this->createRequestExecutor(),
         );
     }
 

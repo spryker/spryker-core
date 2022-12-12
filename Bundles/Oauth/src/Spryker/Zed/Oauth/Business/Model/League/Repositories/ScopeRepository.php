@@ -98,6 +98,19 @@ class ScopeRepository implements ScopeRepositoryInterface
     }
 
     /**
+     * @param string $scopeIdentifier
+     *
+     * @return \Spryker\Zed\Oauth\Business\Model\League\Entities\ScopeEntity
+     */
+    public function createScopeEntity(string $scopeIdentifier): ScopeEntity
+    {
+        $scope = new ScopeEntity();
+        $scope->setIdentifier($scopeIdentifier);
+
+        return $scope;
+    }
+
+    /**
      * @param array $scopes
      * @param string $grantType
      * @param \League\OAuth2\Server\Entities\ClientEntityInterface $clientEntity
@@ -166,18 +179,5 @@ class ScopeRepository implements ScopeRepositoryInterface
         }
 
         return $scopes;
-    }
-
-    /**
-     * @param string $scopeIdentifier
-     *
-     * @return \Spryker\Zed\Oauth\Business\Model\League\Entities\ScopeEntity
-     */
-    protected function createScopeEntity(string $scopeIdentifier): ScopeEntity
-    {
-        $scope = new ScopeEntity();
-        $scope->setIdentifier($scopeIdentifier);
-
-        return $scope;
     }
 }

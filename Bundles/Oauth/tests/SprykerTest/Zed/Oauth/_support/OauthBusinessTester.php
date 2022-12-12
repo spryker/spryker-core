@@ -117,14 +117,18 @@ class OauthBusinessTester extends Actor
     /**
      * @param string $username
      * @param string $applicationContext
+     * @param string $grantType
      *
      * @return \Generated\Shared\Transfer\OauthRequestTransfer
      */
-    public function createOauthRequestTransfer(string $username, string $applicationContext): OauthRequestTransfer
-    {
+    public function createOauthRequestTransfer(
+        string $username,
+        string $applicationContext,
+        string $grantType
+    ): OauthRequestTransfer {
         $oauthRequestTransfer = new OauthRequestTransfer();
         $oauthRequestTransfer
-            ->setGrantType('password')
+            ->setGrantType($grantType)
             ->setClientId(static::CLIENT_IDENTIFIER)
             ->setClientSecret(static::CLIENT_SECRET)
             ->setUsername($username)

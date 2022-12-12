@@ -1,0 +1,80 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 33,
+            "line_to": 33,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'Spryker\\Zed\\OauthCodeFlow\\Persistence\\OauthCodeFlowEntityManagerInterface' for Spryker\\Zed\\Kernel\\EntityManagerResolverAwareTrait::getEntityManager is incorrect, got 'Spryker\\Zed\\Kernel\\Persistence\\AbstractEntityManager'",
+            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/EntityManagerResolverAwareTrait.php",
+            "snippet": "     * @return \\Spryker\\Zed\\Kernel\\Persistence\\AbstractEntityManager",
+            "selected_text": "\\Spryker\\Zed\\Kernel\\Persistence\\AbstractEntityManager",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 33,
+            "line_to": 33,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'Spryker\\Zed\\OauthCodeFlow\\Persistence\\OauthCodeFlowRepositoryInterface' for Spryker\\Zed\\Kernel\\RepositoryResolverAwareTrait::getRepository is incorrect, got 'Spryker\\Zed\\Kernel\\Persistence\\AbstractRepository'",
+            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/RepositoryResolverAwareTrait.php",
+            "snippet": "     * @return \\Spryker\\Zed\\Kernel\\Persistence\\AbstractRepository",
+            "selected_text": "\\Spryker\\Zed\\Kernel\\Persistence\\AbstractRepository",
+            "error_level": 6,
+            "shortcode": 11
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 33,
+            "line_to": 33,
+            "type": "MoreSpecificReturnType",
+            "message": "The declared return type 'Spryker\\Zed\\OauthCodeFlow\\OauthCodeFlowConfig' for Spryker\\Zed\\Kernel\\BundleConfigResolverAwareTrait::getConfig is more specific than the inferred return type 'Spryker\\Zed\\Kernel\\AbstractBundleConfig'",
+            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/BundleConfigResolverAwareTrait.php",
+            "snippet": "     * @return \\Spryker\\Zed\\Kernel\\AbstractBundleConfig",
+            "selected_text": "\\Spryker\\Zed\\Kernel\\AbstractBundleConfig",
+            "error_level": 3,
+            "shortcode": 70
+        },
+        {
+            "severity": "info",
+            "line_from": 45,
+            "line_to": 45,
+            "type": "MoreSpecificReturnType",
+            "message": "The declared return type 'Spryker\\Zed\\Kernel\\AbstractBundleConfig' for Spryker\\Zed\\Kernel\\BundleConfigResolverAwareTrait::resolveBundleConfig is more specific than the inferred return type 'Spryker\\Shared\\Kernel\\AbstractBundleConfig'",
+            "file_name": "vendor/spryker/spryker/Bundles/Kernel/src/Spryker/Zed/Kernel/BundleConfigResolverAwareTrait.php",
+            "snippet": "     * @return \\Spryker\\Zed\\Kernel\\AbstractBundleConfig",
+            "selected_text": "\\Spryker\\Zed\\Kernel\\AbstractBundleConfig",
+            "error_level": 3,
+            "shortcode": 70
+        },
+        {
+            "severity": "info",
+            "line_from": 54,
+            "line_to": 54,
+            "type": "NonInvariantDocblockPropertyType",
+            "message": "Property Spryker\\Zed\\OauthCodeFlow\\Business\\Grant\\AuthCodeGrantType::$accessTokenRepository has type Spryker\\Zed\\Oauth\\Business\\Model\\League\\Repositories\\AccessTokenRepositoryInterface, not invariant with League\\OAuth2\\Server\\Grant\\AbstractGrant::$accessTokenRepository of type League\\OAuth2\\Server\\Repositories\\AccessTokenRepositoryInterface",
+            "file_name": "vendor/spryker/spryker/Bundles/OauthCodeFlow/src/Spryker/Zed/OauthCodeFlow/Business/Grant/AuthCodeGrantType.php",
+            "snippet": "    protected $accessTokenRepository;",
+            "selected_text": "$accessTokenRepository",
+            "error_level": 3,
+            "shortcode": 267
+        },
+        {
+            "severity": "info",
+            "line_from": 59,
+            "line_to": 59,
+            "type": "NonInvariantDocblockPropertyType",
+            "message": "Property Spryker\\Zed\\OauthCodeFlow\\Business\\Grant\\AuthCodeGrantType::$scopeRepository has type Spryker\\Zed\\Oauth\\Business\\Model\\League\\Repositories\\ScopeRepositoryInterface, not invariant with League\\OAuth2\\Server\\Grant\\AbstractGrant::$scopeRepository of type League\\OAuth2\\Server\\Repositories\\ScopeRepositoryInterface",
+            "file_name": "vendor/spryker/spryker/Bundles/OauthCodeFlow/src/Spryker/Zed/OauthCodeFlow/Business/Grant/AuthCodeGrantType.php",
+            "snippet": "    protected $scopeRepository;",
+            "selected_text": "$scopeRepository",
+            "error_level": 3,
+            "shortcode": 267
+        }
+    ],
+    "deprecation": [],
+    "count": 6
+}

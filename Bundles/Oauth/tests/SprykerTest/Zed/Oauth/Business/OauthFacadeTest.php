@@ -398,10 +398,11 @@ class OauthFacadeTest extends Unit
         //Arrange
         $this->createTestClient();
         $this->setOauthUserProviderPluginMock(true);
-        $this->setOauthRequestGrantTypeConfigurationProviderPluginMock(UserPasswordGrantTypeBuilder::class);
+        $this->setOauthRequestGrantTypeConfigurationProviderPluginMock(UserPasswordGrantTypeBuilder::class, static::IDENTIFIER_PASSWORD);
         $oauthRequestTransfer = $this->tester->createOauthRequestTransfer(
             static::FAKE_USERNAME_BACKEND_API,
             static::GLUE_BACKEND_API_APPLICATION,
+            static::IDENTIFIER_PASSWORD,
         );
 
         //Act
@@ -419,10 +420,11 @@ class OauthFacadeTest extends Unit
         //Arrange
         $this->createTestClient();
         $this->setOauthUserProviderPluginMock(false);
-        $this->setOauthRequestGrantTypeConfigurationProviderPluginMock(UserPasswordGrantTypeBuilder::class);
+        $this->setOauthRequestGrantTypeConfigurationProviderPluginMock(UserPasswordGrantTypeBuilder::class, static::IDENTIFIER_PASSWORD);
         $oauthRequestTransfer = $this->tester->createOauthRequestTransfer(
             static::FAKE_USERNAME_INVALID,
             static::GLUE_BACKEND_API_APPLICATION,
+            static::IDENTIFIER_PASSWORD,
         );
 
         //Act
@@ -440,10 +442,11 @@ class OauthFacadeTest extends Unit
         //Arrange
         $this->createTestClient();
         $this->setUserProviderPluginMock(true);
-        $this->setOauthRequestGrantTypeConfigurationProviderPluginMock(PasswordGrantTypeBuilder::class);
+        $this->setOauthRequestGrantTypeConfigurationProviderPluginMock(PasswordGrantTypeBuilder::class, static::IDENTIFIER_PASSWORD);
         $oauthRequestTransfer = $this->tester->createOauthRequestTransfer(
             static::FAKE_USERNAME_STOREFRONT_API,
             static::GLUE_STOREFRONT_API_APPLICATION,
+            static::IDENTIFIER_PASSWORD,
         );
 
         //Act
@@ -461,10 +464,11 @@ class OauthFacadeTest extends Unit
         //Arrange
         $this->createTestClient();
         $this->setUserProviderPluginMock(false);
-        $this->setOauthRequestGrantTypeConfigurationProviderPluginMock(PasswordGrantTypeBuilder::class);
+        $this->setOauthRequestGrantTypeConfigurationProviderPluginMock(PasswordGrantTypeBuilder::class, static::IDENTIFIER_PASSWORD);
         $oauthRequestTransfer = $this->tester->createOauthRequestTransfer(
             static::FAKE_USERNAME_INVALID,
             static::GLUE_STOREFRONT_API_APPLICATION,
+            static::IDENTIFIER_PASSWORD,
         );
 
         //Act
@@ -634,12 +638,13 @@ class OauthFacadeTest extends Unit
 
     /**
      * @param string $grantTypeBuilderClass
+     * @param string $identifier
      *
      * return void
      *
      * @return void
      */
-    protected function setOauthRequestGrantTypeConfigurationProviderPluginMock(string $grantTypeBuilderClass): void
+    protected function setOauthRequestGrantTypeConfigurationProviderPluginMock(string $grantTypeBuilderClass, string $identifier): void
     {
         $oauthRequestGrantTypeConfigurationProviderPluginMock = $this->getMockBuilder(OauthRequestGrantTypeConfigurationProviderPluginInterface::class)
             ->setMethods(['isApplicable', 'getGrantTypeConfiguration'])
@@ -652,9 +657,9 @@ class OauthFacadeTest extends Unit
         $oauthRequestGrantTypeConfigurationProviderPluginMock
             ->method('getGrantTypeConfiguration')
             ->willReturnCallback(
-                function () use ($grantTypeBuilderClass) {
+                function () use ($grantTypeBuilderClass, $identifier) {
                     $oauthGrantTypeConfigurationTransfer = (new OauthGrantTypeConfigurationTransfer())
-                        ->setIdentifier(static::IDENTIFIER_PASSWORD)
+                        ->setIdentifier($identifier)
                         ->setBuilderFullyQualifiedClassName($grantTypeBuilderClass);
 
                     return $oauthGrantTypeConfigurationTransfer;

@@ -1,0 +1,9 @@
+[
+    {
+        "fileName": "src/Spryker/Zed/OauthCodeFlow/Business/Grant/AuthCodeGrantType.php",
+        "description": "Method `Spryker\\Zed\\OauthCodeFlow\\Business\\Grant\\AuthCodeGrantType::issueAccessToken()` must have return type.",
+        "rule": "ExternalMethodExtensionReturnTypeRule",
+        "ruleset": "Spryker",
+        "priority": "1"
+    }
+]

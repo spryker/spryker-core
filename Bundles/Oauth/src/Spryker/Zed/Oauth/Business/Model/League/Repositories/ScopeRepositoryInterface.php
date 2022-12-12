@@ -9,6 +9,7 @@ namespace Spryker\Zed\Oauth\Business\Model\League\Repositories;
 
 use League\OAuth2\Server\Entities\ClientEntityInterface;
 use League\OAuth2\Server\Repositories\ScopeRepositoryInterface as LeagueScopeRepositoryInterface;
+use Spryker\Zed\Oauth\Business\Model\League\Entities\ScopeEntity;
 
 interface ScopeRepositoryInterface extends LeagueScopeRepositoryInterface
 {
@@ -36,4 +37,11 @@ interface ScopeRepositoryInterface extends LeagueScopeRepositoryInterface
         $userIdentifier = null,
         ?string $applicationName = null
     );
+
+    /**
+     * @param string $scopeIdentifier
+     *
+     * @return \Spryker\Zed\Oauth\Business\Model\League\Entities\ScopeEntity
+     */
+    public function createScopeEntity(string $scopeIdentifier): ScopeEntity;
 }

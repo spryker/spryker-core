@@ -62,6 +62,9 @@ class GrantTypeBuilder implements GrantBuilderInterface
             /** @var \Spryker\Zed\Oauth\Business\Model\League\Grant\GrantTypeBuilderInterface $grantBuilder */
             $grantBuilder = new $builderFullyQualifiedClassName();
 
+            /**
+             * @todo Should be refactored before module stabilization.
+             */
             return $grantBuilder->buildGrant($this->repositoryBuilder, new DateInterval($this->oauthConfig->getRefreshTokenTTL()));
         }
 
