@@ -4,6 +4,7 @@
  */
 
 'use strict';
+var initFormattedNumber = require('ZedGuiModules/libs/formatted-number-input');
 
 $(document).ready(function () {
     var numberOfAssignedProducts = $('#assigned-product-template').data('value-count');
@@ -51,6 +52,8 @@ $(document).ready(function () {
                     });
 
                     $('#bundled-products').append($newBundledProductForm);
+
+                    initFormattedNumber($newBundledProductForm[0]);
                 } else {
                     var idProductConcrete = info['id_product'];
                     var $idProductConcreteElement = $('#bundled-products').find(

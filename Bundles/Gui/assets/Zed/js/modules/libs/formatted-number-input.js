@@ -2,11 +2,11 @@
 
 var AutoNumeric = require('autonumeric');
 
-function initFormattedNumber() {
-    var numberInputs = Array.from(document.getElementsByClassName('js-formatted-number-input'));
+function initFormattedNumber(rootElement = document) {
+    var numberInputs = Array.from(rootElement.getElementsByClassName('js-formatted-number-input'));
 
     numberInputs.forEach(function (numberInput) {
-        var hiddenInput = document.getElementsByClassName(numberInput.dataset.target)[0];
+        var hiddenInput = rootElement.getElementsByClassName(numberInput.dataset.target)[0];
         var config = {
             digitGroupSeparator: numberInput.dataset.groupSeparator,
             decimalCharacter: numberInput.dataset.decimalSeparator,
