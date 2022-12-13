@@ -10,6 +10,8 @@ namespace Spryker\Yves\SessionCustomerValidationExtension\Dependency\Plugin;
 use Generated\Shared\Transfer\SessionCustomerTransfer;
 
 /**
+ * @deprecated Use {@link \SprykerShop\Yves\SessionCustomerValidationPageExtension\Dependency\Plugin\CustomerSessionValidatorPluginInterface} instead.
+ *
  * Use this plugin interface to provide functionality to validate customer session.
  */
 interface SessionCustomerValidatorPluginInterface

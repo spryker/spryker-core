@@ -12,6 +12,8 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 use Spryker\Yves\SessionCustomerValidationExtension\Dependency\Plugin\SessionCustomerValidatorPluginInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Yves\SessionFile\Plugin\SessionCustomerValidationPage\FileCustomerSessionValidatorPlugin} instead.
+ *
  * @method \Spryker\Client\SessionFile\SessionFileClient getClient()
  * @method \Spryker\Yves\SessionFile\SessionFileFactory getFactory()
  * @method \Spryker\Yves\SessionFile\SessionFileConfig getConfig()

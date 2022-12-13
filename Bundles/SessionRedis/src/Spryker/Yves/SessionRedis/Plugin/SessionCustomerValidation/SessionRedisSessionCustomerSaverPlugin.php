@@ -12,6 +12,8 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 use Spryker\Yves\SessionCustomerValidationExtension\Dependency\Plugin\SessionCustomerSaverPluginInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Yves\SessionRedis\Plugin\SessionCustomerValidationPage\RedisCustomerSessionSaverPlugin} instead.
+ *
  * @method \Spryker\Yves\SessionRedis\SessionRedisFactory getFactory()
  * @method \Spryker\Yves\SessionRedis\SessionRedisConfig getConfig()
  */

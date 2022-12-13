@@ -6,6 +6,7 @@
     "require": {
         "php": ">=8.0",
         "spryker-shop/session-agent-validation-extension": "^1.0.0",
+        "spryker-shop/session-customer-validation-page-extension": "^1.0.0",
         "spryker/kernel": "^3.52.0",
         "spryker/monitoring": "^1.0.0 || ^2.0.0",
         "spryker/redis": "^2.1.0",

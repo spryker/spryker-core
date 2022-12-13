@@ -13,6 +13,8 @@ use Spryker\Shared\SecurityExtension\Dependency\Plugin\SecurityPluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
 
 /**
+ * @deprecated Use {@link \SprykerShop\Yves\SessionCustomerValidationPage\Plugin\Security\ValidateCustomerSessionSecurityPlugin} instead.
+ *
  * @method \Spryker\Yves\SessionCustomerValidation\SessionCustomerValidationFactory getFactory()
  */
 class ValidateSessionCustomerSecurityPlugin extends AbstractPlugin implements SecurityPluginInterface
