@@ -25,7 +25,7 @@ class PriceProductAbstractGuiTableConfigurationProvider implements PriceProductA
     /**
      * @var string
      */
-    protected const FORMAT_STRING_PRICES_URL = '%s?%s=${row.%s}&%s=${row.%s}&%s=${row.%s}';
+    protected const FORMAT_STRING_PRICES_URL = '%s?%s=${row.%s}&%s=${row.%s}&%s=${row.%s}&%s=${row.%s}';
 
     /**
      * @var string
@@ -118,6 +118,8 @@ class PriceProductAbstractGuiTableConfigurationProvider implements PriceProductA
             PriceProductTableViewTransfer::ID_PRODUCT_ABSTRACT,
             PriceProductTableViewTransfer::PRICE_PRODUCT_DEFAULT_IDS,
             PriceProductTableViewTransfer::PRICE_PRODUCT_DEFAULT_IDS,
+            PriceProductTableViewTransfer::TYPE_PRICE_PRODUCT_STORE_IDS,
+            PriceProductTableViewTransfer::TYPE_PRICE_PRODUCT_STORE_IDS,
             PriceProductTableViewTransfer::VOLUME_QUANTITY,
             PriceProductTableViewTransfer::VOLUME_QUANTITY,
         );
@@ -128,6 +130,8 @@ class PriceProductAbstractGuiTableConfigurationProvider implements PriceProductA
             PriceProductTableViewTransfer::TYPE_PRICE_PRODUCT_STORE_IDS,
             PriceProductTableViewTransfer::ID_PRODUCT_ABSTRACT,
             PriceProductTableViewTransfer::ID_PRODUCT_ABSTRACT,
+            PriceProductTableViewTransfer::TYPE_PRICE_PRODUCT_STORE_IDS,
+            PriceProductTableViewTransfer::TYPE_PRICE_PRODUCT_STORE_IDS,
             PriceProductTableViewTransfer::VOLUME_QUANTITY,
             PriceProductTableViewTransfer::VOLUME_QUANTITY,
         );
