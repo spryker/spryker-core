@@ -9,10 +9,10 @@ namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Communication\Plug
 
 use Generated\Shared\Transfer\FilterTransfer;
 use Orm\Zed\PriceProductMerchantRelationship\Persistence\Map\SpyPriceProductMerchantRelationshipTableMap;
+use Spryker\Shared\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageConfig;
 use Spryker\Shared\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageConstants;
 use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceBulkRepositoryPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\PriceProductMerchantRelationship\Dependency\PriceProductMerchantRelationshipEvents;
 
 /**
  * @method \Spryker\Zed\PriceProductMerchantRelationshipStorage\Business\PriceProductMerchantRelationshipStorageFacadeInterface getFacade()
@@ -72,7 +72,7 @@ class PriceProductAbstractMerchantRelationEventResourceBulkRepositoryPlugin exte
      */
     public function getEventName(): string
     {
-        return PriceProductMerchantRelationshipEvents::PRICE_ABSTRACT_PUBLISH;
+        return PriceProductMerchantRelationshipStorageConfig::PRICE_PRODUCT_ABSTRACT_MERCHANT_RELATIONSHIP_PUBLISH;
     }
 
     /**

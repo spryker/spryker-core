@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PriceProductMerchantRelationshipStorage\Communication\Plugin\Event\Subscriber;
 
+use Spryker\Shared\PriceProductMerchantRelationshipStorage\PriceProductMerchantRelationshipStorageConfig;
 use Spryker\Zed\Event\Dependency\EventCollectionInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -61,7 +62,13 @@ class PriceProductMerchantRelationshipStorageEventSubscriber extends AbstractPlu
      */
     protected function addMerchantRelationshipCreateListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(MerchantRelationshipEvents::ENTITY_SPY_MERCHANT_RELATIONSHIP_TO_COMPANY_BUSINESS_UNIT_CREATE, new MerchantRelationshipListener(), 0, null, $this->getConfig()->getMerchantRelationEventQueueName());
+        $eventCollection->addListenerQueued(
+            MerchantRelationshipEvents::ENTITY_SPY_MERCHANT_RELATIONSHIP_TO_COMPANY_BUSINESS_UNIT_CREATE,
+            new MerchantRelationshipListener(),
+            0,
+            null,
+            $this->getConfig()->getMerchantRelationEventQueueName(),
+        );
 
         return $this;
     }
@@ -73,7 +80,13 @@ class PriceProductMerchantRelationshipStorageEventSubscriber extends AbstractPlu
      */
     protected function addMerchantRelationshipUpdateListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(MerchantRelationshipEvents::ENTITY_SPY_MERCHANT_RELATIONSHIP_TO_COMPANY_BUSINESS_UNIT_UPDATE, new MerchantRelationshipListener(), 0, null, $this->getConfig()->getMerchantRelationEventQueueName());
+        $eventCollection->addListenerQueued(
+            MerchantRelationshipEvents::ENTITY_SPY_MERCHANT_RELATIONSHIP_TO_COMPANY_BUSINESS_UNIT_UPDATE,
+            new MerchantRelationshipListener(),
+            0,
+            null,
+            $this->getConfig()->getMerchantRelationEventQueueName(),
+        );
 
         return $this;
     }
@@ -85,7 +98,13 @@ class PriceProductMerchantRelationshipStorageEventSubscriber extends AbstractPlu
      */
     protected function addMerchantRelationshipDeleteListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(MerchantRelationshipEvents::ENTITY_SPY_MERCHANT_RELATIONSHIP_TO_COMPANY_BUSINESS_UNIT_DELETE, new MerchantRelationshipListener(), 0, null, $this->getConfig()->getMerchantRelationEventQueueName());
+        $eventCollection->addListenerQueued(
+            MerchantRelationshipEvents::ENTITY_SPY_MERCHANT_RELATIONSHIP_TO_COMPANY_BUSINESS_UNIT_DELETE,
+            new MerchantRelationshipListener(),
+            0,
+            null,
+            $this->getConfig()->getMerchantRelationEventQueueName(),
+        );
 
         return $this;
     }
@@ -97,7 +116,13 @@ class PriceProductMerchantRelationshipStorageEventSubscriber extends AbstractPlu
      */
     protected function addConcretePriceProductMerchantRelationshipCreateListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(PriceProductMerchantRelationshipEvents::ENTITY_SPY_PRICE_PRODUCT_MERCHANT_RELATIONSHIP_CREATE, new PriceProductMerchantRelationshipConcreteListener(), 0, null, $this->getConfig()->getPriceProductConcreteMerchantRelationEventQueueName());
+        $eventCollection->addListenerQueued(
+            PriceProductMerchantRelationshipEvents::ENTITY_SPY_PRICE_PRODUCT_MERCHANT_RELATIONSHIP_CREATE,
+            new PriceProductMerchantRelationshipConcreteListener(),
+            0,
+            null,
+            $this->getConfig()->getPriceProductConcreteMerchantRelationEventQueueName(),
+        );
 
         return $this;
     }
@@ -109,7 +134,13 @@ class PriceProductMerchantRelationshipStorageEventSubscriber extends AbstractPlu
      */
     protected function addConcretePriceProductMerchantRelationshipUpdateListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(PriceProductMerchantRelationshipEvents::ENTITY_SPY_PRICE_PRODUCT_MERCHANT_RELATIONSHIP_UPDATE, new PriceProductMerchantRelationshipConcreteListener(), 0, null, $this->getConfig()->getPriceProductConcreteMerchantRelationEventQueueName());
+        $eventCollection->addListenerQueued(
+            PriceProductMerchantRelationshipEvents::ENTITY_SPY_PRICE_PRODUCT_MERCHANT_RELATIONSHIP_UPDATE,
+            new PriceProductMerchantRelationshipConcreteListener(),
+            0,
+            null,
+            $this->getConfig()->getPriceProductConcreteMerchantRelationEventQueueName(),
+        );
 
         return $this;
     }
@@ -121,7 +152,13 @@ class PriceProductMerchantRelationshipStorageEventSubscriber extends AbstractPlu
      */
     protected function addConcretePriceProductMerchantRelationshipDeleteListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(PriceProductMerchantRelationshipEvents::ENTITY_SPY_PRICE_PRODUCT_MERCHANT_RELATIONSHIP_DELETE, new PriceProductMerchantRelationshipConcreteDeleteListener(), 0, null, $this->getConfig()->getPriceProductConcreteMerchantRelationEventQueueName());
+        $eventCollection->addListenerQueued(
+            PriceProductMerchantRelationshipEvents::ENTITY_SPY_PRICE_PRODUCT_MERCHANT_RELATIONSHIP_DELETE,
+            new PriceProductMerchantRelationshipConcreteDeleteListener(),
+            0,
+            null,
+            $this->getConfig()->getPriceProductConcreteMerchantRelationEventQueueName(),
+        );
 
         return $this;
     }
@@ -133,7 +170,13 @@ class PriceProductMerchantRelationshipStorageEventSubscriber extends AbstractPlu
      */
     protected function addAbstractPriceProductMerchantRelationshipCreateListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(PriceProductMerchantRelationshipEvents::ENTITY_SPY_PRICE_PRODUCT_MERCHANT_RELATIONSHIP_CREATE, new PriceProductMerchantRelationshipAbstractListener(), 0, null, $this->getConfig()->getPriceProductAbstractMerchantRelationEventQueueName());
+        $eventCollection->addListenerQueued(
+            PriceProductMerchantRelationshipEvents::ENTITY_SPY_PRICE_PRODUCT_MERCHANT_RELATIONSHIP_CREATE,
+            new PriceProductMerchantRelationshipAbstractListener(),
+            0,
+            null,
+            $this->getConfig()->getPriceProductAbstractMerchantRelationEventQueueName(),
+        );
 
         return $this;
     }
@@ -145,7 +188,13 @@ class PriceProductMerchantRelationshipStorageEventSubscriber extends AbstractPlu
      */
     protected function addAbstractPriceProductMerchantRelationshipUpdateListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(PriceProductMerchantRelationshipEvents::ENTITY_SPY_PRICE_PRODUCT_MERCHANT_RELATIONSHIP_UPDATE, new PriceProductMerchantRelationshipAbstractListener(), 0, null, $this->getConfig()->getPriceProductAbstractMerchantRelationEventQueueName());
+        $eventCollection->addListenerQueued(
+            PriceProductMerchantRelationshipEvents::ENTITY_SPY_PRICE_PRODUCT_MERCHANT_RELATIONSHIP_UPDATE,
+            new PriceProductMerchantRelationshipAbstractListener(),
+            0,
+            null,
+            $this->getConfig()->getPriceProductAbstractMerchantRelationEventQueueName(),
+        );
 
         return $this;
     }
@@ -157,7 +206,13 @@ class PriceProductMerchantRelationshipStorageEventSubscriber extends AbstractPlu
      */
     protected function addAbstractPriceProductMerchantRelationshipDeleteListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(PriceProductMerchantRelationshipEvents::ENTITY_SPY_PRICE_PRODUCT_MERCHANT_RELATIONSHIP_DELETE, new PriceProductMerchantRelationshipAbstractDeleteListener(), 0, null, $this->getConfig()->getPriceProductAbstractMerchantRelationEventQueueName());
+        $eventCollection->addListenerQueued(
+            PriceProductMerchantRelationshipEvents::ENTITY_SPY_PRICE_PRODUCT_MERCHANT_RELATIONSHIP_DELETE,
+            new PriceProductMerchantRelationshipAbstractDeleteListener(),
+            0,
+            null,
+            $this->getConfig()->getPriceProductAbstractMerchantRelationEventQueueName(),
+        );
 
         return $this;
     }
@@ -169,7 +224,13 @@ class PriceProductMerchantRelationshipStorageEventSubscriber extends AbstractPlu
      */
     protected function addConcretePriceProductMerchantRelationshipPublishListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(PriceProductMerchantRelationshipEvents::PRICE_CONCRETE_PUBLISH, new PriceProductMerchantRelationshipConcreteListener(), 0, null, $this->getConfig()->getPriceProductConcreteMerchantRelationEventQueueName());
+        $eventCollection->addListenerQueued(
+            PriceProductMerchantRelationshipStorageConfig::PRICE_PRODUCT_CONCRETE_MERCHANT_RELATIONSHIP_PUBLISH,
+            new PriceProductMerchantRelationshipConcreteListener(),
+            0,
+            null,
+            $this->getConfig()->getPriceProductConcreteMerchantRelationEventQueueName(),
+        );
 
         return $this;
     }
@@ -181,7 +242,13 @@ class PriceProductMerchantRelationshipStorageEventSubscriber extends AbstractPlu
      */
     protected function addAbstractPriceProductMerchantRelationshipPublishListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(PriceProductMerchantRelationshipEvents::PRICE_ABSTRACT_PUBLISH, new PriceProductMerchantRelationshipAbstractListener(), 0, null, $this->getConfig()->getPriceProductAbstractMerchantRelationEventQueueName());
+        $eventCollection->addListenerQueued(
+            PriceProductMerchantRelationshipStorageConfig::PRICE_PRODUCT_ABSTRACT_MERCHANT_RELATIONSHIP_PUBLISH,
+            new PriceProductMerchantRelationshipAbstractListener(),
+            0,
+            null,
+            $this->getConfig()->getPriceProductAbstractMerchantRelationEventQueueName(),
+        );
 
         return $this;
     }
@@ -193,7 +260,13 @@ class PriceProductMerchantRelationshipStorageEventSubscriber extends AbstractPlu
      */
     protected function addConcretePriceProductMerchantRelationshipUnpublishListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(PriceProductMerchantRelationshipEvents::PRICE_CONCRETE_UNPUBLISH, new PriceProductMerchantRelationshipConcreteDeleteListener(), 0, null, $this->getConfig()->getPriceProductConcreteMerchantRelationEventQueueName());
+        $eventCollection->addListenerQueued(
+            PriceProductMerchantRelationshipStorageConfig::PRICE_PRODUCT_CONCRETE_MERCHANT_RELATIONSHIP_UNPUBLISH,
+            new PriceProductMerchantRelationshipConcreteDeleteListener(),
+            0,
+            null,
+            $this->getConfig()->getPriceProductConcreteMerchantRelationEventQueueName(),
+        );
 
         return $this;
     }
@@ -205,7 +278,13 @@ class PriceProductMerchantRelationshipStorageEventSubscriber extends AbstractPlu
      */
     protected function addAbstractPriceProductMerchantRelationshipUnpublishListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(PriceProductMerchantRelationshipEvents::PRICE_ABSTRACT_UNPUBLISH, new PriceProductMerchantRelationshipAbstractDeleteListener(), 0, null, $this->getConfig()->getPriceProductAbstractMerchantRelationEventQueueName());
+        $eventCollection->addListenerQueued(
+            PriceProductMerchantRelationshipStorageConfig::PRICE_PRODUCT_ABSTRACT_MERCHANT_RELATIONSHIP_UNPUBLISH,
+            new PriceProductMerchantRelationshipAbstractDeleteListener(),
+            0,
+            null,
+            $this->getConfig()->getPriceProductAbstractMerchantRelationEventQueueName(),
+        );
 
         return $this;
     }

@@ -50,6 +50,46 @@ class PriceProductMerchantRelationshipStorageConfig extends AbstractSharedConfig
     public const ENTITY_SPY_MERCHANT_UPDATE = 'Entity.spy_merchant.update';
 
     /**
+     * Specification:
+     * - This event will be used for spy_price_product_merchant_relationship publishing.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const PRICE_PRODUCT_ABSTRACT_MERCHANT_RELATIONSHIP_PUBLISH = 'PriceProductMerchantRelationship.price_product_abstract_merchant_relationship.publish';
+
+    /**
+     * Specification:
+     * - This event will be used for spy_price_product_merchant_relationship un-publishing.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const PRICE_PRODUCT_ABSTRACT_MERCHANT_RELATIONSHIP_UNPUBLISH = 'PriceProductMerchantRelationship.price_product_abstract_merchant_relationship.unpublish';
+
+    /**
+     * Specification:
+     * - This event will be used for spy_price_product_merchant_relationship publishing.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const PRICE_PRODUCT_CONCRETE_MERCHANT_RELATIONSHIP_PUBLISH = 'PriceProductMerchantRelationship.price_product_concrete_merchant_relationship.publish';
+
+    /**
+     * Specification:
+     * - This event will be used for spy_price_product_merchant_relationship un-publishing.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const PRICE_PRODUCT_CONCRETE_MERCHANT_RELATIONSHIP_UNPUBLISH = 'PriceProductMerchantRelationship.price_product_concrete_merchant_relationship.unpublish';
+
+    /**
      * @api
      *
      * @return string
