@@ -60,7 +60,7 @@ class SynchronizationBusinessFactory extends AbstractBusinessFactory
             $this->getQueueClient(),
             $this->createQueueMessageCreator(),
             $this->getUtilEncodingService(),
-            $this->getConfig()->getSyncExportChunkSize(),
+            $this->getConfig(),
         );
     }
 

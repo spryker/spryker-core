@@ -10,17 +10,21 @@ namespace Spryker\Zed\Synchronization\Business\Export;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Generated\Shared\Transfer\SynchronizationQueueMessageTransfer;
 use Iterator;
+use Spryker\Zed\Kernel\Persistence\EntityManager\InstancePoolingTrait;
 use Spryker\Zed\Synchronization\Business\Iterator\SynchronizationDataBulkRepositoryPluginIterator;
 use Spryker\Zed\Synchronization\Business\Iterator\SynchronizationDataRepositoryPluginIterator;
 use Spryker\Zed\Synchronization\Business\Message\QueueMessageCreatorInterface;
 use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToQueueClientInterface;
 use Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingServiceInterface;
+use Spryker\Zed\Synchronization\SynchronizationConfig;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRepositoryPluginInterface;
 
 class RepositoryExporter implements ExporterInterface
 {
+    use InstancePoolingTrait;
+
     /**
      * @var \Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToQueueClientInterface
      */
@@ -37,9 +41,9 @@ class RepositoryExporter implements ExporterInterface
     protected $synchronizationDataPlugins;
 
     /**
-     * @var int
+     * @var \Spryker\Zed\Synchronization\SynchronizationConfig
      */
-    protected $chunkSize;
+    protected SynchronizationConfig $synchronizationConfig;
 
     /**
      * @var \Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingServiceInterface
@@ -50,18 +54,18 @@ class RepositoryExporter implements ExporterInterface
      * @param \Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToQueueClientInterface $queueClient
      * @param \Spryker\Zed\Synchronization\Business\Message\QueueMessageCreatorInterface $synchronizationQueueMessageCreator
      * @param \Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingServiceInterface $utilEncodingService
-     * @param int $chunkSize
+     * @param \Spryker\Zed\Synchronization\SynchronizationConfig $synchronizationConfig
      */
     public function __construct(
         SynchronizationToQueueClientInterface $queueClient,
         QueueMessageCreatorInterface $synchronizationQueueMessageCreator,
         SynchronizationToUtilEncodingServiceInterface $utilEncodingService,
-        $chunkSize = 100
+        SynchronizationConfig $synchronizationConfig
     ) {
         $this->queueClient = $queueClient;
         $this->queueMessageCreator = $synchronizationQueueMessageCreator;
-        $this->chunkSize = $chunkSize;
         $this->utilEncodingService = $utilEncodingService;
+        $this->synchronizationConfig = $synchronizationConfig;
     }
 
     /**
@@ -72,6 +76,11 @@ class RepositoryExporter implements ExporterInterface
      */
     public function exportSynchronizedData(array $plugins, array $ids = []): void
     {
+        $isInstancePoolingDisabled = false;
+        if ($this->synchronizationConfig->isRepositorySyncExportPropelInstancePoolingDisabled()) {
+            $isInstancePoolingDisabled = $this->disableInstancePooling();
+        }
+
         foreach ($plugins as $plugin) {
             if ($plugin instanceof SynchronizationDataRepositoryPluginInterface) {
                 $this->exportData($ids, $plugin);
@@ -82,6 +91,10 @@ class RepositoryExporter implements ExporterInterface
             if ($plugin instanceof SynchronizationDataBulkRepositoryPluginInterface) {
                 $this->exportDataBulk($plugin, $ids);
             }
+        }
+
+        if ($isInstancePoolingDisabled) {
+            $this->enableInstancePooling();
         }
     }
 
@@ -106,7 +119,11 @@ class RepositoryExporter implements ExporterInterface
      */
     protected function createSynchronizationDataRepositoryPluginIterator(array $ids, SynchronizationDataRepositoryPluginInterface $plugin): Iterator
     {
-        return new SynchronizationDataRepositoryPluginIterator($plugin, $this->chunkSize, $ids);
+        return new SynchronizationDataRepositoryPluginIterator(
+            $plugin,
+            $this->synchronizationConfig->getSyncExportChunkSize(),
+            $ids,
+        );
     }
 
     /**
@@ -130,7 +147,11 @@ class RepositoryExporter implements ExporterInterface
      */
     protected function createSynchronizationDataBulkRepositoryPluginIterator(array $ids, SynchronizationDataBulkRepositoryPluginInterface $plugin): Iterator
     {
-        return new SynchronizationDataBulkRepositoryPluginIterator($plugin, $this->chunkSize, $ids);
+        return new SynchronizationDataBulkRepositoryPluginIterator(
+            $plugin,
+            $this->synchronizationConfig->getSyncExportChunkSize(),
+            $ids,
+        );
     }
 
     /**

@@ -67,4 +67,17 @@ class SynchronizationConfig extends AbstractBundleConfig
     {
         return $this->get(SynchronizationConstants::EXPORT_MESSAGE_CHUNK_SIZE, 100);
     }
+
+    /**
+     * Specification:
+     * - Disables Propel Instance Pooling for repository synchronization export if set to true.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isRepositorySyncExportPropelInstancePoolingDisabled(): bool
+    {
+        return false;
+    }
 }

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Synchronization\Business\Iterator;
 
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface;
+use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataMaxIterationLimitPluginInterface;
 
 class SynchronizationDataBulkRepositoryPluginIterator extends AbstractSynchronizationDataPluginIterator
 {
@@ -19,7 +20,12 @@ class SynchronizationDataBulkRepositoryPluginIterator extends AbstractSynchroniz
     /**
      * @var array<int>
      */
-    protected $filterIds;
+    protected array $filterIds = [];
+
+    /**
+     * @var int
+     */
+    protected int $iterationLimit = 0;
 
     /**
      * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface $plugin
@@ -31,6 +37,10 @@ class SynchronizationDataBulkRepositoryPluginIterator extends AbstractSynchroniz
         parent::__construct($plugin, $chunkSize);
 
         $this->filterIds = $ids;
+
+        if ($plugin instanceof SynchronizationDataMaxIterationLimitPluginInterface) {
+            $this->iterationLimit = $plugin->getMaxIterationLimit();
+        }
     }
 
     /**
@@ -39,5 +49,27 @@ class SynchronizationDataBulkRepositoryPluginIterator extends AbstractSynchroniz
     protected function updateCurrent(): void
     {
         $this->current = $this->plugin->getData($this->offset, $this->chunkSize, $this->filterIds);
+    }
+
+    /**
+     * @return bool
+     */
+    public function valid(): bool
+    {
+        $valid = parent::valid();
+
+        if (!$valid && !$this->isIterationLimitExceeded()) {
+            return true;
+        }
+
+        return $valid;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isIterationLimitExceeded(): bool
+    {
+        return $this->offset + $this->chunkSize > $this->iterationLimit;
     }
 }
