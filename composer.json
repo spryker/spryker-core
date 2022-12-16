@@ -340,6 +340,7 @@
         "spryker/glue-application-extension": "*",
         "spryker/glue-backend-api-application": "*",
         "spryker/glue-backend-api-application-authorization-connector": "*",
+        "spryker/glue-backend-api-application-glue-json-api-convention-connector": "*",
         "spryker/glue-json-api-convention": "*",
         "spryker/glue-json-api-convention-extension": "*",
         "spryker/glue-storefront-api-application": "*",
