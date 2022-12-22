@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
 use Spryker\Zed\DataImport\Business\DataImportFacade;
+use Spryker\Zed\DataImport\Business\Model\Publisher\DataImporterPublisher;
+use Spryker\Zed\Event\Business\EventFacadeInterface;
+use SprykerTest\Zed\DataImport\DataImportBusinessTester;
 
 /**
  * Auto-generated group annotations
@@ -152,5 +155,50 @@ class DataImportFacadeTest extends Unit
         // Assert
         $this->assertIsArray($dumpedImporter);
         $this->assertEmpty($dumpedImporter);
+    }
+
+    /**
+     * @return void
+     */
+    public function testPublishShouldPublishRegularEvents(): void
+    {
+        // Arrange, Assert
+        $eventFacadeMock = $this->getMockBuilder(EventFacadeInterface::class)->getMock();
+        $eventEntityTransfer = $this->tester->createRegularEventEntityTransfer();
+        $eventFacadeMock
+            ->expects($this->once())
+            ->method('triggerBulk')
+            ->with(DataImportBusinessTester::TEST_EVENT_NAME, [$eventEntityTransfer]);
+
+        $this->tester->setDataImporterPublisherProperty('eventFacade', $eventFacadeMock);
+        $this->tester->setDataImporterPublisherProperty('importedEntityEvents', []);
+
+        $dataImportFacade = $this->getFacade();
+
+        // Act
+        DataImporterPublisher::addEvent(DataImportBusinessTester::TEST_EVENT_NAME, DataImportBusinessTester::TEST_ENTITY_ID_1);
+        $dataImportFacade->publish();
+    }
+
+    /**
+     * @return void
+     */
+    public function testPublishShouldPublishExtendedEvents(): void
+    {
+        // Arrange, Assert
+        $eventFacadeMock = $this->getMockBuilder(EventFacadeInterface::class)->getMock();
+        $eventEntityTransfer = $this->tester->createExtendedEventEntityTransfer();
+        $eventFacadeMock
+            ->expects($this->once())
+            ->method('triggerBulk')
+            ->with(DataImportBusinessTester::TEST_EVENT_NAME, [$eventEntityTransfer]);
+
+        $this->tester->setDataImporterPublisherProperty('eventFacade', $eventFacadeMock);
+        $this->tester->setDataImporterPublisherProperty('importedEntityEvents', []);
+        $dataImportFacade = $this->getFacade();
+
+        // Act
+        DataImporterPublisher::addEvent(DataImportBusinessTester::TEST_EVENT_NAME, DataImportBusinessTester::TEST_ENTITY_ID_2, $eventEntityTransfer);
+        $dataImportFacade->publish();
     }
 }

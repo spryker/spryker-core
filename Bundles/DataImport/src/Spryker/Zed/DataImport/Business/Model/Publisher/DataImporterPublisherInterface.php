@@ -7,15 +7,18 @@
 
 namespace Spryker\Zed\DataImport\Business\Model\Publisher;
 
+use Spryker\Shared\Kernel\Transfer\TransferInterface;
+
 interface DataImporterPublisherInterface
 {
     /**
      * @param string $eventName
      * @param int $entityId
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface|null $eventEntityTransfer
      *
      * @return void
      */
-    public static function addEvent($eventName, $entityId): void;
+    public static function addEvent($eventName, $entityId, ?TransferInterface $eventEntityTransfer = null): void;
 
     /**
      * @deprecated Use {@link addEvent()} instead.

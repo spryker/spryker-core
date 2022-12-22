@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\DataImport\Helper;
 use Codeception\Module;
 use Codeception\Stub;
 use Codeception\Stub\Expected;
+use Codeception\TestInterface;
 use Faker\Factory;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Spryker\Zed\DataImport\Business\Exception\DataImportException;
@@ -21,10 +22,24 @@ use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
 use Spryker\Zed\DataImport\Business\Model\DataReader\DataReaderInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSet;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerInterface;
+use Spryker\Zed\DataImport\Business\Model\Publisher\DataImporterPublisher;
 use Spryker\Zed\DataImport\Dependency\Plugin\DataImportPluginInterface;
+use SprykerTest\Shared\Testify\Helper\StaticVariablesHelper;
 
 class DataImporterHelper extends Module
 {
+    use StaticVariablesHelper;
+
+    /**
+     * @param \Codeception\TestInterface $test
+     *
+     * @return void
+     */
+    public function _after(TestInterface $test): void
+    {
+        $this->resetStaticCaches();
+    }
+
     /**
      * @param string $importType
      * @param bool $isCalled
@@ -204,5 +219,16 @@ class DataImporterHelper extends Module
         }
 
         return new DataReaderStub($dataSets);
+    }
+
+    /**
+     * @param string $propertyName
+     * @param mixed|null $value
+     *
+     * @return void
+     */
+    public function setDataImporterPublisherProperty(string $propertyName, mixed $value = null): void
+    {
+        $this->cleanupStaticCache(DataImporterPublisher::class, $propertyName, $value);
     }
 }

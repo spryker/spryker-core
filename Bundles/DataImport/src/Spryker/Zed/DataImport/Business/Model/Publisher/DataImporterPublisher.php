@@ -10,6 +10,7 @@ namespace Spryker\Zed\DataImport\Business\Model\Publisher;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\DataImport\DataImportConstants;
+use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Zed\Kernel\Locator;
 
 class DataImporterPublisher implements DataImporterPublisherInterface
@@ -42,16 +43,17 @@ class DataImporterPublisher implements DataImporterPublisherInterface
     /**
      * @param string $eventName
      * @param int $entityId
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface|null $eventEntityTransfer
      *
      * @return void
      */
-    public static function addEvent($eventName, $entityId): void
+    public static function addEvent($eventName, $entityId, ?TransferInterface $eventEntityTransfer = null): void
     {
         if (isset(static::$triggeredEventIds[$eventName][$entityId])) {
             return;
         }
 
-        static::$importedEntityEvents[$eventName][$entityId] = true;
+        static::$importedEntityEvents[$eventName][$entityId] = $eventEntityTransfer ?? true;
 
         $chunkSize = static::getChunkSize();
 
@@ -80,15 +82,10 @@ class DataImporterPublisher implements DataImporterPublisherInterface
     public static function triggerEvents(?int $flushChunkSize = null): void
     {
         $uniqueEvents = static::$importedEntityEvents;
-        foreach ($uniqueEvents as $eventName => $ids) {
-            $events = [];
-            foreach ($ids as $key => $value) {
-                $events[] = (new EventEntityTransfer())->setId($key);
-                static::$triggeredEventIds[$eventName][$key] = true;
-            }
-
+        foreach ($uniqueEvents as $eventName => $events) {
+            $eventEntityTransfers = static::generateEventEntityTransfers($eventName, $events);
             static::loadEventFacade();
-            static::$eventFacade->triggerBulk($eventName, $events);
+            static::$eventFacade->triggerBulk($eventName, $eventEntityTransfers);
         }
 
         static::$importedEntityEvents = [];
@@ -100,6 +97,36 @@ class DataImporterPublisher implements DataImporterPublisherInterface
         if (count(static::$triggeredEventIds, COUNT_RECURSIVE) >= $flushChunkSize) {
             static::$triggeredEventIds = [];
         }
+    }
+
+    /**
+     * @param string $eventName
+     * @param array<int|\Generated\Shared\Transfer\EventEntityTransfer> $ids
+     *
+     * @return array<\Generated\Shared\Transfer\EventEntityTransfer>
+     */
+    protected static function generateEventEntityTransfers(string $eventName, array $ids): array
+    {
+        $eventEntityTransfers = [];
+        foreach ($ids as $entityId => $event) {
+            $eventEntityTransfers[] = static::getEventEntityTransfer((int)$entityId, $event);
+            static::$triggeredEventIds[$eventName][$entityId] = true;
+        }
+
+        return $eventEntityTransfers;
+    }
+
+    /**
+     * @param int $entityId
+     * @param \Generated\Shared\Transfer\EventEntityTransfer|int|bool $event
+     *
+     * @return \Generated\Shared\Transfer\EventEntityTransfer
+     */
+    protected static function getEventEntityTransfer(int $entityId, EventEntityTransfer|int|bool $event): EventEntityTransfer
+    {
+            return $event instanceof EventEntityTransfer
+                ? $event
+                : (new EventEntityTransfer())->setId($entityId);
     }
 
     /**
