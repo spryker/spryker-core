@@ -13,6 +13,6 @@ If you want to make a PR with suggested changes, please do so in the specific mo
 - **[Spryker Documentation](https://docs.spryker.com/)**
 - [Spryker Architecture-Sniffer](https://github.com/spryker/architecture-sniffer)
 - [Spryker Code-Sniffer](https://github.com/spryker/code-sniffer)
-- [Spryker Code-Generator](https://github.com/spryker/code-generator)
+- [Spryker Code-Generator](https://github.com/spryker-sdk/spryk)
 
 
