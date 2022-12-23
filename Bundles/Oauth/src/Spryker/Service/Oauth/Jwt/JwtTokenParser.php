@@ -38,7 +38,7 @@ class JwtTokenParser implements JwtTokenParserInterface
     public function parse(string $jwtToken): ?JwtTokenTransfer
     {
         $data = $this->splitJwt($jwtToken);
-        if (!$data) {
+        if ($data === null || $data[0] === '' || $data[1] === '' || $data[2] === '') {
             return null;
         }
 
