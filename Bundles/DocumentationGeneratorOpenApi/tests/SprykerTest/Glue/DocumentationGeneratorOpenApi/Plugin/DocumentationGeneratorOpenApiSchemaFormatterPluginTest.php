@@ -113,7 +113,7 @@ class DocumentationGeneratorOpenApiSchemaFormatterPluginTest extends Unit
             ],
             'servers' => [
                 [
-                    'url' => 'http://' . $applicationDomain,
+                    'url' => (extension_loaded('openssl') ? 'https://' : 'http://') . $applicationDomain,
                 ],
             ],
             'paths' => [

@@ -105,7 +105,12 @@ class OpenApiGeneralSchemaFormatter implements OpenApiSchemaFormatterInterface
     /**
      * @var string
      */
-    protected const AUTH_SCHEMA_TYPE = 'http://';
+    protected const AUTH_HTTP_SCHEMA_TYPE = 'http://';
+
+    /**
+     * @var string
+     */
+    protected const AUTH_HTTPS_SCHEMA_TYPE = 'https://';
 
     /**
      * @var string
@@ -158,6 +163,8 @@ class OpenApiGeneralSchemaFormatter implements OpenApiSchemaFormatterInterface
      */
     public function format(array $formattedData, ApiApplicationSchemaContextTransfer $apiApplicationSchemaContextTransfer): array
     {
+        $authSchemaType = $this->getHttpSchemaType();
+
         return $formattedData + [
             static::KEY_OPENAPI => static::OPENAPI_VERSION,
             static::KEY_INFO => [
@@ -174,7 +181,7 @@ class OpenApiGeneralSchemaFormatter implements OpenApiSchemaFormatterInterface
             ],
             static::KEY_TAGS => [],
             static::KEY_SERVERS => [
-                [static::KEY_CONTACT_URL => static::AUTH_SCHEMA_TYPE . $apiApplicationSchemaContextTransfer->getHost()],
+                [static::KEY_CONTACT_URL => $authSchemaType . $apiApplicationSchemaContextTransfer->getHost()],
             ],
             static::KEY_PATHS => [],
             static::KEY_COMPONENTS => [
@@ -183,5 +190,17 @@ class OpenApiGeneralSchemaFormatter implements OpenApiSchemaFormatterInterface
                 static::KEY_PARAMETERS => [],
             ],
         ];
+    }
+
+    /**
+     * @return string
+     */
+    protected function getHttpSchemaType(): string
+    {
+        if (extension_loaded('openssl')) {
+            return static::AUTH_HTTPS_SCHEMA_TYPE;
+        }
+
+        return static::AUTH_HTTP_SCHEMA_TYPE;
     }
 }
