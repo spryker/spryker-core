@@ -8,16 +8,16 @@
 namespace Spryker\Zed\MessageBroker\Communication\Plugin\MessageBroker;
 
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\MessageBrokerExtension\Dependency\Plugin\MiddlewarePluginInterface;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\Exception\UnrecoverableMessageHandlingException;
-use Symfony\Component\Messenger\Middleware\MiddlewareInterface;
 use Symfony\Component\Messenger\Middleware\StackInterface;
 
 /**
  * @method \Spryker\Zed\MessageBroker\MessageBrokerConfig getConfig()
  * @method \Spryker\Zed\MessageBroker\Business\MessageBrokerFacadeInterface getFacade()
  */
-class ValidationMiddlewarePlugin extends AbstractPlugin implements MiddlewareInterface
+class ValidationMiddlewarePlugin extends AbstractPlugin implements MiddlewarePluginInterface
 {
     /**
      * {@inheritDoc}

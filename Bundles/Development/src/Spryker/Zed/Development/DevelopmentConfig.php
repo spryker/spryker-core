@@ -441,6 +441,7 @@ class DevelopmentConfig extends AbstractBundleConfig
             'symfony/http-kernel' => 'spryker/symfony',
             'symfony/intl' => 'spryker/symfony',
             'symfony/mime' => 'spryker/symfony',
+            'symfony/messenger' => 'spryker/symfony',
             'symfony/options-resolver' => 'spryker/symfony',
             'symfony/process' => 'spryker/symfony',
             'symfony/property-access' => 'spryker/symfony',

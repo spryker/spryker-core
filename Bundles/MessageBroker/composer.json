@@ -7,12 +7,11 @@
         "php": ">=8.0",
         "spryker/kernel": "^3.30.0",
         "spryker/log": "^3.0.0",
-        "spryker/message-broker-extension": "^1.0.0",
+        "spryker/message-broker-extension": "^1.1.0",
         "spryker/monolog": "^2.0.0",
-        "spryker/symfony": "^3.7.0",
+        "spryker/symfony": "^3.10.0",
         "spryker/transfer": "^3.25.0",
-        "spryker/util-encoding": "^1.0.0 || ^2.0.0",
-        "symfony/messenger": "^5.0.0 || ^6.0.0"
+        "spryker/util-encoding": "^1.0.0 || ^2.0.0"
     },
     "require-dev": {
         "spryker-sdk/async-api": "^0.2.0",

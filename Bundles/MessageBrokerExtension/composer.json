@@ -13,7 +13,7 @@
     },
     "suggest": {
         "spryker/kernel": "If you want to use the MessageValidatorPluginInterface.",
-        "spryker/symfony": "If you want to use MessageSenderPluginInterface or MessageReceiverPluginInterface."
+        "spryker/symfony": "If you want to use MessageSenderPluginInterface, MessageReceiverPluginInterface or MiddlewarePluginInterface, minimum required version: 3.10.0."
     },
     "autoload": {
         "psr-4": {

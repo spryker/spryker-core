@@ -176,7 +176,7 @@ class MessageBrokerDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return array<\Symfony\Component\Messenger\Middleware\MiddlewareInterface>
+     * @return array<\Spryker\Zed\MessageBrokerExtension\Dependency\Plugin\MiddlewarePluginInterface>
      */
     public function getMiddlewarePlugins(): array
     {
