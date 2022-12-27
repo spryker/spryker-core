@@ -169,8 +169,8 @@ class OpenApiSpecificationPathMethodFormatter implements OpenApiSpecificationPat
         $pathMethodData[static::KEY_OPERATION_ID] = $operationId;
         $pathMethodData = array_merge($pathMethodData, $annotationTransfer->modifiedToArray());
 
-        if (is_array($pathMethodData[static::KEY_SUMMARY])) {
-            $pathMethodData[static::KEY_SUMMARY] = $pathMethodData[static::KEY_SUMMARY][0];
+        if (count($annotationTransfer->getSummary()) !== 0) {
+            $pathMethodData[static::KEY_SUMMARY] = $annotationTransfer->getSummary()[0];
         }
 
         $specificationComponentData = $this->pathParameterSpecificationComponent->getSpecificationComponentData(

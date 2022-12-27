@@ -36,6 +36,7 @@
         <property name="responseAttributesClassName" type="string"/>
         <property name="isIdNullable" type="bool"/>
         <property name="requestAttributesClassName" type="string"/>
+        <property name="summary" type="string[]" singular="summary"/>
     </transfer>
 
     <transfer name="RelationshipPluginsContext">
