@@ -64,8 +64,8 @@ class QuoteItemsFilter implements QuoteItemsFilterInterface
             ->getProductAbstractTransfersIndexedByIdProductAbstract($productAbstractSkus);
 
         foreach ($quoteTransfer->getItems() as $key => $itemTransfer) {
-            $productAbstractTransfer = $productAbstractTransfersIndexedByIdProductAbstract[$itemTransfer->getIdProductAbstract()];
-            if ($productAbstractTransfer->getApprovalStatus() !== ProductApprovalConfig::STATUS_APPROVED) {
+            $productAbstractTransfer = $productAbstractTransfersIndexedByIdProductAbstract[$itemTransfer->getIdProductAbstract()] ?? null;
+            if ($productAbstractTransfer && $productAbstractTransfer->getApprovalStatus() !== ProductApprovalConfig::STATUS_APPROVED) {
                 $quoteTransfer->getItems()->offsetUnset($key);
                 $this->addFilterMessage($itemTransfer->getSkuOrFail());
             }

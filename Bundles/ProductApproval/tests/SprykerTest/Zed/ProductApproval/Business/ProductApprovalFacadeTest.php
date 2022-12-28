@@ -45,6 +45,11 @@ class ProductApprovalFacadeTest extends Unit
     protected const PRODUCT_ABSTRACT_2_SKU = 'tESnx2djdn';
 
     /**
+     * @var string
+     */
+    protected const PRODUCT_ABSTRACT_3_SKU = 'abstractSku3';
+
+    /**
      * @var \SprykerTest\Zed\ProductApproval\ProductApprovalBusinessTester
      */
     protected $tester;
@@ -510,6 +515,44 @@ class ProductApprovalFacadeTest extends Unit
                 ->setAbstractSku($productAbstractTransfer1->getSkuOrFail())
                 ->setIdProductAbstract($productAbstractTransfer1->getIdProductAbstractOrFail())
                 ->setSku($productConcreteTransfer1->getSkuOrFail()))
+            ->addItem((new ItemTransfer())
+                ->setAbstractSku($productAbstractTransfer2->getSkuOrFail())
+                ->setIdProductAbstract($productAbstractTransfer2->getIdProductAbstractOrFail())
+                ->setSku($productConcreteTransfer2->getSkuOrFail()));
+
+        // Act
+        $quoteTransfer = $this->tester
+            ->getFacade()
+            ->filterCartItems($quoteTransfer);
+
+        // Assert
+        $this->assertCount(2, $quoteTransfer->getItems());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFilterCartItemsShouldNotFilterOutWhenItemIsNotFound(): void
+    {
+        // Arrange
+        $productAbstractTransfer = $this->tester->haveProductAbstract([
+            ProductAbstractTransfer::APPROVAL_STATUS => ProductApprovalConfig::STATUS_APPROVED,
+        ]);
+        $productAbstractTransfer2 = $this->tester->haveProductAbstract([
+            ProductAbstractTransfer::APPROVAL_STATUS => ProductApprovalConfig::STATUS_APPROVED,
+        ]);
+        $productConcreteTransfer = $this->tester->haveProduct([
+            ProductConcreteTransfer::FK_PRODUCT_ABSTRACT => $productAbstractTransfer->getIdProductAbstract(),
+        ]);
+        $productConcreteTransfer2 = $this->tester->haveProduct([
+            ProductConcreteTransfer::FK_PRODUCT_ABSTRACT => $productAbstractTransfer2->getIdProductAbstract(),
+        ]);
+
+        $quoteTransfer = (new QuoteTransfer())
+            ->addItem((new ItemTransfer())
+                ->setAbstractSku(static::PRODUCT_ABSTRACT_3_SKU)
+                ->setIdProductAbstract($productAbstractTransfer->getIdProductAbstractOrFail())
+                ->setSku($productConcreteTransfer->getSkuOrFail()))
             ->addItem((new ItemTransfer())
                 ->setAbstractSku($productAbstractTransfer2->getSkuOrFail())
                 ->setIdProductAbstract($productAbstractTransfer2->getIdProductAbstractOrFail())
