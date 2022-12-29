@@ -6,41 +6,41 @@
 >
 
     <transfer name="ProductConfigurationStorage">
-        <property name="sku" dataBuilderRule="word"/>
+        <property name="sku" dataBuilderRule="word()"/>
         <property name="fkProductConfiguration" dataBuilderRule="numberBetween(0,1)"/>
-        <property name="defaultDisplayData" dataBuilderRule="unique()->sentence"/>
-        <property name="defaultConfiguration" dataBuilderRule="word"/>
-        <property name="configuratorKey" dataBuilderRule="word"/>
-        <property name="isComplete" dataBuilderRule="boolean"/>
+        <property name="defaultDisplayData" dataBuilderRule="unique()->sentence()"/>
+        <property name="defaultConfiguration" dataBuilderRule="word()"/>
+        <property name="configuratorKey" dataBuilderRule="word()"/>
+        <property name="isComplete" dataBuilderRule="boolean()"/>
     </transfer>
 
     <transfer name="ProductConfigurationInstance">
-        <property name="displayData" dataBuilderRule="unique()->sentence"/>
-        <property name="configuration" dataBuilderRule="unique()->sentence"/>
-        <property name="configuratorKey" dataBuilderRule="word"/>
+        <property name="displayData" dataBuilderRule="unique()->sentence()"/>
+        <property name="configuration" dataBuilderRule="unique()->sentence()"/>
+        <property name="configuratorKey" dataBuilderRule="word()"/>
         <property name="isComplete" dataBuilderRule="boolean(100)"/>
         <property name="quantity" dataBuilderRule="randomNumber(1)"/>
         <property name="availableQuantity" dataBuilderRule="randomNumber(1)"/>
     </transfer>
 
     <transfer name="ProductConcrete">
-        <property name="sku" dataBuilderRule="isbn10"/>
+        <property name="sku" dataBuilderRule="isbn10()"/>
         <property name="isActive" dataBuilderRule="=true"/>
     </transfer>
 
     <transfer name="Item">
-        <property name="sku" dataBuilderRule="isbn10"/>
+        <property name="sku" dataBuilderRule="isbn10()"/>
         <property name="groupKey" dataBuilderRule="sentence(2)"/>
     </transfer>
 
     <transfer name="ProductConfiguratorResponse">
         <property name="productConfigurationInstance" dataBuilderRule="ProductConfigurationInstance"/>
-        <property name="sku" dataBuilderRule="isbn10"/>
-        <property name="itemGroupKey" dataBuilderRule="word"/>
-        <property name="customerReference" dataBuilderRule="word"/>
+        <property name="sku" dataBuilderRule="isbn10()"/>
+        <property name="itemGroupKey" dataBuilderRule="word()"/>
+        <property name="customerReference" dataBuilderRule="word()"/>
         <property name="sourceType" dataBuilderRule="=SOURCE_TYPE_PDP"/>
         <property name="timestamp" dataBuilderRule="randomNumber(1)"/>
-        <property name="checkSum" dataBuilderRule="word"/>
+        <property name="checkSum" dataBuilderRule="word()"/>
     </transfer>
 
     <transfer name="ProductConfigurationInstanceCriteria">

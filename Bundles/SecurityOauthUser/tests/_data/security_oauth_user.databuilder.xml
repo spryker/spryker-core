@@ -6,8 +6,8 @@
 >
 
     <transfer name="ResourceOwnerRequest">
-        <property name="code" dataBuilderRule="unique()->word"/>
-        <property name="state" dataBuilderRule="unique()->word"/>
+        <property name="code" dataBuilderRule="unique()->word()"/>
+        <property name="state" dataBuilderRule="unique()->word()"/>
     </transfer>
 
     <transfer name="OauthUserRestrictionRequest">

@@ -6,7 +6,7 @@
 >
 
     <transfer name="ShipmentMethod">
-        <property name="name" dataBuilderRule="word"/>
+        <property name="name" dataBuilderRule="word()"/>
         <property name="isActive" dataBuilderRule="=1"/>
         <property name="fkShipmentCarrier" dataBuilderRule="=1"/>
         <property name="taxRate" dataBuilderRule="randomFloat(2, 0, 99)"/>
@@ -18,7 +18,7 @@
     </transfer>
 
     <transfer name="Item">
-        <property name="sku" dataBuilderRule="isbn10"/>
+        <property name="sku" dataBuilderRule="isbn10()"/>
     </transfer>
 
     <transfer name="Address">
@@ -26,9 +26,9 @@
     </transfer>
 
     <transfer name="Expense">
-        <property name="type" dataBuilderRule="word"/>
+        <property name="type" dataBuilderRule="word()"/>
         <property name="taxRate" dataBuilderRule="randomFloat(2, 0, 99)"/>
-        <property name="name" dataBuilderRule="word"/>
+        <property name="name" dataBuilderRule="word()"/>
         <property name="unitGrossPrice" dataBuilderRule="randomNumber(5)"/>
     </transfer>
 

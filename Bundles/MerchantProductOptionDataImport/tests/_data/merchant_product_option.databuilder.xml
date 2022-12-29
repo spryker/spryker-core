@@ -6,7 +6,7 @@
 >
 
     <transfer name="ProductOptionGroup">
-        <property name="key" dataBuilderRule="unique()->word"/>
+        <property name="key" dataBuilderRule="unique()->word()"/>
     </transfer>
 
 </transfers>

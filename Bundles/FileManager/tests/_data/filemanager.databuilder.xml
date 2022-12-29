@@ -11,7 +11,7 @@
 
     <transfer name="FileInfo">
         <property name="fkFile" dataBuilderRule="1"/>
-        <property name="type" dataBuilderRule="=text"/>
+        <property name="type" dataBuilderRule="=text()"/>
         <property name="size" dataBuilderRule="10"/>
         <property name="version" dataBuilderRule="=1"/>
         <property name="versionName" dataBuilderRule="=v1"/>

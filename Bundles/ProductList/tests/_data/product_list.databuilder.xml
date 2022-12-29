@@ -8,7 +8,7 @@
     <transfer name="ProductList">
         <property name="type" dataBuilderRule="randomElement(['blacklist', 'whitelist'])"/>
         <property name="title" dataBuilderRule="unique()->sentence(1)"/>
-        <property name="key" dataBuilderRule="word"/>
+        <property name="key" dataBuilderRule="word()"/>
     </transfer>
 
 </transfers>

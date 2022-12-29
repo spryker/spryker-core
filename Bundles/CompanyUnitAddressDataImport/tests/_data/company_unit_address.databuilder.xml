@@ -6,7 +6,7 @@
 >
 
     <transfer name="CompanyUnitAddress">
-        <property name="key" dataBuilderRule="word"/>
+        <property name="key" dataBuilderRule="word()"/>
     </transfer>
 
 </transfers>

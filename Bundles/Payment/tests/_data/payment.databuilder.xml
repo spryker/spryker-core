@@ -6,9 +6,9 @@
 >
 
     <transfer name="PaymentMethod">
-        <property name="paymentMethodKey" strict="true" dataBuilderRule="unique()->word"/>
-        <property name="name" dataBuilderRule="word"/>
-        <property name="isActive" dataBuilderRule="boolean"/>
+        <property name="paymentMethodKey" strict="true" dataBuilderRule="unique()->word()"/>
+        <property name="name" dataBuilderRule="word()"/>
+        <property name="isActive" dataBuilderRule="boolean()"/>
     </transfer>
 
     <transfer name="PaymentProvider">
@@ -20,6 +20,6 @@
     </transfer>
 
     <transfer name="Store">
-        <property name="name" dataBuilderRule="isbn10"/>
+        <property name="name" dataBuilderRule="isbn10()"/>
     </transfer>
 </transfers>

@@ -6,7 +6,7 @@
 >
 
     <transfer name="ProductConcrete">
-        <property name="sku" dataBuilderRule="isbn10"/>
+        <property name="sku" dataBuilderRule="isbn10()"/>
         <property name="isActive" dataBuilderRule="=true"/>
     </transfer>
 
@@ -16,11 +16,11 @@
     </transfer>
 
     <transfer name="ProductAbstract">
-        <property name="sku" dataBuilderRule="isbn10"/>
+        <property name="sku" dataBuilderRule="isbn10()"/>
     </transfer>
 
     <transfer name="StorageProduct">
-        <property name="sku" dataBuilderRule="isbn10"/>
+        <property name="sku" dataBuilderRule="isbn10()"/>
     </transfer>
 
 </transfers>

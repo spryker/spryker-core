@@ -6,18 +6,18 @@
 >
 
     <transfer name="Item">
-        <property name="sku" dataBuilderRule="isbn10"/>
+        <property name="sku" dataBuilderRule="isbn10()"/>
         <property name="unitGrossPrice" dataBuilderRule="randomNumber(5)"/>
         <property name="sumGrossPrice" dataBuilderRule="randomNumber(5)"/>
         <property name="quantity" dataBuilderRule="=1"/>
-        <property name="name" dataBuilderRule="word"/>
+        <property name="name" dataBuilderRule="word()"/>
         <property name="unitPrice" dataBuilderRule="randomNumber(5)"/>
         <property name="groupKey" dataBuilderRule="sentence(2)"/>
     </transfer>
 
     <transfer name="Expense">
-        <property name="name" dataBuilderRule="word"/>
-        <property name="type" dataBuilderRule="word"/>
+        <property name="name" dataBuilderRule="word()"/>
+        <property name="type" dataBuilderRule="word()"/>
         <property name="unitPrice" dataBuilderRule="randomNumber(5)"/>
         <property name="sumPrice" dataBuilderRule="randomNumber(5)"/>
         <property name="unitPriceToPayAggregation" dataBuilderRule="randomNumber(5)"/>
@@ -31,7 +31,7 @@
     </transfer>
 
     <transfer name="Address">
-        <property name="address1" dataBuilderRule="address"/>
+        <property name="address1" dataBuilderRule="address()"/>
     </transfer>
 
     <transfer name="OrderListRequest">

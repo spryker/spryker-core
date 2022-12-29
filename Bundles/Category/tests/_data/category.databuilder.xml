@@ -25,7 +25,7 @@
     <transfer name="Node">
         <property name="isRoot" dataBuilderRule="boolean(0)"/>
         <property name="isMain" dataBuilderRule="boolean(100)"/>
-        <property name="nodeOrder" dataBuilderRule="randomDigit"/>
+        <property name="nodeOrder" dataBuilderRule="randomDigit()"/>
         <property name="name" dataBuilderRule="unique()->sentence(2)"/>
         <property name="path" dataBuilderRule="unique()->sentence(2)"/>
     </transfer>

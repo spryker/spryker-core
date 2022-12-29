@@ -6,7 +6,7 @@
 >
 
     <transfer name="Discount">
-        <property name="displayName" dataBuilderRule="unique()->sentence"/>
+        <property name="displayName" dataBuilderRule="unique()->sentence()"/>
         <property name="description" dataBuilderRule="sentence(10)"/>
         <property name="amount" dataBuilderRule="=1"/>
         <property name="isActive" dataBuilderRule="=true"/>
@@ -17,7 +17,7 @@
     </transfer>
 
     <transfer name="CalculatedDiscount">
-        <property name="displayName" dataBuilderRule="unique()->sentence"/>
+        <property name="displayName" dataBuilderRule="unique()->sentence()"/>
         <property name="description" dataBuilderRule="sentence(10)"/>
         <property name="voucherCode" dataBuilderRule="ean8"/>
         <property name="unitGrossAmount" dataBuilderRule="=1"/>
@@ -27,7 +27,7 @@
 
     <transfer name="DiscountGeneral">
         <property name="discountType" dataBuilderRule="=cart_rule"/>
-        <property name="displayName" dataBuilderRule="unique()->sentence"/>
+        <property name="displayName" dataBuilderRule="unique()->sentence()"/>
         <property name="description" dataBuilderRule="sentence(10)"/>
         <property name="validFrom" dataBuilderRule="=2016-01-01 00:00:00"/>
         <property name="validTo" dataBuilderRule="=2035-01-01 00:00:00"/>
@@ -43,7 +43,7 @@
 
     <transfer name="DiscountVoucher">
         <property name="quantity" dataBuilderRule="=1"/>
-        <property name="code" dataBuilderRule="unique()->word"/>
+        <property name="code" dataBuilderRule="unique()->word()"/>
         <property name="randomGeneratedCodeLength" dataBuilderRule="=5"/>
     </transfer>
 

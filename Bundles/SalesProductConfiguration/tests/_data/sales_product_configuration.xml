@@ -7,14 +7,14 @@
 
     <transfer name="ProductConfiguration">
         <property name="fkProduct" dataBuilderRule="numberBetween(0,1)"/>
-        <property name="defaultDisplayData" dataBuilderRule="unique()->sentence"/>
-        <property name="defaultConfiguration" dataBuilderRule="word"/>
-        <property name="configuratorKey" dataBuilderRule="word"/>
-        <property name="isComplete" dataBuilderRule="boolean"/>
+        <property name="defaultDisplayData" dataBuilderRule="unique()->sentence()"/>
+        <property name="defaultConfiguration" dataBuilderRule="word()"/>
+        <property name="configuratorKey" dataBuilderRule="word()"/>
+        <property name="isComplete" dataBuilderRule="boolean()"/>
     </transfer>
 
     <transfer name="Item">
-        <property name="sku" dataBuilderRule="isbn10"/>
+        <property name="sku" dataBuilderRule="isbn10()"/>
         <property name="unitGrossPrice" dataBuilderRule="randomNumber(5)"/>
         <property name="sumGrossPrice" dataBuilderRule="randomNumber(5)"/>
         <property name="quantity" dataBuilderRule="=1"/>

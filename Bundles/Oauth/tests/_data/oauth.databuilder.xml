@@ -6,8 +6,8 @@
 >
 
     <transfer name="RevokeRefreshTokenRequest">
-        <property name="refreshToken" dataBuilderRule="word"/>
-        <property name="customerReference" dataBuilderRule="word"/>
+        <property name="refreshToken" dataBuilderRule="word()"/>
+        <property name="customerReference" dataBuilderRule="word()"/>
     </transfer>
 
 </transfers>

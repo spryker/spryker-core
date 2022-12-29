@@ -11,7 +11,7 @@
 
     <transfer name="SalesOrderThresholdValue">
         <property name="threshold" dataBuilderRule="="/>
-        <property name="fee" dataBuilderRule="randomDigit"/>
+        <property name="fee" dataBuilderRule="randomDigit()"/>
     </transfer>
 
     <transfer name="SalesOrderThresholdType">

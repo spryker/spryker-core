@@ -6,17 +6,17 @@
 >
 
     <transfer name="StockProduct">
-        <property name="sku" dataBuilderRule="isbn10"/>
-        <property name="quantity" dataBuilderRule="randomDigitNotNull"/>
+        <property name="sku" dataBuilderRule="isbn10()"/>
+        <property name="quantity" dataBuilderRule="randomDigitNotNull()"/>
         <property name="isNeverOutOfStock" dataBuilderRule="numberBetween(0,1)"/>
     </transfer>
 
     <transfer name="Type" deprecated="Use StockBuilder instead">
-        <property name="name" dataBuilderRule="unique->lexify('??????')"/>
+        <property name="name" dataBuilderRule="unique()->lexify('??????')"/>
     </transfer>
 
     <transfer name="Stock">
-        <property name="name" dataBuilderRule="unique->lexify('??????')"/>
+        <property name="name" dataBuilderRule="unique()->lexify('??????')"/>
         <property name="isActive" dataBuilderRule="numberBetween(0,1)"/>
     </transfer>
 

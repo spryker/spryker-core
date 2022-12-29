@@ -6,9 +6,9 @@
 >
 
     <transfer name="CompanyUserInvitation">
-        <property name="firstName" dataBuilderRule="firstName"/>
-        <property name="lastName" dataBuilderRule="lastName"/>
-        <property name="email" dataBuilderRule="email"/>
+        <property name="firstName" dataBuilderRule="firstName()"/>
+        <property name="lastName" dataBuilderRule="lastName()"/>
+        <property name="email" dataBuilderRule="email()"/>
     </transfer>
 
 </transfers>

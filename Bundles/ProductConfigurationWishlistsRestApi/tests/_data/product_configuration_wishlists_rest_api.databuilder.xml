@@ -6,24 +6,24 @@
 >
 
     <transfer name="RestWishlistItemProductConfigurationInstanceAttributes">
-        <property name="displayData" dataBuilderRule="unique()->sentence"/>
-        <property name="configuration" dataBuilderRule="unique()->sentence"/>
-        <property name="configuratorKey" dataBuilderRule="word"/>
+        <property name="displayData" dataBuilderRule="unique()->sentence()"/>
+        <property name="configuration" dataBuilderRule="unique()->sentence()"/>
+        <property name="configuratorKey" dataBuilderRule="word()"/>
         <property name="isComplete" dataBuilderRule="boolean(100)"/>
         <property name="quantity" dataBuilderRule="randomNumber(1)"/>
         <property name="availableQuantity" dataBuilderRule="randomNumber(1)"/>
     </transfer>
 
     <transfer name="RestProductConfigurationPriceAttributes">
-        <property name="priceTypeName" dataBuilderRule="word"/>
+        <property name="priceTypeName" dataBuilderRule="word()"/>
         <property name="netAmount" dataBuilderRule="randomNumber(4)"/>
         <property name="grossAmount" dataBuilderRule="randomNumber(4)"/>
     </transfer>
 
     <transfer name="RestCurrency">
-        <property name="code" dataBuilderRule="word"/>
-        <property name="name" dataBuilderRule="word"/>
-        <property name="symbol" dataBuilderRule="word"/>
+        <property name="code" dataBuilderRule="word()"/>
+        <property name="name" dataBuilderRule="word()"/>
+        <property name="symbol" dataBuilderRule="word()"/>
     </transfer>
 
     <transfer name="RestProductPriceVolumesAttributes">
@@ -33,7 +33,7 @@
     </transfer>
 
     <transfer name="RestWishlistItemsAttributes">
-        <property name="id" dataBuilderRule="unique()->uuid"/>
+        <property name="id" dataBuilderRule="unique()->uuid()"/>
     </transfer>
 
 </transfers>

@@ -6,9 +6,9 @@
 >
 
     <transfer name="Customer">
-        <property name="email" dataBuilderRule="unique()->email"/>
-        <property name="firstName" dataBuilderRule="firstName"/>
-        <property name="lastName" dataBuilderRule="lastName"/>
+        <property name="email" dataBuilderRule="unique()->email()"/>
+        <property name="firstName" dataBuilderRule="firstName()"/>
+        <property name="lastName" dataBuilderRule="lastName()"/>
         <property name="gender" dataBuilderRule="randomElement(['Male', 'Female'])"/>
         <property name="dateOfBirth" dataBuilderRule="date('Y-m-d', '-20 years')"/>
         <property name="salutation" dataBuilderRule="randomElement(['Mr', 'Mrs'])"/>

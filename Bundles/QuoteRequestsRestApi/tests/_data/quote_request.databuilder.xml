@@ -6,11 +6,11 @@
 >
 
     <transfer name="QuoteRequestVersion">
-        <property name="versionReference" dataBuilderRule="unique()->sentence"/>
+        <property name="versionReference" dataBuilderRule="unique()->sentence()"/>
     </transfer>
 
     <transfer name="QuoteRequest">
-        <property name="quoteRequestReference" dataBuilderRule="unique()->sentence"/>
+        <property name="quoteRequestReference" dataBuilderRule="unique()->sentence()"/>
     </transfer>
 
 </transfers>

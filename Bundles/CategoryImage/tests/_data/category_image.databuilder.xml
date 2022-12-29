@@ -6,11 +6,11 @@
 >
 
     <transfer name="CategoryImageSet">
-        <property name="name" dataBuilderRule="word"/>
+        <property name="name" dataBuilderRule="word()"/>
     </transfer>
 
     <transfer name="CategoryImage">
-        <property name="sortOrder" dataBuilderRule="randomDigit"/>
+        <property name="sortOrder" dataBuilderRule="randomDigit()"/>
         <property name="externalUrlSmall" dataBuilderRule="imageUrl(640, 480)"/>
         <property name="externalUrlLarge" dataBuilderRule="imageUrl(640, 480)"/>
     </transfer>

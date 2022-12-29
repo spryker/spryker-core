@@ -16,7 +16,7 @@
         <property name="precision" type="int" dataBuilderRule="=1000"/>
         <property name="isDisplayed" type="bool" dataBuilderRule="=true"/>
         <property name="isDefault" type="bool" dataBuilderRule="=false"/>
-        <property name="key" type="string" dataBuilderRule="isbn10"/>
+        <property name="key" type="string" dataBuilderRule="isbn10()"/>
     </transfer>
 
     <transfer name="ProductMeasurementSalesUnit">

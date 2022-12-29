@@ -6,7 +6,7 @@
 >
 
     <transfer name="Company">
-        <property name="name" dataBuilderRule="company"/>
+        <property name="name" dataBuilderRule="company()"/>
         <property name="isActive" dataBuilderRule="=false"/>
         <property name="status" dataBuilderRule="=pending"/>
     </transfer>

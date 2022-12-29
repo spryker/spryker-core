@@ -6,9 +6,9 @@
 >
 
     <transfer name="SecurityCheckAuthContext">
-        <property name="type" dataBuilderRule="word"/>
+        <property name="type" dataBuilderRule="word()"/>
         <property name="ip" dataBuilderRule="randomNumber(5)"/>
-        <property name="account" dataBuilderRule="email"/>
+        <property name="account" dataBuilderRule="email()"/>
     </transfer>
 
 </transfers>

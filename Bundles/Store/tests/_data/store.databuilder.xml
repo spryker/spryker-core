@@ -6,7 +6,7 @@
 >
 
     <transfer name="Store">
-        <property name="name" dataBuilderRule="isbn10"/>
+        <property name="name" dataBuilderRule="isbn10()"/>
     </transfer>
 
     <transfer name="MessageBrokerTestMessage">
@@ -15,7 +15,7 @@
 
     <transfer name="MessageAttributes">
         <property name="storeReference" dataBuilderRule="word()"/>
-        <property name="emitter" dataBuilderRule="word"/>
+        <property name="emitter" dataBuilderRule="word()"/>
         <!-- word instead of word() due to compitability with existed modules -->
     </transfer>
 </transfers>

@@ -6,21 +6,21 @@
 >
 
     <transfer name="Item">
-        <property name="sku" dataBuilderRule="isbn10"/>
+        <property name="sku" dataBuilderRule="isbn10()"/>
         <property name="unitGrossPrice" dataBuilderRule="randomNumber(5)"/>
         <property name="sumGrossPrice" dataBuilderRule="randomNumber(5)"/>
         <property name="quantity" dataBuilderRule="=1"/>
-        <property name="name" dataBuilderRule="word"/>
+        <property name="name" dataBuilderRule="word()"/>
     </transfer>
 
     <transfer name="Address">
-        <property name="firstName" dataBuilderRule="firstName"/>
-        <property name="lastName" dataBuilderRule="lastName"/>
-        <property name="address1" dataBuilderRule="address"/>
-        <property name="company" dataBuilderRule="company"/>
-        <property name="city" dataBuilderRule="city"/>
-        <property name="zipCode" dataBuilderRule="postcode"/>
-        <property name="state" dataBuilderRule="country"/>
+        <property name="firstName" dataBuilderRule="firstName()"/>
+        <property name="lastName" dataBuilderRule="lastName()"/>
+        <property name="address1" dataBuilderRule="address()"/>
+        <property name="company" dataBuilderRule="company()"/>
+        <property name="city" dataBuilderRule="city()"/>
+        <property name="zipCode" dataBuilderRule="postcode()"/>
+        <property name="state" dataBuilderRule="country()"/>
         <property name="iso2Code" dataBuilderRule="=DE"/>
     </transfer>
 

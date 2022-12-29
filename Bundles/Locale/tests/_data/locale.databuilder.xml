@@ -6,7 +6,7 @@
 >
     <transfer name="Locale">
         <property name="idLocale" dataBuilderRule="="/>
-        <property name="localeName" dataBuilderRule="locale"/>
+        <property name="localeName" dataBuilderRule="locale()"/>
         <property name="isActive" dataBuilderRule="boolean(100)"/>
     </transfer>
 </transfers>
