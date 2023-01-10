@@ -92,3 +92,14 @@ Address1,"Adresse 1"
 Address2,"Adresse 2"
 "Cell phone",Mobiltelefon
 "Edit Address for Order: %idSalesOrder%","Adresse für Bestellung %idSalesOrder% bearbeiten"
+new,Neu
+cancelled,Abgebrochen
+paid,Bezahlt
+waiting,Warten
+confirmed,Bestätigt
+returned,Retourniert
+"invoice generated","Rechnung generiert"
+"waiting for return","Wartet auf Retoure"
+"return canceled","Retoure wurde abgebrochen"
+"shipped to customer","An den Kunden versandt"
+invoice-generate,"Rechnung generieren"

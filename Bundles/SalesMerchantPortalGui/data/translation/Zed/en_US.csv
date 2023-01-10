@@ -51,8 +51,11 @@ State,State
 "Canceled By Merchant","Canceled by merchant"
 Shipped,Shipped
 Delivered,Delivered
-initiate,initiate
-ship,ship
-deliver,deliver
-close,close
-"cancel by merchant","cancel by merchant"
+initiate,Initiate
+ship,Ship
+deliver,Deliver
+close,Close
+"cancel by merchant","Cancel by merchant"
+"merchant split pending","Merchant split pending"
+"sent to merchant","Sent to merchant"
+"shipped by merchant","Shipped by merchant"

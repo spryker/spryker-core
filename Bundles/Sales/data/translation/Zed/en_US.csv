@@ -92,3 +92,14 @@ Address1,"Address 1"
 Address2,"Address 2"
 "Cell phone","Cell Phone"
 "Edit Address for Order: %idSalesOrder%","Edit Address for Order: %idSalesOrder%"
+new,New
+cancelled,Cancelled
+paid,Paid
+waiting,Waiting
+confirmed,Confirmed
+returned,Returned
+"invoice generated","Invoice generated"
+"waiting for return","Waiting for return"
+"return canceled","Return canceled"
+"shipped to customer","Shipped to customer"
+invoice-generate,"Generate invoice"

@@ -56,3 +56,6 @@ ship,Versenden
 deliver,Zustellen
 close,Schließen
 "cancel by merchant",Stornieren
+"merchant split pending","Händleraufteilung steht noch aus"
+"sent to merchant","An den Händler versandt"
+"shipped by merchant","Von dem Händler versandt"
