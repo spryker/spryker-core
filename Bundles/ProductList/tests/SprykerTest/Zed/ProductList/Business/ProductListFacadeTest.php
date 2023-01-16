@@ -9,6 +9,9 @@ namespace SprykerTest\Zed\ProductList\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ProductListBuilder;
+use Generated\Shared\Transfer\PaginationTransfer;
+use Generated\Shared\Transfer\ProductListCriteriaTransfer;
+use Orm\Zed\ProductList\Persistence\SpyProductListQuery;
 use Propel\Runtime\Exception\PropelException;
 
 /**
@@ -237,6 +240,88 @@ class ProductListFacadeTest extends Unit
         $this->assertIsArray($productConcreteIds);
         // TODO: use assertSame() once the actual return result is of int[], and not string[]
         $this->assertEquals([$productTransfer->getIdProductConcrete()], $productConcreteIds);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductListCollectionReturnsCorrectProductListsWithoutPagination(): void
+    {
+        // Arrange
+        $this->tester->ensureDatabaseTableIsEmpty(SpyProductListQuery::create());
+        $productListTransfer1 = $this->tester->haveProductList();
+        $productListTransfer2 = $this->tester->haveProductList();
+        $productListTransfer3 = $this->tester->haveProductList();
+        $productListCriteriaTransfer = new ProductListCriteriaTransfer();
+
+        // Act
+        $productListCollectionTransfer = $this->getFacade()->getProductListCollection($productListCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(3, $productListCollectionTransfer->getProductLists());
+        $this->assertSame(
+            $productListTransfer1->getIdProductList(),
+            $productListCollectionTransfer->getProductLists()->offsetGet(0)->getIdProductList(),
+        );
+        $this->assertSame(
+            $productListTransfer2->getIdProductList(),
+            $productListCollectionTransfer->getProductLists()->offsetGet(1)->getIdProductList(),
+        );
+        $this->assertSame(
+            $productListTransfer3->getIdProductList(),
+            $productListCollectionTransfer->getProductLists()->offsetGet(2)->getIdProductList(),
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductListCollectionReturnsPaginatedProductListsWithLimitAndOffset(): void
+    {
+        // Arrange
+        $this->tester->ensureDatabaseTableIsEmpty(SpyProductListQuery::create());
+        $this->tester->haveProductList();
+        $productListTransfer1 = $this->tester->haveProductList();
+        $productListTransfer2 = $this->tester->haveProductList();
+        $this->tester->haveProductList();
+        $productListCriteriaTransfer = (new ProductListCriteriaTransfer())
+            ->setPagination(
+                (new PaginationTransfer())->setOffset(1)->setLimit(2),
+            );
+
+        // Act
+        $productListCollectionTransfer = $this->getFacade()->getProductListCollection($productListCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(2, $productListCollectionTransfer->getProductLists());
+        $this->assertSame(4, $productListCollectionTransfer->getPagination()->getNbResults());
+        $this->assertSame(
+            $productListTransfer1->getIdProductList(),
+            $productListCollectionTransfer->getProductLists()->offsetGet(0)->getIdProductList(),
+        );
+        $this->assertSame(
+            $productListTransfer2->getIdProductList(),
+            $productListCollectionTransfer->getProductLists()->offsetGet(1)->getIdProductList(),
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductAbstractIdsByProductListIdsShouldNotReturnNullIdsWhenCategoryHasNoProducts(): void
+    {
+        // Arrange
+        $this->tester->ensureDatabaseTableIsEmpty(SpyProductListQuery::create());
+
+        $productListTransfer = $this->tester->haveProductList();
+        $categoryTransfer = $this->tester->haveCategory();
+        $this->tester->haveProductListCategory($productListTransfer, $categoryTransfer);
+
+        // Act
+        $result = $this->getFacade()->getProductAbstractIdsByProductListIds([$productListTransfer->getIdProductList()]);
+
+        // Assert
+        $this->assertCount(0, $result);
     }
 
     /**

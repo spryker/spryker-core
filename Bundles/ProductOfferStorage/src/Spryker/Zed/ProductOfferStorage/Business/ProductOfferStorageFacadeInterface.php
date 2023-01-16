@@ -43,9 +43,10 @@ interface ProductOfferStorageFacadeInterface
     /**
      * Specification:
      * - Gets productOfferReferences from eventTransfers.
-     * - Queries all active product offer with the given productOfferReferences.
+     * - If there is no productOfferReferences, then takes product offer ids from eventTransfers.
+     * - Queries all active product offer with the given productOfferReferences or product offer ids.
      * - Stores data as json encoded to storage table.
-     * - Removes all inactive product offer storage entities with the given productOfferReferences.
+     * - Removes all inactive product offer storage entities with the given productOfferReferences or product offer IDs.
      * - Sends a copy of data to queue based on module config.
      *
      * @api

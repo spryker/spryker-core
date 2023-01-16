@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductDiscontinuedGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer;
+use Generated\Shared\Transfer\ProductDiscontinuedCriteriaTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer;
 use Generated\Shared\Transfer\ProductDiscontinueRequestTransfer;
 
@@ -48,12 +50,13 @@ class ProductDiscontinuedGuiToProductDiscontinuedFacadeBridge implements Product
     }
 
     /**
-     * @param int $idProduct
+     * @param \Generated\Shared\Transfer\ProductDiscontinuedCriteriaTransfer $productDiscontinuedCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer
+     * @return \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer
      */
-    public function findProductDiscontinuedByProductId(int $idProduct): ProductDiscontinuedResponseTransfer
-    {
-        return $this->productDiscontinuedFacade->findProductDiscontinuedByProductId($idProduct);
+    public function getProductDiscontinuedCollection(
+        ProductDiscontinuedCriteriaTransfer $productDiscontinuedCriteriaTransfer
+    ): ProductDiscontinuedCollectionTransfer {
+        return $this->productDiscontinuedFacade->getProductDiscontinuedCollection($productDiscontinuedCriteriaTransfer);
     }
 }

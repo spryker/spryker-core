@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ProductOfferStorage\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\ProductOfferStorage\Dependency\Facade\ProductOfferStorageToProductOfferFacadeInterface;
+use Spryker\Zed\ProductOfferStorage\ProductOfferStorageDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductOfferStorage\Persistence\ProductOfferStorageEntityManagerInterface getEntityManager()
@@ -17,4 +19,11 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class ProductOfferStorageCommunicationFactory extends AbstractCommunicationFactory
 {
+    /**
+     * @return \Spryker\Zed\ProductOfferStorage\Dependency\Facade\ProductOfferStorageToProductOfferFacadeInterface
+     */
+    public function getProductOfferFacade(): ProductOfferStorageToProductOfferFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductOfferStorageDependencyProvider::FACADE_PRODUCT_OFFER);
+    }
 }

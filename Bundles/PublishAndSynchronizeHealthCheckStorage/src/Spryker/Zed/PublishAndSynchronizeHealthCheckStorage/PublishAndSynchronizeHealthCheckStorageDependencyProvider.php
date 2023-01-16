@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\PublishAndSynchronizeHealthCheckStorage\Dependency\Client\PublishAndSynchronizeHealthCheckStorageToStorageClientBridge;
 use Spryker\Zed\PublishAndSynchronizeHealthCheckStorage\Dependency\Facade\PublishAndSynchronizeHealthCheckStorageToEventBehaviorFacade;
+use Spryker\Zed\PublishAndSynchronizeHealthCheckStorage\Dependency\Facade\PublishAndSynchronizeHealthCheckStorageToPublishAndSynchronizeHealthCheckFacadeBridge;
 
 /**
  * @method \Spryker\Zed\PublishAndSynchronizeHealthCheckStorage\PublishAndSynchronizeHealthCheckStorageConfig getConfig()
@@ -34,6 +35,11 @@ class PublishAndSynchronizeHealthCheckStorageDependencyProvider extends Abstract
     public const PROPEL_PUBLISH_AND_SYNCHRONIZE_HEALTH_CHECK_QUERY = 'PROPEL_PUBLISH_AND_SYNCHRONIZE_HEALTH_CHECK_QUERY';
 
     /**
+     * @var string
+     */
+    public const FACADE_PUBLISH_AND_SYNCHRONIZE_HEALTH_CHECK = 'FACADE_PUBLISH_AND_SYNCHRONIZE_HEALTH_CHECK';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -54,6 +60,18 @@ class PublishAndSynchronizeHealthCheckStorageDependencyProvider extends Abstract
     public function providePersistenceLayerDependencies(Container $container): Container
     {
         $container = $this->addPublishAndSynchronizeHealthCheckQuery($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideCommunicationLayerDependencies(Container $container): Container
+    {
+        $container = $this->addPublishAndSynchronizeHealthCheckFacade($container);
 
         return $container;
     }
@@ -96,6 +114,22 @@ class PublishAndSynchronizeHealthCheckStorageDependencyProvider extends Abstract
         $container->set(static::PROPEL_PUBLISH_AND_SYNCHRONIZE_HEALTH_CHECK_QUERY, $container->factory(function (): SpyPublishAndSynchronizeHealthCheckQuery {
             return SpyPublishAndSynchronizeHealthCheckQuery::create();
         }));
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPublishAndSynchronizeHealthCheckFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_PUBLISH_AND_SYNCHRONIZE_HEALTH_CHECK, function (Container $container) {
+            return new PublishAndSynchronizeHealthCheckStorageToPublishAndSynchronizeHealthCheckFacadeBridge(
+                $container->getLocator()->publishAndSynchronizeHealthCheck()->facade(),
+            );
+        });
 
         return $container;
     }

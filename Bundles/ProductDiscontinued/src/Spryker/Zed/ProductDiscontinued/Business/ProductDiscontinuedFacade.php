@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductDiscontinuedCriteriaTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedNoteResponseTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedNoteTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer;
@@ -71,6 +72,8 @@ class ProductDiscontinuedFacade extends AbstractFacade implements ProductDiscont
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinuedFacade::getProductDiscontinuedCollection()} instead.
+     *
      * @param int $idProduct
      *
      * @return \Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer
@@ -118,6 +121,8 @@ class ProductDiscontinuedFacade extends AbstractFacade implements ProductDiscont
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinuedFacade::getProductDiscontinuedCollection()} instead.
+     *
      * @param \Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer $criteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer
@@ -128,6 +133,21 @@ class ProductDiscontinuedFacade extends AbstractFacade implements ProductDiscont
         return $this->getFactory()
             ->createProductDiscontinuedReader()
             ->findProductDiscontinuedCollection($criteriaFilterTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductDiscontinuedCriteriaTransfer $productDiscontinuedCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer
+     */
+    public function getProductDiscontinuedCollection(
+        ProductDiscontinuedCriteriaTransfer $productDiscontinuedCriteriaTransfer
+    ): ProductDiscontinuedCollectionTransfer {
+        return $this->getRepository()->getProductDiscontinuedCollection($productDiscontinuedCriteriaTransfer);
     }
 
     /**

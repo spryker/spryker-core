@@ -50,4 +50,14 @@ class ProductAlternativeStorageConfig extends AbstractBundleConfig
      * @var string
      */
     public const PRODUCT_ALTERNATIVE_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.product.error';
+
+    /**
+     * Specification
+     * - This event is used for product alternatives publishing.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const PRODUCT_ALTERNATIVE_PUBLISH = 'ProductAlternative.product_alternative.publish';
 }

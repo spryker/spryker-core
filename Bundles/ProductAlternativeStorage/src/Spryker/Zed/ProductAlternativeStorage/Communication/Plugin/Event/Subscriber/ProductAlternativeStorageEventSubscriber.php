@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductAlternativeStorage\Communication\Plugin\Event\Subscriber;
 
+use Spryker\Shared\ProductAlternativeStorage\ProductAlternativeStorageConfig;
 use Spryker\Zed\Event\Dependency\EventCollectionInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -61,7 +62,7 @@ class ProductAlternativeStorageEventSubscriber extends AbstractPlugin implements
     protected function addProductAlternativePublishListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection
-            ->addListenerQueued(ProductAlternativeEvents::PRODUCT_ALTERNATIVE_PUBLISH, new ProductAlternativePublishStorageListener(), 0, null, $this->getConfig()->getProductAlternativeEventQueueName());
+            ->addListenerQueued(ProductAlternativeStorageConfig::PRODUCT_ALTERNATIVE_PUBLISH, new ProductAlternativePublishStorageListener(), 0, null, $this->getConfig()->getProductAlternativeEventQueueName());
     }
 
     /**
@@ -132,7 +133,7 @@ class ProductAlternativeStorageEventSubscriber extends AbstractPlugin implements
     protected function addReplacementsProductAlternativePublishListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection
-            ->addListenerQueued(ProductAlternativeEvents::PRODUCT_ALTERNATIVE_PUBLISH, new ProductAlternativeReplacementStorageListener(), 0, null, $this->getConfig()->getProductReplacementForEventQueueName());
+            ->addListenerQueued(ProductAlternativeStorageConfig::PRODUCT_ALTERNATIVE_PUBLISH, new ProductAlternativeReplacementStorageListener(), 0, null, $this->getConfig()->getProductReplacementForEventQueueName());
     }
 
     /**

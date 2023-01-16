@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductListStorage\Communication\Plugin\Event\Subscriber;
 
+use Spryker\Shared\ProductListStorage\ProductListStorageConfig;
 use Spryker\Zed\Event\Dependency\EventCollectionInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -164,5 +165,6 @@ class ProductListStorageEventSubscriber extends AbstractPlugin implements EventS
     protected function addProductListListenerUpdate(EventCollectionInterface $eventCollection): void
     {
         $eventCollection->addListenerQueued(ProductListEvents::ENTITY_SPY_PRODUCT_LIST_UPDATE, new ProductListStorageListener(), 0, null, $this->getConfig()->getProductAbstractProductListEventQueueName());
+        $eventCollection->addListenerQueued(ProductListStorageConfig::PRODUCT_LIST_PUBLISH, new ProductListStorageListener(), 0, null, $this->getConfig()->getProductListEventQueueName());
     }
 }

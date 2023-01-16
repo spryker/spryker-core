@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\PublishAndSynchronizeHealthCheck\Business;
 
+use Generated\Shared\Transfer\PublishAndSynchronizeHealthCheckCollectionTransfer;
+use Generated\Shared\Transfer\PublishAndSynchronizeHealthCheckCriteriaTransfer;
 use Generated\Shared\Transfer\PublishAndSynchronizeHealthCheckTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -27,5 +29,20 @@ class PublishAndSynchronizeHealthCheckFacade extends AbstractFacade implements P
     public function savePublishAndSynchronizeHealthCheckEntity(): PublishAndSynchronizeHealthCheckTransfer
     {
         return $this->getFactory()->createPublishAndSynchronizeHealthCheckDataWriter()->savePublishAndSynchronizeHealthCheckEntity();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PublishAndSynchronizeHealthCheckCriteriaTransfer $publishAndSynchronizeHealthCheckCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PublishAndSynchronizeHealthCheckCollectionTransfer
+     */
+    public function getPublishAndSynchronizeHealthCheckCollection(
+        PublishAndSynchronizeHealthCheckCriteriaTransfer $publishAndSynchronizeHealthCheckCriteriaTransfer
+    ): PublishAndSynchronizeHealthCheckCollectionTransfer {
+        return $this->getRepository()->getPublishAndSynchronizeHealthCheckCollection($publishAndSynchronizeHealthCheckCriteriaTransfer);
     }
 }

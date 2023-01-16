@@ -15,4 +15,24 @@ class ProductListSearchConfig extends AbstractBundleConfig
      * @var string
      */
     public const PLUGIN_PRODUCT_LIST_DATA = 'PLUGIN_PRODUCT_LIST_DATA';
+
+    /**
+     * Specification:
+     * - This event is used for product list publishing.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const PRODUCT_LIST_PUBLISH = 'ProductList.spy_product_list.publish';
+
+    /**
+     * Specification:
+     *  - Product list resource name, used for key generation.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const PRODUCT_LIST_RESOURCE_NAME = 'product_list_search';
 }

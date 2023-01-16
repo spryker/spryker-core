@@ -9,11 +9,15 @@ namespace SprykerTest\Zed\ProductList\Helper;
 
 use Codeception\Module;
 use Generated\Shared\DataBuilder\ProductListBuilder;
+use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
+use Orm\Zed\ProductList\Persistence\SpyProductListCategory;
+use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class ProductListHelper extends Module
 {
+    use DataCleanupHelperTrait;
     use LocatorHelperTrait;
 
     /**
@@ -31,5 +35,24 @@ class ProductListHelper extends Module
             ->createProductList($productListTransfer);
 
         return $productListResponseTransfer->getProductList();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return void
+     */
+    public function haveProductListCategory(ProductListTransfer $productListTransfer, CategoryTransfer $categoryTransfer): void
+    {
+        $productListCategoryEntity = new SpyProductListCategory();
+        $productListCategoryEntity->setFkProductList($productListTransfer->getIdProductList());
+        $productListCategoryEntity->setFkCategory($categoryTransfer->getIdCategory());
+
+        $productListCategoryEntity->save();
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($productListCategoryEntity): void {
+            $productListCategoryEntity->delete();
+        });
     }
 }

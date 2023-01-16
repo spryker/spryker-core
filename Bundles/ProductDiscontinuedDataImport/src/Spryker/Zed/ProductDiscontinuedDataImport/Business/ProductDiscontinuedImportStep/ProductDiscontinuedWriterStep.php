@@ -14,12 +14,18 @@ use Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinuedQuery;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
-use Spryker\Zed\ProductDiscontinued\Dependency\ProductDiscontinuedEvents;
 use Spryker\Zed\ProductDiscontinuedDataImport\Business\ProductDiscontinuedDataSet\ProductDiscontinuedDataSetInterface;
 use Spryker\Zed\ProductDiscontinuedDataImport\ProductDiscontinuedDataImportConfig;
 
 class ProductDiscontinuedWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
+    /**
+     * @uses {@link \Spryker\Shared\ProductDiscontinuedStorage\ProductDiscontinuedStorageConfig::PRODUCT_DISCONTINUED_PUBLISH}.
+     *
+     * @var string
+     */
+    protected const PRODUCT_DISCONTINUED_PUBLISH = 'ProductDiscontinued.product_discontinued.publish';
+
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
@@ -38,7 +44,7 @@ class ProductDiscontinuedWriterStep extends PublishAwareStep implements DataImpo
         $this->saveLocalizedNotes($productDiscontinuedEntity, $dataSet);
 
         $this->addPublishEvents(
-            ProductDiscontinuedEvents::PRODUCT_DISCONTINUED_PUBLISH,
+            static::PRODUCT_DISCONTINUED_PUBLISH,
             $productDiscontinuedEntity->getIdProductDiscontinued(),
         );
     }

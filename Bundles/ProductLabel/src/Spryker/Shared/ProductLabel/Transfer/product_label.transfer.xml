@@ -43,6 +43,21 @@
         <property name="productAbstractIds" type="int[]" singular="productAbstractId"/>
         <property name="productLabelIds" type="int[]" singular="productLabelId"/>
         <property name="storeName" type="string"/>
+        <property name="pagination" type="Pagination" strict="true"/>
+        <property name="withProductLabelStores" type="bool"/>
+        <property name="withProductLabelLocalizedAttributes" type="bool"/>
+        <property name="withProductLabelProductAbstracts" type="bool"/>
+    </transfer>
+
+    <transfer name="ProductLabelCollection" strict="true">
+        <property name="productLabels" type="ProductLabel[]" singular="productLabel"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="offset" type="int"/>
+        <property name="limit" type="int"/>
+        <property name="nbResults" type="int"/>
     </transfer>
 
     <transfer name="ProductLabelLocalizedAttributes">

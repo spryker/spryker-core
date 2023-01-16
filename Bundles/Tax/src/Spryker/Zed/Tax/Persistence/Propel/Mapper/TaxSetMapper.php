@@ -8,8 +8,10 @@
 namespace Spryker\Zed\Tax\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\TaxRateTransfer;
+use Generated\Shared\Transfer\TaxSetCollectionTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Orm\Zed\Tax\Persistence\SpyTaxSet;
+use Propel\Runtime\Collection\ObjectCollection;
 
 class TaxSetMapper implements TaxSetMapperInterface
 {
@@ -48,5 +50,24 @@ class TaxSetMapper implements TaxSetMapperInterface
         }
 
         return $taxSetTransfer;
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Tax\Persistence\SpyTaxSet> $taxSetEntities
+     * @param \Generated\Shared\Transfer\TaxSetCollectionTransfer $taxSetCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\TaxSetCollectionTransfer
+     */
+    public function mapTaxSetEntitiesToTaxSetCollectionTransfer(
+        ObjectCollection $taxSetEntities,
+        TaxSetCollectionTransfer $taxSetCollectionTransfer
+    ): TaxSetCollectionTransfer {
+        foreach ($taxSetEntities as $taxSetEntity) {
+            $taxSetCollectionTransfer->addTaxSet(
+                $this->mapTaxSetEntityToTaxSetTransfer($taxSetEntity, new TaxSetTransfer()),
+            );
+        }
+
+        return $taxSetCollectionTransfer;
     }
 }

@@ -33,7 +33,17 @@ class TaxStorageConfig extends AbstractSharedConfig
 
     /**
      * Specification:
-     *  - Resource name, this will use for key generation.
+     * - This event is used for tax set publishing.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const TAX_SET_PUBLISH = 'TaxSet.tax_set.publish';
+
+    /**
+     * Specification:
+     *  - Tax set resource name, used for key generation.
      *
      * @api
      *

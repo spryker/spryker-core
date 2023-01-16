@@ -59,4 +59,19 @@
         <property name="whitelistIds" type="int[]" singular="whitelistId"/>
     </transfer>
 
+    <transfer name="ProductListCollection">
+        <property name="productLists" type="ProductList[]" singular="productList"/>
+        <property name="pagination" type="Pagination" strict="true"/>
+    </transfer>
+
+    <transfer name="ProductListCriteria" strict="true">
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="offset" type="int"/>
+        <property name="limit" type="int"/>
+        <property name="nbResults" type="int"/>
+    </transfer>
+
 </transfers>

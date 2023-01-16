@@ -7,9 +7,10 @@
         "php": ">=8.0",
         "spryker/kernel": "^3.30.0",
         "spryker/locale": "^3.0.0",
-        "spryker/product-discontinued": "^1.0.0",
+        "spryker/product-discontinued": "^1.9.0",
         "spryker/product-management-extension": "^1.1.0",
-        "spryker/symfony": "^3.0.0"
+        "spryker/symfony": "^3.0.0",
+        "spryker/transfer": "^3.27.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*"

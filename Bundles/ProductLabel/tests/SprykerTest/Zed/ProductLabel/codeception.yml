@@ -32,3 +32,4 @@ suites:
                 - \SprykerTest\Shared\Product\Helper\ProductDataHelper
                 - \SprykerTest\Zed\Touch\Helper\TouchAssertionHelper
                 - \SprykerTest\Shared\Store\Helper\StoreDataHelper
+                - \SprykerTest\Shared\Testify\Helper\TableRelationsCleanupHelper

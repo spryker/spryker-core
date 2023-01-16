@@ -12,7 +12,7 @@ coverage:
     whitelist: { include: ['../../../../src/*'] }
 
 suites:
-    Business:
+    Communication:
         path: Communication
         actor: ProductListStorageCommunicationTester
         modules:

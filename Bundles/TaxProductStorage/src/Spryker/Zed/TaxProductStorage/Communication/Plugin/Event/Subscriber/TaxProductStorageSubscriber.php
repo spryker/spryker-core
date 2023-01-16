@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\TaxProductStorage\Communication\Plugin\Event\Subscriber;
 
+use Spryker\Shared\TaxProductStorage\TaxProductStorageConfig;
 use Spryker\Zed\Event\Dependency\EventCollectionInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -37,6 +38,7 @@ class TaxProductStorageSubscriber extends AbstractPlugin implements EventSubscri
         $eventCollection = $this->addProductAbstractCreateListener($eventCollection);
         $eventCollection = $this->addProductAbstractUpdateListener($eventCollection);
         $eventCollection = $this->addProductAbstractDeleteListener($eventCollection);
+        $eventCollection = $this->addTaxProductPublishListener($eventCollection);
 
         return $eventCollection;
     }
@@ -49,6 +51,16 @@ class TaxProductStorageSubscriber extends AbstractPlugin implements EventSubscri
     protected function addProductAbstractPublishListener(EventCollectionInterface $eventCollection): EventCollectionInterface
     {
         return $eventCollection->addListenerQueued(ProductEvents::PRODUCT_ABSTRACT_PUBLISH, new TaxProductStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return \Spryker\Zed\Event\Dependency\EventCollectionInterface
+     */
+    protected function addTaxProductPublishListener(EventCollectionInterface $eventCollection): EventCollectionInterface
+    {
+        return $eventCollection->addListenerQueued(TaxProductStorageConfig::TAX_PRODUCT_PUBLISH, new TaxProductStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**

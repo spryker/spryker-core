@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\TaxStorage\Communication\Plugin\Event\Subscriber;
 
+use Spryker\Shared\TaxStorage\TaxStorageConfig;
 use Spryker\Zed\Event\Dependency\EventCollectionInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -53,7 +54,10 @@ class TaxStorageSubscriber extends AbstractPlugin implements EventSubscriberInte
      */
     protected function addTaxSetPublishStorageListener(EventCollectionInterface $eventCollection): EventCollectionInterface
     {
-        return $eventCollection->addListenerQueued(TaxEvents::TAX_SET_PUBLISH, new TaxSetStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
+        $eventCollection->addListenerQueued(TaxStorageConfig::TAX_SET_PUBLISH, new TaxSetStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
+        $eventCollection->addListenerQueued(TaxEvents::TAX_SET_PUBLISH, new TaxSetStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
+
+        return $eventCollection;
     }
 
     /**

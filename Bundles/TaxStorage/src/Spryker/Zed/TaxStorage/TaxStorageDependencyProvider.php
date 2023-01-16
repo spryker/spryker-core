@@ -11,6 +11,7 @@ use Orm\Zed\Tax\Persistence\SpyTaxSetQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\TaxStorage\Dependency\Facade\TaxSetStorageToEventBehaviorFacadeBridge;
+use Spryker\Zed\TaxStorage\Dependency\Facade\TaxSetStorageToTaxFacadeBridge;
 
 /**
  * @method \Spryker\Zed\TaxStorage\TaxStorageConfig getConfig()
@@ -21,6 +22,11 @@ class TaxStorageDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+
+    /**
+     * @var string
+     */
+    public const FACADE_TAX = 'FACADE_TAX';
 
     /**
      * @var string
@@ -36,6 +42,7 @@ class TaxStorageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = parent::provideCommunicationLayerDependencies($container);
         $container = $this->addEventBehaviorFacade($container);
+        $container = $this->addTaxFacade($container);
 
         return $container;
     }
@@ -63,6 +70,22 @@ class TaxStorageDependencyProvider extends AbstractBundleDependencyProvider
         $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new TaxSetStorageToEventBehaviorFacadeBridge(
                 $container->getLocator()->eventBehavior()->facade(),
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addTaxFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_TAX, function (Container $container) {
+            return new TaxSetStorageToTaxFacadeBridge(
+                $container->getLocator()->tax()->facade(),
             );
         });
 

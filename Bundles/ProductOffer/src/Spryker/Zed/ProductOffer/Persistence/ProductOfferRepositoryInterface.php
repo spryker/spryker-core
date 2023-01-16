@@ -33,4 +33,11 @@ interface ProductOfferRepositoryInterface
      * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     public function getProductOfferStores(int $idProductOffer): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferCriteriaTransfer $productOfferCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
+     */
+    public function getProductOfferCollection(ProductOfferCriteriaTransfer $productOfferCriteriaTransfer): ProductOfferCollectionTransfer;
 }

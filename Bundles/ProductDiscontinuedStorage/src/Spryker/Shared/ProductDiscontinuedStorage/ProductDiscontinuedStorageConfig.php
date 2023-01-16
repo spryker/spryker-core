@@ -40,4 +40,14 @@ class ProductDiscontinuedStorageConfig extends AbstractBundleConfig
      * @var string
      */
     public const PRODUCT_DISCONTINUED_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.product.error';
+
+    /**
+     * Specification:
+     * - This event is used for discontinued products publishing.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const PRODUCT_DISCONTINUED_PUBLISH = 'ProductDiscontinued.product_discontinued.publish';
 }

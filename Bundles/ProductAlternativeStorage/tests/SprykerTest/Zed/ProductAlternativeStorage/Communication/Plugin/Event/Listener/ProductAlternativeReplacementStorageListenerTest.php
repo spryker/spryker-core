@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\ProductAlternativeStorage\Communication\Plugin\Event\L
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Orm\Zed\ProductAlternative\Persistence\Map\SpyProductAlternativeTableMap;
+use Spryker\Shared\ProductAlternativeStorage\ProductAlternativeStorageConfig;
 use Spryker\Zed\ProductAlternative\Dependency\ProductAlternativeEvents;
 use Spryker\Zed\ProductAlternativeStorage\Communication\Plugin\Event\Listener\ProductAlternativeReplacementStorageListener;
 use Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepository;
@@ -95,7 +96,7 @@ class ProductAlternativeReplacementStorageListenerTest extends Unit
         // Act
         $this->productAlternativeReplacementStorageListener->handleBulk(
             $eventTransfers,
-            ProductAlternativeEvents::PRODUCT_ALTERNATIVE_PUBLISH,
+            ProductAlternativeStorageConfig::PRODUCT_ALTERNATIVE_PUBLISH,
         );
         $productReplacementStorageEntity = $this->productAlternativeStorageRepository
             ->findProductReplacementStorageEntitiesBySku(
@@ -124,7 +125,7 @@ class ProductAlternativeReplacementStorageListenerTest extends Unit
         // Act
         $this->productAlternativeReplacementStorageListener->handleBulk(
             $eventTransfers,
-            ProductAlternativeEvents::PRODUCT_ALTERNATIVE_PUBLISH,
+            ProductAlternativeStorageConfig::PRODUCT_ALTERNATIVE_PUBLISH,
         );
         $this->tester->getProductAlternativeFacade()
             ->deleteProductAlternativeByIdProductAlternative($productAlternativeTransfer->getIdProductAlternative());
@@ -156,7 +157,7 @@ class ProductAlternativeReplacementStorageListenerTest extends Unit
         // Act
         $this->productAlternativeReplacementStorageListener->handleBulk(
             $eventTransfers,
-            ProductAlternativeEvents::PRODUCT_ALTERNATIVE_PUBLISH,
+            ProductAlternativeStorageConfig::PRODUCT_ALTERNATIVE_PUBLISH,
         );
         $productReplacementStorageEntity = $this->productAlternativeStorageRepository
             ->findProductReplacementStorageEntitiesBySku(
@@ -185,7 +186,7 @@ class ProductAlternativeReplacementStorageListenerTest extends Unit
         // Act
         $this->productAlternativeReplacementStorageListener->handleBulk(
             $eventTransfers,
-            ProductAlternativeEvents::PRODUCT_ALTERNATIVE_PUBLISH,
+            ProductAlternativeStorageConfig::PRODUCT_ALTERNATIVE_PUBLISH,
         );
         $this->tester->getProductAlternativeFacade()
             ->deleteProductAlternativeByIdProductAlternative($productAlternativeTransfer->getIdProductAlternative());

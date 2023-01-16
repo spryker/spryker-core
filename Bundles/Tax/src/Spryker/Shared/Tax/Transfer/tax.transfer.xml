@@ -3,6 +3,7 @@
 
     <transfer name="TaxSetCollection">
         <property name="taxSets" type="TaxSet[]" singular="taxSet"/>
+        <property name="pagination" type="Pagination" strict="true"/>
     </transfer>
 
     <transfer name="TaxSet">
@@ -12,6 +13,17 @@
         <property name="taxRates" type="TaxRate[]" singular="taxRate"/>
         <property name="createdAt" type="string"/>
         <property name="updatedAt" type="string"/>
+    </transfer>
+
+    <transfer name="TaxSetCriteria" strict="true">
+        <property name="pagination" type="Pagination"/>
+        <property name="withTaxRates" type="bool"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="offset" type="int"/>
+        <property name="limit" type="int"/>
+        <property name="nbResults" type="int"/>
     </transfer>
 
     <transfer name="TaxRateCollection">

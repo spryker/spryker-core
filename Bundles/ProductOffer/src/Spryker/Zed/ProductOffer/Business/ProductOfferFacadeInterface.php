@@ -154,4 +154,18 @@ interface ProductOfferFacadeInterface
         ArrayObject $itemsInCart,
         ItemTransfer $itemTransfer
     ): CartItemQuantityTransfer;
+
+    /**
+     * Specification:
+     * - Fetches a collection of product offers from the Persistence.
+     * - Uses `ProductOfferCriteriaTransfer.pagination.limit` and `ProductOfferCriteriaTransfer.pagination.offset` to paginate results with limit and offset.
+     * - Returns `ProductOfferCollectionTransfer` filled with found product offers.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductOfferCriteriaTransfer $productOfferCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
+     */
+    public function getProductOfferCollection(ProductOfferCriteriaTransfer $productOfferCriteriaTransfer): ProductOfferCollectionTransfer;
 }

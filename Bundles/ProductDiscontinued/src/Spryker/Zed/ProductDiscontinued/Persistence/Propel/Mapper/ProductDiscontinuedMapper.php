@@ -18,31 +18,45 @@ class ProductDiscontinuedMapper implements ProductDiscontinuedMapperInterface
 {
     /**
      * @param \Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinued $productDiscontinuedEntity
+     * @param \Generated\Shared\Transfer\ProductDiscontinuedTransfer $productDiscontinuedTransfer
      *
      * @return \Generated\Shared\Transfer\ProductDiscontinuedTransfer
      */
-    public function mapProductDiscontinuedTransfer(SpyProductDiscontinued $productDiscontinuedEntity): ProductDiscontinuedTransfer
-    {
-        $productDiscontinuedTransfer = (new ProductDiscontinuedTransfer())
-            ->fromArray($productDiscontinuedEntity->toArray(), true);
+    public function mapProductDiscontinuedEntityToProductDiscontinuedTransfer(
+        SpyProductDiscontinued $productDiscontinuedEntity,
+        ProductDiscontinuedTransfer $productDiscontinuedTransfer
+    ): ProductDiscontinuedTransfer {
+        $productDiscontinuedTransfer->fromArray($productDiscontinuedEntity->toArray(), true);
+        $productDiscontinuedTransfer->setSku($productDiscontinuedEntity->getProduct()->getSku());
 
-        /** @var \Orm\Zed\Product\Persistence\SpyProduct|null $productEntity */
-        $productEntity = $productDiscontinuedEntity->getProduct();
-        if ($productEntity) {
-            $productDiscontinuedTransfer->setSku(
-                $productDiscontinuedEntity->getProduct()->getSku(),
-            );
-        }
-
-        /** @var array<\Generated\Shared\Transfer\ProductDiscontinuedNoteTransfer> $productDiscontinuedNotes */
-        $productDiscontinuedNotes = $productDiscontinuedEntity->getSpyProductDiscontinuedNotes();
-        if ($productDiscontinuedNotes) {
-            $productDiscontinuedTransfer->setProductDiscontinuedNotes(
-                $this->mapProductDiscontinuedNotes($productDiscontinuedEntity),
-            );
-        }
+        $productDiscontinuedEntity->initSpyProductDiscontinuedNotes(false);
+        $productDiscontinuedTransfer->setProductDiscontinuedNotes(
+            $this->mapProductDiscontinuedNotes($productDiscontinuedEntity),
+        );
 
         return $productDiscontinuedTransfer;
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinued> $productDiscontinuedEntities
+     * @param \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer $productDiscontinuedCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer
+     */
+    public function mapProductDiscontinuedEntitiesToProductDiscontinuedCollectionTransfer(
+        ObjectCollection $productDiscontinuedEntities,
+        ProductDiscontinuedCollectionTransfer $productDiscontinuedCollectionTransfer
+    ): ProductDiscontinuedCollectionTransfer {
+        foreach ($productDiscontinuedEntities as $productDiscontinuedEntity) {
+            $productDiscontinuedCollectionTransfer->addDiscontinuedProduct(
+                $this->mapProductDiscontinuedEntityToProductDiscontinuedTransfer(
+                    $productDiscontinuedEntity,
+                    new ProductDiscontinuedTransfer(),
+                ),
+            );
+        }
+
+        return $productDiscontinuedCollectionTransfer;
     }
 
     /**
@@ -51,32 +65,13 @@ class ProductDiscontinuedMapper implements ProductDiscontinuedMapperInterface
      *
      * @return \Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinued
      */
-    public function mapTransferToEntity(
+    public function mapProductDiscontinuedTransferToProductDiscontinuedEntity(
         ProductDiscontinuedTransfer $productDiscontinuedTransfer,
         SpyProductDiscontinued $productDiscontinuedEntity
     ): SpyProductDiscontinued {
         $productDiscontinuedEntity->fromArray($productDiscontinuedTransfer->toArray());
 
         return $productDiscontinuedEntity;
-    }
-
-    /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $productDiscontinuedEntityCollection
-     *
-     * @return \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer
-     */
-    public function mapTransferCollection(ObjectCollection $productDiscontinuedEntityCollection): ProductDiscontinuedCollectionTransfer
-    {
-        $productDiscontinuedCollectionTransfer = new ProductDiscontinuedCollectionTransfer();
-        foreach ($productDiscontinuedEntityCollection as $productDiscontinuedEntity) {
-            $productDiscontinuedCollectionTransfer->addDiscontinuedProduct(
-                $this->mapProductDiscontinuedTransfer(
-                    $productDiscontinuedEntity,
-                ),
-            );
-        }
-
-        return $productDiscontinuedCollectionTransfer;
     }
 
     /**

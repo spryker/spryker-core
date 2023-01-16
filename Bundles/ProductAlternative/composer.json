@@ -10,7 +10,8 @@
         "spryker/locale": "^3.1.0",
         "spryker/product": "^6.0.0",
         "spryker/product-alternative-extension": "^1.0.0",
-        "spryker/propel-orm": "^1.1.0"
+        "spryker/propel-orm": "^1.1.0",
+        "spryker/transfer": "^3.27.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*",

@@ -8,11 +8,11 @@
         "spryker/event-behavior": "^1.20.0",
         "spryker/health-check-extension": "^1.0.0",
         "spryker/kernel": "^3.30.0",
-        "spryker/publish-and-synchronize-health-check": "^1.0.0",
+        "spryker/publish-and-synchronize-health-check": "^1.1.0",
         "spryker/publisher-extension": "^1.0.0",
         "spryker/storage": "^3.16.0",
         "spryker/synchronization-behavior": "^1.8.0",
-        "spryker/transfer": "^3.25.0"
+        "spryker/transfer": "^3.27.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*",

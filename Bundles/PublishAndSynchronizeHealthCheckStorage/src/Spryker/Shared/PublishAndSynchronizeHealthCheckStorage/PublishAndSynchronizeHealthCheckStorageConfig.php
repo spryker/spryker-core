@@ -49,4 +49,24 @@ class PublishAndSynchronizeHealthCheckStorageConfig extends AbstractBundleConfig
      * @var string
      */
     public const PUBLISH_AND_SYNCHRONIZE_HEALTH_CHECK_STORAGE_KEY = 'publish_and_synchronize_health_check:health-check';
+
+    /**
+     * Specification:
+     * - This event is used for publish and synchronize health check publishing.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const PUBLISH_AND_SYNCHRONIZE_HEALTH_CHECK_PUBLISH = 'PublishAndSynchronizeHealthCheck.publish_and_synchronize_health_check.publish';
+
+    /**
+     * Specification:
+     *  - Publish and synchronize health check resource name, used for key generation.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const PUBLISH_AND_SYNCHRONIZE_HEALTH_CHECK_RESOURCE_NAME = 'publish_and_synchronize_health_check';
 }

@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\ProductListSearch\Dependency\Facade;
 
+use Generated\Shared\Transfer\ProductListCollectionTransfer;
+use Generated\Shared\Transfer\ProductListCriteriaTransfer;
+
 interface ProductListSearchToProductListFacadeInterface
 {
     /**
@@ -57,4 +60,11 @@ interface ProductListSearchToProductListFacadeInterface
      * @return array
      */
     public function getProductAbstractListIdsByProductAbstractIds(array $productAbstractIds): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductListCriteriaTransfer $productListCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListCollectionTransfer
+     */
+    public function getProductListCollection(ProductListCriteriaTransfer $productListCriteriaTransfer): ProductListCollectionTransfer;
 }

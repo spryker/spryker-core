@@ -11,6 +11,7 @@ use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductOfferStorage\Dependency\Facade\ProductOfferStorageToEventBehaviorFacadeBridge;
+use Spryker\Zed\ProductOfferStorage\Dependency\Facade\ProductOfferStorageToProductOfferFacadeBridge;
 use Spryker\Zed\ProductOfferStorage\Dependency\Facade\ProductOfferStorageToStoreFacadeBridge;
 
 /**
@@ -27,6 +28,11 @@ class ProductOfferStorageDependencyProvider extends AbstractBundleDependencyProv
      * @var string
      */
     public const FACADE_STORE = 'FACADE_STORE';
+
+    /**
+     * @var string
+     */
+    public const FACADE_PRODUCT_OFFER = 'FACADE_PRODUCT_OFFER';
 
     /**
      * @var string
@@ -53,6 +59,7 @@ class ProductOfferStorageDependencyProvider extends AbstractBundleDependencyProv
         parent::provideCommunicationLayerDependencies($container);
 
         $container = $this->addEventBehaviorFacade($container);
+        $container = $this->addProductFacadeFacade($container);
 
         return $container;
     }
@@ -84,6 +91,22 @@ class ProductOfferStorageDependencyProvider extends AbstractBundleDependencyProv
 
         $container = $this->addProductOfferPropelQuery($container);
         $container = $this->addProductOfferStorageMapperPlugins($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductFacadeFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_PRODUCT_OFFER, function (Container $container) {
+            return new ProductOfferStorageToProductOfferFacadeBridge(
+                $container->getLocator()->productOffer()->facade(),
+            );
+        });
 
         return $container;
     }

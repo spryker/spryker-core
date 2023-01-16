@@ -15,6 +15,8 @@ interface ProductListEvents
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Shared\ProductListStorage\ProductListStorageConfig::PRODUCT_LIST_PUBLISH} instead.
+     *
      * @var string
      */
     public const PRODUCT_LIST_PUBLISH = 'ProductList.spy_product_list.publish';

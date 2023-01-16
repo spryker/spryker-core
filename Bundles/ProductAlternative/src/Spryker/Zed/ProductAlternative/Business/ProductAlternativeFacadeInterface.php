@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductAlternative\Business;
 
+use Generated\Shared\Transfer\ProductAlternativeCollectionTransfer;
+use Generated\Shared\Transfer\ProductAlternativeCriteriaTransfer;
 use Generated\Shared\Transfer\ProductAlternativeListTransfer;
 use Generated\Shared\Transfer\ProductAlternativeResponseTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -84,4 +86,20 @@ interface ProductAlternativeFacadeInterface
      * @return array<int>
      */
     public function findProductAbstractIdsWhichConcreteHasAlternative(): array;
+
+    /**
+     * Specification:
+     * - Fetches a collection of product alternatives from the Persistence.
+     * - Uses `ProductAlternativeCriteriaTransfer.pagination.limit` and `ProductAlternativeCriteriaTransfer.pagination.offset` to paginate results with limit and offset.
+     * - Returns `ProductAlternativeCollectionTransfer` filled with found product alternatives.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAlternativeCriteriaTransfer $productAlternativeCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAlternativeCollectionTransfer
+     */
+    public function getProductAlternativeCollection(
+        ProductAlternativeCriteriaTransfer $productAlternativeCriteriaTransfer
+    ): ProductAlternativeCollectionTransfer;
 }

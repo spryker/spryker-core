@@ -16,6 +16,7 @@ use Generated\Shared\DataBuilder\ProductLabelLocalizedAttributesBuilder;
 use Generated\Shared\DataBuilder\ProductLabelProductAbstractRelationsBuilder;
 use Generated\Shared\DataBuilder\StoreRelationBuilder;
 use Generated\Shared\Transfer\FilterTransfer;
+use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ProductLabelCriteriaTransfer;
 use Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer;
@@ -763,6 +764,158 @@ class ProductLabelFacadeTest extends Unit
 
         // Assert
         $this->assertCount(1, $productLabelProductAbstracts);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductLabelCollectionReturnsCorrectProductLabelsWithoutPaginationAndRelations(): void
+    {
+        // Arrange
+        $this->tester->ensureDatabaseTableIsEmpty(SpyProductLabelQuery::create());
+        $storeTransferDE = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $productTransfer = $this->tester->haveProduct();
+        $storeRelationSeedData = [
+            StoreRelationTransfer::ID_STORES => [
+                $storeTransferDE->getIdStore(),
+            ],
+        ];
+
+        $productLabelTransfer1 = $this->tester->haveProductLabel([
+            ProductLabelTransfer::STORE_RELATION => $storeRelationSeedData,
+        ]);
+        $this->tester->haveProductLabelToAbstractProductRelation(
+            $productLabelTransfer1->getIdProductLabel(),
+            $productTransfer->getFkProductAbstract(),
+        );
+        $productLabelTransfer2 = $this->tester->haveProductLabel([
+            ProductLabelTransfer::STORE_RELATION => $storeRelationSeedData,
+        ]);
+        $this->tester->haveProductLabelToAbstractProductRelation(
+            $productLabelTransfer2->getIdProductLabel(),
+            $productTransfer->getFkProductAbstract(),
+        );
+        $productLabelTransfer3 = $this->tester->haveProductLabel([
+            ProductLabelTransfer::STORE_RELATION => $storeRelationSeedData,
+        ]);
+        $this->tester->haveProductLabelToAbstractProductRelation(
+            $productLabelTransfer3->getIdProductLabel(),
+            $productTransfer->getFkProductAbstract(),
+        );
+
+        $productLabelCriteriaTransfer = new ProductLabelCriteriaTransfer();
+
+        // Act
+        $productLabelCollectionTransfer = $this->tester->getFacade()->getProductLabelCollection($productLabelCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(3, $productLabelCollectionTransfer->getProductLabels());
+        $this->assertSame(
+            $productLabelTransfer1->getIdProductLabel(),
+            $productLabelCollectionTransfer->getProductLabels()->offsetGet(0)->getIdProductLabel(),
+        );
+        $this->assertCount(0, $productLabelCollectionTransfer->getProductLabels()->offsetGet(0)->getLocalizedAttributesCollection());
+        $this->assertCount(0, $productLabelCollectionTransfer->getProductLabels()->offsetGet(0)->getProductLabelProductAbstracts());
+        $this->assertCount(0, $productLabelCollectionTransfer->getProductLabels()->offsetGet(0)->getStoreRelation()->getStores());
+        $this->assertSame(
+            $productLabelTransfer2->getIdProductLabel(),
+            $productLabelCollectionTransfer->getProductLabels()->offsetGet(1)->getIdProductLabel(),
+        );
+        $this->assertCount(0, $productLabelCollectionTransfer->getProductLabels()->offsetGet(1)->getLocalizedAttributesCollection());
+        $this->assertCount(0, $productLabelCollectionTransfer->getProductLabels()->offsetGet(1)->getProductLabelProductAbstracts());
+        $this->assertCount(0, $productLabelCollectionTransfer->getProductLabels()->offsetGet(1)->getStoreRelation()->getStores());
+        $this->assertSame(
+            $productLabelTransfer3->getIdProductLabel(),
+            $productLabelCollectionTransfer->getProductLabels()->offsetGet(2)->getIdProductLabel(),
+        );
+        $this->assertCount(0, $productLabelCollectionTransfer->getProductLabels()->offsetGet(2)->getLocalizedAttributesCollection());
+        $this->assertCount(0, $productLabelCollectionTransfer->getProductLabels()->offsetGet(2)->getProductLabelProductAbstracts());
+        $this->assertCount(0, $productLabelCollectionTransfer->getProductLabels()->offsetGet(2)->getStoreRelation()->getStores());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductLabelCollectionShouldReturnAllRelations(): void
+    {
+        // Arrange
+        $this->tester->ensureDatabaseTableIsEmpty(SpyProductLabelQuery::create());
+        $productTransfer = $this->tester->haveProduct();
+        $storeTransferDE = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $storeRelationSeedData = [
+            StoreRelationTransfer::ID_STORES => [
+                $storeTransferDE->getIdStore(),
+            ],
+        ];
+        $productLabelTransfer = $this->tester->haveProductLabel([
+            ProductLabelTransfer::STORE_RELATION => $storeRelationSeedData,
+        ]);
+        $this->tester->haveProductLabelToAbstractProductRelation(
+            $productLabelTransfer->getIdProductLabel(),
+            $productTransfer->getFkProductAbstract(),
+        );
+
+        $productLabelCriteriaTransfer = (new ProductLabelCriteriaTransfer())
+            ->setWithProductLabelLocalizedAttributes(true)
+            ->setWithProductLabelProductAbstracts(true)
+            ->setWithProductLabelStores(true);
+        $localeTransfers = $this->tester->getLocator()->locale()->facade()->getLocaleCollection();
+
+        // Act
+        $productLabelCollectionTransfer = $this->tester->getFacade()->getProductLabelCollection($productLabelCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(1, $productLabelCollectionTransfer->getProductLabels());
+        $this->assertSame(
+            $productLabelTransfer->getIdProductLabel(),
+            $productLabelCollectionTransfer->getProductLabels()->offsetGet(0)->getIdProductLabel(),
+        );
+
+        $this->assertCount(count($localeTransfers), $productLabelCollectionTransfer->getProductLabels()->offsetGet(0)->getLocalizedAttributesCollection());
+
+        $this->assertCount(1, $productLabelCollectionTransfer->getProductLabels()->offsetGet(0)->getProductLabelProductAbstracts());
+        $this->assertSame(
+            $productTransfer->getFkProductAbstract(),
+            $productLabelCollectionTransfer->getProductLabels()->offsetGet(0)->getProductLabelProductAbstracts()->offsetGet(0)->getFkProductAbstract(),
+        );
+
+        $this->assertCount(1, $productLabelCollectionTransfer->getProductLabels()->offsetGet(0)->getStoreRelation()->getStores());
+        $this->assertSame(
+            $storeTransferDE->getIdStore(),
+            $productLabelCollectionTransfer->getProductLabels()->offsetGet(0)->getStoreRelation()->getStores()->offsetGet(0)->getIdStore(),
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductLabelCollectionReturnsPaginatedProductLabelsWithLimitAndOffset(): void
+    {
+        // Arrange
+        $this->tester->ensureDatabaseTableIsEmpty(SpyProductLabelQuery::create());
+        $this->tester->haveProductLabel();
+        $productLabelTransfer1 = $this->tester->haveProductLabel();
+        $productLabelTransfer2 = $this->tester->haveProductLabel();
+        $this->tester->haveProductLabel();
+        $productLabelCriteriaTransfer = (new ProductLabelCriteriaTransfer())
+            ->setPagination(
+                (new PaginationTransfer())->setOffset(1)->setLimit(2),
+            );
+
+        // Act
+        $productLabelCollectionTransfer = $this->tester->getFacade()->getProductLabelCollection($productLabelCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(2, $productLabelCollectionTransfer->getProductLabels());
+        $this->assertSame(4, $productLabelCollectionTransfer->getPagination()->getNbResults());
+        $this->assertSame(
+            $productLabelTransfer1->getIdProductLabel(),
+            $productLabelCollectionTransfer->getProductLabels()->offsetGet(0)->getIdProductLabel(),
+        );
+        $this->assertSame(
+            $productLabelTransfer2->getIdProductLabel(),
+            $productLabelCollectionTransfer->getProductLabels()->offsetGet(1)->getIdProductLabel(),
+        );
     }
 
     /**

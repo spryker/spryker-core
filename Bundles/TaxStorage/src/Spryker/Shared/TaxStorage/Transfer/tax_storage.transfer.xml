@@ -8,6 +8,22 @@
         <property name="taxRates" type="TaxRateStorage[]" singular="taxRate"/>
     </transfer>
 
+    <transfer name="TaxSet">
+    </transfer>
+
+    <transfer name="TaxSetCollection">
+        <property name="taxSets" type="TaxSet[]" singular="taxSet"/>
+    </transfer>
+
+    <transfer name="TaxSetCriteria" strict="true">
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="offset" type="int"/>
+        <property name="limit" type="int"/>
+    </transfer>
+
     <transfer name="TaxRateStorage">
         <property name="name" type="string"/>
         <property name="country" type="string"/>

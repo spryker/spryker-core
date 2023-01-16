@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductDiscontinuedCriteriaTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedNoteResponseTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedNoteTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer;
@@ -64,6 +65,8 @@ interface ProductDiscontinuedFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinuedFacadeInterface::getProductDiscontinuedCollection()} instead.
+     *
      * @param int $idProduct
      *
      * @return \Generated\Shared\Transfer\ProductDiscontinuedResponseTransfer
@@ -100,12 +103,33 @@ interface ProductDiscontinuedFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\ProductDiscontinued\Business\ProductDiscontinuedFacadeInterface::getProductDiscontinuedCollection()} instead.
+     *
      * @param \Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer $criteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer
      */
     public function findProductDiscontinuedCollection(
         ProductDiscontinuedCriteriaFilterTransfer $criteriaFilterTransfer
+    ): ProductDiscontinuedCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Fetches a collection of discontinued products from the Persistence.
+     * - Uses `ProductDiscontinuedCriteriaTransfer.ProductDiscontinuedConditions.skus` to filter discontinued products by SKUs.
+     * - Uses `ProductDiscontinuedCriteriaTransfer.ProductDiscontinuedConditions.productDiscontinuedIds` to filter discontinued products by product discontinued IDs.
+     * - Uses `ProductDiscontinuedCriteriaTransfer.ProductDiscontinuedConditions.productIds` to filter discontinued products by product IDs.
+     * - Uses `ProductDiscontinuedCriteriaTransfer.pagination.limit` and `ProductDiscontinuedCriteriaTransfer.pagination.offset` to paginate results with limit and offset.
+     * - Returns `ProductDiscontinuedCollectionTransfer` filled with found discontinued products.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductDiscontinuedCriteriaTransfer $productDiscontinuedCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer
+     */
+    public function getProductDiscontinuedCollection(
+        ProductDiscontinuedCriteriaTransfer $productDiscontinuedCriteriaTransfer
     ): ProductDiscontinuedCollectionTransfer;
 
     /**

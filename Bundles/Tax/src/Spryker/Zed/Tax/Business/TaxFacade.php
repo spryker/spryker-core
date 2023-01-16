@@ -9,6 +9,8 @@ namespace Spryker\Zed\Tax\Business;
 
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\TaxRateTransfer;
+use Generated\Shared\Transfer\TaxSetCollectionTransfer;
+use Generated\Shared\Transfer\TaxSetCriteriaTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -445,5 +447,19 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
         return $this->getFactory()
             ->createReaderModel()
             ->findTaxSet($idTaxSet);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\TaxSetCriteriaTransfer $taxSetCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\TaxSetCollectionTransfer
+     */
+    public function getTaxSetCollection(TaxSetCriteriaTransfer $taxSetCriteriaTransfer): TaxSetCollectionTransfer
+    {
+        return $this->getRepository()->getTaxSetCollection($taxSetCriteriaTransfer);
     }
 }

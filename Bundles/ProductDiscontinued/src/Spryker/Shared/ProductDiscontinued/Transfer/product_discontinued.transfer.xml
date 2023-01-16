@@ -22,8 +22,27 @@
         <property name="isSuccessful" type="bool"/>
     </transfer>
 
+    <transfer name="ProductDiscontinuedCriteria" strict="true">
+        <property name="productDiscontinuedConditions" type="ProductDiscontinuedConditions"/>
+        <property name="withProductDiscontiniuedNotes" type="bool"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="ProductDiscontinuedConditions" strict="true">
+        <property name="productDiscontinuedIds" type="int[]" singular="idProductDiscontinued"/>
+        <property name="productIds" type="int[]" singular="idProduct"/>
+        <property name="skus" type="string[]" singular="sku"/>
+    </transfer>
+
     <transfer name="ProductDiscontinuedCollection">
         <property name="discontinuedProducts" type="ProductDiscontinued[]" singular="discontinuedProduct"/>
+        <property name="pagination" type="Pagination" strict="true"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
+        <property name="nbResults" type="int"/>
     </transfer>
 
     <transfer name="ProductDiscontinueRequest">

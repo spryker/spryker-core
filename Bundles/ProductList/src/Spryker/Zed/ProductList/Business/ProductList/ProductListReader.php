@@ -227,9 +227,11 @@ class ProductListReader implements ProductListReaderInterface
     public function getProductAbstractIdsByProductListIds(array $productListIds): array
     {
         return array_unique(
-            array_merge(
-                $this->productListRepository->getProductAbstractIdsRelatedToProductConcrete($productListIds),
-                $this->productListRepository->getProductAbstractIdsRelatedToCategories($productListIds),
+            array_filter(
+                array_merge(
+                    $this->productListRepository->getProductAbstractIdsRelatedToProductConcrete($productListIds),
+                    $this->productListRepository->getProductAbstractIdsRelatedToCategories($productListIds),
+                ),
             ),
         );
     }

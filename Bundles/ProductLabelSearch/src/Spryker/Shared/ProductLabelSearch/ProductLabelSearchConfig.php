@@ -93,4 +93,24 @@ interface ProductLabelSearchConfig
      * @var string
      */
     public const PLUGIN_PRODUCT_LABEL_DATA = 'PLUGIN_PRODUCT_LABEL_DATA';
+
+    /**
+     * Specification:
+     * - This event will be used for product label publishing.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const PRODUCT_LABEL_PUBLISH = 'ProductLabel.product_label.publish';
+
+    /**
+     * Specification:
+     * - Product label resource name, used for key generating.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const PRODUCT_LABEL_RESOURCE_NAME = 'product_label';
 }

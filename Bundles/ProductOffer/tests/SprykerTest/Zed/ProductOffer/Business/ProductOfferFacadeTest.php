@@ -14,11 +14,13 @@ use Generated\Shared\DataBuilder\ProductOfferBuilder;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
 use Spryker\Zed\ProductOffer\Business\ProductOfferBusinessFactory;
 use Spryker\Zed\ProductOffer\Persistence\ProductOfferRepositoryInterface;
 use Spryker\Zed\ProductOffer\ProductOfferDependencyProvider;
@@ -330,7 +332,7 @@ class ProductOfferFacadeTest extends Unit
         );
 
         $productOfferRepositoryMock = $this->getMockBuilder(ProductOfferRepositoryInterface::class)
-            ->onlyMethods(['get', 'findOne', 'getProductOfferStores'])
+            ->onlyMethods(['get', 'findOne', 'getProductOfferStores', 'getProductOfferCollection'])
             ->getMock();
         $productOfferRepositoryMock
             ->method('get')
@@ -722,6 +724,69 @@ class ProductOfferFacadeTest extends Unit
 
         // Assert
         $this->assertSame(0, $cartItemQuantityTransfer->getQuantity());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductOfferCollectionReturnsCorrectProductOffersWithoutPagination(): void
+    {
+        // Arrange
+        $this->tester->ensureDatabaseTableIsEmpty(SpyProductOfferQuery::create());
+        $productOfferTransfer1 = $this->tester->haveProductOffer();
+        $productOfferTransfer2 = $this->tester->haveProductOffer();
+        $productOfferTransfer3 = $this->tester->haveProductOffer();
+        $productOfferCriteriaTransfer = new ProductOfferCriteriaTransfer();
+
+        // Act
+        $productOfferCollectionTransfer = $this->tester->getFacade()->getProductOfferCollection($productOfferCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(3, $productOfferCollectionTransfer->getProductOffers());
+        $this->assertSame(
+            $productOfferTransfer1->getIdProductOffer(),
+            $productOfferCollectionTransfer->getProductOffers()->offsetGet(0)->getIdProductOffer(),
+        );
+        $this->assertSame(
+            $productOfferTransfer2->getIdProductOffer(),
+            $productOfferCollectionTransfer->getProductOffers()->offsetGet(1)->getIdProductOffer(),
+        );
+        $this->assertSame(
+            $productOfferTransfer3->getIdProductOffer(),
+            $productOfferCollectionTransfer->getProductOffers()->offsetGet(2)->getIdProductOffer(),
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductOfferCollectionReturnsPaginatedProductOffersWithLimitAndOffset(): void
+    {
+        // Arrange
+        $this->tester->ensureDatabaseTableIsEmpty(SpyProductOfferQuery::create());
+        $this->tester->haveProductOffer();
+        $productOfferTransfer1 = $this->tester->haveProductOffer();
+        $productOfferTransfer2 = $this->tester->haveProductOffer();
+        $this->tester->haveProductOffer();
+        $productOfferCriteriaTransfer = (new ProductOfferCriteriaTransfer())
+            ->setPagination(
+                (new PaginationTransfer())->setOffset(1)->setLimit(2),
+            );
+
+        // Act
+        $productOfferCollectionTransfer = $this->tester->getFacade()->getProductOfferCollection($productOfferCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(2, $productOfferCollectionTransfer->getProductOffers());
+        $this->assertSame(4, $productOfferCollectionTransfer->getPagination()->getNbResults());
+        $this->assertSame(
+            $productOfferTransfer1->getIdProductOffer(),
+            $productOfferCollectionTransfer->getProductOffers()->offsetGet(0)->getIdProductOffer(),
+        );
+        $this->assertSame(
+            $productOfferTransfer2->getIdProductOffer(),
+            $productOfferCollectionTransfer->getProductOffers()->offsetGet(1)->getIdProductOffer(),
+        );
     }
 
     /**

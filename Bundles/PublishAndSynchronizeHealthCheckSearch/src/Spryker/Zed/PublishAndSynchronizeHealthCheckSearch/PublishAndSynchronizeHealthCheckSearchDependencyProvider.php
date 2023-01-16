@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\PublishAndSynchronizeHealthCheckSearch\Dependency\Client\PublishAndSynchronizeHealthCheckSearchToSearchClientBridge;
 use Spryker\Zed\PublishAndSynchronizeHealthCheckSearch\Dependency\Facade\PublishAndSynchronizeHealthCheckSearchToEventBehaviorFacadeBridge;
+use Spryker\Zed\PublishAndSynchronizeHealthCheckSearch\Dependency\Facade\PublishAndSynchronizeHealthCheckSearchToPublishAndSynchronizeHealthCheckFacadeBridge;
 
 /**
  * @method \Spryker\Zed\PublishAndSynchronizeHealthCheckSearch\PublishAndSynchronizeHealthCheckSearchConfig getConfig()
@@ -22,6 +23,11 @@ class PublishAndSynchronizeHealthCheckSearchDependencyProvider extends AbstractB
      * @var string
      */
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+
+    /**
+     * @var string
+     */
+    public const FACADE_PUBLISH_AND_SYNCHRONIZE_HEALTH_CHECK = 'FACADE_PUBLISH_AND_SYNCHRONIZE_HEALTH_CHECK';
 
     /**
      * @var string
@@ -63,10 +69,38 @@ class PublishAndSynchronizeHealthCheckSearchDependencyProvider extends AbstractB
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    public function provideCommunicationLayerDependencies(Container $container): Container
+    {
+        $container = $this->addPublishAndSynchronizeHealthCheckFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addEventBehaviorFacade(Container $container): Container
     {
         $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new PublishAndSynchronizeHealthCheckSearchToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPublishAndSynchronizeHealthCheckFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_PUBLISH_AND_SYNCHRONIZE_HEALTH_CHECK, function (Container $container) {
+            return new PublishAndSynchronizeHealthCheckSearchToPublishAndSynchronizeHealthCheckFacadeBridge(
+                $container->getLocator()->publishAndSynchronizeHealthCheck()->facade(),
+            );
         });
 
         return $container;

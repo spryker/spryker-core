@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductDiscontinued\Persistence;
 
 use Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductDiscontinuedCriteriaTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedTransfer;
 
 interface ProductDiscontinuedRepositoryInterface
@@ -61,4 +62,13 @@ interface ProductDiscontinuedRepositoryInterface
      * @return array<int>
      */
     public function findProductAbstractIdsWithDiscontinuedConcrete(): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductDiscontinuedCriteriaTransfer $productDiscontinuedCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer
+     */
+    public function getProductDiscontinuedCollection(
+        ProductDiscontinuedCriteriaTransfer $productDiscontinuedCriteriaTransfer
+    ): ProductDiscontinuedCollectionTransfer;
 }

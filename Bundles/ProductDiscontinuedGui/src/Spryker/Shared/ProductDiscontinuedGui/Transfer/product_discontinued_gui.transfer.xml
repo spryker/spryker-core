@@ -37,6 +37,19 @@
         <property name="idProductDiscontinued" type="int"/>
     </transfer>
 
+    <transfer name="ProductDiscontinuedCriteria" strict="true">
+        <property name="productDiscontinuedConditions" type="ProductDiscontinuedConditions"/>
+        <property name="withProductDiscontiniuedNotes" type="bool"/>
+    </transfer>
+
+    <transfer name="ProductDiscontinuedConditions" strict="true">
+        <property name="productIds" type="int[]" singular="idProduct"/>
+    </transfer>
+
+    <transfer name="ProductDiscontinuedCollection">
+        <property name="discontinuedProducts" type="ProductDiscontinued[]" singular="discontinuedProduct"/>
+    </transfer>
+
     <transfer name="Locale">
         <property name="idLocale" type="int"/>
     </transfer>

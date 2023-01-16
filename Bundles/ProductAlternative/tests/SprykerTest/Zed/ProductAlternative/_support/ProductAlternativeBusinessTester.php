@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\ProductAlternative;
 
 use Codeception\Actor;
+use Orm\Zed\ProductAlternative\Persistence\SpyProductAlternativeQuery;
 
 /**
  * @method void wantToTest($text)
@@ -28,4 +29,12 @@ use Codeception\Actor;
 class ProductAlternativeBusinessTester extends Actor
 {
     use _generated\ProductAlternativeBusinessTesterActions;
+
+    /**
+     * @return void
+     */
+    public function ensureProductAlternativeTableIsEmpty(): void
+    {
+        SpyProductAlternativeQuery::create()->deleteAll();
+    }
 }

@@ -7,9 +7,12 @@
 
 namespace Spryker\Zed\TaxProductStorage\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\ProductAbstractCollectionTransfer;
+use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Generated\Shared\Transfer\TaxProductStorageTransfer;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
+use Propel\Runtime\Collection\ObjectCollection;
 
 class TaxProductStorageMapper
 {
@@ -29,6 +32,25 @@ class TaxProductStorageMapper
         }
 
         return $taxProductStorageTransfers;
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\SpyProductAbstract> $productAbstractEntities
+     * @param \Generated\Shared\Transfer\ProductAbstractCollectionTransfer $productAbstractCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractCollectionTransfer
+     */
+    public function mapProductAbstractEntitiesToProductAbstractCollectionTransfer(
+        ObjectCollection $productAbstractEntities,
+        ProductAbstractCollectionTransfer $productAbstractCollectionTransfer
+    ): ProductAbstractCollectionTransfer {
+        foreach ($productAbstractEntities as $productAbstractEntity) {
+            $productAbstractCollectionTransfer->addProductAbstract(
+                (new ProductAbstractTransfer())->fromArray($productAbstractEntity->toArray(), true),
+            );
+        }
+
+        return $productAbstractCollectionTransfer;
     }
 
     /**

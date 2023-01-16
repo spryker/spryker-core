@@ -8,11 +8,15 @@
 namespace Spryker\Zed\ProductLabel\Persistence;
 
 use Generated\Shared\Transfer\FilterTransfer;
+use Generated\Shared\Transfer\PaginationTransfer;
+use Generated\Shared\Transfer\ProductLabelCollectionTransfer;
 use Generated\Shared\Transfer\ProductLabelCriteriaTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Orm\Zed\ProductLabel\Persistence\Map\SpyProductLabelTableMap;
+use Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -294,5 +298,181 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
                 ->filterByFkProductAbstract($idProductAbstract)
             ->endUse()
             ->exists();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductLabelCriteriaTransfer $productLabelCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelCollectionTransfer
+     */
+    public function getProductLabelCollection(
+        ProductLabelCriteriaTransfer $productLabelCriteriaTransfer
+    ): ProductLabelCollectionTransfer {
+        $productLabelCollectionTransfer = new ProductLabelCollectionTransfer();
+        $productLabelQuery = $this->getFactory()->createProductLabelQuery();
+
+        $paginationTransfer = $productLabelCriteriaTransfer->getPagination();
+        if ($paginationTransfer) {
+            $productLabelQuery = $this->applyProductLabelPagination($productLabelQuery, $paginationTransfer);
+            $productLabelCollectionTransfer->setPagination($paginationTransfer);
+        }
+
+        $productLabelEntities = $productLabelQuery->find();
+        $productLabelEntitiesIndexedByProductLabelIds = $this->indexProductLabelEntitiesByProductLabelIds($productLabelEntities);
+
+        $this->expandProductLabelWithProductLabelStores($productLabelEntitiesIndexedByProductLabelIds, $productLabelCriteriaTransfer);
+        $this->expandProductLabelWithProductLabelLocalizedAttributes($productLabelEntitiesIndexedByProductLabelIds, $productLabelCriteriaTransfer);
+        $this->expandProductLabelWithProductLabelProductAbstracts($productLabelEntitiesIndexedByProductLabelIds, $productLabelCriteriaTransfer);
+
+        return $this->getFactory()
+            ->createProductLabelMapper()
+            ->mapProductLabelEntitiesToProductLabelCollectionTransfer(
+                $productLabelEntities,
+                $productLabelCollectionTransfer,
+            );
+    }
+
+    /**
+     * @param \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery $productLabelQuery
+     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
+     *
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery
+     */
+    protected function applyProductLabelPagination(
+        SpyProductLabelQuery $productLabelQuery,
+        PaginationTransfer $paginationTransfer
+    ): SpyProductLabelQuery {
+        $paginationTransfer->setNbResults($productLabelQuery->count());
+
+        if ($paginationTransfer->getLimit() !== null && $paginationTransfer->getOffset() !== null) {
+            return $productLabelQuery
+                ->limit($paginationTransfer->getLimit())
+                ->offset($paginationTransfer->getOffset());
+        }
+
+        return $productLabelQuery;
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductLabel\Persistence\SpyProductLabel> $productLabelEntities
+     *
+     * @return array<int, \Orm\Zed\ProductLabel\Persistence\SpyProductLabel>
+     */
+    protected function indexProductLabelEntitiesByProductLabelIds(ObjectCollection $productLabelEntities): array
+    {
+        $productLabelEntitiesIndexedByProductLabelIds = [];
+        foreach ($productLabelEntities as $productLabelEntity) {
+            $productLabelEntitiesIndexedByProductLabelIds[$productLabelEntity->getIdProductLabel()] = $productLabelEntity;
+        }
+
+        return $productLabelEntitiesIndexedByProductLabelIds;
+    }
+
+    /**
+     * @param array<int, \Orm\Zed\ProductLabel\Persistence\SpyProductLabel> $productLabelEntitiesIndexedByProductLabelIds
+     * @param \Generated\Shared\Transfer\ProductLabelCriteriaTransfer $productLabelCriteriaTransfer
+     *
+     * @return array<int, \Orm\Zed\ProductLabel\Persistence\SpyProductLabel>
+     */
+    protected function expandProductLabelWithProductLabelStores(
+        array $productLabelEntitiesIndexedByProductLabelIds,
+        ProductLabelCriteriaTransfer $productLabelCriteriaTransfer
+    ): array {
+        foreach ($productLabelEntitiesIndexedByProductLabelIds as $productLabelEntity) {
+            $productLabelEntity->initProductLabelStores(false);
+        }
+
+        if (!$productLabelCriteriaTransfer->getWithProductLabelStores()) {
+            return $productLabelEntitiesIndexedByProductLabelIds;
+        }
+
+        $productLabelStoreEntities = $this->getFactory()
+            ->createProductLabelStoreQuery()
+            ->leftJoinWithStore()
+            ->filterByFkProductLabel_In(array_keys($productLabelEntitiesIndexedByProductLabelIds))
+            ->find();
+
+        foreach ($productLabelStoreEntities as $productLabelStoreEntity) {
+            $productLabelId = $productLabelStoreEntity->getFkProductLabel();
+            if (!isset($productLabelEntitiesIndexedByProductLabelIds[$productLabelId])) {
+                continue;
+            }
+
+            $productLabelEntitiesIndexedByProductLabelIds[$productLabelId]->addProductLabelStore($productLabelStoreEntity);
+        }
+
+        return $productLabelEntitiesIndexedByProductLabelIds;
+    }
+
+    /**
+     * @param array<int, \Orm\Zed\ProductLabel\Persistence\SpyProductLabel> $productLabelEntitiesIndexedByProductLabelIds
+     * @param \Generated\Shared\Transfer\ProductLabelCriteriaTransfer $productLabelCriteriaTransfer
+     *
+     * @return array<int, \Orm\Zed\ProductLabel\Persistence\SpyProductLabel>
+     */
+    protected function expandProductLabelWithProductLabelLocalizedAttributes(
+        array $productLabelEntitiesIndexedByProductLabelIds,
+        ProductLabelCriteriaTransfer $productLabelCriteriaTransfer
+    ): array {
+        foreach ($productLabelEntitiesIndexedByProductLabelIds as $productLabelEntity) {
+            $productLabelEntity->initSpyProductLabelLocalizedAttributess(false);
+        }
+
+        if (!$productLabelCriteriaTransfer->getWithProductLabelLocalizedAttributes()) {
+            return $productLabelEntitiesIndexedByProductLabelIds;
+        }
+
+        $productLabelLocalizedAttributeEntities = $this->getFactory()
+            ->createLocalizedAttributesQuery()
+            ->leftJoinWithSpyLocale()
+            ->leftJoinWithSpyProductLabel()
+            ->filterByFkProductLabel_In(array_keys($productLabelEntitiesIndexedByProductLabelIds))
+            ->find();
+
+        foreach ($productLabelLocalizedAttributeEntities as $productLabelLocalizedAttributeEntity) {
+            $productLabelId = $productLabelLocalizedAttributeEntity->getFkProductLabel();
+            if (!isset($productLabelEntitiesIndexedByProductLabelIds[$productLabelId])) {
+                continue;
+            }
+
+            $productLabelEntitiesIndexedByProductLabelIds[$productLabelId]->addSpyProductLabelLocalizedAttributes($productLabelLocalizedAttributeEntity);
+        }
+
+        return $productLabelEntitiesIndexedByProductLabelIds;
+    }
+
+    /**
+     * @param array<int, \Orm\Zed\ProductLabel\Persistence\SpyProductLabel> $productLabelEntitiesIndexedByProductLabelIds
+     * @param \Generated\Shared\Transfer\ProductLabelCriteriaTransfer $productLabelCriteriaTransfer
+     *
+     * @return array<int, \Orm\Zed\ProductLabel\Persistence\SpyProductLabel>
+     */
+    protected function expandProductLabelWithProductLabelProductAbstracts(
+        array $productLabelEntitiesIndexedByProductLabelIds,
+        ProductLabelCriteriaTransfer $productLabelCriteriaTransfer
+    ): array {
+        foreach ($productLabelEntitiesIndexedByProductLabelIds as $productLabelEntity) {
+            $productLabelEntity->initSpyProductLabelProductAbstracts(false);
+        }
+
+        if (!$productLabelCriteriaTransfer->getWithProductLabelProductAbstracts()) {
+            return $productLabelEntitiesIndexedByProductLabelIds;
+        }
+
+        $productLabelProductAbstractEntities = $this->getFactory()
+            ->createProductRelationQuery()
+            ->filterByFkProductLabel_In(array_keys($productLabelEntitiesIndexedByProductLabelIds))
+            ->find();
+
+        foreach ($productLabelProductAbstractEntities as $productLabelProductAbstractEntity) {
+            $productLabelId = $productLabelProductAbstractEntity->getFkProductLabel();
+            if (!isset($productLabelEntitiesIndexedByProductLabelIds[$productLabelId])) {
+                continue;
+            }
+
+            $productLabelEntitiesIndexedByProductLabelIds[$productLabelId]->addSpyProductLabelProductAbstract($productLabelProductAbstractEntity);
+        }
+
+        return $productLabelEntitiesIndexedByProductLabelIds;
     }
 }

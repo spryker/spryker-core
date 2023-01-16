@@ -10,13 +10,14 @@
         "spryker/kernel": "^3.37.0",
         "spryker/locale": "^3.0.0",
         "spryker/product-alternative-storage-extension": "^1.0.0",
-        "spryker/product-discontinued": "^1.0.0",
+        "spryker/product-discontinued": "^1.9.0",
+        "spryker/publisher-extension": "^1.0.0",
         "spryker/quick-order-extension": "^1.1.0",
         "spryker/storage": "^3.4.0",
         "spryker/synchronization": "^1.0.0",
         "spryker/synchronization-behavior": "^1.0.0",
         "spryker/synchronization-extension": "^1.1.0",
-        "spryker/transfer": "^3.25.0"
+        "spryker/transfer": "^3.27.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*",

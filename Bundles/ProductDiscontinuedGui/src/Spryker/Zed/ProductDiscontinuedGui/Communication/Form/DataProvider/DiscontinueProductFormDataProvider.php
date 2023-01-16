@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ProductDiscontinuedGui\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductDiscontinuedConditionsTransfer;
+use Generated\Shared\Transfer\ProductDiscontinuedCriteriaTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedNoteTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedTransfer;
 use Spryker\Zed\ProductDiscontinuedGui\Communication\Form\DiscontinueProductForm;
@@ -63,8 +65,20 @@ class DiscontinueProductFormDataProvider
      */
     protected function findProductDiscontinuedByProductId(int $idProductConcrete): ?ProductDiscontinuedTransfer
     {
-        return $this->productDiscontinuedFacade->findProductDiscontinuedByProductId($idProductConcrete)
-            ->getProductDiscontinued();
+        $productDiscontinuedCriteriaTransfer = (new ProductDiscontinuedCriteriaTransfer())
+            ->setWithProductDiscontiniuedNotes(true)
+            ->setProductDiscontinuedConditions(
+                (new ProductDiscontinuedConditionsTransfer())->addIdProduct($idProductConcrete),
+            );
+
+        $productDiscontinuedCollectionTransfer = $this->productDiscontinuedFacade
+            ->getProductDiscontinuedCollection($productDiscontinuedCriteriaTransfer);
+
+        if ($productDiscontinuedCollectionTransfer->getDiscontinuedProducts()->count() === 0) {
+            return null;
+        }
+
+        return $productDiscontinuedCollectionTransfer->getDiscontinuedProducts()->getIterator()->current();
     }
 
     /**

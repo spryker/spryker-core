@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductAlternative\Persistence;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductAlternativeCollectionTransfer;
+use Generated\Shared\Transfer\ProductAlternativeCriteriaTransfer;
 use Generated\Shared\Transfer\ProductAlternativeListItemTransfer;
 use Generated\Shared\Transfer\ProductAlternativeTransfer;
 
@@ -61,4 +62,13 @@ interface ProductAlternativeRepositoryInterface
      * @return array<int>
      */
     public function findProductAbstractIdsWhichConcreteHasAlternative(): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAlternativeCriteriaTransfer $productAlternativeCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAlternativeCollectionTransfer
+     */
+    public function getProductAlternativeCollection(
+        ProductAlternativeCriteriaTransfer $productAlternativeCriteriaTransfer
+    ): ProductAlternativeCollectionTransfer;
 }

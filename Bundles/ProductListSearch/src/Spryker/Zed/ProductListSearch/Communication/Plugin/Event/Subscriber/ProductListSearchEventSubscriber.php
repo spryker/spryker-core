@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductListSearch\Communication\Plugin\Event\Subscriber;
 
+use Spryker\Shared\ProductListSearch\ProductListSearchConfig;
 use Spryker\Zed\Event\Dependency\EventCollectionInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -58,7 +59,7 @@ class ProductListSearchEventSubscriber extends AbstractPlugin implements EventSu
         $this->addProductUpdateSearchListener($eventCollection);
         $this->addProductDeleteSearchListener($eventCollection);
 
-        $this->addProductListUpdateSearchListener($eventCollection);
+        $this->addProductListSearchListener($eventCollection);
 
         $this->addProductListUpdateProductConcretePageSearchPublishListener($eventCollection);
 
@@ -218,9 +219,10 @@ class ProductListSearchEventSubscriber extends AbstractPlugin implements EventSu
      *
      * @return void
      */
-    protected function addProductListUpdateSearchListener(EventCollectionInterface $eventCollection): void
+    protected function addProductListSearchListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection->addListenerQueued(ProductListEvents::ENTITY_SPY_PRODUCT_LIST_UPDATE, new ProductListSearchListener(), 0, null, $this->getConfig()->getEventQueueName());
+        $eventCollection->addListenerQueued(ProductListSearchConfig::PRODUCT_LIST_PUBLISH, new ProductListSearchListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**

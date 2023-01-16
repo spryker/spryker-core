@@ -30,6 +30,7 @@
 
     <transfer name="ProductLabelCriteria">
         <property name="productAbstractIds" type="int[]" singular="productAbstractId"/>
+        <property name="pagination" type="Pagination" strict="true"/>
     </transfer>
 
     <transfer name="ProductLabelProductAbstract">
@@ -41,6 +42,15 @@
 
     <transfer name="StoreRelation">
         <property name="stores" type="Store[]" singular="stores"/>
+    </transfer>
+
+    <transfer name="ProductLabelCollection" strict="true">
+        <property name="productLabels" type="ProductLabel[]" singular="productLabel"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="offset" type="int"/>
+        <property name="limit" type="int"/>
     </transfer>
 
 </transfers>

@@ -94,7 +94,7 @@ class ProductOfferStorageConfig
 
     /**
      * Specification:
-     * - Resource name, this will use for key generating.
+     * - Product offer resource name, used for key generating.
      *
      * @api
      *

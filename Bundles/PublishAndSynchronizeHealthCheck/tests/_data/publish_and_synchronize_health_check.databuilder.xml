@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<transfers
+    xmlns="spryker:databuilder-01"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="spryker:databuilder-01 http://static.spryker.com/databuilder-01.xsd"
+>
+
+    <transfer name="PublishAndSynchronizeHealthCheck">
+        <property name="healthCheckKey" dataBuilderRule="unique()->sentence(2)"/>
+        <property name="healthCheckData" dataBuilderRule="unique()->sentence(2)"/>
+    </transfer>
+
+</transfers>

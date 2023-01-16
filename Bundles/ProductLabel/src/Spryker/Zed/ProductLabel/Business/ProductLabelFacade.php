@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductLabel\Business;
 
 use Generated\Shared\Transfer\FilterTransfer;
+use Generated\Shared\Transfer\ProductLabelCollectionTransfer;
 use Generated\Shared\Transfer\ProductLabelCriteriaTransfer;
 use Generated\Shared\Transfer\ProductLabelResponseTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
@@ -293,5 +294,20 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
     public function getProductLabelProductAbstractsByFilter(FilterTransfer $filterTransfer): array
     {
         return $this->getRepository()->getProductLabelProductAbstractsByFilter($filterTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductLabelCriteriaTransfer $productLabelCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelCollectionTransfer
+     */
+    public function getProductLabelCollection(
+        ProductLabelCriteriaTransfer $productLabelCriteriaTransfer
+    ): ProductLabelCollectionTransfer {
+        return $this->getRepository()->getProductLabelCollection($productLabelCriteriaTransfer);
     }
 }

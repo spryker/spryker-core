@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\TaxProductStorage\Persistence;
 
+use Generated\Shared\Transfer\ProductAbstractCollectionTransfer;
+use Generated\Shared\Transfer\ProductAbstractCriteriaTransfer;
+
 interface TaxProductStorageRepositoryInterface
 {
     /**
@@ -28,4 +31,11 @@ interface TaxProductStorageRepositoryInterface
      * @return array<\Generated\Shared\Transfer\SynchronizationDataTransfer>
      */
     public function getAllSynchronizationDataTransfersFromTaxProductStorages(): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractCriteriaTransfer $productAbstractCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractCollectionTransfer
+     */
+    public function getProductAbstractCollection(ProductAbstractCriteriaTransfer $productAbstractCriteriaTransfer): ProductAbstractCollectionTransfer;
 }

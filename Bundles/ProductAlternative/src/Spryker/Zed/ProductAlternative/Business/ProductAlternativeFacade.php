@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductAlternative\Business;
 
+use Generated\Shared\Transfer\ProductAlternativeCollectionTransfer;
+use Generated\Shared\Transfer\ProductAlternativeCriteriaTransfer;
 use Generated\Shared\Transfer\ProductAlternativeListTransfer;
 use Generated\Shared\Transfer\ProductAlternativeResponseTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -111,5 +113,20 @@ class ProductAlternativeFacade extends AbstractFacade implements ProductAlternat
         return $this->getFactory()
             ->createProductAlternativeReader()
             ->findProductAbstractIdsWhichConcreteHasAlternative();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAlternativeCriteriaTransfer $productAlternativeCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAlternativeCollectionTransfer
+     */
+    public function getProductAlternativeCollection(
+        ProductAlternativeCriteriaTransfer $productAlternativeCriteriaTransfer
+    ): ProductAlternativeCollectionTransfer {
+        return $this->getRepository()->getProductAlternativeCollection($productAlternativeCriteriaTransfer);
     }
 }

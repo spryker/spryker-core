@@ -45,6 +45,20 @@
         <property name="reference" type="string"/>
     </transfer>
 
+    <transfer name="ProductDiscontinuedCriteria" strict="true">
+        <property name="pagination" type="Pagination"/>
+        <property name="productDiscontinuedConditions" type="ProductDiscontinuedConditions"/>
+    </transfer>
+
+    <transfer name="ProductDiscontinuedConditions" strict="true">
+        <property name="productDiscontinuedIds" type="int[]" singular="idProductDiscontinued"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
+    </transfer>
+
     <transfer name="ProductDiscontinuedCollection">
         <property name="discontinuedProducts" type="ProductDiscontinued[]" singular="discontinuedProduct"/>
     </transfer>
@@ -60,7 +74,7 @@
         <property name="idLocale" type="int"/>
     </transfer>
 
-    <transfer name="ProductDiscontinuedCriteriaFilter">
+    <transfer name="ProductDiscontinuedCriteriaFilter" deprecated="Use ProductDiscontinuedCriteria instead.">
         <property name="ids" type="array" singular="ids"/>
     </transfer>
 

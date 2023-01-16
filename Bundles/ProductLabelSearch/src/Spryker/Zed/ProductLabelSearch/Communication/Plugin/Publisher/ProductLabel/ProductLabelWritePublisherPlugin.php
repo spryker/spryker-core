@@ -47,6 +47,7 @@ class ProductLabelWritePublisherPlugin extends AbstractPlugin implements Publish
         return [
             ProductLabelSearchConfig::ENTITY_SPY_PRODUCT_LABEL_UPDATE,
             ProductLabelSearchConfig::ENTITY_SPY_PRODUCT_LABEL_DELETE,
+            ProductLabelSearchConfig::PRODUCT_LABEL_PUBLISH,
         ];
     }
 }

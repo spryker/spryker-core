@@ -8,7 +8,9 @@
 namespace Spryker\Zed\ProductAlternative\Persistence;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ProductAlternativeCollectionTransfer;
+use Generated\Shared\Transfer\ProductAlternativeCriteriaTransfer;
 use Generated\Shared\Transfer\ProductAlternativeListItemTransfer;
 use Generated\Shared\Transfer\ProductAlternativeTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
@@ -19,6 +21,7 @@ use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\ProductAlternative\Persistence\Map\SpyProductAlternativeTableMap;
+use Orm\Zed\ProductAlternative\Persistence\SpyProductAlternativeQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -153,6 +156,31 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ProductAlternativeCriteriaTransfer $productAlternativeCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAlternativeCollectionTransfer
+     */
+    public function getProductAlternativeCollection(
+        ProductAlternativeCriteriaTransfer $productAlternativeCriteriaTransfer
+    ): ProductAlternativeCollectionTransfer {
+        $productAlternativeCollectionTransfer = new ProductAlternativeCollectionTransfer();
+        $productAlternativeQuery = $this->getFactory()->createProductAlternativePropelQuery();
+
+        $paginationTransfer = $productAlternativeCriteriaTransfer->getPagination();
+        if ($paginationTransfer) {
+            $productAlternativeQuery = $this->applyProductAlternativePagination($paginationTransfer, $productAlternativeQuery);
+            $productAlternativeCollectionTransfer->setPagination($paginationTransfer);
+        }
+
+        return $this->getFactory()
+            ->createProductAlternativeMapper()
+            ->mapProductAlternativeEntitiesToProductAlternativeCollectionTransfer(
+                $productAlternativeQuery->find(),
+                $productAlternativeCollectionTransfer,
+            );
+    }
+
+    /**
      * @modules Product
      *
      * @param int $idProduct
@@ -265,5 +293,26 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
             ->select([SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT])
             ->find()
             ->toArray();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
+     * @param \Orm\Zed\ProductAlternative\Persistence\SpyProductAlternativeQuery $productAlternativeQuery
+     *
+     * @return \Orm\Zed\ProductAlternative\Persistence\SpyProductAlternativeQuery
+     */
+    protected function applyProductAlternativePagination(
+        PaginationTransfer $paginationTransfer,
+        SpyProductAlternativeQuery $productAlternativeQuery
+    ): SpyProductAlternativeQuery {
+        $paginationTransfer->setNbResults($productAlternativeQuery->count());
+
+        if ($paginationTransfer->getLimit() !== null && $paginationTransfer->getOffset() !== null) {
+            return $productAlternativeQuery
+                ->limit($paginationTransfer->getLimit())
+                ->offset($paginationTransfer->getOffset());
+        }
+
+        return $productAlternativeQuery;
     }
 }

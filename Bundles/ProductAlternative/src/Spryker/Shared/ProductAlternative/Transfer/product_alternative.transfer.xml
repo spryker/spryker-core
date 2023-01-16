@@ -18,8 +18,19 @@
         <property name="text" type="string"/>
     </transfer>
 
+    <transfer name="ProductAlternativeCriteria" strict="true">
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
     <transfer name="ProductAlternativeCollection">
         <property name="productAlternatives" type="ProductAlternative[]" singular="productAlternative"/>
+        <property name="pagination" type="Pagination" strict="true"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
+        <property name="nbResults" type="int"/>
     </transfer>
 
     <transfer name="ProductAlternativeCreateRequest">

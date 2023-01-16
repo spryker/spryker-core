@@ -29,7 +29,7 @@ class ProductDiscontinuedEntityManager extends AbstractEntityManager implements 
             ->findOneOrCreate();
         $productDiscontinuedEntity = $this->getFactory()
             ->createProductDiscontinuedMapper()
-            ->mapTransferToEntity(
+            ->mapProductDiscontinuedTransferToProductDiscontinuedEntity(
                 $productDiscontinuedTransfer,
                 $productDiscontinuedEntity,
             );

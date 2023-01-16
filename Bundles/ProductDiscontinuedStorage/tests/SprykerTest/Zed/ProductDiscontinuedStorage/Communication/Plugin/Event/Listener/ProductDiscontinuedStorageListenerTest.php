@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\ProductDiscontinuedStorage\Communication\Plugin\Event\
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
+use Spryker\Shared\ProductDiscontinuedStorage\ProductDiscontinuedStorageConfig;
 use Spryker\Zed\ProductDiscontinued\Dependency\ProductDiscontinuedEvents;
 use Spryker\Zed\ProductDiscontinuedStorage\Communication\Plugin\Event\Listener\ProductDiscontinuedStorageListener;
 use Spryker\Zed\ProductDiscontinuedStorage\Communication\Plugin\Event\Listener\ProductDiscontinuedStoragePublishListener;
@@ -78,7 +79,7 @@ class ProductDiscontinuedStorageListenerTest extends Unit
         // Act
         $this->productDiscontinuedStorageListener->handleBulk(
             $eventTransfers,
-            ProductDiscontinuedEvents::PRODUCT_DISCONTINUED_PUBLISH,
+            ProductDiscontinuedStorageConfig::PRODUCT_DISCONTINUED_PUBLISH,
         );
         $productDiscontinuedEntityTransfers = $this->productDiscontinuedStorageRepository
             ->findProductDiscontinuedStorageEntitiesByIds(
@@ -102,7 +103,7 @@ class ProductDiscontinuedStorageListenerTest extends Unit
         // Act
         $this->productDiscontinuedStorageListener->handleBulk(
             $eventTransfers,
-            ProductDiscontinuedEvents::PRODUCT_DISCONTINUED_PUBLISH,
+            ProductDiscontinuedStorageConfig::PRODUCT_DISCONTINUED_PUBLISH,
         );
         $this->productDiscontinuedStorageListener->handleBulk(
             $eventTransfers,
@@ -135,7 +136,7 @@ class ProductDiscontinuedStorageListenerTest extends Unit
 
         $productDiscontinuedStoragePublishListener->handleBulk(
             $eventTransfers,
-            ProductDiscontinuedEvents::PRODUCT_DISCONTINUED_PUBLISH,
+            ProductDiscontinuedStorageConfig::PRODUCT_DISCONTINUED_PUBLISH,
         );
 
         $productDiscontinuedEntityTransfers = $this->productDiscontinuedStorageRepository

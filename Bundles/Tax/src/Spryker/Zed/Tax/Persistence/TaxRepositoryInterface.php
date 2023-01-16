@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Tax\Persistence;
 
 use Generated\Shared\Transfer\TaxRateTransfer;
+use Generated\Shared\Transfer\TaxSetCollectionTransfer;
+use Generated\Shared\Transfer\TaxSetCriteriaTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 
 interface TaxRepositoryInterface
@@ -40,4 +42,11 @@ interface TaxRepositoryInterface
      * @return \Generated\Shared\Transfer\TaxSetTransfer|null
      */
     public function findTaxSet(int $idTaxSet): ?TaxSetTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\TaxSetCriteriaTransfer $taxSetCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\TaxSetCollectionTransfer
+     */
+    public function getTaxSetCollection(TaxSetCriteriaTransfer $taxSetCriteriaTransfer): TaxSetCollectionTransfer;
 }

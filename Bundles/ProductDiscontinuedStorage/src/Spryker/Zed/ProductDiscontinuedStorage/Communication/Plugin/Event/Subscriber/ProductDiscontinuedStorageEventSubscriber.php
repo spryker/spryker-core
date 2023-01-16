@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductDiscontinuedStorage\Communication\Plugin\Event\Subscriber;
 
+use Spryker\Shared\ProductDiscontinuedStorage\ProductDiscontinuedStorageConfig;
 use Spryker\Zed\Event\Dependency\EventCollectionInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -71,7 +72,7 @@ class ProductDiscontinuedStorageEventSubscriber extends AbstractPlugin implement
     protected function addProductDiscontinuedPublishListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection
-            ->addListenerQueued(ProductDiscontinuedEvents::PRODUCT_DISCONTINUED_PUBLISH, new ProductDiscontinuedStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
+            ->addListenerQueued(ProductDiscontinuedStorageConfig::PRODUCT_DISCONTINUED_PUBLISH, new ProductDiscontinuedStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**

@@ -14,6 +14,7 @@ use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
 /**
  * @method \Spryker\Zed\PublishAndSynchronizeHealthCheckSearch\PublishAndSynchronizeHealthCheckSearchConfig getConfig()
  * @method \Spryker\Zed\PublishAndSynchronizeHealthCheckSearch\Business\PublishAndSynchronizeHealthCheckSearchFacadeInterface getFacade()
+ * @method \Spryker\Zed\PublishAndSynchronizeHealthCheckSearch\Communication\PublishAndSynchronizeHealthCheckSearchCommunicationFactory getFactory()
  */
 class PublishAndSynchronizeHealthCheckSearchWritePublisherPlugin extends AbstractPlugin implements PublisherPluginInterface
 {
@@ -44,6 +45,7 @@ class PublishAndSynchronizeHealthCheckSearchWritePublisherPlugin extends Abstrac
         return [
             PublishAndSynchronizeHealthCheckSearchConfig::ENTITY_SPY_PUBLISH_AND_SYNCHRONIZE_HEALTH_CHECK_CREATE,
             PublishAndSynchronizeHealthCheckSearchConfig::ENTITY_SPY_PUBLISH_AND_SYNCHRONIZE_HEALTH_CHECK_UPDATE,
+            PublishAndSynchronizeHealthCheckSearchConfig::PUBLISH_AND_SYNCHRONIZE_HEALTH_CHECK_PUBLISH,
         ];
     }
 }

@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\PublishAndSynchronizeHealthCheckStorage\Business\PublishAndSynchronizeHealthCheckStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\PublishAndSynchronizeHealthCheckStorage\PublishAndSynchronizeHealthCheckStorageConfig getConfig()
+ * @method \Spryker\Zed\PublishAndSynchronizeHealthCheckStorage\Communication\PublishAndSynchronizeHealthCheckStorageCommunicationFactory getFactory()
  */
 class PublishAndSynchronizeHealthCheckStoragePlugin extends AbstractPlugin implements HealthCheckPluginInterface
 {

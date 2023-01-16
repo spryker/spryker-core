@@ -7,6 +7,24 @@
         <property name="idProductAbstract" type="int"/>
     </transfer>
 
+    <transfer name="ProductAbstractCollection">
+        <property name="productAbstracts" type="ProductAbstract[]" singular="productAbstract"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="ProductAbstract">
+    </transfer>
+
+    <transfer name="ProductAbstractCriteria" strict="true">
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="offset" type="int"/>
+        <property name="limit" type="int"/>
+        <property name="nbResults" type="int"/>
+    </transfer>
+
     <transfer name="SynchronizationData">
         <property name="reference" type="string"/>
         <property name="data" type="string"/>

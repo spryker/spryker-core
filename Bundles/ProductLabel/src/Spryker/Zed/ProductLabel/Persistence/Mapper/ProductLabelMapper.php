@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductLabel\Persistence\Mapper;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ProductLabelCollectionTransfer;
 use Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
@@ -152,5 +153,24 @@ class ProductLabelMapper
         $productLabelEntity->fromArray($productLabelTransfer->toArray());
 
         return $productLabelEntity;
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductLabel\Persistence\SpyProductLabel> $productLabelEntities
+     * @param \Generated\Shared\Transfer\ProductLabelCollectionTransfer $productLabelCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelCollectionTransfer
+     */
+    public function mapProductLabelEntitiesToProductLabelCollectionTransfer(
+        ObjectCollection $productLabelEntities,
+        ProductLabelCollectionTransfer $productLabelCollectionTransfer
+    ): ProductLabelCollectionTransfer {
+        foreach ($productLabelEntities as $productLabelEntity) {
+            $productLabelCollectionTransfer->addProductLabel(
+                $this->mapProductLabelEntityToProductLabelTransfer($productLabelEntity, new ProductLabelTransfer()),
+            );
+        }
+
+        return $productLabelCollectionTransfer;
     }
 }

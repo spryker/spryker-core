@@ -9,6 +9,7 @@ namespace Spryker\Zed\PublishAndSynchronizeHealthCheck\Persistence;
 
 use Orm\Zed\PublishAndSynchronizeHealthCheck\Persistence\SpyPublishAndSynchronizeHealthCheckQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\PublishAndSynchronizeHealthCheck\Persistence\Propel\Mapper\PublishAndSynchronizeHealthCheckMapper;
 
 /**
  * @method \Spryker\Zed\PublishAndSynchronizeHealthCheck\Persistence\PublishAndSynchronizeHealthCheckEntityManagerInterface getEntityManager()
@@ -23,5 +24,13 @@ class PublishAndSynchronizeHealthCheckPersistenceFactory extends AbstractPersist
     public function createPublishAndSynchronizeHealthCheckQuery(): SpyPublishAndSynchronizeHealthCheckQuery
     {
         return SpyPublishAndSynchronizeHealthCheckQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\PublishAndSynchronizeHealthCheck\Persistence\Propel\Mapper\PublishAndSynchronizeHealthCheckMapper
+     */
+    public function createPublishAndSynchronizeHealthCheckMapper(): PublishAndSynchronizeHealthCheckMapper
+    {
+        return new PublishAndSynchronizeHealthCheckMapper();
     }
 }

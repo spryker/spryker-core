@@ -29,3 +29,4 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\PropelTableRelationSanitizer
                 - \SprykerTest\Shared\Store\Helper\StoreDataHelper
                 - \SprykerTest\Shared\Testify\Helper\BusinessHelper
+                - \SprykerTest\Shared\Testify\Helper\TableRelationsCleanupHelper

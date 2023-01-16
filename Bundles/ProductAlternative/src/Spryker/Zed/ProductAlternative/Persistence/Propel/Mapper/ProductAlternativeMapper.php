@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ProductAlternativeListItemTransfer;
 use Generated\Shared\Transfer\ProductAlternativeTransfer;
 use Orm\Zed\ProductAlternative\Persistence\SpyProductAlternative;
 use Propel\Runtime\Collection\Collection;
+use Propel\Runtime\Collection\ObjectCollection;
 
 class ProductAlternativeMapper implements ProductAlternativeMapperInterface
 {
@@ -51,6 +52,25 @@ class ProductAlternativeMapper implements ProductAlternativeMapperInterface
             return $productAlternativeCollectionTransfer;
         }
 
+        foreach ($productAlternativeEntities as $productAlternativeEntity) {
+            $productAlternativeCollectionTransfer->addProductAlternative(
+                $this->mapProductAlternativeTransfer($productAlternativeEntity),
+            );
+        }
+
+        return $productAlternativeCollectionTransfer;
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductAlternative\Persistence\SpyProductAlternative> $productAlternativeEntities
+     * @param \Generated\Shared\Transfer\ProductAlternativeCollectionTransfer $productAlternativeCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAlternativeCollectionTransfer
+     */
+    public function mapProductAlternativeEntitiesToProductAlternativeCollectionTransfer(
+        ObjectCollection $productAlternativeEntities,
+        ProductAlternativeCollectionTransfer $productAlternativeCollectionTransfer
+    ): ProductAlternativeCollectionTransfer {
         foreach ($productAlternativeEntities as $productAlternativeEntity) {
             $productAlternativeCollectionTransfer->addProductAlternative(
                 $this->mapProductAlternativeTransfer($productAlternativeEntity),

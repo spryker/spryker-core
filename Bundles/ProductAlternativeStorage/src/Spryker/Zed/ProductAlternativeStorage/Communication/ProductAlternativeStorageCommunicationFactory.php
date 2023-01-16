@@ -13,6 +13,7 @@ use Spryker\Zed\ProductAlternativeStorage\Communication\ProductAlternativeStorag
 use Spryker\Zed\ProductAlternativeStorage\Communication\ProductAlternativeStorageMapper\ProductReplacementForStorageMapper;
 use Spryker\Zed\ProductAlternativeStorage\Communication\ProductAlternativeStorageMapper\ProductReplacementForStorageMapperInterface;
 use Spryker\Zed\ProductAlternativeStorage\Dependency\Facade\ProductAlternativeStorageToEventBehaviorFacadeInterface;
+use Spryker\Zed\ProductAlternativeStorage\Dependency\Facade\ProductAlternativeStorageToProductAlternativeFacadeInterface;
 use Spryker\Zed\ProductAlternativeStorage\ProductAlternativeStorageDependencyProvider;
 
 /**
@@ -45,5 +46,13 @@ class ProductAlternativeStorageCommunicationFactory extends AbstractCommunicatio
     public function createProductReplacementForStorageMapper(): ProductReplacementForStorageMapperInterface
     {
         return new ProductReplacementForStorageMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductAlternativeStorage\Dependency\Facade\ProductAlternativeStorageToProductAlternativeFacadeInterface
+     */
+    public function getProductAlternativeFacade(): ProductAlternativeStorageToProductAlternativeFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductAlternativeStorageDependencyProvider::FACADE_PRODUCT_ALTERNATIVE);
     }
 }

@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\ProductList\Persistence;
 
+use Generated\Shared\Transfer\PaginationTransfer;
+use Generated\Shared\Transfer\ProductListCollectionTransfer;
+use Generated\Shared\Transfer\ProductListCriteriaTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
@@ -14,6 +17,7 @@ use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
 use Orm\Zed\ProductList\Persistence\Map\SpyProductListCategoryTableMap;
 use Orm\Zed\ProductList\Persistence\Map\SpyProductListProductConcreteTableMap;
 use Orm\Zed\ProductList\Persistence\Map\SpyProductListTableMap;
+use Orm\Zed\ProductList\Persistence\SpyProductListQuery;
 use Propel\Runtime\ActiveQuery\Join;
 use Propel\Runtime\Formatter\SimpleArrayFormatter;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -617,5 +621,50 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
             ->select(SpyProductTableMap::COL_ID_PRODUCT)
             ->find()
             ->toArray();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductListCriteriaTransfer $productListCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListCollectionTransfer
+     */
+    public function getProductListCollection(ProductListCriteriaTransfer $productListCriteriaTransfer): ProductListCollectionTransfer
+    {
+        $productListCollectionTransfer = new ProductListCollectionTransfer();
+        $productListQuery = $this->getFactory()->createProductListQuery();
+
+        $paginationTransfer = $productListCriteriaTransfer->getPagination();
+        if ($paginationTransfer) {
+            $productListQuery = $this->applyProductListPagination($productListQuery, $paginationTransfer);
+            $productListCollectionTransfer->setPagination($paginationTransfer);
+        }
+
+        return $this->getFactory()
+            ->createProductListMapper()
+            ->mapProductListEntitiesToProductListCollectionTransfer(
+                $productListQuery->find(),
+                $productListCollectionTransfer,
+            );
+    }
+
+    /**
+     * @param \Orm\Zed\ProductList\Persistence\SpyProductListQuery $productListQuery
+     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
+     *
+     * @return \Orm\Zed\ProductList\Persistence\SpyProductListQuery
+     */
+    protected function applyProductListPagination(
+        SpyProductListQuery $productListQuery,
+        PaginationTransfer $paginationTransfer
+    ): SpyProductListQuery {
+        $paginationTransfer->setNbResults($productListQuery->count());
+
+        if ($paginationTransfer->getLimit() !== null && $paginationTransfer->getOffset() !== null) {
+            return $productListQuery
+                ->limit($paginationTransfer->getLimit())
+                ->offset($paginationTransfer->getOffset());
+        }
+
+        return $productListQuery;
     }
 }

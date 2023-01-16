@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\ProductList\Persistence\Mapper;
 
+use Generated\Shared\Transfer\ProductListCollectionTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
 use Generated\Shared\Transfer\SpyProductListEntityTransfer;
 use Orm\Zed\ProductList\Persistence\SpyProductList;
+use Propel\Runtime\Collection\ObjectCollection;
 
 class ProductListMapper
 {
@@ -65,5 +67,24 @@ class ProductListMapper
         $spyProductListEntity->fromArray($productListTransfer->toArray());
 
         return $spyProductListEntity;
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductList\Persistence\SpyProductList> $productListEntities
+     * @param \Generated\Shared\Transfer\ProductListCollectionTransfer $productListCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListCollectionTransfer
+     */
+    public function mapProductListEntitiesToProductListCollectionTransfer(
+        ObjectCollection $productListEntities,
+        ProductListCollectionTransfer $productListCollectionTransfer
+    ): ProductListCollectionTransfer {
+        foreach ($productListEntities as $productListEntity) {
+            $productListCollectionTransfer->addProductList(
+                $this->mapEntityToProductListTransfer($productListEntity, new ProductListTransfer()),
+            );
+        }
+
+        return $productListCollectionTransfer;
     }
 }

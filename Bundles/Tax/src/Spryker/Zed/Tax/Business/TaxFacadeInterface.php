@@ -9,6 +9,8 @@ namespace Spryker\Zed\Tax\Business;
 
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\TaxRateTransfer;
+use Generated\Shared\Transfer\TaxSetCollectionTransfer;
+use Generated\Shared\Transfer\TaxSetCriteriaTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 
 /**
@@ -381,4 +383,18 @@ interface TaxFacadeInterface
      * @return \Generated\Shared\Transfer\TaxSetTransfer|null
      */
     public function findTaxSet(int $idTaxSet): ?TaxSetTransfer;
+
+    /**
+     * Specification:
+     * - Fetches a collection of tax sets from the Persistence.
+     * - Uses `TaxSetCriteriaTransfer.pagination.limit` and `TaxSetCriteriaTransfer.pagination.offset` to paginate results with limit and offset.
+     * - Returns `TaxSetCollectionTransfer` filled with found tax sets.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\TaxSetCriteriaTransfer $taxSetCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\TaxSetCollectionTransfer
+     */
+    public function getTaxSetCollection(TaxSetCriteriaTransfer $taxSetCriteriaTransfer): TaxSetCollectionTransfer;
 }

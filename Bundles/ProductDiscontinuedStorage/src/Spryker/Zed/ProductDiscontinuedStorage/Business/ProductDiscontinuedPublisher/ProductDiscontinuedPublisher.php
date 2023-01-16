@@ -9,7 +9,8 @@ namespace Spryker\Zed\ProductDiscontinuedStorage\Business\ProductDiscontinuedPub
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer;
-use Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductDiscontinuedConditionsTransfer;
+use Generated\Shared\Transfer\ProductDiscontinuedCriteriaTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedStorageTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedTransfer;
 use Orm\Zed\ProductDiscontinuedStorage\Persistence\SpyProductDiscontinuedStorage;
@@ -158,10 +159,12 @@ class ProductDiscontinuedPublisher implements ProductDiscontinuedPublisherInterf
      */
     protected function findProductDiscontinuedCollection(array $productDiscontinuedIds): ProductDiscontinuedCollectionTransfer
     {
-        $criteriaFilterTransfer = (new ProductDiscontinuedCriteriaFilterTransfer())
-            ->setIds($productDiscontinuedIds);
+        $productDiscontinuedCriteriaTransfer = (new ProductDiscontinuedCriteriaTransfer())
+            ->setProductDiscontinuedConditions(
+                (new ProductDiscontinuedConditionsTransfer())->setProductDiscontinuedIds($productDiscontinuedIds),
+            );
 
-        return $this->productDiscontinuedFacade->findProductDiscontinuedCollection($criteriaFilterTransfer);
+        return $this->productDiscontinuedFacade->getProductDiscontinuedCollection($productDiscontinuedCriteriaTransfer);
     }
 
     /**

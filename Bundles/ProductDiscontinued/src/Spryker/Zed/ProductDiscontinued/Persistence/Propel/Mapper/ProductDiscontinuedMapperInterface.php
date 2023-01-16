@@ -16,10 +16,25 @@ interface ProductDiscontinuedMapperInterface
 {
     /**
      * @param \Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinued $productDiscontinuedEntity
+     * @param \Generated\Shared\Transfer\ProductDiscontinuedTransfer $productDiscontinuedTransfer
      *
      * @return \Generated\Shared\Transfer\ProductDiscontinuedTransfer
      */
-    public function mapProductDiscontinuedTransfer(SpyProductDiscontinued $productDiscontinuedEntity): ProductDiscontinuedTransfer;
+    public function mapProductDiscontinuedEntityToProductDiscontinuedTransfer(
+        SpyProductDiscontinued $productDiscontinuedEntity,
+        ProductDiscontinuedTransfer $productDiscontinuedTransfer
+    ): ProductDiscontinuedTransfer;
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinued> $productDiscontinuedEntities
+     * @param \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer $productDiscontinuedCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer
+     */
+    public function mapProductDiscontinuedEntitiesToProductDiscontinuedCollectionTransfer(
+        ObjectCollection $productDiscontinuedEntities,
+        ProductDiscontinuedCollectionTransfer $productDiscontinuedCollectionTransfer
+    ): ProductDiscontinuedCollectionTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ProductDiscontinuedTransfer $productDiscontinuedTransfer
@@ -27,15 +42,8 @@ interface ProductDiscontinuedMapperInterface
      *
      * @return \Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinued
      */
-    public function mapTransferToEntity(
+    public function mapProductDiscontinuedTransferToProductDiscontinuedEntity(
         ProductDiscontinuedTransfer $productDiscontinuedTransfer,
         SpyProductDiscontinued $productDiscontinuedEntity
     ): SpyProductDiscontinued;
-
-    /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $productDiscontinuedEntityCollection
-     *
-     * @return \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer
-     */
-    public function mapTransferCollection(ObjectCollection $productDiscontinuedEntityCollection): ProductDiscontinuedCollectionTransfer;
 }

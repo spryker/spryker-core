@@ -8,16 +8,16 @@
 namespace Spryker\Zed\ProductDiscontinuedStorage\Dependency\Facade;
 
 use Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer;
-use Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductDiscontinuedCriteriaTransfer;
 
 interface ProductDiscontinuedStorageToProductDiscontinuedFacadeInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer $criteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\ProductDiscontinuedCriteriaTransfer $productDiscontinuedCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer
      */
-    public function findProductDiscontinuedCollection(
-        ProductDiscontinuedCriteriaFilterTransfer $criteriaFilterTransfer
+    public function getProductDiscontinuedCollection(
+        ProductDiscontinuedCriteriaTransfer $productDiscontinuedCriteriaTransfer
     ): ProductDiscontinuedCollectionTransfer;
 }

@@ -9,6 +9,7 @@ namespace Spryker\Zed\TaxStorage\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\TaxStorage\Dependency\Facade\TaxSetStorageToEventBehaviorFacadeInterface;
+use Spryker\Zed\TaxStorage\Dependency\Facade\TaxSetStorageToTaxFacadeInterface;
 use Spryker\Zed\TaxStorage\TaxStorageDependencyProvider;
 
 /**
@@ -25,5 +26,13 @@ class TaxStorageCommunicationFactory extends AbstractCommunicationFactory
     public function getEventBehaviorFacade(): TaxSetStorageToEventBehaviorFacadeInterface
     {
         return $this->getProvidedDependency(TaxStorageDependencyProvider::FACADE_EVENT_BEHAVIOR);
+    }
+
+    /**
+     * @return \Spryker\Zed\TaxStorage\Dependency\Facade\TaxSetStorageToTaxFacadeInterface
+     */
+    public function getTaxFacade(): TaxSetStorageToTaxFacadeInterface
+    {
+        return $this->getProvidedDependency(TaxStorageDependencyProvider::FACADE_TAX);
     }
 }

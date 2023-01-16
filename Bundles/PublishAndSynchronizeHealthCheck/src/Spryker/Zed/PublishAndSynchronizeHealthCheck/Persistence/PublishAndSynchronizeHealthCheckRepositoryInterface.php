@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\PublishAndSynchronizeHealthCheck\Persistence;
 
+use Generated\Shared\Transfer\PublishAndSynchronizeHealthCheckCollectionTransfer;
+use Generated\Shared\Transfer\PublishAndSynchronizeHealthCheckCriteriaTransfer;
 use Generated\Shared\Transfer\PublishAndSynchronizeHealthCheckTransfer;
 
 interface PublishAndSynchronizeHealthCheckRepositoryInterface
@@ -17,4 +19,13 @@ interface PublishAndSynchronizeHealthCheckRepositoryInterface
      * @return \Generated\Shared\Transfer\PublishAndSynchronizeHealthCheckTransfer|null
      */
     public function findPublishAndSynchronizeHealthCheckByKey(string $key): ?PublishAndSynchronizeHealthCheckTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\PublishAndSynchronizeHealthCheckCriteriaTransfer $publishAndSynchronizeHealthCheckCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PublishAndSynchronizeHealthCheckCollectionTransfer
+     */
+    public function getPublishAndSynchronizeHealthCheckCollection(
+        PublishAndSynchronizeHealthCheckCriteriaTransfer $publishAndSynchronizeHealthCheckCriteriaTransfer
+    ): PublishAndSynchronizeHealthCheckCollectionTransfer;
 }

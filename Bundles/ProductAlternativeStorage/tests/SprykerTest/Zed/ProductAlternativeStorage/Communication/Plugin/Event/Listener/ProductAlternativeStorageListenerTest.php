@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\ProductAlternativeStorage\Communication\Plugin\Event\L
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Orm\Zed\ProductAlternative\Persistence\Map\SpyProductAlternativeTableMap;
+use Spryker\Shared\ProductAlternativeStorage\ProductAlternativeStorageConfig;
 use Spryker\Zed\ProductAlternative\Dependency\ProductAlternativeEvents;
 use Spryker\Zed\ProductAlternativeStorage\Communication\Plugin\Event\Listener\ProductAlternativeStorageListener;
 use Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepository;
@@ -86,7 +87,7 @@ class ProductAlternativeStorageListenerTest extends Unit
         // Act
         $this->productAlternativeStorageListener->handleBulk(
             $eventTransfers,
-            ProductAlternativeEvents::PRODUCT_ALTERNATIVE_PUBLISH,
+            ProductAlternativeStorageConfig::PRODUCT_ALTERNATIVE_PUBLISH,
         );
         $productDiscontinuedEntityTransfers = $this->productAlternativeStorageRepository
             ->findProductAlternativeStorageEntities(
@@ -115,7 +116,7 @@ class ProductAlternativeStorageListenerTest extends Unit
         // Act
         $this->productAlternativeStorageListener->handleBulk(
             $eventTransfers,
-            ProductAlternativeEvents::PRODUCT_ALTERNATIVE_PUBLISH,
+            ProductAlternativeStorageConfig::PRODUCT_ALTERNATIVE_PUBLISH,
         );
         $this->tester->getProductAlternativeFacade()
             ->deleteProductAlternativeByIdProductAlternative($productAlternativeTransfer->getIdProductAlternative());

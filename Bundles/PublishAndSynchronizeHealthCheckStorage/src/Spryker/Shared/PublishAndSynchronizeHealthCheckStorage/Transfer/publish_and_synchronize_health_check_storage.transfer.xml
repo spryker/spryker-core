@@ -1,5 +1,19 @@
 <?xml version="1.0"?>
 <transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+    <transfer name="PublishAndSynchronizeHealthCheckCriteria" strict="true">
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="offset" type="int"/>
+        <property name="limit" type="int"/>
+    </transfer>
+
+    <transfer name="PublishAndSynchronizeHealthCheckCollection" strict="true">
+        <property name="publishAndSynchronizeHealthChecks" type="PublishAndSynchronizeHealthCheck[]" singular="publishAndSynchronizeHealthCheck"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
     <transfer name="PublishAndSynchronizeHealthCheck">
         <property name="idPublishAndSynchronizeHealthCheck" type="int"/>
         <property name="healthCheckKey" type="string"/>

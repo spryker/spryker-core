@@ -7,10 +7,11 @@
         "php": ">=8.0",
         "spryker/event-behavior": "^1.1.0",
         "spryker/kernel": "^3.30.0",
-        "spryker/product-label": "^3.0.0",
+        "spryker/product-label": "^3.4.0",
         "spryker/product-page-search": "^0.1.0 || ^1.0.0 || ^2.2.0 || ^3.0.0",
         "spryker/product-page-search-extension": "^1.0.0",
         "spryker/publisher-extension": "^1.0.0",
+        "spryker/transfer": "^3.27.0",
         "spryker/util-sanitize": "^2.1.0"
     },
     "require-dev": {

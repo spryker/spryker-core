@@ -17,6 +17,13 @@ use Spryker\Zed\ProductAlternativeDataImport\Business\ProductAlternativeDataSet\
 class ProductAlternativeWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
     /**
+     * @uses {@link \Spryker\Shared\ProductAlternativeStorage\ProductAlternativeStorageConfig::PRODUCT_ALTERNATIVE_PUBLISH}.
+     *
+     * @var string
+     */
+    protected const PRODUCT_ALTERNATIVE_PUBLISH = 'ProductAlternative.product_alternative.publish';
+
+    /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
      * @return void
@@ -63,7 +70,7 @@ class ProductAlternativeWriterStep extends PublishAwareStep implements DataImpor
             $fkProductConcreteAlternative,
         );
         $this->addPublishEvents(
-            ProductAlternativeEvents::PRODUCT_ALTERNATIVE_PUBLISH,
+            static::PRODUCT_ALTERNATIVE_PUBLISH,
             $productAlternativeEntity->getFkProduct(),
         );
     }
@@ -96,7 +103,7 @@ class ProductAlternativeWriterStep extends PublishAwareStep implements DataImpor
             $fkProductAbstractAlternative,
         );
         $this->addPublishEvents(
-            ProductAlternativeEvents::PRODUCT_ALTERNATIVE_PUBLISH,
+            static::PRODUCT_ALTERNATIVE_PUBLISH,
             $productAlternativeEntity->getFkProduct(),
         );
     }

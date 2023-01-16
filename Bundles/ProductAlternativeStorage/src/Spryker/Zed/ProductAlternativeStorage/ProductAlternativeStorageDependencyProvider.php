@@ -13,6 +13,7 @@ use Orm\Zed\ProductAlternative\Persistence\SpyProductAlternativeQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductAlternativeStorage\Dependency\Facade\ProductAlternativeStorageToEventBehaviorFacadeBridge;
+use Spryker\Zed\ProductAlternativeStorage\Dependency\Facade\ProductAlternativeStorageToProductAlternativeFacadeBridge;
 
 /**
  * @method \Spryker\Zed\ProductAlternativeStorage\ProductAlternativeStorageConfig getConfig()
@@ -53,6 +54,7 @@ class ProductAlternativeStorageDependencyProvider extends AbstractBundleDependen
     {
         $container = parent::provideCommunicationLayerDependencies($container);
         $container = $this->addEventBehaviorFacade($container);
+        $container = $this->addProductAlternativeFacade($container);
 
         return $container;
     }
@@ -82,6 +84,22 @@ class ProductAlternativeStorageDependencyProvider extends AbstractBundleDependen
         $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new ProductAlternativeStorageToEventBehaviorFacadeBridge(
                 $container->getLocator()->eventBehavior()->facade(),
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductAlternativeFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_PRODUCT_ALTERNATIVE, function (Container $container) {
+            return new ProductAlternativeStorageToProductAlternativeFacadeBridge(
+                $container->getLocator()->productAlternative()->facade(),
             );
         });
 

@@ -170,4 +170,18 @@ class ProductOfferFacade extends AbstractFacade implements ProductOfferFacadeInt
             ->createProductOfferCartItemQuantityCounter()
             ->countCartItemQuantity($itemsInCart, $itemTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductOfferCriteriaTransfer $productOfferCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
+     */
+    public function getProductOfferCollection(ProductOfferCriteriaTransfer $productOfferCriteriaTransfer): ProductOfferCollectionTransfer
+    {
+        return $this->getRepository()->getProductOfferCollection($productOfferCriteriaTransfer);
+    }
 }

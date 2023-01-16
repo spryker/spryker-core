@@ -43,6 +43,8 @@ interface ProductAlternativeEvents
      * Specification:
      * - This event is used for product_alternative publishing.
      *
+     * @deprecated Use {@link \Spryker\Shared\ProductAlternativeStorage\ProductAlternativeStorageConfig::PRODUCT_ALTERNATIVE_PUBLISH}.
+     *
      * @api
      *
      * @var string

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\PublishAndSynchronizeHealthCheck\Business;
 
+use Generated\Shared\Transfer\PublishAndSynchronizeHealthCheckCollectionTransfer;
+use Generated\Shared\Transfer\PublishAndSynchronizeHealthCheckCriteriaTransfer;
 use Generated\Shared\Transfer\PublishAndSynchronizeHealthCheckTransfer;
 
 interface PublishAndSynchronizeHealthCheckFacadeInterface
@@ -20,4 +22,21 @@ interface PublishAndSynchronizeHealthCheckFacadeInterface
      * @return \Generated\Shared\Transfer\PublishAndSynchronizeHealthCheckTransfer
      */
     public function savePublishAndSynchronizeHealthCheckEntity(): PublishAndSynchronizeHealthCheckTransfer;
+
+    /**
+     * Specification:
+     * - Fetches a collection of publish and synchronize health checks from the Persistence.
+     * - Uses `PublishAndSynchronizeHealthCheckCriteriaTransfer.publishAndSynchronizeHealthCheckConditions.publishAndSynchronizeHealthCheckIds` to filter publish and synchronize health checks by publishAndSynchronizeHealthCheckIds.
+     * - Uses `PublishAndSynchronizeHealthCheckCriteriaTransfer.pagination.limit` and PublishAndSynchronizeHealthCheckCriteriaTransfer.pagination.offset` to paginate results with limit and offset.
+     * - Returns `PublishAndSynchronizeHealthCheckCollectionTransfer` filled with found publish and synchronize health checks.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PublishAndSynchronizeHealthCheckCriteriaTransfer $publishAndSynchronizeHealthCheckCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PublishAndSynchronizeHealthCheckCollectionTransfer
+     */
+    public function getPublishAndSynchronizeHealthCheckCollection(
+        PublishAndSynchronizeHealthCheckCriteriaTransfer $publishAndSynchronizeHealthCheckCriteriaTransfer
+    ): PublishAndSynchronizeHealthCheckCollectionTransfer;
 }

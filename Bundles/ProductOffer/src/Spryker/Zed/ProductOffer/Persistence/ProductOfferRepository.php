@@ -119,6 +119,51 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ProductOfferCriteriaTransfer $productOfferCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
+     */
+    public function getProductOfferCollection(ProductOfferCriteriaTransfer $productOfferCriteriaTransfer): ProductOfferCollectionTransfer
+    {
+        $productOfferCollectionTransfer = new ProductOfferCollectionTransfer();
+        $productOfferQuery = $this->getFactory()->createProductOfferPropelQuery();
+
+        $paginationTransfer = $productOfferCriteriaTransfer->getPagination();
+        if ($paginationTransfer) {
+            $productOfferQuery = $this->applyProductOfferPagination($productOfferQuery, $paginationTransfer);
+            $productOfferCollectionTransfer->setPagination($paginationTransfer);
+        }
+
+        return $this->getFactory()
+            ->createProductOfferMapper()
+            ->mapProductOfferEntitiesToProductOfferCollectionTransfer(
+                $productOfferQuery->find(),
+                $productOfferCollectionTransfer,
+            );
+    }
+
+    /**
+     * @param \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery $productOfferQuery
+     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
+     *
+     * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery
+     */
+    protected function applyProductOfferPagination(
+        SpyProductOfferQuery $productOfferQuery,
+        PaginationTransfer $paginationTransfer
+    ): SpyProductOfferQuery {
+        $paginationTransfer->setNbResults($productOfferQuery->count());
+
+        if ($paginationTransfer->getLimit() !== null && $paginationTransfer->getOffset() !== null) {
+            return $productOfferQuery
+                ->limit($paginationTransfer->getLimit())
+                ->offset($paginationTransfer->getOffset());
+        }
+
+        return $productOfferQuery;
+    }
+
+    /**
      * @module Product
      *
      * @param \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery<mixed> $productOfferQuery

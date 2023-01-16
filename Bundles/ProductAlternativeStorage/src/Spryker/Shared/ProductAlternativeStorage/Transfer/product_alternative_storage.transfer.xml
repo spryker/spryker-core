@@ -41,4 +41,20 @@
         <property name="limit" type="int"/>
     </transfer>
 
+    <transfer name="ProductAlternativeCriteria" strict="true">
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="ProductAlternative">
+    </transfer>
+
+    <transfer name="ProductAlternativeCollection">
+        <property name="productAlternatives" type="ProductAlternative[]" singular="productAlternative"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
+    </transfer>
+
 </transfers>

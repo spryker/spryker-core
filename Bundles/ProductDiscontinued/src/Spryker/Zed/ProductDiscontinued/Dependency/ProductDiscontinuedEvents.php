@@ -73,6 +73,8 @@ interface ProductDiscontinuedEvents
      * Specification:
      * - This event is used for product_discontinued publishing.
      *
+     * @deprecated Use {@link \Spryker\Shared\ProductDiscontinuedStorage\ProductDiscontinuedStorageConfig::PRODUCT_DISCONTINUED_PUBLISH}.
+     *
      * @api
      *
      * @var string

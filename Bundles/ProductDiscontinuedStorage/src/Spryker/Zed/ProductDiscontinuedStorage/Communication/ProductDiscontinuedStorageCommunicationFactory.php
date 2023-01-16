@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductDiscontinuedStorage\Communication\ProductDiscontinueStorageMapper\ProductDiscontinuedStorageMapper;
 use Spryker\Zed\ProductDiscontinuedStorage\Communication\ProductDiscontinueStorageMapper\ProductDiscontinuedStorageMapperInterface;
 use Spryker\Zed\ProductDiscontinuedStorage\Dependency\Facade\ProductDiscontinuedStorageToEventBehaviorFacadeInterface;
+use Spryker\Zed\ProductDiscontinuedStorage\Dependency\Facade\ProductDiscontinuedStorageToProductDiscontinuedFacadeInterface;
 use Spryker\Zed\ProductDiscontinuedStorage\ProductDiscontinuedStorageDependencyProvider;
 
 /**
@@ -35,5 +36,13 @@ class ProductDiscontinuedStorageCommunicationFactory extends AbstractCommunicati
     public function createProductDiscontinuedStorageMapper(): ProductDiscontinuedStorageMapperInterface
     {
         return new ProductDiscontinuedStorageMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductDiscontinuedStorage\Dependency\Facade\ProductDiscontinuedStorageToProductDiscontinuedFacadeInterface
+     */
+    public function getProductDiscontinuedFacade(): ProductDiscontinuedStorageToProductDiscontinuedFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductDiscontinuedStorageDependencyProvider::FACADE_PRODUCT_DISCONTINUED);
     }
 }

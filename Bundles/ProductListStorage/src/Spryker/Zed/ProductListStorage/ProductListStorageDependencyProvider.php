@@ -10,6 +10,7 @@ namespace Spryker\Zed\ProductListStorage;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery;
 use Orm\Zed\ProductList\Persistence\SpyProductListProductConcreteQuery;
+use Orm\Zed\ProductList\Persistence\SpyProductListQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductListStorage\Dependency\Facade\ProductListStorageToEventBehaviorFacadeBridge;
@@ -24,6 +25,11 @@ class ProductListStorageDependencyProvider extends AbstractBundleDependencyProvi
      * @var string
      */
     public const PROPEL_QUERY_PRODUCT = 'PROPEL_QUERY_PRODUCT';
+
+    /**
+     * @var string
+     */
+    public const PROPEL_PRODUCT_LIST_QUERY = 'PROPEL_PRODUCT_LIST_QUERY';
 
     /**
      * @var string
@@ -67,6 +73,7 @@ class ProductListStorageDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container = parent::provideCommunicationLayerDependencies($container);
         $container = $this->addEventBehaviorFacade($container);
+        $container = $this->addProductListFacade($container);
 
         return $container;
     }
@@ -80,8 +87,23 @@ class ProductListStorageDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container = parent::providePersistenceLayerDependencies($container);
         $container = $this->addProductPropelQuery($container);
+        $container = $this->addProductListPropelQuery($container);
         $container = $this->addProductCategoryPropelQuery($container);
         $container = $this->addProductListProductConcretePropelQuery($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductListPropelQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_PRODUCT_LIST_QUERY, $container->factory(function () {
+            return SpyProductListQuery::create();
+        }));
 
         return $container;
     }

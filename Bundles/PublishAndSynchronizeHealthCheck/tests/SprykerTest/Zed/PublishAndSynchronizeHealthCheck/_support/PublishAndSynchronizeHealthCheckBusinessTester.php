@@ -8,6 +8,9 @@
 namespace SprykerTest\Zed\PublishAndSynchronizeHealthCheck;
 
 use Codeception\Actor;
+use Generated\Shared\DataBuilder\PublishAndSynchronizeHealthCheckBuilder;
+use Generated\Shared\Transfer\PublishAndSynchronizeHealthCheckTransfer;
+use Orm\Zed\PublishAndSynchronizeHealthCheck\Persistence\SpyPublishAndSynchronizeHealthCheck;
 
 /**
  * Inherited Methods
@@ -28,4 +31,21 @@ use Codeception\Actor;
 class PublishAndSynchronizeHealthCheckBusinessTester extends Actor
 {
     use _generated\PublishAndSynchronizeHealthCheckBusinessTesterActions;
+
+    /**
+     * @param array $override
+     *
+     * @return \Generated\Shared\Transfer\PublishAndSynchronizeHealthCheckTransfer
+     */
+    public function createPublishAndSynchronizeHealthCheck(array $override = []): PublishAndSynchronizeHealthCheckTransfer
+    {
+        $publishAndSynchronizeHealthCheckTransfer = (new PublishAndSynchronizeHealthCheckBuilder($override))->build();
+
+        $publishAndSynchronizeHealthCheckEntity = (new SpyPublishAndSynchronizeHealthCheck())
+            ->fromArray($publishAndSynchronizeHealthCheckTransfer->toArray());
+
+        $publishAndSynchronizeHealthCheckEntity->save();
+
+        return $publishAndSynchronizeHealthCheckTransfer->fromArray($publishAndSynchronizeHealthCheckEntity->toArray(), true);
+    }
 }

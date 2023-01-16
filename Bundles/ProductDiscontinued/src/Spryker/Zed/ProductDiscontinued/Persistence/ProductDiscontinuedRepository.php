@@ -7,11 +7,15 @@
 
 namespace Spryker\Zed\ProductDiscontinued\Persistence;
 
+use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductDiscontinuedCriteriaTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinuedQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\Kernel\Persistence\EntityManager\InstancePoolingTrait;
 
@@ -23,7 +27,7 @@ class ProductDiscontinuedRepository extends AbstractRepository implements Produc
     use InstancePoolingTrait;
 
     /**
-     * @uses Product
+     * @module Product
      *
      * @param \Generated\Shared\Transfer\ProductDiscontinuedTransfer $productDiscontinuedTransfer
      *
@@ -42,7 +46,10 @@ class ProductDiscontinuedRepository extends AbstractRepository implements Produc
         if ($productDiscontinuedEntity->count()) {
             return $this->getFactory()
                 ->createProductDiscontinuedMapper()
-                ->mapProductDiscontinuedTransfer($productDiscontinuedEntity->getFirst());
+                ->mapProductDiscontinuedEntityToProductDiscontinuedTransfer(
+                    $productDiscontinuedEntity->getFirst(),
+                    new ProductDiscontinuedTransfer(),
+                );
         }
 
         return null;
@@ -96,7 +103,10 @@ class ProductDiscontinuedRepository extends AbstractRepository implements Produc
         if ($productDiscontinuedEntityCollection->count()) {
             return $this->getFactory()
                 ->createProductDiscontinuedMapper()
-                ->mapTransferCollection($productDiscontinuedEntityCollection);
+                ->mapProductDiscontinuedEntitiesToProductDiscontinuedCollectionTransfer(
+                    $productDiscontinuedEntityCollection,
+                    new ProductDiscontinuedCollectionTransfer(),
+                );
         }
 
         if ($isPoolingEnabled) {
@@ -107,7 +117,7 @@ class ProductDiscontinuedRepository extends AbstractRepository implements Produc
     }
 
     /**
-     * @uses Product
+     * @module Product
      *
      * @param \Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer $criteriaFilterTransfer
      *
@@ -138,7 +148,10 @@ class ProductDiscontinuedRepository extends AbstractRepository implements Produc
         if ($productDiscontinuedEntityCollection->count()) {
             return $this->getFactory()
                 ->createProductDiscontinuedMapper()
-                ->mapTransferCollection($productDiscontinuedEntityCollection);
+                ->mapProductDiscontinuedEntitiesToProductDiscontinuedCollectionTransfer(
+                    $productDiscontinuedEntityCollection,
+                    new ProductDiscontinuedCollectionTransfer(),
+                );
         }
 
         return new ProductDiscontinuedCollectionTransfer();
@@ -180,5 +193,143 @@ class ProductDiscontinuedRepository extends AbstractRepository implements Produc
             ->select([SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT])
             ->find()
             ->toArray();
+    }
+
+    /**
+     * @uses Product
+     *
+     * @param \Generated\Shared\Transfer\ProductDiscontinuedCriteriaTransfer $productDiscontinuedCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer
+     */
+    public function getProductDiscontinuedCollection(
+        ProductDiscontinuedCriteriaTransfer $productDiscontinuedCriteriaTransfer
+    ): ProductDiscontinuedCollectionTransfer {
+        $productDiscontinuedCollectionTransfer = new ProductDiscontinuedCollectionTransfer();
+        $productDiscontinuedQuery = $this->getFactory()
+            ->createProductDiscontinuedQuery()
+            ->joinWithProduct();
+
+        $productDiscontinuedQuery = $this->applyProductDiscontinuedConditions($productDiscontinuedCriteriaTransfer, $productDiscontinuedQuery);
+        $paginationTransfer = $productDiscontinuedCriteriaTransfer->getPagination();
+        if ($paginationTransfer !== null) {
+            $productDiscontinuedQuery = $this->applyProductDiscontinuedPagination($paginationTransfer, $productDiscontinuedQuery);
+            $productDiscontinuedCollectionTransfer->setPagination($paginationTransfer);
+        }
+
+        $productDiscontinuedEntities = $productDiscontinuedQuery->find();
+
+        if ($productDiscontinuedCriteriaTransfer->getWithProductDiscontiniuedNotes()) {
+            $this->expandWithProductDiscontinuedNotes($productDiscontinuedEntities);
+        }
+
+        return $this->getFactory()
+            ->createProductDiscontinuedMapper()
+            ->mapProductDiscontinuedEntitiesToProductDiscontinuedCollectionTransfer(
+                $productDiscontinuedEntities,
+                $productDiscontinuedCollectionTransfer,
+            );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductDiscontinuedCriteriaTransfer $productDiscontinuedCriteriaTransfer
+     * @param \Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinuedQuery $productDiscontinuedQuery
+     *
+     * @return \Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinuedQuery
+     */
+    protected function applyProductDiscontinuedConditions(
+        ProductDiscontinuedCriteriaTransfer $productDiscontinuedCriteriaTransfer,
+        SpyProductDiscontinuedQuery $productDiscontinuedQuery
+    ): SpyProductDiscontinuedQuery {
+        $productDiscontinuedConditionsTransfer = $productDiscontinuedCriteriaTransfer->getProductDiscontinuedConditions();
+        if ($productDiscontinuedConditionsTransfer === null) {
+            return $productDiscontinuedQuery;
+        }
+
+        if ($productDiscontinuedConditionsTransfer->getProductDiscontinuedIds()) {
+            $productDiscontinuedQuery
+                ->filterByIdProductDiscontinued_In($productDiscontinuedConditionsTransfer->getProductDiscontinuedIds());
+        }
+
+        if ($productDiscontinuedConditionsTransfer->getProductIds()) {
+            $productDiscontinuedQuery
+                ->filterByFkProduct_In($productDiscontinuedConditionsTransfer->getProductIds());
+        }
+
+        if ($productDiscontinuedConditionsTransfer->getSkus()) {
+            $productDiscontinuedQuery
+                ->useProductQuery()
+                    ->filterBySku_In($productDiscontinuedConditionsTransfer->getSkus())
+                ->endUse();
+        }
+
+        return $productDiscontinuedQuery;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
+     * @param \Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinuedQuery $productDiscontinuedQuery
+     *
+     * @return \Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinuedQuery
+     */
+    protected function applyProductDiscontinuedPagination(
+        PaginationTransfer $paginationTransfer,
+        SpyProductDiscontinuedQuery $productDiscontinuedQuery
+    ): SpyProductDiscontinuedQuery {
+        $paginationTransfer->setNbResults($productDiscontinuedQuery->count());
+
+        if ($paginationTransfer->getLimit() !== null && $paginationTransfer->getOffset() !== null) {
+            return $productDiscontinuedQuery
+                ->limit($paginationTransfer->getLimitOrFail())
+                ->offset($paginationTransfer->getOffsetOrFail());
+        }
+
+        return $productDiscontinuedQuery;
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinued> $productDiscontinuedEntities
+     *
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinued>
+     */
+    protected function expandWithProductDiscontinuedNotes(ObjectCollection $productDiscontinuedEntities): ObjectCollection
+    {
+        $productDiscontinuedEntitiesIndexedByProductDiscontinuedIds =
+            $this->indexProductDiscontinuedEntitiesByProductDiscontinuedIds($productDiscontinuedEntities);
+
+        $productDiscontinuedNoteEntities = $this->getFactory()
+            ->createProductDiscontinuedNoteQuery()
+            ->filterByFkProductDiscontinued_In(
+                array_keys($productDiscontinuedEntitiesIndexedByProductDiscontinuedIds),
+            )
+            ->find();
+
+        foreach ($productDiscontinuedNoteEntities as $productDiscontinuedNoteEntity) {
+            $productDiscontinuedId = $productDiscontinuedNoteEntity->getFkProductDiscontinued();
+            if (!isset($productDiscontinuedEntitiesIndexedByProductDiscontinuedIds[$productDiscontinuedId])) {
+                continue;
+            }
+
+            $productDiscontinuedEntitiesIndexedByProductDiscontinuedIds[$productDiscontinuedId]
+                ->addSpyProductDiscontinuedNote($productDiscontinuedNoteEntity);
+        }
+
+        return $productDiscontinuedEntities;
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinued> $productDiscontinuedEntities
+     *
+     * @return array<int, \Orm\Zed\ProductDiscontinued\Persistence\SpyProductDiscontinued>
+     */
+    protected function indexProductDiscontinuedEntitiesByProductDiscontinuedIds(
+        ObjectCollection $productDiscontinuedEntities
+    ): array {
+        $productDiscontinuedEntitiesIndexedByProductDiscontinuedIds = [];
+        foreach ($productDiscontinuedEntities as $productDiscontinuedEntity) {
+            $productDiscontinuedEntitiesIndexedByProductDiscontinuedIds[$productDiscontinuedEntity->getIdProductDiscontinued()] = $productDiscontinuedEntity;
+        }
+
+        return $productDiscontinuedEntitiesIndexedByProductDiscontinuedIds;
     }
 }

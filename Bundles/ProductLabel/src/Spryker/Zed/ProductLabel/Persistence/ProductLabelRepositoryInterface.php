@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductLabel\Persistence;
 
 use Generated\Shared\Transfer\FilterTransfer;
+use Generated\Shared\Transfer\ProductLabelCollectionTransfer;
 use Generated\Shared\Transfer\ProductLabelCriteriaTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
@@ -96,4 +97,11 @@ interface ProductLabelRepositoryInterface
      * @return bool
      */
     public function checkProductLabelProductAbstractByIdProductAbstractExists(int $idProductAbstract): bool;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductLabelCriteriaTransfer $productLabelCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelCollectionTransfer
+     */
+    public function getProductLabelCollection(ProductLabelCriteriaTransfer $productLabelCriteriaTransfer): ProductLabelCollectionTransfer;
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductLabelSearch\Dependency\Facade;
 
+use Generated\Shared\Transfer\ProductLabelCollectionTransfer;
 use Generated\Shared\Transfer\ProductLabelCriteriaTransfer;
 
 class ProductLabelSearchToProductLabelBridge implements ProductLabelSearchToProductLabelInterface
@@ -42,5 +43,16 @@ class ProductLabelSearchToProductLabelBridge implements ProductLabelSearchToProd
     public function getActiveLabelsByCriteria(ProductLabelCriteriaTransfer $productLabelCriteriaTransfer): array
     {
         return $this->productLabelFacade->getActiveLabelsByCriteria($productLabelCriteriaTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductLabelCriteriaTransfer $productLabelCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelCollectionTransfer
+     */
+    public function getProductLabelCollection(
+        ProductLabelCriteriaTransfer $productLabelCriteriaTransfer
+    ): ProductLabelCollectionTransfer {
+        return $this->productLabelFacade->getProductLabelCollection($productLabelCriteriaTransfer);
     }
 }

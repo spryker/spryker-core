@@ -52,6 +52,16 @@ class ProductListStorageConfig extends AbstractBundleConfig
     public const PRODUCT_LIST_CONCRETE_RESOURCE_NAME = 'product_concrete_product_lists';
 
     /**
+     * Specification:
+     *  - Product list resource name, used for key generation.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const PRODUCT_LIST_RESOURCE_NAME = 'product_list';
+
+    /**
      * @uses \Spryker\Shared\Product\ProductConfig::VARIANT_LEAF_NODE_ID
      *
      * @var string
@@ -66,4 +76,14 @@ class ProductListStorageConfig extends AbstractBundleConfig
      * @var string
      */
     public const ATTRIBUTE_MAP_PATH_DELIMITER = ':';
+
+    /**
+     * Specification:
+     * - This event is used for product list publishing.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const PRODUCT_LIST_PUBLISH = 'ProductList.spy_product_list.publish';
 }

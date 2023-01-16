@@ -56,6 +56,7 @@ class ProductDiscontinuedStorageDependencyProvider extends AbstractBundleDepende
     {
         $container = parent::provideCommunicationLayerDependencies($container);
         $container = $this->addEventBehaviorFacade($container);
+        $container = $this->addProductDiscontinuedFacade($container);
 
         return $container;
     }

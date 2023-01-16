@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductDiscontinued\Communication\Plugin\ProductAlternative;
 
+use Generated\Shared\Transfer\ProductDiscontinuedConditionsTransfer;
+use Generated\Shared\Transfer\ProductDiscontinuedCriteriaTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductAlternativeExtension\Dependency\Plugin\AlternativeProductApplicablePluginInterface;
 
@@ -28,6 +30,14 @@ class DiscontinuedCheckAlternativeProductApplicablePlugin extends AbstractPlugin
      */
     public function check(int $idProduct): bool
     {
-        return $this->getFacade()->findProductDiscontinuedByProductId($idProduct)->getIsSuccessful();
+        $productDiscontinuedCriteriaTransfer = (new ProductDiscontinuedCriteriaTransfer())
+            ->setProductDiscontinuedConditions(
+                (new ProductDiscontinuedConditionsTransfer())->addIdProduct($idProduct),
+            );
+
+        $productDiscontinuedCollectionTransfer = $this->getFacade()
+            ->getProductDiscontinuedCollection($productDiscontinuedCriteriaTransfer);
+
+        return $productDiscontinuedCollectionTransfer->getDiscontinuedProducts()->count() === 1;
     }
 }
