@@ -53,10 +53,9 @@ class PatchResourcePathMethodFormatter implements PathMethodFormatterInterface
 
         $resourceType = $pathAnnotationTransfer->getResourceTypeOrFail();
         $pathName = $this->openApiSpecificationPathMethodFormatter->getPathFromResourceType($resourceContextTransfer);
-
         $pathMethodComponentDataTransfer = (new PathMethodComponentDataTransfer())
             ->setResourceType($resourceType)
-            ->setAnnotation($pathAnnotationTransfer->getGetResourceById())
+            ->setAnnotation($pathAnnotationTransfer->getPatch())
             ->setPatternOperationIdResource(static::PATTERN_OPERATION_ID_PATCH_RESOURCE)
             ->setDefaultResponseCode(Response::HTTP_OK)
             ->setIsGetCollection(false)
