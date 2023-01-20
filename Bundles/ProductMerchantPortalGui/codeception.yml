@@ -1,4 +1,4 @@
-namespace: ProductMeasurementUnitStorage
+namespace: ProductMerchantPortalGui
 include:
     - tests/SprykerTest/Zed/ProductMerchantPortalGui
 paths:

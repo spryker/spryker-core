@@ -192,7 +192,8 @@
 
     <transfer name="StoreRelation">
         <property name="idEntity" type="int"/>
-        <property name="idStores" type="int[]" singular="idStores"/>
+        <property name="idStores" type="int[]" singular="idStores" deprecated="Will be removed with next major"/>
+        <property name="stores" type="Store[]" singular="stores"/>
     </transfer>
 
     <transfer name="CategoryCollection">
@@ -393,6 +394,7 @@
 
     <transfer name="Merchant">
         <property name="idMerchant" type="int"/>
+        <property name="storeRelation" type="StoreRelation"/>
     </transfer>
 
     <transfer name="StockProduct">

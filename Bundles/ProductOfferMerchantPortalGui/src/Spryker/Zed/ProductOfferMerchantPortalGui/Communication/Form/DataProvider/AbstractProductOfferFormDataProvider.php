@@ -65,7 +65,7 @@ abstract class AbstractProductOfferFormDataProvider
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
-     * @return array<int>
+     * @return array<string, int>
      */
     protected function getStoreChoices(ProductAbstractTransfer $productAbstractTransfer): array
     {
@@ -77,15 +77,41 @@ abstract class AbstractProductOfferFormDataProvider
             return $storeChoices;
         }
 
+        $merchantStores = $this->getCurrentMerchantStoresIndexedByIdStore();
+
         foreach ($storeRelationTransfer->getStores() as $storeTransfer) {
-            /** @var int $idStore */
-            $idStore = $storeTransfer->requireIdStore()->getIdStore();
-            /** @var string $storeName */
-            $storeName = $storeTransfer->requireName()->getName();
+            if (!isset($merchantStores[$storeTransfer->getIdStore()])) {
+                continue;
+            }
+
+            $idStore = $storeTransfer->getIdStoreOrFail();
+            $storeName = $storeTransfer->getNameOrFail();
             $storeChoices[$storeName] = $idStore;
         }
 
         return $storeChoices;
+    }
+
+    /**
+     * @return array<int, \Generated\Shared\Transfer\StoreTransfer>
+     */
+    protected function getCurrentMerchantStoresIndexedByIdStore(): array
+    {
+        $merchantStores = [];
+
+        $merchantTransfer = $this->merchantUserFacade
+            ->getCurrentMerchantUser()
+            ->getMerchant();
+
+        if (!$merchantTransfer || !$merchantTransfer->getStoreRelation()) {
+            return $merchantStores;
+        }
+
+        foreach ($merchantTransfer->getStoreRelationOrFail()->getStores() as $storeTransfer) {
+            $merchantStores[$storeTransfer->getIdStoreOrFail()] = $storeTransfer;
+        }
+
+        return $merchantStores;
     }
 
     /**

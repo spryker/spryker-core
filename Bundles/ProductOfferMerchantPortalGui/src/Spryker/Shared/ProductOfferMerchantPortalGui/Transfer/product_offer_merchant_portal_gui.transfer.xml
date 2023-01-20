@@ -380,6 +380,7 @@
     <transfer name="Merchant">
         <property name="merchantReference" type="string"/>
         <property name="idMerchant" type="int"/>
+        <property name="storeRelation" type="StoreRelation"/>
     </transfer>
 
     <transfer name="PriceProductCriteria">

@@ -17,8 +17,8 @@ use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductAbstractForm;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToCategoryFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToLocaleFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantProductFacadeInterface;
+use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantUserFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductCategoryFacadeInterface;
-use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToStoreFacadeInterface;
 use Spryker\Zed\ProductMerchantPortalGui\ProductMerchantPortalGuiConfig;
 
 class ProductAbstractFormDataProvider implements ProductAbstractFormDataProviderInterface
@@ -50,9 +50,9 @@ class ProductAbstractFormDataProvider implements ProductAbstractFormDataProvider
     protected $merchantProductFacade;
 
     /**
-     * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToStoreFacadeInterface
+     * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantUserFacadeInterface
      */
-    protected $storeFacade;
+    protected ProductMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToCategoryFacadeInterface
@@ -76,7 +76,7 @@ class ProductAbstractFormDataProvider implements ProductAbstractFormDataProvider
 
     /**
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantProductFacadeInterface $merchantProductFacade
-     * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToStoreFacadeInterface $storeFacade
+     * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToCategoryFacadeInterface $categoryFacade
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToLocaleFacadeInterface $localeFacade
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductCategoryFacadeInterface $productCategoryFacade
@@ -84,14 +84,14 @@ class ProductAbstractFormDataProvider implements ProductAbstractFormDataProvider
      */
     public function __construct(
         ProductMerchantPortalGuiToMerchantProductFacadeInterface $merchantProductFacade,
-        ProductMerchantPortalGuiToStoreFacadeInterface $storeFacade,
+        ProductMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade,
         ProductMerchantPortalGuiToCategoryFacadeInterface $categoryFacade,
         ProductMerchantPortalGuiToLocaleFacadeInterface $localeFacade,
         ProductMerchantPortalGuiToProductCategoryFacadeInterface $productCategoryFacade,
         ProductMerchantPortalGuiConfig $productMerchantPortalGuiConfig
     ) {
         $this->merchantProductFacade = $merchantProductFacade;
-        $this->storeFacade = $storeFacade;
+        $this->merchantUserFacade = $merchantUserFacade;
         $this->categoryFacade = $categoryFacade;
         $this->localeFacade = $localeFacade;
         $this->productCategoryFacade = $productCategoryFacade;
@@ -159,23 +159,39 @@ class ProductAbstractFormDataProvider implements ProductAbstractFormDataProvider
     }
 
     /**
-     * @return array<int>
+     * @return array<string, int>
      */
     protected function getStoreChoices(): array
     {
         $storeChoices = [];
 
-        $storeTransfers = $this->storeFacade->getAllStores();
+        $storeTransfers = $this->getCurrentMerchantStores();
 
         foreach ($storeTransfers as $storeTransfer) {
-            /** @var int $idStore */
-            $idStore = $storeTransfer->requireIdStore()->getIdStore();
-            /** @var string $storeName */
-            $storeName = $storeTransfer->requireName()->getName();
+            $idStore = $storeTransfer->getIdStoreOrFail();
+            $storeName = $storeTransfer->getNameOrFail();
             $storeChoices[$storeName] = $idStore;
         }
 
         return $storeChoices;
+    }
+
+    /**
+     * @return list<\Generated\Shared\Transfer\StoreTransfer>
+     */
+    protected function getCurrentMerchantStores(): array
+    {
+        $merchantTransfer = $this->merchantUserFacade
+            ->getCurrentMerchantUser()
+            ->getMerchant();
+
+        if (!$merchantTransfer || !$merchantTransfer->getStoreRelation()) {
+            return [];
+        }
+
+        return $merchantTransfer->getStoreRelationOrFail()
+            ->getStores()
+            ->getArrayCopy();
     }
 
     /**

@@ -140,13 +140,6 @@
         "priority": "2"
     },
     {
-        "fileName": "src/Spryker/Zed/ProductMerchantPortalGui/Dependency/Facade/ProductMerchantPortalGuiToPriceProductFacadeBridge.php",
-        "description": "Bridges: Method `removePriceProductDefaultForPriceProduct()` must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer` signature.",
-        "rule": "BridgeFacadeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
         "fileName": "src/Spryker/Zed/ProductMerchantPortalGui/Dependency/Facade/ProductMerchantPortalGuiToProductApprovalFacadeBridge.php",
         "description": "Bridges: Method `getApplicableApprovalStatuses()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",

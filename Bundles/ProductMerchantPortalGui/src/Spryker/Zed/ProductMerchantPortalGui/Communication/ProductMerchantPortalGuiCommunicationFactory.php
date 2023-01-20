@@ -255,7 +255,7 @@ class ProductMerchantPortalGuiCommunicationFactory extends AbstractCommunication
     {
         return new ProductAbstractFormDataProvider(
             $this->getMerchantProductFacade(),
-            $this->getStoreFacade(),
+            $this->getMerchantUserFacade(),
             $this->getCategoryFacade(),
             $this->getLocaleFacade(),
             $this->getProductCategoryFacade(),
