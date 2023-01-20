@@ -7,10 +7,13 @@
 
 namespace Spryker\Zed\MerchantProduct\Persistence;
 
+use Generated\Shared\Transfer\MerchantProductAbstractCollectionTransfer;
+use Generated\Shared\Transfer\MerchantProductAbstractCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantProductCollectionTransfer;
 use Generated\Shared\Transfer\MerchantProductCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantProductTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\PaginationTransfer;
 use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
 use Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
@@ -122,6 +125,32 @@ class MerchantProductRepository extends AbstractRepository implements MerchantPr
     }
 
     /**
+     * @param \Generated\Shared\Transfer\MerchantProductAbstractCriteriaTransfer $merchantProductAbstractCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantProductAbstractCollectionTransfer
+     */
+    public function getMerchantProductAbstractCollection(
+        MerchantProductAbstractCriteriaTransfer $merchantProductAbstractCriteriaTransfer
+    ): MerchantProductAbstractCollectionTransfer {
+        $merchantProductAbstractCollectionTransfer = new MerchantProductAbstractCollectionTransfer();
+        $merchantProductAbstractQuery = $this->getFactory()->getMerchantProductAbstractPropelQuery();
+
+        $paginationTransfer = $merchantProductAbstractCriteriaTransfer->getPagination();
+        if ($paginationTransfer !== null) {
+            $merchantProductAbstractQuery = $this
+                ->applyMerchantProductAbstractPagination($merchantProductAbstractQuery, $paginationTransfer);
+            $merchantProductAbstractCollectionTransfer->setPagination($paginationTransfer);
+        }
+
+        return $this->getFactory()
+            ->createMerchantMapper()
+            ->mapMerchantProductAbstractEntitiesToMerchantProductAbstractCollectionTransfer(
+                $merchantProductAbstractQuery->find(),
+                $merchantProductAbstractCollectionTransfer,
+            );
+    }
+
+    /**
      * @param \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery $merchantProductAbstractQuery
      * @param \Generated\Shared\Transfer\MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
      *
@@ -159,6 +188,26 @@ class MerchantProductRepository extends AbstractRepository implements MerchantPr
                         ->filterBySku_In($merchantProductCriteriaTransfer->getProductConcreteSkus())
                     ->endUse()
                 ->endUse();
+        }
+
+        return $merchantProductAbstractQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery $merchantProductAbstractQuery
+     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
+     *
+     * @return \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery
+     */
+    protected function applyMerchantProductAbstractPagination(
+        SpyMerchantProductAbstractQuery $merchantProductAbstractQuery,
+        PaginationTransfer $paginationTransfer
+    ): SpyMerchantProductAbstractQuery {
+        $paginationTransfer->setNbResults($merchantProductAbstractQuery->count());
+        if ($paginationTransfer->getLimit() !== null && $paginationTransfer->getOffset() !== null) {
+            return $merchantProductAbstractQuery
+                ->limit($paginationTransfer->getLimit())
+                ->offset($paginationTransfer->getOffset());
         }
 
         return $merchantProductAbstractQuery;

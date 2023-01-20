@@ -10,7 +10,7 @@ namespace Spryker\Zed\AssetStorage\Business;
 use Spryker\Zed\AssetStorage\AssetStorageDependencyProvider;
 use Spryker\Zed\AssetStorage\Business\Publisher\AssetStorageWriter;
 use Spryker\Zed\AssetStorage\Business\Publisher\AssetStorageWriterInterface;
-use Spryker\Zed\AssetStorage\Dependency\Facade\AssetStorageToAssetInterface;
+use Spryker\Zed\AssetStorage\Dependency\Facade\AssetStorageToAssetFacadeInterface;
 use Spryker\Zed\AssetStorage\Dependency\Facade\AssetStorageToStoreFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -43,9 +43,9 @@ class AssetStorageBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\AssetStorage\Dependency\Facade\AssetStorageToAssetInterface
+     * @return \Spryker\Zed\AssetStorage\Dependency\Facade\AssetStorageToAssetFacadeInterface
      */
-    public function getAssetFacade(): AssetStorageToAssetInterface
+    public function getAssetFacade(): AssetStorageToAssetFacadeInterface
     {
         return $this->getProvidedDependency(AssetStorageDependencyProvider::FACADE_ASSET);
     }

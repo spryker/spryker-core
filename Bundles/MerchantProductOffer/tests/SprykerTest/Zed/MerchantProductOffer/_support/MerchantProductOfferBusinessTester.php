@@ -8,6 +8,10 @@
 namespace SprykerTest\Zed\MerchantProductOffer;
 
 use Codeception\Actor;
+use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
+use Orm\Zed\ProductOffer\Persistence\SpyProductOfferStoreQuery;
+use Orm\Zed\ProductOfferStock\Persistence\SpyProductOfferStockQuery;
+use Orm\Zed\ProductOfferValidity\Persistence\SpyProductOfferValidityQuery;
 
 /**
  * @method void wantToTest($text)
@@ -45,5 +49,16 @@ class MerchantProductOfferBusinessTester extends Actor
     public function removeDynamicProductOfferFields(array $productOffer): array
     {
         return array_diff_key($productOffer, array_flip(static::FIELDS_TO_REMOVE));
+    }
+
+    /**
+     * @return void
+     */
+    public function ensureProductOfferTablesAreEmpty(): void
+    {
+        SpyProductOfferValidityQuery::create()->deleteAll();
+        SpyProductOfferStockQuery::create()->deleteAll();
+        SpyProductOfferStoreQuery::create()->deleteAll();
+        SpyProductOfferQuery::create()->deleteAll();
     }
 }

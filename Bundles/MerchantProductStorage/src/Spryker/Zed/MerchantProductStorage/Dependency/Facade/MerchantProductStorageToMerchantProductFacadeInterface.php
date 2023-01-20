@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\MerchantProductStorage\Dependency\Facade;
 
+use Generated\Shared\Transfer\MerchantProductAbstractCollectionTransfer;
+use Generated\Shared\Transfer\MerchantProductAbstractCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantProductCollectionTransfer;
 use Generated\Shared\Transfer\MerchantProductCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
@@ -26,4 +28,13 @@ interface MerchantProductStorageToMerchantProductFacadeInterface
      * @return \Generated\Shared\Transfer\MerchantProductCollectionTransfer
      */
     public function get(MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer): MerchantProductCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantProductAbstractCriteriaTransfer $merchantProductAbstractCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantProductAbstractCollectionTransfer
+     */
+    public function getMerchantProductAbstractCollection(
+        MerchantProductAbstractCriteriaTransfer $merchantProductAbstractCriteriaTransfer
+    ): MerchantProductAbstractCollectionTransfer;
 }

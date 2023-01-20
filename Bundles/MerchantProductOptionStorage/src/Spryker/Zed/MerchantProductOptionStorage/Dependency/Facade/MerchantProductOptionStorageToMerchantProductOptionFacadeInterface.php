@@ -17,7 +17,7 @@ interface MerchantProductOptionStorageToMerchantProductOptionFacadeInterface
      *
      * @return \Generated\Shared\Transfer\MerchantProductOptionGroupCollectionTransfer
      */
-    public function getGroups(
+    public function getMerchantProductOptionGroupCollection(
         MerchantProductOptionGroupCriteriaTransfer $merchantProductOptionGroupCriteriaTransfer
     ): MerchantProductOptionGroupCollectionTransfer;
 }

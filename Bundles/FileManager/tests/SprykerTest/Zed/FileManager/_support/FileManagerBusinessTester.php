@@ -188,12 +188,14 @@ class FileManagerBusinessTester extends Actor
     }
 
     /**
-     * @return array<int>
+     * @param int $count
+     *
+     * @return list<int>
      */
-    public function insertFilesCollection(): array
+    public function insertFilesCollection(int $count = 10): array
     {
         $idFiles = [];
-        for ($i = 1; $i < 10; $i++) {
+        for ($i = 1; $i <= $count; $i++) {
             file_put_contents($this->getDocumentFullFileName($i . '_v1.txt'), 'file content');
 
             $file = new SpyFile();

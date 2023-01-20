@@ -319,6 +319,9 @@ interface CategoryFacadeInterface
     /**
      * Specification:
      * - Retrieves categories from persistence by criteria.
+     * - Uses `CategoryCriteriaTransfer.pagination.limit` and `CategoryCriteriaTransfer.pagination.offset` to paginate results with limit and offset.
+     * - Returns `CategoryCollectionTransfer` filled with found categories.
+     * - From next major version (Forward Compatibility): Use CategoryCriteriaTransfer.categoryConditions to apply category filtering.
      *
      * @api
      *

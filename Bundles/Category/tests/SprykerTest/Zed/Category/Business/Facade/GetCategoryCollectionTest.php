@@ -9,9 +9,11 @@ namespace SprykerTest\Zed\Category\Business\Facade;
 
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\CategoryLocalizedAttributesBuilder;
+use Generated\Shared\Transfer\CategoryConditionsTransfer;
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
+use Generated\Shared\Transfer\PaginationTransfer;
 
 /**
  * Auto-generated group annotations
@@ -160,5 +162,87 @@ class GetCategoryCollectionTest extends Unit
 
         // Assert
         $this->assertCount(1, $categoryTransfers);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCategoryCollectionReturnsEmptyCollectionWhileNoCriteriaMatched(): void
+    {
+        // Arrange
+        $this->tester->haveLocalizedCategory();
+        $categoryConditionsTransfer = (new CategoryConditionsTransfer())->addIdCategory(0);
+        $categoryCriteriaTransfer = (new CategoryCriteriaTransfer())
+            ->setCategoryConditions($categoryConditionsTransfer);
+
+        // Act
+        $categoryCollectionTransfer = $this->tester->getFacade()
+            ->getCategoryCollection($categoryCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(0, $categoryCollectionTransfer->getCategories());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCategoryCollectionReturnsCollectionWithOneCategoryWhileAllCriteriasMatched(): void
+    {
+        // Arrange
+        $localeTransfer = $this->tester->haveLocale([LocaleTransfer::LOCALE_NAME => static::FAKE_LOCALE_NAME]);
+        $categoryLocalizedAttributesData = (new CategoryLocalizedAttributesBuilder())->build()->toArray();
+        $categoryTransfer1 = $this->tester->haveCategory();
+        $this->tester->haveCategoryLocalizedAttributeForCategory(
+            $categoryTransfer1->getIdCategory(),
+            [LocalizedAttributesTransfer::LOCALE => $localeTransfer] + $categoryLocalizedAttributesData,
+        );
+
+        $categoryTransfer2 = $this->tester->haveCategory();
+        $this->tester->haveCategoryLocalizedAttributeForCategory(
+            $categoryTransfer2->getIdCategory(),
+            [LocalizedAttributesTransfer::LOCALE => $localeTransfer] + $categoryLocalizedAttributesData,
+        );
+
+        $categoryConditionsTransfer = (new CategoryConditionsTransfer())
+            ->addIdCategory($categoryTransfer1->getIdCategory())
+            ->setIsMain(true)
+            ->addIdLocale($localeTransfer->getIdLocale())
+            ->addIdCategoryNode($categoryTransfer1->getCategoryNode()->getIdCategoryNode())
+            ->addLocaleName($localeTransfer->getLocaleName());
+        $categoryCriteriaTransfer = (new CategoryCriteriaTransfer())
+            ->setCategoryConditions($categoryConditionsTransfer);
+
+        // Act
+        $categoryCollectionTransfer = $this->tester->getFacade()
+            ->getCategoryCollection($categoryCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(1, $categoryCollectionTransfer->getCategories());
+        $this->assertSame(
+            $categoryTransfer1->getIdCategory(),
+            $categoryCollectionTransfer->getCategories()->getIterator()->current()->getIdCategory(),
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCategoryCollectionReturnsCollectionWithFiveGetCategoriesWhileHavingLimitOffsetPaginationApplied(): void
+    {
+        // Arrange
+        for ($i = 0; $i < 15; $i++) {
+            $this->tester->haveCategory();
+        }
+        $categoryCriteriaTransfer = (new CategoryCriteriaTransfer())
+            ->setPagination(
+                (new PaginationTransfer())->setLimit(5)->setOffset(10),
+            );
+
+        // Act
+        $categoryCollectionTransfer = $this->tester->getFacade()
+            ->getCategoryCollection($categoryCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(5, $categoryCollectionTransfer->getCategories());
     }
 }

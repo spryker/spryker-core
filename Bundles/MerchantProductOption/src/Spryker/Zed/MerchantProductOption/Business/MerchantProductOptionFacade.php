@@ -28,6 +28,8 @@ class MerchantProductOptionFacade extends AbstractFacade implements MerchantProd
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\MerchantProductOption\Business\MerchantProductOptionFacade::getMerchantProductOptionGroupCollection()} instead.
+     *
      * @param \Generated\Shared\Transfer\MerchantProductOptionGroupCriteriaTransfer $merchantProductOptionGroupCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantProductOptionGroupCollectionTransfer
@@ -36,6 +38,21 @@ class MerchantProductOptionFacade extends AbstractFacade implements MerchantProd
         MerchantProductOptionGroupCriteriaTransfer $merchantProductOptionGroupCriteriaTransfer
     ): MerchantProductOptionGroupCollectionTransfer {
         return $this->getRepository()->getGroups($merchantProductOptionGroupCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantProductOptionGroupCriteriaTransfer $merchantProductOptionGroupCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantProductOptionGroupCollectionTransfer
+     */
+    public function getMerchantProductOptionGroupCollection(
+        MerchantProductOptionGroupCriteriaTransfer $merchantProductOptionGroupCriteriaTransfer
+    ): MerchantProductOptionGroupCollectionTransfer {
+        return $this->getRepository()->getMerchantProductOptionGroupCollection($merchantProductOptionGroupCriteriaTransfer);
     }
 
     /**

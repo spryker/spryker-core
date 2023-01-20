@@ -8,7 +8,9 @@
 namespace Spryker\Zed\PriceProductOffer\Persistence;
 
 use ArrayObject;
+use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
+use Generated\Shared\Transfer\PriceProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\QueryCriteriaTransfer;
 use Generated\Shared\Transfer\QueryJoinTransfer;
@@ -161,5 +163,51 @@ class PriceProductOfferRepository extends AbstractRepository implements PricePro
                 ->endUse()
                 ->endUse();
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductOfferCollectionTransfer
+     */
+    public function getPriceProductOfferCollection(PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer): PriceProductOfferCollectionTransfer
+    {
+        $priceProductOfferCollectionTransfer = new PriceProductOfferCollectionTransfer();
+        $priceProductOfferQuery = $this->getFactory()
+            ->getPriceProductOfferPropelQuery()
+            ->joinWithSpyProductOffer();
+
+        $paginationTransfer = $priceProductOfferCriteriaTransfer->getPagination();
+        if ($paginationTransfer) {
+            $priceProductOfferQuery = $this->applyPriceProductOfferPagination($priceProductOfferQuery, $paginationTransfer);
+            $priceProductOfferCollectionTransfer->setPagination($paginationTransfer);
+        }
+
+        return $this->getFactory()
+            ->createPriceProductOfferMapper()
+            ->mapPriceProductOfferEntitiesToPriceProductOfferCollectionTransfer(
+                $priceProductOfferQuery->find(),
+                $priceProductOfferCollectionTransfer,
+            );
+    }
+
+    /**
+     * @param \Orm\Zed\PriceProductOffer\Persistence\SpyPriceProductOfferQuery $priceProductOfferQuery
+     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
+     *
+     * @return \Orm\Zed\PriceProductOffer\Persistence\SpyPriceProductOfferQuery
+     */
+    protected function applyPriceProductOfferPagination(
+        SpyPriceProductOfferQuery $priceProductOfferQuery,
+        PaginationTransfer $paginationTransfer
+    ): SpyPriceProductOfferQuery {
+        $paginationTransfer->setNbResults($priceProductOfferQuery->count());
+        if ($paginationTransfer->getLimit() !== null && $paginationTransfer->getOffset() !== null) {
+            return $priceProductOfferQuery
+                ->limit($paginationTransfer->getLimit())
+                ->offset($paginationTransfer->getOffset());
+        }
+
+        return $priceProductOfferQuery;
     }
 }

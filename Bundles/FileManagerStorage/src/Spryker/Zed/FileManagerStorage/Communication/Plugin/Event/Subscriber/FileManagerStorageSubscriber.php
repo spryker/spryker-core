@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\FileManagerStorage\Communication\Plugin\Event\Subscriber;
 
+use Spryker\Shared\FileManagerStorage\FileManagerStorageConfig;
 use Spryker\Zed\Event\Dependency\EventCollectionInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 use Spryker\Zed\FileManager\Dependency\FileManagerEvents;
@@ -49,7 +50,8 @@ class FileManagerStorageSubscriber extends AbstractPlugin implements EventSubscr
         $eventCollection
             ->addListenerQueued(FileManagerEvents::ENTITY_FILE_CREATE, new FilePublishListener(), 0, null, $this->getConfig()->getEventQueueName())
             ->addListenerQueued(FileManagerEvents::ENTITY_FILE_UPDATE, new FilePublishListener(), 0, null, $this->getConfig()->getEventQueueName())
-            ->addListenerQueued(FileManagerEvents::ENTITY_FILE_DELETE, new FileUnpublishListener(), 0, null, $this->getConfig()->getEventQueueName());
+            ->addListenerQueued(FileManagerEvents::ENTITY_FILE_DELETE, new FileUnpublishListener(), 0, null, $this->getConfig()->getEventQueueName())
+            ->addListenerQueued(FileManagerStorageConfig::FILE_PUBLISH, new FilePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**

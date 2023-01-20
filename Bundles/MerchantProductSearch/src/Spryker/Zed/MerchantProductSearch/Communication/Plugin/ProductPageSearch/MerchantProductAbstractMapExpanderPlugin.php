@@ -16,6 +16,7 @@ use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractMapE
 /**
  * @method \Spryker\Zed\MerchantProductSearch\MerchantProductSearchConfig getConfig()
  * @method \Spryker\Zed\MerchantProductSearch\Business\MerchantProductSearchFacadeInterface getFacade()
+ * @method \Spryker\Zed\MerchantProductSearch\Communication\MerchantProductSearchCommunicationFactory getFactory()
  */
 class MerchantProductAbstractMapExpanderPlugin extends AbstractPlugin implements ProductAbstractMapExpanderPluginInterface
 {

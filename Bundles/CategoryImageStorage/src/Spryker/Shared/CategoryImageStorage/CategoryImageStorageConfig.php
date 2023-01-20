@@ -43,6 +43,18 @@ class CategoryImageStorageConfig extends AbstractBundleConfig
 
     /**
      * Specification:
+     * - This event will be used for category image publishing.
+     *
+     * @api
+     *
+     * @uses {@link \Spryker\Zed\CategoryImage\Dependency\CategoryImageEvents::CATEGORY_IMAGE_CATEGORY_PUBLISH}
+     *
+     * @var string
+     */
+    public const CATEGORY_IMAGE_CATEGORY_PUBLISH = 'CategoryImage.category_image.publish';
+
+    /**
+     * Specification:
      * - Default image set name.
      *
      * @api

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\MerchantProductStorage\Dependency\Facade;
 
+use Generated\Shared\Transfer\MerchantProductAbstractCollectionTransfer;
+use Generated\Shared\Transfer\MerchantProductAbstractCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantProductCollectionTransfer;
 use Generated\Shared\Transfer\MerchantProductCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
@@ -44,5 +46,16 @@ class MerchantProductStorageToMerchantProductFacadeBridge implements MerchantPro
     public function get(MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer): MerchantProductCollectionTransfer
     {
         return $this->merchantProductFacade->get($merchantProductCriteriaTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantProductAbstractCriteriaTransfer $merchantProductAbstractCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantProductAbstractCollectionTransfer
+     */
+    public function getMerchantProductAbstractCollection(
+        MerchantProductAbstractCriteriaTransfer $merchantProductAbstractCriteriaTransfer
+    ): MerchantProductAbstractCollectionTransfer {
+        return $this->merchantProductFacade->getMerchantProductAbstractCollection($merchantProductAbstractCriteriaTransfer);
     }
 }

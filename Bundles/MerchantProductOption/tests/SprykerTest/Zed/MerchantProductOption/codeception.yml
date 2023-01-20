@@ -27,3 +27,4 @@ suites:
                 - \SprykerTest\Shared\MerchantProductOption\Helper\MerchantProductOptionHelper
                 - \SprykerTest\Shared\ProductOption\Helper\ProductOptionGroupDataHelper
                 - \SprykerTest\Zed\Merchant\Helper\MerchantHelper
+                - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper

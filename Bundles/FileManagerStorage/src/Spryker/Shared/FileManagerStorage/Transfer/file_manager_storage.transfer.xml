@@ -64,4 +64,17 @@
         <property name="title" type="string"/>
         <property name="alt" type="string"/>
     </transfer>
+
+    <transfer name="FileCriteria" strict="true">
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="FileCollection" strict="true">
+        <property name="files" type="File[]" singular="file"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
+    </transfer>
 </transfers>

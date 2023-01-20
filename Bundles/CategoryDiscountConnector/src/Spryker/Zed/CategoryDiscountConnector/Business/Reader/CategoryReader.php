@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CategoryDiscountConnector\Business\Reader;
 
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
+use Generated\Shared\Transfer\CategoryConditionsTransfer;
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
 use Spryker\Zed\CategoryDiscountConnector\Dependency\Facade\CategoryDiscountConnectorToCategoryFacadeInterface;
@@ -73,8 +74,9 @@ class CategoryReader implements CategoryReaderInterface
     {
         $localeTransfer = $this->localeFacade->getCurrentLocale();
 
+        $categoryConditionsTransfer = (new CategoryConditionsTransfer())->addIdLocale($localeTransfer->getIdLocaleOrFail());
         $categoryCriteriaTransfer = (new CategoryCriteriaTransfer())
-            ->setIdLocale($localeTransfer->getIdLocaleOrFail());
+            ->setCategoryConditions($categoryConditionsTransfer);
 
         return $this->categoryFacade->getCategoryCollection($categoryCriteriaTransfer);
     }

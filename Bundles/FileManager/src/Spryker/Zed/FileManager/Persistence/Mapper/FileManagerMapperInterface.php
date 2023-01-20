@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\FileManager\Persistence\Mapper;
 
+use Generated\Shared\Transfer\FileCollectionTransfer;
 use Generated\Shared\Transfer\FileDirectoryLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\FileDirectoryTransfer;
 use Generated\Shared\Transfer\FileInfoTransfer;
@@ -20,6 +21,7 @@ use Orm\Zed\FileManager\Persistence\SpyFileDirectoryLocalizedAttributes;
 use Orm\Zed\FileManager\Persistence\SpyFileInfo;
 use Orm\Zed\FileManager\Persistence\SpyFileLocalizedAttributes;
 use Orm\Zed\FileManager\Persistence\SpyMimeType;
+use Propel\Runtime\Collection\ObjectCollection;
 
 interface FileManagerMapperInterface
 {
@@ -38,6 +40,17 @@ interface FileManagerMapperInterface
      * @return \Orm\Zed\FileManager\Persistence\SpyFile
      */
     public function mapFileTransferToEntity(FileTransfer $fileTransfer, SpyFile $file);
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\FileManager\Persistence\SpyFile> $fileEntities
+     * @param \Generated\Shared\Transfer\FileCollectionTransfer $fileCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\FileCollectionTransfer
+     */
+    public function mapFileEntitiesToFileCollectionTransfer(
+        ObjectCollection $fileEntities,
+        FileCollectionTransfer $fileCollectionTransfer
+    ): FileCollectionTransfer;
 
     /**
      * @param \Orm\Zed\FileManager\Persistence\SpyFileInfo $fileInfo

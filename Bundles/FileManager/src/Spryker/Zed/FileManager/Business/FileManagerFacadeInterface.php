@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\FileManager\Business;
 
+use Generated\Shared\Transfer\FileCollectionTransfer;
+use Generated\Shared\Transfer\FileCriteriaTransfer;
 use Generated\Shared\Transfer\FileDirectoryTransfer;
 use Generated\Shared\Transfer\FileDirectoryTreeTransfer;
 use Generated\Shared\Transfer\FileManagerDataTransfer;
@@ -251,4 +253,18 @@ interface FileManagerFacadeInterface
      * @return int
      */
     public function getFileInfoVersionsCount(int $idFile): int;
+
+    /**
+     * Specification:
+     * - Fetches a collection of files from the Persistence.
+     * - Uses `FileCriteriaTransfer.pagination.limit` and `FileCriteriaTransfer.pagination.offset` to paginate results with limit and offset.
+     * - Returns `FileCollectionTransfer` filled with found files.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FileCriteriaTransfer $fileCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\FileCollectionTransfer
+     */
+    public function getFileCollection(FileCriteriaTransfer $fileCriteriaTransfer): FileCollectionTransfer;
 }

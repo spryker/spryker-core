@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Asset\Business;
 
 use Generated\Shared\Transfer\AssetAddedTransfer;
+use Generated\Shared\Transfer\AssetCollectionTransfer;
+use Generated\Shared\Transfer\AssetCriteriaTransfer;
 use Generated\Shared\Transfer\AssetDeletedTransfer;
 use Generated\Shared\Transfer\AssetTransfer;
 use Generated\Shared\Transfer\AssetUpdatedTransfer;
@@ -67,7 +69,7 @@ class AssetFacade extends AbstractFacade implements AssetFacadeInterface
      *
      * @api
      *
-     * @deprecated Will be removed without replacement.
+     * @deprecated Use {@link \Spryker\Zed\Asset\Business\AssetFacade::getAssetCollection()} instead.
      *
      * @param int $idAsset
      *
@@ -76,5 +78,19 @@ class AssetFacade extends AbstractFacade implements AssetFacadeInterface
     public function findAssetById(int $idAsset): ?AssetTransfer
     {
         return $this->getRepository()->findAssetById($idAsset);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AssetCriteriaTransfer $assetCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\AssetCollectionTransfer
+     */
+    public function getAssetCollection(AssetCriteriaTransfer $assetCriteriaTransfer): AssetCollectionTransfer
+    {
+        return $this->getRepository()->getAssetCollection($assetCriteriaTransfer);
     }
 }

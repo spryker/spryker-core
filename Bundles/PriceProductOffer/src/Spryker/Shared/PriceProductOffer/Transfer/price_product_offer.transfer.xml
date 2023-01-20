@@ -17,6 +17,13 @@
         <property name="storeIds" type="int[]" singular="idStore"/>
         <property name="priceTypeIds" type="int[]" singular="idPriceType"/>
         <property name="priceProductStoreIds" type="int[]" singular="idPriceProductStore"/>
+        <property name="pagination" type="Pagination" strict="true"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="offset" type="int"/>
+        <property name="limit" type="int"/>
+        <property name="nbResults" type="int"/>
     </transfer>
 
     <transfer name="ProductOfferCriteria">
@@ -110,6 +117,7 @@
 
     <transfer name="PriceProductOfferCollection">
         <property name="priceProductOffers" type="PriceProductOffer[]" singular="priceProductOffer"/>
+        <property name="pagination" type="Pagination" strict="true"/>
     </transfer>
 
     <transfer name="ValidationResponse">

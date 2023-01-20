@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
+use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
@@ -142,12 +143,19 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
      */
     public function getCategoriesByCriteria(CategoryCriteriaTransfer $categoryCriteriaTransfer): CategoryCollectionTransfer
     {
+        $categoryCollectionTransfer = new CategoryCollectionTransfer();
+        $categoryQuery = $this->getFactory()->createCategoryQuery();
+        $categoryQuery = $this->applyCategoryFilters($categoryQuery, $categoryCriteriaTransfer);
+
+        $paginationTransfer = $categoryCriteriaTransfer->getPagination();
+        if ($paginationTransfer !== null) {
+            $categoryQuery = $this->applyCategoryPagination($categoryQuery, $paginationTransfer);
+            $categoryCollectionTransfer->setPagination($paginationTransfer);
+        }
+
         return $this->getFactory()
             ->createCategoryMapper()
-            ->mapCategoryCollection(
-                $this->applyCategoryFilters($this->getFactory()->createCategoryQuery(), $categoryCriteriaTransfer)->find(),
-                new CategoryCollectionTransfer(),
-            );
+            ->mapCategoryCollection($categoryQuery->find(), $categoryCollectionTransfer);
     }
 
     /**
@@ -827,44 +835,49 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
      */
     protected function applyCategoryFilters(SpyCategoryQuery $categoryQuery, CategoryCriteriaTransfer $categoryCriteriaTransfer): SpyCategoryQuery
     {
-        if ($categoryCriteriaTransfer->getIdCategory()) {
-            $categoryQuery->filterByIdCategory($categoryCriteriaTransfer->getIdCategory());
+        if ($categoryCriteriaTransfer->getCategoryConditions() === null) {
+            return $this->applyCategoryFiltersDeprecated($categoryQuery, $categoryCriteriaTransfer);
         }
 
-        if ($categoryCriteriaTransfer->getIsMain() !== null) {
+        $categoryConditionsTransfer = $categoryCriteriaTransfer->getCategoryConditionsOrFail();
+
+        if ($categoryConditionsTransfer->getCategoryIds()) {
+            $categoryQuery->filterByIdCategory_In($categoryConditionsTransfer->getCategoryIds());
+        }
+
+        if ($categoryConditionsTransfer->getIsMain() !== null) {
             $categoryQuery
                 ->useNodeQuery('node', Criteria::LEFT_JOIN)
-                    ->filterByIsMain($categoryCriteriaTransfer->getIsMain())
+                    ->filterByIsMain($categoryConditionsTransfer->getIsMain())
                 ->endUse();
         }
 
-        if ($categoryCriteriaTransfer->getLocaleName()) {
+        if ($categoryConditionsTransfer->getLocaleNames()) {
             $categoryQuery
                 ->useAttributeQuery(null, Criteria::LEFT_JOIN)
                     ->useLocaleQuery()
-                        ->filterByLocaleName($categoryCriteriaTransfer->getLocaleName())
+                        ->filterByLocaleName_In($categoryConditionsTransfer->getLocaleNames())
                     ->endUse()
                 ->endUse();
         }
 
-        $idCategoryNode = $categoryCriteriaTransfer->getIdCategoryNode();
-        if ($idCategoryNode) {
+        if ($categoryConditionsTransfer->getCategoryNodeIds()) {
             $categoryQuery
                 ->joinWithNode()
                 ->useNodeQuery()
-                    ->filterByIdCategoryNode($idCategoryNode)
+                    ->filterByIdCategoryNode_In($categoryConditionsTransfer->getCategoryNodeIds())
                 ->endUse();
         }
 
-        if ($categoryCriteriaTransfer->getIdLocale()) {
+        if ($categoryConditionsTransfer->getLocaleIds()) {
             $categoryQuery
                 ->joinWithAttribute()
                 ->useAttributeQuery()
-                    ->filterByFkLocale($categoryCriteriaTransfer->getIdLocale())
+                    ->filterByFkLocale_In($categoryConditionsTransfer->getLocaleIds())
                 ->endUse();
         }
 
-        if ($categoryCriteriaTransfer->getWithNodes()) {
+        if ($categoryConditionsTransfer->getWithNodes()) {
             $categoryQuery->leftJoinNode();
         }
 
@@ -946,10 +959,15 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
             ->endUse()
             ->filterByDepth(0, Criteria::NOT_EQUAL);
 
-        if ($categoryCriteriaTransfer->getLimit() !== null && $categoryCriteriaTransfer->getOffset() !== null) {
+        $paginationTransfer = $categoryCriteriaTransfer->getPagination();
+        if (!$paginationTransfer) {
+            return $categoryClosureTableQuery;
+        }
+
+        if ($paginationTransfer->getLimit() !== null && $paginationTransfer->getOffset() !== null) {
             $categoryClosureTableQuery
-                ->limit($categoryCriteriaTransfer->getLimit())
-                ->offset($categoryCriteriaTransfer->getOffset());
+                ->limit($paginationTransfer->getLimit())
+                ->offset($paginationTransfer->getOffset());
         }
 
         return $categoryClosureTableQuery;
@@ -1035,5 +1053,75 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         }
 
         return array_unique($relatedCategoryNodesIds);
+    }
+
+    /**
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryQuery $categoryQuery
+     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
+     */
+    protected function applyCategoryPagination(SpyCategoryQuery $categoryQuery, PaginationTransfer $paginationTransfer): SpyCategoryQuery
+    {
+        $paginationTransfer->setNbResults($categoryQuery->count());
+        if ($paginationTransfer->getOffset() !== null && $paginationTransfer->getLimit() !== null) {
+            return $categoryQuery
+                ->limit($paginationTransfer->getLimitOrFail())
+                ->offset($paginationTransfer->getOffsetOrFail());
+        }
+
+        return $categoryQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryQuery $categoryQuery
+     * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
+     */
+    protected function applyCategoryFiltersDeprecated(SpyCategoryQuery $categoryQuery, CategoryCriteriaTransfer $categoryCriteriaTransfer): SpyCategoryQuery
+    {
+        if ($categoryCriteriaTransfer->getIdCategory()) {
+            $categoryQuery->filterByIdCategory($categoryCriteriaTransfer->getIdCategory());
+        }
+
+        if ($categoryCriteriaTransfer->getIsMain() !== null) {
+            $categoryQuery
+                ->useNodeQuery('node', Criteria::LEFT_JOIN)
+                    ->filterByIsMain($categoryCriteriaTransfer->getIsMain())
+                ->endUse();
+        }
+
+        if ($categoryCriteriaTransfer->getLocaleName()) {
+            $categoryQuery
+                ->useAttributeQuery(null, Criteria::LEFT_JOIN)
+                    ->useLocaleQuery()
+                        ->filterByLocaleName($categoryCriteriaTransfer->getLocaleName())
+                    ->endUse()
+                ->endUse();
+        }
+
+        $idCategoryNode = $categoryCriteriaTransfer->getIdCategoryNode();
+        if ($idCategoryNode) {
+            $categoryQuery
+                ->joinWithNode()
+                ->useNodeQuery()
+                    ->filterByIdCategoryNode($idCategoryNode)
+                ->endUse();
+        }
+
+        if ($categoryCriteriaTransfer->getIdLocale()) {
+            $categoryQuery
+                ->joinWithAttribute()
+                ->useAttributeQuery()
+                    ->filterByFkLocale($categoryCriteriaTransfer->getIdLocale())
+                ->endUse();
+        }
+
+        if ($categoryCriteriaTransfer->getWithNodes()) {
+            $categoryQuery->leftJoinNode();
+        }
+
+        return $categoryQuery;
     }
 }

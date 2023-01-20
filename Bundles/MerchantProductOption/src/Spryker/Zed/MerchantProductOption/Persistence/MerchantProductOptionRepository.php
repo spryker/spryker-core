@@ -9,7 +9,7 @@ namespace Spryker\Zed\MerchantProductOption\Persistence;
 
 use Generated\Shared\Transfer\MerchantProductOptionGroupCollectionTransfer;
 use Generated\Shared\Transfer\MerchantProductOptionGroupCriteriaTransfer;
-use Generated\Shared\Transfer\MerchantProductOptionGroupTransfer;
+use Generated\Shared\Transfer\PaginationTransfer;
 use Orm\Zed\MerchantProductOption\Persistence\Map\SpyMerchantProductOptionGroupTableMap;
 use Orm\Zed\MerchantProductOption\Persistence\SpyMerchantProductOptionGroupQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
@@ -22,6 +22,8 @@ use Spryker\Zed\MerchantProductOption\MerchantProductOptionConfig;
 class MerchantProductOptionRepository extends AbstractRepository implements MerchantProductOptionRepositoryInterface
 {
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Generated\Shared\Transfer\MerchantProductOptionGroupCriteriaTransfer $merchantProductOptionGroupCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantProductOptionGroupCollectionTransfer
@@ -47,36 +49,6 @@ class MerchantProductOptionRepository extends AbstractRepository implements Merc
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantProductOptionGroupCriteriaTransfer $merchantProductOptionGroupCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantProductOptionGroupTransfer|null
-     */
-    public function findGroup(
-        MerchantProductOptionGroupCriteriaTransfer $merchantProductOptionGroupCriteriaTransfer
-    ): ?MerchantProductOptionGroupTransfer {
-        $merchantProductOptionGroupQuery = $this->getFactory()
-            ->getMerchantProductOptionGroupQuery();
-
-        $merchantProductOptionGroupQuery = $this->applyCriteria(
-            $merchantProductOptionGroupCriteriaTransfer,
-            $merchantProductOptionGroupQuery,
-        );
-
-        $merchantProductOptionGroupEntity = $merchantProductOptionGroupQuery->findOne();
-
-        if (!$merchantProductOptionGroupEntity) {
-            return null;
-        }
-
-        return $this->getFactory()
-            ->createMerchantProductOptionGroupMapper()
-            ->mapMerchantProductOptionGroupEntityToMerchantProductOptionGroupTransfer(
-                $merchantProductOptionGroupEntity,
-                new MerchantProductOptionGroupTransfer(),
-            );
-    }
-
-    /**
      * @param array<int> $productOptionGroupIds
      *
      * @return array<int|null>
@@ -96,6 +68,39 @@ class MerchantProductOptionRepository extends AbstractRepository implements Merc
 
     /**
      * @param \Generated\Shared\Transfer\MerchantProductOptionGroupCriteriaTransfer $merchantProductOptionGroupCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantProductOptionGroupCollectionTransfer
+     */
+    public function getMerchantProductOptionGroupCollection(
+        MerchantProductOptionGroupCriteriaTransfer $merchantProductOptionGroupCriteriaTransfer
+    ): MerchantProductOptionGroupCollectionTransfer {
+        $merchantProductOptionCollectionTransfer = new MerchantProductOptionGroupCollectionTransfer();
+        $merchantProductOptionGroupQuery = $this->getFactory()->getMerchantProductOptionGroupQuery();
+
+        $merchantProductOptionGroupQuery = $this->applyMerchantProductOptionGroupFilters(
+            $merchantProductOptionGroupCriteriaTransfer,
+            $merchantProductOptionGroupQuery,
+        );
+
+        $paginationTransfer = $merchantProductOptionGroupCriteriaTransfer->getPagination();
+        if ($paginationTransfer !== null) {
+            $merchantProductOptionGroupQuery = $this
+                ->applyMerchantProductOptionGroupPagination($merchantProductOptionGroupQuery, $paginationTransfer);
+            $merchantProductOptionCollectionTransfer->setPagination($paginationTransfer);
+        }
+
+        return $this->getFactory()
+            ->createMerchantProductOptionGroupMapper()
+            ->mapMerchantProductOptionGroupEntitiesToMerchantProductOptionGroupCollectionTransfer(
+                $merchantProductOptionGroupQuery->find(),
+                $merchantProductOptionCollectionTransfer,
+            );
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @param \Generated\Shared\Transfer\MerchantProductOptionGroupCriteriaTransfer $merchantProductOptionGroupCriteriaTransfer
      * @param \Orm\Zed\MerchantProductOption\Persistence\SpyMerchantProductOptionGroupQuery<mixed> $merchantProductOptionGroupQuery
      *
      * @return \Orm\Zed\MerchantProductOption\Persistence\SpyMerchantProductOptionGroupQuery<mixed>
@@ -114,6 +119,50 @@ class MerchantProductOptionRepository extends AbstractRepository implements Merc
             $merchantProductOptionGroupQuery->filterByFkProductOptionGroup_In(
                 $merchantProductOptionGroupCriteriaTransfer->getProductOptionGroupIds(),
             );
+        }
+
+        return $merchantProductOptionGroupQuery;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantProductOptionGroupCriteriaTransfer $merchantProductOptionGroupCriteriaTransfer
+     * @param \Orm\Zed\MerchantProductOption\Persistence\SpyMerchantProductOptionGroupQuery $merchantProductOptionGroupQuery
+     *
+     * @return \Orm\Zed\MerchantProductOption\Persistence\SpyMerchantProductOptionGroupQuery
+     */
+    protected function applyMerchantProductOptionGroupFilters(
+        MerchantProductOptionGroupCriteriaTransfer $merchantProductOptionGroupCriteriaTransfer,
+        SpyMerchantProductOptionGroupQuery $merchantProductOptionGroupQuery
+    ): SpyMerchantProductOptionGroupQuery {
+        $merchantProductOptionGroupConditionsTransfer = $merchantProductOptionGroupCriteriaTransfer->getMerchantProductOptionGroupConditions();
+        if ($merchantProductOptionGroupConditionsTransfer === null) {
+            return $merchantProductOptionGroupQuery;
+        }
+
+        if ($merchantProductOptionGroupConditionsTransfer->getProductOptionGroupIds()) {
+            $merchantProductOptionGroupQuery->filterByFkProductOptionGroup_In(
+                $merchantProductOptionGroupConditionsTransfer->getProductOptionGroupIds(),
+            );
+        }
+
+        return $merchantProductOptionGroupQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\MerchantProductOption\Persistence\SpyMerchantProductOptionGroupQuery $merchantProductOptionGroupQuery
+     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
+     *
+     * @return \Orm\Zed\MerchantProductOption\Persistence\SpyMerchantProductOptionGroupQuery
+     */
+    protected function applyMerchantProductOptionGroupPagination(
+        SpyMerchantProductOptionGroupQuery $merchantProductOptionGroupQuery,
+        PaginationTransfer $paginationTransfer
+    ): SpyMerchantProductOptionGroupQuery {
+        $paginationTransfer->setNbResults($merchantProductOptionGroupQuery->count());
+        if ($paginationTransfer->getLimit() !== null && $paginationTransfer->getOffset() !== null) {
+            return $merchantProductOptionGroupQuery
+                ->limit($paginationTransfer->getLimit())
+                ->offset($paginationTransfer->getOffset());
         }
 
         return $merchantProductOptionGroupQuery;

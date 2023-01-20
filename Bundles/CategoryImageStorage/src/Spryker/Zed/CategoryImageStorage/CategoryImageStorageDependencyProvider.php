@@ -9,6 +9,7 @@ namespace Spryker\Zed\CategoryImageStorage;
 
 use Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSetQuery;
 use Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSetToCategoryImageQuery;
+use Spryker\Zed\CategoryImageStorage\Dependency\Facade\CategoryImageStorageToCategoryFacadeBridge;
 use Spryker\Zed\CategoryImageStorage\Dependency\Facade\CategoryImageStorageToEventBehaviorBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -22,6 +23,11 @@ class CategoryImageStorageDependencyProvider extends AbstractBundleDependencyPro
      * @var string
      */
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+
+    /**
+     * @var string
+     */
+    public const FACADE_CATEGORY = 'FACADE_CATEGORY';
 
     /**
      * @var string
@@ -40,7 +46,10 @@ class CategoryImageStorageDependencyProvider extends AbstractBundleDependencyPro
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $this->addEventBehaviorFacade($container);
+        $container = parent::provideCommunicationLayerDependencies($container);
+
+        $container = $this->addEventBehaviorFacade($container);
+        $container = $this->addCategoryFacade($container);
 
         return $container;
     }
@@ -68,6 +77,22 @@ class CategoryImageStorageDependencyProvider extends AbstractBundleDependencyPro
         $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new CategoryImageStorageToEventBehaviorBridge(
                 $container->getLocator()->eventBehavior()->facade(),
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCategoryFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_CATEGORY, function (Container $container) {
+            return new CategoryImageStorageToCategoryFacadeBridge(
+                $container->getLocator()->category()->facade(),
             );
         });
 

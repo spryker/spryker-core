@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CategoryImageStorage\Communication;
 
 use Spryker\Zed\CategoryImageStorage\CategoryImageStorageDependencyProvider;
+use Spryker\Zed\CategoryImageStorage\Dependency\Facade\CategoryImageStorageToCategoryFacadeInterface;
 use Spryker\Zed\CategoryImageStorage\Dependency\Facade\CategoryImageStorageToEventBehaviorInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
@@ -25,5 +26,13 @@ class CategoryImageStorageCommunicationFactory extends AbstractCommunicationFact
     public function getEventBehaviorFacade(): CategoryImageStorageToEventBehaviorInterface
     {
         return $this->getProvidedDependency(CategoryImageStorageDependencyProvider::FACADE_EVENT_BEHAVIOR);
+    }
+
+    /**
+     * @return \Spryker\Zed\CategoryImageStorage\Dependency\Facade\CategoryImageStorageToCategoryFacadeInterface
+     */
+    public function getCategoryFacade(): CategoryImageStorageToCategoryFacadeInterface
+    {
+        return $this->getProvidedDependency(CategoryImageStorageDependencyProvider::FACADE_CATEGORY);
     }
 }

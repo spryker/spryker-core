@@ -30,4 +30,14 @@ class MerchantProductStorageConfig extends AbstractBundleConfig
      * @var string
      */
     public const ENTITY_SPY_MERCHANT_UPDATE = 'Entity.spy_merchant.update';
+
+    /**
+     * Specification:
+     * - Merchant product resource name, used for key generating.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const MERCHANT_PRODUCT_RESOURCE_NAME = 'merchant_product';
 }

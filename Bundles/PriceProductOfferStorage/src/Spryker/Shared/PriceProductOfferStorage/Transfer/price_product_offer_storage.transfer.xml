@@ -76,5 +76,19 @@
 
     <transfer name="PriceProductOfferCriteria">
         <property name="priceProductStoreIds" type="int[]" singular="idPriceProductStore"/>
+        <property name="pagination" type="Pagination" strict="true"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="offset" type="int"/>
+        <property name="limit" type="int"/>
+    </transfer>
+
+    <transfer name="PriceProductOfferCollection">
+        <property name="priceProductOffers" type="PriceProductOffer[]" singular="priceProductOffer"/>
+    </transfer>
+
+    <transfer name="PriceProductOffer">
+        <property name="idPriceProductOffer" type="int"/>
     </transfer>
 </transfers>

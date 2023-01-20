@@ -40,4 +40,14 @@ class MerchantProductOptionStorageConfig extends AbstractBundleConfig
      * @var string
      */
     public const ENTITY_SPY_MERCHANT_PRODUCT_OPTION_GROUP_UPDATE = 'Entity.spy_merchant_product_option_group.update';
+
+    /**
+     * Specification:
+     * - Merchant product option group resource name, used for key generating.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const MERCHANT_PRODUCT_OPTION_GROUP_RESOURCE_NAME = 'merchant_product_option_group';
 }

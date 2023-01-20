@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantSwitcher\Business\MerchantSwitcher;
 
 use ArrayObject;
+use Generated\Shared\Transfer\MerchantProductOfferConditionsTransfer;
 use Generated\Shared\Transfer\MerchantProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantSwitchRequestTransfer;
 use Generated\Shared\Transfer\MerchantSwitchResponseTransfer;
@@ -94,13 +95,16 @@ class WishlistMerchantSwitcher implements WishlistMerchantSwitcherInterface
         string $merchantReference,
         WishlistTransfer $wishlistTransfer
     ): ProductOfferCollectionTransfer {
-        $merchantProductOfferCriteriaTransfer = (new MerchantProductOfferCriteriaTransfer())
-            ->setMerchantReference($merchantReference)
+        $merchantProductOfferConditionsTransfer = (new MerchantProductOfferConditionsTransfer())
+            ->addMerchantReference($merchantReference)
             ->setIsActive(true);
 
         foreach ($wishlistTransfer->getWishlistItems() as $item) {
-            $merchantProductOfferCriteriaTransfer->addSku($item->getSku());
+            $merchantProductOfferConditionsTransfer->addSku($item->getSku());
         }
+
+        $merchantProductOfferCriteriaTransfer = (new MerchantProductOfferCriteriaTransfer())
+            ->setMerchantProductOfferConditions($merchantProductOfferConditionsTransfer);
 
         return $this->merchantProductOfferFacade->getProductOfferCollection($merchantProductOfferCriteriaTransfer);
     }

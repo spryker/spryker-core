@@ -11,7 +11,7 @@ use Codeception\Actor;
 use Codeception\Stub;
 use Generated\Shared\Transfer\AssetTransfer;
 use Orm\Zed\AssetStorage\Persistence\SpyAssetSlotStorageQuery;
-use Spryker\Zed\AssetStorage\Dependency\Facade\AssetStorageToAssetBridge;
+use Spryker\Zed\AssetStorage\Dependency\Facade\AssetStorageToAssetFacadeBridge;
 use Spryker\Zed\AssetStorage\Persistence\AssetStorageEntityManager;
 use Spryker\Zed\AssetStorage\Persistence\AssetStorageRepository;
 
@@ -96,7 +96,7 @@ class AssetStorageCommunicationTester extends Actor
     public function mockAssetFacade(?AssetTransfer $assetTransfer): void
     {
         $assetFacadeMock = Stub::make(
-            AssetStorageToAssetBridge::class,
+            AssetStorageToAssetFacadeBridge::class,
             [
                 'findAssetById' => $assetTransfer,
             ],

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\MerchantProductSearch\Dependency\Facade;
 
+use Generated\Shared\Transfer\MerchantProductAbstractCollectionTransfer;
+use Generated\Shared\Transfer\MerchantProductAbstractCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantProductCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 
@@ -33,5 +35,16 @@ class MerchantProductSearchToMerchantProductFacadeBridge implements MerchantProd
     public function findMerchant(MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer): ?MerchantTransfer
     {
         return $this->merchantProductFacade->findMerchant($merchantProductCriteriaTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantProductAbstractCriteriaTransfer $merchantProductAbstractCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantProductAbstractCollectionTransfer
+     */
+    public function getMerchantProductAbstractCollection(
+        MerchantProductAbstractCriteriaTransfer $merchantProductAbstractCriteriaTransfer
+    ): MerchantProductAbstractCollectionTransfer {
+        return $this->merchantProductFacade->getMerchantProductAbstractCollection($merchantProductAbstractCriteriaTransfer);
     }
 }

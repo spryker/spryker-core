@@ -9,6 +9,7 @@ namespace Spryker\Zed\Category\Business\Updater;
 
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
+use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\UpdateCategoryStoreRelationRequestTransfer;
 use Spryker\Zed\Category\Business\Exception\MissingCategoryException;
@@ -262,10 +263,13 @@ class CategoryStoreUpdater implements CategoryStoreUpdaterInterface
         }
 
         $categoryReadChunkSize = $this->categoryConfig->getCategoryReadChunkSize();
-        $categoryCriteriaTransfer = (new CategoryCriteriaTransfer())->setLimit($categoryReadChunkSize);
+        $categoryCriteriaTransfer = (new CategoryCriteriaTransfer())
+            ->setPagination(
+                (new PaginationTransfer())->setLimit($categoryReadChunkSize),
+            );
 
         for ($offset = 0; $offset <= $categoryNodeChildCount; $offset += $categoryReadChunkSize) {
-            $categoryCriteriaTransfer->setOffset($offset);
+            $categoryCriteriaTransfer->getPaginationOrFail()->setOffset($offset);
             $descendantCategoryIds = $this->categoryRepository->getDescendantCategoryIdsByIdCategory(
                 $categoryTransfer,
                 $categoryCriteriaTransfer,

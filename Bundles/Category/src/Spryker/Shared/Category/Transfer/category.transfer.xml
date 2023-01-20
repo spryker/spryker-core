@@ -30,6 +30,7 @@
 
     <transfer name="CategoryCollection">
         <property name="categories" type="Category[]" singular="category"/>
+        <property name="pagination" type="Pagination" strict="true"/>
     </transfer>
 
     <transfer name="NodeCollection">
@@ -67,17 +68,37 @@
     </transfer>
 
     <transfer name="CategoryCriteria">
-        <property name="idCategory" type="int"/>
-        <property name="storeName" type="string"/>
-        <property name="localeName" type="string"/>
-        <property name="idLocale" type="int"/>
+        <property name="idCategory" type="int" deprecated="Use CategoryConditions.categoryIds instead."/>
+        <property name="storeName" type="string" deprecated="Use CategoryConditions.storeNames instead."/>
+        <property name="localeName" type="string" deprecated="Use CategoryConditions.localeNames instead."/>
+        <property name="idLocale" type="int" deprecated="Use CategoryConditions.localeIds instead."/>
+        <property name="withNodes" type="bool" deprecated="Use CategoryConditions.withNodes instead."/>
+        <property name="withChildren" type="bool" deprecated="Use CategoryConditions.withChildren instead."/>
+        <property name="isMain" type="bool" deprecated="Use CategoryConditions.isMain instead."/>
+        <property name="withChildrenRecursively" type="bool" deprecated="Use CategoryConditions.withChildrenRecursively instead."/>
+        <property name="idCategoryNode" type="int" deprecated="Use CategoryConditions.categoryNodeIds instead."/>
+        <property name="limit" type="int" deprecated="Use Pagination.limit instead."/>
+        <property name="offset" type="int" deprecated="Use Pagination.offset instead."/>
+        <property name="categoryConditions" type="CategoryConditions" strict="true"/>
+        <property name="pagination" type="Pagination" strict="true"/>
+    </transfer>
+
+    <transfer name="CategoryConditions" strict="true">
+        <property name="categoryIds" type="int[]" singular="idCategory"/>
+        <property name="storeNames" type="string[]" singular="storeName"/>
+        <property name="localeNames" type="string[]" singular="localeName"/>
+        <property name="localeIds" type="int[]" singular="idLocale"/>
         <property name="withNodes" type="bool"/>
         <property name="withChildren" type="bool"/>
         <property name="isMain" type="bool"/>
         <property name="withChildrenRecursively" type="bool"/>
-        <property name="idCategoryNode" type="int"/>
+        <property name="categoryNodeIds" type="int[]" singular="idCategoryNode"/>
+    </transfer>
+
+    <transfer name="Pagination">
         <property name="limit" type="int"/>
         <property name="offset" type="int"/>
+        <property name="nbResults" type="int"/>
     </transfer>
 
     <transfer name="CategoryNodeCriteria">
@@ -165,5 +186,4 @@
 
     <transfer name="Filter">
     </transfer>
-
 </transfers>

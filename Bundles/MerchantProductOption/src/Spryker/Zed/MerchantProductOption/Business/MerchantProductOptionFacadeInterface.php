@@ -24,11 +24,30 @@ interface MerchantProductOptionFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\MerchantProductOption\Business\MerchantProductOptionFacadeInterface::getMerchantProductOptionGroupCollection()} instead.
+     *
      * @param \Generated\Shared\Transfer\MerchantProductOptionGroupCriteriaTransfer $merchantProductOptionGroupCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantProductOptionGroupCollectionTransfer
      */
     public function getGroups(
+        MerchantProductOptionGroupCriteriaTransfer $merchantProductOptionGroupCriteriaTransfer
+    ): MerchantProductOptionGroupCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Fetches a collection of product option groups from the Persistence.
+     * - Uses `MerchantProductOptionGroupCriteriaTransfer.MerchantProductOptionGroupConditions.productOptionGroupIds` to filter product option groups by productOptionGroupIds.
+     * - Uses `MerchantProductOptionGroupCriteriaTransfer.pagination.limit` and `MerchantProductOptionGroupCriteriaTransfer.pagination.offset` to paginate results with limit and offset.
+     * - Returns `MerchantProductOptionGroupCollectionTransfer` filled with found product option groups.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantProductOptionGroupCriteriaTransfer $merchantProductOptionGroupCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantProductOptionGroupCollectionTransfer
+     */
+    public function getMerchantProductOptionGroupCollection(
         MerchantProductOptionGroupCriteriaTransfer $merchantProductOptionGroupCriteriaTransfer
     ): MerchantProductOptionGroupCollectionTransfer;
 

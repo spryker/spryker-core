@@ -30,9 +30,9 @@ class MerchantProductOptionStorageToMerchantProductOptionFacadeBridge implements
      *
      * @return \Generated\Shared\Transfer\MerchantProductOptionGroupCollectionTransfer
      */
-    public function getGroups(
+    public function getMerchantProductOptionGroupCollection(
         MerchantProductOptionGroupCriteriaTransfer $merchantProductOptionGroupCriteriaTransfer
     ): MerchantProductOptionGroupCollectionTransfer {
-        return $this->merchantProductOptionFacade->getGroups($merchantProductOptionGroupCriteriaTransfer);
+        return $this->merchantProductOptionFacade->getMerchantProductOptionGroupCollection($merchantProductOptionGroupCriteriaTransfer);
     }
 }

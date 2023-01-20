@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantProductOptionStorage\Business\Filter;
 
+use Generated\Shared\Transfer\MerchantProductOptionGroupConditionsTransfer;
 use Generated\Shared\Transfer\MerchantProductOptionGroupCriteriaTransfer;
 use Spryker\Zed\MerchantProductOptionStorage\Dependency\Facade\MerchantProductOptionStorageToMerchantProductOptionFacadeInterface;
 use Spryker\Zed\MerchantProductOptionStorage\Persistence\MerchantProductOptionStorageRepositoryInterface;
@@ -50,9 +51,14 @@ class MerchantProductOptionFilter implements MerchantProductOptionFilterInterfac
     public function filterProductOptions(array $productOptionTransfers): array
     {
         $productOptionGroupIds = $this->extractProductOptionGroupIds($productOptionTransfers);
-        $merchantProductOptionGroupCriteriaTransfer = (new MerchantProductOptionGroupCriteriaTransfer())
+
+        $merchantProductOptionGroupConditionsTransfer = (new MerchantProductOptionGroupConditionsTransfer())
             ->setProductOptionGroupIds($productOptionGroupIds);
-        $approvedMerchantProductOptionGroupCollectionTransfer = $this->merchantProductOptionFacade->getGroups($merchantProductOptionGroupCriteriaTransfer);
+
+        $merchantProductOptionGroupCriteriaTransfer = (new MerchantProductOptionGroupCriteriaTransfer())
+            ->setMerchantProductOptionGroupConditions($merchantProductOptionGroupConditionsTransfer);
+
+        $approvedMerchantProductOptionGroupCollectionTransfer = $this->merchantProductOptionFacade->getMerchantProductOptionGroupCollection($merchantProductOptionGroupCriteriaTransfer);
         $groupedProductOptionTransfers = $this->getProductOptionsGroupedByIdGroup($productOptionTransfers);
 
         foreach ($approvedMerchantProductOptionGroupCollectionTransfer->getMerchantProductOptionGroups() as $merchantProductOptionGroupTransfer) {

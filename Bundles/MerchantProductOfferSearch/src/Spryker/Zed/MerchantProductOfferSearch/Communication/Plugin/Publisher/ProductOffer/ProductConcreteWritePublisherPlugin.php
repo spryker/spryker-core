@@ -14,6 +14,7 @@ use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
 /**
  * @method \Spryker\Zed\MerchantProductOfferSearch\Business\MerchantProductOfferSearchFacadeInterface getFacade()
  * @method \Spryker\Zed\MerchantProductOfferSearch\MerchantProductOfferSearchConfig getConfig()
+ * @method \Spryker\Zed\MerchantProductOfferSearch\Communication\MerchantProductOfferSearchCommunicationFactory getFactory()
  */
 class ProductConcreteWritePublisherPlugin extends AbstractPlugin implements PublisherPluginInterface
 {
@@ -46,6 +47,7 @@ class ProductConcreteWritePublisherPlugin extends AbstractPlugin implements Publ
             MerchantProductOfferSearchConfig::ENTITY_SPY_PRODUCT_OFFER_CREATE,
             MerchantProductOfferSearchConfig::ENTITY_SPY_PRODUCT_OFFER_UPDATE,
             MerchantProductOfferSearchConfig::ENTITY_SPY_PRODUCT_OFFER_DELETE,
+            MerchantProductOfferSearchConfig::PRODUCT_OFFER_PUBLISH,
         ];
     }
 }

@@ -9,6 +9,8 @@ namespace Spryker\Zed\MerchantProduct\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
+use Generated\Shared\Transfer\MerchantProductAbstractCollectionTransfer;
+use Generated\Shared\Transfer\MerchantProductAbstractCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantProductCollectionTransfer;
 use Generated\Shared\Transfer\MerchantProductCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantProductTransfer;
@@ -197,4 +199,20 @@ interface MerchantProductFacadeInterface
     public function checkShoppingListItem(
         ShoppingListItemTransfer $shoppingListItemTransfer
     ): ShoppingListPreAddItemCheckResponseTransfer;
+
+    /**
+     * Specification:
+     * - Fetches a collection of merchant product abstracts from Persistence.
+     * - Uses `MerchantProductAbstractCriteriaTransfer.pagination.limit` and `MerchantProductAbstractCriteriaTransfer.pagination.offset` to paginate results with limit and offset.
+     * - Returns `MerchantProductAbstractCollectionTransfer` filled with found merchant product abstracts.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantProductAbstractCriteriaTransfer $merchantProductAbstractCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantProductAbstractCollectionTransfer
+     */
+    public function getMerchantProductAbstractCollection(
+        MerchantProductAbstractCriteriaTransfer $merchantProductAbstractCriteriaTransfer
+    ): MerchantProductAbstractCollectionTransfer;
 }

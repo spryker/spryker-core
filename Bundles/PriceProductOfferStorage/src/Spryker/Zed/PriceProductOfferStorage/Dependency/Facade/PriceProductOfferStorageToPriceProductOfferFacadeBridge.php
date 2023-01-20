@@ -8,6 +8,7 @@
 namespace Spryker\Zed\PriceProductOfferStorage\Dependency\Facade;
 
 use ArrayObject;
+use Generated\Shared\Transfer\PriceProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer;
 
 class PriceProductOfferStorageToPriceProductOfferFacadeBridge implements PriceProductOfferStorageToPriceProductOfferFacadeInterface
@@ -34,5 +35,16 @@ class PriceProductOfferStorageToPriceProductOfferFacadeBridge implements PricePr
         PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer
     ): ArrayObject {
         return $this->priceProductOfferFacade->getProductOfferPrices($priceProductOfferCriteriaTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductOfferCollectionTransfer
+     */
+    public function getPriceProductOfferCollection(
+        PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer
+    ): PriceProductOfferCollectionTransfer {
+        return $this->priceProductOfferFacade->getPriceProductOfferCollection($priceProductOfferCriteriaTransfer);
     }
 }

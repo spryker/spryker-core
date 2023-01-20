@@ -52,6 +52,12 @@
     <transfer name="MerchantProductOfferCriteria">
         <property name="skus" type="array" singular="sku"/>
         <property name="storeIds" type="int[]" singular="idStore"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
     </transfer>
 
     <transfer name="Store">

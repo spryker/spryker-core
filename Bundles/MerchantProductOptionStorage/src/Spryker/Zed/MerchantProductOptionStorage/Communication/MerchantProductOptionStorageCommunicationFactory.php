@@ -8,13 +8,21 @@
 namespace Spryker\Zed\MerchantProductOptionStorage\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\MerchantProductOptionStorage\Dependency\Facade\MerchantProductOptionStorageToMerchantProductOptionFacadeInterface;
+use Spryker\Zed\MerchantProductOptionStorage\MerchantProductOptionStorageDependencyProvider;
 
 /**
  * @method \Spryker\Zed\MerchantProductOptionStorage\MerchantProductOptionStorageConfig getConfig()
- * @method \Spryker\Zed\MerchantProductOptionStorage\Persistence\MerchantProductOptionStorageEntityManagerInterface getEntityManager()
  * @method \Spryker\Zed\MerchantProductOptionStorage\Persistence\MerchantProductOptionStorageRepositoryInterface getRepository()
  * @method \Spryker\Zed\MerchantProductOptionStorage\Business\MerchantProductOptionStorageFacadeInterface getFacade()
  */
 class MerchantProductOptionStorageCommunicationFactory extends AbstractCommunicationFactory
 {
+    /**
+     * @return \Spryker\Zed\MerchantProductOptionStorage\Dependency\Facade\MerchantProductOptionStorageToMerchantProductOptionFacadeInterface
+     */
+    public function getMerchantProductOptionFacade(): MerchantProductOptionStorageToMerchantProductOptionFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantProductOptionStorageDependencyProvider::FACADE_MERCHANT_PRODUCT_OPTION);
+    }
 }

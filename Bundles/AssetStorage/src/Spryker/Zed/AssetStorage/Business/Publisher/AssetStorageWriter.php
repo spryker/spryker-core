@@ -7,11 +7,13 @@
 
 namespace Spryker\Zed\AssetStorage\Business\Publisher;
 
+use Generated\Shared\Transfer\AssetConditionsTransfer;
+use Generated\Shared\Transfer\AssetCriteriaTransfer;
 use Generated\Shared\Transfer\AssetSlotStorageTransfer;
 use Generated\Shared\Transfer\AssetStorageCollectionTransfer;
 use Generated\Shared\Transfer\AssetStorageTransfer;
 use Generated\Shared\Transfer\AssetTransfer;
-use Spryker\Zed\AssetStorage\Dependency\Facade\AssetStorageToAssetInterface;
+use Spryker\Zed\AssetStorage\Dependency\Facade\AssetStorageToAssetFacadeInterface;
 use Spryker\Zed\AssetStorage\Dependency\Facade\AssetStorageToStoreFacadeInterface;
 use Spryker\Zed\AssetStorage\Persistence\AssetStorageEntityManagerInterface;
 use Spryker\Zed\AssetStorage\Persistence\AssetStorageRepositoryInterface;
@@ -27,7 +29,7 @@ class AssetStorageWriter implements AssetStorageWriterInterface
     protected $storeFacade;
 
     /**
-     * @var \Spryker\Zed\AssetStorage\Dependency\Facade\AssetStorageToAssetInterface
+     * @var \Spryker\Zed\AssetStorage\Dependency\Facade\AssetStorageToAssetFacadeInterface
      */
     protected $assetFacade;
 
@@ -43,13 +45,13 @@ class AssetStorageWriter implements AssetStorageWriterInterface
 
     /**
      * @param \Spryker\Zed\AssetStorage\Dependency\Facade\AssetStorageToStoreFacadeInterface $storeFacade
-     * @param \Spryker\Zed\AssetStorage\Dependency\Facade\AssetStorageToAssetInterface $assetFacade
+     * @param \Spryker\Zed\AssetStorage\Dependency\Facade\AssetStorageToAssetFacadeInterface $assetFacade
      * @param \Spryker\Zed\AssetStorage\Persistence\AssetStorageEntityManagerInterface $assetStorageEntityManager
      * @param \Spryker\Zed\AssetStorage\Persistence\AssetStorageRepositoryInterface $assetStorageRepository
      */
     public function __construct(
         AssetStorageToStoreFacadeInterface $storeFacade,
-        AssetStorageToAssetInterface $assetFacade,
+        AssetStorageToAssetFacadeInterface $assetFacade,
         AssetStorageEntityManagerInterface $assetStorageEntityManager,
         AssetStorageRepositoryInterface $assetStorageRepository
     ) {
@@ -71,6 +73,7 @@ class AssetStorageWriter implements AssetStorageWriterInterface
                 $eventEntityTransfer->getAdditionalValues(),
                 true,
             );
+            $assetTransfer->setIdAsset($eventEntityTransfer->getId());
 
             $this->publishByAssetTransfer($assetTransfer);
         }
@@ -179,8 +182,12 @@ class AssetStorageWriter implements AssetStorageWriterInterface
      */
     protected function publishByAssetTransfer(AssetTransfer $assetTransfer): void
     {
+        if ($assetTransfer->getAssetSlot() === null || $assetTransfer->getStores() === []) {
+            $assetTransfer = $this->findAsset($assetTransfer);
+        }
+
         $assetSlotStorageTransfers = $this->assetStorageRepository->findAssetStoragesByAssetSlotAndStores(
-            $assetTransfer->getAssetSlot(),
+            $assetTransfer->getAssetSlotOrFail(),
             $assetTransfer->getStores(),
         );
 
@@ -326,5 +333,24 @@ class AssetStorageWriter implements AssetStorageWriterInterface
         }
 
         $this->assetStorageEntityManager->saveAssetSlotStorage($assetSlotStorageTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AssetTransfer $assetTransfer
+     *
+     * @return \Generated\Shared\Transfer\AssetTransfer
+     */
+    protected function findAsset(AssetTransfer $assetTransfer): AssetTransfer
+    {
+        $assetConditionsTransfer = (new AssetConditionsTransfer())->addIdAsset($assetTransfer->getIdAsset());
+        $assetCollectionTransfer = $this->assetFacade->getAssetCollection(
+            (new AssetCriteriaTransfer())->setAssetConditions($assetConditionsTransfer),
+        );
+
+        if ($assetCollectionTransfer->getAssets()->count() === 1) {
+            return $assetCollectionTransfer->getAssets()->getIterator()->current();
+        }
+
+        return $assetTransfer;
     }
 }

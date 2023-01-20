@@ -50,4 +50,14 @@ class MerchantProductSearchConfig extends AbstractSharedConfig
      * @var string
      */
     public const ENTITY_SPY_MERCHANT_UPDATE = 'Entity.spy_merchant.update';
+
+    /**
+     * Specification:
+     * - This event is used for merchant product publishing.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const MERCHANT_PRODUCT_SEARCH_RESOURCE_NAME = 'merchant_product_search';
 }

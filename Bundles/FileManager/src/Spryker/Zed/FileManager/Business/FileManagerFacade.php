@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\FileManager\Business;
 
+use Generated\Shared\Transfer\FileCollectionTransfer;
+use Generated\Shared\Transfer\FileCriteriaTransfer;
 use Generated\Shared\Transfer\FileDirectoryTransfer;
 use Generated\Shared\Transfer\FileDirectoryTreeTransfer;
 use Generated\Shared\Transfer\FileManagerDataTransfer;
@@ -297,5 +299,19 @@ class FileManagerFacade extends AbstractFacade implements FileManagerFacadeInter
     public function getFileInfoVersionsCount(int $idFile): int
     {
         return $this->getRepository()->getFileInfoVersionsCount($idFile);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FileCriteriaTransfer $fileCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\FileCollectionTransfer
+     */
+    public function getFileCollection(FileCriteriaTransfer $fileCriteriaTransfer): FileCollectionTransfer
+    {
+        return $this->getRepository()->getFileCollection($fileCriteriaTransfer);
     }
 }

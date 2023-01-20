@@ -34,6 +34,26 @@
         <property name="messageAttributes" type="MessageAttributes"/>
     </transfer>
 
+    <transfer name="AssetCriteria" strict="true">
+        <property name="assetConditions" type="AssetConditions"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="AssetConditions" strict="true">
+        <property name="assetIds" type="int[]" singular="idAsset"/>
+    </transfer>
+
+    <transfer name="AssetCollection" strict="true">
+        <property name="assets" type="Asset[]" singular="asset"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
+        <property name="nbResults" type="int"/>
+    </transfer>
+
     <transfer name="MessageAttributes">
         <property name="storeReference" type="string"/>
         <property name="emitter" type="string"/>

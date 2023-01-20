@@ -59,6 +59,7 @@ class PriceProductOfferStorageDependencyProvider extends AbstractBundleDependenc
         parent::provideCommunicationLayerDependencies($container);
 
         $container = $this->addEventBehaviorFacade($container);
+        $container = $this->addPriceProductOfferFacade($container);
 
         return $container;
     }

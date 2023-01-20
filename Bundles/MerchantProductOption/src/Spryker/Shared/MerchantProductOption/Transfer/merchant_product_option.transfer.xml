@@ -2,6 +2,7 @@
 <transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="MerchantProductOptionGroup">
+        <property name="idMerchantProductOptionGroup" type="int"/>
         <property name="fkProductOptionGroup" type="int"/>
         <property name="merchantReference" type="string"/>
         <property name="approvalStatus" type="string"/>
@@ -48,8 +49,20 @@
     </transfer>
 
     <transfer name="MerchantProductOptionGroupCriteria">
-        <property name="idProductOptionGroup" type="int"/>
+        <property name="idProductOptionGroup" type="int" deprecated="Use merchantProductOptionGroupConditions.productOptionGroupIds instead."/>
+        <property name="productOptionGroupIds" type="int[]" singular="idProductOptionGroup" deprecated="Use merchantProductOptionGroupConditions.productOptionGroupIds instead."/>
+        <property name="merchantProductOptionGroupConditions" type="MerchantProductOptionGroupConditions" strict="true"/>
+        <property name="pagination" type="Pagination" strict="true"/>
+    </transfer>
+
+    <transfer name="MerchantProductOptionGroupConditions" strict="true">
         <property name="productOptionGroupIds" type="int[]" singular="idProductOptionGroup"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
+        <property name="nbResults" type="int"/>
     </transfer>
 
     <transfer name="MerchantCriteria">
@@ -58,6 +71,7 @@
 
     <transfer name="MerchantProductOptionGroupCollection">
         <property name="merchantProductOptionGroups" type="MerchantProductOptionGroup[]" singular="merchantProductOptionGroup"/>
+        <property name="pagination" type="Pagination" strict="true"/>
     </transfer>
 
     <transfer name="CheckoutError">

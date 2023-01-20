@@ -44,7 +44,12 @@
     </transfer>
 
     <transfer name="CategoryCriteria">
-        <property name="idLocale" type="int"/>
+        <property name="idLocale" type="int" deprecated="Use CategoryConditions.localeIds instead."/>
+        <property name="categoryConditions" type="CategoryConditions" strict="true"/>
+    </transfer>
+
+    <transfer name="CategoryConditions" strict="true">
+        <property name="localeIds" type="int[]" singular="idLocale"/>
     </transfer>
 
     <transfer name="Locale">

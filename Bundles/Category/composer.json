@@ -13,7 +13,7 @@
         "spryker/propel-orm": "^1.0.0",
         "spryker/store": "^1.0.0",
         "spryker/touch": "^4.5.0",
-        "spryker/transfer": "^3.25.0",
+        "spryker/transfer": "^3.27.0",
         "spryker/url": "^3.5.0"
     },
     "require-dev": {

@@ -10,10 +10,24 @@
     </transfer>
 
     <transfer name="MerchantProductOfferCriteria">
-        <property name="merchantReference" type="string"/>
-        <property name="skus" type="array" singular="sku"/>
+        <property name="merchantReference" type="string" deprecated="Use MerchantProductOfferConditions.merchantReferences instead."/>
+        <property name="skus" type="array" singular="sku" deprecated="Use MerchantProductOfferConditions.skus instead."/>
+        <property name="storeIds" type="int[]" singular="idStore" deprecated="Use MerchantProductOfferConditions.storeIds instead."/>
+        <property name="isActive" type="bool" deprecated="Use MerchantProductOfferConditions.isActive instead."/>
+        <property name="merchantProductOfferConditions" type="MerchantProductOfferConditions" strict="true"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="MerchantProductOfferConditions" strict="true">
+        <property name="merchantReferences" type="string[]" singular="merchantReference"/>
+        <property name="skus" type="string[]" singular="sku"/>
         <property name="storeIds" type="int[]" singular="idStore"/>
         <property name="isActive" type="bool"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
     </transfer>
 
     <transfer name="ProductOfferCriteria">

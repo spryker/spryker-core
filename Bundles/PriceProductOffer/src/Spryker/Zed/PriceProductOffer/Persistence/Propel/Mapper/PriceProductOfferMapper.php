@@ -11,6 +11,8 @@ use ArrayObject;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
+use Generated\Shared\Transfer\PriceProductOfferCollectionTransfer;
+use Generated\Shared\Transfer\PriceProductOfferTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceTypeTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -87,6 +89,28 @@ class PriceProductOfferMapper
         );
 
         return $priceProductTransfer;
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\PriceProductOffer\Persistence\SpyPriceProductOffer> $priceProductOfferEntities
+     * @param \Generated\Shared\Transfer\PriceProductOfferCollectionTransfer $priceProductOfferCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductOfferCollectionTransfer
+     */
+    public function mapPriceProductOfferEntitiesToPriceProductOfferCollectionTransfer(
+        ObjectCollection $priceProductOfferEntities,
+        PriceProductOfferCollectionTransfer $priceProductOfferCollectionTransfer
+    ): PriceProductOfferCollectionTransfer {
+        foreach ($priceProductOfferEntities as $priceProductOfferEntity) {
+            $priceProductOfferCollectionTransfer->addPriceProductOffer(
+                $this->mapPriceProductOfferEntityToPriceProductOfferTransfer(
+                    $priceProductOfferEntity,
+                    new PriceProductOfferTransfer(),
+                ),
+            );
+        }
+
+        return $priceProductOfferCollectionTransfer;
     }
 
     /**
@@ -176,5 +200,18 @@ class PriceProductOfferMapper
     protected function mapStoreEntityToStoreTransfer(SpyStore $storeEntity, StoreTransfer $storeTransfer): StoreTransfer
     {
         return $storeTransfer->fromArray($storeEntity->toArray(), true);
+    }
+
+    /**
+     * @param \Orm\Zed\PriceProductOffer\Persistence\SpyPriceProductOffer $priceProductOfferEntity
+     * @param \Generated\Shared\Transfer\PriceProductOfferTransfer $priceProductOfferTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductOfferTransfer
+     */
+    protected function mapPriceProductOfferEntityToPriceProductOfferTransfer(
+        SpyPriceProductOffer $priceProductOfferEntity,
+        PriceProductOfferTransfer $priceProductOfferTransfer
+    ): PriceProductOfferTransfer {
+        return $priceProductOfferTransfer->fromArray($priceProductOfferEntity->toArray(), true);
     }
 }

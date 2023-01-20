@@ -17,7 +17,12 @@ interface MerchantProductOfferFacadeInterface
 {
     /**
      * Specification:
-     *  - Gets ProductOfferCollectionTransfer filtered by MerchantProductOfferCriteriaTransfer.
+     * - Gets ProductOfferCollectionTransfer filtered by MerchantProductOfferCriteriaTransfer.
+     * - Uses `MerchantProductOfferCriteriaTransfer.MerchantProductOfferConditions.skus` to filter product offers by skus.
+     * - Uses `MerchantProductOfferCriteriaTransfer.MerchantProductOfferConditions.isActive` to filter product offers by isActive.
+     * - Uses `MerchantProductOfferCriteriaTransfer.MerchantProductOfferConditions.merchantReferences` to filter product offers by merchant references.
+     * - Uses `MerchantProductOfferCriteriaTransfer.MerchantProductOfferConditions.storeIds` to filter product offers by store ids.
+     * - Uses `MerchantProductOfferCriteriaTransfer.pagination.limit` and `MerchantProductOfferCriteriaTransfer.pagination.offset` to paginate results with limit and offset.
      *
      * @api
      *

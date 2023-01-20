@@ -6,12 +6,24 @@
     </transfer>
 
     <transfer name="MerchantProductOptionGroup">
+        <property name="idMerchantProductOptionGroup" type="int"/>
         <property name="approvalStatus" type="string"/>
         <property name="fkProductOptionGroup" type="int"/>
     </transfer>
 
     <transfer name="MerchantProductOptionGroupCriteria">
+        <property name="productOptionGroupIds" type="int[]" singular="idProductOptionGroup" deprecated="Use MerchantProductOptionGroupConditions.productOptionGroupIds instead."/>
+        <property name="merchantProductOptionGroupConditions" type="MerchantProductOptionGroupConditions" strict="true"/>
+        <property name="pagination" type="Pagination" strict="true"/>
+    </transfer>
+
+    <transfer name="MerchantProductOptionGroupConditions" strict="true">
         <property name="productOptionGroupIds" type="int[]" singular="idProductOptionGroup"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
     </transfer>
 
     <transfer name="MerchantProductOptionGroupCollection">

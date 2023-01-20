@@ -63,4 +63,26 @@ class PriceProductOfferStorageConfig
      * @var string
      */
     public const ENTITY_SPY_PRICE_PRODUCT_STORE_UPDATE = 'Entity.spy_price_product_store.update';
+
+    /**
+     * Specification:
+     * - This event is used for price product offer publishing.
+     *
+     * @api
+     *
+     * @uses {@link \Spryker\Zed\PriceProductOffer\Dependency\PriceProductOfferEvents::ENTITY_SPY_PRICE_PRODUCT_OFFER_PUBLISH}
+     *
+     * @var string
+     */
+    public const ENTITY_SPY_PRICE_PRODUCT_OFFER_PUBLISH = 'Entity.spy_price_product_offer.publish';
+
+    /**
+     * Specification:
+     * - Price product offer resource name, used for key generating.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const PRICE_PRODUCT_OFFER_RESOURCE_NAME = 'price_product_offer';
 }

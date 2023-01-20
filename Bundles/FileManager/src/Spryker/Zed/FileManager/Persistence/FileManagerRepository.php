@@ -8,12 +8,16 @@
 namespace Spryker\Zed\FileManager\Persistence;
 
 use ArrayObject;
+use Generated\Shared\Transfer\FileCollectionTransfer;
+use Generated\Shared\Transfer\FileCriteriaTransfer;
 use Generated\Shared\Transfer\FileDirectoryTransfer;
 use Generated\Shared\Transfer\FileInfoTransfer;
 use Generated\Shared\Transfer\FileTransfer;
 use Generated\Shared\Transfer\MimeTypeCollectionTransfer;
 use Generated\Shared\Transfer\MimeTypeTransfer;
+use Generated\Shared\Transfer\PaginationTransfer;
 use Orm\Zed\FileManager\Persistence\Map\SpyFileInfoTableMap;
+use Orm\Zed\FileManager\Persistence\SpyFileQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -305,5 +309,43 @@ class FileManagerRepository extends AbstractRepository implements FileManagerRep
             ->createFileInfoQuery()
             ->filterByFkFile($idFile)
             ->count();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FileCriteriaTransfer $fileCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\FileCollectionTransfer
+     */
+    public function getFileCollection(FileCriteriaTransfer $fileCriteriaTransfer): FileCollectionTransfer
+    {
+        $fileCollectionTransfer = new FileCollectionTransfer();
+        $fileQuery = $this->getFactory()->createFileQuery();
+
+        $paginationTransfer = $fileCriteriaTransfer->getPagination();
+        if ($paginationTransfer !== null) {
+            $fileQuery = $this->applyFilePagination($fileQuery, $paginationTransfer);
+            $fileCollectionTransfer->setPagination($paginationTransfer);
+        }
+
+        return $this->getFactory()->createFileManagerMapper()
+            ->mapFileEntitiesToFileCollectionTransfer($fileQuery->find(), $fileCollectionTransfer);
+    }
+
+    /**
+     * @param \Orm\Zed\FileManager\Persistence\SpyFileQuery $fileQuery
+     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
+     *
+     * @return \Orm\Zed\FileManager\Persistence\SpyFileQuery
+     */
+    protected function applyFilePagination(SpyFileQuery $fileQuery, PaginationTransfer $paginationTransfer): SpyFileQuery
+    {
+        $paginationTransfer->setNbResults($fileQuery->count());
+        if ($paginationTransfer->getOffset() !== null && $paginationTransfer->getLimit() !== null) {
+            return $fileQuery
+                ->limit($paginationTransfer->getLimit())
+                ->offset($paginationTransfer->getOffset());
+        }
+
+        return $fileQuery;
     }
 }

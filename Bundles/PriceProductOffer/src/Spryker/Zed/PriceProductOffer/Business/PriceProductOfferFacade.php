@@ -139,4 +139,18 @@ class PriceProductOfferFacade extends AbstractFacade implements PriceProductOffe
     {
         return $this->getFactory()->createPriceProductOfferWishlistExpander()->expandWishlistItemWithPrices($wishlistItemTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductOfferCollectionTransfer
+     */
+    public function getPriceProductOfferCollection(PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer): PriceProductOfferCollectionTransfer
+    {
+        return $this->getRepository()->getPriceProductOfferCollection($priceProductOfferCriteriaTransfer);
+    }
 }

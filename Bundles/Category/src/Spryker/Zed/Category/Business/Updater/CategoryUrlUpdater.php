@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\CategoryNodeUrlCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
+use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Spryker\Zed\Category\Business\Creator\CategoryUrlCreatorInterface;
 use Spryker\Zed\Category\Business\Generator\UrlPathGeneratorInterface;
@@ -139,10 +140,12 @@ class CategoryUrlUpdater implements CategoryUrlUpdaterInterface
         $categoryReadChunkSize = $this->categoryConfig->getCategoryReadChunkSize();
 
         $categoryCriteriaTransfer = (new CategoryCriteriaTransfer())
-            ->setLimit($categoryReadChunkSize);
+            ->setPagination(
+                (new PaginationTransfer())->setLimit($categoryReadChunkSize),
+            );
 
         for ($offset = 0; $offset <= $categoryNodeChildCount; $offset += $categoryReadChunkSize) {
-            $categoryCriteriaTransfer->setOffset($offset);
+            $categoryCriteriaTransfer->getPaginationOrFail()->setOffset($offset);
 
             $categoryNodeIds = $this->categoryRepository
                 ->getDescendantCategoryNodeIdsByIdCategory($categoryTransfer, $categoryCriteriaTransfer);

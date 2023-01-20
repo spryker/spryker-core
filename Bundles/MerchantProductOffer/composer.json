@@ -11,11 +11,13 @@
         "spryker/product-offer": "^1.0.0",
         "spryker/propel-orm": "^1.0.0",
         "spryker/shopping-list-extension": "^1.4.0",
-        "spryker/transfer": "^3.25.0"
+        "spryker/transfer": "^3.27.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*",
         "spryker/product": "*",
+        "spryker/product-offer-stock": "*",
+        "spryker/product-offer-validity": "*",
         "spryker/propel": "*",
         "spryker/testify": "*"
     },

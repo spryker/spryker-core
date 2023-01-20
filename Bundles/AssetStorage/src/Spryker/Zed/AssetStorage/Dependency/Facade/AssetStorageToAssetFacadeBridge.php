@@ -7,12 +7,11 @@
 
 namespace Spryker\Zed\AssetStorage\Dependency\Facade;
 
+use Generated\Shared\Transfer\AssetCollectionTransfer;
+use Generated\Shared\Transfer\AssetCriteriaTransfer;
 use Generated\Shared\Transfer\AssetTransfer;
 
-/**
- * @deprecated Will be removed without replacement.
- */
-class AssetStorageToAssetBridge implements AssetStorageToAssetInterface
+class AssetStorageToAssetFacadeBridge implements AssetStorageToAssetFacadeInterface
 {
     /**
      * @var \Spryker\Zed\Asset\Business\AssetFacadeInterface
@@ -28,6 +27,8 @@ class AssetStorageToAssetBridge implements AssetStorageToAssetInterface
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param int $idAsset
      *
      * @return \Generated\Shared\Transfer\AssetTransfer|null
@@ -35,5 +36,15 @@ class AssetStorageToAssetBridge implements AssetStorageToAssetInterface
     public function findAssetById(int $idAsset): ?AssetTransfer
     {
         return $this->assetFacade->findAssetById($idAsset);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AssetCriteriaTransfer $assetCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\AssetCollectionTransfer
+     */
+    public function getAssetCollection(AssetCriteriaTransfer $assetCriteriaTransfer): AssetCollectionTransfer
+    {
+        return $this->assetFacade->getAssetCollection($assetCriteriaTransfer);
     }
 }

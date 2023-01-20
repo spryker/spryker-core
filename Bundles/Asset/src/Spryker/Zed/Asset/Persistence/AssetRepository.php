@@ -7,7 +7,11 @@
 
 namespace Spryker\Zed\Asset\Persistence;
 
+use Generated\Shared\Transfer\AssetCollectionTransfer;
+use Generated\Shared\Transfer\AssetCriteriaTransfer;
 use Generated\Shared\Transfer\AssetTransfer;
+use Generated\Shared\Transfer\PaginationTransfer;
+use Orm\Zed\Asset\Persistence\SpyAssetQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
@@ -58,5 +62,67 @@ class AssetRepository extends AbstractRepository implements AssetRepositoryInter
 
         return $this->getFactory()->createAssetMapper()
             ->mapAssetEntityToAssetTransfer($assetEntity, new AssetTransfer());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AssetCriteriaTransfer $assetCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\AssetCollectionTransfer
+     */
+    public function getAssetCollection(AssetCriteriaTransfer $assetCriteriaTransfer): AssetCollectionTransfer
+    {
+        $assetCollectionTransfer = new AssetCollectionTransfer();
+        $assetQuery = $this->getFactory()->createAssetQuery();
+
+        $assetQuery = $this->applyAssetFilters($assetQuery, $assetCriteriaTransfer);
+
+        $paginationTransfer = $assetCriteriaTransfer->getPagination();
+        if ($paginationTransfer !== null) {
+            $assetQuery = $this->applyAssetPagination($assetQuery, $paginationTransfer);
+            $assetCollectionTransfer->setPagination($paginationTransfer);
+        }
+
+        return $this->getFactory()
+            ->createAssetMapper()
+            ->mapAssetEntitiesToAssetCollectionTransfer($assetQuery->find(), $assetCollectionTransfer);
+    }
+
+    /**
+     * @param \Orm\Zed\Asset\Persistence\SpyAssetQuery $assetQuery
+     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
+     *
+     * @return \Orm\Zed\Asset\Persistence\SpyAssetQuery
+     */
+    protected function applyAssetPagination(SpyAssetQuery $assetQuery, PaginationTransfer $paginationTransfer): SpyAssetQuery
+    {
+        $paginationTransfer->setNbResults($assetQuery->count());
+        if ($paginationTransfer->getLimit() !== null && $paginationTransfer->getOffset() !== null) {
+            return $assetQuery
+                ->limit($paginationTransfer->getLimitOrFail())
+                ->offset($paginationTransfer->getOffsetOrFail());
+        }
+
+        return $assetQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\Asset\Persistence\SpyAssetQuery $assetQuery
+     * @param \Generated\Shared\Transfer\AssetCriteriaTransfer $assetCriteriaTransfer
+     *
+     * @return \Orm\Zed\Asset\Persistence\SpyAssetQuery
+     */
+    protected function applyAssetFilters(SpyAssetQuery $assetQuery, AssetCriteriaTransfer $assetCriteriaTransfer): SpyAssetQuery
+    {
+        $assetConditionsTransfer = $assetCriteriaTransfer->getAssetConditions();
+
+        if ($assetConditionsTransfer === null) {
+            return $assetQuery;
+        }
+
+        if ($assetConditionsTransfer->getAssetIds()) {
+            $assetQuery->filterByIdAsset_In($assetConditionsTransfer->getAssetIds());
+        }
+
+        return $assetQuery;
     }
 }

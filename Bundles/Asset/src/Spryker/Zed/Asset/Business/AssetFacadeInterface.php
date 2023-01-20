@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Asset\Business;
 
 use Generated\Shared\Transfer\AssetAddedTransfer;
+use Generated\Shared\Transfer\AssetCollectionTransfer;
+use Generated\Shared\Transfer\AssetCriteriaTransfer;
 use Generated\Shared\Transfer\AssetDeletedTransfer;
 use Generated\Shared\Transfer\AssetTransfer;
 use Generated\Shared\Transfer\AssetUpdatedTransfer;
@@ -68,11 +70,25 @@ interface AssetFacadeInterface
      *
      * @api
      *
-     * @deprecated Will be removed without replacement.
+     * @deprecated Use {@link \Spryker\Zed\Asset\Business\AssetFacadeInterface::getAssetCollection()} instead.
      *
      * @param int $idAsset
      *
      * @return \Generated\Shared\Transfer\AssetTransfer|null
      */
     public function findAssetById(int $idAsset): ?AssetTransfer;
+
+    /**
+     * Specification:
+     * - Fetches a collection of assets from the Persistence.
+     * - Uses `AssetCriteriaTransfer.pagination.limit` and `AssetCriteriaTransfer.pagination.offset` to paginate results with limit and offset.
+     * - Returns `AssetCollectionTransfer` filled with found assets.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AssetCriteriaTransfer $assetCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\AssetCollectionTransfer
+     */
+    public function getAssetCollection(AssetCriteriaTransfer $assetCriteriaTransfer): AssetCollectionTransfer;
 }

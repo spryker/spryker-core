@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantProductOption\Business\Expander\ProductOption;
 
 use Generated\Shared\Transfer\MerchantCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantProductOptionGroupConditionsTransfer;
 use Generated\Shared\Transfer\MerchantProductOptionGroupCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOptionGroupTransfer;
 use Spryker\Zed\MerchantProductOption\Dependency\Facade\MerchantProductOptionToMerchantFacadeInterface;
@@ -44,17 +45,26 @@ class ProductOptionGroupExpander implements ProductOptionGroupExpanderInterface
      */
     public function expandProductOptionGroup(ProductOptionGroupTransfer $productOptionGroupTransfer): ProductOptionGroupTransfer
     {
-        $merchantProductOptionGroupCriteriaTransfer = (new MerchantProductOptionGroupCriteriaTransfer())
-            ->setIdProductOptionGroup($productOptionGroupTransfer->getIdProductOptionGroup());
-
-        $merchantProductOptionGroupTransfer = $this->merchantProductOptionRepository->findGroup(
-            $merchantProductOptionGroupCriteriaTransfer,
-        );
-
-        if (!$merchantProductOptionGroupTransfer) {
+        if ($productOptionGroupTransfer->getIdProductOptionGroup() === null) {
             return $productOptionGroupTransfer;
         }
 
+        $merchantProductOptionGroupCriteriaTransfer = (new MerchantProductOptionGroupCriteriaTransfer())
+            ->setMerchantProductOptionGroupConditions(
+                (new MerchantProductOptionGroupConditionsTransfer())
+                    ->addIdProductOptionGroup($productOptionGroupTransfer->getIdProductOptionGroup()),
+            );
+
+        $merchantProductOptionGroupCollectionTransfer = $this->merchantProductOptionRepository->getMerchantProductOptionGroupCollection(
+            $merchantProductOptionGroupCriteriaTransfer,
+        );
+
+        if ($merchantProductOptionGroupCollectionTransfer->getMerchantProductOptionGroups()->count() === 0) {
+            return $productOptionGroupTransfer;
+        }
+
+        $merchantProductOptionGroupTransfer = $merchantProductOptionGroupCollectionTransfer
+            ->getMerchantProductOptionGroups()->getIterator()->current();
         $merchantCriteriaTransfer = (new MerchantCriteriaTransfer())
             ->setMerchantReference($merchantProductOptionGroupTransfer->getMerchantReference());
 

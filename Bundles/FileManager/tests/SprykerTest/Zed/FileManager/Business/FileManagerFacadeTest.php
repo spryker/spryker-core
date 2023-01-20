@@ -403,7 +403,7 @@ class FileManagerFacadeTest extends Unit
     public function testGetFilesByIds(): void
     {
         // Arrange
-        $idFiles = $this->tester->insertFilesCollection();
+        $idFiles = $this->tester->insertFilesCollection(9);
 
         // Act
         $fileManagerDataTransfers = $this->facade->getFilesByIds($idFiles);

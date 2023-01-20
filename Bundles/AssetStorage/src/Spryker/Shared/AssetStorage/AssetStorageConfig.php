@@ -30,4 +30,24 @@ class AssetStorageConfig extends AbstractBundleConfig
      * @var string
      */
     public const ASSET_SYNC_STORAGE_QUEUE = 'sync.storage.asset_slot';
+
+    /**
+     * Specification:
+     * - This event is used for asset publishing.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const ASSET_PUBLISH = 'Asset.publish';
+
+    /**
+     * Specification:
+     * - Asset resource name, used for key generating.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const ASSET_RESOURCE_NAME = 'asset';
 }

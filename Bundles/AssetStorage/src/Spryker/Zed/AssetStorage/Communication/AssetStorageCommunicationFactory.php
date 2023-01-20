@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\AssetStorage\Communication;
 
+use Spryker\Zed\AssetStorage\AssetStorageDependencyProvider;
+use Spryker\Zed\AssetStorage\Dependency\Facade\AssetStorageToAssetFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
@@ -17,4 +19,11 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class AssetStorageCommunicationFactory extends AbstractCommunicationFactory
 {
+    /**
+     * @return \Spryker\Zed\AssetStorage\Dependency\Facade\AssetStorageToAssetFacadeInterface
+     */
+    public function getAssetFacade(): AssetStorageToAssetFacadeInterface
+    {
+        return $this->getProvidedDependency(AssetStorageDependencyProvider::FACADE_ASSET);
+    }
 }

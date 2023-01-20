@@ -5,13 +5,13 @@
     "license": "proprietary",
     "require": {
         "php": ">=8.0",
-        "spryker/category": "^5.3.0",
+        "spryker/category": "^5.8.0",
         "spryker/discount": "^9.0.0",
         "spryker/discount-extension": "^1.2.0",
         "spryker/kernel": "^3.30.0",
         "spryker/locale": "^3.0.0",
         "spryker/product-category": "^4.13.0",
-        "spryker/transfer": "^3.25.0"
+        "spryker/transfer": "^3.27.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*",

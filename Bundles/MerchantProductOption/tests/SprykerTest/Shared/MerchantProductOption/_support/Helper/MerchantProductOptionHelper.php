@@ -20,7 +20,7 @@ class MerchantProductOptionHelper extends Module
      *
      * @return \Generated\Shared\Transfer\MerchantProductOptionGroupTransfer
      */
-    public function haveMerchantProductOptionGroup(array $seedData): MerchantProductOptionGroupTransfer
+    public function haveMerchantProductOptionGroup(array $seedData = []): MerchantProductOptionGroupTransfer
     {
         $merchantProductOptionGroupTransfer = (new MerchantProductOptionGroupBuilder($seedData))->build();
 

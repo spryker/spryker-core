@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\FileManager\Persistence;
 
+use Generated\Shared\Transfer\FileCollectionTransfer;
+use Generated\Shared\Transfer\FileCriteriaTransfer;
 use Generated\Shared\Transfer\MimeTypeTransfer;
 
 interface FileManagerRepositoryInterface
@@ -92,4 +94,11 @@ interface FileManagerRepositoryInterface
      * @return int
      */
     public function getFileInfoVersionsCount(int $idFile): int;
+
+    /**
+     * @param \Generated\Shared\Transfer\FileCriteriaTransfer $fileCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\FileCollectionTransfer
+     */
+    public function getFileCollection(FileCriteriaTransfer $fileCriteriaTransfer): FileCollectionTransfer;
 }

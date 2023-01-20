@@ -9,6 +9,7 @@ namespace Spryker\Zed\PriceProductOfferStorage\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\PriceProductOfferStorage\Dependency\Facade\PriceProductOfferStorageToEventBehaviorFacadeInterface;
+use Spryker\Zed\PriceProductOfferStorage\Dependency\Facade\PriceProductOfferStorageToPriceProductOfferFacadeInterface;
 use Spryker\Zed\PriceProductOfferStorage\PriceProductOfferStorageDependencyProvider;
 
 /**
@@ -23,5 +24,13 @@ class PriceProductOfferStorageCommunicationFactory extends AbstractCommunication
     public function getEventBehaviorFacade(): PriceProductOfferStorageToEventBehaviorFacadeInterface
     {
         return $this->getProvidedDependency(PriceProductOfferStorageDependencyProvider::FACADE_EVENT_BEHAVIOR);
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductOfferStorage\Dependency\Facade\PriceProductOfferStorageToPriceProductOfferFacadeInterface
+     */
+    public function getPriceProductOfferFacade(): PriceProductOfferStorageToPriceProductOfferFacadeInterface
+    {
+        return $this->getProvidedDependency(PriceProductOfferStorageDependencyProvider::FACADE_PRICE_PRODUCT_OFFER);
     }
 }

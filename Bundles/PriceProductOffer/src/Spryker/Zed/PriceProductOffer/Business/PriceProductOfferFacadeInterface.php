@@ -120,4 +120,18 @@ interface PriceProductOfferFacadeInterface
      * @return \Generated\Shared\Transfer\WishlistItemTransfer
      */
     public function expandWishlistItemWithPrices(WishlistItemTransfer $wishlistItemTransfer): WishlistItemTransfer;
+
+    /**
+     * Specification:
+     * - Fetches a collection of price product offers from the Persistence.
+     * - Uses `PriceProductOfferCriteriaTransfer.pagination.limit` and `PriceProductOfferCriteriaTransfer.pagination.offset` to paginate results with limit and offset.
+     * - Returns `PriceProductOfferCollectionTransfer` filled with found price product offers.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductOfferCollectionTransfer
+     */
+    public function getPriceProductOfferCollection(PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer): PriceProductOfferCollectionTransfer;
 }

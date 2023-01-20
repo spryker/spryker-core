@@ -77,4 +77,26 @@ class MerchantProductOfferSearchConfig extends AbstractBundleConfig
      * @var string
      */
     public const ENTITY_SPY_PRODUCT_OFFER_STORE_DELETE = 'Entity.spy_product_offer_store.delete';
+
+    /**
+     * Specification:
+     * - Merchant product offer resource name, used for key generating.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const MERCHANT_PRODUCT_OFFER_RESOURCE_NAME = 'merchant_product_offer_search';
+
+    /**
+     * Specification:
+     * - This event is used for merchant product offer publishing.
+     *
+     * @api
+     *
+     * @uses {@link \Spryker\Shared\ProductOfferStorage\ProductOfferStorageConfig::PRODUCT_OFFER_PUBLISH}
+     *
+     * @var string
+     */
+    public const PRODUCT_OFFER_PUBLISH = 'ProductOffer.product_offer.publish';
 }

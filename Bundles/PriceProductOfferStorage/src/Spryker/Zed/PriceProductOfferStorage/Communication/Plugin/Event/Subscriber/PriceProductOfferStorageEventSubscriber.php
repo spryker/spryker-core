@@ -25,6 +25,10 @@ use Spryker\Zed\Product\Dependency\ProductEvents;
 class PriceProductOfferStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
     /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
      *
      * @return \Spryker\Zed\Event\Dependency\EventCollectionInterface
