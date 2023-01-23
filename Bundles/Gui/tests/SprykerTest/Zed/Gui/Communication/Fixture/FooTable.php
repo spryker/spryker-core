@@ -7,6 +7,7 @@
 
 namespace SprykerTest\Zed\Gui\Communication\Fixture;
 
+use LogicException;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,7 +31,19 @@ class FooTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config): array
     {
+        $this->runQuery($this->createQuery(), $config);
+
         return [];
+    }
+
+    /**
+     * @throws \LogicException
+     *
+     * @return void
+     */
+    protected function createQuery()
+    {
+        throw new LogicException('Method should be mocked.');
     }
 
     /**

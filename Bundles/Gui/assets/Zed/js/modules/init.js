@@ -14,6 +14,7 @@ var safeChecks = require('./libs/safe-checks');
 var initFormattedNumber = require('./libs/formatted-number-input');
 var initFormattedMoney = require('./libs/formatted-money-input');
 var select2combobox = require('./libs/select2-combobox');
+var timeoutId = 0;
 
 var dataTablesSearchDelay = function () {
     var dataTablesWrapper = $('.dataTables_wrapper');
@@ -21,14 +22,13 @@ var dataTablesSearchDelay = function () {
         var searchInput = $(wrapper).find('input[type="search"]');
         var dataTable = $(wrapper).find('.gui-table-data');
         var dataTableApi = dataTable.dataTable().api();
-        var timeOutId = 0;
 
         if (searchInput.length && dataTable.length) {
             searchInput.unbind().bind('input', function (e) {
                 var self = this;
 
-                clearTimeout(timeOutId);
-                timeOutId = setTimeout(function () {
+                clearTimeout(timeoutId);
+                timeoutId = setTimeout(function () {
                     dataTableApi.settings()[0].jqXHR.abort();
                     dataTableApi.search(self.value).draw();
                 }, 1000);
@@ -63,7 +63,7 @@ $(document).ready(function () {
     /* Draw data tables */
     $('.gui-table-data').on('error.dt', dataTable.onError).dataTable(dataTable.defaultConfiguration);
 
-    $('.gui-table-data').on('draw.dt', function () {
+    $('.gui-table-data').on('draw.dt', function (e, settings) {
         var windowWidth = $(document).width(),
             windowHeight = $(document).height(),
             $toggleWrap = $(this).find('.dropdown'),
@@ -102,6 +102,58 @@ $(document).ready(function () {
         $toggleWrap.on('hidden.bs.dropdown', function () {
             $(this).append($toggleDropdown.removeAttr('style').detach());
         });
+        var api = new $.fn.dataTable.Api(settings);
+        var tableBody = $(e.target).find('tbody');
+        var searchRow = '<tr';
+
+        if ($(e.target).find('tr').slice(-1)[0].className === 'even') {
+            searchRow += ' class="odd"';
+        } else {
+            searchRow += ' class="even"';
+        }
+
+        searchRow += '>';
+
+        var isSearchable = false;
+
+        api.columns().every(function (columnIndex) {
+            if (typeof api.ajax.params() === 'undefined') {
+                return;
+            }
+
+            searchRow += '<td>';
+            if (api.ajax.params()['columns'][columnIndex]['searchable']) {
+                searchRow +=
+                    '<input type="text" style="width:80%" class="form-control input-sm column-search" placeholder="Search" data-column-index="' +
+                    columnIndex +
+                    '" value="' +
+                    api.ajax.params()['columns'][columnIndex]['search']['value'] +
+                    '"/>';
+
+                isSearchable = true;
+            }
+            searchRow += '</td>';
+        });
+        searchRow += '</tr>';
+
+        if (isSearchable === true) {
+            tableBody.append(searchRow);
+
+            tableBody
+                .find('input')
+                .off('keyup change click')
+                .on('keyup', function (e) {
+                    var self = this;
+
+                    clearTimeout(timeoutId);
+                    timeoutId = setTimeout(function () {
+                        api.settings()[0].jqXHR.abort();
+                        api.columns(parseInt(self.getAttribute('data-column-index')))
+                            .search(self.value, false, false)
+                            .draw();
+                    }, 1000);
+                });
+        }
     });
 
     /* Draw data tables without search */

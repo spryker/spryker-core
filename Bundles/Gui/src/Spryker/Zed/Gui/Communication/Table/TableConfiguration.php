@@ -52,6 +52,11 @@ class TableConfiguration
     protected $searchableFields;
 
     /**
+     * @var array<string, string>
+     */
+    protected $searchableColumns = [];
+
+    /**
      * @var array<string>
      */
     protected $sortableFields = [];
@@ -469,5 +474,23 @@ class TableConfiguration
     public function setOrdering(bool $ordering)
     {
         $this->ordering = $ordering;
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    public function getSearchableColumns(): array
+    {
+        return $this->searchableColumns;
+    }
+
+    /**
+     * @param array<string, string> $searchableColumns
+     *
+     * @return void
+     */
+    public function setSearchableColumns(array $searchableColumns): void
+    {
+        $this->searchableColumns = $searchableColumns;
     }
 }

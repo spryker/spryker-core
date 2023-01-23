@@ -3,6 +3,10 @@ data-columns='[
     {
         "className": "column-{{ id }}"
         {% if id in config.sortable %}, "orderable": true{%  endif %}
+        {% if config.searchableColumns is defined %}
+            {% if id in config.searchableColumns|keys %}, "searchable": true{% else %}, "searchable": false{% endif %}
+        {% endif %}
+
     }
     {% if not loop.last %},{% endif %}
 {% endfor %}]'

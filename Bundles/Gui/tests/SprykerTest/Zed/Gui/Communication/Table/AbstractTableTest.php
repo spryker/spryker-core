@@ -8,9 +8,12 @@
 namespace SprykerTest\Zed\Gui\Communication\Table;
 
 use Codeception\Test\Unit;
+use PHPUnit\Framework\MockObject\MockObject;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Gui\Communication\Exception\TableException;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use SprykerTest\Zed\Gui\Communication\Fixture\ActiveRecord;
 use SprykerTest\Zed\Gui\Communication\Fixture\DownloadTable;
 use SprykerTest\Zed\Gui\Communication\Fixture\DownloadTableWithOrderedHeadersAndFormatting;
 use SprykerTest\Zed\Gui\Communication\Fixture\DownloadTableWithoutGetDownloadQueryMethod;
@@ -31,6 +34,26 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
  */
 class AbstractTableTest extends Unit
 {
+    /**
+     * @var string
+     */
+    protected const OPERATOR_FOR_STRICT_SEARCH = '=';
+
+    /**
+     * @var string
+     */
+    protected const OPERATOR_FOR_FUZZY_SEARCH = 'LIKE';
+
+    /**
+     * @var string
+     */
+    protected const SEARCHABLE_FIELD_NAME = 'spy_customer.first_name';
+
+    /**
+     * @var string
+     */
+    protected const SEARCHABLE_FIELD_KEY = 'FIRST_NAME';
+
     /**
      * @var string
      */
@@ -255,5 +278,111 @@ class AbstractTableTest extends Unit
         ]) . PHP_EOL;
 
         $this->assertSame($expectedCsvStreamData, $streamedResponseOutput);
+    }
+
+    /**
+     * @return void
+     */
+    public function testRunQueryFiltersDataUsingColumnStrictSearch(): void
+    {
+        // Arrange
+        $modelCriteriaMock = $this->getModelCriteriaMock();
+        $tableConfigurationMock = $this->getTableConfigurationMock();
+        $fooTableMock = $this->getFooTableMock($modelCriteriaMock, $tableConfigurationMock);
+        $fooTableMock->setRequest(new Request([
+            'search' => ['value' => 'maria'],
+            'columns' => [
+                0 => [
+                    'search' => [
+                        'value' => 'Maria',
+                    ],
+                ]],
+        ]));
+
+        // Assert
+        $modelCriteriaMock->expects($this->any())
+            ->method('where')
+            ->with($this->stringContains(static::OPERATOR_FOR_STRICT_SEARCH))
+            ->willReturn($modelCriteriaMock);
+
+        // Act
+        $fooTableMock->fetchData();
+    }
+
+    /**
+     * @return void
+     */
+    public function testRunQueryUsesFuzzySearchWhenColumnFiltersNotProvided(): void
+    {
+        // Arrange
+        $modelCriteriaMock = $this->getModelCriteriaMock();
+        $tableConfigurationMock = $this->getTableConfigurationMock();
+        $fooTableMock = $this->getFooTableMock($modelCriteriaMock, $tableConfigurationMock);
+        $fooTableMock->setRequest(new Request([
+            'search' => ['value' => 'maria'],
+            'columns' => [
+                0 => [
+                    'search' => [
+                        'value' => '',
+                    ],
+                ],
+            ],
+        ]));
+
+        // Assert
+        $modelCriteriaMock->expects($this->any())
+            ->method('where')
+            ->with($this->stringContains(static::OPERATOR_FOR_FUZZY_SEARCH))
+            ->willReturn($modelCriteriaMock);
+
+        // Act
+        $fooTableMock->fetchData();
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    protected function getModelCriteriaMock(): ModelCriteria
+    {
+        $modelCriteriaMock = $this->getMockBuilder(ModelCriteria::class)
+            ->setConstructorArgs([null, ActiveRecord::class])
+            ->onlyMethods(['where'])
+            ->getMock();
+
+        return $modelCriteriaMock;
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Gui\Communication\Table\TableConfiguration
+     */
+    protected function getTableConfigurationMock(): TableConfiguration
+    {
+        $tableConfigurationMock = new TableConfiguration();
+        $tableConfigurationMock->setSearchableColumns([static::SEARCHABLE_FIELD_KEY => static::SEARCHABLE_FIELD_NAME]);
+        $tableConfigurationMock->setDefaultSortColumnIndex(0);
+        $tableConfigurationMock->setDefaultSortDirection(TableConfiguration::SORT_ASC);
+
+        return $tableConfigurationMock;
+    }
+
+    /**
+     * @param \PHPUnit\Framework\MockObject\MockObject $modelCriteriaMock
+     * @param \PHPUnit\Framework\MockObject\MockObject $tableConfigurationMock
+     *
+     * @return \PHPUnit\Framework\MockObject\MockObject|\SprykerTest\Zed\Gui\Communication\Fixture\FooTable
+     */
+    protected function getFooTableMock(MockObject $modelCriteriaMock, TableConfiguration $tableConfigurationMock): FooTable
+    {
+        $fooTableMock = $this->getMockBuilder(FooTable::class)
+            ->onlyMethods(['createQuery', 'init'])
+            ->getMock();
+        $fooTableMock->method('createQuery')
+            ->willReturn($modelCriteriaMock);
+        $fooTableMock->method('init')
+            ->willReturn($fooTableMock);
+        $fooTableMock->setConfiguration($tableConfigurationMock);
+        $fooTableMock->setLimit(5);
+
+        return $fooTableMock;
     }
 }

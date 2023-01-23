@@ -227,6 +227,36 @@ abstract class AbstractTable
     protected $twig;
 
     /**
+     * @var string
+     */
+    protected const SEARCH_PATTERN_FOR_STRICT_SEARCH_MYSQL = '%s%s = BINARY %s';
+
+    /**
+     * @var string
+     */
+    protected const SEARCH_PATTERN_FOR_STRICT_SEARCH_POSTGRESQL = '%s%s = %s';
+
+    /**
+     * @var string
+     */
+    protected const SEARCH_PATTERN_FOR_FUZZY_SEARCH = 'LOWER(%s%s) LIKE %s';
+
+    /**
+     * @var string
+     */
+    protected const SEARCH = 'search';
+
+    /**
+     * @var string
+     */
+    protected const VALUE = 'value';
+
+    /**
+     * @var string
+     */
+    protected const COLUMNS = 'columns';
+
+    /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
@@ -910,6 +940,7 @@ abstract class AbstractTable
                 'footer' => $this->config->getFooter(),
                 'order' => $this->getOrders($this->config),
                 'searchable' => $this->config->getSearchable(),
+                'searchableColumns' => $this->config->getSearchableColumns(),
                 'sortable' => $this->config->getSortable(),
                 'pageLength' => $this->config->getPageLength(),
                 'processing' => $this->config->isProcessing(),
@@ -999,27 +1030,14 @@ abstract class AbstractTable
         $searchTerm = $this->getSearchTerm();
         $searchValue = $searchTerm[static::PARAMETER_VALUE] ?? '';
 
-        if (mb_strlen($searchValue) > 0) {
+        if (mb_strlen($searchValue) > 0 || $this->isStrictSearch($query, $config) === true) {
             $query->setIdentifierQuoting(true);
 
-            $conditions = [];
-            $connection = Propel::getConnection();
-            $driverName = $connection->getAttribute(PDO::ATTR_DRIVER_NAME);
-            $filter = $driverName === static::DRIVER_NAME_PGSQL ? '::TEXT' : '';
-            $conditionParameter = $connection->quote('%' . mb_strtolower($searchValue) . '%');
+            $conditions = $this->resolveConditions($query, $config, $searchValue);
 
-            foreach ($config->getSearchable() as $value) {
-                $condition = sprintf(
-                    'LOWER(%s%s) LIKE %s',
-                    $value,
-                    $filter,
-                    $conditionParameter,
-                );
-
-                $conditions[] = $condition;
+            if ($conditions !== []) {
+                $query = $this->applyConditions($query, $config, $conditions);
             }
-
-            $query = $this->applyConditions($query, $config, $conditions);
 
             $this->filtered = $query->count();
         }
@@ -1043,6 +1061,105 @@ abstract class AbstractTable
 
     /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
+     *
+     * @return array<string>
+     */
+    protected function getStrictConditionParameters(ModelCriteria $query, TableConfiguration $config): array
+    {
+        $conditionParameters = [];
+        $searchTerms = $this->getSearchColumns();
+
+        foreach ($this->getColumnsList($query, $config) as $index => $colName) {
+            if ($searchTerms[$index][static::SEARCH][static::VALUE] !== '') {
+                $conditionParameters[$config->getSearchableColumns()[$colName]] = $searchTerms[$index][static::SEARCH][static::VALUE];
+            }
+        }
+
+        return $conditionParameters;
+    }
+
+    /**
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
+     *
+     * @return bool
+     */
+    protected function isStrictSearch(ModelCriteria $query, TableConfiguration $config): bool
+    {
+        $searchTerms = $this->getSearchColumns();
+
+        foreach ($this->getColumnsList($query, $config) as $index => $colName) {
+            if (isset($searchTerms[$index]) && $searchTerms[$index][static::SEARCH][static::VALUE] !== '') {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @return array<mixed>
+     */
+    protected function getSearchColumns(): array
+    {
+        return (array)$this->request->query->get(static::COLUMNS);
+    }
+
+    /**
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
+     * @param string $searchValue
+     *
+     * @return array<string>
+     */
+    protected function resolveConditions(
+        ModelCriteria $query,
+        TableConfiguration $config,
+        string $searchValue
+    ): array {
+        $conditions = [];
+        $connection = Propel::getConnection();
+        $driverName = $connection->getAttribute(PDO::ATTR_DRIVER_NAME);
+        $filter = $driverName === static::DRIVER_NAME_PGSQL ? '::TEXT' : '';
+        $searchPattern = $this->getSearchPattern($config, $driverName, $query);
+
+        if ($this->isStrictSearch($query, $config) === true) {
+            $strictConditionParameters = $this->getStrictConditionParameters($query, $config);
+            foreach ($strictConditionParameters as $value => $conditionParameter) {
+                $conditions[] = $this->buildCondition($searchPattern, $value, $filter, $connection->quote($conditionParameter));
+            }
+
+            return $conditions;
+        }
+
+        $conditionParameter = $connection->quote('%' . mb_strtolower($searchValue) . '%');
+        foreach ($config->getSearchable() as $value) {
+            $conditions[] = $this->buildCondition($searchPattern, $value, $filter, $conditionParameter);
+        }
+
+        return $conditions;
+    }
+
+    /**
+     * @param string $searchPattern
+     * @param string $value
+     * @param string $filter
+     * @param string $conditionParameter
+     *
+     * @return string
+     */
+    protected function buildCondition(
+        string $searchPattern,
+        string $value,
+        string $filter,
+        string $conditionParameter
+    ): string {
+        return sprintf($searchPattern, $value, $filter, $conditionParameter);
+    }
+
+    /**
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      *
      * @return int
      */
@@ -1061,7 +1178,7 @@ abstract class AbstractTable
     protected function applyConditions(ModelCriteria $query, TableConfiguration $config, array $conditions): ModelCriteria
     {
         $gluedCondition = implode(
-            sprintf(' %s ', Criteria::LOGICAL_OR),
+            sprintf(' %s ', $this->isStrictSearch($query, $config) === true ? Criteria::LOGICAL_AND : Criteria::LOGICAL_OR),
             $conditions,
         );
 
@@ -1694,5 +1811,35 @@ abstract class AbstractTable
         $options['field'] = $formView->offsetGet($fieldName);
 
         return $this->twig->render('form-field.twig', $options);
+    }
+
+    /**
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
+     * @param string $driverName
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     *
+     * @return string
+     */
+    protected function getSearchPattern(TableConfiguration $config, string $driverName, ModelCriteria $query): string
+    {
+        if ($this->isStrictSearch($query, $config) === true) {
+            return $this->getStrictSearchPatternByDriverName($driverName);
+        }
+
+        return static::SEARCH_PATTERN_FOR_FUZZY_SEARCH;
+    }
+
+    /**
+     * @param string $driverName
+     *
+     * @return string
+     */
+    protected function getStrictSearchPatternByDriverName(string $driverName): string
+    {
+        if ($driverName === static::DRIVER_NAME_PGSQL) {
+            return static::SEARCH_PATTERN_FOR_STRICT_SEARCH_POSTGRESQL;
+        }
+
+        return static::SEARCH_PATTERN_FOR_STRICT_SEARCH_MYSQL;
     }
 }

@@ -17,6 +17,11 @@ class ActiveRecord implements ActiveRecordInterface
     protected $data = [];
 
     /**
+     * @var string
+     */
+    public const TABLE_MAP = '\\SprykerTest\\Zed\\Gui\\Communication\\Fixture\\ActiveRecordTableMap';
+
+    /**
      * @param array<string, mixed> $data
      */
     public function __construct(array $data)
