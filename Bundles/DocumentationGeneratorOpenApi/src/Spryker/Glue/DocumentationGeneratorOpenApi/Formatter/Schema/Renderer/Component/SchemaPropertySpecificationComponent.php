@@ -8,7 +8,6 @@
 namespace Spryker\Glue\DocumentationGeneratorOpenApi\Formatter\Schema\Renderer\Component;
 
 use Generated\Shared\Transfer\SchemaPropertyComponentTransfer;
-use stdClass;
 
 /**
  * Specification:
@@ -101,7 +100,7 @@ class SchemaPropertySpecificationComponent implements SchemaPropertySpecificatio
             }
         }
         if ($schemaPropertyComponentTransfer->getType() === static::VALUE_TYPE_ARRAY && !$schemaPropertyComponentTransfer->getItemsType() && !$schemaPropertyComponentTransfer->getOneOf()) {
-            $schemaProperty[static::KEY_ITEMS] = new stdClass();
+            $schemaProperty[static::KEY_ITEMS] = [];
         }
         if ($schemaPropertyComponentTransfer->getIsNullable()) {
             $schemaProperty[static::KEY_NULLABLE] = true;
