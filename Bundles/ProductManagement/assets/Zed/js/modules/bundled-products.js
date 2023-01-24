@@ -32,13 +32,16 @@ $(document).ready(function () {
                         /__name__/g,
                         numberOfAssignedProducts,
                     );
-                    var $newBundledProductForm = $(jQuery.parseHTML(newBundledProductFormHTML)[1]);
+                    var $newBundledProductForm = $(jQuery.parseHTML(newBundledProductFormHTML.trim()));
 
                     var $idProductConcreteFormField = $newBundledProductForm.find("input[id$='id_product_concrete']");
                     $idProductConcreteFormField.val(info['id_product']);
 
                     var $skuElement = $newBundledProductForm.find("input[id$='sku']");
                     $skuElement.val(info['sku']);
+
+                    var $quantityElement = $newBundledProductForm.find("input[id$='quantity']");
+                    $newBundledProductForm.find('.' + $quantityElement.data('target')).attr('value', 1);
 
                     var bundledFormId = $newBundledProductForm.attr('id');
                     $checkbox.attr('data-related-form-id', bundledFormId);
@@ -53,7 +56,7 @@ $(document).ready(function () {
 
                     $('#bundled-products').append($newBundledProductForm);
 
-                    initFormattedNumber($newBundledProductForm[0]);
+                    $newBundledProductForm.get().forEach((element) => initFormattedNumber(element));
                 } else {
                     var idProductConcrete = info['id_product'];
                     var $idProductConcreteElement = $('#bundled-products').find(

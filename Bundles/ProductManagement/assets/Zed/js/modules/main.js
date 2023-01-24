@@ -6,6 +6,7 @@
 'use strict';
 
 require('../../sass/main.scss');
+var initFormattedNumber = require('ZedGuiModules/libs/formatted-number-input');
 
 $(document).ready(function () {
     /**
@@ -60,11 +61,16 @@ $(document).ready(function () {
         var newOptionFormHTML = prototypeTemplate
             .data('imageCollectionPrototype')
             .replace(/__image_set_name__/g, imageSetIndex)
-            .replace(/__name__/g, imageCollectionIndex);
+            .replace(/__name__/g, imageCollectionIndex)
+            .trim();
 
         newOptionFormHTML = setSortOrderFieldValue(newOptionFormHTML);
 
         imageSet.find('.image-collection-container').append($(newOptionFormHTML));
+
+        $(newOptionFormHTML)
+            .get()
+            .forEach((element) => initFormattedNumber(element));
     }
 
     /**
@@ -88,11 +94,16 @@ $(document).ready(function () {
         var imageCollectionPrototype = prototypeTemplate
             .data('imageCollectionPrototype')
             .replace(/__image_set_name__/g, imageSetIndex)
-            .replace(/__name__/g, 0);
+            .replace(/__name__/g, 0)
+            .trim();
 
         imageCollectionPrototype = setSortOrderFieldValue(imageCollectionPrototype);
 
         imageSet.find('.image-collection-container').append($(imageCollectionPrototype));
+
+        $(imageCollectionPrototype)
+            .get()
+            .forEach((element) => initFormattedNumber(element));
     }
 
     /**
@@ -102,7 +113,9 @@ $(document).ready(function () {
         imageCollectionPrototype = $($.parseHTML(imageCollectionPrototype));
 
         var sortOrderField = imageCollectionPrototype.find('[data-sort-order]');
-        sortOrderField.val(sortOrderField.data('sort-order'));
+        imageCollectionPrototype
+            .find('.' + sortOrderField.data('target'))
+            .attr('value', sortOrderField.data('sort-order'));
 
         return imageCollectionPrototype;
     }
