@@ -61,7 +61,7 @@ class TreeController extends AbstractController
     public function updateHierarchyAction(Request $request)
     {
         /** @var array<string, mixed> $navigationTreeData */
-        $navigationTreeData = $request->request->get(static::PARAM_NAVIGATION_TREE);
+        $navigationTreeData = $request->request->all(static::PARAM_NAVIGATION_TREE);
 
         if (!$navigationTreeData) {
             return $this->jsonResponse([

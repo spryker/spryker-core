@@ -69,7 +69,7 @@ class HeadersSecurityServiceProvider implements ServiceProviderInterface
      */
     public function onKernelResponse(ResponseEvent $event)
     {
-        if (!$event->isMasterRequest()) {
+        if (!$this->isMainRequest($event)) {
             return;
         }
 
@@ -77,5 +77,19 @@ class HeadersSecurityServiceProvider implements ServiceProviderInterface
         $event->getResponse()->headers->set(static::HEADER_CONTENT_SECURITY_POLICY, 'frame-ancestors \'self\'');
         $event->getResponse()->headers->set(static::HEADER_X_CONTENT_TYPE_OPTIONS, 'nosniff');
         $event->getResponse()->headers->set(static::HEADER_X_XSS_PROTECTION, '1; mode=block');
+    }
+
+    /**
+     * @param \Symfony\Component\HttpKernel\Event\ResponseEvent $event
+     *
+     * @return bool
+     */
+    protected function isMainRequest(ResponseEvent $event): bool
+    {
+        if (method_exists($event, 'isMasterRequest')) {
+            return $event->isMasterRequest();
+        }
+
+        return $event->isMainRequest();
     }
 }

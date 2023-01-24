@@ -68,7 +68,7 @@ class DoubleSubmitProtectionExtensionTest extends Unit
 
         $this->generator = $this->getMockBuilder(TokenGeneratorInterface::class)->setMethods(['checkTokenEquals', 'generateToken'])->getMock();
         $this->storage = $this->getMockBuilder(StorageInterface::class)->setMethods(['getToken', 'setToken', 'deleteToken', 'checkTokenEquals'])->getMock();
-        $this->translator = $this->getMockBuilder(TranslatorInterface::class)->onlyMethods(['trans'])->getMock();
+        $this->translator = $this->getMockBuilder(TranslatorInterface::class)->setMethods(['trans', 'getLocale'])->getMock();
         $this->translator->method('trans')->willReturnArgument(0);
 
         $this->formFactory = Forms::createFormFactoryBuilder()

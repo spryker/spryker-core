@@ -2,6 +2,7 @@ parameters:
     level: 7
     checkMissingIterableValueType: false
     ignoreErrors:
+        - '#Call to an undefined method Symfony\\Component\\HttpKernel\\Event\\KernelEvent\:\:isMainRequest\(\).#'
         - '#Property .+SessionHandlerCouchbase::\$connection has unknown class Couchbase as its type.#'
         - '#Instantiated class Couchbase not found.#'
         - '#Call to method .+\(\) on an unknown class Couchbase.#'

@@ -104,7 +104,7 @@ class MemorySessionStorage implements SessionStorageInterface
      *
      * @return bool
      */
-    public function regenerate($destroy = false, $lifetime = null): bool
+    public function regenerate(bool $destroy = false, ?int $lifetime = null): bool
     {
         if (!$this->started) {
             $this->start();
@@ -153,7 +153,7 @@ class MemorySessionStorage implements SessionStorageInterface
      *
      * @return void
      */
-    public function setName($name): void
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
@@ -206,7 +206,7 @@ class MemorySessionStorage implements SessionStorageInterface
      *
      * @return \Symfony\Component\HttpFoundation\Session\SessionBagInterface
      */
-    public function getBag($name): SessionBagInterface
+    public function getBag(string $name): SessionBagInterface
     {
         if (!isset(static::$bags[$name])) {
             throw new InvalidArgumentException(sprintf('The SessionBagInterface %s is not registered.', $name));

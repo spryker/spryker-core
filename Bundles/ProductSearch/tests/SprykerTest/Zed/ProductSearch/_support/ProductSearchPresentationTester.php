@@ -158,7 +158,7 @@ class ProductSearchPresentationTester extends Actor
 
         $this->canSeeCurrentUrlEquals(SearchPreferencesPage::URL_LIST);
 
-        $this->waitForText('Attribute to search was successfully deactivated.', 20);
+        $this->waitForText('Attribute to search was successfully deactivated.', 30);
         $this->canSee('Attribute to search was successfully deactivated.');
     }
 

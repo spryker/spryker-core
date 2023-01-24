@@ -13,6 +13,7 @@ use Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPlu
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpKernel\Event\KernelEvent;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\Event\TerminateEvent;
@@ -104,7 +105,7 @@ class SessionEventDispatcherPlugin extends AbstractPlugin implements EventDispat
         ContainerInterface $container
     ): EventDispatcherInterface {
         $eventDispatcher->addListener(KernelEvents::REQUEST, function (RequestEvent $event) use ($container) {
-            if (!$event->isMasterRequest()) {
+            if (!$this->isMainRequest($event)) {
                 return;
             }
 
@@ -130,7 +131,7 @@ class SessionEventDispatcherPlugin extends AbstractPlugin implements EventDispat
         EventDispatcherInterface $eventDispatcher
     ): EventDispatcherInterface {
         $eventDispatcher->addListener(KernelEvents::RESPONSE, function (ResponseEvent $event) {
-            if (!$event->isMasterRequest()) {
+            if (!$this->isMainRequest($event)) {
                 return;
             }
 
@@ -152,7 +153,7 @@ class SessionEventDispatcherPlugin extends AbstractPlugin implements EventDispat
         EventDispatcherInterface $eventDispatcher
     ): EventDispatcherInterface {
         $eventDispatcher->addListener(KernelEvents::TERMINATE, function (TerminateEvent $event) {
-            if (!$event->isMasterRequest() || !$event->getRequest()->hasSession()) {
+            if (!$this->isMainRequest($event) || !$event->getRequest()->hasSession()) {
                 return;
             }
 
@@ -227,5 +228,19 @@ class SessionEventDispatcherPlugin extends AbstractPlugin implements EventDispat
         }
 
         return false;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpKernel\Event\KernelEvent $event
+     *
+     * @return bool
+     */
+    protected function isMainRequest(KernelEvent $event): bool
+    {
+        if (method_exists($event, 'isMasterRequest')) {
+            return $event->isMasterRequest();
+        }
+
+        return $event->isMainRequest();
     }
 }

@@ -48,7 +48,7 @@ class HeaderEventDispatcherPlugin extends AbstractPlugin implements EventDispatc
      */
     protected function onKernelResponse(ResponseEvent $event): void
     {
-        if (!$event->isMasterRequest()) {
+        if (!$this->isMainRequest($event)) {
             return;
         }
 
@@ -68,5 +68,19 @@ class HeaderEventDispatcherPlugin extends AbstractPlugin implements EventDispatc
         $response->headers->addCacheControlDirective('no-cache', true);
         $response->headers->addCacheControlDirective('no-store', true);
         $response->headers->addCacheControlDirective('must-revalidate', true);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpKernel\Event\ResponseEvent $event
+     *
+     * @return bool
+     */
+    protected function isMainRequest(ResponseEvent $event): bool
+    {
+        if (method_exists($event, 'isMasterRequest')) {
+            return $event->isMasterRequest();
+        }
+
+        return $event->isMainRequest();
     }
 }

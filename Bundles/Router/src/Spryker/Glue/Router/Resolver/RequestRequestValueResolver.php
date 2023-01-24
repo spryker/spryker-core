@@ -19,7 +19,7 @@ class RequestRequestValueResolver implements ArgumentValueResolverInterface
      *
      * @return bool
      */
-    public function supports(Request $request, ArgumentMetadata $argument)
+    public function supports(Request $request, ArgumentMetadata $argument): bool
     {
         return !$argument->isVariadic() && $request->request->has($argument->getName());
     }
@@ -30,7 +30,7 @@ class RequestRequestValueResolver implements ArgumentValueResolverInterface
      *
      * @return \Generator<array|string|int|bool|float|null>
      */
-    public function resolve(Request $request, ArgumentMetadata $argument)
+    public function resolve(Request $request, ArgumentMetadata $argument): iterable
     {
         yield $request->request->get($argument->getName());
     }

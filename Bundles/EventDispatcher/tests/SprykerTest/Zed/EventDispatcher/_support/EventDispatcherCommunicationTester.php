@@ -72,7 +72,9 @@ class EventDispatcherCommunicationTester extends Actor
         /** @var \Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface $eventDispatcherPluginMock */
         $eventDispatcherPluginMock = Stub::makeEmpty(EventDispatcherPluginInterface::class, [
             'extend' => function (EventDispatcher $eventDispatcher) {
-                $eventDispatcher->addListener('foo', 'bar');
+                $eventDispatcher->addListener('foo', function () {
+                    return 'bar';
+                });
 
                 return $eventDispatcher;
             },

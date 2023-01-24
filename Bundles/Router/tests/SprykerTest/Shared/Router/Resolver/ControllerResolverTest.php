@@ -9,7 +9,6 @@ namespace SprykerTest\Shared\Router\Communication\Resolver;
 
 use Codeception\Test\Unit;
 use InvalidArgumentException;
-use stdClass;
 
 /**
  * Auto-generated group annotations
@@ -64,15 +63,17 @@ class ControllerResolverTest extends Unit
      */
     public function testGetControllerReturnsAnArrayWhenControllerIsAService(): void
     {
+        require_once codecept_data_dir('Fixtures/Controller/MockController.php');
+
         // Arrange
         $request = $this->tester->getRequestWithControllerService();
-        $services = ['ControllerServiceName' => 'ControllerClassName'];
+        $services = ['ControllerServiceName' => $this->tester->getMockControllerNamespace()];
 
         // Act
         $controller = $this->tester->getControllerResolver($services)->getController($request);
 
         // Assert
-        $this->tester->assertController('ControllerClassName', $controller);
+        $this->tester->assertController($this->tester->getMockControllerNamespace(), $controller);
     }
 
     /**
@@ -110,6 +111,8 @@ class ControllerResolverTest extends Unit
      */
     public function testGetControllerReturnsAnArrayWhenControllerIsAnArrayAndIsCallable(): void
     {
+        require_once codecept_data_dir('Fixtures/Controller/MockController.php');
+
         // Arrange
         $request = $this->tester->getRequestWithCallableController();
 
@@ -117,7 +120,7 @@ class ControllerResolverTest extends Unit
         $controller = $this->tester->getControllerResolver()->getController($request);
 
         // Assert
-        $this->tester->assertController('ControllerCallable', $controller);
+        $this->tester->assertController($this->tester->getMockControllerNamespace(), $controller);
     }
 
     /**
@@ -132,7 +135,7 @@ class ControllerResolverTest extends Unit
         $controller = $this->tester->getControllerResolver()->getController($request);
 
         // Assert
-        $this->tester->assertController(stdClass::class, $controller);
+        $this->tester->assertController($this->tester->getMockControllerNamespace(), $controller);
     }
 
     /**

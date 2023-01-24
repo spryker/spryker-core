@@ -53,7 +53,7 @@ class HeaderServiceProvider extends AbstractPlugin implements ServiceProviderInt
      */
     public function onKernelResponse(ResponseEvent $event)
     {
-        if (!$event->isMasterRequest()) {
+        if (!$this->isMainRequest($event)) {
             return;
         }
 
@@ -70,5 +70,19 @@ class HeaderServiceProvider extends AbstractPlugin implements ServiceProviderInt
         $event->getResponse()->headers->addCacheControlDirective('no-cache', true);
         $event->getResponse()->headers->addCacheControlDirective('no-store', true);
         $event->getResponse()->headers->addCacheControlDirective('must-revalidate', true);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpKernel\Event\ResponseEvent $event
+     *
+     * @return bool
+     */
+    protected function isMainRequest(ResponseEvent $event): bool
+    {
+        if (method_exists($event, 'isMasterRequest')) {
+            return $event->isMasterRequest();
+        }
+
+        return $event->isMainRequest();
     }
 }

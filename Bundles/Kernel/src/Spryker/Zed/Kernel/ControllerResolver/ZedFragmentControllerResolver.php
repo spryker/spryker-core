@@ -20,9 +20,9 @@ class ZedFragmentControllerResolver extends SilexControllerResolver
     /**
      * @param string $controller
      *
-     * @return array
+     * @return callable
      */
-    protected function createController($controller)
+    protected function createController(string $controller): callable
     {
         if (strpos($controller, ':') !== false) {
             [$moduleName, $controllerName, $actionName] = explode(':', $controller);
@@ -30,7 +30,10 @@ class ZedFragmentControllerResolver extends SilexControllerResolver
             $bundleControllerAction = new BundleControllerAction($moduleName, $controllerName, $actionName);
             $controller = $this->resolveController($bundleControllerAction);
 
-            return [$controller, $bundleControllerAction->getAction() . 'Action'];
+            /** @var callable $callback */
+            $callback = [$controller, $bundleControllerAction->getAction() . 'Action'];
+
+            return $callback;
         }
 
         [$bundle, $controllerName, $actionName] = explode('/', ltrim($controller, '/'));
@@ -44,7 +47,10 @@ class ZedFragmentControllerResolver extends SilexControllerResolver
         $request = $this->getCurrentRequest();
         $request->attributes->set('_controller', $serviceName);
 
-        return [$controller, $bundleControllerAction->getAction() . 'Action'];
+        /** @var callable $callback */
+        $callback = [$controller, $bundleControllerAction->getAction() . 'Action'];
+
+        return $callback;
     }
 
     /**

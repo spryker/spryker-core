@@ -38,6 +38,14 @@ class RouterTester extends Actor
     protected $calledControllerMethods = [];
 
     /**
+     * @return string
+     */
+    public function getMockControllerNamespace(): string
+    {
+        return 'Spryker\Zed\Router\Communication\Controller\MockController';
+    }
+
+    /**
      * @param string $methodName
      *
      * @return void
@@ -85,9 +93,11 @@ class RouterTester extends Actor
         $request = $this->getRequest();
         $request->attributes->set('_controller', [
             function () {
-                return 'ControllerCallable';
+                $controller = $this->getMockControllerNamespace();
+
+                return new $controller();
             },
-            'actionName',
+            'mockAction',
         ]);
 
         return $request;
@@ -99,7 +109,7 @@ class RouterTester extends Actor
     public function getRequestWithControllerService(): Request
     {
         $request = $this->getRequest();
-        $request->attributes->set('_controller', 'ControllerServiceName:actionName');
+        $request->attributes->set('_controller', 'ControllerServiceName:mockAction');
 
         return $request;
     }
@@ -132,7 +142,7 @@ class RouterTester extends Actor
     public function getRequestWithInstantiableClass(): Request
     {
         $request = $this->getRequest();
-        $request->attributes->set('_controller', ['stdClass', 'actionName']);
+        $request->attributes->set('_controller', [$this->getMockControllerNamespace(), 'mockAction']);
 
         return $request;
     }

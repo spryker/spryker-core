@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\Sales\SalesConfig;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -135,8 +136,10 @@ class DetailController extends AbstractController
     {
         $subRequest = clone $request;
         $subRequest->setMethod(Request::METHOD_POST);
-        /** @phpstan-var array $orderTransfer */
-        $subRequest->request->set('orderTransfer', $orderTransfer);
+
+        $subRequest = $this->setOrderFallback($subRequest, $orderTransfer);
+
+        $subRequest->request->set('serializedOrderTransfer', $orderTransfer->serialize());
 
         $responseData = [];
         foreach ($data as $blockName => $blockUrl) {
@@ -144,6 +147,25 @@ class DetailController extends AbstractController
         }
 
         return $responseData;
+    }
+
+    /**
+     * @deprecated Exists for BC reasons. Will be removed in the next major release.
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $subRequest
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Symfony\Component\HttpFoundation\Request
+     */
+    protected function setOrderFallback(Request $subRequest, OrderTransfer $orderTransfer): Request
+    {
+        // symfony/http-foundation: <6.0.0
+        if (method_exists(JsonResponse::class, 'create')) {
+            /** @phpstan-var array $orderTransfer */
+            $subRequest->request->set('orderTransfer', $orderTransfer);
+        }
+
+        return $subRequest;
     }
 
     /**

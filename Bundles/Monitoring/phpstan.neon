@@ -1,3 +1,8 @@
 parameters:
     level: 7
     checkMissingIterableValueType: false
+    reportUnmatchedIgnoredErrors: false
+    ignoreErrors:
+        - '#^Call to function method_exists\(\) with Symfony\\Component\\HttpKernel\\Event\\ControllerEvent and#'
+        - '#Call to an undefined method Symfony\\Component\\HttpKernel\\Event\\ControllerEvent\:\:isMainRequest\(\).#'
+

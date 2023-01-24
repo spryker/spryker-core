@@ -8,6 +8,7 @@
 namespace Spryker\Zed\SalesReturnGui\Communication\Controller;
 
 use Generated\Shared\Transfer\OrderTransfer;
+use InvalidArgumentException;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\SalesReturnGui\Communication\Table\OrderReturnTable;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -25,8 +26,8 @@ class SalesController extends AbstractController
      */
     public function listAction(Request $request): array
     {
-        /** @var \Generated\Shared\Transfer\OrderTransfer $orderTransfer */
-        $orderTransfer = $request->request->get('orderTransfer');
+        /** @phpstan-var \Generated\Shared\Transfer\OrderTransfer */
+        $orderTransfer = $this->getOrder($request);
 
         $orderReturnTable = $this->getFactory()
             ->createOrderReturnTable($orderTransfer);
@@ -51,5 +52,30 @@ class SalesController extends AbstractController
         return new JsonResponse(
             $orderReturnTable->fetchData(),
         );
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @throws \InvalidArgumentException
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected function getOrder(Request $request): OrderTransfer
+    {
+        // @deprecated Exists for BC reasons. Will be removed in the next major release.
+        if ($request->request->has('orderTransfer')) {
+            /** @phpstan-var \Generated\Shared\Transfer\OrderTransfer */
+            return $request->request->get('orderTransfer');
+        }
+
+        if (!$request->request->has('serializedOrderTransfer')) {
+            throw new InvalidArgumentException('`serializedOrderTransfer` not found in request');
+        }
+
+        $orderTransfer = new OrderTransfer();
+        $orderTransfer->unserialize((string)$request->request->get('serializedOrderTransfer'));
+
+        return $orderTransfer;
     }
 }

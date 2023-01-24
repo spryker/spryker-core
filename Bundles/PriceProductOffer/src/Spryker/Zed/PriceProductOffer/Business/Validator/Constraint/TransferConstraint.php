@@ -82,7 +82,7 @@ class TransferConstraint extends Composite
     /**
      * @return string
      */
-    protected function getCompositeOption()
+    protected function getCompositeOption(): string
     {
         return static::FIELDS;
     }

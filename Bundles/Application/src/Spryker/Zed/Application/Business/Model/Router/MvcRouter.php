@@ -51,7 +51,7 @@ class MvcRouter implements RouterInterface
     /**
      * @return \Symfony\Component\Routing\RequestContext
      */
-    public function getContext()
+    public function getContext(): RequestContext
     {
         return $this->context;
     }
@@ -75,7 +75,7 @@ class MvcRouter implements RouterInterface
      *
      * @return string
      */
-    public function generate($name, $parameters = [], $referenceType = self::ABSOLUTE_PATH)
+    public function generate(string $name, array $parameters = [], int $referenceType = self::ABSOLUTE_PATH): string
     {
         throw new RouteNotFoundException();
     }
@@ -85,7 +85,7 @@ class MvcRouter implements RouterInterface
      *
      * @throws \Symfony\Component\Routing\Exception\ResourceNotFoundException
      */
-    public function match($pathinfo)
+    public function match(string $pathinfo): array
     {
         $request = $this->app['request_stack']->getCurrentRequest();
         $bundleControllerAction = new BundleControllerAction(

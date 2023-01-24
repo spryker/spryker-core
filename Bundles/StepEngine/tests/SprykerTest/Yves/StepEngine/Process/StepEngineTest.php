@@ -12,6 +12,7 @@ use Spryker\Yves\StepEngine\Dependency\DataContainer\DataContainerInterface;
 use Spryker\Yves\StepEngine\Form\FormCollectionHandlerInterface;
 use Spryker\Yves\StepEngine\Process\StepEngine;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormView;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
@@ -113,7 +114,7 @@ class StepEngineTest extends AbstractStepEngineTest
 
         $formMock = $this->getFormMock();
         $formMock->method('getName')->willReturn(static::FORM_NAME);
-        $formMock->method('createView')->willReturn([]);
+        $formMock->method('createView')->willReturn($this->getFormView());
 
         $formCollectionHandlerMock->method('getForms')->willReturn([$formMock]);
 
@@ -163,6 +164,14 @@ class StepEngineTest extends AbstractStepEngineTest
     protected function getFormMock(): FormInterface
     {
         return $this->getMockBuilder(FormInterface::class)->getMock();
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Symfony\Component\Form\FormView
+     */
+    protected function getFormView(): FormView
+    {
+        return $this->getMockBuilder(FormView::class)->getMock();
     }
 
     /**

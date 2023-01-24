@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Session\Communication\EventListener;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpKernel\Event\KernelEvent;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
@@ -20,7 +21,7 @@ class SaveSessionListener implements EventSubscriberInterface
      */
     public function onKernelResponse(ResponseEvent $event): void
     {
-        if (!$event->isMasterRequest()) {
+        if (!$this->isMainRequest($event)) {
             return;
         }
 
@@ -46,5 +47,19 @@ class SaveSessionListener implements EventSubscriberInterface
             // low priority but higher than StreamedResponseListener
             KernelEvents::RESPONSE => [['onKernelResponse', -1000]],
         ];
+    }
+
+    /**
+     * @param \Symfony\Component\HttpKernel\Event\KernelEvent $event
+     *
+     * @return bool
+     */
+    protected function isMainRequest(KernelEvent $event): bool
+    {
+        if (method_exists($event, 'isMasterRequest')) {
+            return $event->isMasterRequest();
+        }
+
+        return $event->isMainRequest();
     }
 }

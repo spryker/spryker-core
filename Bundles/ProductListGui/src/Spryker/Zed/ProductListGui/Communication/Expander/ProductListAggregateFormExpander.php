@@ -46,16 +46,16 @@ class ProductListAggregateFormExpander implements ProductListAggregateFormExpand
 
         /** @var array<string|int> $assignedProductIds */
         $assignedProductIds = $assignedProductIdsData
-            ? preg_split('/,/', $assignedProductIdsData, null, PREG_SPLIT_NO_EMPTY)
+            ? preg_split('/,/', $assignedProductIdsData, -1, PREG_SPLIT_NO_EMPTY)
             : [];
 
         /** @var array<string|int> $productIdsToBeAssigned */
         $productIdsToBeAssigned = $productIdsToBeAssignedData
-            ? preg_split('/,/', $productIdsToBeAssignedData, null, PREG_SPLIT_NO_EMPTY)
+            ? preg_split('/,/', $productIdsToBeAssignedData, -1, PREG_SPLIT_NO_EMPTY)
             : [];
         /** @var array<string|int> $productIdsToBeDeassigned */
         $productIdsToBeDeassigned = $productIdsToBeDeassignedData
-            ? preg_split('/,/', $productIdsToBeDeassignedData, null, PREG_SPLIT_NO_EMPTY)
+            ? preg_split('/,/', $productIdsToBeDeassignedData, -1, PREG_SPLIT_NO_EMPTY)
             : [];
 
         $assignedProductIds = array_unique(array_merge($assignedProductIds, $productIdsToBeAssigned));

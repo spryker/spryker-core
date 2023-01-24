@@ -55,7 +55,7 @@ class HstsHeaderEventDispatcher extends AbstractPlugin implements EventDispatche
     public function extend(EventDispatcherInterface $eventDispatcher, ContainerInterface $container): EventDispatcherInterface
     {
         $eventDispatcher->addListener(KernelEvents::RESPONSE, function (ResponseEvent $event): void {
-            if (!$event->isMasterRequest() || !$this->getConfig()->isHstsEnabled()) {
+            if (!$this->isMainRequest($event) || !$this->getConfig()->isHstsEnabled()) {
                 return;
             }
 
@@ -101,5 +101,19 @@ class HstsHeaderEventDispatcher extends AbstractPlugin implements EventDispatche
         }
 
         return implode('; ', $headerParts);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpKernel\Event\ResponseEvent $event
+     *
+     * @return bool
+     */
+    protected function isMainRequest(ResponseEvent $event): bool
+    {
+        if (method_exists($event, 'isMasterRequest')) {
+            return $event->isMasterRequest();
+        }
+
+        return $event->isMainRequest();
     }
 }

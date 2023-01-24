@@ -107,7 +107,7 @@ class ProductMoneyCollectionType extends AbstractCollectionType
     /**
      * @return string
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'product_money_collection';
     }

@@ -17,9 +17,9 @@ class GlueFragmentControllerResolver extends SilexControllerResolver
     /**
      * @param string $controller
      *
-     * @return array
+     * @return callable
      */
-    protected function createController($controller)
+    protected function createController(string $controller): callable
     {
         [$bundle, $controllerName, $actionName] = explode('/', ltrim($controller, '/'));
 
@@ -31,7 +31,10 @@ class GlueFragmentControllerResolver extends SilexControllerResolver
         $request = $this->getCurrentRequest();
         $request->attributes->set('_controller', $serviceName);
 
-        return [$controller, $bundleControllerAction->getAction() . 'Action'];
+        /** @var callable $callback */
+        $callback = [$controller, $bundleControllerAction->getAction() . 'Action'];
+
+        return $callback;
     }
 
     /**

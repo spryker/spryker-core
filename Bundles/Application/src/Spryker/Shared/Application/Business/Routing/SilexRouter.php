@@ -60,7 +60,7 @@ class SilexRouter implements RouterInterface
     /**
      * @inheritDoc
      */
-    public function getContext()
+    public function getContext(): RequestContext
     {
         return ($this->context) ?: $this->app['request_context'];
     }
@@ -80,7 +80,7 @@ class SilexRouter implements RouterInterface
      *
      * @return string
      */
-    public function generate($name, $parameters = [], $referenceType = self::ABSOLUTE_PATH)
+    public function generate(string $name, array $parameters = [], int $referenceType = self::ABSOLUTE_PATH): string
     {
         $generator = new UrlGenerator($this->getRouteCollection(), $this->getContext(), $this->logger);
 
@@ -97,7 +97,7 @@ class SilexRouter implements RouterInterface
      *
      * @return array An array of parameters
      */
-    public function match($pathinfo)
+    public function match(string $pathinfo): array
     {
         $matcher = new RedirectableUrlMatcher($this->getRouteCollection(), $this->getContext());
 

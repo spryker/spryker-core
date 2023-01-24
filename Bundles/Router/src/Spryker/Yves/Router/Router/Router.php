@@ -12,6 +12,7 @@ use Symfony\Component\Config\ConfigCacheFactory;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\HttpKernel\CacheWarmer\WarmableInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Routing\Matcher\RequestMatcherInterface;
 use Symfony\Component\Routing\Matcher\UrlMatcherInterface;
 use Symfony\Component\Routing\Router as SymfonyRouter;
 
@@ -41,9 +42,9 @@ class Router extends SymfonyRouter implements RouterInterface, WarmableInterface
     }
 
     /**
-     * @return \Spryker\Yves\RouterExtension\Dependency\Plugin\RouterEnhancerAwareInterface|\Symfony\Component\Routing\Matcher\UrlMatcherInterface|null
+     * @return \Symfony\Component\Routing\Matcher\UrlMatcherInterface|\Symfony\Component\Routing\Matcher\RequestMatcherInterface
      */
-    public function getMatcher()
+    public function getMatcher(): UrlMatcherInterface|RequestMatcherInterface
     {
         if ($this->matcher !== null) {
             return $this->matcher;
@@ -54,6 +55,19 @@ class Router extends SymfonyRouter implements RouterInterface, WarmableInterface
         $this->matcher = $this->setRouterEnhancerPluginsToMatcher($urlMatcher);
 
         return $this->matcher;
+    }
+
+    /**
+     * @param string $cacheDir
+     *
+     * @return array<string>
+     */
+    public function warmUp(string $cacheDir): array
+    {
+        $this->getGenerator();
+        $this->getMatcher();
+
+        return [];
     }
 
     /**
@@ -71,9 +85,9 @@ class Router extends SymfonyRouter implements RouterInterface, WarmableInterface
     }
 
     /**
-     * @return \Spryker\Yves\RouterExtension\Dependency\Plugin\RouterEnhancerAwareInterface|\Symfony\Component\Routing\Generator\UrlGeneratorInterface|null
+     * @return \Symfony\Component\Routing\Generator\UrlGeneratorInterface
      */
-    public function getGenerator()
+    public function getGenerator(): UrlGeneratorInterface
     {
         if ($this->generator !== null) {
             return $this->generator;
@@ -111,18 +125,5 @@ class Router extends SymfonyRouter implements RouterInterface, WarmableInterface
         }
 
         return $this->configCacheFactory;
-    }
-
-    /**
-     * @param string $cacheDir
-     *
-     * @return array<string>
-     */
-    public function warmUp($cacheDir): array
-    {
-        $this->getGenerator();
-        $this->getMatcher();
-
-        return [];
     }
 }

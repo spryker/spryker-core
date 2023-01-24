@@ -7,13 +7,13 @@
 
 namespace Spryker\Zed\User\Business;
 
+use Spryker\Client\Session\SessionClientInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\User\Business\Expander\MailExpander;
 use Spryker\Zed\User\Business\Expander\MailExpanderInterface;
 use Spryker\Zed\User\Business\Model\Installer;
 use Spryker\Zed\User\Business\Model\User;
 use Spryker\Zed\User\UserDependencyProvider;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
  * @method \Spryker\Zed\User\UserConfig getConfig()
@@ -69,9 +69,9 @@ class UserBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\Session\SessionInterface
+     * @return \Spryker\Client\Session\SessionClientInterface
      */
-    public function getSessionClient(): SessionInterface
+    public function getSessionClient(): SessionClientInterface
     {
         return $this->getProvidedDependency(UserDependencyProvider::CLIENT_SESSION);
     }

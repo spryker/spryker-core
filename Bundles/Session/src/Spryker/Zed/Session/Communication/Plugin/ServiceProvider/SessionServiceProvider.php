@@ -11,6 +11,7 @@ use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\HttpFoundation\Cookie;
+use Symfony\Component\HttpKernel\Event\KernelEvent;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
@@ -82,7 +83,7 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
      */
     public function extendCookieLifetime(ResponseEvent $event): void
     {
-        if ($event->isMasterRequest() === false) {
+        if ($this->isMainRequest($event) === false) {
             return;
         }
 
@@ -133,5 +134,19 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
     protected function isCliOrPhpDbg()
     {
         return (PHP_SAPI === 'cli' || PHP_SAPI === 'phpdbg');
+    }
+
+    /**
+     * @param \Symfony\Component\HttpKernel\Event\KernelEvent $event
+     *
+     * @return bool
+     */
+    protected function isMainRequest(KernelEvent $event): bool
+    {
+        if (method_exists($event, 'isMasterRequest')) {
+            return $event->isMasterRequest();
+        }
+
+        return $event->isMainRequest();
     }
 }

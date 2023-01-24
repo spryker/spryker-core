@@ -134,7 +134,7 @@ class MoneyCollectionType extends AbstractCollectionType
      *
      * @return string
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'money_collection';
     }

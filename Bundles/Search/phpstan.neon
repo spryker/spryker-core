@@ -13,6 +13,7 @@ parameters:
         - '#Method .+::createMappingByName\(\) has invalid return type Elastica\\Type\\Mapping.#'
         - '#Call to an undefined method .+QueryInterface::getSearchQuery\(\).#'
         - '#Call to an undefined method .+QueryInterface::getSearchString\(\).#'
+        - '#Property Spryker\\Zed\\Search\\Business\\Model\\Elasticsearch\\DataMapper\\PageDataMapper::\$underscoreToDashFilter with generic class Laminas\\Filter\\Word\\UnderscoreToDash does not specify its types: TOptions#'
         - { message: '#Call to an undefined method .+QueryInterface::.+\(\).#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Delegator/SearchDelegator.php' }
         - { message: '#If condition is always false.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Dependency/Plugin/QueryInterface.php' }
         - { message: '#If condition is always false.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Dependency/Plugin/ResultFormatterPluginInterface.php' }

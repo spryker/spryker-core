@@ -4,3 +4,6 @@ parameters:
     reportUnmatchedIgnoredErrors: false
     ignoreErrors:
         - '#Method .+RouteCollection::add\(\) invoked with 3 parameters, 2 required.#'
+        - '#^Method Spryker\\Zed\Router\\Communication\\Resolver\\ControllerResolver\:\:resolveControllerFromUri\(\) should return callable\(\)\: mixed but returns array#'
+        - '#Method Spryker\\Glue\\Router\\Router\\RequestMatcherUrlGeneratorWrapper::setContext\(\) with return type void returns mixed but should not return anything.#'
+

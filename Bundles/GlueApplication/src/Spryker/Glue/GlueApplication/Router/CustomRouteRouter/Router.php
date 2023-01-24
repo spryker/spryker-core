@@ -77,7 +77,7 @@ class Router extends SymfonyRouter implements RouterInterface, WarmableInterface
      *
      * @return array<string>
      */
-    public function warmUp($cacheDir): array
+    public function warmUp(string $cacheDir): array
     {
         $this->getGenerator();
         $this->getMatcher();

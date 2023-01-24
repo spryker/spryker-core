@@ -72,7 +72,7 @@ class TwigTranslatorPlugin extends AbstractTwigExtensionPlugin implements Transl
      *
      * @return string
      */
-    public function trans($id, array $parameters = [], ?string $domain = null, ?string $locale = null)
+    public function trans(string $id, array $parameters = [], ?string $domain = null, ?string $locale = null): string
     {
         if ($locale !== null) {
             $this->setLocale($locale);
@@ -152,9 +152,9 @@ class TwigTranslatorPlugin extends AbstractTwigExtensionPlugin implements Transl
      *
      * @api
      *
-     * @return string|null
+     * @return string
      */
-    public function getLocale()
+    public function getLocale(): string
     {
         return $this->localeName;
     }

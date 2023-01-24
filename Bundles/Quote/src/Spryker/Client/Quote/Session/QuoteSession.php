@@ -10,7 +10,7 @@ namespace Spryker\Client\Quote\Session;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Quote\Dependency\Client\QuoteToCurrencyClientInterface;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Spryker\Client\Session\SessionClientInterface;
 
 class QuoteSession implements QuoteSessionInterface
 {
@@ -20,7 +20,7 @@ class QuoteSession implements QuoteSessionInterface
     public const QUOTE_SESSION_IDENTIFIER = 'quote session identifier';
 
     /**
-     * @var \Symfony\Component\HttpFoundation\Session\SessionInterface
+     * @var \Spryker\Client\Session\SessionClientInterface
      */
     protected $session;
 
@@ -40,12 +40,12 @@ class QuoteSession implements QuoteSessionInterface
     protected static $currencyTransfer;
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
+     * @param \Spryker\Client\Session\SessionClientInterface $session
      * @param \Spryker\Client\Quote\Dependency\Client\QuoteToCurrencyClientInterface $currencyClient
      * @param array<\Spryker\Client\Quote\Dependency\Plugin\QuoteTransferExpanderPluginInterface> $quoteTransferExpanderPlugins
      */
     public function __construct(
-        SessionInterface $session,
+        SessionClientInterface $session,
         QuoteToCurrencyClientInterface $currencyClient,
         array $quoteTransferExpanderPlugins = []
     ) {

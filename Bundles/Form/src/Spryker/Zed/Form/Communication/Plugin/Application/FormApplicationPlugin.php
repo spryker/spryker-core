@@ -11,6 +11,9 @@ use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\Form\FormFactoryBuilderInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Csrf\CsrfTokenManager;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 use Symfony\Component\Security\Csrf\TokenStorage\ClearableTokenStorageInterface;
@@ -118,7 +121,7 @@ class FormApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
     protected function createTokenStorage(ContainerInterface $container): ClearableTokenStorageInterface
     {
         if ($container->has(static::SERVICE_SESSION)) {
-            return new SessionTokenStorage($container->get(static::SERVICE_SESSION));
+            return $this->createSessionTokenStorage($container->get(static::SERVICE_SESSION));
         }
 
         return $this->getFactory()->createDefaultTokenStorage();
@@ -137,5 +140,21 @@ class FormApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
         }
 
         return $formFactoryBuilder;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
+     *
+     * @return \Symfony\Component\Security\Csrf\TokenStorage\ClearableTokenStorageInterface
+     */
+    protected function createSessionTokenStorage(SessionInterface $session): ClearableTokenStorageInterface
+    {
+        $request = new Request();
+        $request->setSession($session);
+
+        $requestStack = new RequestStack();
+        $requestStack->push($request);
+
+        return new SessionTokenStorage($requestStack);
     }
 }

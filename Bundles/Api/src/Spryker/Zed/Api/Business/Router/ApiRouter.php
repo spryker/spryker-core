@@ -66,7 +66,7 @@ class ApiRouter implements RouterInterface
     /**
      * @return \Symfony\Component\Routing\RequestContext
      */
-    public function getContext()
+    public function getContext(): RequestContext
     {
         return $this->context;
     }
@@ -92,7 +92,7 @@ class ApiRouter implements RouterInterface
      *
      * @return string The generated URL
      */
-    public function generate($name, $parameters = [], $referenceType = self::ABSOLUTE_PATH)
+    public function generate(string $name, array $parameters = [], int $referenceType = self::ABSOLUTE_PATH): string
     {
         throw new RouteNotFoundException();
     }
@@ -106,7 +106,7 @@ class ApiRouter implements RouterInterface
      *
      * @return array
      */
-    public function match($pathinfo)
+    public function match(string $pathinfo): array
     {
         if (!$this->config->isApiEnabled()) {
             return [];

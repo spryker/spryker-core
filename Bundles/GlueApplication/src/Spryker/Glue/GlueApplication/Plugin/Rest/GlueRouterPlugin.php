@@ -20,17 +20,7 @@ use Symfony\Component\Routing\RequestContext;
  */
 class GlueRouterPlugin extends AbstractPlugin implements RequestMatcherInterface, UrlGeneratorInterface
 {
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return array
-     */
-    public function matchRequest(Request $request)
-    {
-        return $this->getFactory()
-            ->createRestResourceRouter()
-            ->matchRequest($request);
-    }
+    use GlueRouterPluginTrait;
 
     /**
      * Sets the request context.
@@ -44,11 +34,23 @@ class GlueRouterPlugin extends AbstractPlugin implements RequestMatcherInterface
     }
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array
+     */
+    protected function executeMatchRequest(Request $request): array
+    {
+        return $this->getFactory()
+            ->createRestResourceRouter()
+            ->matchRequest($request);
+    }
+
+    /**
      * {@inheritDoc}
      *
      * @return \Symfony\Component\Routing\RequestContext
      */
-    public function getContext()
+    protected function executeGetContext(): RequestContext
     {
         return new RequestContext();
     }
@@ -62,7 +64,7 @@ class GlueRouterPlugin extends AbstractPlugin implements RequestMatcherInterface
      *
      * @return string
      */
-    public function generate($name, $parameters = [], $referenceType = self::ABSOLUTE_PATH)
+    protected function executeGenerate(string $name, array $parameters = [], int $referenceType = self::ABSOLUTE_PATH): string
     {
         return '';
     }

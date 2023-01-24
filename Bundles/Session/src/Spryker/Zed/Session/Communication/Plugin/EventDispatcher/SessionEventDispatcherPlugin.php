@@ -13,6 +13,7 @@ use Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPlu
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpKernel\Event\KernelEvent;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -99,7 +100,7 @@ class SessionEventDispatcherPlugin extends AbstractPlugin implements EventDispat
         ContainerInterface $container
     ): EventDispatcherInterface {
         $eventDispatcher->addListener(KernelEvents::REQUEST, function (RequestEvent $event) use ($container) {
-            if (!$event->isMasterRequest()) {
+            if (!$this->isMainRequest($event)) {
                 return;
             }
 
@@ -127,7 +128,7 @@ class SessionEventDispatcherPlugin extends AbstractPlugin implements EventDispat
         ContainerInterface $container
     ): EventDispatcherInterface {
         $eventDispatcher->addListener(KernelEvents::RESPONSE, function (ResponseEvent $event) {
-            if (!$event->isMasterRequest()) {
+            if (!$this->isMainRequest($event)) {
                 return;
             }
 
@@ -184,5 +185,19 @@ class SessionEventDispatcherPlugin extends AbstractPlugin implements EventDispat
     protected function isSessionTestEnabled(ContainerInterface $container): bool
     {
         return $container->has(static::FLAG_SESSION_TEST) && $container->get(static::FLAG_SESSION_TEST);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpKernel\Event\KernelEvent $event
+     *
+     * @return bool
+     */
+    protected function isMainRequest(KernelEvent $event): bool
+    {
+        if (method_exists($event, 'isMasterRequest')) {
+            return $event->isMasterRequest();
+        }
+
+        return $event->isMainRequest();
     }
 }

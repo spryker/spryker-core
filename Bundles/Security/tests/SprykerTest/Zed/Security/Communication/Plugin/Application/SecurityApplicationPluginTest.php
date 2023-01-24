@@ -343,7 +343,7 @@ class SecurityApplicationPluginTest extends Unit
         $this->tester->mockSecurityPlugin($securityConfiguration);
         $this->tester->addRoute('homepage', static::HOMEPAGE_PATH, function () {
             return new Response('foo');
-        }, [], [], [], null, null, ['POST', 'GET']);
+        }, [], [], [], null, [], ['POST', 'GET']);
 
         $httpKernelBrowser = $this->tester->getHttpKernelBrowser();
         $httpKernelBrowser->request('get', static::HOMEPAGE_PATH);

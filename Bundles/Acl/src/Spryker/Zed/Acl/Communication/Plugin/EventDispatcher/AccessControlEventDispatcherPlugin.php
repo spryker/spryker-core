@@ -59,7 +59,7 @@ class AccessControlEventDispatcherPlugin extends AbstractPlugin implements Event
         $controller = $request->attributes->get('controller');
         $action = $request->attributes->get('action');
 
-        if (!$event->isMasterRequest() || $aclFacade->isIgnorable($module, $controller, $action)) {
+        if (!$this->isMainRequest($event) || $aclFacade->isIgnorable($module, $controller, $action)) {
             return $event;
         }
 
@@ -70,5 +70,19 @@ class AccessControlEventDispatcherPlugin extends AbstractPlugin implements Event
         }
 
         return $event;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpKernel\Event\RequestEvent $event
+     *
+     * @return bool
+     */
+    protected function isMainRequest(RequestEvent $event): bool
+    {
+        if (method_exists($event, 'isMasterRequest')) {
+            return $event->isMasterRequest();
+        }
+
+        return $event->isMainRequest();
     }
 }

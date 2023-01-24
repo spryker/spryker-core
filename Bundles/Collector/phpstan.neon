@@ -24,6 +24,6 @@ parameters:
         - '#Call to an undefined method .+IndexAdapterInterface::deleteDocuments\(\).#'
         - '#Call to an undefined method .+IndexAdapterInterface::refresh\(\).#'
         - '#Call to an undefined method .+IndexAdapterInterface::flush\(\).#'
-        - '#Parameter \#1 \$callback of function call_user_func_array expects callable\(\): mixed, .+ given.#'
+        - '#Parameter \#1 \$function of function call_user_func_array expects callable\(\): mixed, .+ given.#'
         - '#Parameter \#1 \$callback of function call_user_func_array expects callable\(\): mixed, .+ given.#'
     reportUnmatchedIgnoredErrors: false

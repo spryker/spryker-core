@@ -82,7 +82,7 @@ class MockArraySessionStorage implements SessionStorageInterface
     /**
      * @inheritDoc
      */
-    public function start()
+    public function start(): bool
     {
         if ($this->started) {
             return true;
@@ -100,7 +100,7 @@ class MockArraySessionStorage implements SessionStorageInterface
     /**
      * @inheritDoc
      */
-    public function regenerate($destroy = false, $lifetime = null)
+    public function regenerate(bool $destroy = false, ?int $lifetime = null): bool
     {
         if (!$this->started) {
             $this->start();
@@ -115,7 +115,7 @@ class MockArraySessionStorage implements SessionStorageInterface
     /**
      * @return string
      */
-    public function getId()
+    public function getId(): string
     {
         return $this->id;
     }
@@ -127,7 +127,7 @@ class MockArraySessionStorage implements SessionStorageInterface
      *
      * @return void
      */
-    public function setId($id)
+    public function setId(string $id)
     {
         if ($this->started) {
             throw new LogicException('Cannot set session ID after the session has started.');
@@ -139,7 +139,7 @@ class MockArraySessionStorage implements SessionStorageInterface
     /**
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -149,7 +149,7 @@ class MockArraySessionStorage implements SessionStorageInterface
      *
      * @return void
      */
-    public function setName($name)
+    public function setName(string $name)
     {
         $this->name = $name;
     }
@@ -207,9 +207,9 @@ class MockArraySessionStorage implements SessionStorageInterface
      *
      * @throws \InvalidArgumentException
      *
-     * @return \Symfony\Component\HttpFoundation\Session\SessionBagInterface|mixed
+     * @return \Symfony\Component\HttpFoundation\Session\SessionBagInterface
      */
-    public function getBag($name)
+    public function getBag($name): SessionBagInterface
     {
         if (!isset(static::$bags[$name])) {
             throw new InvalidArgumentException(sprintf('The SessionBagInterface %s is not registered.', $name));
@@ -225,7 +225,7 @@ class MockArraySessionStorage implements SessionStorageInterface
     /**
      * @inheritDoc
      */
-    public function isStarted()
+    public function isStarted(): bool
     {
         return $this->started;
     }
@@ -251,7 +251,7 @@ class MockArraySessionStorage implements SessionStorageInterface
      *
      * @return \Symfony\Component\HttpFoundation\Session\Storage\MetadataBag
      */
-    public function getMetadataBag()
+    public function getMetadataBag(): MetadataBag
     {
         return static::$metadataBag;
     }

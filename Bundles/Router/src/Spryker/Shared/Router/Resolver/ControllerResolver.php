@@ -30,9 +30,9 @@ class ControllerResolver implements ControllerResolverInterface
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return callable|object|array|bool|false
+     * @return callable|false
      */
-    public function getController(Request $request)
+    public function getController(Request $request): callable|false
     {
         $controller = $request->attributes->get('_controller');
 
@@ -59,7 +59,7 @@ class ControllerResolver implements ControllerResolverInterface
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $controller
      *
-     * @return array|bool
+     * @return callable|false
      */
     protected function getControllerFromString(Request $request, string $controller)
     {
@@ -69,7 +69,14 @@ class ControllerResolver implements ControllerResolverInterface
 
         [$controllerServiceIdentifier, $actionName] = explode(':', $controller);
         if ($this->container->has($controllerServiceIdentifier)) {
-            return [$this->container->get($controllerServiceIdentifier), $actionName];
+            $controllerNameSpace = $this->container->get($controllerServiceIdentifier);
+            $controllerInstance = new $controllerNameSpace();
+            $controllerInstance = $this->injectContainerAndInitialize($controllerInstance);
+
+            /** @phpstan-var callable $callable*/
+            $callable = [$controllerInstance, $actionName];
+
+            return $callable;
         }
 
         return false;
@@ -79,7 +86,7 @@ class ControllerResolver implements ControllerResolverInterface
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param array $controller
      *
-     * @return array
+     * @return callable
      */
     protected function getControllerFromArray(Request $request, array $controller)
     {
@@ -87,13 +94,19 @@ class ControllerResolver implements ControllerResolverInterface
             $controllerInstance = $controller[0]();
             $controllerInstance = $this->injectContainerAndInitialize($controllerInstance);
 
-            return [$controllerInstance, $controller[1]];
+            /** @phpstan-var callable $callable*/
+            $callable = [$controllerInstance, $controller[1]];
+
+            return $callable;
         }
 
         $controllerInstance = new $controller[0]();
         $controllerInstance = $this->injectContainerAndInitialize($controllerInstance);
 
-        return [$controllerInstance, $controller[1]];
+        /** @phpstan-var callable $callable*/
+        $callable = [$controllerInstance, $controller[1]];
+
+        return $callable;
     }
 
     /**
@@ -102,11 +115,13 @@ class ControllerResolver implements ControllerResolverInterface
      *
      * @throws \InvalidArgumentException
      *
-     * @return object
+     * @return callable
      */
     protected function getControllerFromObject(Request $request, $controller)
     {
         if (method_exists($controller, '__invoke')) {
+
+            /** @phpstan-var callable $controller*/
             $controller = $this->injectContainerAndInitialize($controller);
 
             return $controller;

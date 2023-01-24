@@ -61,7 +61,7 @@ abstract class AbstractRouter implements RouterInterface
     /**
      * @inheritDoc
      */
-    public function getContext()
+    public function getContext(): RequestContext
     {
         return $this->context;
     }

@@ -12,13 +12,13 @@ use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
 use Orm\Zed\User\Persistence\SpyUser;
+use Spryker\Client\Session\SessionClientInterface;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\User\Business\Exception\PasswordEncryptionFailedException;
 use Spryker\Zed\User\Business\Exception\UsernameExistsException;
 use Spryker\Zed\User\Business\Exception\UserNotFoundException;
 use Spryker\Zed\User\Persistence\UserQueryContainerInterface;
 use Spryker\Zed\User\UserConfig;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class User implements UserInterface
 {
@@ -35,7 +35,7 @@ class User implements UserInterface
     protected $queryContainer;
 
     /**
-     * @var \Symfony\Component\HttpFoundation\Session\SessionInterface
+     * @var \Spryker\Client\Session\SessionClientInterface
      */
     protected $session;
 
@@ -61,7 +61,7 @@ class User implements UserInterface
 
     /**
      * @param \Spryker\Zed\User\Persistence\UserQueryContainerInterface $queryContainer
-     * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
+     * @param \Spryker\Client\Session\SessionClientInterface $session
      * @param \Spryker\Zed\User\UserConfig $settings
      * @param array<\Spryker\Zed\UserExtension\Dependency\Plugin\UserPostSavePluginInterface> $userPostSavePlugins
      * @param array<\Spryker\Zed\UserExtension\Dependency\Plugin\UserPreSavePluginInterface> $userPreSavePlugins
@@ -69,7 +69,7 @@ class User implements UserInterface
      */
     public function __construct(
         UserQueryContainerInterface $queryContainer,
-        SessionInterface $session,
+        SessionClientInterface $session,
         UserConfig $settings,
         array $userPostSavePlugins = [],
         array $userPreSavePlugins = [],

@@ -127,7 +127,7 @@ class Application extends Container implements HttpKernelInterface, TerminableIn
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function handle(Request $request, $type = self::MASTER_REQUEST, $catch = true): Response
+    public function handle(Request $request, int $type = self::MASTER_REQUEST, bool $catch = true): Response
     {
         $this->container->set('request', $request);
 

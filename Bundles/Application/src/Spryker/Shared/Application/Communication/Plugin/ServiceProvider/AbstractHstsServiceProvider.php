@@ -81,7 +81,7 @@ abstract class AbstractHstsServiceProvider implements ServiceProviderInterface
      */
     public function onKernelResponse(ResponseEvent $event)
     {
-        if (!$event->isMasterRequest() || !$this->getIsHstsEnabled()) {
+        if (!$this->isMainRequest($event) || !$this->getIsHstsEnabled()) {
             return;
         }
         $headerBody = $this->renderHeaderBody($this->getHstsConfig());
@@ -115,5 +115,19 @@ abstract class AbstractHstsServiceProvider implements ServiceProviderInterface
         }
 
         return '';
+    }
+
+    /**
+     * @param \Symfony\Component\HttpKernel\Event\ResponseEvent $event
+     *
+     * @return bool
+     */
+    protected function isMainRequest(ResponseEvent $event): bool
+    {
+        if (method_exists($event, 'isMasterRequest')) {
+            return $event->isMasterRequest();
+        }
+
+        return $event->isMainRequest();
     }
 }

@@ -23,7 +23,7 @@ class SimpleMoneyType extends SymfonyMoneyType
      *
      * @return string
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return '';
     }

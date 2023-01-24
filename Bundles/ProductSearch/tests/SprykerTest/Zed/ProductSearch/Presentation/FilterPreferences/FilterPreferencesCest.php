@@ -70,7 +70,7 @@ class FilterPreferencesCest
 
         // save
         $i->click(FilterPreferencesPage::SELECTOR_SAVE_FILTER_ORDER);
-        $i->wait(1);
+        $i->wait(5);
         $i->canSee('Success', FilterPreferencesPage::SELECTOR_ORDER_SAVE_ALERT);
 
         // check if it was persistent

@@ -58,7 +58,7 @@ class DoubleSubmitProtectionExtension extends AbstractExtension
     /**
      * @return array
      */
-    protected function loadTypeExtensions()
+    protected function loadTypeExtensions(): array
     {
         return [
             new DoubleSubmitFormType(

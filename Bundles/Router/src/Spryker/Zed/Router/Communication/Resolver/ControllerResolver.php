@@ -18,7 +18,7 @@ class ControllerResolver extends SharedControllerResolver
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param string $controller
      *
-     * @return array|bool
+     * @return callable|bool
      */
     protected function getControllerFromString(Request $request, string $controller)
     {
@@ -33,9 +33,9 @@ class ControllerResolver extends SharedControllerResolver
      * @param string $uri
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return callable
      */
-    private function resolveControllerFromUri(string $uri, Request $request): array
+    private function resolveControllerFromUri(string $uri, Request $request)
     {
         [$module, $controllerName, $actionName] = explode('/', ltrim($uri, '/'));
 
@@ -55,6 +55,9 @@ class ControllerResolver extends SharedControllerResolver
             ),
         );
 
-        return [$controller, $bundleControllerAction->getAction() . 'Action'];
+        /** @var callable $callable */
+        $callable = [$controller, $bundleControllerAction->getAction() . 'Action'];
+
+        return $callable;
     }
 }

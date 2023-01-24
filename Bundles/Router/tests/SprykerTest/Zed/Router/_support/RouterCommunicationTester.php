@@ -32,6 +32,14 @@ class RouterCommunicationTester extends Actor
     use _generated\RouterCommunicationTesterActions;
 
     /**
+     * @return string
+     */
+    public function getMockControllerNamespace(): string
+    {
+        return 'Spryker\Zed\Router\Communication\Controller\MockController';
+    }
+
+    /**
      * @param array $services
      *
      * @return \Symfony\Component\HttpKernel\Controller\ControllerResolverInterface
@@ -58,7 +66,7 @@ class RouterCommunicationTester extends Actor
     public function getRequestWithControllerService(): Request
     {
         $request = $this->getRequest();
-        $request->attributes->set('_controller', 'ControllerServiceName:actionName');
+        $request->attributes->set('_controller', 'ControllerServiceName:mockAction');
 
         return $request;
     }

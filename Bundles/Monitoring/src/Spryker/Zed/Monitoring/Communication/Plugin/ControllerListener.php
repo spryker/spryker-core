@@ -79,7 +79,7 @@ class ControllerListener extends AbstractPlugin implements EventSubscriberInterf
      */
     public function onKernelController(ControllerEvent $event): void
     {
-        if (!$event->isMasterRequest()) {
+        if (!$this->isMainRequest($event)) {
             return;
         }
 
@@ -151,5 +151,19 @@ class ControllerListener extends AbstractPlugin implements EventSubscriberInterf
         if (defined('APPLICATION_STORE')) {
             $this->monitoringService->addCustomParameter('store', $this->storeFacade->getCurrentStore()->getName());
         }
+    }
+
+    /**
+     * @param \Symfony\Component\HttpKernel\Event\ControllerEvent $event
+     *
+     * @return bool
+     */
+    protected function isMainRequest(ControllerEvent $event): bool
+    {
+        if (method_exists($event, 'isMasterRequest')) {
+            return $event->isMasterRequest();
+        }
+
+        return $event->isMainRequest();
     }
 }

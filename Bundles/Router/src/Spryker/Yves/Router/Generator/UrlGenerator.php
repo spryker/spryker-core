@@ -41,7 +41,7 @@ class UrlGenerator extends CompiledUrlGenerator implements RouterEnhancerAwareIn
      *
      * @return string
      */
-    public function generate($name, $parameters = [], $referenceType = SymfonyRouter::ABSOLUTE_PATH)
+    public function generate($name, $parameters = [], $referenceType = SymfonyRouter::ABSOLUTE_PATH): string
     {
         $generatedUrl = parent::generate($name, $parameters, $referenceType);
 

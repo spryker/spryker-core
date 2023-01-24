@@ -1,5 +1,7 @@
 parameters:
     level: 7
     checkMissingIterableValueType: false
+    reportUnmatchedIgnoredErrors: false
     ignoreErrors:
         - '#Negated boolean expression is always false.#'
+        - '#Call to an undefined method Symfony\\Component\\HttpKernel\\Event\\RequestEvent\:\:isMainRequest\(\).#'

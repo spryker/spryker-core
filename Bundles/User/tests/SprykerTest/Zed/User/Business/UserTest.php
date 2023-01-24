@@ -356,7 +356,7 @@ class UserTest extends Unit
 
         $sessionClient->expects($this->once())
             ->method('has')
-            ->will($this->returnValue(null));
+            ->will($this->returnValue(false));
 
         $hasCurrentUser = $userModel->hasCurrentUser();
         $this->assertFalse($hasCurrentUser);

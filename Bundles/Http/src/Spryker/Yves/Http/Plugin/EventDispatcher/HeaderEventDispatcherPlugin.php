@@ -35,7 +35,7 @@ class HeaderEventDispatcherPlugin extends AbstractPlugin implements EventDispatc
     public function extend(EventDispatcherInterface $eventDispatcher, ContainerInterface $container): EventDispatcherInterface
     {
         $eventDispatcher->addListener(KernelEvents::RESPONSE, function (ResponseEvent $event): void {
-            if (!$event->isMasterRequest()) {
+            if (!$this->isMainRequest($event)) {
                 return;
             }
 
@@ -57,5 +57,19 @@ class HeaderEventDispatcherPlugin extends AbstractPlugin implements EventDispatc
         });
 
         return $eventDispatcher;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpKernel\Event\ResponseEvent $event
+     *
+     * @return bool
+     */
+    protected function isMainRequest(ResponseEvent $event): bool
+    {
+        if (method_exists($event, 'isMasterRequest')) {
+            return $event->isMasterRequest();
+        }
+
+        return $event->isMainRequest();
     }
 }
