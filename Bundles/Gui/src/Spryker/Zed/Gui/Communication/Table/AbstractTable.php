@@ -763,7 +763,11 @@ abstract class AbstractTable
      */
     protected function getOrderParameter(): ?array
     {
-        return $this->request->query->all('order') ?: null;
+        if ($this->isSymfonyHttpFoundationVersion5OrHigher()) {
+            return $this->request->query->all('order');
+        }
+
+        return (array)$this->request->query->get('order') ?: null;
     }
 
     /**
@@ -870,7 +874,11 @@ abstract class AbstractTable
      */
     protected function getSearchParameter(): array
     {
-         return $this->request->query->all('search');
+        if ($this->isSymfonyHttpFoundationVersion5OrHigher()) {
+            return $this->request->query->all('search');
+        }
+
+        return (array)$this->request->query->get('search');
     }
 
     /**
