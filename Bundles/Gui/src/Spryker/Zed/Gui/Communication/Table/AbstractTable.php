@@ -1103,10 +1103,6 @@ abstract class AbstractTable
      */
     protected function getSearchColumns(): array
     {
-        if ($this->isSymfonyHttpFoundationVersion5OrHigher()) {
-            return $this->request->query->all(static::COLUMNS);
-        }
-
         return (array)$this->request->query->get(static::COLUMNS);
     }
 
