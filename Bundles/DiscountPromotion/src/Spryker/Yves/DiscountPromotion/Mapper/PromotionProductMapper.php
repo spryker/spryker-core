@@ -79,7 +79,7 @@ class PromotionProductMapper implements PromotionProductMapperInterface
     protected function getSelectedAttributes(Request $request, $abstractSku)
     {
         /** @var array $selectedAttributes */
-        $selectedAttributes = $request->query->get(static::URL_PARAM_VARIANT_ATTRIBUTES) ?: [];
+        $selectedAttributes = $request->query->all()[static::URL_PARAM_VARIANT_ATTRIBUTES] ?? [];
 
         return isset($selectedAttributes[$abstractSku]) ? $this->filterEmptyAttributes($selectedAttributes[$abstractSku]) : [];
     }

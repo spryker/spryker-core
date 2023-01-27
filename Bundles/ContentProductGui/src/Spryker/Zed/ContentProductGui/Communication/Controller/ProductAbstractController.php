@@ -28,7 +28,7 @@ class ProductAbstractController extends AbstractController
      */
     public function productAbstractSelectedTableAction(Request $request): JsonResponse
     {
-        $idProductAbstracts = (array)$request->query->get(static::PARAM_IDS) ?: [];
+        $idProductAbstracts = $request->query->all()[static::PARAM_IDS] ?? [];
 
         return $this->jsonResponse(
             $this->getFactory()->createProductAbstractSelectedTable($idProductAbstracts)->fetchData(),
