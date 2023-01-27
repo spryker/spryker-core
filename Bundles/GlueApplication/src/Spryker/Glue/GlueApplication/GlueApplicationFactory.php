@@ -139,10 +139,10 @@ use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\Application\ApplicationInterface;
 use Spryker\Shared\Kernel\Container\ContainerProxy;
-use Spryker\Shared\Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

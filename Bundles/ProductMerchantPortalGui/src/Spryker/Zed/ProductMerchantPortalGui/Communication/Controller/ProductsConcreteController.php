@@ -65,9 +65,10 @@ class ProductsConcreteController extends AbstractController
      */
     public function bulkEditAction(Request $request): JsonResponse
     {
+        $productIds = $request->all()[static::PARAM_PRODUCT_IDS] ?? [];
         $productIds = array_map(function ($value) {
             return (int)$value;
-        }, explode(',', trim($request->get(static::PARAM_PRODUCT_IDS, []), '[]')));
+        }, explode(',', trim($productIds, '[]')));
         $idMerchant = $this->getFactory()->getMerchantUserFacade()->getCurrentMerchantUser()->getIdMerchant();
         $productConcreteCollectionTransfer = $this->getFactory()->getMerchantProductFacade()->getProductConcreteCollection(
             (new MerchantProductCriteriaTransfer())->setIdMerchant($idMerchant)->setProductConcreteIds($productIds),

@@ -11,14 +11,13 @@ use Spryker\Service\Container\Container;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface;
 use Spryker\Shared\ApplicationExtension\Dependency\Plugin\BootableApplicationPluginInterface;
-use Spryker\Shared\Symfony\Component\HttpFoundation\Request as SprykerRequest;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernel;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\TerminableInterface;
 use Symfony\Component\Routing\Loader\ClosureLoader;
 use Symfony\Component\Routing\Router;
-use Symfony\Component\HttpFoundation\Request;
 
 class Application extends Container implements HttpKernelInterface, TerminableInterface, ApplicationInterface
 {
@@ -112,7 +111,7 @@ class Application extends Container implements HttpKernelInterface, TerminableIn
      */
     public function run(): void
     {
-        $request = SprykerRequest::createFromGlobals();
+        $request = Request::createFromGlobals();
 
         $response = $this->handle($request);
         $response->send();
