@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\Sales\Communication\Controller;
 
+use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\MerchantOrderTransfer;
+use InvalidArgumentException;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\Sales\SalesConfig;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,7 +30,7 @@ class CustomerController extends AbstractController
     public function customerOrdersAction(Request $request)
     {
         /** @var \Generated\Shared\Transfer\CustomerTransfer $customerTransfer */
-        $customerTransfer = $request->request->get('customerTransfer');
+        $customerTransfer = $this->getCustomerTransfer($request);
         $ordersTable = $this->getFactory()->createCustomerOrdersTable($customerTransfer->getCustomerReference());
 
         return [
@@ -46,5 +49,30 @@ class CustomerController extends AbstractController
         $ordersTable = $this->getFactory()->createCustomerOrdersTable($customerReference);
 
         return $this->jsonResponse($ordersTable->fetchData());
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @throws \InvalidArgumentException
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    protected function getCustomerTransfer(Request $request): CustomerTransfer
+    {
+        // @deprecated Exists for BC reasons. Will be removed in the next major release.
+        if ($request->request->has('customerTransfer')) {
+            /** @phpstan-var \Generated\Shared\Transfer\CustomerTransfer */
+            return $request->request->get('customerTransfer');
+        }
+
+        if (!$request->request->has('serializedCustomerTransfer')) {
+            throw new InvalidArgumentException('`serializedCustomerTransfer` not found in request');
+        }
+
+        $customerTransfer = new CustomerTransfer();
+        $customerTransfer->unserialize((string)$request->request->get('serializedCustomerTransfer'));
+
+        return $customerTransfer;
     }
 }
