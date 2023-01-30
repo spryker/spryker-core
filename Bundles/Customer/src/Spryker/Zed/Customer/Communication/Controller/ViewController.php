@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Customer\Communication\Controller;
 
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Spryker\Shared\Customer\CustomerConstants;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
