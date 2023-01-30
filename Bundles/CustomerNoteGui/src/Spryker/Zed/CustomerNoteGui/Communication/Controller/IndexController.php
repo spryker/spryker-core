@@ -49,7 +49,7 @@ class IndexController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $customerTransfer = $ths->getCustomerTransfer();
+        $customerTransfer = $this->getCustomerTransfer($request);
 
         $idCustomer = $customerTransfer !== null
             ? $customerTransfer->getIdCustomer()
