@@ -763,11 +763,7 @@ abstract class AbstractTable
      */
     protected function getOrderParameter(): ?array
     {
-        if ($this->isSymfonyHttpFoundationVersion5OrHigher()) {
-            return $this->request->query->all('order');
-        }
-
-        return (array)$this->request->query->get('order') ?: null;
+        return $this->request->query->all()['order'] ?? null;
     }
 
     /**
@@ -1103,7 +1099,7 @@ abstract class AbstractTable
      */
     protected function getSearchColumns(): array
     {
-        return (array)$this->request->query->get(static::COLUMNS);
+        return $this->request->query->all()[static::COLUMNS] ?? [];
     }
 
     /**

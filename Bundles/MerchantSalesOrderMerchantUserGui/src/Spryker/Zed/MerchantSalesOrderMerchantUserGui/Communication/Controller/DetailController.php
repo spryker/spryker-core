@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\MerchantOrderItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -243,8 +244,9 @@ class DetailController extends AbstractController
         $subRequest = clone $request;
         $subRequest->setMethod(Request::METHOD_POST);
 
-        /** @phpstan-var array $merchantOrderTransfer */
-        $subRequest->request->set('merchantOrderTransfer', $merchantOrderTransfer);
+        $subRequest = $this->setMerchantOrderFallback($subRequest, $merchantOrderTransfer);
+
+        $subRequest->request->set('serializedMerchantOrderTransfer', $merchantOrderTransfer->serialize());
 
         $responseData = [];
         foreach ($data as $blockName => $blockUrl) {
@@ -252,6 +254,25 @@ class DetailController extends AbstractController
         }
 
         return $responseData;
+    }
+
+    /**
+     * @deprecated Exists for BC reasons. Will be removed in the next major release.
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $subRequest
+     * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
+     *
+     * @return \Symfony\Component\HttpFoundation\Request
+     */
+    protected function setMerchantOrderFallback(Request $subRequest, MerchantOrderTransfer $merchantOrderTransfer): Request
+    {
+        // symfony/http-foundation: <6.0.0
+        if (method_exists(JsonResponse::class, 'create')) {
+            /** @phpstan-var array $merchantOrderTransfer */
+            $subRequest->request->set('merchantOrderTransfer', $merchantOrderTransfer);
+        }
+
+        return $subRequest;
     }
 
     /**

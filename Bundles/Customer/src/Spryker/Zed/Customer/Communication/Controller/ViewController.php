@@ -10,6 +10,7 @@ namespace Spryker\Zed\Customer\Communication\Controller;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Spryker\Shared\Customer\CustomerConstants;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -25,6 +26,11 @@ class ViewController extends AbstractController
      * @var string
      */
     protected const PARAM_CUSTOMER = 'customerTransfer';
+
+    /**
+     * @var string
+     */
+    protected const PARAM_SERIALIZED_CUSTOMER_TRANSFER = 'serializedCustomerTransfer';
 
     /**
      * @var string
@@ -120,8 +126,10 @@ class ViewController extends AbstractController
     {
         $subRequest = clone $request;
         $subRequest->setMethod(Request::METHOD_POST);
-        /** @phpstan-var array $customerTransfer */
-        $subRequest->request->set(static::PARAM_CUSTOMER, $customerTransfer);
+
+        $subRequest = $this->setCustomerFallback($subRequest, $customerTransfer);
+
+        $subRequest->request->set(static::PARAM_SERIALIZED_CUSTOMER_TRANSFER, $customerTransfer->serialize());
 
         $responseData = [];
         $blocks = $this->getFactory()->getCustomerDetailExternalBlocksUrls();
@@ -136,6 +144,25 @@ class ViewController extends AbstractController
         }
 
         return $responseData;
+    }
+
+    /**
+     * @deprecated Exists for BC reasons. Will be removed in the next major release.
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $subRequest
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Symfony\Component\HttpFoundation\Request
+     */
+    protected function setCustomerFallback(Request $subRequest, CustomerTransfer $customerTransfer): Request
+    {
+        // symfony/http-foundation: <6.0.0
+        if (method_exists(JsonResponse::class, 'create')) {
+            /** @phpstan-var array $customerTransfer */
+            $subRequest->request->set(static::PARAM_CUSTOMER, $customerTransfer);
+        }
+
+        return $subRequest;
     }
 
     /**
