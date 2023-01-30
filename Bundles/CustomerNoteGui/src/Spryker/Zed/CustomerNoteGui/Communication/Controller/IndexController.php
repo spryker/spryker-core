@@ -106,8 +106,6 @@ class IndexController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @throws \InvalidArgumentException
-     *
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
     protected function getCustomerTransfer(Request $request): ?CustomerTransfer
