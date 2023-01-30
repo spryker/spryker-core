@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CustomerNoteGui\Communication\Controller;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\SpyCustomerNoteEntityTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,6 +21,11 @@ class IndexController extends AbstractController
      * @var string
      */
     protected const CUSTOMER_PARAM = 'customerTransfer';
+
+    /**
+     * @var string
+     */
+    protected const CUSTOMER_PARAM_SERIALIZED = 'serializedCustomerTransfer';
 
     /**
      * @var string
@@ -43,8 +49,7 @@ class IndexController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        /** @var \Generated\Shared\Transfer\CustomerTransfer|null $customerTransfer */
-        $customerTransfer = $request->request->get(static::CUSTOMER_PARAM);
+        $customerTransfer = $ths->getCustomerTransfer();
 
         $idCustomer = $customerTransfer !== null
             ? $customerTransfer->getIdCustomer()
@@ -96,5 +101,30 @@ class IndexController extends AbstractController
         $noteTransfer->setMessage($message);
 
         return $noteTransfer;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @throws \InvalidArgumentException
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    protected function getCustomerTransfer(Request $request): ?CustomerTransfer
+    {
+        // @deprecated Exists for BC reasons. Will be removed in the next major release.
+        if ($request->request->has(static::CUSTOMER_PARAM)) {
+            /** @phpstan-var \Generated\Shared\Transfer\CustomerTransfer */
+            return $request->request->get(static::CUSTOMER_PARAM);
+        }
+
+        if (!$request->request->has(static::CUSTOMER_PARAM_SERIALIZED)) {
+            return null;
+        }
+
+        $orderTransfer = new CustomerTransfer();
+        $orderTransfer->unserialize((string)$request->request->get(static::CUSTOMER_PARAM_SERIALIZED));
+
+        return $orderTransfer;
     }
 }
