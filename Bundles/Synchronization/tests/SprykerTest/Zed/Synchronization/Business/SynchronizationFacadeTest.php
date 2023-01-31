@@ -115,7 +115,7 @@ class SynchronizationFacadeTest extends Unit
         ];
 
         $queueMessage = new QueueSendMessageTransfer();
-        $queueMessage->setBody(json_encode($queueMessageBody));
+        $queueMessage->setBody((string)json_encode($queueMessageBody));
 
         $queueMessageTransfer = new QueueReceiveMessageTransfer();
         $queueMessageTransfer->setQueueName('test');
@@ -184,7 +184,7 @@ class SynchronizationFacadeTest extends Unit
         ];
 
         $queueMessage = new QueueSendMessageTransfer();
-        $queueMessage->setBody(json_encode($queueMessageBody));
+        $queueMessage->setBody((string)json_encode($queueMessageBody));
 
         $queueMessageTransfer = new QueueReceiveMessageTransfer();
         $queueMessageTransfer->setQueueName('test');

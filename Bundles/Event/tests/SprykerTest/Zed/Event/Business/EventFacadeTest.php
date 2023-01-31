@@ -349,7 +349,7 @@ class EventFacadeTest extends Unit
         ];
 
         $queueMessageTransfer = new QueueSendMessageTransfer();
-        $queueMessageTransfer->setBody(json_encode($message));
+        $queueMessageTransfer->setBody((string)json_encode($message));
 
         $queueReceivedMessageTransfer = new QueueReceiveMessageTransfer();
         $queueReceivedMessageTransfer->setQueueMessage($queueMessageTransfer);
