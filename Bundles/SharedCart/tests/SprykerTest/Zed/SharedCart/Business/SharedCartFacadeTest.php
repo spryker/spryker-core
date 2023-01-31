@@ -120,6 +120,8 @@ class SharedCartFacadeTest extends Unit
     }
 
     /**
+     * @skip This test was temporarily skipped due to flikerness. See {@link https://spryker.atlassian.net/browse/CC-25718} for details
+     *
      * @return void
      */
     public function testShareCartByResourceShareRequestShouldReturnErrorMessageWhenCompanyUserIsFromDifferentBusinessUnit(): void

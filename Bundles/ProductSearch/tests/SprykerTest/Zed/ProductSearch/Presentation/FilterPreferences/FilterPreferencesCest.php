@@ -47,6 +47,8 @@ class FilterPreferencesCest
     }
 
     /**
+     * @skip This test was temporarily skipped due to flikerness. See {@link https://spryker.atlassian.net/browse/CC-25718} for details
+     *
      * @param \SprykerTest\Zed\ProductSearch\ProductSearchPresentationTester $i
      *
      * @return void
@@ -79,6 +81,8 @@ class FilterPreferencesCest
     }
 
     /**
+     * @skip This test was temporarily skipped due to flikerness. See {@link https://spryker.atlassian.net/browse/CC-25718} for details
+     *
      * @param \SprykerTest\Zed\ProductSearch\ProductSearchPresentationTester $i
      *
      * @return void

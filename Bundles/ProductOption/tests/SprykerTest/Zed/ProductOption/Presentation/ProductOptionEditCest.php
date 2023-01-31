@@ -24,6 +24,8 @@ use SprykerTest\Zed\ProductOption\ProductOptionPresentationTester;
 class ProductOptionEditCest
 {
     /**
+     * @skip This test was temporarily skipped due to flikerness. See {@link https://spryker.atlassian.net/browse/CC-25718} for details
+     *
      * @param \SprykerTest\Zed\ProductOption\ProductOptionPresentationTester $i
      *
      * @return void
