@@ -10,6 +10,8 @@ namespace Spryker\Zed\ProductReview\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductReview\Business\Expander\ProductConcreteRatingExpander;
 use Spryker\Zed\ProductReview\Business\Expander\ProductConcreteRatingExpanderInterface;
+use Spryker\Zed\ProductReview\Business\MessageBroker\ProductReviewMessageHandler;
+use Spryker\Zed\ProductReview\Business\MessageBroker\ProductReviewMessageHandlerInterface;
 use Spryker\Zed\ProductReview\Business\Model\ProductReviewCreator;
 use Spryker\Zed\ProductReview\Business\Model\ProductReviewDeleter;
 use Spryker\Zed\ProductReview\Business\Model\ProductReviewEntityReader;
@@ -19,6 +21,7 @@ use Spryker\Zed\ProductReview\Business\Model\Touch\ProductReviewTouch;
 use Spryker\Zed\ProductReview\Business\Trigger\ProductEventTrigger;
 use Spryker\Zed\ProductReview\Business\Trigger\ProductEventTriggerInterface;
 use Spryker\Zed\ProductReview\Dependency\Facade\ProductReviewToEventInterface;
+use Spryker\Zed\ProductReview\Dependency\Facade\ProductReviewToLocaleInterface;
 use Spryker\Zed\ProductReview\ProductReviewDependencyProvider;
 
 /**
@@ -84,6 +87,19 @@ class ProductReviewBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\ProductReview\Business\MessageBroker\ProductReviewMessageHandlerInterface
+     */
+    public function createProductReviewMessageHandler(): ProductReviewMessageHandlerInterface
+    {
+        return new ProductReviewMessageHandler(
+            $this->createProductReviewCreator(),
+            $this->getLocaleFacade(),
+            $this->getProductFacade(),
+            $this->createProductReviewReader(),
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\ProductReview\Business\Model\Touch\ProductReviewTouchInterface
      */
     protected function createProductReviewTouch()
@@ -121,5 +137,13 @@ class ProductReviewBusinessFactory extends AbstractBusinessFactory
     protected function getProductFacade()
     {
         return $this->getProvidedDependency(ProductReviewDependencyProvider::FACADE_PRODUCT);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductReview\Dependency\Facade\ProductReviewToLocaleInterface
+     */
+    protected function getLocaleFacade(): ProductReviewToLocaleInterface
+    {
+        return $this->getProvidedDependency(ProductReviewDependencyProvider::FACADE_LOCALE);
     }
 }

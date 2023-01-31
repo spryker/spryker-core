@@ -80,4 +80,17 @@ class ProductReviewReader implements ProductReviewReaderInterface
             ->queryProductReviewById($productReviewTransfer->getIdProductReview())
             ->findOne();
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductReviewTransfer $productReviewTransfer
+     *
+     * @return bool
+     */
+    public function isProductReviewAlreadySubmittedByCustomer(ProductReviewTransfer $productReviewTransfer): bool
+    {
+        return $this->productReviewQueryContainer->queryProductReview()
+            ->filterByCustomerReference($productReviewTransfer->getCustomerReference())
+            ->filterByCreatedAt($productReviewTransfer->getCreatedAt())
+            ->exists();
+    }
 }

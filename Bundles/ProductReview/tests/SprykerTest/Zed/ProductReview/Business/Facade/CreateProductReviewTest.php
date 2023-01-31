@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\ProductReview\Business\Facade;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductReviewTransfer;
 use Orm\Zed\ProductReview\Persistence\Map\SpyProductReviewTableMap;
+use Propel\Runtime\Exception\PropelException;
 use Spryker\Client\ProductReview\ProductReviewClientInterface;
 use Spryker\Shared\ProductReview\Exception\RatingOutOfRangeException;
 use Spryker\Zed\ProductReview\ProductReviewDependencyProvider;
@@ -49,13 +50,35 @@ class CreateProductReviewTest extends Unit
     }
 
     /**
-     * @dataProvider statusDataProvider
+     * @dataProvider validStatusDataProvider
      *
      * @param string|null $inputStatus
      *
      * @return void
      */
-    public function testCreateProductReviewIsCreatedAlwaysWithPendingStatus(?string $inputStatus): void
+    public function testCreateProductReviewIsCreatedAlwaysWithProvidedValidStatus(?string $inputStatus): void
+    {
+        // Arrange
+        $productReviewTransfer = $this->tester->haveProductReview([
+            ProductReviewTransfer::STATUS => $inputStatus,
+        ]);
+
+        // Act
+        $productReviewTransfer = $this->tester->getFacade()->createProductReview($productReviewTransfer);
+
+        // Assert
+        $actualProductReviewTransfer = $this->tester->getFacade()->findProductReview($productReviewTransfer);
+        $this->assertSame($inputStatus, $actualProductReviewTransfer->getStatus(), 'Product review should have been created with expected status.');
+    }
+
+    /**
+     * @dataProvider emptyStatusDataProvider
+     *
+     * @param string|null $inputStatus
+     *
+     * @return void
+     */
+    public function testCreateProductReviewIsCreatedAlwaysWithPendingStatusWhenEmptyStatusProvided(?string $inputStatus): void
     {
         // Arrange
         $productReviewTransfer = $this->tester->haveProductReview([
@@ -71,15 +94,42 @@ class CreateProductReviewTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testCreateProductReviewThrowsExceptionWhenInvalidStatusProvided(): void
+    {
+        // Arrange
+        $productReviewTransfer = $this->tester->haveProductReview([
+            ProductReviewTransfer::STATUS => 'some_status',
+        ]);
+
+        // Assert
+        $this->expectException(PropelException::class);
+
+        // Act
+        $this->tester->getFacade()->createProductReview($productReviewTransfer);
+    }
+
+    /**
      * @return array
      */
-    public function statusDataProvider(): array
+    public function validStatusDataProvider(): array
     {
         return [
-            'status not defined' => [null],
             'pending status' => [SpyProductReviewTableMap::COL_STATUS_PENDING],
             'approved status' => [SpyProductReviewTableMap::COL_STATUS_APPROVED],
             'rejected status' => [SpyProductReviewTableMap::COL_STATUS_REJECTED],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function emptyStatusDataProvider(): array
+    {
+        return [
+            'empty string' => [''],
+            'status not defined' => [null],
         ];
     }
 

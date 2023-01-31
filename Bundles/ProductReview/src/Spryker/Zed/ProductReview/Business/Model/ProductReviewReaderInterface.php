@@ -17,4 +17,11 @@ interface ProductReviewReaderInterface
      * @return \Generated\Shared\Transfer\ProductReviewTransfer|null
      */
     public function findProductReview(ProductReviewTransfer $productReviewTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductReviewTransfer $productReviewTransfer
+     *
+     * @return bool
+     */
+    public function isProductReviewAlreadySubmittedByCustomer(ProductReviewTransfer $productReviewTransfer): bool;
 }

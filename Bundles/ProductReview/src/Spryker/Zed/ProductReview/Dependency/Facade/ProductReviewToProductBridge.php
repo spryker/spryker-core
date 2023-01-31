@@ -31,4 +31,24 @@ class ProductReviewToProductBridge implements ProductReviewToProductInterface
     {
         $this->productFacade->touchProductAbstract($idProductAbstract);
     }
+
+    /**
+     * @param array<string> $skus
+     *
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
+     */
+    public function getRawProductConcreteTransfersByConcreteSkus(array $skus): array
+    {
+        return $this->productFacade->getRawProductConcreteTransfersByConcreteSkus($skus);
+    }
+
+    /**
+     * @param string $concreteSku
+     *
+     * @return int
+     */
+    public function getProductAbstractIdByConcreteSku($concreteSku)
+    {
+        return $this->productFacade->getProductAbstractIdByConcreteSku($concreteSku);
+    }
 }

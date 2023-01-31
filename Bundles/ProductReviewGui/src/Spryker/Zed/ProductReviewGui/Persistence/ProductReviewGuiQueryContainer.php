@@ -11,6 +11,7 @@ use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\ProductReview\Persistence\Map\SpyProductReviewTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
  * @method \Spryker\Zed\ProductReviewGui\Persistence\ProductReviewGuiPersistenceFactory getFactory()
@@ -62,7 +63,7 @@ class ProductReviewGuiQueryContainer extends AbstractQueryContainer implements P
                     ->filterByFkLocale($idLocale)
                 ->endUse()
             ->endUse()
-            ->addJoin(SpyProductReviewTableMap::COL_CUSTOMER_REFERENCE, SpyCustomerTableMap::COL_CUSTOMER_REFERENCE)
+            ->addJoin(SpyProductReviewTableMap::COL_CUSTOMER_REFERENCE, SpyCustomerTableMap::COL_CUSTOMER_REFERENCE, Criteria::LEFT_JOIN)
             ->withColumn(SpyProductReviewTableMap::COL_CREATED_AT, static::FIELD_CREATED)
             ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, static::FIELD_PRODUCT_NAME)
             ->withColumn(SpyCustomerTableMap::COL_ID_CUSTOMER, static::FIELD_ID_CUSTOMER)

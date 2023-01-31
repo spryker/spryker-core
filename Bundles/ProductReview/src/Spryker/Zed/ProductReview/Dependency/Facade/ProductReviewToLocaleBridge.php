@@ -31,4 +31,12 @@ class ProductReviewToLocaleBridge implements ProductReviewToLocaleInterface
     {
         return $this->localeFacade->getLocale($localeName);
     }
+
+    /**
+     * @return array<\Generated\Shared\Transfer\LocaleTransfer>
+     */
+    public function getLocaleCollection()
+    {
+        return $this->localeFacade->getLocaleCollection();
+    }
 }

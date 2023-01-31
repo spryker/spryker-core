@@ -300,13 +300,20 @@ class ProductReviewTable extends AbstractTable
      */
     protected function getCustomerName(SpyProductReview $productReviewEntity)
     {
+        $firstName = $productReviewEntity->getVirtualColumn(ProductReviewTableConstants::COL_PRODUCT_REVIEW_GUI_FIRST_NAME);
+        $lastName = $productReviewEntity->getVirtualColumn(ProductReviewTableConstants::COL_PRODUCT_REVIEW_GUI_LAST_NAME);
+
+        if ($firstName === null && $lastName === null) {
+            return $this->generateLabel('Guest', 'label-default');
+        }
+
         return sprintf(
             '<a href="%s" target="_blank">%s %s</a>',
             Url::generate('/customer/view', [
                 'id-customer' => $productReviewEntity->getVirtualColumn(ProductReviewTableConstants::COL_PRODUCT_REVIEW_GUI_ID_CUSTOMER),
             ]),
-            $this->utilSanitizeService->escapeHtml($productReviewEntity->getVirtualColumn(ProductReviewTableConstants::COL_PRODUCT_REVIEW_GUI_FIRST_NAME)),
-            $this->utilSanitizeService->escapeHtml($productReviewEntity->getVirtualColumn(ProductReviewTableConstants::COL_PRODUCT_REVIEW_GUI_LAST_NAME)),
+            $this->utilSanitizeService->escapeHtml($firstName),
+            $this->utilSanitizeService->escapeHtml($lastName),
         );
     }
 

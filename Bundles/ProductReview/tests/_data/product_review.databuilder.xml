@@ -12,4 +12,14 @@
         <property name="nickname" dataBuilderRule="name(2)"/>
     </transfer>
 
+    <transfer name="Review">
+        <property name="productIdentifier" dataBuilderRule="uuid()"/>
+        <property name="customerIdentifier" dataBuilderRule="uuid()"/>
+        <property name="nickname" dataBuilderRule="name()"/>
+        <property name="locale" dataBuilderRule="locale()"/>
+        <property name="reviewTitle" dataBuilderRule="sentence(2)"/>
+        <property name="reviewText" dataBuilderRule="sentence(6)"/>
+        <property name="rating" dataBuilderRule="numberBetween(1,5)"/>
+    </transfer>
+
 </transfers>

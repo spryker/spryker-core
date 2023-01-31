@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductReview\Business;
 
+use Generated\Shared\Transfer\AddReviewsTransfer;
 use Generated\Shared\Transfer\ProductReviewTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -94,5 +95,19 @@ class ProductReviewFacade extends AbstractFacade implements ProductReviewFacadeI
         return $this->getFactory()
             ->createProductConcreteRatingExpander()
             ->expandProductConcretesWithRating($productConcreteTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AddReviewsTransfer $addReviewsTransfer
+     *
+     * @return void
+     */
+    public function handleAddReviews(AddReviewsTransfer $addReviewsTransfer): void
+    {
+        $this->getFactory()->createProductReviewMessageHandler()->handleAddReviews($addReviewsTransfer);
     }
 }

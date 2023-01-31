@@ -54,6 +54,7 @@ class ProductReviewDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addEventFacade($container);
         $container = $this->addTouchFacade($container);
         $container = $this->addProductFacade($container);
+        $container = $this->addLocaleFacade($container);
         $container = $this->addProductReviewClient($container);
 
         return $container;

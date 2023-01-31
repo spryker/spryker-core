@@ -79,8 +79,12 @@ class ProductReviewCreator implements ProductReviewCreatorInterface
     protected function createProductReviewEntity(ProductReviewTransfer $productReviewTransfer)
     {
         $productReviewEntity = new SpyProductReview();
+
+        if (empty($productReviewTransfer->getStatus())) {
+            $this->setInitialStatus($productReviewTransfer);
+        }
+
         $productReviewEntity->fromArray($productReviewTransfer->toArray());
-        $productReviewEntity = $this->setInitialStatus($productReviewEntity);
 
         $productReviewEntity->save();
 
@@ -88,15 +92,15 @@ class ProductReviewCreator implements ProductReviewCreatorInterface
     }
 
     /**
-     * @param \Orm\Zed\ProductReview\Persistence\SpyProductReview $productReviewEntity
+     * @param \Generated\Shared\Transfer\ProductReviewTransfer $productReviewTransfer
      *
-     * @return \Orm\Zed\ProductReview\Persistence\SpyProductReview
+     * @return \Generated\Shared\Transfer\ProductReviewTransfer
      */
-    protected function setInitialStatus(SpyProductReview $productReviewEntity)
+    protected function setInitialStatus(ProductReviewTransfer $productReviewTransfer)
     {
-        $productReviewEntity->setStatus(SpyProductReviewTableMap::COL_STATUS_PENDING);
+        $productReviewTransfer->setStatus(SpyProductReviewTableMap::COL_STATUS_PENDING);
 
-        return $productReviewEntity;
+        return $productReviewTransfer;
     }
 
     /**

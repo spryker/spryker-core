@@ -15,4 +15,9 @@ interface ProductReviewToLocaleInterface
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getLocale($localeName);
+
+    /**
+     * @return array<\Generated\Shared\Transfer\LocaleTransfer>
+     */
+    public function getLocaleCollection();
 }

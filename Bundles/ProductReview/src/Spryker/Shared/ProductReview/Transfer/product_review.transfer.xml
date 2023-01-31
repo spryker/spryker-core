@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
-
     <transfer name="ProductReview">
         <property name="idProductReview" type="int"/>
         <property name="fkProductAbstract" type="int"/>
@@ -14,7 +13,6 @@
         <property name="createdAt" type="string"/>
         <property name="updatedAt" type="string"/>
     </transfer>
-
     <transfer name="ProductReviewRequest">
         <property name="idProductAbstract" type="int"/>
         <property name="localeName" type="string"/>
@@ -24,42 +22,34 @@
         <property name="description" type="string"/>
         <property name="nickname" type="string"/>
     </transfer>
-
     <transfer name="ProductReviewError">
         <property name="message" type="string"/>
     </transfer>
-
     <transfer name="ProductReviewResponse">
         <property name="productReview" type="ProductReview"/>
         <property name="isSuccess" type="bool"/>
         <property name="errors" type="ProductReviewError[]" singular="error"/>
     </transfer>
-
     <transfer name="ProductReviewSearchConfig">
         <property name="paginationConfig" type="PaginationConfig"/>
     </transfer>
-
     <transfer name="ProductReviewSearchRequest">
         <property name="idProductAbstract" type="int"/>
         <property name="requestParams" type="array" singular="requestParams"/>
     </transfer>
-
     <transfer name="BulkProductReviewSearchRequest">
         <property name="productAbstractIds" type="int[]" singular="idProductAbstract"/>
         <property name="filter" type="Filter"/>
     </transfer>
-
     <transfer name="Filter">
         <property name="limit" type="int"/>
         <property name="offset" type="int"/>
     </transfer>
-
     <transfer name="ProductAbstractReview">
         <property name="idProductAbstract" type="int"/>
         <property name="averageRating" type="float"/>
         <property name="reviewCount" type="int"/>
     </transfer>
-
     <transfer name="PaginationSearchResult">
         <property name="numFound" type="int"/>
         <property name="currentPage" type="int"/>
@@ -67,7 +57,6 @@
         <property name="currentItemsPerPage" type="int"/>
         <property name="config" type="PaginationConfig"/>
     </transfer>
-
     <transfer name="FacetConfig">
         <property name="name" type="string"/>
         <property name="parameterName" type="string"/>
@@ -75,7 +64,6 @@
         <property name="type" type="string"/>
         <property name="valueTransformer" type="string"/>
     </transfer>
-
     <transfer name="SortConfig">
         <property name="name" type="string"/>
         <property name="parameterName" type="string"/>
@@ -83,43 +71,50 @@
         <property name="isDescending" type="bool"/>
         <property name="unmappedType" type="string"/>
     </transfer>
-
     <transfer name="PaginationConfig">
         <property name="parameterName" type="string"/>
         <property name="itemsPerPageParameterName" type="string"/>
         <property name="defaultItemsPerPage" type="int"/>
         <property name="validItemsPerPageOptions" type="array" singular="validItemsPerPageOptions"/>
     </transfer>
-
     <transfer name="Locale">
         <property name="idLocale" type="int"/>
     </transfer>
-
     <transfer name="SearchContext">
         <property name="sourceIdentifier" type="string"/>
     </transfer>
-
     <transfer name="ProductView">
         <property name="rating" type="ProductReviewSummary"/>
     </transfer>
-
     <transfer name="ProductReviewSummary">
         <property name="maximumRating" type="int"/>
         <property name="averageRating" type="float"/>
         <property name="totalReview" type="int"/>
         <property name="ratingAggregation" type="array" singular="ratingAggregation"/>
     </transfer>
-
     <transfer name="RatingAggregation">
         <property name="ratingAggregation" type="int[]" singular="ratingAggregation"/>
     </transfer>
-
     <transfer name="EventEntity">
         <property name="foreignKeys" type="array" singular="foreignKeys"/>
     </transfer>
-
     <transfer name="ProductConcrete">
         <property name="rating" type="float"/>
     </transfer>
-
+    <transfer name="AddReviews">
+        <property name="reviews" type="Review[]" singular="review"/>
+        <property name="messageAttributes" type="MessageAttributes"/>
+    </transfer>
+    <transfer name="Review">
+        <property name="productIdentifier" type="string"/>
+        <property name="customerIdentifier" type="string"/>
+        <property name="nickname" type="string"/>
+        <property name="locale" type="string"/>
+        <property name="reviewTitle" type="string"/>
+        <property name="reviewText" type="string"/>
+        <property name="rating" type="int"/>
+        <property name="status" type="int"/>
+        <property name="createdAt" type="string"/>
+    </transfer>
+    <transfer name="MessageAttributes"/>
 </transfers>

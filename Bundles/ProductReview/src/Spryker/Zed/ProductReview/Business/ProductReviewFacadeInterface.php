@@ -7,13 +7,14 @@
 
 namespace Spryker\Zed\ProductReview\Business;
 
+use Generated\Shared\Transfer\AddReviewsTransfer;
 use Generated\Shared\Transfer\ProductReviewTransfer;
 
 interface ProductReviewFacadeInterface
 {
     /**
      * Specification:
-     * - Stores provided product review in persistent storage with pending status.
+     * - Stores provided product review in persistent storage with the status provided in the transfer object or pending if it's empty.
      *   - Checks if provided rating in transfer object does not exceed configured limit
      * - Returns the provided transfer object updated with the stored entity's data.
      * - Triggers event 'Product.product_concrete.update'.
@@ -89,4 +90,19 @@ interface ProductReviewFacadeInterface
      * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function expandProductConcretesWithRating(array $productConcreteTransfers): array;
+
+    /**
+     * Specification:
+     * - Creates reviews that are made on an external system.
+     * - Reviews without AddReviews.reviews[].locale property will be ignored.
+     * - Reviews where ProductAbstract cannot be found from provided AddReviews.reviews[].productIdentifier property will be ignored.
+     * - Reviews that matches existing with same AddReviews.reviews[].customerReference and AddReviews.reviews[].createdAt are considered duplicates and will be skipped.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AddReviewsTransfer $addReviewsTransfer
+     *
+     * @return void
+     */
+    public function handleAddReviews(AddReviewsTransfer $addReviewsTransfer): void;
 }
