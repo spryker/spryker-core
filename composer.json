@@ -570,6 +570,7 @@
         "spryker/product-approval-gui": "*",
         "spryker/product-attribute": "*",
         "spryker/product-attribute-gui": "*",
+        "spryker/product-attributes-backend-api": "*",
         "spryker/product-attributes-rest-api": "*",
         "spryker/product-availabilities-rest-api": "*",
         "spryker/product-barcode": "*",

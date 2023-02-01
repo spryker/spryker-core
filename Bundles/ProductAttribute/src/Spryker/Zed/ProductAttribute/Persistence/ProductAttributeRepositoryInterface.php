@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductAttribute\Persistence;
 
 use Generated\Shared\Transfer\ProductManagementAttributeCollectionTransfer;
+use Generated\Shared\Transfer\ProductManagementAttributeCriteriaTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeFilterTransfer;
 
 interface ProductAttributeRepositoryInterface
@@ -34,4 +35,13 @@ interface ProductAttributeRepositoryInterface
      * @return array<\Generated\Shared\Transfer\ProductManagementAttributeValueTransfer>
      */
     public function getProductManagementAttributeValues(array $productManagementAttributeIds): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductManagementAttributeCriteriaTransfer $productManagementAttributeCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeCollectionTransfer
+     */
+    public function getProductManagementAttributeCollection(
+        ProductManagementAttributeCriteriaTransfer $productManagementAttributeCriteriaTransfer
+    ): ProductManagementAttributeCollectionTransfer;
 }

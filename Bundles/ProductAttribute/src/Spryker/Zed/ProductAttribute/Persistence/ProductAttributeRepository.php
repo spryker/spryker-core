@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductAttribute\Persistence;
 
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeCollectionTransfer;
+use Generated\Shared\Transfer\ProductManagementAttributeCriteriaTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeFilterTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeQuery;
@@ -135,6 +136,104 @@ class ProductAttributeRepository extends AbstractRepository implements ProductAt
         );
 
         $productManagementAttributeQuery->setFormatter(ModelCriteria::FORMAT_OBJECT);
+
+        return $productManagementAttributeQuery;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductManagementAttributeCriteriaTransfer $productManagementAttributeCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeCollectionTransfer
+     */
+    public function getProductManagementAttributeCollection(
+        ProductManagementAttributeCriteriaTransfer $productManagementAttributeCriteriaTransfer
+    ): ProductManagementAttributeCollectionTransfer {
+        $productManagementAttributeCollectionTransfer = new ProductManagementAttributeCollectionTransfer();
+        $productManagementAttributeQuery = $this->getFactory()->createProductManagementAttributeQuery();
+        $productManagementAttributeQuery->joinWithSpyProductAttributeKey();
+
+        $productManagementAttributeQuery = $this->applyProductManagementAttributeConditions(
+            $productManagementAttributeCriteriaTransfer,
+            $productManagementAttributeQuery,
+        );
+
+        if ($productManagementAttributeCriteriaTransfer->getPagination()) {
+            $productManagementAttributeQuery = $this->applyProductManagementAttributePagination(
+                $productManagementAttributeCriteriaTransfer->getPagination(),
+                $productManagementAttributeQuery,
+            );
+            $productManagementAttributeCollectionTransfer->setPagination($productManagementAttributeCriteriaTransfer->getPagination());
+        }
+
+        $productManagementAttributeEntities = $productManagementAttributeQuery->find();
+
+        return $this->getFactory()
+            ->createProductManagementAttributeMapper()
+            ->mapProductManagementAttributeEntityCollectionToTransferCollection($productManagementAttributeEntities, $productManagementAttributeCollectionTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductManagementAttributeCriteriaTransfer $productManagementAttributeCriteriaTransfer
+     * @param \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeQuery $productManagementAttributeQuery
+     *
+     * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeQuery
+     */
+    protected function applyProductManagementAttributeConditions(
+        ProductManagementAttributeCriteriaTransfer $productManagementAttributeCriteriaTransfer,
+        SpyProductManagementAttributeQuery $productManagementAttributeQuery
+    ): SpyProductManagementAttributeQuery {
+        $productManagementAttributeConditionsTransfer = $productManagementAttributeCriteriaTransfer->getProductManagementAttributeConditions();
+        if ($productManagementAttributeConditionsTransfer === null) {
+            return $productManagementAttributeQuery;
+        }
+
+        if ($productManagementAttributeConditionsTransfer->getKeys()) {
+            $productManagementAttributeQuery
+                ->useSpyProductAttributeKeyQuery()
+                    ->filterByKey_In($productManagementAttributeConditionsTransfer->getKeys())
+                ->endUse();
+        }
+
+        return $productManagementAttributeQuery;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
+     * @param \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeQuery $productManagementAttributeQuery
+     *
+     * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeQuery
+     */
+    protected function applyProductManagementAttributePagination(
+        PaginationTransfer $paginationTransfer,
+        SpyProductManagementAttributeQuery $productManagementAttributeQuery
+    ): SpyProductManagementAttributeQuery {
+        if ($paginationTransfer->getPage() && $paginationTransfer->getMaxPerPage()) {
+            $paginationModel = $productManagementAttributeQuery->paginate(
+                $paginationTransfer->getPageOrFail(),
+                $paginationTransfer->getMaxPerPageOrFail(),
+            );
+            $paginationTransfer
+                ->setNbResults($paginationModel->getNbResults())
+                ->setFirstIndex($paginationModel->getFirstIndex())
+                ->setLastIndex($paginationModel->getLastIndex())
+                ->setFirstPage($paginationModel->getFirstPage())
+                ->setLastPage($paginationModel->getLastPage())
+                ->setNextPage($paginationModel->getNextPage())
+                ->setPreviousPage($paginationModel->getPreviousPage());
+
+            /** @var \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeQuery $productManagementAttributeQuery */
+            $productManagementAttributeQuery = $paginationModel->getQuery();
+
+            return $productManagementAttributeQuery;
+        }
+
+        $paginationTransfer->setNbResults($productManagementAttributeQuery->count());
+
+        if ($paginationTransfer->getLimit() !== null && $paginationTransfer->getOffset() !== null) {
+            return $productManagementAttributeQuery
+                ->limit($paginationTransfer->getLimitOrFail())
+                ->offset($paginationTransfer->getOffsetOrFail());
+        }
 
         return $productManagementAttributeQuery;
     }

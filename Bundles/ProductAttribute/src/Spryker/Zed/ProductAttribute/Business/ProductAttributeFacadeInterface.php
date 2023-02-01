@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductAttribute\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeCollectionTransfer;
+use Generated\Shared\Transfer\ProductManagementAttributeCriteriaTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeFilterTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 
@@ -335,5 +336,25 @@ interface ProductAttributeFacadeInterface
      */
     public function getProductManagementAttributes(
         ProductManagementAttributeFilterTransfer $productManagementAttributeFilterTransfer
+    ): ProductManagementAttributeCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Fetches a collection of product attributes from persistence.
+     * - Uses `ProductManagementAttributeCriteriaTransfer.pagination.{page, maxPerPage}` to paginate result with page and maxPerPage.
+     * - In case `ProductManagementAttributeCriteriaTransfer.pagination.{page, maxPerPage}` is not provided, uses `ProductManagementAttributeCriteriaTransfer.pagination.{limit, offset}` to paginate result with limit and offset.
+     * - Uses `ProductManagementAttributeCriteriaTransfer.productManagementAttributeConditions.keys` to filter result by keys.
+     * - Expands found product management attributes with attribute values.
+     * - Translates product management attribute keys.
+     * - Returns `ProductManagementAttributeCollectionTransfer` filled with expanded product management attributes.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductManagementAttributeCriteriaTransfer $productManagementAttributeCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeCollectionTransfer
+     */
+    public function getProductManagementAttributeCollection(
+        ProductManagementAttributeCriteriaTransfer $productManagementAttributeCriteriaTransfer
     ): ProductManagementAttributeCollectionTransfer;
 }

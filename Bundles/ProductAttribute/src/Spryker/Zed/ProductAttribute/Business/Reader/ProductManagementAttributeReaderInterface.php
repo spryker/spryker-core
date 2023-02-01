@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductAttribute\Business\Reader;
 
 use Generated\Shared\Transfer\ProductManagementAttributeCollectionTransfer;
+use Generated\Shared\Transfer\ProductManagementAttributeCriteriaTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeFilterTransfer;
 
 interface ProductManagementAttributeReaderInterface
@@ -19,5 +20,14 @@ interface ProductManagementAttributeReaderInterface
      */
     public function getProductManagementAttributes(
         ProductManagementAttributeFilterTransfer $productManagementAttributeFilterTransfer
+    ): ProductManagementAttributeCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductManagementAttributeCriteriaTransfer $productManagementAttributeCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeCollectionTransfer
+     */
+    public function getProductManagementAttributeCollection(
+        ProductManagementAttributeCriteriaTransfer $productManagementAttributeCriteriaTransfer
     ): ProductManagementAttributeCollectionTransfer;
 }

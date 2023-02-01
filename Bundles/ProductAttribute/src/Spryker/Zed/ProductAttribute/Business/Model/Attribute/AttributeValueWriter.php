@@ -37,26 +37,26 @@ class AttributeValueWriter implements AttributeValueWriterInterface
      */
     public function saveProductAttributeValues(ProductManagementAttributeTransfer $productManagementAttributeTransfer)
     {
-        $existingAttributeValues = $this->getExistingAttributeValues($productManagementAttributeTransfer->getIdProductManagementAttribute());
+        $productManagementAttributeValueEntities = $this->getExistingAttributeValues($productManagementAttributeTransfer->getIdProductManagementAttribute());
 
         $this->productAttributeQueryContainer
             ->getConnection()
             ->beginTransaction();
 
         try {
-            foreach ($productManagementAttributeTransfer->getValues() as $attributeValueTransfer) {
-                if (isset($existingAttributeValues[$attributeValueTransfer->getValue()])) {
-                    unset($existingAttributeValues[$attributeValueTransfer->getValue()]);
-
-                    continue;
-                }
-
-                $attributeValueTransfer->setFkProductManagementAttribute($productManagementAttributeTransfer->getIdProductManagementAttribute());
-
-                $this->createAttributeValue($attributeValueTransfer);
+            foreach ($productManagementAttributeTransfer->getValues() as $productManagementAttributeValueTransfer) {
+                $this->createProductManagementAttributeValueIfNotExists(
+                    $productManagementAttributeValueTransfer,
+                    $productManagementAttributeTransfer,
+                    $productManagementAttributeValueEntities,
+                );
             }
-
-            $this->deleteDetachedAttributeValues($existingAttributeValues);
+            $this->deleteDetachedAttributeValues(
+                $this->getProductManagementAttributeValueEntitiesToDetach(
+                    $productManagementAttributeTransfer,
+                    $productManagementAttributeValueEntities,
+                ),
+            );
 
             $this->productAttributeQueryContainer
                 ->getConnection()
@@ -73,18 +73,40 @@ class AttributeValueWriter implements AttributeValueWriterInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer $productManagementAttributeTransfer
+     * @param array<string, \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValue> $productManagementAttributeValueEntities
+     *
+     * @return array<string, \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValue>
+     */
+    protected function getProductManagementAttributeValueEntitiesToDetach(
+        ProductManagementAttributeTransfer $productManagementAttributeTransfer,
+        array $productManagementAttributeValueEntities
+    ): array {
+        foreach ($productManagementAttributeTransfer->getValues() as $productManagementAttributeValueTransfer) {
+            $attributeValue = $productManagementAttributeValueTransfer->getValue();
+            if (isset($productManagementAttributeValueEntities[$attributeValue])) {
+                unset($productManagementAttributeValueEntities[$attributeValue]);
+            }
+        }
+
+        return $productManagementAttributeValueEntities;
+    }
+
+    /**
      * @param int $idProductManagementAttribute
      *
-     * @return array<\Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValue>
+     * @return array<string, \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValue>
      */
-    protected function getExistingAttributeValues($idProductManagementAttribute)
+    protected function getExistingAttributeValues($idProductManagementAttribute): array
     {
+        /** @var array<string, \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValue> $result */
         $result = [];
 
         $attributeValues = $this->productAttributeQueryContainer
             ->queryProductManagementAttributeValueByAttributeId($idProductManagementAttribute)
             ->find();
 
+        /** @var \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValue $attributeValue */
         foreach ($attributeValues as $attributeValue) {
             $result[$attributeValue->getValue()] = $attributeValue;
         }
@@ -97,7 +119,7 @@ class AttributeValueWriter implements AttributeValueWriterInterface
      *
      * @return void
      */
-    protected function createAttributeValue(ProductManagementAttributeValueTransfer $attributeValueTransfer)
+    protected function createAttributeValue(ProductManagementAttributeValueTransfer $attributeValueTransfer): void
     {
         $attributeValueEntity = new SpyProductManagementAttributeValue();
         $attributeValueEntity->fromArray($attributeValueTransfer->toArray());
@@ -108,15 +130,43 @@ class AttributeValueWriter implements AttributeValueWriterInterface
     }
 
     /**
-     * @param array<\Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValue> $attributeValues
+     * @param array<string, \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValue> $attributeValues
      *
      * @return void
      */
-    protected function deleteDetachedAttributeValues(array $attributeValues)
+    protected function deleteDetachedAttributeValues(array $attributeValues): void
     {
         foreach ($attributeValues as $attributeValue) {
             $attributeValue->getSpyProductManagementAttributeValueTranslations()->delete();
             $attributeValue->delete();
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductManagementAttributeValueTransfer $productManagementAttributeValueTransfer
+     * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer $productManagementAttributeTransfer
+     * @param array<string, \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValue> $productManagementAttributeValueEntities
+     *
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeValueTransfer
+     */
+    protected function createProductManagementAttributeValueIfNotExists(
+        ProductManagementAttributeValueTransfer $productManagementAttributeValueTransfer,
+        ProductManagementAttributeTransfer $productManagementAttributeTransfer,
+        array $productManagementAttributeValueEntities
+    ): ProductManagementAttributeValueTransfer {
+        $attributeValue = $productManagementAttributeValueTransfer->getValue();
+
+        if (isset($productManagementAttributeValueEntities[$attributeValue])) {
+            $productManagementAttributeValueTransfer->setIdProductManagementAttributeValue(
+                $productManagementAttributeValueEntities[$attributeValue]->getIdProductManagementAttributeValue(),
+            );
+
+            return $productManagementAttributeValueTransfer;
+        }
+
+        $productManagementAttributeValueTransfer->setFkProductManagementAttribute($productManagementAttributeTransfer->getIdProductManagementAttribute());
+        $this->createAttributeValue($productManagementAttributeValueTransfer);
+
+        return $productManagementAttributeValueTransfer;
     }
 }

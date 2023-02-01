@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductAttribute\Business\Reader;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ProductManagementAttributeCollectionTransfer;
+use Generated\Shared\Transfer\ProductManagementAttributeCriteriaTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeFilterTransfer;
 use Spryker\Zed\ProductAttribute\Business\Translator\ProductManagementAttributeTranslatorInterface;
 use Spryker\Zed\ProductAttribute\Persistence\ProductAttributeRepositoryInterface;
@@ -18,12 +19,12 @@ class ProductManagementAttributeReader implements ProductManagementAttributeRead
     /**
      * @var \Spryker\Zed\ProductAttribute\Persistence\ProductAttributeRepositoryInterface
      */
-    protected $productAttributeRepository;
+    protected ProductAttributeRepositoryInterface $productAttributeRepository;
 
     /**
      * @var \Spryker\Zed\ProductAttribute\Business\Translator\ProductManagementAttributeTranslatorInterface
      */
-    protected $productManagementAttributeTranslator;
+    protected ProductManagementAttributeTranslatorInterface $productManagementAttributeTranslator;
 
     /**
      * @param \Spryker\Zed\ProductAttribute\Persistence\ProductAttributeRepositoryInterface $productAttributeRepository
@@ -47,6 +48,31 @@ class ProductManagementAttributeReader implements ProductManagementAttributeRead
     ): ProductManagementAttributeCollectionTransfer {
         $productManagementAttributeCollectionTransfer = $this->productAttributeRepository
             ->getProductManagementAttributes($productManagementAttributeFilterTransfer);
+
+        if (!$productManagementAttributeCollectionTransfer->getProductManagementAttributes()->count()) {
+            return $productManagementAttributeCollectionTransfer;
+        }
+
+        $productManagementAttributeTransfers = $productManagementAttributeCollectionTransfer->getProductManagementAttributes();
+
+        $productManagementAttributeTransfers = $this->expandProductManagementAttributesWithValues($productManagementAttributeTransfers);
+        $productManagementAttributeTransfers = $this->productManagementAttributeTranslator
+            ->translateProductManagementAttributes($productManagementAttributeTransfers);
+
+        return $productManagementAttributeCollectionTransfer
+            ->setProductManagementAttributes($productManagementAttributeTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductManagementAttributeCriteriaTransfer $productManagementAttributeCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeCollectionTransfer
+     */
+    public function getProductManagementAttributeCollection(
+        ProductManagementAttributeCriteriaTransfer $productManagementAttributeCriteriaTransfer
+    ): ProductManagementAttributeCollectionTransfer {
+        $productManagementAttributeCollectionTransfer = $this->productAttributeRepository
+            ->getProductManagementAttributeCollection($productManagementAttributeCriteriaTransfer);
 
         if (!$productManagementAttributeCollectionTransfer->getProductManagementAttributes()->count()) {
             return $productManagementAttributeCollectionTransfer;

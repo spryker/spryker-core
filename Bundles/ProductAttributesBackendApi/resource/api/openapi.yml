@@ -1,0 +1,216 @@
+openapi: 3.0.3
+info:
+    title: Product Attribute Backend API
+    version: 0.1.0
+servers:
+    - url: http://glue-backend.de.spryker.local
+security:
+    - bearerAuth: []
+paths:
+    /product-attributes:
+        get:
+            description: List product attributes
+            parameters:
+                - $ref: '#/components/parameters/Page'
+                - in: header
+                  name: Content-Type
+                  schema:
+                      type: string
+                      example: application/vnd.api+json
+                  required: true
+            responses:
+                '200':
+                    description: Listing of product attributes
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                $ref: '#/components/schemas/ApiCollectionResponse'
+                '403':
+                    description: Not authorized
+        post:
+            description: Create a new product attribute
+            parameters:
+                - in: header
+                  name: Content-Type
+                  schema:
+                      type: string
+                      example: application/vnd.api+json
+                  required: true
+            requestBody:
+                content:
+                    application/vnd.api+json:
+                        schema:
+                            $ref: '#/components/schemas/ApiRequest'
+            responses:
+                '403':
+                    description: Not authorized
+                '400':
+                    description: Invalid request
+                '200':
+                    description: Product attribute was created
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                $ref: '#/components/schemas/ApiResponse'
+    /product-attributes/{key}:
+        parameters:
+            - name: key
+              in: path
+              required: true
+              description: Product attribute key
+              schema:
+                  type: string
+            - in: header
+              name: Content-Type
+              schema:
+                  type: string
+                  example: application/vnd.api+json
+              required: true
+        get:
+            description: Fetch product attribute by key
+            parameters:
+                - in: header
+                  name: Content-Type
+                  schema:
+                      type: string
+                      example: application/vnd.api+json
+                  required: true
+            responses:
+                '200':
+                    description: Successful operation
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                $ref: '#/components/schemas/ApiResponse'
+        patch:
+            description: Update a product attribute
+            requestBody:
+                content:
+                    application/vnd.api+json:
+                        schema:
+                            $ref: '#/components/schemas/ApiRequest'
+            responses:
+                '403':
+                    description: Not authorized
+                '404':
+                    description: Not Found
+                '200':
+                    description: Product attribute was updated
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                $ref: '#/components/schemas/ApiResponse'
+components:
+    securitySchemes:
+        bearerAuth:
+            type: http
+            scheme: bearer
+            bearerFormat: JWT
+    parameters:
+        Page:
+            name: page
+            in: query
+            description: 'Parameter is used to limit requested items.'
+            required: false
+            style: deepObject
+            explode: true
+            schema:
+                type: object
+                properties:
+                    offset:
+                        type: integer
+                        description: 'The number of items to skip before starting to collect the result set.'
+                    limit:
+                        type: integer
+                        description: 'The numbers of items to return.'
+                example:
+                    offset: 0
+                    limit: 10
+    schemas:
+        ApiResponse:
+            type: object
+            properties:
+                data:
+                    $ref: '#/components/schemas/ApiProductAttributeResponse'
+        ApiRequest:
+            type: object
+            properties:
+                data:
+                    $ref: '#/components/schemas/ApiProductAttributeRequest'
+        ApiCollectionResponse:
+            type: object
+            properties:
+                data:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ApiProductAttributeResponse'
+        ApiProductAttributeResponse:
+            type: object
+            properties:
+                type:
+                    type: string
+                id:
+                    type: string
+                    description: Product attribute key.
+                attributes:
+                    $ref: '#/components/schemas/ApiProductAttributeAttributes'
+        ApiProductAttributeRequest:
+            type: object
+            properties:
+                type:
+                    type: string
+                attributes:
+                    $ref: '#/components/schemas/ApiProductAttributeAttributes'
+        ApiProductAttributeLocalizedKey:
+            type: object
+            properties:
+                localeName:
+                    type: string
+                    example: de_DE
+                translationName:
+                    type: string
+                    example: Test
+        ApiProductAttributeValue:
+            type: object
+            properties:
+                value:
+                    type: string
+                    example: '16 GB'
+                localizedValues:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ApiProductAttributeLocalizedValue'
+        ApiProductAttributeLocalizedValue:
+            type: object
+            properties:
+                localeName:
+                    type: string
+                    example: de_DE
+                translation:
+                    type: string
+                    example: Test
+        ApiProductAttributeAttributes:
+            type: object
+            properties:
+                key:
+                    type: string
+                    description: Product attribute key.
+                    example: storage_capacity
+                inputType:
+                    type: string
+                    description: Input type.
+                    example: text
+                allowInput:
+                    type: boolean
+                    description: Is input allowed.
+                isSuper:
+                    type: boolean
+                    description: Is super attribute.
+                localizedKeys:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ApiProductAttributeLocalizedKey'
+                values:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ApiProductAttributeValue'

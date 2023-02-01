@@ -115,6 +115,17 @@ class ProductAttributeBusinessTester extends Actor
     protected $productAttributeFacade;
 
     /**
+     * @param array $array1
+     * @param array $array2
+     *
+     * @return void
+     */
+    public function assertArrayValuesAreEqual(array $array1, array $array2): void
+    {
+        $this->assertFalse(array_diff($array1, $array2) || array_diff($array2, $array1));
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getLocaleOne(): LocaleTransfer

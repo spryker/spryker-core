@@ -109,6 +109,33 @@ class ProductAttributeFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testUpdateProductManagementAttributeReturnsValuesWithIds(): void
+    {
+        // Arrange
+        $productManagementAttributeEntity = $this->tester->createProductManagementAttributeEntity(['a', 'b', 'c']);
+        $productManagementAttributeTransfer = (new ProductManagementAttributeTransfer())
+            ->setIdProductManagementAttribute($productManagementAttributeEntity->getIdProductManagementAttribute())
+            ->setInputType($productManagementAttributeEntity->getInputType())
+            ->setKey($productManagementAttributeEntity->getSpyProductAttributeKey()->getKey())
+            ->addValue((new ProductManagementAttributeValueTransfer())->setValue('a'))
+            ->addValue((new ProductManagementAttributeValueTransfer())->setValue('b'))
+            ->addValue((new ProductManagementAttributeValueTransfer())->setValue('d'));
+        // Act
+        $productManagementAttributeTransfer = $this->productAttributeFacade->updateProductManagementAttribute($productManagementAttributeTransfer);
+
+        // Assert
+        $this->assertCount(3, $productManagementAttributeTransfer->getValues());
+        $this->assertNotNull($productManagementAttributeTransfer->getValues()[0]->getIdProductManagementAttributeValue());
+        $this->assertNotNull($productManagementAttributeTransfer->getValues()[1]->getIdProductManagementAttributeValue());
+        $this->assertNotNull($productManagementAttributeTransfer->getValues()[2]->getIdProductManagementAttributeValue());
+        $this->assertSame('a', $productManagementAttributeTransfer->getValues()[0]->getValue());
+        $this->assertSame('b', $productManagementAttributeTransfer->getValues()[1]->getValue());
+        $this->assertSame('d', $productManagementAttributeTransfer->getValues()[2]->getValue());
+    }
+
+    /**
+     * @return void
+     */
     public function testTranslateProductManagementAttributeValues(): void
     {
         /** @var \Spryker\Zed\ProductAttribute\Business\ProductAttributeBusinessFactory|\PHPUnit\Framework\MockObject\MockObject $productManagementBusinessFactoryMock */
