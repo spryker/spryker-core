@@ -7,11 +7,13 @@
 
 namespace Spryker\Zed\Category\Persistence;
 
+use Generated\Shared\Transfer\CategoryCollectionDeleteCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryNodeUrlCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryNodeUrlPathCriteriaTransfer;
+use Generated\Shared\Transfer\CategoryTemplateTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
@@ -26,7 +28,11 @@ use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
 use Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryQuery;
+use Orm\Zed\Category\Persistence\SpyCategoryTemplateQuery;
+use Propel\Runtime\ActiveQuery\Criteria as PropelCriteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Spryker\Zed\Category\CategoryConfig;
+use Spryker\Zed\Category\Persistence\Exception\CategoryDefaultTemplateNotFoundException;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\PropelOrm\Business\Model\Formatter\PropelArraySetFormatter;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
@@ -133,7 +139,19 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
 
         return $this->getFactory()
             ->createCategoryMapper()
-            ->mapCategoryCollection($spyCategories, new CategoryCollectionTransfer());
+            ->mapCategoryCollection($spyCategories, new CategoryCollectionTransfer(), null);
+    }
+
+    /**
+     * @deprecated Use {@link \Spryker\Zed\Category\Persistence\CategoryRepository::getCategoryCollection()} instead.
+     *
+     * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
+     */
+    public function getCategoriesByCriteria(CategoryCriteriaTransfer $categoryCriteriaTransfer): CategoryCollectionTransfer
+    {
+        return $this->getCategoryCollection($categoryCriteriaTransfer);
     }
 
     /**
@@ -141,11 +159,13 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
      *
      * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
      */
-    public function getCategoriesByCriteria(CategoryCriteriaTransfer $categoryCriteriaTransfer): CategoryCollectionTransfer
+    public function getCategoryCollection(CategoryCriteriaTransfer $categoryCriteriaTransfer): CategoryCollectionTransfer
     {
         $categoryCollectionTransfer = new CategoryCollectionTransfer();
         $categoryQuery = $this->getFactory()->createCategoryQuery();
         $categoryQuery = $this->applyCategoryFilters($categoryQuery, $categoryCriteriaTransfer);
+
+        $categoryQuery = $this->applyCategorySorting($categoryQuery, $categoryCriteriaTransfer);
 
         $paginationTransfer = $categoryCriteriaTransfer->getPagination();
         if ($paginationTransfer !== null) {
@@ -155,7 +175,11 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
 
         return $this->getFactory()
             ->createCategoryMapper()
-            ->mapCategoryCollection($categoryQuery->find(), $categoryCollectionTransfer);
+            ->mapCategoryCollection(
+                $categoryQuery->find(),
+                $categoryCollectionTransfer,
+                $categoryCriteriaTransfer,
+            );
     }
 
     /**
@@ -828,6 +852,24 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CategoryCollectionDeleteCriteriaTransfer $categoryCollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
+     */
+    public function getCategoryDeleteCollection(
+        CategoryCollectionDeleteCriteriaTransfer $categoryCollectionDeleteCriteriaTransfer
+    ): CategoryCollectionTransfer {
+        $categoryCollectionTransfer = new CategoryCollectionTransfer();
+        $categoryQuery = $this->getFactory()->createCategoryQuery();
+        $categoryEntities = $this->applyCategoryDeleteFilters($categoryQuery, $categoryCollectionDeleteCriteriaTransfer)->find();
+        if (!$categoryEntities->count()) {
+            return $categoryCollectionTransfer;
+        }
+
+        return $this->getFactory()->createCategoryMapper()->mapCategoryCollection($categoryEntities, $categoryCollectionTransfer);
+    }
+
+    /**
      * @param \Orm\Zed\Category\Persistence\SpyCategoryQuery $categoryQuery
      * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
      *
@@ -843,6 +885,10 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
 
         if ($categoryConditionsTransfer->getCategoryIds()) {
             $categoryQuery->filterByIdCategory_In($categoryConditionsTransfer->getCategoryIds());
+        }
+
+        if ($categoryConditionsTransfer->getCategoryKeys()) {
+            $categoryQuery->filterByCategoryKey_In($categoryConditionsTransfer->getCategoryKeys());
         }
 
         if ($categoryConditionsTransfer->getIsMain() !== null) {
@@ -1123,5 +1169,75 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
         }
 
         return $categoryQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryQuery $categoryQuery
+     * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
+     */
+    protected function applyCategorySorting(
+        SpyCategoryQuery $categoryQuery,
+        CategoryCriteriaTransfer $categoryCriteriaTransfer
+    ): SpyCategoryQuery {
+        $sortCollection = $categoryCriteriaTransfer->getSortCollection();
+        foreach ($sortCollection as $sortTransfer) {
+            $categoryQuery->orderBy($sortTransfer->getFieldOrFail(), $sortTransfer->getIsAscending() ? PropelCriteria::ASC : PropelCriteria::DESC);
+        }
+
+        return $categoryQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryQuery $categoryQuery
+     * @param \Generated\Shared\Transfer\CategoryCollectionDeleteCriteriaTransfer $categoryCollectionDeleteCriteriaTransfer
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
+     */
+    protected function applyCategoryDeleteFilters(
+        SpyCategoryQuery $categoryQuery,
+        CategoryCollectionDeleteCriteriaTransfer $categoryCollectionDeleteCriteriaTransfer
+    ): SpyCategoryQuery {
+        return $this->buildQueryByConditions($categoryCollectionDeleteCriteriaTransfer->modifiedToArray(), $categoryQuery);
+    }
+
+    /**
+     * @param array $conditions
+     * @param \Orm\Zed\Category\Persistence\SpyCategoryQuery $categoryQuery
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
+     */
+    protected function buildQueryByConditions(
+        array $conditions,
+        SpyCategoryQuery $categoryQuery
+    ): SpyCategoryQuery {
+        if (isset($conditions['category_ids'])) {
+            $categoryQuery->filterByIdCategory($conditions['category_ids'], PropelCriteria::IN);
+        }
+        if (isset($conditions['category_keys'])) {
+            $categoryQuery->filterByCategoryKey($conditions['category_keys'], PropelCriteria::IN);
+        }
+
+        return $categoryQuery;
+    }
+
+    /**
+     * @throws \Spryker\Zed\Category\Persistence\Exception\CategoryDefaultTemplateNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\CategoryTemplateTransfer
+     */
+    public function getDefaultCategoryTemplate(): CategoryTemplateTransfer
+    {
+        $categoryTemplateEntity = SpyCategoryTemplateQuery::create()->findOneByName(CategoryConfig::CATEGORY_TEMPLATE_DEFAULT);
+
+        if (!$categoryTemplateEntity) {
+            throw new CategoryDefaultTemplateNotFoundException(sprintf('Could not find a CategoryTemplate by name "%s".', CategoryConfig::CATEGORY_TEMPLATE_DEFAULT));
+        }
+
+        return $this->getFactory()->createCategoryTemplateMapper()->mapCategoryTemplateEntityToCategoryTemplateTransfer(
+            $categoryTemplateEntity,
+            new CategoryTemplateTransfer(),
+        );
     }
 }

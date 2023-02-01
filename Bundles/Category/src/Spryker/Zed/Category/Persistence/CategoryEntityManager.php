@@ -400,6 +400,25 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
     }
 
     /**
+     * @param array<int> $categoryIds
+     * @param array<int> $storeIds
+     *
+     * @return void
+     */
+    public function bulkDeleteCategoryStoreRelations(array $categoryIds, array $storeIds): void
+    {
+        if ($storeIds === []) {
+            return;
+        }
+
+        $this->getFactory()
+            ->createCategoryStoreQuery()
+            ->filterByFkCategory_in($categoryIds)
+            ->filterByFkStore_In($storeIds)
+            ->delete();
+    }
+
+    /**
      * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Category\Persistence\SpyCategoryClosureTable> $parentCategoryClosureTableEntities
      * @param \Orm\Zed\Category\Persistence\SpyCategoryClosureTable $categoryClosureTableEntity
      *
@@ -487,24 +506,5 @@ class CategoryEntityManager extends AbstractEntityManager implements CategoryEnt
 
             $this->persist($categoryClosureTableEntity);
         }
-    }
-
-    /**
-     * @param array<int> $categoryIds
-     * @param array<int> $storeIds
-     *
-     * @return void
-     */
-    public function bulkDeleteCategoryStoreRelations(array $categoryIds, array $storeIds): void
-    {
-        if ($storeIds === []) {
-            return;
-        }
-
-        $this->getFactory()
-            ->createCategoryStoreQuery()
-            ->filterByFkCategory_in($categoryIds)
-            ->filterByFkStore_In($storeIds)
-            ->delete();
     }
 }

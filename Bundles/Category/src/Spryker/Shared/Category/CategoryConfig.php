@@ -7,9 +7,9 @@
 
 namespace Spryker\Shared\Category;
 
-use Spryker\Shared\Kernel\AbstractBundleConfig;
+use Spryker\Shared\Kernel\AbstractSharedConfig;
 
-class CategoryConfig extends AbstractBundleConfig
+class CategoryConfig extends AbstractSharedConfig
 {
     /**
      * Used as `item_type` for touch mechanism.

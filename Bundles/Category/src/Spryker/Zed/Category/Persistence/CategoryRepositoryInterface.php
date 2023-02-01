@@ -7,11 +7,13 @@
 
 namespace Spryker\Zed\Category\Persistence;
 
+use Generated\Shared\Transfer\CategoryCollectionDeleteCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryNodeUrlCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryNodeUrlPathCriteriaTransfer;
+use Generated\Shared\Transfer\CategoryTemplateTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
@@ -28,6 +30,8 @@ interface CategoryRepositoryInterface
     public function getAllCategoryCollection(LocaleTransfer $localeTransfer): CategoryCollectionTransfer;
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface::getCategoryCollection()} instead.
+     *
      * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
@@ -199,4 +203,27 @@ interface CategoryRepositoryInterface
      * @return array<\Generated\Shared\Transfer\StoreRelationTransfer>
      */
     public function getCategoryStoreRelationsByCategoryIds(array $categoryIds): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer $categoryCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
+     */
+    public function getCategoryCollection(
+        CategoryCriteriaTransfer $categoryCriteriaTransfer
+    ): CategoryCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryCollectionDeleteCriteriaTransfer $categoryCollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
+     */
+    public function getCategoryDeleteCollection(
+        CategoryCollectionDeleteCriteriaTransfer $categoryCollectionDeleteCriteriaTransfer
+    ): CategoryCollectionTransfer;
+
+    /**
+     * @return \Generated\Shared\Transfer\CategoryTemplateTransfer
+     */
+    public function getDefaultCategoryTemplate(): CategoryTemplateTransfer;
 }

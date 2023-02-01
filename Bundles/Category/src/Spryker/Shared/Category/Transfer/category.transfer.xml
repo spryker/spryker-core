@@ -81,6 +81,7 @@
         <property name="offset" type="int" deprecated="Use Pagination.offset instead."/>
         <property name="categoryConditions" type="CategoryConditions" strict="true"/>
         <property name="pagination" type="Pagination" strict="true"/>
+        <property name="sortCollection" type="Sort[]" singular="sort" strict="true"/>
     </transfer>
 
     <transfer name="CategoryConditions" strict="true">
@@ -93,12 +94,40 @@
         <property name="isMain" type="bool"/>
         <property name="withChildrenRecursively" type="bool"/>
         <property name="categoryNodeIds" type="int[]" singular="idCategoryNode"/>
+        <property name="categoryKeys" type="string[]" singular="categoryKey" strict="true"/>
+        <property name="withParentCategory" type="bool" strict="true"/>
     </transfer>
 
     <transfer name="Pagination">
         <property name="limit" type="int"/>
         <property name="offset" type="int"/>
         <property name="nbResults" type="int"/>
+    </transfer>
+
+    <transfer name="Sort">
+        <property name="field" type="string"/>
+        <property name="isAscending" type="bool"/>
+    </transfer>
+
+    <transfer name="CategoryCollectionRequest" strict="true">
+        <property name="isTransactional" type="bool"/>
+        <property name="categories" type="Category[]" singular="category"/>
+    </transfer>
+
+    <transfer name="CategoryCollectionResponse" strict="true">
+        <property name="errors" type="Error[]" singular="error"/>
+        <property name="categories" type="Category[]" singular="category"/>
+    </transfer>
+
+    <transfer name="CategoryCollectionDeleteCriteria" strict="true">
+        <property name="isTransactional" type="bool"/>
+        <property name="categoryKeys" type="string[]" singular="categoryKey"/>
+        <property name="categoryIds" type="int[]" singular="idCategory"/>
+    </transfer>
+
+    <transfer name="Error">
+        <property name="message" type="string"/>
+        <property name="entityIdentifier" type="string"/>
     </transfer>
 
     <transfer name="CategoryNodeCriteria">
@@ -186,4 +215,5 @@
 
     <transfer name="Filter">
     </transfer>
+
 </transfers>

@@ -145,6 +145,7 @@ class CategoryNodeUpdater implements CategoryNodeUpdaterInterface
             $currentCategoryNodeTransfer,
             $categoryTransfer,
         );
+
         if ($idFormerParentCategoryNode) {
             $nodeTransfer->setFkParentCategoryNode($categoryTransfer->getParentCategoryNodeOrFail()->getIdCategoryNodeOrFail());
         }
@@ -209,6 +210,11 @@ class CategoryNodeUpdater implements CategoryNodeUpdaterInterface
         if ($categoryTransfer->getCategoryNodeOrFail()->getIsRoot()) {
             return null;
         }
+
+        if (!$categoryTransfer->getParentCategoryNode()) {
+            return null;
+        }
+
         $parentCategoryNodeTransfer = $categoryTransfer->getParentCategoryNodeOrFail();
         $idFormerParentCategoryNode = $currentCategoryNodeTransfer->getFkParentCategoryNode();
 

@@ -45,17 +45,6 @@ class CategoryHelper extends Module
     }
 
     /**
-     * @deprecated Will be removed in favor of {@link \Spryker\Zed\Propel\Communication\Plugin\Application\PropelApplicationPlugin}.
-     *
-     * @return void
-     */
-    protected function addBackwardCompatibleServiceProvider(): void
-    {
-        $propelServiceProvider = new PropelServiceProvider();
-        $propelServiceProvider->boot(new Application());
-    }
-
-    /**
      * @param \Codeception\TestInterface $test
      *
      * @return void
@@ -91,12 +80,57 @@ class CategoryHelper extends Module
     }
 
     /**
+     * @param string $categoryKey
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer
+     */
+    public function createCategory(string $categoryKey): CategoryTransfer
+    {
+        $categoryFacade = new CategoryFacade();
+        $categoryTemplateTransfer = $this->findCategoryTemplateByName(CategoryConfig::CATEGORY_TEMPLATE_DEFAULT);
+
+        $categoryTransfer = (new CategoryTransfer())
+            ->setCategoryKey($categoryKey)
+            ->setFkCategoryTemplate($categoryTemplateTransfer->getIdCategoryTemplate())
+            ->setIsActive(false);
+
+        $this->addLocalizedAttributesToCategoryTransfer($categoryTransfer);
+
+        $categoryNodeTransfer = new NodeTransfer();
+        $categoryNodeTransfer->setFkCategory($categoryTransfer->getIdCategory());
+        $categoryNodeTransfer->setIsMain(false);
+        $categoryTransfer->setCategoryNode($categoryNodeTransfer);
+
+        $parentCategoryNodeTransfer = new NodeTransfer();
+        $parentCategoryNodeTransfer->setIdCategoryNode(1);
+        $categoryTransfer->setParentCategoryNode($parentCategoryNodeTransfer);
+
+        $categoryFacade->create($categoryTransfer);
+
+        return $categoryTransfer;
+    }
+
+    /**
+     * @param string $categoryKey
+     *
+     * @return \Orm\Zed\Category\Persistence\SpyCategory
+     */
+    public function loadCategoryByCategoryKey(string $categoryKey): SpyCategory
+    {
+        $categoryQuery = new SpyCategoryQuery();
+
+        return $categoryQuery->findOneByCategoryKey($categoryKey);
+    }
+
+    /**
+     * @deprecated Will be removed in favor of {@link \Spryker\Zed\Propel\Communication\Plugin\Application\PropelApplicationPlugin}.
+     *
      * @return void
      */
-    private function cleanUpDatabase(): void
+    protected function addBackwardCompatibleServiceProvider(): void
     {
-        $this->removeCategory(CategoryCreatePage::CATEGORY_A);
-        $this->removeCategory(CategoryCreatePage::CATEGORY_B);
+        $propelServiceProvider = new PropelServiceProvider();
+        $propelServiceProvider->boot(new Application());
     }
 
     /**
@@ -128,37 +162,6 @@ class CategoryHelper extends Module
         }
 
         $categoryEntity->delete();
-    }
-
-    /**
-     * @param string $categoryKey
-     *
-     * @return \Generated\Shared\Transfer\CategoryTransfer
-     */
-    public function createCategory(string $categoryKey): CategoryTransfer
-    {
-        $categoryFacade = new CategoryFacade();
-        $categoryTemplateTransfer = $this->findCategoryTemplateByName(CategoryConfig::CATEGORY_TEMPLATE_DEFAULT);
-
-        $categoryTransfer = (new CategoryTransfer())
-            ->setCategoryKey($categoryKey)
-            ->setFkCategoryTemplate($categoryTemplateTransfer->getIdCategoryTemplate())
-            ->setIsActive(false);
-
-        $this->addLocalizedAttributesToCategoryTransfer($categoryTransfer);
-
-        $categoryNodeTransfer = new NodeTransfer();
-        $categoryNodeTransfer->setFkCategory($categoryTransfer->getIdCategory());
-        $categoryNodeTransfer->setIsMain(false);
-        $categoryTransfer->setCategoryNode($categoryNodeTransfer);
-
-        $parentCategoryNodeTransfer = new NodeTransfer();
-        $parentCategoryNodeTransfer->setIdCategoryNode(1);
-        $categoryTransfer->setParentCategoryNode($parentCategoryNodeTransfer);
-
-        $categoryFacade->create($categoryTransfer);
-
-        return $categoryTransfer;
     }
 
     /**
@@ -218,14 +221,11 @@ class CategoryHelper extends Module
     }
 
     /**
-     * @param string $categoryKey
-     *
-     * @return \Orm\Zed\Category\Persistence\SpyCategory
+     * @return void
      */
-    public function loadCategoryByCategoryKey(string $categoryKey): SpyCategory
+    private function cleanUpDatabase(): void
     {
-        $categoryQuery = new SpyCategoryQuery();
-
-        return $categoryQuery->findOneByCategoryKey($categoryKey);
+        $this->removeCategory(CategoryCreatePage::CATEGORY_A);
+        $this->removeCategory(CategoryCreatePage::CATEGORY_B);
     }
 }

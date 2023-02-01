@@ -7,11 +7,14 @@
 
 namespace Spryker\Zed\Category\Business\Deleter;
 
+use Generated\Shared\Transfer\CategoryCollectionDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\CategoryCollectionResponseTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Spryker\Zed\Category\Dependency\CategoryEvents;
 use Spryker\Zed\Category\Dependency\Facade\CategoryToEventFacadeInterface;
 use Spryker\Zed\Category\Persistence\CategoryEntityManagerInterface;
+use Spryker\Zed\Category\Persistence\CategoryRepositoryInterface;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
 class CategoryDeleter implements CategoryDeleterInterface
@@ -21,29 +24,37 @@ class CategoryDeleter implements CategoryDeleterInterface
     /**
      * @var \Spryker\Zed\Category\Persistence\CategoryEntityManagerInterface
      */
-    protected $categoryEntityManager;
+    protected CategoryEntityManagerInterface $categoryEntityManager;
+
+    /**
+     * @var \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface
+     */
+    protected CategoryRepositoryInterface $categoryRepository;
 
     /**
      * @var \Spryker\Zed\Category\Business\Deleter\CategoryRelationshipDeleterInterface
      */
-    protected $categoryRelationshipDeleter;
+    protected CategoryRelationshipDeleterInterface $categoryRelationshipDeleter;
 
     /**
      * @var \Spryker\Zed\Category\Dependency\Facade\CategoryToEventFacadeInterface
      */
-    protected $eventFacade;
+    protected CategoryToEventFacadeInterface $eventFacade;
 
     /**
      * @param \Spryker\Zed\Category\Persistence\CategoryEntityManagerInterface $categoryEntityManager
+     * @param \Spryker\Zed\Category\Persistence\CategoryRepositoryInterface $categoryRepository
      * @param \Spryker\Zed\Category\Business\Deleter\CategoryRelationshipDeleterInterface $categoryRelationshipDeleter
      * @param \Spryker\Zed\Category\Dependency\Facade\CategoryToEventFacadeInterface $eventFacade
      */
     public function __construct(
         CategoryEntityManagerInterface $categoryEntityManager,
+        CategoryRepositoryInterface $categoryRepository,
         CategoryRelationshipDeleterInterface $categoryRelationshipDeleter,
         CategoryToEventFacadeInterface $eventFacade
     ) {
         $this->categoryEntityManager = $categoryEntityManager;
+        $this->categoryRepository = $categoryRepository;
         $this->categoryRelationshipDeleter = $categoryRelationshipDeleter;
         $this->eventFacade = $eventFacade;
     }
@@ -57,6 +68,19 @@ class CategoryDeleter implements CategoryDeleterInterface
     {
         $this->getTransactionHandler()->handleTransaction(function () use ($idCategory) {
             $this->executeDeleteCategoryTransaction($idCategory);
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryCollectionDeleteCriteriaTransfer $categoryCollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryCollectionResponseTransfer
+     */
+    public function deleteCategoryCollection(
+        CategoryCollectionDeleteCriteriaTransfer $categoryCollectionDeleteCriteriaTransfer
+    ): CategoryCollectionResponseTransfer {
+        return $this->getTransactionHandler()->handleTransaction(function () use ($categoryCollectionDeleteCriteriaTransfer) {
+            return $this->executeDeleteCategoryCollectionTransaction($categoryCollectionDeleteCriteriaTransfer);
         });
     }
 
@@ -91,5 +115,26 @@ class CategoryDeleter implements CategoryDeleterInterface
             CategoryEvents::CATEGORY_AFTER_PUBLISH_DELETE,
             (new EventEntityTransfer())->setId($categoryTransfer->getIdCategory()),
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryCollectionDeleteCriteriaTransfer $categoryCollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryCollectionResponseTransfer
+     */
+    protected function executeDeleteCategoryCollectionTransaction(
+        CategoryCollectionDeleteCriteriaTransfer $categoryCollectionDeleteCriteriaTransfer
+    ): CategoryCollectionResponseTransfer {
+        $categoryCollectionTransfer = $this->categoryRepository->getCategoryDeleteCollection($categoryCollectionDeleteCriteriaTransfer);
+
+        $categoryCollectionResponseTransfer = new CategoryCollectionResponseTransfer();
+
+        foreach ($categoryCollectionTransfer->getCategories() as $categoryTransfer) {
+            $this->deleteCategory($categoryTransfer->getIdCategoryOrFail());
+
+            $categoryCollectionResponseTransfer->addCategory($categoryTransfer);
+        }
+
+        return $categoryCollectionResponseTransfer;
     }
 }

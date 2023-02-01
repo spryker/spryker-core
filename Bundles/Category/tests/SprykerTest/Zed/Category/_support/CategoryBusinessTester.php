@@ -102,6 +102,21 @@ class CategoryBusinessTester extends Actor
     }
 
     /**
+     * @param int $idCategoryNode
+     * @param int $idCategoryNodeDescendant
+     *
+     * @return int|null
+     */
+    public function findCategoryClosureTableDepth(int $idCategoryNode, int $idCategoryNodeDescendant): ?int
+    {
+        return $this->getCategoryClosureTableQuery()
+            ->filterByFkCategoryNode($idCategoryNode)
+            ->filterByFkCategoryNodeDescendant($idCategoryNodeDescendant)
+            ->select(static::COL_DEPTH)
+            ->findOne();
+    }
+
+    /**
      * @param array<\Generated\Shared\Transfer\LocaleTransfer> $localeTransfers
      * @param array<int> $storeIds
      * @param array $seedData
@@ -128,21 +143,6 @@ class CategoryBusinessTester extends Actor
         }
 
         return $categoryTransfer;
-    }
-
-    /**
-     * @param int $idCategoryNode
-     * @param int $idCategoryNodeDescendant
-     *
-     * @return int|null
-     */
-    public function findCategoryClosureTableDepth(int $idCategoryNode, int $idCategoryNodeDescendant): ?int
-    {
-        return $this->getCategoryClosureTableQuery()
-            ->filterByFkCategoryNode($idCategoryNode)
-            ->filterByFkCategoryNodeDescendant($idCategoryNodeDescendant)
-            ->select(static::COL_DEPTH)
-            ->findOne();
     }
 
     /**

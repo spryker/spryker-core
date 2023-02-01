@@ -1,0 +1,177 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 196,
+            "line_to": 198,
+            "type": "InvalidArgument",
+            "message": "Argument 1 of Generated\\Shared\\Transfer\\CategoryConditionsTransfer::setCategoryKeys expects array<array-key, string>|null, but array{null|string} provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoriesBackendApi/src/Spryker/Glue/CategoriesBackendApi/Mapper/CategoryMapper.php",
+            "snippet": "                        ->setCategoryKeys([\n                            $apiCategoryParentTransfer->getCategoryKey(),\n                        ])",
+            "selected_text": "[\n                            $apiCategoryParentTransfer->getCategoryKey(),\n                        ]",
+            "error_level": 6,
+            "shortcode": 4
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 75,
+            "line_to": 75,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Glue\\CategoriesBackendApi\\Mapper\\CategoryMapper::mapApiCategoryImageSetsToCategoryImageSets expects ArrayObject<int, Generated\\Shared\\Transfer\\ApiCategoryImageSetTransfer>, but possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ApiCategoryImageSetTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoriesBackendApi/src/Spryker/Glue/CategoriesBackendApi/Mapper/CategoryMapper.php",
+            "snippet": "            $this->mapApiCategoryImageSetsToCategoryImageSets($apiCategoryAttributesTransfer->getImageSets(), new ArrayObject()),",
+            "selected_text": "$apiCategoryAttributesTransfer->getImageSets()",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 204,
+            "line_to": 204,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdCategoryNode on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoriesBackendApi/src/Spryker/Glue/CategoriesBackendApi/Mapper/CategoryMapper.php",
+            "snippet": "        $nodeTransfer->setFkParentCategoryNode($parent->getCategoryNode()->getIdCategoryNode());",
+            "selected_text": "getIdCategoryNode",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 60,
+            "line_to": 60,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\CategoryTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoriesBackendApi/src/Spryker/Glue/CategoriesBackendApi/Mapper/GlueResponseCategoryMapper.php",
+            "snippet": "        if ($categoryCollectionTransfer->getCategories()->count() > 0) {",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 61,
+            "line_to": 61,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\CategoryTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoriesBackendApi/src/Spryker/Glue/CategoriesBackendApi/Mapper/GlueResponseCategoryMapper.php",
+            "snippet": "            return $this->addCategoryTransferToGlueResponse($categoryCollectionTransfer->getCategories()->offsetGet(0), $glueResponseTransfer);",
+            "selected_text": "offsetGet",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 77,
+            "line_to": 77,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ErrorTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoriesBackendApi/src/Spryker/Glue/CategoriesBackendApi/Mapper/GlueResponseCategoryMapper.php",
+            "snippet": "        if ($categoryCollectionResponseTransfer->getErrors()->count() !== 0) {",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 84,
+            "line_to": 84,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\CategoryTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoriesBackendApi/src/Spryker/Glue/CategoriesBackendApi/Mapper/GlueResponseCategoryMapper.php",
+            "snippet": "        if ($categoryCollectionResponseTransfer->getCategories()->count() === 0) {",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 104,
+            "line_to": 104,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\CategoryTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoriesBackendApi/src/Spryker/Glue/CategoriesBackendApi/Mapper/GlueResponseCategoryMapper.php",
+            "snippet": "        if ($categoryCollectionResponseTransfer->getCategories()->count() > 0) {",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 105,
+            "line_to": 105,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\CategoryTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoriesBackendApi/src/Spryker/Glue/CategoriesBackendApi/Mapper/GlueResponseCategoryMapper.php",
+            "snippet": "            return $this->addCategoryTransferToGlueResponse($categoryCollectionResponseTransfer->getCategories()->offsetGet(0), $glueResponseTransfer);",
+            "selected_text": "offsetGet",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 141,
+            "line_to": 141,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Glue\\CategoriesBackendApi\\Mapper\\GlueResponseCategoryMapper::mapLocalizedAttributesTransfersToApiCategoryLocalizedAttributes expects ArrayObject<int, Generated\\Shared\\Transfer\\CategoryLocalizedAttributesTransfer>, but possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\CategoryLocalizedAttributesTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoriesBackendApi/src/Spryker/Glue/CategoriesBackendApi/Mapper/GlueResponseCategoryMapper.php",
+            "snippet": "        $apiLocalizedAttributes = $this->mapLocalizedAttributesTransfersToApiCategoryLocalizedAttributes($categoryTransfer->getLocalizedAttributes());",
+            "selected_text": "$categoryTransfer->getLocalizedAttributes()",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 152,
+            "line_to": 152,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Glue\\CategoriesBackendApi\\Mapper\\GlueResponseCategoryMapper::mapCategoryImageSetTransfersToApiCategoryImageSetTransfers expects ArrayObject<int, Generated\\Shared\\Transfer\\CategoryImageSetTransfer>, but possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\CategoryImageSetTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoriesBackendApi/src/Spryker/Glue/CategoriesBackendApi/Mapper/GlueResponseCategoryMapper.php",
+            "snippet": "        $apiCategoryImageSetTransfers = $this->mapCategoryImageSetTransfersToApiCategoryImageSetTransfers($categoryTransfer->getImageSets());",
+            "selected_text": "$categoryTransfer->getImageSets()",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 70,
+            "line_to": 70,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\CategoryTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoriesBackendApi/src/Spryker/Glue/CategoriesBackendApi/Processor/Updater/CategoryUpdater.php",
+            "snippet": "        $categoryTransfer = $categoryCollectionTransfer->getCategories()->offsetGet(0);",
+            "selected_text": "offsetGet",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 33,
+            "line_to": 33,
+            "type": "LessSpecificImplementedReturnType",
+            "message": "The inherited return type 'callable():Generated\\Shared\\Transfer\\GlueResponseTransfer' for Spryker\\Glue\\GlueApplicationExtension\\Dependency\\Plugin\\ResourceInterface::getResource is more specific than the implemented return type for Spryker\\Glue\\GlueApplication\\Plugin\\GlueApplication\\Backend\\AbstractResourcePlugin::getresource 'callable'",
+            "file_name": "vendor/spryker/spryker/Bundles/GlueApplication/src/Spryker/Glue/GlueApplication/Plugin/GlueApplication/Backend/AbstractResourcePlugin.php",
+            "snippet": "     * @return callable",
+            "selected_text": "callable",
+            "error_level": 5,
+            "shortcode": 166
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 168,
+            "line_to": 168,
+            "type": "DeprecatedMethod",
+            "message": "The method Generated\\Shared\\Transfer\\StoreRelationTransfer::addIdStores has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoriesBackendApi/src/Spryker/Glue/CategoriesBackendApi/Mapper/CategoryMapper.php",
+            "snippet": "            $storeRelationTransfer->addIdStores($storeTransfer->getIdStoreOrFail());",
+            "selected_text": "addIdStores",
+            "error_level": 2,
+            "shortcode": 1
+        }
+    ],
+    "count": 14
+}

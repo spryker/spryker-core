@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Category\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
+use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
@@ -36,12 +37,14 @@ interface CategoryMapperInterface
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Category\Persistence\SpyCategory> $categoryEntities
      * @param \Generated\Shared\Transfer\CategoryCollectionTransfer $categoryCollectionTransfer
+     * @param \Generated\Shared\Transfer\CategoryCriteriaTransfer|null $categoryCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
      */
     public function mapCategoryCollection(
         ObjectCollection $categoryEntities,
-        CategoryCollectionTransfer $categoryCollectionTransfer
+        CategoryCollectionTransfer $categoryCollectionTransfer,
+        ?CategoryCriteriaTransfer $categoryCriteriaTransfer = null
     ): CategoryCollectionTransfer;
 
     /**

@@ -20,14 +20,14 @@ class ContainerGlobals
     protected static $onlyFor = [];
 
     /**
-     * @param string $dependencyProviderClassName
+     * @param string $factoryClassName
      *
      * @return mixed|array
      */
-    public function getContainerGlobals($dependencyProviderClassName)
+    public function getContainerGlobals($factoryClassName)
     {
-        if (isset(static::$onlyFor[$dependencyProviderClassName])) {
-            return static::$onlyFor[$dependencyProviderClassName];
+        if (isset(static::$onlyFor[$factoryClassName])) {
+            return static::$onlyFor[$factoryClassName];
         }
 
         return static::$containerGlobals;
@@ -43,14 +43,28 @@ class ContainerGlobals
     public function set($key, $value, $onlyFor = null)
     {
         if ($onlyFor) {
-            static::$onlyFor[$onlyFor] = [
-                $key => $value,
-            ];
+            $this->setOnlyFor($key, $value, $onlyFor);
 
             return;
         }
 
         static::$containerGlobals[$key] = $value;
+    }
+
+    /**
+     * @param string $key
+     * @param object|array<string|object>|string $value
+     * @param string|null $onlyFor
+     *
+     * @return void
+     */
+    protected function setOnlyFor(string $key, $value, ?string $onlyFor = null): void
+    {
+        if (!isset(static::$onlyFor[$onlyFor])) {
+            static::$onlyFor[$onlyFor] = [];
+        }
+
+        static::$onlyFor[$onlyFor][$key] = $value;
     }
 
     /**

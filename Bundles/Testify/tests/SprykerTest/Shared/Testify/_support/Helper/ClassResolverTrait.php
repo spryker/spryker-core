@@ -27,12 +27,13 @@ trait ClassResolverTrait
     /**
      * @param string $classNamePattern
      * @param string $moduleName
+     * @param string|null $applicationName
      *
      * @return object|null
      */
-    protected function resolveClass(string $classNamePattern, string $moduleName): ?object
+    protected function resolveClass(string $classNamePattern, string $moduleName, ?string $applicationName = null): ?object
     {
-        $resolvedClassName = $this->resolveClassName($classNamePattern, $moduleName);
+        $resolvedClassName = $this->resolveClassName($classNamePattern, $moduleName, $applicationName);
 
         if ($resolvedClassName === null) {
             return null;
@@ -64,24 +65,26 @@ trait ClassResolverTrait
     /**
      * @param string $classNamePattern
      * @param string $moduleName
+     * @param string|null $applicationName
      *
      * @return array<string>
      */
-    protected function getClassNameCandidates(string $classNamePattern, string $moduleName): array
+    protected function getClassNameCandidates(string $classNamePattern, string $moduleName, ?string $applicationName = null): array
     {
         $classNameFromConfiguration = $this->getClassNameFromConfiguration($classNamePattern, $moduleName);
 
-        $config = Configuration::config();
-        $namespaceParts = explode('\\', $config['namespace']);
-
-        // When `application` is configured in the codeception.yml use this value instead of guessing it.
-        $application = $config['application'] ?? $namespaceParts[1];
+        if (!$applicationName) {
+            $config = Configuration::config();
+            $namespaceParts = explode('\\', $config['namespace']);
+            // When `application` is configured in the codeception.yml use this value instead of guessing it.
+            $applicationName = $config['application'] ?? $namespaceParts[1];
+        }
 
         $classNameCandidates = [];
         $classNameCandidates[] = $classNameFromConfiguration;
 
         foreach ($this->coreNamespaces as $coreNamespace) {
-            $classNameCandidates[] = sprintf($classNamePattern, $coreNamespace, $application, $moduleName);
+            $classNameCandidates[] = sprintf($classNamePattern, $coreNamespace, $applicationName, $moduleName);
         }
 
         return $classNameCandidates;

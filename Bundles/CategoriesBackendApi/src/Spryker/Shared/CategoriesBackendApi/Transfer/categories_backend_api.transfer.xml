@@ -1,0 +1,172 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="ApiCategoryAttributes" strict="true">
+        <property name="categoryKey" type="string"/>
+
+        <property name="isActive" type="bool"/>
+        <property name="isInMenu" type="bool"/>
+        <property name="isClickable" type="bool"/>
+        <property name="isSearchable" type="bool"/>
+
+        <property name="stores" type="string[]" singular="store"/>
+
+        <property name="parent" type="ApiCategoryParent"/>
+
+        <property name="imageSets" type="ApiCategoryImageSet[]" singular="imageSet"/>
+
+        <property name="localizedAttributes" type="ApiCategoryLocalizedAttribute[]" singular="localizedAttribute"/>
+    </transfer>
+
+    <transfer name="ApiCategoryLocalizedAttribute" strict="true">
+        <property name="locale" type="string"/>
+        <property name="name" type="string"/>
+        <property name="metaTitle" type="string"/>
+        <property name="metaDescription" type="string"/>
+        <property name="metaKeywords" type="string"/>
+    </transfer>
+
+    <transfer name="ApiCategoryParent" strict="true">
+        <property name="categoryKey" type="string"/>
+        <property name="sortOrder" type="int"/>
+    </transfer>
+
+    <transfer name="ApiCategoryImageSet" strict="true">
+        <property name="locale" type="string"/>
+        <property name="name" type="string"/>
+        <property name="images" type="ApiCategoryImage[]" singular="image"/>
+    </transfer>
+
+    <transfer name="ApiCategoryImage" strict="true">
+        <property name="sortOrder" type="int"/>
+        <property name="smallUrl" type="string"/>
+        <property name="largeUrl" type="string"/>
+    </transfer>
+
+    <transfer name="CategoryCollectionDeleteCriteria" strict="true">
+        <property name="isTransactional" type="bool"/>
+        <property name="categoryKeys" type="string[]" singular="categoryKey"/>
+        <property name="categoryIds" type="int[]" singular="idCategory"/>
+        <property name="uuids" type="string[]" singular="uuid"/>
+    </transfer>
+
+    <transfer name="Category">
+        <property name="categoryKey" type="string"/>
+        <property name="localizedAttributes" type="CategoryLocalizedAttributes[]" singular="localizedAttributes"/>
+        <property name="imageSets" type="CategoryImageSet[]" singular="imageSet"/>
+        <property name="storeRelation" type="StoreRelation"/>
+        <property name="categoryNode" type="Node"/>
+        <property name="parentCategoryNode" type="Node"/>
+    </transfer>
+
+    <transfer name="CategoryLocalizedAttributes">
+        <property name="locale" type="Locale"/>
+    </transfer>
+
+    <transfer name="CategoryImageSet">
+        <property name="locale" type="Locale"/>
+        <property name="name" type="string"/>
+        <property name="categoryImages" type="CategoryImage[]" singular="categoryImage"/>
+    </transfer>
+
+    <transfer name="CategoryImage">
+        <property name="externalUrlSmall" type="string"/>
+        <property name="externalUrlLarge" type="string"/>
+    </transfer>
+
+    <transfer name="StoreRelation">
+        <property name="idStores" type="int[]" singular="idStores"/>
+        <property name="stores" type="Store[]" singular="stores"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="idStore" type="int"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="Node">
+        <property name="nodeOrder" type="int"/>
+        <property name="fkParentCategoryNode" type="int"/>
+        <property name="category" type="Category"/>
+        <property name="isRoot" type="bool"/>
+    </transfer>
+
+    <transfer name="CategoryCollection">
+        <property name="categories" type="Category[]" singular="category"/>
+        <property name="pagination" type="Pagination" strict="true"/>
+    </transfer>
+
+    <transfer name="CategoryCriteria">
+        <property name="categoryConditions" type="CategoryConditions" strict="true"/>
+        <property name="pagination" type="Pagination" strict="true"/>
+        <property name="sortCollection" type="Sort[]" singular="sort" strict="true"/>
+    </transfer>
+
+    <transfer name="CategoryConditions" strict="true">
+        <property name="categoryKeys" type="string[]" singular="categoryKey"/>
+        <property name="withParentCategory" type="bool"/>
+    </transfer>
+
+    <transfer name="GlueRequest">
+        <property name="pagination" type="Pagination"/>
+        <property name="sortings" type="Sort[]" singular="sorting"/>
+        <property name="queryFields" type="array" associative="true" singular="queryField"/>
+        <property name="resource" type="GlueResource"/>
+    </transfer>
+
+    <transfer name="CategoryCollectionRequest" strict="true">
+        <property name="isTransactional" type="bool"/>
+        <property name="categories" type="Category[]" singular="category"/>
+    </transfer>
+
+    <transfer name="GlueResponse">
+        <property name="pagination" type="Pagination"/>
+        <property name="errors" type="GlueError[]" singular="error"/>
+        <property name="httpStatus" type="int"/>
+        <property name="resources" type="GlueResource[]" singular="resource"/>
+    </transfer>
+
+    <transfer name="CategoryCollectionResponse" strict="true">
+        <property name="errors" type="Error[]" singular="error"/>
+        <property name="categories" type="Category[]" singular="category"/>
+    </transfer>
+
+    <transfer name="GlueError">
+        <property name="message" type="string"/>
+        <property name="status" type="int"/>
+    </transfer>
+
+    <transfer name="GlueResource">
+        <property name="attributes" type="AbstractAttributes"/>
+        <property name="id" type="string"/>
+        <property name="type" type="string"/>
+    </transfer>
+
+    <transfer name="GlueResourceMethodConfiguration">
+        <property name="isProtected" type="bool"/>
+        <property name="attributes" type="string"/>
+    </transfer>
+
+    <transfer name="GlueResourceMethodCollection">
+        <property name="getCollection" type="GlueResourceMethodConfiguration"/>
+        <property name="get" type="GlueResourceMethodConfiguration"/>
+        <property name="post" type="GlueResourceMethodConfiguration"/>
+        <property name="patch" type="GlueResourceMethodConfiguration"/>
+        <property name="delete" type="GlueResourceMethodConfiguration"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="localeName" type="string"/>
+    </transfer>
+
+    <transfer name="Error">
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="Sort">
+    </transfer>
+
+    <transfer name="Pagination">
+    </transfer>
+
+</transfers>

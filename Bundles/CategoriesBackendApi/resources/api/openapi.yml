@@ -1,0 +1,360 @@
+openapi: 3.0.3
+info:
+    title: Category Backend API
+    version: 0.1.0
+
+servers:
+    - url: http://glue-backend.de.spryker.local
+
+security:
+    - bearerAuth: []
+
+paths:
+    /categories:
+        get:
+            description: List categories
+            parameters:
+                - $ref: '#/components/parameters/Page'
+
+            requestBody:
+                content:
+                    # content-type is required in current version
+                    application/vnd.api+json: {}
+
+            responses:
+                '200':
+                    $ref: '#/components/responses/ApiCategoryCollectionResponse'
+                '4XX':
+                    description: Bad request
+                    $ref: '#/components/responses/ApiErrorResponse'
+                '5XX':
+                    description: Internal server error
+
+        post:
+            description: Create new category
+
+            requestBody:
+                $ref: '#/components/requestBodies/ApiCategoryRequestPayload'
+
+            responses:
+                '201':
+                    description: Category has been created
+                    $ref: '#/components/responses/ApiCategoryEntityResponse'
+                '4XX':
+                    description: Bad request
+                    $ref: '#/components/responses/ApiErrorResponse'
+                '5XX':
+                    description: Internal server error
+
+    /categories/{key}:
+        parameters:
+            - name: key
+              in: path
+              required: true
+              description: Category key
+              schema:
+                  type: string
+        get:
+            description: Fetch category by key
+
+            requestBody:
+                content:
+                    # content-type is required in current version
+                    application/vnd.api+json: {}
+
+            responses:
+                '200':
+                    description: Successful operation
+                    $ref: '#/components/responses/ApiCategoryEntityResponse'
+
+        patch:
+            description: Update category with specified {key}
+            requestBody:
+                $ref: '#/components/requestBodies/ApiCategoryRequestPayload'
+
+            responses:
+                '200':
+                    description: Category was successfully updated
+                    $ref: '#/components/responses/ApiCategoryEntityResponse'
+                '4XX':
+                    description: Bad request
+                    $ref: '#/components/responses/ApiErrorResponse'
+                '5XX':
+                    description: Internal server error
+
+        delete:
+            description: Delete category with specified {key}
+            requestBody:
+                content:
+                    # content-type is required in current version
+                    application/vnd.api+json: {}
+            responses:
+                '204':
+                    description: Category has been deleted
+                '4XX':
+                    description: Bad request
+                    $ref: '#/components/responses/ApiErrorResponse'
+                '5XX':
+                    description: Internal server error
+
+components:
+    requestBodies:
+        ApiCategoryRequestPayload:
+            content:
+                application/vnd.api+json:
+                    schema:
+                        $ref: '#/components/schemas/ApiCategoryRequest'
+
+    responses:
+        ApiCategoryCollectionResponse:
+            description: Listing of categories
+            content:
+                application/vnd.api+json:
+                    schema:
+                        $ref: '#/components/schemas/ApiCategoryCollectionResponse'
+
+        ApiCategoryEntityResponse:
+            description: Representation of category
+            content:
+                application/vnd.api+json:
+                    schema:
+                        $ref: '#/components/schemas/ApiCategoryEntityResponse'
+
+        ApiErrorResponse:
+            description: Error response
+            content:
+                application/vnd.api+json:
+                    schema:
+                        properties:
+                            errors:
+                                $ref: '#/components/schemas/JsonApiErrorMessageCollection'
+
+    securitySchemes:
+        bearerAuth:
+            type: http
+            scheme: bearer
+            bearerFormat: JWT
+
+    parameters:
+        Page:
+            name: page
+            in: query
+            description: 'Parameter is used to limit requested items.'
+            required: false
+            style: deepObject
+            explode: true
+            schema:
+                type: object
+                properties:
+                    offset:
+                        type: integer
+                        description: 'The number of items to skip before starting to collect the result set.'
+                    limit:
+                        type: integer
+                        description: 'The numbers of items to return.'
+                example:
+                    offset: 0
+                    limit: 10
+
+    schemas:
+        ApiCategoryCollectionResponse:
+            type: object
+            properties:
+                data:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ApiCategoryResponseData'
+                links:
+                    $ref: '#/components/schemas/JsonApiPaginationLinks'
+
+        ApiCategoryEntityResponse:
+            type: object
+            properties:
+                data:
+                    $ref: '#/components/schemas/ApiCategoryResponseData'
+
+        JsonApiPaginationLinks:
+            type: object
+            description: See https://jsonapi.org/format/#document-links
+            properties:
+                first:
+                    description: URL to first page in results
+                    type: string
+                next:
+                    description: URL to next page in results.
+                    type: string
+                last:
+                    description: URL to last page in results
+                    type: string
+
+        ApiCategoryRequest:
+            properties:
+                data:
+                    $ref: '#/components/schemas/ApiCategoryRequestData'
+
+        ApiCategoryRequestData:
+            type: object
+            properties:
+                type:
+                    type: string
+                    example: 'categories'
+                attributes:
+                    $ref: '#/components/schemas/ApiCategoryAttributes'
+
+        ApiCategoryResponseData:
+            type: object
+            properties:
+                type:
+                    type: string
+                    example: 'categories'
+                id:
+                    type: string
+                attributes:
+                    $ref: '#/components/schemas/ApiCategoryAttributes'
+
+        ApiCategoryAttributes:
+            type: object
+            required:
+                - categoryKey
+                - stores
+                - parent
+                - imageSets
+                - localizedAttributes
+            properties:
+                categoryKey:
+                    type: string
+                    description: Unique identifier of the category that is used for assigning products and CMS blocks to the categories through the import.
+                    example: smartphones
+
+                isActive:
+                    type: boolean
+                    description: Defines if the category is to be displayed on the Storefront.
+                    default: false
+                isInMenu:
+                    type: boolean
+                    description: Defines if the category is to be displayed in the category tree on the Storefront.
+                    default: false
+                isClickable:
+                    type: boolean
+                    default: false
+                isSearchable:
+                    type: boolean
+                    description: Defines if customers can find the category on the Storefront using search.
+                    default: false
+
+                stores:
+                    type: array
+                    description: Stores which the category will be displayed in.
+                    items:
+                        type: string
+                    example:
+                        - DE
+                        - AT
+
+                parent:
+                    $ref: '#/components/schemas/ApiCategoryParentRelationship'
+
+                imageSets:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ApiCategoryImageSet'
+
+                localizedAttributes:
+                    $ref: '#/components/schemas/ApiCategoryLocalizedAttributeCollection'
+
+        ApiCategoryParentRelationship:
+            type: object
+            required:
+                - categoryKey
+                - sortOrder
+            properties:
+                categoryKey:
+                    type: string
+                    description: Defines under which category this category is displayed on the Storefront.
+                    example: electronics-and-computers
+                sortOrder:
+                    type: integer
+                    description: When displayed together with sibling categories, defines the order of images in an ascending order.
+                    minimum: 0
+
+        ApiCategoryLocalizedAttributeCollection:
+            type: array
+            items:
+                $ref: '#/components/schemas/ApiCategoryLocalizedAttributes'
+
+        ApiCategoryLocalizedAttributes:
+            type: object
+            required:
+                - locale
+                - name
+                - metaTitle
+                - metaDescription
+                - metaKeywords
+            properties:
+                locale:
+                    type: string
+                    example: de_DE
+                name:
+                    type: string
+                    example: Name that is displayed on the Storefront.
+                metaTitle:
+                    type: string
+                    example: SEO title.
+                metaDescription:
+                    type: string
+                    example: SEO description.
+                metaKeywords:
+                    type: string
+                    example: SEO keywords.
+
+        ApiCategoryImageSet:
+            required:
+                - locale
+                - name
+                - images
+            properties:
+                locale:
+                    type: string
+                    example: de_DE
+                name:
+                    type: string
+                    example: Standard images
+                images:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ApiCategoryImage'
+
+        ApiCategoryImage:
+            required:
+                - sortOrder
+                - smallUrl
+                - largeUrl
+            properties:
+                sortOrder:
+                    type: integer
+                    description: When displayed together with other images, defines the order of images in an ascending order.
+                    minimum: 0
+                    example: 10
+                smallUrl:
+                    type: string
+                    description: URL to the small version of the image. This image will be displayed when categories are sorted as a list.
+                    example: https://example.com/golden-goose.jpg
+                largeUrl:
+                    type: string
+                    description: URL to the large version of the image. This image will be displayed when categories are sorted as a grid.
+                    example: https://example.com/golden-goose.jpg
+
+        JsonApiErrorMessageCollection:
+            type: array
+            items:
+                $ref: '#/components/schemas/JsonApiErrorMessage'
+
+        JsonApiErrorMessage:
+            type: object
+            properties:
+                status:
+                    type: integer
+                code:
+                    type: string
+                message:
+                    type: string

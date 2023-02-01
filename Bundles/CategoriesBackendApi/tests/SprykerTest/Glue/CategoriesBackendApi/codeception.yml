@@ -1,0 +1,40 @@
+namespace: SprykerTest\Glue\CategoriesBackendApi
+paths:
+    tests: .
+    data: ../../../_data
+    support: _support
+    output: ../../../_output
+coverage:
+    enabled: true
+    remote: false
+    whitelist:
+        include:
+            - '../../../../src/*'
+suites:
+    RestApi:
+        actor: CategoriesBackendApiTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Glue\CategoriesBackendApi\Helper\CategoriesHelper
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper:
+                      projectNamespaces:
+                          - Spryker
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Glue\Testify\Helper\DependencyProviderHelper
+                - \SprykerTest\Glue\Testify\Helper\GlueBackendApiHelper
+                - \SprykerTest\Glue\Testify\Helper\JsonPath
+                - \SprykerTest\Zed\Testify\Helper\Business\DependencyProviderHelper
+                - \SprykerTest\Zed\Category\Helper\CategoryDataHelper
+                - \SprykerTest\Zed\Category\Helper\CategoryCrudHelper
+                - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDataHelper
+            config:
+                \SprykerTest\Glue\Testify\Helper\GlueRest:
+                    depends: PhpBrowser
+                    part: Json
+                \SprykerTest\Shared\Testify\Helper\DataCleanupHelper:
+                    cleanup: false

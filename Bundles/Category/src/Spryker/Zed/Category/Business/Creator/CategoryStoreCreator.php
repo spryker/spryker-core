@@ -42,7 +42,7 @@ class CategoryStoreCreator implements CategoryStoreCreatorInterface
      */
     public function createCategoryStoreRelations(CategoryTransfer $categoryTransfer): void
     {
-        if (!$categoryTransfer->getStoreRelation()) {
+        if (!$categoryTransfer->getStoreRelation() || count($categoryTransfer->getStoreRelation()->getIdStores()) === 0) {
             return;
         }
 

@@ -7,6 +7,10 @@
 
 namespace Spryker\Zed\Category\Business;
 
+use Spryker\Zed\Category\Business\Category\IdentifierBuilder\CategoryIdentifierBuilder;
+use Spryker\Zed\Category\Business\Category\IdentifierBuilder\CategoryIdentifierBuilderInterface;
+use Spryker\Zed\Category\Business\Category\Validator\CategoryValidator;
+use Spryker\Zed\Category\Business\Category\Validator\CategoryValidatorInterface;
 use Spryker\Zed\Category\Business\Creator\CategoryAttributeCreator;
 use Spryker\Zed\Category\Business\Creator\CategoryAttributeCreatorInterface;
 use Spryker\Zed\Category\Business\Creator\CategoryClosureTableCreator;
@@ -107,8 +111,11 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     {
         return new CategoryCreator(
             $this->getEntityManager(),
+            $this->getRepository(),
             $this->createCategoryRelationshipCreator(),
             $this->getEventFacade(),
+            $this->createCategoryCreateValidator(),
+            $this->createCategoryIdentifierBuilder(),
             $this->getCategoryCreateAfterPlugins(),
         );
     }
@@ -176,6 +183,8 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->createCategoryRelationshipUpdater(),
             $this->getEventFacade(),
+            $this->createCategoryUpdateValidator(),
+            $this->createCategoryIdentifierBuilder(),
             $this->getCategoryUpdateAfterPlugins(),
         );
     }
@@ -353,6 +362,7 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     {
         return new CategoryDeleter(
             $this->getEntityManager(),
+            $this->getRepository(),
             $this->createCategoryRelationshipDeleter(),
             $this->getEventFacade(),
         );
@@ -564,5 +574,45 @@ class CategoryBusinessFactory extends AbstractBusinessFactory
     public function getCategoryStoreAssignerPlugin(): CategoryStoreAssignerPluginInterface
     {
         return $this->getProvidedDependency(CategoryDependencyProvider::PLUGIN_CATEGORY_STORE_ASSIGNER);
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Category\IdentifierBuilder\CategoryIdentifierBuilderInterface
+     */
+    public function createCategoryIdentifierBuilder(): CategoryIdentifierBuilderInterface
+    {
+        return new CategoryIdentifierBuilder();
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Category\Validator\CategoryValidatorInterface
+     */
+    public function createCategoryCreateValidator(): CategoryValidatorInterface
+    {
+        return new CategoryValidator($this->getCategoryCreateValidatorRules(), $this->createCategoryIdentifierBuilder());
+    }
+
+    /**
+     * @return array<\Spryker\Zed\Category\Business\Category\Validator\Rules\CategoryValidatorRuleInterface>
+     */
+    public function getCategoryCreateValidatorRules(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\Category\Business\Category\Validator\CategoryValidatorInterface
+     */
+    public function createCategoryUpdateValidator(): CategoryValidatorInterface
+    {
+        return new CategoryValidator($this->getCategoryUpdateValidatorRules(), $this->createCategoryIdentifierBuilder());
+    }
+
+    /**
+     * @return array<\Spryker\Zed\Category\Business\Category\Validator\Rules\CategoryValidatorRuleInterface>
+     */
+    public function getCategoryUpdateValidatorRules(): array
+    {
+        return [];
     }
 }

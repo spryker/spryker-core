@@ -21,6 +21,10 @@
     "require-dev": {
         "spryker/code-sniffer": "*",
         "spryker/console": "*",
+        "spryker/glue-application": "*",
+        "spryker/glue-backend-api-application": "*",
+        "spryker/glue-json-api-convention": "*",
+        "spryker/glue-json-api-convention-extension": "*",
         "spryker/json-path": "^1.0.0",
         "spryker/json-schema": "^1.0.0",
         "spryker/propel-orm": "*",

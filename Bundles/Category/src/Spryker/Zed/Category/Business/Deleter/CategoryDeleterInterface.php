@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\Category\Business\Deleter;
 
+use Generated\Shared\Transfer\CategoryCollectionDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\CategoryCollectionResponseTransfer;
+
 interface CategoryDeleterInterface
 {
     /**
@@ -15,4 +18,13 @@ interface CategoryDeleterInterface
      * @return void
      */
     public function deleteCategory(int $idCategory): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\CategoryCollectionDeleteCriteriaTransfer $categoryCollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryCollectionResponseTransfer
+     */
+    public function deleteCategoryCollection(
+        CategoryCollectionDeleteCriteriaTransfer $categoryCollectionDeleteCriteriaTransfer
+    ): CategoryCollectionResponseTransfer;
 }

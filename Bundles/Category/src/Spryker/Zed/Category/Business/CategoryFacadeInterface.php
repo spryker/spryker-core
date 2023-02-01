@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\Category\Business;
 
+use Generated\Shared\Transfer\CategoryCollectionDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\CategoryCollectionRequestTransfer;
+use Generated\Shared\Transfer\CategoryCollectionResponseTransfer;
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
@@ -343,4 +346,62 @@ interface CategoryFacadeInterface
      * @return array<int, array<string>>
      */
     public function getAscendantCategoryKeysGroupedByIdCategoryNode(CategoryNodeCriteriaTransfer $categoryNodeCriteriaTransfer): array;
+
+    /**
+     * Specification:
+     * - Stores collection of Categories to the storage.
+     * - Uses `CategoryValidatorInterface` to validate `CategoryTransfer` before save.
+     * - Uses `CategoryValidatorRulePluginInterface` to validate `CategoryTransfer` before save.
+     * - Executes pre-create `CategoryCreatePluginInterface` before create the `CategoryTransfer`.
+     * - Executes post-create `CategoryCreatePluginInterface` after create the `CategoryTransfer`.
+     * - Returns `CategoryCollectionResponseTransfer.CategoryTransfer[]` filled with created categories.
+     * - Returns `CategoryCollectionResponseTransfer.ErrorTransfer[]` filled with validation errors.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CategoryCollectionRequestTransfer $categoryCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryCollectionResponseTransfer
+     */
+    public function createCategoryCollection(
+        CategoryCollectionRequestTransfer $categoryCollectionRequestTransfer
+    ): CategoryCollectionResponseTransfer;
+
+    /**
+     * Specification:
+     * - Updates collection of Categories in the storage.
+     * - Uses `CategoryValidatorInterface` to validate `CategoryTransfer` before save.
+     * - Uses `CategoryValidatorRulePluginInterface` to validate `CategoryTransfer` before save.
+     * - Executes pre-update `CategoryUpdatePluginInterface` before update the `CategoryTransfer`.
+     * - Executes post-update `CategoryUpdatePluginInterface` after update the `CategoryTransfer`.
+     * - Returns `CategoryCollectionResponseTransfer.CategoryTransfer[]` filled with updated categories.
+     * - Returns `CategoryCollectionResponseTransfer.ErrorTransfer[]` filled with validation errors.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CategoryCollectionRequestTransfer $categoryCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryCollectionResponseTransfer
+     */
+    public function updateCategoryCollection(
+        CategoryCollectionRequestTransfer $categoryCollectionRequestTransfer
+    ): CategoryCollectionResponseTransfer;
+
+    /**
+     * Specification:
+     * - Deletes collection of Categories from the storage by delete criteria.
+     * - Uses `CategoryCollectionDeleteCriteriaTransfer.categoryIds` to filter categories by categoryIds.
+     * - Uses `CategoryCollectionDeleteCriteriaTransfer.categoryKeys` to filter categories by categoryKeys.
+     * - Uses `CategoryCollectionDeleteCriteriaTransfer.isTransactional` to make transactional delete.
+     * - Returns `CategoryCollectionResponseTransfer.CategoryTransfer[]` filled with deleted categories.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CategoryCollectionDeleteCriteriaTransfer $categoryCollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryCollectionResponseTransfer
+     */
+    public function deleteCategoryCollection(
+        CategoryCollectionDeleteCriteriaTransfer $categoryCollectionDeleteCriteriaTransfer
+    ): CategoryCollectionResponseTransfer;
 }

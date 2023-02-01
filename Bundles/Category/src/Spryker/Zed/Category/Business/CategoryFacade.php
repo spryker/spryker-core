@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\Category\Business;
 
+use Generated\Shared\Transfer\CategoryCollectionDeleteCriteriaTransfer;
+use Generated\Shared\Transfer\CategoryCollectionRequestTransfer;
+use Generated\Shared\Transfer\CategoryCollectionResponseTransfer;
 use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryNodeCriteriaTransfer;
@@ -324,7 +327,7 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
      */
     public function getCategoryCollection(CategoryCriteriaTransfer $categoryCriteriaTransfer): CategoryCollectionTransfer
     {
-        return $this->getRepository()->getCategoriesByCriteria($categoryCriteriaTransfer);
+        return $this->getRepository()->getCategoryCollection($categoryCriteriaTransfer);
     }
 
     /**
@@ -341,5 +344,50 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
         return $this->getFactory()
             ->createCategoryReader()
             ->getAscendantCategoryKeysGroupedByIdCategoryNode($categoryNodeCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CategoryCollectionRequestTransfer $categoryCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryCollectionResponseTransfer
+     */
+    public function createCategoryCollection(
+        CategoryCollectionRequestTransfer $categoryCollectionRequestTransfer
+    ): CategoryCollectionResponseTransfer {
+        return $this->getFactory()->createCategoryCreator()->createCategoryCollection($categoryCollectionRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CategoryCollectionRequestTransfer $categoryCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryCollectionResponseTransfer
+     */
+    public function updateCategoryCollection(
+        CategoryCollectionRequestTransfer $categoryCollectionRequestTransfer
+    ): CategoryCollectionResponseTransfer {
+        return $this->getFactory()->createCategoryUpdater()->updateCategoryCollection($categoryCollectionRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CategoryCollectionDeleteCriteriaTransfer $categoryCollectionDeleteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\CategoryCollectionResponseTransfer
+     */
+    public function deleteCategoryCollection(
+        CategoryCollectionDeleteCriteriaTransfer $categoryCollectionDeleteCriteriaTransfer
+    ): CategoryCollectionResponseTransfer {
+        return $this->getFactory()->createCategoryDeleter()->deleteCategoryCollection($categoryCollectionDeleteCriteriaTransfer);
     }
 }

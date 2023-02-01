@@ -93,7 +93,7 @@ abstract class AbstractDependencyProviderHelper extends Module
         }
 
         $moduleName = $this->getModuleName($moduleName);
-        $dependencyProvider = $this->resolveClass(static::DEPENDENCY_PROVIDER_CLASS_NAME_PATTERN, $moduleName);
+        $dependencyProvider = $this->resolveClass(static::DEPENDENCY_PROVIDER_CLASS_NAME_PATTERN, $moduleName, 'Zed');
 
         if (!$dependencyProvider) {
             throw new Exception(sprintf('You tried to create an unknown dependecy provider %s', $moduleName));

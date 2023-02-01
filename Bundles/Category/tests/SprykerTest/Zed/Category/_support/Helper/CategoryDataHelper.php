@@ -8,6 +8,9 @@
 namespace SprykerTest\Zed\Category\Helper;
 
 use Codeception\Module;
+use Codeception\Stub;
+use Codeception\Stub\Expected;
+use Codeception\TestInterface;
 use Generated\Shared\DataBuilder\CategoryBuilder;
 use Generated\Shared\DataBuilder\CategoryLocalizedAttributesBuilder;
 use Generated\Shared\DataBuilder\NodeBuilder;
@@ -23,8 +26,12 @@ use Orm\Zed\Category\Persistence\SpyCategoryNode;
 use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 use Orm\Zed\Category\Persistence\SpyCategoryStore;
 use Orm\Zed\Category\Persistence\SpyCategoryStoreQuery;
+use Spryker\Shared\Kernel\ContainerMocker\ContainerGlobals;
 use Spryker\Zed\Category\Business\CategoryFacadeInterface;
 use Spryker\Zed\Category\CategoryConfig;
+use Spryker\Zed\Category\CategoryDependencyProvider;
+use Spryker\Zed\Category\Communication\Plugin\Category\MainChildrenPropagationCategoryStoreAssignerPlugin;
+use Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryStoreAssignerPluginInterface;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
@@ -34,18 +41,30 @@ class CategoryDataHelper extends Module
     use LocatorHelperTrait;
 
     /**
+     * This dependency is mandatory when saving categories. Add it for every test.
+     *
+     * @param \Codeception\TestInterface $test
+     *
+     * @return void
+     */
+    public function _before(TestInterface $test)
+    {
+        $categoryStoreAssignerPluginStub = Stub::makeEmpty(CategoryStoreAssignerPluginInterface::class, [
+            'handleStoreRelationUpdate' => Expected::once(),
+        ]);
+
+        $containerGlobals = new ContainerGlobals();
+        $containerGlobals->set(CategoryDependencyProvider::PLUGIN_CATEGORY_STORE_ASSIGNER, $categoryStoreAssignerPluginStub);
+    }
+
+    /**
      * @param array $seedData
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer
      */
     public function haveCategory(array $seedData = []): CategoryTransfer
     {
-        $seedData = $seedData + [
-            'categoryNode' => $this->generateCategoryNodeTransfer(),
-            'parentCategoryNode' => $this->generateCategoryNodeTransfer(),
-        ];
-
-        $categoryTransfer = $this->generateCategoryTransfer($seedData);
+        $categoryTransfer = $this->haveCategoryTransfer($seedData);
 
         $this->getCategoryFacade()->create($categoryTransfer);
 
@@ -61,16 +80,38 @@ class CategoryDataHelper extends Module
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer
      */
+    public function haveCategoryTransfer(array $seedData = []): CategoryTransfer
+    {
+        $seedData = $seedData + [
+            'categoryNode' => $this->haveCategoryNodeTransfer(),
+            'parentCategoryNode' => $this->haveCategoryNodeTransfer(),
+        ];
+
+        $categoryTransfer = (new CategoryBuilder($seedData))->build();
+
+        if (!isset($seedData[CategoryTransfer::FK_CATEGORY_TEMPLATE])) {
+            $categoryTemplateTransfer = $this->haveCategoryTemplate();
+            $categoryTransfer->setFkCategoryTemplate($categoryTemplateTransfer->getIdCategoryTemplate());
+        }
+
+        return $categoryTransfer;
+    }
+
+    /**
+     * @param array $seedData
+     *
+     * @return \Generated\Shared\Transfer\CategoryTransfer
+     */
     public function haveLocalizedCategory(array $seedData = []): CategoryTransfer
     {
         $parentNode = $this->getCategoryFacade()->getAllNodesByIdCategory(2)[0];
 
         $seedData += [
-            'categoryNode' => $seedData[CategoryTransfer::CATEGORY_NODE] ?? $this->generateCategoryNodeTransfer(),
+            'categoryNode' => $seedData[CategoryTransfer::CATEGORY_NODE] ?? $this->haveCategoryNodeTransfer(),
             'parentCategoryNode' => $seedData[CategoryTransfer::PARENT_CATEGORY_NODE] ?? $parentNode,
         ];
 
-        $categoryTransfer = $this->generateLocalizedCategoryTransfer($seedData);
+        $categoryTransfer = $this->haveLocalizedCategoryTransfer($seedData);
 
         $this->getCategoryFacade()->create($categoryTransfer);
 
@@ -124,7 +165,7 @@ class CategoryDataHelper extends Module
      */
     public function haveCategoryWithoutCategoryNode(array $seedData = []): CategoryTransfer
     {
-        $categoryTransfer = $this->generateCategoryTransfer($seedData);
+        $categoryTransfer = $this->haveCategoryTransfer($seedData);
 
         $categoryEntity = new SpyCategory();
         $categoryEntity->fromArray($categoryTransfer->toArray());
@@ -180,7 +221,7 @@ class CategoryDataHelper extends Module
      */
     public function haveCategoryNodeForCategory(int $idCategory, array $seedData = []): NodeTransfer
     {
-        $nodeTransfer = $this->generateCategoryNodeTransfer($seedData);
+        $nodeTransfer = $this->haveCategoryNodeTransfer($seedData);
 
         $categoryNodeEntity = new SpyCategoryNode();
 
@@ -228,27 +269,9 @@ class CategoryDataHelper extends Module
      *
      * @return \Generated\Shared\Transfer\CategoryTransfer
      */
-    protected function generateCategoryTransfer(array $seedData = []): CategoryTransfer
+    public function haveLocalizedCategoryTransfer(array $seedData = []): CategoryTransfer
     {
-        $categoryTransfer = (new CategoryBuilder($seedData))->build();
-        $categoryTransfer->setIdCategory(null);
-
-        if (!isset($seedData[CategoryTransfer::FK_CATEGORY_TEMPLATE])) {
-            $categoryTemplateTransfer = $this->haveCategoryTemplate();
-            $categoryTransfer->setFkCategoryTemplate($categoryTemplateTransfer->getIdCategoryTemplate());
-        }
-
-        return $categoryTransfer;
-    }
-
-    /**
-     * @param array $seedData
-     *
-     * @return \Generated\Shared\Transfer\CategoryTransfer
-     */
-    protected function generateLocalizedCategoryTransfer(array $seedData = []): CategoryTransfer
-    {
-        $categoryTransfer = $this->generateCategoryTransfer($seedData);
+        $categoryTransfer = $this->haveCategoryTransfer($seedData);
         $categoryLocalizedAttributes = (new CategoryLocalizedAttributesBuilder($seedData))->withLocale()->build();
         $locale = $this->getLocator()->locale()->facade()->getCurrentLocale();
         $categoryLocalizedAttributes->setLocale($locale);
@@ -262,7 +285,7 @@ class CategoryDataHelper extends Module
      *
      * @return \Generated\Shared\Transfer\NodeTransfer
      */
-    protected function generateCategoryNodeTransfer(array $seedData = []): NodeTransfer
+    public function haveCategoryNodeTransfer(array $seedData = []): NodeTransfer
     {
         $categoryNodeTransfer = (new NodeBuilder($seedData))->build();
 
@@ -313,5 +336,17 @@ class CategoryDataHelper extends Module
         SpyCategoryNodeQuery::create()
             ->filterByIdCategoryNode($categoryNodeEntity->getIdCategoryNode())
             ->delete();
+    }
+
+    /**
+     * @return void
+     */
+    public function havePluginForSavingCategoryStoreRelations()
+    {
+        $containerGlobals = new ContainerGlobals();
+        $containerGlobals->set(
+            CategoryDependencyProvider::PLUGIN_CATEGORY_STORE_ASSIGNER,
+            new MainChildrenPropagationCategoryStoreAssignerPlugin(),
+        );
     }
 }
