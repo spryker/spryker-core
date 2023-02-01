@@ -24,6 +24,7 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Zed\Testify\Helper\BusinessHelper
                 - \SprykerTest\Shared\Tax\Helper\TaxSetDataHelper
                 - \SprykerTest\Shared\Testify\Helper\TableRelationsCleanupHelper
 

@@ -10,6 +10,8 @@ namespace Spryker\Zed\Product\Business;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
+use Generated\Shared\Transfer\ProductAbstractCollectionTransfer;
+use Generated\Shared\Transfer\ProductAbstractCriteriaTransfer;
 use Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
@@ -1083,4 +1085,20 @@ interface ProductFacadeInterface
      * @return void
      */
     public function triggerProductExportEvents(ProductExportCriteriaTransfer $productExportCriteriaTransfer): void;
+
+    /**
+     * Specification:
+     * - Reads product abstract collection from Persistence.
+     * - Filters by `ProductAbstractCriteria.productAbstractConditions`.
+     * - Orders product abstract collection by `ProductAbstractCriteria.sortCollection`.
+     * - Paginates product abstract collection.
+     * - Returns product abstract entities data mapped to business transfers.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractCriteriaTransfer $productAbstractCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractCollectionTransfer
+     */
+    public function getProductAbstractCollection(ProductAbstractCriteriaTransfer $productAbstractCriteriaTransfer): ProductAbstractCollectionTransfer;
 }

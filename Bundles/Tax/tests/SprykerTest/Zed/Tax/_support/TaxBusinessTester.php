@@ -25,6 +25,8 @@ use Generated\Shared\Transfer\ItemTransfer;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
  * @SuppressWarnings(PHPMD)
+ *
+ * @method \Spryker\Zed\Tax\Business\TaxFacadeInterface getFacade()
  */
 class TaxBusinessTester extends Actor
 {

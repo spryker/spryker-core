@@ -10,7 +10,9 @@ namespace Spryker\Zed\Product\Persistence\Mapper;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Orm\Zed\Locale\Persistence\SpyLocale;
+use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes;
 use Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Product\Dependency\Service\ProductToUtilEncodingInterface;
 
 class LocalizedAttributesMapper
@@ -48,6 +50,54 @@ class LocalizedAttributesMapper
             ->setAttributes($encodedAttributes);
 
         return $productLocalizedAttributesEntity;
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes> $productAbstractLocalizedAttributesEntities
+     * @param array<int, array<\Generated\Shared\Transfer\LocalizedAttributesTransfer>> $localizedAttributesTransfers
+     *
+     * @return array<int, array<\Generated\Shared\Transfer\LocalizedAttributesTransfer>>
+     */
+    public function mapProductLocalizedAttributesEntitiesToLocalizedAttributesTransfers(
+        ObjectCollection $productAbstractLocalizedAttributesEntities,
+        array $localizedAttributesTransfers = []
+    ): array {
+        foreach ($productAbstractLocalizedAttributesEntities as $productAbstractLocalizedAttributesEntity) {
+            $localizedAttributesTransfers[$productAbstractLocalizedAttributesEntity->getFkProductAbstract()][]
+                = $this->mapProductLocalizedAttributesEntityToLocalizedAttributesTransfer(
+                    $productAbstractLocalizedAttributesEntity,
+                    new LocalizedAttributesTransfer(),
+                );
+        }
+
+        return $localizedAttributesTransfers;
+    }
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributes $productAbstractLocalizedAttributes
+     * @param \Generated\Shared\Transfer\LocalizedAttributesTransfer $localizedAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\LocalizedAttributesTransfer
+     */
+    public function mapProductLocalizedAttributesEntityToLocalizedAttributesTransfer(
+        SpyProductAbstractLocalizedAttributes $productAbstractLocalizedAttributes,
+        LocalizedAttributesTransfer $localizedAttributesTransfer
+    ): LocalizedAttributesTransfer {
+        $localeTransfer = $this->mapLocaleEntityToTransfer(
+            $productAbstractLocalizedAttributes->getLocale(),
+            new LocaleTransfer(),
+        );
+
+        $localizedAttributesData = $productAbstractLocalizedAttributes->toArray();
+
+        unset($localizedAttributesData[LocalizedAttributesTransfer::ATTRIBUTES]);
+
+        $attributes = $productAbstractLocalizedAttributes->getAttributes();
+
+        return $localizedAttributesTransfer
+            ->fromArray($localizedAttributesData, true)
+            ->setAttributes($this->decodeAttributes($attributes))
+            ->setLocale($localeTransfer);
     }
 
     /**

@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\TaxProductConnector\Business\Expander\Product;
 
+use Generated\Shared\Transfer\ProductAbstractCollectionTransfer;
+use Generated\Shared\Transfer\ProductAbstractCriteriaTransfer;
+use Generated\Shared\Transfer\ProductAbstractTaxSetCollectionTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorRepositoryInterface;
 
@@ -41,5 +44,43 @@ class ProductAbstractTaxSetExpander implements ProductAbstractTaxSetExpanderInte
         }
 
         return $productAbstractTransfer->setIdTaxSet($taxSetTransfer->getIdTaxSet());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractCollectionTransfer $productAbstractCollectionTransfer
+     * @param \Generated\Shared\Transfer\ProductAbstractCriteriaTransfer $productAbstractCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractCollectionTransfer
+     */
+    public function expandProductAbstractCollection(
+        ProductAbstractCollectionTransfer $productAbstractCollectionTransfer,
+        ProductAbstractCriteriaTransfer $productAbstractCriteriaTransfer
+    ): ProductAbstractCollectionTransfer {
+        if (!$productAbstractCriteriaTransfer->getProductAbstractRelations()->getWithTaxSet()) {
+            return $productAbstractCollectionTransfer;
+        }
+
+        $productAbstractIds = [];
+        foreach ($productAbstractCollectionTransfer->getProductAbstracts() as $productAbstractTransfer) {
+            $productAbstractIds[] = $productAbstractTransfer->getIdProductAbstractOrFail();
+        }
+
+        $taxSetTransfers = $this->taxProductConnectorRepository->getTaxSets($productAbstractIds);
+
+        if (!count($taxSetTransfers)) {
+            return $productAbstractCollectionTransfer;
+        }
+
+        foreach ($productAbstractCollectionTransfer->getProductAbstracts() as $productAbstractTransfer) {
+            if (isset($taxSetTransfers[$productAbstractTransfer->getIdProductAbstractOrFail()])) {
+                $productAbstractCollectionTransfer->addProductTaxSet(
+                    (new ProductAbstractTaxSetCollectionTransfer())
+                        ->setProductAbstractSku($productAbstractTransfer->getSkuOrFail())
+                        ->setTaxSet($taxSetTransfers[$productAbstractTransfer->getIdProductAbstractOrFail()]),
+                );
+            }
+        }
+
+        return $productAbstractCollectionTransfer;
     }
 }

@@ -45,4 +45,33 @@
         <property name="localeName" type="string"/>
     </transfer>
 
+    <transfer name="UrlCriteria" strict="true">
+        <property name="urlConditions" type="UrlConditions"/>
+        <property name="sortCollection" type="Sort[]" singular="sort"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="UrlConditions" strict="true">
+        <property name="resourceProductAbstractIds" type="int[]" singular="idResourceProductAbstract"/>
+        <property name="notResourceProductAbstractIds" type="int[]" singular="notResourceProductAbstractId"/>
+        <property name="urls" type="string[]" singular="url"/>
+        <property name="localeIds" type="int[]" singular="idLocale"/>
+    </transfer>
+
+    <transfer name="UrlCollection" strict="true">
+        <property name="urls" type="Url[]" singular="url"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="Sort">
+        <property name="field" type="string"/>
+        <property name="isAscending" type="bool"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="nbResults" type="int"/>
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
+    </transfer>
+
 </transfers>

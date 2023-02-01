@@ -1,0 +1,560 @@
+openapi: 3.0.3
+info:
+    title: Product Backend API
+    version: 1.0.0
+servers:
+    - url: http://glue-backend.de.spryker.local
+security:
+    - bearerAuth: []
+paths:
+    /product-abstract:
+        get:
+            description: Retrieves product abstract collection.
+            parameters:
+                - $ref: '#/components/parameters/Page'
+                - $ref: '#/components/parameters/Sort'
+                - $ref: '#/components/parameters/ContentType'
+            responses:
+                '200':
+                    description: Retrieves product abstract collection.
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/ApiProductsAttributesResponse'
+                '400':
+                    description: Bad request
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/ApiErrorResponse'
+                '403':
+                    description: Not authorized
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/ApiErrorResponse'
+        post:
+            description: Creates product abstract.
+            requestBody:
+                content:
+                    application/vnd.api+json:
+                        schema:
+                            $ref: '#/components/schemas/ApiProductsAttributesRequest'
+            responses:
+                '201':
+                    description: Product created.
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                $ref: '#/components/schemas/ApiProductsAttributesResponse'
+                '409':
+                    description: Conflict.
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/ApiErrorResponse'
+    /product-abstract/{productAbstractSku}:
+        parameters:
+            - $ref: '#/components/parameters/ContentType'
+            - name: productAbstractSku
+              in: path
+              required: true
+              description: Product SKU
+              schema:
+                  type: string
+        get:
+            description: Retrieves product abstract by SKU.
+            responses:
+                '200':
+                    description: Successful operation
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                $ref: '#/components/schemas/ApiProductsAttributesResponse'
+                '400':
+                    description: Bad request.
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/ApiErrorResponse'
+                '404':
+                    description: Product not found.
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/ApiErrorResponse'
+                '403':
+                    description: Not authorized.
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/ApiErrorResponse'
+        patch:
+            description: Updated product abstract.
+            requestBody:
+                required: true
+                content:
+                    application/vnd.api+json:
+                        schema:
+                            $ref: '#/components/schemas/ApiProductsAttributesPatchRequest'
+            responses:
+                '200':
+                    description: Product updated.
+                '403':
+                    description: Unauthorized.
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/ApiErrorResponse'
+                '404':
+                    description: Product not found.
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/ApiErrorResponse'
+components:
+    securitySchemes:
+        bearerAuth:
+            type: http
+            scheme: bearer
+            bearerFormat: JWT
+    parameters:
+        Page:
+            name: page
+            in: query
+            description: 'Parameter is used to limit requested items.'
+            required: false
+            style: deepObject
+            explode: true
+            schema:
+                type: object
+                properties:
+                    offset:
+                        type: integer
+                        description: 'The number of items to skip before starting to collect the result set.'
+                    limit:
+                        type: integer
+                        description: 'The numbers of items to return.'
+                example:
+                    offset: 0
+                    limit: 10
+        Sort:
+            name: page
+            in: query
+            description: 'Parameter is used to sort items. Use dash `-` for DESC direction.'
+            required: false
+            style: form
+            explode: false
+            schema:
+                type: string
+                example: -sku
+        ContentType:
+            name: Content-Type
+            in: header
+            description: 'Content-Type header required for all the requests.'
+            required: true
+            schema:
+                type: string
+                example: application/vnd.api+json
+    schemas:
+        ApiProductsAttributesResponse:
+            type: object
+            properties:
+                data:
+                    $ref: '#/components/schemas/ApiProductsAttributesData'
+                links:
+                    $ref: '#/components/schemas/ApiLinks'
+        ApiProductsAttributesRequest:
+            type: object
+            properties:
+                data:
+                    $ref: '#/components/schemas/ApiProductsAttributesRequestData'
+        ApiProductsAttributesPatchRequest:
+            type: object
+            properties:
+                data:
+                    $ref: '#/components/schemas/ApiProductsAttributesPatchRequestData'
+        ApiProductsAttributesData:
+            type: object
+            properties:
+                type:
+                    type: string
+                    example: 'products'
+                id:
+                    type: string
+                    example: '011'
+                attributes:
+                    $ref: '#/components/schemas/ApiProductsAttributes'
+        ApiProductsAttributesRequestData:
+            type: object
+            properties:
+                type:
+                    type: string
+                    example: 'products'
+                id:
+                    type: string
+                    example: '011'
+                attributes:
+                    $ref: '#/components/schemas/ApiProductsAttributesRequestAttributes'
+        ApiProductsAttributesPatchRequestData:
+            type: object
+            properties:
+                type:
+                    type: string
+                    example: 'product-abstract'
+                id:
+                    type: string
+                    example: '011'
+                attributes:
+                    $ref: '#/components/schemas/ApiProductsAttributesPatchRequestAttributes'
+        ApiProductsAttributes:
+            type: object
+            properties:
+                productAbstractSku:
+                    type: string
+                    description: SKU of the product.
+                    example: '011'
+                taxSetName:
+                    type: string
+                    description: Tax Set name. Mjust exist in the system.
+                    example: 'Entertainment Electronics'
+                    enum:
+                        - Entertainment Electronics
+                        - Smart Electronics
+                        - Communication Electronics
+                        - Shipment Taxes
+                        - Tax Exempt
+                        - MOV Taxes
+                newFrom:
+                    type: string
+                    description: Date the product is marked as NEW from.
+                    example: '2023-01-01 00:00:00.000000'
+                newTo:
+                    type: string
+                    description: Date the product is marked as NEW utill.
+                    example: '2023-06-01 00:00:00.000000'
+                attributes:
+                    type: array
+                    items:
+                        type: string
+                    example: { megapixel: 20 MP, sensor_type: CCD, display: LCD, digital_zoom: 4 x, brand: Canon }
+                stores:
+                    type: array
+                    items:
+                        type: string
+                    example:
+                        - DE
+                        - AT
+                    description: Stores the product will show up in.
+                localizedAttributes:
+                    $ref: '#/components/schemas/ApiProductLocalizedAttributeCollection'
+                urls:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ApiProductUrlsCollection'
+                categories:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ApiProductCategoryCollection'
+                imageSets:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ApiProductImageSet'
+                variants:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ApiProductConcretes'
+        ApiProductsAttributesRequestAttributes:
+            type: object
+            required:
+                - productAbstractSku
+                - taxSetName
+                - urls
+            properties:
+                productAbstractSku:
+                    type: string
+                    description: SKU of the product.
+                    example: '011'
+                taxSetName:
+                    type: string
+                    description: Tax Set name. Mjust exist in the system.
+                    example: 'Entertainment Electronics'
+                    enum:
+                        - Entertainment Electronics
+                        - Smart Electronics
+                        - Communication Electronics
+                        - Shipment Taxes
+                        - Tax Exempt
+                        - MOV Taxes
+                newFrom:
+                    type: string
+                    description: Date the product is marked as NEW from.
+                    example: '2023-01-01 00:00:00.000000'
+                newTo:
+                    type: string
+                    description: Date the product is marked as NEW utill.
+                    example: '2023-06-01 00:00:00.000000'
+                attributes:
+                    type: array
+                    items:
+                        type: string
+                    example: { megapixel: 20 MP, sensor_type: CCD, display: LCD, digital_zoom: 4 x, brand: Canon }
+                stores:
+                    type: array
+                    items:
+                        type: string
+                    example:
+                        - DE
+                        - AT
+                    description: Stores the product will show up in.
+                localizedAttributes:
+                    $ref: '#/components/schemas/ApiProductLocalizedAttributeCollection'
+                urls:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ApiProductUrlsCollection'
+                categories:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ApiProductCategoryCollectionRequest'
+                imageSets:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ApiProductImageSet'
+                variants:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ApiProductConcretes'
+        ApiProductsAttributesPatchRequestAttributes:
+            type: object
+            required:
+                - urls
+            properties:
+                productAbstractSku:
+                    type: string
+                    description: SKU of the product.
+                    example: '011'
+                taxSetName:
+                    type: string
+                    description: Tax Set name. Mjust exist in the system.
+                    example: 'Entertainment Electronics'
+                    enum:
+                        - Entertainment Electronics
+                        - Smart Electronics
+                        - Communication Electronics
+                        - Shipment Taxes
+                        - Tax Exempt
+                        - MOV Taxes
+                newFrom:
+                    type: string
+                    description: Date the product is marked as NEW from.
+                    example: '2023-01-01 00:00:00.000000'
+                newTo:
+                    type: string
+                    description: Date the product is marked as NEW utill.
+                    example: '2023-06-01 00:00:00.000000'
+                attributes:
+                    type: array
+                    items:
+                        type: string
+                    example: { megapixel: 20 MP, sensor_type: CCD, display: LCD, digital_zoom: 4 x, brand: Canon }
+                stores:
+                    type: array
+                    items:
+                        type: string
+                    example:
+                        - DE
+                        - AT
+                    description: Stores the product will show up in.
+                localizedAttributes:
+                    $ref: '#/components/schemas/ApiProductLocalizedAttributeCollection'
+                urls:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ApiProductUrlsCollection'
+                categories:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ApiProductCategoryCollectionRequest'
+                imageSets:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ApiProductImageSet'
+                variants:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ApiProductConcretes'
+        ApiProductLocalizedAttributeCollection:
+            type: array
+            items:
+                $ref: '#/components/schemas/ApiProductLocalizedAttributes'
+        ApiProductLocalizedAttributes:
+            type: object
+            required:
+                - locale
+                - name
+            properties:
+                locale:
+                    type: string
+                    example: de_DE
+                name:
+                    type: string
+                    example: Name of the product.
+                description:
+                    type: string
+                    example: Description of the product.
+                metaTitle:
+                    type: string
+                    example: SEO title.
+                metaDescription:
+                    type: string
+                    example: SEO description.
+                metaKeywords:
+                    type: string
+                    example: SEO keywords.
+                attributes:
+                    type: array
+                    items:
+                        type: string
+                    example: { color: Blau }
+        ApiProductUrlsCollection:
+            required:
+                - locale
+                - url
+            properties:
+                locale:
+                    type: string
+                    example: de_DE
+                url:
+                    type: string
+                    example: /de/canon-ixus-180-11-tests36
+        ApiProductImageSet:
+            properties:
+                locale:
+                    type: string
+                    example: de_DE
+                name:
+                    type: string
+                    example: Standard images
+                images:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ApiProductImage'
+        ApiProductImage:
+            properties:
+                sortOrder:
+                    type: integer
+                    description: When displayed together with other images, defines the order of images in an ascending order. The minimum value is 0.
+                    example: 10
+                externalUrlSmall:
+                    type: string
+                    description: URL to the small version of the image. This image will be displayed when categories are sorted as a list.
+                    example: https://example.com/golden-goose.jpg
+                externalUrlLarge:
+                    type: string
+                    description: URL to the large version of the image. This image will be displayed when categories are sorted as a grid.
+                    example: https://example.com/golden-goose.jpg
+        ApiProductCategoryCollection:
+            properties:
+                name:
+                    type: string
+                    example: Digital Cameras
+                categoryKey:
+                    type: string
+                    example: digital-cameras
+                metaTitle:
+                    type: string
+                    example: Digital Cameras
+                metaDescription:
+                    type: string
+                    example: Digital Cameras
+                metaKeywords:
+                    type: string
+                    example: Digital Cameras
+        ApiProductCategoryCollectionRequest:
+            required:
+                - categoryKey
+            properties:
+                categoryKey:
+                    type: string
+                    example: digital-cameras
+        ApiProductConcretes:
+            required:
+                - sku
+            properties:
+                sku:
+                    type: string
+                    example: test36_30727008
+                isQuantitySplittable:
+                    type: boolean
+                    example: false
+                isActive:
+                    type: boolean
+                    example: true
+                localizedAttributes:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ApiProductConcreteLocalizedAttributes'
+                imageSets:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ApiProductImageSet'
+        ApiProductConcreteLocalizedAttributes:
+            properties:
+                locale:
+                    type: string
+                    example: de_DE
+                name:
+                    type: string
+                    example: TomTom Runner 2 Music
+                description:
+                    type: string
+                    example: Multisport-Modus Im Rad-, Schwimm-, Fitness- und Laufbandmodus trainieren. Zeit, Tempo, Distanz und verbrannte Kalorien zum Nachverfolgen auf deiner Uhr. Erfasse deine Schritte, aktiven Minuten und verbrannten Kalorien. Wähle eine deiner vergangenen Leistungen aus, um dagegen anzutreten. Verbessere deine Geschwindigkeit und Ausdauer mit individuell zusammengestellten Trainings- und Ruhephasen. Motiviere dich selbst mit dem Audio-Feedback zu deiner Leistung. Überwache deine Leistung auf dem Laufband oder im Fitnessstudio. Setz dir Ziele und verfolge deinen Fortschritt, täglich oder wöchentlich. Über 500 Songs immer mit dabei, auch ohne Handy.
+                isSearchable:
+                    type: boolean
+                    example: true
+                attributes:
+                    type: array
+                    items:
+                        type: string
+                    example: { color: Schwarz }
+        ApiErrorResponse:
+            properties:
+                errors:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ApiError'
+        ApiError:
+            properties:
+                status:
+                    type: number
+                    example: 403
+                code:
+                    type: string
+                    example: 002
+                message:
+                    type: string
+                    example: Unauthorized.
+        ApiLinks:
+            properties:
+                self:
+                    type: string
+                    example: https://glue-backend.de.spryker.local/product-abstract

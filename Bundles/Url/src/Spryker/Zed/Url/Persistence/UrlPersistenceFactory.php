@@ -10,6 +10,7 @@ namespace Spryker\Zed\Url\Persistence;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use Orm\Zed\Url\Persistence\SpyUrlRedirectQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\Url\Persistence\Propel\Mapper\UrlMapper;
 
 /**
  * @method \Spryker\Zed\Url\UrlConfig getConfig()
@@ -32,5 +33,13 @@ class UrlPersistenceFactory extends AbstractPersistenceFactory
     public function createUrlRedirectQuery()
     {
         return SpyUrlRedirectQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\Url\Persistence\Propel\Mapper\UrlMapper
+     */
+    public function createUrlMapper(): UrlMapper
+    {
+        return new UrlMapper();
     }
 }

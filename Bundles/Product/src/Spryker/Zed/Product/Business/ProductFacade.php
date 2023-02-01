@@ -10,6 +10,8 @@ namespace Spryker\Zed\Product\Business;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
+use Generated\Shared\Transfer\ProductAbstractCollectionTransfer;
+use Generated\Shared\Transfer\ProductAbstractCriteriaTransfer;
 use Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
@@ -1237,5 +1239,19 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     public function triggerProductExportEvents(ProductExportCriteriaTransfer $productExportCriteriaTransfer): void
     {
         $this->getFactory()->createProductEventBusExporter()->export($productExportCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractCriteriaTransfer $productAbstractCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractCollectionTransfer
+     */
+    public function getProductAbstractCollection(ProductAbstractCriteriaTransfer $productAbstractCriteriaTransfer): ProductAbstractCollectionTransfer
+    {
+        return $this->getFactory()->createProductAbstractReader()->getProductAbstractCollection($productAbstractCriteriaTransfer);
     }
 }

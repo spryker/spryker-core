@@ -883,6 +883,10 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
 
         $categoryConditionsTransfer = $categoryCriteriaTransfer->getCategoryConditionsOrFail();
 
+        if ($categoryConditionsTransfer->getCategoryKeys()) {
+            $categoryQuery->filterByCategoryKey_In($categoryConditionsTransfer->getCategoryKeys());
+        }
+
         if ($categoryConditionsTransfer->getCategoryIds()) {
             $categoryQuery->filterByIdCategory_In($categoryConditionsTransfer->getCategoryIds());
         }

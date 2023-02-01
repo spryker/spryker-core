@@ -60,4 +60,22 @@ class TaxProductConnectorRepository extends AbstractRepository implements TaxPro
             ->createTaxSetMapper()
             ->mapTaxSetEntityToTaxSetTransfer($taxSet);
     }
+
+    /**
+     * @param array<int> $productAbstractIds
+     *
+     * @return array<int, \Generated\Shared\Transfer\TaxSetTransfer>
+     */
+    public function getTaxSets(array $productAbstractIds): array
+    {
+        $productAbstractEntities = $this->getFactory()
+            ->createProductAbstractQuery()
+            ->filterByIdProductAbstract_In($productAbstractIds)
+            ->leftJoinWithSpyTaxSet()
+            ->find();
+
+        return $this->getFactory()
+            ->createTaxSetMapper()
+            ->mapProductAbstractEntitiesToTaxSetTransfers($productAbstractEntities);
+    }
 }

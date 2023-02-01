@@ -9,10 +9,11 @@
         "spryker/country": "^3.0.0",
         "spryker/kernel": "^3.30.0",
         "spryker/product": "^5.0.0 || ^6.0.0",
-        "spryker/product-extension": "^1.1.0",
+        "spryker/product-extension": "^1.5.0",
         "spryker/propel-orm": "^1.0.0",
         "spryker/tax": "^4.0.0 || ^5.0.0",
         "spryker/tax-product-connector-extension": "^1.0.0",
+        "spryker/transfer": "^3.27.0",
         "spryker/zed-request": "^3.0.0"
     },
     "require-dev": {

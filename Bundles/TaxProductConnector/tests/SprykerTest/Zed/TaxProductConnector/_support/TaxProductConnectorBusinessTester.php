@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\TaxRateTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Spryker\Shared\Tax\TaxConstants;
 
 /**
@@ -27,6 +28,8 @@ use Spryker\Shared\Tax\TaxConstants;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
  * @SuppressWarnings(PHPMD)
+ *
+ * @method \Spryker\Zed\TaxProductConnector\Business\TaxProductConnectorFacadeInterface getFacade
  */
 class TaxProductConnectorBusinessTester extends Actor
 {
@@ -72,6 +75,13 @@ class TaxProductConnectorBusinessTester extends Actor
         }
 
         $productAbstractTransfer = $this->haveProductAbstract($productAbstractOverride);
+
+        if ($taxSetTransfer) {
+            SpyProductAbstractQuery::create()->filterByIdProductAbstract($productAbstractTransfer->getIdProductAbstract())
+                ->findOne()
+                ->setFkTaxSet($taxSetTransfer->getIdTaxSet())
+                ->save();
+        }
 
         return $productAbstractTransfer;
     }

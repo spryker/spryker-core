@@ -172,4 +172,34 @@
     <transfer name="MessageResponse">
     </transfer>
 
+    <transfer name="ProductAbstractCriteria" strict="true">
+        <property name="productAbstractConditions" type="ProductAbstractConditions"/>
+        <property name="sortCollection" type="Sort[]" singular="sort"/>
+        <property name="pagination" type="Pagination"/>
+        <property name="productAbstractRelations" type="ProductAbstractRelations"/>
+    </transfer>
+
+    <transfer name="ProductAbstractConditions" strict="true">
+        <property name="skus" type="string[]" singular="sku"/>
+    </transfer>
+
+    <transfer name="Sort"/>
+
+    <transfer name="ProductAbstractRelations" strict="true">
+        <property name="withStoreRelations" type="bool"/>
+        <property name="withLocalizedAttributes" type="bool"/>
+        <property name="withVariants" type="bool"/>
+    </transfer>
+
+    <transfer name="ProductAbstractCollection">
+        <property name="productAbstracts" type="ProductAbstract[]" singular="productAbstract"/>
+        <property name="productConcretes" type="ProductAbstractConcreteCollection[]" singular="productConcrete" strict="true"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="ProductAbstractConcreteCollection" strict="true">
+        <property name="productConcretes" type="ProductConcrete[]" singular="productConcrete"/>
+        <property name="productAbstractSku" type="string"/>
+    </transfer>
+
 </transfers>

@@ -47,4 +47,23 @@
         <property name="items" type="Item[]" singular="item"/>
         <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead."/>
     </transfer>
+
+    <transfer name="ProductAbstractRelations" strict="true">
+        <property name="withTaxSet" type="bool"/>
+    </transfer>
+
+    <transfer name="ProductAbstractCollection">
+        <property name="productTaxSets" type="ProductAbstractTaxSetCollection[]" singular="productTaxSet" strict="true"/>
+        <property name="productAbstracts" type="ProductAbstract[]" singular="productAbstract"/>
+    </transfer>
+
+    <transfer name="ProductAbstractTaxSetCollection" strict="true">
+        <property name="taxSet" type="TaxSet"/>
+        <property name="productAbstractSku" type="string"/>
+    </transfer>
+
+    <transfer name="ProductAbstractCriteria" strict="true">
+        <property name="productAbstractRelations" type="ProductAbstractRelations"/>
+    </transfer>
+
 </transfers>

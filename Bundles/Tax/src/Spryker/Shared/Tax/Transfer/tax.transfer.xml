@@ -18,6 +18,7 @@
     <transfer name="TaxSetCriteria" strict="true">
         <property name="pagination" type="Pagination"/>
         <property name="withTaxRates" type="bool"/>
+        <property name="taxSetConditions" type="TaxSetConditions"/>
     </transfer>
 
     <transfer name="Pagination">
@@ -125,6 +126,10 @@
         <property name="unitTaxAmount" type="int"/>
         <property name="unitDiscountAmountAggregation" type="int"/>
         <property name="unitPrice" type="int"/>
+    </transfer>
+
+    <transfer name="TaxSetConditions">
+        <property name="names" type="string[]" singular="name"/>
     </transfer>
 
 </transfers>

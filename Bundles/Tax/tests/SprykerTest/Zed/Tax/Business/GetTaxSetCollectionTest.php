@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\Tax\Business\Facade;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\PaginationTransfer;
+use Generated\Shared\Transfer\TaxSetConditionsTransfer;
 use Generated\Shared\Transfer\TaxSetCriteriaTransfer;
 use Orm\Zed\Tax\Persistence\SpyTaxSetQuery;
 use SprykerTest\Zed\Tax\TaxBusinessTester;
@@ -121,5 +122,27 @@ class GetTaxSetCollectionTest extends Unit
             $taxSetTransfer2->getIdTaxSet(),
             $taxSetCollectionTransfer->getTaxSets()->offsetGet(1)->getIdTaxSet(),
         );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetTaxSetCollectionFiltersTaxSetsByName(): void
+    {
+        // Arrange
+        $taxSetTransfer = $this->tester->haveTaxSet();
+
+        $taxSetCriteriaTransfer = (new TaxSetCriteriaTransfer())->setTaxSetConditions(
+            (new TaxSetConditionsTransfer())
+                ->addName($taxSetTransfer->getName()),
+        );
+
+        // Act
+        $taxSetCollectionTransfer = $this->tester->getFacade()
+            ->getTaxSetCollection($taxSetCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(1, $taxSetCollectionTransfer->getTaxSets());
+        $this->assertSame($taxSetCollectionTransfer->getTaxSets()->offsetGet(0)->getName(), $taxSetTransfer->getName());
     }
 }

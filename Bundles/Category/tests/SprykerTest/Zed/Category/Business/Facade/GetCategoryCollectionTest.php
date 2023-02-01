@@ -167,6 +167,30 @@ class GetCategoryCollectionTest extends Unit
     /**
      * @return void
      */
+    public function testGetCategoryCollectionFiltersCategoriesByCategoryKey(): void
+    {
+        // Arrange
+        $expectedCategoryTransfer = $this->tester->haveCategory();
+
+        $categoryCriteriaTransfer = (new CategoryCriteriaTransfer())
+            ->setCategoryConditions(
+                (new CategoryConditionsTransfer())
+                    ->addCategoryKey($expectedCategoryTransfer->getCategoryKey()),
+            );
+
+        // Act
+        $categoryTransfers = $this->tester->getFacade()
+            ->getCategoryCollection($categoryCriteriaTransfer)
+            ->getCategories();
+
+        // Assert
+        $this->assertCount(1, $categoryTransfers);
+        $this->assertSame($expectedCategoryTransfer->getCategoryKey(), $categoryTransfers->offsetGet(0)->getCategoryKey());
+    }
+
+    /**
+     * @return void
+     */
     public function testGetCategoryCollectionReturnsEmptyCollectionWhileNoCriteriaMatched(): void
     {
         // Arrange

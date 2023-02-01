@@ -55,6 +55,8 @@ use Spryker\Zed\Product\Business\Product\Variant\AttributePermutationGenerator;
 use Spryker\Zed\Product\Business\Product\Variant\VariantGenerator;
 use Spryker\Zed\Product\Business\Publisher\ProductMessageBrokerPublisher;
 use Spryker\Zed\Product\Business\Publisher\ProductPublisherInterface;
+use Spryker\Zed\Product\Business\Reader\ProductAbstractReader;
+use Spryker\Zed\Product\Business\Reader\ProductAbstractReaderInterface;
 use Spryker\Zed\Product\Business\Reader\ProductConcreteReader;
 use Spryker\Zed\Product\Business\Reader\ProductConcreteReaderInterface;
 use Spryker\Zed\Product\Business\Transfer\ProductTransferMapper;
@@ -728,5 +730,24 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     public function getProductConcreteMergerPlugins(): array
     {
         return $this->getProvidedDependency(ProductDependencyProvider::PLUGINS_PRODUCT_CONCRETE_MERGER);
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Reader\ProductAbstractReaderInterface
+     */
+    public function createProductAbstractReader(): ProductAbstractReaderInterface
+    {
+        return new ProductAbstractReader(
+            $this->getRepository(),
+            $this->getProductAbstractCollectionPlugins(),
+        );
+    }
+
+    /**
+     * @return array<\Spryker\Zed\ProductExtension\Dependency\Plugin\ProductAbstractCollectionExpanderPluginInterface>
+     */
+    public function getProductAbstractCollectionPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_COLLECTION_EXPANDER);
     }
 }

@@ -9,6 +9,8 @@ namespace Spryker\Zed\Url\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\RedirectTransfer;
+use Generated\Shared\Transfer\UrlCollectionTransfer;
+use Generated\Shared\Transfer\UrlCriteriaTransfer;
 use Generated\Shared\Transfer\UrlRedirectTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Symfony\Component\HttpFoundation\Response;
@@ -582,4 +584,20 @@ interface UrlFacadeInterface
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
     public function getUrlByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale);
+
+    /**
+     * Specification:
+     * - Reads URL collection from the Persistence.
+     * - Filters by `UrlCriteria.urlConditions`.
+     * - Orders URL collection by `UrlCriteria.sortCollection`.
+     * - Paginates URL collection.
+     * - Returns URL entities data mapped to business transfers.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UrlCriteriaTransfer $urlCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\UrlCollectionTransfer
+     */
+    public function getUrlCollection(UrlCriteriaTransfer $urlCriteriaTransfer): UrlCollectionTransfer;
 }

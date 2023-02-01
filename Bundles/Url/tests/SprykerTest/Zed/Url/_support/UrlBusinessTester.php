@@ -22,6 +22,8 @@ use Codeception\Actor;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
  * @SuppressWarnings(PHPMD)
+ *
+ * @method \Spryker\Zed\Url\Business\UrlFacadeInterface getFacade()
  */
 class UrlBusinessTester extends Actor
 {

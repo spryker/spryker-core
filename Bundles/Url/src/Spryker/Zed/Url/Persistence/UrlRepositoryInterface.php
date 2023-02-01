@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Url\Persistence;
 
+use Generated\Shared\Transfer\UrlCollectionTransfer;
+use Generated\Shared\Transfer\UrlCriteriaTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 
 interface UrlRepositoryInterface
@@ -25,4 +27,11 @@ interface UrlRepositoryInterface
      * @return bool
      */
     public function hasUrlCaseInsensitive(UrlTransfer $urlTransfer, bool $ignoreRedirects): bool;
+
+    /**
+     * @param \Generated\Shared\Transfer\UrlCriteriaTransfer $urlCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\UrlCollectionTransfer
+     */
+    public function getUrlCollection(UrlCriteriaTransfer $urlCriteriaTransfer): UrlCollectionTransfer;
 }

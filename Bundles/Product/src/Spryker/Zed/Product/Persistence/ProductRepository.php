@@ -12,6 +12,8 @@ use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
+use Generated\Shared\Transfer\ProductAbstractCollectionTransfer;
+use Generated\Shared\Transfer\ProductAbstractCriteriaTransfer;
 use Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -828,5 +830,125 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
             ->orderBy(SpyProductTableMap::COL_ID_PRODUCT)
             ->find()
             ->toArray();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractCriteriaTransfer $productAbstractCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractCollectionTransfer
+     */
+    public function getProductAbstractCollection(ProductAbstractCriteriaTransfer $productAbstractCriteriaTransfer): ProductAbstractCollectionTransfer
+    {
+        $productAbstractQuery = $this->getFactory()->createProductAbstractQuery();
+
+        $productAbstractQuery = $this->applyProductAbstractCriteria($productAbstractCriteriaTransfer, $productAbstractQuery);
+        $productAbstractQuery = $this->applyProductAbstractSortings($productAbstractCriteriaTransfer, $productAbstractQuery);
+        $productAbstractQuery = $this->applyProductAbstractPagination($productAbstractCriteriaTransfer, $productAbstractQuery);
+
+        $productAbstractCollectionTransfer = (new ProductAbstractCollectionTransfer())
+            ->setPagination($productAbstractCriteriaTransfer->getPagination());
+
+        $productAbstractCollection = $productAbstractQuery->find();
+
+        return $this->getFactory()->createProductMapper()
+            ->mapProductAbstractEntitiesToProductAbstractCollectionTransfer(
+                $productAbstractCollection,
+                $productAbstractCollectionTransfer,
+            );
+    }
+
+    /**
+     * @param array<int, int> $productAbstractIds
+     *
+     * @return array<int, \Generated\Shared\Transfer\StoreRelationTransfer>
+     */
+    public function getProductAbstractStoreRelations(array $productAbstractIds): array
+    {
+        $productAbstractStoreQuery = $this->getFactory()
+            ->createProductAbstractStoreQuery();
+        $productAbstractStoreEntities = $productAbstractStoreQuery
+            ->filterByFkProductAbstract_In($productAbstractIds)
+            ->leftJoinWithSpyStore()
+            ->find();
+
+        return $this->getFactory()
+            ->createProductAbstractStoreMapper()
+            ->mapProductAbstractStoreEntitiesToStoreRelationTransfers($productAbstractStoreEntities);
+    }
+
+    /**
+     * @param array<int, int> $productAbstractIds
+     *
+     * @return array<int, array<\Generated\Shared\Transfer\LocalizedAttributesTransfer>>
+     */
+    public function getProductAbstractLocalizedAttributes(array $productAbstractIds): array
+    {
+        $productAbstractLocalizedAttributesEntities = $this->getFactory()->createProductAbstractLocalizedAttributesQuery()
+            ->joinWithLocale()
+            ->filterByFkProductAbstract_In($productAbstractIds)
+            ->find();
+
+        return $this->getFactory()->createLocalizedAttributesMapper()
+            ->mapProductLocalizedAttributesEntitiesToLocalizedAttributesTransfers($productAbstractLocalizedAttributesEntities);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractCriteriaTransfer $productAbstractCriteriaTransfer
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $productAbstractQuery
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     */
+    public function applyProductAbstractCriteria(
+        ProductAbstractCriteriaTransfer $productAbstractCriteriaTransfer,
+        SpyProductAbstractQuery $productAbstractQuery
+    ): SpyProductAbstractQuery {
+        if ($productAbstractCriteriaTransfer->getProductAbstractConditions()) {
+            if ($productAbstractCriteriaTransfer->getProductAbstractConditions()->getSkus()) {
+                $productAbstractQuery->filterBySku_In($productAbstractCriteriaTransfer->getProductAbstractConditions()->getSkus());
+            }
+        }
+
+        return $productAbstractQuery;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractCriteriaTransfer $productAbstractCriteriaTransfer
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $productAbstractQuery
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     */
+    public function applyProductAbstractSortings(
+        ProductAbstractCriteriaTransfer $productAbstractCriteriaTransfer,
+        SpyProductAbstractQuery $productAbstractQuery
+    ): SpyProductAbstractQuery {
+        foreach ($productAbstractCriteriaTransfer->getSortCollection() as $sortTransfer) {
+            $productAbstractQuery->orderBy(
+                $sortTransfer->getField(),
+                $sortTransfer->getIsAscending() ? Criteria::ASC : Criteria::DESC,
+            );
+        }
+
+        return $productAbstractQuery;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractCriteriaTransfer $productAbstractCriteriaTransfer
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $productAbstractQuery
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     */
+    public function applyProductAbstractPagination(
+        ProductAbstractCriteriaTransfer $productAbstractCriteriaTransfer,
+        SpyProductAbstractQuery $productAbstractQuery
+    ): SpyProductAbstractQuery {
+        if ($productAbstractCriteriaTransfer->getPagination()) {
+            $productAbstractCriteriaTransfer->getPagination()->setNbResults($productAbstractQuery->count());
+
+            $productAbstractQuery
+                ->setLimit($productAbstractCriteriaTransfer->getPagination()->getLimit())
+                ->setOffset($productAbstractCriteriaTransfer->getPagination()->getOffset());
+        }
+
+        return $productAbstractQuery;
     }
 }

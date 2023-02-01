@@ -7,4 +7,10 @@
     <transfer name="ProductAbstract">
     </transfer>
 
+    <transfer name="ProductAbstractCollection">
+    </transfer>
+
+    <transfer name="ProductAbstractCriteria" strict="true">
+    </transfer>
+
 </transfers>

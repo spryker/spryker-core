@@ -105,6 +105,7 @@ class TaxRepository extends AbstractRepository implements TaxRepositoryInterface
     {
         $taxSetCollectionTransfer = new TaxSetCollectionTransfer();
         $taxSetQuery = $this->getFactory()->createTaxSetQuery();
+        $taxSetQuery = $this->applyTaxSetFilters($taxSetCriteriaTransfer, $taxSetQuery);
 
         $paginationTransfer = $taxSetCriteriaTransfer->getPagination();
         if ($paginationTransfer) {
@@ -198,5 +199,24 @@ class TaxRepository extends AbstractRepository implements TaxRepositoryInterface
         }
 
         return $taxSetEntitiesIndexedByTaxSetIds;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\TaxSetCriteriaTransfer $taxSetCriteriaTransfer
+     * @param \Orm\Zed\Tax\Persistence\SpyTaxSetQuery $taxSetQuery
+     *
+     * @return \Orm\Zed\Tax\Persistence\SpyTaxSetQuery
+     */
+    public function applyTaxSetFilters(TaxSetCriteriaTransfer $taxSetCriteriaTransfer, SpyTaxSetQuery $taxSetQuery): SpyTaxSetQuery
+    {
+        if (!$taxSetCriteriaTransfer->getTaxSetConditions()) {
+            return $taxSetQuery;
+        }
+
+        if ($taxSetCriteriaTransfer->getTaxSetConditions()->getNames()) {
+            $taxSetQuery->filterByName_In($taxSetCriteriaTransfer->getTaxSetConditions()->getNames());
+        }
+
+        return $taxSetQuery;
     }
 }

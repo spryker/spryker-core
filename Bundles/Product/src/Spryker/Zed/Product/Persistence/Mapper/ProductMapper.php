@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Product\Persistence\Mapper;
 
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
+use Generated\Shared\Transfer\ProductAbstractCollectionTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -16,6 +17,7 @@ use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Store\Persistence\SpyStore;
 use Propel\Runtime\Collection\Collection;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Product\Dependency\Service\ProductToUtilEncodingInterface;
 use Spryker\Zed\Product\Persistence\ProductRepository;
 
@@ -225,6 +227,25 @@ class ProductMapper implements ProductMapperInterface
     }
 
     /**
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\SpyProductAbstract> $productAbstractCollection
+     * @param \Generated\Shared\Transfer\ProductAbstractCollectionTransfer $productAbstractCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractCollectionTransfer
+     */
+    public function mapProductAbstractEntitiesToProductAbstractCollectionTransfer(
+        ObjectCollection $productAbstractCollection,
+        ProductAbstractCollectionTransfer $productAbstractCollectionTransfer
+    ): ProductAbstractCollectionTransfer {
+        foreach ($productAbstractCollection as $productAbstractEntity) {
+            $productAbstractCollectionTransfer->addProductAbstract(
+                $this->mapProductAbstractEntityToProductAbstractTransfer($productAbstractEntity, (new ProductAbstractTransfer())),
+            );
+        }
+
+        return $productAbstractCollectionTransfer;
+    }
+
+    /**
      * @param \Propel\Runtime\Collection\Collection<\Orm\Zed\Product\Persistence\SpyProduct> $productEntityCollection
      *
      * @return array<\Orm\Zed\Product\Persistence\SpyProduct>
@@ -237,5 +258,18 @@ class ProductMapper implements ProductMapperInterface
         }
 
         return $productEntitiesIndexedBySku;
+    }
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProductAbstract $productAbstractEntity
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer
+     */
+    public function mapProductAbstractEntityToProductAbstractTransfer(
+        SpyProductAbstract $productAbstractEntity,
+        ProductAbstractTransfer $productAbstractTransfer
+    ): ProductAbstractTransfer {
+        return $productAbstractTransfer->fromArray($productAbstractEntity->toArray(), true);
     }
 }

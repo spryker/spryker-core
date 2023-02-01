@@ -153,6 +153,11 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_PRODUCT_CONCRETE_MERGER = 'PLUGINS_PRODUCT_CONCRETE_MERGER';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_PRODUCT_ABSTRACT_COLLECTION_EXPANDER = 'PLUGINS_PRODUCT_ABSTRACT_COLLECTION_EXPANDER';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -182,6 +187,7 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addProductConcreteExpanderPlugins($container);
         $container = $this->addMessageBrokerFacade($container);
         $container = $this->addProductConcreteMergerPlugins($container);
+        $container = $this->addProductAbstractCollectionExpanderPlugins($container);
 
         return $container;
     }
@@ -699,6 +705,28 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
      * @return array<\Spryker\Zed\ProductExtension\Dependency\Plugin\ProductConcreteMergerPluginInterface>
      */
     protected function getProductConcreteMergerPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductAbstractCollectionExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRODUCT_ABSTRACT_COLLECTION_EXPANDER, function () {
+            return $this->getProductAbstractCollectionExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Zed\ProductExtension\Dependency\Plugin\ProductAbstractCollectionExpanderPluginInterface>
+     */
+    protected function getProductAbstractCollectionExpanderPlugins(): array
     {
         return [];
     }

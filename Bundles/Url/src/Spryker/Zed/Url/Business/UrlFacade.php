@@ -9,6 +9,8 @@ namespace Spryker\Zed\Url\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\RedirectTransfer;
+use Generated\Shared\Transfer\UrlCollectionTransfer;
+use Generated\Shared\Transfer\UrlCriteriaTransfer;
 use Generated\Shared\Transfer\UrlRedirectTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -738,5 +740,19 @@ class UrlFacade extends AbstractFacade implements UrlFacadeInterface
         $urlManager = $this->getFactory()->createUrlManager();
 
         return $urlManager->getUrlByIdProductAbstractAndIdLocale($idProductAbstract, $idLocale);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UrlCriteriaTransfer $urlCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\UrlCollectionTransfer
+     */
+    public function getUrlCollection(UrlCriteriaTransfer $urlCriteriaTransfer): UrlCollectionTransfer
+    {
+        return $this->getRepository()->getUrlCollection($urlCriteriaTransfer);
     }
 }

@@ -718,6 +718,7 @@
         "spryker/product-storage-extension": "*",
         "spryker/product-tax-sets-rest-api": "*",
         "spryker/product-validity": "*",
+        "spryker/products-backend-api": "*",
         "spryker/products-categories-resource-relationship": "*",
         "spryker/products-rest-api": "*",
         "spryker/products-rest-api-extension": "*",

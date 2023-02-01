@@ -8,6 +8,8 @@
 namespace Spryker\Zed\TaxProductConnector\Business;
 
 use Generated\Shared\Transfer\CalculableObjectTransfer;
+use Generated\Shared\Transfer\ProductAbstractCollectionTransfer;
+use Generated\Shared\Transfer\ProductAbstractCriteriaTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\TaxSetResponseTransfer;
@@ -92,4 +94,20 @@ interface TaxProductConnectorFacadeInterface
      * @return \Generated\Shared\Transfer\TaxSetResponseTransfer
      */
     public function getTaxSetForProductAbstract(ProductAbstractTransfer $productAbstractTransfer): TaxSetResponseTransfer;
+
+    /**
+     * Specification:
+     * - Expands each product abstract with a corresponding tax set.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractCollectionTransfer $productAbstractCollectionTransfer
+     * @param \Generated\Shared\Transfer\ProductAbstractCriteriaTransfer $productAbstractCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractCollectionTransfer
+     */
+    public function expandProductAbstractCollectionWithTaxSets(
+        ProductAbstractCollectionTransfer $productAbstractCollectionTransfer,
+        ProductAbstractCriteriaTransfer $productAbstractCriteriaTransfer
+    ): ProductAbstractCollectionTransfer;
 }

@@ -1,0 +1,100 @@
+[
+    {
+        "fileName": "src/Spryker/Glue/ProductsBackendApi/Dependency/Facade/ProductsBackendApiToLocaleFacadeBridge.php",
+        "description": "Bridges: Method `getLocale()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Glue/ProductsBackendApi/Dependency/Facade/ProductsBackendApiToLocaleFacadeBridge.php",
+        "description": "Bridges: Method `getLocaleCollection()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Glue/ProductsBackendApi/Dependency/Facade/ProductsBackendApiToProductCategoryFacadeBridge.php",
+        "description": "Bridges: Method `createProductCategoryMappings()` must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Glue/ProductsBackendApi/Dependency/Facade/ProductsBackendApiToProductCategoryFacadeBridge.php",
+        "description": "Bridges: Method `removeProductCategoryMappings()` must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Glue/ProductsBackendApi/Dependency/Facade/ProductsBackendApiToProductFacadeBridge.php",
+        "description": "Bridges: Method `getProductConcretesByCriteria()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Glue/ProductsBackendApi/Dependency/Facade/ProductsBackendApiToProductFacadeBridge.php",
+        "description": "Bridges: Method `getProductUrls()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Glue/ProductsBackendApi/Dependency/Facade/ProductsBackendApiToProductFacadeBridge.php",
+        "description": "Bridges: Method `addProduct()` must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Glue/ProductsBackendApi/Dependency/Facade/ProductsBackendApiToProductFacadeBridge.php",
+        "description": "Bridges: Method `saveProduct()` must have `public function [update|create]<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Glue/ProductsBackendApi/Dependency/Facade/ProductsBackendApiToProductImageFacadeBridge.php",
+        "description": "Bridges: Method `getProductImagesSetCollectionByProductAbstractId()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Glue/ProductsBackendApi/Dependency/Facade/ProductsBackendApiToProductImageFacadeBridge.php",
+        "description": "Bridges: Method `getProductImagesSetCollectionByProductId()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Glue/ProductsBackendApi/Dependency/Facade/ProductsBackendApiToStoreFacadeBridge.php",
+        "description": "Bridges: Method `getStoreTransfersByStoreNames()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Glue/ProductsBackendApi/Dependency/Facade/ProductsBackendApiToTaxProductConnectorFacadeBridge.php",
+        "description": "Bridges: Method `getTaxSetForProductAbstract()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Glue/ProductsBackendApi/Dependency/Facade/ProductsBackendApiToUrlFacadeBridge.php",
+        "description": "Bridges: Method `createUrl()` must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Glue/ProductsBackendApi/Dependency/Facade/ProductsBackendApiToUrlFacadeBridge.php",
+        "description": "Bridges: Method `updateUrl()` must have `public function update<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

@@ -24,4 +24,11 @@ interface TaxProductConnectorRepositoryInterface
      * @return \Generated\Shared\Transfer\TaxSetTransfer|null
      */
     public function findByIdProductAbstract(int $idProductAbstract): ?TaxSetTransfer;
+
+    /**
+     * @param array<int> $productAbstractIds
+     *
+     * @return array<int, \Generated\Shared\Transfer\TaxSetTransfer>
+     */
+    public function getTaxSets(array $productAbstractIds): array;
 }

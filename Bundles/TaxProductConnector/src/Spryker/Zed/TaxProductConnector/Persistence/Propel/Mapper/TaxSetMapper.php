@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CountryTransfer;
 use Generated\Shared\Transfer\TaxRateTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Orm\Zed\Tax\Persistence\SpyTaxSet;
+use Propel\Runtime\Collection\ObjectCollection;
 
 class TaxSetMapper implements TaxSetMapperInterface
 {
@@ -38,5 +39,27 @@ class TaxSetMapper implements TaxSetMapperInterface
         }
 
         return $taxSetTransfer;
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Product\Persistence\SpyProductAbstract> $productAbstractEntities
+     * @param array<int, \Generated\Shared\Transfer\TaxSetTransfer> $taxSetTransfers
+     *
+     * @return array<int, \Generated\Shared\Transfer\TaxSetTransfer>
+     */
+    public function mapProductAbstractEntitiesToTaxSetTransfers(ObjectCollection $productAbstractEntities, array $taxSetTransfers = []): array
+    {
+        if (!$productAbstractEntities->count()) {
+            return [];
+        }
+
+        foreach ($productAbstractEntities as $productAbstractEntity) {
+            if ($productAbstractEntity->getSpyTaxSet()) {
+                $taxSetTransfers[$productAbstractEntity->getIdProductAbstract()] = (new TaxSetTransfer())
+                    ->fromArray($productAbstractEntity->getSpyTaxSet()->toArray(), true);
+            }
+        }
+
+        return $taxSetTransfers;
     }
 }

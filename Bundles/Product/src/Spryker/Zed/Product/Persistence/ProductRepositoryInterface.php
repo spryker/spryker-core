@@ -10,6 +10,8 @@ namespace Spryker\Zed\Product\Persistence;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
+use Generated\Shared\Transfer\ProductAbstractCollectionTransfer;
+use Generated\Shared\Transfer\ProductAbstractCriteriaTransfer;
 use Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductCriteriaTransfer;
@@ -214,4 +216,25 @@ interface ProductRepositoryInterface
         int $idStore,
         int $lastProductId
     ): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractCriteriaTransfer $productAbstractCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractCollectionTransfer
+     */
+    public function getProductAbstractCollection(ProductAbstractCriteriaTransfer $productAbstractCriteriaTransfer): ProductAbstractCollectionTransfer;
+
+    /**
+     * @param array<int, int> $productAbstractIds
+     *
+     * @return array<int, \Generated\Shared\Transfer\StoreRelationTransfer>
+     */
+    public function getProductAbstractStoreRelations(array $productAbstractIds): array;
+
+    /**
+     * @param array<int, int> $productAbstractIds
+     *
+     * @return array<int, array<\Generated\Shared\Transfer\LocalizedAttributesTransfer>>
+     */
+    public function getProductAbstractLocalizedAttributes(array $productAbstractIds): array;
 }
