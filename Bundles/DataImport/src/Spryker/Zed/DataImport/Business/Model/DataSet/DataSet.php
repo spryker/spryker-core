@@ -74,7 +74,7 @@ class DataSet implements DataSetInterface
      */
     public function offsetExists($offset): bool
     {
-        return $this->dataSet->offsetExists($offset) && $this->dataSet->offsetGet($offset) !== null;
+        return $this->dataSet->offsetExists($offset);
     }
 
     /**

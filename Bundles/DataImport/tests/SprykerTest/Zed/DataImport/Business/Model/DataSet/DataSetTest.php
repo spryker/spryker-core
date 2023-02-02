@@ -71,7 +71,7 @@ class DataSetTest extends Unit
         $dataSet['emptystring'] = '';
         $dataSet['int'] = 0;
 
-        $this->assertFalse(isset($dataSet['null']));
+        $this->assertTrue(isset($dataSet['null']));
         $this->assertTrue(isset($dataSet['true']));
         $this->assertTrue(isset($dataSet['false']));
         $this->assertTrue(isset($dataSet['emptystring']));
