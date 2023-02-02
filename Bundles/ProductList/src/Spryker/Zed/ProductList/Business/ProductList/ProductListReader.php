@@ -131,15 +131,17 @@ class ProductListReader implements ProductListReaderInterface
      */
     public function getProductBlacklistIdsByIdProduct(int $idProduct): array
     {
-        return array_unique(
-            array_merge(
-                $this->productListRepository->getProductConcreteProductListIdsForType(
-                    $idProduct,
-                    SpyProductListTableMap::COL_TYPE_BLACKLIST,
-                ),
-                $this->productListRepository->getProductConcreteProductListIdsRelatedToCategoriesForType(
-                    $idProduct,
-                    SpyProductListTableMap::COL_TYPE_BLACKLIST,
+        return array_values(
+            array_unique(
+                array_merge(
+                    $this->productListRepository->getProductConcreteProductListIdsForType(
+                        $idProduct,
+                        SpyProductListTableMap::COL_TYPE_BLACKLIST,
+                    ),
+                    $this->productListRepository->getProductConcreteProductListIdsRelatedToCategoriesForType(
+                        $idProduct,
+                        SpyProductListTableMap::COL_TYPE_BLACKLIST,
+                    ),
                 ),
             ),
         );
@@ -152,15 +154,17 @@ class ProductListReader implements ProductListReaderInterface
      */
     public function getProductWhitelistIdsByIdProduct(int $idProduct): array
     {
-        return array_unique(
-            array_merge(
-                $this->productListRepository->getProductConcreteProductListIdsForType(
-                    $idProduct,
-                    SpyProductListTableMap::COL_TYPE_WHITELIST,
-                ),
-                $this->productListRepository->getProductConcreteProductListIdsRelatedToCategoriesForType(
-                    $idProduct,
-                    SpyProductListTableMap::COL_TYPE_WHITELIST,
+        return array_values(
+            array_unique(
+                array_merge(
+                    $this->productListRepository->getProductConcreteProductListIdsForType(
+                        $idProduct,
+                        SpyProductListTableMap::COL_TYPE_WHITELIST,
+                    ),
+                    $this->productListRepository->getProductConcreteProductListIdsRelatedToCategoriesForType(
+                        $idProduct,
+                        SpyProductListTableMap::COL_TYPE_WHITELIST,
+                    ),
                 ),
             ),
         );
