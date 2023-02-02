@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Session\Business;
 
 use Generated\Shared\Transfer\HealthCheckServiceResponseTransfer;
+use Generated\Shared\Transfer\MessageAttributesTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -59,5 +60,20 @@ class SessionFacade extends AbstractFacade implements SessionFacadeInterface
     public function executeSessionHealthCheck(): HealthCheckServiceResponseTransfer
     {
         return $this->getFactory()->createSessionHealthChecker()->executeHealthCheck();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MessageAttributesTransfer $messageAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\MessageAttributesTransfer
+     */
+    public function expandMessageAttributesWithSessionTrackingId(
+        MessageAttributesTransfer $messageAttributesTransfer
+    ): MessageAttributesTransfer {
+        return $this->getFactory()->createMessageAttributesExpander()->expand($messageAttributesTransfer);
     }
 }

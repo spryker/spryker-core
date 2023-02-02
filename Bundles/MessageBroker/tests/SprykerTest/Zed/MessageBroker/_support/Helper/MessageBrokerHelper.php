@@ -10,6 +10,8 @@ namespace SprykerTest\Zed\MessageBroker\Helper;
 use Codeception\Module;
 use Codeception\Stub;
 use Codeception\TestInterface;
+use Generated\Shared\DataBuilder\MessageAttributesBuilder;
+use Generated\Shared\Transfer\MessageAttributesTransfer;
 use Generated\Shared\Transfer\MessageBrokerWorkerConfigTransfer;
 use Spryker\Zed\MessageBroker\Business\MessageBrokerBusinessFactory;
 use Spryker\Zed\MessageBroker\Business\MessageBrokerFacadeInterface;
@@ -336,6 +338,16 @@ class MessageBrokerHelper extends Module
         if ($callable) {
             $callable($stamp);
         }
+    }
+
+    /**
+     * @param array $seedData
+     *
+     * @return \Generated\Shared\Transfer\MessageAttributesTransfer
+     */
+    public function getMessageAttributesTransfer(array $seedData = []): MessageAttributesTransfer
+    {
+        return (new MessageAttributesBuilder($seedData))->build();
     }
 
     /**

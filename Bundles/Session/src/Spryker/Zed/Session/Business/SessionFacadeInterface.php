@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Session\Business;
 
 use Generated\Shared\Transfer\HealthCheckServiceResponseTransfer;
+use Generated\Shared\Transfer\MessageAttributesTransfer;
 
 interface SessionFacadeInterface
 {
@@ -44,4 +45,20 @@ interface SessionFacadeInterface
      * @return \Generated\Shared\Transfer\HealthCheckServiceResponseTransfer
      */
     public function executeSessionHealthCheck(): HealthCheckServiceResponseTransfer;
+
+    /**
+     * Specification:
+     * - Generates sessionTrackingId using the UUID v4.
+     * - Sets sessionTrackingId to sessionClient if empty.
+     * - Sets `MessageAttributes.sessionTrackingId` if empty using generated sessionTrackingId.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MessageAttributesTransfer $messageAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\MessageAttributesTransfer
+     */
+    public function expandMessageAttributesWithSessionTrackingId(
+        MessageAttributesTransfer $messageAttributesTransfer
+    ): MessageAttributesTransfer;
 }

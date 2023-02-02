@@ -18,6 +18,8 @@ interface MessageBrokerFacadeInterface
      * Specification:
      * - Adds message attributes to the transfer object.
      * - Wraps message in a Symfony Envelope and sends it through the configured transport for this message.
+     * - Writes Logger::INFO level log in case of successful envelope message sending.
+     * - Writes Logger::ERROR level log in case of any error during envelope message sending.
      *
      * @api
      *

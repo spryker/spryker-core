@@ -10,6 +10,7 @@
         <property name="timestamp" type="string"/>
         <property name="correlationId" type="string"/>
         <property name="tenantIdentifier" type="string"/>
+        <property name="transactionId" type="string"/>
     </transfer>
 
     <transfer name="Publisher" deprecated="Will be removed in next major.">

@@ -8,6 +8,8 @@
 namespace SprykerTest\Zed\Session;
 
 use Codeception\Actor;
+use Generated\Shared\DataBuilder\MessageAttributesBuilder;
+use Generated\Shared\Transfer\MessageAttributesTransfer;
 
 /**
  * @method void wantToTest($text)
@@ -20,10 +22,21 @@ use Codeception\Actor;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
+ * @method \Spryker\Zed\Session\Business\SessionFacade getFacade()
  *
  * @SuppressWarnings(PHPMD)
  */
 class SessionBusinessTester extends Actor
 {
     use _generated\SessionBusinessTesterActions;
+
+    /**
+     * @param array $seedData
+     *
+     * @return \Generated\Shared\Transfer\MessageAttributesTransfer
+     */
+    public function getMessageAttributesTransfer(array $seedData = []): MessageAttributesTransfer
+    {
+        return (new MessageAttributesBuilder($seedData))->build();
+    }
 }

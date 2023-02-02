@@ -16,6 +16,8 @@ use Spryker\Zed\MessageBroker\Business\Config\ConfigFormatterInterface;
 use Spryker\Zed\MessageBroker\Business\Config\JsonToArrayConfigFormatter;
 use Spryker\Zed\MessageBroker\Business\Debug\DebugPrinter;
 use Spryker\Zed\MessageBroker\Business\Debug\DebugPrinterInterface;
+use Spryker\Zed\MessageBroker\Business\Logger\MessagePublishLogger;
+use Spryker\Zed\MessageBroker\Business\Logger\MessagePublishLoggerInterface;
 use Spryker\Zed\MessageBroker\Business\MessageAttributeProvider\MessageAttributeProvider;
 use Spryker\Zed\MessageBroker\Business\MessageAttributeProvider\MessageAttributeProviderInterface;
 use Spryker\Zed\MessageBroker\Business\MessageHandler\MessageHandlerLocator;
@@ -57,7 +59,16 @@ class MessageBrokerBusinessFactory extends AbstractBusinessFactory
         return new MessagePublisher(
             $this->createMessageDecorator(),
             $this->createMessageBus(),
+            $this->createMessagePublishLogger(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\MessageBroker\Business\Logger\MessagePublishLoggerInterface
+     */
+    public function createMessagePublishLogger(): MessagePublishLoggerInterface
+    {
+        return new MessagePublishLogger($this->getConfig());
     }
 
     /**

@@ -6,4 +6,8 @@
         <property name="message" type="string"/>
     </transfer>
 
+    <transfer name="MessageAttributes">
+        <property name="sessionTrackingId" type="string"/>
+    </transfer>
+
 </transfers>

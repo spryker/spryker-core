@@ -11,6 +11,8 @@ use Predis\Client;
 use Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface;
 use Spryker\Shared\Session\SessionConfig;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Session\Business\Expander\MessageAttributesExpander;
+use Spryker\Zed\Session\Business\Expander\MessageAttributesExpanderInterface;
 use Spryker\Zed\Session\Business\Lock\Redis\RedisSessionLockReader;
 use Spryker\Zed\Session\Business\Lock\SessionLockReleaser;
 use Spryker\Zed\Session\Business\Lock\SessionLockReleaser\SessionLockReleaserPool;
@@ -215,5 +217,15 @@ class SessionBusinessFactory extends AbstractBusinessFactory
     public function getSessionClient()
     {
         return $this->getProvidedDependency(SessionDependencyProvider::SESSION_CLIENT);
+    }
+
+    /**
+     * @return \Spryker\Zed\Session\Business\Expander\MessageAttributesExpanderInterface
+     */
+    public function createMessageAttributesExpander(): MessageAttributesExpanderInterface
+    {
+        return new MessageAttributesExpander(
+            $this->getSessionClient(),
+        );
     }
 }
