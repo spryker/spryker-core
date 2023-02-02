@@ -76,7 +76,10 @@ class ConfiguredBundleWriter implements ConfiguredBundleWriterInterface
             return $this->createFailedResponse(ConfigurableBundleCartsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_CART_ID_MISSING);
         }
 
-        if ($restConfiguredBundlesAttributesTransfer->getQuantity() <= 0) {
+        if (
+            !is_int($restConfiguredBundlesAttributesTransfer->getQuantity()) ||
+            $restConfiguredBundlesAttributesTransfer->getQuantity() <= 0
+        ) {
             return $this->createFailedResponse(ConfigurableBundleCartsRestApiSharedConfig::ERROR_IDENTIFIER_CONFIGURED_BUNDLE_WRONG_QUANTITY);
         }
 
@@ -116,7 +119,10 @@ class ConfiguredBundleWriter implements ConfiguredBundleWriterInterface
             return $this->createFailedResponse(ConfigurableBundleCartsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_CART_ID_MISSING);
         }
 
-        if ($restConfiguredBundlesAttributesTransfer->getQuantity() <= 0) {
+        if (
+            !is_int($restConfiguredBundlesAttributesTransfer->getQuantity()) ||
+            $restConfiguredBundlesAttributesTransfer->getQuantity() <= 0
+        ) {
             return $this->createFailedResponse(ConfigurableBundleCartsRestApiSharedConfig::ERROR_IDENTIFIER_CONFIGURED_BUNDLE_WRONG_QUANTITY);
         }
 
