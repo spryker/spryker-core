@@ -14,7 +14,7 @@ use Spryker\Glue\SalesReturnsRestApi\SalesReturnsRestApiConfig;
 
 /**
  * @Glue({
- *     "resourceAttributesClassName": "\\Generated\\Shared\\Transfer\\RestReturnsAttributesTransfer"
+ *     "resourceAttributesClassName": "\\Generated\\Shared\\Transfer\\RestReturnItemsAttributesTransfer"
  * })
  *
  * @method \Spryker\Glue\SalesReturnsRestApi\SalesReturnsRestApiFactory getFactory()

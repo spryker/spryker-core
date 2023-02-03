@@ -39,6 +39,7 @@ class ReturnsResourceController extends AbstractController
      *          "parameters": [{
      *              "ref": "acceptLanguage"
      *          }],
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestReturnsAttributesTransfer",
      *          "responses": {
      *              "403": "Unauthorized request."
      *          }
@@ -63,6 +64,7 @@ class ReturnsResourceController extends AbstractController
      *          "parameters": [{
      *              "ref": "acceptLanguage"
      *          }],
+     *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestReturnsAttributesTransfer",
      *          "responses": {
      *              "422": "Unprocessable entity."
      *          }
