@@ -190,7 +190,7 @@ class AclMerchantPortalFacadeTest extends Unit
         // Assert
         $this->assertInstanceOf(AclEntityMetadataConfigTransfer::class, $aclEntityMetadataConfigTransfer);
         $this->assertNotEmpty($aclEntityMetadataCollectionTransfer->getCollection());
-        $this->assertSame(109, count($aclEntityMetadataCollectionTransfer->getCollection()));
+        $this->assertSame(116, count($aclEntityMetadataCollectionTransfer->getCollection()));
         $this->assertAclEntityMetadataConfigEntityWithoutParents($aclEntityMetadataCollectionTransfer);
         $this->assertAclEntityMetadataConfigHasEntities($aclEntityMetadataCollectionTransfer);
     }

@@ -299,9 +299,11 @@ abstract class AbstractAclEntityConnection
             $join->setRightTableAlias($rightTableAclEntityAlias);
         }
 
-        $leftTableAclEntityAlias = $this->queryAliasGenerator->generateTableAlias($query, $leftTableName);
-        if ($this->hasTableNameOrAlias($query, $leftTableAclEntityAlias)) {
-            $join->setLeftTableAlias($leftTableAclEntityAlias);
+        if ($this->hasTableNameOrAlias($query, $leftTableName)) {
+            $leftTableAclEntityAlias = $this->findLeftTableJoinAlias($query, $leftTableName);
+            if ($leftTableAclEntityAlias !== null) {
+                $join->setLeftTableAlias($leftTableAclEntityAlias);
+            }
         }
 
         return $join;
@@ -325,5 +327,24 @@ abstract class AbstractAclEntityConnection
     protected function getTableMapByEntityClass(string $entityClass): TableMap
     {
         return $this->propelServiceContainer->getDatabaseMap()->getTableByPhpName($entityClass);
+    }
+
+    /**
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param string $leftTableName
+     *
+     * @return string|null
+     */
+    protected function findLeftTableJoinAlias(ModelCriteria $query, string $leftTableName): ?string
+    {
+        $tableAliases = array_filter($query->getAliases(), function (string $tableName) use ($leftTableName) {
+            return $tableName === $leftTableName;
+        });
+
+        if ($tableAliases === []) {
+            return null;
+        }
+
+        return array_key_last($tableAliases);
     }
 }

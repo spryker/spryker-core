@@ -254,6 +254,62 @@ class AclMerchantPortalConfig extends AbstractBundleConfig
                 AclEntityConstants::OPERATION_MASK_READ,
             );
 
+        $aclEntityRuleTransfers[] = (new AclEntityRuleTransfer())
+            ->setEntity('Orm\Zed\Discount\Persistence\SpyDiscount')
+            ->setScope(AclEntityConstants::SCOPE_GLOBAL)
+            ->setPermissionMask(
+                AclEntityConstants::OPERATION_MASK_READ,
+            );
+
+        $aclEntityRuleTransfers[] = (new AclEntityRuleTransfer())
+            ->setEntity('Orm\Zed\Discount\Persistence\SpyDiscountAmount')
+            ->setScope(AclEntityConstants::SCOPE_INHERITED)
+            ->setPermissionMask(
+                AclEntityConstants::OPERATION_MASK_READ,
+            );
+
+        $aclEntityRuleTransfers[] = (new AclEntityRuleTransfer())
+            ->setEntity('Orm\Zed\Discount\Persistence\SpyDiscountStore')
+            ->setScope(AclEntityConstants::SCOPE_INHERITED)
+            ->setPermissionMask(
+                AclEntityConstants::OPERATION_MASK_READ,
+            );
+
+        $aclEntityRuleTransfers[] = (new AclEntityRuleTransfer())
+            ->setEntity('Orm\Zed\Discount\Persistence\SpyDiscountVoucher')
+            ->setScope(AclEntityConstants::SCOPE_INHERITED)
+            ->setPermissionMask(
+                AclEntityConstants::OPERATION_MASK_READ,
+            );
+
+        $aclEntityRuleTransfers[] = (new AclEntityRuleTransfer())
+            ->setEntity('Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool')
+            ->setScope(AclEntityConstants::SCOPE_INHERITED)
+            ->setPermissionMask(
+                AclEntityConstants::OPERATION_MASK_READ,
+            );
+
+        $aclEntityRuleTransfers[] = (new AclEntityRuleTransfer())
+            ->setEntity('Orm\Zed\DiscountPromotion\Persistence\SpyDiscountPromotion')
+            ->setScope(AclEntityConstants::SCOPE_INHERITED)
+            ->setPermissionMask(
+                AclEntityConstants::OPERATION_MASK_READ,
+            );
+
+        $aclEntityRuleTransfers[] = (new AclEntityRuleTransfer())
+            ->setEntity('Orm\Zed\Sales\Persistence\SpySalesDiscount')
+            ->setScope(AclEntityConstants::SCOPE_GLOBAL)
+            ->setPermissionMask(
+                AclEntityConstants::OPERATION_MASK_READ,
+            );
+
+        $aclEntityRuleTransfers[] = (new AclEntityRuleTransfer())
+            ->setEntity('Orm\Zed\Sales\Persistence\SpySalesDiscountCode')
+            ->setScope(AclEntityConstants::SCOPE_INHERITED)
+            ->setPermissionMask(
+                AclEntityConstants::OPERATION_MASK_READ,
+            );
+
         return $aclEntityRuleTransfers;
     }
 

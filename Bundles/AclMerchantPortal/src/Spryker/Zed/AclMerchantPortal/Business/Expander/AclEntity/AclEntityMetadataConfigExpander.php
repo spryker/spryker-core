@@ -990,6 +990,98 @@ class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpander
                     AclEntityConstants::OPERATION_MASK_CREATE | AclEntityConstants::OPERATION_MASK_READ,
                 ),
         );
+        $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
+            'Orm\Zed\Discount\Persistence\SpyDiscount',
+            (new AclEntityMetadataTransfer())
+                ->setEntityName('Orm\Zed\Discount\Persistence\SpyDiscount')
+                ->setDefaultGlobalOperationMask(
+                    AclEntityConstants::OPERATION_MASK_READ,
+                ),
+        );
+        $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
+            'Orm\Zed\Discount\Persistence\SpyDiscountAmount',
+            (new AclEntityMetadataTransfer())
+                ->setEntityName('Orm\Zed\Discount\Persistence\SpyDiscountAmount')
+                ->setParent(
+                    (new AclEntityParentMetadataTransfer())
+                        ->setEntityName('Orm\Zed\Discount\Persistence\SpyDiscount'),
+                )
+                ->setDefaultGlobalOperationMask(
+                    AclEntityConstants::OPERATION_MASK_READ,
+                ),
+        );
+        $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
+            'Orm\Zed\Discount\Persistence\SpyDiscountStore',
+            (new AclEntityMetadataTransfer())
+                ->setEntityName('Orm\Zed\Discount\Persistence\SpyDiscountStore')
+                ->setParent(
+                    (new AclEntityParentMetadataTransfer())
+                        ->setEntityName('Orm\Zed\Discount\Persistence\SpyDiscount'),
+                )
+                ->setDefaultGlobalOperationMask(
+                    AclEntityConstants::OPERATION_MASK_READ,
+                ),
+        );
+        $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
+            'Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool',
+            (new AclEntityMetadataTransfer())
+                ->setEntityName('Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool')
+                ->setParent(
+                    (new AclEntityParentMetadataTransfer())
+                        ->setEntityName('Orm\Zed\Discount\Persistence\SpyDiscount'),
+                )
+                ->setDefaultGlobalOperationMask(
+                    AclEntityConstants::OPERATION_MASK_READ,
+                ),
+        );
+        $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
+            'Orm\Zed\Discount\Persistence\SpyDiscountVoucher',
+            (new AclEntityMetadataTransfer())
+                ->setEntityName('Orm\Zed\Discount\Persistence\SpyDiscountVoucher')
+                ->setParent(
+                    (new AclEntityParentMetadataTransfer())
+                        ->setEntityName('Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool'),
+                )
+                ->setDefaultGlobalOperationMask(
+                    AclEntityConstants::OPERATION_MASK_READ,
+                ),
+        );
+        $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
+            'Orm\Zed\DiscountPromotion\Persistence\SpyDiscountPromotion',
+            (new AclEntityMetadataTransfer())
+                ->setEntityName('Orm\Zed\DiscountPromotion\Persistence\SpyDiscountPromotion')
+                ->setParent(
+                    (new AclEntityParentMetadataTransfer())
+                        ->setEntityName('Orm\Zed\Discount\Persistence\SpyDiscount'),
+                )
+                ->setDefaultGlobalOperationMask(
+                    AclEntityConstants::OPERATION_MASK_READ,
+                ),
+        );
+        $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
+            'Orm\Zed\Sales\Persistence\SpySalesDiscount',
+            (new AclEntityMetadataTransfer())
+                ->setEntityName('Orm\Zed\Sales\Persistence\SpySalesDiscount')
+                ->setParent(
+                    (new AclEntityParentMetadataTransfer())
+                        ->setEntityName('Orm\Zed\Sales\Persistence\SpySalesOrder'),
+                )
+                ->setDefaultGlobalOperationMask(
+                    AclEntityConstants::OPERATION_MASK_READ,
+                ),
+        );
+        $aclEntityMetadataCollectionTransfer->addAclEntityMetadata(
+            'Orm\Zed\Sales\Persistence\SpySalesDiscountCode',
+            (new AclEntityMetadataTransfer())
+                ->setEntityName('Orm\Zed\Sales\Persistence\SpySalesDiscountCode')
+                ->setParent(
+                    (new AclEntityParentMetadataTransfer())
+                        ->setEntityName('Orm\Zed\Sales\Persistence\SpySalesDiscount'),
+                )
+                ->setDefaultGlobalOperationMask(
+                    AclEntityConstants::OPERATION_MASK_READ,
+                ),
+        );
 
         return $this->expandAclEntityMetadataConfigWithAllowList($aclEntityMetadataConfigTransfer);
     }
