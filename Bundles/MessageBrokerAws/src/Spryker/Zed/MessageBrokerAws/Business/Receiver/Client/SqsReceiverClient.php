@@ -8,16 +8,20 @@
 namespace Spryker\Zed\MessageBrokerAws\Business\Receiver\Client;
 
 use AsyncAws\Sqs\SqsClient;
+use Spryker\Shared\Log\LoggerTrait;
 use Spryker\Zed\MessageBrokerAws\Business\Config\ConfigFormatterInterface;
 use Spryker\Zed\MessageBrokerAws\Business\Receiver\Client\Stamp\ChannelNameStamp;
 use Spryker\Zed\MessageBrokerAws\MessageBrokerAwsConfig;
 use Symfony\Component\Messenger\Bridge\AmazonSqs\Transport\AmazonSqsReceiver;
 use Symfony\Component\Messenger\Bridge\AmazonSqs\Transport\Connection;
 use Symfony\Component\Messenger\Envelope;
+use Symfony\Component\Messenger\Exception\MessageDecodingFailedException;
 use Symfony\Component\Messenger\Transport\Serialization\SerializerInterface;
 
 class SqsReceiverClient implements ReceiverClientInterface
 {
+    use LoggerTrait;
+
     /**
      * @var string
      */
@@ -62,8 +66,12 @@ class SqsReceiverClient implements ReceiverClientInterface
      */
     public function get(string $channelName): iterable
     {
-        foreach ($this->createReceiverClient()->get() as $envelope) {
-            yield $envelope->with(new ChannelNameStamp($channelName));
+        try {
+            foreach ($this->createReceiverClient()->get() as $envelope) {
+                yield $envelope->with(new ChannelNameStamp($channelName));
+            }
+        } catch (MessageDecodingFailedException $e) {
+            $this->getLogger()->error($e->getMessage());
         }
     // @codeCoverageIgnoreStart
     }

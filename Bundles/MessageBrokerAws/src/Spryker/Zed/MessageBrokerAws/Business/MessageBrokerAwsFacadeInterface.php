@@ -24,6 +24,10 @@ interface MessageBrokerAwsFacadeInterface
 
     /**
      * Specification:
+     * - Receives messages from SQS.
+     * - Adds ChannelNameStamp in Envelop.
+     * - Returns a generator to get an unlimited number of Envelopes.
+     * - If a received message cannot be decoded the error message is logged.
      *
      * @api
      *
