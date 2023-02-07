@@ -12,6 +12,8 @@ use Spryker\Zed\Category\Dependency\Plugin\CategoryRelationUpdatePluginInterface
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
+ * @deprecated Will be removed in the next major without replacement.
+ *
  * @method \Spryker\Zed\ProductCategory\Business\ProductCategoryFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductCategory\Communication\ProductCategoryCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductCategory\ProductCategoryConfig getConfig()
