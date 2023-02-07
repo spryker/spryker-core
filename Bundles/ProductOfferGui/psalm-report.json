@@ -63,20 +63,20 @@
         },
         {
             "severity": "info",
-            "line_from": 219,
-            "line_to": 219,
+            "line_from": 207,
+            "line_to": 207,
             "type": "PossiblyNullArgument",
             "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductOfferGui/src/Spryker/Zed/ProductOfferGui/Communication/Table/ProductOfferTable.php",
-            "snippet": "            ->where(sprintf('%s = (%s)', SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE, $this->localeFacade->getCurrentLocale()->getIdLocale()))",
+            "snippet": "            $this->localeFacade->getCurrentLocale()->getIdLocale(),",
             "selected_text": "$this->localeFacade->getCurrentLocale()->getIdLocale()",
             "error_level": 3,
             "shortcode": 78
         },
         {
             "severity": "info",
-            "line_from": 53,
-            "line_to": 53,
+            "line_from": 45,
+            "line_to": 45,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Orm\\Zed\\ProductOffer\\Persistence\\SpyProductOfferQuery::join cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductOfferGui/src/Spryker/Zed/ProductOfferGui/Persistence/Mapper/ProductOfferQueryCriteriaMapper.php",
@@ -87,8 +87,8 @@
         },
         {
             "severity": "info",
-            "line_from": 56,
-            "line_to": 56,
+            "line_from": 48,
+            "line_to": 48,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Orm\\Zed\\ProductOffer\\Persistence\\SpyProductOfferQuery::addJoinCondition cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductOfferGui/src/Spryker/Zed/ProductOfferGui/Persistence/Mapper/ProductOfferQueryCriteriaMapper.php",
@@ -99,8 +99,8 @@
         },
         {
             "severity": "info",
-            "line_from": 56,
-            "line_to": 56,
+            "line_from": 48,
+            "line_to": 48,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Orm\\Zed\\ProductOffer\\Persistence\\SpyProductOfferQuery::addJoinCondition cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductOfferGui/src/Spryker/Zed/ProductOfferGui/Persistence/Mapper/ProductOfferQueryCriteriaMapper.php",
@@ -110,5 +110,6 @@
             "shortcode": 78
         }
     ],
-    "deprecation": []
+    "deprecation": [],
+    "count": 9
 }

@@ -14,6 +14,7 @@ use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
@@ -235,26 +236,69 @@ class ProductTable extends AbstractProductTable
         /** @var \Propel\Runtime\Collection\ObjectCollection $queryResults */
         $queryResults = $this->runQuery($query, $config, true);
 
+        $productData = $this->getProductData($queryResults->getData());
+
+        $productAbstractCollection = $this->executeProductTableDataBulkExpanderPlugins(
+            $this->getProductAbstractCollection($queryResults),
+            $productData,
+        );
+
+        return $this->formatProductAbstractIds($productAbstractCollection);
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection $queryResults
+     *
+     * @return list<int>
+     */
+    protected function getProductAbstractIdsWithEmptyName(ObjectCollection $queryResults): array
+    {
         $productAbstractIdsWithEmptyName = [];
+
         foreach ($queryResults as $productAbstractEntity) {
             if (!$productAbstractEntity->getVirtualColumn(static::COL_NAME)) {
                 $productAbstractIdsWithEmptyName[] = $productAbstractEntity->getIdProductAbstract();
             }
         }
 
-        $productAbstractLocalizedAttributeNames = [];
-        if ($productAbstractIdsWithEmptyName) {
-            $productAbstractLocalizedAttributeNames = $this->productFacade->getProductAbstractLocalizedAttributeNamesIndexedByIdProductAbstract($productAbstractIdsWithEmptyName);
-        }
+        return $productAbstractIdsWithEmptyName;
+    }
 
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection $queryResults
+     *
+     * @return array<array<mixed>>
+     */
+    protected function getProductAbstractCollection(ObjectCollection $queryResults): array
+    {
         $productAbstractCollection = [];
+        $productAbstractLocalizedAttributeNames = $this->productFacade
+            ->getProductAbstractLocalizedAttributeNamesIndexedByIdProductAbstract(
+                $this->getProductAbstractIdsWithEmptyName($queryResults),
+            );
+
         foreach ($queryResults as $productAbstractEntity) {
             $productAbstractCollection[] = $this->generateItem($productAbstractEntity, $productAbstractLocalizedAttributeNames);
         }
 
-        $productData = $this->getProductData($queryResults->getData());
+        return $productAbstractCollection;
+    }
 
-        return $this->executeProductTableDataBulkExpanderPlugins($productAbstractCollection, $productData);
+    /**
+     * @param array<array<string, mixed>> $productAbstractCollection
+     *
+     * @return array<array<string, mixed>>
+     */
+    protected function formatProductAbstractIds(array $productAbstractCollection): array
+    {
+        foreach ($productAbstractCollection as $key => $productAbstract) {
+            if (isset($productAbstract[static::COL_ID_PRODUCT_ABSTRACT])) {
+                $productAbstractCollection[$key][static::COL_ID_PRODUCT_ABSTRACT] =
+                    $this->formatInt($productAbstract[static::COL_ID_PRODUCT_ABSTRACT]);
+            }
+        }
+
+        return $productAbstractCollection;
     }
 
     /**
@@ -286,7 +330,7 @@ class ProductTable extends AbstractProductTable
     protected function generateItem(SpyProductAbstract $productAbstractEntity, array $productAbstractLocalizedAttributeNames): array
     {
         $item = [
-            static::COL_ID_PRODUCT_ABSTRACT => $this->formatInt($productAbstractEntity->getIdProductAbstract()),
+            static::COL_ID_PRODUCT_ABSTRACT => $productAbstractEntity->getIdProductAbstract(),
             static::COL_SKU => $productAbstractEntity->getSku(),
             static::COL_NAME => $this->resolveProductName($productAbstractEntity, $productAbstractLocalizedAttributeNames),
             static::COL_TAX_SET => $productAbstractEntity->getVirtualColumn(static::COL_TAX_SET),

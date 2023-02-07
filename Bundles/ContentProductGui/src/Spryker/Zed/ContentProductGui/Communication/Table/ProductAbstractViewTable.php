@@ -111,10 +111,8 @@ class ProductAbstractViewTable extends AbstractProductAbstractTable
      */
     protected function formatRow(SpyProductAbstract $productAbstractEntity): array
     {
-        $idProductAbstract = $productAbstractEntity->getIdProductAbstract();
-
         return [
-            static::COL_ID_PRODUCT_ABSTRACT => $this->formatInt($idProductAbstract),
+            static::COL_ID_PRODUCT_ABSTRACT => $productAbstractEntity->getIdProductAbstract(),
             static::COL_SKU => $productAbstractEntity->getSku(),
             static::COL_IMAGE => $this->getProductPreview($this->getProductPreviewUrl($productAbstractEntity)),
             static::COL_NAME => $productAbstractEntity->getSpyProductAbstractLocalizedAttributess()->getFirst()->getName(),

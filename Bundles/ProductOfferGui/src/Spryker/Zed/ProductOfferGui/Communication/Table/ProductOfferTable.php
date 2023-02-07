@@ -237,27 +237,39 @@ class ProductOfferTable extends AbstractTable
         $results = [];
 
         foreach ($queryResults as $item) {
-            $rowData = [
-                SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER => $this->formatInt(
-                    $item[SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER],
-                ),
-                SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE => $item[SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE],
-                SpyProductOfferTableMap::COL_CONCRETE_SKU => $item[SpyProductOfferTableMap::COL_CONCRETE_SKU],
-                static::COL_PRODUCT_NAME => $item[static::COL_PRODUCT_NAME],
-                SpyProductOfferTableMap::COL_APPROVAL_STATUS => $this->createStatusLabel($item),
-                SpyProductOfferTableMap::COL_IS_ACTIVE => $this->getActiveLabel($item[SpyProductOfferTableMap::COL_IS_ACTIVE]),
-                SpyProductOfferStoreTableMap::COL_FK_STORE => $this->createStoresLabel($item),
-                static::COL_ACTIONS => $this->buildLinks($item),
-            ];
-
-            foreach ($this->productOfferTableExpanderPlugins as $productOfferTableExpanderPlugin) {
-                $rowData = $productOfferTableExpanderPlugin->expandData($rowData, $item);
-            }
-
-            $results[] = $rowData;
+            $results[] = $this->formatRow($item);
         }
 
         return $results;
+    }
+
+    /**
+     * @param array<string, mixed> $item
+     *
+     * @return array<string, mixed>
+     */
+    protected function formatRow(array $item): array
+    {
+        $rowData = [
+            SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER => $item[SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER],
+            SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE => $item[SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE],
+            SpyProductOfferTableMap::COL_CONCRETE_SKU => $item[SpyProductOfferTableMap::COL_CONCRETE_SKU],
+            static::COL_PRODUCT_NAME => $item[static::COL_PRODUCT_NAME],
+            SpyProductOfferTableMap::COL_APPROVAL_STATUS => $this->createStatusLabel($item),
+            SpyProductOfferTableMap::COL_IS_ACTIVE => $this->getActiveLabel($item[SpyProductOfferTableMap::COL_IS_ACTIVE]),
+            SpyProductOfferStoreTableMap::COL_FK_STORE => $this->createStoresLabel($item),
+            static::COL_ACTIONS => $this->buildLinks($item),
+        ];
+
+        foreach ($this->productOfferTableExpanderPlugins as $productOfferTableExpanderPlugin) {
+            $rowData = $productOfferTableExpanderPlugin->expandData($rowData, $item);
+        }
+
+        $rowData[SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER] = $this->formatInt(
+            $rowData[SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER],
+        );
+
+        return $rowData;
     }
 
     /**
