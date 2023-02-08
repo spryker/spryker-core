@@ -1,0 +1,37 @@
+{# @var userTransfer \Generated\Shared\Transfer\UserTransfer.userName #}
+
+{% extends '@Gui/Layout/layout.twig' %}
+
+
+{% block section_title %}
+    {{ 'Assign Warehouse to User' | trans ~ ': ' ~ userTransfer.username }}
+{% endblock %}
+
+{% block action %}
+    {{ backActionButton(usersUrl, 'List Users' | trans) }}
+{% endblock %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' with {'widget_title': 'List of warehouses'} %}
+        {% block widget_content %}
+            <div class="alert alert-info">
+                <i class="alert__icon fa fa-exclamation-triangle" aria-hidden="true"></i>
+                <div class="alert__text">{{ 'A warehouse can be assigned to multiple users at a time.' | trans }}</div>
+            </div>
+
+            {{ form_start(form) }}
+                {{ form_widget(form) }}
+
+                {% include '@WarehouseUserGui/AssignWarehouse/_partials/table-available-warehouses.twig' with {'availableWarehouses': availableWarehouses} only %}
+                {% include '@WarehouseUserGui/AssignWarehouse/_partials/table-assigned-warehouses.twig' with {'assignedWarehouses': assignedWarehouses} only %}
+
+                <button class="btn btn-primary safe-submit">{{ 'Save' | trans }}</button>
+            {{ form_end(form) }}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="{{ assetsPath('js/spryker-zed-warehouse-user-gui-main.js') }}"></script>
+{% endblock %}

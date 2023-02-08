@@ -1,7 +1,7 @@
 {% for field in userForm.children %}
 
-    {% if userForm.is_agent is defined and field == userForm.is_agent %}
-        {% include '@Agent/_partials/user-form-is-agent-field.twig' %}
+    {% if field.vars.attr.template_path is defined %}
+        {% include field.vars.attr.template_path with {'userForm': userForm} %}
     {% else %}
         {{ form_row(field) }}
     {% endif %}

@@ -22,6 +22,10 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerI
 class UserAuthenticationFailureHandler extends AbstractPlugin implements AuthenticationFailureHandlerInterface
 {
     /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Symfony\Component\Security\Core\Exception\AuthenticationException $exception
      *

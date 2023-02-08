@@ -68,4 +68,16 @@
     <transfer name="AclEntityRule">
     </transfer>
 
+    <transfer name="UserCollection" strict="true">
+        <property name="users" type="User[]" singular="user"/>
+    </transfer>
+
+    <transfer name="UserConditions" strict="true">
+        <property name="usernames" type="string[]" singular="username"/>
+    </transfer>
+
+    <transfer name="UserCriteria">
+        <property name="userConditions" type="UserConditions" strict="true"/>
+    </transfer>
+
 </transfers>

@@ -10,4 +10,17 @@
         <property name="idUser" type="int"/>
     </transfer>
 
+    <transfer name="UserConditions" strict="true">
+        <property name="usernames" type="string[]" singular="username"/>
+        <property name="throwUserNotFoundException" type="bool" deprecated="Exists for BC reasons only."/>
+    </transfer>
+
+    <transfer name="UserCriteria">
+        <property name="userConditions" type="UserConditions" strict="true"/>
+    </transfer>
+
+    <transfer name="UserCollection" strict="true">
+        <property name="users" type="User[]" singular="user"/>
+    </transfer>
+
 </transfers>

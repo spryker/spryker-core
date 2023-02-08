@@ -1,19 +1,44 @@
 {
     "error": [],
-    "warning": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 92,
+            "line_to": 92,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\UserTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/SessionUserValidation/src/Spryker/Zed/SessionUserValidation/Communication/EventListener/SaveSessionUserListener.php",
+            "snippet": "        return $userCollectionTransfer->getUsers()->getIterator()->current();",
+            "selected_text": "getIterator",
+            "error_level": 3,
+            "shortcode": 113
+        }
+    ],
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 60,
-            "line_to": 60,
+            "line_from": 89,
+            "line_to": 89,
             "type": "DeprecatedMethod",
             "message": "The method Symfony\\Component\\Security\\Core\\User\\UserInterface::getUsername has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/SessionUserValidation/src/Spryker/Zed/SessionUserValidation/Communication/EventListener/SaveSessionUserListener.php",
-            "snippet": "        $userTransfer = $this->userFacade->getUserByUsername($user->getUsername());",
+            "snippet": "        $userCriteriaTransfer = $this->createUserCriteriaTransfer($user->getUsername());",
             "selected_text": "getUsername",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 104,
+            "line_to": 104,
+            "type": "DeprecatedMethod",
+            "message": "The method Generated\\Shared\\Transfer\\UserConditionsTransfer::setThrowUserNotFoundException has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/SessionUserValidation/src/Spryker/Zed/SessionUserValidation/Communication/EventListener/SaveSessionUserListener.php",
+            "snippet": "            ->setThrowUserNotFoundException(true);",
+            "selected_text": "setThrowUserNotFoundException",
             "error_level": 2,
             "shortcode": 1
         }
     ],
-    "count": 1
+    "count": 3
 }

@@ -25,9 +25,9 @@ class UserMerchantPortalGuiToLocaleFacadeBridge implements UserMerchantPortalGui
     }
 
     /**
-     * @return array
+     * @return array<string>
      */
-    public function getAvailableLocales()
+    public function getAvailableLocales(): array
     {
         return $this->localeFacade->getAvailableLocales();
     }
@@ -37,7 +37,7 @@ class UserMerchantPortalGuiToLocaleFacadeBridge implements UserMerchantPortalGui
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getLocaleById($idLocale)
+    public function getLocaleById($idLocale): LocaleTransfer
     {
         return $this->localeFacade->getLocaleById($idLocale);
     }

@@ -1,0 +1,28 @@
+"Warehouse user",Lagerbenutzer
+"User could not be found.","Der Benutzer könnte nicht gefunden werden."
+"User uuid is missing.","Benutzer-UUID fehlt."
+"Warehouse user assignments are updated.","Lagerhaus Benutzerzuordnungen werden aktualisiert."
+"Assign warehouses","Lagerhäuser zuordnen"
+"Assign Warehouse to User","Lagerhaus dem Benutzer zuweisen"
+"List Users","Benutzer auflisten"
+"A warehouse can be assigned to multiple users at a time.","Ein Lagerhaus kann mehreren Benutzern gleichzeitig zugewiesen werden."
+Remove,Entfernen
+Save,Sparen
+"Deselect All","Alle abwählen"
+"Deselected warehouses","Abgewählte Lagerhäuser"
+Inactive,Inactive
+Active,Aktiv
+"Warehouse ID",Lager-ID
+Name,Name
+Status,Status
+Assigned,Zugewiesen
+Assign,Zuweisen
+Selected,Ausgewählt
+"Select All","Alle auswählen"
+"List of warehouses","Liste der Läger"
+"Assigned warehouses","Zugewiesene Läger"
+"Warehouses to be deassigned","Läger, deren Zuweisung entfernt werden soll"
+"Select warehouses to assign","Wählen Sie Läger, die zugewiesen werden sollen"
+"Warehouses to be assigned","Läger, die zugewiesen werden sollen"
+"Selected warehouses","Ausgewählte Läger"
+"This user is a warehouse user","Dieser Nutzer ist ein Lagernutzer"

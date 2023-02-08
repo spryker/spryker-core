@@ -8,13 +8,22 @@
 namespace Spryker\Zed\OauthUserConnector\Business\Provider;
 
 use Generated\Shared\Transfer\OauthUserTransfer;
+use Generated\Shared\Transfer\UserConditionsTransfer;
 use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserIdentifierTransfer;
+use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\OauthUserConnector\Dependency\Facade\OauthUserConnectorToUserFacadeInterface;
 use Spryker\Zed\OauthUserConnector\Dependency\Service\OauthUserConnectorToUtilEncodingServiceInterface;
 
 class UserProvider implements UserProviderInterface
 {
+    /**
+     * @uses \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS_ACTIVE
+     *
+     * @var string
+     */
+    protected const USER_STATUS_ACTIVE = 'active';
+
     /**
      * @var \Spryker\Zed\OauthUserConnector\Dependency\Facade\OauthUserConnectorToUserFacadeInterface
      */
@@ -48,10 +57,7 @@ class UserProvider implements UserProviderInterface
             return $oauthUserTransfer;
         }
 
-        $userCriteriaTransfer = (new UserCriteriaTransfer())
-            ->setEmail($oauthUserTransfer->getUsername());
-
-        $userTransfer = $this->userFacade->findUser($userCriteriaTransfer);
+        $userTransfer = $this->findUserTransfer($oauthUserTransfer);
         if (!$userTransfer) {
             return $oauthUserTransfer;
         }
@@ -68,5 +74,36 @@ class UserProvider implements UserProviderInterface
         return $oauthUserTransfer
             ->setUserIdentifier($this->utilEncodingService->encodeJson($userIdentifierTransfer->toArray()))
             ->setIsSuccess(true);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OauthUserTransfer $oauthUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer|null
+     */
+    protected function findUserTransfer(OauthUserTransfer $oauthUserTransfer): ?UserTransfer
+    {
+        if (!$oauthUserTransfer->getUsername()) {
+            return null;
+        }
+
+        $userCriteriaTransfer = $this->createUserCriteriaTransfer($oauthUserTransfer->getUsername());
+        $userCollectionTransfer = $this->userFacade->getUserCollection($userCriteriaTransfer);
+
+        return $userCollectionTransfer->getUsers()->getIterator()->current();
+    }
+
+    /**
+     * @param string $username
+     *
+     * @return \Generated\Shared\Transfer\UserCriteriaTransfer
+     */
+    protected function createUserCriteriaTransfer(string $username): UserCriteriaTransfer
+    {
+        $userConditionsTransfer = (new UserConditionsTransfer())
+            ->addStatus(static::USER_STATUS_ACTIVE)
+            ->addUsername($username);
+
+        return (new UserCriteriaTransfer())->setUserConditions($userConditionsTransfer);
     }
 }

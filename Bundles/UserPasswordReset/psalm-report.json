@@ -1,5 +1,44 @@
 {
     "error": [],
-    "warning": [],
-    "deprecation": []
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 119,
+            "line_to": 119,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\UserTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/UserPasswordReset/src/Spryker/Zed/UserPasswordReset/Business/ResetPassword/ResetPassword.php",
+            "snippet": "        $userTransfer = $userCollectionTransfer->getUsers()->getIterator()->current();",
+            "selected_text": "getIterator",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 189,
+            "line_to": 189,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\UserTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/UserPasswordReset/src/Spryker/Zed/UserPasswordReset/Business/ResetPassword/ResetPassword.php",
+            "snippet": "        $userTransfer = $userCollectionTransfer->getUsers()->getIterator()->current();",
+            "selected_text": "getIterator",
+            "error_level": 3,
+            "shortcode": 113
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 185,
+            "line_to": 185,
+            "type": "DeprecatedMethod",
+            "message": "The method Generated\\Shared\\Transfer\\UserConditionsTransfer::setThrowUserNotFoundException has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/UserPasswordReset/src/Spryker/Zed/UserPasswordReset/Business/ResetPassword/ResetPassword.php",
+            "snippet": "            ->setThrowUserNotFoundException(true);",
+            "selected_text": "setThrowUserNotFoundException",
+            "error_level": 2,
+            "shortcode": 1
+        }
+    ],
+    "count": 3
 }

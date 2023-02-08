@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\SessionUserValidation\Dependency\Facade;
 
+use Generated\Shared\Transfer\UserCollectionTransfer;
+use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 
 interface SessionUserValidationToUserFacadeInterface
@@ -22,9 +24,9 @@ interface SessionUserValidationToUserFacadeInterface
     public function hasCurrentUser(): bool;
 
     /**
-     * @param string $username
+     * @param \Generated\Shared\Transfer\UserCriteriaTransfer $userCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\UserTransfer
+     * @return \Generated\Shared\Transfer\UserCollectionTransfer
      */
-    public function getUserByUsername(string $username): UserTransfer;
+    public function getUserCollection(UserCriteriaTransfer $userCriteriaTransfer): UserCollectionTransfer;
 }

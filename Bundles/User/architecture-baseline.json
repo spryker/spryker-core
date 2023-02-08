@@ -5,19 +5,5 @@
         "rule": "FacadeReturnValueRule",
         "ruleset": "Spryker Zed",
         "priority": "1"
-    },
-    {
-        "fileName": "src/Spryker/Zed/User/Communication/Form/ResetPasswordForm.php",
-        "description": "Method `Spryker\\Zed\\User\\Communication\\Form\\ResetPasswordForm::getBlockPrefix()` must have return type.",
-        "rule": "ExternalMethodExtensionReturnTypeRule",
-        "ruleset": "Spryker",
-        "priority": "1"
-    },
-    {
-        "fileName": "src/Spryker/Zed/User/Communication/Form/UserForm.php",
-        "description": "Method `Spryker\\Zed\\User\\Communication\\Form\\UserForm::getBlockPrefix()` must have return type.",
-        "rule": "ExternalMethodExtensionReturnTypeRule",
-        "ruleset": "Spryker",
-        "priority": "1"
     }
 ]

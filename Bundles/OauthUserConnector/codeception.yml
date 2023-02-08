@@ -1,4 +1,6 @@
 namespace: OauthUserConnector
+include:
+    - tests/SprykerTest/Zed/OauthUserConnector
 actor: Tester
 paths:
     tests: tests

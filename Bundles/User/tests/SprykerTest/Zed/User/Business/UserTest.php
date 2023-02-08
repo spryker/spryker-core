@@ -12,8 +12,10 @@ use Generated\Shared\DataBuilder\MailBuilder;
 use Generated\Shared\DataBuilder\UserBuilder;
 use Generated\Shared\Transfer\MailRecipientTransfer;
 use Generated\Shared\Transfer\MailTransfer;
+use Generated\Shared\Transfer\UserConditionsTransfer;
 use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserTransfer;
+use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
 use Spryker\Client\Session\SessionClient;
 use Spryker\Zed\User\Business\Exception\UserNotFoundException;
 use Spryker\Zed\User\Business\Model\User;
@@ -37,6 +39,13 @@ class UserTest extends Unit
      * @var string
      */
     public const USERNAME = 'test@test.com';
+
+    /**
+     * @uses \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS_BLOCKED
+     *
+     * @var string
+     */
+    protected const USER_STATUS_BLOCKED = 'blocked';
 
     /**
      * @var \SprykerTest\Zed\User\UserBusinessTester
@@ -458,6 +467,119 @@ class UserTest extends Unit
 
         // Assert
         $this->assertNull($mailTransfer->getUser());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetUserCollectionReturnsCollectionOfUserTransfersById(): void
+    {
+        // Arrange
+        $userTransfer = $this->tester->haveUser();
+        $userConditionsTransfer = (new UserConditionsTransfer())->addIdUser($userTransfer->getIdUserOrFail());
+        $userCriteriaTransfer = (new UserCriteriaTransfer())->setUserConditions($userConditionsTransfer);
+
+        // Act
+        $userCollectionTransfer = $this->getUserFacade()->getUserCollection($userCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(1, $userCollectionTransfer->getUsers());
+        $this->assertSame($userTransfer->getIdUserOrFail(), $userCollectionTransfer->getUsers()->getIterator()->current()->getIdUser());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetUserCollectionReturnsCollectionOfUserTransfersByUsername(): void
+    {
+        // Arrange
+        $userTransfer = $this->tester->haveUser();
+        $userConditionsTransfer = (new UserConditionsTransfer())->addUsername($userTransfer->getUsername());
+        $userCriteriaTransfer = (new UserCriteriaTransfer())->setUserConditions($userConditionsTransfer);
+
+        // Act
+        $userCollectionTransfer = $this->getUserFacade()->getUserCollection($userCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(1, $userCollectionTransfer->getUsers());
+        $this->assertSame($userTransfer->getIdUserOrFail(), $userCollectionTransfer->getUsers()->getIterator()->current()->getIdUser());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetUserCollectionReturnsCollectionOfUserTransfersByStatus(): void
+    {
+        // Arrange
+        $userTransfer = $this->tester->haveUser([UserTransfer::STATUS => static::USER_STATUS_BLOCKED]);
+        $userConditionsTransfer = (new UserConditionsTransfer())->addStatus(static::USER_STATUS_BLOCKED);
+        $userCriteriaTransfer = (new UserCriteriaTransfer())->setUserConditions($userConditionsTransfer);
+
+        // Act
+        $userCollectionTransfer = $this->getUserFacade()->getUserCollection($userCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(1, $userCollectionTransfer->getUsers());
+        $this->assertSame($userTransfer->getIdUserOrFail(), $userCollectionTransfer->getUsers()->getIterator()->current()->getIdUser());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetUserCollectionThrowsExceptionWhenUsersNotFoundAndThrowExceptionConditionIsSetToTrue(): void
+    {
+        // Arrange
+        $userTransfer = $this->tester->haveUser();
+        $userConditionsTransfer = (new UserConditionsTransfer())
+            ->addIdUser(0)
+            ->setThrowUserNotFoundException(true);
+        $userCriteriaTransfer = (new UserCriteriaTransfer())->setUserConditions($userConditionsTransfer);
+
+        // Assert
+        $this->expectException(UserNotFoundException::class);
+
+        // Act
+        $this->getUserFacade()->getUserCollection($userCriteriaTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetUserCollectionReturnsCollectionOfUserTransfersByUuid(): void
+    {
+        // Arrange
+        if (!SpyUserTableMap::getTableMap()->hasColumn('uuid')) {
+            $this->markTestSkipped('This test requires uuid column in spy_user table.');
+        }
+
+        $userTransfer = $this->tester->haveUser();
+        $userConditionsTransfer = (new UserConditionsTransfer())->addUuid($userTransfer->getUuidOrFail());
+        $userCriteriaTransfer = (new UserCriteriaTransfer())->setUserConditions($userConditionsTransfer);
+
+        // Act
+        $userCollectionTransfer = $this->getUserFacade()->getUserCollection($userCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(1, $userCollectionTransfer->getUsers());
+        $this->assertSame($userTransfer->getIdUserOrFail(), $userCollectionTransfer->getUsers()->getIterator()->current()->getIdUser());
+        $this->assertSame($userTransfer->getUuidOrFail(), $userCollectionTransfer->getUsers()->getIterator()->current()->getUuid());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetUserCollectionReturnsEmptyCollectionOfUserTransfersByInvalidId(): void
+    {
+        // Arrange
+        $this->tester->haveUser();
+        $userConditionsTransfer = (new UserConditionsTransfer())->addIdUser(0);
+        $userCriteriaTransfer = (new UserCriteriaTransfer())->setUserConditions($userConditionsTransfer);
+
+        // Act
+        $userCollectionTransfer = $this->getUserFacade()->getUserCollection($userCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(0, $userCollectionTransfer->getUsers());
     }
 
     /**

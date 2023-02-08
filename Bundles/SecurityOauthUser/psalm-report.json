@@ -3,10 +3,58 @@
     "warning": [
         {
             "severity": "info",
+            "line_from": 69,
+            "line_to": 69,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\UserTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/SecurityOauthUser/src/Spryker/Zed/SecurityOauthUser/Business/Strategy/CreateUserAuthenticationStrategy.php",
+            "snippet": "        if ($userCollectionTransfer->getUsers()->count() === 0) {",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 73,
+            "line_to": 73,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\UserTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/SecurityOauthUser/src/Spryker/Zed/SecurityOauthUser/Business/Strategy/CreateUserAuthenticationStrategy.php",
+            "snippet": "        $userTransfer = $userCollectionTransfer->getUsers()->getIterator()->current();",
+            "selected_text": "getIterator",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 60,
+            "line_to": 60,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\UserTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/SecurityOauthUser/src/Spryker/Zed/SecurityOauthUser/Business/Strategy/ExistingUserAuthenticationStrategy.php",
+            "snippet": "        if ($userCollectionTransfer->getUsers()->count() === 0) {",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 64,
+            "line_to": 64,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\UserTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/SecurityOauthUser/src/Spryker/Zed/SecurityOauthUser/Business/Strategy/ExistingUserAuthenticationStrategy.php",
+            "snippet": "        $userTransfer = $userCollectionTransfer->getUsers()->getIterator()->current();",
+            "selected_text": "getIterator",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
             "line_from": 103,
             "line_to": 106,
             "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of Symfony\\Component\\Security\\Core\\User\\ChainUserProvider::__construct expects iterable<array-key, Symfony\\Component\\Security\\Core\\User\\UserProviderInterface>, possibly different type array{mixed, Symfony\\Component\\Security\\Core\\User\\UserProviderInterface} provided",
+            "message": "Argument 1 of Symfony\\Component\\Security\\Core\\User\\ChainUserProvider::__construct expects iterable<array-key, Symfony\\Component\\Security\\Core\\User\\UserProviderInterface>, but possibly different type array{mixed, Symfony\\Component\\Security\\Core\\User\\UserProviderInterface} provided",
             "file_name": "vendor/spryker/spryker/Bundles/SecurityOauthUser/src/Spryker/Zed/SecurityOauthUser/Communication/Plugin/Security/OauthUserSecurityPlugin.php",
             "snippet": "                    return new ChainUserProvider([\n                        $userFirewallConfiguration['users'](),\n                        $this->getFactory()->createOauthUserProvider(),\n                    ]);",
             "selected_text": "[\n                        $userFirewallConfiguration['users'](),\n                        $this->getFactory()->createOauthUserProvider(),\n                    ]",
@@ -39,6 +87,90 @@
         }
     ],
     "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 88,
+            "line_to": 88,
+            "type": "DeprecatedMethod",
+            "message": "The method Generated\\Shared\\Transfer\\UserCriteriaTransfer::getEmailOrFail has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/SecurityOauthUser/src/Spryker/Zed/SecurityOauthUser/Business/Creator/OauthUserCreator.php",
+            "snippet": "            ->setUsername($userCriteriaTransfer->getEmailOrFail())",
+            "selected_text": "getEmailOrFail",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 89,
+            "line_to": 89,
+            "type": "DeprecatedMethod",
+            "message": "The method Generated\\Shared\\Transfer\\UserCriteriaTransfer::getEmailOrFail has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/SecurityOauthUser/src/Spryker/Zed/SecurityOauthUser/Business/Creator/OauthUserCreator.php",
+            "snippet": "            ->setFirstName($userCriteriaTransfer->getEmailOrFail())",
+            "selected_text": "getEmailOrFail",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 90,
+            "line_to": 90,
+            "type": "DeprecatedMethod",
+            "message": "The method Generated\\Shared\\Transfer\\UserCriteriaTransfer::getEmailOrFail has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/SecurityOauthUser/src/Spryker/Zed/SecurityOauthUser/Business/Creator/OauthUserCreator.php",
+            "snippet": "            ->setLastName($userCriteriaTransfer->getEmailOrFail())",
+            "selected_text": "getEmailOrFail",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 64,
+            "line_to": 64,
+            "type": "DeprecatedMethod",
+            "message": "The method Generated\\Shared\\Transfer\\UserCriteriaTransfer::requireEmail has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/SecurityOauthUser/src/Spryker/Zed/SecurityOauthUser/Business/Strategy/CreateUserAuthenticationStrategy.php",
+            "snippet": "        $userCriteriaTransfer->requireEmail();",
+            "selected_text": "requireEmail",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 65,
+            "line_to": 65,
+            "type": "DeprecatedMethod",
+            "message": "The method Generated\\Shared\\Transfer\\UserCriteriaTransfer::getEmailOrFail has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/SecurityOauthUser/src/Spryker/Zed/SecurityOauthUser/Business/Strategy/CreateUserAuthenticationStrategy.php",
+            "snippet": "        $userConditionsTransfer = (new UserConditionsTransfer())->addUsername($userCriteriaTransfer->getEmailOrFail());",
+            "selected_text": "getEmailOrFail",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 55,
+            "line_to": 55,
+            "type": "DeprecatedMethod",
+            "message": "The method Generated\\Shared\\Transfer\\UserCriteriaTransfer::requireEmail has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/SecurityOauthUser/src/Spryker/Zed/SecurityOauthUser/Business/Strategy/ExistingUserAuthenticationStrategy.php",
+            "snippet": "        $userCriteriaTransfer->requireEmail();",
+            "selected_text": "requireEmail",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 56,
+            "line_to": 56,
+            "type": "DeprecatedMethod",
+            "message": "The method Generated\\Shared\\Transfer\\UserCriteriaTransfer::getEmailOrFail has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/SecurityOauthUser/src/Spryker/Zed/SecurityOauthUser/Business/Strategy/ExistingUserAuthenticationStrategy.php",
+            "snippet": "        $userConditionsTransfer = (new UserConditionsTransfer())->addUsername($userCriteriaTransfer->getEmailOrFail());",
+            "selected_text": "getEmailOrFail",
+            "error_level": 2,
+            "shortcode": 1
+        },
         {
             "severity": "info",
             "line_from": 25,
@@ -113,6 +245,18 @@
         },
         {
             "severity": "info",
+            "line_from": 115,
+            "line_to": 115,
+            "type": "DeprecatedMethod",
+            "message": "The method Generated\\Shared\\Transfer\\UserCriteriaTransfer::setEmail has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/SecurityOauthUser/src/Spryker/Zed/SecurityOauthUser/Communication/Plugin/Security/Provider/OauthUserProvider.php",
+            "snippet": "            (new UserCriteriaTransfer())->setEmail($username),",
+            "selected_text": "setEmail",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
             "line_from": 58,
             "line_to": 58,
             "type": "DeprecatedClass",
@@ -147,5 +291,6 @@
             "error_level": 2,
             "shortcode": 98
         }
-    ]
+    ],
+    "count": 24
 }

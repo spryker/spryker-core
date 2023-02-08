@@ -26,6 +26,7 @@ use Symfony\Component\Form\FormInterface;
  * @method \Spryker\Zed\User\Persistence\UserQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\User\UserConfig getConfig()
  * @method \Spryker\Zed\User\Business\UserFacadeInterface getFacade()
+ * @method \Spryker\Zed\User\Persistence\UserRepositoryInterface getRepository()
  */
 class UserCommunicationFactory extends AbstractCommunicationFactory
 {

@@ -23,6 +23,11 @@ class UserAgentFormExpander implements UserAgentFormExpanderInterface
     protected const FIELD_IS_AGENT_LABEL = 'This user is an agent';
 
     /**
+     * @var string
+     */
+    protected const FIELD_IS_AGENT_TEMPLATE_PATH = '@Agent/_partials/user-form-is-agent-field.twig';
+
+    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      *
      * @return void
@@ -42,6 +47,9 @@ class UserAgentFormExpander implements UserAgentFormExpanderInterface
         $builder->add(static::FIELD_IS_AGENT, CheckboxType::class, [
             'label' => static::FIELD_IS_AGENT_LABEL,
             'required' => false,
+            'attr' => [
+                'template_path' => static::FIELD_IS_AGENT_TEMPLATE_PATH,
+            ],
         ]);
     }
 }

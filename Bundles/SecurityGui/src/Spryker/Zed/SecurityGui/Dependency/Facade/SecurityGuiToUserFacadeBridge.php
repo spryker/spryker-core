@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\SecurityGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\UserCollectionTransfer;
+use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 
 class SecurityGuiToUserFacadeBridge implements SecurityGuiToUserFacadeInterface
@@ -25,21 +27,11 @@ class SecurityGuiToUserFacadeBridge implements SecurityGuiToUserFacadeInterface
     }
 
     /**
-     * @param string $username
-     *
-     * @return \Generated\Shared\Transfer\UserTransfer
-     */
-    public function getUserByUsername($username)
-    {
-        return $this->userFacade->getUserByUsername($username);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\UserTransfer $user
      *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
-    public function updateUser(UserTransfer $user)
+    public function updateUser(UserTransfer $user): UserTransfer
     {
         return $this->userFacade->updateUser($user);
     }
@@ -59,8 +51,18 @@ class SecurityGuiToUserFacadeBridge implements SecurityGuiToUserFacadeInterface
      *
      * @return bool
      */
-    public function hasActiveUserByUsername($username)
+    public function hasActiveUserByUsername($username): bool
     {
         return $this->userFacade->hasActiveUserByUsername($username);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UserCriteriaTransfer $userCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\UserCollectionTransfer
+     */
+    public function getUserCollection(UserCriteriaTransfer $userCriteriaTransfer): UserCollectionTransfer
+    {
+        return $this->userFacade->getUserCollection($userCriteriaTransfer);
     }
 }

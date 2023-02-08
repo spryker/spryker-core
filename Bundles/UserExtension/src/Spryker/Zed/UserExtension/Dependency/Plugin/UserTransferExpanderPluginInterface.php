@@ -9,6 +9,9 @@ namespace Spryker\Zed\UserExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\UserTransfer;
 
+/**
+ * @deprecated Use {@link \Spryker\Zed\UserExtension\Dependency\Plugin\UserExpanderPluginInterface} instead.
+ */
 interface UserTransferExpanderPluginInterface
 {
     /**

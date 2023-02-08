@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\OauthUserConnector\Dependency\Facade;
 
+use Generated\Shared\Transfer\UserCollectionTransfer;
 use Generated\Shared\Transfer\UserCriteriaTransfer;
-use Generated\Shared\Transfer\UserTransfer;
 
 interface OauthUserConnectorToUserFacadeInterface
 {
@@ -17,14 +17,7 @@ interface OauthUserConnectorToUserFacadeInterface
      *
      * @return bool
      */
-    public function hasActiveUserByUsername(string $username): bool;
-
-    /**
-     * @param \Generated\Shared\Transfer\UserCriteriaTransfer $userCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\UserTransfer|null
-     */
-    public function findUser(UserCriteriaTransfer $userCriteriaTransfer): ?UserTransfer;
+    public function hasActiveUserByUsername($username): bool;
 
     /**
      * @param string $password
@@ -32,5 +25,12 @@ interface OauthUserConnectorToUserFacadeInterface
      *
      * @return bool
      */
-    public function isValidPassword(string $password, string $hash): bool;
+    public function isValidPassword($password, $hash): bool;
+
+    /**
+     * @param \Generated\Shared\Transfer\UserCriteriaTransfer $userCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\UserCollectionTransfer
+     */
+    public function getUserCollection(UserCriteriaTransfer $userCriteriaTransfer): UserCollectionTransfer;
 }

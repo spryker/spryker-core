@@ -17,6 +17,7 @@ use Spryker\Zed\Kernel\Communication\Form\AbstractType;
  * @method \Spryker\Zed\User\Communication\UserCommunicationFactory getFactory()
  * @method \Spryker\Zed\User\Persistence\UserQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\User\UserConfig getConfig()
+ * @method \Spryker\Zed\User\Persistence\UserRepositoryInterface getRepository()
  */
 class DeactivateUserForm extends AbstractType
 {

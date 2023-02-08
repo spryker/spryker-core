@@ -8,6 +8,9 @@
 namespace Spryker\Zed\SessionUserValidation\Communication\EventListener;
 
 use Generated\Shared\Transfer\SessionUserTransfer;
+use Generated\Shared\Transfer\UserConditionsTransfer;
+use Generated\Shared\Transfer\UserCriteriaTransfer;
+use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\SessionUserValidation\Dependency\Facade\SessionUserValidationToUserFacadeInterface;
 use Spryker\Zed\SessionUserValidationExtension\Dependency\Plugin\SessionUserSaverPluginInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -57,7 +60,7 @@ class SaveSessionUserListener implements EventSubscriberInterface
             return;
         }
 
-        $userTransfer = $this->userFacade->getUserByUsername($user->getUsername());
+        $userTransfer = $this->getUserTransfer($user);
 
         $this->sessionUserSaverPlugin->saveSessionUser(
             (new SessionUserTransfer())
@@ -74,5 +77,32 @@ class SaveSessionUserListener implements EventSubscriberInterface
         return [
             SecurityEvents::INTERACTIVE_LOGIN => 'onInteractiveLogin',
         ];
+    }
+
+    /**
+     * @param \Symfony\Component\Security\Core\User\UserInterface $user
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer
+     */
+    protected function getUserTransfer(UserInterface $user): UserTransfer
+    {
+        $userCriteriaTransfer = $this->createUserCriteriaTransfer($user->getUsername());
+        $userCollectionTransfer = $this->userFacade->getUserCollection($userCriteriaTransfer);
+
+        return $userCollectionTransfer->getUsers()->getIterator()->current();
+    }
+
+    /**
+     * @param string $username
+     *
+     * @return \Generated\Shared\Transfer\UserCriteriaTransfer
+     */
+    protected function createUserCriteriaTransfer(string $username): UserCriteriaTransfer
+    {
+        $userConditionsTransfer = (new UserConditionsTransfer())
+            ->addUsername($username)
+            ->setThrowUserNotFoundException(true);
+
+        return (new UserCriteriaTransfer())->setUserConditions($userConditionsTransfer);
     }
 }

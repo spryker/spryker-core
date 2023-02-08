@@ -31,7 +31,7 @@ class SecurityOauthUserToAclFacadeBridge implements SecurityOauthUserToAclFacade
      *
      * @return int
      */
-    public function addUserToGroup($idUser, $idGroup)
+    public function addUserToGroup($idUser, $idGroup): int
     {
         return $this->aclFacade->addUserToGroup($idUser, $idGroup);
     }

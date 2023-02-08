@@ -46,7 +46,7 @@ class SecurityOauthUser implements SecurityOauthUserInterface
     /**
      * @return array<string>
      */
-    public function getRoles()
+    public function getRoles(): array
     {
         return $this->roles;
     }
@@ -54,7 +54,7 @@ class SecurityOauthUser implements SecurityOauthUserInterface
     /**
      * @return string|null
      */
-    public function getSalt()
+    public function getSalt(): ?string
     {
         return null;
     }
@@ -62,7 +62,7 @@ class SecurityOauthUser implements SecurityOauthUserInterface
     /**
      * @return string
      */
-    public function getUsername()
+    public function getUsername(): string
     {
         return $this->username;
     }
@@ -70,7 +70,7 @@ class SecurityOauthUser implements SecurityOauthUserInterface
     /**
      * @return string|null
      */
-    public function getPassword()
+    public function getPassword(): ?string
     {
         return $this->password;
     }

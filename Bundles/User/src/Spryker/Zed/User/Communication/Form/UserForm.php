@@ -30,6 +30,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  * @method \Spryker\Zed\User\Communication\UserCommunicationFactory getFactory()
  * @method \Spryker\Zed\User\Persistence\UserQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\User\UserConfig getConfig()
+ * @method \Spryker\Zed\User\Persistence\UserRepositoryInterface getRepository()
  */
 class UserForm extends AbstractType
 {
@@ -86,7 +87,7 @@ class UserForm extends AbstractType
     /**
      * @return string
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'user';
     }

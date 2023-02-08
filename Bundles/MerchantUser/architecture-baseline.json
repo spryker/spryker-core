@@ -50,13 +50,6 @@
     },
     {
         "fileName": "src/Spryker/Zed/MerchantUser/Dependency/Facade/MerchantUserToUserFacadeBridge.php",
-        "description": "Bridges: Method `findUser()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
-        "rule": "BridgeFacadeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/MerchantUser/Dependency/Facade/MerchantUserToUserFacadeBridge.php",
         "description": "Bridges: Method `getCurrentUser()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
@@ -73,41 +66,6 @@
         "fileName": "src/Spryker/Zed/MerchantUser/Dependency/Facade/MerchantUserToUserFacadeBridge.php",
         "description": "Bridges: Type should be defined for param `hash` in method `Spryker\\Zed\\MerchantUser\\Dependency\\Facade\\MerchantUserToUserFacadeBridge::isValidPassword()`.",
         "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/MerchantUser/Dependency/Facade/MerchantUserToUserFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `updateUser()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/MerchantUser/Dependency/Facade/MerchantUserToUserFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `deactivateUser()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/MerchantUser/Dependency/Facade/MerchantUserToUserFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `removeUser()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/MerchantUser/Dependency/Facade/MerchantUserToUserFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `getCurrentUser()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/MerchantUser/Dependency/Facade/MerchantUserToUserFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `isValidPassword()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
     }

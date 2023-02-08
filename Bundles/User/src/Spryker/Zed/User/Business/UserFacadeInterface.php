@@ -8,6 +8,7 @@
 namespace Spryker\Zed\User\Business;
 
 use Generated\Shared\Transfer\MailTransfer;
+use Generated\Shared\Transfer\UserCollectionTransfer;
 use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 
@@ -53,6 +54,8 @@ interface UserFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\User\Business\UserFacadeInterface::getUserCollection()} instead.
+     *
      * @param string $username
      *
      * @return \Generated\Shared\Transfer\UserTransfer
@@ -64,6 +67,8 @@ interface UserFacadeInterface
      * - TODO: Add method specification.
      *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\User\Business\UserFacadeInterface::getUserCollection()} instead.
      *
      * @param int $idUser
      *
@@ -77,7 +82,7 @@ interface UserFacadeInterface
      *
      * @api
      *
-     * @deprecated Use {@link findUser()} instead.
+     * @deprecated Use {@link \Spryker\Zed\User\Business\UserFacadeInterface::getUserCollection()} instead.
      *
      * @param int $idUser
      *
@@ -92,6 +97,8 @@ interface UserFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\User\Business\UserFacadeInterface::getUserCollection()} instead.
+     *
      * @param \Generated\Shared\Transfer\UserCriteriaTransfer $userCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\UserTransfer|null
@@ -103,6 +110,8 @@ interface UserFacadeInterface
      * - TODO: Add method specification.
      *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\User\Business\UserFacadeInterface::getUserCollection()} instead.
      *
      * @param int $idUser
      *
@@ -129,9 +138,11 @@ interface UserFacadeInterface
 
     /**
      * Specification:
-     *  - Creates user from user transfer.
-     *  - Executes user post save plugins.
-     *  - Throws exception if username exist.
+     * - Creates user from `UserTransfer`.
+     * - Executes a stack of {@link \Spryker\Zed\UserExtension\Dependency\Plugin\UserPreSavePluginInterface} plugins.
+     * - Executes a stack of {@link \Spryker\Zed\UserExtension\Dependency\Plugin\UserExpanderPluginInterface} plugins.
+     * - Executes a stack of {@link \Spryker\Zed\UserExtension\Dependency\Plugin\UserPostSavePluginInterface} plugins.
+     * - Throws exception if username exist.
      *
      * @api
      *
@@ -143,7 +154,10 @@ interface UserFacadeInterface
 
     /**
      * Specification:
-     * - TODO: Add method specification.
+     * - Updates User with passed `UserTransfer` data.
+     * - Executes a stack of {@link \Spryker\Zed\UserExtension\Dependency\Plugin\UserPreSavePluginInterface} plugins.
+     * - Executes a stack of {@link \Spryker\Zed\UserExtension\Dependency\Plugin\UserExpanderPluginInterface} plugins.
+     * - Executes a stack of {@link \Spryker\Zed\UserExtension\Dependency\Plugin\UserPostSavePluginInterface} plugins.
      *
      * @api
      *
@@ -272,4 +286,25 @@ interface UserFacadeInterface
      * @return \Generated\Shared\Transfer\MailTransfer
      */
     public function expandMailWithUserData(MailTransfer $mailTransfer): MailTransfer;
+
+    /**
+     * Specification:
+     * - Fetches collection of Users from the storage.
+     * - Uses `UserCriteriaTransfer.UserConditions.userIds` to filter users by userIds.
+     * - Uses `UserCriteriaTransfer.UserConditions.usernames` to filter users by usernames (emails).
+     * - Uses `UserCriteriaTransfer.UserConditions.statuses` to filter users by statuses.
+     * - Uses `UserCriteriaTransfer.UserConditions.uuids` to filter users by uuids if `spy_users.uuid` column exists.
+     * - Executes a stack of {@link \Spryker\Zed\UserExtension\Dependency\Plugin\UserExpanderPluginInterface} plugins.
+     * - If `UserCriteriaTransfer.UserConditions.throwException` is set to `true`, method will throw {@link \Spryker\Zed\User\Business\Exception\UserNotFoundException} in case of no user was found.
+     * - Returns `UserCollectionTransfer` filled with found users.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UserCriteriaTransfer $userCriteriaTransfer
+     *
+     * @throws \Spryker\Zed\User\Business\Exception\UserNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\UserCollectionTransfer
+     */
+    public function getUserCollection(UserCriteriaTransfer $userCriteriaTransfer): UserCollectionTransfer;
 }

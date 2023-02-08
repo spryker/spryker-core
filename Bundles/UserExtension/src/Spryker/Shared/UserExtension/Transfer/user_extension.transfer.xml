@@ -4,4 +4,7 @@
     <transfer name="User">
     </transfer>
 
+    <transfer name="UserCollection" strict="true">
+    </transfer>
+
 </transfers>

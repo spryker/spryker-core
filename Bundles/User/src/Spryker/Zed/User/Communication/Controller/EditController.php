@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\User\Communication\Controller;
 
+use Generated\Shared\Transfer\UserConditionsTransfer;
 use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
@@ -21,6 +22,7 @@ use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
  * @method \Spryker\Zed\User\Business\UserFacadeInterface getFacade()
  * @method \Spryker\Zed\User\Communication\UserCommunicationFactory getFactory()
  * @method \Spryker\Zed\User\Persistence\UserQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\User\Persistence\UserRepositoryInterface getRepository()
  */
 class EditController extends AbstractController
 {
@@ -297,10 +299,7 @@ class EditController extends AbstractController
             return $this->redirectResponse(static::USER_LISTING_URL);
         }
 
-        $userTransfer = $this->getFacade()->findUser(
-            (new UserCriteriaTransfer())->setIdUser($idUser),
-        );
-
+        $userTransfer = $this->findUserTransfer($idUser);
         if (!$userTransfer) {
             $this->addErrorMessage(static::MESSAGE_USER_NOT_FOUND);
 
@@ -444,5 +443,30 @@ class EditController extends AbstractController
         $currentUser = $this->getFacade()->getCurrentUser();
 
         return $currentUser->getIdUser() === $idUser;
+    }
+
+    /**
+     * @param int $idUser
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer|null
+     */
+    protected function findUserTransfer(int $idUser): ?UserTransfer
+    {
+        $userCriteriaTransfer = $this->createUserCriteriaTransfer($idUser);
+        $userCollectionTransfer = $this->getFacade()->getUserCollection($userCriteriaTransfer);
+
+        return $userCollectionTransfer->getUsers()->getIterator()->current();
+    }
+
+    /**
+     * @param int $idUser
+     *
+     * @return \Generated\Shared\Transfer\UserCriteriaTransfer
+     */
+    protected function createUserCriteriaTransfer(int $idUser): UserCriteriaTransfer
+    {
+        $userConditionsTransfer = (new UserConditionsTransfer())->addIdUser($idUser);
+
+        return (new UserCriteriaTransfer())->setUserConditions($userConditionsTransfer);
     }
 }

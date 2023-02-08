@@ -8,6 +8,7 @@
 namespace Spryker\Zed\User\Business\Model;
 
 use Generated\Shared\Transfer\CollectionTransfer;
+use Generated\Shared\Transfer\UserCollectionTransfer;
 use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
@@ -55,9 +56,16 @@ class User implements UserInterface
     protected $userPreSavePlugins;
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\User\Business\Model\User::$userExpanderPlugins} instead.
+     *
      * @var array<\Spryker\Zed\UserExtension\Dependency\Plugin\UserTransferExpanderPluginInterface>
      */
     protected $userTransferExpanderPlugins;
+
+    /**
+     * @var array<\Spryker\Zed\UserExtension\Dependency\Plugin\UserExpanderPluginInterface>
+     */
+    protected array $userExpanderPlugins;
 
     /**
      * @param \Spryker\Zed\User\Persistence\UserQueryContainerInterface $queryContainer
@@ -66,6 +74,7 @@ class User implements UserInterface
      * @param array<\Spryker\Zed\UserExtension\Dependency\Plugin\UserPostSavePluginInterface> $userPostSavePlugins
      * @param array<\Spryker\Zed\UserExtension\Dependency\Plugin\UserPreSavePluginInterface> $userPreSavePlugins
      * @param array<\Spryker\Zed\UserExtension\Dependency\Plugin\UserTransferExpanderPluginInterface> $userTransferExpanderPlugins
+     * @param array<\Spryker\Zed\UserExtension\Dependency\Plugin\UserExpanderPluginInterface> $userExpanderPlugins
      */
     public function __construct(
         UserQueryContainerInterface $queryContainer,
@@ -73,7 +82,8 @@ class User implements UserInterface
         UserConfig $settings,
         array $userPostSavePlugins = [],
         array $userPreSavePlugins = [],
-        array $userTransferExpanderPlugins = []
+        array $userTransferExpanderPlugins = [],
+        array $userExpanderPlugins = []
     ) {
         $this->queryContainer = $queryContainer;
         $this->session = $session;
@@ -81,6 +91,7 @@ class User implements UserInterface
         $this->userPostSavePlugins = $userPostSavePlugins;
         $this->userPreSavePlugins = $userPreSavePlugins;
         $this->userTransferExpanderPlugins = $userTransferExpanderPlugins;
+        $this->userExpanderPlugins = $userExpanderPlugins;
     }
 
     /**
@@ -293,6 +304,8 @@ class User implements UserInterface
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\User\Business\Reader\UserReader::getUserCollection()} instead.
+     *
      * @param string $username
      *
      * @throws \Spryker\Zed\User\Business\Exception\UserNotFoundException
@@ -311,6 +324,8 @@ class User implements UserInterface
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\User\Business\Reader\UserReader::getUserCollection()} instead.
+     *
      * @param int $id
      *
      * @throws \Spryker\Zed\User\Business\Exception\UserNotFoundException
@@ -343,6 +358,8 @@ class User implements UserInterface
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\User\Business\Reader\UserReader::getUserCollection()} instead.
+     *
      * @param \Generated\Shared\Transfer\UserCriteriaTransfer $userCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\UserTransfer|null
@@ -397,6 +414,8 @@ class User implements UserInterface
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\User\Business\Reader\UserReader::getUserCollection()} instead.
+     *
      * @param int $id
      *
      * @throws \Spryker\Zed\User\Business\Exception\UserNotFoundException
@@ -534,12 +553,30 @@ class User implements UserInterface
         $userTransfer = new UserTransfer();
         $userTransfer->fromArray($userEntity->toArray(), true);
 
+        $userTransfer = $this->executeUserExpanderPlugins($userTransfer);
         $userTransfer = $this->executeUserTransferExpanderPlugins($userTransfer);
 
         return $userTransfer;
     }
 
     /**
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer
+     */
+    protected function executeUserExpanderPlugins(UserTransfer $userTransfer): UserTransfer
+    {
+        $userCollectionTransfer = (new UserCollectionTransfer())->addUser($userTransfer);
+        foreach ($this->userExpanderPlugins as $userExpanderPlugin) {
+            $userCollectionTransfer = $userExpanderPlugin->expand($userCollectionTransfer);
+        }
+
+        return $userCollectionTransfer->getUsers()->getIterator()->current();
+    }
+
+    /**
+     * @deprecated Use {@link \Spryker\Zed\User\Business\Model\User::executeUserExpanderPlugins()} instead.
+     *
      * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
      *
      * @return \Generated\Shared\Transfer\UserTransfer

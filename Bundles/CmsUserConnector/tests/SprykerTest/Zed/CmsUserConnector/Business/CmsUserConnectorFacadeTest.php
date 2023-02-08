@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CmsPageAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageMetaAttributesTransfer;
 use Generated\Shared\Transfer\CmsPageTransfer;
 use Generated\Shared\Transfer\CmsVersionTransfer;
+use Generated\Shared\Transfer\UserCollectionTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Orm\Zed\Cms\Persistence\SpyCmsVersion;
 use Spryker\Zed\Cms\Business\CmsFacade;
@@ -161,10 +162,18 @@ class CmsUserConnectorFacadeTest extends Unit
     protected function mockUserMethodForExpandUser($userBridgeMock): CmsUserConnectorToUserBridge
     {
         $userBridgeMock->expects($this->once())
-            ->method('getUserById')
-            ->willReturn($this->createUserTransfer());
+            ->method('getUserCollection')
+            ->willReturn($this->createUserCollectionTransfer());
 
         return $userBridgeMock;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\UserCollectionTransfer
+     */
+    protected function createUserCollectionTransfer(): UserCollectionTransfer
+    {
+        return (new UserCollectionTransfer())->addUser($this->createUserTransfer());
     }
 
     /**
@@ -190,7 +199,7 @@ class CmsUserConnectorFacadeTest extends Unit
             ->setMethods([
                 'hasCurrentUser',
                 'getCurrentUser',
-                'getUserById',
+                'getUserCollection',
             ])
             ->getMock();
     }

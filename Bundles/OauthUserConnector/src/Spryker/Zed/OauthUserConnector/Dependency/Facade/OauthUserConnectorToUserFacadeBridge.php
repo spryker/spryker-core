@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\OauthUserConnector\Dependency\Facade;
 
+use Generated\Shared\Transfer\UserCollectionTransfer;
 use Generated\Shared\Transfer\UserCriteriaTransfer;
-use Generated\Shared\Transfer\UserTransfer;
 
 class OauthUserConnectorToUserFacadeBridge implements OauthUserConnectorToUserFacadeInterface
 {
@@ -30,19 +30,9 @@ class OauthUserConnectorToUserFacadeBridge implements OauthUserConnectorToUserFa
      *
      * @return bool
      */
-    public function hasActiveUserByUsername(string $username): bool
+    public function hasActiveUserByUsername($username): bool
     {
         return $this->userFacade->hasActiveUserByUsername($username);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\UserCriteriaTransfer $userCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\UserTransfer|null
-     */
-    public function findUser(UserCriteriaTransfer $userCriteriaTransfer): ?UserTransfer
-    {
-        return $this->userFacade->findUser($userCriteriaTransfer);
     }
 
     /**
@@ -51,8 +41,18 @@ class OauthUserConnectorToUserFacadeBridge implements OauthUserConnectorToUserFa
      *
      * @return bool
      */
-    public function isValidPassword(string $password, string $hash): bool
+    public function isValidPassword($password, $hash): bool
     {
         return $this->userFacade->isValidPassword($password, $hash);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UserCriteriaTransfer $userCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\UserCollectionTransfer
+     */
+    public function getUserCollection(UserCriteriaTransfer $userCriteriaTransfer): UserCollectionTransfer
+    {
+        return $this->userFacade->getUserCollection($userCriteriaTransfer);
     }
 }

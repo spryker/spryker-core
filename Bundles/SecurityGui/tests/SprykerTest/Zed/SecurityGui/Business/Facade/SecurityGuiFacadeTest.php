@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\SecurityGui\Business\Facade;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\SecurityGui\Dependency\Facade\SecurityGuiToUserFacadeBridge;
 use Spryker\Zed\SecurityGui\SecurityGuiDependencyProvider;
 use Spryker\Zed\User\Business\UserFacadeInterface;
@@ -43,7 +44,8 @@ class SecurityGuiFacadeTest extends Unit
         $userFacadeMock->expects($this->once())
             ->method('setCurrentUser');
         $userFacadeMock->expects($this->once())
-            ->method('updateUser');
+            ->method('updateUser')
+            ->willReturn((new UserTransfer()));
 
         $userTransfer = $this->tester->haveUser();
 

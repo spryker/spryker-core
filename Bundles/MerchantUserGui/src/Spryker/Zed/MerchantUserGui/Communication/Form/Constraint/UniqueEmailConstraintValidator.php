@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantUserGui\Communication\Form\Constraint;
 
+use Generated\Shared\Transfer\UserConditionsTransfer;
 use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
@@ -28,10 +29,10 @@ class UniqueEmailConstraintValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, UniqueEmailConstraint::class);
         }
 
-        $userTransfer = $constraint->getMerchantUserFacade()->findUser(
-            (new UserCriteriaTransfer())->setEmail($value),
-        );
+        $userCriteriaTransfer = $this->createUserCriteriaTransfer($value);
+        $userCollectionTransfer = $constraint->getMerchantUserFacade()->getUserCollection($userCriteriaTransfer);
 
+        $userTransfer = $userCollectionTransfer->getUsers()->getIterator()->current();
         if (!$userTransfer) {
             return;
         }
@@ -44,5 +45,17 @@ class UniqueEmailConstraintValidator extends ConstraintValidator
                 ->setParameter('{{ username }}', $value)
                 ->addViolation();
         }
+    }
+
+    /**
+     * @param string $username
+     *
+     * @return \Generated\Shared\Transfer\UserCriteriaTransfer
+     */
+    protected function createUserCriteriaTransfer(string $username): UserCriteriaTransfer
+    {
+        $userConditionsTransfer = (new UserConditionsTransfer())->addUsername($username);
+
+        return (new UserCriteriaTransfer())->setUserConditions($userConditionsTransfer);
     }
 }

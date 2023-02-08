@@ -25,6 +25,13 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 class StockRepository extends AbstractRepository implements StockRepositoryInterface
 {
     /**
+     * @uses \Orm\Zed\Stock\Persistence\Map\SpyStockTableMap::COL_UUID
+     *
+     * @var string
+     */
+    protected const COLUMN_UUID = 'uuid';
+
+    /**
      * @return array<string>
      */
     public function getStockNames(): array
@@ -357,6 +364,10 @@ class StockRepository extends AbstractRepository implements StockRepositoryInter
             $stockQuery->filterByIsActive(true);
         }
 
+        if ($stockCriteriaFilterTransfer->getStockIds() !== []) {
+            $stockQuery->filterByIdStock_In($stockCriteriaFilterTransfer->getStockIds());
+        }
+
         if ($stockCriteriaFilterTransfer->getStockNames() !== []) {
             $stockQuery->filterByName_In($stockCriteriaFilterTransfer->getStockNames());
         }
@@ -367,6 +378,10 @@ class StockRepository extends AbstractRepository implements StockRepositoryInter
                     ->filterByName_In($stockCriteriaFilterTransfer->getStoreNames())
                 ->endUse()
                 ->endUse();
+        }
+
+        if ($stockCriteriaFilterTransfer->getUuids() !== [] && $stockQuery->getTableMap()->hasColumn(static::COLUMN_UUID)) {
+            $stockQuery->filterByUuid_In($stockCriteriaFilterTransfer->getUuids());
         }
 
         return $stockQuery;

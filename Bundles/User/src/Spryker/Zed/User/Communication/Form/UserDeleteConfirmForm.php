@@ -16,6 +16,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @method \Spryker\Zed\User\Persistence\UserQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\User\Business\UserFacadeInterface getFacade()
  * @method \Spryker\Zed\User\Communication\UserCommunicationFactory getFactory()
+ * @method \Spryker\Zed\User\Persistence\UserRepositoryInterface getRepository()
  */
 class UserDeleteConfirmForm extends AbstractType
 {

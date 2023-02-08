@@ -1,5 +1,104 @@
 {
     "error": [],
-    "warning": [],
-    "deprecation": []
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 207,
+            "line_to": 207,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\UserTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantUser/src/Spryker/Zed/MerchantUser/Business/Creator/MerchantUserCreator.php",
+            "snippet": "        return $userCollectionTransfer->getUsers()->getIterator()->current();",
+            "selected_text": "getIterator",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 74,
+            "line_to": 74,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\UserTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantUser/src/Spryker/Zed/MerchantUser/Business/Reader/MerchantUserReader.php",
+            "snippet": "        return $userCollectionTransfer->getUsers()->getIterator()->current();",
+            "selected_text": "getIterator",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 46,
+            "line_to": 46,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\UserTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantUser/src/Spryker/Zed/MerchantUser/Business/Reader/UserReader.php",
+            "snippet": "        return $userCollectionTransfer->getUsers()->getIterator()->current();",
+            "selected_text": "getIterator",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 153,
+            "line_to": 153,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\UserTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantUser/src/Spryker/Zed/MerchantUser/Business/Updater/MerchantUserUpdater.php",
+            "snippet": "        return $userCollectionTransfer->getUsers()->getIterator()->current();",
+            "selected_text": "getIterator",
+            "error_level": 3,
+            "shortcode": 113
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 69,
+            "line_to": 69,
+            "type": "DeprecatedMethod",
+            "message": "The method Generated\\Shared\\Transfer\\UserCriteriaTransfer::getEmail has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantUser/src/Spryker/Zed/MerchantUser/Business/Reader/UserReader.php",
+            "snippet": "        if ($userCriteriaTransfer->getEmail()) {",
+            "selected_text": "getEmail",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 70,
+            "line_to": 70,
+            "type": "DeprecatedMethod",
+            "message": "The method Generated\\Shared\\Transfer\\UserCriteriaTransfer::getEmailOrFail has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantUser/src/Spryker/Zed/MerchantUser/Business/Reader/UserReader.php",
+            "snippet": "            $userConditionsTransfer->addUsername($userCriteriaTransfer->getEmailOrFail());",
+            "selected_text": "getEmailOrFail",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 73,
+            "line_to": 73,
+            "type": "DeprecatedMethod",
+            "message": "The method Generated\\Shared\\Transfer\\UserCriteriaTransfer::getIdUser has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantUser/src/Spryker/Zed/MerchantUser/Business/Reader/UserReader.php",
+            "snippet": "        if ($userCriteriaTransfer->getIdUser()) {",
+            "selected_text": "getIdUser",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 74,
+            "line_to": 74,
+            "type": "DeprecatedMethod",
+            "message": "The method Generated\\Shared\\Transfer\\UserCriteriaTransfer::getIdUserOrFail has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantUser/src/Spryker/Zed/MerchantUser/Business/Reader/UserReader.php",
+            "snippet": "            $userConditionsTransfer->addIdUser($userCriteriaTransfer->getIdUserOrFail());",
+            "selected_text": "getIdUserOrFail",
+            "error_level": 2,
+            "shortcode": 1
+        }
+    ],
+    "count": 8
 }

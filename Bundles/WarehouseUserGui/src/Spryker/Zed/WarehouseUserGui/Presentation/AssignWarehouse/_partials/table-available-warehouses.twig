@@ -1,0 +1,37 @@
+<div class="tabs-container">
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#available-tab">{{ 'Select warehouses to assign' | trans }}</a></li>
+        <li><a data-toggle="tab" href="#to-be-assigned-tab" id="to-be-assigned-tab-label">{{ 'Warehouses to be assigned' | trans }}</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="available-tab" class="tab-pane active">
+            <div class="panel-body">
+                {{ availableWarehouses | raw }}
+                <button type="button" class="js-select-all-button btn btn-primary">{{ 'Select All' | trans }}</button>
+            </div>
+        </div>
+
+        <div id="to-be-assigned-tab" class="tab-pane">
+            <div class="panel-body">
+                <h3>{{ 'Selected warehouses' | trans }}</h3>
+
+                <table class="table table-striped table-bordered table-hover gui-table-data"
+                       id="to-be-assigned-tab-table"
+                       data-paging="false"
+                       data-remove-button-text="{{ 'Remove' | trans }}"
+                >
+                    <thead>
+                        <tr>
+                            <th>{{ 'Warehouse ID' | trans }}</th>
+                            <th>{{ 'Name' | trans }}</th>
+                            <th>{{ 'Status' | trans }}</th>
+                            <th>{{ 'Selected' | trans }}</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

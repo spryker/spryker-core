@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\UserLocale\Business\UserExpander;
 
+use Generated\Shared\Transfer\UserCollectionTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\UserLocale\Dependency\Facade\UserLocaleToLocaleFacadeBridgeInterface;
 
@@ -60,5 +61,59 @@ class UserExpander implements UserExpanderInterface
         }
 
         return $userTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UserCollectionTransfer $userCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\UserCollectionTransfer
+     */
+    public function expandUserCollectionWithLocale(UserCollectionTransfer $userCollectionTransfer): UserCollectionTransfer
+    {
+        if (!$this->isMissingLocaleData($userCollectionTransfer)) {
+            return $userCollectionTransfer;
+        }
+
+        $availableLocales = $this->localeFacade->getAvailableLocales();
+        $currentLocaleTransfer = $this->localeFacade->getCurrentLocale();
+        foreach ($userCollectionTransfer->getUsers() as $userTransfer) {
+            if (!$userTransfer->getFkLocale() && !$userTransfer->getLocaleName()) {
+                $userTransfer
+                    ->setLocaleName($currentLocaleTransfer->getLocaleNameOrFail())
+                    ->setFkLocale($currentLocaleTransfer->getIdLocaleOrFail());
+
+                continue;
+            }
+
+            if (!$userTransfer->getFkLocale()) {
+                $idLocale = array_search($userTransfer->getLocaleNameOrFail(), $availableLocales, true) ?: null;
+
+                $userTransfer->setFkLocale($idLocale);
+            }
+
+            if (!$userTransfer->getLocaleName()) {
+                $localeName = $availableLocales[$userTransfer->getFkLocaleOrFail()] ?? null;
+
+                $userTransfer->setLocaleName($localeName);
+            }
+        }
+
+        return $userCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UserCollectionTransfer $userCollectionTransfer
+     *
+     * @return bool
+     */
+    protected function isMissingLocaleData(UserCollectionTransfer $userCollectionTransfer): bool
+    {
+        foreach ($userCollectionTransfer->getUsers() as $userTransfer) {
+            if (!$userTransfer->getFkLocale() || !$userTransfer->getLocaleName()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

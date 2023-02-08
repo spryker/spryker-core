@@ -7,17 +7,12 @@
 
 namespace Spryker\Zed\SecurityGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\UserCollectionTransfer;
+use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 
 interface SecurityGuiToUserFacadeInterface
 {
-    /**
-     * @param string $username
-     *
-     * @return \Generated\Shared\Transfer\UserTransfer
-     */
-    public function getUserByUsername($username);
-
     /**
      * @param \Generated\Shared\Transfer\UserTransfer $user
      *
@@ -25,7 +20,7 @@ interface SecurityGuiToUserFacadeInterface
      *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
-    public function updateUser(UserTransfer $user);
+    public function updateUser(UserTransfer $user): UserTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\UserTransfer $user
@@ -39,5 +34,12 @@ interface SecurityGuiToUserFacadeInterface
      *
      * @return bool
      */
-    public function hasActiveUserByUsername($username);
+    public function hasActiveUserByUsername($username): bool;
+
+    /**
+     * @param \Generated\Shared\Transfer\UserCriteriaTransfer $userCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\UserCollectionTransfer
+     */
+    public function getUserCollection(UserCriteriaTransfer $userCriteriaTransfer): UserCollectionTransfer;
 }

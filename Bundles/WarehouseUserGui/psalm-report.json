@@ -1,0 +1,43 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 205,
+            "line_to": 205,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\UserTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/WarehouseUserGui/src/Spryker/Zed/WarehouseUserGui/Communication/Controller/AssignWarehouseController.php",
+            "snippet": "        if (!$userCollectionTransfer->getUsers()->count()) {",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 209,
+            "line_to": 209,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\UserTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/WarehouseUserGui/src/Spryker/Zed/WarehouseUserGui/Communication/Controller/AssignWarehouseController.php",
+            "snippet": "        return $userCollectionTransfer->getUsers()->getIterator()->current();",
+            "selected_text": "getIterator",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 207,
+            "line_to": 207,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/WarehouseUserGui/src/Spryker/Zed/WarehouseUserGui/Communication/Table/AbstractWarehouseTable.php",
+            "snippet": "            $stockEntity->getUuid(),",
+            "selected_text": "$stockEntity->getUuid()",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": [],
+    "count": 3
+}

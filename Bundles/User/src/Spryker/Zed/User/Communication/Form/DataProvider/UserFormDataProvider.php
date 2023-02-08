@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\User\Communication\Form\DataProvider;
 
+use Generated\Shared\Transfer\UserConditionsTransfer;
 use Generated\Shared\Transfer\UserCriteriaTransfer;
+use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\User\Business\UserFacadeInterface;
 use Spryker\Zed\User\Communication\Form\UserForm;
 use Spryker\Zed\User\Dependency\Plugin\GroupPluginInterface;
@@ -41,10 +43,7 @@ class UserFormDataProvider
      */
     public function getData($idUser)
     {
-        $userTransfer = $this->userFacade->findUser(
-            (new UserCriteriaTransfer())->setIdUser($idUser),
-        );
-
+        $userTransfer = $this->findUserTransfer($idUser);
         if ($userTransfer === null) {
             return null;
         }
@@ -112,5 +111,30 @@ class UserFormDataProvider
         }
 
         return $formData;
+    }
+
+    /**
+     * @param int $idUser
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer|null
+     */
+    protected function findUserTransfer(int $idUser): ?UserTransfer
+    {
+        $userCriteriaTransfer = $this->createUserCriteriaTransfer($idUser);
+        $userCollectionTransfer = $this->userFacade->getUserCollection($userCriteriaTransfer);
+
+        return $userCollectionTransfer->getUsers()->getIterator()->current();
+    }
+
+    /**
+     * @param int $idUser
+     *
+     * @return \Generated\Shared\Transfer\UserCriteriaTransfer
+     */
+    protected function createUserCriteriaTransfer(int $idUser): UserCriteriaTransfer
+    {
+        $userConditionsTransfer = (new UserConditionsTransfer())->addIdUser($idUser);
+
+        return (new UserCriteriaTransfer())->setUserConditions($userConditionsTransfer);
     }
 }

@@ -4,7 +4,8 @@
     "description": "UserExtension module",
     "license": "proprietary",
     "require": {
-        "php": ">=8.0"
+        "php": ">=8.0",
+        "spryker/transfer": "^3.27.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*",

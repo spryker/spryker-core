@@ -22,4 +22,17 @@
         <property name="email" type="string"/>
     </transfer>
 
+    <transfer name="UserCollection" strict="true">
+        <property name="users" type="User[]" singular="user"/>
+    </transfer>
+
+    <transfer name="UserConditions" strict="true">
+        <property name="usernames" type="string[]" singular="username"/>
+        <property name="statuses" type="string[]" singular="status"/>
+    </transfer>
+
+    <transfer name="UserCriteria">
+        <property name="userConditions" type="UserConditions" strict="true"/>
+    </transfer>
+
 </transfers>

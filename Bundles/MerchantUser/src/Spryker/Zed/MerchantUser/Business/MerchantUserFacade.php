@@ -10,6 +10,7 @@ namespace Spryker\Zed\MerchantUser\Business;
 use Generated\Shared\Transfer\MerchantUserCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantUserResponseTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
+use Generated\Shared\Transfer\UserCollectionTransfer;
 use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserPasswordResetRequestTransfer;
 use Generated\Shared\Transfer\UserTransfer;
@@ -107,6 +108,8 @@ class MerchantUserFacade extends AbstractFacade implements MerchantUserFacadeInt
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\MerchantUser\Business\MerchantUserFacade::getUserCollection()} instead.
+     *
      * @param \Generated\Shared\Transfer\UserCriteriaTransfer $userCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\UserTransfer|null
@@ -114,7 +117,7 @@ class MerchantUserFacade extends AbstractFacade implements MerchantUserFacadeInt
     public function findUser(UserCriteriaTransfer $userCriteriaTransfer): ?UserTransfer
     {
         return $this->getFactory()
-            ->getUserFacade()
+            ->createUserReader()
             ->findUser($userCriteriaTransfer);
     }
 
@@ -241,5 +244,21 @@ class MerchantUserFacade extends AbstractFacade implements MerchantUserFacadeInt
     public function filterUserRoles(UserTransfer $userTransfer, array $roles): array
     {
         return $this->getFactory()->createBackofficeMerchantUserRoleFilter()->filterUserRoles($userTransfer, $roles);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UserCriteriaTransfer $userCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\UserCollectionTransfer
+     */
+    public function getUserCollection(UserCriteriaTransfer $userCriteriaTransfer): UserCollectionTransfer
+    {
+        return $this->getFactory()
+            ->createUserReader()
+            ->getUserCollection($userCriteriaTransfer);
     }
 }

@@ -12,9 +12,9 @@ use Generated\Shared\Transfer\LocaleTransfer;
 interface UserMerchantPortalGuiToLocaleFacadeInterface
 {
     /**
-     * @return array
+     * @return array<string>
      */
-    public function getAvailableLocales();
+    public function getAvailableLocales(): array;
 
     /**
      * @param int $idLocale
@@ -23,7 +23,7 @@ interface UserMerchantPortalGuiToLocaleFacadeInterface
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getLocaleById($idLocale);
+    public function getLocaleById($idLocale): LocaleTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer

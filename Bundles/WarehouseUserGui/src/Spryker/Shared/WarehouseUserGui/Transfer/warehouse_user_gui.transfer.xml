@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="Button">
+        <property name="url" type="string"/>
+        <property name="title" type="string"/>
+        <property name="defaultOptions" type="array" singular="defaultOptions"/>
+    </transfer>
+
+    <transfer name="User">
+        <property name="idUser" type="int"/>
+        <property name="uuid" type="string" strict="true"/>
+    </transfer>
+
+    <transfer name="WarehouseUserAssignmentCollectionRequest" strict="true">
+        <property name="warehouseUserAssignments" type="WarehouseUserAssignment[]" singular="warehouseUserAssignment"/>
+    </transfer>
+
+    <transfer name="WarehouseUserAssignmentConditions" strict="true">
+        <property name="userUuids" type="string[]" singular="userUuid"/>
+        <property name="warehouseUuids" type="string[]" singular="warehouseUuid"/>
+    </transfer>
+
+    <transfer name="StockCollection">
+        <property name="stocks" type="Stock[]" singular="stock"/>
+    </transfer>
+
+    <transfer name="WarehouseUserAssignmentCriteria" strict="true">
+        <property name="warehouseUserAssignmentConditions" type="WarehouseUserAssignmentConditions"/>
+    </transfer>
+
+    <transfer name="WarehouseUserAssignmentCollection" strict="true">
+        <property name="warehouseUserAssignments" type="WarehouseUserAssignment[]" singular="warehouseUserAssignment"/>
+    </transfer>
+
+    <transfer name="WarehouseUserAssignmentCollectionDeleteCriteria" strict="true">
+        <property name="userUuids" type="string[]" singular="userUuid"/>
+        <property name="warehouseUuids" type="string[]" singular="warehouseUuid"/>
+    </transfer>
+
+    <transfer name="WarehouseUserAssignment" strict="true">
+        <property name="userUuid" type="string"/>
+        <property name="idWarehouseUserAssignment" type="int"/>
+        <property name="warehouse" type="Stock"/>
+    </transfer>
+
+    <transfer name="WarehouseUserAssignmentCollectionResponse" strict="true">
+    </transfer>
+
+    <transfer name="Stock">
+        <property name="idStock" type="int"/>
+        <property name="uuid" type="string" strict="true"/>
+    </transfer>
+
+    <transfer name="UserConditions" strict="true">
+        <property name="uuids" type="string[]" singular="uuid"/>
+    </transfer>
+
+    <transfer name="UserCriteria">
+        <property name="userConditions" type="UserConditions" strict="true"/>
+    </transfer>
+
+    <transfer name="UserCollection" strict="true">
+        <property name="users" type="User[]" singular="user"/>
+    </transfer>
+
+</transfers>

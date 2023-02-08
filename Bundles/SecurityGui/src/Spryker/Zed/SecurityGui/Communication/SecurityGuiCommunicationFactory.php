@@ -60,7 +60,10 @@ class SecurityGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createUserProvider(): UserProvider
     {
-        return new UserProvider($this->getUserRoleFilterPlugins());
+        return new UserProvider(
+            $this->getUserRoleFilterPlugins(),
+            $this->getUserLoginRestrictionPlugins(),
+        );
     }
 
     /**
@@ -136,5 +139,13 @@ class SecurityGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getUserRoleFilterPlugins(): array
     {
         return $this->getProvidedDependency(SecurityGuiDependencyProvider::PLUGINS_USER_ROLE_FILTER);
+    }
+
+    /**
+     * @return array<\Spryker\Zed\SecurityGuiExtension\Dependency\Plugin\UserLoginRestrictionPluginInterface>
+     */
+    public function getUserLoginRestrictionPlugins(): array
+    {
+        return $this->getProvidedDependency(SecurityGuiDependencyProvider::PLUGINS_USER_LOGIN_RESTRICTION);
     }
 }

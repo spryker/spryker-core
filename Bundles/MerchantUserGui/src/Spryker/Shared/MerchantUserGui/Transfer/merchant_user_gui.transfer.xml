@@ -49,7 +49,16 @@
     </transfer>
 
     <transfer name="UserCriteria">
-        <property name="email" type="string"/>
+        <property name="email" type="string" deprecated="Use UserConditions.usernames instead."/>
+        <property name="userConditions" type="UserConditions" strict="true"/>
+    </transfer>
+
+    <transfer name="UserCollection" strict="true">
+        <property name="users" type="User[]" singular="user"/>
+    </transfer>
+
+    <transfer name="UserConditions" strict="true">
+        <property name="usernames" type="string[]" singular="username"/>
     </transfer>
 
 </transfers>

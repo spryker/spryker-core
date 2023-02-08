@@ -7,8 +7,11 @@
 
 namespace Spryker\Zed\SecurityGui\Communication\Plugin\Security\Provider;
 
+use Generated\Shared\Transfer\UserConditionsTransfer;
+use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\SecurityGui\Communication\Exception\AccessDeniedException;
 use Spryker\Zed\SecurityGui\Communication\Security\User;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -22,19 +25,40 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
 class UserProvider extends AbstractPlugin implements UserProviderInterface
 {
     /**
+     * @uses \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS_ACTIVE
+     *
+     * @var string
+     */
+    protected const USER_STATUS_ACTIVE = 'active';
+
+    /**
      * @var array<\Spryker\Zed\SecurityGuiExtension\Dependency\Plugin\UserRoleFilterPluginInterface>
      */
     protected $userRoleFilterPlugins;
 
     /**
-     * @param array $userRoleFilterPlugins
+     * @var array<\Spryker\Zed\SecurityGuiExtension\Dependency\Plugin\UserLoginRestrictionPluginInterface>
      */
-    public function __construct(array $userRoleFilterPlugins)
+    protected array $userLoginRestrictionPlugins;
+
+    /**
+     * @param array<\Spryker\Zed\SecurityGuiExtension\Dependency\Plugin\UserRoleFilterPluginInterface> $userRoleFilterPlugins
+     * @param array<\Spryker\Zed\SecurityGuiExtension\Dependency\Plugin\UserLoginRestrictionPluginInterface> $userLoginRestrictionPlugins
+     */
+    public function __construct(array $userRoleFilterPlugins, array $userLoginRestrictionPlugins = [])
     {
         $this->userRoleFilterPlugins = $userRoleFilterPlugins;
+        $this->userLoginRestrictionPlugins = $userLoginRestrictionPlugins;
     }
 
     /**
+     * {@inheritDoc}
+     * - Finds user in the persistence by provided username.
+     * - Executes a stack of {@link \Spryker\Zed\SecurityGuiExtension\Dependency\Plugin\UserLoginRestrictionPluginInterface} plugins.
+     * - Throws {@link \Spryker\Zed\SecurityGui\Communication\Exception\AccessDeniedException} when user is restricted.
+     *
+     * @api
+     *
      * @param string $username
      *
      * @throws \Symfony\Component\Security\Core\Exception\UsernameNotFoundException
@@ -49,6 +73,8 @@ class UserProvider extends AbstractPlugin implements UserProviderInterface
             throw new UsernameNotFoundException();
         }
 
+        $this->executeUserLoginRestrictionPlugins($userTransfer);
+
         return $this->getFactory()
             ->createSecurityUser(
                 $userTransfer,
@@ -57,6 +83,13 @@ class UserProvider extends AbstractPlugin implements UserProviderInterface
     }
 
     /**
+     * {@inheritDoc}
+     * - Finds user in the persistence by provided UserInterface.username.
+     * - Executes a stack of {@link \Spryker\Zed\SecurityGuiExtension\Dependency\Plugin\UserLoginRestrictionPluginInterface} plugins.
+     * - Throws {@link \Spryker\Zed\SecurityGui\Communication\Exception\AccessDeniedException} when user is restricted.
+     *
+     * @api
+     *
      * @param \Symfony\Component\Security\Core\User\UserInterface $user
      *
      * @throws \Symfony\Component\Security\Core\Exception\UsernameNotFoundException
@@ -69,11 +102,13 @@ class UserProvider extends AbstractPlugin implements UserProviderInterface
             return $user;
         }
 
-        $userTransfer = $this->findUserTransfer($user);
+        $userTransfer = $this->findUserByUsername($user->getUsername());
 
         if ($userTransfer === null) {
             throw new UsernameNotFoundException();
         }
+
+        $this->executeUserLoginRestrictionPlugins($userTransfer);
 
         return $this->getFactory()
             ->createSecurityUser(
@@ -83,6 +118,10 @@ class UserProvider extends AbstractPlugin implements UserProviderInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param string $class
      *
      * @return bool
@@ -103,19 +142,10 @@ class UserProvider extends AbstractPlugin implements UserProviderInterface
             return null;
         }
 
-        return $this->getFactory()
-            ->getUserFacade()
-            ->getUserByUsername($username);
-    }
+        $userCriteriaTransfer = $this->createUserCriteriaTransfer($username);
+        $userCollectionTransfer = $this->getFactory()->getUserFacade()->getUserCollection($userCriteriaTransfer);
 
-    /**
-     * @param \Symfony\Component\Security\Core\User\UserInterface $user
-     *
-     * @return \Generated\Shared\Transfer\UserTransfer|null
-     */
-    protected function findUserTransfer(UserInterface $user): ?UserTransfer
-    {
-        return $this->findUserByUsername($user->getUsername());
+        return $userCollectionTransfer->getUsers()->getIterator()->current();
     }
 
     /**
@@ -132,5 +162,35 @@ class UserProvider extends AbstractPlugin implements UserProviderInterface
         }
 
         return $roles;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     *
+     * @throws \Spryker\Zed\SecurityGui\Communication\Exception\AccessDeniedException
+     *
+     * @return void
+     */
+    protected function executeUserLoginRestrictionPlugins(UserTransfer $userTransfer): void
+    {
+        foreach ($this->userLoginRestrictionPlugins as $userLoginRestrictionPlugin) {
+            if ($userLoginRestrictionPlugin->isRestricted($userTransfer)) {
+                throw new AccessDeniedException();
+            }
+        }
+    }
+
+    /**
+     * @param string $username
+     *
+     * @return \Generated\Shared\Transfer\UserCriteriaTransfer
+     */
+    protected function createUserCriteriaTransfer(string $username): UserCriteriaTransfer
+    {
+        $userConditionsTransfer = (new UserConditionsTransfer())
+            ->addUsername($username)
+            ->addStatus(static::USER_STATUS_ACTIVE);
+
+        return (new UserCriteriaTransfer())->setUserConditions($userConditionsTransfer);
     }
 }

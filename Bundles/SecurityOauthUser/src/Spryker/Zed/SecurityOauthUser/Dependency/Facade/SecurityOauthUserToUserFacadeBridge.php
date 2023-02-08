@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SecurityOauthUser\Dependency\Facade;
 
+use Generated\Shared\Transfer\UserCollectionTransfer;
 use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 
@@ -36,16 +37,6 @@ class SecurityOauthUserToUserFacadeBridge implements SecurityOauthUserToUserFaca
     }
 
     /**
-     * @param \Generated\Shared\Transfer\UserCriteriaTransfer $userCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\UserTransfer|null
-     */
-    public function findUser(UserCriteriaTransfer $userCriteriaTransfer): ?UserTransfer
-    {
-        return $this->userFacade->findUser($userCriteriaTransfer);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
      *
      * @return \Generated\Shared\Transfer\UserTransfer
@@ -53,5 +44,15 @@ class SecurityOauthUserToUserFacadeBridge implements SecurityOauthUserToUserFaca
     public function createUser(UserTransfer $userTransfer): UserTransfer
     {
         return $this->userFacade->createUser($userTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UserCriteriaTransfer $userCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\UserCollectionTransfer
+     */
+    public function getUserCollection(UserCriteriaTransfer $userCriteriaTransfer): UserCollectionTransfer
+    {
+        return $this->userFacade->getUserCollection($userCriteriaTransfer);
     }
 }

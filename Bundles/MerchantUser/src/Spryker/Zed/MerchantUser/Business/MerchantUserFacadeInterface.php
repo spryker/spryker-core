@@ -10,6 +10,7 @@ namespace Spryker\Zed\MerchantUser\Business;
 use Generated\Shared\Transfer\MerchantUserCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantUserResponseTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
+use Generated\Shared\Transfer\UserCollectionTransfer;
 use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserPasswordResetRequestTransfer;
 use Generated\Shared\Transfer\UserTransfer;
@@ -92,6 +93,8 @@ interface MerchantUserFacadeInterface
      * - Returns null otherwise.
      *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\MerchantUser\Business\MerchantUserFacadeInterface::getUserCollection()} instead.
      *
      * @param \Generated\Shared\Transfer\UserCriteriaTransfer $userCriteriaTransfer
      *
@@ -210,4 +213,23 @@ interface MerchantUserFacadeInterface
      * @return array<string>
      */
     public function filterUserRoles(UserTransfer $userTransfer, array $roles): array;
+
+    /**
+     * Specification:
+     * - Fetches collection of Users from the persistence.
+     * - Uses `UserCriteriaTransfer.UserConditions.userIds` to filter users by userIds.
+     * - Uses `UserCriteriaTransfer.UserConditions.usernames` to filter users by usernames (emails).
+     * - Uses `UserCriteriaTransfer.UserConditions.statuses` to filter users by statuses.
+     * - Uses `UserCriteriaTransfer.UserConditions.uuids` to filter users by uuids if `spy_users.uuid` column exists.
+     * - Executes a stack of {@link \Spryker\Zed\UserExtension\Dependency\Plugin\UserExpanderPluginInterface} plugins.
+     * - If `UserCriteriaTransfer.UserConditions.throwException` is set to `true`, method will throw {@link \Spryker\Zed\User\Business\Exception\UserNotFoundException} in case of no user was found.
+     * - Returns `UserCollectionTransfer` filled with found users.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UserCriteriaTransfer $userCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\UserCollectionTransfer
+     */
+    public function getUserCollection(UserCriteriaTransfer $userCriteriaTransfer): UserCollectionTransfer;
 }

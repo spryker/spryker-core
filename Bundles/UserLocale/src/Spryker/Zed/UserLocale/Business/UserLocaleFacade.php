@@ -8,6 +8,7 @@
 namespace Spryker\Zed\UserLocale\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\UserCollectionTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -20,6 +21,8 @@ class UserLocaleFacade extends AbstractFacade implements UserLocaleFacadeInterfa
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\UserLocale\Business\UserLocaleFacade::expandUserCollectionWithLocale()} instead.
      *
      * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
      *
@@ -42,5 +45,21 @@ class UserLocaleFacade extends AbstractFacade implements UserLocaleFacadeInterfa
     public function getCurrentUserLocale(): LocaleTransfer
     {
         return $this->getFactory()->createUserLocaleReader()->getCurrentUserLocaleTransfer();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UserCollectionTransfer $userCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\UserCollectionTransfer
+     */
+    public function expandUserCollectionWithLocale(UserCollectionTransfer $userCollectionTransfer): UserCollectionTransfer
+    {
+        return $this->getFactory()
+            ->createUserExpander()
+            ->expandUserCollectionWithLocale($userCollectionTransfer);
     }
 }

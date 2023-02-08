@@ -1,5 +1,55 @@
 {
     "error": [],
-    "warning": [],
-    "deprecation": []
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 66,
+            "line_to": 66,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $oauthScopeTransferMap[null|string] using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/OauthUserConnector/src/Spryker/Zed/OauthUserConnector/Business/Installer/OauthUserScopeInstaller.php",
+            "snippet": "            $oauthScopeTransferMap[$oauthScopeTransfer->getIdentifier()] = $oauthScopeTransfer;",
+            "selected_text": "$oauthScopeTransferMap",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 36,
+            "line_to": 36,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\OauthScopeTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/OauthUserConnector/src/Spryker/Zed/OauthUserConnector/Business/Provider/ScopeProvider.php",
+            "snippet": "        $scopes = $oauthScopeRequestTransfer->getDefaultScopes()->getArrayCopy();",
+            "selected_text": "getArrayCopy",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 86,
+            "line_to": 86,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\OauthUserConnector\\Business\\Provider\\UserProvider::createUserCriteriaTransfer cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/OauthUserConnector/src/Spryker/Zed/OauthUserConnector/Business/Provider/UserProvider.php",
+            "snippet": "        $userCriteriaTransfer = $this->createUserCriteriaTransfer($oauthUserTransfer->getUsername());",
+            "selected_text": "$oauthUserTransfer->getUsername()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 89,
+            "line_to": 89,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\UserTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/OauthUserConnector/src/Spryker/Zed/OauthUserConnector/Business/Provider/UserProvider.php",
+            "snippet": "        return $userCollectionTransfer->getUsers()->getIterator()->current();",
+            "selected_text": "getIterator",
+            "error_level": 3,
+            "shortcode": 113
+        }
+    ],
+    "deprecation": [],
+    "count": 4
 }

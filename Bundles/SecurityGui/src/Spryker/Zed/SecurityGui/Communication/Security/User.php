@@ -48,7 +48,7 @@ class User implements UserInterface
     /**
      * @return array<string>
      */
-    public function getRoles()
+    public function getRoles(): array
     {
         return $this->roles;
     }
@@ -56,7 +56,7 @@ class User implements UserInterface
     /**
      * @return string|null
      */
-    public function getSalt()
+    public function getSalt(): ?string
     {
         return null;
     }
@@ -64,7 +64,7 @@ class User implements UserInterface
     /**
      * @return string
      */
-    public function getUsername()
+    public function getUsername(): string
     {
         return $this->username;
     }
@@ -72,7 +72,7 @@ class User implements UserInterface
     /**
      * @return string|null
      */
-    public function getPassword()
+    public function getPassword(): ?string
     {
         return $this->password;
     }
@@ -80,7 +80,7 @@ class User implements UserInterface
     /**
      * @return void
      */
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
     }
 

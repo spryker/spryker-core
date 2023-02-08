@@ -52,6 +52,8 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_USER_PRE_SAVE = 'PLUGINS_USER_PRE_SAVE';
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\User\UserDependencyProvider::PLUGINS_USER_EXPANDER} instead.
+     *
      * @var string
      */
     public const PLUGINS_USER_TRANSFER_EXPANDER = 'PLUGINS_USER_TRANSFER_EXPANDER';
@@ -60,6 +62,11 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
      * @var string
      */
     public const PLUGINS_USER_FORM_EXPANDER = 'PLUGINS_USER_FORM_EXPANDER';
+
+    /**
+     * @var string
+     */
+    public const PLUGINS_USER_EXPANDER = 'PLUGINS_USER_EXPANDER';
 
     /**
      * @var string
@@ -82,6 +89,7 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addPostSavePlugins($container);
         $container = $this->addUserPreSavePlugins($container);
         $container = $this->addUserTransferExpanderPlugins($container);
+        $container = $this->addUserExpanderPlugins($container);
 
         return $container;
     }
@@ -236,6 +244,8 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\User\UserDependencyProvider::addUserExpanderPlugins()} instead.
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -250,6 +260,8 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\User\UserDependencyProvider::getUserExpanderPlugins()} instead.
+     *
      * @return array<\Spryker\Zed\UserExtension\Dependency\Plugin\UserPreSavePluginInterface>
      */
     protected function getUserTransferExpanderPlugins(): array
@@ -319,6 +331,28 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
      * @return array<\Spryker\Zed\UserExtension\Dependency\Plugin\UserFormExpanderPluginInterface>
      */
     protected function getUserFormExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUserExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_USER_EXPANDER, function () {
+            return $this->getUserExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Zed\UserExtension\Dependency\Plugin\UserExpanderPluginInterface>
+     */
+    protected function getUserExpanderPlugins(): array
     {
         return [];
     }

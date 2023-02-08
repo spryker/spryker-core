@@ -7,22 +7,26 @@
 
 namespace Spryker\Zed\CmsUserConnector\Dependency\Facade;
 
+use Generated\Shared\Transfer\UserCollectionTransfer;
+use Generated\Shared\Transfer\UserCriteriaTransfer;
+use Generated\Shared\Transfer\UserTransfer;
+
 interface CmsUserConnectorToUserInterface
 {
     /**
      * @return \Generated\Shared\Transfer\UserTransfer
      */
-    public function getCurrentUser();
+    public function getCurrentUser(): UserTransfer;
 
     /**
      * @return bool
      */
-    public function hasCurrentUser();
+    public function hasCurrentUser(): bool;
 
     /**
-     * @param int $idUser
+     * @param \Generated\Shared\Transfer\UserCriteriaTransfer $userCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\UserTransfer
+     * @return \Generated\Shared\Transfer\UserCollectionTransfer
      */
-    public function getUserById($idUser);
+    public function getUserCollection(UserCriteriaTransfer $userCriteriaTransfer): UserCollectionTransfer;
 }

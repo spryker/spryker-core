@@ -1,0 +1,28 @@
+"Warehouse user","Warehouse user"
+"User could not be found.","User could not be found."
+"User uuid is missing.","User uuid is missing."
+"Warehouse user assignments are updated.","Warehouse user assignments are updated."
+"Assign warehouses","Assign warehouses"
+"Assign Warehouse to User","Assign Warehouse to User"
+"List Users","List Users"
+"A warehouse can be assigned to multiple users at a time.","A warehouse can be assigned to multiple users at a time."
+Remove,Remove
+Save,Save
+"Deselect All","Deselect All"
+"Deselected warehouses","Deselected warehouses"
+Inactive,Inactive
+Active,Active
+"Warehouse ID","Warehouse ID"
+Name,Name
+Status,Status
+Assigned,Assigned
+Assign,Assign
+Selected,Selected
+"Select All","Select All"
+"List of warehouses","List of warehouses"
+"Assigned warehouses","Assigned warehouses"
+"Warehouses to be deassigned","Warehouses to be deassigned"
+"Select warehouses to assign","Select warehouses to assign"
+"Warehouses to be assigned","Warehouses to be assigned"
+"Selected warehouses","Selected warehouses"
+"This user is a warehouse user","This user is a warehouse user"

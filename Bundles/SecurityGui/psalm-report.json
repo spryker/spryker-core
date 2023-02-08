@@ -3,6 +3,18 @@
     "warning": [
         {
             "severity": "info",
+            "line_from": 148,
+            "line_to": 148,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\UserTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/SecurityGui/src/Spryker/Zed/SecurityGui/Communication/Plugin/Security/Provider/UserProvider.php",
+            "snippet": "        return $userCollectionTransfer->getUsers()->getIterator()->current();",
+            "selected_text": "getIterator",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
             "line_from": 26,
             "line_to": 26,
             "type": "MissingReturnType",
@@ -29,8 +41,8 @@
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 49,
-            "line_to": 49,
+            "line_from": 73,
+            "line_to": 73,
             "type": "DeprecatedClass",
             "message": "Symfony\\Component\\Security\\Core\\Exception\\UsernameNotFoundException is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/SecurityGui/src/Spryker/Zed/SecurityGui/Communication/Plugin/Security/Provider/UserProvider.php",
@@ -41,8 +53,8 @@
         },
         {
             "severity": "info",
-            "line_from": 75,
-            "line_to": 75,
+            "line_from": 108,
+            "line_to": 108,
             "type": "DeprecatedClass",
             "message": "Symfony\\Component\\Security\\Core\\Exception\\UsernameNotFoundException is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/SecurityGui/src/Spryker/Zed/SecurityGui/Communication/Plugin/Security/Provider/UserProvider.php",
@@ -50,18 +62,7 @@
             "selected_text": "new UsernameNotFoundException()",
             "error_level": 2,
             "shortcode": 98
-        },
-        {
-            "severity": "info",
-            "line_from": 118,
-            "line_to": 118,
-            "type": "DeprecatedMethod",
-            "message": "The method Symfony\\Component\\Security\\Core\\User\\UserInterface::getUsername has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/SecurityGui/src/Spryker/Zed/SecurityGui/Communication/Plugin/Security/Provider/UserProvider.php",
-            "snippet": "        return $this->findUserByUsername($user->getUsername());",
-            "selected_text": "getUsername",
-            "error_level": 2,
-            "shortcode": 1
         }
-    ]
+    ],
+    "count": 5
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SecurityOauthUser\Business\Strategy;
 
+use Generated\Shared\Transfer\UserConditionsTransfer;
 use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\SecurityOauthUser\Dependency\Facade\SecurityOauthUserToUserFacadeInterface;
@@ -52,12 +53,15 @@ class ExistingUserAuthenticationStrategy implements AuthenticationStrategyInterf
     public function resolveOauthUser(UserCriteriaTransfer $userCriteriaTransfer): ?UserTransfer
     {
         $userCriteriaTransfer->requireEmail();
+        $userConditionsTransfer = (new UserConditionsTransfer())->addUsername($userCriteriaTransfer->getEmailOrFail());
+        $userCriteriaTransfer->setUserConditions($userConditionsTransfer);
 
-        $userTransfer = $this->userFacade->findUser($userCriteriaTransfer);
-        if ($userTransfer === null) {
+        $userCollectionTransfer = $this->userFacade->getUserCollection($userCriteriaTransfer);
+        if ($userCollectionTransfer->getUsers()->count() === 0) {
             return null;
         }
 
+        $userTransfer = $userCollectionTransfer->getUsers()->getIterator()->current();
         if ($userTransfer->getStatus() !== $this->securityOauthUserConfig->getOauthUserStatusActive()) {
             return null;
         }

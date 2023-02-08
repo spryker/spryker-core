@@ -1,0 +1,23 @@
+namespace: SprykerTest\Zed\WarehouseUserGui
+
+paths:
+    tests: .
+    data: ../../../_data
+    support: _support
+    output: ../../../_output
+
+coverage:
+    enabled: true
+    remote: false
+    whitelist:
+        include:
+            - '../../../../src/*'
+
+suites:
+    Communication:
+        path: Communication
+        actor: WarehouseUserGuiCommunicationTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment

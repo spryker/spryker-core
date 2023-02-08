@@ -29,10 +29,12 @@
     </transfer>
 
     <transfer name="StockCriteriaFilter">
-        <property name="idStock" type="int"/>
+        <property name="idStock" type="int" deprecated="Use stockIds property instead."/>
         <property name="isActive" type="bool"/>
         <property name="storeNames" type="string[]" singular="storeName"/>
         <property name="stockNames" type="string[]" singular="stockName"/>
+        <property name="stockIds" type="int[]" singular="idStock" strict="true"/>
+        <property name="uuids" type="string[]" singular="uuid" strict="true"/>
     </transfer>
 
     <transfer name="StockResponse">

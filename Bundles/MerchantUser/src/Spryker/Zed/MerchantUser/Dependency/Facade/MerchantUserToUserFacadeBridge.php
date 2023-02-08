@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantUser\Dependency\Facade;
 
+use Generated\Shared\Transfer\UserCollectionTransfer;
 use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 
@@ -40,7 +41,7 @@ class MerchantUserToUserFacadeBridge implements MerchantUserToUserFacadeInterfac
      *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
-    public function updateUser(UserTransfer $user)
+    public function updateUser(UserTransfer $user): UserTransfer
     {
         return $this->userFacade->updateUser($user);
     }
@@ -50,7 +51,7 @@ class MerchantUserToUserFacadeBridge implements MerchantUserToUserFacadeInterfac
      *
      * @return bool
      */
-    public function deactivateUser($idUser)
+    public function deactivateUser($idUser): bool
     {
         return $this->userFacade->deactivateUser($idUser);
     }
@@ -60,25 +61,15 @@ class MerchantUserToUserFacadeBridge implements MerchantUserToUserFacadeInterfac
      *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
-    public function removeUser($idUser)
+    public function removeUser($idUser): UserTransfer
     {
         return $this->userFacade->removeUser($idUser);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\UserCriteriaTransfer $userCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\UserTransfer|null
-     */
-    public function findUser(UserCriteriaTransfer $userCriteriaTransfer): ?UserTransfer
-    {
-        return $this->userFacade->findUser($userCriteriaTransfer);
-    }
-
-    /**
      * @return \Generated\Shared\Transfer\UserTransfer
      */
-    public function getCurrentUser()
+    public function getCurrentUser(): UserTransfer
     {
         return $this->userFacade->getCurrentUser();
     }
@@ -99,8 +90,18 @@ class MerchantUserToUserFacadeBridge implements MerchantUserToUserFacadeInterfac
      *
      * @return bool
      */
-    public function isValidPassword($password, $hash)
+    public function isValidPassword($password, $hash): bool
     {
         return $this->userFacade->isValidPassword($password, $hash);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UserCriteriaTransfer $userCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\UserCollectionTransfer
+     */
+    public function getUserCollection(UserCriteriaTransfer $userCriteriaTransfer): UserCollectionTransfer
+    {
+        return $this->userFacade->getUserCollection($userCriteriaTransfer);
     }
 }

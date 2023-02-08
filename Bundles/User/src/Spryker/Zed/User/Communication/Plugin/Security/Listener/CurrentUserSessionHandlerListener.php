@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\User\Communication\Plugin\Security\Listener;
 
+use Generated\Shared\Transfer\UserConditionsTransfer;
+use Generated\Shared\Transfer\UserCriteriaTransfer;
+use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\User\Business\UserFacadeInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -70,7 +73,7 @@ class CurrentUserSessionHandlerListener extends AbstractListener
             return;
         }
 
-        $currentUser = $this->userFacade->getUserByUsername(
+        $currentUser = $this->getUserTransfer(
             $token->getUser()->getUsername(),
         );
 
@@ -79,5 +82,32 @@ class CurrentUserSessionHandlerListener extends AbstractListener
         $event->setResponse(
             new RedirectResponse($event->getRequest()->getPathInfo()),
         );
+    }
+
+    /**
+     * @param string $username
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer
+     */
+    protected function getUserTransfer(string $username): UserTransfer
+    {
+        $userCriteriaTransfer = $this->createUserCriteriaTransfer($username);
+        $userCollectionTransfer = $this->userFacade->getUserCollection($userCriteriaTransfer);
+
+        return $userCollectionTransfer->getUsers()->getIterator()->current();
+    }
+
+    /**
+     * @param string $username
+     *
+     * @return \Generated\Shared\Transfer\UserCriteriaTransfer
+     */
+    protected function createUserCriteriaTransfer(string $username): UserCriteriaTransfer
+    {
+        $userConditionsTransfer = (new UserConditionsTransfer())
+            ->addUsername($username)
+            ->setThrowUserNotFoundException(true);
+
+        return (new UserCriteriaTransfer())->setUserConditions($userConditionsTransfer);
     }
 }

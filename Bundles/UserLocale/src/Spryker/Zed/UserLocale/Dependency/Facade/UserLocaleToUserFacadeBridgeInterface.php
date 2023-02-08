@@ -7,15 +7,17 @@
 
 namespace Spryker\Zed\UserLocale\Dependency\Facade;
 
+use Generated\Shared\Transfer\UserTransfer;
+
 interface UserLocaleToUserFacadeBridgeInterface
 {
     /**
      * @return \Generated\Shared\Transfer\UserTransfer
      */
-    public function getCurrentUser();
+    public function getCurrentUser(): UserTransfer;
 
     /**
      * @return bool
      */
-    public function hasCurrentUser();
+    public function hasCurrentUser(): bool;
 }

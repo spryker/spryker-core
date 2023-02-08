@@ -1,0 +1,115 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 71,
+            "line_to": 71,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\WarehouseUser\\Business\\Expander\\WarehouseUserAssignmentExpanderInterface::expandWarehouseUserAssignmentTransfersWithWarehouses expects ArrayObject<array-key, Generated\\Shared\\Transfer\\WarehouseUserAssignmentTransfer>, but possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\WarehouseUserAssignmentTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/WarehouseUser/src/Spryker/Zed/WarehouseUser/Business/Creator/WarehouseUserAssignmentCreator.php",
+            "snippet": "            $warehouseUserAssignmentCollectionRequestTransfer->getWarehouseUserAssignments(),",
+            "selected_text": "$warehouseUserAssignmentCollectionRequestTransfer->getWarehouseUserAssignments()",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 79,
+            "line_to": 79,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ErrorTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/WarehouseUser/src/Spryker/Zed/WarehouseUser/Business/Creator/WarehouseUserAssignmentCreator.php",
+            "snippet": "            && $warehouseUserAssignmentCollectionResponseTransfer->getErrors()->count() !== 0",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 124,
+            "line_to": 124,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\WarehouseUser\\Business\\Creator\\WarehouseUserAssignmentCreator::getErroredWarehouseUserAssignmentsIdentifiers expects ArrayObject<array-key, Generated\\Shared\\Transfer\\ErrorTransfer>, but possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ErrorTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/WarehouseUser/src/Spryker/Zed/WarehouseUser/Business/Creator/WarehouseUserAssignmentCreator.php",
+            "snippet": "            $warehouseUserAssignmentCollectionResponseTransfer->getErrors(),",
+            "selected_text": "$warehouseUserAssignmentCollectionResponseTransfer->getErrors()",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 62,
+            "line_to": 62,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\WarehouseUser\\Business\\Validator\\WarehouseUserAssignmentValidatorInterface::validateCollection expects ArrayObject<array-key, Generated\\Shared\\Transfer\\WarehouseUserAssignmentTransfer>, but possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\WarehouseUserAssignmentTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/WarehouseUser/src/Spryker/Zed/WarehouseUser/Business/Updater/WarehouseUserAssignmentUpdater.php",
+            "snippet": "            $warehouseUserAssignmentCollectionRequestTransfer->getWarehouseUserAssignments(),",
+            "selected_text": "$warehouseUserAssignmentCollectionRequestTransfer->getWarehouseUserAssignments()",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 64,
+            "line_to": 64,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ErrorTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/WarehouseUser/src/Spryker/Zed/WarehouseUser/Business/Updater/WarehouseUserAssignmentUpdater.php",
+            "snippet": "        if ($warehouseUserAssignmentCollectionRequestTransfer->getIsTransactional() && $warehouseUserAssignmentCollectionResponseTransfer->getErrors()->count()) {",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 107,
+            "line_to": 107,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\WarehouseUser\\Business\\Updater\\WarehouseUserAssignmentUpdater::getErroredWarehouseUserAssignmentsIdentifiers expects ArrayObject<array-key, Generated\\Shared\\Transfer\\ErrorTransfer>, but possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ErrorTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/WarehouseUser/src/Spryker/Zed/WarehouseUser/Business/Updater/WarehouseUserAssignmentUpdater.php",
+            "snippet": "        $warehouseUserAssignmentIdsWithErrors = $this->getErroredWarehouseUserAssignmentsIdentifiers($warehouseUserAssignmentCollectionResponseTransfer->getErrors());",
+            "selected_text": "$warehouseUserAssignmentCollectionResponseTransfer->getErrors()",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 56,
+            "line_to": 56,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\WarehouseUser\\Persistence\\Propel\\Mapper\\WarehouseUserMapper::mapWarehouseUserAssignmentTransferToWarehouseUserAssignmentEntity cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/WarehouseUser/src/Spryker/Zed/WarehouseUser/Persistence/WarehouseUserEntityManager.php",
+            "snippet": "            $warehouseUserAssignmentEntity,",
+            "selected_text": "$warehouseUserAssignmentEntity",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 76,
+            "line_to": 76,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\WarehouseUserAssignmentTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/WarehouseUser/src/Spryker/Zed/WarehouseUser/Persistence/WarehouseUserEntityManager.php",
+            "snippet": "        }, $warehouseUserAssignmentCollectionTransfer->getWarehouseUserAssignments()->getArrayCopy());",
+            "selected_text": "getArrayCopy",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 46,
+            "line_to": 46,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 2 of Spryker\\Zed\\WarehouseUser\\Persistence\\WarehouseUserRepository::applyWarehouseUserAssignmentSorting expects ArrayObject<array-key, Generated\\Shared\\Transfer\\SortTransfer>, but possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\SortTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/WarehouseUser/src/Spryker/Zed/WarehouseUser/Persistence/WarehouseUserRepository.php",
+            "snippet": "            $warehouseUserAssignmentCriteriaTransfer->getSortCollection(),",
+            "selected_text": "$warehouseUserAssignmentCriteriaTransfer->getSortCollection()",
+            "error_level": 3,
+            "shortcode": 92
+        }
+    ],
+    "deprecation": [],
+    "count": 9
+}

@@ -1,0 +1,9 @@
+[
+    {
+        "fileName": "src/Spryker/Zed/WarehouseUser/Dependency/Facade/WarehouseUserToStockFacadeBridge.php",
+        "description": "Bridges: Method `getStocksByStockCriteriaFilter()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

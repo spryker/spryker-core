@@ -8,6 +8,9 @@
 namespace Spryker\Zed\CmsUserConnector\Business\Version;
 
 use Generated\Shared\Transfer\CmsVersionTransfer;
+use Generated\Shared\Transfer\UserConditionsTransfer;
+use Generated\Shared\Transfer\UserCriteriaTransfer;
+use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\CmsUserConnector\Dependency\Facade\CmsUserConnectorToUserInterface;
 
 class CmsVersionUserExpander implements CmsVersionUserExpanderInterface
@@ -36,10 +39,37 @@ class CmsVersionUserExpander implements CmsVersionUserExpanderInterface
             return $cmsVersionTransfer;
         }
 
-        $userTransfer = $this->userFacade->getUserById($cmsVersionTransfer->getFkUser());
+        $userTransfer = $this->getUserTransfer($cmsVersionTransfer->getFkUser());
         $cmsVersionTransfer->setFirstName($userTransfer->getFirstName());
         $cmsVersionTransfer->setLastName($userTransfer->getLastName());
 
         return $cmsVersionTransfer;
+    }
+
+    /**
+     * @param int $idUser
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer
+     */
+    protected function getUserTransfer(int $idUser): UserTransfer
+    {
+        $userCriteriaTransfer = $this->createUserCriteriaTransfer($idUser);
+        $userCollectionTransfer = $this->userFacade->getUserCollection($userCriteriaTransfer);
+
+        return $userCollectionTransfer->getUsers()->getIterator()->current();
+    }
+
+    /**
+     * @param int $idUser
+     *
+     * @return \Generated\Shared\Transfer\UserCriteriaTransfer
+     */
+    protected function createUserCriteriaTransfer(int $idUser): UserCriteriaTransfer
+    {
+        $userConditionsTransfer = (new UserConditionsTransfer())
+            ->addIdUser($idUser)
+            ->setThrowUserNotFoundException(true);
+
+        return (new UserCriteriaTransfer())->setUserConditions($userConditionsTransfer);
     }
 }

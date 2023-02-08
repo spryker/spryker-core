@@ -13,11 +13,14 @@ use Spryker\Zed\User\Business\Expander\MailExpander;
 use Spryker\Zed\User\Business\Expander\MailExpanderInterface;
 use Spryker\Zed\User\Business\Model\Installer;
 use Spryker\Zed\User\Business\Model\User;
+use Spryker\Zed\User\Business\Reader\UserReader;
+use Spryker\Zed\User\Business\Reader\UserReaderInterface;
 use Spryker\Zed\User\UserDependencyProvider;
 
 /**
  * @method \Spryker\Zed\User\UserConfig getConfig()
  * @method \Spryker\Zed\User\Persistence\UserQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\User\Persistence\UserRepositoryInterface getRepository()
  */
 class UserBusinessFactory extends AbstractBusinessFactory
 {
@@ -41,6 +44,18 @@ class UserBusinessFactory extends AbstractBusinessFactory
             $this->getPostSavePlugins(),
             $this->getUserPreSavePlugins(),
             $this->getUserTransferExpanderPlugins(),
+            $this->getUserExpanderPlugins(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\User\Business\Reader\UserReaderInterface
+     */
+    public function createUserReader(): UserReaderInterface
+    {
+        return new UserReader(
+            $this->getRepository(),
+            $this->getUserExpanderPlugins(),
         );
     }
 
@@ -61,6 +76,8 @@ class UserBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\User\Business\UserBusinessFactory::getUserExpanderPlugins()} instead.
+     *
      * @return array<\Spryker\Zed\UserExtension\Dependency\Plugin\UserTransferExpanderPluginInterface>
      */
     public function getUserTransferExpanderPlugins(): array
@@ -86,5 +103,13 @@ class UserBusinessFactory extends AbstractBusinessFactory
             $this->createUserModel(),
             $this->getConfig(),
         );
+    }
+
+    /**
+     * @return array<\Spryker\Zed\UserExtension\Dependency\Plugin\UserExpanderPluginInterface>
+     */
+    public function getUserExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(UserDependencyProvider::PLUGINS_USER_EXPANDER);
     }
 }

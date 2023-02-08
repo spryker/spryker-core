@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Acl\Dependency\Facade;
 
+use Generated\Shared\Transfer\UserCollectionTransfer;
+use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 
 class AclToUserBridge implements AclToUserInterface
@@ -35,16 +37,6 @@ class AclToUserBridge implements AclToUserInterface
     }
 
     /**
-     * @param string $username
-     *
-     * @return \Generated\Shared\Transfer\UserTransfer
-     */
-    public function getUserByUsername(string $username): UserTransfer
-    {
-        return $this->userFacade->getUserByUsername($username);
-    }
-
-    /**
      * @return bool
      */
     public function hasCurrentUser(): bool
@@ -58,5 +50,15 @@ class AclToUserBridge implements AclToUserInterface
     public function getCurrentUser(): UserTransfer
     {
         return $this->userFacade->getCurrentUser();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UserCriteriaTransfer $userCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\UserCollectionTransfer
+     */
+    public function getUserCollection(UserCriteriaTransfer $userCriteriaTransfer): UserCollectionTransfer
+    {
+        return $this->userFacade->getUserCollection($userCriteriaTransfer);
     }
 }

@@ -10,8 +10,8 @@ namespace Spryker\Zed\UserMerchantPortalGui\Dependency\Facade;
 use Generated\Shared\Transfer\MerchantUserCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantUserResponseTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
+use Generated\Shared\Transfer\UserCollectionTransfer;
 use Generated\Shared\Transfer\UserCriteriaTransfer;
-use Generated\Shared\Transfer\UserTransfer;
 
 interface UserMerchantPortalGuiToMerchantUserFacadeInterface
 {
@@ -37,13 +37,6 @@ interface UserMerchantPortalGuiToMerchantUserFacadeInterface
     ): MerchantUserResponseTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\UserCriteriaTransfer $userCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\UserTransfer|null
-     */
-    public function findUser(UserCriteriaTransfer $userCriteriaTransfer): ?UserTransfer;
-
-    /**
      * @param \Generated\Shared\Transfer\MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantUserTransfer|null
@@ -56,5 +49,12 @@ interface UserMerchantPortalGuiToMerchantUserFacadeInterface
      *
      * @return bool
      */
-    public function isValidPassword($password, $hash);
+    public function isValidPassword($password, $hash): bool;
+
+    /**
+     * @param \Generated\Shared\Transfer\UserCriteriaTransfer $userCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\UserCollectionTransfer
+     */
+    public function getUserCollection(UserCriteriaTransfer $userCriteriaTransfer): UserCollectionTransfer;
 }

@@ -3,15 +3,27 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 39,
-            "line_to": 39,
+            "line_from": 42,
+            "line_to": 42,
             "type": "PossiblyNullArgument",
-            "message": "Argument 1 of Spryker\\Zed\\CmsUserConnector\\Dependency\\Facade\\CmsUserConnectorToUserInterface::getUserById cannot be null, possibly null value provided",
+            "message": "Argument 1 of Spryker\\Zed\\CmsUserConnector\\Business\\Version\\CmsVersionUserExpander::getUserTransfer cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/CmsUserConnector/src/Spryker/Zed/CmsUserConnector/Business/Version/CmsVersionUserExpander.php",
-            "snippet": "        $userTransfer = $this->userFacade->getUserById($cmsVersionTransfer->getFkUser());",
+            "snippet": "        $userTransfer = $this->getUserTransfer($cmsVersionTransfer->getFkUser());",
             "selected_text": "$cmsVersionTransfer->getFkUser()",
             "error_level": 3,
             "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 59,
+            "line_to": 59,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\UserTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsUserConnector/src/Spryker/Zed/CmsUserConnector/Business/Version/CmsVersionUserExpander.php",
+            "snippet": "        return $userCollectionTransfer->getUsers()->getIterator()->current();",
+            "selected_text": "getIterator",
+            "error_level": 3,
+            "shortcode": 113
         },
         {
             "severity": "info",
@@ -50,5 +62,19 @@
             "shortcode": 83
         }
     ],
-    "deprecation": []
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 71,
+            "line_to": 71,
+            "type": "DeprecatedMethod",
+            "message": "The method Generated\\Shared\\Transfer\\UserConditionsTransfer::setThrowUserNotFoundException has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsUserConnector/src/Spryker/Zed/CmsUserConnector/Business/Version/CmsVersionUserExpander.php",
+            "snippet": "            ->setThrowUserNotFoundException(true);",
+            "selected_text": "setThrowUserNotFoundException",
+            "error_level": 2,
+            "shortcode": 1
+        }
+    ],
+    "count": 6
 }

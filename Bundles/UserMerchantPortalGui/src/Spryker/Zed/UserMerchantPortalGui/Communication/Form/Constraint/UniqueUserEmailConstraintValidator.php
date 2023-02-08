@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\UserMerchantPortalGui\Communication\Form\Constraint;
 
+use Generated\Shared\Transfer\UserConditionsTransfer;
 use Generated\Shared\Transfer\UserCriteriaTransfer;
+use Generated\Shared\Transfer\UserTransfer;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -47,13 +49,37 @@ class UniqueUserEmailConstraintValidator extends ConstraintValidator
             return false;
         }
 
-        $userCriteriaTransfer = (new UserCriteriaTransfer())->setEmail($email);
-
-        $userTransfer = $constraint->getMerchantUserFacade()->findUser($userCriteriaTransfer);
+        $userTransfer = $this->findUserTransfer($constraint, $email);
         if ($userTransfer === null) {
             return true;
         }
 
         return $constraint->getIdUser() === $userTransfer->getIdUser();
+    }
+
+    /**
+     * @param \Spryker\Zed\UserMerchantPortalGui\Communication\Form\Constraint\UniqueUserEmailConstraint $constraint
+     * @param string $email
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer|null
+     */
+    protected function findUserTransfer(UniqueUserEmailConstraint $constraint, string $email): ?UserTransfer
+    {
+        $userCriteriaTransfer = $this->createUserCriteriaTransfer($email);
+        $userCollectionTransfer = $constraint->getMerchantUserFacade()->getUserCollection($userCriteriaTransfer);
+
+        return $userCollectionTransfer->getUsers()->getIterator()->current();
+    }
+
+    /**
+     * @param string $email
+     *
+     * @return \Generated\Shared\Transfer\UserCriteriaTransfer
+     */
+    protected function createUserCriteriaTransfer(string $email): UserCriteriaTransfer
+    {
+        $userConditionsTransfer = (new UserConditionsTransfer())->addUsername($email);
+
+        return (new UserCriteriaTransfer())->setUserConditions($userConditionsTransfer);
     }
 }

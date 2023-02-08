@@ -82,6 +82,8 @@ interface UserInterface
     public function hasUserById($idUser);
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\User\Business\Reader\UserReaderInterface::getUserCollection()} instead.
+     *
      * @param string $username
      *
      * @throws \Spryker\Zed\User\Business\Exception\UserNotFoundException
@@ -91,6 +93,8 @@ interface UserInterface
     public function getUserByUsername($username);
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\User\Business\Reader\UserReaderInterface::getUserCollection()} instead.
+     *
      * @param int $id
      *
      * @throws \Spryker\Zed\User\Business\Exception\UserNotFoundException
@@ -109,6 +113,8 @@ interface UserInterface
     public function findUserById(int $id): ?UserTransfer;
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\User\Business\Reader\UserReaderInterface::getUserCollection()} instead.
+     *
      * @param \Generated\Shared\Transfer\UserCriteriaTransfer $userCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\UserTransfer|null
@@ -116,6 +122,8 @@ interface UserInterface
     public function findUser(UserCriteriaTransfer $userCriteriaTransfer): ?UserTransfer;
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\User\Business\Reader\UserReaderInterface::getUserCollection()} instead.
+     *
      * @param int $id
      *
      * @throws \Spryker\Zed\User\Business\Exception\UserNotFoundException

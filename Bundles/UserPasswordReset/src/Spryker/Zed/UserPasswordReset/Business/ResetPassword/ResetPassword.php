@@ -11,6 +11,7 @@ use DateInterval;
 use DateTime;
 use Generated\Shared\Transfer\ResetPasswordCriteriaTransfer;
 use Generated\Shared\Transfer\ResetPasswordTransfer;
+use Generated\Shared\Transfer\UserConditionsTransfer;
 use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserPasswordResetRequestTransfer;
 use Spryker\Zed\UserPasswordReset\Dependency\Facade\UserPasswordResetToUserFacadeInterface;
@@ -111,8 +112,11 @@ class ResetPassword implements ResetPasswordInterface
     {
         $userPasswordResetRequestTransfer->requireEmail();
 
-        $userTransfer = $this->userFacade->findUser((new UserCriteriaTransfer())->setEmail($userPasswordResetRequestTransfer->getEmail()));
+        $userConditionsTransfer = (new UserConditionsTransfer())->addUsername($userPasswordResetRequestTransfer->getEmailOrFail());
+        $userCriteriaTransfer = (new UserCriteriaTransfer())->setUserConditions($userConditionsTransfer);
+        $userCollectionTransfer = $this->userFacade->getUserCollection($userCriteriaTransfer);
 
+        $userTransfer = $userCollectionTransfer->getUsers()->getIterator()->current();
         if (!$userTransfer || $userTransfer->getStatus() !== $this->resetConfig->getUserStatusActive()) {
             return false;
         }
@@ -176,7 +180,13 @@ class ResetPassword implements ResetPasswordInterface
 
         /** @var int $idUser */
         $idUser = $resetPasswordTransfer->getFkUserId();
-        $userTransfer = $this->userFacade->getUserById($idUser);
+        $userConditionsTransfer = (new UserConditionsTransfer())
+            ->addIdUser($idUser)
+            ->setThrowUserNotFoundException(true);
+        $userCriteriaTransfer = (new UserCriteriaTransfer())->setUserConditions($userConditionsTransfer);
+        $userCollectionTransfer = $this->userFacade->getUserCollection($userCriteriaTransfer);
+
+        $userTransfer = $userCollectionTransfer->getUsers()->getIterator()->current();
         $userTransfer->setPassword($password);
         $this->userFacade->updateUser($userTransfer);
 

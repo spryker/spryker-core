@@ -12,6 +12,7 @@ use Spryker\Zed\SecurityOauthUser\Dependency\Facade\SecurityOauthUserToMessenger
 use Spryker\Zed\SecurityOauthUser\SecurityOauthUserConfig;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface;
 
@@ -45,7 +46,7 @@ class OauthUserAuthenticationFailureHandler implements AuthenticationFailureHand
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
+    public function onAuthenticationFailure(Request $request, AuthenticationException $exception): Response
     {
         $this->messengerFacade->addErrorMessage(
             (new MessageTransfer())->setValue('Authentication failed!'),

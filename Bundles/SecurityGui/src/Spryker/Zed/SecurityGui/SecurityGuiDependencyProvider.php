@@ -50,6 +50,11 @@ class SecurityGuiDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_USER_ROLE_FILTER = 'PLUGINS_USER_ROLE_FILTER';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_USER_LOGIN_RESTRICTION = 'PLUGINS_USER_LOGIN_RESTRICTION';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -64,6 +69,7 @@ class SecurityGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addSecurityFacade($container);
         $container = $this->addAuthenticationLinkPlugins($container);
         $container = $this->addUserRoleFilterPlugins($container);
+        $container = $this->addUserLoginRestrictionPlugins($container);
 
         return $container;
     }
@@ -175,6 +181,20 @@ class SecurityGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUserLoginRestrictionPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_USER_LOGIN_RESTRICTION, function () {
+            return $this->getUserLoginRestrictionPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
      * @return array<\Spryker\Zed\SecurityGuiExtension\Dependency\Plugin\AuthenticationLinkPluginInterface>
      */
     protected function getAuthenticationLinkPlugins(): array
@@ -186,6 +206,14 @@ class SecurityGuiDependencyProvider extends AbstractBundleDependencyProvider
      * @return array<\Spryker\Zed\SecurityGuiExtension\Dependency\Plugin\UserRoleFilterPluginInterface>
      */
     protected function getUserRoleFilterPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return array<\Spryker\Zed\SecurityGuiExtension\Dependency\Plugin\UserLoginRestrictionPluginInterface>
+     */
+    protected function getUserLoginRestrictionPlugins(): array
     {
         return [];
     }

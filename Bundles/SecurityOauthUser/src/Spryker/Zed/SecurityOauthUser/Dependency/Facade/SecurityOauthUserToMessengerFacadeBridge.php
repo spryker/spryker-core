@@ -29,7 +29,7 @@ class SecurityOauthUserToMessengerFacadeBridge implements SecurityOauthUserToMes
      *
      * @return void
      */
-    public function addErrorMessage(MessageTransfer $message)
+    public function addErrorMessage(MessageTransfer $message): void
     {
         $this->messengerFacade->addErrorMessage($message);
     }

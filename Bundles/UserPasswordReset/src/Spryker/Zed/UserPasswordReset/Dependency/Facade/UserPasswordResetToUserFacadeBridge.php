@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\UserPasswordReset\Dependency\Facade;
 
+use Generated\Shared\Transfer\UserCollectionTransfer;
 use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 
@@ -26,32 +27,22 @@ class UserPasswordResetToUserFacadeBridge implements UserPasswordResetToUserFaca
     }
 
     /**
-     * @param \Generated\Shared\Transfer\UserCriteriaTransfer $userCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\UserTransfer|null
-     */
-    public function findUser(UserCriteriaTransfer $userCriteriaTransfer): ?UserTransfer
-    {
-        return $this->userFacade->findUser($userCriteriaTransfer);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\UserTransfer $user
      *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
-    public function updateUser(UserTransfer $user)
+    public function updateUser(UserTransfer $user): UserTransfer
     {
         return $this->userFacade->updateUser($user);
     }
 
     /**
-     * @param int $idUser
+     * @param \Generated\Shared\Transfer\UserCriteriaTransfer $userCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\UserTransfer
+     * @return \Generated\Shared\Transfer\UserCollectionTransfer
      */
-    public function getUserById($idUser)
+    public function getUserCollection(UserCriteriaTransfer $userCriteriaTransfer): UserCollectionTransfer
     {
-        return $this->userFacade->getUserById($idUser);
+        return $this->userFacade->getUserCollection($userCriteriaTransfer);
     }
 }

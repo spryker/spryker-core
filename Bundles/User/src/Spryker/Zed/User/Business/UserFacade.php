@@ -8,12 +8,14 @@
 namespace Spryker\Zed\User\Business;
 
 use Generated\Shared\Transfer\MailTransfer;
+use Generated\Shared\Transfer\UserCollectionTransfer;
 use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\User\Business\UserBusinessFactory getFactory()
+ * @method \Spryker\Zed\User\Persistence\UserRepositoryInterface getRepository()
  */
 class UserFacade extends AbstractFacade implements UserFacadeInterface
 {
@@ -68,6 +70,8 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\User\Business\UserFacade::getUserCollection()} instead.
+     *
      * @param string $username
      *
      * @return \Generated\Shared\Transfer\UserTransfer
@@ -83,6 +87,8 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\User\Business\UserFacade::getUserCollection()} instead.
      *
      * @param int $idUser
      *
@@ -100,7 +106,7 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
      *
      * @api
      *
-     * @deprecated Use {@link findUser()} instead.
+     * @deprecated Use {@link \Spryker\Zed\User\Business\UserFacade::getUserCollection()} instead.
      *
      * @param int $idUser
      *
@@ -118,6 +124,8 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\User\Business\UserFacade::getUserCollection()} instead.
+     *
      * @param \Generated\Shared\Transfer\UserCriteriaTransfer $userCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\UserTransfer|null
@@ -133,6 +141,8 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\User\Business\UserFacade::getUserCollection()} instead.
      *
      * @param int $idUser
      *
@@ -347,5 +357,23 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
         return $this->getFactory()
             ->createMailExpander()
             ->expandMailWithUserData($mailTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UserCriteriaTransfer $userCriteriaTransfer
+     *
+     * @throws \Spryker\Zed\User\Business\Exception\UserNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\UserCollectionTransfer
+     */
+    public function getUserCollection(UserCriteriaTransfer $userCriteriaTransfer): UserCollectionTransfer
+    {
+        return $this->getFactory()
+            ->createUserReader()
+            ->getUserCollection($userCriteriaTransfer);
     }
 }

@@ -7,6 +7,7 @@
 
 namespace SprykerTest\Zed\SecurityMerchantPortalGui\Communication\Plugin\Security;
 
+use Generated\Shared\Transfer\UserCollectionTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Zed\UserMerchantPortalGui\Communication\Form\Constraint\UniqueUserEmailConstraint;
@@ -44,7 +45,7 @@ class UniqueUserEmailConstraintValidatorTest extends ConstraintValidatorTestCase
     {
         // Arrange
         $uniqueUserEmailConstraint = $this->createUniqueUserEmailConstraint(
-            $this->createMerchantUserFacadeMock(null),
+            $this->createMerchantUserFacadeMock(new UserCollectionTransfer()),
         );
 
         // Act
@@ -60,8 +61,9 @@ class UniqueUserEmailConstraintValidatorTest extends ConstraintValidatorTestCase
     public function testReturnsErrorForExistingUserEmail(): void
     {
         // Arrange
+        $userCollectionTransfer = (new UserCollectionTransfer())->addUser((new UserTransfer())->setIdUser(1));
         $uniqueUserEmailConstraint = $this->createUniqueUserEmailConstraint(
-            $this->createMerchantUserFacadeMock((new UserTransfer())->setIdUser(1)),
+            $this->createMerchantUserFacadeMock($userCollectionTransfer),
         );
 
         // Act
@@ -78,8 +80,9 @@ class UniqueUserEmailConstraintValidatorTest extends ConstraintValidatorTestCase
     public function testReturnsSuccessWhenUserIsSameForExistingEmail(): void
     {
         // Arrange
+        $userCollectionTransfer = (new UserCollectionTransfer())->addUser((new UserTransfer())->setIdUser(12));
         $uniqueUserEmailConstraint = $this->createUniqueUserEmailConstraint(
-            $this->createMerchantUserFacadeMock((new UserTransfer())->setIdUser(12)),
+            $this->createMerchantUserFacadeMock($userCollectionTransfer),
             12,
         );
 
@@ -96,8 +99,9 @@ class UniqueUserEmailConstraintValidatorTest extends ConstraintValidatorTestCase
     public function testReturnsErrorWhenUserIsNotSameForExistingEmail(): void
     {
         // Arrange
+        $userCollectionTransfer = (new UserCollectionTransfer())->addUser((new UserTransfer())->setIdUser(13));
         $uniqueUserEmailConstraint = $this->createUniqueUserEmailConstraint(
-            $this->createMerchantUserFacadeMock((new UserTransfer())->setIdUser(13)),
+            $this->createMerchantUserFacadeMock($userCollectionTransfer),
             12,
         );
 
@@ -126,19 +130,19 @@ class UniqueUserEmailConstraintValidatorTest extends ConstraintValidatorTestCase
     }
 
     /**
-     * @param \Generated\Shared\Transfer\UserTransfer|null $returnForFindUser
+     * @param \Generated\Shared\Transfer\UserCollectionTransfer $userCollectionTransfer
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\UserMerchantPortalGui\Dependency\Facade\UserMerchantPortalGuiToMerchantUserFacadeInterface
      */
     protected function createMerchantUserFacadeMock(
-        ?UserTransfer $returnForFindUser
+        UserCollectionTransfer $userCollectionTransfer
     ): UserMerchantPortalGuiToMerchantUserFacadeInterface {
         $merchantUserFacade = $this->getMockBuilder(UserMerchantPortalGuiToMerchantUserFacadeInterface::class)
             ->getMock();
 
         $merchantUserFacade
-            ->method('findUser')
-            ->willReturn($returnForFindUser);
+            ->method('getUserCollection')
+            ->willReturn($userCollectionTransfer);
 
         return $merchantUserFacade;
     }

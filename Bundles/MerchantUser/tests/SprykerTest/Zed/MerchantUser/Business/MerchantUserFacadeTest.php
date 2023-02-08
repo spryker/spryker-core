@@ -12,6 +12,7 @@ use Generated\Shared\DataBuilder\UserBuilder;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\MerchantUserCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
+use Generated\Shared\Transfer\UserCollectionTransfer;
 use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserPasswordResetRequestTransfer;
 use Generated\Shared\Transfer\UserTransfer;
@@ -87,12 +88,12 @@ class MerchantUserFacadeTest extends Unit
         $this->userFacadeMock = $this->getMockBuilder(MerchantUserToUserFacadeInterface::class)
             ->disableOriginalConstructor()
             ->onlyMethods([
-                'findUser',
                 'updateUser',
                 'createUser',
                 'getCurrentUser',
                 'setCurrentUser',
                 'isValidPassword',
+                'getUserCollection',
             ])
             ->getMockForAbstractClass();
     }
@@ -190,10 +191,8 @@ class MerchantUserFacadeTest extends Unit
         $merchantUserTransfer = $this->tester->haveMerchantUser($merchantTransfer, $userTransfer);
         $merchantUserTransfer->setUser($userTransfer);
 
-        $userCriteriaTransfer = (new UserCriteriaTransfer())->setIdUser($userTransfer->getIdUser());
-        $this->userFacadeMock->expects($this->once())->method('findUser')
-            ->with($userCriteriaTransfer)
-            ->willReturn($userTransfer);
+        $this->userFacadeMock->expects($this->once())->method('getUserCollection')
+            ->willReturn((new UserCollectionTransfer())->addUser($userTransfer));
 
         $this->userFacadeMock->expects($this->once())->method('updateUser')
             ->with($userTransfer)
@@ -223,10 +222,8 @@ class MerchantUserFacadeTest extends Unit
         $merchantUserTransfer = $this->tester->haveMerchantUser($merchantTransfer, $userTransfer);
         $merchantUserTransfer->setUser($userTransfer);
 
-        $userCriteriaTransfer = (new UserCriteriaTransfer())->setIdUser($userTransfer->getIdUser());
-        $this->userFacadeMock->expects($this->once())->method('findUser')
-            ->with($userCriteriaTransfer)
-            ->willReturn($userTransfer);
+        $this->userFacadeMock->expects($this->once())->method('getUserCollection')
+            ->willReturn((new UserCollectionTransfer())->addUser($userTransfer));
 
         $this->userFacadeMock->expects($this->once())->method('updateUser')
             ->with($userTransfer)
@@ -258,10 +255,8 @@ class MerchantUserFacadeTest extends Unit
         $merchantUserTransfer = $this->tester->haveMerchantUser($merchantTransfer, $userTransfer);
         $merchantUserTransfer->setUser($userTransfer);
 
-        $userCriteriaTransfer = (new UserCriteriaTransfer())->setIdUser($userTransfer->getIdUser());
-        $this->userFacadeMock->expects($this->once())->method('findUser')
-            ->with($userCriteriaTransfer)
-            ->willReturn($userTransfer);
+        $this->userFacadeMock->expects($this->once())->method('getUserCollection')
+            ->willReturn((new UserCollectionTransfer())->addUser($userTransfer));
 
         $this->userFacadeMock->expects($this->once())->method('updateUser')
             ->with($userTransfer)
@@ -433,9 +428,10 @@ class MerchantUserFacadeTest extends Unit
         // Arrange
         $this->initializeFacadeMocks();
         $userTransfer = $this->tester->haveUser();
+        $this->userFacadeMock->method('getUserCollection')->willReturn((new UserCollectionTransfer()));
 
         // Assert
-        $this->userFacadeMock->expects($this->once())->method('findUser');
+        $this->userFacadeMock->expects($this->once())->method('getUserCollection');
 
         // Act
         $this->tester->getFacade()->findUser((new UserCriteriaTransfer())->setIdUser($userTransfer->getIdUser()));

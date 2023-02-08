@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantUser\Dependency\Facade;
 
+use Generated\Shared\Transfer\UserCollectionTransfer;
 use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 
@@ -24,33 +25,26 @@ interface MerchantUserToUserFacadeInterface
      *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
-    public function updateUser(UserTransfer $user);
+    public function updateUser(UserTransfer $user): UserTransfer;
 
     /**
      * @param int $idUser
      *
      * @return bool
      */
-    public function deactivateUser($idUser);
+    public function deactivateUser($idUser): bool;
 
     /**
      * @param int $idUser
      *
      * @return \Generated\Shared\Transfer\UserTransfer
      */
-    public function removeUser($idUser);
-
-    /**
-     * @param \Generated\Shared\Transfer\UserCriteriaTransfer $userCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\UserTransfer|null
-     */
-    public function findUser(UserCriteriaTransfer $userCriteriaTransfer): ?UserTransfer;
+    public function removeUser($idUser): UserTransfer;
 
     /**
      * @return \Generated\Shared\Transfer\UserTransfer
      */
-    public function getCurrentUser();
+    public function getCurrentUser(): UserTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\UserTransfer $user
@@ -65,5 +59,12 @@ interface MerchantUserToUserFacadeInterface
      *
      * @return bool
      */
-    public function isValidPassword($password, $hash);
+    public function isValidPassword($password, $hash): bool;
+
+    /**
+     * @param \Generated\Shared\Transfer\UserCriteriaTransfer $userCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\UserCollectionTransfer
+     */
+    public function getUserCollection(UserCriteriaTransfer $userCriteriaTransfer): UserCollectionTransfer;
 }

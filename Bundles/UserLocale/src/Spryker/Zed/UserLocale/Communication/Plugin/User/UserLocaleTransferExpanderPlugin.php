@@ -12,6 +12,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\UserExtension\Dependency\Plugin\UserTransferExpanderPluginInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\UserLocale\Communication\Plugin\User\LocaleUserExpanderPlugin} instead.
+ *
  * @method \Spryker\Zed\UserLocale\Communication\UserLocaleCommunicationFactory getFactory()
  * @method \Spryker\Zed\UserLocale\Business\UserLocaleFacadeInterface getFacade()
  * @method \Spryker\Zed\UserLocale\UserLocaleConfig getConfig()

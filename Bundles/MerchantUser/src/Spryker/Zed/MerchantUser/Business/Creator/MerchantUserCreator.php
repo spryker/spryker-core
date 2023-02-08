@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\MerchantUserCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantUserResponseTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\UserConditionsTransfer;
 use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface;
@@ -163,9 +164,9 @@ class MerchantUserCreator implements MerchantUserCreatorInterface
      */
     protected function persistUserByMerchantUser(UserTransfer $userTransfer): UserTransfer
     {
-        $userCriteriaTransfer = (new UserCriteriaTransfer())->setEmail($userTransfer->getUsername());
-        $existingUserTransfer = $this->userFacade->findUser($userCriteriaTransfer);
-
+        $existingUserTransfer = $userTransfer->getUsername()
+            ? $this->findUserTransfer($userTransfer->getUsernameOrFail())
+            : null;
         if (!$existingUserTransfer) {
             $userTransfer->setPassword(
                 $this->utilTextService->generateRandomByteString(static::USER_CREATION_DEFAULT_PASSWORD_LENGTH),
@@ -191,5 +192,30 @@ class MerchantUserCreator implements MerchantUserCreatorInterface
         }
 
         return $merchantUserTransfer;
+    }
+
+    /**
+     * @param string $username
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer|null
+     */
+    protected function findUserTransfer(string $username): ?UserTransfer
+    {
+        $userCriteriaTransfer = $this->createUserCriteriaTransfer($username);
+        $userCollectionTransfer = $this->userFacade->getUserCollection($userCriteriaTransfer);
+
+        return $userCollectionTransfer->getUsers()->getIterator()->current();
+    }
+
+    /**
+     * @param string $username
+     *
+     * @return \Generated\Shared\Transfer\UserCriteriaTransfer
+     */
+    protected function createUserCriteriaTransfer(string $username): UserCriteriaTransfer
+    {
+        $userConditionsTransfer = (new UserConditionsTransfer())->addUsername($username);
+
+        return (new UserCriteriaTransfer())->setUserConditions($userConditionsTransfer);
     }
 }

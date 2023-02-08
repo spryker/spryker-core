@@ -14,10 +14,10 @@ interface UserLocaleToStoreInterface
      *
      * @return void
      */
-    public function setCurrentLocale($currentLocale);
+    public function setCurrentLocale($currentLocale): void;
 
     /**
      * @return string
      */
-    public function getCurrentLocale();
+    public function getCurrentLocale(): string;
 }

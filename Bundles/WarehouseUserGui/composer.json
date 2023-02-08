@@ -1,0 +1,52 @@
+{
+    "name": "spryker/warehouse-user-gui",
+    "type": "library",
+    "description": "WarehouseUserGui module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=8.0",
+        "spryker/gui": "^3.46.0",
+        "spryker/kernel": "^3.30.0",
+        "spryker/propel-orm": "^1.0.0",
+        "spryker/stock": "^8.0.0",
+        "spryker/symfony": "^3.9.0",
+        "spryker/transfer": "^3.27.0",
+        "spryker/user": "^3.16.0",
+        "spryker/user-extension": "^1.0.0",
+        "spryker/util-encoding": "^2.0.0",
+        "spryker/util-sanitize": "^2.0.0",
+        "spryker/util-text": "^1.2.0",
+        "spryker/warehouse-user": "^0.1.0"
+    },
+    "require-dev": {
+        "spryker/code-sniffer": "*",
+        "spryker/testify": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Spryker\\": "src/Spryker/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SprykerTest\\": "tests/SprykerTest/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
+}

@@ -14,5 +14,19 @@
             "shortcode": 78
         }
     ],
-    "deprecation": []
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 33,
+            "line_to": 33,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Zed\\UserLocale\\Business\\UserLocaleFacadeInterface::expandUserTransferWithLocale has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/UserLocale/src/Spryker/Zed/UserLocale/Communication/Plugin/User/AssignUserLocalePreSavePlugin.php",
+            "snippet": "        return $this->getFacade()->expandUserTransferWithLocale($userTransfer);",
+            "selected_text": "expandUserTransferWithLocale",
+            "error_level": 2,
+            "shortcode": 1
+        }
+    ],
+    "count": 2
 }
