@@ -59,8 +59,8 @@ class AssignController extends AbstractController
         $categoryProductsTable = $this->getCategoryProductsTable($idCategory, $localeTransfer);
         $productsTable = $this->getProductsTable($idCategory, $localeTransfer);
 
-        $categoryFacade = $this->getFactory()->getCategoryFacade();
-        $categoryPath = $categoryFacade->getNodePath($idCategory, $localeTransfer);
+        $idCategoryNode = $categoryEntity->getNodes()->getIterator()->current()->getIdCategoryNode();
+        $categoryPath = $this->getFactory()->getCategoryFacade()->getNodePath($idCategoryNode, $localeTransfer);
 
         return $this->viewResponse([
             'idCategory' => $idCategory,
@@ -83,7 +83,9 @@ class AssignController extends AbstractController
         $categoryEntity = $this->getFactory()
             ->getCategoryQueryContainer()
             ->queryCategoryById($idCategory)
-            ->findOne();
+            ->joinWithNode()
+            ->find()
+            ->getFirst();
 
         if (!$categoryEntity) {
             $this->addErrorMessage('The category with id "%s" does not exist.', ['%s' => $idCategory]);
