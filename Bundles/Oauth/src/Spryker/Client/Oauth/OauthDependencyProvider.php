@@ -32,6 +32,11 @@ class OauthDependencyProvider extends AbstractDependencyProvider
     public const PLUGINS_AUTHORIZATION_VALIDATOR = 'PLUGINS_AUTHORIZATION_VALIDATOR';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_ACCESS_TOKEN_VALIDATOR = 'PLUGINS_ACCESS_TOKEN_VALIDATOR';
+
+    /**
      * @param \Spryker\Client\Kernel\Container $container
      *
      * @return \Spryker\Client\Kernel\Container
@@ -43,6 +48,7 @@ class OauthDependencyProvider extends AbstractDependencyProvider
         $container = $this->addZedRequestClient($container);
         $container = $this->addKeyLoaderPlugins($container);
         $container = $this->addAuthorizationValidatorPlugins($container);
+        $container = $this->addAccessTokenValidatorPlugins($container);
 
         return $container;
     }
@@ -101,6 +107,28 @@ class OauthDependencyProvider extends AbstractDependencyProvider
      * @return array<\Spryker\Client\OauthExtension\Dependency\Plugin\AuthorizationValidatorPluginInterface>
      */
     protected function getAuthorizationValidatorPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addAccessTokenValidatorPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_ACCESS_TOKEN_VALIDATOR, function (): array {
+            return $this->getAccessTokenValidatorPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Client\OauthExtension\Dependency\Plugin\AccessTokenValidatorPluginInterface>
+     */
+    protected function getAccessTokenValidatorPlugins(): array
     {
         return [];
     }

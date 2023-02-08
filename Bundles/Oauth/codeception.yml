@@ -1,4 +1,4 @@
-namespace: SprykerTest
+namespace: Oauth
 include:
     - tests/SprykerTest/Zed/Oauth
 paths:

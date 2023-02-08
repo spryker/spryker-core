@@ -22,11 +22,20 @@ class AccessTokenValidator implements AccessTokenValidatorInterface
     protected $resourceServer;
 
     /**
-     * @param \League\OAuth2\Server\ResourceServer $resourceServer
+     * @var array<int, \Spryker\Client\OauthExtension\Dependency\Plugin\AccessTokenValidatorPluginInterface>
      */
-    public function __construct(ResourceServer $resourceServer)
-    {
+    protected array $accessTokenValidatorPlugins;
+
+    /**
+     * @param \League\OAuth2\Server\ResourceServer $resourceServer
+     * @param array<int, \Spryker\Client\OauthExtension\Dependency\Plugin\AccessTokenValidatorPluginInterface> $accessTokenValidatorPlugins
+     */
+    public function __construct(
+        ResourceServer $resourceServer,
+        array $accessTokenValidatorPlugins
+    ) {
         $this->resourceServer = $resourceServer;
+        $this->accessTokenValidatorPlugins = $accessTokenValidatorPlugins;
     }
 
     /**
@@ -39,6 +48,15 @@ class AccessTokenValidator implements AccessTokenValidatorInterface
     public function validate(OauthAccessTokenValidationRequestTransfer $authAccessTokenValidationRequestTransfer): OauthAccessTokenValidationResponseTransfer
     {
         $oauthAccessTokenValidationResponseTransfer = (new OauthAccessTokenValidationResponseTransfer())->setIsValid(false);
+
+        $oauthAccessTokenValidationResponseTransfer = $this->executeAccessTokenValidatorPlugins(
+            $authAccessTokenValidationRequestTransfer,
+            $oauthAccessTokenValidationResponseTransfer,
+        );
+
+        if ($oauthAccessTokenValidationResponseTransfer->getError() !== null) {
+            return $oauthAccessTokenValidationResponseTransfer;
+        }
 
         try {
             $accessTokenRequest = new ServerRequest(
@@ -61,6 +79,30 @@ class AccessTokenValidator implements AccessTokenValidatorInterface
                 ->setMessage($exception->getMessage());
 
             $oauthAccessTokenValidationResponseTransfer->setError($oauthErrorTransfer);
+        }
+
+        return $oauthAccessTokenValidationResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OauthAccessTokenValidationRequestTransfer $authAccessTokenValidationRequestTransfer
+     * @param \Generated\Shared\Transfer\OauthAccessTokenValidationResponseTransfer $oauthAccessTokenValidationResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\OauthAccessTokenValidationResponseTransfer
+     */
+    protected function executeAccessTokenValidatorPlugins(
+        OauthAccessTokenValidationRequestTransfer $authAccessTokenValidationRequestTransfer,
+        OauthAccessTokenValidationResponseTransfer $oauthAccessTokenValidationResponseTransfer
+    ): OauthAccessTokenValidationResponseTransfer {
+        foreach ($this->accessTokenValidatorPlugins as $accessTokenValidatorPlugin) {
+            $oauthAccessTokenValidationResponseTransfer = $accessTokenValidatorPlugin->validate(
+                $authAccessTokenValidationRequestTransfer,
+                $oauthAccessTokenValidationResponseTransfer,
+            );
+
+            if ($oauthAccessTokenValidationResponseTransfer->getError() !== null) {
+                return $oauthAccessTokenValidationResponseTransfer;
+            }
         }
 
         return $oauthAccessTokenValidationResponseTransfer;

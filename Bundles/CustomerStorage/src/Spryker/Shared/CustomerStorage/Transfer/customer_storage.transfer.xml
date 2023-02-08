@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="Customer">
+        <property name="customerReference" type="string"/>
+        <property name="anonymizedAt" type="string"/>
+        <property name="idCustomer" type="int"/>
+    </transfer>
+
+    <transfer name="CustomerCollection">
+        <property name="customers" type="Customer[]" singular="customer"/>
+    </transfer>
+
+    <transfer name="CustomerCriteriaFilter">
+        <property name="customerIds" type="int[]" singular="idCustomer" strict="true"/>
+        <property name="hasAnonymizedAt" type="bool" strict="true"/>
+    </transfer>
+
+    <transfer name="InvalidatedCustomer" strict="true">
+        <property name="idCustomerInvalidatedStorage" type="string"/>
+        <property name="customerReference" type="string"/>
+        <property name="key" type="string"/>
+        <property name="anonymizedAt" type="string"/>
+        <property name="passwordUpdatedAt" type="string"/>
+    </transfer>
+
+    <transfer name="InvalidatedCustomerCollection" strict="true">
+        <property name="invalidatedCustomers" type="InvalidatedCustomer[]" singular="invalidatedCustomer"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="InvalidatedCustomerCriteria" strict="true">
+        <property name="invalidatedCustomerConditions" type="InvalidatedCustomerConditions"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="InvalidatedCustomerConditions" strict="true">
+        <property name="customerReferences" type="string[]" singular="customerReference"/>
+    </transfer>
+
+    <transfer name="InvalidatedCustomerCollectionDeleteCriteria" strict="true">
+        <property name="createdAt" type="string"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="EventEntity">
+        <property name="id" type="int"/>
+        <property name="modifiedColumns" type="array" singular="modifiedColumns"/>
+    </transfer>
+
+    <transfer name="SynchronizationData">
+        <property name="reference" type="string"/>
+        <property name="data" type="string"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
+    </transfer>
+
+    <transfer name="Error">
+    </transfer>
+
+</transfers>

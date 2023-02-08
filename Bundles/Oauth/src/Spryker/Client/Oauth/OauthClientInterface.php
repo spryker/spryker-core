@@ -48,6 +48,7 @@ interface OauthClientInterface
 
     /**
      * Specification:
+     * - Executes the stack of {@link \Spryker\Client\OauthExtension\Dependency\Plugin\AccessTokenValidatorPluginInterface} plugins.
      * - Validates JWT token.
      * - Checks if a fingerprint is valid using a public key.
      * - Does not go to Zed.

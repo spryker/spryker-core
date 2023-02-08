@@ -42,7 +42,10 @@ class OauthFactory extends AbstractFactory
      */
     public function createAccessTokenValidator(): AccessTokenValidatorInterface
     {
-        return new AccessTokenValidator($this->createResourceServerBuilder()->create());
+        return new AccessTokenValidator(
+            $this->createResourceServerBuilder()->create(),
+            $this->getAccessTokenValidatorPlugins(),
+        );
     }
 
     /**
@@ -60,7 +63,10 @@ class OauthFactory extends AbstractFactory
      */
     public function createOauthAccessTokenValidator(): AccessTokenValidatorInterface
     {
-        return new AccessTokenValidator($this->createResourceServerCreator()->create());
+        return new AccessTokenValidator(
+            $this->createResourceServerCreator()->create(),
+            $this->getAccessTokenValidatorPlugins(),
+        );
     }
 
     /**
@@ -113,5 +119,13 @@ class OauthFactory extends AbstractFactory
     public function getAuthorizationValidatorPlugins(): array
     {
         return $this->getProvidedDependency(OauthDependencyProvider::PLUGINS_AUTHORIZATION_VALIDATOR);
+    }
+
+    /**
+     * @return array<int, \Spryker\Client\OauthExtension\Dependency\Plugin\AccessTokenValidatorPluginInterface>
+     */
+    public function getAccessTokenValidatorPlugins(): array
+    {
+        return $this->getProvidedDependency(OauthDependencyProvider::PLUGINS_ACCESS_TOKEN_VALIDATOR);
     }
 }

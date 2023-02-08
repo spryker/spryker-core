@@ -34,4 +34,10 @@
     <transfer name="OauthScopeFind">
     </transfer>
 
+    <transfer name="OauthAccessTokenValidationRequest">
+    </transfer>
+
+    <transfer name="OauthAccessTokenValidationResponse">
+    </transfer>
+
 </transfers>

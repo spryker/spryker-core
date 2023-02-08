@@ -33,6 +33,11 @@ class TokenDataExtractor implements TokenDataExtractorInterface
     protected const JWT_CLAIM_SCOPES = 'scopes';
 
     /**
+     * @var string
+     */
+    protected const JWT_CLAIM_IAT = 'iat';
+
+    /**
      * @var \Spryker\Service\Oauth\Jwt\JwtTokenParserInterface
      */
     protected $jwtTokenParser;
@@ -68,6 +73,7 @@ class TokenDataExtractor implements TokenDataExtractorInterface
     protected function createJwtTokenToOauthTokenDataTransfer(JwtTokenTransfer $jwtTokenTransfer): OauthAccessTokenDataTransfer
     {
         return (new OauthAccessTokenDataTransfer())
+            ->setOauthIssuedAt($jwtTokenTransfer->getClaims()[static::JWT_CLAIM_IAT] ?? null)
             ->setOauthAccessTokenId($jwtTokenTransfer->getClaims()[static::JWT_CLAIM_JTI] ?? null)
             ->setOauthClientId($jwtTokenTransfer->getClaims()[static::JWT_CLAIM_AUD] ?? null)
             ->setOauthUserId($jwtTokenTransfer->getClaims()[static::JWT_CLAIM_SUB] ?? null)

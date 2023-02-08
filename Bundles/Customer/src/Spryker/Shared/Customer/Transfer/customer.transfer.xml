@@ -186,6 +186,8 @@
     </transfer>
 
     <transfer name="CustomerCriteriaFilter">
+        <property name="customerIds" type="int[]" singular="idCustomer" strict="true"/>
+        <property name="hasAnonymizedAt" type="bool" strict="true"/>
         <property name="restorePasswordKeyExists" type="bool"/>
         <property name="passwordExists" type="bool"/>
     </transfer>

@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="CustomerIdentifier">
+        <property name="customerReference" type="string"/>
+    </transfer>
+
+    <transfer name="InvalidatedCustomer" strict="true">
+        <property name="passwordUpdatedAt" type="string"/>
+        <property name="anonymizedAt" type="string"/>
+    </transfer>
+
+    <transfer name="InvalidatedCustomerCollection" strict="true">
+        <property name="invalidatedCustomers" type="InvalidatedCustomer[]" singular="invalidatedCustomer"/>
+    </transfer>
+
+    <transfer name="InvalidatedCustomerConditions" strict="true">
+        <property name="customerReferences" type="string[]" singular="customerReference"/>
+    </transfer>
+
+    <transfer name="InvalidatedCustomerCriteria" strict="true">
+        <property name="invalidatedCustomerConditions" type="InvalidatedCustomerConditions"/>
+    </transfer>
+
+    <transfer name="OauthAccessTokenData">
+        <property name="oauthUserId" type="string"/>
+        <property name="oauthIssuedAt" type="int" strict="true"/>
+        <property name="oauthScopes" type="array" singular="oauthScopes"/>
+    </transfer>
+
+    <transfer name="OauthAccessTokenValidationRequest">
+        <property name="accessToken" type="string"/>
+    </transfer>
+
+    <transfer name="OauthAccessTokenValidationResponse">
+        <property name="error" type="OauthError"/>
+    </transfer>
+
+    <transfer name="OauthError">
+        <property name="errorType" type="string"/>
+        <property name="message" type="string"/>
+    </transfer>
+
+</transfers>

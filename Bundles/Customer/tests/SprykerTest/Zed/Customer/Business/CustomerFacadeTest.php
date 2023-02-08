@@ -1635,6 +1635,36 @@ class CustomerFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testGetCustomerCollectionByCriteriaShouldFilterByCustomerIds(): void
+    {
+        // Arrange
+        $customerTransfer = $this->tester->haveCustomer([CustomerTransfer::PASSWORD => static::VALUE_VALID_PASSWORD]);
+        $this->tester->haveCustomer([CustomerTransfer::PASSWORD => static::VALUE_VALID_PASSWORD]);
+
+        $customerCriteriaFilterTransfer = (new CustomerCriteriaFilterTransfer())
+            ->addIdCustomer($customerTransfer->getIdCustomerOrFail());
+
+        // Act
+        $customerCollectionTransfer = $this->tester->getFacade()->getCustomerCollectionByCriteria(
+            $customerCriteriaFilterTransfer,
+        );
+
+        // Assert
+        $this->assertSame(
+            1,
+            $customerCollectionTransfer->getCustomers()->count(),
+            'Customer collection was not filter by customer identifier.',
+        );
+        $this->assertSame(
+            $customerTransfer->getIdCustomerOrFail(),
+            $customerCollectionTransfer->getCustomers()->offsetGet(0)->getIdCustomerOrFail(),
+            'Wrong customer was filtered.',
+        );
+    }
+
+    /**
+     * @return void
+     */
     public function testGetCustomerByCriteriaShouldFindExistingCustomer(): void
     {
         // Arrange

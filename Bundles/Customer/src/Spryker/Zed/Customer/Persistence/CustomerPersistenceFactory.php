@@ -9,6 +9,7 @@ namespace Spryker\Zed\Customer\Persistence;
 
 use Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Customer\Persistence\Mapper\CustomerMapper;
 use Spryker\Zed\Customer\Persistence\Mapper\CustomerMapperInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
@@ -22,11 +23,15 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 class CustomerPersistenceFactory extends AbstractPersistenceFactory
 {
     /**
+     * @param string|null $modelAlias
+     * @param \Propel\Runtime\ActiveQuery\Criteria|null $criteria
+     * @param bool $withAnonymized
+     *
      * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
      */
-    public function createSpyCustomerQuery()
+    public function createSpyCustomerQuery(?string $modelAlias = null, ?Criteria $criteria = null, bool $withAnonymized = false): SpyCustomerQuery
     {
-        return SpyCustomerQuery::create();
+        return SpyCustomerQuery::create($modelAlias, $criteria, $withAnonymized);
     }
 
     /**

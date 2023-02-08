@@ -85,6 +85,7 @@
         <property name="oauthClientId" type="string"/>
         <property name="oauthScopes" type="array" singular="oauthScopes"/>
         <property name="oauthUserId" type="string"/>
+        <property name="oauthIssuedAt" type="int" strict="true"/>
     </transfer>
 
     <transfer name="OauthRefreshToken">
