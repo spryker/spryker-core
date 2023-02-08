@@ -17,6 +17,7 @@ interface SalesPaymentFacadeInterface
     /**
      * Specification:
      * - Saves order payments to the database spy_sales_payment.
+     * - Executes {@link \Spryker\Zed\SalesPaymentExtension\Dependency\Plugin\PaymentMapKeyBuilderStrategyPluginInterface} plugin stack.
      *
      * @api
      *

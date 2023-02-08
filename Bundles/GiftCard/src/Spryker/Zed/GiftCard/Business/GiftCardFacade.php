@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\CollectedDiscountTransfer;
 use Generated\Shared\Transfer\GiftCardTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\PaymentMethodsTransfer;
+use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
@@ -408,5 +409,19 @@ class GiftCardFacade extends AbstractFacade implements GiftCardFacadeInterface
         return $this->getFactory()
             ->createGiftCardCartCodeOperationMessageFinder()
             ->findOperationResponseMessage($quoteTransfer, $cartCode);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PaymentTransfer $paymentTransfer
+     *
+     * @return string
+     */
+    public function buildPaymentMapKey(PaymentTransfer $paymentTransfer): string
+    {
+        return $this->getFactory()->createPaymentMapKeyBuilder()->buildMapKey($paymentTransfer);
     }
 }

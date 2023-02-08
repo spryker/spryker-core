@@ -8,6 +8,8 @@
 namespace Spryker\Zed\GiftCard\Business;
 
 use Spryker\Zed\GiftCard\Business\ActualValueHydrator\GiftCardActualValueHydrator;
+use Spryker\Zed\GiftCard\Business\Builder\PaymentMapKeyBuilder;
+use Spryker\Zed\GiftCard\Business\Builder\PaymentMapKeyBuilderInterface;
 use Spryker\Zed\GiftCard\Business\Calculation\GiftCardCalculator;
 use Spryker\Zed\GiftCard\Business\Cart\MetadataExpander;
 use Spryker\Zed\GiftCard\Business\CartCode\GiftCardCartCodeAdder;
@@ -147,6 +149,14 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
     public function createGiftCardCartCodeOperationMessageFinder(): GiftCardCartCodeOperationMessageFinderInterface
     {
         return new GiftCardCartCodeOperationMessageFinder();
+    }
+
+    /**
+     * @return \Spryker\Zed\GiftCard\Business\Builder\PaymentMapKeyBuilderInterface
+     */
+    public function createPaymentMapKeyBuilder(): PaymentMapKeyBuilderInterface
+    {
+        return new PaymentMapKeyBuilder();
     }
 
     /**

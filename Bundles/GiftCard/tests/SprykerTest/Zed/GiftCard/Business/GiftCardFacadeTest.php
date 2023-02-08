@@ -24,6 +24,7 @@ use Generated\Shared\Transfer\SalesPaymentTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Spryker\Shared\Kernel\Transfer\Exception\NullValueException;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\GiftCard\Business\GiftCardBusinessFactory;
 use Spryker\Zed\GiftCard\Business\GiftCardFacadeInterface;
@@ -49,6 +50,26 @@ class GiftCardFacadeTest extends Unit
      * @var string
      */
     protected const TEST_GIFT_CARD_CODE = 'testCode';
+
+    /**
+     * @var string
+     */
+    protected const TEST_PAYMENT_PROVIDER = 'TEST_PAYMENT_PROVIDER';
+
+    /**
+     * @var string
+     */
+    protected const TEST_PAYMENT_METHOD = 'TEST_PAYMENT_METHOD';
+
+    /**
+     * @var int
+     */
+    protected const TEST_GIFT_CARD_ID = 0;
+
+    /**
+     * @var string
+     */
+    protected const NULL_VALUE_EXCEPTION_MESSAGE_PATTERN = 'Property "%s" of transfer `%s` is null.';
 
     /**
      * @var \SprykerTest\Zed\GiftCard\GiftCardBusinessTester
@@ -383,6 +404,113 @@ class GiftCardFacadeTest extends Unit
 
         // Act
         $this->getFacade()->saveOrderGiftCards($quoteTransfer, new SaveOrderTransfer());
+    }
+
+    /**
+     * @return void
+     */
+    public function testBuildPaymentMapKeyReturnsMapKeyAccordingToThePattern(): void
+    {
+        // Arrange
+        $paymentTransfer = (new PaymentTransfer())
+            ->setPaymentProvider(static::TEST_PAYMENT_PROVIDER)
+            ->setPaymentMethod(static::TEST_PAYMENT_METHOD)
+            ->setGiftCard((new GiftCardTransfer())->setIdGiftCard(static::TEST_GIFT_CARD_ID));
+
+        // Act
+        $paymentKeyMap = $this->getFacade()->buildPaymentMapKey($paymentTransfer);
+
+        // Assert
+        $this->assertEquals('TEST_PAYMENT_PROVIDER-TEST_PAYMENT_METHOD-0', $paymentKeyMap);
+    }
+
+    /**
+     * @dataProvider buildPaymentMapKeyThrowsExceptionIfRequiredPropertiesAreNotSetDataProvider
+     *
+     * @param \Generated\Shared\Transfer\PaymentTransfer $paymentTransfer
+     * @param string $exceptionMessage
+     *
+     * @return void
+     */
+    public function testBuildPaymentMapKeyThrowsExceptionIfRequiredPropertiesAreNotSet(
+        PaymentTransfer $paymentTransfer,
+        string $exceptionMessage
+    ): void {
+        // Assert
+        $this->expectException(NullValueException::class);
+        $this->expectExceptionMessage(
+            $exceptionMessage,
+        );
+
+        // Act
+        $this->getFacade()->buildPaymentMapKey($paymentTransfer);
+    }
+
+    /**
+     * @return array<string, array<int, mixed>>
+     */
+    public function buildPaymentMapKeyThrowsExceptionIfRequiredPropertiesAreNotSetDataProvider(): array
+    {
+        return [
+            'payment transfer: idGiftCard is not provided; expected: NullValueException' =>
+                $this->getDataForNoGiftCardIdProvided(),
+            'payment transfer: PaymentProvider is not provided; expected: NullValueException' =>
+                $this->getDataForNoPaymentProviderProvided(),
+            'payment transfer: PaymentMethod is not provided; expected: NullValueException' =>
+                $this->getDataForNoPaymentMethodProvided(),
+        ];
+    }
+
+    /**
+     * @return array<int, mixed>
+     */
+    protected function getDataForNoGiftCardIdProvided(): array
+    {
+        return [
+            (new PaymentTransfer())
+                ->setPaymentProvider(static::TEST_PAYMENT_PROVIDER)
+                ->setPaymentMethod(static::TEST_PAYMENT_METHOD)
+                ->setGiftCard((new GiftCardTransfer())),
+            sprintf(
+                static::NULL_VALUE_EXCEPTION_MESSAGE_PATTERN,
+                GiftCardTransfer::ID_GIFT_CARD,
+                GiftCardTransfer::class,
+            ),
+        ];
+    }
+
+    /**
+     * @return array<int, mixed>
+     */
+    protected function getDataForNoPaymentProviderProvided(): array
+    {
+        return [
+            (new PaymentTransfer())
+                ->setPaymentMethod(static::TEST_PAYMENT_METHOD)
+                ->setGiftCard((new GiftCardTransfer())->setIdGiftCard(static::TEST_GIFT_CARD_ID)),
+            sprintf(
+                static::NULL_VALUE_EXCEPTION_MESSAGE_PATTERN,
+                PaymentTransfer::PAYMENT_PROVIDER,
+                PaymentTransfer::class,
+            ),
+        ];
+    }
+
+    /**
+     * @return array<int, mixed>
+     */
+    protected function getDataForNoPaymentMethodProvided(): array
+    {
+        return [
+            (new PaymentTransfer())
+                ->setPaymentProvider(static::TEST_PAYMENT_PROVIDER)
+                ->setGiftCard((new GiftCardTransfer())->setIdGiftCard(static::TEST_GIFT_CARD_ID)),
+            sprintf(
+                static::NULL_VALUE_EXCEPTION_MESSAGE_PATTERN,
+                PaymentTransfer::PAYMENT_METHOD,
+                PaymentTransfer::class,
+            ),
+        ];
     }
 
     /**

@@ -21,14 +21,23 @@ class SalesPaymentWriter implements SalesPaymentWriterInterface
     /**
      * @var \Spryker\Zed\SalesPayment\Persistence\SalesPaymentEntityManagerInterface
      */
-    protected $salesPaymentEntityManager;
+    protected SalesPaymentEntityManagerInterface $salesPaymentEntityManager;
+
+    /**
+     * @var array<\Spryker\Zed\SalesPaymentExtension\Dependency\Plugin\PaymentMapKeyBuilderStrategyPluginInterface>
+     */
+    protected array $paymentMapKeyBuilderStrategyPlugins;
 
     /**
      * @param \Spryker\Zed\SalesPayment\Persistence\SalesPaymentEntityManagerInterface $entityManager
+     * @param array<\Spryker\Zed\SalesPaymentExtension\Dependency\Plugin\PaymentMapKeyBuilderStrategyPluginInterface> $paymentMapKeyBuilderStrategyPlugins
      */
-    public function __construct(SalesPaymentEntityManagerInterface $entityManager)
-    {
+    public function __construct(
+        SalesPaymentEntityManagerInterface $entityManager,
+        array $paymentMapKeyBuilderStrategyPlugins
+    ) {
         $this->salesPaymentEntityManager = $entityManager;
+        $this->paymentMapKeyBuilderStrategyPlugins = $paymentMapKeyBuilderStrategyPlugins;
     }
 
     /**
@@ -107,6 +116,12 @@ class SalesPaymentWriter implements SalesPaymentWriterInterface
      */
     protected function createPaymentMapKey(PaymentTransfer $paymentTransfer): string
     {
+        foreach ($this->paymentMapKeyBuilderStrategyPlugins as $paymentMapKeyBuilderStrategyPlugin) {
+            if ($paymentMapKeyBuilderStrategyPlugin->isApplicable($paymentTransfer)) {
+                return $paymentMapKeyBuilderStrategyPlugin->buildPaymentMapKey($paymentTransfer);
+            }
+        }
+
         return sprintf(
             '%s-%s',
             $paymentTransfer->getPaymentProvider(),

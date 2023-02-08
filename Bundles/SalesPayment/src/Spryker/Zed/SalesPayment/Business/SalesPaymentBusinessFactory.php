@@ -45,15 +45,10 @@ class SalesPaymentBusinessFactory extends AbstractBusinessFactory
      */
     public function createSalesPaymentWriter(): SalesPaymentWriterInterface
     {
-        return new SalesPaymentWriter($this->getEntityManager());
-    }
-
-    /**
-     * @return array<\Spryker\Zed\SalesPaymentExtension\Dependency\Plugin\OrderPaymentExpanderPluginInterface>
-     */
-    public function getOrderPaymentExpanderPlugins(): array
-    {
-        return $this->getProvidedDependency(SalesPaymentDependencyProvider::SALES_PAYMENT_EXPANDER_PLUGINS);
+        return new SalesPaymentWriter(
+            $this->getEntityManager(),
+            $this->getPaymentMapKeyBuilderStrategyPlugins(),
+        );
     }
 
     /**
@@ -84,6 +79,22 @@ class SalesPaymentBusinessFactory extends AbstractBusinessFactory
     public function createRefundAmountCalculator(): RefundAmountCalculatorInterface
     {
         return new RefundAmountCalculator($this->getConfig());
+    }
+
+    /**
+     * @return array<\Spryker\Zed\SalesPaymentExtension\Dependency\Plugin\OrderPaymentExpanderPluginInterface>
+     */
+    public function getOrderPaymentExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(SalesPaymentDependencyProvider::SALES_PAYMENT_EXPANDER_PLUGINS);
+    }
+
+    /**
+     * @return array<\Spryker\Zed\SalesPaymentExtension\Dependency\Plugin\PaymentMapKeyBuilderStrategyPluginInterface>
+     */
+    public function getPaymentMapKeyBuilderStrategyPlugins(): array
+    {
+        return $this->getProvidedDependency(SalesPaymentDependencyProvider::PAYMENT_MAP_KEY_BUILDER_STRATEGY_PLUGINS);
     }
 
     /**
