@@ -101,7 +101,7 @@ class CsvReader implements CsvReaderInterface
 
     /**
      * @param array $columns
-     * @param array<string, mixed> $data
+     * @param array<int|string, mixed> $data
      * @param string $filename
      * @param int $lineNumber
      *
@@ -177,7 +177,7 @@ class CsvReader implements CsvReaderInterface
     /**
      * @throws \UnexpectedValueException
      *
-     * @return array
+     * @return array<int|string, mixed>
      */
     public function read()
     {

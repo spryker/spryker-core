@@ -10,6 +10,7 @@ namespace Spryker\Zed\PublishAndSynchronizeHealthCheckStorage\Business\HealthChe
 use DateInterval;
 use DateTime;
 use Generated\Shared\Transfer\HealthCheckServiceResponseTransfer;
+use RuntimeException;
 use Spryker\Shared\PublishAndSynchronizeHealthCheckStorage\PublishAndSynchronizeHealthCheckStorageConfig as PublishAndSynchronizeHealthCheckStoragePublishAndSynchronizeHealthCheckStorageConfig;
 use Spryker\Zed\PublishAndSynchronizeHealthCheckStorage\Dependency\Client\PublishAndSynchronizeHealthCheckStorageToStorageClientInterface;
 use Spryker\Zed\PublishAndSynchronizeHealthCheckStorage\PublishAndSynchronizeHealthCheckStorageConfig;
@@ -68,11 +69,17 @@ class HealthCheck implements HealthCheckInterface
     /**
      * @param array $publishAndSynchronizeHealthCheckStorageData
      *
+     * @throws \RuntimeException
+     *
      * @return bool
      */
     protected function isValid(array $publishAndSynchronizeHealthCheckStorageData): bool
     {
         $dateInterval = DateInterval::createFromDateString($this->publishAndSynchronizeHealthCheckStorageConfig->getValidationThreshold());
+        if ($dateInterval === false) {
+            throw new RuntimeException('Cannot create a DateInterval from `PublishAndSynchronizeHealthCheckStorageConfig::getValidationThreshold()`');
+        }
+
         $now = new DateTime();
         $maxAge = $now->sub($dateInterval);
 

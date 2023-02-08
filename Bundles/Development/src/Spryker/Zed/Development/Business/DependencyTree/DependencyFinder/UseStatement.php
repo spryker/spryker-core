@@ -57,7 +57,7 @@ class UseStatement extends AbstractDependencyFinder
     }
 
     /**
-     * @param string $match
+     * @param array<string> $match
      *
      * @return string
      */

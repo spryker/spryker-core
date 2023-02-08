@@ -12,6 +12,7 @@ use DateTime;
 use Exception;
 use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLock;
 use Propel\Runtime\Exception\PropelException;
+use RuntimeException;
 use Spryker\Zed\Oms\Business\Exception\LockException;
 use Spryker\Zed\Oms\OmsConfig;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
@@ -151,6 +152,8 @@ class TriggerLocker implements LockerInterface
     }
 
     /**
+     * @throws \RuntimeException
+     *
      * @return \DateTime
      */
     protected function createExpirationDate()
@@ -158,6 +161,10 @@ class TriggerLocker implements LockerInterface
         $dateInterval = DateInterval::createFromDateString(
             $this->omsConfig->getStateMachineLockerTimeoutInterval(),
         );
+        if ($dateInterval === false) {
+            throw new RuntimeException('Cannot create a DateInterval from `OmsConfig::getStateMachineLockerTimeoutInterval()`');
+        }
+
         $expirationDate = new DateTime();
         $expirationDate->add($dateInterval);
 

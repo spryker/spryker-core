@@ -72,12 +72,12 @@ class VersionResolver implements VersionResolverInterface
             $fullVersion = substr($urlString, strlen($this->config->getPathVersionPrefix()));
             preg_match($this->config->getApiVersionResolvingRegex(), $fullVersion, $matches);
 
-            return $matches ?? [];
+            return $matches ?: [];
         }
 
         preg_match($this->config->getApiVersionResolvingRegex(), $urlString, $matches);
 
-        return $matches ?? [];
+        return $matches ?: [];
     }
 
     /**

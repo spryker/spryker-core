@@ -11,6 +11,7 @@ use DateInterval;
 use DateTime;
 use Generated\Shared\Transfer\HealthCheckServiceResponseTransfer;
 use Generated\Shared\Transfer\PublishAndSynchronizeHealthCheckTransfer;
+use RuntimeException;
 use Spryker\Shared\HealthCheckExtension\Dependency\Plugin\HealthCheckPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -72,6 +73,8 @@ class PublishAndSynchronizeWriteHealthCheckPlugin extends AbstractPlugin impleme
     /**
      * @param \Generated\Shared\Transfer\PublishAndSynchronizeHealthCheckTransfer $publishAndSynchronizeHealthCheckTransfer
      *
+     * @throws \RuntimeException
+     *
      * @return bool
      */
     protected function isValid(PublishAndSynchronizeHealthCheckTransfer $publishAndSynchronizeHealthCheckTransfer): bool
@@ -81,6 +84,10 @@ class PublishAndSynchronizeWriteHealthCheckPlugin extends AbstractPlugin impleme
         }
 
         $dateInterval = DateInterval::createFromDateString($this->getConfig()->getValidationThreshold());
+        if ($dateInterval === false) {
+            throw new RuntimeException('Cannot create a DateInterval from `PublishAndSynchronizeHealthCheckConfig::getValidationThreshold()`');
+        }
+
         $now = new DateTime();
         $maxAge = $now->sub($dateInterval);
 

@@ -18,6 +18,7 @@ use Orm\Zed\Oms\Persistence\SpyOmsEventTimeout;
 use Orm\Zed\Oms\Persistence\SpyOmsEventTimeoutQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Propel\Runtime\Collection\ObjectCollection;
+use RuntimeException;
 use Spryker\Zed\Oms\Business\Process\EventInterface;
 use Spryker\Zed\Oms\Business\Process\ProcessInterface;
 use Spryker\Zed\Oms\Business\Util\TimeoutProcessorCollectionInterface;
@@ -191,6 +192,8 @@ class Timeout implements TimeoutInterface
      * @param \Spryker\Zed\Oms\Business\Process\EventInterface $event
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem|null $spySalesOrderItem
      *
+     * @throws \RuntimeException
+     *
      * @return \DateTime
      */
     protected function calculateTimeoutDateFromEvent(DateTime $currentTime, EventInterface $event, ?SpySalesOrderItem $spySalesOrderItem = null)
@@ -209,6 +212,9 @@ class Timeout implements TimeoutInterface
 
         $timeout = $event->getTimeout();
         $interval = DateInterval::createFromDateString($timeout);
+        if ($interval === false) {
+            throw new RuntimeException('Cannot create a DateInterval from `$event->getTimeout()`');
+        }
 
         $this->validateTimeout($interval, $timeout);
 

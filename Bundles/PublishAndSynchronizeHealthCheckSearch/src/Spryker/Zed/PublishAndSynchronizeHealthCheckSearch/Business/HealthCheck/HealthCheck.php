@@ -12,6 +12,7 @@ use DateTime;
 use Generated\Shared\Transfer\HealthCheckServiceResponseTransfer;
 use Generated\Shared\Transfer\SearchContextTransfer;
 use Generated\Shared\Transfer\SearchDocumentTransfer;
+use RuntimeException;
 use Spryker\Shared\PublishAndSynchronizeHealthCheckSearch\PublishAndSynchronizeHealthCheckSearchConfig as SharedPublishAndSynchronizeHealthCheckSearchConfig;
 use Spryker\Zed\PublishAndSynchronizeHealthCheckSearch\Dependency\Client\PublishAndSynchronizeHealthCheckSearchToSearchClientInterface;
 use Spryker\Zed\PublishAndSynchronizeHealthCheckSearch\PublishAndSynchronizeHealthCheckSearchConfig;
@@ -75,11 +76,17 @@ class HealthCheck implements HealthCheckInterface
     /**
      * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
      *
+     * @throws \RuntimeException
+     *
      * @return bool
      */
     protected function isValid(SearchDocumentTransfer $searchDocumentTransfer): bool
     {
         $dateInterval = DateInterval::createFromDateString($this->publishAndSynchronizeHealthCheckSearchConfig->getValidationThreshold());
+        if ($dateInterval === false) {
+            throw new RuntimeException('Cannot create a DateInterval from `PublishAndSynchronizeHealthCheckSearchConfig::getValidationThreshold()`');
+        }
+
         $now = new DateTime();
         $maxAge = $now->sub($dateInterval);
 
