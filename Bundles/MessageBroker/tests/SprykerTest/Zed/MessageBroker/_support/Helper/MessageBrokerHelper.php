@@ -432,7 +432,7 @@ class MessageBrokerHelper extends Module
             $eventDispatcher->addSubscriber($eventSubscriber);
         }
 
-        $this->getBusinessHelper()->mockFactoryMethod('getEventDispatcher', $eventDispatcher);
+        $this->getBusinessHelper()->mockFactoryMethod('getEventDispatcher', $eventDispatcher, 'MessageBroker');
 
         $messageBrokerWorkerConfigTransfer = new MessageBrokerWorkerConfigTransfer();
         $messageBrokerWorkerConfigTransfer->setChannels([]);
