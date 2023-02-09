@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="ProductOfferWarehouseCriteria">
+        <property name="store" type="string"/>
+        <property name="productOfferReference" type="string"/>
+        <property name="quantity" type="int"/>
+    </transfer>
+
+    <transfer name="Order">
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="store" type="string"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="productOfferReference" type="string"/>
+        <property name="quantity" type="int"/>
+        <property name="warehouse" type="Stock" strict="true"/>
+    </transfer>
+
+    <transfer name="Stock">
+        <property name="idStock" type="int"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="idStore" type="int"/>
+        <property name="name" type="string"/>
+        <property name="storeRelation" type="StoreRelation"/>
+    </transfer>
+
+    <transfer name="StoreRelation">
+        <property name="idStores" type="int[]" singular="idStores"/>
+    </transfer>
+
+    <transfer name="ProductOfferStock">
+        <property name="idProductOffer" type="int"/>
+        <property name="quantity" type="decimal"/>
+        <property name="stock" type="Stock"/>
+        <property name="isNeverOutOfStock" type="bool"/>
+    </transfer>
+
+    <transfer name="ProductOffer">
+        <property name="idProductOffer" type="int"/>
+        <property name="productOfferReference" type="string"/>
+    </transfer>
+
+</transfers>

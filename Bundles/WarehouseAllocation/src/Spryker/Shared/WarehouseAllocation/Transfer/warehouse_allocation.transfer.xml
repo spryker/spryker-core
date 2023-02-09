@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+    <transfer name="Order">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="idSalesOrderItem" type="int"/>
+        <property name="warehouse" type="Stock" strict="true"/>
+        <property name="uuid" type="string"/>
+    </transfer>
+
+    <transfer name="Stock">
+        <property name="idStock" type="int"/>
+    </transfer>
+
+    <transfer name="WarehouseAllocation" strict="true">
+        <property name="warehouse" type="Stock"/>
+        <property name="salesOrderItemUuid" type="string"/>
+    </transfer>
+
+    <transfer name="WarehouseAllocationCriteria" strict="true">
+        <property name="warehouseAllocationConditions" type="WarehouseAllocationConditions"/>
+    </transfer>
+
+    <transfer name="WarehouseAllocationConditions" strict="true">
+        <property name="warehouseIds" type="int[]" singular="idWarehouse"/>
+        <property name="salesOrderItemUuids" type="string[]" singular="salesOrderItemUuid"/>
+    </transfer>
+
+    <transfer name="WarehouseAllocationCollection" strict="true">
+        <property name="warehouseAllocations" type="WarehouseAllocation[]" singular="warehouseAllocation"/>
+    </transfer>
+
+</transfers>

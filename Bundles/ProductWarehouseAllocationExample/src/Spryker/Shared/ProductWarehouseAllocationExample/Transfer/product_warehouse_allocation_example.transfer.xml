@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="Order">
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="store" type="string"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="sku" type="string"/>
+        <property name="quantity" type="int"/>
+        <property name="warehouse" type="Stock" strict="true"/>
+    </transfer>
+
+    <transfer name="Stock">
+        <property name="idStock" type="int"/>
+        <property name="storeRelation" type="StoreRelation"/>
+    </transfer>
+
+    <transfer name="StoreRelation">
+        <property name="idStores" type="int[]" singular="idStores"/>
+    </transfer>
+
+    <transfer name="StockProduct">
+        <property name="sku" type="string"/>
+        <property name="stockType" type="string"/>
+        <property name="isNeverOutOfStock" type="string"/>
+        <property name="quantity" type="decimal"/>
+        <property name="fkStock" type="int"/>
+    </transfer>
+
+    <transfer name="ProductWarehouseCriteria">
+        <property name="storeName" type="string"/>
+        <property name="sku" type="string"/>
+        <property name="quantity" type="int"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="idStore" type="int"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+</transfers>
