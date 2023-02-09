@@ -17,12 +17,14 @@ interface PropelCommandRunnerInterface
      * @param \Symfony\Component\Console\Command\Command $command
      * @param \Symfony\Component\Console\Input\InputDefinition $inputDefinition
      * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @param array<string, mixed> $commandLineArguments
      *
      * @return int
      */
     public function runCommand(
         Command $command,
         InputDefinition $inputDefinition,
-        OutputInterface $output
+        OutputInterface $output,
+        array $commandLineArguments = []
     ): int;
 }

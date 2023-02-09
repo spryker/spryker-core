@@ -126,7 +126,10 @@ class ConfigurableBundleTemplateSlotProductsTable extends AbstractTable
             true,
         );
 
-        return $this->mapProductEntityCollectionToTableData($productEntityCollection->toArray());
+        /** @var array<int, array<string, mixed>> $productEntities */
+        $productEntities = $productEntityCollection->toArray();
+
+        return $this->mapProductEntityCollectionToTableData($productEntities);
     }
 
     /**

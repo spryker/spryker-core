@@ -2,5 +2,5 @@ parameters:
     level: 7
     checkMissingIterableValueType: false
     ignoreErrors:
-        - '#Call to an undefined method \$this\(.+AbstractSpyMerchantRelationshipSalesOrderThresholdQuery\)\|.+PropelConditionalProxy::filterBy.+\(\).#'
-        - '#Call to an undefined method .+PropelConditionalProxy\|static\(.+AbstractSpyMerchantRelationshipSalesOrderThresholdQuery\)::use.+\(\).#'
+        - '#Call to an undefined method .+PropelConditionalProxy::filterByFkStore\(\).#'
+        - '#Call to an undefined method .+PropelConditionalProxy::filterByFkCurrency\(\).#'

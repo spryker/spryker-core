@@ -67,7 +67,10 @@ class ConnectionProvider implements ConnectionProviderInterface
     protected function establishConnection(): void
     {
         $serviceContainer = $this->getServiceContainer();
-        $serviceContainer->setAdapterClass(static::CONNECTION_NAME, $this->config->getDbEngineName());
+
+        /** @phpstan-var class-string<\Propel\Runtime\Adapter\AdapterInterface> $adapterClass */
+        $adapterClass = $this->config->getDbEngineName();
+        $serviceContainer->setAdapterClass(static::CONNECTION_NAME, $adapterClass);
         $serviceContainer->setConnectionManager($this->createConnectionManager());
         $serviceContainer->setDefaultDatasource(static::CONNECTION_NAME);
 

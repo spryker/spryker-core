@@ -46,7 +46,9 @@ class PropelApplicationPlugin extends AbstractPlugin implements ApplicationPlugi
         $this->getFacade()->loadPropelTableMap();
 
         $serviceContainer = $this->getServiceContainer();
-        $serviceContainer->setAdapterClass(static::DATA_SOURCE_NAME, $this->getConfig()->getCurrentDatabaseEngine());
+        /** @phpstan-var class-string<\Propel\Runtime\Adapter\AdapterInterface> $adapterClass */
+        $adapterClass = $this->getConfig()->getCurrentDatabaseEngine();
+        $serviceContainer->setAdapterClass(static::DATA_SOURCE_NAME, $adapterClass);
         $serviceContainer->setConnectionManager($manager);
         $serviceContainer->setDefaultDatasource(static::DATA_SOURCE_NAME);
 

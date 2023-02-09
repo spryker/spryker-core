@@ -2,5 +2,4 @@ parameters:
     level: 7
     checkMissingIterableValueType: false
     ignoreErrors:
-        - '#Call to an undefined method .+Criteria::endUse\(\).#'
-        - '#Call to an undefined method .+SpyMerchantRelationshipToCompanyBusinessUnitQuery\|.+PropelConditionalProxy::filterByFkCompanyBusinessUnit_In\(\).#'
+        - '#Call to an undefined method .+PropelConditionalProxy::filterByFkCompanyBusinessUnit_In\(\).#'

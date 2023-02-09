@@ -42,13 +42,15 @@ class PropelCommandRunner implements PropelCommandRunnerInterface
      * @param \Symfony\Component\Console\Command\Command $command
      * @param \Symfony\Component\Console\Input\InputDefinition $inputDefinition
      * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @param array<string, mixed> $commandLineArguments
      *
      * @return int
      */
     public function runCommand(
         Command $command,
         InputDefinition $inputDefinition,
-        OutputInterface $output
+        OutputInterface $output,
+        array $commandLineArguments = []
     ): int {
         if ($command instanceof ConfigurablePropelCommandInterface) {
             $this->propelCommandConfigurator->configurePropelCommand($command);
@@ -59,6 +61,7 @@ class PropelCommandRunner implements PropelCommandRunnerInterface
                 $inputDefinition,
                 $command->getDefinition(),
                 $command->getName(),
+                $commandLineArguments,
             );
 
         return $command->run($input, $output);

@@ -9,6 +9,7 @@ namespace Spryker\Zed\Propel\Communication\Console;
 
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -28,12 +29,33 @@ class MigrateConsole extends Console
     public const COMMAND_DESCRIPTION = 'Migrate database';
 
     /**
+     * @var string
+     */
+    protected const COMMAND_OPTION_MIGRATE_TO_VERSION = 'migrate-to-version';
+
+    /**
+     * @var string
+     */
+    protected const COMMAND_OPTION_MIGRATE_TO_VERSION_FULL = '--migrate-to-version';
+
+    /**
+     * @var string
+     */
+    protected const COMMAND_OPTION_MIGRATE_TO_VERSION_DESCRIPTION = 'Defines the version to migrate database to.';
+
+    /**
      * @return void
      */
     protected function configure()
     {
         $this->setName(static::COMMAND_NAME);
         $this->setDescription(static::COMMAND_DESCRIPTION);
+        $this->addOption(
+            static::COMMAND_OPTION_MIGRATE_TO_VERSION,
+            null,
+            InputOption::VALUE_REQUIRED,
+            static::COMMAND_OPTION_MIGRATE_TO_VERSION_DESCRIPTION,
+        );
 
         parent::configure();
     }
@@ -50,10 +72,16 @@ class MigrateConsole extends Console
 
         $command = $this->getFactory()->createMigrationMigrateCommand();
 
+        $commandLineArguments = [];
+        if ($input->getOption(static::COMMAND_OPTION_MIGRATE_TO_VERSION)) {
+            $commandLineArguments[static::COMMAND_OPTION_MIGRATE_TO_VERSION_FULL] = $input->getOption(static::COMMAND_OPTION_MIGRATE_TO_VERSION);
+        }
+
         return $this->getFactory()->createPropelCommandRunner()->runCommand(
             $command,
             $this->getDefinition(),
             $output,
+            $commandLineArguments,
         );
     }
 }

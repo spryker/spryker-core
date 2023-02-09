@@ -16,12 +16,14 @@ interface PropelCommandInputBuilderInterface
      * @param \Symfony\Component\Console\Input\InputDefinition $inputDefinition
      * @param \Symfony\Component\Console\Input\InputDefinition $wrappedInputDefinition
      * @param string $commandName
+     * @param array<string, mixed> $commandLineArguments
      *
      * @return \Symfony\Component\Console\Input\InputInterface
      */
     public function buildInput(
         InputDefinition $inputDefinition,
         InputDefinition $wrappedInputDefinition,
-        string $commandName
+        string $commandName,
+        array $commandLineArguments = []
     ): InputInterface;
 }

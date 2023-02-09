@@ -8,6 +8,8 @@
 namespace SprykerTest\Zed\Propel;
 
 use Codeception\Actor;
+use Spryker\Zed\Propel\Communication\Console\MigrationCheckConsole;
+use Symfony\Component\Console\Tester\CommandTester;
 
 /**
  * @method void wantToTest($text)
@@ -26,4 +28,15 @@ use Codeception\Actor;
 class PropelCommunicationTester extends Actor
 {
     use _generated\PropelCommunicationTesterActions;
+
+    /**
+     * @return \Symfony\Component\Console\Tester\CommandTester
+     */
+    public function getMigrationCheckConsoleCommandTester(): CommandTester
+    {
+        $factory = $this->getFactory();
+        $command = (new MigrationCheckConsole())->setFactory($factory);
+
+        return $this->getConsoleTester($command);
+    }
 }
