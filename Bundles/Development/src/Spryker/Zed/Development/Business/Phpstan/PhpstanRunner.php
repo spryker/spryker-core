@@ -10,6 +10,10 @@ namespace Spryker\Zed\Development\Business\Phpstan;
 use Laminas\Filter\FilterChain;
 use Laminas\Filter\StringToLower;
 use Laminas\Filter\Word\CamelCaseToDash;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
+use RecursiveRegexIterator;
+use RegexIterator;
 use RuntimeException;
 use SplFileInfo;
 use Spryker\Zed\Development\Business\Phpstan\Config\PhpstanConfigFileFinderInterface;
@@ -191,6 +195,14 @@ class PhpstanRunner implements PhpstanRunnerInterface
 
         if (is_dir($path . 'src')) {
             $path .= 'src' . DIRECTORY_SEPARATOR;
+        }
+
+        if (!$this->needsRun($path)) {
+            if ($output->isVerbose()) {
+                $output->writeln(sprintf('Skipping %s (no PHP files found)', $path));
+            }
+
+            return static::CODE_SUCCESS;
         }
 
         $configFilePath .= $this->config->getPhpstanConfigFilename();
@@ -633,5 +645,22 @@ class PhpstanRunner implements PhpstanRunnerInterface
         }
 
         return (int)$matches[1] ?: null;
+    }
+
+    /**
+     * @param string $path
+     *
+     * @return bool
+     */
+    protected function needsRun(string $path): bool
+    {
+        $directoryIterator = new RecursiveDirectoryIterator($path);
+        $recursiveIterator = new RecursiveIteratorIterator($directoryIterator);
+        $regexIterator = new RegexIterator($recursiveIterator, '#\.php$#', RecursiveRegexIterator::GET_MATCH);
+        foreach ($regexIterator as $file) {
+            return true;
+        }
+
+        return false;
     }
 }
