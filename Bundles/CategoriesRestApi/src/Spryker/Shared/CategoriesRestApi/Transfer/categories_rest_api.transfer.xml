@@ -28,6 +28,7 @@
 
     <transfer name="CategoryNodeStorage">
         <property name="idCategory" type="int"/>
+        <property name="nodeId" type="int"/>
     </transfer>
 
     <transfer name="RestErrorMessage">

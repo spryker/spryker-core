@@ -24,22 +24,22 @@ class CategoryReader implements CategoryReaderInterface
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
      */
-    protected $restResourceBuilder;
+    protected RestResourceBuilderInterface $restResourceBuilder;
 
     /**
      * @var \Spryker\Glue\CategoriesRestApi\Dependency\Client\CategoriesRestApiToCategoryStorageClientInterface
      */
-    protected $categoryStorageClient;
+    protected CategoriesRestApiToCategoryStorageClientInterface $categoryStorageClient;
 
     /**
      * @var \Spryker\Glue\CategoriesRestApi\Processor\Mapper\CategoryMapperInterface
      */
-    protected $categoryMapper;
+    protected CategoryMapperInterface $categoryMapper;
 
     /**
      * @var \Spryker\Glue\CategoriesRestApi\Dependency\Client\CategoriesRestApiToStoreClientInterface
      */
-    protected $storeClient;
+    protected CategoriesRestApiToStoreClientInterface $storeClient;
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
@@ -152,7 +152,7 @@ class CategoryReader implements CategoryReaderInterface
         $restResources = [];
 
         foreach ($categoryNodeStorageTransfers as $categoryNodeStorageTransfer) {
-            $restResources[$categoryNodeStorageTransfer->getIdCategory()] = $this->buildProductCategoryResource($categoryNodeStorageTransfer);
+            $restResources[$categoryNodeStorageTransfer->getNodeId()] = $this->buildProductCategoryResource($categoryNodeStorageTransfer);
         }
 
         return $restResources;

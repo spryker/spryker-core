@@ -7,6 +7,8 @@
 
 namespace Spryker\Glue\CategoriesRestApi\Dependency\Client;
 
+use Generated\Shared\Transfer\StoreTransfer;
+
 class CategoriesRestApiToStoreClientBridge implements CategoriesRestApiToStoreClientInterface
 {
     /**
@@ -25,7 +27,7 @@ class CategoriesRestApiToStoreClientBridge implements CategoriesRestApiToStoreCl
     /**
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getCurrentStore()
+    public function getCurrentStore(): StoreTransfer
     {
         return $this->storeClient->getCurrentStore();
     }

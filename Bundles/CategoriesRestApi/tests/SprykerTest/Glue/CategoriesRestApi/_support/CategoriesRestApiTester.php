@@ -12,8 +12,8 @@ use Codeception\Actor;
 /**
  * Inherited Methods
  *
- * @method void wantToTest($text)
  * @method void wantTo($text)
+ * @method void wantToTest($text)
  * @method void execute($callable)
  * @method void expectTo($prediction)
  * @method void expect($prediction)
@@ -21,11 +21,11 @@ use Codeception\Actor;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method void pause()
+ * @method void pause($vars = [])
  *
  * @SuppressWarnings(PHPMD)
  */
-class CategoriesRestApiPluginTester extends Actor
+class CategoriesRestApiTester extends Actor
 {
-    use _generated\CategoriesRestApiPluginTesterActions;
+    use _generated\CategoriesRestApiTesterActions;
 }

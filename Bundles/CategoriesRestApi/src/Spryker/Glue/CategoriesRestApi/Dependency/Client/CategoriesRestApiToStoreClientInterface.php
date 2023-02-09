@@ -7,10 +7,12 @@
 
 namespace Spryker\Glue\CategoriesRestApi\Dependency\Client;
 
+use Generated\Shared\Transfer\StoreTransfer;
+
 interface CategoriesRestApiToStoreClientInterface
 {
     /**
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getCurrentStore();
+    public function getCurrentStore(): StoreTransfer;
 }

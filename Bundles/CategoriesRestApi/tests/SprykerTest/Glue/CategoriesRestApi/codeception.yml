@@ -2,9 +2,9 @@ namespace: SprykerTest\Glue\CategoriesRestApi
 
 paths:
     tests: .
-    data: _data
+    data: ../../../_data
     support: _support
-    output: _output
+    output: ../../../_output
 
 coverage:
     enabled: true
@@ -13,8 +13,13 @@ coverage:
 
 suites:
     Glue:
-        path: Plugin
-        actor: CategoriesRestApiPluginTester
+        path: .
+        actor: CategoriesRestApiTester
         modules:
             enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Glue\Testify\Helper\FactoryHelper

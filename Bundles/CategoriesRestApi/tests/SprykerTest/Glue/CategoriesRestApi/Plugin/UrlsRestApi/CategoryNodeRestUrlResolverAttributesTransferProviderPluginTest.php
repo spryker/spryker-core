@@ -15,6 +15,7 @@ use Spryker\Glue\CategoriesRestApi\Dependency\Client\CategoriesRestApiToCategory
 use Spryker\Glue\CategoriesRestApi\Dependency\Client\CategoriesRestApiToStoreClientInterface;
 use Spryker\Glue\CategoriesRestApi\Plugin\UrlsRestApi\CategoryNodeRestUrlResolverAttributesTransferProviderPlugin;
 use Spryker\Shared\Kernel\Transfer\Exception\NullValueException;
+use SprykerTest\Glue\CategoriesRestApi\CategoriesRestApiTester;
 
 /**
  * Auto-generated group annotations
@@ -55,9 +56,9 @@ class CategoryNodeRestUrlResolverAttributesTransferProviderPluginTest extends Un
     protected const ID_RESOURCE_CATEGORYNODE = 3;
 
     /**
-     * @var \SprykerTest\Glue\CategoriesRestApi\CategoriesRestApiPluginTester
+     * @var \SprykerTest\Glue\CategoriesRestApi\CategoriesRestApiTester
      */
-    protected $tester;
+    protected CategoriesRestApiTester $tester;
 
     /**
      * @return void
