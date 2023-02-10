@@ -82,7 +82,7 @@ class ProductAttributesNotBlankConstraintValidatorTest extends ConstraintValidat
     /**
      * @return void
      */
-    public function testValidateInvalidAttributes()
+    public function testValidateInvalidAttributes(): void
     {
         // Arrange
         $attributes = [

@@ -26,32 +26,32 @@ class ProductGuiTableDataProvider extends AbstractGuiTableDataProvider
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepositoryInterface
      */
-    protected $productOfferMerchantPortalGuiRepository;
+    protected ProductOfferMerchantPortalGuiRepositoryInterface $productOfferMerchantPortalGuiRepository;
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToTranslatorFacadeInterface
      */
-    protected $translatorFacade;
+    protected ProductOfferMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade;
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Builder\ProductNameBuilderInterface
      */
-    protected $productNameBuilder;
+    protected ProductNameBuilderInterface $productNameBuilder;
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface
      */
-    protected $merchantUserFacade;
+    protected ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade;
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToLocaleFacadeInterface
      */
-    protected $localeFacade;
+    protected ProductOfferMerchantPortalGuiToLocaleFacadeInterface $localeFacade;
 
     /**
      * @var array<\Spryker\Zed\ProductOfferMerchantPortalGuiExtension\Dependency\Plugin\ProductTableExpanderPluginInterface>
      */
-    protected $productTableExpanderPlugins;
+    protected array $productTableExpanderPlugins;
 
     /**
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepositoryInterface $productOfferMerchantPortalGuiRepository

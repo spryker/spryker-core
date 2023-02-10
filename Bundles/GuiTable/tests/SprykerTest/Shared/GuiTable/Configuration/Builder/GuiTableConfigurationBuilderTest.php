@@ -87,7 +87,7 @@ class GuiTableConfigurationBuilderTest extends Unit
     /**
      * @return void
      */
-    public function testAddColumnImageAddsImageWithCorrectAttributesWithoutAltAttribute()
+    public function testAddColumnImageAddsImageWithCorrectAttributesWithoutAltAttribute(): void
     {
         // Arrange
         $guiTableConfigurationBuilder = $this->tester->createGuiTableConfigurationBuilder();

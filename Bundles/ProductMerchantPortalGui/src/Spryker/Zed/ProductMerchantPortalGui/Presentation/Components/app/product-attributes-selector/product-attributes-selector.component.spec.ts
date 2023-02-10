@@ -45,7 +45,7 @@ const mockSelectedAttributes = [
 ];
 
 @Component({
-    selector: 'spy-test',
+    selector: 'mp-test',
     template: `
         <mp-product-attributes-selector
             [attributes]="attributes"

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Constraint;
 
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Kernel\Communication\Validator\AbstractConstraintValidator;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -16,8 +17,8 @@ class ProductConcreteOwnedByMerchantConstraintValidator extends AbstractConstrai
     /**
      * Checks if concrete product owned by merchant.
      *
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer|null $value
-     * @param \Symfony\Component\Validator\Constraint|\Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Constraint\ProductConcreteOwnedByMerchantConstraint $constraint
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer|mixed $value
+     * @param \Symfony\Component\Validator\Constraint $constraint
      *
      * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException
      *
@@ -25,7 +26,7 @@ class ProductConcreteOwnedByMerchantConstraintValidator extends AbstractConstrai
      */
     public function validate($value, Constraint $constraint): void
     {
-        if (!$value) {
+        if (!$value instanceof ProductConcreteTransfer) {
             return;
         }
 

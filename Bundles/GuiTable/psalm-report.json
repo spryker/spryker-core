@@ -3,56 +3,8 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 326,
-            "line_to": 326,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/GuiTable/src/Spryker/Shared/GuiTable/Configuration/Builder/GuiTableConfigurationBuilder.php",
-            "snippet": "            throw new InvalidConfigurationException(sprintf('Column with id \"%s\" already exists', $columnId));",
-            "selected_text": "$columnId",
-            "error_level": 3,
-            "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 329,
-            "line_to": 329,
-            "type": "PossiblyNullArrayOffset",
-            "message": "Cannot access value on variable $this->columns[$columnId] using possibly null offset null|string",
-            "file_name": "vendor/spryker/spryker/Bundles/GuiTable/src/Spryker/Shared/GuiTable/Configuration/Builder/GuiTableConfigurationBuilder.php",
-            "snippet": "        $this->columns[$columnId] = $guiTableColumnConfigurationTransfer;",
-            "selected_text": "$this->columns",
-            "error_level": 3,
-            "shortcode": 125
-        },
-        {
-            "severity": "info",
-            "line_from": 1132,
-            "line_to": 1132,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 1 of Generated\\Shared\\Transfer\\GuiTableEditableDataErrorTransfer::setColumnErrors cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/GuiTable/src/Spryker/Shared/GuiTable/Configuration/Builder/GuiTableConfigurationBuilder.php",
-            "snippet": "                ->setColumnErrors($columnErrors);",
-            "selected_text": "$columnErrors",
-            "error_level": 3,
-            "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 1242,
-            "line_to": 1242,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/GuiTable/src/Spryker/Shared/GuiTable/Configuration/Builder/GuiTableConfigurationBuilder.php",
-            "snippet": "            throw new InvalidConfigurationException(sprintf('Editable column with id \"%s\" already exists', $columnId));",
-            "selected_text": "$columnId",
-            "error_level": 3,
-            "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 386,
-            "line_to": 386,
+            "line_from": 382,
+            "line_to": 382,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\GuiTableColumnConfigurationTransfer> variable $guiTableColumnConfigurationTransfers",
             "file_name": "vendor/spryker/spryker/Bundles/GuiTable/src/Spryker/Shared/GuiTable/Configuration/Translator/AbstractConfigurationTranslator.php",
@@ -60,18 +12,6 @@
             "selected_text": "count",
             "error_level": 3,
             "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 93,
-            "line_to": 93,
-            "type": "PossiblyNullArrayOffset",
-            "message": "Cannot access value on variable $indexedColumnTypes[mixed|null|string] using possibly null offset mixed|null|string",
-            "file_name": "vendor/spryker/spryker/Bundles/GuiTable/src/Spryker/Shared/GuiTable/Http/DataResponse/DataResponseFormatter.php",
-            "snippet": "            $indexedColumnTypes[$guiTableColumnConfigurationTransfer->getId()] = $guiTableColumnConfigurationTransfer->getTypeOrFail();",
-            "selected_text": "$indexedColumnTypes",
-            "error_level": 3,
-            "shortcode": 125
         },
         {
             "severity": "info",
@@ -86,5 +26,6 @@
             "shortcode": 166
         }
     ],
-    "deprecation": []
+    "deprecation": [],
+    "count": 2
 }

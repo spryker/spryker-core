@@ -140,10 +140,10 @@ class ProductAttributesNotBlankConstraintValidator extends ConstraintValidator
     }
 
     /**
-     * @param array $attributesIndexedByLocaleName
-     * @param array $defaultAttributes
+     * @param array<string, array<string>> $attributesIndexedByLocaleName
+     * @param array<string> $defaultAttributes
      *
-     * @return array
+     * @return array<string, array<string>>
      */
     protected function appendDefaultAttributes(array $attributesIndexedByLocaleName, array $defaultAttributes): array
     {
@@ -157,14 +157,14 @@ class ProductAttributesNotBlankConstraintValidator extends ConstraintValidator
     /**
      * @param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributesTransfers
      *
-     * @return array
+     * @return array<string, array<string>>
      */
     protected function getLocalizedAttributesGroupedByLocaleName(ArrayObject $localizedAttributesTransfers): array
     {
         $result = [];
 
         foreach ($localizedAttributesTransfers as $localizedAttributeTransfer) {
-            $localeName = $localizedAttributeTransfer->getLocaleOrFail()->getLocaleName();
+            $localeName = $localizedAttributeTransfer->getLocaleOrFail()->getLocaleNameOrFail();
             $result[$localeName] = $localizedAttributeTransfer->getAttributes();
         }
 

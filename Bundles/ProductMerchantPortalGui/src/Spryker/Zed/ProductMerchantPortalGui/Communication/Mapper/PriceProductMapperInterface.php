@@ -49,7 +49,7 @@ interface PriceProductMapperInterface
     ): PriceProductCollectionDeleteCriteriaTransfer;
 
     /**
-     * @param array $requestQueryParams
+     * @param array<mixed> $requestQueryParams
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductCriteriaTransfer

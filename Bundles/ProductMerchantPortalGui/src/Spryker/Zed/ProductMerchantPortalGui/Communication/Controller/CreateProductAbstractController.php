@@ -275,10 +275,10 @@ class CreateProductAbstractController extends AbstractController
     }
 
     /**
-     * @param array<mixed> $responseData
+     * @param array<string, mixed> $responseData
      * @param string $errorMessage
      *
-     * @return array<mixed>
+     * @return array<string, mixed>
      */
     protected function addErrorNotification(array $responseData, string $errorMessage): array
     {
@@ -308,7 +308,7 @@ class CreateProductAbstractController extends AbstractController
     }
 
     /**
-     * @param array<mixed> $productAbstractData
+     * @param array<string, mixed> $productAbstractData
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
@@ -326,7 +326,7 @@ class CreateProductAbstractController extends AbstractController
     }
 
     /**
-     * @param array $productConcreteData
+     * @param array<int, array<string, mixed>> $productConcreteData
      *
      * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
@@ -347,10 +347,10 @@ class CreateProductAbstractController extends AbstractController
     }
 
     /**
-     * @param array<mixed> $viewData
-     * @param array<mixed> $formData
+     * @param array<string, mixed> $viewData
+     * @param array<string, mixed> $formData
      *
-     * @return array<mixed>
+     * @return array<string, mixed>
      */
     protected function createMultiConcreteResponse(array $viewData, array $formData): array
     {
@@ -366,7 +366,7 @@ class CreateProductAbstractController extends AbstractController
     /**
      * @param \Generated\Shared\Transfer\TableValidationResponseTransfer $tableValidationResponseTransfer
      *
-     * @return array<mixed>
+     * @return array<int, mixed>
      */
     protected function extractErrors(TableValidationResponseTransfer $tableValidationResponseTransfer): array
     {

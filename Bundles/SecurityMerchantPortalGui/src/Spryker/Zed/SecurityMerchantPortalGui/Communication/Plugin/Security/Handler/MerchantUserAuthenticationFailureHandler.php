@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\MessageTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Http\Authentication\AuthenticationFailureHandlerInterface;
 
@@ -26,7 +27,7 @@ class MerchantUserAuthenticationFailureHandler extends AbstractPlugin implements
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
+    public function onAuthenticationFailure(Request $request, AuthenticationException $exception): Response
     {
         $this->getFactory()
             ->getMessengerFacade()

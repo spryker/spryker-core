@@ -20,7 +20,7 @@ class PriceProductConcreteTableDataProvider extends AbstractPriceProductTableDat
     /**
      * @var int
      */
-    protected $idProductConcrete;
+    protected int $idProductConcrete;
 
     /**
      * @param int $idProductConcrete

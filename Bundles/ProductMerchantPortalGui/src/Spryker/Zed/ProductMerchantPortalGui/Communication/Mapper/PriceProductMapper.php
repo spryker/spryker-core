@@ -48,32 +48,32 @@ class PriceProductMapper implements PriceProductMapperInterface
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeInterface
      */
-    protected $priceProductFacade;
+    protected ProductMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToCurrencyFacadeInterface
      */
-    protected $currencyFacade;
+    protected ProductMerchantPortalGuiToCurrencyFacadeInterface $currencyFacade;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMoneyFacadeInterface
      */
-    protected $moneyFacade;
+    protected ProductMerchantPortalGuiToMoneyFacadeInterface $moneyFacade;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\Merger\PriceProductMergerInterface
      */
-    protected $priceProductMerger;
+    protected PriceProductMergerInterface $priceProductMerger;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToUtilEncodingServiceInterface
      */
-    protected $utilEncodingService;
+    protected ProductMerchantPortalGuiToUtilEncodingServiceInterface $utilEncodingService;
 
     /**
      * @var array<\Spryker\Zed\ProductMerchantPortalGuiExtension\Dependency\Plugin\PriceProductMapperPluginInterface>
      */
-    protected $priceProductMapperPlugins;
+    protected array $priceProductMapperPlugins;
 
     /**
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade
@@ -133,7 +133,7 @@ class PriceProductMapper implements PriceProductMapperInterface
         ArrayObject $priceProductTransfers
     ): ArrayObject {
         foreach ($priceProductTransfers as $priceProductTransfer) {
-            $priceProductTransfer = $this->executePriceProductMapperPlugins($priceProductTransfer, $data);
+            $this->executePriceProductMapperPlugins($priceProductTransfer, $data);
         }
 
         return new ArrayObject($priceProductTransfers);
@@ -175,7 +175,7 @@ class PriceProductMapper implements PriceProductMapperInterface
     }
 
     /**
-     * @param array $requestQueryParams
+     * @param array<mixed> $requestQueryParams
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductCriteriaTransfer
@@ -262,7 +262,7 @@ class PriceProductMapper implements PriceProductMapperInterface
     }
 
     /**
-     * @param array $newPriceProduct
+     * @param array<mixed> $newPriceProduct
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      * @param \Generated\Shared\Transfer\PriceTypeTransfer $priceTypeTransfer
      *
@@ -351,7 +351,7 @@ class PriceProductMapper implements PriceProductMapperInterface
     }
 
     /**
-     * @param array $newPriceProduct
+     * @param array<mixed> $newPriceProduct
      * @param \Generated\Shared\Transfer\PriceTypeTransfer $priceTypeTransfer
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      *
@@ -394,16 +394,17 @@ class PriceProductMapper implements PriceProductMapperInterface
     }
 
     /**
-     * @param array $requestQueryParams
+     * @param array<mixed> $requestQueryParams
      *
-     * @return array
+     * @return array<array<mixed>>
      */
     protected function decodeRequestQueryParams(array $requestQueryParams): array
     {
         $decodedRequestQueryParams = [];
 
         foreach ($requestQueryParams as $key => $encodedValue) {
-            $decodedValue = $this->utilEncodingService->decodeJson($encodedValue);
+            /** @var array<mixed> $decodedValue */
+            $decodedValue = $this->utilEncodingService->decodeJson($encodedValue, true);
 
             if (json_last_error() !== JSON_ERROR_NONE) {
                 continue;

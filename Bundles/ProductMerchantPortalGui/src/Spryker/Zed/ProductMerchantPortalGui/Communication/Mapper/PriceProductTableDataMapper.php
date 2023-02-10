@@ -23,27 +23,27 @@ class PriceProductTableDataMapper implements PriceProductTableDataMapperInterfac
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeInterface
      */
-    protected $priceProductFacade;
+    protected ProductMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToStoreFacadeInterface
      */
-    protected $storeFacade;
+    protected ProductMerchantPortalGuiToStoreFacadeInterface $storeFacade;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToUtilEncodingServiceInterface
      */
-    protected $utilEncodingService;
+    protected ProductMerchantPortalGuiToUtilEncodingServiceInterface $utilEncodingService;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToPriceProductServiceInterface
      */
-    protected $priceProductService;
+    protected ProductMerchantPortalGuiToPriceProductServiceInterface $priceProductService;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\PriceProductMapperInterface
      */
-    protected $priceProductMapper;
+    protected PriceProductMapperInterface $priceProductMapper;
 
     /**
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade

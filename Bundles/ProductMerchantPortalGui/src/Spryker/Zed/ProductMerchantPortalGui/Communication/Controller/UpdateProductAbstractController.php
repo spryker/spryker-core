@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Controller;
 
 use ArrayObject;
-use Generated\Shared\Transfer\GuiTableEditableInitialDataTransfer;
 use Generated\Shared\Transfer\MerchantProductTransfer;
 use Generated\Shared\Transfer\PriceProductTableViewTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
@@ -44,14 +43,6 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
      * @var string
      */
     protected const STATUS_DRAFT = 'draft';
-
-    /**
-     * @var array
-     */
-    protected const DEFAULT_INITIAL_DATA = [
-        GuiTableEditableInitialDataTransfer::DATA => [],
-        GuiTableEditableInitialDataTransfer::ERRORS => [],
-    ];
 
     /**
      * @see \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\AddProductConcreteController::indexAction()
@@ -130,11 +121,11 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
     }
 
     /**
-     * @param \Symfony\Component\Form\FormInterface $productAbstractForm
+     * @param \Symfony\Component\Form\FormInterface<mixed> $productAbstractForm
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param int $idMerchant
-     * @param array<mixed> $priceInitialData
-     * @param array $attributesInitialData
+     * @param array<string, array<string, mixed>> $priceInitialData
+     * @param array<string, array<string, mixed>> $attributesInitialData
      * @param array<int> $initialCategoryIds
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
@@ -263,12 +254,12 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
     }
 
     /**
-     * @param \Symfony\Component\Form\FormInterface $productAbstractForm
+     * @param \Symfony\Component\Form\FormInterface<mixed> $productAbstractForm
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      * @param \Generated\Shared\Transfer\ValidationResponseTransfer $validationResponseTransfer
-     * @param array $priceInitialData
-     * @param array $attributesInitialData
-     * @param array $imageSetsErrors
+     * @param array<string, array<string, mixed>> $priceInitialData
+     * @param array<string, array<string, mixed>> $attributesInitialData
+     * @param array<array<string>> $imageSetsErrors
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
@@ -318,9 +309,6 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
                         ->createProductAbstractFormDataProvider()
                         ->getProductCategoryTree(),
                     'urlAddProductConcrete' => static::URL_ADD_PRODUCT_CONCRETE,
-                    'urlUpdateApprovalStatus' => $this->getFactory() // @deprecated Use `applicableUpdateApprovalStatuses` instead.
-                        ->createCreateProductUrlGenerator()
-                        ->getUpdateProductAbstractApprovalStatusUrl(static::STATUS_WAITING_FOR_APPROVAL, $productAbstractTransfer->getIdProductAbstractOrFail()),
                     'applicableUpdateApprovalStatuses' => $this->getFactory()
                         ->createApplicableApprovalStatusReader()
                         ->getApplicableUpdateApprovalStatuses($productAbstractTransfer->getApprovalStatus() ?? static::STATUS_DRAFT),
@@ -373,12 +361,11 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
     protected function getImageSetMetaDataGroupedByImageSet(ArrayObject $imageSets, array $imageSetsErrors): SplObjectStorage
     {
         $imageSetMetaData = new SplObjectStorage();
-
         foreach ($imageSets as $originalIndex => $imageSet) {
-            $imageSetMetaData[$imageSet] = [
+            $imageSetMetaData->attach($imageSet, [
                 'originalIndex' => $originalIndex,
                 'errors' => $imageSetsErrors[$originalIndex] ?? [],
-            ];
+            ]);
         }
 
         return $imageSetMetaData;
@@ -412,7 +399,7 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
      *
      * @return array<string>
      */
-    protected function getImageSetTabNames(ProductAbstractTransfer $productAbstractTransfer)
+    protected function getImageSetTabNames(ProductAbstractTransfer $productAbstractTransfer): array
     {
         $result = [];
 

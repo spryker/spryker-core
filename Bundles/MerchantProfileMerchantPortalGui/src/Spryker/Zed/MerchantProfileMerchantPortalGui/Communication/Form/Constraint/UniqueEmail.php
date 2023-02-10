@@ -19,7 +19,7 @@ class UniqueEmail extends SymfonyConstraint
     /**
      * @var int|null
      */
-    protected $currentIdMerchant;
+    protected ?int $currentIdMerchant;
 
     /**
      * @return int|null

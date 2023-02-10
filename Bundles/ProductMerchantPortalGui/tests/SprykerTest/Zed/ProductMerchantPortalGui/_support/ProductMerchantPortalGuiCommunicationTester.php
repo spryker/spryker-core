@@ -366,7 +366,7 @@ class ProductMerchantPortalGuiCommunicationTester extends Actor
     /**
      * @param \PHPUnit\Framework\MockObject\Rule\InvokedCount $expectedInvokedCount
      * @param string $method
-     * @param array<mixed> ...$arguments
+     * @param mixed ...$arguments
      *
      * @return \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeInterface
      */

@@ -33,7 +33,7 @@ class CreateProductAbstractWithMultiConcreteForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
-     * @param array<mixed> $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -44,7 +44,7 @@ class CreateProductAbstractWithMultiConcreteForm extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      *
      * @return $this
      */
@@ -63,7 +63,7 @@ class CreateProductAbstractWithMultiConcreteForm extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      *
      * @return $this
      */

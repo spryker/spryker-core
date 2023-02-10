@@ -163,8 +163,8 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
 
     /**
      * @param \Symfony\Component\Form\FormInterface<mixed> $productConcreteEditForm
-     * @param array $pricesInitialData
-     * @param array $attributesInitialData
+     * @param array<string, array<string, mixed>> $pricesInitialData
+     * @param array<string, array<string, mixed>> $attributesInitialData
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
@@ -229,7 +229,7 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
             }
         } else {
             /** @var \Symfony\Component\Form\FormErrorIterator<\Symfony\Component\Form\FormError> $formErrors */
-            $formErrors = $productConcreteEditForm->getErrors(true, true);
+            $formErrors = $productConcreteEditForm->getErrors(true);
             $imageSetsErrors = $this->getFactory()
                 ->createImageSetMapper()
                 ->mapErrorsToImageSetValidationData(
@@ -259,12 +259,12 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
     }
 
     /**
-     * @param \Symfony\Component\Form\FormInterface $productConcreteEditForm
+     * @param \Symfony\Component\Form\FormInterface<mixed> $productConcreteEditForm
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param \Generated\Shared\Transfer\ValidationResponseTransfer $validationResponseTransfer
-     * @param array $priceInitialData
-     * @param array $attributesInitialData
-     * @param array $imageSetsErrors
+     * @param array<string, array<string, mixed>> $priceInitialData
+     * @param array<string, array<string, mixed>> $attributesInitialData
+     * @param array<array<string>> $imageSetsErrors
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
@@ -411,7 +411,7 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
     }
 
     /**
-     * @param \Symfony\Component\Form\FormInterface $productConcreteEditForm
+     * @param \Symfony\Component\Form\FormInterface<mixed> $productConcreteEditForm
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer|null $productAbstractTransfer
      *
@@ -527,18 +527,16 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
      */
     protected function mapAbstractProductImageSets(ArrayObject $productImageSetTransfers, int $idProductConcrete): ArrayObject
     {
-        /** @var \ArrayObject<int, \Generated\Shared\Transfer\ProductImageSetTransfer> $mappedImageSetsTransfers */
         $mappedImageSetsTransfers = new ArrayObject();
 
         foreach ($productImageSetTransfers as $productImageSetTransfer) {
-            /** @var \ArrayObject<int, \Generated\Shared\Transfer\ProductImageTransfer> $newProductImages */
             $newProductImages = new ArrayObject();
             foreach ($productImageSetTransfer->getProductImages() as $productImage) {
                 $newProductImage = new ProductImageTransfer();
                 $newProductImage->fromArray($productImage->toArray());
                 $newProductImage->setIdProductImage(null);
                 $newProductImage->setIdProductImageSetToProductImage(null);
-                $newProductImages[] = $newProductImage;
+                $newProductImages->append($newProductImage);
             }
 
             $newImageSet = new ProductImageSetTransfer();
@@ -550,7 +548,7 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
             $newImageSet->setIdProductAbstract(null);
             $newImageSet->setIdProduct($idProductConcrete);
 
-            $mappedImageSetsTransfers[] = $newImageSet;
+            $mappedImageSetsTransfers->append($newImageSet);
         }
 
         return $mappedImageSetsTransfers;

@@ -15,7 +15,7 @@ class ConfigurationTranslator extends AbstractConfigurationTranslator
     /**
      * @var \Spryker\Zed\GuiTable\Dependency\Facade\GuiTableToTranslatorFacadeInterface
      */
-    protected $translatorFacade;
+    protected GuiTableToTranslatorFacadeInterface $translatorFacade;
 
     /**
      * @param \Spryker\Zed\GuiTable\Dependency\Facade\GuiTableToTranslatorFacadeInterface $translatorFacade

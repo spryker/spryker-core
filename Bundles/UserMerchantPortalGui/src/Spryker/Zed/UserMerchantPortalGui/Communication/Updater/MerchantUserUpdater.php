@@ -17,12 +17,12 @@ class MerchantUserUpdater implements MerchantUserUpdaterInterface
     /**
      * @var \Spryker\Zed\UserMerchantPortalGui\Dependency\Facade\UserMerchantPortalGuiToMerchantUserFacadeInterface
      */
-    protected $merchantUserFacade;
+    protected UserMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade;
 
     /**
      * @var array<\Spryker\Zed\UserMerchantPortalGuiExtension\Dependency\Plugin\MerchantUserPostChangePluginInterface>
      */
-    protected $merchantUserPostChangePlugins;
+    protected array $merchantUserPostChangePlugins;
 
     /**
      * @param \Spryker\Zed\UserMerchantPortalGui\Dependency\Facade\UserMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade

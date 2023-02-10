@@ -27,7 +27,7 @@ class ProductOfferMerchantPortalGuiToMoneyFacadeBridge implements ProductOfferMe
      *
      * @return float
      */
-    public function convertIntegerToDecimal($value)
+    public function convertIntegerToDecimal(int $value): float
     {
         return $this->moneyFacade->convertIntegerToDecimal($value);
     }
@@ -37,7 +37,7 @@ class ProductOfferMerchantPortalGuiToMoneyFacadeBridge implements ProductOfferMe
      *
      * @return int
      */
-    public function convertDecimalToInteger($value)
+    public function convertDecimalToInteger(float $value): int
     {
         return $this->moneyFacade->convertDecimalToInteger($value);
     }

@@ -19,7 +19,7 @@ class HtmlTagWhitelistConstraintValidator extends AbstractConstraintValidator
     /**
      * Checks if the passed value has only white listed HTML tags.
      *
-     * @param string $value The value that should be validated
+     * @param mixed|string $value The value that should be validated
      * @param \Symfony\Component\Validator\Constraint $constraint The constraint for the validation
      *
      * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException

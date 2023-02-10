@@ -25,7 +25,7 @@ interface ProductAbstractFormDataProviderInterface
     public function getOptions(): array;
 
     /**
-     * @return array<mixed>
+     * @return array<array<string, mixed>>
      */
     public function getProductCategoryTree(): array;
 }

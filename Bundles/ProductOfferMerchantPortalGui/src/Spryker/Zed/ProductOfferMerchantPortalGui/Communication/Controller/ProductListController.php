@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 class ProductListController extends AbstractController
 {
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function indexAction(): array
     {

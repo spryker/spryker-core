@@ -13,11 +13,11 @@ use Symfony\Component\Form\DataTransformerInterface;
 class QuantityTransformer implements DataTransformerInterface
 {
     /**
-     * @param \Spryker\DecimalObject\Decimal|null $value
+     * @param \Spryker\DecimalObject\Decimal|mixed $value
      *
      * @return float|null
      */
-    public function transform($value)
+    public function transform($value): ?float
     {
         if ($value === null) {
             return null;
@@ -27,11 +27,11 @@ class QuantityTransformer implements DataTransformerInterface
     }
 
     /**
-     * @param float|null $value
+     * @param mixed|float|null $value
      *
      * @return \Spryker\DecimalObject\Decimal|null
      */
-    public function reverseTransform($value)
+    public function reverseTransform($value): ?Decimal
     {
         if ($value === null) {
             return null;

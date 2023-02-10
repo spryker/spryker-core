@@ -99,17 +99,17 @@ class ProductGuiTableConfigurationProvider implements ProductGuiTableConfigurati
     /**
      * @var \Spryker\Shared\GuiTable\GuiTableFactoryInterface
      */
-    protected $guiTableFactory;
+    protected GuiTableFactoryInterface $guiTableFactory;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToTranslatorFacadeInterface
      */
-    protected $translatorFacade;
+    protected ProductMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade;
 
     /**
      * @var array<\Spryker\Zed\ProductMerchantPortalGuiExtension\Dependency\Plugin\ProductConcreteTableExpanderPluginInterface>
      */
-    protected $productConcreteTableExpanderPlugins;
+    protected array $productConcreteTableExpanderPlugins;
 
     /**
      * @param \Spryker\Shared\GuiTable\GuiTableFactoryInterface $guiTableFactory

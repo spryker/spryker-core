@@ -44,7 +44,7 @@ class ProductApprovalStatusProductTableConfigurationExpander implements ProductA
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToTranslatorFacadeInterface
      */
-    protected $translatorFacade;
+    protected ProductMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade;
 
     /**
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade

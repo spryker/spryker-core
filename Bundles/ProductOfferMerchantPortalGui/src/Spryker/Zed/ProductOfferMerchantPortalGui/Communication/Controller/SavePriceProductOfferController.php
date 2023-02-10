@@ -43,11 +43,6 @@ class SavePriceProductOfferController extends AbstractPriceProductOfferControlle
     protected const RESPONSE_NOTIFICATION_MESSAGE_SUCCESS = 'Offer prices saved successfully.';
 
     /**
-     * @var string
-     */
-    protected const POST_ACTION_REFRESH_TABLE = 'refresh_table';
-
-    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
@@ -129,7 +124,7 @@ class SavePriceProductOfferController extends AbstractPriceProductOfferControlle
         $requestedTypePriceProductOfferIds = explode(',', $requestedTypePriceProductOfferIds);
         $typePriceProductOfferIds = [];
 
-        foreach ($requestedTypePriceProductOfferIds as $key => $requestedTypePriceProductOfferId) {
+        foreach ($requestedTypePriceProductOfferIds as $requestedTypePriceProductOfferId) {
             $typePriceProductOfferId = explode(':', $requestedTypePriceProductOfferId);
             $typePriceProductOfferIds[$typePriceProductOfferId[0]] = (int)$typePriceProductOfferId[1];
         }

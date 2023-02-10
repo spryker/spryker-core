@@ -91,7 +91,7 @@ class ProductAbstractTableDataMapper
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToUtilEncodingServiceInterface
      */
-    protected $utilEncodingService;
+    protected ProductMerchantPortalGuiToUtilEncodingServiceInterface $utilEncodingService;
 
     /**
      * @var array<string, string>

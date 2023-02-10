@@ -21,7 +21,7 @@ interface PriceProductTableColumnCreatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     * @param array $propertyPathValues
+     * @param array<string> $propertyPathValues
      *
      * @return string
      */

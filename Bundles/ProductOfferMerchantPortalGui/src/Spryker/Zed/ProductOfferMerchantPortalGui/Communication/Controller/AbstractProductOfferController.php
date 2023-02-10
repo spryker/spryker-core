@@ -24,7 +24,7 @@ use Symfony\Component\HttpFoundation\Request;
 class AbstractProductOfferController extends AbstractController
 {
     /**
-     * @var array
+     * @var array<string, array<mixed>>
      */
     protected const DEFAULT_INITIAL_DATA = [
         GuiTableEditableInitialDataTransfer::DATA => [],

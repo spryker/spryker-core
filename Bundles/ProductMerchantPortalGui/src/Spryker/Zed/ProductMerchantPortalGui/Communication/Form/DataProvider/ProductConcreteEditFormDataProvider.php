@@ -68,32 +68,32 @@ class ProductConcreteEditFormDataProvider implements ProductConcreteEditFormData
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantUserFacadeInterface
      */
-    protected $merchantUserFacade;
+    protected ProductMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantProductFacadeInterface
      */
-    protected $merchantProductFacade;
+    protected ProductMerchantPortalGuiToMerchantProductFacadeInterface $merchantProductFacade;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToLocaleFacadeInterface
      */
-    protected $localeFacade;
+    protected ProductMerchantPortalGuiToLocaleFacadeInterface $localeFacade;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductFacadeInterface
      */
-    protected $productFacade;
+    protected ProductMerchantPortalGuiToProductFacadeInterface $productFacade;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\ProductAttributeDataProviderInterface
      */
-    protected $productAttributeDataProvider;
+    protected ProductAttributeDataProviderInterface $productAttributeDataProvider;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Communication\Reader\PriceProductReaderInterface
      */
-    protected $priceProductReader;
+    protected PriceProductReaderInterface $priceProductReader;
 
     /**
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade
@@ -122,7 +122,7 @@ class ProductConcreteEditFormDataProvider implements ProductConcreteEditFormData
     /**
      * @param int $idProductConcrete
      *
-     * @return array<mixed>
+     * @return array<string, mixed>
      */
     public function getData(int $idProductConcrete): array
     {
@@ -244,14 +244,14 @@ class ProductConcreteEditFormDataProvider implements ProductConcreteEditFormData
     /**
      * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductImageSetTransfer> $productImageSetTransfers
      *
-     * @return array
+     * @return array<array<string, array<int, array<string, mixed>>>>
      */
     protected function normalizeImageSets(ArrayObject $productImageSetTransfers): array
     {
         $result = [];
 
-        foreach ($productImageSetTransfers as $imageSetTransfer) {
-            $imageSet = $imageSetTransfer->toArrayRecursiveCamelCased();
+        foreach ($productImageSetTransfers as $productImageSetTransfer) {
+            $imageSet = $productImageSetTransfer->toArrayRecursiveCamelCased();
 
             $imageSet = $this->filterArray($imageSet, [ProductImageSetTransfer::NAME, ProductImageSetTransfer::PRODUCT_IMAGES]);
 
@@ -273,10 +273,10 @@ class ProductConcreteEditFormDataProvider implements ProductConcreteEditFormData
     }
 
     /**
-     * @param array $array
+     * @param array<string, mixed> $array
      * @param array<string> $exclusions
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function filterArray(array $array, array $exclusions): array
     {

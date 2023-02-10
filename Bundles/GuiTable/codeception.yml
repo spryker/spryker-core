@@ -1,6 +1,6 @@
 namespace: GuiTable
 include:
-    - tests/SprykerTest/Zed/GuiTable
+    - tests/SprykerTest/Shared/GuiTable
 paths:
     tests: tests
     output: tests/_output

@@ -1,11 +1,10 @@
 import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-
 import { CreateConcreteProductsOverlayComponent } from './create-concrete-products-overlay.component';
 
 @Component({
-    selector: 'spy-test',
+    selector: 'mp-test',
     template: `
         <mp-create-concrete-products-overlay [product]="product">
             <span title class="projected-title"></span>

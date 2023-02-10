@@ -2,17 +2,19 @@
     "name": "mp-user",
     "version": "0.0.1",
     "private": true,
+    "peerDependencies": {
+        "@angular/common": "^15.0.3",
+        "@angular/core": "^15.0.3",
+        "rxjs": "~7.5.7"
+    },
     "dependencies": {
-        "@angular/common": "^12.2.16",
-        "@angular/core": "^12.2.16",
-        "@spryker/actions": "^0.2.3",
-        "@spryker/button": "^0.6.2",
-        "@spryker/button.action": "^0.2.3",
-        "@spryker/card": "^0.6.3",
-        "@spryker/headline": "^0.5.3",
-        "@spryker/styles": "^0.7.4",
-        "@spryker/utils": "^0.3.5",
-        "@spryker/web-components": "^0.3.3",
-        "rxjs": "~7.4.0"
+        "@spryker/actions": "^1.0.0",
+        "@spryker/button": "^1.0.0",
+        "@spryker/button.action": "^1.0.0",
+        "@spryker/card": "^1.0.1",
+        "@spryker/headline": "^1.0.0",
+        "@spryker/styles": "^1.0.1",
+        "@spryker/utils": "^1.0.0",
+        "@spryker/web-components": "^1.0.0"
     }
 }

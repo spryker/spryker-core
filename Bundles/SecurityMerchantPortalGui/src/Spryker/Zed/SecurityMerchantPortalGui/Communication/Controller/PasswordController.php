@@ -34,7 +34,7 @@ class PasswordController extends AbstractController
      *
      * @var string
      */
-    protected const RESET_RASSWORD_PATH = '/security-merchant-portal-gui/password/reset';
+    protected const RESET_PASSWORD_PATH = '/security-merchant-portal-gui/password/reset';
 
     /**
      * @var string
@@ -59,7 +59,7 @@ class PasswordController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function resetRequestAction(Request $request): array
     {
@@ -82,7 +82,7 @@ class PasswordController extends AbstractController
                     ->requestPasswordReset(
                         (new UserPasswordResetRequestTransfer())
                             ->setEmail($formData[MerchantResetPasswordRequestForm::FIELD_EMAIL])
-                            ->setResetPasswordPath(static::RESET_RASSWORD_PATH),
+                            ->setResetPasswordPath(static::RESET_PASSWORD_PATH),
                     );
             }
 
@@ -101,7 +101,7 @@ class PasswordController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array<string, mixed>
      */
     public function resetAction(Request $request)
     {

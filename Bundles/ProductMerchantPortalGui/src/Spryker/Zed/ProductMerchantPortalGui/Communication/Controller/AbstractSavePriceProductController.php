@@ -23,13 +23,6 @@ use Symfony\Component\HttpFoundation\Request;
 abstract class AbstractSavePriceProductController extends AbstractController
 {
     /**
-     * @uses \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_DIMENSION_DEFAULT
-     *
-     * @var string
-     */
-    protected const PRICE_DIMENSION_TYPE_DEFAULT = 'PRICE_DIMENSION_DEFAULT';
-
-    /**
      * @var string
      */
     protected const RESPONSE_NOTIFICATION_MESSAGE_SUCCESS = 'Product prices saved successfully.';
@@ -192,7 +185,7 @@ abstract class AbstractSavePriceProductController extends AbstractController
     /**
      * @param array<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
      *
-     * @return array
+     * @return array<string>
      */
     protected function getPriceProductGroupKeys(array $priceProductTransfers): array
     {

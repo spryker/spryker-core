@@ -26,46 +26,6 @@ class AddProductConcreteController extends AbstractController
     /**
      * @var string
      */
-    protected const RESPONSE_KEY_POST_ACTIONS = 'postActions';
-
-    /**
-     * @var string
-     */
-    protected const RESPONSE_KEY_NOTIFICATIONS = 'notifications';
-
-    /**
-     * @var string
-     */
-    protected const RESPONSE_KEY_TYPE = 'type';
-
-    /**
-     * @var string
-     */
-    protected const RESPONSE_KEY_MESSAGE = 'message';
-
-    /**
-     * @var string
-     */
-    protected const RESPONSE_TYPE_REFRESH_TABLE = 'refresh_table';
-
-    /**
-     * @var string
-     */
-    protected const RESPONSE_TYPE_CLOSE_OVERLAY = 'close_overlay';
-
-    /**
-     * @var string
-     */
-    protected const RESPONSE_TYPE_SUCCESS = 'success';
-
-    /**
-     * @var string
-     */
-    protected const RESPONSE_TYPE_ERROR = 'error';
-
-    /**
-     * @var string
-     */
     protected const RESPONSE_MESSAGE_SUCCESS_PRODUCTS_SAVED = 'Success! %d Concrete Products are saved.';
 
     /**
@@ -162,7 +122,7 @@ class AddProductConcreteController extends AbstractController
     }
 
     /**
-     * @param \Symfony\Component\Form\FormInterface $addProductConcreteForm
+     * @param \Symfony\Component\Form\FormInterface<mixed> $addProductConcreteForm
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteCollectionTransfer
@@ -226,12 +186,12 @@ class AddProductConcreteController extends AbstractController
     }
 
     /**
-     * @param \Symfony\Component\Form\FormInterface $addProductConcreteForm
+     * @param \Symfony\Component\Form\FormInterface<mixed> $addProductConcreteForm
      * @param \Generated\Shared\Transfer\MerchantProductTransfer $merchantProductTransfer
      * @param \Generated\Shared\Transfer\LocaleTransfer $defaultStoreDefaultLocaleTransfer
      * @param array<\Generated\Shared\Transfer\ProductManagementAttributeTransfer> $productManagementAttributeTransfers
      *
-     * @return array<mixed>
+     * @return array<string, mixed>
      */
     protected function getResponseData(
         FormInterface $addProductConcreteForm,
@@ -278,10 +238,10 @@ class AddProductConcreteController extends AbstractController
     }
 
     /**
-     * @param array<mixed> $responseData
+     * @param array<string, mixed> $responseData
      * @param \Generated\Shared\Transfer\ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
      *
-     * @return array<mixed>
+     * @return array<string, mixed>
      */
     protected function addSuccessResponseDataToResponse(
         array $responseData,
@@ -309,9 +269,9 @@ class AddProductConcreteController extends AbstractController
     }
 
     /**
-     * @param array<mixed> $responseData
+     * @param array<string, mixed> $responseData
      *
-     * @return array<mixed>
+     * @return array<string, mixed>
      */
     protected function addErrorResponseDataToResponse(array $responseData): array
     {
@@ -329,9 +289,9 @@ class AddProductConcreteController extends AbstractController
     /**
      * @param \Symfony\Component\Form\FormInterface<mixed> $addProductConcreteForm
      *
-     * @return array<mixed>
+     * @return array<int, mixed>
      */
-    protected function getErrors(FormInterface $addProductConcreteForm)
+    protected function getErrors(FormInterface $addProductConcreteForm): array
     {
         $errors = [];
 

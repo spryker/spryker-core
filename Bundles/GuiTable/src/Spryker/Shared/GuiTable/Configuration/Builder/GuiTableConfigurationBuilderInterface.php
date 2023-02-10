@@ -139,11 +139,11 @@ interface GuiTableConfigurationBuilderInterface
      *
      * @api
      *
-     * @param array<string, \Generated\Shared\Transfer\GuiTableColumnConfigurationTransfer> $colunms
+     * @param array<string, \Generated\Shared\Transfer\GuiTableColumnConfigurationTransfer> $columns
      *
      * @return $this
      */
-    public function setColumns(array $colunms);
+    public function setColumns(array $columns);
 
     /**
      * @api

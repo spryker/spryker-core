@@ -29,7 +29,7 @@ class PriceProductOfferTableViewPriceComparisonStrategy implements PriceProductO
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\Column\ColumnIdCreatorInterface
      */
-    protected $columnIdCreator;
+    protected ColumnIdCreatorInterface $columnIdCreator;
 
     /**
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\Column\ColumnIdCreatorInterface $columnIdCreator

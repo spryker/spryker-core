@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Generator;
 interface CreateProductUrlGeneratorInterface
 {
     /**
-     * @param array<mixed> $formData
+     * @param array<string, mixed> $formData
      * @param bool $isSingleConcrete
      *
      * @return string
@@ -25,14 +25,4 @@ interface CreateProductUrlGeneratorInterface
      * @return string
      */
     public function getCreateProductAbstractUrl(string $sku, string $name, bool $isSingleConcrete): string;
-
-    /**
-     * @deprecated Will be removed without replacement.
-     *
-     * @param string $status
-     * @param int $idProductAbstract
-     *
-     * @return string
-     */
-    public function getUpdateProductAbstractApprovalStatusUrl(string $status, int $idProductAbstract): string;
 }

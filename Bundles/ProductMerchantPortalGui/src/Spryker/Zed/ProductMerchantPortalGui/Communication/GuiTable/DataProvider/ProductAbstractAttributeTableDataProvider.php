@@ -36,12 +36,12 @@ class ProductAbstractAttributeTableDataProvider extends AbstractGuiTableDataProv
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductFacadeInterface
      */
-    protected $productFacade;
+    protected ProductMerchantPortalGuiToProductFacadeInterface $productFacade;
 
     /**
      * @var int
      */
-    protected $idProductAbstract;
+    protected int $idProductAbstract;
 
     /**
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductFacadeInterface $productFacade
@@ -83,7 +83,7 @@ class ProductAbstractAttributeTableDataProvider extends AbstractGuiTableDataProv
         $productAbstract = $this->productFacade->findProductAbstractById($idProductAbstract);
 
         if (!$productAbstract) {
-            throw new ProductAbstractNotFoundException((int)$idProductAbstract);
+            throw new ProductAbstractNotFoundException($idProductAbstract);
         }
 
         foreach ($productAbstract->getLocalizedAttributes() as $localizedAttribute) {
@@ -130,7 +130,7 @@ class ProductAbstractAttributeTableDataProvider extends AbstractGuiTableDataProv
                 ];
             }
 
-            $data[$attributeName][$localizedAttributesTransfer->getLocaleOrFail()->getLocaleName()] = $value;
+            $data[$attributeName][$localizedAttributesTransfer->getLocaleOrFail()->getLocaleNameOrFail()] = $value;
         }
 
         return $data;
@@ -141,7 +141,7 @@ class ProductAbstractAttributeTableDataProvider extends AbstractGuiTableDataProv
      * @param string $orderBy
      * @param string $orderDirection
      *
-     * @return array
+     * @return array<array<string>>
      */
     protected function sortAttributesArray(array $attributes, string $orderBy, string $orderDirection): array
     {

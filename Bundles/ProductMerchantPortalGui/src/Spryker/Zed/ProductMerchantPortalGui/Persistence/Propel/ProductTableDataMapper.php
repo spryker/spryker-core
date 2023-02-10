@@ -86,7 +86,7 @@ class ProductTableDataMapper
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToUtilEncodingServiceInterface
      */
-    protected $utilEncodingService;
+    protected ProductMerchantPortalGuiToUtilEncodingServiceInterface $utilEncodingService;
 
     /**
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToUtilEncodingServiceInterface $utilEncodingService

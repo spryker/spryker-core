@@ -32,17 +32,17 @@ class PriceDeleter implements PriceDeleterInterface
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeInterface
      */
-    protected $priceProductFacade;
+    protected ProductMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToPriceProductVolumeServiceInterface
      */
-    protected $priceProductVolumeService;
+    protected ProductMerchantPortalGuiToPriceProductVolumeServiceInterface $priceProductVolumeService;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\PriceProductMapperInterface
      */
-    protected $priceProductMapper;
+    protected PriceProductMapperInterface $priceProductMapper;
 
     /**
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade

@@ -52,7 +52,7 @@ const mockAttributeErrors = [
 ];
 
 @Component({
-    selector: 'spy-test',
+    selector: 'mp-test',
     template: `
         <mp-concrete-product-attributes-selector
             [attributes]="attributes"

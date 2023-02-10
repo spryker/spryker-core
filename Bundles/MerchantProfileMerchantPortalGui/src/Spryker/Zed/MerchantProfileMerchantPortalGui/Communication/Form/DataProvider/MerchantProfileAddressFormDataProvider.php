@@ -14,7 +14,7 @@ class MerchantProfileAddressFormDataProvider implements MerchantProfileAddressFo
     /**
      * @var \Spryker\Zed\MerchantProfileMerchantPortalGui\Dependency\Facade\MerchantProfileMerchantPortalGuiToCountryFacadeInterface
      */
-    protected $countryFacade;
+    protected MerchantProfileMerchantPortalGuiToCountryFacadeInterface $countryFacade;
 
     /**
      * @param \Spryker\Zed\MerchantProfileMerchantPortalGui\Dependency\Facade\MerchantProfileMerchantPortalGuiToCountryFacadeInterface $countryFacade
@@ -32,12 +32,7 @@ class MerchantProfileAddressFormDataProvider implements MerchantProfileAddressFo
         $countryChoices = [];
 
         foreach ($this->countryFacade->getAvailableCountries()->getCountries() as $country) {
-            /** @var int $idCountry */
-            $idCountry = $country->requireIdCountry()->getIdCountry();
-            /** @var string $countryName */
-            $countryName = $country->requireName()->getName();
-
-            $countryChoices[$idCountry] = $countryName;
+            $countryChoices[$country->getIdCountryOrFail()] = $country->getNameOrFail();
         }
 
         return $countryChoices;

@@ -23,7 +23,7 @@ class UniqueUrlValidator extends AbstractConstraintValidator
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\UrlTransfer $value The value that should be validated
+     * @param \Generated\Shared\Transfer\UrlTransfer|mixed $value The value that should be validated
      * @param \Symfony\Component\Validator\Constraint $constraint The constraint for the validation
      *
      * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException
@@ -32,6 +32,10 @@ class UniqueUrlValidator extends AbstractConstraintValidator
      */
     public function validate($value, Constraint $constraint): void
     {
+        if (!$value instanceof UrlTransfer) {
+            return;
+        }
+
         $url = $value->getUrl();
         if (!$url) {
             return;
@@ -41,13 +45,13 @@ class UniqueUrlValidator extends AbstractConstraintValidator
             throw new UnexpectedTypeException($constraint, UniqueUrl::class);
         }
 
-        if (!$this->isUrlChanged($value, $constraint)) {
+        if (!$this->isUrlChanged($value)) {
             return;
         }
 
         if ($this->hasUrlCaseInsensitive($url)) {
             $this->context
-                ->buildViolation(sprintf('Provided URL "%s" is already taken.', $value->getUrl()))
+                ->buildViolation(sprintf('Provided URL "%s" is already taken.', $value->getUrlOrFail()))
                 ->atPath(MerchantProfileUrlCollectionFormType::FIELD_URL)
                 ->addViolation();
         }
@@ -92,14 +96,12 @@ class UniqueUrlValidator extends AbstractConstraintValidator
 
     /**
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
-     * @param \Spryker\Zed\MerchantProfileMerchantPortalGui\Communication\Form\Constraint\UniqueUrl $constraint
      *
      * @return bool
      */
-    protected function isUrlChanged(UrlTransfer $urlTransfer, UniqueUrl $constraint): bool
+    protected function isUrlChanged(UrlTransfer $urlTransfer): bool
     {
-        /** @var string $url */
-        $url = $urlTransfer->requireUrl()->getUrl();
+        $url = $urlTransfer->getUrlOrFail();
         $existingUrlTransfer = $this->findExistingUrl($url);
 
         if (!$existingUrlTransfer) {
@@ -112,6 +114,6 @@ class UniqueUrlValidator extends AbstractConstraintValidator
             return true;
         }
 
-        return (int)$idMerchant !== (int)$urlTransfer->getFkResourceMerchant();
+        return $idMerchant !== $urlTransfer->getFkResourceMerchant();
     }
 }

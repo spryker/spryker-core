@@ -16,12 +16,12 @@ class MerchantAccountFormDataProvider implements MerchantAccountFormDataProvider
     /**
      * @var \Spryker\Zed\UserMerchantPortalGui\Dependency\Facade\UserMerchantPortalGuiToLocaleFacadeInterface
      */
-    protected $localeFacade;
+    protected UserMerchantPortalGuiToLocaleFacadeInterface $localeFacade;
 
     /**
      * @var \Spryker\Zed\UserMerchantPortalGui\Dependency\Facade\UserMerchantPortalGuiToMerchantUserFacadeInterface
      */
-    protected $merchantUserFacade;
+    protected UserMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade;
 
     /**
      * @param \Spryker\Zed\UserMerchantPortalGui\Dependency\Facade\UserMerchantPortalGuiToLocaleFacadeInterface $localeFacade

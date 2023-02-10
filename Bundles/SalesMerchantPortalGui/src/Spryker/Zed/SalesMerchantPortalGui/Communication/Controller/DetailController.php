@@ -116,22 +116,15 @@ class DetailController extends AbstractSalesMerchantPortalGuiController
      */
     protected function getCustomerMerchantOrderNumber(MerchantOrderTransfer $merchantOrderTransfer): int
     {
-        $customerMerchantOrderNumber = 0;
+        $orderTransfer = $merchantOrderTransfer->getOrderOrFail();
 
-        /** @var \Generated\Shared\Transfer\OrderTransfer $orderTransfer */
-        $orderTransfer = $merchantOrderTransfer->requireOrder()->getOrder();
-        /** @var string $customerReference */
-        $customerReference = $orderTransfer->getCustomerReference();
-
-        $customerMerchantOrderNumber = $this->getFactory()
+        return $this->getFactory()
             ->getMerchantSalesOrderFacade()
             ->getMerchantOrdersCount(
                 (new MerchantOrderCriteriaTransfer())
-                    ->setCustomerReference($customerReference)
+                    ->setCustomerReference($orderTransfer->getCustomerReferenceOrFail())
                     ->setMerchantReference($merchantOrderTransfer->getMerchantReference()),
             );
-
-        return $customerMerchantOrderNumber;
     }
 
     /**
@@ -161,9 +154,7 @@ class DetailController extends AbstractSalesMerchantPortalGuiController
     {
         $salesOrderItemIds = [];
         foreach ($merchantOrderTransfer->getMerchantOrderItems() as $merchantOrderItem) {
-            /** @var int $idOrderItem */
-            $idOrderItem = $merchantOrderItem->requireIdOrderItem()->getIdOrderItem();
-            $salesOrderItemIds[] = $idOrderItem;
+            $salesOrderItemIds[] = $merchantOrderItem->getIdOrderItemOrFail();
         }
 
         return $salesOrderItemIds;
@@ -178,14 +169,8 @@ class DetailController extends AbstractSalesMerchantPortalGuiController
     {
         $merchantOrderItemTransfers = [];
         foreach ($merchantOrderTransfer->getMerchantOrderItems() as $merchantOrderItemTransfer) {
-            /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
-            $itemTransfer = $merchantOrderItemTransfer->requireOrderItem()->getOrderItem();
-            /** @var \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer */
-            $shipmentTransfer = $itemTransfer->getShipment();
-            /** @var int $idSalesShipment */
-            $idSalesShipment = $shipmentTransfer->requireIdSalesShipment()->getIdSalesShipment();
-
-            $merchantOrderItemTransfers[$idSalesShipment][] = $merchantOrderItemTransfer;
+            $shipmentTransfer = $merchantOrderItemTransfer->getOrderItemOrFail()->getShipmentOrFail();
+            $merchantOrderItemTransfers[$shipmentTransfer->getIdSalesShipmentOrFail()][] = $merchantOrderItemTransfer;
         }
 
         return $merchantOrderItemTransfers;

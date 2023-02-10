@@ -4,7 +4,6 @@ import { DummyLayoutComponent } from './dummy-layout/dummy-layout.component';
 import { DummyLayoutModule } from './dummy-layout/dummy-layout.module';
 import { DummyCardComponent } from './dummy-card/dummy-card.component';
 import { DummyCardModule } from './dummy-card/dummy-card.module';
-import { ButtonModule, ButtonComponent } from '@spryker/button';
 
 @NgModule({
     imports: [

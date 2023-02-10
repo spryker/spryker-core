@@ -16,7 +16,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\UserMerchantPortalGui\Communication\UserMerchantPortalGuiCommunicationFactory getFactory()
- * @method \Spryker\Zed\UserMerchantPortalGui\Business\UserMerchantPortalGuiFacadeInterface getFacade()
  */
 class MyAccountController extends AbstractController
 {
@@ -50,7 +49,7 @@ class MyAccountController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array<string, mixed>
      */
     public function indexAction(Request $request)
     {

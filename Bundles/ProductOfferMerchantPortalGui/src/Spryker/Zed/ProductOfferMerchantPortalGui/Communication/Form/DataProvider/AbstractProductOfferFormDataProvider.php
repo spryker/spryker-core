@@ -23,17 +23,17 @@ abstract class AbstractProductOfferFormDataProvider
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToProductFacadeInterface
      */
-    protected $productFacade;
+    protected ProductOfferMerchantPortalGuiToProductFacadeInterface $productFacade;
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface
      */
-    protected $merchantUserFacade;
+    protected ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade;
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantStockFacadeInterface
      */
-    protected $merchantStockFacade;
+    protected ProductOfferMerchantPortalGuiToMerchantStockFacadeInterface $merchantStockFacade;
 
     /**
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToProductFacadeInterface $productFacade
@@ -53,7 +53,7 @@ abstract class AbstractProductOfferFormDataProvider
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
-     * @return array<array<int>>
+     * @return array<string, array<int>>
      */
     public function getOptions(ProductAbstractTransfer $productAbstractTransfer): array
     {
@@ -84,9 +84,7 @@ abstract class AbstractProductOfferFormDataProvider
                 continue;
             }
 
-            $idStore = $storeTransfer->getIdStoreOrFail();
-            $storeName = $storeTransfer->getNameOrFail();
-            $storeChoices[$storeName] = $idStore;
+            $storeChoices[$storeTransfer->getNameOrFail()] = $storeTransfer->getIdStoreOrFail();
         }
 
         return $storeChoices;
@@ -125,7 +123,7 @@ abstract class AbstractProductOfferFormDataProvider
     {
         $idMerchant = $this->merchantUserFacade->getCurrentMerchantUser()
             ->getMerchantOrFail()
-            ->getIdMerchant();
+            ->getIdMerchantOrFail();
 
         $merchantStockCriteriaTransfer = (new MerchantStockCriteriaTransfer())
             ->setIsDefault(true)
@@ -147,8 +145,7 @@ abstract class AbstractProductOfferFormDataProvider
         foreach ($productOfferTransfer->getProductOfferStocks() as $productOfferStockTransfer) {
             /** @var \Generated\Shared\Transfer\StockTransfer $firstStockTransfer */
             $firstStockTransfer = $stockTransfers->offsetGet(0);
-            /** @var \Generated\Shared\Transfer\StockTransfer $stockTransfer */
-            $stockTransfer = $productOfferStockTransfer->requireStock()->getStock();
+            $stockTransfer = $productOfferStockTransfer->getStockOrFail();
 
             if ($stockTransfer->getIdStock() === $firstStockTransfer->getIdStock()) {
                 $productOfferTransfer->setProductOfferStocks(new ArrayObject([$productOfferStockTransfer]));

@@ -13,14 +13,14 @@ use Symfony\Component\Form\DataTransformerInterface;
 class MerchantProfileUrlCollectionDataTransformer implements DataTransformerInterface
 {
     /**
-     * @param array<\Generated\Shared\Transfer\UrlTransfer> $value
+     * @param mixed|array<\Generated\Shared\Transfer\UrlTransfer> $value
      *
      * @return \ArrayObject<int, \Generated\Shared\Transfer\UrlTransfer>
      */
     public function transform($value): ArrayObject
     {
         $merchantProfileUrlCollection = new ArrayObject();
-        if (!$value) {
+        if (!$value || !is_array($value)) {
             return $merchantProfileUrlCollection;
         }
         foreach ($value as $urlTransfer) {
@@ -30,7 +30,8 @@ class MerchantProfileUrlCollectionDataTransformer implements DataTransformerInte
                 continue;
             }
 
-            $url = preg_replace('#^' . $urlTransfer->getUrlPrefix() . '#i', '', $url);
+            $urlPrefix = $urlTransfer->getUrlPrefix() ?? '';
+            $url = preg_replace('#^' . $urlPrefix . '#i', '', $url);
             $urlTransfer->setUrl($url);
             $merchantProfileUrlCollection->append($urlTransfer);
         }
@@ -39,14 +40,14 @@ class MerchantProfileUrlCollectionDataTransformer implements DataTransformerInte
     }
 
     /**
-     * @param array<\Generated\Shared\Transfer\UrlTransfer> $value
+     * @param mixed|array<\Generated\Shared\Transfer\UrlTransfer> $value
      *
      * @return \ArrayObject<int, \Generated\Shared\Transfer\UrlTransfer>
      */
     public function reverseTransform($value): ArrayObject
     {
         $merchantProfileUrlCollection = new ArrayObject();
-        if (!$value) {
+        if (!$value || !is_array($value)) {
             return $merchantProfileUrlCollection;
         }
 

@@ -22,22 +22,22 @@ class PriceProductDataProvider implements PriceProductDataProviderInterface
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductFacadeInterface
      */
-    protected $priceProductFacade;
+    protected ProductOfferMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade;
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductOfferFacadeInterface
      */
-    protected $priceProductOfferFacade;
+    protected ProductOfferMerchantPortalGuiToPriceProductOfferFacadeInterface $priceProductOfferFacade;
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Mapper\PriceProductOfferMapper
      */
-    protected $priceProductOfferMapper;
+    protected PriceProductOfferMapper $priceProductOfferMapper;
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Expander\PriceProductsVolumeDataExpanderInterface
      */
-    protected $priceProductsVolumeDataExpander;
+    protected PriceProductsVolumeDataExpanderInterface $priceProductsVolumeDataExpander;
 
     /**
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade

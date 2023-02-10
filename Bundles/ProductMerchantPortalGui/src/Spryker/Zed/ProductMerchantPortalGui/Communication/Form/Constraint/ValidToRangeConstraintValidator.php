@@ -18,7 +18,7 @@ class ValidToRangeConstraintValidator extends AbstractConstraintValidator
     /**
      * Checks if the Valid to value is not earlier than Valid from.
      *
-     * @param string $value
+     * @param mixed|string $value
      * @param \Symfony\Component\Validator\Constraint $constraint
      *
      * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException
@@ -35,11 +35,11 @@ class ValidToRangeConstraintValidator extends AbstractConstraintValidator
             throw new UnexpectedTypeException($constraint, ValidToRangeConstraint::class);
         }
 
-        /** @var \Symfony\Component\Form\FormInterface $form */
+        /** @var \Symfony\Component\Form\FormInterface<mixed> $form */
         $form = $this->context->getObject();
-        /** @var \Symfony\Component\Form\FormInterface $parentForm */
+        /** @var \Symfony\Component\Form\FormInterface<mixed> $parentForm */
         $parentForm = $form->getParent();
-        /** @var \Generated\Shared\Transfer\ProductConcreteTransfer|array $formData */
+        /** @var \Generated\Shared\Transfer\ProductConcreteTransfer|array<string, mixed> $formData */
         $formData = $parentForm->getData();
         $validFrom = is_array($formData) ? $formData[ProductConcreteTransfer::VALID_FROM] : $formData->getValidFrom();
 

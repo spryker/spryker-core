@@ -4,7 +4,7 @@ import { By } from '@angular/platform-browser';
 import { AutogenerateInputComponent } from './autogenerate-input.component';
 
 @Component({
-    selector: 'spy-test',
+    selector: 'mp-test',
     template: `
         <mp-autogenerate-input
             [name]="name"

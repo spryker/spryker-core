@@ -26,11 +26,11 @@ class ProductConcreteEditFormDataTransformer implements DataTransformerInterface
     protected const PRODUCT_CONCRETE_EDIT_FORM_FIELD_PRODUCT_CONCRETE = 'productConcrete';
 
     /**
-     * @param array<mixed> $value
+     * @param mixed|array<mixed> $value
      *
      * @return array<mixed>
      */
-    public function transform($value)
+    public function transform($value): array
     {
         $value[static::FIELD_SEARCHABILITY] = [];
 
@@ -48,11 +48,11 @@ class ProductConcreteEditFormDataTransformer implements DataTransformerInterface
     }
 
     /**
-     * @param array<mixed> $value
+     * @param mixed|array<mixed> $value
      *
      * @return array<mixed>
      */
-    public function reverseTransform($value)
+    public function reverseTransform($value): array
     {
         /** @var \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer */
         $productConcreteTransfer = $value[static::PRODUCT_CONCRETE_EDIT_FORM_FIELD_PRODUCT_CONCRETE];

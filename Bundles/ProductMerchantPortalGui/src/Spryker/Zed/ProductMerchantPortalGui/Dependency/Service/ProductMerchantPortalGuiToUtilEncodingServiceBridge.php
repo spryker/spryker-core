@@ -40,9 +40,9 @@ class ProductMerchantPortalGuiToUtilEncodingServiceBridge implements ProductMerc
      * @param int|null $depth
      * @param int|null $options
      *
-     * @return mixed|null
+     * @return array<mixed>|null
      */
-    public function decodeJson(string $jsonValue, bool $assoc = false, ?int $depth = null, ?int $options = null)
+    public function decodeJson(string $jsonValue, bool $assoc = false, ?int $depth = null, ?int $options = null) // phpcs:ignore
     {
         if ($assoc === false) {
             trigger_error('Param #2 `$assoc` must be `true` as return of type `object` is not accepted.', E_USER_DEPRECATED);

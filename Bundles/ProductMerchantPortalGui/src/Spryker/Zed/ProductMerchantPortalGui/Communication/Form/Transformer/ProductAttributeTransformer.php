@@ -15,7 +15,7 @@ class ProductAttributeTransformer implements DataTransformerInterface
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToUtilEncodingServiceInterface
      */
-    protected $utilEncodingService;
+    protected ProductMerchantPortalGuiToUtilEncodingServiceInterface $utilEncodingService;
 
     /**
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToUtilEncodingServiceInterface $utilEncodingService
@@ -29,7 +29,7 @@ class ProductAttributeTransformer implements DataTransformerInterface
     /**
      * @param mixed $value
      *
-     * @return mixed
+     * @return null
      */
     public function transform($value)
     {
@@ -39,9 +39,9 @@ class ProductAttributeTransformer implements DataTransformerInterface
     /**
      * @param mixed $value
      *
-     * @return mixed
+     * @return array<mixed>|null
      */
-    public function reverseTransform($value)
+    public function reverseTransform($value): ?array
     {
         $newAttributes = $this->utilEncodingService->decodeJson($value, true);
 

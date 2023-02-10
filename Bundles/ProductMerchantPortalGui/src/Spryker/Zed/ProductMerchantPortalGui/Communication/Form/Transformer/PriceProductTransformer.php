@@ -21,32 +21,32 @@ class PriceProductTransformer implements DataTransformerInterface
     /**
      * @var int|null
      */
-    protected $idProductAbstract;
+    protected ?int $idProductAbstract = null;
 
     /**
      * @var int|null
      */
-    protected $idProductConcrete;
+    protected ?int $idProductConcrete = null;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Communication\Reader\PriceProductReaderInterface
      */
-    protected $priceProductReader;
+    protected PriceProductReaderInterface $priceProductReader;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\PriceProductMapperInterface
      */
-    protected $priceProductMapper;
+    protected PriceProductMapperInterface $priceProductMapper;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\PriceProductTableDataMapperInterface
      */
-    protected $priceProductTableDataMapper;
+    protected PriceProductTableDataMapperInterface $priceProductTableDataMapper;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToUtilEncodingServiceInterface
      */
-    protected $utilEncodingService;
+    protected ProductMerchantPortalGuiToUtilEncodingServiceInterface $utilEncodingService;
 
     /**
      * @param \Spryker\Zed\ProductMerchantPortalGui\Communication\Reader\PriceProductReaderInterface $priceProductReader
@@ -91,11 +91,11 @@ class PriceProductTransformer implements DataTransformerInterface
     }
 
     /**
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $value
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>|mixed $value
      *
-     * @return mixed
+     * @return string|null
      */
-    public function transform($value)
+    public function transform($value): ?string
     {
         $priceProductTableViewCollection = $this->priceProductTableDataMapper
             ->mapPriceProductTransfersToPriceProductTableViewCollectionTransfer(
@@ -110,9 +110,9 @@ class PriceProductTransformer implements DataTransformerInterface
     /**
      * @param mixed $value
      *
-     * @return mixed
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer>
      */
-    public function reverseTransform($value)
+    public function reverseTransform($value): ArrayObject
     {
         $newPriceProducts = $this->utilEncodingService->decodeJson($value, true);
         if (!$newPriceProducts) {

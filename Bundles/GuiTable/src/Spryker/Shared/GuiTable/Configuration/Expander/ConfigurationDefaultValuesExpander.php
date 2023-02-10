@@ -24,7 +24,7 @@ class ConfigurationDefaultValuesExpander implements ConfigurationDefaultValuesEx
     /**
      * @var \Spryker\Shared\GuiTable\Configuration\GuiTableConfigInterface
      */
-    protected $guiTableConfig;
+    protected GuiTableConfigInterface $guiTableConfig;
 
     /**
      * @param \Spryker\Shared\GuiTable\Configuration\GuiTableConfigInterface $guiTableConfig

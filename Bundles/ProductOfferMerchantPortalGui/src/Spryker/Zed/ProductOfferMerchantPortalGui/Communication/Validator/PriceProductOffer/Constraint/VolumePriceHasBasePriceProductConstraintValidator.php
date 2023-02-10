@@ -29,7 +29,7 @@ class VolumePriceHasBasePriceProductConstraintValidator extends AbstractConstrai
     protected const VOLUME_PRICE_TYPE = 'volume_prices';
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductOfferCollectionTransfer $value
+     * @param \Generated\Shared\Transfer\PriceProductOfferCollectionTransfer|mixed $value
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Validator\PriceProductOffer\Constraint\VolumePriceHasBasePriceProductConstraint $constraint
      *
      * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException

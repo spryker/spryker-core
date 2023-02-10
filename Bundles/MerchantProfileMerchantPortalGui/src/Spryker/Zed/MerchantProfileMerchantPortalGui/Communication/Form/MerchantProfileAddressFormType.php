@@ -26,16 +26,6 @@ class MerchantProfileAddressFormType extends AbstractType
     /**
      * @var string
      */
-    public const OPTION_COUNTRY_CHOICES = 'country_choices';
-
-    /**
-     * @var string
-     */
-    protected const FIELD_ID_MERCHANT_PROFILE_ADDRESS = 'id_merchant_profile_address';
-
-    /**
-     * @var string
-     */
     protected const FIELD_CITY = 'city';
 
     /**
@@ -127,7 +117,7 @@ class MerchantProfileAddressFormType extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      * @param array<string, mixed> $options
      *
      * @return void
@@ -149,7 +139,7 @@ class MerchantProfileAddressFormType extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      *
      * @return $this
      */
@@ -168,7 +158,7 @@ class MerchantProfileAddressFormType extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      *
      * @return $this
      */
@@ -186,7 +176,7 @@ class MerchantProfileAddressFormType extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      *
      * @return $this
      */
@@ -204,7 +194,7 @@ class MerchantProfileAddressFormType extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      *
      * @return $this
      */
@@ -222,7 +212,7 @@ class MerchantProfileAddressFormType extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      *
      * @return $this
      */
@@ -238,7 +228,7 @@ class MerchantProfileAddressFormType extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      *
      * @return $this
      */
@@ -262,7 +252,7 @@ class MerchantProfileAddressFormType extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      *
      * @return $this
      */
@@ -281,7 +271,7 @@ class MerchantProfileAddressFormType extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      *
      * @return $this
      */

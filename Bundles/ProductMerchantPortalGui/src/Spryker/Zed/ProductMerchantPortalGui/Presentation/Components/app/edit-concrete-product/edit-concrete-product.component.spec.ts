@@ -4,7 +4,7 @@ import { By } from '@angular/platform-browser';
 import { EditConcreteProductComponent } from './edit-concrete-product.component';
 
 @Component({
-    selector: 'spy-test',
+    selector: 'mp-test',
     template: `
         <mp-edit-concrete-product>
             <span title></span>

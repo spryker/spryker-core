@@ -14,7 +14,7 @@ use Symfony\Component\Form\DataTransformerInterface;
 class StockTransformer implements DataTransformerInterface
 {
     /**
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\StockProductTransfer> $value
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\StockProductTransfer>|mixed $value
      *
      * @return \Generated\Shared\Transfer\StockProductTransfer
      */
@@ -28,7 +28,7 @@ class StockTransformer implements DataTransformerInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StockProductTransfer $value
+     * @param \Generated\Shared\Transfer\StockProductTransfer|mixed $value
      *
      * @return \ArrayObject<int, \Generated\Shared\Transfer\StockProductTransfer>
      */

@@ -78,22 +78,22 @@ class MerchantOrderGuiTableConfigurationProvider implements MerchantOrderGuiTabl
     /**
      * @var \Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToStoreFacadeInterface
      */
-    protected $storeFacade;
+    protected SalesMerchantPortalGuiToStoreFacadeInterface $storeFacade;
 
     /**
      * @var \Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMerchantOmsFacadeInterface
      */
-    protected $merchantOmsFacade;
+    protected SalesMerchantPortalGuiToMerchantOmsFacadeInterface $merchantOmsFacade;
 
     /**
      * @var \Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMerchantUserFacadeInterface
      */
-    protected $merchantUserFacade;
+    protected SalesMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade;
 
     /**
      * @var \Spryker\Shared\GuiTable\GuiTableFactoryInterface
      */
-    protected $guiTableFactory;
+    protected GuiTableFactoryInterface $guiTableFactory;
 
     /**
      * @param \Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToStoreFacadeInterface $storeFacade

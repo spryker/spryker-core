@@ -19,12 +19,12 @@ class ProductStockExpander implements ProductStockExpanderInterface
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantStockFacadeInterface
      */
-    protected $merchantStockFacade;
+    protected ProductMerchantPortalGuiToMerchantStockFacadeInterface $merchantStockFacade;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantUserFacadeInterface
      */
-    protected $merchantUserFacade;
+    protected ProductMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade;
 
     /**
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantStockFacadeInterface $merchantStockFacade

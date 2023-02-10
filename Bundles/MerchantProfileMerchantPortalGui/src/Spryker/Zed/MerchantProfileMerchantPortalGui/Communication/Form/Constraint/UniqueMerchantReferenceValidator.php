@@ -18,7 +18,7 @@ use Symfony\Component\Validator\Constraint;
 class UniqueMerchantReferenceValidator extends AbstractConstraintValidator
 {
     /**
-     * @param string $value
+     * @param mixed|string $value
      * @param \Spryker\Zed\MerchantProfileMerchantPortalGui\Communication\Form\Constraint\UniqueMerchantReference $constraint
      *
      * @return void

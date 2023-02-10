@@ -26,17 +26,17 @@ class PriceProductOfferTableDataMapper implements PriceProductOfferTableDataMapp
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductFacadeInterface
      */
-    protected $priceProductFacade;
+    protected ProductOfferMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade;
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToStoreFacadeInterface
      */
-    protected $storeFacade;
+    protected ProductOfferMerchantPortalGuiToStoreFacadeInterface $storeFacade;
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\Column\ColumnIdCreatorInterface
      */
-    protected $columnIdCreator;
+    protected ColumnIdCreatorInterface $columnIdCreator;
 
     /**
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade
@@ -137,7 +137,7 @@ class PriceProductOfferTableDataMapper implements PriceProductOfferTableDataMapp
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     * @param array $prices
+     * @param array<string, int> $prices
      * @param string $storeName
      * @param string $currencyCode
      *
@@ -196,7 +196,7 @@ class PriceProductOfferTableDataMapper implements PriceProductOfferTableDataMapp
         );
         $typePriceProductOfferIdsCombined = sprintf(
             '%s,%s',
-            $priceProductOfferTableViewTransfer->getTypePriceProductOfferIds(),
+            $priceProductOfferTableViewTransfer->getTypePriceProductOfferIdsOrFail(),
             $typePriceProductOfferIdAdditional,
         );
 
@@ -214,7 +214,7 @@ class PriceProductOfferTableDataMapper implements PriceProductOfferTableDataMapp
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      * @param array<\Generated\Shared\Transfer\PriceTypeTransfer> $priceTypeTransfers
      *
-     * @return array
+     * @return array<string, int>
      */
     protected function preparePrices(PriceProductTransfer $priceProductTransfer, array $priceTypeTransfers): array
     {
@@ -234,12 +234,12 @@ class PriceProductOfferTableDataMapper implements PriceProductOfferTableDataMapp
 
             if ($moneyValueTransfer->getGrossAmount() !== null) {
                 $columnId = $this->columnIdCreator->createGrossAmountColumnId($priceTypeName);
-                $prices[$columnId] = $moneyValueTransfer->getGrossAmount();
+                $prices[$columnId] = $moneyValueTransfer->getGrossAmountOrFail();
             }
 
             if ($moneyValueTransfer->getNetAmount() !== null) {
                 $columnId = $this->columnIdCreator->createNetAmountColumnId($priceTypeName);
-                $prices[$columnId] = $moneyValueTransfer->getNetAmount();
+                $prices[$columnId] = $moneyValueTransfer->getNetAmountOrFail();
             }
         }
 

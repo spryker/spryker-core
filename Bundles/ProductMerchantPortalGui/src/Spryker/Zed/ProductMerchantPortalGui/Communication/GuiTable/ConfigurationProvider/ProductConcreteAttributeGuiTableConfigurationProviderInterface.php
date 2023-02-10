@@ -13,7 +13,7 @@ interface ProductConcreteAttributeGuiTableConfigurationProviderInterface
 {
     /**
      * @param int $idProductConcrete
-     * @param array $attributesInitialData
+     * @param array<string, array<string, mixed>> $attributesInitialData
      *
      * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
      */

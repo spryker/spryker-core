@@ -16,12 +16,12 @@ class PriceProductReader implements PriceProductReaderInterface
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductOfferFacadeInterface
      */
-    protected $priceProductOfferFacade;
+    protected ProductOfferMerchantPortalGuiToPriceProductOfferFacadeInterface $priceProductOfferFacade;
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Filter\PriceProductFilterInterface
      */
-    protected $priceProductFilter;
+    protected PriceProductFilterInterface $priceProductFilter;
 
     /**
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductOfferFacadeInterface $priceProductOfferFacade

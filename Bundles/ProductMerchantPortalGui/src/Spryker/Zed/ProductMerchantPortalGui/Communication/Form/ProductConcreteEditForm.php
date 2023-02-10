@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -142,23 +141,6 @@ class ProductConcreteEditForm extends AbstractType
      *
      * @return $this
      */
-    protected function addLocalizedAttributesSubform(FormBuilderInterface $builder)
-    {
-        $builder->add(ProductConcreteTransfer::LOCALIZED_ATTRIBUTES, CollectionType::class, [
-            'label' => false,
-            'entry_type' => ProductLocalizedAttributesForm::class,
-            'allow_add' => true,
-            'allow_delete' => true,
-        ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
     protected function addUseAbstractProductNameField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_USE_ABSTRACT_PRODUCT_NAME, CheckboxType::class, [
@@ -170,7 +152,7 @@ class ProductConcreteEditForm extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      *
      * @return $this
      */
@@ -185,7 +167,7 @@ class ProductConcreteEditForm extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      *
      * @return $this
      */
@@ -214,7 +196,7 @@ class ProductConcreteEditForm extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      *
      * @return $this
      */
@@ -229,7 +211,7 @@ class ProductConcreteEditForm extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      *
      * @return $this
      */

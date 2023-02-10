@@ -49,107 +49,107 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     /**
      * @var array<\Generated\Shared\Transfer\GuiTableColumnConfigurationTransfer>
      */
-    protected $columns;
+    protected array $columns = [];
 
     /**
      * @var array<\Generated\Shared\Transfer\GuiTableColumnConfigurationTransfer>
      */
-    protected $editableColumns;
+    protected array $editableColumns = [];
 
     /**
-     * @var string
+     * @var string|null
      */
-    protected $title;
+    protected ?string $title = null;
 
     /**
      * @var array<\Generated\Shared\Transfer\GuiTableFilterTransfer>
      */
-    protected $filters = [];
+    protected array $filters = [];
 
     /**
      * @var array<\Generated\Shared\Transfer\GuiTableRowActionTransfer>
      */
-    protected $rowActions = [];
+    protected array $rowActions = [];
 
     /**
-     * @var string
+     * @var string|null
      */
-    protected $rowOnClickIdAction;
+    protected ?string $rowOnClickIdAction = null;
 
     /**
-     * @var string
+     * @var string|null
      */
-    protected $rowActionRowIdPath;
+    protected ?string $rowActionRowIdPath = null;
 
     /**
-     * @var string
+     * @var string|null
      */
-    protected $availableRowActionsPath;
+    protected ?string $availableRowActionsPath = null;
 
     /**
      * @var array<\Generated\Shared\Transfer\GuiTableBatchActionTransfer>
      */
-    protected $batchActions = [];
+    protected array $batchActions = [];
 
     /**
-     * @var string
+     * @var string|null
      */
-    protected $batchActionRowIdPath;
+    protected ?string $batchActionRowIdPath = null;
 
     /**
-     * @var string
+     * @var string|null
      */
-    protected $availableBatchActionsPath;
+    protected ?string $availableBatchActionsPath = null;
 
     /**
-     * @var string
+     * @var string|null
      */
-    protected $noBatchActionsMessage;
+    protected ?string $noBatchActionsMessage = null;
 
     /**
-     * @var string
+     * @var string|null
      */
-    protected $dataSourceUrl;
+    protected ?string $dataSourceUrl = null;
 
     /**
      * @var array<array<string>>
      */
-    protected $dataSourceInlineData;
+    protected array $dataSourceInlineData = [];
 
     /**
-     * @var int
+     * @var int|null
      */
-    protected $defaultPageSize;
-
-    /**
-     * @var bool
-     */
-    protected $isSearchEnabled = true;
+    protected ?int $defaultPageSize = null;
 
     /**
      * @var bool
      */
-    protected $isColumnConfiguratorEnabled = true;
-
-    /**
-     * @var string
-     */
-    protected $searchPlaceholder;
+    protected bool $isSearchEnabled = true;
 
     /**
      * @var bool
      */
-    protected $isItemSelectionEnabled;
+    protected bool $isColumnConfiguratorEnabled = true;
+
+    /**
+     * @var string|null
+     */
+    protected ?string $searchPlaceholder = null;
+
+    /**
+     * @var bool|null
+     */
+    protected ?bool $isItemSelectionEnabled = null;
 
     /**
      * @var \Generated\Shared\Transfer\GuiTableEditableConfigurationTransfer|null
      */
-    protected $editableConfiguration;
+    protected ?GuiTableEditableConfigurationTransfer $editableConfiguration = null;
 
     /**
-     * @var bool
+     * @var bool|null
      */
-    protected $isPaginationEnabled;
+    protected ?bool $isPaginationEnabled = null;
 
     /**
      * @api
@@ -164,7 +164,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     /**
      * @api
      *
-     * @return array<\Generated\Shared\Transfer\GuiTableColumnConfigurationTransfer>
+     * @return array<string, \Generated\Shared\Transfer\GuiTableColumnConfigurationTransfer>
      */
     public function getColumns(): array
     {
@@ -174,13 +174,13 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     /**
      * @api
      *
-     * @param array<string, \Generated\Shared\Transfer\GuiTableColumnConfigurationTransfer> $colunms
+     * @param array<string, \Generated\Shared\Transfer\GuiTableColumnConfigurationTransfer> $columns
      *
      * @return $this
      */
-    public function setColumns(array $colunms)
+    public function setColumns(array $columns)
     {
-        $this->columns = $colunms;
+        $this->columns = $columns;
 
         return $this;
     }
@@ -361,7 +361,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      */
     protected function addColumn(GuiTableColumnConfigurationTransfer $guiTableColumnConfigurationTransfer): void
     {
-        $columnId = $guiTableColumnConfigurationTransfer->getId();
+        $columnId = $guiTableColumnConfigurationTransfer->getIdOrFail();
 
         if (isset($this->columns[$columnId])) {
             throw new InvalidConfigurationException(sprintf('Column with id "%s" already exists', $columnId));
@@ -1194,7 +1194,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
 
         foreach ($errors as $error) {
             $rowError = $error[GuiTableEditableDataErrorTransfer::ROW_ERROR] ?? null;
-            $columnErrors = $error[GuiTableEditableDataErrorTransfer::COLUMN_ERRORS] ?? null;
+            $columnErrors = $error[GuiTableEditableDataErrorTransfer::COLUMN_ERRORS] ?? [];
 
             $guiTableEditableDataErrorTransfers[] = (new GuiTableEditableDataErrorTransfer())
                 ->setRowError($rowError)
@@ -1260,8 +1260,8 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     }
 
     /**
-     * @param array|null $editableButtonOptions
-     * @param array $defaultOverwriteOptions
+     * @param array<string, mixed>|null $editableButtonOptions
+     * @param array<string, mixed> $defaultOverwriteOptions
      *
      * @return array<string, ?string>
      */
@@ -1305,7 +1305,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      */
     protected function addEditableColumn(GuiTableColumnConfigurationTransfer $guiTableColumnConfigurationTransfer): void
     {
-        $columnId = $guiTableColumnConfigurationTransfer->getId();
+        $columnId = $guiTableColumnConfigurationTransfer->getIdOrFail();
 
         if (isset($this->editableColumns[$columnId])) {
             throw new InvalidConfigurationException(sprintf('Editable column with id "%s" already exists', $columnId));

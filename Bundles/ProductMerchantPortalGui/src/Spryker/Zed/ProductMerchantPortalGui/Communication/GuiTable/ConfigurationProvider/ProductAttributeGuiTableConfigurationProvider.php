@@ -11,7 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 use Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface;
 use Spryker\Shared\GuiTable\GuiTableFactoryInterface;
-use Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\ProductAttributeDataProvider;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\ProductAttributeDataProviderInterface;
 
 class ProductAttributeGuiTableConfigurationProvider implements ProductAttributeGuiTableConfigurationProviderInterface
 {
@@ -38,20 +38,20 @@ class ProductAttributeGuiTableConfigurationProvider implements ProductAttributeG
     /**
      * @var \Spryker\Shared\GuiTable\GuiTableFactoryInterface
      */
-    protected $guiTableFactory;
+    protected GuiTableFactoryInterface $guiTableFactory;
 
     /**
-     * @var \Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\ProductAttributeDataProvider
+     * @var \Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\ProductAttributeDataProviderInterface
      */
-    protected $productAttributeDataProvider;
+    protected ProductAttributeDataProviderInterface $productAttributeDataProvider;
 
     /**
      * @param \Spryker\Shared\GuiTable\GuiTableFactoryInterface $guiTableFactory
-     * @param \Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\ProductAttributeDataProvider $productAttributeDataProvider
+     * @param \Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\ProductAttributeDataProviderInterface $productAttributeDataProvider
      */
     public function __construct(
         GuiTableFactoryInterface $guiTableFactory,
-        ProductAttributeDataProvider $productAttributeDataProvider
+        ProductAttributeDataProviderInterface $productAttributeDataProvider
     ) {
         $this->guiTableFactory = $guiTableFactory;
         $this->productAttributeDataProvider = $productAttributeDataProvider;

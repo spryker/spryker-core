@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantProfileMerchantPortalGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\TranslationTransfer;
 
 interface MerchantProfileMerchantPortalGuiToGlossaryFacadeInterface
 {
@@ -17,7 +18,7 @@ interface MerchantProfileMerchantPortalGuiToGlossaryFacadeInterface
      *
      * @return bool
      */
-    public function hasTranslation($keyName, ?LocaleTransfer $localeTransfer = null);
+    public function hasTranslation(string $keyName, ?LocaleTransfer $localeTransfer = null): bool;
 
     /**
      * @param string $keyName
@@ -25,5 +26,5 @@ interface MerchantProfileMerchantPortalGuiToGlossaryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function getTranslation($keyName, LocaleTransfer $localeTransfer);
+    public function getTranslation(string $keyName, LocaleTransfer $localeTransfer): TranslationTransfer;
 }

@@ -22,22 +22,22 @@ class ProductAbstractAttributeUniqueCombinationConstraint extends Constraint
     /**
      * @var string
      */
-    protected $message = 'The attribute %attribute% already exists. Please define another one';
+    protected string $message = 'The attribute %attribute% already exists. Please define another one';
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductAttributeFacadeInterface
      */
-    protected $productAttributeFacade;
+    protected ProductMerchantPortalGuiToProductAttributeFacadeInterface $productAttributeFacade;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductFacadeInterface
      */
-    protected $productFacade;
+    protected ProductMerchantPortalGuiToProductFacadeInterface $productFacade;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToTranslatorFacadeInterface
      */
-    protected $translatorFacade;
+    protected ProductMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade;
 
     /**
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductAttributeFacadeInterface $productAttributeFacade

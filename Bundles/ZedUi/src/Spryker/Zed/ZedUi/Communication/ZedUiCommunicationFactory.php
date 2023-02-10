@@ -45,6 +45,14 @@ class ZedUiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Shared\ZedUi\ZedUiFactoryInterface
+     */
+    public function createZedUiFactory(): ZedUiFactoryInterface
+    {
+        return new ZedUiFactory();
+    }
+
+    /**
      * @return \Spryker\Zed\ZedUi\Dependency\Service\ZedUiToUtilEncodingServiceInterface
      */
     public function getUtilEncoding(): ZedUiToUtilEncodingServiceInterface
@@ -58,13 +66,5 @@ class ZedUiCommunicationFactory extends AbstractCommunicationFactory
     public function getTranslatorFacade(): ZedUiToTranslatorFacadeInterface
     {
         return $this->getProvidedDependency(ZedUiDependencyProvider::FACADE_TRANSLATOR);
-    }
-
-    /**
-     * @return \Spryker\Shared\ZedUi\ZedUiFactoryInterface
-     */
-    public function createZedUiFactory(): ZedUiFactoryInterface
-    {
-        return new ZedUiFactory();
     }
 }

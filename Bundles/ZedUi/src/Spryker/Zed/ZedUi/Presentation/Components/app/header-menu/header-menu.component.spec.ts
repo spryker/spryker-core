@@ -8,9 +8,9 @@ describe('HeaderMenuComponent', () => {
     let fixture: ComponentFixture<TestComponent>;
 
     @Component({
-        selector: 'spy-test',
+        selector: 'mp-test',
         template: `
-            <mp-header-menu>
+            <mp-header-menu [navigationConfig]="navigationConfig">
                 <span info-primary>Name</span>
                 <span info-secondary>Email</span>
 
@@ -18,7 +18,9 @@ describe('HeaderMenuComponent', () => {
             </mp-header-menu>
         `,
     })
-    class TestComponent {}
+    class TestComponent {
+        navigationConfig?: any;
+    }
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
@@ -71,5 +73,27 @@ describe('HeaderMenuComponent', () => {
 
         expect(defaultSlotElem).toBeTruthy();
         expect(defaultSlotElem.nativeElement.textContent).toBe('Content');
+    });
+
+    it('should render `@Input(navigationConfig)` data to the `.mp-header-menu__link` element', () => {
+        const mockConfig = [
+            {
+                url: 'mockUrl',
+                type: 'mockType',
+                title: 'mockTitle',
+            },
+        ];
+
+        component.navigationConfig = mockConfig;
+        fixture.detectChanges();
+
+        const linkElem = fixture.debugElement.query(By.css('.mp-header-menu__link'));
+        const userMenuLinkComponent = linkElem.query(By.css('spy-user-menu-link'));
+
+        expect(linkElem).toBeTruthy();
+        expect(linkElem.properties.href).toBe(mockConfig[0].url);
+        expect(userMenuLinkComponent).toBeTruthy();
+        expect(userMenuLinkComponent.properties.type).toBe(mockConfig[0].type);
+        expect(userMenuLinkComponent.nativeElement.textContent.trim()).toBe(mockConfig[0].title);
     });
 });

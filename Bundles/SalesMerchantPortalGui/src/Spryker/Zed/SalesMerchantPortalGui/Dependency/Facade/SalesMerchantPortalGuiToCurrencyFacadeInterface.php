@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
+
 interface SalesMerchantPortalGuiToCurrencyFacadeInterface
 {
     /**
@@ -14,5 +16,5 @@ interface SalesMerchantPortalGuiToCurrencyFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function fromIsoCode(string $isoCode);
+    public function fromIsoCode(string $isoCode): CurrencyTransfer;
 }

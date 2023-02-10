@@ -47,7 +47,7 @@ class ProductMerchantPortalGuiToProductAttributeFacadeBridge implements ProductM
     /**
      * @param int $idProductAbstract
      *
-     * @return array
+     * @return array<string, array<string, mixed>>
      */
     public function getProductAbstractAttributeValues(int $idProductAbstract): array
     {

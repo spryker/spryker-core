@@ -27,37 +27,37 @@ class ProductTableDataProvider extends AbstractGuiTableDataProvider
     /**
      * @var int
      */
-    protected $idProductAbstract;
+    protected int $idProductAbstract;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Persistence\ProductMerchantPortalGuiRepositoryInterface
      */
-    protected $productMerchantPortalGuiRepository;
+    protected ProductMerchantPortalGuiRepositoryInterface $productMerchantPortalGuiRepository;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToLocaleFacadeInterface
      */
-    protected $localeFacade;
+    protected ProductMerchantPortalGuiToLocaleFacadeInterface $localeFacade;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantUserFacadeInterface
      */
-    protected $merchantUserFacade;
+    protected ProductMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToTranslatorFacadeInterface
      */
-    protected $translatorFacade;
+    protected ProductMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Communication\Extractor\LocalizedAttributesExtractorInterface
      */
-    protected $localizedAttributesExtractor;
+    protected LocalizedAttributesExtractorInterface $localizedAttributesExtractor;
 
     /**
      * @var array<\Spryker\Zed\ProductMerchantPortalGuiExtension\Dependency\Plugin\ProductConcreteTableExpanderPluginInterface>
      */
-    protected $productConcreteTableExpanderPlugins;
+    protected array $productConcreteTableExpanderPlugins;
 
     /**
      * @param int $idProductAbstract

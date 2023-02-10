@@ -66,7 +66,7 @@ class ProductConcreteValidator implements ProductConcreteValidatorInterface
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\External\ProductMerchantPortalGuiToValidationAdapterInterface
      */
-    protected $validationAdapter;
+    protected ProductMerchantPortalGuiToValidationAdapterInterface $validationAdapter;
 
     /**
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\External\ProductMerchantPortalGuiToValidationAdapterInterface $validationAdapter
@@ -121,7 +121,7 @@ class ProductConcreteValidator implements ProductConcreteValidatorInterface
     /**
      * @param \Symfony\Component\Validator\ConstraintViolationInterface $constraintViolation
      *
-     * @return array
+     * @return array<mixed>
      */
     protected function extractRowNumberAndAttributeName(ConstraintViolationInterface $constraintViolation): array
     {
@@ -138,7 +138,7 @@ class ProductConcreteValidator implements ProductConcreteValidatorInterface
     }
 
     /**
-     * @return array
+     * @return array<\Symfony\Component\Validator\Constraint>
      */
     protected function getProductConcreteConstraints(): array
     {
@@ -165,7 +165,7 @@ class ProductConcreteValidator implements ProductConcreteValidatorInterface
     }
 
     /**
-     * @return array
+     * @return array<\Symfony\Component\Validator\Constraint>
      */
     protected function getSuperAttributeConstraints(): array
     {

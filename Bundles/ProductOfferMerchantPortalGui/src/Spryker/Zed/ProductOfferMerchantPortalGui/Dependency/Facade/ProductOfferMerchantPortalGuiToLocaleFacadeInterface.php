@@ -7,10 +7,12 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+
 interface ProductOfferMerchantPortalGuiToLocaleFacadeInterface
 {
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getCurrentLocale();
+    public function getCurrentLocale(): LocaleTransfer;
 }

@@ -29,7 +29,7 @@ abstract class AbstractUpdateProductController extends AbstractController
     protected const RESPONSE_NOTIFICATION_MESSAGE_ERROR = 'Please resolve all errors.';
 
     /**
-     * @var array
+     * @var array<string, array<string, mixed>>
      */
     protected const DEFAULT_INITIAL_DATA = [
         GuiTableEditableInitialDataTransfer::DATA => [],
@@ -38,9 +38,9 @@ abstract class AbstractUpdateProductController extends AbstractController
 
     /**
      * @param string $tableViewName
-     * @param array|null $requestTableData
+     * @param array<string, mixed>|null $requestTableData
      *
-     * @return array<mixed>
+     * @return array<string, array<string, mixed>>
      */
     protected function getDefaultInitialData(string $tableViewName, ?array $requestTableData): array
     {
@@ -64,9 +64,9 @@ abstract class AbstractUpdateProductController extends AbstractController
     }
 
     /**
-     * @param array<mixed> $responseData
+     * @param array<string, mixed> $responseData
      *
-     * @return array<mixed>
+     * @return array<string, mixed>
      */
     protected function addSuccessResponseDataToResponse(array $responseData): array
     {
@@ -82,11 +82,11 @@ abstract class AbstractUpdateProductController extends AbstractController
     }
 
     /**
-     * @param \Symfony\Component\Form\FormInterface $form
+     * @param \Symfony\Component\Form\FormInterface<mixed> $form
      * @param \Generated\Shared\Transfer\ValidationResponseTransfer $validationResponseTransfer
-     * @param array $responseData
+     * @param array<string, mixed> $responseData
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function addErrorResponseDataToResponse(
         FormInterface $form,

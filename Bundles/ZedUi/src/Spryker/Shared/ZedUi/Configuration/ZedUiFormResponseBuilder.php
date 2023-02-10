@@ -66,12 +66,12 @@ class ZedUiFormResponseBuilder implements ZedUiFormResponseBuilderInterface
     /**
      * @var array<\Generated\Shared\Transfer\ZedUiFormResponseActionTransfer>
      */
-    protected $actions = [];
+    protected array $actions = [];
 
     /**
-     * @var array<array>
+     * @var array<array<string, mixed>>
      */
-    protected $notifications = [];
+    protected array $notifications = [];
 
     /**
      * {@inheritDoc}
@@ -107,19 +107,21 @@ class ZedUiFormResponseBuilder implements ZedUiFormResponseBuilderInterface
      * @param bool $closeable
      * @param string|null $description
      *
-     * @return \Spryker\Shared\ZedUi\Configuration\ZedUiFormResponseBuilderInterface
+     * @return $this
      */
     public function addInfoNotification(
         string $title,
         bool $closeable = true,
         ?string $description = null
-    ): ZedUiFormResponseBuilderInterface {
-        return $this->addActionNotification(
+    ) {
+        $this->addActionNotification(
             $title,
             static::RESPONSE_NOTIFICATION_TYPE_INFO,
             $closeable,
             $description,
         );
+
+        return $this;
     }
 
     /**
@@ -131,19 +133,21 @@ class ZedUiFormResponseBuilder implements ZedUiFormResponseBuilderInterface
      * @param bool $closeable
      * @param string|null $description
      *
-     * @return \Spryker\Shared\ZedUi\Configuration\ZedUiFormResponseBuilderInterface
+     * @return $this
      */
     public function addSuccessNotification(
         string $title,
         bool $closeable = true,
         ?string $description = null
-    ): ZedUiFormResponseBuilderInterface {
-        return $this->addActionNotification(
+    ) {
+        $this->addActionNotification(
             $title,
             static::RESPONSE_NOTIFICATION_TYPE_SUCCESS,
             $closeable,
             $description,
         );
+
+        return $this;
     }
 
     /**
@@ -155,19 +159,21 @@ class ZedUiFormResponseBuilder implements ZedUiFormResponseBuilderInterface
      * @param bool $closeable
      * @param string|null $description
      *
-     * @return \Spryker\Shared\ZedUi\Configuration\ZedUiFormResponseBuilderInterface
+     * @return $this
      */
     public function addWarningNotification(
         string $title,
         bool $closeable = true,
         ?string $description = null
-    ): ZedUiFormResponseBuilderInterface {
-        return $this->addActionNotification(
+    ) {
+        $this->addActionNotification(
             $title,
             static::RESPONSE_NOTIFICATION_TYPE_WARNING,
             $closeable,
             $description,
         );
+
+        return $this;
     }
 
     /**
@@ -179,19 +185,21 @@ class ZedUiFormResponseBuilder implements ZedUiFormResponseBuilderInterface
      * @param bool $closeable
      * @param string|null $description
      *
-     * @return \Spryker\Shared\ZedUi\Configuration\ZedUiFormResponseBuilderInterface
+     * @return $this
      */
     public function addErrorNotification(
         string $title,
         bool $closeable = true,
         ?string $description = null
-    ): ZedUiFormResponseBuilderInterface {
-        return $this->addActionNotification(
+    ) {
+        $this->addActionNotification(
             $title,
             static::RESPONSE_NOTIFICATION_TYPE_ERROR,
             $closeable,
             $description,
         );
+
+        return $this;
     }
 
     /**
@@ -201,9 +209,9 @@ class ZedUiFormResponseBuilder implements ZedUiFormResponseBuilderInterface
      *
      * @param string $url
      *
-     * @return \Spryker\Shared\ZedUi\Configuration\ZedUiFormResponseBuilderInterface
+     * @return $this
      */
-    public function addActionRedirect(string $url): ZedUiFormResponseBuilderInterface
+    public function addActionRedirect(string $url)
     {
         $this->actions[] = $this->createResponseAction(static::RESPONSE_ACTION_TYPE_REDIRECT, $url);
 
@@ -215,9 +223,9 @@ class ZedUiFormResponseBuilder implements ZedUiFormResponseBuilderInterface
      *
      * @api
      *
-     * @return \Spryker\Shared\ZedUi\Configuration\ZedUiFormResponseBuilderInterface
+     * @return $this
      */
-    public function addActionRefreshDrawer(): ZedUiFormResponseBuilderInterface
+    public function addActionRefreshDrawer()
     {
         $this->actions[] = $this->createResponseAction(static::RESPONSE_ACTION_TYPE_REFRESH_DRAWER);
 
@@ -229,9 +237,9 @@ class ZedUiFormResponseBuilder implements ZedUiFormResponseBuilderInterface
      *
      * @api
      *
-     * @return \Spryker\Shared\ZedUi\Configuration\ZedUiFormResponseBuilderInterface
+     * @return $this
      */
-    public function addActionCloseDrawer(): ZedUiFormResponseBuilderInterface
+    public function addActionCloseDrawer()
     {
         $this->actions[] = $this->createResponseAction(static::RESPONSE_ACTION_TYPE_CLOSE_DRAWER);
 
@@ -245,9 +253,9 @@ class ZedUiFormResponseBuilder implements ZedUiFormResponseBuilderInterface
      *
      * @param string|null $tableId
      *
-     * @return \Spryker\Shared\ZedUi\Configuration\ZedUiFormResponseBuilderInterface
+     * @return $this
      */
-    public function addActionRefreshTable(?string $tableId = null): ZedUiFormResponseBuilderInterface
+    public function addActionRefreshTable(?string $tableId = null)
     {
         $zedUiFormResponseActionTransfer = $this->createResponseAction(
             static::RESPONSE_ACTION_TYPE_REFRESH_TABLE,
@@ -264,9 +272,9 @@ class ZedUiFormResponseBuilder implements ZedUiFormResponseBuilderInterface
      *
      * @api
      *
-     * @return \Spryker\Shared\ZedUi\Configuration\ZedUiFormResponseBuilderInterface
+     * @return $this
      */
-    public function addActionRefreshParentTable(): ZedUiFormResponseBuilderInterface
+    public function addActionRefreshParentTable()
     {
         $this->actions[] = $this->createResponseAction(static::RESPONSE_ACTION_TYPE_REFRESH_PARENT_TABLE);
 
@@ -276,7 +284,7 @@ class ZedUiFormResponseBuilder implements ZedUiFormResponseBuilderInterface
     /**
      * @param string $actionType
      * @param string|null $url
-     * @param array $notifications
+     * @param array<array<string, mixed>> $notifications
      *
      * @return \Generated\Shared\Transfer\ZedUiFormResponseActionTransfer
      */
@@ -303,14 +311,14 @@ class ZedUiFormResponseBuilder implements ZedUiFormResponseBuilderInterface
      * @param bool $closeable
      * @param string|null $description
      *
-     * @return \Spryker\Shared\ZedUi\Configuration\ZedUiFormResponseBuilderInterface
+     * @return $this
      */
     protected function addActionNotification(
         string $title,
         string $type,
         bool $closeable = true,
         ?string $description = null
-    ): ZedUiFormResponseBuilderInterface {
+    ) {
         $this->notifications[] = [
             'title' => $title,
             'type' => $type,

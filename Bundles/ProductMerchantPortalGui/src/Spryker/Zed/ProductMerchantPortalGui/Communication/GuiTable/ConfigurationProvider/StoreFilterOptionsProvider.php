@@ -14,7 +14,7 @@ class StoreFilterOptionsProvider implements StoreFilterOptionsProviderInterface
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToStoreFacadeInterface
      */
-    protected $storeFacade;
+    protected ProductMerchantPortalGuiToStoreFacadeInterface $storeFacade;
 
     /**
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToStoreFacadeInterface $storeFacade
@@ -36,7 +36,7 @@ class StoreFilterOptionsProvider implements StoreFilterOptionsProviderInterface
             if ($storeTransfer->getName() === null) {
                 continue;
             }
-            $storeOptions[(int)$storeTransfer->getIdStore()] = $storeTransfer->getName();
+            $storeOptions[(int)$storeTransfer->getIdStore()] = $storeTransfer->getNameOrFail();
         }
 
         return $storeOptions;

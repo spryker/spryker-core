@@ -10,13 +10,13 @@
         "importHelpers": true,
         "skipLibCheck": true,
         "skipDefaultLibCheck": true,
-        "target": "es2015",
+        "target": "es2020",
         "module": "esnext",
         "typeRoots": ["node_modules/@types"],
         "lib": ["dom", "esnext"],
         "baseUrl": ".",
-        "removeComments": true,
         "rootDir": ".",
+        "removeComments": true,
         "paths": {
             "@mp/zed-ui/*": ["./Bundles/ZedUi/src/Spryker/Zed/ZedUi/Presentation/Components/*"]
         }

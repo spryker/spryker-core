@@ -23,7 +23,7 @@ interface UserMerchantPortalGuiToLocaleFacadeInterface
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getLocaleById($idLocale): LocaleTransfer;
+    public function getLocaleById(int $idLocale): LocaleTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer

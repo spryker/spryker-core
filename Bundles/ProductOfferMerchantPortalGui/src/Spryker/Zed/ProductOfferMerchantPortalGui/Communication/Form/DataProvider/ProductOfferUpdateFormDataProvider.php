@@ -19,7 +19,7 @@ class ProductOfferUpdateFormDataProvider extends AbstractProductOfferFormDataPro
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToProductOfferFacadeInterface
      */
-    protected $productOfferFacade;
+    protected ProductOfferMerchantPortalGuiToProductOfferFacadeInterface $productOfferFacade;
 
     /**
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToProductFacadeInterface $productFacade

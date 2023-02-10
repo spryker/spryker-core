@@ -55,8 +55,8 @@ class UniqueProductConcretePerSuperAttributeCollectionConstraintValidator extend
     /**
      * Checks if combination of super attribute values doesn't exist in DB.
      *
-     * @param array<mixed> $value
-     * @param \Symfony\Component\Validator\Constraint|\Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Constraint\UniqueProductConcretePerSuperAttributeCollectionConstraint $constraint
+     * @param mixed|array<mixed> $value
+     * @param \Symfony\Component\Validator\Constraint $constraint
      *
      * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException
      *
@@ -92,13 +92,13 @@ class UniqueProductConcretePerSuperAttributeCollectionConstraintValidator extend
      */
     protected function getIdProductAbstract(): int
     {
-        /** @var \Symfony\Component\Form\FormInterface $form */
+        /** @var \Symfony\Component\Form\FormInterface<mixed> $form */
         $form = $this->context->getObject();
-        /** @var \Symfony\Component\Form\FormInterface $parentForm */
+        /** @var \Symfony\Component\Form\FormInterface<mixed> $parentForm */
         $parentForm = $form->getParent();
-        /** @var \Symfony\Component\Form\FormInterface $baseForm */
+        /** @var \Symfony\Component\Form\FormInterface<mixed> $baseForm */
         $baseForm = $parentForm->getParent();
-        /** @var \Generated\Shared\Transfer\ProductConcreteTransfer|array $formData */
+        /** @var \Generated\Shared\Transfer\ProductConcreteTransfer|array<string, mixed> $formData */
         $formData = $baseForm->getData();
 
         return (int)$formData[static::FIELD_ID_PRODUCT_ABSTRACT];

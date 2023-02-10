@@ -139,7 +139,7 @@ class SalesMerchantPortalGuiRepository extends AbstractRepository implements Sal
         $merchantSalesOrderQuery = $this->getFactory()->getMerchantSalesOrderPropelQuery();
         $merchantSalesOrderQuery = $this->filterMerchantSalesOrderQueryByIdMerchant($merchantSalesOrderQuery, $idMerchant);
 
-        /** @var array $merchantOrderCounts */
+        /** @var array<string, mixed> $merchantOrderCounts */
         $merchantOrderCounts = $merchantSalesOrderQuery
             ->addAsColumn(MerchantOrderCountsTransfer::TOTAL, 'COUNT(*)')
             ->addAsColumn(
@@ -159,7 +159,7 @@ class SalesMerchantPortalGuiRepository extends AbstractRepository implements Sal
         foreach ($totalsPerStore as $totalPerStore) {
             $merchantOrderCountsTransfer->addTotalPerStore(
                 $totalPerStore[OrderTransfer::STORE],
-                $totalPerStore[MerchantOrderCountsTransfer::TOTAL_PER_STORE],
+                $totalPerStore[MerchantOrderCountsTransfer::ORDER_TOTALS_PER_STORE],
             );
         }
 
@@ -699,13 +699,13 @@ class SalesMerchantPortalGuiRepository extends AbstractRepository implements Sal
 
         return $merchantSalesOrderQuery->joinOrder()
             ->addAsColumn(OrderTransfer::STORE, SpySalesOrderTableMap::COL_STORE)
-            ->addAsColumn(MerchantOrderCountsTransfer::TOTAL_PER_STORE, 'COUNT(*)')
+            ->addAsColumn(MerchantOrderCountsTransfer::ORDER_TOTALS_PER_STORE, 'COUNT(*)')
             ->useOrderQuery()
             ->groupByStore()
             ->endUse()
             ->select([
                 OrderTransfer::STORE,
-                MerchantOrderCountsTransfer::TOTAL_PER_STORE,
+                MerchantOrderCountsTransfer::ORDER_TOTALS_PER_STORE,
             ])
             ->find()
             ->toArray();

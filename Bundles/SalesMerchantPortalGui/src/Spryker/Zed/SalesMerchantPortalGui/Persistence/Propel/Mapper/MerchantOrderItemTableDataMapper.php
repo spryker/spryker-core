@@ -68,7 +68,7 @@ class MerchantOrderItemTableDataMapper
     /**
      * @var \Spryker\Zed\SalesMerchantPortalGui\Dependency\Service\SalesMerchantPortalGuiToUtilEncodingServiceInterface
      */
-    protected $utilEncodingService;
+    protected SalesMerchantPortalGuiToUtilEncodingServiceInterface $utilEncodingService;
 
     /**
      * @param \Spryker\Zed\SalesMerchantPortalGui\Dependency\Service\SalesMerchantPortalGuiToUtilEncodingServiceInterface $utilEncodingService
@@ -79,7 +79,7 @@ class MerchantOrderItemTableDataMapper
     }
 
     /**
-     * @param array $merchantOrderItemTableDataArray
+     * @param array<string, mixed> $merchantOrderItemTableDataArray
      * @param \Generated\Shared\Transfer\MerchantOrderItemCollectionTransfer $merchantOrderItemCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantOrderItemCollectionTransfer

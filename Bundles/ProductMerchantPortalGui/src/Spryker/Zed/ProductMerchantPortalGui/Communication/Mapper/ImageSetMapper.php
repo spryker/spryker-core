@@ -62,7 +62,7 @@ class ImageSetMapper implements ImageSetMapperInterface
     /**
      * @param \Symfony\Component\Form\FormErrorIterator<\Symfony\Component\Form\FormError> $errors
      *
-     * @return array<array<string>>
+     * @return array<int, array<string, mixed>>
      */
     public function mapErrorsToImageSetValidationData(FormErrorIterator $errors): array
     {
@@ -88,9 +88,9 @@ class ImageSetMapper implements ImageSetMapperInterface
     }
 
     /**
-     * @param array $source
+     * @param array<int, array<string, mixed>> $source
      *
-     * @return array
+     * @return array<int, array<string, mixed>>
      */
     protected function fillNotExistingNumericArrayElementsWithEmptyArray(array $source): array
     {
@@ -133,11 +133,11 @@ class ImageSetMapper implements ImageSetMapperInterface
     }
 
     /**
-     * @param array $imageSetData
-     * @param array $fields
+     * @param array<array<string, mixed>> $imageSetData
+     * @param array<string> $fields
      * @param string $errorMessage
      *
-     * @return array
+     * @return array<array<string, mixed>>
      */
     protected function mapErrorMessageToImageSetData(array $imageSetData, array $fields, string $errorMessage): array
     {
@@ -150,11 +150,11 @@ class ImageSetMapper implements ImageSetMapperInterface
     }
 
     /**
-     * @param array $imageSetData
-     * @param array $fields
+     * @param array<array<string, array<string, array<string, mixed>>>> $imageSetData
+     * @param array<string> $fields
      * @param string $errorMessage
      *
-     * @return array
+     * @return array<array<string, array<string, array<string, mixed>>>>
      */
     protected function mapErrorMessageToImageSetImagesData(array $imageSetData, array $fields, string $errorMessage): array
     {

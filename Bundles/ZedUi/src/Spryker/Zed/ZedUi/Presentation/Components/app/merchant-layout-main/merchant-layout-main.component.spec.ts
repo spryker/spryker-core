@@ -10,7 +10,7 @@ describe('MerchantLayoutMainComponent', () => {
     let fixture: ComponentFixture<TestComponent>;
 
     @Component({
-        selector: 'test-component',
+        selector: 'mp-test',
         template: `
             <mp-merchant-layout-main [navigationConfig]="navigationConfig">
                 <div name="header">Header Slot</div>

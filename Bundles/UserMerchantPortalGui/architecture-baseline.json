@@ -8,13 +8,6 @@
     },
     {
         "fileName": "src/Spryker/Zed/UserMerchantPortalGui/Dependency/Facade/UserMerchantPortalGuiToLocaleFacadeBridge.php",
-        "description": "Bridges: Type should be defined for param `idLocale` in method `Spryker\\Zed\\UserMerchantPortalGui\\Dependency\\Facade\\UserMerchantPortalGuiToLocaleFacadeBridge::getLocaleById()`.",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/UserMerchantPortalGui/Dependency/Facade/UserMerchantPortalGuiToLocaleFacadeBridge.php",
         "description": "Bridges: Method `getLocaleById()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
@@ -38,20 +31,6 @@
         "fileName": "src/Spryker/Zed/UserMerchantPortalGui/Dependency/Facade/UserMerchantPortalGuiToMerchantUserFacadeBridge.php",
         "description": "Bridges: Method `findMerchantUser()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/UserMerchantPortalGui/Dependency/Facade/UserMerchantPortalGuiToMerchantUserFacadeBridge.php",
-        "description": "Bridges: Type should be defined for param `password` in method `Spryker\\Zed\\UserMerchantPortalGui\\Dependency\\Facade\\UserMerchantPortalGuiToMerchantUserFacadeBridge::isValidPassword()`.",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/UserMerchantPortalGui/Dependency/Facade/UserMerchantPortalGuiToMerchantUserFacadeBridge.php",
-        "description": "Bridges: Type should be defined for param `hash` in method `Spryker\\Zed\\UserMerchantPortalGui\\Dependency\\Facade\\UserMerchantPortalGuiToMerchantUserFacadeBridge::isValidPassword()`.",
-        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     }

@@ -20,10 +20,10 @@ class PriceProductAbstractTableDataProvider extends AbstractPriceProductTableDat
     /**
      * @var int
      */
-    protected $idProductAbstract;
+    protected int $idProductAbstract;
 
     /**
-     * @param int $idProductConcrete
+     * @param int $idProductAbstract
      * @param \Spryker\Zed\ProductMerchantPortalGui\Communication\Reader\PriceProductReaderInterface $priceProductReader
      * @param \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\PriceProductTableDataMapperInterface $priceProductTableDataMapper
      * @param \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\Sorter\PriceProductTableViewSorterInterface $priceProductTableViewSorter
@@ -31,14 +31,14 @@ class PriceProductAbstractTableDataProvider extends AbstractPriceProductTableDat
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMoneyFacadeInterface $moneyFacade
      */
     public function __construct(
-        int $idProductConcrete,
+        int $idProductAbstract,
         PriceProductReaderInterface $priceProductReader,
         PriceProductTableDataMapperInterface $priceProductTableDataMapper,
         PriceProductTableViewSorterInterface $priceProductTableViewSorter,
         ProductMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade,
         ProductMerchantPortalGuiToMoneyFacadeInterface $moneyFacade
     ) {
-        $this->idProductAbstract = $idProductConcrete;
+        $this->idProductAbstract = $idProductAbstract;
 
         parent::__construct(
             $priceProductReader,

@@ -157,9 +157,7 @@ export class ConcreteProductsPreviewComponent implements OnChanges {
                 }
 
                 return product?.superAttributes.every((superAttr) => {
-                    /* tslint:disable:no-shadowed-variable */
                     const attr = attrs.find((attr) => attr.value === superAttr.value);
-                    /* tslint:enable */
 
                     return attr.attribute.value === superAttr.attribute.value;
                 });

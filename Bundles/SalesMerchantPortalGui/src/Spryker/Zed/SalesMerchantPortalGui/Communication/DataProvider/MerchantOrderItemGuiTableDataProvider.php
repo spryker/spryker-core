@@ -28,32 +28,32 @@ class MerchantOrderItemGuiTableDataProvider extends AbstractGuiTableDataProvider
     /**
      * @var \Spryker\Zed\SalesMerchantPortalGui\Persistence\SalesMerchantPortalGuiRepositoryInterface
      */
-    protected $salesMerchantPortalGuiRepository;
+    protected SalesMerchantPortalGuiRepositoryInterface $salesMerchantPortalGuiRepository;
 
     /**
      * @var \Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMerchantUserFacadeInterface
      */
-    protected $merchantUserFacade;
+    protected SalesMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade;
 
     /**
      * @var \Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMerchantOmsFacadeInterface
      */
-    protected $merchantOmsFacade;
+    protected SalesMerchantPortalGuiToMerchantOmsFacadeInterface $merchantOmsFacade;
 
     /**
      * @var \Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToSalesFacadeInterface
      */
-    protected $salesFacade;
+    protected SalesMerchantPortalGuiToSalesFacadeInterface $salesFacade;
 
     /**
      * @var array<int>
      */
-    protected $merchantOrderItemIds;
+    protected array $merchantOrderItemIds;
 
     /**
      * @var array<\Spryker\Zed\SalesMerchantPortalGuiExtension\Dependency\Plugin\MerchantOrderItemTableExpanderPluginInterface>
      */
-    protected $merchantOrderItemTableExpanderPlugins;
+    protected array $merchantOrderItemTableExpanderPlugins;
 
     /**
      * @param \Spryker\Zed\SalesMerchantPortalGui\Persistence\SalesMerchantPortalGuiRepositoryInterface $salesMerchantPortalGuiRepository
@@ -108,10 +108,8 @@ class MerchantOrderItemGuiTableDataProvider extends AbstractGuiTableDataProvider
         $salesOrderItemIds = [];
 
         foreach ($merchantOrderItemCollectionTransfer->getMerchantOrderItems() as $merchantOrderItemTransfer) {
-            /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
-            $itemTransfer = $merchantOrderItemTransfer->requireOrderItem()->getOrderItem();
-            /** @var int $idSalesOrderItem */
-            $idSalesOrderItem = $itemTransfer->requireIdSalesOrderItem()->getIdSalesOrderItem();
+            $itemTransfer = $merchantOrderItemTransfer->getOrderItemOrFail();
+            $idSalesOrderItem = $itemTransfer->getIdSalesOrderItemOrFail();
 
             $responseData = [
                 ItemTransfer::ID_SALES_ORDER_ITEM => $idSalesOrderItem,
@@ -129,22 +127,13 @@ class MerchantOrderItemGuiTableDataProvider extends AbstractGuiTableDataProvider
             $salesOrderItemIds[] = $idSalesOrderItem;
         }
 
-        /** @var \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer */
-        $paginationTransfer = $merchantOrderItemCollectionTransfer->requirePagination()->getPagination();
-        /** @var int $page */
-        $page = $paginationTransfer->requirePage()->getPage();
-        /** @var int $maxPerPage */
-        $maxPerPage = $paginationTransfer->requireMaxPerPage()->getMaxPerPage();
-        /** @var int $total */
-        $total = $paginationTransfer->requireNbResults()->getNbResults();
-
+        $paginationTransfer = $merchantOrderItemCollectionTransfer->getPaginationOrFail();
         $guiTableDataResponseTransfer = $guiTableDataResponseTransfer
-            ->setPage($page)
-            ->setPageSize($maxPerPage)
-            ->setTotal($total);
-        $guiTableDataResponseTransfer = $this->expandDataResponse($guiTableDataResponseTransfer, $salesOrderItemIds);
+            ->setPage($paginationTransfer->getPageOrFail())
+            ->setPageSize($paginationTransfer->getMaxPerPageOrFail())
+            ->setTotal($paginationTransfer->getNbResultsOrFail());
 
-        return $guiTableDataResponseTransfer;
+        return $this->expandDataResponse($guiTableDataResponseTransfer, $salesOrderItemIds);
     }
 
     /**
@@ -195,7 +184,7 @@ class MerchantOrderItemGuiTableDataProvider extends AbstractGuiTableDataProvider
 
         $indexedItemTransfers = [];
         foreach ($itemCollectionTransfer->getItems() as $itemTransfer) {
-            $indexedItemTransfers[$itemTransfer->getIdSalesOrderItem()] = $itemTransfer;
+            $indexedItemTransfers[$itemTransfer->getIdSalesOrderItemOrFail()] = $itemTransfer;
         }
 
         foreach ($guiTableDataResponseTransfer->getRows() as $guiTableRowDataResponseTransfer) {

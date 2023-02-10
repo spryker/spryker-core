@@ -15,7 +15,7 @@ abstract class AbstractPriceProductMergeStrategy implements PriceProductMergeStr
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToPriceProductServiceInterface
      */
-    protected $priceProductService;
+    protected ProductMerchantPortalGuiToPriceProductServiceInterface $priceProductService;
 
     /**
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToPriceProductServiceInterface $priceProductService
@@ -33,16 +33,6 @@ abstract class AbstractPriceProductMergeStrategy implements PriceProductMergeStr
     protected function isNewPriceProductTransfer(PriceProductTransfer $priceProductTransfer): bool
     {
         return $priceProductTransfer->getIdPriceProduct() === null;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     *
-     * @return bool
-     */
-    protected function isBasePriceProduct(PriceProductTransfer $priceProductTransfer): bool
-    {
-        return $priceProductTransfer->getVolumeQuantityOrFail() === 0;
     }
 
     /**

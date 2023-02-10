@@ -15,7 +15,7 @@ class ValidationResponseTranslator implements ValidationResponseTranslatorInterf
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToTranslatorFacadeInterface
      */
-    protected $translatorFacade;
+    protected ProductOfferMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade;
 
     /**
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade

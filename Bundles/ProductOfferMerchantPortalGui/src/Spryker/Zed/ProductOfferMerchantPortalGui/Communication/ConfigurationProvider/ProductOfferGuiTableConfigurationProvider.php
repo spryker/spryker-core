@@ -129,17 +129,17 @@ class ProductOfferGuiTableConfigurationProvider implements GuiTableConfiguration
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToStoreFacadeInterface
      */
-    protected $storeFacade;
+    protected ProductOfferMerchantPortalGuiToStoreFacadeInterface $storeFacade;
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToTranslatorFacadeInterface
      */
-    protected $translatorFacade;
+    protected ProductOfferMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade;
 
     /**
      * @var \Spryker\Shared\GuiTable\GuiTableFactoryInterface
      */
-    protected $guiTableFactory;
+    protected GuiTableFactoryInterface $guiTableFactory;
 
     /**
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToStoreFacadeInterface $storeFacade

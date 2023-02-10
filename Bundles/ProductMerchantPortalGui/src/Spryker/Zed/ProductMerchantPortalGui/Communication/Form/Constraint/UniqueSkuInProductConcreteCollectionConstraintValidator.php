@@ -39,8 +39,8 @@ class UniqueSkuInProductConcreteCollectionConstraintValidator extends AbstractCo
     /**
      * Checks if SKUs are unique in collection and do not exist in DB.
      *
-     * @param array<mixed> $value
-     * @param \Symfony\Component\Validator\Constraint|\Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Constraint\UniqueSkuInProductConcreteCollectionConstraint $constraint
+     * @param mixed|array<mixed> $value
+     * @param \Symfony\Component\Validator\Constraint $constraint
      *
      * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException
      *
@@ -77,7 +77,7 @@ class UniqueSkuInProductConcreteCollectionConstraintValidator extends AbstractCo
         );
 
         foreach ($productConcreteTransfers as $productConcreteTransfer) {
-            if (!isset($skuIndexes[$productConcreteTransfer->getSku()])) {
+            if (!isset($skuIndexes[$productConcreteTransfer->getSkuOrFail()])) {
                 continue;
             }
 
@@ -85,7 +85,7 @@ class UniqueSkuInProductConcreteCollectionConstraintValidator extends AbstractCo
                 ->buildViolation($constraint->getMessageValueExists())
                 ->atPath(sprintf(
                     static::PROPERTY_PATH_TEMPLATE,
-                    (int)$skuIndexes[$productConcreteTransfer->getSku()],
+                    (int)$skuIndexes[$productConcreteTransfer->getSkuOrFail()],
                     static::PRODUCT_CONCRETE_SUPER_ATTRIBUTE_FORM_FIELD_SKU,
                 ))
                 ->addViolation();

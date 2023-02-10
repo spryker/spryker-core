@@ -71,22 +71,22 @@ class PriceProductGuiTableConfigurationBuilderProvider implements PriceProductGu
     /**
      * @var \Spryker\Shared\GuiTable\GuiTableFactoryInterface
      */
-    protected $guiTableFactory;
+    protected GuiTableFactoryInterface $guiTableFactory;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeInterface
      */
-    protected $priceProductFacade;
+    protected ProductMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\StoreFilterOptionsProviderInterface
      */
-    protected $storeFilterOptionsProvider;
+    protected StoreFilterOptionsProviderInterface $storeFilterOptionsProvider;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\CurrencyFilterConfigurationProviderInterface
      */
-    protected $currencyFilterConfigurationProvider;
+    protected CurrencyFilterConfigurationProviderInterface $currencyFilterConfigurationProvider;
 
     /**
      * @param \Spryker\Shared\GuiTable\GuiTableFactoryInterface $guiTableFactory
@@ -275,7 +275,7 @@ class PriceProductGuiTableConfigurationBuilderProvider implements PriceProductGu
     }
 
     /**
-     * @return array<mixed>
+     * @return array<string, int>
      */
     protected function getVolumeQuantityColumnOptions(): array
     {

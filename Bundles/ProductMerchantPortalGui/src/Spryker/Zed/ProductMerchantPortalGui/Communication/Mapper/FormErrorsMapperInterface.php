@@ -13,9 +13,9 @@ interface FormErrorsMapperInterface
 {
     /**
      * @param \Symfony\Component\Form\FormInterface<mixed> $addProductConcreteForm
-     * @param array<mixed> $errors
+     * @param array<int, mixed> $errors
      *
-     * @return array<mixed>
+     * @return array<int, mixed>
      */
     public function mapAddProductConcreteFormErrorsToErrorsData(
         FormInterface $addProductConcreteForm,
@@ -24,9 +24,9 @@ interface FormErrorsMapperInterface
 
     /**
      * @param \Symfony\Component\Form\FormInterface<mixed> $addProductConcreteForm
-     * @param array<mixed> $errors
+     * @param array<int, mixed> $errors
      *
-     * @return array<mixed>
+     * @return array<int, mixed>
      */
     public function mapAddProductConcreteFormAttributesErrorsToErrorsData(
         FormInterface $addProductConcreteForm,

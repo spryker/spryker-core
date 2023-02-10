@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductMerchantPortalGui;
 
 use Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery;
-use Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery;
 use Orm\Zed\ProductImage\Persistence\SpyProductImageQuery;
@@ -191,11 +190,6 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
     /**
      * @var string
      */
-    public const PROPEL_QUERY_PRICE_PRODUCT_DEFAULT = 'PROPEL_QUERY_PRICE_PRODUCT_DEFAULT';
-
-    /**
-     * @var string
-     */
     public const PLUGINS_PRODUCT_ABSTRACT_FORM_EXPANDER = 'PLUGINS_PRODUCT_ABSTRACT_FORM_EXPANDER';
 
     /**
@@ -285,7 +279,6 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
         $container = $this->addProductConcretePropelQuery($container);
         $container = $this->addStorePropelQuery($container);
         $container = $this->addProductCategoryPropelQuery($container);
-        $container = $this->addPriceProductDefaultPropelQuery($container);
         $container = $this->addUtilEncodingService($container);
         $container = $this->addPriceProductFacade($container);
 
@@ -709,20 +702,6 @@ class ProductMerchantPortalGuiDependencyProvider extends AbstractBundleDependenc
     {
         $container->set(static::PROPEL_QUERY_PRODUCT_CATEGORY, $container->factory(function () {
             return SpyProductCategoryQuery::create();
-        }));
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addPriceProductDefaultPropelQuery(Container $container): Container
-    {
-        $container->set(static::PROPEL_QUERY_PRICE_PRODUCT_DEFAULT, $container->factory(function () {
-            return SpyPriceProductDefaultQuery::create();
         }));
 
         return $container;

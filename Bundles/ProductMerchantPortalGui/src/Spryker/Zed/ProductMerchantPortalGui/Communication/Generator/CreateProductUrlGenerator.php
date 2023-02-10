@@ -31,13 +31,6 @@ class CreateProductUrlGenerator implements CreateProductUrlGeneratorInterface
     protected const URL_WITH_MULTI_CONCRETE_ACTION = '/product-merchant-portal-gui/create-product-abstract/create-with-multi-concrete';
 
     /**
-     * @see \Spryker\Zed\ProductMerchantPortalGui\Communication\Controller\ProductAbstractApprovalController::indexAction()
-     *
-     * @var string
-     */
-    protected const URL_UPDATE_APPROVAL_STATUS = '/product-merchant-portal-gui/product-abstract-approval';
-
-    /**
      * @uses \Spryker\Zed\ProductMerchantPortalGui\Communication\Form\CreateProductAbstractForm::FIELD_NAME
      *
      * @var string
@@ -59,17 +52,7 @@ class CreateProductUrlGenerator implements CreateProductUrlGeneratorInterface
     protected const FIELD_IS_SINGLE_CONCRETE = 'isSingleConcrete';
 
     /**
-     * @var string
-     */
-    protected const FIELD_ID_PRODUCT_ABSTRACT = 'id-product-abstract';
-
-    /**
-     * @var string
-     */
-    protected const FIELD_APPROVAL_STATUS = 'approval-status';
-
-    /**
-     * @param array<mixed> $formData
+     * @param array<string, mixed> $formData
      * @param bool $isSingleConcrete
      *
      * @return string
@@ -111,30 +94,6 @@ class CreateProductUrlGenerator implements CreateProductUrlGeneratorInterface
         return sprintf(
             '%s?%s',
             static::URL_INDEX_ACTION,
-            $getParams,
-        );
-    }
-
-    /**
-     * @deprecated Will be removed without replacement.
-     *
-     * @param string $status
-     * @param int $idProductAbstract
-     *
-     * @return string
-     */
-    public function getUpdateProductAbstractApprovalStatusUrl(string $status, int $idProductAbstract): string
-    {
-        $getParams = http_build_query(
-            [
-                static::FIELD_APPROVAL_STATUS => $status,
-                static::FIELD_ID_PRODUCT_ABSTRACT => $idProductAbstract,
-            ],
-        );
-
-        return sprintf(
-            '%s?%s',
-            static::URL_UPDATE_APPROVAL_STATUS,
             $getParams,
         );
     }

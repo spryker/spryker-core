@@ -26,7 +26,7 @@ class UniqueEmailValidator extends AbstractConstraintValidator
     /**
      * Checks if the passed email is unique.
      *
-     * @param string $value
+     * @param mixed|string $value
      * @param \Symfony\Component\Validator\Constraint $constraint
      *
      * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException

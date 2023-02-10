@@ -59,7 +59,7 @@ class ProductImageSetsEventSubscriber implements EventSubscriberInterface
     protected const FIELD_ORIGINAL_INDEX = 'originalIndex';
 
     /**
-     * @return array<string>
+     * @return array<string, string>
      */
     public static function getSubscribedEvents(): array
     {
@@ -95,9 +95,9 @@ class ProductImageSetsEventSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param array $imageSetsFront
+     * @param array<array<string, mixed>> $imageSetsFront
      *
-     * @return array
+     * @return array<array<string, mixed>>
      */
     protected function findNewImageSets(array $imageSetsFront): array
     {
@@ -123,9 +123,9 @@ class ProductImageSetsEventSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param array $imageSetsFront
+     * @param array<array<string, mixed>> $imageSetsFront
      *
-     * @return array
+     * @return array<array<string, mixed>>
      */
     protected function findOldImageSetsIndexedByOriginalIndex(array $imageSetsFront): array
     {
@@ -152,9 +152,9 @@ class ProductImageSetsEventSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @param array $imageSetsData
+     * @param array<string, mixed> $imageSetsData
      *
-     * @return array
+     * @return array<mixed>
      */
     protected function parseFrontendImageSetsData(array $imageSetsData): array
     {

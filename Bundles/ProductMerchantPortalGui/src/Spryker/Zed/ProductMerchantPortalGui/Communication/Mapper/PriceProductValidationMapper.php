@@ -23,17 +23,17 @@ class PriceProductValidationMapper implements PriceProductValidationMapperInterf
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Communication\Creator\PriceProductTableColumnCreatorInterface
      */
-    protected $priceProductTableColumnCreator;
+    protected PriceProductTableColumnCreatorInterface $priceProductTableColumnCreator;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Communication\Matcher\PriceProductTableRowMatcherInterface
      */
-    protected $priceProductTableRowMatcher;
+    protected PriceProductTableRowMatcherInterface $priceProductTableRowMatcher;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToTranslatorFacadeInterface
      */
-    protected $translatorFacade;
+    protected ProductMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade;
 
     /**
      * @param \Spryker\Zed\ProductMerchantPortalGui\Communication\Creator\PriceProductTableColumnCreatorInterface $priceProductTableColumnCreator
@@ -53,9 +53,9 @@ class PriceProductValidationMapper implements PriceProductValidationMapperInterf
     /**
      * @param \Generated\Shared\Transfer\ValidationResponseTransfer $validationResponseTransfer
      * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
-     * @param array<mixed> $initialData
+     * @param array<string, mixed> $initialData
      *
-     * @return array<mixed>
+     * @return array<string, mixed>
      */
     public function mapValidationResponseTransferToInitialData(
         ValidationResponseTransfer $validationResponseTransfer,
@@ -80,9 +80,9 @@ class PriceProductValidationMapper implements PriceProductValidationMapperInterf
     /**
      * @param \Generated\Shared\Transfer\ValidationErrorTransfer $validationErrorTransfer
      * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
-     * @param array<mixed> $initialData
+     * @param array<string, mixed> $initialData
      *
-     * @return array<mixed>
+     * @return array<string, mixed>
      */
     protected function addValidationErrorToInitialData(
         ValidationErrorTransfer $validationErrorTransfer,
@@ -143,20 +143,18 @@ class PriceProductValidationMapper implements PriceProductValidationMapperInterf
     {
         $propertyPath = str_replace('[', '', $propertyPath);
         $propertyPathValues = explode(']', $propertyPath);
-        $propertyPathValues = array_filter($propertyPathValues, function (string $pathValue) {
-            return $pathValue !== '' && $pathValue !== null;
-        });
-
         if (!is_array($propertyPathValues)) {
             return [];
         }
 
-        return $propertyPathValues;
+        return array_filter($propertyPathValues, function (string $pathValue) {
+            return $pathValue !== '';
+        });
     }
 
     /**
      * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
-     * @param array<mixed> $propertyPath
+     * @param array<string> $propertyPath
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
@@ -164,7 +162,7 @@ class PriceProductValidationMapper implements PriceProductValidationMapperInterf
         ArrayObject $priceProductTransfers,
         array $propertyPath
     ): ?PriceProductTransfer {
-        $priceProductIndex = $propertyPath[0];
+        $priceProductIndex = (int)$propertyPath[0];
 
         if ($priceProductTransfers->offsetExists($priceProductIndex)) {
             return $priceProductTransfers->offsetGet($priceProductIndex);

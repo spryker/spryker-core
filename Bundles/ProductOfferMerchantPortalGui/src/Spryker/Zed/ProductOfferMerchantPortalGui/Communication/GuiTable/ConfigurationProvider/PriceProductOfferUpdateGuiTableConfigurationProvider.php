@@ -43,21 +43,6 @@ class PriceProductOfferUpdateGuiTableConfigurationProvider extends AbstractPrice
     protected const TITLE_ROW_ACTION_DELETE = 'Delete';
 
     /**
-     * @var string
-     */
-    protected const TITLE_ADD_BUTTON = 'Save';
-
-    /**
-     * @var string
-     */
-    protected const TITLE_CANCEL_BUTTON = 'Cancel';
-
-    /**
-     * @var string
-     */
-    protected const METHOD_UPDATE_ACTION_URL = 'POST';
-
-    /**
      * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller\UpdateProductOfferController::PARAM_ID_PRODUCT_OFFER
      *
      * @var string
@@ -198,7 +183,7 @@ class PriceProductOfferUpdateGuiTableConfigurationProvider extends AbstractPrice
 
         $urlSavePrices = sprintf(static::URL_SAVE_PRICES, $this->idProductOffer);
 
-        $guiTableConfigurationBuilder->enableInlineDataEditing($urlSavePrices, static::METHOD_UPDATE_ACTION_URL);
+        $guiTableConfigurationBuilder->enableInlineDataEditing($urlSavePrices);
 
         return $guiTableConfigurationBuilder;
     }

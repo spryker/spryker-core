@@ -50,7 +50,7 @@ class MerchantUserProvider extends AbstractPlugin implements UserProviderInterfa
      *
      * @return \Symfony\Component\Security\Core\User\UserInterface
      */
-    public function loadUserByUsername($username)
+    public function loadUserByUsername(string $username): UserInterface
     {
         $merchantUserTransfer = $this->findMerchantUser($username);
 
@@ -75,7 +75,7 @@ class MerchantUserProvider extends AbstractPlugin implements UserProviderInterfa
      *
      * @return \Symfony\Component\Security\Core\User\UserInterface
      */
-    public function refreshUser(UserInterface $user)
+    public function refreshUser(UserInterface $user): UserInterface
     {
         if (!$user instanceof MerchantUser) {
             return $user;
@@ -95,7 +95,7 @@ class MerchantUserProvider extends AbstractPlugin implements UserProviderInterfa
      *
      * @return bool
      */
-    public function supportsClass($class)
+    public function supportsClass(string $class): bool
     {
         return is_a($class, MerchantUser::class, true);
     }

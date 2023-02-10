@@ -18,7 +18,7 @@ class LoginController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array<string, mixed>
      */
     public function indexAction(Request $request)
     {

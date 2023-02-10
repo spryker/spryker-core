@@ -1,11 +1,10 @@
 import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-
 import { EditAbstractProductComponent } from './edit-abstract-product.component';
 
 @Component({
-    selector: 'spy-test',
+    selector: 'mp-test',
     template: `
         <mp-edit-abstract-product [product]="product">
             <span title class="projected-title">Title</span>

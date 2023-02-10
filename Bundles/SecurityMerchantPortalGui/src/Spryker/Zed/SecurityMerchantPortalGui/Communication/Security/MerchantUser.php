@@ -14,22 +14,22 @@ class MerchantUser implements MerchantUserInterface
     /**
      * @var \Generated\Shared\Transfer\MerchantUserTransfer
      */
-    protected $merchantUserTransfer;
+    protected MerchantUserTransfer $merchantUserTransfer;
 
     /**
      * @var string
      */
-    protected $username;
+    protected string $username;
 
     /**
      * @var string|null
      */
-    protected $password;
+    protected ?string $password;
 
     /**
      * @var array<string>
      */
-    protected $roles = [];
+    protected array $roles = [];
 
     /**
      * @param \Generated\Shared\Transfer\MerchantUserTransfer $merchantUserTransfer
@@ -37,14 +37,10 @@ class MerchantUser implements MerchantUserInterface
      */
     public function __construct(MerchantUserTransfer $merchantUserTransfer, array $roles = [])
     {
-        $merchantUserTransfer->requireUser();
         $this->merchantUserTransfer = $merchantUserTransfer;
 
-        /** @var \Generated\Shared\Transfer\UserTransfer $userTransfer */
-        $userTransfer = $merchantUserTransfer->getUser();
-        /** @var string $username */
-        $username = $userTransfer->requireUsername()->getUsername();
-        $this->username = $username;
+        $userTransfer = $merchantUserTransfer->getUserOrFail();
+        $this->username = $userTransfer->getUsernameOrFail();
         $this->password = $userTransfer->getPassword();
         $this->roles = $roles;
     }
@@ -52,7 +48,7 @@ class MerchantUser implements MerchantUserInterface
     /**
      * @return array<string>
      */
-    public function getRoles()
+    public function getRoles(): array
     {
         return $this->roles;
     }
@@ -60,7 +56,7 @@ class MerchantUser implements MerchantUserInterface
     /**
      * @return string|null
      */
-    public function getSalt()
+    public function getSalt(): ?string
     {
         return null;
     }
@@ -68,7 +64,7 @@ class MerchantUser implements MerchantUserInterface
     /**
      * @return string
      */
-    public function getUsername()
+    public function getUsername(): string
     {
         return $this->username;
     }
@@ -76,7 +72,7 @@ class MerchantUser implements MerchantUserInterface
     /**
      * @return string|null
      */
-    public function getPassword()
+    public function getPassword(): ?string
     {
         return $this->password;
     }
@@ -84,7 +80,7 @@ class MerchantUser implements MerchantUserInterface
     /**
      * @return void
      */
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
     }
 

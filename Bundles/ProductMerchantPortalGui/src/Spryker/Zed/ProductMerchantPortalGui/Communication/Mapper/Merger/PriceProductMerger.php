@@ -15,7 +15,7 @@ class PriceProductMerger implements PriceProductMergerInterface
     /**
      * @var array<\Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\Merger\MergeStrategy\PriceProductMergeStrategyInterface>
      */
-    protected $mergeStrategies;
+    protected array $mergeStrategies;
 
     /**
      * @param array<\Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\Merger\MergeStrategy\PriceProductMergeStrategyInterface> $mergeStrategies
@@ -34,7 +34,7 @@ class PriceProductMerger implements PriceProductMergerInterface
     public function mergePriceProducts(
         PriceProductTransfer $newPriceProductTransfer,
         ArrayObject $priceProductTransfers
-    ) {
+    ): ArrayObject {
         foreach ($this->mergeStrategies as $mergeStrategy) {
             if ($mergeStrategy->isApplicable($newPriceProductTransfer, $priceProductTransfers)) {
                 return $mergeStrategy->merge($newPriceProductTransfer, $priceProductTransfers);

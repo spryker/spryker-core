@@ -93,7 +93,7 @@ class CreateProductAbstractWithSingleConcreteForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
-     * @param array<mixed> $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -109,7 +109,7 @@ class CreateProductAbstractWithSingleConcreteForm extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      *
      * @return $this
      */
@@ -128,7 +128,7 @@ class CreateProductAbstractWithSingleConcreteForm extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      *
      * @return $this
      */
@@ -145,7 +145,7 @@ class CreateProductAbstractWithSingleConcreteForm extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      *
      * @return $this
      */
@@ -168,7 +168,7 @@ class CreateProductAbstractWithSingleConcreteForm extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      *
      * @return $this
      */
@@ -189,7 +189,7 @@ class CreateProductAbstractWithSingleConcreteForm extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      *
      * @return $this
      */
@@ -204,7 +204,7 @@ class CreateProductAbstractWithSingleConcreteForm extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      *
      * @return $this
      */
@@ -219,13 +219,13 @@ class CreateProductAbstractWithSingleConcreteForm extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      *
      * @return void
      */
     protected function addEventListener(FormBuilderInterface $builder): void
     {
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event): void {
             $data = $event->getData();
 
             if ($data[static::FIELD_CONCRETE_SKU] !== $data[static::FIELD_SKU]) {

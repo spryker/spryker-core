@@ -37,12 +37,12 @@ class PriceFieldMapperStrategy extends AbstractFieldMapperStrategy
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToPriceProductVolumeServiceInterface
      */
-    protected $priceProductVolumeService;
+    protected ProductMerchantPortalGuiToPriceProductVolumeServiceInterface $priceProductVolumeService;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMoneyFacadeInterface
      */
-    protected $moneyFacade;
+    protected ProductMerchantPortalGuiToMoneyFacadeInterface $moneyFacade;
 
     /**
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade
@@ -92,7 +92,7 @@ class PriceFieldMapperStrategy extends AbstractFieldMapperStrategy
             $firstPriceProductTransfer = $priceProductTransfers[0];
             $priceProductTransfer = $this->createNewPriceProduct($priceTypeName, $firstPriceProductTransfer);
 
-            $priceProductTransfers[] = $priceProductTransfer;
+            $priceProductTransfers->append($priceProductTransfer);
         }
 
         if ($this->isVolumePriceField($volumeQuantity)) {
@@ -111,7 +111,7 @@ class PriceFieldMapperStrategy extends AbstractFieldMapperStrategy
             $this->mapDataToMoneyValueTransfer($data, $priceProductTransferToReplace->getMoneyValueOrFail());
             $this->priceProductVolumeService->deleteVolumePrice(
                 $priceProductTransfer,
-                (new PriceProductTransfer())->setVolumeQuantity((int)$volumeQuantity),
+                (new PriceProductTransfer())->setVolumeQuantity($volumeQuantity),
             );
 
             $this->priceProductVolumeService->addVolumePrice($priceProductTransfer, $priceProductTransferToReplace);
@@ -175,7 +175,7 @@ class PriceFieldMapperStrategy extends AbstractFieldMapperStrategy
     }
 
     /**
-     * @param array<mixed> $data
+     * @param array<string, mixed> $data
      * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer
      *
      * @return \Generated\Shared\Transfer\MoneyValueTransfer
@@ -210,25 +210,6 @@ class PriceFieldMapperStrategy extends AbstractFieldMapperStrategy
         }
 
         return $this->moneyFacade->convertDecimalToInteger((float)$value);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $volumePriceProductTransfer
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer
-     */
-    protected function createEmptyPriceProduct(PriceProductTransfer $volumePriceProductTransfer): PriceProductTransfer
-    {
-        $priceProductTransfer = (new PriceProductTransfer())
-            ->fromArray($volumePriceProductTransfer->toArray());
-
-        $priceProductTransfer
-            ->setVolumeQuantity(null)
-            ->getMoneyValueOrFail()
-            ->setNetAmount(null)
-            ->setGrossAmount(null);
-
-        return $priceProductTransfer;
     }
 
     /**

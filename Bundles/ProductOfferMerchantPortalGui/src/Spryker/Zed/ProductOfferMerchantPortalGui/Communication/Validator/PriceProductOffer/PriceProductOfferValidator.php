@@ -14,23 +14,24 @@ use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\External\ProductOfferMe
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductOfferFacadeInterface;
 use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class PriceProductOfferValidator implements PriceProductOfferValidatorInterface
 {
     /**
      * @var \Symfony\Component\Validator\Validator\ValidatorInterface
      */
-    protected $validator;
+    protected ValidatorInterface $validator;
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Validator\PriceProductOffer\PriceProductOfferConstraintProviderInterface
      */
-    protected $priceProductOfferConstraintProvider;
+    protected PriceProductOfferConstraintProviderInterface $priceProductOfferConstraintProvider;
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductOfferFacadeInterface
      */
-    protected $priceProductOfferFacade;
+    protected ProductOfferMerchantPortalGuiToPriceProductOfferFacadeInterface $priceProductOfferFacade;
 
     /**
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\External\ProductOfferMerchantPortalGuiToValidationAdapterInterface $validationAdapter
@@ -73,7 +74,7 @@ class PriceProductOfferValidator implements PriceProductOfferValidatorInterface
     }
 
     /**
-     * @param \Symfony\Component\Validator\ConstraintViolationListInterface $constraintViolationList
+     * @param \Symfony\Component\Validator\ConstraintViolationListInterface<\Symfony\Component\Validator\ConstraintViolationInterface> $constraintViolationList
      * @param \Generated\Shared\Transfer\ValidationResponseTransfer $validationResponseTransfer
      *
      * @return \Generated\Shared\Transfer\ValidationResponseTransfer

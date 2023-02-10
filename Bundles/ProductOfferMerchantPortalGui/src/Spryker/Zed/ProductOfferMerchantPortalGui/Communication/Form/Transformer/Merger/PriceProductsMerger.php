@@ -15,7 +15,7 @@ class PriceProductsMerger implements PriceProductsMergerInterface
     /**
      * @var array<\Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\Transformer\Merger\MergeStrategy\PriceProductMergeStrategyInterface>
      */
-    protected $priceProductMergeStrategies;
+    protected array $priceProductMergeStrategies;
 
     /**
      * @param array<\Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\Transformer\Merger\MergeStrategy\PriceProductMergeStrategyInterface> $priceProductMergeStrategies

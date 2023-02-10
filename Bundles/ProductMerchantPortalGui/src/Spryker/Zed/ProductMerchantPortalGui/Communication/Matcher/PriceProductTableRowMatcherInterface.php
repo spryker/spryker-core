@@ -14,7 +14,7 @@ interface PriceProductTableRowMatcherInterface
     /**
      * @param array<mixed> $initialDataRow
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     * @param array $propertyPath
+     * @param array<string> $propertyPath
      *
      * @return bool
      */

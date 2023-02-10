@@ -29,32 +29,32 @@ class ProductOfferPriceGuiTableDataProvider extends AbstractGuiTableDataProvider
     /**
      * @var int|null
      */
-    protected $idProductOffer;
+    protected ?int $idProductOffer;
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface
      */
-    protected $merchantUserFacade;
+    protected ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade;
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMoneyFacadeInterface
      */
-    protected $moneyFacade;
+    protected ProductOfferMerchantPortalGuiToMoneyFacadeInterface $moneyFacade;
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Mapper\PriceProductOfferTableDataMapperInterface
      */
-    protected $priceProductOfferTableDataMapper;
+    protected PriceProductOfferTableDataMapperInterface $priceProductOfferTableDataMapper;
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Reader\PriceProductReaderInterface
      */
-    protected $priceProductReader;
+    protected PriceProductReaderInterface $priceProductReader;
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Sorter\PriceProductOfferTableViewSorterInterface
      */
-    protected $priceProductOfferTableViewSorter;
+    protected PriceProductOfferTableViewSorterInterface $priceProductOfferTableViewSorter;
 
     /**
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade
@@ -180,9 +180,9 @@ class ProductOfferPriceGuiTableDataProvider extends AbstractGuiTableDataProvider
         $count = $priceProductOfferTableViewCollectionTransfer->getPriceProductOfferTableViews()->count();
 
         return $priceProductOfferTableViewCollectionTransfer->getPaginationOrFail()
-            ->setPage($criteriaTransfer->getPage())
-            ->setMaxPerPage($criteriaTransfer->getPageSize())
-            ->setLastPage((int)($count / $criteriaTransfer->getPageSize()));
+            ->setPage($criteriaTransfer->getPageOrFail())
+            ->setMaxPerPage($criteriaTransfer->getPageSizeOrFail())
+            ->setLastPage((int)($count / $criteriaTransfer->getPageSizeOrFail()));
     }
 
     /**
@@ -199,7 +199,7 @@ class ProductOfferPriceGuiTableDataProvider extends AbstractGuiTableDataProvider
 
         $paginationTransfer = $priceProductOfferTableViewCollectionTransfer->getPaginationOrFail();
 
-        $positionStart = ($paginationTransfer->getPage() - 1) * $paginationTransfer->getMaxPerPage();
+        $positionStart = ($paginationTransfer->getPageOrFail() - 1) * $paginationTransfer->getMaxPerPageOrFail();
 
         $priceProductOfferTableViewsOnCurrentPage = array_slice(
             $priceProductOfferTableViews,

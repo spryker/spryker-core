@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\ProductMerchantPortalGui\Communication\Reader;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
+use SprykerTest\Zed\ProductMerchantPortalGui\ProductMerchantPortalGuiCommunicationTester;
 
 /**
  * Auto-generated group annotations
@@ -26,9 +27,11 @@ class PriceProductReaderTest extends Unit
     /**
      * @var \SprykerTest\Zed\ProductMerchantPortalGui\ProductMerchantPortalGuiCommunicationTester
      */
-    protected $tester;
+    protected ProductMerchantPortalGuiCommunicationTester $tester;
 
     /**
+     * @group test
+     *
      * @return void
      */
     public function testGetPriceProductsWithoutPriceExtractionCallsPriceProductFacadeWithOnlyConcretePricesAndWithAllMerchantPricesParams(): void

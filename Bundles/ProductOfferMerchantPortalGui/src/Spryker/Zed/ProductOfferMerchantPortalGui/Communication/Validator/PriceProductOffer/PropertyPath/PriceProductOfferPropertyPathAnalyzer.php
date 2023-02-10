@@ -69,7 +69,7 @@ class PriceProductOfferPropertyPathAnalyzer implements PriceProductOfferProperty
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\Column\ColumnIdCreatorInterface
      */
-    protected $columnIdCreator;
+    protected ColumnIdCreatorInterface $columnIdCreator;
 
     /**
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\Column\ColumnIdCreatorInterface $columnIdCreator
@@ -206,7 +206,7 @@ class PriceProductOfferPropertyPathAnalyzer implements PriceProductOfferProperty
     }
 
     /**
-     * @param array $propertyPathValues
+     * @param array<string> $propertyPathValues
      *
      * @return string|null
      */
@@ -227,7 +227,8 @@ class PriceProductOfferPropertyPathAnalyzer implements PriceProductOfferProperty
         $subTransferProperty = $propertyPathValues[static::PROPERTY_PATH_VALUES_INDEX_MONEY_VALUE] ?? null;
 
         if (
-            stripos($priceProductTransferProperty, PriceProductTransfer::MONEY_VALUE) !== false
+            $priceProductTransferProperty
+            && stripos($priceProductTransferProperty, PriceProductTransfer::MONEY_VALUE) !== false
             && ($subTransferProperty === MoneyValueTransfer::GROSS_AMOUNT || $subTransferProperty === MoneyValueTransfer::NET_AMOUNT)
         ) {
             $priceTypeName = $this->extractPriceTypeNameFromMoneyValue($priceProductTransferProperty);
@@ -243,7 +244,7 @@ class PriceProductOfferPropertyPathAnalyzer implements PriceProductOfferProperty
      *
      * @return string
      */
-    protected function extractPriceTypeNameFromMoneyValue(string $moneyTypeWithPriceTypeName)
+    protected function extractPriceTypeNameFromMoneyValue(string $moneyTypeWithPriceTypeName): string
     {
         [$_, $priceTypeName] = explode(':', $moneyTypeWithPriceTypeName);
 
@@ -251,7 +252,7 @@ class PriceProductOfferPropertyPathAnalyzer implements PriceProductOfferProperty
     }
 
     /**
-     * @param array $propertyPathValues
+     * @param array<string> $propertyPathValues
      *
      * @return string|null
      */
@@ -260,7 +261,7 @@ class PriceProductOfferPropertyPathAnalyzer implements PriceProductOfferProperty
     ): ?string {
         $fieldName = end($propertyPathValues);
 
-        if ($this->isPriceColumn($fieldName)) {
+        if ($fieldName && $this->isPriceColumn($fieldName)) {
             $priceProductTransferProperty = $propertyPathValues[static::PROPERTY_PATH_VALUES_INDEX_PRICE_PRODUCT] ?? '';
             $priceTypeName = $this->extractPriceTypeNameFromMoneyValue($priceProductTransferProperty);
 
@@ -279,10 +280,6 @@ class PriceProductOfferPropertyPathAnalyzer implements PriceProductOfferProperty
     {
         $propertyPath = trim($propertyPath, '[]');
         $propertyPathValues = explode('][', $propertyPath);
-
-        if (!is_array($propertyPathValues)) {
-            return [];
-        }
 
         return $propertyPathValues;
     }

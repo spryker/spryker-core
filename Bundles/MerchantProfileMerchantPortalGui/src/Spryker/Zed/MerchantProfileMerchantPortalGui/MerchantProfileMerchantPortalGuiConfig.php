@@ -17,7 +17,7 @@ class MerchantProfileMerchantPortalGuiConfig extends AbstractBundleConfig
     protected const PREFIX_MERCHANT_PROFILE_URL = 'merchant';
 
     /**
-     * @var array
+     * @var array<string, string>
      */
     protected const SALUTATION_CHOICES = [
         'Ms' => 'Ms',
@@ -29,7 +29,7 @@ class MerchantProfileMerchantPortalGuiConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array<string>
+     * @return array<string, string>
      */
     public function getSalutationChoices(): array
     {

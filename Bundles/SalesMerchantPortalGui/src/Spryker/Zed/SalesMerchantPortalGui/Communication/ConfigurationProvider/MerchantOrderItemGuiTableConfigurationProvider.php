@@ -64,27 +64,27 @@ class MerchantOrderItemGuiTableConfigurationProvider implements MerchantOrderIte
     /**
      * @var \Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMerchantOmsFacadeInterface
      */
-    protected $merchantOmsFacade;
+    protected SalesMerchantPortalGuiToMerchantOmsFacadeInterface $merchantOmsFacade;
 
     /**
      * @var \Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMerchantUserFacadeInterface
      */
-    protected $merchantUserFacade;
+    protected SalesMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade;
 
     /**
      * @var \Spryker\Shared\GuiTable\GuiTableFactoryInterface
      */
-    protected $guiTableFactory;
-
-    /**
-     * @var array<\Spryker\Zed\SalesMerchantPortalGuiExtension\Dependency\Plugin\MerchantOrderItemTableExpanderPluginInterface>
-     */
-    protected $merchantOrderItemTableExpanderPlugins;
+    protected GuiTableFactoryInterface $guiTableFactory;
 
     /**
      * @var \Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToTranslatorFacadeInterface
      */
-    protected $translatorFacade;
+    protected SalesMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade;
+
+    /**
+     * @var array<\Spryker\Zed\SalesMerchantPortalGuiExtension\Dependency\Plugin\MerchantOrderItemTableExpanderPluginInterface>
+     */
+    protected array $merchantOrderItemTableExpanderPlugins;
 
     /**
      * @param \Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMerchantOmsFacadeInterface $merchantOmsFacade
@@ -198,7 +198,7 @@ class MerchantOrderItemGuiTableConfigurationProvider implements MerchantOrderIte
                 $manualEvent,
                 sprintf(
                     '/sales-merchant-portal-gui/trigger-merchant-oms/batch/?merchant-order-id=%d&event-name=%s&merchant-order-ids=[${rowId}]',
-                    $merchantOrderTransfer->getIdMerchantOrder(),
+                    $merchantOrderTransfer->getIdMerchantOrderOrFail(),
                     $manualEvent,
                 ),
             );
@@ -226,7 +226,7 @@ class MerchantOrderItemGuiTableConfigurationProvider implements MerchantOrderIte
                 $manualEvent,
                 sprintf(
                     '/sales-merchant-portal-gui/trigger-merchant-oms/batch/?merchant-order-id=%d&event-name=%s&merchant-order-ids=${rowIds}',
-                    $merchantOrderTransfer->getIdMerchantOrder(),
+                    $merchantOrderTransfer->getIdMerchantOrderOrFail(),
                     $manualEvent,
                 ),
             );

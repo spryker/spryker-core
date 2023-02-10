@@ -13,8 +13,10 @@ coverage:
 
 suites:
     Business:
-        path: Configuration
+        path: .
         actor: GuiTableSharedTester
         modules:
             enabled:
                 - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper

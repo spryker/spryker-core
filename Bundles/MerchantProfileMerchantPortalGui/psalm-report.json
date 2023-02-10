@@ -3,40 +3,17 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 50,
-            "line_to": 50,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantProfileMerchantPortalGui/src/Spryker/Zed/MerchantProfileMerchantPortalGui/Communication/Form/Constraint/UniqueUrlValidator.php",
-            "snippet": "                ->buildViolation(sprintf('Provided URL \"%s\" is already taken.', $value->getUrl()))",
-            "selected_text": "$value->getUrl()",
-            "error_level": 3,
-            "shortcode": 78
-        },
-        {
-            "severity": "info",
             "line_from": 113,
             "line_to": 113,
             "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of Spryker\\Zed\\MerchantProfileMerchantPortalGui\\Communication\\Form\\DataProvider\\MerchantProfileFormDataProvider::addUrlPrefixToUrlTransfer expects ArrayObject<int, Generated\\Shared\\Transfer\\UrlTransfer>, possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\UrlTransfer> provided",
+            "message": "Argument 1 of Spryker\\Zed\\MerchantProfileMerchantPortalGui\\Communication\\Form\\DataProvider\\MerchantProfileFormDataProvider::addUrlPrefixToUrlTransfer expects ArrayObject<int, Generated\\Shared\\Transfer\\UrlTransfer>, but possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\UrlTransfer> provided",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantProfileMerchantPortalGui/src/Spryker/Zed/MerchantProfileMerchantPortalGui/Communication/Form/DataProvider/MerchantProfileFormDataProvider.php",
             "snippet": "                $this->addUrlPrefixToUrlTransfer($merchantProfileUrlCollection, $localeTransfer),",
             "selected_text": "$merchantProfileUrlCollection",
             "error_level": 3,
             "shortcode": 92
-        },
-        {
-            "severity": "info",
-            "line_from": 33,
-            "line_to": 33,
-            "type": "PossiblyNullOperand",
-            "message": "Cannot concatenate with a possibly null null|string",
-            "file_name": "vendor/spryker/spryker/Bundles/MerchantProfileMerchantPortalGui/src/Spryker/Zed/MerchantProfileMerchantPortalGui/Communication/Form/Transformer/MerchantProfileUrlCollectionDataTransformer.php",
-            "snippet": "            $url = preg_replace('#^' . $urlTransfer->getUrlPrefix() . '#i', '', $url);",
-            "selected_text": "$urlTransfer->getUrlPrefix()",
-            "error_level": 1,
-            "shortcode": 80
         }
     ],
-    "deprecation": []
+    "deprecation": [],
+    "count": 1
 }

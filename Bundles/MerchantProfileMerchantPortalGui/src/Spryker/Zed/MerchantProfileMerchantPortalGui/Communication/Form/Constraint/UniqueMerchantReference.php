@@ -24,7 +24,7 @@ class UniqueMerchantReference extends Constraint
     /**
      * @var int|null
      */
-    protected $currentMerchantId;
+    protected ?int $currentMerchantId;
 
     /**
      * @return string

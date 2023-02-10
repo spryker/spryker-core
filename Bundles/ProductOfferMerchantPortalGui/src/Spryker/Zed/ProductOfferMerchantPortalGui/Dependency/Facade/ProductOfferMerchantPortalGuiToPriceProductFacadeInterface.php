@@ -12,5 +12,5 @@ interface ProductOfferMerchantPortalGuiToPriceProductFacadeInterface
     /**
      * @return array<\Generated\Shared\Transfer\PriceTypeTransfer>
      */
-    public function getPriceTypeValues();
+    public function getPriceTypeValues(): array;
 }

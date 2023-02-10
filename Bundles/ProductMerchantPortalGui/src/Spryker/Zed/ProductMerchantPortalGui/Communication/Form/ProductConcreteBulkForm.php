@@ -46,7 +46,7 @@ class ProductConcreteBulkForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
-     * @param array<mixed> $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -127,6 +127,8 @@ class ProductConcreteBulkForm extends AbstractType
                 if ($value !== null) {
                     return new DateTime($value);
                 }
+
+                return null;
             },
             function ($value) {
                 if ($value instanceof DateTime) {

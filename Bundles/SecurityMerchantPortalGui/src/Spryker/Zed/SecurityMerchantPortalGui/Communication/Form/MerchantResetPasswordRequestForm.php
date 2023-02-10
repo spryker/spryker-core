@@ -61,12 +61,12 @@ class MerchantResetPasswordRequestForm extends AbstractType
     protected const BLOCK_PREFIX = 'reset_password';
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      * @param array<string, mixed> $options
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->addEmailField($builder)
             ->addSubmitField($builder);
@@ -81,7 +81,7 @@ class MerchantResetPasswordRequestForm extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      *
      * @return $this
      */
@@ -103,7 +103,7 @@ class MerchantResetPasswordRequestForm extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      *
      * @return $this
      */

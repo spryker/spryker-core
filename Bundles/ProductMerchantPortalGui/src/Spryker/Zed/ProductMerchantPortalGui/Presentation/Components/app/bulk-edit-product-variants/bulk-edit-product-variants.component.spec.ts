@@ -2,13 +2,11 @@ import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { CardModule } from '@spryker/card';
-import { NotificationType } from '@spryker/notification';
-
 import { BulkEditProductVariantsComponent } from './bulk-edit-product-variants.component';
 import { BulkEditProductVariantSections } from './types';
 
 @Component({
-    selector: 'spy-test',
+    selector: 'mp-test',
     template: `
         <mp-bulk-edit-product-variants [sections]="sections" [notificationText]="notificationText">
             <span title class="projected-title"></span>

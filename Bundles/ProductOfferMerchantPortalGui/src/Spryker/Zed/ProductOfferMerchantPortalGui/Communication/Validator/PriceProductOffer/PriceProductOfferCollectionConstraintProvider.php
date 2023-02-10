@@ -12,7 +12,7 @@ class PriceProductOfferCollectionConstraintProvider implements PriceProductOffer
     /**
      * @var array<\Symfony\Component\Validator\Constraint>
      */
-    protected $priceProductOfferCollectionTransferConstraints;
+    protected array $priceProductOfferCollectionTransferConstraints;
 
     /**
      * @param array<\Symfony\Component\Validator\Constraint> $priceProductOfferCollectionTransferConstraints

@@ -25,7 +25,7 @@ class SecurityTokenUpdater implements SecurityTokenUpdaterInterface
     /**
      * @var \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface
      */
-    protected $tokenStorageService;
+    protected TokenStorageInterface $tokenStorageService;
 
     /**
      * @param \Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface $tokenStorageService
@@ -72,7 +72,6 @@ class SecurityTokenUpdater implements SecurityTokenUpdaterInterface
     {
         return new UsernamePasswordToken(
             $merchantUser,
-            $merchantUser->getPassword(),
             static::SECURITY_FIREWALL_NAME,
             [SecurityMerchantPortalGuiConfig::ROLE_MERCHANT_USER],
         );

@@ -14,7 +14,7 @@ use Symfony\Component\Form\DataTransformerInterface;
 class StoresTransformer implements DataTransformerInterface
 {
     /**
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\StoreTransfer>|null $value
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\StoreTransfer>|mixed $value
      *
      * @return array<int>|null
      */
@@ -27,8 +27,7 @@ class StoresTransformer implements DataTransformerInterface
         $storeIds = [];
 
         foreach ($value as $storeTransfer) {
-            /** @var int $idStore */
-            $idStore = $storeTransfer->requireIdStore()->getIdStore();
+            $idStore = $storeTransfer->getIdStoreOrFail();
             $storeIds[] = $idStore;
         }
 
@@ -36,7 +35,7 @@ class StoresTransformer implements DataTransformerInterface
     }
 
     /**
-     * @param array<int>|null $value
+     * @param mixed|array<int>|null $value
      *
      * @return \ArrayObject<int, \Generated\Shared\Transfer\StoreTransfer>|null
      */

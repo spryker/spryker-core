@@ -93,7 +93,7 @@ class ProductAttributeDataProvider implements ProductAttributeDataProviderInterf
                 ];
             }
 
-            $data[$attributeName][$localizedAttributesTransfer->getLocaleOrFail()->getLocaleName()] = $value;
+            $data[$attributeName][$localizedAttributesTransfer->getLocaleOrFail()->getLocaleNameOrFail()] = $value;
         }
 
         return $data;

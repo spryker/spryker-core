@@ -26,12 +26,12 @@ class NavigationComponentConfigFunctionProvider extends TwigFunctionProvider
     /**
      * @var \Spryker\Zed\ZedUi\Dependency\Service\ZedUiToUtilEncodingServiceInterface
      */
-    protected $utilEncodingService;
+    protected ZedUiToUtilEncodingServiceInterface $utilEncodingService;
 
     /**
      * @var \Spryker\Zed\ZedUi\Dependency\Facade\ZedUiToTranslatorFacadeInterface
      */
-    protected $translatorFacade;
+    protected ZedUiToTranslatorFacadeInterface $translatorFacade;
 
     /**
      * @param \Spryker\Zed\ZedUi\Dependency\Service\ZedUiToUtilEncodingServiceInterface $utilEncodingService
@@ -66,7 +66,7 @@ class NavigationComponentConfigFunctionProvider extends TwigFunctionProvider
     }
 
     /**
-     * @param array $navigationItems
+     * @param array<array<string, mixed>> $navigationItems
      *
      * @return array<\Spryker\Zed\ZedUi\Communication\Twig\NavigationItem>
      */
@@ -112,7 +112,7 @@ class NavigationComponentConfigFunctionProvider extends TwigFunctionProvider
     /**
      * @param array<string, mixed> $navigationItem
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function getNavigationItemSubItems(array $navigationItem): array
     {

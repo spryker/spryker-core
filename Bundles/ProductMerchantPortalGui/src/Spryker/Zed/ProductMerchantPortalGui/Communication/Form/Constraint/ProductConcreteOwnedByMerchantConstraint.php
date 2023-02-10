@@ -21,12 +21,12 @@ class ProductConcreteOwnedByMerchantConstraint extends SymfonyConstraint
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantUserFacadeInterface
      */
-    protected $merchantUserFacade;
+    protected ProductMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantProductFacadeInterface
      */
-    protected $merchantProductFacade;
+    protected ProductMerchantPortalGuiToMerchantProductFacadeInterface $merchantProductFacade;
 
     /**
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade
@@ -36,7 +36,7 @@ class ProductConcreteOwnedByMerchantConstraint extends SymfonyConstraint
     public function __construct(
         ProductMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade,
         ProductMerchantPortalGuiToMerchantProductFacadeInterface $merchantProductFacade,
-        $options = null
+        ?array $options = null
     ) {
         $this->merchantUserFacade = $merchantUserFacade;
         $this->merchantProductFacade = $merchantProductFacade;

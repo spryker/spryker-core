@@ -10,6 +10,12 @@ namespace SprykerTest\Shared\GuiTable;
 use Codeception\Actor;
 use Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilder;
 use Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface;
+use Spryker\Shared\GuiTable\Dependency\Service\GuiTableToUtilDateTimeServiceBridge;
+use Spryker\Shared\GuiTable\Dependency\Service\GuiTableToUtilDateTimeServiceInterface;
+use Spryker\Shared\GuiTable\Http\DataResponse\DataResponseFormatter;
+use Spryker\Shared\GuiTable\Http\DataResponse\DataResponseFormatterInterface;
+use Spryker\Shared\GuiTable\Normalizer\DateRangeRequestFilterValueNormalizer;
+use Spryker\Shared\GuiTable\Normalizer\DateRangeRequestFilterValueNormalizerInterface;
 
 /**
  * Inherited Methods
@@ -37,5 +43,29 @@ class GuiTableSharedTester extends Actor
     public function createGuiTableConfigurationBuilder(): GuiTableConfigurationBuilderInterface
     {
         return new GuiTableConfigurationBuilder();
+    }
+
+    /**
+     * @return \Spryker\Shared\GuiTable\Normalizer\DateRangeRequestFilterValueNormalizerInterface
+     */
+    public function createDateRangeRequestFilterValueNormalizer(): DateRangeRequestFilterValueNormalizerInterface
+    {
+        return new DateRangeRequestFilterValueNormalizer();
+    }
+
+    /**
+     * @return \Spryker\Shared\GuiTable\Http\DataResponse\DataResponseFormatterInterface
+     */
+    public function createDataResponseFormatter(): DataResponseFormatterInterface
+    {
+        return new DataResponseFormatter($this->createGuiTableToUtilDateTimeServiceBridge());
+    }
+
+    /**
+     * @return \Spryker\Shared\GuiTable\Dependency\Service\GuiTableToUtilDateTimeServiceInterface
+     */
+    protected function createGuiTableToUtilDateTimeServiceBridge(): GuiTableToUtilDateTimeServiceInterface
+    {
+        return new GuiTableToUtilDateTimeServiceBridge($this->getLocator()->utilDateTime()->service());
     }
 }

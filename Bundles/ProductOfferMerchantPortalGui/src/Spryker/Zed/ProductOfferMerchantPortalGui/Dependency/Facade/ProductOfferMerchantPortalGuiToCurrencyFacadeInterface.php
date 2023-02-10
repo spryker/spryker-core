@@ -14,7 +14,7 @@ interface ProductOfferMerchantPortalGuiToCurrencyFacadeInterface
     /**
      * @return array<\Generated\Shared\Transfer\StoreWithCurrencyTransfer>
      */
-    public function getAllStoresWithCurrencies();
+    public function getAllStoresWithCurrencies(): array;
 
     /**
      * @param string $isoCode
@@ -30,5 +30,5 @@ interface ProductOfferMerchantPortalGuiToCurrencyFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function getByIdCurrency($idCurrency);
+    public function getByIdCurrency(int $idCurrency): CurrencyTransfer;
 }

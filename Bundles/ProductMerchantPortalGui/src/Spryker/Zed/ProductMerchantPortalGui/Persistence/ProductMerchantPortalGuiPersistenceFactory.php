@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductMerchantPortalGui\Persistence;
 
 use Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery;
-use Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery;
 use Orm\Zed\ProductImage\Persistence\SpyProductImageQuery;
@@ -89,14 +88,6 @@ class ProductMerchantPortalGuiPersistenceFactory extends AbstractPersistenceFact
     public function getProductCategoryPropelQuery(): SpyProductCategoryQuery
     {
         return $this->getProvidedDependency(ProductMerchantPortalGuiDependencyProvider::PROPEL_QUERY_PRODUCT_CATEGORY);
-    }
-
-    /**
-     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery<\Orm\Zed\PriceProduct\Persistence\SpyPriceProductDefaultQuery>
-     */
-    public function getPriceProductDefaultPropelQuery(): SpyPriceProductDefaultQuery
-    {
-        return $this->getProvidedDependency(ProductMerchantPortalGuiDependencyProvider::PROPEL_QUERY_PRICE_PRODUCT_DEFAULT);
     }
 
     /**

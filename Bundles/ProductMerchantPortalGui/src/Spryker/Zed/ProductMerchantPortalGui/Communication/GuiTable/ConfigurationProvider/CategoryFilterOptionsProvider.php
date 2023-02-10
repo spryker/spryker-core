@@ -21,17 +21,17 @@ class CategoryFilterOptionsProvider implements CategoryFilterOptionsProviderInte
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToCategoryFacadeInterface
      */
-    protected $categoryFacade;
+    protected ProductMerchantPortalGuiToCategoryFacadeInterface $categoryFacade;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToLocaleFacadeInterface
      */
-    protected $localeFacade;
+    protected ProductMerchantPortalGuiToLocaleFacadeInterface $localeFacade;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\ProductMerchantPortalGuiConfig
      */
-    protected $productMerchantPortalGuiConfig;
+    protected ProductMerchantPortalGuiConfig $productMerchantPortalGuiConfig;
 
     /**
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToCategoryFacadeInterface $categoryFacade

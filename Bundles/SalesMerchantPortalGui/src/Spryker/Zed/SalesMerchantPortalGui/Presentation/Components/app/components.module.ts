@@ -3,7 +3,6 @@ import { WebComponentsModule } from '@spryker/web-components';
 import { ButtonAjaxComponent, ButtonAjaxModule } from '@spryker/button';
 import { ChipsComponent, ChipsModule } from '@spryker/chips';
 import { CardModule, CardComponent } from '@spryker/card';
-import { CollapsibleComponent, CollapsibleModule } from '@spryker/collapsible';
 import { TabsModule, TabsComponent, TabComponent } from '@spryker/tabs';
 
 import { SalesOrdersComponent } from './sales-orders/sales-orders.component';

@@ -12,5 +12,5 @@ interface SalesMerchantPortalGuiToStoreFacadeInterface
     /**
      * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
-    public function getAllStores();
+    public function getAllStores(): array;
 }

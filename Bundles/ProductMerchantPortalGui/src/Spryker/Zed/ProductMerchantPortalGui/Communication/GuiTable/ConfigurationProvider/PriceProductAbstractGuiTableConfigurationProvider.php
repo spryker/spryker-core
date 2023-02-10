@@ -76,12 +76,12 @@ class PriceProductAbstractGuiTableConfigurationProvider implements PriceProductA
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ConfigurationBuilderProvider\PriceProductGuiTableConfigurationBuilderProviderInterface
      */
-    protected $priceProductGuiTableConfigurationBuilderProvider;
+    protected PriceProductGuiTableConfigurationBuilderProviderInterface $priceProductGuiTableConfigurationBuilderProvider;
 
     /**
      * @var array<\Spryker\Zed\ProductMerchantPortalGuiExtension\Dependency\Plugin\PriceProductAbstractTableConfigurationExpanderPluginInterface>
      */
-    protected $priceProductAbstractTableConfigurationExpanderPlugins;
+    protected array $priceProductAbstractTableConfigurationExpanderPlugins;
 
     /**
      * @param \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ConfigurationBuilderProvider\PriceProductGuiTableConfigurationBuilderProviderInterface $priceProductGuiTableConfigurationBuilderProvider
@@ -97,7 +97,7 @@ class PriceProductAbstractGuiTableConfigurationProvider implements PriceProductA
 
     /**
      * @param int $idProductAbstract
-     * @param array<mixed> $initialData
+     * @param array<string, array<string, mixed>> $initialData
      *
      * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
      */
@@ -139,7 +139,7 @@ class PriceProductAbstractGuiTableConfigurationProvider implements PriceProductA
 
         $guiTableConfigurationBuilder->setDataSourceUrl($dataSourceUrl)
             ->addRowActionHttp(static::ID_ROW_ACTION_URL_DELETE_PRICE, static::TITLE_ROW_ACTION_DELETE, $deletePriceUrl)
-            ->enableInlineDataEditing($savePricesUrl, 'POST')
+            ->enableInlineDataEditing($savePricesUrl)
             ->enableAddingNewRows(
                 $formInputName,
                 $initialData,

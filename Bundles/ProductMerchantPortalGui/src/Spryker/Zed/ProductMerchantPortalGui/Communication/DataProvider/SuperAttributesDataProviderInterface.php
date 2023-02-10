@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider;
 interface SuperAttributesDataProviderInterface
 {
     /**
-     * @return array
+     * @return array<array<string, mixed>>
      */
     public function getSuperAttributes(): array;
 }

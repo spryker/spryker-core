@@ -25,22 +25,22 @@ class MerchantProfileFormDataProvider implements MerchantProfileFormDataProvider
     /**
      * @var \Spryker\Zed\MerchantProfileMerchantPortalGui\MerchantProfileMerchantPortalGuiConfig
      */
-    protected $merchantProfileMerchantPortalGuiConfig;
+    protected MerchantProfileMerchantPortalGuiConfig $merchantProfileMerchantPortalGuiConfig;
 
     /**
      * @var \Spryker\Zed\MerchantProfileMerchantPortalGui\Dependency\Facade\MerchantProfileMerchantPortalGuiToMerchantFacadeInterface
      */
-    protected $merchantFacade;
+    protected MerchantProfileMerchantPortalGuiToMerchantFacadeInterface $merchantFacade;
 
     /**
      * @var \Spryker\Zed\MerchantProfileMerchantPortalGui\Dependency\Facade\MerchantProfileMerchantPortalGuiToGlossaryFacadeInterface
      */
-    protected $glossaryFacade;
+    protected MerchantProfileMerchantPortalGuiToGlossaryFacadeInterface $glossaryFacade;
 
     /**
      * @var \Spryker\Zed\MerchantProfileMerchantPortalGui\Dependency\Facade\MerchantProfileMerchantPortalGuiToLocaleFacadeInterface
      */
-    protected $localeFacade;
+    protected MerchantProfileMerchantPortalGuiToLocaleFacadeInterface $localeFacade;
 
     /**
      * @param \Spryker\Zed\MerchantProfileMerchantPortalGui\MerchantProfileMerchantPortalGuiConfig $merchantProfileMerchantPortalGuiConfig
@@ -125,13 +125,13 @@ class MerchantProfileFormDataProvider implements MerchantProfileFormDataProvider
      * @return \Generated\Shared\Transfer\UrlTransfer
      */
     protected function addUrlPrefixToUrlTransfer(
-        $merchantProfileUrlCollection,
+        ArrayObject $merchantProfileUrlCollection,
         LocaleTransfer $localeTransfer
     ): UrlTransfer {
         $urlTransfer = new UrlTransfer();
-        foreach ($merchantProfileUrlCollection as $urlTransfer) {
-            if ($urlTransfer->getFkLocale() === $localeTransfer->getIdLocale()) {
-                $urlTransfer->fromArray($urlTransfer->toArray(), true);
+        foreach ($merchantProfileUrlCollection as $merchantProfileUrlTransfer) {
+            if ($merchantProfileUrlTransfer->getFkLocale() === $localeTransfer->getIdLocale()) {
+                $urlTransfer->fromArray($merchantProfileUrlTransfer->toArray(), true);
 
                 break;
             }
@@ -151,8 +151,7 @@ class MerchantProfileFormDataProvider implements MerchantProfileFormDataProvider
      */
     protected function getLocalizedUrlPrefix(LocaleTransfer $localeTransfer): string
     {
-        /** @var string $localeName */
-        $localeName = $localeTransfer->requireLocaleName()->getLocaleName();
+        $localeName = $localeTransfer->getLocaleNameOrFail();
         $localeNameParts = explode('_', $localeName);
         $languageCode = $localeNameParts[0];
 

@@ -15,9 +15,9 @@ interface PriceProductValidationMapperInterface
     /**
      * @param \Generated\Shared\Transfer\ValidationResponseTransfer $validationResponseTransfer
      * @param \ArrayObject<int, \Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
-     * @param array<mixed> $initialData
+     * @param array<string, mixed> $initialData
      *
-     * @return array<mixed>
+     * @return array<string, mixed>
      */
     public function mapValidationResponseTransferToInitialData(
         ValidationResponseTransfer $validationResponseTransfer,

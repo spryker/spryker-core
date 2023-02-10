@@ -1,6 +1,6 @@
 {
     "include": {
-        "spryker/transfer": "Provides transfer objects decimal property type functionality.",
+        "spryker/transfer": "Provides transfer objects definition with strict types.",
         "spryker/zed-ui": "Zed UI provides layout templates and frontend infrastructure."
     }
 }

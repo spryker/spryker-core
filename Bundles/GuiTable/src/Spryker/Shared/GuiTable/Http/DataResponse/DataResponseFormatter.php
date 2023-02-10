@@ -23,7 +23,7 @@ class DataResponseFormatter implements DataResponseFormatterInterface
     /**
      * @var \Spryker\Shared\GuiTable\Dependency\Service\GuiTableToUtilDateTimeServiceInterface
      */
-    protected $utilDateTimeService;
+    protected GuiTableToUtilDateTimeServiceInterface $utilDateTimeService;
 
     /**
      * @param \Spryker\Shared\GuiTable\Dependency\Service\GuiTableToUtilDateTimeServiceInterface $utilDateTimeService
@@ -64,7 +64,7 @@ class DataResponseFormatter implements DataResponseFormatterInterface
         array $guiTableDataResponseArray,
         GuiTableConfigurationTransfer $guiTableConfigurationTransfer
     ): array {
-        $rows = $guiTableDataResponseArray[static::KEY_DATA_RESPONSE_ARRAY_DATA] = array_map(function (array $rowData): array {
+        $rows = array_map(function (array $rowData): array {
             return $rowData[GuiTableRowDataResponseTransfer::RESPONSE_DATA];
         }, $guiTableDataResponseArray[GuiTableDataResponseTransfer::ROWS]);
 
@@ -90,7 +90,7 @@ class DataResponseFormatter implements DataResponseFormatterInterface
     {
         $indexedColumnTypes = [];
         foreach ($guiTableConfigurationTransfer->getColumns() as $guiTableColumnConfigurationTransfer) {
-            $indexedColumnTypes[$guiTableColumnConfigurationTransfer->getId()] = $guiTableColumnConfigurationTransfer->getTypeOrFail();
+            $indexedColumnTypes[$guiTableColumnConfigurationTransfer->getIdOrFail()] = $guiTableColumnConfigurationTransfer->getTypeOrFail();
         }
 
         return $indexedColumnTypes;

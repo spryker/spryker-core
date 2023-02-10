@@ -27,7 +27,7 @@ class SalesMerchantPortalGuiToRouterFacadeBridge implements SalesMerchantPortalG
     /**
      * @return \Spryker\Zed\Router\Business\Router\ChainRouter
      */
-    public function getMerchantPortalRouter(): ChainRouter
+    public function getMerchantPortalChainRouter(): ChainRouter
     {
         return $this->routerFacade->getMerchantPortalChainRouter();
     }

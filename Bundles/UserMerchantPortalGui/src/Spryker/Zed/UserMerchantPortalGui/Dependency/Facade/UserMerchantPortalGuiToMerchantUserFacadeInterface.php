@@ -49,7 +49,7 @@ interface UserMerchantPortalGuiToMerchantUserFacadeInterface
      *
      * @return bool
      */
-    public function isValidPassword($password, $hash): bool;
+    public function isValidPassword(string $password, string $hash): bool;
 
     /**
      * @param \Generated\Shared\Transfer\UserCriteriaTransfer $userCriteriaTransfer

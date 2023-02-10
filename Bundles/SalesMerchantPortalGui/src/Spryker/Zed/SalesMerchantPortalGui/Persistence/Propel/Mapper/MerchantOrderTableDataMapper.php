@@ -97,7 +97,7 @@ class MerchantOrderTableDataMapper
     ];
 
     /**
-     * @param array $merchantOrderTableDataArray
+     * @param array<string, mixed> $merchantOrderTableDataArray
      * @param \Generated\Shared\Transfer\MerchantOrderCollectionTransfer $merchantOrderCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantOrderCollectionTransfer
@@ -131,9 +131,9 @@ class MerchantOrderTableDataMapper
     }
 
     /**
-     * @param array $merchantOrderTableRowDataArray
+     * @param array<string, mixed> $merchantOrderTableRowDataArray
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function prepareItemsStatesTableData(array $merchantOrderTableRowDataArray): array
     {

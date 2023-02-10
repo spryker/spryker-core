@@ -46,11 +46,9 @@ abstract class AbstractConfigurationTranslator implements ConfigurationTranslato
     protected function translateColumns(
         GuiTableConfigurationTransfer $guiTableConfigurationTransfer
     ): GuiTableConfigurationTransfer {
-        /** @var \ArrayObject<int, \Generated\Shared\Transfer\GuiTableColumnConfigurationTransfer> $translatedGuiTableColumnConfigurationTransfers */
         $translatedGuiTableColumnConfigurationTransfers = new ArrayObject();
-
         foreach ($guiTableConfigurationTransfer->getColumns() as $guiTableColumnConfigurationTransfer) {
-            $translatedGuiTableColumnConfigurationTransfers[] = $this->translateColumn($guiTableColumnConfigurationTransfer);
+            $translatedGuiTableColumnConfigurationTransfers->append($this->translateColumn($guiTableColumnConfigurationTransfer));
         }
 
         $guiTableConfigurationTransfer->setColumns($translatedGuiTableColumnConfigurationTransfers);
@@ -89,11 +87,9 @@ abstract class AbstractConfigurationTranslator implements ConfigurationTranslato
             return $guiTableConfigurationTransfer;
         }
 
-        /** @var \ArrayObject<int, \Generated\Shared\Transfer\GuiTableFilterTransfer> $translatedGuiTableFilterTransfers */
         $translatedGuiTableFilterTransfers = new ArrayObject();
-
         foreach ($guiTableFiltersConfigurationTransfer->getItems() as $guiTableFilterTransfer) {
-            $translatedGuiTableFilterTransfers[] = $this->translateFilter($guiTableFilterTransfer);
+            $translatedGuiTableFilterTransfers->append($this->translateFilter($guiTableFilterTransfer));
         }
 
         $guiTableFiltersConfigurationTransfer->setItems($translatedGuiTableFilterTransfers);
@@ -141,11 +137,9 @@ abstract class AbstractConfigurationTranslator implements ConfigurationTranslato
             return $guiTableConfigurationTransfer;
         }
 
-        /** @var \ArrayObject<int, \Generated\Shared\Transfer\GuiTableRowActionTransfer> $translatedGuiTableRowActionTransfers */
         $translatedGuiTableRowActionTransfers = new ArrayObject();
-
         foreach ($guiTableRowActionsConfigurationTransfer->getActions() as $guiTableRowActionTransfer) {
-            $translatedGuiTableRowActionTransfers[] = $this->translateRowAction($guiTableRowActionTransfer);
+            $translatedGuiTableRowActionTransfers->append($this->translateRowAction($guiTableRowActionTransfer));
         }
 
         $guiTableRowActionsConfigurationTransfer->setActions($translatedGuiTableRowActionTransfers);
@@ -184,11 +178,9 @@ abstract class AbstractConfigurationTranslator implements ConfigurationTranslato
             return $guiTableConfigurationTransfer;
         }
 
-        /** @var \ArrayObject<int, \Generated\Shared\Transfer\GuiTableBatchActionTransfer> $translatedGuiTableBatchActionTransfers */
         $translatedGuiTableBatchActionTransfers = new ArrayObject();
-
         foreach ($guiTableBatchActionsConfigurationTransfer->getActions() as $guiTableBatchActionTransfer) {
-            $translatedGuiTableBatchActionTransfers[] = $this->translateBatchAction($guiTableBatchActionTransfer);
+            $translatedGuiTableBatchActionTransfers->append($this->translateBatchAction($guiTableBatchActionTransfer));
         }
 
         $guiTableBatchActionsConfigurationTransfer->setActions($translatedGuiTableBatchActionTransfers);
@@ -391,10 +383,9 @@ abstract class AbstractConfigurationTranslator implements ConfigurationTranslato
             return $guiTableConfigurationTransfer;
         }
 
-        /** @var \ArrayObject<int, \Generated\Shared\Transfer\GuiTableColumnConfigurationTransfer> $translatedGuiTableColumnConfigurationTransfers */
         $translatedGuiTableColumnConfigurationTransfers = new ArrayObject();
         foreach ($guiTableColumnConfigurationTransfers as $guiTableColumnConfigurationTransfer) {
-            $translatedGuiTableColumnConfigurationTransfers[] = $this->translateColumn($guiTableColumnConfigurationTransfer);
+            $translatedGuiTableColumnConfigurationTransfers->append($this->translateColumn($guiTableColumnConfigurationTransfer));
         }
 
         $guiTableEditableConfigurationTransfer->setColumns($translatedGuiTableColumnConfigurationTransfers);

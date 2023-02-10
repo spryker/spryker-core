@@ -86,27 +86,27 @@ abstract class AbstractPriceProductOfferGuiTableConfigurationProvider
     /**
      * @var \Spryker\Shared\GuiTable\GuiTableFactoryInterface
      */
-    protected $guiTableFactory;
+    protected GuiTableFactoryInterface $guiTableFactory;
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductFacadeInterface
      */
-    protected $priceProductFacade;
+    protected ProductOfferMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade;
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToStoreFacadeInterface
      */
-    protected $storeFacade;
+    protected ProductOfferMerchantPortalGuiToStoreFacadeInterface $storeFacade;
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToCurrencyFacadeInterface
      */
-    protected $currencyFacade;
+    protected ProductOfferMerchantPortalGuiToCurrencyFacadeInterface $currencyFacade;
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\Column\ColumnIdCreatorInterface
      */
-    protected $columnIdCreator;
+    protected ColumnIdCreatorInterface $columnIdCreator;
 
     /**
      * @param \Spryker\Shared\GuiTable\GuiTableFactoryInterface $guiTableFactory

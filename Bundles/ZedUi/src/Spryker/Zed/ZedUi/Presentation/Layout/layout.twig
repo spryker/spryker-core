@@ -1,12 +1,8 @@
-{# @deprecated property "isWatchMode" is deprecated: use "isDifferentialMode" instead. #}
 {% set importConfig = {
     assetsPath: 'js/',
     bundleSubFolder: 'spy/',
-    isWatchMode: false,
     isDifferentialMode: false,
 } %}
-
-{% set importConfig = importConfig | merge({ isDifferentialMode: not importConfig.isWatchMode }) %}
 
 {% macro importJs(name, config) %}
     {% if config.isDifferentialMode %}

@@ -70,7 +70,7 @@ class CreateProductAbstractWithSingleConcreteFormDataProvider implements CreateP
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array<mixed>
+     * @return array<string, mixed>
      */
     public function getDefaultData(Request $request): array
     {

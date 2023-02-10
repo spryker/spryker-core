@@ -62,7 +62,7 @@ class AddProductConcreteForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
-     * @param array<mixed> $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */

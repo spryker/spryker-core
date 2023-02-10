@@ -14,7 +14,7 @@ interface ProductAttributesMapperInterface
 {
     /**
      * @param \Symfony\Component\Form\FormErrorIterator<\Symfony\Component\Form\FormError> $errors
-     * @param array $attributesInitialData
+     * @param array<string, array<string, mixed>> $attributesInitialData
      *
      * @return array<array<string>>
      */

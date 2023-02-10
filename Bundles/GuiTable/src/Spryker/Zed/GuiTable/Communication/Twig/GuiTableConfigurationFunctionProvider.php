@@ -28,24 +28,19 @@ class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
     protected const CONFIG_ENABLED = 'enabled';
 
     /**
-     * @var string
-     */
-    protected const CONFIG_ITEMS = 'items';
-
-    /**
      * @var \Spryker\Shared\GuiTable\Dependency\Service\GuiTableToUtilEncodingServiceInterface
      */
-    protected $utilEncodingService;
+    protected GuiTableToUtilEncodingServiceInterface $utilEncodingService;
 
     /**
      * @var \Spryker\Shared\GuiTable\Configuration\Expander\ConfigurationDefaultValuesExpanderInterface
      */
-    protected $configurationDefaultValuesExpander;
+    protected ConfigurationDefaultValuesExpanderInterface $configurationDefaultValuesExpander;
 
     /**
      * @var \Spryker\Shared\GuiTable\Configuration\Translator\ConfigurationTranslatorInterface
      */
-    protected $configurationTranslator;
+    protected ConfigurationTranslatorInterface $configurationTranslator;
 
     /**
      * @param \Spryker\Shared\GuiTable\Dependency\Service\GuiTableToUtilEncodingServiceInterface $utilEncodingService
@@ -173,7 +168,7 @@ class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
     /**
      * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
      *
-     * @return array<int|string, array<int, array>|bool|string|null>
+     * @return array<string, array<int, array<string, mixed>>|bool|string|null>
      */
     protected function prepareRowActions(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): array
     {
@@ -197,7 +192,7 @@ class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
     /**
      * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
      *
-     * @return array<int|string, array<int, array>|bool|string|null>
+     * @return array<string, array<int, array<string, mixed>>|bool|string|null>
      */
     protected function prepareBatchActions(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): array
     {

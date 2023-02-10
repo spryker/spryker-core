@@ -25,17 +25,17 @@ class DataRequestBuilder implements DataRequestBuilderInterface
     /**
      * @var \Spryker\Shared\GuiTable\Dependency\Service\GuiTableToUtilEncodingServiceInterface
      */
-    protected $utilEncodingService;
+    protected GuiTableToUtilEncodingServiceInterface $utilEncodingService;
 
     /**
      * @var \Spryker\Shared\GuiTable\Configuration\GuiTableConfigInterface
      */
-    protected $guiTableConfig;
+    protected GuiTableConfigInterface $guiTableConfig;
 
     /**
      * @var \Spryker\Shared\GuiTable\Normalizer\DateRangeRequestFilterValueNormalizerInterface
      */
-    protected $dateRangeRequestFilterValueNormalizer;
+    protected DateRangeRequestFilterValueNormalizerInterface $dateRangeRequestFilterValueNormalizer;
 
     /**
      * @param \Spryker\Shared\GuiTable\Dependency\Service\GuiTableToUtilEncodingServiceInterface $utilEncodingService

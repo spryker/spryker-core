@@ -29,7 +29,7 @@ class SalesMerchantPortalGuiToMoneyFacadeBridge implements SalesMerchantPortalGu
      *
      * @return string
      */
-    public function formatWithSymbol(MoneyTransfer $moneyTransfer)
+    public function formatWithSymbol(MoneyTransfer $moneyTransfer): string
     {
         return $this->moneyFacade->formatWithSymbol($moneyTransfer);
     }

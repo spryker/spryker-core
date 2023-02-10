@@ -19,22 +19,22 @@ class PriceProductReader implements PriceProductReaderInterface
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeInterface
      */
-    protected $priceProductFacade;
+    protected ProductMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductFacadeInterface
      */
-    protected $productFacade;
+    protected ProductMerchantPortalGuiToProductFacadeInterface $productFacade;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductVolumeFacadeInterface
      */
-    protected $priceProductVolumeFacade;
+    protected ProductMerchantPortalGuiToPriceProductVolumeFacadeInterface $priceProductVolumeFacade;
 
     /**
      * @var array<\Spryker\Zed\ProductMerchantPortalGuiExtension\Dependency\Plugin\PriceProductTableFilterPluginInterface>
      */
-    protected $priceProductTableFilterPlugins;
+    protected array $priceProductTableFilterPlugins;
 
     /**
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade

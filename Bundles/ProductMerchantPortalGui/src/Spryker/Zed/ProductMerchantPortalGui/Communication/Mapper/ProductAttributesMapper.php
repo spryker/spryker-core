@@ -10,29 +10,29 @@ namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper;
 use ArrayObject;
 use Generated\Shared\Transfer\GuiTableEditableDataErrorTransfer;
 use Generated\Shared\Transfer\GuiTableEditableInitialDataTransfer;
-use Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\ProductAttributeDataProvider;
+use Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\ProductAttributeDataProviderInterface;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductAttributeGuiTableConfigurationProvider;
 use Symfony\Component\Form\FormErrorIterator;
 
 class ProductAttributesMapper implements ProductAttributesMapperInterface
 {
     /**
-     * @var \Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\ProductAttributeDataProvider
+     * @var \Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\ProductAttributeDataProviderInterface
      */
-    protected $productAttributeDataProvider;
+    protected ProductAttributeDataProviderInterface $productAttributeDataProvider;
 
     /**
-     * @param \Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\ProductAttributeDataProvider $productAttributeDataProvider
+     * @param \Spryker\Zed\ProductMerchantPortalGui\Communication\DataProvider\ProductAttributeDataProviderInterface $productAttributeDataProvider
      */
     public function __construct(
-        ProductAttributeDataProvider $productAttributeDataProvider
+        ProductAttributeDataProviderInterface $productAttributeDataProvider
     ) {
         $this->productAttributeDataProvider = $productAttributeDataProvider;
     }
 
     /**
      * @param \Symfony\Component\Form\FormErrorIterator<\Symfony\Component\Form\FormError> $errors
-     * @param array $attributesInitialData
+     * @param array<string, array<string, mixed>> $attributesInitialData
      *
      * @return array<array<string>>
      */
@@ -163,10 +163,10 @@ class ProductAttributesMapper implements ProductAttributesMapperInterface
     }
 
     /**
-     * @param array $attributesTableInitialData
+     * @param array<mixed> $attributesTableInitialData
      * @param array<string, mixed> $data
      *
-     * @return array
+     * @return array<mixed>
      */
     protected function fillNotExistingNumericArrayElements(array $attributesTableInitialData, array $data = []): array
     {

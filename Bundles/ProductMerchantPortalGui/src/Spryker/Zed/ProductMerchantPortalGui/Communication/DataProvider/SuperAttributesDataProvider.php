@@ -29,7 +29,7 @@ class SuperAttributesDataProvider implements SuperAttributesDataProviderInterfac
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductAttributeFacadeInterface
      */
-    protected $productAttributeFacade;
+    protected ProductMerchantPortalGuiToProductAttributeFacadeInterface $productAttributeFacade;
 
     /**
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductAttributeFacadeInterface $productAttributeFacade
@@ -40,7 +40,7 @@ class SuperAttributesDataProvider implements SuperAttributesDataProviderInterfac
     }
 
     /**
-     * @return array<mixed>
+     * @return array<array<string, mixed>>
      */
     public function getSuperAttributes(): array
     {

@@ -8,7 +8,7 @@ describe('EditOfferComponent', () => {
     let fixture: ComponentFixture<TestComponent>;
 
     @Component({
-        selector: 'test-edit-offer',
+        selector: 'mp-test',
         template: `
             <mp-edit-offer
                 [product]="product"

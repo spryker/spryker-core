@@ -11,7 +11,6 @@ use ArrayObject;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
-use Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\ConfigurationProvider\ProductAttributeGuiTableConfigurationProvider;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 
@@ -25,18 +24,11 @@ class ProductAbstractAttributeUniqueCombinationConstraintValidator extends Const
      *
      * @var string
      */
-    public const DEFAULT_LOCALE = '_';
-
-    /**
-     * @var array<string, string>
-     */
-    public const LOCALE_NAME_MAP = [
-        self::DEFAULT_LOCALE => ProductAttributeGuiTableConfigurationProvider::COL_KEY_ATTRIBUTE_DEFAULT,
-    ];
+    protected const DEFAULT_LOCALE = '_';
 
     /**
      * @param mixed $value
-     * @param \Spryker\Zed\ProductManagement\Communication\Form\Validator\Constraints\ProductAttributeUniqueCombination|\Symfony\Component\Validator\Constraint $constraint
+     * @param \Symfony\Component\Validator\Constraint $constraint
      *
      * @return void
      */
@@ -119,7 +111,7 @@ class ProductAbstractAttributeUniqueCombinationConstraintValidator extends Const
         $result = [];
 
         foreach ($localizedAttributesTransfers as $localizedAttributeTransfer) {
-            $localeName = $localizedAttributeTransfer->getLocaleOrFail()->getLocaleName();
+            $localeName = $localizedAttributeTransfer->getLocaleOrFail()->getLocaleNameOrFail();
             $result[$localeName] = $localizedAttributeTransfer->getAttributes();
         }
 

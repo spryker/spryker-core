@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\ProductMerchantPortalGui\Communication\Mapper;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
 use Generated\Shared\Transfer\PriceProductTableViewTransfer;
+use SprykerTest\Zed\ProductMerchantPortalGui\ProductMerchantPortalGuiCommunicationTester;
 
 /**
  * Auto-generated group annotations
@@ -27,7 +28,7 @@ class PriceProductMapperTest extends Unit
     /**
      * @var \SprykerTest\Zed\ProductMerchantPortalGui\ProductMerchantPortalGuiCommunicationTester
      */
-    protected $tester;
+    protected ProductMerchantPortalGuiCommunicationTester $tester;
 
     /**
      * @var string

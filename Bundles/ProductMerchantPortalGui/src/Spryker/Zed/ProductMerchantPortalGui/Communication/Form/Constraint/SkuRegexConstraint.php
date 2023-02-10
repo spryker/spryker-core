@@ -24,7 +24,7 @@ class SkuRegexConstraint extends Regex
     /**
      * @param array<string, mixed>|null $options
      */
-    public function __construct($options = null)
+    public function __construct(?array $options = null)
     {
         $defaults = [
             'pattern' => static::REGEX_PATTERN,

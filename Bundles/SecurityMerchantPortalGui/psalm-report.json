@@ -41,8 +41,8 @@
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 43,
-            "line_to": 43,
+            "line_from": 58,
+            "line_to": 58,
             "type": "DeprecatedClass",
             "message": "Symfony\\Component\\Security\\Core\\Exception\\UsernameNotFoundException is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/SecurityMerchantPortalGui/src/Spryker/Zed/SecurityMerchantPortalGui/Communication/Plugin/Security/Provider/MerchantUserProvider.php",
@@ -53,8 +53,8 @@
         },
         {
             "severity": "info",
-            "line_from": 66,
-            "line_to": 66,
+            "line_from": 87,
+            "line_to": 87,
             "type": "DeprecatedClass",
             "message": "Symfony\\Component\\Security\\Core\\Exception\\UsernameNotFoundException is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/SecurityMerchantPortalGui/src/Spryker/Zed/SecurityMerchantPortalGui/Communication/Plugin/Security/Provider/MerchantUserProvider.php",
@@ -63,5 +63,6 @@
             "error_level": 2,
             "shortcode": 98
         }
-    ]
+    ],
+    "count": 5
 }

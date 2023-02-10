@@ -16,5 +16,5 @@ interface SalesMerchantPortalGuiToMoneyFacadeInterface
      *
      * @return string
      */
-    public function formatWithSymbol(MoneyTransfer $moneyTransfer);
+    public function formatWithSymbol(MoneyTransfer $moneyTransfer): string;
 }

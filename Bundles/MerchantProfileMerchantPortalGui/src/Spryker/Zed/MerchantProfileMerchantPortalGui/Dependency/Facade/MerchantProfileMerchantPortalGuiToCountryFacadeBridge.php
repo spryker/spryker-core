@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\MerchantProfileMerchantPortalGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\CountryCollectionTransfer;
+
 class MerchantProfileMerchantPortalGuiToCountryFacadeBridge implements MerchantProfileMerchantPortalGuiToCountryFacadeInterface
 {
     /**
@@ -25,7 +27,7 @@ class MerchantProfileMerchantPortalGuiToCountryFacadeBridge implements MerchantP
     /**
      * @return \Generated\Shared\Transfer\CountryCollectionTransfer
      */
-    public function getAvailableCountries()
+    public function getAvailableCountries(): CountryCollectionTransfer
     {
         return $this->countryFacade->getAvailableCountries();
     }

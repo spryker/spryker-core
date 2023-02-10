@@ -14,7 +14,7 @@ class CurrencyFilterConfigurationProvider implements CurrencyFilterConfiguration
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToCurrencyFacadeInterface
      */
-    protected $currencyFacade;
+    protected ProductMerchantPortalGuiToCurrencyFacadeInterface $currencyFacade;
 
     /**
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToCurrencyFacadeInterface $currencyFacade

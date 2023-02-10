@@ -25,11 +25,6 @@ class DeletePriceProductOfferController extends AbstractPriceProductOfferControl
     /**
      * @var string
      */
-    protected const POST_ACTION_TYPE_REFRESH_TABLE = 'refresh_table';
-
-    /**
-     * @var string
-     */
     protected const RESPONSE_NOTIFICATION_MESSAGE_SUCCESS = 'Success! The Price is deleted.';
 
     /**

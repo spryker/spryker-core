@@ -1,6 +1,0 @@
-{
-    "extends": "./node_modules/@spryker/frontend-config.tslint/tslint.mp.json",
-    "linterOptions": {
-        "exclude": ["**/node_modules/**", "vendor/**", "!vendor/spryker/spryker/**"]
-    }
-}

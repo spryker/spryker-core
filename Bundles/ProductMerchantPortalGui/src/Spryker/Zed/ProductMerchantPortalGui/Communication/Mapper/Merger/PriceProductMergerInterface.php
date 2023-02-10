@@ -21,5 +21,5 @@ interface PriceProductMergerInterface
     public function mergePriceProducts(
         PriceProductTransfer $newPriceProductTransfer,
         ArrayObject $priceProductTransfers
-    );
+    ): ArrayObject;
 }

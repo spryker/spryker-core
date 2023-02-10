@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\TableValidationResponseTransfer;
 interface ProductConcreteValidatorInterface
 {
     /**
-     * @param array $concreteProducts
+     * @param array<mixed> $concreteProducts
      *
      * @return \Generated\Shared\Transfer\TableValidationResponseTransfer
      */

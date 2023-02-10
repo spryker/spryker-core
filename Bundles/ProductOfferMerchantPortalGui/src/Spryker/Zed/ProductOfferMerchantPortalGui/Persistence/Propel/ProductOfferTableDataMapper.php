@@ -135,7 +135,7 @@ class ProductOfferTableDataMapper
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilEncodingServiceInterface
      */
-    protected $utilEncodingService;
+    protected ProductOfferMerchantPortalGuiToUtilEncodingServiceInterface $utilEncodingService;
 
     /**
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilEncodingServiceInterface $utilEncodingService
@@ -205,13 +205,13 @@ class ProductOfferTableDataMapper
     protected function prepareProductOfferAttributesTableData(array $productOfferTableRowDataArray): array
     {
         $productConcreteAttributes = $this->utilEncodingService->decodeJson(
-            $productOfferTableRowDataArray[ProductOfferTransfer::PRODUCT_ATTRIBUTES] ?? null,
+            $productOfferTableRowDataArray[ProductOfferTransfer::PRODUCT_ATTRIBUTES] ?? '',
             true,
         );
         $productConcreteAttributes = is_array($productConcreteAttributes) ? $productConcreteAttributes : [];
 
         $productConcreteLocalizedAttributes = $this->utilEncodingService->decodeJson(
-            $productOfferTableRowDataArray[ProductOfferTransfer::PRODUCT_LOCALIZED_ATTRIBUTES] ?? null,
+            $productOfferTableRowDataArray[ProductOfferTransfer::PRODUCT_LOCALIZED_ATTRIBUTES] ?? '',
             true,
         );
         $productConcreteLocalizedAttributes = is_array($productConcreteLocalizedAttributes) ? $productConcreteLocalizedAttributes : [];

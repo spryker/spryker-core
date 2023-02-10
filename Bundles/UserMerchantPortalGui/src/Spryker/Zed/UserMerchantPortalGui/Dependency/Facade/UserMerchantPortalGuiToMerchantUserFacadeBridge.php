@@ -73,7 +73,7 @@ class UserMerchantPortalGuiToMerchantUserFacadeBridge implements UserMerchantPor
      *
      * @return bool
      */
-    public function isValidPassword($password, $hash): bool
+    public function isValidPassword(string $password, string $hash): bool
     {
         return $this->merchantUserFacade->isValidPassword($password, $hash);
     }

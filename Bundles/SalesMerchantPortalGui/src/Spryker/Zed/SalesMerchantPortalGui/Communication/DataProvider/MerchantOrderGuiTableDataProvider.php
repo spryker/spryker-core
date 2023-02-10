@@ -27,22 +27,22 @@ class MerchantOrderGuiTableDataProvider extends AbstractGuiTableDataProvider
     /**
      * @var \Spryker\Zed\SalesMerchantPortalGui\Persistence\SalesMerchantPortalGuiRepositoryInterface
      */
-    protected $salesMerchantPortalGuiRepository;
+    protected SalesMerchantPortalGuiRepositoryInterface $salesMerchantPortalGuiRepository;
 
     /**
      * @var \Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMerchantUserFacadeInterface
      */
-    protected $merchantUserFacade;
+    protected SalesMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade;
 
     /**
      * @var \Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToCurrencyFacadeInterface
      */
-    protected $currencyFacade;
+    protected SalesMerchantPortalGuiToCurrencyFacadeInterface $currencyFacade;
 
     /**
      * @var \Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMoneyFacadeInterface
      */
-    protected $moneyFacade;
+    protected SalesMerchantPortalGuiToMoneyFacadeInterface $moneyFacade;
 
     /**
      * @param \Spryker\Zed\SalesMerchantPortalGui\Persistence\SalesMerchantPortalGuiRepositoryInterface $salesMerchantPortalGuiRepository
@@ -86,8 +86,7 @@ class MerchantOrderGuiTableDataProvider extends AbstractGuiTableDataProvider
         $guiTableDataResponseTransfer = new GuiTableDataResponseTransfer();
 
         foreach ($merchantOrderCollectionTransfer->getMerchantOrders() as $merchantOrderTransfer) {
-            /** @var \Generated\Shared\Transfer\OrderTransfer $orderTransfer */
-            $orderTransfer = $merchantOrderTransfer->requireOrder()->getOrder();
+            $orderTransfer = $merchantOrderTransfer->getOrderOrFail();
 
             $responseData = [
                 MerchantOrderTransfer::ID_MERCHANT_ORDER => $merchantOrderTransfer->getIdMerchantOrder(),
@@ -105,19 +104,12 @@ class MerchantOrderGuiTableDataProvider extends AbstractGuiTableDataProvider
             $guiTableDataResponseTransfer->addRow((new GuiTableRowDataResponseTransfer())->setResponseData($responseData));
         }
 
-        /** @var \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer */
-        $paginationTransfer = $merchantOrderCollectionTransfer->requirePagination()->getPagination();
-        /** @var int $page */
-        $page = $paginationTransfer->requirePage()->getPage();
-        /** @var int $maxPerPage */
-        $maxPerPage = $paginationTransfer->requireMaxPerPage()->getMaxPerPage();
-        /** @var int $total */
-        $total = $paginationTransfer->requireNbResults()->getNbResults();
+        $paginationTransfer = $merchantOrderCollectionTransfer->getPaginationOrFail();
 
         return $guiTableDataResponseTransfer
-            ->setPage($page)
-            ->setPageSize($maxPerPage)
-            ->setTotal($total);
+            ->setPage($paginationTransfer->getPageOrFail())
+            ->setPageSize($paginationTransfer->getMaxPerPageOrFail())
+            ->setTotal($paginationTransfer->getNbResultsOrFail());
     }
 
     /**
@@ -129,9 +121,9 @@ class MerchantOrderGuiTableDataProvider extends AbstractGuiTableDataProvider
     {
         return sprintf(
             '%s %s %s',
-            $orderTransfer->getSalutation(),
-            $orderTransfer->getFirstName(),
-            $orderTransfer->getLastName(),
+            $orderTransfer->getSalutationOrFail(),
+            $orderTransfer->getFirstNameOrFail(),
+            $orderTransfer->getLastNameOrFail(),
         );
     }
 
@@ -142,12 +134,9 @@ class MerchantOrderGuiTableDataProvider extends AbstractGuiTableDataProvider
      */
     protected function getGrandTotalData(MerchantOrderTransfer $merchantOrderTransfer): string
     {
-        /** @var \Generated\Shared\Transfer\TotalsTransfer $totalsTransfer */
-        $totalsTransfer = $merchantOrderTransfer->requireTotals()->getTotals();
-        /** @var \Generated\Shared\Transfer\OrderTransfer $orderTransfer */
-        $orderTransfer = $merchantOrderTransfer->requireOrder()->getOrder();
-        /** @var string $isoCode */
-        $isoCode = $orderTransfer->requireCurrencyIsoCode()->getCurrencyIsoCode();
+        $totalsTransfer = $merchantOrderTransfer->getTotalsOrFail();
+        $orderTransfer = $merchantOrderTransfer->getOrderOrFail();
+        $isoCode = $orderTransfer->getCurrencyIsoCodeOrFail();
         $currencyTransfer = $this->currencyFacade->fromIsoCode($isoCode);
 
         $moneyTransfer = (new MoneyTransfer())

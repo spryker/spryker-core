@@ -20,7 +20,7 @@ class CurrentPasswordConstraint extends Constraint
     /**
      * @var \Spryker\Zed\UserMerchantPortalGui\Dependency\Facade\UserMerchantPortalGuiToMerchantUserFacadeInterface
      */
-    protected $merchantUserFacade;
+    protected UserMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade;
 
     /**
      * @return \Spryker\Zed\UserMerchantPortalGui\Dependency\Facade\UserMerchantPortalGuiToMerchantUserFacadeInterface

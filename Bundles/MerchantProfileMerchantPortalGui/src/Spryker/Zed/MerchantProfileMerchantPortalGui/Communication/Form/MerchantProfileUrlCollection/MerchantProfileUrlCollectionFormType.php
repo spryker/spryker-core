@@ -43,11 +43,6 @@ class MerchantProfileUrlCollectionFormType extends AbstractType
     /**
      * @var string
      */
-    protected const FIELD_FK_LOCALE = 'fkLocale';
-
-    /**
-     * @var string
-     */
     protected const URL_PATH_PATTERN = '#^([^\s\\\\]+)$#i';
 
     /**
@@ -65,7 +60,7 @@ class MerchantProfileUrlCollectionFormType extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      * @param array<string, mixed> $options
      *
      * @return void
@@ -84,7 +79,7 @@ class MerchantProfileUrlCollectionFormType extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      *
      * @return $this
      */

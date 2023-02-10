@@ -921,7 +921,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
         $expiringOffersDateTime = (new DateTime(sprintf('+%s Days', $dashboardExpiringOffersLimit)))->format('Y-m-d H:i:s');
 
         $productOfferPropelQuery = $this->getFactory()->getProductOfferPropelQuery();
-        /** @var array $merchantProductOfferCounts */
+        /** @var array<mixed> $merchantProductOfferCounts */
         $merchantProductOfferCounts = $productOfferPropelQuery
             ->leftJoinSpyProductOfferValidity()
             ->leftJoinProductOfferStock()
@@ -977,7 +977,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
             ->findOne();
 
         $merchantProductOfferCountsTransfer = (new MerchantProductOfferCountsTransfer())->fromArray($merchantProductOfferCounts, true);
-        $inactiveCount = $merchantProductOfferCountsTransfer->getTotal() - $merchantProductOfferCountsTransfer->getActive();
+        $inactiveCount = $merchantProductOfferCountsTransfer->getTotalOrFail() - $merchantProductOfferCountsTransfer->getActiveOrFail();
         $merchantProductOfferCountsTransfer->setInactive($inactiveCount > 0 ? $inactiveCount : 0);
 
         return $merchantProductOfferCountsTransfer;

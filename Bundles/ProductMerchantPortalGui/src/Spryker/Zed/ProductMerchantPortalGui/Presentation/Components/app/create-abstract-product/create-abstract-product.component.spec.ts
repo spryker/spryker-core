@@ -4,7 +4,7 @@ import { By } from '@angular/platform-browser';
 import { CreateAbstractProductComponent } from './create-abstract-product.component';
 
 @Component({
-    selector: 'spy-test',
+    selector: 'mp-test',
     template: `
         <mp-create-abstract-product>
             <span title>Name</span>

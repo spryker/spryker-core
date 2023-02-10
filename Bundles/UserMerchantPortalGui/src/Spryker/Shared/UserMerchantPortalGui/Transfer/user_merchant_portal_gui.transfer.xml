@@ -37,7 +37,7 @@
         <property name="value" type="string"/>
     </transfer>
 
-    <transfer name="ZedUiFormResponse">
+    <transfer name="ZedUiFormResponse" strict="true">
     </transfer>
 
     <transfer name="UserConditions" strict="true">

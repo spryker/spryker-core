@@ -150,7 +150,7 @@ class ProductConcreteForm extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      *
      * @return $this
      */
@@ -261,6 +261,8 @@ class ProductConcreteForm extends AbstractType
                 if ($value !== null) {
                     return new DateTime($value);
                 }
+
+                return null;
             },
             function ($value) {
                 if ($value instanceof DateTime) {

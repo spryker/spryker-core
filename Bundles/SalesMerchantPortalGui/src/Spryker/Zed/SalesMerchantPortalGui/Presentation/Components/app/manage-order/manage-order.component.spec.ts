@@ -14,7 +14,7 @@ describe('ManageOrderComponent', () => {
     let fixture: ComponentFixture<TestComponent>;
 
     @Component({
-        selector: 'test-edit-offer',
+        selector: 'mp-test',
         template: `
             <mp-manage-order [orderDetails]="orderDetails">
                 <div state-transitions class="${mockStateTransitionsClass}"></div>

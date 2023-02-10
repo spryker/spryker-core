@@ -36,21 +36,6 @@ class ProductAbstractAttributeGuiTableConfigurationProvider implements ProductAb
     /**
      * @var string
      */
-    public const COL_KEY_COLUMN_TYPE = 'columnType';
-
-    /**
-     * @var string
-     */
-    public const COL_KEY_COLUMN_TYPE_OPTIONS = 'columnTypeOptions';
-
-    /**
-     * @var string
-     */
-    public const COL_KEY_ALLOW_INPUT = 'allowInput';
-
-    /**
-     * @var string
-     */
     public const COL_KEY_ID_PRODUCT_ABSTRACT = 'idProductAbstract';
 
     /**
@@ -149,17 +134,17 @@ class ProductAbstractAttributeGuiTableConfigurationProvider implements ProductAb
     /**
      * @var \Spryker\Shared\GuiTable\GuiTableFactoryInterface
      */
-    protected $guiTableFactory;
+    protected GuiTableFactoryInterface $guiTableFactory;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductAttributeFacadeInterface
      */
-    protected $productAttributeFacade;
+    protected ProductMerchantPortalGuiToProductAttributeFacadeInterface $productAttributeFacade;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductFacadeInterface
      */
-    protected $productFacade;
+    protected ProductMerchantPortalGuiToProductFacadeInterface $productFacade;
 
     /**
      * @param \Spryker\Shared\GuiTable\GuiTableFactoryInterface $guiTableFactory
@@ -178,7 +163,7 @@ class ProductAbstractAttributeGuiTableConfigurationProvider implements ProductAb
 
     /**
      * @param int $idProductAbstract
-     * @param array $attributesInitialData
+     * @param array<string, array<string, mixed>> $attributesInitialData
      *
      * @throws \Spryker\Zed\ProductMerchantPortalGui\Communication\Exception\ProductAbstractNotFoundException
      *
@@ -188,10 +173,10 @@ class ProductAbstractAttributeGuiTableConfigurationProvider implements ProductAb
         int $idProductAbstract,
         array $attributesInitialData
     ): GuiTableConfigurationTransfer {
-        $productAbstract = $this->productFacade->findProductAbstractById($idProductAbstract);
+        $productAbstractTransfer = $this->productFacade->findProductAbstractById($idProductAbstract);
 
-        if (!$productAbstract) {
-            throw new ProductAbstractNotFoundException((int)$idProductAbstract);
+        if (!$productAbstractTransfer) {
+            throw new ProductAbstractNotFoundException($idProductAbstract);
         }
 
         $guiTableConfigurationBuilder = $this->guiTableFactory->createConfigurationBuilder();
@@ -200,7 +185,7 @@ class ProductAbstractAttributeGuiTableConfigurationProvider implements ProductAb
             ->addColumnChip(static::COL_KEY_ATTRIBUTE_NAME, static::TITLE_COLUMN_ATTRIBUTE_NAME, true, false, static::COLOR_GREY)
             ->addColumnChip(static::COL_KEY_ATTRIBUTE_DEFAULT, static::TITLE_COLUMN_ATTRIBUTE_DEFAULT, true, false, static::COLOR_BLUE);
 
-        foreach ($productAbstract->getLocalizedAttributes() as $localizedAttributesTransfer) {
+        foreach ($productAbstractTransfer->getLocalizedAttributes() as $localizedAttributesTransfer) {
             $localeTransfer = $localizedAttributesTransfer->getLocaleOrFail();
 
             $guiTableConfigurationBuilder->addColumnText(
@@ -239,7 +224,7 @@ class ProductAbstractAttributeGuiTableConfigurationProvider implements ProductAb
 
     /**
      * @param \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder
-     * @param array $attributesInitialData
+     * @param array<string, array<string, mixed>> $attributesInitialData
      *
      * @return \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface
      */
@@ -251,7 +236,7 @@ class ProductAbstractAttributeGuiTableConfigurationProvider implements ProductAb
 
         $attributesOptions = [];
         foreach ($allAttributes as $attribute) {
-            $attributesOptions[$attribute->getKey()] = $attribute->getKey();
+            $attributesOptions[$attribute->getKeyOrFail()] = $attribute->getKeyOrFail();
         }
 
         $guiTableConfigurationBuilder->addEditableColumnSelect(
@@ -267,7 +252,7 @@ class ProductAbstractAttributeGuiTableConfigurationProvider implements ProductAb
             static::PRODUCT_ATTRIBUTES_DATA_URL,
         );
 
-        $guiTableConfigurationBuilder->enableInlineDataEditing($this->getAttributeActionUrl(static::PRODUCT_ATTRIBUTE_SAVE_DATA_URL), 'POST');
+        $guiTableConfigurationBuilder->enableInlineDataEditing($this->getAttributeActionUrl(static::PRODUCT_ATTRIBUTE_SAVE_DATA_URL));
 
         $formInputName = sprintf('%s[%s]', ProductAbstractForm::BLOCK_PREFIX, ProductAbstractTransfer::ATTRIBUTES);
 

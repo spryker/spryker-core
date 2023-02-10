@@ -27,27 +27,27 @@ class PriceProductsVolumeDataExpander implements PriceProductsVolumeDataExpander
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToPriceProductVolumeServiceInterface
      */
-    protected $priceProductVolumeService;
+    protected ProductOfferMerchantPortalGuiToPriceProductVolumeServiceInterface $priceProductVolumeService;
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Mapper\PriceProductOfferMapper
      */
-    protected $priceProductOfferMapper;
+    protected PriceProductOfferMapper $priceProductOfferMapper;
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductOfferVolumeFacadeInterface
      */
-    protected $priceProductOfferVolumeFacade;
+    protected ProductOfferMerchantPortalGuiToPriceProductOfferVolumeFacadeInterface $priceProductOfferVolumeFacade;
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Filter\PriceProductFilterInterface
      */
-    protected $priceProductFilter;
+    protected PriceProductFilterInterface $priceProductFilter;
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\PriceProductOfferDataProviderInterface
      */
-    protected $priceProductOfferDataProvider;
+    protected PriceProductOfferDataProviderInterface $priceProductOfferDataProvider;
 
     /**
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToPriceProductVolumeServiceInterface $priceProductVolumeService
@@ -170,7 +170,7 @@ class PriceProductsVolumeDataExpander implements PriceProductsVolumeDataExpander
         $grossAmount = $moneyValueTransfer->getGrossAmount();
         $moneyValueTransfer->setNetAmount(null)->setGrossAmount(null);
         $priceProductTransfer
-            ->setVolumeQuantity((int)$volumeQuantity)
+            ->setVolumeQuantity($volumeQuantity)
             ->setIdPriceProduct(null)
             ->setMoneyValue($moneyValueTransfer);
         $volumeQuantity = $this->getVolumeQuantity($volumeQuantity, $requestKey, $requestValue);
@@ -234,7 +234,7 @@ class PriceProductsVolumeDataExpander implements PriceProductsVolumeDataExpander
 
             $this->priceProductVolumeService->deleteVolumePrice(
                 $storedPriceProductTransfer,
-                (new PriceProductTransfer())->setVolumeQuantity((int)$volumeQuantity),
+                (new PriceProductTransfer())->setVolumeQuantity($volumeQuantity),
             );
             $this->priceProductVolumeService->addVolumePrice($storedPriceProductTransfer, $priceProductTransferToReplace);
         }

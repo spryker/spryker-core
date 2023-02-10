@@ -12,7 +12,7 @@ interface ProductConcreteEditFormDataProviderInterface
     /**
      * @param int $idProductConcrete
      *
-     * @return array<mixed>
+     * @return array<string, mixed>
      */
     public function getData(int $idProductConcrete): array;
 

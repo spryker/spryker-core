@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Transformer;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToLocaleFacadeInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 
@@ -15,7 +16,7 @@ class LocaleTransformer implements DataTransformerInterface
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToLocaleFacadeInterface
      */
-    protected $localeFacade;
+    protected ProductMerchantPortalGuiToLocaleFacadeInterface $localeFacade;
 
     /**
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToLocaleFacadeInterface $localeFacade
@@ -26,15 +27,13 @@ class LocaleTransformer implements DataTransformerInterface
     }
 
     /**
-     * {@inheritDoc}
+     * @param \Generated\Shared\Transfer\LocaleTransfer|mixed $value
      *
-     * @param \Generated\Shared\Transfer\LocaleTransfer|null $value The value in the original representation
-     *
-     * @return int|null The value in the transformed representation
+     * @return int|null
      */
-    public function transform($value)
+    public function transform($value): ?int
     {
-        if (!$value) {
+        if (!$value instanceof LocaleTransfer) {
             return null;
         }
 
@@ -42,13 +41,11 @@ class LocaleTransformer implements DataTransformerInterface
     }
 
     /**
-     * {@inheritDoc}
+     * @param mixed|int|null $value
      *
-     * @param int|null $value The value in the transformed representation
-     *
-     * @return \Generated\Shared\Transfer\LocaleTransfer|null The value in the original representation
+     * @return \Generated\Shared\Transfer\LocaleTransfer|null
      */
-    public function reverseTransform($value)
+    public function reverseTransform($value): ?LocaleTransfer
     {
         if (!$value) {
             return null;

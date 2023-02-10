@@ -33,7 +33,7 @@ abstract class AbstractFieldMapperStrategy implements FieldMapperStrategyInterfa
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeInterface
      */
-    protected $priceProductFacade;
+    protected ProductMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade;
 
     /**
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade
@@ -95,7 +95,7 @@ abstract class AbstractFieldMapperStrategy implements FieldMapperStrategyInterfa
         }
 
         /** @var \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer */
-        $priceProductTransfer = $priceProductTransfers[0];
+        $priceProductTransfer = $priceProductTransfers->offsetGet(0);
 
         $moneyValueTransfer = $priceProductTransfer->getMoneyValueOrFail();
         $priceDimensionTransfer = $priceProductTransfer->getPriceDimensionOrFail();
@@ -108,12 +108,14 @@ abstract class AbstractFieldMapperStrategy implements FieldMapperStrategyInterfa
             $newPriceDimensionTransfer = (clone $priceDimensionTransfer)
                 ->setIdPriceProductDefault(null);
 
-            $priceProductTransfers[] = (new PriceProductTransfer())
-                ->setFkPriceType($priceTypeTransfer->getIdPriceType())
-                ->setPriceType($priceTypeTransfer)
-                ->setPriceDimension($newPriceDimensionTransfer)
-                ->setMoneyValue($this->recreateMoneyValueTransfer($moneyValueTransfer))
-                ->setPriceTypeName($priceTypeTransfer->getNameOrFail());
+            $priceProductTransfers->append(
+                (new PriceProductTransfer())
+                    ->setFkPriceType($priceTypeTransfer->getIdPriceType())
+                    ->setPriceType($priceTypeTransfer)
+                    ->setPriceDimension($newPriceDimensionTransfer)
+                    ->setMoneyValue($this->recreateMoneyValueTransfer($moneyValueTransfer))
+                    ->setPriceTypeName($priceTypeTransfer->getNameOrFail()),
+            );
         }
 
         return $priceProductTransfers;

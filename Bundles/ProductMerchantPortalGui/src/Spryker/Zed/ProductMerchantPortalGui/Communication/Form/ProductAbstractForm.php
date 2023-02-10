@@ -41,6 +41,9 @@ class ProductAbstractForm extends AbstractType
      */
     public const BLOCK_PREFIX = 'productAbstract';
 
+    /**
+     * @var string
+     */
     public const GROUP_WITH_STORES = self::FIELD_STORES;
 
     /**
@@ -81,11 +84,6 @@ class ProductAbstractForm extends AbstractType
     protected const KEY_OPTIONS_DATA = 'data';
 
     /**
-     * @var string
-     */
-    protected const KEY_OPTIONS_ATTRIBUTES = 'attributes';
-
-    /**
      * @return string
      */
     public function getBlockPrefix(): string
@@ -119,7 +117,7 @@ class ProductAbstractForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
-     * @param array<mixed> $options
+     * @param array<string, mixed> $options
      *
      * @return void
      */
@@ -174,7 +172,7 @@ class ProductAbstractForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
-     * @param array<mixed> $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -201,7 +199,7 @@ class ProductAbstractForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
-     * @param array<mixed> $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -224,7 +222,7 @@ class ProductAbstractForm extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      *
      * @return $this
      */
@@ -248,7 +246,7 @@ class ProductAbstractForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
-     * @param array<mixed> $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */
@@ -274,7 +272,7 @@ class ProductAbstractForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
-     * @param array<mixed> $options
+     * @param array<string, mixed> $options
      *
      * @return $this
      */

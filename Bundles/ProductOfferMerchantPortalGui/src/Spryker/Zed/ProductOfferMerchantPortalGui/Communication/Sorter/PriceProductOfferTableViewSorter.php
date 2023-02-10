@@ -22,12 +22,12 @@ class PriceProductOfferTableViewSorter implements PriceProductOfferTableViewSort
     /**
      * @var array<\Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Sorter\ComparisonStrategy\PriceProductOfferTableView\PriceProductOfferTableViewComparisonStrategyInterface>
      */
-    protected $priceProductComparisonStrategies;
+    protected array $priceProductComparisonStrategies;
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Sorter\ComparisonStrategy\PriceProductOfferTableView\PriceProductOfferTableViewComparisonStrategyInterface
      */
-    protected $defaultPriceProductComparisonStrategy;
+    protected PriceProductOfferTableViewComparisonStrategyInterface $defaultPriceProductComparisonStrategy;
 
     /**
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Sorter\ComparisonStrategy\PriceProductOfferTableView\PriceProductOfferTableViewComparisonStrategyInterface $defaultPriceProductComparisonStrategy

@@ -7,10 +7,12 @@
 
 namespace Spryker\Zed\MerchantProfileMerchantPortalGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\CountryCollectionTransfer;
+
 interface MerchantProfileMerchantPortalGuiToCountryFacadeInterface
 {
     /**
      * @return \Generated\Shared\Transfer\CountryCollectionTransfer
      */
-    public function getAvailableCountries();
+    public function getAvailableCountries(): CountryCollectionTransfer;
 }

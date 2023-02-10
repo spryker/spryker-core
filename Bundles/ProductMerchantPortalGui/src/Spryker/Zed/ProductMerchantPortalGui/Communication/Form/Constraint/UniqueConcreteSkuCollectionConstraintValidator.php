@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 class UniqueConcreteSkuCollectionConstraintValidator extends AbstractConstraintValidator
 {
     /**
-     * @param array<mixed> $value Concrete products that should be validated
+     * @param mixed|array<mixed> $value Concrete products that should be validated
      * @param \Symfony\Component\Validator\Constraint $constraint
      *
      * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException

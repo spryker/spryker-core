@@ -21,27 +21,27 @@ class OrdersDashboardCardProvider implements OrdersDashboardCardProviderInterfac
     /**
      * @var \Spryker\Zed\SalesMerchantPortalGui\Persistence\SalesMerchantPortalGuiRepositoryInterface
      */
-    protected $salesMerchantPortalGuiRepository;
+    protected SalesMerchantPortalGuiRepositoryInterface $salesMerchantPortalGuiRepository;
 
     /**
      * @var \Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMerchantUserFacadeInterface
      */
-    protected $merchantUserFacade;
+    protected SalesMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade;
 
     /**
      * @var \Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToRouterFacadeInterface
      */
-    protected $routerFacade;
+    protected SalesMerchantPortalGuiToRouterFacadeInterface $routerFacade;
 
     /**
      * @var \Spryker\Zed\SalesMerchantPortalGui\SalesMerchantPortalGuiConfig
      */
-    protected $salesMerchantPortalGuiConfig;
+    protected SalesMerchantPortalGuiConfig $salesMerchantPortalGuiConfig;
 
     /**
      * @var \Twig\Environment
      */
-    protected $twigEnvironment;
+    protected Environment $twigEnvironment;
 
     /**
      * @param \Spryker\Zed\SalesMerchantPortalGui\Persistence\SalesMerchantPortalGuiRepositoryInterface $salesMerchantPortalGuiRepository
@@ -69,8 +69,7 @@ class OrdersDashboardCardProvider implements OrdersDashboardCardProviderInterfac
      */
     public function getDashboardCard(): MerchantDashboardCardTransfer
     {
-        /** @var int $idMerchant */
-        $idMerchant = $this->merchantUserFacade->getCurrentMerchantUser()->getIdMerchant();
+        $idMerchant = $this->merchantUserFacade->getCurrentMerchantUser()->getIdMerchantOrFail();
         $merchantOrderCountsTransfer = $this->salesMerchantPortalGuiRepository->getMerchantOrderCounts($idMerchant);
 
         $title = $this->twigEnvironment->render(
@@ -93,7 +92,7 @@ class OrdersDashboardCardProvider implements OrdersDashboardCardProviderInterfac
             ->setActionButtons(new ArrayObject([
                 (new MerchantDashboardActionButtonTransfer())
                     ->setTitle('Manage Orders')
-                    ->setUrl($this->routerFacade->getMerchantPortalRouter()->generate('sales-merchant-portal-gui:orders')),
+                    ->setUrl($this->routerFacade->getMerchantPortalChainRouter()->generate('sales-merchant-portal-gui:orders')),
             ]));
     }
 }

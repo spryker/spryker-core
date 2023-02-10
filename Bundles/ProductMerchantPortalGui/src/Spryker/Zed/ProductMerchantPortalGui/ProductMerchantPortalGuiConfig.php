@@ -59,19 +59,6 @@ class ProductMerchantPortalGuiConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - Defines main category ID which is used as a starting point for category tree building for form options.
-     *
-     * @api
-     *
-     * @return int
-     */
-    public function getMainCategoryIdForCategoryOptions(): int
-    {
-        return static::MAIN_CATEGORY_ID;
-    }
-
-    /**
-     * Specification:
      * - Returns map of product approval statuses available for update.
      *
      * @api

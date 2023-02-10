@@ -14,27 +14,27 @@ class NavigationItem implements JsonSerializable
     /**
      * @var string|null
      */
-    protected $title;
+    protected ?string $title;
 
     /**
      * @var string|null
      */
-    protected $url;
+    protected ?string $url;
 
     /**
      * @var string|null
      */
-    protected $icon;
+    protected ?string $icon;
 
     /**
      * @var bool|null
      */
-    protected $isActive;
+    protected ?bool $isActive;
 
     /**
-     * @var array|null
+     * @var array<array<string, mixed>>|null
      */
-    protected $subItems;
+    protected ?array $subItems;
 
     /**
      * @return string|null
@@ -109,7 +109,7 @@ class NavigationItem implements JsonSerializable
     }
 
     /**
-     * @return array|null
+     * @return array<array<string, mixed>>|null
      */
     public function getSubItems(): ?array
     {
@@ -117,7 +117,7 @@ class NavigationItem implements JsonSerializable
     }
 
     /**
-     * @param array|null $subItems
+     * @param array<array<string, mixed>>|null $subItems
      *
      * @return void
      */
@@ -127,7 +127,7 @@ class NavigationItem implements JsonSerializable
     }
 
     /**
-     * @return array
+     * @return array<string, mixed>
      */
     public function jsonSerialize(): array
     {

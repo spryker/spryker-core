@@ -2,13 +2,15 @@
     "name": "mp-dummy",
     "version": "0.0.1",
     "private": true,
+    "peerDependencies": {
+        "@angular/common": "^15.0.3",
+        "@angular/core": "^15.0.3",
+        "rxjs": "~7.5.7"
+    },
     "dependencies": {
-        "@angular/common": "^12.2.16",
-        "@angular/core": "^12.2.16",
-        "@spryker/button": "^0.6.2",
-        "@spryker/card": "^0.6.3",
-        "@spryker/headline": "^0.5.3",
-        "@spryker/web-components": "^0.3.3",
-        "rxjs": "~7.4.0"
+        "@spryker/button": "^1.0.0",
+        "@spryker/card": "^1.0.1",
+        "@spryker/headline": "^1.0.0",
+        "@spryker/web-components": "^1.0.0"
     }
 }

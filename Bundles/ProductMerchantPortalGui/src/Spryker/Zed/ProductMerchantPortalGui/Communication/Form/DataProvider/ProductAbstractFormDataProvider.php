@@ -24,30 +24,9 @@ use Spryker\Zed\ProductMerchantPortalGui\ProductMerchantPortalGuiConfig;
 class ProductAbstractFormDataProvider implements ProductAbstractFormDataProviderInterface
 {
     /**
-     * @uses \Spryker\Zed\Category\Business\Tree\CategoryTreeReader::ID_CATEGORY
-     *
-     * @var string
-     */
-    protected const KEY_NODE_CHILD_ID_CATEGORY = 'id_category';
-
-    /**
-     * @uses \Spryker\Zed\Category\Business\Tree\CategoryTreeReader::TEXT
-     *
-     * @var string
-     */
-    protected const KEY_NODE_CHILD_TEXT = 'text';
-
-    /**
-     * @uses \Spryker\Zed\Category\Business\Tree\Formatter\CategoryTreeFormatter::CHILDREN
-     *
-     * @var string
-     */
-    protected const KEY_NODE_CHILD_CHILDREN = 'children';
-
-    /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantProductFacadeInterface
      */
-    protected $merchantProductFacade;
+    protected ProductMerchantPortalGuiToMerchantProductFacadeInterface $merchantProductFacade;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantUserFacadeInterface
@@ -57,22 +36,22 @@ class ProductAbstractFormDataProvider implements ProductAbstractFormDataProvider
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToCategoryFacadeInterface
      */
-    protected $categoryFacade;
+    protected ProductMerchantPortalGuiToCategoryFacadeInterface $categoryFacade;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToLocaleFacadeInterface
      */
-    protected $localeFacade;
+    protected ProductMerchantPortalGuiToLocaleFacadeInterface $localeFacade;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductCategoryFacadeInterface
      */
-    protected $productCategoryFacade;
+    protected ProductMerchantPortalGuiToProductCategoryFacadeInterface $productCategoryFacade;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\ProductMerchantPortalGuiConfig
      */
-    protected $productMerchantPortalGuiConfig;
+    protected ProductMerchantPortalGuiConfig $productMerchantPortalGuiConfig;
 
     /**
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantProductFacadeInterface $merchantProductFacade
@@ -139,7 +118,7 @@ class ProductAbstractFormDataProvider implements ProductAbstractFormDataProvider
     }
 
     /**
-     * @return array<mixed>
+     * @return array<array<string, mixed>>
      */
     public function getProductCategoryTree(): array
     {
@@ -197,7 +176,7 @@ class ProductAbstractFormDataProvider implements ProductAbstractFormDataProvider
     /**
      * @param \Generated\Shared\Transfer\NodeCollectionTransfer $nodeCollectionTransfer
      *
-     * @return array<mixed>
+     * @return array<array<string, mixed>>
      */
     protected function getCategoryTreeArray(NodeCollectionTransfer $nodeCollectionTransfer): array
     {

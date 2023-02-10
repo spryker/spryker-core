@@ -8,7 +8,7 @@ describe('ContentToggleComponent', () => {
     let fixture: ComponentFixture<TestComponent>;
 
     @Component({
-        selector: 'spy-test',
+        selector: 'mp-test',
         template: `
             <mp-content-toggle [name]="name" [isContentHidden]="isContentHidden">
                 <span toggle-text></span>

@@ -22,7 +22,7 @@ class ValidProductOfferPriceIdsOwnByMerchantConstraintValidator extends Abstract
     /**
      * Checks if the merchant owns product offer prices.
      *
-     * @param \Generated\Shared\Transfer\PriceProductOfferCollectionTransfer $value
+     * @param \Generated\Shared\Transfer\PriceProductOfferCollectionTransfer|mixed $value
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\Constraint\ValidProductOfferPriceIdsOwnByMerchantConstraint $constraint
      *
      * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException

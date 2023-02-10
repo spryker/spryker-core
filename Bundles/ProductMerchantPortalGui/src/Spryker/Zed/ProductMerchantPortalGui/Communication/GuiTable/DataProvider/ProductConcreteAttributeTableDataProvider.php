@@ -49,22 +49,22 @@ class ProductConcreteAttributeTableDataProvider extends AbstractGuiTableDataProv
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductFacadeInterface
      */
-    protected $productFacade;
+    protected ProductMerchantPortalGuiToProductFacadeInterface $productFacade;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToLocaleFacadeInterface
      */
-    protected $localeFacade;
+    protected ProductMerchantPortalGuiToLocaleFacadeInterface $localeFacade;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Communication\Extractor\LocalizedAttributesExtractorInterface
      */
-    protected $localizedAttributesExtractor;
+    protected LocalizedAttributesExtractorInterface $localizedAttributesExtractor;
 
     /**
      * @var int
      */
-    protected $idProductConcrete;
+    protected int $idProductConcrete;
 
     /**
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductFacadeInterface $productFacade
@@ -114,7 +114,7 @@ class ProductConcreteAttributeTableDataProvider extends AbstractGuiTableDataProv
         $productConcreteTransfer = $this->productFacade->findProductConcreteById($idProductConcrete);
 
         if (!$productConcreteTransfer) {
-            throw new ProductConcreteNotFoundException((int)$idProductConcrete);
+            throw new ProductConcreteNotFoundException($idProductConcrete);
         }
 
         $superAttributeNames = $this->getSuperAttributeNames($productConcreteTransfer);
@@ -148,7 +148,7 @@ class ProductConcreteAttributeTableDataProvider extends AbstractGuiTableDataProv
     }
 
     /**
-     * @param array $attributes
+     * @param array<string, mixed> $attributes
      * @param string $columnName
      * @param array<array<string>> $data
      *
@@ -172,7 +172,7 @@ class ProductConcreteAttributeTableDataProvider extends AbstractGuiTableDataProv
     }
 
     /**
-     * @param array $attributes
+     * @param array<string, array<string, mixed>> $attributes
      * @param string $orderBy
      * @param string $orderDirection
      *

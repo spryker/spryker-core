@@ -10,9 +10,9 @@
     </transfer>
 
     <transfer name="GuiTableDataResponse">
-        <property name="page" type="int"/>
-        <property name="pageSize" type="int"/>
-        <property name="total" type="int"/>
+        <property name="page" type="int" strict="true"/>
+        <property name="pageSize" type="int" strict="true"/>
+        <property name="total" type="int" strict="true"/>
         <property name="rows" type="GuiTableRowDataResponse[]" singular="row"/>
     </transfer>
 
@@ -29,10 +29,10 @@
         <property name="columns" type="GuiTableColumnConfiguration[]" singular="column"/>
     </transfer>
 
-    <transfer name="GuiTableDataRequest">
+    <transfer name="GuiTableDataRequest" strict="true">
     </transfer>
 
-    <transfer name="ProductTableCriteria">
+    <transfer name="ProductTableCriteria" strict="true">
         <property name="filterIsActive" type="bool"/>
         <property name="filterHasOffers" type="bool"/>
         <property name="searchTerm" type="string"/>
@@ -45,12 +45,12 @@
         <property name="orderDirection" type="string"/>
     </transfer>
 
-    <transfer name="CriteriaRangeFilter">
+    <transfer name="CriteriaRangeFilter" strict="true">
         <property name="from" type="string"/>
         <property name="to" type="string"/>
     </transfer>
 
-    <transfer name="ProductOfferTableCriteria">
+    <transfer name="ProductOfferTableCriteria" strict="true">
         <property name="filterIsActive" type="bool"/>
         <property name="filterHasStock" type="bool"/>
         <property name="filterApprovalStatus" type="string"/>
@@ -67,31 +67,31 @@
         <property name="orderDirection" type="string"/>
     </transfer>
 
-    <transfer name="GuiTableFilter">
+    <transfer name="GuiTableFilter" strict="true">
         <property name="title" type="string"/>
         <property name="id" type="string"/>
         <property name="type" type="string"/>
         <property name="typeOptions" type="object"/>
     </transfer>
 
-    <transfer name="SelectGuiTableFilterTypeOptions">
+    <transfer name="SelectGuiTableFilterTypeOptions" strict="true">
         <property name="multiselect" type="bool"/>
         <property name="values" type="OptionSelectGuiTableFilterTypeOptions[]" singular="value"/>
     </transfer>
 
-    <transfer name="DateRangeGuiTableFilterTypeOptions">
+    <transfer name="DateRangeGuiTableFilterTypeOptions" strict="true">
         <property name="placeholderFrom" type="string"/>
         <property name="placeholderTo" type="string"/>
     </transfer>
 
-    <transfer name="OptionSelectGuiTableFilterTypeOptions">
+    <transfer name="OptionSelectGuiTableFilterTypeOptions" strict="true">
         <property name="value" type="string"/>
         <property name="title" type="string"/>
     </transfer>
 
     <transfer name="ProductConcreteCollection">
         <property name="products" type="ProductConcrete[]" singular="product"/>
-        <property name="pagination" type="Pagination"/>
+        <property name="pagination" type="Pagination" strict="true"/>
     </transfer>
 
     <transfer name="ProductOfferCollection">
@@ -274,7 +274,7 @@
         <property name="isDefault" type="bool"/>
     </transfer>
 
-    <transfer name="MerchantProductOfferCounts">
+    <transfer name="MerchantProductOfferCounts" strict="true">
         <property name="total" type="int"/>
         <property name="active" type="int"/>
         <property name="inactive" type="int"/>
@@ -286,12 +286,12 @@
     </transfer>
 
     <transfer name="MerchantDashboardCard">
-        <property name="actionButtons" type="MerchantDashboardActionButton[]" singular="actionButton"/>
-        <property name="title" type="string"/>
-        <property name="content" type="string"/>
+        <property name="actionButtons" type="MerchantDashboardActionButton[]" singular="actionButton" strict="true"/>
+        <property name="title" type="string" strict="true"/>
+        <property name="content" type="string" strict="true"/>
     </transfer>
 
-    <transfer name="MerchantDashboardActionButton">
+    <transfer name="MerchantDashboardActionButton" strict="true">
         <property name="title" type="string"/>
         <property name="url" type="string"/>
     </transfer>
@@ -302,7 +302,7 @@
         <property name="productOfferReference" type="string"/>
     </transfer>
 
-    <transfer name="PriceProductOfferTableCriteria">
+    <transfer name="PriceProductOfferTableCriteria" strict="true">
         <property name="filterInStores" type="int[]" singular="inStore"/>
         <property name="filterInCurrencies" type="int[]" singular="inCurrency"/>
         <property name="idProductOffer" type="int"/>
@@ -313,12 +313,12 @@
         <property name="idMerchant" type="int"/>
     </transfer>
 
-    <transfer name="PriceProductOfferTableViewCollection">
+    <transfer name="PriceProductOfferTableViewCollection" strict="true">
         <property name="priceProductOfferTableViews" type="PriceProductOfferTableView[]" singular="priceProductOfferTableView"/>
         <property name="pagination" type="Pagination"/>
     </transfer>
 
-    <transfer name="PriceProductOfferTableView">
+    <transfer name="PriceProductOfferTableView" strict="true">
         <property name="store" type="string"/>
         <property name="currency" type="string"/>
         <property name="prices" type="float[]" singular="price" associative="true"/>
@@ -361,17 +361,17 @@
         <property name="root" type="object"/>
     </transfer>
 
-    <transfer name="GuiTableEditableInitialData">
+    <transfer name="GuiTableEditableInitialData" strict="true">
         <property name="data" type="array" description="Data for rows" singular="data"/>
         <property name="errors" type="GuiTableEditableDataError[]" singular="error" description="Key is data index."/>
     </transfer>
 
-    <transfer name="GuiTableEditableDataError">
+    <transfer name="GuiTableEditableDataError" strict="true">
         <property name="rowError" type="string"/>
         <property name="columnErrors" type="array" singular="columnError" associative="true" description="Key is column ID."/>
     </transfer>
 
-    <transfer name="GuiTableEditableButton">
+    <transfer name="GuiTableEditableButton" strict="true">
         <property name="title" type="string"/>
         <property name="variant" type="string"/>
         <property name="size" type="string"/>
@@ -386,7 +386,7 @@
     <transfer name="PriceProductCriteria">
     </transfer>
 
-    <transfer name="ZedUiFormResponse">
+    <transfer name="ZedUiFormResponse" strict="true">
     </transfer>
 
 </transfers>

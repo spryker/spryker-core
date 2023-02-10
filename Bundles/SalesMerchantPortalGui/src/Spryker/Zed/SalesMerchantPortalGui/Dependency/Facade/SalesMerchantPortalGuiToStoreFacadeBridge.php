@@ -25,7 +25,7 @@ class SalesMerchantPortalGuiToStoreFacadeBridge implements SalesMerchantPortalGu
     /**
      * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
-    public function getAllStores()
+    public function getAllStores(): array
     {
         return $this->storeFacade->getAllStores();
     }

@@ -2,12 +2,12 @@
 <transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="MerchantDashboardCard">
-        <property name="actionButtons" type="MerchantDashboardActionButton[]" singular="actionButton"/>
-        <property name="title" type="string"/>
-        <property name="content" type="string"/>
+        <property name="actionButtons" type="MerchantDashboardActionButton[]" singular="actionButton" strict="true"/>
+        <property name="title" type="string" strict="true"/>
+        <property name="content" type="string" strict="true"/>
     </transfer>
 
-    <transfer name="MerchantDashboardActionButton">
+    <transfer name="MerchantDashboardActionButton" strict="true">
         <property name="title" type="string"/>
         <property name="url" type="string"/>
     </transfer>

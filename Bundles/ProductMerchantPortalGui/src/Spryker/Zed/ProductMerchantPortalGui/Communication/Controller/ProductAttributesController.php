@@ -359,11 +359,11 @@ class ProductAttributesController extends AbstractController
     }
 
     /**
-     * @param array<string> $newAttributes
-     * @param array<string> $productAttributes
+     * @param array<string, string> $newAttributes
+     * @param array<string, string> $productAttributes
      * @param string $attributeName
      *
-     * @return array
+     * @return array<string, string>
      */
     protected function updateProductAttributes(
         array $newAttributes,
@@ -384,7 +384,7 @@ class ProductAttributesController extends AbstractController
     }
 
     /**
-     * @param array<string> $newAttributes
+     * @param array<string, string> $newAttributes
      * @param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributesTransfers
      * @param string $attributeName
      *
@@ -414,11 +414,11 @@ class ProductAttributesController extends AbstractController
     }
 
     /**
-     * @param array $attributes
+     * @param array<string, string> $attributes
      * @param string $attributeName
      * @param string|null $attributeValue
      *
-     * @return array
+     * @return array<string, string>
      */
     protected function updateAttribute(array $attributes, string $attributeName, ?string $attributeValue): array
     {
@@ -434,7 +434,7 @@ class ProductAttributesController extends AbstractController
     /**
      * @param \Generated\Shared\Transfer\ProductManagementAttributeTransfer $productManagementAttribute
      *
-     * @return array
+     * @return array<int, array<string, mixed>>
      */
     protected function getOptions(ProductManagementAttributeTransfer $productManagementAttribute): array
     {
@@ -444,8 +444,8 @@ class ProductAttributesController extends AbstractController
         foreach ($values as $value) {
             if ($value->getValue() !== null) {
                 $options[] = [
-                    'value' => $value->getValue(),
-                    'title' => ucfirst($value->getValue()),
+                    'value' => $value->getValueOrFail(),
+                    'title' => ucfirst($value->getValueOrFail()),
                 ];
             }
         }
@@ -492,7 +492,7 @@ class ProductAttributesController extends AbstractController
     }
 
     /**
-     * @param array<string> $attributes
+     * @param array<string, string> $attributes
      * @param \ArrayObject<int, \Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributesTransfers
      * @param string $attributeName
      *

@@ -25,12 +25,12 @@ class ProductConcreteLocalizedAttributesExpander implements ProductConcreteLocal
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToLocaleFacadeInterface
      */
-    protected $localeFacade;
+    protected ProductMerchantPortalGuiToLocaleFacadeInterface $localeFacade;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductAttributeFacadeInterface
      */
-    protected $productAttributeFacade;
+    protected ProductMerchantPortalGuiToProductAttributeFacadeInterface $productAttributeFacade;
 
     /**
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToLocaleFacadeInterface $localeFacade
@@ -82,7 +82,7 @@ class ProductConcreteLocalizedAttributesExpander implements ProductConcreteLocal
     }
 
     /**
-     * @param array<mixed> $attributes
+     * @param array<string> $attributes
      *
      * @return \ArrayObject<int, \Generated\Shared\Transfer\ProductManagementAttributeTransfer>
      */

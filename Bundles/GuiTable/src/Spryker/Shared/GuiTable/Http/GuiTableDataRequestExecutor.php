@@ -19,17 +19,17 @@ class GuiTableDataRequestExecutor implements GuiTableDataRequestExecutorInterfac
     /**
      * @var \Spryker\Shared\GuiTable\Http\DataRequest\DataRequestBuilderInterface
      */
-    protected $dataRequestBuilder;
+    protected DataRequestBuilderInterface $dataRequestBuilder;
 
     /**
      * @var \Spryker\Shared\GuiTable\Http\DataResponse\DataResponseFormatterInterface
      */
-    protected $dataResponseFormatter;
+    protected DataResponseFormatterInterface $dataResponseFormatter;
 
     /**
      * @var \Spryker\Shared\GuiTable\Http\HttpResponseBuilderInterface
      */
-    protected $httpResponseBuilder;
+    protected HttpResponseBuilderInterface $httpResponseBuilder;
 
     /**
      * @param \Spryker\Shared\GuiTable\Http\DataRequest\DataRequestBuilderInterface $dataRequestBuilder

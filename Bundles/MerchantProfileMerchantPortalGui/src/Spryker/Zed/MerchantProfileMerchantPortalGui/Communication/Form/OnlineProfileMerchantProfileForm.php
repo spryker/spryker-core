@@ -19,7 +19,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
 
 /**
@@ -104,7 +103,7 @@ class OnlineProfileMerchantProfileForm extends AbstractType
     protected const URL_PATH_PATTERN = '#^([^\s\\\\]+)$#i';
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      * @param array<string, mixed> $options
      *
      * @return void
@@ -122,7 +121,7 @@ class OnlineProfileMerchantProfileForm extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      *
      * @return $this
      */
@@ -147,7 +146,7 @@ class OnlineProfileMerchantProfileForm extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      *
      * @return $this
      */
@@ -163,7 +162,7 @@ class OnlineProfileMerchantProfileForm extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      *
      * @return $this
      */
@@ -183,7 +182,7 @@ class OnlineProfileMerchantProfileForm extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      *
      * @return $this
      */
@@ -200,7 +199,7 @@ class OnlineProfileMerchantProfileForm extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      *
      * @return $this
      */
@@ -220,7 +219,7 @@ class OnlineProfileMerchantProfileForm extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      *
      * @return $this
      */
@@ -238,7 +237,7 @@ class OnlineProfileMerchantProfileForm extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      *
      * @return $this
      */
@@ -264,20 +263,7 @@ class OnlineProfileMerchantProfileForm extends AbstractType
     /**
      * @return array<\Symfony\Component\Validator\Constraint>
      */
-    protected function getRequiredTextFieldConstraints(): array
-    {
-        return [
-            new NotBlank(),
-            new Length(['max' => 255]),
-        ];
-    }
-
-    /**
-     * @param array $choices
-     *
-     * @return array<\Symfony\Component\Validator\Constraint>
-     */
-    protected function getUrlFieldConstraints(array $choices = []): array
+    protected function getUrlFieldConstraints(): array
     {
         return [
             new Length(['max' => 255]),
@@ -289,7 +275,7 @@ class OnlineProfileMerchantProfileForm extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      *
      * @return $this
      */

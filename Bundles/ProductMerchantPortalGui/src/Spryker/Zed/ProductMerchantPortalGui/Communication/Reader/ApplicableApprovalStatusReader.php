@@ -14,7 +14,7 @@ class ApplicableApprovalStatusReader implements ApplicableApprovalStatusReaderIn
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\ProductMerchantPortalGuiConfig
      */
-    protected $productMerchantPortalGuiConfig;
+    protected ProductMerchantPortalGuiConfig $productMerchantPortalGuiConfig;
 
     /**
      * @param \Spryker\Zed\ProductMerchantPortalGui\ProductMerchantPortalGuiConfig $productMerchantPortalGuiConfig

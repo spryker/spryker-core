@@ -33,7 +33,7 @@ class MerchantProfileAddressTransfersToMerchantProfileAddressTransferTransformer
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantProfileAddressTransfer $value
+     * @param \Generated\Shared\Transfer\MerchantProfileAddressTransfer|mixed $value
      *
      * @return \ArrayObject<int, \Generated\Shared\Transfer\MerchantProfileAddressTransfer>
      */

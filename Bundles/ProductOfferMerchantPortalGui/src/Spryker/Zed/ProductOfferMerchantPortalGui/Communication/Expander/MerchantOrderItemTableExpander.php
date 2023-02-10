@@ -36,7 +36,7 @@ class MerchantOrderItemTableExpander implements MerchantOrderItemTableExpanderIn
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToProductOfferFacadeInterface
      */
-    protected $productOfferFacade;
+    protected ProductOfferMerchantPortalGuiToProductOfferFacadeInterface $productOfferFacade;
 
     /**
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToProductOfferFacadeInterface $productOfferFacade

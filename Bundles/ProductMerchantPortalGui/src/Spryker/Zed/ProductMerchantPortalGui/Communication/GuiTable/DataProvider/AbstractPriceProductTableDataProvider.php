@@ -38,27 +38,27 @@ abstract class AbstractPriceProductTableDataProvider extends AbstractGuiTableDat
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Communication\Mapper\PriceProductTableDataMapperInterface
      */
-    protected $priceProductTableDataMapper;
+    protected PriceProductTableDataMapperInterface $priceProductTableDataMapper;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Communication\GuiTable\Sorter\PriceProductTableViewSorterInterface
      */
-    protected $priceProductTableViewSorter;
+    protected PriceProductTableViewSorterInterface $priceProductTableViewSorter;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Communication\Reader\PriceProductReaderInterface
      */
-    protected $priceProductReader;
+    protected PriceProductReaderInterface $priceProductReader;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantUserFacadeInterface
      */
-    protected $merchantUserFacade;
+    protected ProductMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMoneyFacadeInterface
      */
-    protected $moneyFacade;
+    protected ProductMerchantPortalGuiToMoneyFacadeInterface $moneyFacade;
 
     /**
      * @param \Spryker\Zed\ProductMerchantPortalGui\Communication\Reader\PriceProductReaderInterface $priceProductReader
@@ -150,7 +150,7 @@ abstract class AbstractPriceProductTableDataProvider extends AbstractGuiTableDat
         return $priceProductTableViewCollectionTransfer->getPaginationOrFail()
             ->setPage($criteriaTransfer->getPage())
             ->setMaxPerPage($criteriaTransfer->getPageSize())
-            ->setLastPage((int)($count / $criteriaTransfer->getPageSize()));
+            ->setLastPage((int)($count / $criteriaTransfer->getPageSizeOrFail()));
     }
 
     /**
@@ -167,7 +167,7 @@ abstract class AbstractPriceProductTableDataProvider extends AbstractGuiTableDat
 
         $paginationTransfer = $priceProductTableViewCollectionTransfer->getPaginationOrFail();
 
-        $positionStart = ($paginationTransfer->getPage() - 1) * $paginationTransfer->getMaxPerPage();
+        $positionStart = ($paginationTransfer->getPageOrFail() - 1) * $paginationTransfer->getMaxPerPageOrFail();
 
         $priceProductTableViewsOnCurrentPage = array_slice(
             $priceProductOfferTableViews,

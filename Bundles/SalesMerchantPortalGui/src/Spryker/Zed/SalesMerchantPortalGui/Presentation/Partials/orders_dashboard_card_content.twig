@@ -6,7 +6,7 @@
         <span title>{{ 'Per Store' | trans }}</span>
 
         <div class="spy-row spy-row-gutter-sm spy-row-align-row-space-between">
-            {% for store,total in merchantOrderCounts.totalPerStore %}
+            {% for store,total in merchantOrderCounts.orderTotalsPerStore %}
                 <div class="spy-col spy-col-basis-auto">
                     <web-mp-dashboard-stats-block
                         name="{{ store }}"

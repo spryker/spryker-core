@@ -20,8 +20,8 @@ class ProductAbstractIdOwnedByMerchantConstraintValidator extends AbstractConstr
     /**
      * Checks if abstract product with provided ID owned by merchant.
      *
-     * @param int $value ID product abstract
-     * @param \Symfony\Component\Validator\Constraint|\Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Constraint\ProductAbstractIdOwnedByMerchantConstraint $constraint
+     * @param mixed|int $value ID product abstract
+     * @param \Symfony\Component\Validator\Constraint $constraint
      *
      * @throws \Symfony\Component\Validator\Exception\UnexpectedTypeException
      *

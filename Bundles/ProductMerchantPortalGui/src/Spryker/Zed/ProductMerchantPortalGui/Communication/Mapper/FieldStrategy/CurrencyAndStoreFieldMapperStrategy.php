@@ -23,12 +23,12 @@ class CurrencyAndStoreFieldMapperStrategy extends AbstractFieldMapperStrategy
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Service\ProductMerchantPortalGuiToPriceProductVolumeServiceInterface
      */
-    protected $priceProductVolumeService;
+    protected ProductMerchantPortalGuiToPriceProductVolumeServiceInterface $priceProductVolumeService;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToCurrencyFacadeInterface
      */
-    protected $currencyFacade;
+    protected ProductMerchantPortalGuiToCurrencyFacadeInterface $currencyFacade;
 
     /**
      * @param \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade
@@ -84,7 +84,7 @@ class CurrencyAndStoreFieldMapperStrategy extends AbstractFieldMapperStrategy
                 $priceProductTransfer,
             );
 
-            $priceProductTransfers[] = $newPriceProductTransfer;
+            $priceProductTransfers->append($newPriceProductTransfer);
 
             return $priceProductTransfers;
         }
@@ -167,7 +167,7 @@ class CurrencyAndStoreFieldMapperStrategy extends AbstractFieldMapperStrategy
     }
 
     /**
-     * @param array<mixed> $data
+     * @param array<string, mixed> $data
      * @param \Generated\Shared\Transfer\MoneyValueTransfer $moneyValueTransfer
      *
      * @return \Generated\Shared\Transfer\MoneyValueTransfer

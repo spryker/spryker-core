@@ -12,9 +12,25 @@
                 {% endblock %}
 
                 {% block header %}
+                    {% set navigationConfig = [] %}
+
+                    {% for userMenuNavigationItem in userMenuNavigationItems %}
+                        {% set navigationConfig = navigationConfig | merge([{
+                            url: userMenuNavigationItem.uri,
+                            type: userMenuNavigationItem.type,
+                            title: userMenuNavigationItem.title | trans,
+                        }]) %}
+                    {% endfor %}
+
+                    {% set navigationConfig = navigationConfig | merge([{
+                        url: '/security-merchant-portal-gui/logout',
+                        type: 'danger',
+                        title: 'Logout' | trans
+                    }]) %}
+
                     <header header>
                         {% block headerMenu %}
-                            <web-mp-header-menu cloak menu>
+                            <web-mp-header-menu navigation-config="{{ navigationConfig | json_encode() }}" cloak menu>
                                 {% block infoPrimary %}
                                     {% if username is not empty %}
                                         <span info-primary>{{ username }}</span>
@@ -25,32 +41,6 @@
                                     {% if userEmail is not empty %}
                                         <span info-secondary>{{ userEmail }}</span>
                                     {% endif %}
-                                {% endblock %}
-
-                                {% block userMenuList %}
-                                    {% for userMenuNavigationItem in userMenuNavigationItems %}
-                                        {% block userMenuLink %}
-                                            <a class="mp-header-menu__link" href="{{ userMenuNavigationItem.uri }}">
-                                                {% block userMenuLinkInner %}
-                                                    <web-spy-user-menu-link
-                                                        cloak
-                                                        {% if userMenuNavigationItem.type is not empty %}type="{{ userMenuNavigationItem.type }}"{% endif %}>
-                                                        {{ userMenuNavigationItem.title | trans }}
-                                                    </web-spy-user-menu-link>
-                                                {% endblock %}
-                                            </a>
-                                        {% endblock %}
-                                    {% endfor %}
-
-                                    {% block logoutLink %}
-                                        <a class="mp-header-menu__link" href="/security-merchant-portal-gui/logout">
-                                            {% block logoutLinkInner %}
-                                                <web-spy-user-menu-link cloak type="danger">
-                                                    {{ 'Logout' | trans }}
-                                                </web-spy-user-menu-link>
-                                            {% endblock %}
-                                        </a>
-                                    {% endblock %}
                                 {% endblock %}
                             </web-mp-header-menu>
                         {% endblock %}

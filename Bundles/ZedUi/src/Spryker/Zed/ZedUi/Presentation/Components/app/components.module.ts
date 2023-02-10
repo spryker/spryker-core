@@ -10,7 +10,6 @@ import { TextareaComponent, TextareaModule } from '@spryker/textarea';
 import { SelectModule, SelectComponent } from '@spryker/select';
 import { ToggleModule, ToggleComponent } from '@spryker/toggle';
 import { CheckboxModule, CheckboxComponent } from '@spryker/checkbox';
-import { UserMenuLinkComponent, UserMenuModule } from '@spryker/user-menu';
 import { LogoComponent, LogoModule } from '@spryker/logo';
 
 import { HeaderMenuComponent } from './header-menu/header-menu.component';
@@ -50,7 +49,6 @@ import { RootComponent } from './app.component';
             SelectComponent,
             ToggleComponent,
             CheckboxComponent,
-            UserMenuLinkComponent,
             LogoComponent,
         ]),
         LayoutCenteredModule,
@@ -69,7 +67,6 @@ import { RootComponent } from './app.component';
         SelectModule,
         ToggleModule,
         CheckboxModule,
-        UserMenuModule,
         LogoModule,
     ],
     declarations: [RootComponent],

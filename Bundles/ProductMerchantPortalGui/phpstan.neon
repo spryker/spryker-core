@@ -1,5 +1,4 @@
 parameters:
     level: 8
-    checkMissingIterableValueType: false
     ignoreErrors:
         - '#Call to an undefined method .+SpyUrlQuery::useSpyProductLocalizedAttributesQuery\(\).#'

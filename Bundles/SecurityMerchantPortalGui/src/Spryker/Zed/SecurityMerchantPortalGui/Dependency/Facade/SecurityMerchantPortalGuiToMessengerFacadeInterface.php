@@ -16,5 +16,5 @@ interface SecurityMerchantPortalGuiToMessengerFacadeInterface
      *
      * @return void
      */
-    public function addErrorMessage(MessageTransfer $message);
+    public function addErrorMessage(MessageTransfer $message): void;
 }

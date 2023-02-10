@@ -47,7 +47,7 @@ class AttributesDataProvider implements AttributesDataProviderInterface
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Communication\Extractor\LocalizedAttributesExtractorInterface
      */
-    protected $localizedAttributesExtractor;
+    protected LocalizedAttributesExtractorInterface $localizedAttributesExtractor;
 
     /**
      * @param \Spryker\Zed\ProductMerchantPortalGui\Communication\Extractor\LocalizedAttributesExtractorInterface $localizedAttributesExtractor
@@ -60,7 +60,7 @@ class AttributesDataProvider implements AttributesDataProviderInterface
     /**
      * @param array<\Generated\Shared\Transfer\ProductManagementAttributeTransfer> $productManagementAttributeTransfers
      *
-     * @return array<mixed>
+     * @return array<array<string, mixed>>
      */
     public function getProductAttributesData(array $productManagementAttributeTransfers): array
     {
@@ -91,7 +91,7 @@ class AttributesDataProvider implements AttributesDataProviderInterface
      * @param array<\Generated\Shared\Transfer\ProductManagementAttributeTransfer> $productManagementAttributeTransfers
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return array<mixed>
+     * @return array<array<string, mixed>>
      */
     public function getExistingConcreteProductData(
         MerchantProductTransfer $merchantProductTransfer,
@@ -120,7 +120,7 @@ class AttributesDataProvider implements AttributesDataProviderInterface
      * @param array<string> $superAttributeKeys
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
-     * @return array
+     * @return array<string, mixed>
      */
     protected function getSuperAttributesDataItem(
         ProductConcreteTransfer $productConcreteTransfer,
@@ -158,8 +158,8 @@ class AttributesDataProvider implements AttributesDataProviderInterface
     }
 
     /**
-     * @param array<mixed> $a
-     * @param array<mixed> $b
+     * @param array<string, mixed> $a
+     * @param array<string, mixed> $b
      *
      * @return int
      */

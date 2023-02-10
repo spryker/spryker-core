@@ -28,11 +28,6 @@ class BusinessInfoMerchantProfileForm extends AbstractType
     /**
      * @var string
      */
-    protected const FIELD_ID_MERCHANT = 'id_merchant';
-
-    /**
-     * @var string
-     */
     protected const FIELD_CONTACT_PERSON_TITLE = 'contact_person_title';
 
     /**
@@ -69,11 +64,6 @@ class BusinessInfoMerchantProfileForm extends AbstractType
      * @var string
      */
     protected const FIELD_MERCHANT_REFERENCE = 'merchant_reference';
-
-    /**
-     * @var string
-     */
-    protected const FIELD_MERCHANT_PROFILE = 'merchantProfile';
 
     /**
      * @var string
@@ -144,7 +134,7 @@ class BusinessInfoMerchantProfileForm extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      * @param array<string, mixed> $options
      *
      * @return void
@@ -163,12 +153,11 @@ class BusinessInfoMerchantProfileForm extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array $choices
+     * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      *
      * @return $this
      */
-    protected function addContactPersonTitleField(FormBuilderInterface $builder, array $choices = [])
+    protected function addContactPersonTitleField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_CONTACT_PERSON_TITLE, ChoiceType::class, [
             'choices' => array_flip($this->getConfig()->getSalutationChoices()),
@@ -183,7 +172,7 @@ class BusinessInfoMerchantProfileForm extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      *
      * @return $this
      */
@@ -204,7 +193,7 @@ class BusinessInfoMerchantProfileForm extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      *
      * @return $this
      */
@@ -225,7 +214,7 @@ class BusinessInfoMerchantProfileForm extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      *
      * @return $this
      */
@@ -242,7 +231,7 @@ class BusinessInfoMerchantProfileForm extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      *
      * @return $this
      */
@@ -260,7 +249,7 @@ class BusinessInfoMerchantProfileForm extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      *
      * @return $this
      */
@@ -278,7 +267,7 @@ class BusinessInfoMerchantProfileForm extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      *
      * @return $this
      */
@@ -294,7 +283,7 @@ class BusinessInfoMerchantProfileForm extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      *
      * @return $this
      */
@@ -322,7 +311,7 @@ class BusinessInfoMerchantProfileForm extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      *
      * @return $this
      */
@@ -402,7 +391,7 @@ class BusinessInfoMerchantProfileForm extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $formBuilder
+     * @param \Symfony\Component\Form\FormBuilderInterface<mixed> $formBuilder
      *
      * @return int|null
      */

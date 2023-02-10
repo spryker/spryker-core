@@ -44,7 +44,7 @@ class SecurityMerchantPortalGuiCommunicationFactory extends AbstractCommunicatio
     }
 
     /**
-     * @return \Symfony\Component\Form\FormInterface
+     * @return \Symfony\Component\Form\FormInterface<mixed>
      */
     public function createLoginForm(): FormInterface
     {
@@ -52,7 +52,7 @@ class SecurityMerchantPortalGuiCommunicationFactory extends AbstractCommunicatio
     }
 
     /**
-     * @return \Symfony\Component\Form\FormInterface
+     * @return \Symfony\Component\Form\FormInterface<mixed>
      */
     public function createResetPasswordRequestForm(): FormInterface
     {
@@ -60,7 +60,7 @@ class SecurityMerchantPortalGuiCommunicationFactory extends AbstractCommunicatio
     }
 
     /**
-     * @return \Symfony\Component\Form\FormInterface
+     * @return \Symfony\Component\Form\FormInterface<mixed>
      */
     public function createResetPasswordForm(): FormInterface
     {

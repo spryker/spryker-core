@@ -58,21 +58,6 @@ class ProductConcreteAttributeGuiTableConfigurationProvider implements ProductCo
     /**
      * @var string
      */
-    protected const COL_KEY_COLUMN_TYPE = 'columnType';
-
-    /**
-     * @var string
-     */
-    protected const COL_KEY_COLUMN_TYPE_OPTIONS = 'columnTypeOptions';
-
-    /**
-     * @var string
-     */
-    protected const COL_KEY_ALLOW_INPUT = 'allowInput';
-
-    /**
-     * @var string
-     */
     protected const COL_KEY_ID_PRODUCT_CONCRETE = 'idProductConcrete';
 
     /**
@@ -171,17 +156,17 @@ class ProductConcreteAttributeGuiTableConfigurationProvider implements ProductCo
     /**
      * @var \Spryker\Shared\GuiTable\GuiTableFactoryInterface
      */
-    protected $guiTableFactory;
+    protected GuiTableFactoryInterface $guiTableFactory;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductAttributeFacadeInterface
      */
-    protected $productAttributeFacade;
+    protected ProductMerchantPortalGuiToProductAttributeFacadeInterface $productAttributeFacade;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToProductFacadeInterface
      */
-    protected $productFacade;
+    protected ProductMerchantPortalGuiToProductFacadeInterface $productFacade;
 
     /**
      * @param \Spryker\Shared\GuiTable\GuiTableFactoryInterface $guiTableFactory
@@ -200,7 +185,7 @@ class ProductConcreteAttributeGuiTableConfigurationProvider implements ProductCo
 
     /**
      * @param int $idProductConcrete
-     * @param array $attributesInitialData
+     * @param array<string, array<string, mixed>> $attributesInitialData
      *
      * @throws \Spryker\Zed\ProductMerchantPortalGui\Communication\Exception\ProductConcreteNotFoundException
      *
@@ -211,7 +196,7 @@ class ProductConcreteAttributeGuiTableConfigurationProvider implements ProductCo
         $productConcrete = $this->productFacade->findProductConcreteById($idProductConcrete);
 
         if (!$productConcrete) {
-            throw new ProductConcreteNotFoundException((int)$idProductConcrete);
+            throw new ProductConcreteNotFoundException($idProductConcrete);
         }
 
         $guiTableConfigurationBuilder = $this->guiTableFactory->createConfigurationBuilder();
@@ -260,7 +245,7 @@ class ProductConcreteAttributeGuiTableConfigurationProvider implements ProductCo
 
     /**
      * @param \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder
-     * @param array $attributesInitialData
+     * @param array<string, array<string, mixed>> $attributesInitialData
      *
      * @return \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface
      */
@@ -287,7 +272,7 @@ class ProductConcreteAttributeGuiTableConfigurationProvider implements ProductCo
             static::PRODUCT_ATTRIBUTES_DATA_URL,
         );
 
-        $guiTableConfigurationBuilder->enableInlineDataEditing($this->getAttributeActionUrl(static::PRODUCT_ATTRIBUTE_SAVE_DATA_URL), 'POST');
+        $guiTableConfigurationBuilder->enableInlineDataEditing($this->getAttributeActionUrl(static::PRODUCT_ATTRIBUTE_SAVE_DATA_URL));
 
         $formInputName = sprintf(
             '%s[%s][%s]',
@@ -326,23 +311,6 @@ class ProductConcreteAttributeGuiTableConfigurationProvider implements ProductCo
     }
 
     /**
-     * @param array<string> $attributes
-     * @param array<string> $superAttributes
-     *
-     * @return array<string>
-     */
-    protected function filterSuperAttributes(array $attributes, array $superAttributes): array
-    {
-        foreach ($attributes as $attributeKey => $attribute) {
-            if (in_array($attributeKey, $superAttributes)) {
-                unset($attributes[$attributeKey]);
-            }
-        }
-
-        return $attributes;
-    }
-
-    /**
      * @param string $action
      *
      * @return string
@@ -370,7 +338,7 @@ class ProductConcreteAttributeGuiTableConfigurationProvider implements ProductCo
 
         foreach ($productManagementAttributeCollectionTransfer->getProductManagementAttributes() as $attribute) {
             if (!$attribute->getIsSuper()) {
-                $nonSuperAttributeKeysIndexedByKeys[$attribute->getKey()] = $attribute->getKey();
+                $nonSuperAttributeKeysIndexedByKeys[$attribute->getKeyOrFail()] = $attribute->getKeyOrFail();
             }
         }
 

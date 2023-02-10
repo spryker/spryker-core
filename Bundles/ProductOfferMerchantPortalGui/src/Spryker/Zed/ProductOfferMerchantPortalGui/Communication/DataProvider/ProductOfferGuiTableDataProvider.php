@@ -40,27 +40,27 @@ class ProductOfferGuiTableDataProvider extends AbstractGuiTableDataProvider
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepositoryInterface
      */
-    protected $productOfferMerchantPortalGuiRepository;
+    protected ProductOfferMerchantPortalGuiRepositoryInterface $productOfferMerchantPortalGuiRepository;
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToTranslatorFacadeInterface
      */
-    protected $translatorFacade;
+    protected ProductOfferMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade;
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Builder\ProductNameBuilderInterface
      */
-    protected $productNameBuilder;
+    protected ProductNameBuilderInterface $productNameBuilder;
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface
      */
-    protected $merchantUserFacade;
+    protected ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade;
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToLocaleFacadeInterface
      */
-    protected $localeFacade;
+    protected ProductOfferMerchantPortalGuiToLocaleFacadeInterface $localeFacade;
 
     /**
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepositoryInterface $productOfferMerchantPortalGuiRepository
@@ -170,9 +170,9 @@ class ProductOfferGuiTableDataProvider extends AbstractGuiTableDataProvider
     /**
      * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
      *
-     * @return string|int|null
+     * @return int|null
      */
-    protected function getStockColumnData(ProductOfferTransfer $productOfferTransfer)
+    protected function getStockColumnData(ProductOfferTransfer $productOfferTransfer): ?int
     {
         if (!$productOfferTransfer->getProductOfferStocks()->count()) {
             return null;

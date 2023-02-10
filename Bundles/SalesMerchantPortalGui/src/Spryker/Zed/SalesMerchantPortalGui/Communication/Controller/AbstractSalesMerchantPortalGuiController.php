@@ -24,8 +24,7 @@ abstract class AbstractSalesMerchantPortalGuiController extends AbstractControll
     protected function isMerchantOrderBelongsCurrentMerchant(MerchantOrderTransfer $merchantOrderTransfer): bool
     {
         $currentMerchantUserTransfer = $this->getFactory()->getMerchantUserFacade()->getCurrentMerchantUser();
-        /** @var \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer */
-        $merchantTransfer = $currentMerchantUserTransfer->requireMerchant()->getMerchant();
+        $merchantTransfer = $currentMerchantUserTransfer->getMerchantOrFail();
 
         if ($merchantTransfer->getMerchantReference() !== $merchantOrderTransfer->getMerchantReference()) {
             return false;

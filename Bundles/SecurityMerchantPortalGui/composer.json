@@ -12,8 +12,9 @@
         "spryker/security-extension": "^1.0.0",
         "spryker/security-merchant-portal-gui-extension": "^1.0.0",
         "spryker/symfony": "^3.5.0",
+        "spryker/transfer": "^3.25.0",
         "spryker/user-merchant-portal-gui-extension": "^1.0.0",
-        "spryker/zed-ui": "^1.6.0"
+        "spryker/zed-ui": "^2.0.0"
     },
     "require-dev": {
         "spryker/acl": "*",
@@ -47,12 +48,12 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "scripts": {
-        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
-        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/"
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.0.x-dev"
+            "dev-master": "2.0.x-dev"
         }
     },
     "config": {

@@ -37,32 +37,32 @@ class PriceProductOfferMapper
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductFacadeInterface
      */
-    protected $priceProductFacade;
+    protected ProductOfferMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade;
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMoneyFacadeInterface
      */
-    protected $moneyFacade;
+    protected ProductOfferMerchantPortalGuiToMoneyFacadeInterface $moneyFacade;
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductOfferVolumeFacadeInterface
      */
-    protected $priceProductOfferVolumeFacade;
+    protected ProductOfferMerchantPortalGuiToPriceProductOfferVolumeFacadeInterface $priceProductOfferVolumeFacade;
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToPriceProductVolumeServiceInterface
      */
-    protected $priceProductVolumeService;
+    protected ProductOfferMerchantPortalGuiToPriceProductVolumeServiceInterface $priceProductVolumeService;
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Validator\PriceProductOffer\PropertyPath\PriceProductOfferPropertyPathAnalyzerInterface
      */
-    protected $propertyPathAnalyzer;
+    protected PriceProductOfferPropertyPathAnalyzerInterface $propertyPathAnalyzer;
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\Column\ColumnIdCreatorInterface
      */
-    protected $columnIdCreator;
+    protected ColumnIdCreatorInterface $columnIdCreator;
 
     /**
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade
@@ -181,8 +181,6 @@ class PriceProductOfferMapper
             if ($key === MoneyValueTransfer::CURRENCY) {
                 $value = (int)$value;
                 $moneyValueTransfer->setFkCurrency($value);
-
-                continue;
             }
         }
 

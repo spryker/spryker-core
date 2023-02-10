@@ -38,7 +38,7 @@ class EmptyJsonAttributesConstraintValidator extends AbstractConstraintValidator
     protected const FIELD_EXISTING_ATTRIBUTES = 'existing_attributes';
 
     /**
-     * @param string $value Attributes that should be validated
+     * @param mixed|string $value Attributes that should be validated
      * @param \Symfony\Component\Validator\Constraint $constraint
      *
      * @throws \Symfony\Component\Form\Exception\UnexpectedTypeException
@@ -88,11 +88,11 @@ class EmptyJsonAttributesConstraintValidator extends AbstractConstraintValidator
      */
     protected function getExistingAttributes(): array
     {
-        /** @var \Symfony\Component\Form\FormInterface $form */
+        /** @var \Symfony\Component\Form\FormInterface<mixed> $form */
         $form = $this->context->getObject();
-        /** @var \Symfony\Component\Form\FormInterface $baseForm */
+        /** @var \Symfony\Component\Form\FormInterface<mixed> $baseForm */
         $baseForm = $form->getParent();
-        /** @var \Generated\Shared\Transfer\ProductConcreteTransfer|array $formData */
+        /** @var \Generated\Shared\Transfer\ProductConcreteTransfer|array<string, mixed> $formData */
         $formData = $baseForm->getData();
 
         return $this->getFactory()->getUtilEncodingService()->decodeJson(

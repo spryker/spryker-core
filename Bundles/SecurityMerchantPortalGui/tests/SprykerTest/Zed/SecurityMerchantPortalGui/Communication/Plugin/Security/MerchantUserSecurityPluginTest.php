@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\SecurityMerchantPortalGui\Communication\Plugin\Security\MerchantUserSecurityPlugin;
+use SprykerTest\Zed\SecurityMerchantPortalGui\SecurityMerchantPortalGuiCommunicationTester;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -65,7 +66,7 @@ class MerchantUserSecurityPluginTest extends Unit
     /**
      * @var \SprykerTest\Zed\SecurityMerchantPortalGui\SecurityMerchantPortalGuiCommunicationTester
      */
-    protected $tester;
+    protected SecurityMerchantPortalGuiCommunicationTester $tester;
 
     /**
      * @return void

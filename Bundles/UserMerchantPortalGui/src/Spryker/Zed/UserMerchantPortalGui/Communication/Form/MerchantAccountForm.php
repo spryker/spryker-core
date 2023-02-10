@@ -22,7 +22,6 @@ use Symfony\Component\Validator\Constraints\Regex;
 
 /**
  * @method \Spryker\Zed\UserMerchantPortalGui\Communication\UserMerchantPortalGuiCommunicationFactory getFactory()
- * @method \Spryker\Zed\UserMerchantPortalGui\Business\UserMerchantPortalGuiFacadeInterface getFacade()
  */
 class MerchantAccountForm extends AbstractType
 {
@@ -80,11 +79,6 @@ class MerchantAccountForm extends AbstractType
      * @var string
      */
     protected const LABEL_USERNAME = 'E-mail';
-
-    /**
-     * @var string
-     */
-    protected const LABEL_PASSWORD = 'Password';
 
     /**
      * @var string
@@ -150,7 +144,7 @@ class MerchantAccountForm extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this
             ->addFirstNameField($builder)

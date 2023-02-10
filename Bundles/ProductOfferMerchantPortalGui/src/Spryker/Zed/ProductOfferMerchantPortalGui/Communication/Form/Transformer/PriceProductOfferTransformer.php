@@ -36,42 +36,42 @@ class PriceProductOfferTransformer implements DataTransformerInterface
     /**
      * @var int|null
      */
-    protected $idProductOffer;
+    protected ?int $idProductOffer;
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilEncodingServiceInterface
      */
-    protected $utilEncodingService;
+    protected ProductOfferMerchantPortalGuiToUtilEncodingServiceInterface $utilEncodingService;
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToPriceProductFacadeInterface
      */
-    protected $priceProductFacade;
+    protected ProductOfferMerchantPortalGuiToPriceProductFacadeInterface $priceProductFacade;
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToCurrencyFacadeInterface
      */
-    protected $currencyFacade;
+    protected ProductOfferMerchantPortalGuiToCurrencyFacadeInterface $currencyFacade;
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMoneyFacadeInterface
      */
-    protected $moneyFacade;
+    protected ProductOfferMerchantPortalGuiToMoneyFacadeInterface $moneyFacade;
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\Transformer\Merger\PriceProductsMergerInterface
      */
-    protected $priceProductsMerger;
+    protected PriceProductsMergerInterface $priceProductsMerger;
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\GuiTable\Column\ColumnIdCreatorInterface
      */
-    protected $columnIdCreator;
+    protected ColumnIdCreatorInterface $columnIdCreator;
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\PriceProductOfferDataProviderInterface
      */
-    protected $priceProductOfferDataProvider;
+    protected PriceProductOfferDataProviderInterface $priceProductOfferDataProvider;
 
     /**
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilEncodingServiceInterface $utilEncodingService
@@ -121,12 +121,12 @@ class PriceProductOfferTransformer implements DataTransformerInterface
 
             $key = sprintf(
                 '%d_%d',
-                $priceProductTransfer->getMoneyValueOrFail()->getFkStore(),
-                $priceProductTransfer->getMoneyValueOrFail()->getFkCurrency(),
+                $priceProductTransfer->getMoneyValueOrFail()->getFkStoreOrFail(),
+                $priceProductTransfer->getMoneyValueOrFail()->getFkCurrencyOrFail(),
             );
 
-            $prices[$key][PriceProductOfferTableViewTransfer::STORE] = $priceProductTransfer->getMoneyValueOrFail()->getFkStore();
-            $prices[$key][PriceProductOfferTableViewTransfer::CURRENCY] = $priceProductTransfer->getMoneyValueOrFail()->getFkCurrency();
+            $prices[$key][PriceProductOfferTableViewTransfer::STORE] = $priceProductTransfer->getMoneyValueOrFail()->getFkStoreOrFail();
+            $prices[$key][PriceProductOfferTableViewTransfer::CURRENCY] = $priceProductTransfer->getMoneyValueOrFail()->getFkCurrencyOrFail();
 
             $prices = $this->addPrices($priceProductTransfer, $prices[$key], $priceTypes);
         }
@@ -215,7 +215,7 @@ class PriceProductOfferTransformer implements DataTransformerInterface
     }
 
     /**
-     * @param array $newPriceProductOfferData
+     * @param array<mixed> $newPriceProductOfferData
      * @param \Generated\Shared\Transfer\PriceProductDimensionTransfer $priceProductDimensionTransfer
      * @param \Generated\Shared\Transfer\CurrencyTransfer|null $currencyTransfer
      * @param \Generated\Shared\Transfer\PriceTypeTransfer $priceTypeTransfer

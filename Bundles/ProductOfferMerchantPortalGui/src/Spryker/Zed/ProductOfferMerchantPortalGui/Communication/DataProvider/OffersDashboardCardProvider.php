@@ -21,27 +21,27 @@ class OffersDashboardCardProvider implements OffersDashboardCardProviderInterfac
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepositoryInterface
      */
-    protected $productOfferMerchantPortalGuiRepository;
+    protected ProductOfferMerchantPortalGuiRepositoryInterface $productOfferMerchantPortalGuiRepository;
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface
      */
-    protected $merchantUserFacade;
+    protected ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade;
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToRouterFacadeInterface
      */
-    protected $routerFacade;
+    protected ProductOfferMerchantPortalGuiToRouterFacadeInterface $routerFacade;
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\ProductOfferMerchantPortalGuiConfig
      */
-    protected $productOfferMerchantPortalGuiConfig;
+    protected ProductOfferMerchantPortalGuiConfig $productOfferMerchantPortalGuiConfig;
 
     /**
      * @var \Twig\Environment
      */
-    protected $twigEnvironment;
+    protected Environment $twigEnvironment;
 
     /**
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepositoryInterface $productOfferMerchantPortalGuiRepository
@@ -69,11 +69,9 @@ class OffersDashboardCardProvider implements OffersDashboardCardProviderInterfac
      */
     public function getDashboardCard(): MerchantDashboardCardTransfer
     {
-        /** @var int $idMerchant */
         $idMerchant = $this->merchantUserFacade
             ->getCurrentMerchantUser()
-            ->requireIdMerchant()
-            ->getIdMerchant();
+            ->getIdMerchantOrFail();
 
         $merchantProductOfferCountsTransfer = $this->productOfferMerchantPortalGuiRepository
             ->getOffersDashboardCardCounts($idMerchant);

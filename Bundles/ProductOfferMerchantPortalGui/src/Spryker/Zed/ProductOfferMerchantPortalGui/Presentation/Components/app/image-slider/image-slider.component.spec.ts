@@ -23,8 +23,7 @@ describe('ImageSliderComponent', () => {
     ];
 
     @Component({
-        // tslint:disable-next-line: component-selector
-        selector: 'test',
+        selector: 'mp-test',
         template: ` <mp-image-slider [images]="images"></mp-image-slider> `,
     })
     class TestComponent {

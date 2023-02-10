@@ -26,17 +26,17 @@ class PriceProductTableRowMatcher implements PriceProductTableRowMatcherInterfac
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Communication\Creator\PriceProductTableColumnCreatorInterface
      */
-    protected $priceProductTableColumnCreator;
+    protected PriceProductTableColumnCreatorInterface $priceProductTableColumnCreator;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToPriceProductVolumeFacadeInterface
      */
-    protected $priceProductVolumeFacade;
+    protected ProductMerchantPortalGuiToPriceProductVolumeFacadeInterface $priceProductVolumeFacade;
 
     /**
      * @var \Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMoneyFacadeInterface
      */
-    protected $moneyFacade;
+    protected ProductMerchantPortalGuiToMoneyFacadeInterface $moneyFacade;
 
     /**
      * @param \Spryker\Zed\ProductMerchantPortalGui\Communication\Creator\PriceProductTableColumnCreatorInterface $priceProductTableColumnCreator
@@ -56,7 +56,7 @@ class PriceProductTableRowMatcher implements PriceProductTableRowMatcherInterfac
     /**
      * @param array<mixed> $initialDataRow
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     * @param array $propertyPath
+     * @param array<string> $propertyPath
      *
      * @return bool
      */
@@ -73,7 +73,7 @@ class PriceProductTableRowMatcher implements PriceProductTableRowMatcherInterfac
     }
 
     /**
-     * @param array $initialDataRow
+     * @param array<mixed> $initialDataRow
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
      * @return bool
@@ -88,7 +88,7 @@ class PriceProductTableRowMatcher implements PriceProductTableRowMatcherInterfac
     }
 
     /**
-     * @param array $initialDataRow
+     * @param array<mixed> $initialDataRow
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      *
      * @return bool
@@ -103,9 +103,9 @@ class PriceProductTableRowMatcher implements PriceProductTableRowMatcherInterfac
     }
 
     /**
-     * @param array $initialDataRow
+     * @param array<mixed> $initialDataRow
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     * @param array $propertyPath
+     * @param array<string> $propertyPath
      *
      * @return bool
      */
@@ -140,9 +140,9 @@ class PriceProductTableRowMatcher implements PriceProductTableRowMatcherInterfac
     }
 
     /**
-     * @param array $initialDataRow
+     * @param array<mixed> $initialDataRow
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     * @param array $propertyPath
+     * @param array<string> $propertyPath
      *
      * @return bool
      */
@@ -179,7 +179,7 @@ class PriceProductTableRowMatcher implements PriceProductTableRowMatcherInterfac
     /**
      * @param array<mixed> $initialDataRow
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     * @param array $propertyPath
+     * @param array<string> $propertyPath
      *
      * @return bool
      */
@@ -218,9 +218,9 @@ class PriceProductTableRowMatcher implements PriceProductTableRowMatcherInterfac
     }
 
     /**
-     * @param array $initialDataRow
+     * @param array<mixed> $initialDataRow
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
-     * @param array $propertyPath
+     * @param array<string> $propertyPath
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
