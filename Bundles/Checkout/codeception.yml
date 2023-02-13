@@ -2,6 +2,7 @@ namespace: SprykerTest
 include:
     - tests/SprykerTest/Yves/Checkout
     - tests/SprykerTest/Zed/Checkout
+    - tests/SprykerTest/Shared/Checkout
 paths:
     tests: tests
     support: .

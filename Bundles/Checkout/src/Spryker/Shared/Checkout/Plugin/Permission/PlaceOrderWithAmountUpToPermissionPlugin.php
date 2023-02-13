@@ -37,7 +37,7 @@ class PlaceOrderWithAmountUpToPermissionPlugin implements ExecutablePermissionPl
      */
     public function can(array $configuration, $context = null): bool
     {
-        if (!$context) {
+        if ($context === null) {
             return false;
         }
 
