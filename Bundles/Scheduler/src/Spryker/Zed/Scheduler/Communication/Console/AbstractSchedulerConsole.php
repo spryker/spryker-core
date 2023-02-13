@@ -53,10 +53,12 @@ class AbstractSchedulerConsole extends Console
         foreach ($responseCollectionTransfer->getResponses() as $responseTransfer) {
             $status = $responseTransfer->getStatus();
             $outputColor = $status ? static::OUTPUT_SUCCESS_COLOR : static::OUTPUT_ERROR_COLOR;
-            $output->writeln(sprintf(
-                "Scheduler Name: <fg=$outputColor;options=bold>%s</>",
-                $responseTransfer->getSchedule()->getIdScheduler(),
-            ));
+            if ($responseTransfer->getSchedule()) {
+                $output->writeln(sprintf(
+                    "Scheduler Name: <fg=$outputColor;options=bold>%s</>",
+                    $responseTransfer->getSchedule()->getIdScheduler(),
+                ));
+            }
             $output->writeln(sprintf(
                 "Scheduler Status: <fg=$outputColor;options=bold>%s</>",
                 $status ? static::OUTPUT_SUCCESS_MESSAGE : static::OUTPUT_ERROR_MESSAGE,
@@ -65,8 +67,11 @@ class AbstractSchedulerConsole extends Console
                 $this->outputJobResponse($responseTransfer, $output);
             }
             if ($status === false) {
-                $output->writeln($responseTransfer->getMessage());
-                $isSuccess = $status;
+                $output->writeln(sprintf(
+                    "Scheduler Error: <fg=$outputColor;options=bold>%s</>",
+                    $responseTransfer->getMessage(),
+                ));
+                $isSuccess = false;
             }
         }
 
@@ -81,6 +86,10 @@ class AbstractSchedulerConsole extends Console
      */
     protected function outputJobResponse(SchedulerResponseTransfer $responseTransfer, OutputInterface $output): void
     {
+        if (!$responseTransfer->getSchedule() || count($responseTransfer->getSchedule()->getJobs()) === 0) {
+            return;
+        }
+
         foreach ($responseTransfer->getSchedule()->getJobs() as $jobTransfer) {
             $output->writeln(' - ' . $jobTransfer->getName());
         }

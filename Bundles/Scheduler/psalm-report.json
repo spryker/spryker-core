@@ -27,54 +27,6 @@
         },
         {
             "severity": "info",
-            "line_from": 58,
-            "line_to": 58,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/Scheduler/src/Spryker/Zed/Scheduler/Communication/Console/AbstractSchedulerConsole.php",
-            "snippet": "                $responseTransfer->getSchedule()->getIdScheduler(),",
-            "selected_text": "$responseTransfer->getSchedule()->getIdScheduler()",
-            "error_level": 3,
-            "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 58,
-            "line_to": 58,
-            "type": "PossiblyNullReference",
-            "message": "Cannot call method getIdScheduler on possibly null value",
-            "file_name": "vendor/spryker/spryker/Bundles/Scheduler/src/Spryker/Zed/Scheduler/Communication/Console/AbstractSchedulerConsole.php",
-            "snippet": "                $responseTransfer->getSchedule()->getIdScheduler(),",
-            "selected_text": "getIdScheduler",
-            "error_level": 3,
-            "shortcode": 83
-        },
-        {
-            "severity": "info",
-            "line_from": 68,
-            "line_to": 68,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 1 of Symfony\\Component\\Console\\Output\\OutputInterface::writeln cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/Scheduler/src/Spryker/Zed/Scheduler/Communication/Console/AbstractSchedulerConsole.php",
-            "snippet": "                $output->writeln($responseTransfer->getMessage());",
-            "selected_text": "$responseTransfer->getMessage()",
-            "error_level": 3,
-            "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 84,
-            "line_to": 84,
-            "type": "PossiblyNullReference",
-            "message": "Cannot call method getJobs on possibly null value",
-            "file_name": "vendor/spryker/spryker/Bundles/Scheduler/src/Spryker/Zed/Scheduler/Communication/Console/AbstractSchedulerConsole.php",
-            "snippet": "        foreach ($responseTransfer->getSchedule()->getJobs() as $jobTransfer) {",
-            "selected_text": "getJobs",
-            "error_level": 3,
-            "shortcode": 83
-        },
-        {
-            "severity": "info",
             "line_from": 24,
             "line_to": 24,
             "type": "LessSpecificImplementedReturnType",
@@ -99,5 +51,5 @@
         }
     ],
     "deprecation": [],
-    "count": 8
+    "count": 4
 }

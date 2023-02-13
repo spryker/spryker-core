@@ -85,6 +85,11 @@ abstract class AbstractSchedulerCommand implements SchedulerCommandInterface
                 $responseCollectionTransfer->addResponse($responseTransfer);
             }
         } catch (Throwable $throwable) {
+            $responseCollectionTransfer->addResponse(
+                (new SchedulerResponseTransfer())
+                    ->setStatus(false)
+                    ->setMessage($throwable->getMessage()),
+            );
         }
 
         return $responseCollectionTransfer;
