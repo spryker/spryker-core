@@ -45,8 +45,6 @@ class ProductOfferDeletePublisherPlugin extends AbstractPlugin implements Publis
         return [
             ProductOfferStorageConfig::ENTITY_SPY_PRODUCT_OFFER_DELETE,
             ProductOfferStorageConfig::ENTITY_SPY_PRODUCT_OFFER_STORE_DELETE,
-            ProductOfferStorageConfig::ENTITY_SPY_PRODUCT_OFFER_STORE_CREATE,
-            ProductOfferStorageConfig::ENTITY_SPY_PRODUCT_OFFER_STORE_UPDATE,
             ProductOfferStorageConfig::PRODUCT_OFFER_UNPUBLISH,
             ProductOfferStorageConfig::PRODUCT_OFFER_STORE_UNPUBLISH,
         ];
