@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ProductCategory\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductCategory\Business\Event\ProductCategoryEventTrigger;
+use Spryker\Zed\ProductCategory\Business\Event\ProductCategoryEventTriggerInterface;
 use Spryker\Zed\ProductCategory\Business\Expander\ProductConcreteExpander;
 use Spryker\Zed\ProductCategory\Business\Expander\ProductConcreteExpanderInterface;
 use Spryker\Zed\ProductCategory\Business\Manager\ProductCategoryManager;
@@ -88,5 +90,16 @@ class ProductCategoryBusinessFactory extends AbstractBusinessFactory
     public function createProductConcreteExpander(): ProductConcreteExpanderInterface
     {
         return new ProductConcreteExpander($this->getRepository());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductCategory\Business\Event\ProductCategoryEventTriggerInterface
+     */
+    public function createProductCategoryEventTrigger(): ProductCategoryEventTriggerInterface
+    {
+        return new ProductCategoryEventTrigger(
+            $this->getRepository(),
+            $this->getEventFacade(),
+        );
     }
 }

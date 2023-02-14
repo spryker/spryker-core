@@ -34,4 +34,11 @@ interface ProductCategoryRepositoryInterface
      * @return \Generated\Shared\Transfer\ProductCategoryCollectionTransfer
      */
     public function getProductCategoryCollection(ProductCategoryCriteriaTransfer $productCategoryCriteriaTransfer): ProductCategoryCollectionTransfer;
+
+    /**
+     * @param int $idCategoryNode
+     *
+     * @return \Generated\Shared\Transfer\ProductCategoryCollectionTransfer
+     */
+    public function findProductCategoryChildrenMappingsByCategoryNodeId(int $idCategoryNode): ProductCategoryCollectionTransfer;
 }

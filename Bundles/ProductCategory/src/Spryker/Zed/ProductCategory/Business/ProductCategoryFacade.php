@@ -111,6 +111,8 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\ProductCategory\Business\ProductCategoryFacade::triggerProductUpdateEventsForCategory()} instead.
+     *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
      * @return void
@@ -200,5 +202,21 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
         return $this->getFactory()
             ->createProductConcreteExpander()
             ->expandProductConcreteWithProductCategories($productConcreteTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return void
+     */
+    public function triggerProductUpdateEventsForCategory(CategoryTransfer $categoryTransfer): void
+    {
+        $this->getFactory()
+            ->createProductCategoryEventTrigger()
+            ->triggerProductUpdateEventsForCategory($categoryTransfer);
     }
 }

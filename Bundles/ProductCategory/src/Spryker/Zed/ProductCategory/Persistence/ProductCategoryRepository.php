@@ -130,6 +130,35 @@ class ProductCategoryRepository extends AbstractRepository implements ProductCat
     }
 
     /**
+     * @module Category
+     *
+     * @param int $idCategoryNode
+     *
+     * @return \Generated\Shared\Transfer\ProductCategoryCollectionTransfer
+     */
+    public function findProductCategoryChildrenMappingsByCategoryNodeId(int $idCategoryNode): ProductCategoryCollectionTransfer
+    {
+        $productCategoryEntities = $this->getFactory()
+            ->createProductCategoryQuery()
+            ->useSpyCategoryQuery()
+                ->useNodeQuery()
+                    ->useDescendantQuery()
+                        ->filterByFkCategoryNode($idCategoryNode)
+                    ->endUse()
+                ->endUse()
+            ->endUse()
+            ->setFormatter(ModelCriteria::FORMAT_ARRAY)
+            ->find();
+
+        return $this->getFactory()
+            ->createproductCategoryMapper()
+            ->mapProductCategoryArrayToProductCategoryCollectionTransfer(
+                $productCategoryEntities,
+                new ProductCategoryCollectionTransfer(),
+            );
+    }
+
+    /**
      * @param \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery $productCategoryQuery
      * @param \Generated\Shared\Transfer\ProductCategoryCriteriaTransfer $productCategoryCriteriaTransfer
      *

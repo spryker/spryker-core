@@ -9,9 +9,17 @@ namespace SprykerTest\Zed\ProductCategory\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\CategoryLocalizedAttributesBuilder;
+use Generated\Shared\Transfer\CategoryTransfer;
+use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
+use Generated\Shared\Transfer\NodeTransfer;
+use Spryker\Shared\Kernel\Transfer\Exception\NullValueException;
 use Spryker\Zed\ProductCategory\Business\ProductCategoryFacadeInterface;
+use Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToEventInterface;
+use Spryker\Zed\ProductCategory\Dependency\ProductCategoryEvents;
+use Spryker\Zed\ProductCategory\ProductCategoryDependencyProvider;
+use SprykerTest\Zed\ProductCategory\ProductCategoryBusinessTester;
 
 /**
  * Auto-generated group annotations
@@ -37,9 +45,21 @@ class ProductCategoryFacadeTest extends Unit
     protected const LOCALE_DE = 'de_DE';
 
     /**
+     * @var int
+     */
+    protected const FAKE_ID_CATEGORY_NODE = 888;
+
+    /**
+     * @uses \Spryker\Zed\ProductCategory\Business\Event\ProductCategoryEventTrigger::COL_FK_PRODUCT_ABSTRACT
+     *
+     * @var string
+     */
+    protected const COL_FK_PRODUCT_ABSTRACT = 'fk_product_abstract';
+
+    /**
      * @var \SprykerTest\Zed\ProductCategory\ProductCategoryBusinessTester
      */
-    protected $tester;
+    protected ProductCategoryBusinessTester $tester;
 
     /**
      * @return void
@@ -196,5 +216,131 @@ class ProductCategoryFacadeTest extends Unit
             $productTransfers[0]->getProductCategories()[0]->getCategory()->getIdCategory(),
             $categoryTransfer->getIdCategory(),
         );
+    }
+
+    /**
+     * @return void
+     */
+    public function testTriggerProductUpdateEventsForCategoryShouldThrowAnExceptionWhenCategoryNodeIsNotProvided(): void
+    {
+        // Assert
+        $this->expectException(NullValueException::class);
+
+        // Act
+        $this->getProductCategoryFacade()->triggerProductUpdateEventsForCategory(new CategoryTransfer());
+    }
+
+    /**
+     * @return void
+     */
+    public function testTriggerProductUpdateEventsForCategoryShouldThrowAnExceptionWhenCategoryNodeIdIsNotProvided(): void
+    {
+        // Assert
+        $this->expectException(NullValueException::class);
+
+        // Act
+        $this->getProductCategoryFacade()->triggerProductUpdateEventsForCategory(
+            (new CategoryTransfer())->setCategoryNode(new NodeTransfer()),
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testTriggerProductUpdateEventsForCategoryShouldNotTriggerProductUpdateEventsForNonExistingCategoryNode(): void
+    {
+        // Arrange
+        $categoryTransfer = (new CategoryTransfer())->setCategoryNode(
+            (new NodeTransfer())->setIdCategoryNode(static::FAKE_ID_CATEGORY_NODE),
+        );
+
+        $eventFacadeMock = $this->createEventFacadeMock();
+        $this->tester->setDependency(ProductCategoryDependencyProvider::FACADE_EVENT, $eventFacadeMock);
+
+        // Assert
+        $eventFacadeMock->expects($this->never())
+            ->method('triggerBulk');
+
+        // Act
+        $this->getProductCategoryFacade()->triggerProductUpdateEventsForCategory($categoryTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testTriggerProductUpdateEventsForCategoryShouldTriggerProductUpdateEventsForCategoryAndChildCategories(): void
+    {
+        // Arrange
+        $parentCategoryTransfer = $this->tester->haveCategory();
+        $parentProductTransfer = $this->tester->haveProduct();
+        $this->tester->assignProductToCategory($parentCategoryTransfer->getIdCategory(), $parentProductTransfer->getFkProductAbstract());
+
+        $childCategoryTransfer = $this->tester->haveCategory([
+            CategoryTransfer::PARENT_CATEGORY_NODE => $parentCategoryTransfer->getCategoryNode(),
+        ]);
+        $childProductTransfer = $this->tester->haveProduct();
+        $this->tester->assignProductToCategory($childCategoryTransfer->getIdCategory(), $childProductTransfer->getFkProductAbstract());
+
+        $expectedProductUpdatedEvents = [
+            (new EventEntityTransfer())->setForeignKeys([
+                static::COL_FK_PRODUCT_ABSTRACT => $parentProductTransfer->getFkProductAbstract(),
+            ]),
+            (new EventEntityTransfer())->setForeignKeys([
+                static::COL_FK_PRODUCT_ABSTRACT => $childProductTransfer->getFkProductAbstract(),
+            ]),
+        ];
+
+        $eventFacadeMock = $this->createEventFacadeMock();
+        $this->tester->setDependency(ProductCategoryDependencyProvider::FACADE_EVENT, $eventFacadeMock);
+
+        // Assert
+        $eventFacadeMock->expects($this->once())
+            ->method('triggerBulk')
+            ->with(ProductCategoryEvents::PRODUCT_CONCRETE_UPDATE, $expectedProductUpdatedEvents);
+
+        // Act
+        $this->getProductCategoryFacade()->triggerProductUpdateEventsForCategory($parentCategoryTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testTriggerProductUpdateEventsForCategoryShouldFilterOutDuplicateProductAbstractIds(): void
+    {
+        // Arrange
+        $idProductAbstract = $this->tester->haveProduct()->getFkProductAbstract();
+
+        $parentCategoryTransfer = $this->tester->haveCategory();
+        $this->tester->assignProductToCategory($parentCategoryTransfer->getIdCategory(), $idProductAbstract);
+
+        $childCategoryTransfer = $this->tester->haveCategory([
+            CategoryTransfer::PARENT_CATEGORY_NODE => $parentCategoryTransfer->getCategoryNode(),
+        ]);
+        $this->tester->assignProductToCategory($childCategoryTransfer->getIdCategory(), $idProductAbstract);
+
+        $expectedProductUpdatedEvents = [
+            (new EventEntityTransfer())->setForeignKeys([
+                static::COL_FK_PRODUCT_ABSTRACT => $idProductAbstract,
+            ]),
+        ];
+
+        $eventFacadeMock = $this->createEventFacadeMock();
+        $this->tester->setDependency(ProductCategoryDependencyProvider::FACADE_EVENT, $eventFacadeMock);
+
+        // Assert
+        $eventFacadeMock->expects($this->once())
+            ->method('triggerBulk')
+            ->with(ProductCategoryEvents::PRODUCT_CONCRETE_UPDATE, $expectedProductUpdatedEvents);
+
+        // Act
+        $this->getProductCategoryFacade()->triggerProductUpdateEventsForCategory($parentCategoryTransfer);
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductCategory\Dependency\Facade\ProductCategoryToEventInterface
+     */
+    protected function createEventFacadeMock(): ProductCategoryToEventInterface
+    {
+        return $this->createMock(ProductCategoryToEventInterface::class);
     }
 }

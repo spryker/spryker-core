@@ -99,6 +99,8 @@ interface ProductCategoryFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\ProductCategory\Business\ProductCategoryFacadeInterface::triggerProductUpdateEventsForCategory()} instead.
+     *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
      *
      * @return void
@@ -169,4 +171,17 @@ interface ProductCategoryFacadeInterface
      * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function expandProductConcreteTransfersWithProductCategories(array $productConcreteTransfers): array;
+
+    /**
+     * Specification:
+     * - Requires `Category.categoryNode.idCategoryNode` to be set.
+     * - Triggers product update events for products that are assigned to the given category and its child categories.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     *
+     * @return void
+     */
+    public function triggerProductUpdateEventsForCategory(CategoryTransfer $categoryTransfer): void;
 }
