@@ -95,6 +95,22 @@ class ProductOfferStorageBusinessTester extends Actor
     }
 
     /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param string $sku
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferTransfer
+     */
+    public function createProductOfferWithConcreteSku(StoreTransfer $storeTransfer, string $sku): ProductOfferTransfer
+    {
+        $productOfferData = [];
+        $productOfferData[ProductOfferTransfer::CONCRETE_SKU] = $sku;
+        $productOfferTransfer = $this->haveProductOffer($productOfferData)->addStore($storeTransfer);
+        $this->haveProductOfferStore($productOfferTransfer, $storeTransfer);
+
+        return $productOfferTransfer;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductOfferStorageTransfer $productOfferStorageTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *

@@ -339,4 +339,44 @@ class ProductOfferStorageFacadeTest extends Unit
         $this->assertSame($productConcreteProductOffersStorageData[0]->getData()[0], mb_strtolower($productOfferTransfer->getProductOfferReference()));
         $this->assertSame($productConcreteProductOffersStorageData[0]->getStore(), $storeTransfer->getName());
     }
+
+    /**
+     * @return void
+     */
+    public function testWriteProductConcreteProductOffersStorageCollectionByProductOfferStoreEventsPublishesAtStoreByTwoOffersForOneConcreteSku()
+    {
+        // Arrange
+        $storeTransfer = $this->tester->haveStoreByName(static::STORE_NAME_DE);
+        $productOfferTransfer = $this->tester->createProductOffer($storeTransfer);
+        $productOfferTransfer2 = $this->tester->createProductOfferWithConcreteSku(
+            $storeTransfer,
+            $productOfferTransfer->getConcreteSku(),
+        );
+
+        $this->tester->haveProductConcreteProductOfferStorage(
+            $productOfferTransfer->getConcreteSku(),
+            $storeTransfer->getName(),
+            ['test'],
+        );
+
+        $eventEntityTransfers = [
+            (new EventEntityTransfer())->setForeignKeys([
+                SpyProductOfferStoreTableMap::COL_FK_PRODUCT_OFFER => $productOfferTransfer->getIdProductOffer(),
+                SpyProductOfferStoreTableMap::COL_FK_STORE => $storeTransfer->getIdStore(),
+            ]),
+        ];
+
+        // Act
+        $this->tester->getFacade()->writeProductConcreteProductOffersStorageCollectionByProductOfferStoreEvents($eventEntityTransfers);
+
+        $productConcreteProductOffersStorageEntities = $this->tester->getProductConcreteProductOffersEntities(
+            [$productOfferTransfer->getConcreteSku()],
+        );
+
+        // Assert
+        $this->assertSame($productConcreteProductOffersStorageEntities[0]->getStore(), $storeTransfer->getName());
+        $this->assertCount(2, $productConcreteProductOffersStorageEntities->getData()[0]->getData());
+        $this->assertSame($productConcreteProductOffersStorageEntities->getData()[0]->getData()[0], mb_strtolower($productOfferTransfer->getProductOfferReference()));
+        $this->assertSame($productConcreteProductOffersStorageEntities->getData()[0]->getData()[1], mb_strtolower($productOfferTransfer2->getProductOfferReference()));
+    }
 }
