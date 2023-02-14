@@ -77,6 +77,11 @@ class GlueBackendApiApplicationConfig extends AbstractBundleConfig
     protected const GENERATED_FULL_FILE_NAME = '/Generated/Zed/Oauth/GlueScopesCache/glue_scopes_cache.yml';
 
     /**
+     * @var string
+     */
+    protected const HEADER_NAME_ACCESS_CONTROL_ALLOW_ORIGIN = 'Access-Control-Allow-Origin';
+
+    /**
      * Specification:
      * - Returns the host that the Backend API application serves
      *
@@ -115,7 +120,7 @@ class GlueBackendApiApplicationConfig extends AbstractBundleConfig
      */
     public function getSecurityHeaders(): array
     {
-        return [
+        $securityHeaders = [
             'X-Frame-Options' => static::HEADER_X_FRAME_OPTIONS_VALUE,
             'Content-Security-Policy' => static::HEADER_CONTENT_SECURITY_POLICY_VALUE,
             'X-Content-Type-Options' => static::HEADER_X_CONTENT_TYPE_OPTIONS_VALUE,
@@ -123,6 +128,8 @@ class GlueBackendApiApplicationConfig extends AbstractBundleConfig
             'Referrer-Policy' => static::HEADER_REFERRER_POLICY_VALUE,
             'Permissions-policy' => static::HEADER_PERMISSIONS_POLICY_VALUE,
         ];
+
+        return $this->addAccessControlAllowOriginHeader($securityHeaders);
     }
 
     /**
@@ -174,6 +181,14 @@ class GlueBackendApiApplicationConfig extends AbstractBundleConfig
     }
 
     /**
+     * @return string
+     */
+    protected function getCorsAllowOrigin(): string
+    {
+        return $this->get(GlueBackendApiApplicationConstants::GLUE_BACKEND_CORS_ALLOW_ORIGIN, '');
+    }
+
+    /**
      * @return string|null
      */
     protected function getCachePathIfCacheEnabled(): ?string
@@ -199,5 +214,21 @@ class GlueBackendApiApplicationConfig extends AbstractBundleConfig
             APPLICATION_CODE_BUCKET,
             $projectNamespaces,
         );
+    }
+
+    /**
+     * @param array<string, string> $securityHeaders
+     *
+     * @return array<string, string>
+     */
+    protected function addAccessControlAllowOriginHeader(array $securityHeaders): array
+    {
+        if ($this->getCorsAllowOrigin() === '') {
+            return $securityHeaders;
+        }
+
+        $securityHeaders[static::HEADER_NAME_ACCESS_CONTROL_ALLOW_ORIGIN] = $this->getCorsAllowOrigin();
+
+        return $securityHeaders;
     }
 }

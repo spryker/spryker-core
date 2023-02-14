@@ -59,4 +59,14 @@ interface GlueStorefrontApiApplicationConstants
      * @var string
      */
     public const GLUE_CACHE_PATH = 'GLUE_STOREFRONT_API_APPLICATION:GLUE_CACHE_PATH';
+
+    /**
+     * Specification:
+     *  - Specifies a URI that may access the resources.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const GLUE_STOREFRONT_CORS_ALLOW_ORIGIN = 'GLUE_STOREFRONT_API_APPLICATION:GLUE_STOREFRONT_CORS_ALLOW_ORIGIN';
 }

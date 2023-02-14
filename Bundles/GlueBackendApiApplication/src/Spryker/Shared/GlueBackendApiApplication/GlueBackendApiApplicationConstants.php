@@ -60,4 +60,14 @@ interface GlueBackendApiApplicationConstants
      * @var string
      */
     public const GLUE_CACHE_PATH = 'GLUE_BACKEND_API_APPLICATION:GLUE_CACHE_PATH';
+
+    /**
+     * Specification:
+     *  - Specifies a URI that may access the resources.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const GLUE_BACKEND_CORS_ALLOW_ORIGIN = 'GLUE_BACKEND_API_APPLICATION:GLUE_BACKEND_CORS_ALLOW_ORIGIN';
 }

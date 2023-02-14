@@ -77,6 +77,11 @@ class GlueStorefrontApiApplicationConfig extends AbstractBundleConfig
     protected const HEADER_AUTHORIZATION = 'authorization';
 
     /**
+     * @var string
+     */
+    protected const HEADER_NAME_ACCESS_CONTROL_ALLOW_ORIGIN = 'Access-Control-Allow-Origin';
+
+    /**
      * Specification:
      * - Returns the host that the Storefront API application serves
      *
@@ -115,7 +120,7 @@ class GlueStorefrontApiApplicationConfig extends AbstractBundleConfig
      */
     public function getSecurityHeaders(): array
     {
-        return [
+        $securityHeaders = [
             'X-Frame-Options' => static::HEADER_X_FRAME_OPTIONS_VALUE,
             'Content-Security-Policy' => static::HEADER_CONTENT_SECURITY_POLICY_VALUE,
             'X-Content-Type-Options' => static::HEADER_X_CONTENT_TYPE_OPTIONS_VALUE,
@@ -123,6 +128,8 @@ class GlueStorefrontApiApplicationConfig extends AbstractBundleConfig
             'Referrer-Policy' => static::HEADER_REFERRER_POLICY_VALUE,
             'Permissions-policy' => static::HEADER_PERMISSIONS_POLICY_VALUE,
         ];
+
+        return $this->addAccessControlAllowOriginHeader($securityHeaders);
     }
 
     /**
@@ -164,6 +171,24 @@ class GlueStorefrontApiApplicationConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
+     * @return string
+     */
+    public function getGeneratedFullFileNameForCollectedScopes(): string
+    {
+        return APPLICATION_SOURCE_DIR . static::GENERATED_FULL_FILE_NAME;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getCorsAllowOrigin(): string
+    {
+        return $this->get(GlueStorefrontApiApplicationConstants::GLUE_STOREFRONT_CORS_ALLOW_ORIGIN, '');
+    }
+
+    /**
      * @return string|null
      */
     protected function getCachePathIfCacheEnabled(): ?string
@@ -192,12 +217,18 @@ class GlueStorefrontApiApplicationConfig extends AbstractBundleConfig
     }
 
     /**
-     * @api
+     * @param array $securityHeaders
      *
-     * @return string
+     * @return array
      */
-    public function getGeneratedFullFileNameForCollectedScopes(): string
+    protected function addAccessControlAllowOriginHeader(array $securityHeaders): array
     {
-        return APPLICATION_SOURCE_DIR . static::GENERATED_FULL_FILE_NAME;
+        if ($this->getCorsAllowOrigin() === '') {
+            return $securityHeaders;
+        }
+
+        $securityHeaders[static::HEADER_NAME_ACCESS_CONTROL_ALLOW_ORIGIN] = $this->getCorsAllowOrigin();
+
+        return $securityHeaders;
     }
 }
