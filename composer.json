@@ -819,7 +819,6 @@
         "spryker/security-system-user": "*",
         "spryker/sequence-number": "*",
         "spryker/session": "*",
-        "spryker/session-customer-validation": "*",
         "spryker/session-customer-validation-extension": "*",
         "spryker/session-extension": "*",
         "spryker/session-file": "*",

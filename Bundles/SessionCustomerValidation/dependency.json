@@ -1,5 +1,0 @@
-{
-    "include": {
-        "spryker/transfer": "Provides transfer objects definition with associative functionality."
-    }
-}
