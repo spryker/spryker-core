@@ -148,7 +148,7 @@ if (PHP_VERSION_ID >= 80200) {
         /**
          * @param int $maxLifetime
          *
-         * @return bool
+         * @return int|false
          */
         public function gc($maxLifetime)
         {
