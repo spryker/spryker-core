@@ -112,11 +112,12 @@ class MerchantOrderTableDataMapper
             $merchantOrderTableRowDataArray = $this->prepareItemsStatesTableData($merchantOrderTableRowDataArray);
 
             $merchantOrderTransfer = (new MerchantOrderTransfer())->fromArray($merchantOrderTableRowDataArray, true);
+            $salutationSet = SpySalesOrderTableMap::getValueSet(SpySalesOrderTableMap::COL_SALUTATION);
+            $salutation = $salutationSet[$merchantOrderTableRowDataArray[OrderTransfer::SALUTATION]] ?? null;
+
             $orderTransfer = (new OrderTransfer())
                 ->fromArray($merchantOrderTableRowDataArray, true)
-                ->setSalutation(
-                    SpySalesOrderTableMap::getValueSet(SpySalesOrderTableMap::COL_SALUTATION)[$merchantOrderTableRowDataArray[OrderTransfer::SALUTATION]],
-                );
+                ->setSalutation($salutation);
             $totalsTransfer = (new TotalsTransfer())->setGrandTotal($merchantOrderTableRowDataArray[TotalsTransfer::GRAND_TOTAL]);
 
             $merchantOrderTransfer->setOrder($orderTransfer);

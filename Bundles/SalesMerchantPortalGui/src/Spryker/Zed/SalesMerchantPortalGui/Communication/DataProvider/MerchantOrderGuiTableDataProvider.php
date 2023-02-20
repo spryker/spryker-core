@@ -119,12 +119,16 @@ class MerchantOrderGuiTableDataProvider extends AbstractGuiTableDataProvider
      */
     protected function getCustomerData(OrderTransfer $orderTransfer): string
     {
-        return sprintf(
-            '%s %s %s',
-            $orderTransfer->getSalutationOrFail(),
-            $orderTransfer->getFirstNameOrFail(),
-            $orderTransfer->getLastNameOrFail(),
-        );
+        if ($orderTransfer->getSalutation()) {
+            return sprintf(
+                '%s %s %s',
+                $orderTransfer->getSalutationOrFail(),
+                $orderTransfer->getFirstNameOrFail(),
+                $orderTransfer->getLastNameOrFail(),
+            );
+        }
+
+        return sprintf('%s %s', $orderTransfer->getFirstNameOrFail(), $orderTransfer->getLastNameOrFail());
     }
 
     /**
