@@ -13,11 +13,12 @@ use Generated\Shared\Transfer\QueryJoinTransfer;
 use Generated\Shared\Transfer\QueryWhereConditionTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Propel\Runtime\ActiveQuery\Criterion\CustomCriterion;
 
 class OrderSearchQueryJoinQueryBuilder implements OrderSearchQueryJoinQueryBuilderInterface
 {
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @var string
      */
     protected const CONCAT = 'CONCAT';
@@ -237,21 +238,11 @@ class OrderSearchQueryJoinQueryBuilder implements OrderSearchQueryJoinQueryBuild
         $value = $queryWhereConditionTransfer->getValue();
         $comparison = $queryWhereConditionTransfer->getComparison() ?? Criteria::LIKE;
 
-        if (mb_strpos($column, static::CONCAT) !== false) {
-            return $salesOrderQuery->addCond(
-                $conditionName,
-                new CustomCriterion(new Criteria(), sprintf('%s%s\'%%%s%%\'', $column, $comparison, $value)),
-                null,
-                Criteria::CUSTOM,
-            );
+        if ($comparison === Criteria::LIKE) {
+            $value = $this->formatFilterValue($value);
         }
 
-        return $salesOrderQuery->addCond(
-            $conditionName,
-            $column,
-            $comparison === Criteria::LIKE ? $this->formatFilterValue($value) : $value,
-            $comparison,
-        );
+        return $salesOrderQuery->addCond($conditionName, $column, $value, $comparison);
     }
 
     /**
