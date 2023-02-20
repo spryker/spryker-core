@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductLabel;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\ProductLabel\Dependency\Facade\ProductLabelToEventBridge;
 use Spryker\Zed\ProductLabel\Dependency\Facade\ProductLabelToProductBridge;
 use Spryker\Zed\ProductLabel\Dependency\Facade\ProductLabelToTouchBridge;
 
@@ -30,6 +31,11 @@ class ProductLabelDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
+    public const FACADE_EVENT = 'FACADE_EVENT';
+
+    /**
+     * @var string
+     */
     public const PLUGIN_PRODUCT_LABEL_RELATION_UPDATERS = 'PLUGIN_PRODUCT_LABEL_RELATION_UPDATERS';
 
     /**
@@ -41,6 +47,7 @@ class ProductLabelDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addTouchFacade($container);
         $container = $this->addProductFacade($container);
+        $container = $this->addEventFacade($container);
 
         $container = $this->addProductLabelRelationUpdaterPlugins($container);
 
@@ -70,6 +77,20 @@ class ProductLabelDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::FACADE_PRODUCT, function (Container $container) {
             return new ProductLabelToProductBridge($container->getLocator()->product()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addEventFacade(Container $container)
+    {
+        $container->set(static::FACADE_EVENT, function (Container $container) {
+            return new ProductLabelToEventBridge($container->getLocator()->event()->facade());
         });
 
         return $container;

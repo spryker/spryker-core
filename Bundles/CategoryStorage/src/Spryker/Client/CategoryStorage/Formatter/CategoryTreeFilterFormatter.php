@@ -8,7 +8,7 @@
 namespace Spryker\Client\CategoryStorage\Formatter;
 
 use ArrayObject;
-use Generated\Shared\Transfer\CategoryNodeSearchResultTransfer;
+use Spryker\Client\CategoryStorage\Mapper\CategoryNodeStorageMapperInterface;
 use Spryker\Client\CategoryStorage\Storage\CategoryTreeStorageReaderInterface;
 
 class CategoryTreeFilterFormatter implements CategoryTreeFilterFormatterInterface
@@ -40,11 +40,20 @@ class CategoryTreeFilterFormatter implements CategoryTreeFilterFormatterInterfac
     protected $categoryTreeStorageReader;
 
     /**
-     * @param \Spryker\Client\CategoryStorage\Storage\CategoryTreeStorageReaderInterface $categoryTreeStorageReader
+     * @var \Spryker\Client\CategoryStorage\Mapper\CategoryNodeStorageMapperInterface
      */
-    public function __construct(CategoryTreeStorageReaderInterface $categoryTreeStorageReader)
-    {
+    protected $categoryNodeStorageMapper;
+
+    /**
+     * @param \Spryker\Client\CategoryStorage\Storage\CategoryTreeStorageReaderInterface $categoryTreeStorageReader
+     * @param \Spryker\Client\CategoryStorage\Mapper\CategoryNodeStorageMapperInterface $categoryNodeStorageMapper
+     */
+    public function __construct(
+        CategoryTreeStorageReaderInterface $categoryTreeStorageReader,
+        CategoryNodeStorageMapperInterface $categoryNodeStorageMapper
+    ) {
         $this->categoryTreeStorageReader = $categoryTreeStorageReader;
+        $this->categoryNodeStorageMapper = $categoryNodeStorageMapper;
     }
 
     /**
@@ -59,7 +68,7 @@ class CategoryTreeFilterFormatter implements CategoryTreeFilterFormatterInterfac
         $categoryDocCounts = $this->getMappedCategoryDocCountsByNodeId($docCountAggregation);
 
         $categoryNodeStorageTransfers = $this->categoryTreeStorageReader->getCategories($localeName, $storeName);
-        $categoryNodeSearchResultTransfers = $this->mapCategoryNodeStoragesToCategoryNodeSearchResults(
+        $categoryNodeSearchResultTransfers = $this->categoryNodeStorageMapper->mapCategoryNodeStoragesToCategoryNodeSearchResults(
             $categoryNodeStorageTransfers,
             new ArrayObject(),
         );
@@ -68,25 +77,6 @@ class CategoryTreeFilterFormatter implements CategoryTreeFilterFormatterInterfac
             $categoryNodeSearchResultTransfers,
             $categoryDocCounts,
         );
-    }
-
-    /**
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\CategoryNodeStorageTransfer> $categoryNodeStorageTransfers
-     * @param \ArrayObject<int, \Generated\Shared\Transfer\CategoryNodeSearchResultTransfer> $categoryNodeSearchResultTransfers
-     *
-     * @return \ArrayObject<int, \Generated\Shared\Transfer\CategoryNodeSearchResultTransfer>
-     */
-    protected function mapCategoryNodeStoragesToCategoryNodeSearchResults(
-        ArrayObject $categoryNodeStorageTransfers,
-        ArrayObject $categoryNodeSearchResultTransfers
-    ): ArrayObject {
-        foreach ($categoryNodeStorageTransfers as $categoryNodeStorageTransfer) {
-            $categoryNodeSearchResultTransfers->append(
-                (new CategoryNodeSearchResultTransfer())->fromArray($categoryNodeStorageTransfer->toArray(), true),
-            );
-        }
-
-        return $categoryNodeSearchResultTransfers;
     }
 
     /**

@@ -1,0 +1,73 @@
+asyncapi: 2.2.0
+info:
+    title: 'Search AsyncAPI definition.'
+    version: 0.1.0
+channels:
+    product:
+        subscribe:
+            message:
+                oneOf:
+                    - $ref: '#/components/messages/SearchEndpointAvailable'
+                    - $ref: '#/components/messages/SearchEndpointRemoved'
+components:
+    messages:
+        SearchEndpointAvailable:
+            name: SearchEndpointAvailable
+            title: Search endpoint available
+            summary: A search endpoint has become available. Also can be used for updating url.
+            headers:
+                $ref: '#/components/schemas/headers'
+            payload:
+                $ref: '#/components/schemas/SearchEndpoint'
+
+        SearchEndpointRemoved:
+            name: SearchEndpointRemoved
+            title: Search endpoint removed
+            summary: A search endpoint has been removed and is no longer available
+            headers:
+                $ref: '#/components/schemas/headers'
+    schemas:
+        headers:
+            type: object
+            required:
+                - authorization
+                - timestamp
+                - correlationId
+                - storeReference
+                - event
+                - transferName
+                - publisher
+            properties:
+                authorization:
+                    type: string
+                    description: 'Authorization header for requesting a protected resource.'
+                timestamp:
+                    type: integer
+                    description: 'Timestamp when this message was created (microtime).'
+                correlationId:
+                    type: string
+                    description: 'Identifier of the current process.'
+                storeReference:
+                    type: string
+                    description: 'Identifier of a store for the triggered event.'
+                event:
+                    type: string
+                    description: 'Name of the current event.'
+                transferName:
+                    type: string
+                    description: 'Transfer name of the current event.'
+                publisher:
+                    type: object
+                    properties:
+                        appIdentifier:
+                            type: string
+                            description: 'Identifier of the app that triggered the event.'
+                        storeReference:
+                            type: string
+                            description: 'Identifier of a store that triggered the event.'
+        SearchEndpoint:
+            type: object
+            properties:
+                url:
+                    type: string
+                    description: The URI of the search endpoint

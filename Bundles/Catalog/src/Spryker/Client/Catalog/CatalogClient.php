@@ -36,11 +36,15 @@ class CatalogClient extends AbstractClient implements CatalogClientInterface
         $searchQuery = $this
             ->getFactory()
             ->getSearchClient()
-            ->expandQuery($searchQuery, $this->getFactory()->getCatalogSearchQueryExpanderPlugins(), $requestParameters);
+            ->expandQuery(
+                $searchQuery,
+                $this->getFactory()->getCatalogSearchQueryExpanderPlugins($searchQuery),
+                $requestParameters,
+            );
 
         $resultFormatters = $this
             ->getFactory()
-            ->getCatalogSearchResultFormatters();
+            ->getCatalogSearchResultFormatters($searchQuery);
 
         return $this
             ->getFactory()

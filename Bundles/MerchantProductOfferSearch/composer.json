@@ -34,7 +34,8 @@
         "spryker/catalog": "If you want to use Catalog plugins, minimum required version: 5.2.0.",
         "spryker/elastica": "If you want to use ElasticSearch query expander.",
         "spryker/event": "To use event behavior.",
-        "spryker/search": "If you want to use Search plugins."
+        "spryker/search": "If you want to use Search plugins.",
+        "spryker/search-http": "If you want to use SearchHttp plugins."
     },
     "autoload": {
         "psr-4": {

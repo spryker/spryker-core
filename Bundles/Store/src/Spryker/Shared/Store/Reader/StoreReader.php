@@ -18,11 +18,20 @@ class StoreReader implements StoreReaderInterface
     protected $store;
 
     /**
-     * @param \Spryker\Shared\Store\Dependency\Adapter\StoreToStoreInterface $store
+     * @var array<\Spryker\Client\Store\Plugin\Expander\StoreExpanderInterface>
      */
-    public function __construct(StoreToStoreInterface $store)
-    {
+    protected array $storeExpanders;
+
+    /**
+     * @param \Spryker\Shared\Store\Dependency\Adapter\StoreToStoreInterface $store
+     * @param array<\Spryker\Client\Store\Plugin\Expander\StoreExpanderInterface> $storeExpanders
+     */
+    public function __construct(
+        StoreToStoreInterface $store,
+        array $storeExpanders = []
+    ) {
         $this->store = $store;
+        $this->storeExpanders = $storeExpanders;
     }
 
     /**
@@ -42,6 +51,20 @@ class StoreReader implements StoreReaderInterface
             ->setStoresWithSharedPersistence($this->store->getStoresWithSharedPersistence())
             ->setCountries($this->store->getCountries())
             ->setTimezone($this->store->getTimezone());
+
+        return $this->expandStore($storeTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    protected function expandStore(StoreTransfer $storeTransfer): StoreTransfer
+    {
+        foreach ($this->storeExpanders as $storeExpander) {
+            $storeTransfer = $storeExpander->expand($storeTransfer);
+        }
 
         return $storeTransfer;
     }

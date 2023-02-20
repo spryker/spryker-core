@@ -9,7 +9,8 @@
         "spryker/kernel": "^3.30.0",
         "spryker/price": "^5.0.0",
         "spryker/price-product": "^2.0.0 || ^4.0.0",
-        "spryker/price-product-storage": "^2.0.0 || ^4.0.0"
+        "spryker/price-product-storage": "^2.0.0 || ^4.0.0",
+        "spryker/search-extension": "^1.0.0"
     },
     "require-dev": {
         "spryker/catalog": "*",
@@ -21,7 +22,8 @@
         "spryker/catalog": "If you want to use Catalog plugins, minimum required version: 5.2.0.",
         "spryker/config": "If you want to use Config plugins.",
         "spryker/elastica": "If you want to use Elastica plugins.",
-        "spryker/search": "If you want to use Search plugins."
+        "spryker/search": "If you want to use Search plugins.",
+        "spryker/search-http": "If you want to use SearchHttp plugins."
     },
     "autoload": {
         "psr-4": {

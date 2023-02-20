@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductLabel\Business\ProductAbstractRelation;
 
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstract;
+use Spryker\Zed\ProductLabel\Business\Label\Trigger\ProductEventTriggerInterface;
 use Spryker\Zed\ProductLabel\Business\Touch\ProductAbstractRelationTouchManagerInterface;
 use Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
@@ -27,15 +28,23 @@ class ProductAbstractRelationWriter implements ProductAbstractRelationWriterInte
     protected $productRelationTouchManager;
 
     /**
+     * @var \Spryker\Zed\ProductLabel\Business\Label\Trigger\ProductEventTriggerInterface
+     */
+    protected ProductEventTriggerInterface $productEventTrigger;
+
+    /**
      * @param \Spryker\Zed\ProductLabel\Persistence\ProductLabelQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\ProductLabel\Business\Touch\ProductAbstractRelationTouchManagerInterface $productRelationTouchManager
+     * @param \Spryker\Zed\ProductLabel\Business\Label\Trigger\ProductEventTriggerInterface $productEventTrigger
      */
     public function __construct(
         ProductLabelQueryContainerInterface $queryContainer,
-        ProductAbstractRelationTouchManagerInterface $productRelationTouchManager
+        ProductAbstractRelationTouchManagerInterface $productRelationTouchManager,
+        ProductEventTriggerInterface $productEventTrigger
     ) {
         $this->queryContainer = $queryContainer;
         $this->productRelationTouchManager = $productRelationTouchManager;
+        $this->productEventTrigger = $productEventTrigger;
     }
 
     /**
@@ -50,6 +59,8 @@ class ProductAbstractRelationWriter implements ProductAbstractRelationWriterInte
         $this->handleDatabaseTransaction(function () use ($idProductLabel, $idsProductAbstract, $isTouchEnabled) {
             $this->executeSetRelationsTransaction($idProductLabel, $idsProductAbstract, $isTouchEnabled);
         });
+
+        $this->productEventTrigger->triggerProductUpdateEvents($idsProductAbstract);
     }
 
     /**

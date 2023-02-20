@@ -5,6 +5,7 @@
     "license": "proprietary",
     "require": {
         "php": ">=8.0",
+        "spryker/catalog-extension": "^1.0.0",
         "spryker/kernel": "^3.30.0",
         "spryker/search": "^6.0.0 || ^7.0.0 || ^8.0.0",
         "spryker/search-extension": "^1.0.0",
@@ -18,7 +19,8 @@
     "suggest": {
         "spryker/config": "If you want to use Elastica plugins.",
         "spryker/elastica": "If you want to use Elastica plugins.",
-        "spryker/product-page-search": "If you want to use ProductPageSearch plugins, minimum required version: 0.1.0."
+        "spryker/product-page-search": "If you want to use ProductPageSearch plugins, minimum required version: 0.1.0.",
+        "spryker/search-http": "If you want to use SearchHttp plugins."
     },
     "autoload": {
         "psr-4": {

@@ -89,7 +89,10 @@ class ProductCategoryBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductConcreteExpander(): ProductConcreteExpanderInterface
     {
-        return new ProductConcreteExpander($this->getRepository());
+        return new ProductConcreteExpander(
+            $this->getRepository(),
+            $this->getCategoryFacade(),
+        );
     }
 
     /**

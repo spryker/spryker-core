@@ -130,4 +130,8 @@
         <property name="orderBy" type="string"/>
     </transfer>
 
+    <transfer name="SearchHttpResponse">
+        <property name="facets" type="array" singular="facet"/>
+    </transfer>
+
 </transfers>

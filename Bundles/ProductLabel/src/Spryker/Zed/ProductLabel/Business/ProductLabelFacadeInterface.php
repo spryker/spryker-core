@@ -267,4 +267,16 @@ interface ProductLabelFacadeInterface
     public function getProductLabelCollection(
         ProductLabelCriteriaTransfer $productLabelCriteriaTransfer
     ): ProductLabelCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Expands product concrete collection with labels.
+     *
+     * @api
+     *
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
+     */
+    public function expandProductConcretesWithLabels(array $productConcreteTransfers): array;
 }

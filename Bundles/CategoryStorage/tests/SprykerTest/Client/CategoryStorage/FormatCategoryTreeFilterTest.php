@@ -10,6 +10,7 @@ namespace SprykerTest\Client\CategoryStorage;
 use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\CategoryNodeStorageBuilder;
+use Generated\Shared\Transfer\SearchHttpResponseTransfer;
 use Spryker\Client\CategoryStorage\CategoryStorageFactory;
 use Spryker\Client\CategoryStorage\Dependency\Client\CategoryStorageToStorageBridge;
 use Spryker\Client\CategoryStorage\Dependency\Client\CategoryStorageToStorageInterface;
@@ -31,6 +32,11 @@ class FormatCategoryTreeFilterTest extends Unit
     protected const FIRST_CATEGORY_NODE_ID = 1;
 
     /**
+     * @var string
+     */
+    protected const FIRST_CATEGORY_NAME = 'Category_1';
+
+    /**
      * @var int
      */
     protected const FIRST_CATEGORY_DOC_COUNT = 224;
@@ -46,6 +52,11 @@ class FormatCategoryTreeFilterTest extends Unit
     protected const SECOND_CATEGORY_NODE_ID = 2;
 
     /**
+     * @var string
+     */
+    protected const SECOND_CATEGORY_NAME = 'Category_2';
+
+    /**
      * @var int
      */
     protected const THIRD_CATEGORY_DOC_COUNT = 41;
@@ -54,6 +65,11 @@ class FormatCategoryTreeFilterTest extends Unit
      * @var int
      */
     protected const THIRD_CATEGORY_NODE_ID = 3;
+
+    /**
+     * @var string
+     */
+    protected const THIRD_CATEGORY_NAME = 'Category_3';
 
     /**
      * @var string
@@ -234,6 +250,106 @@ class FormatCategoryTreeFilterTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testFormatSearchHttpCategoryTreeFilterFormatsSearchHttpCategoryTree(): void
+    {
+        // Arrange
+        $searchResult = $this->getSearchHttpResults();
+
+        /** @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\CategoryStorage\CategoryStorageFactory $categoryStorageFactoryMock */
+        $categoryStorageFactoryMock = $this->getMockBuilder(CategoryStorageFactory::class)
+            ->onlyMethods(['getStorageClient', 'getConfig'])
+            ->getMock();
+
+        $categoryStorageFactoryMock
+            ->method('getStorageClient')
+            ->willReturn($this->getStorageClientMock());
+
+        // Act
+        $categoryNodeSearchResultTransfers = $this->tester
+            ->getClientMock($categoryStorageFactoryMock)
+            ->formatSearchHttpCategoryTree($searchResult);
+
+        // Assert
+        $this->assertSame(
+            (static::FIRST_CATEGORY_DOC_COUNT + static::SECOND_CATEGORY_DOC_COUNT),
+            $categoryNodeSearchResultTransfers->offsetGet(0)->getDocCount(),
+        );
+        $this->assertSame(
+            static::SECOND_CATEGORY_DOC_COUNT,
+            $categoryNodeSearchResultTransfers->offsetGet(0)->getChildren()->offsetGet(0)->getDocCount(),
+        );
+        $this->assertSame(
+            static::THIRD_CATEGORY_DOC_COUNT,
+            $categoryNodeSearchResultTransfers->offsetGet(1)->getDocCount(),
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testFormatSearchHttpCategoryTreeFilterTryToFormatTreeWhenSearchResultsHasNoAggregationByCategory()
+    {
+        // Arrange
+        $searchResult = $this->getEmptySearchHttpResults();
+
+        /** @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\CategoryStorage\CategoryStorageFactory $categoryStorageFactoryMock */
+        $categoryStorageFactoryMock = $this->getMockBuilder(CategoryStorageFactory::class)
+            ->onlyMethods(['getStorageClient', 'getConfig'])
+            ->getMock();
+
+        $categoryStorageFactoryMock
+            ->method('getStorageClient')
+            ->willReturn($this->getStorageClientMock());
+
+        // Act
+        $categoryNodeSearchResultTransfers = $this->tester
+            ->getClientMock($categoryStorageFactoryMock)
+            ->formatSearchHttpCategoryTree($searchResult);
+
+        // Assert
+        $this->assertSame(
+            0,
+            $categoryNodeSearchResultTransfers->offsetGet(0)->getDocCount(),
+        );
+        $this->assertSame(
+            0,
+            $categoryNodeSearchResultTransfers->offsetGet(0)->getChildren()->offsetGet(0)->getDocCount(),
+        );
+        $this->assertSame(
+            0,
+            $categoryNodeSearchResultTransfers->offsetGet(1)->getDocCount(),
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testFormatSearchHttpCategoryTreeFilterTryToFormatTreeWhenCategoryNodeStoragesAreEmpty(): void
+    {
+        // Arrange
+        $searchResult = $this->getSearchHttpResults();
+
+        /** @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\CategoryStorage\CategoryStorageFactory $categoryStorageFactoryMock */
+        $categoryStorageFactoryMock = $this->getMockBuilder(CategoryStorageFactory::class)
+            ->onlyMethods(['getStorageClient', 'getConfig'])
+            ->getMock();
+
+        $categoryStorageFactoryMock
+            ->method('getStorageClient')
+            ->willReturn($this->getStorageClientMock(true));
+
+        // Act
+        $categoryNodeSearchResultTransfers = $this->tester
+            ->getClientMock($categoryStorageFactoryMock)
+            ->formatSearchHttpCategoryTree($searchResult);
+
+        // Assert
+        $this->assertEmpty($categoryNodeSearchResultTransfers, 'Expects empty collection in case empty category storage data.');
+    }
+
+    /**
      * @param bool $isEmpty
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\CategoryStorage\Dependency\Client\CategoryStorageToStorageInterface
@@ -243,12 +359,20 @@ class FormatCategoryTreeFilterTest extends Unit
         $categoryNodeStorageTransfers = [
             (new CategoryNodeStorageBuilder())->build()
                 ->setNodeId(static::FIRST_CATEGORY_NODE_ID)
+                ->setName(static::FIRST_CATEGORY_NAME)
                 ->setChildren(new ArrayObject([
-                    (new CategoryNodeStorageBuilder())->build()->setNodeId(static::SECOND_CATEGORY_NODE_ID)->toArray(),
+                    (new CategoryNodeStorageBuilder())->build()
+                        ->setNodeId(static::SECOND_CATEGORY_NODE_ID)
+                        ->setName(static::SECOND_CATEGORY_NAME)
+                        ->toArray(),
                     (new CategoryNodeStorageBuilder())->build(),
                     (new CategoryNodeStorageBuilder())->build(),
                 ]))->toArray(),
-            (new CategoryNodeStorageBuilder())->build()->setNodeId(static::THIRD_CATEGORY_NODE_ID)->toArray(),
+            (new CategoryNodeStorageBuilder())
+                ->build()
+                ->setNodeId(static::THIRD_CATEGORY_NODE_ID)
+                ->setName(static::THIRD_CATEGORY_NAME)
+                ->toArray(),
         ];
 
         $storageClientMock = $this->getMockBuilder(CategoryStorageToStorageBridge::class)
@@ -275,5 +399,30 @@ class FormatCategoryTreeFilterTest extends Unit
                 ['key' => static::THIRD_CATEGORY_NODE_ID, 'doc_count' => static::THIRD_CATEGORY_DOC_COUNT],
             ],
         ];
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\SearchHttpResponseTransfer
+     */
+    protected function getSearchHttpResults(): SearchHttpResponseTransfer
+    {
+        return (new SearchHttpResponseTransfer())
+            ->setFacets(
+                [
+                    'category' => [
+                        static::FIRST_CATEGORY_NAME => static::FIRST_CATEGORY_DOC_COUNT,
+                        static::SECOND_CATEGORY_NAME => static::SECOND_CATEGORY_DOC_COUNT,
+                        static::THIRD_CATEGORY_NAME => static::THIRD_CATEGORY_DOC_COUNT,
+                    ],
+                ],
+            );
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\SearchHttpResponseTransfer
+     */
+    protected function getEmptySearchHttpResults(): SearchHttpResponseTransfer
+    {
+        return (new SearchHttpResponseTransfer())->setFacets([]);
     }
 }

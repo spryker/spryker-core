@@ -33,12 +33,27 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
     /**
      * @var string
      */
+    public const CATALOG_SEARCH_QUERY_PLUGIN_VARIANTS = 'CATALOG_SEARCH_QUERY_PLUGIN_VARIANTS';
+
+    /**
+     * @var string
+     */
     public const CATALOG_SEARCH_QUERY_EXPANDER_PLUGINS = 'catalog search query expander plugins';
 
     /**
      * @var string
      */
+    public const CATALOG_SEARCH_QUERY_EXPANDER_PLUGIN_VARIANTS = 'CATALOG_SEARCH_QUERY_EXPANDER_PLUGIN_VARIANTS';
+
+    /**
+     * @var string
+     */
     public const CATALOG_SEARCH_RESULT_FORMATTER_PLUGINS = 'catalog search result formatter plugins';
+
+    /**
+     * @var string
+     */
+    public const CATALOG_SEARCH_RESULT_FORMATTER_PLUGIN_VARIANTS = 'CATALOG_SEARCH_RESULT_FORMATTER_PLUGIN_VARIANTS';
 
     /**
      * @var string
@@ -59,6 +74,11 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
      * @var string
      */
     public const PLUGIN_FACET_CONFIG_TRANSFER_BUILDERS = 'PLUGIN_FACET_CONFIG_TRANSFER_BUILDERS';
+
+    /**
+     * @var string
+     */
+    public const PLUGIN_FACET_CONFIG_TRANSFER_BUILDER_VARIANTS = 'PLUGIN_FACET_CONFIG_TRANSFER_BUILDER_VARIANTS';
 
     /**
      * @var string
@@ -101,12 +121,16 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
 
         $container = $this->addSearchClient($container);
         $container = $this->addCatalogSearchQueryPlugin($container);
+        $container = $this->addCatalogSearchQueryPluginVariants($container);
         $container = $this->addCatalogSearchQueryExpanderPlugins($container);
-        $container = $this->addCatalogSerachResultFormatterPlugins($container);
+        $container = $this->addCatalogSearchQueryExpanderPluginVariants($container);
+        $container = $this->addCatalogSearchResultFormatterPlugins($container);
+        $container = $this->addCatalogSearchResultFormatterPluginVariants($container);
         $container = $this->addSuggestionQueryPlugin($container);
         $container = $this->addSuggestionQueryExpanderPlugins($container);
         $container = $this->addSuggestionResultFormatterPlugins($container);
         $container = $this->addFacetConfigTransferBuilderPlugins($container);
+        $container = $this->addFacetConfigTransferBuilderPluginVariants($container);
         $container = $this->addSortConfigTransferBuilderPlugins($container);
         $container = $this->addCatalogSearchCountQueryExpanderPlugins($container);
         $container = $this->addProductConcreteCatalogSearchResultFormatterPlugins($container);
@@ -150,6 +174,20 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
+    protected function addCatalogSearchQueryPluginVariants(Container $container)
+    {
+        $container->set(static::CATALOG_SEARCH_QUERY_PLUGIN_VARIANTS, function () {
+            return $this->createCatalogSearchQueryPluginVariants();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
     protected function addCatalogSearchQueryExpanderPlugins(Container $container)
     {
         $container->set(static::CATALOG_SEARCH_QUERY_EXPANDER_PLUGINS, function () {
@@ -164,10 +202,38 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addCatalogSerachResultFormatterPlugins(Container $container)
+    protected function addCatalogSearchQueryExpanderPluginVariants(Container $container)
+    {
+        $container->set(static::CATALOG_SEARCH_QUERY_EXPANDER_PLUGIN_VARIANTS, function () {
+            return $this->createCatalogSearchQueryExpanderPluginVariants();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addCatalogSearchResultFormatterPlugins(Container $container)
     {
         $container->set(static::CATALOG_SEARCH_RESULT_FORMATTER_PLUGINS, function () {
             return $this->createCatalogSearchResultFormatterPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addCatalogSearchResultFormatterPluginVariants(Container $container)
+    {
+        $container->set(static::CATALOG_SEARCH_RESULT_FORMATTER_PLUGIN_VARIANTS, function () {
+            return $this->createCatalogSearchResultFormatterPluginVariants();
         });
 
         return $container;
@@ -224,6 +290,20 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::PLUGIN_FACET_CONFIG_TRANSFER_BUILDERS, function () {
             return $this->getFacetConfigTransferBuilderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addFacetConfigTransferBuilderPluginVariants(Container $container)
+    {
+        $container->set(static::PLUGIN_FACET_CONFIG_TRANSFER_BUILDER_VARIANTS, function () {
+            return $this->getFacetConfigTransferBuilderPluginVariants();
         });
 
         return $container;
@@ -324,6 +404,16 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
+     * @phpstan-return array<\Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface>
+     *
+     * @return array<\Spryker\Client\Search\Dependency\Plugin\QueryInterface>
+     */
+    protected function createCatalogSearchQueryPluginVariants(): array
+    {
+        return [];
+    }
+
+    /**
      * @return array<\Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface>
      */
     protected function createCatalogSearchQueryExpanderPlugins()
@@ -332,9 +422,43 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
+     * @example
+     *  return [
+     *      SearchHttpConfig::TYPE_SEARCH_HTTP => [
+     *          new Plugin1(),
+     *          ...
+     *          new PluginN(),
+     *      ],
+     *  ]
+     *
+     * @return array<string, array<\Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface>>
+     */
+    protected function createCatalogSearchQueryExpanderPluginVariants()
+    {
+        return [];
+    }
+
+    /**
      * @return array<\Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface>
      */
     protected function createCatalogSearchResultFormatterPlugins()
+    {
+        return [];
+    }
+
+    /**
+     * @example
+     *  return [
+     *      SearchHttpConfig::TYPE_SEARCH_HTTP => [
+     *          new Plugin1(),
+     *          ...
+     *          new PluginN(),
+     *      ],
+     *  ]
+     *
+     * @return array<string, array<\Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface>>
+     */
+    protected function createCatalogSearchResultFormatterPluginVariants(): array
     {
         return [];
     }
@@ -369,6 +493,23 @@ class CatalogDependencyProvider extends AbstractDependencyProvider
      * @return array<\Spryker\Client\Catalog\Dependency\Plugin\FacetConfigTransferBuilderPluginInterface>
      */
     protected function getFacetConfigTransferBuilderPlugins()
+    {
+        return [];
+    }
+
+    /**
+     * @example
+     *  return [
+     *      SearchHttpConfig::TYPE_SEARCH_HTTP => [
+     *          new Plugin1(),
+     *          ...
+     *          new PluginN(),
+     *      ],
+     *  ]
+     *
+     * @return array<string, array<\Spryker\Client\Catalog\Dependency\Plugin\FacetConfigTransferBuilderPluginInterface>>
+     */
+    protected function getFacetConfigTransferBuilderPluginVariants(): array
     {
         return [];
     }

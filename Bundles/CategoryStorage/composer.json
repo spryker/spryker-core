@@ -11,6 +11,7 @@
         "spryker/locale": "^3.1.0",
         "spryker/propel-orm": "^1.5.0",
         "spryker/publisher-extension": "^1.0.0",
+        "spryker/search-extension": "^1.0.0",
         "spryker/storage": "^3.4.0",
         "spryker/store": "^1.15.0",
         "spryker/synchronization": "^1.9.0",
@@ -30,10 +31,11 @@
         "spryker/url-storage": "*"
     },
     "suggest": {
-        "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0",
-        "spryker/url-storage": "If you want to use UrlStorage plugins, minimum required version: 0.2.0",
         "spryker/elastica": "If you want to use Elastica plugins.",
-        "spryker/search-elasticsearch": "If you want to use search plugins."
+        "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0",
+        "spryker/search-elasticsearch": "If you want to use search plugins.",
+        "spryker/url-storage": "If you want to use UrlStorage plugins, minimum required version: 0.2.0",
+        "spryker/search-http": "If you want to use SearchHttp plugins."
     },
     "autoload": {
         "psr-4": {

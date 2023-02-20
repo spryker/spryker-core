@@ -9,6 +9,7 @@ namespace Spryker\Client\CategoryStorage;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CategoryNodeStorageTransfer;
+use Generated\Shared\Transfer\SearchHttpResponseTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -85,5 +86,21 @@ class CategoryStorageClient extends AbstractClient implements CategoryStorageCli
         return $this->getFactory()
             ->createCategoryTreeFilterFormatter()
             ->formatCategoryTreeFilter($docCountAggregation, $localeName, $storeName);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchHttpResponseTransfer $searchResult
+     *
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\CategoryNodeSearchResultTransfer>
+     */
+    public function formatSearchHttpCategoryTree(SearchHttpResponseTransfer $searchResult): ArrayObject
+    {
+        return $this->getFactory()
+            ->createCategoryTreeSearchHttpFormatter()
+            ->format($searchResult);
     }
 }

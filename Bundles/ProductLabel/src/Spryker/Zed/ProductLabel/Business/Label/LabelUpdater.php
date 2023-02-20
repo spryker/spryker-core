@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ProductLabelTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionWriterInterface;
 use Spryker\Zed\ProductLabel\Business\Label\ProductLabelStoreRelation\ProductLabelStoreRelationUpdaterInterface;
+use Spryker\Zed\ProductLabel\Business\Label\Trigger\ProductEventTriggerInterface;
 use Spryker\Zed\ProductLabel\Business\ProductAbstractRelation\ProductAbstractRelationReaderInterface;
 use Spryker\Zed\ProductLabel\Business\Touch\LabelDictionaryTouchManagerInterface;
 use Spryker\Zed\ProductLabel\Business\Touch\ProductAbstractRelationTouchManagerInterface;
@@ -58,12 +59,18 @@ class LabelUpdater implements LabelUpdaterInterface
     protected $storeRelationUpdater;
 
     /**
+     * @var \Spryker\Zed\ProductLabel\Business\Label\Trigger\ProductEventTriggerInterface
+     */
+    protected ProductEventTriggerInterface $productEventTrigger;
+
+    /**
      * @param \Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionWriterInterface $localizedAttributesCollectionWriter
      * @param \Spryker\Zed\ProductLabel\Business\ProductAbstractRelation\ProductAbstractRelationReaderInterface $productAbstractRelationReader
      * @param \Spryker\Zed\ProductLabel\Business\Touch\LabelDictionaryTouchManagerInterface $dictionaryTouchManager
      * @param \Spryker\Zed\ProductLabel\Business\Touch\ProductAbstractRelationTouchManagerInterface $productAbstractRelationTouchManager
      * @param \Spryker\Zed\ProductLabel\Persistence\ProductLabelEntityManagerInterface $productLabelEntityManager
      * @param \Spryker\Zed\ProductLabel\Business\Label\ProductLabelStoreRelation\ProductLabelStoreRelationUpdaterInterface $storeRelationUpdater
+     * @param \Spryker\Zed\ProductLabel\Business\Label\Trigger\ProductEventTriggerInterface $productEventTrigger
      */
     public function __construct(
         LocalizedAttributesCollectionWriterInterface $localizedAttributesCollectionWriter,
@@ -71,7 +78,8 @@ class LabelUpdater implements LabelUpdaterInterface
         LabelDictionaryTouchManagerInterface $dictionaryTouchManager,
         ProductAbstractRelationTouchManagerInterface $productAbstractRelationTouchManager,
         ProductLabelEntityManagerInterface $productLabelEntityManager,
-        ProductLabelStoreRelationUpdaterInterface $storeRelationUpdater
+        ProductLabelStoreRelationUpdaterInterface $storeRelationUpdater,
+        ProductEventTriggerInterface $productEventTrigger
     ) {
         $this->localizedAttributesCollectionWriter = $localizedAttributesCollectionWriter;
         $this->productAbstractRelationReader = $productAbstractRelationReader;
@@ -79,6 +87,7 @@ class LabelUpdater implements LabelUpdaterInterface
         $this->productAbstractRelationTouchManager = $productAbstractRelationTouchManager;
         $this->productLabelEntityManager = $productLabelEntityManager;
         $this->storeRelationUpdater = $storeRelationUpdater;
+        $this->productEventTrigger = $productEventTrigger;
     }
 
     /**
@@ -93,6 +102,8 @@ class LabelUpdater implements LabelUpdaterInterface
         $this->getTransactionHandler()->handleTransaction(function () use ($productLabelTransfer) {
             $this->executeUpdateTransaction($productLabelTransfer);
         });
+
+        $this->triggerProductEvents($productLabelTransfer);
     }
 
     /**
@@ -181,5 +192,20 @@ class LabelUpdater implements LabelUpdaterInterface
         foreach ($productAbstractIds as $idProductAbstract) {
             $this->productAbstractRelationTouchManager->touchActiveByIdProductAbstract($idProductAbstract);
         }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
+     *
+     * @return void
+     */
+    protected function triggerProductEvents(ProductLabelTransfer $productLabelTransfer): void
+    {
+        $productAbstractIds = $this->productAbstractRelationReader
+            ->findIdsProductAbstractByIdProductLabel(
+                $productLabelTransfer->getIdProductLabel(),
+            );
+
+        $this->productEventTrigger->triggerProductUpdateEvents($productAbstractIds);
     }
 }

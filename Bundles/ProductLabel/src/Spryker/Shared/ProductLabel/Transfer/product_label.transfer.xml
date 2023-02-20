@@ -72,6 +72,7 @@
         <property name="idProductLabelProductAbstract" type="int"/>
         <property name="fkProductAbstract" type="int"/>
         <property name="fkProductLabel" type="int"/>
+        <property name="productLabel" type="ProductLabel"/>
     </transfer>
 
     <transfer name="ProductLabelProductAbstractRelations">
@@ -102,6 +103,15 @@
         <property name="idEntity" type="int"/>
         <property name="idStores" type="int[]" singular="idStores"/>
         <property name="stores" type="Store[]" singular="stores"/>
+    </transfer>
+
+    <transfer name="ProductConcrete">
+        <property name="productLabels" type="ProductLabel[]" singular="productLabel"/>
+        <property name="fkProductAbstract" type="int"/>
+    </transfer>
+
+    <transfer name="EventEntity">
+        <property name="foreignKeys" type="array" singular="foreignKeys"/>
     </transfer>
 
 </transfers>

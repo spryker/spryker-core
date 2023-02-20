@@ -9,6 +9,8 @@ namespace Spryker\Zed\ProductLabel\Business;
 
 use Psr\Log\LoggerInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductLabel\Business\Expander\ProductConcreteLabelExpander;
+use Spryker\Zed\ProductLabel\Business\Expander\ProductConcreteLabelExpanderInterface;
 use Spryker\Zed\ProductLabel\Business\Label\LabelCreator;
 use Spryker\Zed\ProductLabel\Business\Label\LabelCreatorInterface;
 use Spryker\Zed\ProductLabel\Business\Label\LabelDeleter;
@@ -18,6 +20,8 @@ use Spryker\Zed\ProductLabel\Business\Label\LabelUpdaterInterface;
 use Spryker\Zed\ProductLabel\Business\Label\LocalizedAttributesCollection\LocalizedAttributesCollectionWriter;
 use Spryker\Zed\ProductLabel\Business\Label\ProductLabelStoreRelation\ProductLabelStoreRelationUpdater;
 use Spryker\Zed\ProductLabel\Business\Label\ProductLabelStoreRelation\ProductLabelStoreRelationUpdaterInterface;
+use Spryker\Zed\ProductLabel\Business\Label\Trigger\ProductEventTrigger;
+use Spryker\Zed\ProductLabel\Business\Label\Trigger\ProductEventTriggerInterface;
 use Spryker\Zed\ProductLabel\Business\Label\ValidityUpdater;
 use Spryker\Zed\ProductLabel\Business\ProductAbstractRelation\ProductAbstractRelationDeleter;
 use Spryker\Zed\ProductLabel\Business\ProductAbstractRelation\ProductAbstractRelationReader;
@@ -25,6 +29,7 @@ use Spryker\Zed\ProductLabel\Business\ProductAbstractRelation\ProductAbstractRel
 use Spryker\Zed\ProductLabel\Business\ProductAbstractRelation\ProductAbstractRelationWriter;
 use Spryker\Zed\ProductLabel\Business\Touch\LabelDictionaryTouchManager;
 use Spryker\Zed\ProductLabel\Business\Touch\ProductAbstractRelationTouchManager;
+use Spryker\Zed\ProductLabel\Dependency\Facade\ProductLabelToEventInterface;
 use Spryker\Zed\ProductLabel\ProductLabelDependencyProvider;
 
 /**
@@ -60,6 +65,7 @@ class ProductLabelBusinessFactory extends AbstractBusinessFactory
             $this->createProductAbstractRelationTouchManager(),
             $this->getEntityManager(),
             $this->createProductLabelStoreRelationUpdater(),
+            $this->createProductEventTrigger(),
         );
     }
 
@@ -71,6 +77,8 @@ class ProductLabelBusinessFactory extends AbstractBusinessFactory
         return new LabelDeleter(
             $this->getEntityManager(),
             $this->getRepository(),
+            $this->createProductEventTrigger(),
+            $this->createProductAbstractRelationReader(),
         );
     }
 
@@ -125,6 +133,7 @@ class ProductLabelBusinessFactory extends AbstractBusinessFactory
         return new ProductAbstractRelationWriter(
             $this->getQueryContainer(),
             $this->createProductAbstractRelationTouchManager(),
+            $this->createProductEventTrigger(),
         );
     }
 
@@ -138,6 +147,7 @@ class ProductLabelBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getEntityManager(),
             $this->getConfig(),
+            $this->createProductEventTrigger(),
         );
     }
 
@@ -189,5 +199,29 @@ class ProductLabelBusinessFactory extends AbstractBusinessFactory
     public function createProductLabelStoreRelationUpdater(): ProductLabelStoreRelationUpdaterInterface
     {
         return new ProductLabelStoreRelationUpdater($this->getRepository(), $this->getEntityManager());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductLabel\Business\Expander\ProductConcreteLabelExpanderInterface
+     */
+    public function createProductConcreteLabelExpander(): ProductConcreteLabelExpanderInterface
+    {
+        return new ProductConcreteLabelExpander($this->getRepository());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductLabel\Business\Label\Trigger\ProductEventTriggerInterface
+     */
+    public function createProductEventTrigger(): ProductEventTriggerInterface
+    {
+        return new ProductEventTrigger($this->getEventFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductLabel\Dependency\Facade\ProductLabelToEventInterface
+     */
+    public function getEventFacade(): ProductLabelToEventInterface
+    {
+        return $this->getProvidedDependency(ProductLabelDependencyProvider::FACADE_EVENT);
     }
 }

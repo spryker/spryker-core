@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<transfers
+    xmlns="spryker:databuilder-01"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="spryker:databuilder-01 http://static.spryker.com/databuilder-01.xsd"
+>
+
+    <transfer name="SearchHttpConfig">
+        <property name="applicationId" dataBuilderRule="word()"/>
+        <property name="url" dataBuilderRule="word()"/>
+    </transfer>
+
+    <transfer name="SearchHttpConfigCollection">
+        <property name="searchHttpConfigs" dataBuilderRule="SearchHttpConfig[]"/>
+    </transfer>
+
+    <transfer name="SearchHttpResponse">
+        <property name="products" dataBuilderRule="SearchHttpResponseProduct[]"/>
+        <property name="pagination" dataBuilderRule="SearchHttpResponsePagination"/>
+        <property name="facets" dataBuilderRule="=[]"/>
+    </transfer>
+
+    <transfer name="SearchHttpResponseProduct">
+        <property name="sku" dataBuilderRule="word()"/>
+        <property name="productAbstractSku" dataBuilderRule="word()"/>
+        <property name="name" dataBuilderRule="word()"/>
+        <property name="description" dataBuilderRule="word()"/>
+        <property name="images" dataBuilderRule="="/>
+        <property name="labels" dataBuilderRule="="/>
+        <property name="attributes" dataBuilderRule="SearchHttpResponseProductAttribute[]"/>
+        <property name="merchants" dataBuilderRule="="/>
+        <property name="keywords" dataBuilderRule="word()"/>
+        <property name="url" dataBuilderRule="word()"/>
+        <property name="rating" dataBuilderRule="word()"/>
+        <property name="categories" dataBuilderRule="="/>
+        <property name="prices" dataBuilderRule="SearchHttpResponseProductPrice[]"/>
+    </transfer>
+
+    <transfer name="SearchHttpResponseProductAttribute">
+        <property name="name" dataBuilderRule="word()"/>
+        <property name="value" dataBuilderRule="word()"/>
+    </transfer>
+
+    <transfer name="SearchHttpResponseProductPrice">
+        <property name="currency" dataBuilderRule="word()"/>
+        <property name="priceGross" dataBuilderRule="randomNumber(3)"/>
+        <property name="priceNet" dataBuilderRule="randomNumber(3)"/>
+    </transfer>
+
+    <transfer name="SearchHttpResponsePagination">
+        <property name="numFound" dataBuilderRule="randomNumber(3)"/>
+        <property name="currentPage" dataBuilderRule="randomNumber(3)"/>
+        <property name="currentItemsPerPage" dataBuilderRule="randomNumber(3)"/>
+    </transfer>
+
+    <transfer name="CategoryNodeStorage">
+        <property name="idCategory" dataBuilderRule="="/>
+        <property name="name" dataBuilderRule="unique()->sentence(2)"/>
+    </transfer>
+
+    <transfer name="Money">
+        <property name="amount" dataBuilderRule="randomNumber(3)"/>
+    </transfer>
+
+    <transfer name="SearchQueryValueFacetFilter">
+        <property name="fieldName" dataBuilderRule="word()"/>
+        <property name="values" dataBuilderRule="="/>
+    </transfer>
+
+    <transfer name="SearchQueryRangeFacetFilter">
+        <property name="fieldName" dataBuilderRule="word()"/>
+        <property name="from" dataBuilderRule="word()"/>
+        <property name="to" dataBuilderRule="word()"/>
+    </transfer>
+
+    <transfer name="SearchQueryPagination">
+        <property name="page" dataBuilderRule="randomNumber(3)"/>
+        <property name="itemsPerPage" dataBuilderRule="randomNumber(3)"/>
+    </transfer>
+
+    <transfer name="SearchQuerySorting">
+        <property name="fieldName" dataBuilderRule="word()"/>
+        <property name="sortDirection" dataBuilderRule="word()"/>
+    </transfer>
+
+</transfers>

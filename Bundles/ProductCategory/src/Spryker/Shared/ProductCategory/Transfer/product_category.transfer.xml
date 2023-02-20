@@ -32,6 +32,7 @@
         <property name="categoryNode" type="Node"/>
         <property name="idCategory" type="int"/>
         <property name="localizedAttributes" type="CategoryLocalizedAttributes[]" singular="localizedAttributes"/>
+        <property name="nodeCollection" type="NodeCollection"/>
     </transfer>
 
     <transfer name="Locale">
@@ -50,6 +51,8 @@
 
     <transfer name="Node">
         <property name="idCategoryNode" type="int"/>
+        <property name="category" type="Category"/>
+        <property name="childrenNodes" type="NodeCollection"/>
     </transfer>
 
     <transfer name="ProductAbstract">
@@ -57,11 +60,21 @@
 
     <transfer name="ProductConcrete">
         <property name="productCategories" type="ProductCategory[]" singular="productCategory"/>
+        <property name="relatedCategoryTreeNodes" type="Node[]" singular="relatedCategoryTreeNode"/>
         <property name="fkProductAbstract" type="int"/>
     </transfer>
 
     <transfer name="EventEntity">
         <property name="foreignKeys" type="array" singular="foreignKeys"/>
+    </transfer>
+
+    <transfer name="CategoryCriteria">
+        <property name="isRoot" type="bool" deprecated="Use CategoryConditions.isRoot instead."/>
+        <property name="withChildrenRecursively" type="bool"/>
+    </transfer>
+
+    <transfer name="NodeCollection">
+        <property name="nodes" type="Node[]" singular="node"/>
     </transfer>
 
 </transfers>

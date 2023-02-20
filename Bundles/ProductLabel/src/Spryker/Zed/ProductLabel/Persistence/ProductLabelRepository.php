@@ -235,9 +235,40 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
             return [];
         }
 
-        return $this->getFactory()
+        $productLabelProductAbstractTransfer = $this->getFactory()
             ->createProductLabelProductAbstractMapper()
             ->mapProductLabelProductAbstractEntitiesToProductLabelProductTransfers($productLabelProductAbstractEntities, []);
+
+        return $this->mapProductLabelEntitiesToProductLabelTransfers(
+            $productLabelProductAbstractEntities,
+            $productLabelProductAbstractTransfer,
+        );
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstract> $productLabelProductAbstractEntities
+     * @param array<\Generated\Shared\Transfer\ProductLabelProductAbstractTransfer> $productLabelProductAbstractTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\ProductLabelProductAbstractTransfer>
+     */
+    protected function mapProductLabelEntitiesToProductLabelTransfers(
+        ObjectCollection $productLabelProductAbstractEntities,
+        array $productLabelProductAbstractTransfers
+    ): array {
+        foreach ($productLabelProductAbstractTransfers as $productLabelProductAbstractTransfer) {
+            foreach ($productLabelProductAbstractEntities as $productLabelProductAbstractEntity) {
+                if ($productLabelProductAbstractTransfer->getFkProductAbstract() === $productLabelProductAbstractEntity->getFkProductAbstract()) {
+                    $productLabelTransfer = $this->getFactory()->createProductLabelMapper()->mapProductLabelEntityToProductLabelTransfer(
+                        $productLabelProductAbstractEntity->getSpyProductLabel(),
+                        new ProductLabelTransfer(),
+                    );
+
+                    $productLabelProductAbstractTransfer->setProductLabel($productLabelTransfer);
+                }
+            }
+        }
+
+        return $productLabelProductAbstractTransfers;
     }
 
     /**

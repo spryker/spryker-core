@@ -902,6 +902,13 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
                 ->endUse();
         }
 
+        if ($categoryConditionsTransfer->getIsRoot() !== null) {
+            $categoryQuery
+                ->useNodeQuery('node', Criteria::LEFT_JOIN)
+                ->filterByIsRoot($categoryConditionsTransfer->getIsRoot())
+                ->endUse();
+        }
+
         if ($categoryConditionsTransfer->getLocaleNames()) {
             $categoryQuery
                 ->useAttributeQuery(null, Criteria::LEFT_JOIN)
@@ -1139,6 +1146,13 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
             $categoryQuery
                 ->useNodeQuery('node', Criteria::LEFT_JOIN)
                     ->filterByIsMain($categoryCriteriaTransfer->getIsMain())
+                ->endUse();
+        }
+
+        if ($categoryCriteriaTransfer->getIsRoot() !== null) {
+            $categoryQuery
+                ->useNodeQuery('node', Criteria::LEFT_JOIN)
+                    ->filterByIsRoot($categoryCriteriaTransfer->getIsRoot())
                 ->endUse();
         }
 

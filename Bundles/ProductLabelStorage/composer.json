@@ -33,7 +33,8 @@
     "suggest": {
         "spryker/catalog": "If you want to use Catalog plugins, minimum required version: 5.2.0",
         "spryker/event": "If you want to use Event plugins, minimum required version: 2.1.0",
-        "spryker/search": "If you want to use Search plugins, minimum required version: 7.0.0"
+        "spryker/search": "If you want to use Search plugins, minimum required version: 7.0.0",
+        "spryker/search-http": "If you want to use SearchHttp plugins."
     },
     "autoload": {
         "psr-4": {

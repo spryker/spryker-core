@@ -75,6 +75,7 @@
         <property name="withNodes" type="bool" deprecated="Use CategoryConditions.withNodes instead."/>
         <property name="withChildren" type="bool" deprecated="Use CategoryConditions.withChildren instead."/>
         <property name="isMain" type="bool" deprecated="Use CategoryConditions.isMain instead."/>
+        <property name="isRoot" type="bool" deprecated="Use CategoryConditions.isRoot instead."/>
         <property name="withChildrenRecursively" type="bool" deprecated="Use CategoryConditions.withChildrenRecursively instead."/>
         <property name="idCategoryNode" type="int" deprecated="Use CategoryConditions.categoryNodeIds instead."/>
         <property name="limit" type="int" deprecated="Use Pagination.limit instead."/>
@@ -92,6 +93,7 @@
         <property name="withNodes" type="bool"/>
         <property name="withChildren" type="bool"/>
         <property name="isMain" type="bool"/>
+        <property name="isRoot" type="bool"/>
         <property name="withChildrenRecursively" type="bool"/>
         <property name="categoryNodeIds" type="int[]" singular="idCategoryNode"/>
         <property name="categoryKeys" type="string[]" singular="categoryKey" strict="true"/>

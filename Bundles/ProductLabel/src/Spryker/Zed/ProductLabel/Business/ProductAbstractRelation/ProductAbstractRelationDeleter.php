@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductLabel\Business\ProductAbstractRelation;
 
+use Spryker\Zed\ProductLabel\Business\Label\Trigger\ProductEventTriggerInterface;
 use Spryker\Zed\ProductLabel\Business\Touch\ProductAbstractRelationTouchManagerInterface;
 use Spryker\Zed\ProductLabel\Persistence\ProductLabelEntityManagerInterface;
 use Spryker\Zed\ProductLabel\Persistence\ProductLabelRepositoryInterface;
@@ -35,24 +36,32 @@ class ProductAbstractRelationDeleter implements ProductAbstractRelationDeleterIn
     /**
      * @var \Spryker\Zed\ProductLabel\Persistence\ProductLabelEntityManagerInterface
      */
-    private $productLabelEntityManager;
+    protected $productLabelEntityManager;
+
+    /**
+     * @var \Spryker\Zed\ProductLabel\Business\Label\Trigger\ProductEventTriggerInterface
+     */
+    protected ProductEventTriggerInterface $productEventTrigger;
 
     /**
      * @param \Spryker\Zed\ProductLabel\Business\Touch\ProductAbstractRelationTouchManagerInterface $productRelationTouchManager
      * @param \Spryker\Zed\ProductLabel\Persistence\ProductLabelRepositoryInterface $productLabelRepository
      * @param \Spryker\Zed\ProductLabel\Persistence\ProductLabelEntityManagerInterface $productLabelEntityManager
      * @param \Spryker\Zed\ProductLabel\ProductLabelConfig $productLabelConfig
+     * @param \Spryker\Zed\ProductLabel\Business\Label\Trigger\ProductEventTriggerInterface $productEventTrigger
      */
     public function __construct(
         ProductAbstractRelationTouchManagerInterface $productRelationTouchManager,
         ProductLabelRepositoryInterface $productLabelRepository,
         ProductLabelEntityManagerInterface $productLabelEntityManager,
-        ProductLabelConfig $productLabelConfig
+        ProductLabelConfig $productLabelConfig,
+        ProductEventTriggerInterface $productEventTrigger
     ) {
         $this->productRelationTouchManager = $productRelationTouchManager;
         $this->productLabelRepository = $productLabelRepository;
         $this->productLabelEntityManager = $productLabelEntityManager;
         $this->productLabelConfig = $productLabelConfig;
+        $this->productEventTrigger = $productEventTrigger;
     }
 
     /**
@@ -67,6 +76,8 @@ class ProductAbstractRelationDeleter implements ProductAbstractRelationDeleterIn
         $this->handleDatabaseTransaction(function () use ($idProductLabel, $productAbstractIds, $isTouchEnabled) {
             $this->executeDeleteRelationsTransaction($idProductLabel, $productAbstractIds, $isTouchEnabled);
         });
+
+        $this->productEventTrigger->triggerProductUpdateEvents($productAbstractIds);
     }
 
     /**

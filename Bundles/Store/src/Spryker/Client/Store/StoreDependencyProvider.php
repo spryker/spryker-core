@@ -12,6 +12,9 @@ use Spryker\Client\Kernel\Container;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Store\Dependency\Adapter\StoreToKernelStoreAdapter;
 
+/**
+ * @method \Spryker\Client\Store\StoreConfig getConfig()
+ */
 class StoreDependencyProvider extends AbstractDependencyProvider
 {
     /**

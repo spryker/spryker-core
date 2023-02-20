@@ -12,6 +12,7 @@
         <property name="fkProductAbstract" type="int"/>
         <property name="sku" type="string"/>
         <property name="abstractSku" type="string"/>
+        <property name="approvalStatus" type="string"/>
     </transfer>
 
     <transfer name="CartChange">

@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductLabelResponseTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
+use Spryker\Zed\ProductLabel\Business\Label\Trigger\ProductEventTriggerInterface;
+use Spryker\Zed\ProductLabel\Business\ProductAbstractRelation\ProductAbstractRelationReaderInterface;
 use Spryker\Zed\ProductLabel\Persistence\ProductLabelEntityManagerInterface;
 use Spryker\Zed\ProductLabel\Persistence\ProductLabelRepositoryInterface;
 
@@ -34,15 +36,31 @@ class LabelDeleter implements LabelDeleterInterface
     protected $productLabelRepository;
 
     /**
+     * @var \Spryker\Zed\ProductLabel\Business\Label\Trigger\ProductEventTriggerInterface
+     */
+    protected ProductEventTriggerInterface $productEventTrigger;
+
+    /**
+     * @var \Spryker\Zed\ProductLabel\Business\ProductAbstractRelation\ProductAbstractRelationReaderInterface
+     */
+    protected ProductAbstractRelationReaderInterface $productAbstractRelationReader;
+
+    /**
      * @param \Spryker\Zed\ProductLabel\Persistence\ProductLabelEntityManagerInterface $productLabelEntityManager
      * @param \Spryker\Zed\ProductLabel\Persistence\ProductLabelRepositoryInterface $productLabelRepository
+     * @param \Spryker\Zed\ProductLabel\Business\Label\Trigger\ProductEventTriggerInterface $productEventTrigger
+     * @param \Spryker\Zed\ProductLabel\Business\ProductAbstractRelation\ProductAbstractRelationReaderInterface $productAbstractRelationReader
      */
     public function __construct(
         ProductLabelEntityManagerInterface $productLabelEntityManager,
-        ProductLabelRepositoryInterface $productLabelRepository
+        ProductLabelRepositoryInterface $productLabelRepository,
+        ProductEventTriggerInterface $productEventTrigger,
+        ProductAbstractRelationReaderInterface $productAbstractRelationReader
     ) {
         $this->productLabelEntityManager = $productLabelEntityManager;
         $this->productLabelRepository = $productLabelRepository;
+        $this->productEventTrigger = $productEventTrigger;
+        $this->productAbstractRelationReader = $productAbstractRelationReader;
     }
 
     /**
@@ -66,6 +84,8 @@ class LabelDeleter implements LabelDeleterInterface
                 ->setIsSuccessful(false)
                 ->addMessage($this->createMessageTransfer(static::MESSAGE_PRODUCT_LABEL_NOT_FOUND, [$productLabelId]));
         }
+
+        $this->triggerProductEvents($productLabelTransfer);
 
         $this->getTransactionHandler()->handleTransaction(function () use ($productLabelTransfer) {
             $this->executeProductLabelDeleteTransaction($productLabelTransfer);
@@ -109,5 +129,20 @@ class LabelDeleter implements LabelDeleterInterface
         return (new MessageTransfer())
             ->setValue($message)
             ->setParameters($parameters);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
+     *
+     * @return void
+     */
+    protected function triggerProductEvents(ProductLabelTransfer $productLabelTransfer): void
+    {
+        $productAbstractIds = $this->productAbstractRelationReader
+            ->findIdsProductAbstractByIdProductLabel(
+                $productLabelTransfer->getIdProductLabel(),
+            );
+
+        $this->productEventTrigger->triggerProductUpdateEvents($productAbstractIds);
     }
 }

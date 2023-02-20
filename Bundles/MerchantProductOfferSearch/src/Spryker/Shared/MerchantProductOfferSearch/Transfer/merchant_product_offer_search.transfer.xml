@@ -79,4 +79,9 @@
         <property name="merchantReference" type="string"/>
     </transfer>
 
+    <transfer name="SearchQueryValueFacetFilter">
+        <property name="fieldName" type="string"/>
+        <property name="values" type="array" singular="value"/>
+    </transfer>
+
 </transfers>

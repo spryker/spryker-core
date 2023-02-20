@@ -13,6 +13,10 @@ use Spryker\Client\CategoryStorage\Dependency\Client\CategoryStorageToStoreClien
 use Spryker\Client\CategoryStorage\Dependency\Service\CategoryStorageToSynchronizationServiceInterface;
 use Spryker\Client\CategoryStorage\Formatter\CategoryTreeFilterFormatter;
 use Spryker\Client\CategoryStorage\Formatter\CategoryTreeFilterFormatterInterface;
+use Spryker\Client\CategoryStorage\Formatter\CategoryTreeSearchHttpFormatter;
+use Spryker\Client\CategoryStorage\Formatter\CategoryTreeSearchHttpFormatterInterface;
+use Spryker\Client\CategoryStorage\Mapper\CategoryNodeStorageMapper;
+use Spryker\Client\CategoryStorage\Mapper\CategoryNodeStorageMapperInterface;
 use Spryker\Client\CategoryStorage\Mapper\UrlStorageCategoryNodeMapper;
 use Spryker\Client\CategoryStorage\Mapper\UrlStorageCategoryNodeMapperInterface;
 use Spryker\Client\CategoryStorage\Storage\CategoryNodeStorage;
@@ -31,7 +35,10 @@ class CategoryStorageFactory extends AbstractFactory
      */
     public function createCategoryTreeFilterFormatter(): CategoryTreeFilterFormatterInterface
     {
-        return new CategoryTreeFilterFormatter($this->createCategoryTreeStorageReader());
+        return new CategoryTreeFilterFormatter(
+            $this->createCategoryTreeStorageReader(),
+            $this->createCategoryNodeStorageMapper(),
+        );
     }
 
     /**
@@ -43,6 +50,14 @@ class CategoryStorageFactory extends AbstractFactory
             $this->getStorageClient(),
             $this->getSynchronizationService(),
         );
+    }
+
+    /**
+     * @return \Spryker\Client\CategoryStorage\Mapper\CategoryNodeStorageMapperInterface
+     */
+    public function createCategoryNodeStorageMapper(): CategoryNodeStorageMapperInterface
+    {
+        return new CategoryNodeStorageMapper();
     }
 
     /**
@@ -98,5 +113,18 @@ class CategoryStorageFactory extends AbstractFactory
     public function getSynchronizationService(): CategoryStorageToSynchronizationServiceInterface
     {
         return $this->getProvidedDependency(CategoryStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
+    }
+
+    /**
+     * @return \Spryker\Client\CategoryStorage\Formatter\CategoryTreeSearchHttpFormatterInterface
+     */
+    public function createCategoryTreeSearchHttpFormatter(): CategoryTreeSearchHttpFormatterInterface
+    {
+        return new CategoryTreeSearchHttpFormatter(
+            $this->createCategoryTreeStorageReader(),
+            $this->createCategoryNodeStorageMapper(),
+            $this->getLocaleClient(),
+            $this->getStoreClient(),
+        );
     }
 }

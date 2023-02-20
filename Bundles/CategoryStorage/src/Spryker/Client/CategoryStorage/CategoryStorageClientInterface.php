@@ -9,6 +9,7 @@ namespace Spryker\Client\CategoryStorage;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CategoryNodeStorageTransfer;
+use Generated\Shared\Transfer\SearchHttpResponseTransfer;
 
 interface CategoryStorageClientInterface
 {
@@ -68,4 +69,19 @@ interface CategoryStorageClientInterface
      * @return \ArrayObject<int, \Generated\Shared\Transfer\CategoryNodeSearchResultTransfer>
      */
     public function formatCategoryTreeFilter(array $docCountAggregation, string $localeName, string $storeName): ArrayObject;
+
+    /**
+     * Specification:
+     * - Returns category nodes with attached product count.
+     * - Retrieves category tree from storage by locale name and store name.
+     * - Recursively merges each category node in the category tree with product count taken from the category facet aggregations in $searchResult.
+     * - Compatible only with SearchHttpResponseTransfer and used for SearchHttp module search results.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SearchHttpResponseTransfer $searchResult
+     *
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\CategoryNodeSearchResultTransfer>
+     */
+    public function formatSearchHttpCategoryTree(SearchHttpResponseTransfer $searchResult): ArrayObject;
 }

@@ -15,6 +15,7 @@ use Generated\Shared\DataBuilder\ProductLabelCriteriaBuilder;
 use Generated\Shared\DataBuilder\ProductLabelLocalizedAttributesBuilder;
 use Generated\Shared\DataBuilder\ProductLabelProductAbstractRelationsBuilder;
 use Generated\Shared\DataBuilder\StoreRelationBuilder;
+use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ProductLabelCriteriaTransfer;
@@ -27,7 +28,9 @@ use Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabelStoreQuery;
 use Spryker\Shared\Product\ProductConfig;
 use Spryker\Shared\ProductLabel\ProductLabelConstants;
+use Spryker\Zed\ProductLabel\Business\Label\Trigger\ProductEventTrigger;
 use Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface;
+use Spryker\Zed\ProductLabel\Dependency\Facade\ProductLabelToEventInterface;
 use Spryker\Zed\ProductLabel\Dependency\Plugin\ProductLabelRelationUpdaterPluginInterface;
 use Spryker\Zed\ProductLabel\ProductLabelDependencyProvider;
 
@@ -58,6 +61,26 @@ class ProductLabelFacadeTest extends Unit
      * @var string
      */
     public const STORE_NAME_AT = 'AT';
+
+    /**
+     * @var \Spryker\Zed\ProductLabel\Dependency\Facade\ProductLabelToEventInterface
+     */
+    protected $eventFacade;
+
+    /**
+     * @return void
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->eventFacade = $this->createMock(ProductLabelToEventInterface::class);
+
+        $this->tester->mockFactoryMethod(
+            'getEventFacade',
+            $this->eventFacade,
+        );
+    }
 
     /**
      * @return void
@@ -919,6 +942,46 @@ class ProductLabelFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testProductConcretesSuccessfullyExpandedWithLabels(): void
+    {
+        // Arrange
+        $productConcreteTransfer = $this->tester->haveProduct();
+        $productLabelTransfer = $this->tester->haveProductLabel();
+        $this->tester->haveProductLabelToAbstractProductRelation(
+            $productLabelTransfer->getIdProductLabel(),
+            $productConcreteTransfer->getFkProductAbstract(),
+        );
+
+        $productConcreteTransfers = [$productConcreteTransfer];
+
+        // Act
+        $expandedProductConcreteTransfers = $this->tester->getFacade()->expandProductConcretesWithLabels($productConcreteTransfers);
+
+        // Assert
+        $this->assertSame(
+            $expandedProductConcreteTransfers[0]->getProductLabels()->offsetGet(0)->getIdProductLabel(),
+            $productLabelTransfer->getIdProductLabel(),
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandProductConcretesWithLabelsReturnsEmptyArrayWhenProductAreEmpty(): void
+    {
+        // Arrange
+        $productConcreteTransfers = [];
+
+        // Act
+        $expandedProductConcreteTransfers = $this->tester->getFacade()->expandProductConcretesWithLabels($productConcreteTransfers);
+
+        // Assert
+        $this->assertEmpty($expandedProductConcreteTransfers);
+    }
+
+    /**
      * @return \Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface
      */
     protected function getProductLabelFacade(): ProductLabelFacadeInterface
@@ -940,5 +1003,103 @@ class ProductLabelFacadeTest extends Unit
         ]);
 
         return $builder->build();
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddProductAbstractRelationsEmitsProductEvents(): void
+    {
+        // Arrange
+        $productTransfer = $this->tester->haveProduct();
+        $idProductAbstract = $productTransfer->getFkProductAbstract();
+        $productLabelTransfer = $this->tester->haveProductLabel();
+        $idProductLabel = $productLabelTransfer->getIdProductLabel();
+
+        // Assert
+        $this->assertProductEventWithProductAbstractIdIsEmitted($idProductAbstract);
+
+        // Act
+        $this->tester->getFacade()->addAbstractProductRelationsForLabel($idProductLabel, [$idProductAbstract]);
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdatingLabelEmitsProductEventsForRelatedProducts(): void
+    {
+        // Arrange
+        $productTransfer = $this->tester->haveProduct();
+        $idProductAbstract = $productTransfer->getFkProductAbstract();
+        $productLabelTransfer = $this->tester->haveProductLabel();
+        $idProductLabel = $productLabelTransfer->getIdProductLabel();
+        $this->tester->haveProductLabelToAbstractProductRelation($idProductLabel, $idProductAbstract);
+
+        // Assert
+        $this->assertProductEventWithProductAbstractIdIsEmitted($idProductAbstract);
+
+        // Act
+        $this->tester->getFacade()->updateLabel($productLabelTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testRemoveAbstractRelationsEmitsProductEvent(): void
+    {
+        // Arrange
+        $productTransfer = $this->tester->haveProduct();
+        $idProductAbstract = $productTransfer->getFkProductAbstract();
+        $productLabelTransfer = $this->tester->haveProductLabel();
+        $idProductLabel = $productLabelTransfer->getIdProductLabel();
+        $this->tester->haveProductLabelToAbstractProductRelation($idProductLabel, $idProductAbstract);
+
+        // Assert
+        $this->assertProductEventWithProductAbstractIdIsEmitted($idProductAbstract);
+
+        // Act
+        $this->tester->getFacade()->removeProductAbstractRelationsForLabel($idProductLabel, [$idProductAbstract]);
+    }
+
+    /**
+     * @return void
+     */
+    public function testLabelRemovalEmitsProductEventForRelatedProducts(): void
+    {
+        // Arrange
+        $productTransfer = $this->tester->haveProduct();
+        $idProductAbstract = $productTransfer->getFkProductAbstract();
+        $productLabelTransfer = $this->tester->haveProductLabel();
+        $idProductLabel = $productLabelTransfer->getIdProductLabel();
+        $this->tester->haveProductLabelToAbstractProductRelation($idProductLabel, $idProductAbstract);
+
+        // Assert
+        $this->assertProductEventWithProductAbstractIdIsEmitted($idProductAbstract);
+
+        // Act
+        $this->tester->getFacade()->removeLabel($productLabelTransfer);
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return void
+     */
+    protected function assertProductEventWithProductAbstractIdIsEmitted(int $idProductAbstract): void
+    {
+        $this->eventFacade
+            ->expects($this->atLeastOnce())
+            ->method('triggerBulk')
+            ->with(ProductEventTrigger::PRODUCT_CONCRETE_UPDATE, $this->callback(
+                function ($transfers) use ($idProductAbstract) {
+                    $this->assertNotEmpty($transfers);
+                    $this->assertInstanceOf(EventEntityTransfer::class, $transfers[0]);
+                    $this->assertNotEmpty($transfers[0]->getForeignKeys());
+                    $this->assertNotEmpty($transfers[0]->getForeignKeys()[ProductEventTrigger::COLUMN_FK_PRODUCT_ABSTRACT]);
+                    $this->assertEquals($transfers[0]->getForeignKeys()[ProductEventTrigger::COLUMN_FK_PRODUCT_ABSTRACT], $idProductAbstract);
+
+                    return true;
+                },
+            ));
     }
 }

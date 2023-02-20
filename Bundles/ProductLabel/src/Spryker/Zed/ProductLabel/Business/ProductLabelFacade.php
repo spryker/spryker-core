@@ -310,4 +310,20 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
     ): ProductLabelCollectionTransfer {
         return $this->getRepository()->getProductLabelCollection($productLabelCriteriaTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
+     */
+    public function expandProductConcretesWithLabels(array $productConcreteTransfers): array
+    {
+        return $this->getFactory()
+            ->createProductConcreteLabelExpander()
+            ->expandProductConcretesWithLabels($productConcreteTransfers);
+    }
 }

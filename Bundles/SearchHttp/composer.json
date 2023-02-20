@@ -1,0 +1,65 @@
+{
+    "name": "spryker/search-http",
+    "type": "library",
+    "description": "SearchHttp module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=8.0",
+        "psr/http-message": "^1.0.0",
+        "spryker/catalog-extension": "^1.0.0",
+        "spryker/category-storage": "^2.0.0",
+        "spryker/guzzle": "^2.0.0",
+        "spryker/kernel": "^3.30.0",
+        "spryker/locale": "^1.0.0 || ^2.0.0 || ^3.0.0",
+        "spryker/log": "^3.0.0",
+        "spryker/message-broker-extension": "^1.0.0",
+        "spryker/money": "^2.8.0",
+        "spryker/product-storage": "^1.36.0",
+        "spryker/propel-orm": "^1.16.0",
+        "spryker/search-extension": "^1.1.0",
+        "spryker/storage": "^3.4.0",
+        "spryker/store": "^1.17.0",
+        "spryker/synchronization-behavior": "^1.0.0",
+        "spryker/synchronization-extension": "^1.0.0",
+        "spryker/transfer": "^3.27.0"
+    },
+    "require-dev": {
+        "spryker/code-sniffer": "*",
+        "spryker/propel": "*",
+        "spryker/queue": "*",
+        "spryker/session": "*",
+        "spryker/testify": "*"
+    },
+    "suggest": {
+        "spryker/catalog": "Add Catalog Module if you need to use Catalog Module",
+        "spryker/product-page-search": "Add Product Page Search Module if you need to use Product Page Search Module",
+        "spryker/search": "Add Search Module if you need to use Search Module"
+    },
+    "autoload": {
+        "psr-4": {
+            "Spryker\\": "src/Spryker/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SprykerTest\\": "tests/SprykerTest/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
+}

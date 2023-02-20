@@ -43,7 +43,7 @@ class CatalogPriceProductConnectorFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\CatalogPriceProductConnector\Dependency\CatalogPriceProductConnectorToPriceClientInterface
      */
-    protected function getPriceClient()
+    public function getPriceClient()
     {
         return $this->getProvidedDependency(CatalogPriceProductConnectorDependencyProvider::CLIENT_PRICE);
     }
@@ -51,7 +51,7 @@ class CatalogPriceProductConnectorFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\CatalogPriceProductConnector\Dependency\CatalogPriceProductConnectorToCurrencyClientInterface
      */
-    protected function getCurrencyClient()
+    public function getCurrencyClient()
     {
         return $this->getProvidedDependency(CatalogPriceProductConnectorDependencyProvider::CLIENT_CURRENCY);
     }
