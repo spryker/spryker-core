@@ -231,6 +231,13 @@
     </transfer>
 
     <transfer name="ProductAbstract">
+        <property name="approvalStatus" type="string"/>
+        <property name="sku" type="string"/>
+        <property name="storeRelation" type="StoreRelation"/>
+        <property name="idTaxSet" type="int"/>
+        <property name="localizedAttributes" type="LocalizedAttributes[]" singular="localizedAttributes"/>
+        <property name="imageSets" type="ProductImageSet[]" singular="imageSet"/>
+        <property name="idProductAbstract" type="int"/>
     </transfer>
 
     <transfer name="Category">
@@ -244,6 +251,7 @@
 
     <transfer name="TaxSet">
         <property name="name" type="string"/>
+        <property name="idTaxSet" type="int"/>
     </transfer>
 
     <transfer name="ProductAbstractConcreteCollection" strict="true">
