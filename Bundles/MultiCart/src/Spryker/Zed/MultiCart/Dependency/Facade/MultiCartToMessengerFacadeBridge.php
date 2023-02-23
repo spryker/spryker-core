@@ -29,7 +29,7 @@ class MultiCartToMessengerFacadeBridge implements MultiCartToMessengerFacadeInte
      *
      * @return void
      */
-    public function addInfoMessage(MessageTransfer $message)
+    public function addInfoMessage(MessageTransfer $message): void
     {
         $this->messengerFacade->addInfoMessage($message);
     }
@@ -39,7 +39,7 @@ class MultiCartToMessengerFacadeBridge implements MultiCartToMessengerFacadeInte
      *
      * @return void
      */
-    public function addSuccessMessage(MessageTransfer $message)
+    public function addSuccessMessage(MessageTransfer $message): void
     {
         $this->messengerFacade->addSuccessMessage($message);
     }

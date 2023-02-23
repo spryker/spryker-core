@@ -79,4 +79,19 @@ class MultiCartConfig extends AbstractBundleConfig
             QuoteTransfer::PRICE_MODE,
         ];
     }
+
+    /**
+     * Specification:
+     * - Determines the `QuoteTransfer` fields that will be stored in storage.
+     * - Supports nested fields filtering, e.g. [QuoteTransfer::ITEM => [ItemTransfer::GROUP_KEY]].
+     * - Nesting level is not limited.
+     *
+     * @api
+     *
+     * @return array<string|array<string>>
+     */
+    public function getQuoteFieldsAllowedForCustomerQuoteCollectionInSession(): array
+    {
+        return [];
+    }
 }

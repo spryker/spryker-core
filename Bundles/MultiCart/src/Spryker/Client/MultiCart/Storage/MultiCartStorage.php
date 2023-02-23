@@ -7,9 +7,11 @@
 
 namespace Spryker\Client\MultiCart\Storage;
 
+use ArrayObject;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\MultiCart\Dependency\Client\MultiCartToSessionClientInterface;
+use Spryker\Client\MultiCart\MultiCartConfig;
 
 class MultiCartStorage implements MultiCartStorageInterface
 {
@@ -21,14 +23,21 @@ class MultiCartStorage implements MultiCartStorageInterface
     /**
      * @var \Spryker\Client\MultiCart\Dependency\Client\MultiCartToSessionClientInterface
      */
-    protected $sessionClient;
+    protected MultiCartToSessionClientInterface $sessionClient;
+
+    /**
+     * @var \Spryker\Client\MultiCart\MultiCartConfig
+     */
+    protected MultiCartConfig $multiCartConfig;
 
     /**
      * @param \Spryker\Client\MultiCart\Dependency\Client\MultiCartToSessionClientInterface $sessionClient
+     * @param \Spryker\Client\MultiCart\MultiCartConfig $multiCartConfig
      */
-    public function __construct(MultiCartToSessionClientInterface $sessionClient)
+    public function __construct(MultiCartToSessionClientInterface $sessionClient, MultiCartConfig $multiCartConfig)
     {
         $this->sessionClient = $sessionClient;
+        $this->multiCartConfig = $multiCartConfig;
     }
 
     /**
@@ -38,6 +47,8 @@ class MultiCartStorage implements MultiCartStorageInterface
      */
     public function setQuoteCollection(QuoteCollectionTransfer $quoteCollectionTransfer): void
     {
+        $quoteCollectionTransfer = $this->filterQuoteCollectionByAllowedInSessionQuoteFieldsConfiguration($quoteCollectionTransfer);
+
         $this->sessionClient->set(static::SESSION_KEY_QUOTE_COLLECTION, $quoteCollectionTransfer);
     }
 
@@ -64,5 +75,53 @@ class MultiCartStorage implements MultiCartStorageInterface
         }
 
         return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteCollectionTransfer $quoteCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
+     */
+    protected function filterQuoteCollectionByAllowedInSessionQuoteFieldsConfiguration(
+        QuoteCollectionTransfer $quoteCollectionTransfer
+    ): QuoteCollectionTransfer {
+        $allowedQuoteFields = $this->multiCartConfig->getQuoteFieldsAllowedForCustomerQuoteCollectionInSession();
+        if ($allowedQuoteFields === []) {
+            return $quoteCollectionTransfer;
+        }
+
+        $filteredQuoteTransfers = new ArrayObject();
+        foreach ($quoteCollectionTransfer->getQuotes() as $quoteTransfer) {
+            $quoteData = $this->filterOutNotAllowedQuoteFields($quoteTransfer->toArray(true, true), $allowedQuoteFields);
+            $filteredQuoteTransfers->append((new QuoteTransfer())->fromArray($quoteData, true));
+        }
+
+        return $quoteCollectionTransfer->setQuotes($filteredQuoteTransfers);
+    }
+
+    /**
+     * @param array<string, mixed> $quoteData
+     * @param array<string|array<string>> $allowedQuoteFields
+     *
+     * @return array<string, mixed>
+     */
+    protected function filterOutNotAllowedQuoteFields(array $quoteData, array $allowedQuoteFields): array
+    {
+        $filteredQuoteData = [];
+        foreach ($allowedQuoteFields as $key => $allowedQuoteField) {
+            if (is_string($allowedQuoteField) && isset($quoteData[$allowedQuoteField])) {
+                $filteredQuoteData[$allowedQuoteField] = $quoteData[$allowedQuoteField];
+
+                continue;
+            }
+
+            if (is_array($allowedQuoteField) && isset($quoteData[$key])) {
+                foreach ($quoteData[$key] as $quoteFieldData) {
+                    $filteredQuoteData[$key][] = $this->filterOutNotAllowedQuoteFields($quoteFieldData, $allowedQuoteField);
+                }
+            }
+        }
+
+        return $filteredQuoteData;
     }
 }

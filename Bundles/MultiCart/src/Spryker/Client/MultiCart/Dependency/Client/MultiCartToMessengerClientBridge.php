@@ -27,7 +27,7 @@ class MultiCartToMessengerClientBridge implements MultiCartToMessengerClientInte
      *
      * @return void
      */
-    public function addInfoMessage($message)
+    public function addInfoMessage(string $message): void
     {
         $this->messengerClient->addInfoMessage($message);
     }
@@ -37,7 +37,7 @@ class MultiCartToMessengerClientBridge implements MultiCartToMessengerClientInte
      *
      * @return void
      */
-    public function addErrorMessage($message)
+    public function addErrorMessage(string $message): void
     {
         $this->messengerClient->addErrorMessage($message);
     }
@@ -47,7 +47,7 @@ class MultiCartToMessengerClientBridge implements MultiCartToMessengerClientInte
      *
      * @return void
      */
-    public function addSuccessMessage($message)
+    public function addSuccessMessage(string $message): void
     {
         $this->messengerClient->addSuccessMessage($message);
     }

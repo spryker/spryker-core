@@ -26,7 +26,7 @@ interface MultiCartToQuoteFacadeInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function findQuoteById($idQuote): QuoteResponseTransfer;
+    public function findQuoteById(int $idQuote): QuoteResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer

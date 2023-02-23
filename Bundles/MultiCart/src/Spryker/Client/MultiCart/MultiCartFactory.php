@@ -56,7 +56,10 @@ class MultiCartFactory extends AbstractFactory
      */
     public function createMultiCartStorage(): MultiCartStorageInterface
     {
-        return new MultiCartStorage($this->getSessionClient());
+        return new MultiCartStorage(
+            $this->getSessionClient(),
+            $this->getConfig(),
+        );
     }
 
     /**

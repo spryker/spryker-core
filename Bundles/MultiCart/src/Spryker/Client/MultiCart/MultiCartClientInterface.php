@@ -64,6 +64,9 @@ interface MultiCartClientInterface
 
     /**
      * Specification:
+     * - Iterates over `QuoteCollectionTransfer.quotes`.
+     * - Filters `QuoteTransfer` fields according to {@link \Spryker\Client\MultiCart\MultiCartConfig::getQuoteFieldsAllowedForCustomerQuoteCollectionInSession()}.
+     * - If no fields are specified in config method, filtering is not applied.
      * - Set customer quote collection.
      *
      * @api

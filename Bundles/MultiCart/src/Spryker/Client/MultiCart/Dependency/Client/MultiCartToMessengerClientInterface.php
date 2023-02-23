@@ -14,19 +14,19 @@ interface MultiCartToMessengerClientInterface
      *
      * @return void
      */
-    public function addInfoMessage($message);
+    public function addInfoMessage(string $message): void;
 
     /**
      * @param string $message
      *
      * @return void
      */
-    public function addErrorMessage($message);
+    public function addErrorMessage(string $message): void;
 
     /**
      * @param string $message
      *
      * @return void
      */
-    public function addSuccessMessage($message);
+    public function addSuccessMessage(string $message): void;
 }

@@ -27,7 +27,7 @@ class MultiCartToQuoteClientBridge implements MultiCartToQuoteClientInterface
     /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function getQuote()
+    public function getQuote(): QuoteTransfer
     {
         return $this->quoteClient->getQuote();
     }
@@ -37,7 +37,7 @@ class MultiCartToQuoteClientBridge implements MultiCartToQuoteClientInterface
      *
      * @return void
      */
-    public function setQuote(QuoteTransfer $quoteTransfer)
+    public function setQuote(QuoteTransfer $quoteTransfer): void
     {
         $this->quoteClient->setQuote($quoteTransfer);
     }
@@ -45,7 +45,7 @@ class MultiCartToQuoteClientBridge implements MultiCartToQuoteClientInterface
     /**
      * @return string
      */
-    public function getStorageStrategy()
+    public function getStorageStrategy(): string
     {
         return $this->quoteClient->getStorageStrategy();
     }

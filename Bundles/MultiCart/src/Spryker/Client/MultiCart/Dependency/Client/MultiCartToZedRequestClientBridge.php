@@ -27,11 +27,11 @@ class MultiCartToZedRequestClientBridge implements MultiCartToZedRequestClientIn
     /**
      * @param string $url
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $object
-     * @param array|int|null $requestOptions
+     * @param array|null $requestOptions
      *
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
-    public function call($url, TransferInterface $object, $requestOptions = null)
+    public function call(string $url, TransferInterface $object, ?array $requestOptions = null): TransferInterface
     {
         return $this->zedRequestClient->call($url, $object, $requestOptions);
     }
@@ -39,7 +39,7 @@ class MultiCartToZedRequestClientBridge implements MultiCartToZedRequestClientIn
     /**
      * @return void
      */
-    public function addFlashMessagesFromLastZedRequest()
+    public function addFlashMessagesFromLastZedRequest(): void
     {
         $this->zedRequestClient->addFlashMessagesFromLastZedRequest();
     }

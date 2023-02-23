@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\MultiCart\Dependency\Client;
 
+use Generated\Shared\Transfer\CustomerTransfer;
+
 class MultiCartToCustomerClientBridge implements MultiCartToCustomerClientInterface
 {
     /**
@@ -25,7 +27,7 @@ class MultiCartToCustomerClientBridge implements MultiCartToCustomerClientInterf
     /**
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
-    public function getCustomer()
+    public function getCustomer(): ?CustomerTransfer
     {
         return $this->customerClient->getCustomer();
     }

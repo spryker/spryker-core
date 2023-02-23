@@ -15,7 +15,7 @@ interface MultiCartToSessionClientInterface
      *
      * @return void
      */
-    public function set($name, $value);
+    public function set(string $name, $value): void;
 
     /**
      * @param string $name
@@ -23,5 +23,5 @@ interface MultiCartToSessionClientInterface
      *
      * @return mixed
      */
-    public function get($name, $default = null);
+    public function get(string $name, $default = null): mixed;
 }

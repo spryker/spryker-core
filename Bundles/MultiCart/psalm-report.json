@@ -111,8 +111,8 @@
         },
         {
             "severity": "info",
-            "line_from": 31,
-            "line_to": 31,
+            "line_from": 33,
+            "line_to": 33,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Client\\MultiCart\\Storage\\MultiCartStorageInterface::setQuoteCollection cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/MultiCart/src/Spryker/Client/MultiCart/Plugin/SaveCustomerQuotesQuoteUpdatePlugin.php",
@@ -159,8 +159,8 @@
         },
         {
             "severity": "info",
-            "line_from": 61,
-            "line_to": 61,
+            "line_from": 65,
+            "line_to": 65,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\MultiCart\\Persistence\\MultiCartRepositoryInterface::isQuoteDefault cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/MultiCart/src/Spryker/Zed/MultiCart/Business/Messenger/MultiCartMessenger.php",
@@ -171,8 +171,8 @@
         },
         {
             "severity": "info",
-            "line_from": 62,
-            "line_to": 62,
+            "line_from": 66,
+            "line_to": 66,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\MultiCart\\Persistence\\MultiCartRepositoryInterface::isQuoteDefault cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/MultiCart/src/Spryker/Zed/MultiCart/Business/Messenger/MultiCartMessenger.php",
@@ -183,8 +183,8 @@
         },
         {
             "severity": "info",
-            "line_from": 62,
-            "line_to": 62,
+            "line_from": 66,
+            "line_to": 66,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getCustomerReference on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/MultiCart/src/Spryker/Zed/MultiCart/Business/Messenger/MultiCartMessenger.php",

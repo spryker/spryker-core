@@ -19,7 +19,11 @@ class SaveCustomerQuotesQuoteUpdatePlugin extends AbstractPlugin implements Quot
 {
     /**
      * Specification:
-     * - Extract Customer Quote Collection and saves it to customer session.
+     * - Extract Customer Quote Collection.
+     * - Iterates over `QuoteResponseTransfer.customerQuotes.quotes`.
+     * - Filters `QuoteTransfer` fields according to {@link \Spryker\Client\MultiCart\MultiCartConfig::getQuoteFieldsAllowedForCustomerQuoteCollectionInSession()}.
+     * - If no fields are specified in config method, filtering is not applied.
+     * - Saves `QuoteCollectionTransfer` to customer session.
      *
      * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
      *

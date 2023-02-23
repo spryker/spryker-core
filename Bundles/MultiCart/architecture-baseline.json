@@ -1,131 +1,5 @@
 [
     {
-        "fileName": "src/Spryker/Client/MultiCart/Dependency/Client/MultiCartToCustomerClientInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `getCustomer()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Client/MultiCart/Dependency/Client/MultiCartToMessengerClientBridge.php",
-        "description": "Bridges: Type should be defined for param `message` in method `Spryker\\Client\\MultiCart\\Dependency\\Client\\MultiCartToMessengerClientBridge::addInfoMessage()`.",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Client/MultiCart/Dependency/Client/MultiCartToMessengerClientBridge.php",
-        "description": "Bridges: Type should be defined for param `message` in method `Spryker\\Client\\MultiCart\\Dependency\\Client\\MultiCartToMessengerClientBridge::addErrorMessage()`.",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Client/MultiCart/Dependency/Client/MultiCartToMessengerClientBridge.php",
-        "description": "Bridges: Type should be defined for param `message` in method `Spryker\\Client\\MultiCart\\Dependency\\Client\\MultiCartToMessengerClientBridge::addSuccessMessage()`.",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Client/MultiCart/Dependency/Client/MultiCartToMessengerClientInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `addInfoMessage()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Client/MultiCart/Dependency/Client/MultiCartToMessengerClientInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `addErrorMessage()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Client/MultiCart/Dependency/Client/MultiCartToMessengerClientInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `addSuccessMessage()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Client/MultiCart/Dependency/Client/MultiCartToQuoteClientInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `getQuote()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Client/MultiCart/Dependency/Client/MultiCartToQuoteClientInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `setQuote()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Client/MultiCart/Dependency/Client/MultiCartToQuoteClientInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `getStorageStrategy()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Client/MultiCart/Dependency/Client/MultiCartToSessionClientBridge.php",
-        "description": "Bridges: Type should be defined for param `name` in method `Spryker\\Client\\MultiCart\\Dependency\\Client\\MultiCartToSessionClientBridge::set()`.",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Client/MultiCart/Dependency/Client/MultiCartToSessionClientBridge.php",
-        "description": "Bridges: Type should be defined for param `name` in method `Spryker\\Client\\MultiCart\\Dependency\\Client\\MultiCartToSessionClientBridge::get()`.",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Client/MultiCart/Dependency/Client/MultiCartToSessionClientInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `set()`. Got `$name` but expected to be `string $name`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Client/MultiCart/Dependency/Client/MultiCartToSessionClientInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `get()`. Got `$name` but expected to be `string $name`. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Client/MultiCart/Dependency/Client/MultiCartToZedRequestClientBridge.php",
-        "description": "Bridges: Type should be defined for param `url` in method `Spryker\\Client\\MultiCart\\Dependency\\Client\\MultiCartToZedRequestClientBridge::call()`.",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Client/MultiCart/Dependency/Client/MultiCartToZedRequestClientInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `call()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Client/MultiCart/Dependency/Client/MultiCartToZedRequestClientInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `addFlashMessagesFromLastZedRequest()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Client/MultiCart/Dependency/Service/MultiCartToUtilDateTimeServiceInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `formatDateTime()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
         "fileName": "src/Spryker/Zed/MultiCart/Dependency/Facade/MultiCartToMessengerFacadeBridge.php",
         "description": "Bridges: Method `addInfoMessage()` must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
@@ -136,20 +10,6 @@
         "fileName": "src/Spryker/Zed/MultiCart/Dependency/Facade/MultiCartToMessengerFacadeBridge.php",
         "description": "Bridges: Method `addSuccessMessage()` must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/MultiCart/Dependency/Facade/MultiCartToMessengerFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `addInfoMessage()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/MultiCart/Dependency/Facade/MultiCartToMessengerFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `addSuccessMessage()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -176,13 +36,6 @@
     },
     {
         "fileName": "src/Spryker/Zed/MultiCart/Dependency/Facade/MultiCartToQuoteFacadeBridge.php",
-        "description": "Bridges: Type should be defined for param `idQuote` in method `Spryker\\Zed\\MultiCart\\Dependency\\Facade\\MultiCartToQuoteFacadeBridge::findQuoteById()`.",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/MultiCart/Dependency/Facade/MultiCartToQuoteFacadeBridge.php",
         "description": "Bridges: Method `findQuoteById()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
@@ -192,13 +45,6 @@
         "fileName": "src/Spryker/Zed/MultiCart/Dependency/Facade/MultiCartToStoreFacadeBridge.php",
         "description": "Bridges: Method `getCurrentStore()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/MultiCart/Dependency/Facade/MultiCartToStoreFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `getCurrentStore()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
     }
