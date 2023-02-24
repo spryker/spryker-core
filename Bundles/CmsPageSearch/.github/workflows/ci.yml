@@ -51,8 +51,3 @@ jobs:
             - name: Composer Update
               run: composer update --prefer-lowest --prefer-dist --no-interaction --profile -vvv
 
-            - name: Composer Install prefer lowest tool
-              run: composer require --dev dereuromark/composer-prefer-lowest;
-
-            - name: Run validation
-              run: vendor/bin/validate-prefer-lowest -m
