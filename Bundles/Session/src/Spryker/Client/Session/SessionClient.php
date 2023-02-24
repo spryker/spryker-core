@@ -260,6 +260,10 @@ class SessionClient extends AbstractClient implements SessionClientInterface
      */
     public function isStarted()
     {
+        if (!$this->getContainer()) {
+            return false;
+        }
+
         return $this->getContainer()->isStarted();
     }
 

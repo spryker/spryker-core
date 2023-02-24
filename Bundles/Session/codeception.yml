@@ -3,6 +3,7 @@ include:
     - tests/SprykerTest/Shared/Session
     - tests/SprykerTest/Yves/Session
     - tests/SprykerTest/Zed/Session
+    - tests/SprykerTest/Client/Session
 paths:
     support: .
     output: tests/_output
