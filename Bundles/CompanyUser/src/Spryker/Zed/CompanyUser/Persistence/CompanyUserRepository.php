@@ -468,7 +468,7 @@ class CompanyUserRepository extends AbstractRepository implements CompanyUserRep
      *
      * @return bool
      */
-    public function isActiveCompanyUserExists(int $idCustomer): bool
+    public function isActiveCompanyUser(int $idCustomer): bool
     {
         $companyUserQuery = $this->getFactory()
             ->createCompanyUserQuery()

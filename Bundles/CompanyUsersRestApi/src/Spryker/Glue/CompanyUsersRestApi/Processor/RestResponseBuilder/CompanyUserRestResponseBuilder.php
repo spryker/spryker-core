@@ -23,12 +23,12 @@ class CompanyUserRestResponseBuilder implements CompanyUserRestResponseBuilderIn
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
      */
-    protected $restResourceBuilder;
+    protected RestResourceBuilderInterface $restResourceBuilder;
 
     /**
      * @var \Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUserMapperInterface
      */
-    protected $companyUserMapper;
+    protected CompanyUserMapperInterface $companyUserMapper;
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
@@ -152,5 +152,18 @@ class CompanyUserRestResponseBuilder implements CompanyUserRestResponseBuilderIn
         $restResource->setPayload($companyUserTransfer);
 
         return $restResource;
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createCompanyUserHasNoPermissionErrorResponse(): RestResponseInterface
+    {
+        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
+            ->setStatus(Response::HTTP_FORBIDDEN)
+            ->setCode(CompanyUsersRestApiConfig::RESPONSE_CODE_COMPANY_USER_HAS_NO_PERMISSION)
+            ->setDetail(CompanyUsersRestApiConfig::RESPONSE_DETAIL_COMPANY_USER_HAS_NO_PERMISSION);
+
+        return $this->restResourceBuilder->createRestResponse()->addError($restErrorMessageTransfer);
     }
 }

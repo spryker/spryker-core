@@ -119,5 +119,5 @@ interface CompanyUserRepositoryInterface
      *
      * @return bool
      */
-    public function isActiveCompanyUserExists(int $idCustomer): bool;
+    public function isActiveCompanyUser(int $idCustomer): bool;
 }

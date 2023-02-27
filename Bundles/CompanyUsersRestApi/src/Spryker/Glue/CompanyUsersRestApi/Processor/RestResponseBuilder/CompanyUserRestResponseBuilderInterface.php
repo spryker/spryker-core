@@ -59,4 +59,9 @@ interface CompanyUserRestResponseBuilderInterface
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createCompanyUserNotFoundErrorResponse(): RestResponseInterface;
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createCompanyUserHasNoPermissionErrorResponse(): RestResponseInterface;
 }

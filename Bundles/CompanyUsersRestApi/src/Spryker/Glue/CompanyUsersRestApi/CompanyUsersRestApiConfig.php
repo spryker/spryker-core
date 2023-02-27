@@ -71,6 +71,20 @@ class CompanyUsersRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_DETAIL_COMPANY_USER_NOT_FOUND = 'Company user not found';
 
     /**
+     * @api
+     *
+     * @var string
+     */
+    public const RESPONSE_CODE_COMPANY_USER_HAS_NO_PERMISSION = '1405';
+
+    /**
+     * @api
+     *
+     * @var string
+     */
+    public const RESPONSE_DETAIL_COMPANY_USER_HAS_NO_PERMISSION = 'Forbidden';
+
+    /**
      * @uses \Spryker\Glue\GlueApplication\GlueApplicationConfig::COLLECTION_IDENTIFIER_CURRENT_USER
      *
      * @var string

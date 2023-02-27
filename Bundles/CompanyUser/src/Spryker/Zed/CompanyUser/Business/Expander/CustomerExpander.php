@@ -39,7 +39,7 @@ class CustomerExpander implements CustomerExpanderInterface
         }
 
         return $customerTransfer->setIsActiveCompanyUserExists(
-            $this->repository->isActiveCompanyUserExists($idCustomer),
+            $this->repository->isActiveCompanyUser($idCustomer),
         );
     }
 }

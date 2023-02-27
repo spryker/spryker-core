@@ -18,9 +18,12 @@ use Spryker\Glue\CompanyUsersRestApi\Dependency\Client\CompanyUsersRestApiToComp
 use Spryker\Glue\CompanyUsersRestApi\Processor\RestResponseBuilder\CompanyUserRestResponseBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
+use Spryker\Glue\Kernel\PermissionAwareTrait;
 
 class CompanyUserReader implements CompanyUserReaderInterface
 {
+    use PermissionAwareTrait;
+
     /**
      * @var string
      */
@@ -29,22 +32,22 @@ class CompanyUserReader implements CompanyUserReaderInterface
     /**
      * @var \Spryker\Glue\CompanyUsersRestApi\Dependency\Client\CompanyUsersRestApiToCompanyUserClientInterface
      */
-    protected $companyUserClient;
+    protected CompanyUsersRestApiToCompanyUserClientInterface $companyUserClient;
 
     /**
      * @var \Spryker\Client\CompanyUsersRestApi\CompanyUsersRestApiClientInterface
      */
-    protected $companyUsersRestApiClient;
+    protected CompanyUsersRestApiClientInterface $companyUsersRestApiClient;
 
     /**
      * @var \Spryker\Glue\CompanyUsersRestApi\Processor\RestResponseBuilder\CompanyUserRestResponseBuilderInterface
      */
-    protected $companyUserRestResponseBuilder;
+    protected CompanyUserRestResponseBuilderInterface $companyUserRestResponseBuilder;
 
     /**
      * @var \Spryker\Glue\CompanyUsersRestApi\Dependency\Client\CompanyUsersRestApiToCompanyUserStorageClientInterface
      */
-    protected $companyUserStorageClient;
+    protected CompanyUsersRestApiToCompanyUserStorageClientInterface $companyUserStorageClient;
 
     /**
      * @param \Spryker\Glue\CompanyUsersRestApi\Dependency\Client\CompanyUsersRestApiToCompanyUserClientInterface $companyUserClient
@@ -71,6 +74,15 @@ class CompanyUserReader implements CompanyUserReaderInterface
      */
     public function getCompanyUserByResourceId(RestRequestInterface $restRequest): RestResponseInterface
     {
+        $idCompany = $restRequest->getRestUser()->getIdCompany();
+        if (!$idCompany) {
+            return $this->companyUserRestResponseBuilder->createCompanyUserNotSelectedErrorResponse();
+        }
+
+        if (!$this->can('SeeCompanyUsersPermissionPlugin')) {
+            return $this->companyUserRestResponseBuilder->createCompanyUserHasNoPermissionErrorResponse();
+        }
+
         $idResource = $restRequest->getResource()->getId();
 
         if ($idResource === CompanyUsersRestApiConfig::COLLECTION_IDENTIFIER_CURRENT_USER) {
@@ -90,6 +102,10 @@ class CompanyUserReader implements CompanyUserReaderInterface
         $idCompany = $restRequest->getRestUser()->getIdCompany();
         if (!$idCompany) {
             return $this->companyUserRestResponseBuilder->createCompanyUserNotSelectedErrorResponse();
+        }
+
+        if (!$this->can('SeeCompanyUsersPermissionPlugin')) {
+            return $this->companyUserRestResponseBuilder->createCompanyUserHasNoPermissionErrorResponse();
         }
 
         $filterTransfer = $this->createFilterTransfer($restRequest);
