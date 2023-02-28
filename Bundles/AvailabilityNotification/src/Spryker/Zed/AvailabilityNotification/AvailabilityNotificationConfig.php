@@ -8,6 +8,7 @@
 namespace Spryker\Zed\AvailabilityNotification;
 
 use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Shared\AvailabilityNotification\AvailabilityNotificationConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class AvailabilityNotificationConfig extends AbstractBundleConfig
@@ -21,6 +22,11 @@ class AvailabilityNotificationConfig extends AbstractBundleConfig
      * @var bool
      */
     protected const AVAILABILITY_NOTIFICATION_CHECK_PRODUCT_EXISTS = false;
+
+    /**
+     * @var int
+     */
+    protected const DEFAULT_BASE_URL_YVES_PORT = 443;
 
     /**
      * @api
@@ -61,5 +67,31 @@ class AvailabilityNotificationConfig extends AbstractBundleConfig
     public function availabilityNotificationCheckProductExists(): bool
     {
         return static::AVAILABILITY_NOTIFICATION_CHECK_PRODUCT_EXISTS;
+    }
+
+    /**
+     * Specification:
+     * - Returns stores to Yves host mapping.
+     *
+     * @api
+     *
+     * @return array<string, string>
+     */
+    public function getStoreToYvesHostMapping(): array
+    {
+        return $this->get(AvailabilityNotificationConstants::STORE_TO_YVES_HOST_MAPPING, []);
+    }
+
+    /**
+     * Specification:
+     * - Returns base URL Yves port.
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getBaseUrlYvesPort(): int
+    {
+        return $this->get(AvailabilityNotificationConstants::BASE_URL_YVES_PORT, static::DEFAULT_BASE_URL_YVES_PORT);
     }
 }

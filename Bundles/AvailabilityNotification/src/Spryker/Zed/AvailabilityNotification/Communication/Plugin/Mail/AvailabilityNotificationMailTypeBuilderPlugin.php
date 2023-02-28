@@ -60,6 +60,8 @@ class AvailabilityNotificationMailTypeBuilderPlugin extends AbstractPlugin imple
 
     /**
      * {@inheritDoc}
+     * - Requires `Mail.availabilityNotificationSubscriptionMailData.availabilityNotificationSubscription` to be set.
+     * - Requires `Mail.availabilityNotificationSubscriptionMailData.productName` to be set.
      * - Builds the `MailTransfer` with data for availability notification mail.
      *
      * @api
@@ -72,11 +74,11 @@ class AvailabilityNotificationMailTypeBuilderPlugin extends AbstractPlugin imple
     {
         /** @var \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer */
         $availabilityNotificationSubscriptionTransfer = $mailTransfer
-            ->getAvailabilityNotificationSubscriptionMailData()
+            ->getAvailabilityNotificationSubscriptionMailDataOrFail()
             ->getAvailabilityNotificationSubscriptionOrFail();
 
         $productName = $mailTransfer
-            ->getAvailabilityNotificationSubscriptionMailData()
+            ->getAvailabilityNotificationSubscriptionMailDataOrFail()
             ->getProductNameOrFail();
 
         return $mailTransfer

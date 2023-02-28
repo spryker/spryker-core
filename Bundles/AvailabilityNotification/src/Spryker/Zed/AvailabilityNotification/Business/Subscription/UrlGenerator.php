@@ -9,7 +9,9 @@ namespace Spryker\Zed\AvailabilityNotification\Business\Subscription;
 
 use Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer;
 use Generated\Shared\Transfer\LocalizedUrlTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\AvailabilityNotification\AvailabilityNotificationConfig;
+use Spryker\Zed\AvailabilityNotification\Business\Resolver\BaseUrlGetStrategyResolverInterface;
 
 class UrlGenerator implements UrlGeneratorInterface
 {
@@ -21,14 +23,23 @@ class UrlGenerator implements UrlGeneratorInterface
     /**
      * @var \Spryker\Zed\AvailabilityNotification\AvailabilityNotificationConfig
      */
-    protected $config;
+    protected AvailabilityNotificationConfig $availabilityNotificationConfig;
 
     /**
-     * @param \Spryker\Zed\AvailabilityNotification\AvailabilityNotificationConfig $config
+     * @var \Spryker\Zed\AvailabilityNotification\Business\Resolver\BaseUrlGetStrategyResolverInterface
      */
-    public function __construct(AvailabilityNotificationConfig $config)
-    {
-        $this->config = $config;
+    protected BaseUrlGetStrategyResolverInterface $baseUrlGetStrategyResolver;
+
+    /**
+     * @param \Spryker\Zed\AvailabilityNotification\AvailabilityNotificationConfig $availabilityNotificationConfig
+     * @param \Spryker\Zed\AvailabilityNotification\Business\Resolver\BaseUrlGetStrategyResolverInterface $baseUrlGetStrategyResolver
+     */
+    public function __construct(
+        AvailabilityNotificationConfig $availabilityNotificationConfig,
+        BaseUrlGetStrategyResolverInterface $baseUrlGetStrategyResolver
+    ) {
+        $this->availabilityNotificationConfig = $availabilityNotificationConfig;
+        $this->baseUrlGetStrategyResolver = $baseUrlGetStrategyResolver;
     }
 
     /**
@@ -38,24 +49,35 @@ class UrlGenerator implements UrlGeneratorInterface
      */
     public function createUnsubscriptionLink(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer): string
     {
-        $yvesBaseUrl = $this->config->getBaseUrlYves();
+        $localeName = $availabilityNotificationSubscriptionTransfer->getLocaleOrFail()->getLocaleNameOrFail();
+        $unsubscribeUri = sprintf(
+            $this->availabilityNotificationConfig->getUnsubscribeUri(),
+            $this->getLanguageFromLocale($localeName),
+            $availabilityNotificationSubscriptionTransfer->getSubscriptionKey(),
+        );
 
-        $localeName = $availabilityNotificationSubscriptionTransfer->getLocale()->getLocaleName();
-        $locale = $this->getLanguageFromLocale($localeName);
-
-        return $yvesBaseUrl . sprintf($this->config->getUnsubscribeUri(), $locale, $availabilityNotificationSubscriptionTransfer->getSubscriptionKey());
+        return sprintf(
+            '%s%s',
+            $this->getBaseUrl($availabilityNotificationSubscriptionTransfer->getStore()),
+            $unsubscribeUri,
+        );
     }
 
     /**
      * @param \Generated\Shared\Transfer\LocalizedUrlTransfer $localizedUrlTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return string
      */
-    public function generateProductUrl(LocalizedUrlTransfer $localizedUrlTransfer): string
-    {
-        $yvesBaseUrl = $this->config->getBaseUrlYves();
-
-        return $yvesBaseUrl . $localizedUrlTransfer->getUrl();
+    public function generateProductUrl(
+        LocalizedUrlTransfer $localizedUrlTransfer,
+        ?StoreTransfer $storeTransfer = null
+    ): string {
+        return sprintf(
+            '%s%s',
+            $this->getBaseUrl($storeTransfer),
+            (string)$localizedUrlTransfer->getUrl(),
+        );
     }
 
     /**
@@ -72,5 +94,20 @@ class UrlGenerator implements UrlGeneratorInterface
         }
 
         return current($splitLocale);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
+     *
+     * @return string
+     */
+    protected function getBaseUrl(?StoreTransfer $storeTransfer = null): string
+    {
+        $baseUrlGetStrategy = $this->baseUrlGetStrategyResolver->resolveBaseUrlGetStrategy($storeTransfer);
+        if ($baseUrlGetStrategy !== null) {
+            return $baseUrlGetStrategy->getBaseUrl($storeTransfer);
+        }
+
+        return $this->availabilityNotificationConfig->getBaseUrlYves();
     }
 }

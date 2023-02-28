@@ -66,11 +66,17 @@ class AvailabilityNotificationSubscriptionSender implements AvailabilityNotifica
         $productConcreteTransfer = $this->productFacade->getProductConcrete($availabilityNotificationSubscriptionTransfer->getSku());
         $unsubscriptionLink = $this->urlGenerator->createUnsubscriptionLink($availabilityNotificationSubscriptionTransfer);
 
+        $productUrl = $this->productAttributeFinder->findProductUrl(
+            $productConcreteTransfer,
+            $availabilityNotificationSubscriptionTransfer->getLocaleOrFail(),
+            $availabilityNotificationSubscriptionTransfer->getStore(),
+        );
+
         $mailData = (new AvailabilityNotificationSubscriptionMailDataTransfer())
             ->setProductConcrete($productConcreteTransfer)
             ->setProductName($this->productAttributeFinder->findProductName($productConcreteTransfer, $availabilityNotificationSubscriptionTransfer->getLocale()))
             ->setProductImageUrl($this->productAttributeFinder->findExternalProductImage($productConcreteTransfer))
-            ->setProductUrl($this->productAttributeFinder->findProductUrl($productConcreteTransfer, $availabilityNotificationSubscriptionTransfer->getLocale()))
+            ->setProductUrl($productUrl)
             ->setAvailabilityNotificationSubscription($availabilityNotificationSubscriptionTransfer)
             ->setAvailabilityUnsubscriptionLink($unsubscriptionLink);
 

@@ -81,21 +81,27 @@ class ProductBecomeAvailableNotificationSender implements ProductBecomeAvailable
             )
             ->getAvailabilityNotificationSubscriptions();
 
-        foreach ($availabilityNotificationSubscriptions as $availabilityNotificationSubscription) {
-            $productConcreteTransfer = $this->productFacade->getProductConcrete($availabilityNotificationSubscription->getSku());
-            $unsubscriptionLink = $this->urlGenerator->createUnsubscriptionLink($availabilityNotificationSubscription);
+        foreach ($availabilityNotificationSubscriptions as $availabilityNotificationSubscriptionTransfer) {
+            $productConcreteTransfer = $this->productFacade->getProductConcrete($availabilityNotificationSubscriptionTransfer->getSku());
+            $unsubscriptionLink = $this->urlGenerator->createUnsubscriptionLink($availabilityNotificationSubscriptionTransfer);
+
+            $productUrl = $this->productAttributeFinder->findProductUrl(
+                $productConcreteTransfer,
+                $availabilityNotificationSubscriptionTransfer->getLocaleOrFail(),
+                $availabilityNotificationSubscriptionTransfer->getStoreOrFail(),
+            );
 
             $mailData = (new AvailabilityNotificationSubscriptionMailDataTransfer())
-                ->setAvailabilityNotificationSubscription($availabilityNotificationSubscription)
+                ->setAvailabilityNotificationSubscription($availabilityNotificationSubscriptionTransfer)
                 ->setProductConcrete($productConcreteTransfer)
-                ->setProductName($this->productAttributeFinder->findProductName($productConcreteTransfer, $availabilityNotificationSubscription->getLocale()))
+                ->setProductName($this->productAttributeFinder->findProductName($productConcreteTransfer, $availabilityNotificationSubscriptionTransfer->getLocale()))
                 ->setProductImageUrl($this->productAttributeFinder->findExternalProductImage($productConcreteTransfer))
-                ->setProductUrl($this->productAttributeFinder->findProductUrl($productConcreteTransfer, $availabilityNotificationSubscription->getLocale()))
+                ->setProductUrl($productUrl)
                 ->setAvailabilityUnsubscriptionLink($unsubscriptionLink);
 
             $mailTransfer = (new MailTransfer())
                 ->setType(AvailabilityNotificationMailTypePlugin::AVAILABILITY_NOTIFICATION_MAIL)
-                ->setLocale($availabilityNotificationSubscription->getLocale())
+                ->setLocale($availabilityNotificationSubscriptionTransfer->getLocale())
                 ->setAvailabilityNotificationSubscriptionMailData($mailData);
 
             $this->mailFacade->handleMail($mailTransfer);

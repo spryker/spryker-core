@@ -18,10 +18,14 @@ interface AvailabilityNotificationFacadeInterface
 {
     /**
      * Specification:
+     * - Requires `AvailabilityNotificationSubscription.email` to be set.
+     * - Requires `AvailabilityNotificationSubscription.sku` to be set.
+     * - Requires `AvailabilityNotificationSubscription.locale` to be set.
      * - Subscribe customer to product availability
      *   by provided subscription email, customer reference, product sku in a case insensitive way.
      * - Validates email.
      * - Create subscription if subscription is not created already.
+     * - Uses strategy to get base URL for link generation.
      * - Sends success email.
      *
      * @api
@@ -36,7 +40,10 @@ interface AvailabilityNotificationFacadeInterface
 
     /**
      * Specification:
+     * - Requires `AvailabilityNotificationSubscription.subscriptionKey` to be set.
+     * - Requires `AvailabilityNotificationSubscription.locale` to be set.
      * - Removes provided subscription.
+     * - Uses strategy to get base URL for link generation.
      * - Sends success email.
      *
      * @api
@@ -51,7 +58,11 @@ interface AvailabilityNotificationFacadeInterface
 
     /**
      * Specification:
+     * - Requires `AvailabilityNotificationSubscription.customerReference` to be set.
+     * - Requires `AvailabilityNotificationSubscription.sku` to be set.
+     * - Requires `AvailabilityNotificationSubscription.locale` to be set.
      * - Removes provided subscription.
+     * - Uses strategy to get base URL for link generation.
      * - Sends success email.
      *
      * @api
@@ -79,6 +90,8 @@ interface AvailabilityNotificationFacadeInterface
 
     /**
      * Specification:
+     * - Requires `AvailabilityNotificationData.store` to be set.
+     * - Uses strategy to get base URL for link generation.
      * - Send mails to all users which subscribed to product availability notification.
      *
      * @api

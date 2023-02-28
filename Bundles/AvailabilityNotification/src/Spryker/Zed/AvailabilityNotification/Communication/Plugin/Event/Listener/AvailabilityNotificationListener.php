@@ -20,8 +20,8 @@ class AvailabilityNotificationListener extends AbstractPlugin implements EventBu
 {
     /**
      * {@inheritDoc}
-     *
-     * - Notify subscribed users when product is available again.
+     * - Requires `AvailabilityNotificationData.store` to be set.
+     * - Send mails to all users which subscribed to product availability notification.
      *
      * @api
      *

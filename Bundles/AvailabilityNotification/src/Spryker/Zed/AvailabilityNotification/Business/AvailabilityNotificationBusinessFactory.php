@@ -20,6 +20,10 @@ use Spryker\Zed\AvailabilityNotification\Business\Notification\ProductBecomeAvai
 use Spryker\Zed\AvailabilityNotification\Business\Notification\ProductBecomeAvailableNotificationSenderInterface;
 use Spryker\Zed\AvailabilityNotification\Business\Product\ProductAttributeFinder;
 use Spryker\Zed\AvailabilityNotification\Business\Product\ProductAttributeFinderInterface;
+use Spryker\Zed\AvailabilityNotification\Business\Resolver\BaseUrlGetStrategyResolver;
+use Spryker\Zed\AvailabilityNotification\Business\Resolver\BaseUrlGetStrategyResolverInterface;
+use Spryker\Zed\AvailabilityNotification\Business\Strategy\BaseUrlGetStrategyInterface;
+use Spryker\Zed\AvailabilityNotification\Business\Strategy\StoreYvesBaseUrlGetStrategy;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationSubscriber;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationSubscriberInterface;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\AvailabilityNotificationSubscriptionKeyGenerator;
@@ -220,7 +224,10 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
      */
     protected function createUrlGenerator(): UrlGeneratorInterface
     {
-        return new UrlGenerator($this->getConfig());
+        return new UrlGenerator(
+            $this->getConfig(),
+            $this->createBaseUrlGetStrategyResolver(),
+        );
     }
 
     /**
@@ -229,5 +236,31 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
     public function createCustomerExpander(): CustomerExpanderInterface
     {
         return new CustomerExpander($this->createAvailabilityNotificationReader(), $this->getStoreFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\AvailabilityNotification\Business\Strategy\BaseUrlGetStrategyInterface
+     */
+    public function createStoreYvesBaseUrlGetStrategy(): BaseUrlGetStrategyInterface
+    {
+        return new StoreYvesBaseUrlGetStrategy($this->getConfig());
+    }
+
+    /**
+     * @return list<\Spryker\Zed\AvailabilityNotification\Business\Strategy\BaseUrlGetStrategyInterface>
+     */
+    public function getBaseUrlGetStrategyList(): array
+    {
+        return [
+            $this->createStoreYvesBaseUrlGetStrategy(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Zed\AvailabilityNotification\Business\Resolver\BaseUrlGetStrategyResolverInterface
+     */
+    public function createBaseUrlGetStrategyResolver(): BaseUrlGetStrategyResolverInterface
+    {
+        return new BaseUrlGetStrategyResolver($this->getBaseUrlGetStrategyList());
     }
 }

@@ -91,6 +91,8 @@ class AvailabilityNotificationRepository extends AbstractRepository implements A
     }
 
     /**
+     * @module Store
+     *
      * @param \Generated\Shared\Transfer\AvailabilityNotificationCriteriaTransfer $availabilityNotificationCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionCollectionTransfer
@@ -106,7 +108,8 @@ class AvailabilityNotificationRepository extends AbstractRepository implements A
             $querySubscription
                 ->innerJoinSpyStore()
                 ->useSpyStoreQuery()
-                ->filterByName_In($availabilityNotificationCriteriaTransfer->getStoreNames());
+                    ->filterByName_In($availabilityNotificationCriteriaTransfer->getStoreNames())
+                ->endUse();
         }
         if ($availabilityNotificationCriteriaTransfer->getSkus()) {
             $querySubscription->filterBySku_In($availabilityNotificationCriteriaTransfer->getSkus());

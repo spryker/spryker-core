@@ -55,6 +55,7 @@ class AvailabilityNotificationSubscriptionMailTypeBuilderPlugin extends Abstract
 
     /**
      * {@inheritDoc}
+     * - Requires `Mail.availabilityNotificationSubscriptionMailData.availabilityNotificationSubscription` to be set.
      * - Builds the `MailTransfer` with data for availability notification subscription mail.
      *
      * @api
@@ -66,7 +67,7 @@ class AvailabilityNotificationSubscriptionMailTypeBuilderPlugin extends Abstract
     public function build(MailTransfer $mailTransfer): MailTransfer
     {
         /** @var \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer */
-        $availabilityNotificationSubscriptionTransfer = $mailTransfer->getAvailabilityNotificationSubscriptionMailData()
+        $availabilityNotificationSubscriptionTransfer = $mailTransfer->getAvailabilityNotificationSubscriptionMailDataOrFail()
             ->getAvailabilityNotificationSubscriptionOrFail();
 
         return $mailTransfer
