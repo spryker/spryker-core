@@ -102,3 +102,4 @@ Generate,Generate
 "Enter an integer %min%-%max%. Discounts are calculated in sequential order, starting from %min%. The default value is %max%.","Enter an integer %min%-%max%. Discounts are calculated in sequential order, starting from %min%. The default value is %max%."
 "Invalid entry. Please enter an integer %min%-%max%","Invalid entry. Please enter an integer %min%-%max%"
 Priority,Priority
+"Enter an integer %min%-%max%.","Enter an integer %min%-%max%."

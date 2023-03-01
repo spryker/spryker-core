@@ -6,6 +6,10 @@
     {{ form_errors(voucherForm.quantity) }}
     {{ form_label(voucherForm.quantity) }}
     {{ form_widget(voucherForm.quantity) }}
+    <div class="form-note">
+        <span class="glyphicon glyphicon-info-sign"></span>
+        {{ voucherForm.quantity.vars.help }}
+    </div>
 </div>
 <div class="form-group">
     {{ form_errors(voucherForm.custom_code) }}

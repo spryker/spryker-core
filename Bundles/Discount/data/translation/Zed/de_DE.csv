@@ -102,3 +102,4 @@ Generate,Generieren
 "Enter an integer %min%-%max%. Discounts are calculated in sequential order, starting from %min%. The default value is %max%.","Geben Sie eine ganze Zahl von %min%-%max% ein. Rabatte werden in fortlaufender Reihenfolge berechnet, beginnend mit %min%. Der Standardwert ist %max%."
 "Invalid entry. Please enter an integer %min%-%max%","Ungültiger Eintrag. Bitte geben Sie eine ganze Zahl ein %min%-%max%"
 Priority,Priorität
+"Enter an integer %min%-%max%.","Geben Sie eine ganze Zahl von %min%-%max% ein."

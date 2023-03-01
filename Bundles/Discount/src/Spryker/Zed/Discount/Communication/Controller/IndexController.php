@@ -120,6 +120,7 @@ class IndexController extends AbstractController
         $voucherFormDataProvider = $this->getFactory()->createVoucherFormDataProvider();
         $voucherForm = $this->getFactory()->getVoucherForm(
             $voucherFormDataProvider->getData($idDiscount),
+            $voucherFormDataProvider->getOptions(),
         );
         $isVoucherFormSubmittedSuccessfully = $this->isVoucherFormSubmittedSuccessfully($request, $voucherForm);
 

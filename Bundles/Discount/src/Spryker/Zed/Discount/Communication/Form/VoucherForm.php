@@ -7,13 +7,18 @@
 
 namespace Spryker\Zed\Discount\Communication\Form;
 
+use Generated\Shared\Transfer\DiscountVoucherTransfer;
+use Spryker\Zed\Discount\Communication\Form\Constraint\Sequentially;
+use Spryker\Zed\Gui\Communication\Form\Type\FormattedNumberType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Range;
+use Symfony\Component\Validator\Constraints\Regex;
 
 /**
  * @method \Spryker\Zed\Discount\Business\DiscountFacadeInterface getFacade()
@@ -24,6 +29,11 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  */
 class VoucherForm extends AbstractType
 {
+    /**
+     * @var string
+     */
+    public const OPTION_LOCALE = 'locale';
+
     /**
      * @var string
      */
@@ -50,14 +60,34 @@ class VoucherForm extends AbstractType
     public const FIELD_ID_DISCOUNT = 'id_discount';
 
     /**
+     * @var string
+     */
+    protected const FIELD_QUANTITY_ERROR_MESSAGE = 'Invalid entry. Please enter an integer %min%-%max%';
+
+    /**
+     * @var string
+     */
+    protected const FIELD_QUANTITY_HELP_MESSAGE = 'Enter an integer %min%-%max%.';
+
+    /**
+     * @var string
+     */
+    protected const PARAM_QUANTITY_MESSAGE_MIN = '%min%';
+
+    /**
+     * @var string
+     */
+    protected const PARAM_QUANTITY_MESSAGE_MAX = '%max%';
+
+    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     * @param array<string> $options
+     * @param array<string, string> $options
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addQuantityField($builder)
+        $this->addQuantityField($builder, $options)
             ->addCustomCodeField($builder)
             ->addRandomGeneratedCodeLength($builder)
             ->addMaxNumberOfUsesField($builder)
@@ -66,17 +96,47 @@ class VoucherForm extends AbstractType
     }
 
     /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+     *
+     * @return void
+     */
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        parent::configureOptions($resolver);
+
+        $resolver->setDefaults([
+            'data_class' => DiscountVoucherTransfer::class,
+            static::OPTION_LOCALE => null,
+        ]);
+    }
+
+    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array<string, string> $options
      *
      * @return $this
      */
-    protected function addQuantityField(FormBuilderInterface $builder)
+    protected function addQuantityField(FormBuilderInterface $builder, array $options)
     {
-        $builder->add(static::FIELD_QUANTITY, TextType::class, [
+        $minValue = $this->getConfig()->getVoucherCodesQuantityMinValue();
+        $maxValue = $this->getConfig()->getVoucherCodesQuantityMaxValue();
+
+        $quantityHelpMessage = $this->getFactory()
+            ->getTranslatorFacade()
+            ->trans(static::FIELD_QUANTITY_HELP_MESSAGE, [
+                static::PARAM_QUANTITY_MESSAGE_MIN => $minValue,
+                static::PARAM_QUANTITY_MESSAGE_MAX => $maxValue,
+            ]);
+
+        $builder->add(static::FIELD_QUANTITY, FormattedNumberType::class, [
             'label' => 'Quantity',
-            'constraints' => [
-                new NotBlank(),
+            'locale' => $options[static::OPTION_LOCALE],
+            'help' => $quantityHelpMessage,
+            'attr' => [
+                'min' => $minValue,
+                'max' => $maxValue,
             ],
+            'constraints' => $this->getQuantityFiledConstraints($minValue, $maxValue),
         ]);
 
         return $this;
@@ -175,6 +235,41 @@ class VoucherForm extends AbstractType
         $range = range(3, 10);
 
         return array_combine(array_values($range), $range);
+    }
+
+    /**
+     * @param int $minValue
+     * @param int $maxValue
+     *
+     * @return list<\Symfony\Component\Validator\Constraint>
+     */
+    protected function getQuantityFiledConstraints(int $minValue, int $maxValue): array
+    {
+        $quantityRangeErrorMessage = $this->getFactory()
+            ->getTranslatorFacade()
+            ->trans(static::FIELD_QUANTITY_ERROR_MESSAGE, [
+                static::PARAM_QUANTITY_MESSAGE_MIN => $minValue,
+                static::PARAM_QUANTITY_MESSAGE_MAX => $maxValue,
+            ]);
+
+        $constraints = [
+            'constraints' => [
+                new Range([
+                    'min' => $minValue,
+                    'max' => $maxValue,
+                    'notInRangeMessage' => $quantityRangeErrorMessage,
+                    'invalidMessage' => $quantityRangeErrorMessage,
+                ]),
+                new Regex([
+                    'pattern' => '/^\d+$/',
+                    'message' => $quantityRangeErrorMessage,
+                ]),
+            ],
+        ];
+
+        return [
+            new Sequentially($constraints),
+        ];
     }
 
     /**

@@ -58,17 +58,16 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
 
     /**
      * @param \Generated\Shared\Transfer\DiscountVoucherTransfer $discountVoucherTransfer
+     * @param array<string, string> $options
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function getVoucherForm(DiscountVoucherTransfer $discountVoucherTransfer)
+    public function getVoucherForm(DiscountVoucherTransfer $discountVoucherTransfer, array $options): FormInterface
     {
         return $this->getFormFactory()->create(
             VoucherForm::class,
             $discountVoucherTransfer,
-            [
-                'data_class' => DiscountVoucherTransfer::class,
-            ],
+            $options,
         );
     }
 
@@ -119,9 +118,9 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\Discount\Communication\Form\DataProvider\VoucherFormDataProvider
      */
-    public function createVoucherFormDataProvider()
+    public function createVoucherFormDataProvider(): VoucherFormDataProvider
     {
-        $voucherFormDataProvider = new VoucherFormDataProvider();
+        $voucherFormDataProvider = new VoucherFormDataProvider($this->getLocaleFacade());
         $voucherFormDataProvider->applyFormDataExpanderPlugins($this->getDiscountFormDataProviderExpanderPlugins());
 
         return $voucherFormDataProvider;

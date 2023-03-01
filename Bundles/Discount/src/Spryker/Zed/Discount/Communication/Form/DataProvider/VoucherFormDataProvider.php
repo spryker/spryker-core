@@ -8,15 +8,30 @@
 namespace Spryker\Zed\Discount\Communication\Form\DataProvider;
 
 use Generated\Shared\Transfer\DiscountVoucherTransfer;
+use Spryker\Zed\Discount\Communication\Form\VoucherForm;
+use Spryker\Zed\Discount\Dependency\Facade\DiscountToLocaleFacadeInterface;
 
 class VoucherFormDataProvider extends BaseDiscountFormDataProvider
 {
     /**
+     * @var \Spryker\Zed\Discount\Dependency\Facade\DiscountToLocaleFacadeInterface
+     */
+    protected DiscountToLocaleFacadeInterface $localeFacade;
+
+    /**
+     * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToLocaleFacadeInterface $localeFacade
+     */
+    public function __construct(DiscountToLocaleFacadeInterface $localeFacade)
+    {
+        $this->localeFacade = $localeFacade;
+    }
+
+    /**
      * @param int|null $idDiscount
      *
-     * @return mixed
+     * @return \Generated\Shared\Transfer\DiscountVoucherTransfer
      */
-    public function getData($idDiscount = null)
+    public function getData(?int $idDiscount = null): DiscountVoucherTransfer
     {
         $discountVoucherTransfer = new DiscountVoucherTransfer();
         $discountVoucherTransfer->setIdDiscount($idDiscount);
@@ -27,5 +42,15 @@ class VoucherFormDataProvider extends BaseDiscountFormDataProvider
         }
 
         return $discountVoucherTransfer;
+    }
+
+    /**
+     * @return array<string, string>
+     */
+    public function getOptions(): array
+    {
+        return [
+            VoucherForm::OPTION_LOCALE => $this->localeFacade->getCurrentLocaleName(),
+        ];
     }
 }

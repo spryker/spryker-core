@@ -52,6 +52,16 @@ class DiscountConfig extends AbstractBundleConfig
     protected const PRIORITY_MAX_VALUE = 9999;
 
     /**
+     * @var int
+     */
+    protected const VOUCHER_CODES_QUANTITY_MIN_VALUE = 1;
+
+    /**
+     * @var int
+     */
+    protected const VOUCHER_CODES_QUANTITY_MAX_VALUE = 14000;
+
+    /**
      * @var bool
      */
     protected const IS_MONEY_COLLECTION_FORM_TYPE_PLUGIN_ENABLED = false;
@@ -147,6 +157,32 @@ class DiscountConfig extends AbstractBundleConfig
     public function getPriorityMaxValue(): int
     {
         return static::PRIORITY_MAX_VALUE;
+    }
+
+    /**
+     * Specification:
+     * - Defines the minimum quantity of generated voucher codes.
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getVoucherCodesQuantityMinValue(): int
+    {
+        return static::VOUCHER_CODES_QUANTITY_MIN_VALUE;
+    }
+
+    /**
+     * Specification:
+     * - Defines the maximum quantity of generated voucher codes.
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getVoucherCodesQuantityMaxValue(): int
+    {
+        return static::VOUCHER_CODES_QUANTITY_MAX_VALUE;
     }
 
     /**
