@@ -33,6 +33,8 @@ class MerchantProfileHelper extends Module
         $merchantProfileTransfer = (new MerchantProfileBuilder($seedData))->build();
         $merchantProfileTransfer->setIdMerchantProfile(null);
         $merchantProfileTransfer->setFkMerchant($merchantTransfer->getIdMerchant());
+        $merchantProfileTransfer->setMerchantReference($merchantTransfer->getMerchantReference());
+        $merchantProfileTransfer->setMerchantName($merchantTransfer->getName());
 
         $merchantProfileTransfer = $this->addMerchantProfileLocalizedGlossaryAttributes($merchantProfileTransfer);
         $merchantProfileTransfer->setAddressCollection($this->createMerchantProfileAddressTransfers());

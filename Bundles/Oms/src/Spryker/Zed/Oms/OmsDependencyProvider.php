@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollection;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollection;
 use Spryker\Zed\Oms\Dependency\Facade\OmsToMailBridge;
+use Spryker\Zed\Oms\Dependency\Facade\OmsToMessageBrokerBridge;
 use Spryker\Zed\Oms\Dependency\Facade\OmsToSalesBridge;
 use Spryker\Zed\Oms\Dependency\Facade\OmsToStoreFacadeBridge;
 use Spryker\Zed\Oms\Dependency\QueryContainer\OmsToSalesBridge as PersistenceOmsToSalesBridge;
@@ -134,6 +135,11 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     public const PROPEL_QUERY_SALES_ORDER_ITEM = 'PROPEL_QUERY_SALES_ORDER_ITEM';
 
     /**
+     * @var string
+     */
+    public const FACADE_MESSAGE_BROKER = 'FACADE_MESSAGE_BROKER';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -159,6 +165,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addOmsReservationWriterStrategyPlugins($container);
         $container = $this->addReservationPostSaveTerminationAwareStrategyPlugins($container);
         $container = $this->addTimeoutProcessorPlugins($container);
+        $container = $this->addMessageBrokerFacade($container);
 
         return $container;
     }
@@ -594,5 +601,19 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     protected function getTimeoutProcessorPlugins(): array
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMessageBrokerFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_MESSAGE_BROKER, function (Container $container) {
+            return new OmsToMessageBrokerBridge($container->getLocator()->messageBroker()->facade());
+        });
+
+        return $container;
     }
 }

@@ -31,6 +31,7 @@ use Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachine;
 use Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachineFlagReader;
 use Spryker\Zed\Oms\Business\OrderStateMachine\PersistenceManager;
 use Spryker\Zed\Oms\Business\OrderStateMachine\Timeout;
+use Spryker\Zed\Oms\Business\OrderStatusChanged\OrderStatusChangedMessageSender;
 use Spryker\Zed\Oms\Business\Process\Event;
 use Spryker\Zed\Oms\Business\Process\Process;
 use Spryker\Zed\Oms\Business\Process\State;
@@ -555,5 +556,21 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     public function getTimeoutProcessorPlugins(): array
     {
         return $this->getProvidedDependency(OmsDependencyProvider::PLUGINS_TIMEOUT_PROCESSOR);
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Dependency\Facade\OmsToMessageBrokerInterface
+     */
+    public function getMessageBrokerFacade()
+    {
+        return $this->getProvidedDependency(OmsDependencyProvider::FACADE_MESSAGE_BROKER);
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Business\OrderStatusChanged\OrderStatusChangedMessageSender
+     */
+    public function createOrderStatusChangedMessageSender(): OrderStatusChangedMessageSender
+    {
+        return new OrderStatusChangedMessageSender($this->getMessageBrokerFacade(), $this->getStoreFacade(), $this->getSalesFacade(), $this->getConfig());
     }
 }

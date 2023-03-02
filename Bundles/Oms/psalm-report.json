@@ -2223,6 +2223,18 @@
             "selected_text": "querySalesOrderItemsWithExpiredTimeoutsBackwardsCompatible",
             "error_level": 2,
             "shortcode": 1
+        },
+        {
+            "severity": "error",
+            "line_from": 162,
+            "line_to": 162,
+            "type": "UndefinedMethod",
+            "message": "Method Spryker\\Shared\\Kernel\\Transfer\\AbstractTransfer::toArrayNotRecursiveCamelCased does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/Oms/src/Spryker/Zed/Oms/Business/OrderStatusChanged/OrderStatusChangedMessageSender.php",
+            "snippet": "        $camelCasedData = $transfer->toArrayNotRecursiveCamelCased();",
+            "selected_text": "toArrayNotRecursiveCamelCased",
+            "error_level": 6,
+            "shortcode": 22
         }
     ],
     "count": 185

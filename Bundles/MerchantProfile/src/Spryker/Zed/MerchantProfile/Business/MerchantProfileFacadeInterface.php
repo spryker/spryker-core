@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\MerchantProfileCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantProfileTransfer;
 use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 
 interface MerchantProfileFacadeInterface
 {
@@ -82,4 +83,16 @@ interface MerchantProfileFacadeInterface
      * @return \Generated\Shared\Transfer\MerchantResponseTransfer
      */
     public function postUpdateMerchant(MerchantTransfer $merchantTransfer): MerchantResponseTransfer;
+
+    /**
+     * Specification:
+     * - Hydrates the `Order.merchants` property.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function hydrateOrderMerchants(OrderTransfer $orderTransfer): OrderTransfer;
 }

@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\MerchantProfile\Business\MerchantProfileFacade;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\MerchantProfileCriteriaTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 
 /**
  * Auto-generated group annotations
@@ -146,5 +147,37 @@ class MerchantProfileFacadeTest extends Unit
         // Assert
         $this->assertNotNull($merchantProfileTransfer);
         $this->assertSame($expectedMerchantProfileTransfer->getIdMerchantProfile(), $merchantProfileTransfer->getIdMerchantProfile());
+    }
+
+    /**
+     * @return void
+     */
+    public function testShouldHydrateOrderTransferWithMerchantsInfo(): void
+    {
+        $merchantTransfer1 = $this->tester->haveMerchant(['merchantReference' => 'M001']);
+        $expectedMerchantProfileTransfer1 = $this->tester->haveMerchantProfile($merchantTransfer1);
+
+        $merchantTransfer2 = $this->tester->haveMerchant(['merchantReference' => 'M002']);
+        $expectedMerchantProfileTransfer2 = $this->tester->haveMerchantProfile($merchantTransfer2);
+
+        $orderTransfer = new OrderTransfer();
+        $orderTransfer->setMerchantReferences([
+            $expectedMerchantProfileTransfer1->getMerchantReference(),
+            $expectedMerchantProfileTransfer2->getMerchantReference(),
+        ]);
+
+        $this->tester->getFacade()->hydrateOrderMerchants($orderTransfer);
+
+        $merchants = $orderTransfer->getMerchants();
+
+        $this->assertCount(2, $merchants);
+
+        $this->assertEquals($expectedMerchantProfileTransfer1->getMerchantReference(), $merchants[0]->getMerchantReference());
+        $this->assertEquals($expectedMerchantProfileTransfer1->getMerchantName(), $merchants[0]->getName());
+        $this->assertEquals($expectedMerchantProfileTransfer1->getLogoUrl(), $merchants[0]->getImageUrl());
+
+        $this->assertEquals($expectedMerchantProfileTransfer2->getMerchantReference(), $merchants[1]->getMerchantReference());
+        $this->assertEquals($expectedMerchantProfileTransfer2->getMerchantName(), $merchants[1]->getName());
+        $this->assertEquals($expectedMerchantProfileTransfer2->getLogoUrl(), $merchants[1]->getImageUrl());
     }
 }

@@ -758,4 +758,16 @@ interface OmsFacadeInterface
      * @return array<\Generated\Shared\Transfer\OrderTransfer>
      */
     public function setOrderIsCancellableByItemState(array $orderTransfers): array;
+
+    /**
+     * Specification:
+     * - Sends OrderStatusChanged message to the message broker `orders` channel.
+     *
+     * @api
+     *
+     * @param int $idSalesOrder
+     *
+     * @return void
+     */
+    public function sendOrderStatusChangedMessage(int $idSalesOrder): void;
 }

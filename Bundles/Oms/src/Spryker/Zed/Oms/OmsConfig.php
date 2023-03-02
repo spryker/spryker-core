@@ -7,6 +7,10 @@
 
 namespace Spryker\Zed\Oms;
 
+use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\OrderStatusChangedTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Shared\Oms\OmsConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
@@ -146,5 +150,25 @@ class OmsConfig extends AbstractBundleConfig
     public function getCheckConditionsQueryLimit(): ?int
     {
         return null;
+    }
+
+    /**
+     * @api
+     *
+     * @return array
+     */
+    public function getOrderFieldsForOrderStatusChangedMessage(): array
+    {
+        return [
+            OrderTransfer::EMAIL => OrderStatusChangedTransfer::EMAIL_ADDRESS,
+            OrderTransfer::CREATED_AT => OrderStatusChangedTransfer::TRANSACTION_DATE,
+            OrderTransfer::LOCALE => [
+                LocaleTransfer::LOCALE_NAME => OrderStatusChangedTransfer::LOCALE_NAME,
+            ],
+            OrderTransfer::CUSTOMER => [
+                CustomerTransfer::USERNAME => OrderStatusChangedTransfer::USER_NAME,
+            ],
+            OrderTransfer::ORDER_REFERENCE => OrderStatusChangedTransfer::ORDER_REFERENCE,
+        ];
     }
 }

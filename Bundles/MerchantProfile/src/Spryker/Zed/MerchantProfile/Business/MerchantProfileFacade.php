@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\MerchantProfileCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantProfileTransfer;
 use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -99,5 +100,19 @@ class MerchantProfileFacade extends AbstractFacade implements MerchantProfileFac
         return $this->getFactory()
             ->createMerchantProfileWriter()
             ->postUpdateMerchant($merchantTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function hydrateOrderMerchants(OrderTransfer $orderTransfer): OrderTransfer
+    {
+        return $this->getFactory()->createMerchantDataOrderHydrate()->hydrateOrderWithMerchantData($orderTransfer);
     }
 }

@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\MerchantProfileCollectionTransfer;
 use Generated\Shared\Transfer\MerchantProfileCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantProfileTransfer;
 use Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileQuery;
+use Propel\Runtime\ActiveQuery\Criteria as PropelCriteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
@@ -108,6 +109,15 @@ class MerchantProfileRepository extends AbstractRepository implements MerchantPr
         if ($merchantProfileCriteriaTransfer->getMerchantReference()) {
             $merchantProfileQuery->useSpyMerchantQuery()
                 ->filterByMerchantReference($merchantProfileCriteriaTransfer->getMerchantReference())
+                ->endUse();
+        }
+
+        if ($merchantProfileCriteriaTransfer->getMerchantReferences()) {
+            $merchantProfileQuery->useSpyMerchantQuery()
+                ->filterByMerchantReference(
+                    $merchantProfileCriteriaTransfer->getMerchantReferences(),
+                    PropelCriteria::IN,
+                )
                 ->endUse();
         }
 

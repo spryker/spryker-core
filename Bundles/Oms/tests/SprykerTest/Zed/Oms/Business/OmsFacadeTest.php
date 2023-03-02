@@ -10,7 +10,10 @@ namespace SprykerTest\Zed\Oms\Business;
 use Codeception\Test\Unit;
 use DateTime;
 use Generated\Shared\DataBuilder\ItemBuilder;
+use Generated\Shared\DataBuilder\ItemMetadataBuilder;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\OmsProductReservationTransfer;
+use Generated\Shared\Transfer\OrderStatusChangedTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ReservationRequestTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -24,9 +27,12 @@ use Spryker\Zed\Oms\Business\OmsBusinessFactory;
 use Spryker\Zed\Oms\Business\OmsFacade;
 use Spryker\Zed\Oms\Business\OmsFacadeInterface;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollectionInterface;
+use Spryker\Zed\Oms\Dependency\Facade\OmsToSalesInterface;
 use Spryker\Zed\Oms\OmsConfig;
 use Spryker\Zed\Oms\OmsDependencyProvider;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
+use Spryker\Zed\SalesPayment\SalesPaymentDependencyProvider;
+use SprykerTest\Zed\MessageBroker\Helper\InMemoryMessageBrokerHelperTrait;
 use SprykerTest\Zed\Oms\Business\OrderStateMachine\Plugin\Fixtures\TestAuthPlugin;
 
 /**
@@ -42,6 +48,8 @@ use SprykerTest\Zed\Oms\Business\OrderStateMachine\Plugin\Fixtures\TestAuthPlugi
  */
 class OmsFacadeTest extends Unit
 {
+    use InMemoryMessageBrokerHelperTrait;
+
     /**
      * @var \SprykerTest\Zed\Oms\OmsBusinessTester
      */
@@ -417,5 +425,82 @@ class OmsFacadeTest extends Unit
         $omsFacade->setFactory($omsBusinessFactory);
 
         return $omsFacade;
+    }
+
+    /**
+     * @return void
+     */
+    public function testOrderStatusChangedMessageIsSent(): void
+    {
+        // setting the dependency
+        $testStateMachineProcessName = 'Test01';
+        $localeName = 'en_US';
+
+        $salesFacadeMock = $this->createMock(
+            OmsToSalesInterface::class,
+        );
+
+        $this->tester->setDependency(SalesPaymentDependencyProvider::FACADE_SALES, $salesFacadeMock);
+
+        // configuring the mock
+        $orderTransfer = $this->tester->createOrderByStateMachineProcessName($testStateMachineProcessName);
+        $orderTransfer->setCreatedAt(date('Y-m-d h:i:s'));
+        $orderTransfer->setEmail($orderTransfer->getCustomer()->getEmail());
+        $orderTransfer->setLocale((new LocaleTransfer())->setLocaleName($localeName));
+
+        $itemMetadataTransfer = (new ItemMetadataBuilder())->build();
+        $itemMetadataTransfer->setImage('https://image.url');
+
+        foreach ($orderTransfer->getItems() as $item) {
+            $item->setMetadata($itemMetadataTransfer);
+            $item->setSku('some_sku');
+        }
+
+        $salesFacadeMock->method('getOrderByIdSalesOrder')->willReturn($orderTransfer);
+
+        // running
+        $omsFacade = $this->createOmsFacade();
+
+        $omsFacade->sendOrderStatusChangedMessage($orderTransfer->getIdSalesOrder());
+
+        $this->tester->assertMessageWasSent(OrderStatusChangedTransfer::class);
+
+        $properties = [
+            'email_address' => $orderTransfer->getEmail(),
+            'transaction_date' => $orderTransfer->getCreatedAt(),
+            'locale_name' => $orderTransfer->getLocale()->getLocaleName(),
+            'order_reference' => $orderTransfer->getOrderReference(),
+        ];
+        $this->getInMemoryMessageBrokerHelper()->assertMessagesByCallbackForMessageName(
+            function (array $envelopes) use ($properties): void {
+                /** @var array<\Symfony\Component\Messenger\Envelope> $envelopes */
+                $this->assertCount(1, $envelopes);
+
+                /** @var \Spryker\Shared\Kernel\Transfer\TransferInterface $message */
+                $message = $envelopes[0]->getMessage();
+
+                $this->assertEquals($properties, array_intersect_key($message->toArray(), $properties));
+            },
+            OrderStatusChangedTransfer::class,
+        );
+
+        $items = $orderTransfer->getItems();
+        $this->getInMemoryMessageBrokerHelper()->assertMessagesByCallbackForMessageName(
+            function (array $envelopes) use ($items): void {
+                /** @var array<\Symfony\Component\Messenger\Envelope> $envelopes */
+                $this->assertCount(1, $envelopes);
+
+                /** @var \Spryker\Shared\Kernel\Transfer\TransferInterface $message */
+                $message = $envelopes[0]->getMessage();
+
+                foreach ($message->getOrderItems() as $k => $orderItem) {
+                    $this->assertEquals($orderItem->getProductId(), $items[$k]->getSku());
+                    $this->assertEquals($orderItem->getName(), $items[$k]->getName());
+                    $this->assertEquals($orderItem->getImageUrl(), $items[$k]->getMetaData()->getImage());
+                    $this->assertEquals($orderItem->getPrice(), $items[$k]->getUnitPrice());
+                }
+            },
+            OrderStatusChangedTransfer::class,
+        );
     }
 }

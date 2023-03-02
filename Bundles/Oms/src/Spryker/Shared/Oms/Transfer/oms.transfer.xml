@@ -203,4 +203,38 @@
         <property name="isHtml" type="bool"/>
     </transfer>
 
+    <transfer name="OrderStatusChanged">
+        <property name="transactionDate" type="string"/>
+        <property name="emailAddress" type="string"/>
+        <property name="localeName" type="string"/>
+        <property name="userName" type="string"/>
+        <property name="orderItems" type="OrderItem[]" singular="orderItem"/>
+        <property name="merchants" type="OrderMerchant[]" singular="merchant"/>
+        <property name="status" type="string"/>
+        <property name="orderReference" type="string"/>
+        <property name="messageAttributes" type="MessageAttributes"/>
+    </transfer>
+
+    <transfer name="OrderMerchant" strict="true">
+    </transfer>
+
+    <transfer name="OrderItem">
+        <property name="productId" type="string"/>
+        <property name="name" type="string"/>
+        <property name="imageUrl" type="string"/>
+        <property name="price" type="int"/>
+    </transfer>
+
+    <transfer name="MessageAttributes">
+        <property name="storeReference" type="string"/>
+        <property name="emitter" type="string"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="username" type="string"/>
+    </transfer>
+
+    <transfer name="MessageResponse">
+    </transfer>
+
 </transfers>

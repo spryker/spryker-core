@@ -31,6 +31,17 @@
         <property name="addressCollection" type="MerchantProfileAddress[]" singular="address"/>
     </transfer>
 
+    <transfer name="Order">
+        <property name="merchants" type="OrderMerchant[]" singular="merchant" strict="true"/>
+        <property name="merchantReferences" type="string[]" singular="merchantReference"/>
+    </transfer>
+
+    <transfer name="OrderMerchant" strict="true">
+        <property name="merchantReference" type="string"/>
+        <property name="name" type="string"/>
+        <property name="imageUrl" type="string"/>
+    </transfer>
+
     <transfer name="MerchantProfileCollection">
         <property name="merchantProfiles" type="MerchantProfile[]" singular="merchantProfile"/>
     </transfer>
@@ -60,6 +71,7 @@
         <property name="merchantIds" type="int[]" singular="idMerchant"/>
         <property name="merchantProfileIds" type="int[]" singular="idMerchantProfile"/>
         <property name="merchantReference" type="string"/>
+        <property name="merchantReferences" type="string[]" singular="merchantReference"/>
         <property name="filter" type="Filter"/>
     </transfer>
 

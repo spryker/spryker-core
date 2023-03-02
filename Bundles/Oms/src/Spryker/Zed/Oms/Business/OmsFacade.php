@@ -828,4 +828,18 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
             ->createOrderExpander()
             ->setOrderIsCancellableByItemState($orderTransfers);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int $idSalesOrder
+     *
+     * @return void
+     */
+    public function sendOrderStatusChangedMessage(int $idSalesOrder): void
+    {
+        $this->getFactory()->createOrderStatusChangedMessageSender()->sendMessage($idSalesOrder);
+    }
 }
