@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="PushNotificationCollectionRequest" strict="true">
+        <property name="isTransactional" type="bool"/>
+        <property name="pushNotifications" type="PushNotification[]" singular="pushNotification"/>
+    </transfer>
+
+    <transfer name="PushNotificationCollectionResponse" strict="true">
+        <property name="errors" type="Error[]" singular="error"/>
+        <property name="pushNotifications" type="PushNotification[]" singular="pushNotification"/>
+    </transfer>
+
+    <transfer name="PushNotificationSubscriptionCollectionRequest" strict="true">
+        <property name="isTransactional" type="bool"/>
+        <property name="pushNotificationSubscriptions" type="PushNotificationSubscription[]" singular="pushNotificationSubscription"/>
+    </transfer>
+
+    <transfer name="PushNotificationSubscriptionCollectionResponse" strict="true">
+        <property name="errors" type="Error[]" singular="error"/>
+        <property name="pushNotificationSubscriptions" type="PushNotificationSubscription[]" singular="pushNotificationSubscription"/>
+    </transfer>
+
+    <transfer name="PushNotification" strict="true">
+        <property name="idPushNotification" type="int"/>
+        <property name="uuid" type="string"/>
+        <property name="provider" type="PushNotificationProvider"/>
+        <property name="group" type="PushNotificationGroup"/>
+        <property name="payload" type="array" associative="true" singular="payloadItem"/>
+        <property name="subscriptions" type="PushNotificationSubscription[]" singular="subscription"/>
+    </transfer>
+
+    <transfer name="PushNotificationSubscription" strict="true">
+        <property name="idPushNotificationSubscription" type="int"/>
+        <property name="uuid" type="string"/>
+        <property name="provider" type="PushNotificationProvider"/>
+        <property name="group" type="PushNotificationGroup"/>
+        <property name="deliveryLogs" type="PushNotificationSubscriptionDeliveryLog[]" singular="deliveryLog"/>
+        <property name="payload" type="array" associative="true" singular="payloadItem"/>
+    </transfer>
+
+    <transfer name="PushNotificationProvider" strict="true">
+        <property name="idPushNotificationProvider" type="int"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="PushNotificationGroup" strict="true">
+        <property name="idPushNotificationGroup" type="int"/>
+        <property name="name" type="string"/>
+        <property name="identifier" type="string"/>
+    </transfer>
+
+    <transfer name="PushNotificationSubscriptionDeliveryLog" strict="true">
+        <property name="idPushNotificationSubscriptionDeliveryLog" type="int"/>
+        <property name="pushNotification" type="PushNotification"/>
+        <property name="pushNotificationSubscription" type="PushNotificationSubscription"/>
+    </transfer>
+
+    <transfer name="Error">
+        <property name="message" type="string"/>
+        <property name="entityIdentifier" type="string"/>
+    </transfer>
+
+    <transfer name="ErrorCollection" strict="true">
+        <property name="errors" type="Error[]" singular="error"/>
+    </transfer>
+
+    <transfer name="PushNotificationProviderCollectionRequest" strict="true">
+        <property name="pushNotificationProviders" type="PushNotificationProvider[]" singular="pushNotificationProvider"/>
+    </transfer>
+
+    <transfer name="PushNotificationProviderConditions" strict="true">
+        <property name="names" type="string[]" singular="name"/>
+    </transfer>
+
+    <transfer name="PushNotificationProviderCriteria" strict="true">
+        <property name="pushNotificationProviderConditions" type="PushNotificationProviderConditions"/>
+    </transfer>
+
+    <transfer name="PushNotificationProviderCollectionResponse" strict="true">
+    </transfer>
+
+    <transfer name="PushNotificationProviderCollection" strict="true">
+        <property name="providers" type="PushNotificationProvider[]" singular="provider"/>
+    </transfer>
+
+</transfers>

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="PushNotificationCollectionRequest" strict="true">
+    </transfer>
+
+    <transfer name="PushNotification" strict="true">
+    </transfer>
+
+    <transfer name="PushNotificationCollectionResponse" strict="true">
+    </transfer>
+
+    <transfer name="PushNotificationSubscriptionCollectionRequest" strict="true">
+    </transfer>
+
+    <transfer name="PushNotificationSubscriptionCollectionResponse" strict="true">
+    </transfer>
+
+    <transfer name="PushNotificationSubscriptionCollection" strict="true">
+    </transfer>
+
+    <transfer name="ErrorCollection" strict="true">
+    </transfer>
+
+</transfers>

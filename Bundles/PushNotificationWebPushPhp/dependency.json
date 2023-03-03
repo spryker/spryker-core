@@ -1,0 +1,6 @@
+{
+    "include": {
+        "minishlink/web-push": "Provides web push notification functionality.",
+        "spryker/transfer": "Provides transfer objects definition with strict types and `::get*OrFail()` functionality."
+    }
+}

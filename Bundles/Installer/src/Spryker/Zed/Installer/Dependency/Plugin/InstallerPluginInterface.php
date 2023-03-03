@@ -7,15 +7,11 @@
 
 namespace Spryker\Zed\Installer\Dependency\Plugin;
 
-interface InstallerPluginInterface
+use Spryker\Zed\InstallerExtension\Dependency\Plugin\InstallerPluginInterface as ExtensionInstallerPluginInterface;
+
+/**
+ * @deprecated Use {@link \Spryker\Zed\InstallerExtension\Dependency\Plugin\InstallerPluginInterface} instead.
+ */
+interface InstallerPluginInterface extends ExtensionInstallerPluginInterface
 {
-    /**
-     * Specification:
-     * - TODO: Add method specification.
-     *
-     * @api
-     *
-     * @return void
-     */
-    public function install();
 }

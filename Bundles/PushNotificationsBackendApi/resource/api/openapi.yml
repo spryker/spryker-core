@@ -1,0 +1,84 @@
+openapi: 3.0.3
+info:
+    title: Push Notification Backend API
+    version: 1.0.0
+servers:
+    - url: http://glue-backend.de.spryker.local
+security:
+    - bearerAuth: []
+paths:
+    /push-notification-subscriptions:
+        post:
+            description: 'Creates a push notification subscription.'
+            requestBody:
+                content:
+                    application/vnd.api+json:
+                        schema:
+                            $ref: '#/components/schemas/ApiPushNotificationSubscriptionAttributesResponse'
+            responses:
+                '201':
+                    description: 'Expected response to a valid request.'
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                $ref: '#/components/schemas/ApiPushNotificationSubscriptionAttributesResponse'
+                '400':
+                    description: 'Expected response to a bad request.'
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                $ref: '#/components/schemas/JsonApiErrorMessage'
+components:
+    securitySchemes:
+        bearerAuth:
+            type: http
+            scheme: bearer
+            bearerFormat: JWT
+    schemas:
+        ApiPushNotificationGroupAttributes:
+            properties:
+                name:
+                    type: string
+                identifier:
+                    type: string
+        ApiPushNotificationSubscriptionAttributes:
+            properties:
+                providerName:
+                    type: string
+                group:
+                    $ref: '#/components/schemas/ApiPushNotificationGroupAttributes'
+                payload:
+                    type: array
+                    items: {}
+        ApiPushNotificationSubscriptionAttributesResponse:
+            properties:
+                data:
+                    $ref: '#/components/schemas/ApiPushNotificationSubscriptionResponseData'
+                links:
+                    $ref: '#/components/schemas/Links'
+        ApiPushNotificationSubscriptionResponseData:
+            properties:
+                type:
+                    type: string
+                id:
+                    type: string
+                attributes:
+                    $ref: '#/components/schemas/ApiPushNotificationSubscriptionAttributes'
+                links:
+                    $ref: '#/components/schemas/Links'
+        JsonApiErrorMessage:
+            type: object
+            properties:
+                errors:
+                    type: object
+                    properties:
+                        status:
+                            type: integer
+                        code:
+                            type: string
+                        message:
+                            type: string
+        Links:
+            properties:
+                self:
+                    type: string

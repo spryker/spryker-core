@@ -416,6 +416,7 @@ class DevelopmentConfig extends AbstractBundleConfig
             'league/oauth2-server' => 'spryker/oauth',
             'mandrill/mandrill' => 'spryker/mandrill',
             'mikey179/vfsstream' => 'spryker/testify',
+            'minishlink/web-push' => 'spryker/push-notification-web-push-php',
             'moneyphp/money' => 'spryker/money',
             'monolog/monolog' => 'spryker/monolog',
             'pimple/pimple' => 'spryker/container',
