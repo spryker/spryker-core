@@ -56,6 +56,7 @@ class UserBusinessFactory extends AbstractBusinessFactory
         return new UserReader(
             $this->getRepository(),
             $this->getUserExpanderPlugins(),
+            $this->getUserTransferExpanderPlugins(),
         );
     }
 

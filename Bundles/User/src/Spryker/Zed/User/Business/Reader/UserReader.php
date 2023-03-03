@@ -20,18 +20,28 @@ class UserReader implements UserReaderInterface
     protected UserRepositoryInterface $userRepository;
 
     /**
-     * @var array<\Spryker\Zed\UserExtension\Dependency\Plugin\UserExpanderPluginInterface>
+     * @var list<\Spryker\Zed\UserExtension\Dependency\Plugin\UserExpanderPluginInterface>
      */
     protected array $userExpanderPlugins;
 
     /**
+     * @var list<\Spryker\Zed\UserExtension\Dependency\Plugin\UserTransferExpanderPluginInterface>
+     */
+    protected array $userTransferExpanderPlugins;
+
+    /**
      * @param \Spryker\Zed\User\Persistence\UserRepositoryInterface $userRepository
      * @param array<\Spryker\Zed\UserExtension\Dependency\Plugin\UserExpanderPluginInterface> $userExpanderPlugins
+     * @param array<\Spryker\Zed\UserExtension\Dependency\Plugin\UserTransferExpanderPluginInterface> $userTransferExpanderPlugins
      */
-    public function __construct(UserRepositoryInterface $userRepository, array $userExpanderPlugins)
-    {
+    public function __construct(
+        UserRepositoryInterface $userRepository,
+        array $userExpanderPlugins,
+        array $userTransferExpanderPlugins = []
+    ) {
         $this->userRepository = $userRepository;
         $this->userExpanderPlugins = $userExpanderPlugins;
+        $this->userTransferExpanderPlugins = $userTransferExpanderPlugins;
     }
 
     /**
@@ -48,7 +58,10 @@ class UserReader implements UserReaderInterface
             return $userCollectionTransfer;
         }
 
-        return $this->executeUserExpanderPlugins($userCollectionTransfer);
+        $userCollectionTransfer = $this->executeUserExpanderPlugins($userCollectionTransfer);
+        $userCollectionTransfer = $this->executeUserTransferExpanderPlugins($userCollectionTransfer);
+
+        return $userCollectionTransfer;
     }
 
     /**
@@ -82,5 +95,23 @@ class UserReader implements UserReaderInterface
         ) {
             throw new UserNotFoundException();
         }
+    }
+
+    /**
+     * @deprecated Exists for BC reasons only.
+     *
+     * @param \Generated\Shared\Transfer\UserCollectionTransfer $userCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\UserCollectionTransfer
+     */
+    protected function executeUserTransferExpanderPlugins(UserCollectionTransfer $userCollectionTransfer): UserCollectionTransfer
+    {
+        foreach ($this->userTransferExpanderPlugins as $userTransferExpanderPlugin) {
+            foreach ($userCollectionTransfer->getUsers() as $key => $userTransfer) {
+                $userCollectionTransfer->getUsers()->offsetSet($key, $userTransferExpanderPlugin->expandUserTransfer($userTransfer));
+            }
+        }
+
+        return $userCollectionTransfer;
     }
 }

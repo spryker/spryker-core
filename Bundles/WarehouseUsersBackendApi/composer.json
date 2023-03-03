@@ -9,7 +9,7 @@
         "spryker/kernel": "^3.30.0",
         "spryker/symfony": "^3.0.0",
         "spryker/transfer": "^3.27.0",
-        "spryker/user": "^3.16.0",
+        "spryker/user": "^3.17.0",
         "spryker/warehouse-user": "^0.1.0"
     },
     "require-dev": {

@@ -10,7 +10,7 @@
         "spryker/security-gui-extension": "^1.2.0",
         "spryker/stock": "^8.5.0",
         "spryker/transfer": "^3.27.0",
-        "spryker/user": "^3.16.0",
+        "spryker/user": "^3.17.0",
         "spryker/uuid-behavior": "^1.0.0"
     },
     "require-dev": {

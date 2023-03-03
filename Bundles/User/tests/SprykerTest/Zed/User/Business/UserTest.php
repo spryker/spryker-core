@@ -22,6 +22,9 @@ use Spryker\Zed\User\Business\Model\User;
 use Spryker\Zed\User\Business\UserFacadeInterface;
 use Spryker\Zed\User\Persistence\UserQueryContainerInterface;
 use Spryker\Zed\User\UserConfig;
+use Spryker\Zed\User\UserDependencyProvider;
+use Spryker\Zed\UserExtension\Dependency\Plugin\UserExpanderPluginInterface;
+use Spryker\Zed\UserExtension\Dependency\Plugin\UserTransferExpanderPluginInterface;
 
 /**
  * Auto-generated group annotations
@@ -580,6 +583,56 @@ class UserTest extends Unit
 
         // Assert
         $this->assertCount(0, $userCollectionTransfer->getUsers());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetUserCollectionExecutesUserExpanderPlugins(): void
+    {
+        // Arrange
+        $userTransfer = $this->tester->haveUser();
+        $userConditionsTransfer = (new UserConditionsTransfer())->addUuid($userTransfer->getUuidOrFail());
+        $userCriteriaTransfer = (new UserCriteriaTransfer())->setUserConditions($userConditionsTransfer);
+
+        // Assert
+        $userExpanderPluginMock = $this
+            ->getMockBuilder(UserExpanderPluginInterface::class)
+            ->getMock();
+
+        $userExpanderPluginMock
+            ->expects($this->once())
+            ->method('expand');
+
+        $this->tester->setDependency(UserDependencyProvider::PLUGINS_USER_EXPANDER, [$userExpanderPluginMock]);
+
+        // Act
+        $this->getUserFacade()->getUserCollection($userCriteriaTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetUserCollectionExecutesUserTransferExpanderPlugins(): void
+    {
+        // Arrange
+        $userTransfer = $this->tester->haveUser();
+        $userConditionsTransfer = (new UserConditionsTransfer())->addUuid($userTransfer->getUuidOrFail());
+        $userCriteriaTransfer = (new UserCriteriaTransfer())->setUserConditions($userConditionsTransfer);
+
+        // Assert
+        $userTransferExpanderPluginMock = $this
+            ->getMockBuilder(UserTransferExpanderPluginInterface::class)
+            ->getMock();
+
+        $userTransferExpanderPluginMock
+            ->expects($this->once())
+            ->method('expandUserTransfer');
+
+        $this->tester->setDependency(UserDependencyProvider::PLUGINS_USER_TRANSFER_EXPANDER, [$userTransferExpanderPluginMock]);
+
+        // Act
+        $this->getUserFacade()->getUserCollection($userCriteriaTransfer);
     }
 
     /**
