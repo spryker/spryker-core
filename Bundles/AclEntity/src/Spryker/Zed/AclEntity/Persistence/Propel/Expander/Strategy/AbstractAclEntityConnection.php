@@ -19,10 +19,16 @@ use Spryker\Zed\AclEntity\Persistence\Exception\JoinNotFoundException;
 use Spryker\Zed\AclEntity\Persistence\Exception\QueryMergerJoinMalfunctionException;
 use Spryker\Zed\AclEntity\Persistence\Exception\RelationNotFoundException;
 use Spryker\Zed\AclEntity\Persistence\Propel\Comparator\JoinComparatorInterface;
+use Spryker\Zed\AclEntity\Persistence\Propel\Generator\AclEntityAliasGenerator;
 use Spryker\Zed\AclEntity\Persistence\Propel\Generator\AclEntityAliasGeneratorInterface;
 
 abstract class AbstractAclEntityConnection
 {
+    /**
+     * @var string
+     */
+    protected const PATTERN_ACL_TABLE_JOIN_ALIAS = '/\w+' . AclEntityAliasGenerator::SUFFIX_TABLE . '\d?/';
+
     /**
      * @var \Spryker\Zed\AclEntity\Persistence\Propel\Comparator\JoinComparatorInterface
      */
@@ -337,14 +343,24 @@ abstract class AbstractAclEntityConnection
      */
     protected function findLeftTableJoinAlias(ModelCriteria $query, string $leftTableName): ?string
     {
-        $tableAliases = array_filter($query->getAliases(), function (string $tableName) use ($leftTableName) {
-            return $tableName === $leftTableName;
-        });
+        $tableAliases = array_filter($query->getAliases(), function (string $tableName, string $tableAlias) use ($leftTableName) {
+            return $tableName === $leftTableName && $this->isAclJoinAlias($tableAlias);
+        }, ARRAY_FILTER_USE_BOTH);
 
         if ($tableAliases === []) {
             return null;
         }
 
         return array_key_last($tableAliases);
+    }
+
+    /**
+     * @param string $tableAlias
+     *
+     * @return bool
+     */
+    protected function isAclJoinAlias(string $tableAlias): bool
+    {
+        return preg_match(static::PATTERN_ACL_TABLE_JOIN_ALIAS, $tableAlias) === 1;
     }
 }

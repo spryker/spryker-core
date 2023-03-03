@@ -14,7 +14,7 @@ class AclEntityAliasGenerator implements AclEntityAliasGeneratorInterface
     /**
      * @var string
      */
-    protected const SUFFIX_TABLE = '_acl';
+    public const SUFFIX_TABLE = '_acl';
 
     /**
      * @var string
