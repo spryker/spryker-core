@@ -151,7 +151,7 @@ class ManualOrderEntryFormPluginFilter
      */
     protected function isFormSubmitted(ManualOrderEntryFormPluginInterface $formPlugin, Request $request): bool
     {
-        return ($request->request->get($formPlugin->getName()) !== null);
+        return $request->get($formPlugin->getName()) !== null;
     }
 
     /**
