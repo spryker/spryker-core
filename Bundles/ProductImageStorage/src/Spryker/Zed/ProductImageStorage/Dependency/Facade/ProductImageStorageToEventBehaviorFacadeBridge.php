@@ -27,7 +27,7 @@ class ProductImageStorageToEventBehaviorFacadeBridge implements ProductImageStor
      *
      * @return array
      */
-    public function getEventTransferIds(array $eventTransfers)
+    public function getEventTransferIds(array $eventTransfers): array
     {
         return $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
     }
@@ -38,7 +38,7 @@ class ProductImageStorageToEventBehaviorFacadeBridge implements ProductImageStor
      *
      * @return array
      */
-    public function getEventTransferForeignKeys(array $eventTransfers, $foreignKeyColumnName)
+    public function getEventTransferForeignKeys(array $eventTransfers, $foreignKeyColumnName): array
     {
         return $this->eventBehaviorFacade->getEventTransferForeignKeys($eventTransfers, $foreignKeyColumnName);
     }

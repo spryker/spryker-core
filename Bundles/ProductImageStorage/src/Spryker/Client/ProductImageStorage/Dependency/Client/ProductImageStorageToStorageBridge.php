@@ -27,7 +27,7 @@ class ProductImageStorageToStorageBridge implements ProductImageStorageToStorage
      *
      * @return array
      */
-    public function get($key)
+    public function get($key): array
     {
         return $this->storageClient->get($key);
     }

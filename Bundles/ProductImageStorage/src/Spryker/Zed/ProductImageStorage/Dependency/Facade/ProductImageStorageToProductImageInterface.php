@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductImageStorage\Dependency\Facade;
 
+use Generated\Shared\Transfer\ProductImageFilterTransfer;
+
 interface ProductImageStorageToProductImageInterface
 {
     /**
@@ -15,7 +17,7 @@ interface ProductImageStorageToProductImageInterface
      *
      * @return array<\Generated\Shared\Transfer\ProductImageSetTransfer>
      */
-    public function getCombinedAbstractImageSets($idProductAbstract, $idLocale);
+    public function getCombinedAbstractImageSets($idProductAbstract, $idLocale): array;
 
     /**
      * @param int $idProductConcrete
@@ -24,5 +26,12 @@ interface ProductImageStorageToProductImageInterface
      *
      * @return array<\Generated\Shared\Transfer\ProductImageSetTransfer>
      */
-    public function getCombinedConcreteImageSets($idProductConcrete, $idProductAbstract, $idLocale);
+    public function getCombinedConcreteImageSets($idProductConcrete, $idProductAbstract, $idLocale): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductImageFilterTransfer $productImageFilterTransfer
+     *
+     * @return array<int>
+     */
+    public function getProductConcreteIds(ProductImageFilterTransfer $productImageFilterTransfer): array;
 }

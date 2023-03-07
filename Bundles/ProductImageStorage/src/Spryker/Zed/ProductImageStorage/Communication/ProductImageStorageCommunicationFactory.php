@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductImageStorage\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\ProductImageStorage\Dependency\Facade\ProductImageStorageToProductImageInterface;
 use Spryker\Zed\ProductImageStorage\ProductImageStorageDependencyProvider;
 
 /**
@@ -24,5 +25,13 @@ class ProductImageStorageCommunicationFactory extends AbstractCommunicationFacto
     public function getEventBehaviorFacade()
     {
         return $this->getProvidedDependency(ProductImageStorageDependencyProvider::FACADE_EVENT_BEHAVIOR);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductImageStorage\Dependency\Facade\ProductImageStorageToProductImageInterface
+     */
+    public function getProductImageFacade(): ProductImageStorageToProductImageInterface
+    {
+        return $this->getProvidedDependency(ProductImageStorageDependencyProvider::FACADE_PRODUCT_IMAGE);
     }
 }

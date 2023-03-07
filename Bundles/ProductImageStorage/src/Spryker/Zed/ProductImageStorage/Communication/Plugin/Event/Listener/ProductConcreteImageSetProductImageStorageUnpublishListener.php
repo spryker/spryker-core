@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductImageStorage\Communication\Plugin\Event\Listener;
 
+use Generated\Shared\Transfer\ProductImageFilterTransfer;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -19,6 +20,13 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class ProductConcreteImageSetProductImageStorageUnpublishListener extends AbstractPlugin implements EventBulkHandlerInterface
 {
     /**
+     * @uses {@link \Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetToProductImageTableMap::COL_FK_PRODUCT_IMAGE_SET}
+     *
+     * @var string
+     */
+    protected const COL_FK_PRODUCT_IMAGE_SET = 'spy_product_image_set_to_product_image.fk_product_image_set';
+
+    /**
      * {@inheritDoc}
      *
      * @api
@@ -30,8 +38,16 @@ class ProductConcreteImageSetProductImageStorageUnpublishListener extends Abstra
      */
     public function handleBulk(array $eventEntityTransfers, $eventName)
     {
-        $productImageSetToProductImageIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventEntityTransfers);
-        $productIds = $this->getQueryContainer()->queryProductIdsByProductImageSetToProductImageIds($productImageSetToProductImageIds)->find()->getData();
+        $productImageSetIds = $this->getFactory()
+            ->getEventBehaviorFacade()
+            ->getEventTransferForeignKeys(
+                $eventEntityTransfers,
+                static::COL_FK_PRODUCT_IMAGE_SET,
+            );
+
+        $productIds = $this->getFactory()->getProductImageFacade()->getProductConcreteIds(
+            (new ProductImageFilterTransfer())->setProductImageSetIds($productImageSetIds),
+        );
 
         $this->getFacade()->unpublishProductConcreteImages($productIds);
     }

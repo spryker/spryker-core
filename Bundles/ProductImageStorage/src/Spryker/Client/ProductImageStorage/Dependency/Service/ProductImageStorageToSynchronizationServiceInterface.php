@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\ProductImageStorage\Dependency\Service;
 
+use Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface;
+
 interface ProductImageStorageToSynchronizationServiceInterface
 {
     /**
@@ -14,5 +16,5 @@ interface ProductImageStorageToSynchronizationServiceInterface
      *
      * @return \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface
      */
-    public function getStorageKeyBuilder($resourceName);
+    public function getStorageKeyBuilder($resourceName): SynchronizationKeyGeneratorPluginInterface;
 }

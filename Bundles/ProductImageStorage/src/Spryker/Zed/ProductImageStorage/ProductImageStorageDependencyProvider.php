@@ -58,9 +58,9 @@ class ProductImageStorageDependencyProvider extends AbstractBundleDependencyProv
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
-            return new ProductImageStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
-        });
+        $container = parent::provideCommunicationLayerDependencies($container);
+        $container = $this->addProductImageFacade($container);
+        $container = $this->addEventBehaviorFacade($container);
 
         return $container;
     }
@@ -72,9 +72,8 @@ class ProductImageStorageDependencyProvider extends AbstractBundleDependencyProv
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container->set(static::FACADE_PRODUCT_IMAGE, function (Container $container) {
-            return new ProductImageStorageToProductImageBridge($container->getLocator()->productImage()->facade());
-        });
+        $container = parent::provideBusinessLayerDependencies($container);
+        $container = $this->addProductImageFacade($container);
 
         return $container;
     }
@@ -90,6 +89,34 @@ class ProductImageStorageDependencyProvider extends AbstractBundleDependencyProv
         $container = $this->addProductImageQueryContainer($container);
         $container = $this->addPropelProductLocalizedAttributesQuery($container);
         $container = $this->addPropelProductImageSetQuery($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductImageFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_PRODUCT_IMAGE, function (Container $container) {
+            return new ProductImageStorageToProductImageBridge($container->getLocator()->productImage()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addEventBehaviorFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
+            return new ProductImageStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
+        });
 
         return $container;
     }

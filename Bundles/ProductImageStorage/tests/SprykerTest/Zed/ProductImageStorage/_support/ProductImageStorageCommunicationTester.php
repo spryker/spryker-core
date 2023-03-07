@@ -12,6 +12,7 @@ use Generated\Shared\DataBuilder\ProductImageBuilder;
 use Generated\Shared\Transfer\ProductImageTransfer;
 use Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImage;
 use Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery;
+use Orm\Zed\ProductImageStorage\Persistence\SpyProductConcreteImageStorage;
 
 /**
  * @method void wantToTest($text)
@@ -92,5 +93,24 @@ class ProductImageStorageCommunicationTester extends Actor
         }
 
         $productImageSetToProductImageEntity->delete();
+    }
+
+    /**
+     * @param int $idProductConcrete
+     * @param string $locale
+     *
+     * @return \Orm\Zed\ProductImageStorage\Persistence\SpyProductConcreteImageStorage
+     */
+    public function createProductConcreteImageStorage(int $idProductConcrete, string $locale): SpyProductConcreteImageStorage
+    {
+        $productConcreteImageStorageEntity = (new SpyProductConcreteImageStorage())
+            ->setFkProduct($idProductConcrete)
+            ->setKey(uniqid())
+            ->setData([])
+            ->setLocale($locale);
+
+        $productConcreteImageStorageEntity->save();
+
+        return $productConcreteImageStorageEntity;
     }
 }

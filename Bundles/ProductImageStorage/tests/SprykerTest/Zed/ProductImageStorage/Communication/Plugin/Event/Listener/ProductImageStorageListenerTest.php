@@ -16,6 +16,8 @@ use Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery;
 use Orm\Zed\ProductImageStorage\Persistence\SpyProductAbstractImageStorageQuery;
 use Orm\Zed\ProductImageStorage\Persistence\SpyProductConcreteImageStorageQuery;
 use PHPUnit\Framework\SkippedTestError;
+use Spryker\Client\Kernel\Container;
+use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Zed\ProductImage\Dependency\ProductImageEvents;
 use Spryker\Zed\ProductImageStorage\Business\ProductImageStorageBusinessFactory;
 use Spryker\Zed\ProductImageStorage\Business\ProductImageStorageFacade;
@@ -62,6 +64,11 @@ use SprykerTest\Zed\ProductImageStorage\ProductImageStorageConfigMock;
 class ProductImageStorageListenerTest extends Unit
 {
     /**
+     * @var string
+     */
+    protected const LOCALE_EN_US = 'en_US';
+
+    /**
      * @var \SprykerTest\Zed\ProductImageStorage\ProductImageStorageCommunicationTester
      */
     protected $tester;
@@ -93,6 +100,12 @@ class ProductImageStorageListenerTest extends Unit
         if (!$this->tester->isSuiteProject()) {
             throw new SkippedTestError('Warning: not in suite environment');
         }
+
+        $this->tester->setDependency(QueueDependencyProvider::QUEUE_ADAPTERS, function (Container $container) {
+            return [
+                $container->getLocator()->rabbitMq()->client()->createQueueAdapter(),
+            ];
+        });
 
         $this->createProducts();
 
@@ -696,19 +709,20 @@ class ProductImageStorageListenerTest extends Unit
      */
     public function testProductConcreteImageSetProductImageStorageUnpublishListener(): void
     {
-        // Prepare
+        // Arrange
         $productConcreteImageSetProductImageStorageUnpublishListener = new ProductConcreteImageSetProductImageStorageUnpublishListener();
         $productConcreteImageSetProductImageStorageUnpublishListener->setFacade($this->getProductImageStorageFacade());
 
-        $productImageSetToProductImage = $this->tester->findProductImageSetToProductImage(
-            $this->productImageSetTransfer->getIdProductImageSet(),
+        $eventTransfers = [
+            (new EventEntityTransfer())->setId(
+                $this->productImageSetTransfer->getProductImages()->getIterator()->current()->getIdProductImageSetToProductImage(),
+            ),
+        ];
+
+        $this->tester->createProductConcreteImageStorage(
+            $this->productConcreteTransfer->getIdProductConcrete(),
+            static::LOCALE_EN_US,
         );
-
-        $eventTransfers = [];
-
-        if ($productImageSetToProductImage) {
-            $eventTransfers[] = (new EventEntityTransfer())->setId($productImageSetToProductImage->getIdProductImageSetToProductImage());
-        }
 
         $this->tester->deleteProductImageSetToProductImage($this->productImageSetTransfer->getIdProductImageSet());
 
