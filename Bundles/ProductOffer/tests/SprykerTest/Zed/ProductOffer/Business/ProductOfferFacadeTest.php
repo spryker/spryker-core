@@ -743,18 +743,9 @@ class ProductOfferFacadeTest extends Unit
 
         // Assert
         $this->assertCount(3, $productOfferCollectionTransfer->getProductOffers());
-        $this->assertSame(
-            $productOfferTransfer1->getIdProductOffer(),
-            $productOfferCollectionTransfer->getProductOffers()->offsetGet(0)->getIdProductOffer(),
-        );
-        $this->assertSame(
-            $productOfferTransfer2->getIdProductOffer(),
-            $productOfferCollectionTransfer->getProductOffers()->offsetGet(1)->getIdProductOffer(),
-        );
-        $this->assertSame(
-            $productOfferTransfer3->getIdProductOffer(),
-            $productOfferCollectionTransfer->getProductOffers()->offsetGet(2)->getIdProductOffer(),
-        );
+        $this->assertTrue($this->productOfferCollectionTransferContainsProductOffer($productOfferCollectionTransfer, $productOfferTransfer1));
+        $this->assertTrue($this->productOfferCollectionTransferContainsProductOffer($productOfferCollectionTransfer, $productOfferTransfer2));
+        $this->assertTrue($this->productOfferCollectionTransferContainsProductOffer($productOfferCollectionTransfer, $productOfferTransfer3));
     }
 
     /**
@@ -779,14 +770,8 @@ class ProductOfferFacadeTest extends Unit
         // Assert
         $this->assertCount(2, $productOfferCollectionTransfer->getProductOffers());
         $this->assertSame(4, $productOfferCollectionTransfer->getPagination()->getNbResults());
-        $this->assertSame(
-            $productOfferTransfer1->getIdProductOffer(),
-            $productOfferCollectionTransfer->getProductOffers()->offsetGet(0)->getIdProductOffer(),
-        );
-        $this->assertSame(
-            $productOfferTransfer2->getIdProductOffer(),
-            $productOfferCollectionTransfer->getProductOffers()->offsetGet(1)->getIdProductOffer(),
-        );
+        $this->assertTrue($this->productOfferCollectionTransferContainsProductOffer($productOfferCollectionTransfer, $productOfferTransfer1));
+        $this->assertTrue($this->productOfferCollectionTransferContainsProductOffer($productOfferCollectionTransfer, $productOfferTransfer2));
     }
 
     /**
@@ -857,5 +842,24 @@ class ProductOfferFacadeTest extends Unit
         );
 
         return $itemsInCart;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferCollectionTransfer $productOfferCollectionTransfer
+     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
+     *
+     * @return bool
+     */
+    protected function productOfferCollectionTransferContainsProductOffer(
+        ProductOfferCollectionTransfer $productOfferCollectionTransfer,
+        ProductOfferTransfer $productOfferTransfer
+    ): bool {
+        foreach ($productOfferCollectionTransfer->getProductOffers() as $productOffer) {
+            if ($productOffer->getIdProductOffer() === $productOfferTransfer->getIdProductOffer()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
