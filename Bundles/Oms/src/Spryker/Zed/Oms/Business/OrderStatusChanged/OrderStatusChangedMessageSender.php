@@ -104,7 +104,9 @@ class OrderStatusChangedMessageSender implements OrderStatusChangedMessageSender
             $processedListOfSkus[] = $orderItem->getSku();
         }
 
-        $orderStatusChangedTransfer->setMerchants($orderTransfer->getMerchants());
+        if (method_exists(OrderTransfer::class, 'getMerchants')) {
+            $orderStatusChangedTransfer->setMerchants($orderTransfer->getMerchants());
+        }
 
         return $orderStatusChangedTransfer;
     }
