@@ -9,6 +9,7 @@
         "spryker/acl-entity": "^1.0.0",
         "spryker/acl-entity-extension": "^1.0.0",
         "spryker/acl-extension": "^1.1.0",
+        "spryker/acl-merchant-portal-extension": "^1.0.0",
         "spryker/kernel": "^3.30.0",
         "spryker/merchant": "^3.0.0",
         "spryker/merchant-extension": "^1.1.0",
@@ -22,6 +23,9 @@
         "spryker/propel": "*",
         "spryker/testify": "*",
         "spryker/user": "*"
+    },
+    "suggest": {
+        "spryker/event-behavior": "To be able to use the EventBehavior propel entities for AclEntityMetadataCollection expansion."
     },
     "autoload": {
         "psr-4": {

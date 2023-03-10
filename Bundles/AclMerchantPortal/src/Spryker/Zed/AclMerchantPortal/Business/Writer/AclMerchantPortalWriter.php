@@ -26,6 +26,9 @@ use Spryker\Zed\AclMerchantPortal\Business\Generator\AclMerchantPortalGeneratorI
 use Spryker\Zed\AclMerchantPortal\Dependency\Facade\AclMerchantPortalToAclEntityFacadeInterface;
 use Spryker\Zed\AclMerchantPortal\Dependency\Facade\AclMerchantPortalToAclFacadeInterface;
 
+/**
+ * @deprecated Use {@link \Spryker\Zed\AclMerchantPortal\Business\Creator\AclEntityCreator} instead.
+ */
 class AclMerchantPortalWriter implements AclMerchantPortalWriterInterface
 {
     /**

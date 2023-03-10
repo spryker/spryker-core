@@ -5,6 +5,7 @@
     "license": "proprietary",
     "require": {
         "php": ">=8.0",
+        "spryker/acl-merchant-portal-extension": "^1.0.0",
         "spryker/category": "^4.19.0 || ^5.0.0",
         "spryker/category-extension": "^1.0.0",
         "spryker/event": "^2.0.0",
@@ -13,7 +14,8 @@
         "spryker/merchant": "^3.1.0",
         "spryker/merchant-extension": "^1.1.0",
         "spryker/propel-orm": "^1.0.0",
-        "spryker/publisher-extension": "^1.0.0"
+        "spryker/publisher-extension": "^1.0.0",
+        "spryker/transfer": "^3.25.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*",

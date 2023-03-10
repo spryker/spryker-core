@@ -80,4 +80,8 @@
         <property name="userConditions" type="UserConditions" strict="true"/>
     </transfer>
 
+    <transfer name="AclEntityMetadataConfig">
+        <property name="aclEntityAllowList" type="string[]" singular="aclEntityAllowListItem"/>
+    </transfer>
+
 </transfers>

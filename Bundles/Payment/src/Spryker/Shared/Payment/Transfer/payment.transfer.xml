@@ -377,4 +377,23 @@
         <property name="entityIdentifier" type="string"/>
         <property name="parameters" type="array" singular="parameter"/>
     </transfer>
+
+    <transfer name="AclEntityMetadataConfig">
+        <property name="aclEntityMetadataCollection" type="AclEntityMetadataCollection"/>
+    </transfer>
+
+    <transfer name="AclEntityParentMetadata">
+        <property name="entityName" type="string"/>
+    </transfer>
+
+    <transfer name="AclEntityMetadata">
+        <property name="entityName" type="string"/>
+        <property name="defaultGlobalOperationMask" type="int"/>
+        <property name="parent" type="AclEntityParentMetadata"/>
+        <property name="isSubEntity" type="bool"/>
+    </transfer>
+
+    <transfer name="AclEntityMetadataCollection">
+        <property name="collection" type="array" singular="aclEntityMetadata" associative="true"/>
+    </transfer>
 </transfers>

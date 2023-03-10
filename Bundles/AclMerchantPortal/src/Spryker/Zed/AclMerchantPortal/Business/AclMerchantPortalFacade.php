@@ -24,6 +24,8 @@ class AclMerchantPortalFacade extends AbstractFacade implements AclMerchantPorta
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\AclMerchantPortal\Business\AclMerchantPortalFacade::createAclEntitiesForMerchant()} instead.
+     *
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantResponseTransfer
@@ -38,6 +40,8 @@ class AclMerchantPortalFacade extends AbstractFacade implements AclMerchantPorta
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\AclMerchantPortal\Business\AclMerchantPortalFacade::createAclEntitiesForMerchantUser()} instead.
+     *
      * @param \Generated\Shared\Transfer\MerchantUserTransfer $merchantUserTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantUserTransfer
@@ -51,6 +55,8 @@ class AclMerchantPortalFacade extends AbstractFacade implements AclMerchantPorta
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\AclMerchantPortal\Business\AclMerchantPortalFacade::expandAclEntityConfiguration()} instead.
      *
      * @param \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
      *
@@ -95,5 +101,54 @@ class AclMerchantPortalFacade extends AbstractFacade implements AclMerchantPorta
         return $this->getFactory()
             ->createMerchantUserRestrictionChecker()
             ->isLoginRestricted($merchantUserTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantResponseTransfer
+     */
+    public function createAclEntitiesForMerchant(MerchantTransfer $merchantTransfer): MerchantResponseTransfer
+    {
+        return $this->getFactory()
+            ->createAclEntityCreator()
+            ->createAclEntitiesForMerchant($merchantTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantUserTransfer $merchantUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantUserTransfer
+     */
+    public function createAclEntitiesForMerchantUser(MerchantUserTransfer $merchantUserTransfer): MerchantUserTransfer
+    {
+        return $this->getFactory()
+            ->createAclEntityCreator()
+            ->createAclEntitiesForMerchantUser($merchantUserTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
+     *
+     * @return \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer
+     */
+    public function expandAclEntityConfiguration(
+        AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
+    ): AclEntityMetadataConfigTransfer {
+        return $this->getFactory()
+            ->createAclEntityConfigurationExpander()
+            ->expandAclEntityConfiguration($aclEntityMetadataConfigTransfer);
     }
 }

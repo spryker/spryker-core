@@ -34,6 +34,7 @@
         "spryker/acl-entity-extension": "*",
         "spryker/acl-extension": "*",
         "spryker/acl-merchant-portal": "*",
+        "spryker/acl-merchant-portal-extension": "*",
         "spryker/agent": "*",
         "spryker/agent-auth-rest-api": "*",
         "spryker/agent-extension": "*",

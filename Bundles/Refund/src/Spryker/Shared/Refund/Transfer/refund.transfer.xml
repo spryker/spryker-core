@@ -45,4 +45,27 @@
     <transfer name="Money">
     </transfer>
 
+    <transfer name="AclEntityMetadataConfig">
+        <property name="aclEntityMetadataCollection" type="AclEntityMetadataCollection"/>
+    </transfer>
+
+    <transfer name="AclEntityMetadata">
+        <property name="entityName" type="string"/>
+        <property name="parent" type="AclEntityParentMetadata"/>
+    </transfer>
+
+    <transfer name="AclEntityParentMetadata">
+        <property name="entityName" type="string"/>
+    </transfer>
+
+    <transfer name="AclEntityMetadataCollection">
+        <property name="collection" type="array" singular="aclEntityMetadata" associative="true"/>
+    </transfer>
+
+    <transfer name="AclEntityRule">
+        <property name="entity" type="string"/>
+        <property name="scope" type="string"/>
+        <property name="permissionMask" type="int"/>
+    </transfer>
+
 </transfers>

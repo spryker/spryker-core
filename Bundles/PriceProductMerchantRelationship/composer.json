@@ -5,6 +5,7 @@
     "license": "proprietary",
     "require": {
         "php": ">=8.0",
+        "spryker/acl-merchant-portal-extension": "^1.0.0",
         "spryker/cart": "^5.1.0 || ^7.0.0",
         "spryker/kernel": "^3.30.0",
         "spryker/merchant-relationship": "^1.4.0",

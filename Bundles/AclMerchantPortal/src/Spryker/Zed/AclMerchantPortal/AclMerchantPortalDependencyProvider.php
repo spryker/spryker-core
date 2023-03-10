@@ -33,6 +33,31 @@ class AclMerchantPortalDependencyProvider extends AbstractBundleDependencyProvid
     public const FACADE_MERCHANT_USER = 'FACADE_MERCHANT_USER';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_MERCHANT_ACL_RULE_EXPANDER = 'PLUGINS_MERCHANT_ACL_RULE_EXPANDER';
+
+    /**
+     * @var string
+     */
+    public const PLUGINS_MERCHANT_ACL_ENTITY_RULE_EXPANDER = 'PLUGINS_MERCHANT_ACL_ENTITY_RULE_EXPANDER';
+
+    /**
+     * @var string
+     */
+    public const PLUGINS_MERCHANT_USER_ACL_RULE_EXPANDER = 'PLUGINS_MERCHANT_USER_ACL_RULE_EXPANDER';
+
+    /**
+     * @var string
+     */
+    public const PLUGINS_ACL_ENTITY_CONFIGURATION_EXPANDER = 'PLUGINS_ACL_ENTITY_CONFIGURATION_EXPANDER';
+
+    /**
+     * @var string
+     */
+    public const PLUGINS_MERCHANT_USER_ACL_ENTITY_RULE_EXPANDER = 'PLUGINS_MERCHANT_USER_ACL_ENTITY_RULE_EXPANDER';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -43,20 +68,11 @@ class AclMerchantPortalDependencyProvider extends AbstractBundleDependencyProvid
 
         $container = $this->addAclEntityFacade($container);
         $container = $this->addAclFacade($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    public function provideCommunicationLayerDependencies(Container $container): Container
-    {
-        $container = parent::provideCommunicationLayerDependencies($container);
-
-        $container = $this->addAclFacade($container);
+        $container = $this->addMerchantAclEntityRuleExpanderPlugins($container);
+        $container = $this->addMerchantAclRuleExpanderPlugins($container);
+        $container = $this->addMerchantUserAclEntityRuleExpanderPlugins($container);
+        $container = $this->addMerchantUserAclRuleExpanderPlugins($container);
+        $container = $this->addAclEntityConfigurationExpanderPlugins($container);
 
         return $container;
     }
@@ -91,5 +107,115 @@ class AclMerchantPortalDependencyProvider extends AbstractBundleDependencyProvid
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMerchantAclEntityRuleExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_MERCHANT_ACL_ENTITY_RULE_EXPANDER, function () {
+            return $this->getMerchantAclEntityRuleExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return list<\Spryker\Zed\AclMerchantPortalExtension\Dependency\Plugin\MerchantAclEntityRuleExpanderPluginInterface>
+     */
+    protected function getMerchantAclEntityRuleExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMerchantAclRuleExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_MERCHANT_ACL_RULE_EXPANDER, function () {
+            return $this->getMerchantAclRuleExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return list<\Spryker\Zed\AclMerchantPortalExtension\Dependency\Plugin\MerchantAclRuleExpanderPluginInterface>
+     */
+    protected function getMerchantAclRuleExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMerchantUserAclEntityRuleExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_MERCHANT_USER_ACL_ENTITY_RULE_EXPANDER, function () {
+            return $this->getMerchantUserAclEntityRuleExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return list<\Spryker\Zed\AclMerchantPortalExtension\Dependency\Plugin\MerchantUserAclEntityRuleExpanderPluginInterface>
+     */
+    protected function getMerchantUserAclEntityRuleExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMerchantUserAclRuleExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_MERCHANT_USER_ACL_RULE_EXPANDER, function () {
+            return $this->getMerchantUserAclRuleExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return list<\Spryker\Zed\AclMerchantPortalExtension\Dependency\Plugin\MerchantUserAclRuleExpanderPluginInterface>
+     */
+    protected function getMerchantUserAclRuleExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addAclEntityConfigurationExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_ACL_ENTITY_CONFIGURATION_EXPANDER, function () {
+            return $this->getAclEntityConfigurationExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return list<\Spryker\Zed\AclMerchantPortalExtension\Dependency\Plugin\AclEntityConfigurationExpanderPluginInterface>
+     */
+    protected function getAclEntityConfigurationExpanderPlugins(): array
+    {
+        return [];
     }
 }

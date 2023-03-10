@@ -74,4 +74,24 @@
         <property name="offset" type="int"/>
     </transfer>
 
+    <transfer name="AclEntityMetadataConfig">
+        <property name="aclEntityAllowList" type="string[]" singular="aclEntityAllowListItem"/>
+        <property name="aclEntityMetadataCollection" type="AclEntityMetadataCollection"/>
+    </transfer>
+
+    <transfer name="AclEntityMetadata">
+        <property name="entityName" type="string"/>
+        <property name="defaultGlobalOperationMask" type="int"/>
+    </transfer>
+
+    <transfer name="AclEntityMetadataCollection">
+        <property name="collection" type="array" singular="aclEntityMetadata" associative="true"/>
+    </transfer>
+
+    <transfer name="AclEntityRule">
+        <property name="entity" type="string"/>
+        <property name="scope" type="string"/>
+        <property name="permissionMask" type="int"/>
+    </transfer>
+
 </transfers>

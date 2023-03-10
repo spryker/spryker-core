@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
 
+/**
+ * @deprecated Use {@link \Spryker\Zed\AclMerchantPortal\Business\Creator\AclEntityCreatorInterface} instead.
+ */
 interface AclMerchantPortalWriterInterface
 {
     /**

@@ -163,7 +163,7 @@
             "line_from": 71,
             "line_to": 71,
             "type": "PossiblyInvalidArgument",
-            "message": "Argument 2 of Spryker\\Zed\\GiftCard\\Business\\Calculation\\GiftCardCalculator::addNotApplicableGiftCardsToCalculableObject expects ArrayObject<int, Generated\\Shared\\Transfer\\GiftCardTransfer>, possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\GiftCardTransfer> provided",
+            "message": "Argument 2 of Spryker\\Zed\\GiftCard\\Business\\Calculation\\GiftCardCalculator::addNotApplicableGiftCardsToCalculableObject expects ArrayObject<int, Generated\\Shared\\Transfer\\GiftCardTransfer>, but possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\GiftCardTransfer> provided",
             "file_name": "vendor/spryker/spryker/Bundles/GiftCard/src/Spryker/Zed/GiftCard/Business/Calculation/GiftCardCalculator.php",
             "snippet": "            $this->addNotApplicableGiftCardsToCalculableObject($calculableObjectTransfer, $giftCards);",
             "selected_text": "$giftCards",
@@ -175,7 +175,7 @@
             "line_from": 76,
             "line_to": 76,
             "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of Spryker\\Zed\\GiftCard\\Business\\Calculation\\GiftCardCalculator::partitionGiftCardsByApplicability expects ArrayObject<int, Generated\\Shared\\Transfer\\GiftCardTransfer>, possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\GiftCardTransfer> provided",
+            "message": "Argument 1 of Spryker\\Zed\\GiftCard\\Business\\Calculation\\GiftCardCalculator::partitionGiftCardsByApplicability expects ArrayObject<int, Generated\\Shared\\Transfer\\GiftCardTransfer>, but possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\GiftCardTransfer> provided",
             "file_name": "vendor/spryker/spryker/Bundles/GiftCard/src/Spryker/Zed/GiftCard/Business/Calculation/GiftCardCalculator.php",
             "snippet": "        [$applicableGiftCards, $nonApplicableGiftCards] = $this->partitionGiftCardsByApplicability($giftCards, $calculableObjectTransfer);",
             "selected_text": "$giftCards",
@@ -703,7 +703,7 @@
             "line_from": 39,
             "line_to": 39,
             "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of Spryker\\Zed\\GiftCard\\Business\\Checker\\GiftCardItemsCheckerInterface::hasOnlyGiftCardItems expects ArrayObject<int, Generated\\Shared\\Transfer\\ItemTransfer>, possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ItemTransfer> provided",
+            "message": "Argument 1 of Spryker\\Zed\\GiftCard\\Business\\Checker\\GiftCardItemsCheckerInterface::hasOnlyGiftCardItems expects ArrayObject<int, Generated\\Shared\\Transfer\\ItemTransfer>, but possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ItemTransfer> provided",
             "file_name": "vendor/spryker/spryker/Bundles/GiftCard/src/Spryker/Zed/GiftCard/Business/Shipment/ShipmentGroupsSanitizer.php",
             "snippet": "            if ($this->giftCardItemsChecker->hasOnlyGiftCardItems($shipmentGroupTransfer->getItems()) === false) {",
             "selected_text": "$shipmentGroupTransfer->getItems()",
@@ -787,7 +787,7 @@
             "line_from": 62,
             "line_to": 62,
             "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of Spryker\\Zed\\GiftCard\\Business\\ShipmentMethod\\ShipmentMethodCollectionRemoverInterface::remove expects ArrayObject<int, Generated\\Shared\\Transfer\\ShipmentMethodTransfer>, possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ShipmentMethodTransfer> provided",
+            "message": "Argument 1 of Spryker\\Zed\\GiftCard\\Business\\ShipmentMethod\\ShipmentMethodCollectionRemoverInterface::remove expects ArrayObject<int, Generated\\Shared\\Transfer\\ShipmentMethodTransfer>, but possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ShipmentMethodTransfer> provided",
             "file_name": "vendor/spryker/spryker/Bundles/GiftCard/src/Spryker/Zed/GiftCard/Business/ShipmentMethod/ShipmentMethodGiftCardFilter.php",
             "snippet": "            $shipmentMethodsTransferList,",
             "selected_text": "$shipmentMethodsTransferList",
@@ -796,8 +796,8 @@
         },
         {
             "severity": "info",
-            "line_from": 31,
-            "line_to": 31,
+            "line_from": 32,
+            "line_to": 32,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\GiftCard\\Business\\GiftCardFacadeInterface::findGiftCardsByIdSalesOrder cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/GiftCard/src/Spryker/Zed/GiftCard/Communication/Controller/SalesController.php",
@@ -877,6 +877,18 @@
             "selected_text": "$giftCardTransfer->getValue()",
             "error_level": 5,
             "shortcode": 139
+        },
+        {
+            "severity": "info",
+            "line_from": 34,
+            "line_to": 34,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdGiftCard on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/GiftCard/src/Spryker/Zed/GiftCard/Communication/Plugin/SalesPayment/GiftCardPaymentMapKeyBuilderStrategyPlugin.php",
+            "snippet": "        return $paymentTransfer->getGiftCard() && $paymentTransfer->getGiftCard()->getIdGiftCard();",
+            "selected_text": "getIdGiftCard",
+            "error_level": 3,
+            "shortcode": 83
         }
     ],
     "deprecation": [
@@ -918,8 +930,8 @@
         },
         {
             "severity": "info",
-            "line_from": 347,
-            "line_to": 347,
+            "line_from": 357,
+            "line_to": 357,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\GiftCard\\Business\\ShipmentMethod\\ShipmentMethodGiftCardReaderInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/GiftCard/src/Spryker/Zed/GiftCard/Business/GiftCardBusinessFactory.php",
@@ -930,8 +942,8 @@
         },
         {
             "severity": "info",
-            "line_from": 349,
-            "line_to": 349,
+            "line_from": 359,
+            "line_to": 359,
             "type": "DeprecatedClass",
             "message": "Class Spryker\\Zed\\GiftCard\\Business\\ShipmentMethod\\ShipmentMethodGiftCardReaderInterface is marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/GiftCard/src/Spryker/Zed/GiftCard/Business/GiftCardBusinessFactory.php",
@@ -942,8 +954,8 @@
         },
         {
             "severity": "info",
-            "line_from": 351,
-            "line_to": 351,
+            "line_from": 361,
+            "line_to": 361,
             "type": "DeprecatedClass",
             "message": "Spryker\\Zed\\GiftCard\\Business\\ShipmentMethod\\ShipmentMethodGiftCardReader is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/GiftCard/src/Spryker/Zed/GiftCard/Business/GiftCardBusinessFactory.php",
@@ -1061,5 +1073,5 @@
             "shortcode": 1
         }
     ],
-    "count": 88
+    "count": 89
 }

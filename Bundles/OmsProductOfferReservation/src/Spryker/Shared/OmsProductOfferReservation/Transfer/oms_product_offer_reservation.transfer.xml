@@ -44,4 +44,33 @@
     <transfer name="OmsState">
     </transfer>
 
+    <transfer name="AclEntityMetadataConfig">
+        <property name="aclEntityMetadataCollection" type="AclEntityMetadataCollection"/>
+    </transfer>
+
+    <transfer name="AclEntityMetadata">
+        <property name="entityName" type="string"/>
+        <property name="parent" type="AclEntityParentMetadata"/>
+    </transfer>
+
+    <transfer name="AclEntityParentMetadata">
+        <property name="entityName" type="string"/>
+        <property name="connection" type="AclEntityParentConnectionMetadata"/>
+    </transfer>
+
+    <transfer name="AclEntityParentConnectionMetadata">
+        <property name="reference" type="string"/>
+        <property name="referencedColumn" type="string"/>
+    </transfer>
+
+    <transfer name="AclEntityMetadataCollection">
+        <property name="collection" type="array" singular="aclEntityMetadata" associative="true"/>
+    </transfer>
+
+    <transfer name="AclEntityRule">
+        <property name="entity" type="string"/>
+        <property name="scope" type="string"/>
+        <property name="permissionMask" type="int"/>
+    </transfer>
+
 </transfers>

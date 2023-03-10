@@ -80,4 +80,30 @@
         <property name="throwUserNotFoundException" type="bool" deprecated="Exists for BC reasons only."/>
     </transfer>
 
+    <transfer name="AclEntityMetadataConfig">
+        <property name="aclEntityAllowList" type="string[]" singular="aclEntityAllowListItem"/>
+        <property name="aclEntityMetadataCollection" type="AclEntityMetadataCollection"/>
+    </transfer>
+
+    <transfer name="AclEntityMetadata">
+        <property name="entityName" type="string"/>
+        <property name="defaultGlobalOperationMask" type="int"/>
+        <property name="hasSegmentTable" type="bool"/>
+        <property name="parent" type="AclEntityParentMetadata"/>
+    </transfer>
+
+    <transfer name="AclEntityParentMetadata">
+        <property name="entityName" type="string"/>
+    </transfer>
+
+    <transfer name="AclEntityMetadataCollection">
+        <property name="collection" type="array" singular="aclEntityMetadata" associative="true"/>
+    </transfer>
+
+    <transfer name="AclEntityRule">
+        <property name="entity" type="string"/>
+        <property name="scope" type="string"/>
+        <property name="permissionMask" type="int"/>
+    </transfer>
+
 </transfers>

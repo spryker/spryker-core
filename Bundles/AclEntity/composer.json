@@ -8,6 +8,7 @@
         "spryker/acl": "^3.8.0",
         "spryker/acl-entity-extension": "^1.0.0",
         "spryker/acl-extension": "^1.1.0",
+        "spryker/acl-merchant-portal-extension": "^1.0.0",
         "spryker/application-extension": "^1.0.0",
         "spryker/kernel": "^3.30.0",
         "spryker/price-product-extension": "^1.7.0",

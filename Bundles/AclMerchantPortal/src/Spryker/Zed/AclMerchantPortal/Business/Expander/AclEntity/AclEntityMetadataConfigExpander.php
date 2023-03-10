@@ -14,6 +14,9 @@ use Generated\Shared\Transfer\AclEntityParentConnectionMetadataTransfer;
 use Generated\Shared\Transfer\AclEntityParentMetadataTransfer;
 use Spryker\Shared\AclEntity\AclEntityConstants;
 
+/**
+ * @deprecated Use {@link \Spryker\Zed\AclMerchantPortal\Business\Expander\AclEntityConfigurationExpander} instead.
+ */
 class AclEntityMetadataConfigExpander implements AclEntityMetadataConfigExpanderInterface
 {
     /**

@@ -13,6 +13,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostCreatePluginInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\AclMerchantPortal\Communication\Plugin\Merchant\MerchantAclEntitiesMerchantPostCreatePlugin} instead.
+ *
  * @method \Spryker\Zed\AclMerchantPortal\Business\AclMerchantPortalFacadeInterface getFacade()
  * @method \Spryker\Zed\AclMerchantPortal\AclMerchantPortalConfig getConfig()
  * @method \Spryker\Zed\AclMerchantPortal\Communication\AclMerchantPortalCommunicationFactory getFactory()

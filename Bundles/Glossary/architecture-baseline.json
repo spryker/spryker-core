@@ -14,13 +14,6 @@
         "priority": "1"
     },
     {
-        "fileName": "src/Spryker/Zed/Glossary/Communication/Plugin/TwigTranslatorPlugin.php",
-        "description": "Method `Spryker\\Zed\\Glossary\\Communication\\Plugin\\TwigTranslatorPlugin::trans()` must have return type.",
-        "rule": "ExternalMethodExtensionReturnTypeRule",
-        "ruleset": "Spryker",
-        "priority": "1"
-    },
-    {
         "fileName": "src/Spryker/Zed/Glossary/Dependency/Facade/GlossaryToLocaleBridge.php",
         "description": "Bridges: Type should be defined for param `localeName` in method `Spryker\\Zed\\Glossary\\Dependency\\Facade\\GlossaryToLocaleBridge::getLocale()`.",
         "rule": "BridgeMethodsRule",

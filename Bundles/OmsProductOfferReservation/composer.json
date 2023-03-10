@@ -5,13 +5,14 @@
     "license": "proprietary",
     "require": {
         "php": ">=8.0",
+        "spryker/acl-merchant-portal-extension": "^1.0.0",
         "spryker/decimal-object": "^1.0.0",
         "spryker/kernel": "^3.33.0",
         "spryker/oms": "^11.7.0",
         "spryker/oms-extension": "^1.2.0",
         "spryker/sales": "^11.0.0",
         "spryker/store": "^1.0.0",
-        "spryker/transfer": "^3.18.0"
+        "spryker/transfer": "^3.25.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*",

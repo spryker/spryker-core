@@ -5,6 +5,7 @@
     "license": "proprietary",
     "require": {
         "php": ">=8.0",
+        "spryker/acl-merchant-portal-extension": "^1.0.0",
         "spryker/calculation": "^4.0.0",
         "spryker/gui": "^3.0.0",
         "spryker/kernel": "^3.30.0",
@@ -12,6 +13,7 @@
         "spryker/refund-extension": "^1.0.0",
         "spryker/sales": "^6.0.0 || ^7.0.0 || ^8.0.0 || ^10.0.0 || ^11.0.0",
         "spryker/symfony": "^3.0.0",
+        "spryker/transfer": "^3.25.0",
         "spryker/util-date-time": "^1.0.0"
     },
     "require-dev": {

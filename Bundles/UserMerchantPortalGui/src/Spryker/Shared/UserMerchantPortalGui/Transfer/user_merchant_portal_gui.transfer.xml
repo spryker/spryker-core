@@ -48,4 +48,11 @@
         <property name="users" type="User[]" singular="user"/>
     </transfer>
 
+    <transfer name="Rule">
+        <property name="bundle" type="string"/>
+        <property name="controller" type="string"/>
+        <property name="action" type="string"/>
+        <property name="type" type="string"/>
+    </transfer>
+
 </transfers>

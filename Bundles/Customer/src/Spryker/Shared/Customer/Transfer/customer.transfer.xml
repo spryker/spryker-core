@@ -234,4 +234,10 @@
         <property name="isHtml" type="bool"/>
     </transfer>
 
+    <transfer name="AclEntityRule">
+        <property name="entity" type="string"/>
+        <property name="scope" type="string"/>
+        <property name="permissionMask" type="int"/>
+    </transfer>
+
 </transfers>

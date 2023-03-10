@@ -20,7 +20,7 @@ class AclGroupMerchantUserLoginRestrictionPlugin extends AbstractPlugin implemen
 {
     /**
      * {@inheritDoc}
-     * - Requires `MerchantUserTransfer.idUser` to be provided.
+     * - Requires `MerchantUser.idUser` to be provided.
      * - Returns `true` if the given `MerchantUser` transfer has a group with a `root_group` name, `false` otherwise.
      *
      * @api

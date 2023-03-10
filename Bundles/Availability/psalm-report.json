@@ -27,10 +27,10 @@
         },
         {
             "severity": "info",
-            "line_from": 193,
-            "line_to": 193,
+            "line_from": 191,
+            "line_to": 191,
             "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of Spryker\\Zed\\AvailabilityExtension\\Dependency\\Plugin\\CartItemQuantityCounterStrategyPluginInterface::isApplicable expects ArrayObject<int, Generated\\Shared\\Transfer\\ItemTransfer>, possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ItemTransfer> provided",
+            "message": "Argument 1 of Spryker\\Zed\\AvailabilityExtension\\Dependency\\Plugin\\CartItemQuantityCounterStrategyPluginInterface::isApplicable expects ArrayObject<int, Generated\\Shared\\Transfer\\ItemTransfer>, but possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ItemTransfer> provided",
             "file_name": "vendor/spryker/spryker/Bundles/Availability/src/Spryker/Zed/Availability/Business/Model/ProductsAvailableCheckoutPreCondition.php",
             "snippet": "            if ($cartItemQuantityCounterStrategyPlugin->isApplicable($quoteTransfer->getItems(), $itemTransfer)) {",
             "selected_text": "$quoteTransfer->getItems()",
@@ -39,10 +39,10 @@
         },
         {
             "severity": "info",
-            "line_from": 195,
-            "line_to": 195,
+            "line_from": 193,
+            "line_to": 193,
             "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of Spryker\\Zed\\AvailabilityExtension\\Dependency\\Plugin\\CartItemQuantityCounterStrategyPluginInterface::countCartItemQuantity expects ArrayObject<int, Generated\\Shared\\Transfer\\ItemTransfer>, possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ItemTransfer> provided",
+            "message": "Argument 1 of Spryker\\Zed\\AvailabilityExtension\\Dependency\\Plugin\\CartItemQuantityCounterStrategyPluginInterface::countCartItemQuantity expects ArrayObject<int, Generated\\Shared\\Transfer\\ItemTransfer>, but possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ItemTransfer> provided",
             "file_name": "vendor/spryker/spryker/Bundles/Availability/src/Spryker/Zed/Availability/Business/Model/ProductsAvailableCheckoutPreCondition.php",
             "snippet": "                    $quoteTransfer->getItems(),",
             "selected_text": "$quoteTransfer->getItems()",
@@ -51,8 +51,8 @@
         },
         {
             "severity": "info",
-            "line_from": 172,
-            "line_to": 172,
+            "line_from": 192,
+            "line_to": 192,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\SellableItemResponseTransfer> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/Availability/src/Spryker/Zed/Availability/Business/Model/Sellable.php",
@@ -138,7 +138,7 @@
             "line_from": 343,
             "line_to": 343,
             "type": "ArgumentTypeCoercion",
-            "message": "Argument 1 of Spryker\\Zed\\Availability\\Persistence\\Mapper\\AvailabilityMapperInterface::mapAvailabilityEntitiesToProductConcreteAvailabilityCollectionTransfer expects Propel\\Runtime\\Collection\\ObjectCollection<Orm\\Zed\\Availability\\Persistence\\SpyAvailability>, parent type Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\Availability\\Persistence\\SpyAvailability> provided",
+            "message": "Argument 1 of Spryker\\Zed\\Availability\\Persistence\\Mapper\\AvailabilityMapperInterface::mapAvailabilityEntitiesToProductConcreteAvailabilityCollectionTransfer expects Propel\\Runtime\\Collection\\ObjectCollection<Orm\\Zed\\Availability\\Persistence\\SpyAvailability>, but parent type Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\Availability\\Persistence\\SpyAvailability> provided",
             "file_name": "vendor/spryker/spryker/Bundles/Availability/src/Spryker/Zed/Availability/Persistence/AvailabilityRepository.php",
             "snippet": "                $availabilityEntities,",
             "selected_text": "$availabilityEntities",
@@ -221,6 +221,18 @@
         },
         {
             "severity": "info",
+            "line_from": 85,
+            "line_to": 85,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Zed\\Availability\\Business\\Model\\SellableInterface::areProductsSellableForStoreWithDefaultBatchStrategy has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Availability/src/Spryker/Zed/Availability/Business/Model/ProductsAvailableCheckoutPreCondition.php",
+            "snippet": "        $sellableItemsResponseTransfer = $this->sellable->areProductsSellableForStoreWithDefaultBatchStrategy(",
+            "selected_text": "areProductsSellableForStoreWithDefaultBatchStrategy",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
             "line_from": 40,
             "line_to": 40,
             "type": "DeprecatedClass",
@@ -245,8 +257,8 @@
         },
         {
             "severity": "info",
-            "line_from": 413,
-            "line_to": 413,
+            "line_from": 433,
+            "line_to": 433,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\DecimalObject\\Decimal::greatherThanOrEquals has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Availability/src/Spryker/Zed/Availability/Business/Model/Sellable.php",
@@ -280,5 +292,5 @@
             "shortcode": 152
         }
     ],
-    "count": 23
+    "count": 24
 }

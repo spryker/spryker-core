@@ -12,6 +12,8 @@ use Spryker\Zed\AclEntityExtension\Dependency\Plugin\AclEntityMetadataConfigExpa
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\AclMerchantPortal\Communication\Plugin\AclEntity\MerchantPortalConfigurationAclEntityMetadataConfigExpanderPlugin} instead.
+ *
  * @method \Spryker\Zed\AclMerchantPortal\Business\AclMerchantPortalFacadeInterface getFacade()
  * @method \Spryker\Zed\AclMerchantPortal\AclMerchantPortalConfig getConfig()
  * @method \Spryker\Zed\AclMerchantPortal\Communication\AclMerchantPortalCommunicationFactory getFactory()

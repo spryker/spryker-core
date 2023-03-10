@@ -12,6 +12,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\MerchantUserExtension\Dependency\Plugin\MerchantUserPostCreatePluginInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\AclMerchantPortal\Communication\Plugin\MerchantUser\MerchantUserAclEntitiesMerchantUserPostCreatePlugin} instead.
+ *
  * @method \Spryker\Zed\AclMerchantPortal\Business\AclMerchantPortalFacadeInterface getFacade()
  * @method \Spryker\Zed\AclMerchantPortal\AclMerchantPortalConfig getConfig()
  * @method \Spryker\Zed\AclMerchantPortal\Communication\AclMerchantPortalCommunicationFactory getFactory()

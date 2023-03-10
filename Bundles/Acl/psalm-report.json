@@ -1,5 +1,30 @@
 {
-    "error": [],
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 287,
+            "line_to": 287,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<array-key, string>' for Spryker\\Zed\\Acl\\Business\\Model\\Installer::extractUsernamesFromUserTransfers is incorrect, got 'list<null|string>'",
+            "file_name": "vendor/spryker/spryker/Bundles/Acl/src/Spryker/Zed/Acl/Business/Model/Installer.php",
+            "snippet": "     * @return array<string>",
+            "selected_text": "array<string>",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 298,
+            "line_to": 298,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'list<null|string>' does not match the declared return type 'array<array-key, string>' for Spryker\\Zed\\Acl\\Business\\Model\\Installer::extractUsernamesFromUserTransfers",
+            "file_name": "vendor/spryker/spryker/Bundles/Acl/src/Spryker/Zed/Acl/Business/Model/Installer.php",
+            "snippet": "        return $usernames;",
+            "selected_text": "$usernames",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
     "warning": [
         {
             "severity": "info",
@@ -638,19 +663,7 @@
             "selected_text": "addRole",
             "error_level": 2,
             "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 62,
-            "line_to": 62,
-            "type": "DeprecatedMethod",
-            "message": "The method Symfony\\Component\\HttpKernel\\Event\\KernelEvent::isMasterRequest has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/Acl/src/Spryker/Zed/Acl/Communication/Plugin/EventDispatcher/AccessControlEventDispatcherPlugin.php",
-            "snippet": "        if (!$event->isMasterRequest() || $aclFacade->isIgnorable($module, $controller, $action)) {",
-            "selected_text": "isMasterRequest",
-            "error_level": 2,
-            "shortcode": 1
         }
     ],
-    "count": 54
+    "count": 55
 }

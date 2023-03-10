@@ -463,7 +463,7 @@
             "line_from": 47,
             "line_to": 47,
             "type": "ArgumentTypeCoercion",
-            "message": "Argument 1 of Spryker\\Zed\\DiscountPromotion\\Persistence\\Propel\\Mapper\\DiscountPromotionMapper::mapDiscountPromotionEntitiesToDiscountPromotionCollectionTransfer expects Propel\\Runtime\\Collection\\ObjectCollection<Orm\\Zed\\DiscountPromotion\\Persistence\\SpyDiscountPromotion>, parent type Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\DiscountPromotion\\Persistence\\SpyDiscountPromotion> provided",
+            "message": "Argument 1 of Spryker\\Zed\\DiscountPromotion\\Persistence\\Propel\\Mapper\\DiscountPromotionMapper::mapDiscountPromotionEntitiesToDiscountPromotionCollectionTransfer expects Propel\\Runtime\\Collection\\ObjectCollection<Orm\\Zed\\DiscountPromotion\\Persistence\\SpyDiscountPromotion>, but parent type Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\DiscountPromotion\\Persistence\\SpyDiscountPromotion> provided",
             "file_name": "vendor/spryker/spryker/Bundles/DiscountPromotion/src/Spryker/Zed/DiscountPromotion/Persistence/DiscountPromotionRepository.php",
             "snippet": "                $discountPromotionQuery->find(),",
             "selected_text": "$discountPromotionQuery->find()",
@@ -594,8 +594,8 @@
         },
         {
             "severity": "info",
-            "line_from": 46,
-            "line_to": 46,
+            "line_from": 52,
+            "line_to": 52,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Zed\\DiscountPromotion\\Persistence\\DiscountPromotionRepositoryInterface::isAbstractSkusFieldExists has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/DiscountPromotion/src/Spryker/Zed/DiscountPromotion/Communication/Form/DiscountPromotionFormType.php",
@@ -606,8 +606,8 @@
         },
         {
             "severity": "info",
-            "line_from": 89,
-            "line_to": 89,
+            "line_from": 111,
+            "line_to": 111,
             "type": "DeprecatedConstant",
             "message": "Constant Generated\\Shared\\Transfer\\DiscountPromotionTransfer::ABSTRACT_SKU is deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/DiscountPromotion/src/Spryker/Zed/DiscountPromotion/Communication/Form/DiscountPromotionFormType.php",
@@ -639,18 +639,6 @@
             "selected_text": "CartGroupPromotionItems",
             "error_level": 2,
             "shortcode": 152
-        },
-        {
-            "severity": "info",
-            "line_from": 41,
-            "line_to": 41,
-            "type": "DeprecatedMethod",
-            "message": "The method Spryker\\Zed\\DiscountPromotion\\Communication\\DiscountPromotionCommunicationFactory::createDiscountFormPromotionType has been marked as deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/DiscountPromotion/src/Spryker/Zed/DiscountPromotion/Communication/Plugin/Discount/DiscountPromotionCalculationFormExpanderPlugin.php",
-            "snippet": "            $this->getFactory()->createDiscountFormPromotionType(),",
-            "selected_text": "createDiscountFormPromotionType",
-            "error_level": 2,
-            "shortcode": 1
         },
         {
             "severity": "info",
@@ -689,5 +677,5 @@
             "shortcode": 1
         }
     ],
-    "count": 57
+    "count": 56
 }

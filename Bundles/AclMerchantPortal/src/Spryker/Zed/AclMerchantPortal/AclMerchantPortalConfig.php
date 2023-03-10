@@ -63,6 +63,8 @@ class AclMerchantPortalConfig extends AbstractBundleConfig
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\AclMerchantPortalExtension\Dependency\Plugin\MerchantAclRuleExpanderPluginInterface} instead.
+     *
      * @return array<\Generated\Shared\Transfer\RuleTransfer>
      */
     public function getMerchantAclRoleRules(): array
@@ -95,6 +97,8 @@ class AclMerchantPortalConfig extends AbstractBundleConfig
      * - Defines set of AclEntityRules to assigned for merchant-specific AclRole.
      *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\AclMerchantPortalExtension\Dependency\Plugin\MerchantAclEntityRuleExpanderPluginInterface} instead.
      *
      * @return array<\Generated\Shared\Transfer\AclEntityRuleTransfer>
      */
@@ -327,9 +331,9 @@ class AclMerchantPortalConfig extends AbstractBundleConfig
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\AclMerchantPortalExtension\Dependency\Plugin\MerchantUserAclRuleExpanderPluginInterface} instead.
      *
      * @return array<\Generated\Shared\Transfer\RuleTransfer>
      */
@@ -354,9 +358,9 @@ class AclMerchantPortalConfig extends AbstractBundleConfig
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\AclMerchantPortalExtension\Dependency\Plugin\MerchantUserAclEntityRuleExpanderPluginInterface} instead.
      *
      * @return array<\Generated\Shared\Transfer\AclEntityRuleTransfer>
      */

@@ -29,7 +29,7 @@
             "line_from": 185,
             "line_to": 185,
             "type": "InvalidReturnType",
-            "message": "The declared return type 'array<array-key, string>' for Spryker\\Zed\\Store\\Communication\\Form\\Type\\StoreRelationToggleType::getStoreNameMap is incorrect, got 'array<int, null|string>'",
+            "message": "The declared return type 'array<array-key, string>' for Spryker\\Zed\\Store\\Communication\\Form\\Type\\StoreRelationToggleType::getStoreNameMap is incorrect, got 'array<\"\"|int, null|string>'",
             "file_name": "vendor/spryker/spryker/Bundles/Store/src/Spryker/Zed/Store/Communication/Form/Type/StoreRelationToggleType.php",
             "snippet": "     * @return array<string> Keys are store ids, values are store names.",
             "selected_text": "array<string>",
@@ -41,7 +41,7 @@
             "line_from": 196,
             "line_to": 196,
             "type": "InvalidReturnStatement",
-            "message": "The inferred type 'array<int, null|string>' does not match the declared return type 'array<array-key, string>' for Spryker\\Zed\\Store\\Communication\\Form\\Type\\StoreRelationToggleType::getStoreNameMap",
+            "message": "The inferred type 'array<\"\"|int, null|string>' does not match the declared return type 'array<array-key, string>' for Spryker\\Zed\\Store\\Communication\\Form\\Type\\StoreRelationToggleType::getStoreNameMap",
             "file_name": "vendor/spryker/spryker/Bundles/Store/src/Spryker/Zed/Store/Communication/Form/Type/StoreRelationToggleType.php",
             "snippet": "        return $storeNameMap;",
             "selected_text": "$storeNameMap",
@@ -112,6 +112,18 @@
         },
         {
             "severity": "info",
+            "line_from": 61,
+            "line_to": 61,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getStoreReference on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/Store/src/Spryker/Zed/Store/Business/Expander/CurrentStoreReferenceAccessTokenRequestExpander.php",
+            "snippet": "            && $accessTokenRequestTransfer->getAccessTokenRequestOptions()->getStoreReference();",
+            "selected_text": "getStoreReference",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
             "line_from": 38,
             "line_to": 38,
             "type": "PossiblyNullArgument",
@@ -124,8 +136,8 @@
         },
         {
             "severity": "info",
-            "line_from": 74,
-            "line_to": 74,
+            "line_from": 83,
+            "line_to": 83,
             "type": "LessSpecificImplementedReturnType",
             "message": "The inherited return type 'array<array-key, Generated\\Shared\\Transfer\\StoreTransfer>' for Spryker\\Zed\\Store\\Business\\Model\\StoreReaderInterface::getAllStores is more specific than the implemented return type for Spryker\\Zed\\Store\\Business\\Model\\StoreReader::getallstores 'array<array-key, mixed>'",
             "file_name": "vendor/spryker/spryker/Bundles/Store/src/Spryker/Zed/Store/Business/Model/StoreReader.php",
@@ -148,6 +160,30 @@
         },
         {
             "severity": "info",
+            "line_from": 63,
+            "line_to": 63,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $storeReferenceMap using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/Store/src/Spryker/Zed/Store/Business/Reader/StoreReferenceReader.php",
+            "snippet": "            $storeTransfer->setStoreReference($storeReferenceMap[$storeTransfer->getName()]);",
+            "selected_text": "$storeReferenceMap",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 55,
+            "line_to": 55,
+            "type": "UndefinedInterfaceMethod",
+            "message": "Method Spryker\\Shared\\Kernel\\Transfer\\TransferInterface::getMessageAttributes does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/Store/src/Spryker/Zed/Store/Business/Validator/MessageValidator.php",
+            "snippet": "        if ($storeReference !== $messageTransfer->getMessageAttributes()->getStoreReference()) {",
+            "selected_text": "getMessageAttributes",
+            "error_level": 5,
+            "shortcode": 181
+        },
+        {
+            "severity": "info",
             "line_from": 193,
             "line_to": 193,
             "type": "PossiblyNullArrayOffset",
@@ -157,6 +193,30 @@
             "selected_text": "$storeNameMap",
             "error_level": 3,
             "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 30,
+            "line_to": 30,
+            "type": "InvalidNullableReturnType",
+            "message": "The declared return type 'bool' for Spryker\\Zed\\Store\\Communication\\Plugin\\MessageBroker\\StoreReferenceMessageValidatorPlugin::isValid is not nullable, but 'bool|null' contains null",
+            "file_name": "vendor/spryker/spryker/Bundles/Store/src/Spryker/Zed/Store/Communication/Plugin/MessageBroker/StoreReferenceMessageValidatorPlugin.php",
+            "snippet": "     * @return bool",
+            "selected_text": "bool",
+            "error_level": 5,
+            "shortcode": 144
+        },
+        {
+            "severity": "info",
+            "line_from": 34,
+            "line_to": 34,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'bool' for Spryker\\Zed\\Store\\Communication\\Plugin\\MessageBroker\\StoreReferenceMessageValidatorPlugin::isValid is not nullable, but the function returns 'bool|null'",
+            "file_name": "vendor/spryker/spryker/Bundles/Store/src/Spryker/Zed/Store/Communication/Plugin/MessageBroker/StoreReferenceMessageValidatorPlugin.php",
+            "snippet": "        return $this->getFacade()->validateMessageTransfer($messageTransfer)->getIsValid();",
+            "selected_text": "$this->getFacade()->validateMessageTransfer($messageTransfer)->getIsValid()",
+            "error_level": 5,
+            "shortcode": 139
         },
         {
             "severity": "info",
@@ -172,22 +232,22 @@
         },
         {
             "severity": "info",
-            "line_from": 51,
-            "line_to": 51,
-            "type": "MismatchingDocblockParamType",
-            "message": "Parameter $storeEntities has wrong type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\Store\\Persistence\\SpyStore>', should be 'Propel\\Runtime\\Collection\\ObjectCollection'",
+            "line_from": 47,
+            "line_to": 47,
+            "type": "ArgumentTypeCoercion",
+            "message": "Argument 1 of Spryker\\Zed\\Store\\Persistence\\StoreRepository::mapStoreEntitiesToStoreTransfers expects Propel\\Runtime\\Collection\\ObjectCollection<Orm\\Zed\\Store\\Persistence\\SpyStore>, but parent type Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\Store\\Persistence\\SpyStore> provided",
             "file_name": "vendor/spryker/spryker/Bundles/Store/src/Spryker/Zed/Store/Persistence/StoreRepository.php",
-            "snippet": "     * @param \\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\Store\\Persistence\\SpyStore[] $storeEntities",
-            "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\Store\\Persistence\\SpyStore[]",
-            "error_level": 4,
-            "shortcode": 141
+            "snippet": "        return $this->mapStoreEntitiesToStoreTransfers($storeEntities);",
+            "selected_text": "$storeEntities",
+            "error_level": 3,
+            "shortcode": 193
         }
     ],
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 66,
-            "line_to": 66,
+            "line_from": 74,
+            "line_to": 74,
             "type": "DeprecatedProperty",
             "message": "Spryker\\Zed\\Store\\Business\\Model\\StoreReader::$storeConfigurationProvider is marked deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/Store/src/Spryker/Zed/Store/Business/Model/StoreReader.php",
@@ -195,7 +255,19 @@
             "selected_text": "$this->storeConfigurationProvider",
             "error_level": 2,
             "shortcode": 99
+        },
+        {
+            "severity": "info",
+            "line_from": 34,
+            "line_to": 34,
+            "type": "DeprecatedMethod",
+            "message": "The method Generated\\Shared\\Transfer\\StoreRelationTransfer::setIdStores has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Store/src/Spryker/Zed/Store/Communication/Form/DataProvider/StoreRelationToggleDataProvider.php",
+            "snippet": "            ->setIdStores($this->getAllIdStores());",
+            "selected_text": "setIdStores",
+            "error_level": 2,
+            "shortcode": 1
         }
     ],
-    "count": 16
+    "count": 22
 }

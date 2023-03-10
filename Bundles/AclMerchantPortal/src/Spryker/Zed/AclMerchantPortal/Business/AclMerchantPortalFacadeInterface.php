@@ -24,6 +24,8 @@ interface AclMerchantPortalFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\AclMerchantPortal\Business\AclMerchantPortalFacadeInterface::createAclEntitiesForMerchant()} instead.
+     *
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantResponseTransfer
@@ -38,6 +40,8 @@ interface AclMerchantPortalFacadeInterface
      * - Returns `MerchantUser` transfer object.
      *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\AclMerchantPortal\Business\AclMerchantPortalFacadeInterface::createAclEntitiesForMerchantUser()} instead.
      *
      * @param \Generated\Shared\Transfer\MerchantUserTransfer $merchantUserTransfer
      *
@@ -55,6 +59,8 @@ interface AclMerchantPortalFacadeInterface
      * - Expands provided `AclEntityMetadataConfig` transfer object with allow list entities.
      *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\AclMerchantPortal\Business\AclMerchantPortalFacadeInterface::expandAclEntityConfiguration()} instead.
      *
      * @param \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
      *
@@ -80,7 +86,7 @@ interface AclMerchantPortalFacadeInterface
 
     /**
      * Specification:
-     * - Requires `MerchantUserTransfer.idUser` to be provided.
+     * - Requires `MerchantUser.idUser` to be provided.
      * - Returns `true` if the given `MerchantUser` transfer has a group with a `root_group` name, `false` otherwise.
      *
      * @api
@@ -90,4 +96,56 @@ interface AclMerchantPortalFacadeInterface
      * @return bool
      */
     public function isMerchantUserLoginRestricted(MerchantUserTransfer $merchantUserTransfer): bool;
+
+    /**
+     * Specification:
+     * - Expects `Merchant.merchantReference` and `Merchant.name` to be set.
+     * - Requires `Merchant.idMerchant` to be provided.
+     * - Creates ACL entity segment for provided merchant.
+     * - Executes {@link \Spryker\Zed\AclMerchantPortalExtension\Dependency\Plugin\MerchantAclRuleExpanderPluginInterface} plugin stack.
+     * - Executes {@link \Spryker\Zed\AclMerchantPortalExtension\Dependency\Plugin\MerchantAclEntityRuleExpanderPluginInterface} plugin stack.
+     * - Creates ACL role, ACL rules, ACL entity rules, ACL group for provided merchant.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantResponseTransfer
+     */
+    public function createAclEntitiesForMerchant(MerchantTransfer $merchantTransfer): MerchantResponseTransfer;
+
+    /**
+     * Specification:
+     * - Requires `MerchantUser.idMerchantUser` to be provided.
+     * - Requires `MerchantUser.user.idUser`, `MerchantUser.user.firstName` and `MerchantUser.user.lastName` to be provided.
+     * - Requires `MerchantUser.merchant.name` and `MerchantUser.merchant.merchantReference` to be provided.
+     * - Creates ACL entity segment for provided merchant user.
+     * - Executes {@link \Spryker\Zed\AclMerchantPortalExtension\Dependency\Plugin\MerchantUserAclRuleExpanderPluginInterface} plugin stack.
+     * - Executes {@link \Spryker\Zed\AclMerchantPortalExtension\Dependency\Plugin\MerchantUserAclEntityRuleExpanderPluginInterface} plugin stack.
+     * - Creates ACL role, ACL rules, ACL entity rules, ACL group for provided merchant user.
+     * - Finds merchant, product-viewer groups.
+     * - Adds merchant user to merchant, product-viewer, merchant-user groups.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantUserTransfer $merchantUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantUserTransfer
+     */
+    public function createAclEntitiesForMerchantUser(MerchantUserTransfer $merchantUserTransfer): MerchantUserTransfer;
+
+    /**
+     * Specification:
+     * - Expands provided `AclEntityMetadataConfig` transfer object with event behavior composite data.
+     * - Executes {@link \Spryker\Zed\AclMerchantPortalExtension\Dependency\Plugin\AclEntityConfigurationExpanderPluginInterface} plugin stack.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
+     *
+     * @return \Generated\Shared\Transfer\AclEntityMetadataConfigTransfer
+     */
+    public function expandAclEntityConfiguration(
+        AclEntityMetadataConfigTransfer $aclEntityMetadataConfigTransfer
+    ): AclEntityMetadataConfigTransfer;
 }

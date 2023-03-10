@@ -1,21 +1,7 @@
 [
     {
-        "fileName": "src/Spryker/Zed/PriceProductOffer/Business/Validator/Constraint/GreaterThanOrEqualOrEmptyConstraintValidator.php",
-        "description": "Method `Spryker\\Zed\\PriceProductOffer\\Business\\Validator\\Constraint\\GreaterThanOrEqualOrEmptyConstraintValidator::compareValues()` must have return type.",
-        "rule": "ExternalMethodExtensionReturnTypeRule",
-        "ruleset": "Spryker",
-        "priority": "1"
-    },
-    {
         "fileName": "src/Spryker/Zed/PriceProductOffer/Business/Validator/Constraint/TransferConstraint.php",
         "description": "Method `Spryker\\Zed\\PriceProductOffer\\Business\\Validator\\Constraint\\TransferConstraint::getRequiredOptions()` must have return type.",
-        "rule": "ExternalMethodExtensionReturnTypeRule",
-        "ruleset": "Spryker",
-        "priority": "1"
-    },
-    {
-        "fileName": "src/Spryker/Zed/PriceProductOffer/Business/Validator/Constraint/TransferConstraint.php",
-        "description": "Method `Spryker\\Zed\\PriceProductOffer\\Business\\Validator\\Constraint\\TransferConstraint::getCompositeOption()` must have return type.",
         "rule": "ExternalMethodExtensionReturnTypeRule",
         "ruleset": "Spryker",
         "priority": "1"
