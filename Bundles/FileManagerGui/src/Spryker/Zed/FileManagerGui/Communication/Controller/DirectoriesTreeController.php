@@ -57,8 +57,7 @@ class DirectoriesTreeController extends AbstractController
      */
     public function updateHierarchyAction(Request $request)
     {
-        /** @var array<string, mixed> $fileDirectoryTreeData */
-        $fileDirectoryTreeData = $request->request->get(static::FILE_DIRECTORY_TREE);
+        $fileDirectoryTreeData = $request->request->all(static::FILE_DIRECTORY_TREE);
 
         if (!$fileDirectoryTreeData) {
             return $this->jsonResponse([
@@ -69,7 +68,7 @@ class DirectoriesTreeController extends AbstractController
 
         $fileDirectoryTreeTransfer = new FileDirectoryTreeTransfer();
 
-        $fileDirectoryTreeTransfer->fromArray((array)$fileDirectoryTreeData);
+        $fileDirectoryTreeTransfer->fromArray($fileDirectoryTreeData);
 
         $this->getFactory()
             ->getFileManagerFacade()

@@ -64,8 +64,7 @@ class AddVariantController extends AbstractController
 
         $localeProvider = $this->getFactory()->createLocaleProvider();
 
-        /** @var array|null $priceDimension */
-        $priceDimension = $request->query->get(static::PARAM_PRICE_DIMENSION);
+        $priceDimension = $request->query->all(static::PARAM_PRICE_DIMENSION) ?: null;
         $dataProvider = $this->getFactory()->createProductVariantFormAddDataProvider();
         $form = $this
             ->getFactory()

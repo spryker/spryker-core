@@ -42,7 +42,7 @@ class ErrorController extends AbstractController
     protected function getErrorMessage(Request $request): string
     {
         /** @var \Symfony\Component\ErrorHandler\Exception\FlattenException|null $exception */
-        $exception = $request->query->get(static::REQUEST_PARAM_EXCEPTION);
+        $exception = $request->query->all()[static::REQUEST_PARAM_EXCEPTION] ?? null;
 
         if ($exception instanceof FlattenException) {
             return $exception->getMessage();

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Payment\Communication\Controller;
 
+use Generated\Shared\Transfer\OrderTransfer;
+use InvalidArgumentException;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -27,12 +29,36 @@ class SalesController extends AbstractController
      */
     public function listAction(Request $request)
     {
-        /** @var \Generated\Shared\Transfer\OrderTransfer $orderTransfer */
-        $orderTransfer = $request->request->get('orderTransfer');
+        $orderTransfer = $this->getOrder($request);
 
         return [
             'payments' => $orderTransfer->getPayments(),
             'order' => $orderTransfer,
         ];
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @throws \InvalidArgumentException
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected function getOrder(Request $request): OrderTransfer
+    {
+        // @deprecated Exists for BC reasons. Will be removed in the next major release.
+        if ($request->request->has('orderTransfer')) {
+            /** @phpstan-var \Generated\Shared\Transfer\OrderTransfer */
+            return $request->request->get('orderTransfer');
+        }
+
+        if (!$request->request->has('serializedOrderTransfer')) {
+            throw new InvalidArgumentException('`serializedOrderTransfer` not found in request');
+        }
+
+        $orderTransfer = new OrderTransfer();
+        $orderTransfer->unserialize((string)$request->request->get('serializedOrderTransfer'));
+
+        return $orderTransfer;
     }
 }

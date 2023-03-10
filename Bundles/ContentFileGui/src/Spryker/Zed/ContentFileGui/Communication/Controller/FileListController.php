@@ -28,11 +28,8 @@ class FileListController extends AbstractController
      */
     public function fileListSelectedTableAction(Request $request): JsonResponse
     {
-        /** @var array<int> $fileIds */
-        $fileIds = (array)$request->query->get(static::PARAM_FILE_IDS);
-
         return $this->jsonResponse(
-            $this->getFactory()->createContentFileListSelectedTable($fileIds)->fetchData(),
+            $this->getFactory()->createContentFileListSelectedTable($request->query->all(static::PARAM_FILE_IDS))->fetchData(),
         );
     }
 

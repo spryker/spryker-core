@@ -116,10 +116,7 @@ class TriggerController extends AbstractController
         /** @var string $redirect */
         $redirect = $request->query->get(static::REQUEST_PARAMETER_REDIRECT, '/');
 
-        /** @var array $itemsList */
-        $itemsList = $request->query->get(static::REQUEST_PARAMETER_ITEMS);
-
-        $orderItems = $this->getOrderItemsToTriggerAction($idOrder, $itemsList);
+        $orderItems = $this->getOrderItemsToTriggerAction($idOrder, $request->query->all(static::REQUEST_PARAMETER_ITEMS) ?: null);
 
         $triggerEventReturnData = $this->getFacade()->triggerEvent($event, $orderItems, []);
         $this->addOmsEventTriggerStatusMessage($triggerEventReturnData);
@@ -207,11 +204,7 @@ class TriggerController extends AbstractController
      */
     protected function getRequestIdSalesOrderItems(Request $request): array
     {
-        /** @var array|null $idOrderItems */
-        $idOrderItems = $request->query->get(static::REQUEST_PARAMETER_ITEMS);
-        if (!is_array($idOrderItems)) {
-            $idOrderItems = [];
-        }
+        $idOrderItems = $request->query->all()[static::REQUEST_PARAMETER_ITEMS] ?? [];
 
         // Exists for Backward Compatibility reasons only.
         $idOrderItem = $request->query->get(static::REQUEST_PARAMETER_ID_SALES_ORDER_ITEM);
