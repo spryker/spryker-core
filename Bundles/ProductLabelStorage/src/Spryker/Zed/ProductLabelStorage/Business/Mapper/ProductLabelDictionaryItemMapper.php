@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductLabelStorage\Business\Mapper;
 
+use Generated\Shared\Transfer\ProductLabelCollectionTransfer;
 use Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
 use Spryker\Zed\ProductLabelStorage\Dependency\Facade\ProductLabelStorageToStoreFacadeInterface;
@@ -27,17 +28,17 @@ class ProductLabelDictionaryItemMapper implements ProductLabelDictionaryItemMapp
     }
 
     /**
-     * @param array<\Generated\Shared\Transfer\ProductLabelTransfer> $productLabelTransfers
+     * @param \Generated\Shared\Transfer\ProductLabelCollectionTransfer $productLabelCollectionTransfer
      *
      * @return array<array<\Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer>>
      */
     public function mapProductLabelTransfersToProductLabelDictionaryItemTransfersByStoreNameAndLocaleName(
-        array $productLabelTransfers
+        ProductLabelCollectionTransfer $productLabelCollectionTransfer
     ): array {
         $productLabelDictionaryItemTransfers = [];
         $localeNameMapByStoreName = $this->getLocaleNameMapByStoreName();
 
-        foreach ($productLabelTransfers as $productLabelTransfer) {
+        foreach ($productLabelCollectionTransfer->getProductLabels() as $productLabelTransfer) {
             foreach ($localeNameMapByStoreName as $storeName => $storeLocales) {
                 $productLabelDictionaryItemTransfers = $this->mapProductLabelTransferToProductLabelDictionaryItemTransfersByStoreNameAndLocaleName(
                     $productLabelTransfer,

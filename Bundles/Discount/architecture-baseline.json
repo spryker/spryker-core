@@ -21,20 +21,6 @@
         "priority": "1"
     },
     {
-        "fileName": "src/Spryker/Zed/Discount/Communication/Form/ConditionsForm.php",
-        "description": "Method `Spryker\\Zed\\Discount\\Communication\\Form\\ConditionsForm::getBlockPrefix()` must have return type.",
-        "rule": "ExternalMethodExtensionReturnTypeRule",
-        "ruleset": "Spryker",
-        "priority": "1"
-    },
-    {
-        "fileName": "src/Spryker/Zed/Discount/Communication/Form/DiscountForm.php",
-        "description": "Method `Spryker\\Zed\\Discount\\Communication\\Form\\DiscountForm::getBlockPrefix()` must have return type.",
-        "rule": "ExternalMethodExtensionReturnTypeRule",
-        "ruleset": "Spryker",
-        "priority": "1"
-    },
-    {
         "fileName": "src/Spryker/Zed/Discount/Communication/Form/GeneralForm.php",
         "description": "Method `Spryker\\Zed\\Discount\\Communication\\Form\\GeneralForm::getBlockPrefix()` must have return type.",
         "rule": "ExternalMethodExtensionReturnTypeRule",
@@ -72,6 +58,13 @@
     {
         "fileName": "src/Spryker/Zed/Discount/Dependency/Facade/DiscountToCurrencyBridge.php",
         "description": "Bridges: Method `getCurrent()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Discount/Dependency/Facade/DiscountToLocaleFacadeBridge.php",
+        "description": "Bridges: Method `getCurrentLocaleName()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -163,20 +156,6 @@
     {
         "fileName": "src/Spryker/Zed/Discount/Dependency/Facade/DiscountToTranslatorFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `trans()`. Got `$id` but expected to be `string $id`. Got `$domain` but expected to be `?string $domain`. Got `$locale` but expected to be `?string $locale`. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/Discount/Dependency/Facade/DiscountToLocaleFacadeBridge.php",
-        "description": "Bridges: Method `getCurrentLocaleName()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
-        "rule": "BridgeFacadeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/Discount/Dependency/Facade/DiscountToTranslatorFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `trans()`. Got `$id` but expected to be `string $id`. Got `$domain` but expected to be `string $domain`. Got `$locale` but expected to be `string $locale`. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"

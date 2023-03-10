@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductLabelSearch\Dependency\Facade;
+namespace Spryker\Zed\ProductLabelDiscountConnector\Dependency\Facade;
 
 use Generated\Shared\Transfer\ProductLabelCollectionTransfer;
 use Generated\Shared\Transfer\ProductLabelCriteriaTransfer;
 
-class ProductLabelSearchToProductLabelBridge implements ProductLabelSearchToProductLabelInterface
+class ProductLabelDiscountConnectorToProductLabelFacadeBridge implements ProductLabelDiscountConnectorToProductLabelFacadeInterface
 {
     /**
      * @var \Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface
@@ -23,16 +23,6 @@ class ProductLabelSearchToProductLabelBridge implements ProductLabelSearchToProd
     public function __construct($productLabelFacade)
     {
         $this->productLabelFacade = $productLabelFacade;
-    }
-
-    /**
-     * @param int $idProductAbstract
-     *
-     * @return array<int>
-     */
-    public function findLabelIdsByIdProductAbstract($idProductAbstract)
-    {
-        return $this->productLabelFacade->findLabelIdsByIdProductAbstract($idProductAbstract);
     }
 
     /**

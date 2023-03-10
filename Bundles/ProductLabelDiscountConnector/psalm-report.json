@@ -1,35 +1,10 @@
 {
-    "error": [
-        {
-            "severity": "error",
-            "line_from": 28,
-            "line_to": 28,
-            "type": "InvalidReturnType",
-            "message": "The declared return type 'array<array-key, string>' for Spryker\\Zed\\ProductLabelDiscountConnector\\Business\\Label\\LabelProvider::findAllLabels is incorrect, got 'array<0|string, null|string>'",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelDiscountConnector/src/Spryker/Zed/ProductLabelDiscountConnector/Business/Label/LabelProvider.php",
-            "snippet": "     * @return array<string>",
-            "selected_text": "array<string>",
-            "error_level": 6,
-            "shortcode": 11
-        },
-        {
-            "severity": "error",
-            "line_from": 39,
-            "line_to": 39,
-            "type": "InvalidReturnStatement",
-            "message": "The inferred type 'array<0|string, null|string>' does not match the declared return type 'array<array-key, string>' for Spryker\\Zed\\ProductLabelDiscountConnector\\Business\\Label\\LabelProvider::findAllLabels",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelDiscountConnector/src/Spryker/Zed/ProductLabelDiscountConnector/Business/Label/LabelProvider.php",
-            "snippet": "        return $productLabelOptions;",
-            "selected_text": "$productLabelOptions",
-            "error_level": 6,
-            "shortcode": 128
-        }
-    ],
+    "error": [],
     "warning": [
         {
             "severity": "info",
-            "line_from": 44,
-            "line_to": 44,
+            "line_from": 42,
+            "line_to": 42,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\ProductLabelDiscountConnector\\Business\\Collector\\ProductLabelCollector::createDiscountableItemTransfer cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelDiscountConnector/src/Spryker/Zed/ProductLabelDiscountConnector/Business/Collector/ProductLabelCollector.php",
@@ -40,8 +15,8 @@
         },
         {
             "severity": "info",
-            "line_from": 74,
-            "line_to": 74,
+            "line_from": 72,
+            "line_to": 72,
             "type": "InvalidNullableReturnType",
             "message": "The declared return type 'int' for Spryker\\Zed\\ProductLabelDiscountConnector\\Business\\Collector\\ProductLabelCollector::getPrice is not nullable, but 'int|null' contains null",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelDiscountConnector/src/Spryker/Zed/ProductLabelDiscountConnector/Business/Collector/ProductLabelCollector.php",
@@ -52,8 +27,8 @@
         },
         {
             "severity": "info",
-            "line_from": 79,
-            "line_to": 79,
+            "line_from": 77,
+            "line_to": 77,
             "type": "NullableReturnStatement",
             "message": "The declared return type 'int' for Spryker\\Zed\\ProductLabelDiscountConnector\\Business\\Collector\\ProductLabelCollector::getPrice is not nullable, but the function returns 'int|null'",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelDiscountConnector/src/Spryker/Zed/ProductLabelDiscountConnector/Business/Collector/ProductLabelCollector.php",
@@ -64,8 +39,8 @@
         },
         {
             "severity": "info",
-            "line_from": 81,
-            "line_to": 81,
+            "line_from": 79,
+            "line_to": 79,
             "type": "NullableReturnStatement",
             "message": "The declared return type 'int' for Spryker\\Zed\\ProductLabelDiscountConnector\\Business\\Collector\\ProductLabelCollector::getPrice is not nullable, but the function returns 'int|null'",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelDiscountConnector/src/Spryker/Zed/ProductLabelDiscountConnector/Business/Collector/ProductLabelCollector.php",
@@ -76,8 +51,8 @@
         },
         {
             "severity": "info",
-            "line_from": 52,
-            "line_to": 52,
+            "line_from": 50,
+            "line_to": 50,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\ProductLabelDiscountConnector\\Business\\DecisionRule\\ProductLabelDecisionRule::findValidProductLabelEntities cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelDiscountConnector/src/Spryker/Zed/ProductLabelDiscountConnector/Business/DecisionRule/ProductLabelDecisionRule.php",
@@ -88,20 +63,44 @@
         },
         {
             "severity": "info",
-            "line_from": 36,
-            "line_to": 36,
-            "type": "PossiblyNullArrayOffset",
-            "message": "Cannot access value on variable $productLabelOptions[null|string] using possibly null offset null|string",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelDiscountConnector/src/Spryker/Zed/ProductLabelDiscountConnector/Business/Label/LabelProvider.php",
-            "snippet": "            $productLabelOptions[$productLabelTransfer->getName()] = $productLabelTransfer->getName();",
-            "selected_text": "$productLabelOptions",
+            "line_from": 67,
+            "line_to": 67,
+            "type": "MoreSpecificReturnType",
+            "message": "The declared return type 'Propel\\Runtime\\Collection\\ObjectCollection<Orm\\Zed\\ProductLabel\\Persistence\\SpyProductLabel>' for Spryker\\Zed\\ProductLabelDiscountConnector\\Business\\DecisionRule\\ProductLabelDecisionRule::findValidProductLabelEntities is more specific than the inferred return type 'Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\ProductLabel\\Persistence\\SpyProductLabel>'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelDiscountConnector/src/Spryker/Zed/ProductLabelDiscountConnector/Business/DecisionRule/ProductLabelDecisionRule.php",
+            "snippet": "     * @return \\Propel\\Runtime\\Collection\\ObjectCollection<\\Orm\\Zed\\ProductLabel\\Persistence\\SpyProductLabel>",
+            "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection<\\Orm\\Zed\\ProductLabel\\Persistence\\SpyProductLabel>",
             "error_level": 3,
-            "shortcode": 125
+            "shortcode": 70
         },
         {
             "severity": "info",
-            "line_from": 55,
-            "line_to": 55,
+            "line_from": 75,
+            "line_to": 75,
+            "type": "LessSpecificReturnStatement",
+            "message": "The type 'Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\ProductLabel\\Persistence\\SpyProductLabel>' is more general than the declared return type 'Propel\\Runtime\\Collection\\ObjectCollection<Orm\\Zed\\ProductLabel\\Persistence\\SpyProductLabel>' for Spryker\\Zed\\ProductLabelDiscountConnector\\Business\\DecisionRule\\ProductLabelDecisionRule::findValidProductLabelEntities",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelDiscountConnector/src/Spryker/Zed/ProductLabelDiscountConnector/Business/DecisionRule/ProductLabelDecisionRule.php",
+            "snippet": "        return $productLabelEntities;",
+            "selected_text": "$productLabelEntities",
+            "error_level": 3,
+            "shortcode": 129
+        },
+        {
+            "severity": "info",
+            "line_from": 67,
+            "line_to": 67,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ProductLabelTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelDiscountConnector/src/Spryker/Zed/ProductLabelDiscountConnector/Business/DecisionRule/ProductLabelListDecisionRule.php",
+            "snippet": "        if (!$productLabelCollectionTransfer->getProductLabels()->count()) {",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 57,
+            "line_to": 57,
             "type": "LessSpecificImplementedReturnType",
             "message": "The inherited return type 'array<array-key, string>' for Spryker\\Zed\\DiscountExtension\\Dependency\\Plugin\\DiscountableItemCollectorPluginInterface::acceptedDataTypes is more specific than the implemented return type for Spryker\\Zed\\ProductLabelDiscountConnector\\Communication\\Plugin\\Collector\\ProductLabelCollectorPlugin::accepteddatatypes 'array<array-key, mixed>'",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelDiscountConnector/src/Spryker/Zed/ProductLabelDiscountConnector/Communication/Plugin/Collector/ProductLabelCollectorPlugin.php",
@@ -112,8 +111,8 @@
         },
         {
             "severity": "info",
-            "line_from": 60,
-            "line_to": 60,
+            "line_from": 62,
+            "line_to": 62,
             "type": "LessSpecificImplementedReturnType",
             "message": "The inherited return type 'array<array-key, string>' for Spryker\\Zed\\DiscountExtension\\Dependency\\Plugin\\DecisionRulePluginInterface::acceptedDataTypes is more specific than the implemented return type for Spryker\\Zed\\ProductLabelDiscountConnector\\Communication\\Plugin\\DecisionRule\\ProductLabelDecisionRulePlugin::accepteddatatypes 'array<array-key, mixed>'",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelDiscountConnector/src/Spryker/Zed/ProductLabelDiscountConnector/Communication/Plugin/DecisionRule/ProductLabelDecisionRulePlugin.php",
@@ -126,8 +125,8 @@
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 63,
-            "line_to": 63,
+            "line_from": 61,
+            "line_to": 61,
             "type": "DeprecatedMethod",
             "message": "The method Generated\\Shared\\Transfer\\DiscountableItemTransfer::setUnitGrossPrice has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelDiscountConnector/src/Spryker/Zed/ProductLabelDiscountConnector/Business/Collector/ProductLabelCollector.php",
@@ -135,30 +134,7 @@
             "selected_text": "setUnitGrossPrice",
             "error_level": 2,
             "shortcode": 1
-        },
-        {
-            "severity": "info",
-            "line_from": 21,
-            "line_to": 21,
-            "type": "DeprecatedInterface",
-            "message": "Spryker\\Zed\\Discount\\Dependency\\Plugin\\CollectorPluginInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelDiscountConnector/src/Spryker/Zed/ProductLabelDiscountConnector/Communication/Plugin/Collector/ProductLabelCollectorPlugin.php",
-            "snippet": "class ProductLabelCollectorPlugin extends AbstractPlugin implements CollectorPluginInterface, DiscountRuleWithValueOptionsPluginInterface",
-            "selected_text": "ProductLabelCollectorPlugin",
-            "error_level": 2,
-            "shortcode": 152
-        },
-        {
-            "severity": "info",
-            "line_from": 22,
-            "line_to": 22,
-            "type": "DeprecatedInterface",
-            "message": "Spryker\\Zed\\Discount\\Dependency\\Plugin\\DecisionRulePluginInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelDiscountConnector/src/Spryker/Zed/ProductLabelDiscountConnector/Communication/Plugin/DecisionRule/ProductLabelDecisionRulePlugin.php",
-            "snippet": "class ProductLabelDecisionRulePlugin extends AbstractPlugin implements DecisionRulePluginInterface, DiscountRuleWithValueOptionsPluginInterface",
-            "selected_text": "ProductLabelDecisionRulePlugin",
-            "error_level": 2,
-            "shortcode": 152
         }
-    ]
+    ],
+    "count": 11
 }

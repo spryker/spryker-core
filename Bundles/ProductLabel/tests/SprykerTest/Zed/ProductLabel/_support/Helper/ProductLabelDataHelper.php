@@ -12,6 +12,7 @@ use Generated\Shared\DataBuilder\ProductLabelBuilder;
 use Generated\Shared\DataBuilder\ProductLabelLocalizedAttributesBuilder;
 use Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
+use Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery;
 use Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
@@ -71,6 +72,14 @@ class ProductLabelDataHelper extends Module
                 [$idProductAbstract],
             );
         });
+    }
+
+    /**
+     * @return void
+     */
+    public function ensureProductLabelTableIsEmpty(): void
+    {
+        SpyProductLabelQuery::create()->deleteAll();
     }
 
     /**

@@ -32,15 +32,13 @@ class ProductLabelCollector implements ProductLabelCollectorInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
-     * @return array<\Generated\Shared\Transfer\DiscountableItemTransfer>
+     * @return list<\Generated\Shared\Transfer\DiscountableItemTransfer>
      */
-    public function collect(QuoteTransfer $quoteTransfer, ClauseTransfer $clauseTransfer)
+    public function collect(QuoteTransfer $quoteTransfer, ClauseTransfer $clauseTransfer): array
     {
         $discountableItems = [];
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $isSatisfied = $this->productLabelDecisionRule->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
-
-            if ($isSatisfied) {
+            if ($this->productLabelDecisionRule->isSatisfiedBy($itemTransfer, $clauseTransfer)) {
                 $discountableItems[] = $this->createDiscountableItemTransfer($itemTransfer, $quoteTransfer->getPriceMode());
             }
         }

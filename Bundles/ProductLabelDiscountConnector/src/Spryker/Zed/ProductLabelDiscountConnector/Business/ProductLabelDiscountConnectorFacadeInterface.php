@@ -20,6 +20,8 @@ interface ProductLabelDiscountConnectorFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\ProductLabelDiscountConnector\Business\ProductLabelDiscountConnectorFacadeInterface::isProductLabelSatisfiedByListClause} instead.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
@@ -36,6 +38,8 @@ interface ProductLabelDiscountConnectorFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\ProductLabelDiscountConnector\Business\ProductLabelDiscountConnectorFacadeInterface::getDiscountableItemsCollection()} instead.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
@@ -45,11 +49,45 @@ interface ProductLabelDiscountConnectorFacadeInterface
 
     /**
      * Specification:
+     * - Retrieves product labels from Persistence.
      * - Returns an array with all label names.
      *
      * @api
      *
-     * @return array<string>
+     * @return array<string, string>
      */
     public function findAllLabels();
+
+    /**
+     * Specification:
+     * - Requires `QuoteTransfer.item.idProductAbstract` to be set.
+     * - Collects discountable items from the given quote by items product labels.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
+     *
+     * @return list<\Generated\Shared\Transfer\DiscountableItemTransfer>
+     */
+    public function getDiscountableItemsCollection(QuoteTransfer $quoteTransfer, ClauseTransfer $clauseTransfer): array;
+
+    /**
+     * Specification:
+     * - Requires `ItemTransfer.idProductAbstract` to be set.
+     * - Checks if product label matches clause.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
+     *
+     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
+     *
+     * @return bool
+     */
+    public function isProductLabelSatisfiedByListClause(
+        ItemTransfer $itemTransfer,
+        ClauseTransfer $clauseTransfer
+    ): bool;
 }

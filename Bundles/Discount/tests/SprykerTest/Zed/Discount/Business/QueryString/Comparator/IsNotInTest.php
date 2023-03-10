@@ -28,6 +28,13 @@ use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 class IsNotInTest extends Unit
 {
     /**
+     * @uses \Spryker\Zed\Discount\Business\QueryString\ComparatorOperators::LIST_DELIMITER
+     *
+     * @var string
+     */
+    protected const LIST_DELIMITER = ';';
+
+    /**
      * @return void
      */
     public function testAcceptShouldReturnTrueWhenIsNotInExpressionProvided(): void
@@ -86,6 +93,65 @@ class IsNotInTest extends Unit
         $clauseTransfer = new ClauseTransfer();
 
         $contains->compare($clauseTransfer, []);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCompareShouldReturnTrueWhenNoOneOfProvidedValuesIsInClause(): void
+    {
+        // Arrange
+        $clauseTransfer = (new ClauseTransfer())->setValue(implode(ComparatorOperators::LIST_DELIMITER, [1, 2, 3]));
+        $implodedValueToCompare = implode(static::LIST_DELIMITER, [4, 5]);
+
+        // Act
+        $isMatching = $this->createIsNotIn()->compare($clauseTransfer, $implodedValueToCompare);
+
+        // Assert
+        $this->assertTrue($isMatching);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCompareShouldReturnTrueWhenEmptyValueIsProvided(): void
+    {
+        // Arrange
+        $clauseTransfer = (new ClauseTransfer())->setValue(implode(ComparatorOperators::LIST_DELIMITER, [1, 2, 3]));
+
+        // Act
+        $isMatching = $this->createIsNotIn()->compare($clauseTransfer, '');
+
+        // Assert
+        $this->assertTrue($isMatching);
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsValidValueShouldReturnTrueWhenEmptyValueIsProvided(): void
+    {
+        // Act
+        $isMatching = $this->createIsNotIn()->isValidValue('');
+
+        // Assert
+        $this->assertTrue($isMatching);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCompareShouldReturnFalseWhenAtLeastOneOfProvidedValuesIsInClause(): void
+    {
+        // Arrange
+        $clauseTransfer = (new ClauseTransfer())->setValue(implode(ComparatorOperators::LIST_DELIMITER, [1, 2, 3]));
+        $implodedValueToCompare = implode(static::LIST_DELIMITER, [1, 4]);
+
+        // Act
+        $isMatching = $this->createIsNotIn()->compare($clauseTransfer, $implodedValueToCompare);
+
+        // Assert
+        $this->assertFalse($isMatching);
     }
 
     /**

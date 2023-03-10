@@ -10,8 +10,8 @@ namespace SprykerTest\Zed\ProductLabelDiscountConnector;
 use Codeception\Actor;
 use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 
 /**
  * @method void wantToTest($text)
@@ -54,20 +54,44 @@ class ProductLabelDiscountConnectorBusinessTester extends Actor
     }
 
     /**
+     * @param list<string> $acceptedTypes
      * @param string $value
+     * @param string $operator
      *
      * @return \Generated\Shared\Transfer\ClauseTransfer
      */
-    public function createClauseTransfer(string $value): ClauseTransfer
-    {
+    public function createClauseTransfer(
+        array $acceptedTypes,
+        string $value,
+        string $operator
+    ): ClauseTransfer {
         $clauseTransfer = new ClauseTransfer();
-        $clauseTransfer->setOperator('=');
+        $clauseTransfer->setOperator($operator);
         $clauseTransfer->setField('label');
         $clauseTransfer->setValue($value);
-        $clauseTransfer->setAcceptedTypes([
-            ComparatorOperators::TYPE_STRING,
-        ]);
+        $clauseTransfer->setAcceptedTypes($acceptedTypes);
 
         return $clauseTransfer;
+    }
+
+    /**
+     * @param array<array<string, mixed>> $productLabelsData
+     * @param array<string, mixed> $productConcreteOverride
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function haveProductWithProductLabels(array $productLabelsData, array $productConcreteOverride = []): ProductConcreteTransfer
+    {
+        $productConcreteTransfer = $this->haveProduct($productConcreteOverride);
+        foreach ($productLabelsData as $productLabelData) {
+            $productLabelTransfer = $this->haveProductLabel($productLabelData);
+
+            $this->haveProductLabelToAbstractProductRelation(
+                $productLabelTransfer->getIdProductLabel(),
+                $productConcreteTransfer->getFkProductAbstract(),
+            );
+        }
+
+        return $productConcreteTransfer;
     }
 }

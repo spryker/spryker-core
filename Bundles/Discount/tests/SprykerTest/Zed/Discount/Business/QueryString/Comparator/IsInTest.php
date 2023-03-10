@@ -28,6 +28,13 @@ use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 class IsInTest extends Unit
 {
     /**
+     * @uses \Spryker\Zed\Discount\Business\QueryString\ComparatorOperators::LIST_DELIMITER
+     *
+     * @var string
+     */
+    protected const LIST_DELIMITER = ';';
+
+    /**
      * @return void
      */
     public function testAcceptShouldReturnTrueWhenIsInExpressionProvided(): void
@@ -88,6 +95,65 @@ class IsInTest extends Unit
         $clauseTransfer = new ClauseTransfer();
 
         $isIn->compare($clauseTransfer, []);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCompareShouldReturnTrueWhenAtLeastOneOfProvidedValuesIsInClause(): void
+    {
+        // Arrange
+        $clauseTransfer = (new ClauseTransfer())->setValue(implode(ComparatorOperators::LIST_DELIMITER, [1, 2, 3]));
+        $implodedValueToCompare = implode(static::LIST_DELIMITER, [1, 4]);
+
+        // Act
+        $isMatching = $this->createIsIn()->compare($clauseTransfer, $implodedValueToCompare);
+
+        // Assert
+        $this->assertTrue($isMatching);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCompareShouldReturnFalseWhenNoOneOfProvidedValuesIsInClause(): void
+    {
+        // Arrange
+        $clauseTransfer = (new ClauseTransfer())->setValue(implode(ComparatorOperators::LIST_DELIMITER, [1, 2, 3]));
+        $implodedValueToCompare = implode(static::LIST_DELIMITER, [4, 5]);
+
+        // Act
+        $isMatching = $this->createIsIn()->compare($clauseTransfer, $implodedValueToCompare);
+
+        // Assert
+        $this->assertFalse($isMatching);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCompareShouldReturnFalseWhenEmptyValueIsProvided(): void
+    {
+        // Arrange
+        $clauseTransfer = (new ClauseTransfer())->setValue(implode(ComparatorOperators::LIST_DELIMITER, [1, 2, 3]));
+
+        // Act
+        $isMatching = $this->createIsIn()->compare($clauseTransfer, '');
+
+        // Assert
+        $this->assertFalse($isMatching);
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsValidValueShouldReturnFalseWhenEmptyValueIsProvided(): void
+    {
+        // Act
+        $isValidValue = $this->createIsIn()->isValidValue('');
+
+        // Assert
+        $this->assertFalse($isValidValue);
     }
 
     /**

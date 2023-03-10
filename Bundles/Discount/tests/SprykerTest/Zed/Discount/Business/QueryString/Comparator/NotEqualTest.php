@@ -86,6 +86,33 @@ class NotEqualTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testCompareShouldReturnFalseWhenEmptyValueIsProvided(): void
+    {
+        // Arrange
+        $clauseTransfer = (new ClauseTransfer())->setValue('value');
+
+        // Act
+        $isMatching = $this->createNotEqual()->compare($clauseTransfer, '');
+
+        // Assert
+        $this->assertFalse($isMatching);
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsValueValidShouldReturnFalseWhenEmptyValueIsProvided(): void
+    {
+        // Act
+        $isValueValid = $this->createNotEqual()->isValidValue('');
+
+        // Assert
+        $this->assertFalse($isValueValid);
+    }
+
+    /**
      * @return \Spryker\Zed\Discount\Business\QueryString\Comparator\NotEqual
      */
     protected function createNotEqual(): NotEqual

@@ -40,10 +40,12 @@
     </transfer>
 
     <transfer name="ProductLabelCriteria">
-        <property name="productAbstractIds" type="int[]" singular="productAbstractId"/>
+        <property name="productLabelConditions" type="ProductLabelConditions" strict="true"/>
+        <property name="productAbstractIds" type="int[]" singular="productAbstractId" deprecated="Use ProductLabelConditions.productAbstractIds instead."/>
         <property name="productLabelIds" type="int[]" singular="productLabelId"/>
         <property name="storeName" type="string"/>
         <property name="pagination" type="Pagination" strict="true"/>
+        <property name="sortCollection" type="Sort[]" singular="sort" strict="true"/>
         <property name="withProductLabelStores" type="bool"/>
         <property name="withProductLabelLocalizedAttributes" type="bool"/>
         <property name="withProductLabelProductAbstracts" type="bool"/>
@@ -103,6 +105,16 @@
         <property name="idEntity" type="int"/>
         <property name="idStores" type="int[]" singular="idStores"/>
         <property name="stores" type="Store[]" singular="stores"/>
+    </transfer>
+
+    <transfer name="Sort">
+        <property name="field" type="string"/>
+        <property name="isAscending" type="bool"/>
+    </transfer>
+
+    <transfer name="ProductLabelConditions" strict="true">
+        <property name="productAbstractIds" type="int[]" singular="productAbstractId"/>
+        <property name="isActive" type="bool"/>
     </transfer>
 
     <transfer name="ProductConcrete">

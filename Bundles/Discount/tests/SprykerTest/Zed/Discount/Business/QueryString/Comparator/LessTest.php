@@ -86,6 +86,33 @@ class LessTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testCompareShouldReturnFalseWhenEmptyValueIsProvided(): void
+    {
+        // Arrange
+        $clauseTransfer = (new ClauseTransfer())->setValue('1');
+
+        // Act
+        $isMatching = $this->createLess()->compare($clauseTransfer, '');
+
+        // Assert
+        $this->assertFalse($isMatching);
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsValueValidShouldReturnFalseWhenEmptyValueIsProvided(): void
+    {
+        // Act
+        $isValueValid = $this->createLess()->isValidValue('');
+
+        // Assert
+        $this->assertFalse($isValueValid);
+    }
+
+    /**
      * @return \Spryker\Zed\Discount\Business\QueryString\Comparator\Less
      */
     protected function createLess(): Less

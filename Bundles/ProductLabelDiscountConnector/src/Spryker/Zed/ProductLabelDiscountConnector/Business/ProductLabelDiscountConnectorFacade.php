@@ -22,6 +22,8 @@ class ProductLabelDiscountConnectorFacade extends AbstractFacade implements Prod
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\ProductLabelDiscountConnector\Business\ProductLabelDiscountConnectorFacade::isProductLabelSatisfiedByListClause} instead.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
@@ -32,13 +34,15 @@ class ProductLabelDiscountConnectorFacade extends AbstractFacade implements Prod
     {
         return $this->getFactory()
             ->createProductLabelDecisionRule()
-            ->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
+            ->isSatisfiedBy($itemTransfer, $clauseTransfer);
     }
 
     /**
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\ProductLabelDiscountConnector\Business\ProductLabelDiscountConnectorFacade::getDiscountableItemsCollection()} instead.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
@@ -57,12 +61,50 @@ class ProductLabelDiscountConnectorFacade extends AbstractFacade implements Prod
      *
      * @api
      *
-     * @return array<string>
+     * @return array<string, string>
      */
     public function findAllLabels()
     {
         return $this->getFactory()
             ->createLabelProvider()
             ->findAllLabels();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
+     *
+     * @return list<\Generated\Shared\Transfer\DiscountableItemTransfer>
+     */
+    public function getDiscountableItemsCollection(QuoteTransfer $quoteTransfer, ClauseTransfer $clauseTransfer): array
+    {
+        return $this->getFactory()
+            ->createProductLabelListCollector()
+            ->collect($quoteTransfer, $clauseTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
+     *
+     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
+     *
+     * @return bool
+     */
+    public function isProductLabelSatisfiedByListClause(
+        ItemTransfer $itemTransfer,
+        ClauseTransfer $clauseTransfer
+    ): bool {
+        return $this->getFactory()
+            ->createProductLabelListDecisionRule()
+            ->isSatisfiedBy($itemTransfer, $clauseTransfer);
     }
 }

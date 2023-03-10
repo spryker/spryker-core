@@ -9,8 +9,15 @@ namespace Spryker\Zed\ProductLabelDiscountConnector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductLabelDiscountConnector\Business\Collector\ProductLabelCollector;
+use Spryker\Zed\ProductLabelDiscountConnector\Business\Collector\ProductLabelCollectorInterface;
 use Spryker\Zed\ProductLabelDiscountConnector\Business\DecisionRule\ProductLabelDecisionRule;
+use Spryker\Zed\ProductLabelDiscountConnector\Business\DecisionRule\ProductLabelDecisionRuleInterface;
+use Spryker\Zed\ProductLabelDiscountConnector\Business\DecisionRule\ProductLabelListDecisionRule;
 use Spryker\Zed\ProductLabelDiscountConnector\Business\Label\LabelProvider;
+use Spryker\Zed\ProductLabelDiscountConnector\Business\Label\LabelProviderInterface;
+use Spryker\Zed\ProductLabelDiscountConnector\Dependency\Facade\ProductLabelDiscountConnectorToDiscountInterface;
+use Spryker\Zed\ProductLabelDiscountConnector\Dependency\Facade\ProductLabelDiscountConnectorToProductLabelFacadeInterface;
+use Spryker\Zed\ProductLabelDiscountConnector\Dependency\QueryContainer\ProductLabelDiscountConnectorToProductLabelInterface;
 use Spryker\Zed\ProductLabelDiscountConnector\ProductLabelDiscountConnectorDependencyProvider;
 
 /**
@@ -21,7 +28,7 @@ class ProductLabelDiscountConnectorBusinessFactory extends AbstractBusinessFacto
     /**
      * @return \Spryker\Zed\ProductLabelDiscountConnector\Business\Label\LabelProviderInterface
      */
-    public function createLabelProvider()
+    public function createLabelProvider(): LabelProviderInterface
     {
         return new LabelProvider($this->getProductLabelFacade());
     }
@@ -29,23 +36,42 @@ class ProductLabelDiscountConnectorBusinessFactory extends AbstractBusinessFacto
     /**
      * @return \Spryker\Zed\ProductLabelDiscountConnector\Business\DecisionRule\ProductLabelDecisionRuleInterface
      */
-    public function createProductLabelDecisionRule()
+    public function createProductLabelDecisionRule(): ProductLabelDecisionRuleInterface
     {
         return new ProductLabelDecisionRule($this->getDiscountFacade(), $this->getProductLabelQueryContainer());
     }
 
     /**
+     * @return \Spryker\Zed\ProductLabelDiscountConnector\Business\DecisionRule\ProductLabelDecisionRuleInterface
+     */
+    public function createProductLabelListDecisionRule(): ProductLabelDecisionRuleInterface
+    {
+        return new ProductLabelListDecisionRule(
+            $this->getProductLabelFacade(),
+            $this->getDiscountFacade(),
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\ProductLabelDiscountConnector\Business\Collector\ProductLabelCollectorInterface
      */
-    public function createProductLabelCollector()
+    public function createProductLabelCollector(): ProductLabelCollectorInterface
     {
         return new ProductLabelCollector($this->createProductLabelDecisionRule());
     }
 
     /**
-     * @return \Spryker\Zed\ProductLabelDiscountConnector\Dependency\Facade\ProductLabelDiscountConnectorToProductLabelInterface
+     * @return \Spryker\Zed\ProductLabelDiscountConnector\Business\Collector\ProductLabelCollectorInterface
      */
-    protected function getProductLabelFacade()
+    public function createProductLabelListCollector(): ProductLabelCollectorInterface
+    {
+        return new ProductLabelCollector($this->createProductLabelListDecisionRule());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductLabelDiscountConnector\Dependency\Facade\ProductLabelDiscountConnectorToProductLabelFacadeInterface
+     */
+    public function getProductLabelFacade(): ProductLabelDiscountConnectorToProductLabelFacadeInterface
     {
         return $this->getProvidedDependency(ProductLabelDiscountConnectorDependencyProvider::FACADE_PRODUCT_LABEL);
     }
@@ -53,7 +79,7 @@ class ProductLabelDiscountConnectorBusinessFactory extends AbstractBusinessFacto
     /**
      * @return \Spryker\Zed\ProductLabelDiscountConnector\Dependency\Facade\ProductLabelDiscountConnectorToDiscountInterface
      */
-    protected function getDiscountFacade()
+    public function getDiscountFacade(): ProductLabelDiscountConnectorToDiscountInterface
     {
         return $this->getProvidedDependency(ProductLabelDiscountConnectorDependencyProvider::FACADE_DISCOUNT);
     }
@@ -61,7 +87,7 @@ class ProductLabelDiscountConnectorBusinessFactory extends AbstractBusinessFacto
     /**
      * @return \Spryker\Zed\ProductLabelDiscountConnector\Dependency\QueryContainer\ProductLabelDiscountConnectorToProductLabelInterface
      */
-    protected function getProductLabelQueryContainer()
+    public function getProductLabelQueryContainer(): ProductLabelDiscountConnectorToProductLabelInterface
     {
         return $this->getProvidedDependency(ProductLabelDiscountConnectorDependencyProvider::QUERY_CONTAINER_PRODUCT_LABEL);
     }

@@ -16,7 +16,7 @@ interface ProductLabelCollectorInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
-     * @return array<\Generated\Shared\Transfer\DiscountableItemTransfer>
+     * @return list<\Generated\Shared\Transfer\DiscountableItemTransfer>
      */
-    public function collect(QuoteTransfer $quoteTransfer, ClauseTransfer $clauseTransfer);
+    public function collect(QuoteTransfer $quoteTransfer, ClauseTransfer $clauseTransfer): array;
 }

@@ -101,6 +101,33 @@ class LessEqualTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testCompareShouldReturnFalseWhenEmptyValueIsProvided(): void
+    {
+        // Arrange
+        $clauseTransfer = (new ClauseTransfer())->setValue('1');
+
+        // Act
+        $isMatching = $this->createLessEqual()->compare($clauseTransfer, '');
+
+        // Assert
+        $this->assertFalse($isMatching);
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsValueValidShouldReturnFalseWhenEmptyValueIsProvided(): void
+    {
+        // Act
+        $isValueValid = $this->createLessEqual()->isValidValue('');
+
+        // Assert
+        $this->assertFalse($isValueValid);
+    }
+
+    /**
      * @return \Spryker\Zed\Discount\Business\QueryString\Comparator\LessEqual
      */
     protected function createLessEqual(): LessEqual

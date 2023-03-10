@@ -111,6 +111,8 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\ProductLabel\Persistence\ProductLabelRepositoryInterface::getProductLabelCollection()} instead.
+     *
      * @param \Generated\Shared\Transfer\ProductLabelCriteriaTransfer $productLabelCriteriaTransfer
      *
      * @return array<\Generated\Shared\Transfer\ProductLabelTransfer>
@@ -123,11 +125,7 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
             $productLabelQuery->filterByIdProductLabel_In($productLabelCriteriaTransfer->getProductLabelIds());
         }
 
-        if ($productLabelCriteriaTransfer->getProductAbstractIds()) {
-            $productLabelQuery->useSpyProductLabelProductAbstractQuery()
-                    ->filterByFkProductAbstract_In($productLabelCriteriaTransfer->getProductAbstractIds())
-                ->endUse();
-        }
+        $productLabelQuery = $this->applyProductAbstractIdsFilter($productLabelQuery, $productLabelCriteriaTransfer);
 
         if ($productLabelCriteriaTransfer->getStoreName() !== null) {
             $productLabelQuery->useProductLabelStoreQuery()
@@ -144,16 +142,25 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
             ->endUse()
             ->filterByIsActive(true);
 
-        $productLabelEntities = $productLabelQuery
+        $productLabelQuery = $productLabelQuery
             ->filterByValidFrom('now', Criteria::LESS_EQUAL)
             ->_or()
             ->filterByValidFrom(null, Criteria::ISNULL)
             ->filterByValidTo('now', Criteria::GREATER_EQUAL)
             ->_or()
-            ->filterByValidTo(null, Criteria::ISNULL)
-            ->orderByIsExclusive(Criteria::DESC)
-            ->orderByPosition(Criteria::ASC)
-            ->find();
+            ->filterByValidTo(null, Criteria::ISNULL);
+
+        $hasSortCollection = count($productLabelCriteriaTransfer->getSortCollection());
+        if ($hasSortCollection) {
+            $productLabelQuery = $this->applyProductLabelSorting($productLabelQuery, $productLabelCriteriaTransfer);
+        }
+
+        if (!$hasSortCollection) {
+            $productLabelQuery = $productLabelQuery->orderByIsExclusive(Criteria::DESC)
+                ->orderByPosition(Criteria::ASC);
+        }
+
+        $productLabelEntities = $productLabelQuery->find();
 
         return $this->getFactory()
             ->createProductLabelMapper()
@@ -348,6 +355,9 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
             $productLabelCollectionTransfer->setPagination($paginationTransfer);
         }
 
+        $productLabelQuery = $this->applyProductLabelConditions($productLabelQuery, $productLabelCriteriaTransfer);
+        $productLabelQuery = $this->applyProductLabelSorting($productLabelQuery, $productLabelCriteriaTransfer);
+
         $productLabelEntities = $productLabelQuery->find();
         $productLabelEntitiesIndexedByProductLabelIds = $this->indexProductLabelEntitiesByProductLabelIds($productLabelEntities);
 
@@ -505,5 +515,88 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
         }
 
         return $productLabelEntitiesIndexedByProductLabelIds;
+    }
+
+    /**
+     * @param \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery $productLabelQuery
+     * @param \Generated\Shared\Transfer\ProductLabelCriteriaTransfer $productLabelCriteriaTransfer
+     *
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery
+     */
+    protected function applyProductLabelConditions(
+        SpyProductLabelQuery $productLabelQuery,
+        ProductLabelCriteriaTransfer $productLabelCriteriaTransfer
+    ): SpyProductLabelQuery {
+        $productLabelQuery = $this->applyProductAbstractIdsFilter($productLabelQuery, $productLabelCriteriaTransfer);
+
+        $productLabelConditions = $productLabelCriteriaTransfer->getProductLabelConditions();
+        if (!$productLabelConditions) {
+            return $productLabelQuery;
+        }
+
+        if ($productLabelConditions->getIsActive()) {
+            $productLabelQuery->filterByIsActive(true)
+                ->filterByValidFrom('now', Criteria::LESS_EQUAL)
+                ->_or()
+                ->filterByValidFrom(null, Criteria::ISNULL)
+                ->filterByValidTo('now', Criteria::GREATER_EQUAL)
+                ->_or()
+                ->filterByValidTo(null, Criteria::ISNULL);
+        }
+
+        return $productLabelQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery $productLabelQuery
+     * @param \Generated\Shared\Transfer\ProductLabelCriteriaTransfer $productLabelCriteriaTransfer
+     *
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery
+     */
+    protected function applyProductLabelSorting(
+        SpyProductLabelQuery $productLabelQuery,
+        ProductLabelCriteriaTransfer $productLabelCriteriaTransfer
+    ): SpyProductLabelQuery {
+        $sortCollection = $productLabelCriteriaTransfer->getSortCollection();
+        foreach ($sortCollection as $sortTransfer) {
+            $productLabelQuery->orderBy(
+                $sortTransfer->getFieldOrFail(),
+                $sortTransfer->getIsAscending() ? Criteria::ASC : Criteria::DESC,
+            );
+        }
+
+        return $productLabelQuery;
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @param \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery $productLabelQuery
+     * @param \Generated\Shared\Transfer\ProductLabelCriteriaTransfer $productLabelCriteriaTransfer
+     *
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery
+     */
+    protected function applyProductAbstractIdsFilter(
+        SpyProductLabelQuery $productLabelQuery,
+        ProductLabelCriteriaTransfer $productLabelCriteriaTransfer
+    ): SpyProductLabelQuery {
+        if (
+            $productLabelCriteriaTransfer->getProductLabelConditions()
+            && $productLabelCriteriaTransfer->getProductLabelConditionsOrFail()->getProductAbstractIds()
+        ) {
+            $productLabelQuery->useSpyProductLabelProductAbstractQuery()
+                ->filterByFkProductAbstract_In($productLabelCriteriaTransfer->getProductLabelConditionsOrFail()->getProductAbstractIds())
+                ->endUse();
+
+            return $productLabelQuery;
+        }
+
+        if ($productLabelCriteriaTransfer->getProductAbstractIds()) {
+            $productLabelQuery->useSpyProductLabelProductAbstractQuery()
+                ->filterByFkProductAbstract_In($productLabelCriteriaTransfer->getProductAbstractIds())
+                ->endUse();
+        }
+
+        return $productLabelQuery;
     }
 }

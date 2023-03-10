@@ -7,6 +7,7 @@
 
 namespace SprykerTest\Zed\ProductLabel\Business;
 
+use ArrayObject;
 use Codeception\Test\Unit;
 use DateInterval;
 use DateTime;
@@ -18,10 +19,12 @@ use Generated\Shared\DataBuilder\StoreRelationBuilder;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
+use Generated\Shared\Transfer\ProductLabelConditionsTransfer;
 use Generated\Shared\Transfer\ProductLabelCriteriaTransfer;
 use Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
+use Generated\Shared\Transfer\SortTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery;
@@ -31,6 +34,8 @@ use Spryker\Shared\ProductLabel\ProductLabelConstants;
 use Spryker\Zed\ProductLabel\Business\Label\Trigger\ProductEventTrigger;
 use Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface;
 use Spryker\Zed\ProductLabel\Dependency\Facade\ProductLabelToEventInterface;
+use Spryker\Zed\ProductLabel\Dependency\Facade\ProductLabelToProductInterface;
+use Spryker\Zed\ProductLabel\Dependency\Facade\ProductLabelToTouchInterface;
 use Spryker\Zed\ProductLabel\Dependency\Plugin\ProductLabelRelationUpdaterPluginInterface;
 use Spryker\Zed\ProductLabel\ProductLabelDependencyProvider;
 
@@ -285,6 +290,96 @@ class ProductLabelFacadeTest extends Unit
         $localizedAttributesList = $persistedProductLabelTransfer->getLocalizedAttributesCollection()->getArrayCopy();
         $this->assertSame($productLabelTransfer->getIdProductLabel(), $localizedAttributesList[0]->getFkProductLabel());
         $this->assertSame($localeTransfer->getIdLocale(), $localizedAttributesList[0]->getFkLocale());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateLabelShouldTouchDictionaryWhenLabelIsUpdated(): void
+    {
+        // Arrange
+        $productLabelTransfer = $this->tester->haveProductLabel([
+            ProductLabelTransfer::IS_EXCLUSIVE => true,
+        ]);
+
+        $touchFacadeMock = $this->createTouchFacadeMock();
+        $this->tester->setDependency(ProductLabelDependencyProvider::FACADE_TOUCH, $touchFacadeMock);
+
+        $productLabelTransfer->setIsExclusive(false);
+
+        // Assert
+        $touchFacadeMock->expects($this->once())
+            ->method('touchActive')
+            ->with(
+                ProductLabelConstants::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY,
+                ProductLabelConstants::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY_IDENTIFIER,
+            );
+
+        // Act
+        $this->getProductLabelFacade()->updateLabel($productLabelTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateLabelShouldNotTouchDictionaryWhenLabelIsNotUpdated(): void
+    {
+        // Arrange
+        $productLabelTransfer = $this->tester->haveProductLabel([
+            ProductLabelTransfer::IS_EXCLUSIVE => true,
+        ]);
+
+        $touchFacadeMock = $this->createTouchFacadeMock();
+        $this->tester->setDependency(ProductLabelDependencyProvider::FACADE_TOUCH, $touchFacadeMock);
+
+        // Assert
+        $touchFacadeMock->expects($this->never())->method('touchActive');
+
+        // Act
+        $this->getProductLabelFacade()->updateLabel($productLabelTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateLabelShouldTouchProductRelationWhenIsActiveUpdated(): void
+    {
+        // Arrange
+        $productLabelTransfer = $this->tester->haveProductLabel([
+            ProductLabelTransfer::IS_ACTIVE => true,
+        ]);
+        $idProductAbstract = $this->tester->haveProduct()->getFkProductAbstract();
+
+        $this->tester->haveProductLabelToAbstractProductRelation($productLabelTransfer->getIdProductLabel(), $idProductAbstract);
+
+        $touchFacadeMock = $this->createTouchFacadeMock();
+        $this->tester->setDependency(ProductLabelDependencyProvider::FACADE_TOUCH, $touchFacadeMock);
+
+        $productFacadeMock = $this->createProductFacadeMock();
+        $this->tester->setDependency(ProductLabelDependencyProvider::FACADE_PRODUCT, $productFacadeMock);
+
+        $productLabelTransfer->setIsActive(false);
+
+        // Assert
+        $touchFacadeMock->expects($this->exactly(2))
+            ->method('touchActive')
+            ->withConsecutive(
+                [
+                    ProductLabelConstants::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY,
+                    ProductLabelConstants::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY_IDENTIFIER,
+                ],
+                [
+                    ProductLabelConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT_PRODUCT_LABEL_RELATIONS,
+                    $idProductAbstract,
+                ],
+            );
+
+        $productFacadeMock->expects($this->once())
+            ->method('touchProductAbstract')
+            ->with($idProductAbstract);
+
+        // Act
+        $this->getProductLabelFacade()->updateLabel($productLabelTransfer);
     }
 
     /**
@@ -944,6 +1039,39 @@ class ProductLabelFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testGetProductLabelCollectionShouldReturnCollectionFilteredByIdProductAbstract(): void
+    {
+        // Arrange
+        $this->tester->ensureDatabaseTableIsEmpty(SpyProductLabelQuery::create());
+
+        $idProductAbstract = $this->tester->haveProduct()->getFkProductAbstract();
+
+        $productLabelTransfer = $this->tester->haveProductLabel();
+        $this->tester->haveProductLabel();
+
+        $this->tester->haveProductLabelToAbstractProductRelation(
+            $productLabelTransfer->getIdProductLabel(),
+            $idProductAbstract,
+        );
+
+        $productLabelCriteriaTransfer = (new ProductLabelCriteriaTransfer())->setProductLabelConditions(
+            (new ProductLabelConditionsTransfer())->addProductAbstractId($idProductAbstract),
+        );
+
+        // Act
+        $productLabelCollectionTransfer = $this->tester->getFacade()->getProductLabelCollection($productLabelCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(1, $productLabelCollectionTransfer->getProductLabels());
+        $this->assertSame(
+            $productLabelTransfer->getIdProductLabel(),
+            $productLabelCollectionTransfer->getProductLabels()->getIterator()->current()->getIdProductLabel(),
+        );
+    }
+
+    /**
+     * @return void
+     */
     public function testProductConcretesSuccessfullyExpandedWithLabels(): void
     {
         // Arrange
@@ -963,6 +1091,89 @@ class ProductLabelFacadeTest extends Unit
         $this->assertSame(
             $expandedProductConcreteTransfers[0]->getProductLabels()->offsetGet(0)->getIdProductLabel(),
             $productLabelTransfer->getIdProductLabel(),
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductLabelCollectionShouldReturnCollectionFilteredByIsActive(): void
+    {
+        // Arrange
+        $this->tester->ensureDatabaseTableIsEmpty(SpyProductLabelQuery::create());
+
+        $productLabelTransfer = $this->tester->haveProductLabel([
+            ProductLabelTransfer::IS_ACTIVE => true,
+        ]);
+        $this->tester->haveProductLabel([
+            ProductLabelTransfer::IS_ACTIVE => false,
+        ]);
+        $this->tester->haveProductLabel([
+            ProductLabelTransfer::IS_ACTIVE => true,
+            ProductLabelTransfer::VALID_TO => date('Y-m-d H:i:s', strtotime('-1 day')),
+        ]);
+        $this->tester->haveProductLabel([
+            ProductLabelTransfer::IS_ACTIVE => true,
+            ProductLabelTransfer::VALID_FROM => date('Y-m-d H:i:s', strtotime('+1 day')),
+        ]);
+
+        $productLabelCriteriaTransfer = (new ProductLabelCriteriaTransfer())->setProductLabelConditions(
+            (new ProductLabelConditionsTransfer())->setIsActive(true),
+        );
+
+        // Act
+        $productLabelCollectionTransfer = $this->tester->getFacade()->getProductLabelCollection($productLabelCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(1, $productLabelCollectionTransfer->getProductLabels());
+        $this->assertSame(
+            $productLabelTransfer->getIdProductLabel(),
+            $productLabelCollectionTransfer->getProductLabels()->getIterator()->current()->getIdProductLabel(),
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductLabelCollectionShouldReturnCollectionSortedBySortCollection(): void
+    {
+        // Arrange
+        $this->tester->ensureDatabaseTableIsEmpty(SpyProductLabelQuery::create());
+
+        $productLabelTransfer = $this->tester->haveProductLabel([
+            ProductLabelTransfer::IS_EXCLUSIVE => true,
+            ProductLabelTransfer::POSITION => 3,
+        ]);
+        $productLabelTransfer2 = $this->tester->haveProductLabel([
+            ProductLabelTransfer::IS_EXCLUSIVE => false,
+            ProductLabelTransfer::POSITION => 2,
+        ]);
+        $productLabelTransfer3 = $this->tester->haveProductLabel([
+            ProductLabelTransfer::IS_EXCLUSIVE => false,
+            ProductLabelTransfer::POSITION => 1,
+        ]);
+
+        $productLabelCriteriaTransfer = (new ProductLabelCriteriaTransfer())->setSortCollection(new ArrayObject([
+            (new SortTransfer())->setField(ProductLabelTransfer::IS_EXCLUSIVE)->setIsAscending(false),
+            (new SortTransfer())->setField(ProductLabelTransfer::POSITION)->setIsAscending(true),
+        ]));
+
+        // Act
+        $productLabelCollectionTransfer = $this->tester->getFacade()->getProductLabelCollection($productLabelCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(3, $productLabelCollectionTransfer->getProductLabels());
+        $this->assertSame(
+            $productLabelTransfer->getIdProductLabel(),
+            $productLabelCollectionTransfer->getProductLabels()->offsetGet(0)->getIdProductLabel(),
+        );
+        $this->assertSame(
+            $productLabelTransfer3->getIdProductLabel(),
+            $productLabelCollectionTransfer->getProductLabels()->offsetGet(1)->getIdProductLabel(),
+        );
+        $this->assertSame(
+            $productLabelTransfer2->getIdProductLabel(),
+            $productLabelCollectionTransfer->getProductLabels()->offsetGet(2)->getIdProductLabel(),
         );
     }
 
@@ -1101,5 +1312,21 @@ class ProductLabelFacadeTest extends Unit
                     return true;
                 },
             ));
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductLabel\Dependency\Facade\ProductLabelToTouchInterface
+     */
+    protected function createTouchFacadeMock(): ProductLabelToTouchInterface
+    {
+        return $this->createMock(ProductLabelToTouchInterface::class);
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductLabel\Dependency\Facade\ProductLabelToProductInterface
+     */
+    protected function createProductFacadeMock(): ProductLabelToProductInterface
+    {
+        return $this->createMock(ProductLabelToProductInterface::class);
     }
 }

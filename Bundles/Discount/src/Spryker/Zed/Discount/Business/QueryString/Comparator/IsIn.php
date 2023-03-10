@@ -8,74 +8,40 @@
 namespace Spryker\Zed\Discount\Business\QueryString\Comparator;
 
 use Generated\Shared\Transfer\ClauseTransfer;
-use Spryker\Zed\Discount\Business\Exception\ComparatorException;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 
-class IsIn implements ComparatorInterface
+class IsIn extends AbstractComparator implements ComparatorInterface
 {
     /**
      * @var string
      */
-    public const EXPRESSION = 'is in';
+    protected const EXPRESSION = 'is in';
 
     /**
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
-     * @param string $withValue
+     * @param mixed $withValue
      *
      * @return bool
      */
-    public function compare(ClauseTransfer $clauseTransfer, $withValue)
+    public function compare(ClauseTransfer $clauseTransfer, $withValue): bool
     {
-        $this->isValidValue($withValue);
+        if (!$this->isValidValue($withValue)) {
+            return false;
+        }
 
-        $values = explode(ComparatorOperators::LIST_DELIMITER, $clauseTransfer->getValue());
+        $searchValues = $this->getExplodedListValue((string)$withValue);
+        $clauseValues = $this->getExplodedListValue((string)$clauseTransfer->getValue());
 
-        $values = array_map('trim', $values);
-
-        return in_array(strtolower($withValue), $values);
+        return array_intersect($searchValues, $clauseValues) !== [];
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
-     *
-     * @return bool
+     * @return list<string>
      */
-    public function accept(ClauseTransfer $clauseTransfer)
-    {
-        return (strcasecmp($clauseTransfer->getOperator(), $this->getExpression()) === 0);
-    }
-
-    /**
-     * @return string
-     */
-    public function getExpression()
-    {
-        return static::EXPRESSION;
-    }
-
-    /**
-     * @return array<string>
-     */
-    public function getAcceptedTypes()
+    public function getAcceptedTypes(): array
     {
         return [
             ComparatorOperators::TYPE_LIST,
         ];
-    }
-
-    /**
-     * @param string $withValue
-     *
-     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
-     *
-     * @return bool
-     */
-    public function isValidValue($withValue)
-    {
-        if (!is_scalar($withValue)) {
-            throw new ComparatorException('Only scalar value can be used together with "is in" comparator.');
-        }
-
-        return true;
     }
 }

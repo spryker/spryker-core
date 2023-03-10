@@ -7,8 +7,13 @@
 
 namespace Spryker\Zed\ProductLabelSearch\Business\PageData;
 
+use ArrayObject;
+use Generated\Shared\Transfer\ProductLabelCollectionTransfer;
+use Generated\Shared\Transfer\ProductLabelConditionsTransfer;
 use Generated\Shared\Transfer\ProductLabelCriteriaTransfer;
+use Generated\Shared\Transfer\ProductLabelTransfer;
 use Generated\Shared\Transfer\ProductPageLoadTransfer;
+use Generated\Shared\Transfer\SortTransfer;
 use Spryker\Zed\ProductLabelSearch\Business\Mapper\ProductLabelMapperInterface;
 use Spryker\Zed\ProductLabelSearch\Dependency\Facade\ProductLabelSearchToProductLabelInterface;
 
@@ -41,15 +46,12 @@ class ProductPageDataTransferExpander implements ProductPageDataTransferExpander
      *
      * @return \Generated\Shared\Transfer\ProductPageLoadTransfer
      */
-    public function expandProductPageDataTransferWithProductLabelIds(ProductPageLoadTransfer $productPageLoadTransfer)
+    public function expandProductPageDataTransferWithProductLabelIds(ProductPageLoadTransfer $productPageLoadTransfer): ProductPageLoadTransfer
     {
-        $productLabelCriteriaTransfer = (new ProductLabelCriteriaTransfer())
-            ->setProductAbstractIds($productPageLoadTransfer->getProductAbstractIds());
-        $productLabelTransfers = $this->productLabelFacade
-            ->getActiveLabelsByCriteria($productLabelCriteriaTransfer);
+        $productLabelCollectionTransfer = $this->getProductLabelCollection($productPageLoadTransfer);
 
         $productLabelIdsMappedByIdProductAbstract = $this->productLabelMapper
-            ->getProductLabelIdsMappedByIdProductAbstractAndStoreName($productLabelTransfers);
+            ->getProductLabelIdsMappedByIdProductAbstractAndStoreName($productLabelCollectionTransfer);
 
         $payloadTransfers = $this->expandPayloadTransfersWithProductLabelIds(
             $productPageLoadTransfer->getPayloadTransfers(),
@@ -80,5 +82,28 @@ class ProductPageDataTransferExpander implements ProductPageDataTransferExpander
         }
 
         return $payloadTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $productPageLoadTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelCollectionTransfer
+     */
+    protected function getProductLabelCollection(ProductPageLoadTransfer $productPageLoadTransfer): ProductLabelCollectionTransfer
+    {
+        $productLabelCriteriaTransfer = (new ProductLabelCriteriaTransfer())
+            ->setProductLabelConditions(
+                (new ProductLabelConditionsTransfer())
+                    ->setIsActive(true)
+                    ->setProductAbstractIds($productPageLoadTransfer->getProductAbstractIds()),
+            )
+            ->setSortCollection(new ArrayObject([
+                (new SortTransfer())->setField(ProductLabelTransfer::IS_EXCLUSIVE)->setIsAscending(false),
+                (new SortTransfer())->setField(ProductLabelTransfer::POSITION)->setIsAscending(true),
+            ]))
+            ->setWithProductLabelStores(true)
+            ->setWithProductLabelProductAbstracts(true);
+
+        return $this->productLabelFacade->getProductLabelCollection($productLabelCriteriaTransfer);
     }
 }

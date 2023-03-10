@@ -13,35 +13,35 @@ interface ComparatorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
-     * @param string $withValue
+     * @param mixed $withValue
      *
      * @return bool
      */
-    public function compare(ClauseTransfer $clauseTransfer, $withValue);
+    public function compare(ClauseTransfer $clauseTransfer, $withValue): bool;
 
     /**
-     * @param string $withValue
+     * @param mixed $withValue
      *
      * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
      *
      * @return bool
      */
-    public function isValidValue($withValue);
+    public function isValidValue($withValue): bool;
 
     /**
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
      * @return bool
      */
-    public function accept(ClauseTransfer $clauseTransfer);
+    public function accept(ClauseTransfer $clauseTransfer): bool;
 
     /**
      * @return string
      */
-    public function getExpression();
+    public function getExpression(): string;
 
     /**
-     * @return array<string>
+     * @return list<string>
      */
-    public function getAcceptedTypes();
+    public function getAcceptedTypes(): array;
 }

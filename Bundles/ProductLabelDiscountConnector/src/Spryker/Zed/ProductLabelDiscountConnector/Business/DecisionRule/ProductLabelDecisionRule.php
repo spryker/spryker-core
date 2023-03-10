@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductLabelDiscountConnector\Business\DecisionRule;
 
 use Generated\Shared\Transfer\ClauseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\ProductLabelDiscountConnector\Dependency\Facade\ProductLabelDiscountConnectorToDiscountInterface;
 use Spryker\Zed\ProductLabelDiscountConnector\Dependency\QueryContainer\ProductLabelDiscountConnectorToProductLabelInterface;
 
@@ -38,13 +37,12 @@ class ProductLabelDecisionRule implements ProductLabelDecisionRuleInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer $currentItemTransfer
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
      *
      * @return bool
      */
-    public function isSatisfiedBy(QuoteTransfer $quoteTransfer, ItemTransfer $currentItemTransfer, ClauseTransfer $clauseTransfer)
+    public function isSatisfiedBy(ItemTransfer $currentItemTransfer, ClauseTransfer $clauseTransfer): bool
     {
         $currentItemTransfer->requireIdProductAbstract();
         $idProductAbstract = $currentItemTransfer->getIdProductAbstract();

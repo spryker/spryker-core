@@ -31,9 +31,30 @@
 
     <transfer name="ProductLabel">
         <property name="name" type="string"/>
+        <property name="isExclusive" type="bool"/>
+        <property name="position" type="int"/>
     </transfer>
 
     <transfer name="CalculatedDiscount">
+    </transfer>
+
+    <transfer name="ProductLabelCriteria">
+        <property name="productLabelConditions" type="ProductLabelConditions" strict="true"/>
+        <property name="sortCollection" type="Sort[]" singular="sort" strict="true"/>
+    </transfer>
+
+    <transfer name="Sort">
+        <property name="field" type="string"/>
+        <property name="isAscending" type="bool"/>
+    </transfer>
+
+    <transfer name="ProductLabelCollection" strict="true">
+        <property name="productLabels" type="ProductLabel[]" singular="productLabel"/>
+    </transfer>
+
+    <transfer name="ProductLabelConditions" strict="true">
+        <property name="productAbstractIds" type="int[]" singular="productAbstractId"/>
+        <property name="isActive" type="bool"/>
     </transfer>
 
 </transfers>

@@ -86,6 +86,33 @@ class EqualTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testCompareShouldReturnFalseWhenEmptyValueIsProvided(): void
+    {
+        // Arrange
+        $clauseTransfer = (new ClauseTransfer())->setValue('value');
+
+        // Act
+        $isMatching = $this->createEqual()->compare($clauseTransfer, '');
+
+        // Assert
+        $this->assertFalse($isMatching);
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsValueValidShouldReturnFalseWhenEmptyValueIsProvided(): void
+    {
+        // Act
+        $isValueValid = $this->createEqual()->isValidValue('');
+
+        // Assert
+        $this->assertFalse($isValueValid);
+    }
+
+    /**
      * @return \Spryker\Zed\Discount\Business\QueryString\Comparator\Equal
      */
     protected function createEqual(): Equal

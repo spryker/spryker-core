@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\ProductLabelDiscountConnector\Business;
 use Codeception\Test\Unit;
 use DMS\PHPUnitExtensions\ArraySubset\ArraySubsetAsserts;
 use Generated\Shared\Transfer\ProductLabelTransfer;
+use SprykerTest\Zed\ProductLabelDiscountConnector\ProductLabelDiscountConnectorBusinessTester;
 
 /**
  * Auto-generated group annotations
@@ -27,9 +28,54 @@ class ProductLabelDiscountConnectorFacadeTest extends Unit
     use ArraySubsetAsserts;
 
     /**
+     * @uses \Spryker\Zed\Discount\Business\QueryString\Comparator\IsIn::EXPRESSION
+     *
+     * @var string
+     */
+    protected const EXPRESSION_IS_IN = 'is in';
+
+    /**
+     * @uses \Spryker\Zed\Discount\Business\QueryString\Comparator\IsNotIn::EXPRESSION
+     *
+     * @var string
+     */
+    protected const EXPRESSION_IS_NOT_IN = 'is not in';
+
+    /**
+     * @uses \Spryker\Zed\Discount\Business\QueryString\Comparator\Equal::EXPRESSION
+     *
+     * @var string
+     */
+    protected const EXPRESSION_EQUAL = '=';
+
+    /**
+     * @uses \Spryker\Zed\Discount\Business\QueryString\ComparatorOperators::TYPE_STRING
+     *
+     * @var string
+     */
+    protected const TYPE_STRING = 'string';
+
+    /**
+     * @uses \Spryker\Zed\Discount\Business\QueryString\ComparatorOperators::TYPE_LIST
+     *
+     * @var string
+     */
+    protected const TYPE_LIST = 'list';
+
+    /**
+     * @var string
+     */
+    protected const PRODUCT_LABEL_NAME_1 = 'test';
+
+    /**
+     * @var string
+     */
+    protected const PRODUCT_LABEL_NAME_2 = 'test2';
+
+    /**
      * @var \SprykerTest\Zed\ProductLabelDiscountConnector\ProductLabelDiscountConnectorBusinessTester
      */
-    protected $tester;
+    protected ProductLabelDiscountConnectorBusinessTester $tester;
 
     /**
      * @return void
@@ -74,7 +120,11 @@ class ProductLabelDiscountConnectorFacadeTest extends Unit
         );
 
         $quoteTransfer = $this->tester->createQuoteTransfer([$productConcreteTransfer]);
-        $clauseTransfer = $this->tester->createClauseTransfer($productLabelTransfer->getName());
+        $clauseTransfer = $this->tester->createClauseTransfer(
+            [static::TYPE_STRING],
+            $productLabelTransfer->getName(),
+            static::EXPRESSION_EQUAL,
+        );
 
         // Act
         $isSatisfied = $this->tester->getFacade()->isProductLabelSatisfiedBy(
@@ -101,7 +151,11 @@ class ProductLabelDiscountConnectorFacadeTest extends Unit
         $productConcreteTransfer = $this->tester->haveProduct();
 
         $quoteTransfer = $this->tester->createQuoteTransfer([$productConcreteTransfer]);
-        $clauseTransfer = $this->tester->createClauseTransfer($productLabelTransfer->getName());
+        $clauseTransfer = $this->tester->createClauseTransfer(
+            [static::TYPE_STRING],
+            $productLabelTransfer->getName(),
+            static::EXPRESSION_EQUAL,
+        );
 
         // Act
         $isSatisfied = $this->tester->getFacade()->isProductLabelSatisfiedBy(
@@ -145,7 +199,11 @@ class ProductLabelDiscountConnectorFacadeTest extends Unit
             $productConcreteTransfer3,
 
         ]);
-        $clauseTransfer = $this->tester->createClauseTransfer($productLabelTransfer->getName());
+        $clauseTransfer = $this->tester->createClauseTransfer(
+            [static::TYPE_STRING],
+            $productLabelTransfer->getName(),
+            static::EXPRESSION_EQUAL,
+        );
 
         // Act
         $collected = $this->tester->getFacade()->collectByProductLabel($quoteTransfer, $clauseTransfer);
@@ -193,12 +251,193 @@ class ProductLabelDiscountConnectorFacadeTest extends Unit
         );
 
         $quoteTransfer = $this->tester->createQuoteTransfer([$productConcreteTransfer]);
-        $clauseTransfer = $this->tester->createClauseTransfer($productLabelTransfer1->getName());
+        $clauseTransfer = $this->tester->createClauseTransfer(
+            [static::TYPE_STRING],
+            $productLabelTransfer1->getName(),
+            static::EXPRESSION_EQUAL,
+        );
 
         // Act
         $collected = $this->tester->getFacade()->collectByProductLabel($quoteTransfer, $clauseTransfer);
 
         // Assert
         $this->assertCount(1, $collected, 'Number of collected items should match expected number.');
+    }
+
+    /**
+     * @dataProvider getProductLabelListClauseDataProvider
+     *
+     * @param array<array<string, mixed>> $productLabelsData
+     * @param string $clauseValue
+     * @param string $clauseOperator
+     * @param bool $expectedResult
+     *
+     * @return void
+     */
+    public function testIsProductLabelSatisfiedByListClause(
+        array $productLabelsData,
+        string $clauseValue,
+        string $clauseOperator,
+        bool $expectedResult
+    ): void {
+        // Arrange
+        $productConcreteTransfer = $this->tester->haveProductWithProductLabels($productLabelsData);
+        $quoteTransfer = $this->tester->createQuoteTransfer([$productConcreteTransfer]);
+        $clauseTransfer = $this->tester->createClauseTransfer([static::TYPE_LIST], $clauseValue, $clauseOperator);
+
+        // Act
+        $isSatisfied = $this->tester->getFacade()->isProductLabelSatisfiedByListClause(
+            $quoteTransfer->getItems()->getIterator()->current(),
+            $clauseTransfer,
+        );
+
+        // Arrange
+        $this->assertSame($expectedResult, $isSatisfied);
+    }
+
+    /**
+     * @dataProvider getProductLabelListClauseDataProvider
+     *
+     * @param array<array<string, mixed>> $productLabelsData
+     * @param string $clauseValue
+     * @param string $clauseOperator
+     * @param bool $expectedResult
+     *
+     * @return void
+     */
+    public function testGetDiscountableItemsCollection(
+        array $productLabelsData,
+        string $clauseValue,
+        string $clauseOperator,
+        bool $expectedResult
+    ): void {
+        // Arrange
+        $productConcreteTransfer = $this->tester->haveProductWithProductLabels($productLabelsData);
+        $quoteTransfer = $this->tester->createQuoteTransfer([$productConcreteTransfer]);
+        $clauseTransfer = $this->tester->createClauseTransfer([static::TYPE_LIST], $clauseValue, $clauseOperator);
+
+        // Act
+        $discountableItemTransfers = $this->tester->getFacade()->getDiscountableItemsCollection(
+            $quoteTransfer,
+            $clauseTransfer,
+        );
+
+        // Arrange
+        $this->assertSame($expectedResult, $discountableItemTransfers !== []);
+    }
+
+    /**
+     * @return array<string, array<array<array<string, mixed>>|string|bool>>
+     */
+    public function getProductLabelListClauseDataProvider(): array
+    {
+        return [
+            'Should return true when at least one product label is in the condition list.' => [
+                [
+                    [
+                        ProductLabelTransfer::VALID_FROM => null,
+                        ProductLabelTransfer::VALID_TO => null,
+                        ProductLabelTransfer::NAME => static::PRODUCT_LABEL_NAME_1,
+                    ],
+                    [
+                        ProductLabelTransfer::VALID_FROM => null,
+                        ProductLabelTransfer::VALID_TO => null,
+                        ProductLabelTransfer::NAME => static::PRODUCT_LABEL_NAME_2,
+                    ],
+                ],
+                static::PRODUCT_LABEL_NAME_1,
+                static::EXPRESSION_IS_IN,
+                true,
+            ],
+            'Should return false when no product labels are in the condition list.' => [
+                [
+                    [
+                        ProductLabelTransfer::VALID_FROM => null,
+                        ProductLabelTransfer::VALID_TO => null,
+                        ProductLabelTransfer::NAME => static::PRODUCT_LABEL_NAME_1,
+                    ],
+                ],
+                static::PRODUCT_LABEL_NAME_2,
+                static::EXPRESSION_IS_IN,
+                false,
+            ],
+            'Should return false when a product has an exclusive product label that is not in the condition list.' => [
+                [
+                    [
+                        ProductLabelTransfer::VALID_FROM => null,
+                        ProductLabelTransfer::VALID_TO => null,
+                        ProductLabelTransfer::NAME => static::PRODUCT_LABEL_NAME_1,
+                    ],
+                    [
+                        ProductLabelTransfer::VALID_FROM => null,
+                        ProductLabelTransfer::VALID_TO => null,
+                        ProductLabelTransfer::NAME => static::PRODUCT_LABEL_NAME_2,
+                        ProductLabelTransfer::IS_EXCLUSIVE => true,
+                    ],
+                ],
+                static::PRODUCT_LABEL_NAME_1,
+                static::EXPRESSION_IS_IN,
+                false,
+            ],
+            'Should return false when a product does not have product labels.' => [
+                [],
+                static::PRODUCT_LABEL_NAME_1,
+                static::EXPRESSION_IS_IN,
+                false,
+            ],
+            'Should return true when no product labels are in the condition list.' => [
+                [
+                    [
+                        ProductLabelTransfer::VALID_FROM => null,
+                        ProductLabelTransfer::VALID_TO => null,
+                        ProductLabelTransfer::NAME => static::PRODUCT_LABEL_NAME_1,
+                    ],
+                ],
+                static::PRODUCT_LABEL_NAME_2,
+                static::EXPRESSION_IS_NOT_IN,
+                true,
+            ],
+            'Should return true when a product has an exclusive product label that is not in the condition list.' => [
+                [
+                    [
+                        ProductLabelTransfer::VALID_FROM => null,
+                        ProductLabelTransfer::VALID_TO => null,
+                        ProductLabelTransfer::NAME => static::PRODUCT_LABEL_NAME_1,
+                    ],
+                    [
+                        ProductLabelTransfer::VALID_FROM => null,
+                        ProductLabelTransfer::VALID_TO => null,
+                        ProductLabelTransfer::NAME => static::PRODUCT_LABEL_NAME_2,
+                        ProductLabelTransfer::IS_EXCLUSIVE => true,
+                    ],
+                ],
+                static::PRODUCT_LABEL_NAME_1,
+                static::EXPRESSION_IS_NOT_IN,
+                true,
+            ],
+            'Should return true when a product does not have product labels.' => [
+                [],
+                static::PRODUCT_LABEL_NAME_1,
+                static::EXPRESSION_IS_NOT_IN,
+                true,
+            ],
+            'Should return false when at least one product label is in the condition list.' => [
+                [
+                    [
+                        ProductLabelTransfer::VALID_FROM => null,
+                        ProductLabelTransfer::VALID_TO => null,
+                        ProductLabelTransfer::NAME => static::PRODUCT_LABEL_NAME_1,
+                    ],
+                    [
+                        ProductLabelTransfer::VALID_FROM => null,
+                        ProductLabelTransfer::VALID_TO => null,
+                        ProductLabelTransfer::NAME => static::PRODUCT_LABEL_NAME_2,
+                    ],
+                ],
+                static::PRODUCT_LABEL_NAME_1,
+                static::EXPRESSION_IS_NOT_IN,
+                false,
+            ],
+        ];
     }
 }

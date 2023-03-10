@@ -101,6 +101,33 @@ class GreaterEqualTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testCompareShouldReturnFalseWhenEmptyValueIsProvided(): void
+    {
+        // Arrange
+        $clauseTransfer = (new ClauseTransfer())->setValue('1');
+
+        // Act
+        $isMatching = $this->createMoreEqual()->compare($clauseTransfer, '');
+
+        // Assert
+        $this->assertFalse($isMatching);
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsValueValidShouldReturnFalseWhenEmptyValueIsProvided(): void
+    {
+        // Act
+        $isValueValid = $this->createMoreEqual()->isValidValue('');
+
+        // Assert
+        $this->assertFalse($isValueValid);
+    }
+
+    /**
      * @return \Spryker\Zed\Discount\Business\QueryString\Comparator\GreaterEqual
      */
     protected function createMoreEqual(): GreaterEqual

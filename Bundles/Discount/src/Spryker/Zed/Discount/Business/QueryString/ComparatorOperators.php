@@ -68,12 +68,8 @@ class ComparatorOperators implements ComparatorOperatorsInterface
      */
     public function compare(ClauseTransfer $clauseTransfer, $withValue)
     {
-        if ((string)$withValue === '') {
-            return false;
-        }
-
         if ($this->isMatchAllValue($clauseTransfer->getValue())) {
-            return true;
+            return (string)$withValue !== '';
         }
 
         foreach ($this->operators as $operator) {

@@ -123,6 +123,8 @@ class ProductLabelFacade extends AbstractFacade implements ProductLabelFacadeInt
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\ProductLabel\Business\ProductLabelFacade::getProductLabelCollection()} instead.
+     *
      * @param \Generated\Shared\Transfer\ProductLabelCriteriaTransfer $productLabelCriteriaTransfer
      *
      * @return array<\Generated\Shared\Transfer\ProductLabelTransfer>

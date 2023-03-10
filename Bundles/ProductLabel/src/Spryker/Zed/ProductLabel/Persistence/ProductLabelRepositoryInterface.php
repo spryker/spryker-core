@@ -56,6 +56,8 @@ interface ProductLabelRepositoryInterface
     public function getProductLabelsByIdProductAbstract(int $idProductAbstract): array;
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\ProductLabel\Persistence\ProductLabelRepositoryInterface::getProductLabelCollection()} instead.
+     *
      * @param \Generated\Shared\Transfer\ProductLabelCriteriaTransfer $productLabelCriteriaTransfer
      *
      * @return array<\Generated\Shared\Transfer\ProductLabelTransfer>

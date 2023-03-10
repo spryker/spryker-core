@@ -7,20 +7,21 @@
 
 namespace Spryker\Zed\ProductLabelSearch\Business\Mapper;
 
+use Generated\Shared\Transfer\ProductLabelCollectionTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
 
 class ProductLabelMapper implements ProductLabelMapperInterface
 {
     /**
-     * @param array<\Generated\Shared\Transfer\ProductLabelTransfer> $productLabelTransfers
+     * @param \Generated\Shared\Transfer\ProductLabelCollectionTransfer $productLabelCollectionTransfer
      *
      * @return array<array<int>>
      */
-    public function getProductLabelIdsMappedByIdProductAbstractAndStoreName(array $productLabelTransfers): array
+    public function getProductLabelIdsMappedByIdProductAbstractAndStoreName(ProductLabelCollectionTransfer $productLabelCollectionTransfer): array
     {
         $productLabelIdsMap = [];
 
-        foreach ($productLabelTransfers as $productLabelTransfer) {
+        foreach ($productLabelCollectionTransfer->getProductLabels() as $productLabelTransfer) {
             $productLabelIdsMap = $this->mapProductLabelTransferToProductLabelIdsByIdProductAbstractAndStoreName(
                 $productLabelTransfer,
                 $productLabelIdsMap,

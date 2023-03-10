@@ -8,66 +8,38 @@
 namespace Spryker\Zed\Discount\Business\QueryString\Comparator;
 
 use Generated\Shared\Transfer\ClauseTransfer;
-use Spryker\Zed\Discount\Business\Exception\ComparatorException;
 use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 
-class Contains implements ComparatorInterface
+class Contains extends AbstractComparator implements ComparatorInterface
 {
     /**
+     * @var string
+     */
+    protected const EXPRESSION = 'contains';
+
+    /**
      * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
-     * @param string $withValue
+     * @param mixed $withValue
      *
      * @return bool
      */
-    public function compare(ClauseTransfer $clauseTransfer, $withValue)
+    public function compare(ClauseTransfer $clauseTransfer, $withValue): bool
     {
-        $this->isValidValue($withValue);
+        if (!$this->isValidValue($withValue)) {
+            return false;
+        }
 
         return (stripos(trim($withValue), $clauseTransfer->getValue()) !== false);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
-     *
-     * @return bool
+     * @return list<string>
      */
-    public function accept(ClauseTransfer $clauseTransfer)
-    {
-        return (strcasecmp($clauseTransfer->getOperator(), $this->getExpression()) === 0);
-    }
-
-    /**
-     * @return string
-     */
-    public function getExpression()
-    {
-        return 'contains';
-    }
-
-    /**
-     * @return array<string>
-     */
-    public function getAcceptedTypes()
+    public function getAcceptedTypes(): array
     {
         return [
             ComparatorOperators::TYPE_STRING,
             ComparatorOperators::TYPE_NUMBER,
         ];
-    }
-
-    /**
-     * @param string $withValue
-     *
-     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
-     *
-     * @return bool
-     */
-    public function isValidValue($withValue)
-    {
-        if (!is_scalar($withValue)) {
-            throw new ComparatorException('Only scalar value can be used together with "contains" comparator.');
-        }
-
-        return true;
     }
 }

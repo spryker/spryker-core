@@ -2,8 +2,8 @@
     "error": [
         {
             "severity": "error",
-            "line_from": 37,
-            "line_to": 37,
+            "line_from": 38,
+            "line_to": 38,
             "type": "InvalidReturnType",
             "message": "The declared return type 'array<array-key, array<array-key, int>>' for Spryker\\Zed\\ProductLabelSearch\\Business\\Mapper\\ProductLabelMapper::mapProductLabelTransferToProductLabelIdsByIdProductAbstractAndStoreName is incorrect, got 'array<array-key, array<array-key, int|list<int|null>>>'",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelSearch/src/Spryker/Zed/ProductLabelSearch/Business/Mapper/ProductLabelMapper.php",
@@ -14,8 +14,8 @@
         },
         {
             "severity": "error",
-            "line_from": 49,
-            "line_to": 49,
+            "line_from": 50,
+            "line_to": 50,
             "type": "InvalidReturnStatement",
             "message": "The inferred type 'array<array-key, array<array-key, int|list<int|null>>>' does not match the declared return type 'array<array-key, array<array-key, int>>' for Spryker\\Zed\\ProductLabelSearch\\Business\\Mapper\\ProductLabelMapper::mapProductLabelTransferToProductLabelIdsByIdProductAbstractAndStoreName",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelSearch/src/Spryker/Zed/ProductLabelSearch/Business/Mapper/ProductLabelMapper.php",
@@ -40,8 +40,8 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 43,
-            "line_to": 43,
+            "line_from": 44,
+            "line_to": 44,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getStores on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelSearch/src/Spryker/Zed/ProductLabelSearch/Business/Mapper/ProductLabelMapper.php",
@@ -52,8 +52,8 @@
         },
         {
             "severity": "info",
-            "line_from": 45,
-            "line_to": 45,
+            "line_from": 46,
+            "line_to": 46,
             "type": "PossiblyNullArrayOffset",
             "message": "Cannot access value on variable $productLabelIdsMap[int|mixed|null] using possibly null offset int|mixed|null",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelSearch/src/Spryker/Zed/ProductLabelSearch/Business/Mapper/ProductLabelMapper.php",
@@ -64,8 +64,8 @@
         },
         {
             "severity": "info",
-            "line_from": 45,
-            "line_to": 45,
+            "line_from": 46,
+            "line_to": 46,
             "type": "PossiblyInvalidArrayAssignment",
             "message": "Cannot access array value on non-array variable $productLabelIdsMap[int|mixed|null][mixed|null|string] of type int",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelSearch/src/Spryker/Zed/ProductLabelSearch/Business/Mapper/ProductLabelMapper.php",
@@ -76,8 +76,8 @@
         },
         {
             "severity": "info",
-            "line_from": 78,
-            "line_to": 78,
+            "line_from": 80,
+            "line_to": 80,
             "type": "PossiblyNullArrayOffset",
             "message": "Cannot access value on variable $productLabelIdsMappedByIdProductAbstract using possibly null offset int|null",
             "file_name": "vendor/spryker/spryker/Bundles/ProductLabelSearch/src/Spryker/Zed/ProductLabelSearch/Business/PageData/ProductPageDataTransferExpander.php",
@@ -85,6 +85,18 @@
             "selected_text": "$productLabelIdsMappedByIdProductAbstract",
             "error_level": 3,
             "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 50,
+            "line_to": 50,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ProductLabelTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelSearch/src/Spryker/Zed/ProductLabelSearch/Communication/Plugin/Publisher/ProductLabelSearchPublisherTriggerPlugin.php",
+            "snippet": "            ->getArrayCopy();",
+            "selected_text": "getArrayCopy",
+            "error_level": 3,
+            "shortcode": 113
         }
     ],
     "deprecation": [
@@ -101,5 +113,5 @@
             "shortcode": 152
         }
     ],
-    "count": 8
+    "count": 9
 }

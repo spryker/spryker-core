@@ -8,8 +8,12 @@
 namespace Spryker\Zed\ProductLabelStorage\Business\Writer;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ProductLabelCollectionTransfer;
+use Generated\Shared\Transfer\ProductLabelConditionsTransfer;
 use Generated\Shared\Transfer\ProductLabelCriteriaTransfer;
 use Generated\Shared\Transfer\ProductLabelDictionaryStorageTransfer;
+use Generated\Shared\Transfer\ProductLabelTransfer;
+use Generated\Shared\Transfer\SortTransfer;
 use Spryker\Zed\ProductLabelStorage\Business\Mapper\ProductLabelDictionaryItemMapper;
 use Spryker\Zed\ProductLabelStorage\Dependency\Facade\ProductLabelStorageToProductLabelFacadeInterface;
 use Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageEntityManagerInterface;
@@ -60,10 +64,9 @@ class ProductLabelDictionaryStorageWriter implements ProductLabelDictionaryStora
      */
     public function writeProductLabelDictionaryStorageCollection(): void
     {
-        $productLabelTransfers = $this->productLabelFacade
-            ->getActiveLabelsByCriteria(new ProductLabelCriteriaTransfer());
+        $productLabelCollectionTransfer = $this->getProductLabelCollection();
 
-        if (!$productLabelTransfers) {
+        if (!count($productLabelCollectionTransfer->getProductLabels())) {
             $this->productLabelStorageEntityManager->deleteAllProductLabelDictionaryStorageEntities();
 
             return;
@@ -71,7 +74,7 @@ class ProductLabelDictionaryStorageWriter implements ProductLabelDictionaryStora
 
         $productLabelDictionaryItemTransfersMappedByStoreAndLocale = $this->productLabelDictionaryItemMapper
             ->mapProductLabelTransfersToProductLabelDictionaryItemTransfersByStoreNameAndLocaleName(
-                $productLabelTransfers,
+                $productLabelCollectionTransfer,
             );
 
         $productLabelDictionaryStorageTransfers = $this->productLabelStorageRepository
@@ -161,5 +164,26 @@ class ProductLabelDictionaryStorageWriter implements ProductLabelDictionaryStora
                 );
             }
         }
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ProductLabelCollectionTransfer
+     */
+    protected function getProductLabelCollection(): ProductLabelCollectionTransfer
+    {
+        $productLabelCriteriaTransfer = (new ProductLabelCriteriaTransfer())
+            ->setProductLabelConditions(
+                (new ProductLabelConditionsTransfer())
+                    ->setIsActive(true),
+            )
+            ->setSortCollection(new ArrayObject([
+                (new SortTransfer())->setField(ProductLabelTransfer::IS_EXCLUSIVE)->setIsAscending(false),
+                (new SortTransfer())->setField(ProductLabelTransfer::POSITION)->setIsAscending(true),
+            ]))
+            ->setWithProductLabelStores(true)
+            ->setWithProductLabelLocalizedAttributes(true)
+            ->setWithProductLabelProductAbstracts(true);
+
+        return $this->productLabelFacade->getProductLabelCollection($productLabelCriteriaTransfer);
     }
 }

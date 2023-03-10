@@ -16,5 +16,5 @@ interface ProductPageDataTransferExpanderInterface
      *
      * @return \Generated\Shared\Transfer\ProductPageLoadTransfer
      */
-    public function expandProductPageDataTransferWithProductLabelIds(ProductPageLoadTransfer $productPageLoadTransfer);
+    public function expandProductPageDataTransferWithProductLabelIds(ProductPageLoadTransfer $productPageLoadTransfer): ProductPageLoadTransfer;
 }

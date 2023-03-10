@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductLabelStorage\Dependency\Facade;
 
 use Generated\Shared\Transfer\FilterTransfer;
+use Generated\Shared\Transfer\ProductLabelCollectionTransfer;
 use Generated\Shared\Transfer\ProductLabelCriteriaTransfer;
 
 class ProductLabelStorageToProductLabelFacadeBridge implements ProductLabelStorageToProductLabelFacadeInterface
@@ -48,10 +49,11 @@ class ProductLabelStorageToProductLabelFacadeBridge implements ProductLabelStora
     /**
      * @param \Generated\Shared\Transfer\ProductLabelCriteriaTransfer $productLabelCriteriaTransfer
      *
-     * @return array<\Generated\Shared\Transfer\ProductLabelTransfer>
+     * @return \Generated\Shared\Transfer\ProductLabelCollectionTransfer
      */
-    public function getActiveLabelsByCriteria(ProductLabelCriteriaTransfer $productLabelCriteriaTransfer): array
-    {
-        return $this->productLabelFacade->getActiveLabelsByCriteria($productLabelCriteriaTransfer);
+    public function getProductLabelCollection(
+        ProductLabelCriteriaTransfer $productLabelCriteriaTransfer
+    ): ProductLabelCollectionTransfer {
+        return $this->productLabelFacade->getProductLabelCollection($productLabelCriteriaTransfer);
     }
 }

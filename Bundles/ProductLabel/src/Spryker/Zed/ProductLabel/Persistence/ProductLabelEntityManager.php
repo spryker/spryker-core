@@ -65,9 +65,12 @@ class ProductLabelEntityManager extends AbstractEntityManager implements Product
             $productLabelTransfer,
             $productLabelEntity,
         );
+
+        $modifiedColumns = $productLabelEntity->getModifiedColumns();
+
         $productLabelEntity->save();
 
-        return $productLabelEntity->getModifiedColumns();
+        return $modifiedColumns;
     }
 
     /**

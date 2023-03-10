@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductLabelDiscountConnector;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductLabelDiscountConnector\Dependency\Facade\ProductLabelDiscountConnectorToDiscountBridge;
-use Spryker\Zed\ProductLabelDiscountConnector\Dependency\Facade\ProductLabelDiscountConnectorToProductLabelBridge;
+use Spryker\Zed\ProductLabelDiscountConnector\Dependency\Facade\ProductLabelDiscountConnectorToProductLabelFacadeBridge;
 use Spryker\Zed\ProductLabelDiscountConnector\Dependency\QueryContainer\ProductLabelDiscountConnectorToProductLabelBridge as ProductLabelDiscountConnectorToProductLabelQueryContainerBridge;
 
 /**
@@ -56,7 +56,7 @@ class ProductLabelDiscountConnectorDependencyProvider extends AbstractBundleDepe
     protected function addProductLabelFacade(Container $container)
     {
         $container->set(static::FACADE_PRODUCT_LABEL, function (Container $container) {
-            return new ProductLabelDiscountConnectorToProductLabelBridge($container->getLocator()->productLabel()->facade());
+            return new ProductLabelDiscountConnectorToProductLabelFacadeBridge($container->getLocator()->productLabel()->facade());
         });
     }
 

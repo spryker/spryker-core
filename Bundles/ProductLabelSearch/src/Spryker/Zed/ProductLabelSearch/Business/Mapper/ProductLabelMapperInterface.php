@@ -7,12 +7,14 @@
 
 namespace Spryker\Zed\ProductLabelSearch\Business\Mapper;
 
+use Generated\Shared\Transfer\ProductLabelCollectionTransfer;
+
 interface ProductLabelMapperInterface
 {
     /**
-     * @param array<\Generated\Shared\Transfer\ProductLabelTransfer> $productLabelTransfers
+     * @param \Generated\Shared\Transfer\ProductLabelCollectionTransfer $productLabelCollectionTransfer
      *
      * @return array<array<int>>
      */
-    public function getProductLabelIdsMappedByIdProductAbstractAndStoreName(array $productLabelTransfers): array;
+    public function getProductLabelIdsMappedByIdProductAbstractAndStoreName(ProductLabelCollectionTransfer $productLabelCollectionTransfer): array;
 }
