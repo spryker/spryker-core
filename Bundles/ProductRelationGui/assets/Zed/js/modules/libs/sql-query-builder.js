@@ -38,6 +38,8 @@ SqlQueryBuilder.prototype.getQuerySet = function () {
         return [];
     }
 
+    this.enableSubmitButton();
+
     return this.builder.queryBuilder('getRules');
 };
 
@@ -51,20 +53,14 @@ SqlQueryBuilder.prototype.loadQuerySet = function () {
 SqlQueryBuilder.prototype.onFormSubmit = function () {
     var self = this;
     this.productRelationFormSubmitBtn.on('click', function (event) {
-        event.preventDefault();
-
         if (!self.builder.queryBuilder('validate')) {
+            event.preventDefault();
             $('.tabs-container').find('[data-tab-content-id="tab-content-assign-products"]').addClass('error');
 
             $('.flash-messages').html('<div class="alert alert-danger">Query rule not provided.</div>');
 
             return;
         }
-
-        var json = JSON.stringify(self.getQuerySet());
-
-        self.productRelationQuerySet.val(json);
-        self.productRelationForm.submit();
     });
 };
 
@@ -101,6 +97,7 @@ SqlQueryBuilder.prototype.watchForQueryRuleUpdates = function () {
         'afterAddGroup.queryBuilder afterAddRule.queryBuilder afterUpdateRuleValue.queryBuilder	afterUpdateRuleFilter.queryBuilder afterUpdateRuleOperator.queryBuilder afterApplyRuleFlags.queryBuilder afterUpdateGroupCondition.queryBuilder afterDeleteRule.queryBuilder afterDeleteGroup.queryBuilder',
         function () {
             self.updateTable();
+            self.updateQuerySetField();
         },
     );
 };
@@ -110,6 +107,12 @@ SqlQueryBuilder.prototype.updateTable = function () {
     var json = JSON.stringify(this.getQuerySet());
 
     this.reloadQueryBuilderTable(table, json);
+};
+
+SqlQueryBuilder.prototype.updateQuerySetField = function () {
+    var json = JSON.stringify(this.getQuerySet());
+
+    this.productRelationQuerySet.val(json);
 };
 
 SqlQueryBuilder.prototype.initializeRuleProductsTable = function () {
@@ -128,6 +131,11 @@ SqlQueryBuilder.prototype.reloadQueryBuilderTable = function (table, json) {
     var newUrl = this.replaceUrlParam('data', json, url);
 
     table.ajax.url(newUrl).load();
+};
+
+SqlQueryBuilder.prototype.enableSubmitButton = function () {
+    this.productRelationFormSubmitBtn[0].disabled = false;
+    this.productRelationFormSubmitBtn[0].classList.remove('disabled');
 };
 
 module.exports = SqlQueryBuilder;
