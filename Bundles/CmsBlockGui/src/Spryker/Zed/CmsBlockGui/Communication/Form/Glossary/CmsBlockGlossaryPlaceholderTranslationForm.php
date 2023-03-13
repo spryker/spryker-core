@@ -102,6 +102,9 @@ class CmsBlockGlossaryPlaceholderTranslationForm extends AbstractType
             'constraints' => [
                 $this->getFactory()->createTwigContentConstraint(),
             ],
+            'sanitize_xss' => true,
+            'allowed_attributes' => ['style'],
+            'allowed_html_tags' => ['iframe'],
         ]);
 
         return $this;

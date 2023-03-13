@@ -245,6 +245,9 @@ class CmsGlossaryForm extends AbstractType
             'attr' => [
                 'class' => 'html-editor',
             ],
+            'sanitize_xss' => true,
+            'allowed_attributes' => ['style'],
+            'allowed_html_tags' => ['iframe'],
         ]);
 
         return $this;

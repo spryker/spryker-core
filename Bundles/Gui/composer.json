@@ -15,7 +15,7 @@
         "spryker/twig-extension": "^1.0.0",
         "spryker/util-number": "^1.0.0",
         "spryker/util-sanitize": "^2.0.0",
-        "spryker/util-sanitize-xss": "^1.0.0",
+        "spryker/util-sanitize-xss": "^1.1.0",
         "spryker/util-text": "^1.1.0"
     },
     "require-dev": {

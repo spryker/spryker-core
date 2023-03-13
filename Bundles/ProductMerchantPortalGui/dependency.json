@@ -1,5 +1,6 @@
 {
     "include": {
+        "spryker/gui": "Provides `sanitize_xss` functionality.",
         "spryker/merchant-product-approval": "Makes sure the connection between Merchant and ProductApproval exist.",
         "spryker/transfer": "Provides transfer objects definition with strict types.",
         "spryker/zed-ui": "Zed UI provides layout templates and frontend infrastructure."

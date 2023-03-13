@@ -126,6 +126,7 @@ class ProductImageFormType extends AbstractType
             ],
             'label' => static::LABEL_SMALL_IMAGE_URL,
             'required' => true,
+            'sanitize_xss' => true,
         ]);
 
         return $this;
@@ -144,6 +145,7 @@ class ProductImageFormType extends AbstractType
             ],
             'label' => static::LABEL_LARGE_IMAGE_URL,
             'required' => true,
+            'sanitize_xss' => true,
         ]);
 
         return $this;

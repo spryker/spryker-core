@@ -117,6 +117,44 @@ class UtilSanitizeXssServiceTest extends Unit
     }
 
     /**
+     * @dataProvider getSanitizeXssTwigFunctionsDataProvider
+     *
+     * @param string $text
+     * @param string $expectedResult
+     *
+     * @return void
+     */
+    public function testSanitizeXssTwigFunctions(string $text, string $expectedResult): void
+    {
+        // Act
+        $sanitizedText = $this->getUtilSanitizeXssService()->sanitizeXss($text);
+
+        // Assert
+        $this->assertSame($expectedResult, $sanitizedText);
+    }
+
+    /**
+     * @return array<string, list<string>>
+     */
+    protected function getSanitizeXssTwigFunctionsDataProvider(): array
+    {
+        return [
+            'Should not remove valid twig functions.' => [
+                '{{ twig_file() }} {{twig_file([1, 2, 3])}} {{ twigFile("arguments") }}',
+                '{{ twig_file() }} {{twig_file([1, 2, 3])}} {{ twigFile("arguments") }}',
+            ],
+            'Should sanitize invalid twig functions.' => [
+                '{{ <script>alert("Hack");</script> }}{{<span style="font-size: 36px;"><b>&lt;script&gt;alert("Hack");&lt;/script&gt;</b></span>}}{{ <img SRC=&#x6A&#x61&#x76&#x61&#x73&#x63&#x72&#x69&#x70&#x74&#x3A&#x61&#x6C&#x65&#x72&#x74&#x28&#x27&#x58&#x53&#x53&#x27&#x29 /> }}{{twig_file([1, 2, 3])}}',
+                '{{  }}{{<span ><b>alert&#40;"Hack"&#41;;</b></span>}}{{ <img  /> }}{{twig_file([1, 2, 3])}}',
+            ],
+            'Should sanitize twig function arguments.' => [
+                '{{twig-function(<script>alert("Hack");</script>)}}{{ twig_function(<span style="font-size: 36px;"><b>&lt;script&gt;alert("Hack");&lt;/script&gt;</b></span>) }}{{ twig_file(<script>alert("Hack");</script>) }} {{ twigFile(<img SRC=&#x6A&#x61&#x76&#x61&#x73&#x63&#x72&#x69&#x70&#x74&#x3A&#x61&#x6C&#x65&#x72&#x74&#x28&#x27&#x58&#x53&#x53&#x27&#x29 />) }}',
+                '{{twig-function()}}{{ twig_function(<span ><b>alert&#40;"Hack"&#41;;</b></span>) }}{{ twig_file&#40;&#41; }} {{ twigFile(<img  />) }}',
+            ],
+        ];
+    }
+
+    /**
      * @return \Spryker\Service\UtilSanitizeXss\UtilSanitizeXssServiceInterface
      */
     protected function getUtilSanitizeXssService(): UtilSanitizeXssServiceInterface
