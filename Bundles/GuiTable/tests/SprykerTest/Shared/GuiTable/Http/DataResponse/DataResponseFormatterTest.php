@@ -13,6 +13,8 @@ use Generated\Shared\Transfer\GuiTableColumnConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableDataResponseTransfer;
 use Generated\Shared\Transfer\GuiTableRowDataResponseTransfer;
+use Spryker\Shared\GuiTable\Configuration\GuiTableConfigInterface;
+use Spryker\Shared\GuiTable\Http\DataResponse\DataResponseFormatter;
 use SprykerTest\Shared\GuiTable\GuiTableSharedTester;
 
 /**
@@ -34,6 +36,11 @@ class DataResponseFormatterTest extends Unit
      * @var string
      */
     protected const KEY_DATA_RESPONSE_ARRAY_DATA = 'data';
+
+    /**
+     * @var string
+     */
+    protected const TIMEZONE_UTC = 'UTC';
 
     /**
      * @var int
@@ -68,7 +75,12 @@ class DataResponseFormatterTest extends Unit
     /**
      * @var string
      */
-    protected const TEST_VALUE_DATE_FORMATTED = '2023-01-01T01:00:00+01:00';
+    protected const TEST_VALUE_DATE_FORMATTED_DEFAULT = '2023-01-01T01:00:00+01:00';
+
+    /**
+     * @var string
+     */
+    protected const TEST_VALUE_DATE_FORMATTED_UTC = '2023-01-01T00:00:00+00:00';
 
     /**
      * @var string
@@ -102,12 +114,16 @@ class DataResponseFormatterTest extends Unit
             static::KEY_DATA_RESPONSE_ARRAY_DATA => static::TEST_TABLE_DATA,
         ];
 
+        $dataResponseFormatter = new DataResponseFormatter(
+            $this->tester->createGuiTableToUtilDateTimeServiceBridge(),
+            $this->createGuiTableConfigMock(),
+        );
+
         // Act
-        $formattedGuiTableDataResponse = $this->tester->createDataResponseFormatter()
-            ->formatGuiTableDataResponse(
-                $guiTableDataResponseTransfer,
-                new GuiTableConfigurationTransfer(),
-            );
+        $formattedGuiTableDataResponse = $dataResponseFormatter->formatGuiTableDataResponse(
+            $guiTableDataResponseTransfer,
+            new GuiTableConfigurationTransfer(),
+        );
 
         // Assert
         $this->assertEquals($expectedResult, $formattedGuiTableDataResponse);
@@ -116,7 +132,7 @@ class DataResponseFormatterTest extends Unit
     /**
      * @return void
      */
-    public function testFormatGuiTableDataResponseFormatsDateTime(): void
+    public function testFormatGuiTableDataResponseFormatsDateTimeWhenTimezoneConfigNotSpecified(): void
     {
         // Arrange
         $guiTableDataResponseTransfer = $this->createGuiTableDataResponseTransfer();
@@ -124,16 +140,47 @@ class DataResponseFormatterTest extends Unit
             ->addColumn((new GuiTableColumnConfigurationTransfer())->setId(static::TEST_COLUMN_ID_1)->setType(static::TEST_TYPE_DATE))
             ->addColumn((new GuiTableColumnConfigurationTransfer())->setId(static::TEST_COLUMN_ID_2)->setType('column_type1'));
 
+        $dataResponseFormatter = new DataResponseFormatter(
+            $this->tester->createGuiTableToUtilDateTimeServiceBridge(),
+            $this->createGuiTableConfigMock(),
+        );
+
         // Act
-        $formattedGuiTableDataResponse = $this->tester->createDataResponseFormatter()
-            ->formatGuiTableDataResponse(
-                $guiTableDataResponseTransfer,
-                $guiTableConfigurationTransfer,
-            );
+        $formattedGuiTableDataResponse = $dataResponseFormatter->formatGuiTableDataResponse(
+            $guiTableDataResponseTransfer,
+            $guiTableConfigurationTransfer,
+        );
 
         // Assert
-        $this->assertSame(static::TEST_VALUE_DATE_FORMATTED, $formattedGuiTableDataResponse[static::KEY_DATA_RESPONSE_ARRAY_DATA][0][static::TEST_COLUMN_ID_1]);
-        $this->assertSame(static::TEST_VALUE_DATE_FORMATTED, $formattedGuiTableDataResponse[static::KEY_DATA_RESPONSE_ARRAY_DATA][1][static::TEST_COLUMN_ID_1]);
+        $this->assertSame(static::TEST_VALUE_DATE_FORMATTED_DEFAULT, $formattedGuiTableDataResponse[static::KEY_DATA_RESPONSE_ARRAY_DATA][0][static::TEST_COLUMN_ID_1]);
+        $this->assertSame(static::TEST_VALUE_DATE_FORMATTED_DEFAULT, $formattedGuiTableDataResponse[static::KEY_DATA_RESPONSE_ARRAY_DATA][1][static::TEST_COLUMN_ID_1]);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFormatGuiTableDataResponseFormatsDateTimeWhenTimezoneConfigIsProvided(): void
+    {
+        // Arrange
+        $guiTableDataResponseTransfer = $this->createGuiTableDataResponseTransfer();
+        $guiTableConfigurationTransfer = (new GuiTableConfigurationTransfer())
+            ->addColumn((new GuiTableColumnConfigurationTransfer())->setId(static::TEST_COLUMN_ID_1)->setType(static::TEST_TYPE_DATE))
+            ->addColumn((new GuiTableColumnConfigurationTransfer())->setId(static::TEST_COLUMN_ID_2)->setType('column_type1'));
+
+        $dataResponseFormatter = new DataResponseFormatter(
+            $this->tester->createGuiTableToUtilDateTimeServiceBridge(),
+            $this->createGuiTableConfigMock(static::TIMEZONE_UTC),
+        );
+
+        // Act
+        $formattedGuiTableDataResponse = $dataResponseFormatter->formatGuiTableDataResponse(
+            $guiTableDataResponseTransfer,
+            $guiTableConfigurationTransfer,
+        );
+
+        // Assert
+        $this->assertSame(static::TEST_VALUE_DATE_FORMATTED_UTC, $formattedGuiTableDataResponse[static::KEY_DATA_RESPONSE_ARRAY_DATA][0][static::TEST_COLUMN_ID_1]);
+        $this->assertSame(static::TEST_VALUE_DATE_FORMATTED_UTC, $formattedGuiTableDataResponse[static::KEY_DATA_RESPONSE_ARRAY_DATA][1][static::TEST_COLUMN_ID_1]);
     }
 
     /**
@@ -153,5 +200,18 @@ class DataResponseFormatterTest extends Unit
             ->setPage(static::TEST_PARAM_PAGE)
             ->setPageSize(static::TEST_PARAM_PAGE_SIZE)
             ->setTotal(static::TEST_PARAM_TOTAL);
+    }
+
+    /**
+     * @param string|null $timezone
+     *
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\GuiTable\Configuration\GuiTableConfigInterface
+     */
+    protected function createGuiTableConfigMock(?string $timezone = null): GuiTableConfigInterface
+    {
+        $guiTableConfigMock = $this->getMockBuilder(GuiTableConfigInterface::class)->getMock();
+        $guiTableConfigMock->method('getDefaultTimezone')->willReturn($timezone);
+
+        return $guiTableConfigMock;
     }
 }

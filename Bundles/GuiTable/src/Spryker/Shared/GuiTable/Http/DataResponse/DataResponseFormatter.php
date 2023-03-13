@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableDataResponseTransfer;
 use Generated\Shared\Transfer\GuiTableRowDataResponseTransfer;
 use Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface;
+use Spryker\Shared\GuiTable\Configuration\GuiTableConfigInterface;
 use Spryker\Shared\GuiTable\Dependency\Service\GuiTableToUtilDateTimeServiceInterface;
 
 class DataResponseFormatter implements DataResponseFormatterInterface
@@ -26,11 +27,18 @@ class DataResponseFormatter implements DataResponseFormatterInterface
     protected GuiTableToUtilDateTimeServiceInterface $utilDateTimeService;
 
     /**
-     * @param \Spryker\Shared\GuiTable\Dependency\Service\GuiTableToUtilDateTimeServiceInterface $utilDateTimeService
+     * @var \Spryker\Shared\GuiTable\Configuration\GuiTableConfigInterface
      */
-    public function __construct(GuiTableToUtilDateTimeServiceInterface $utilDateTimeService)
+    protected GuiTableConfigInterface $guiTableConfig;
+
+    /**
+     * @param \Spryker\Shared\GuiTable\Dependency\Service\GuiTableToUtilDateTimeServiceInterface $utilDateTimeService
+     * @param \Spryker\Shared\GuiTable\Configuration\GuiTableConfigInterface $guiTableConfig
+     */
+    public function __construct(GuiTableToUtilDateTimeServiceInterface $utilDateTimeService, GuiTableConfigInterface $guiTableConfig)
     {
         $this->utilDateTimeService = $utilDateTimeService;
+        $this->guiTableConfig = $guiTableConfig;
     }
 
     /**
@@ -70,10 +78,11 @@ class DataResponseFormatter implements DataResponseFormatterInterface
 
         $indexedColumnTypes = $this->getIndexedColumnTypesByColumnIds($guiTableConfigurationTransfer);
 
+        $defaultTimezone = $this->guiTableConfig->getDefaultTimezone();
         foreach ($rows as $rowKey => $row) {
             foreach ($row as $idColumn => $value) {
                 if (isset($indexedColumnTypes[$idColumn]) && $indexedColumnTypes[$idColumn] === GuiTableConfigurationBuilderInterface::COLUMN_TYPE_DATE) {
-                    $rows[$rowKey][$idColumn] = $value ? $this->utilDateTimeService->formatDateTimeToIso8601($value) : null;
+                    $rows[$rowKey][$idColumn] = $value ? $this->utilDateTimeService->formatDateTimeToIso8601($value, $defaultTimezone) : null;
                 }
             }
         }

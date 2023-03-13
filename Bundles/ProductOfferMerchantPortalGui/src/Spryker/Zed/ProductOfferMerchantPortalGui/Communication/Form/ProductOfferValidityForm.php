@@ -7,13 +7,11 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form;
 
-use DateTime;
 use Generated\Shared\Transfer\ProductOfferValidityTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\Constraint\ValidFromRangeConstraint;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\Constraint\ValidToRangeConstraint;
-use Symfony\Component\Form\CallbackTransformer;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Spryker\Zed\ZedUi\Communication\Form\Type\DateTimeIso8601Type;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -59,11 +57,6 @@ class ProductOfferValidityForm extends AbstractType
      * @var string
      */
     protected const PLACEHOLDER_VALID_TO = 'To';
-
-    /**
-     * @var string
-     */
-    protected const DATE_TIME_FORMAT = 'Y-m-d H:i:s';
 
     /**
      * @return string
@@ -119,7 +112,7 @@ class ProductOfferValidityForm extends AbstractType
      */
     protected function addValidFromField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_VALID_FROM, DateTimeType::class, [
+        $builder->add(static::FIELD_VALID_FROM, DateTimeIso8601Type::class, [
             'required' => false,
             'label' => static::LABEL_VALID_FROM,
             'constraints' => [
@@ -131,9 +124,6 @@ class ProductOfferValidityForm extends AbstractType
             ],
         ]);
 
-        $builder->get(static::FIELD_VALID_FROM)
-            ->addModelTransformer($this->createDateTimeModelTransformer());
-
         return $this;
     }
 
@@ -144,7 +134,7 @@ class ProductOfferValidityForm extends AbstractType
      */
     protected function addValidToField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_VALID_TO, DateTimeType::class, [
+        $builder->add(static::FIELD_VALID_TO, DateTimeIso8601Type::class, [
             'required' => false,
             'label' => static::LABEL_VALID_TO,
             'constraints' => [
@@ -156,32 +146,6 @@ class ProductOfferValidityForm extends AbstractType
             ],
         ]);
 
-        $builder->get(static::FIELD_VALID_TO)
-            ->addModelTransformer($this->createDateTimeModelTransformer());
-
         return $this;
-    }
-
-    /**
-     * @return \Symfony\Component\Form\CallbackTransformer
-     */
-    protected function createDateTimeModelTransformer(): CallbackTransformer
-    {
-        return new CallbackTransformer(
-            function ($value) {
-                if ($value !== null) {
-                    return new DateTime($value);
-                }
-
-                return null;
-            },
-            function ($value) {
-                if ($value instanceof DateTime) {
-                    $value = $value->format(static::DATE_TIME_FORMAT);
-                }
-
-                return $value;
-            },
-        );
     }
 }

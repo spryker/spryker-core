@@ -26,6 +26,13 @@ use Spryker\Shared\UtilDateTime\UtilDateTimeConstants;
 class UtilDateTimeServiceTest extends Unit
 {
     /**
+     * @uses \Spryker\Service\UtilDateTime\Model\DateTimeFormatter::DEFAULT_TIME_ZONE
+     *
+     * @var string
+     */
+    protected const DEFAULT_DATE_TIME_ZONE = 'Europe/Berlin';
+
+    /**
      * @var \SprykerTest\Service\UtilDateTime\UtilDateTimeServiceTester
      */
     protected $tester;
@@ -122,6 +129,43 @@ class UtilDateTimeServiceTest extends Unit
             ['1980-12-06 23:00:00', 'H:i', '23:00'],
             ['1980-12-06 23:00:00', 'h:i', '11:00'],
             [new DateTime('1980-12-06 23:00:00', new DateTimeZone('UTC')), 'h:i', '11:00'],
+        ];
+    }
+
+    /**
+     * @dataProvider testFormatDateTimeToIso8601ReturnsProperlyFormattedDateDataProvider
+     *
+     * @param \DateTime|string $dateTime
+     * @param string|null $timezone
+     * @param string $expectedResult
+     *
+     * @return void
+     */
+    public function testFormatDateTimeToIso8601ReturnsProperlyFormattedDate($dateTime, ?string $timezone, string $expectedResult): void
+    {
+        // Act
+        $utilDateTimeService = $this->getService([
+            UtilDateTimeConstants::DATE_TIME_ZONE => static::DEFAULT_DATE_TIME_ZONE,
+        ]);
+
+        $formattedDateTime = $utilDateTimeService->formatDateTimeToIso8601($dateTime, $timezone);
+
+        // Assert
+        $this->assertSame($expectedResult, $formattedDateTime);
+    }
+
+    /**
+     * @return list<array<mixed>>
+     */
+    protected function testFormatDateTimeToIso8601ReturnsProperlyFormattedDateDataProvider(): array
+    {
+        return [
+            ['1980-12-06 23:59:00', 'UTC', '1980-12-06T23:59:00+00:00'],
+            [new DateTime('1980-12-06 23:59:00'), 'UTC', '1980-12-06T23:59:00+00:00'],
+            ['1980-12-06 23:59:00', 'EET', '1980-12-07T01:59:00+02:00'],
+            [new DateTime('1980-12-06 23:59:00'), 'EET', '1980-12-07T01:59:00+02:00'],
+            ['1980-12-06 23:59:00', null, '1980-12-07T00:59:00+01:00'],
+            [new DateTime('1980-12-06 23:59:00'), null, '1980-12-07T00:59:00+01:00'],
         ];
     }
 

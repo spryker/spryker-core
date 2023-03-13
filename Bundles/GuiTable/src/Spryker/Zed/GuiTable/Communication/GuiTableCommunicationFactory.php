@@ -97,7 +97,10 @@ class GuiTableCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createDataResponseFormatter(): DataResponseFormatterInterface
     {
-        return new DataResponseFormatter($this->getUtilDateTimeService());
+        return new DataResponseFormatter(
+            $this->getUtilDateTimeService(),
+            $this->getConfig(),
+        );
     }
 
     /**

@@ -69,12 +69,13 @@ class DateTimeFormatter implements DateTimeFormatterInterface
 
     /**
      * @param \DateTime|string $dateTime
+     * @param string|null $timezone
      *
      * @return string
      */
-    public function formatDateTimeToIso8601($dateTime): string
+    public function formatDateTimeToIso8601($dateTime, ?string $timezone = null): string
     {
-        return $this->format($dateTime, DateTime::ATOM, DateTime::ATOM);
+        return $this->format($dateTime, DateTime::ATOM, DateTime::ATOM, $timezone);
     }
 
     /**
@@ -91,12 +92,17 @@ class DateTimeFormatter implements DateTimeFormatterInterface
      * @param \DateTime|string $dateTime
      * @param string $formatConfigConstant
      * @param string $defaultFormat
+     * @param string|null $timezone
      *
      * @return string|null
      */
-    protected function format($dateTime, $formatConfigConstant, $defaultFormat)
+    protected function format($dateTime, $formatConfigConstant, $defaultFormat, ?string $timezone = null)
     {
-        $dateTimeZone = new DateTimeZone($this->config->get(UtilDateTimeConstants::DATE_TIME_ZONE, static::DEFAULT_TIME_ZONE));
+        if (!$timezone) {
+            $timezone = $this->config->get(UtilDateTimeConstants::DATE_TIME_ZONE, static::DEFAULT_TIME_ZONE);
+        }
+
+        $dateTimeZone = new DateTimeZone($timezone);
         $configuredFormat = $this->config->get($formatConfigConstant, $defaultFormat);
 
         if (!($dateTime instanceof DateTime)) {

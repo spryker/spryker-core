@@ -33,4 +33,9 @@ interface GuiTableConfigInterface
      * @return string
      */
     public function getDefaultSearchPlaceholder(): string;
+
+    /**
+     * @return string|null
+     */
+    public function getDefaultTimezone(): ?string;
 }

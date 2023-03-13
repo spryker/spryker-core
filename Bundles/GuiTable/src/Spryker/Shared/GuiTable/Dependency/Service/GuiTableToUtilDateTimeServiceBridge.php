@@ -24,11 +24,12 @@ class GuiTableToUtilDateTimeServiceBridge implements GuiTableToUtilDateTimeServi
 
     /**
      * @param \DateTime|string $dateTime
+     * @param string|null $timezone
      *
      * @return string
      */
-    public function formatDateTimeToIso8601($dateTime): string
+    public function formatDateTimeToIso8601($dateTime, ?string $timezone = null): string
     {
-        return $this->utilDateTimeService->formatDateTimeToIso8601($dateTime);
+        return $this->utilDateTimeService->formatDateTimeToIso8601($dateTime, $timezone);
     }
 }

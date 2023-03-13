@@ -69,4 +69,17 @@ class GuiTableConfig extends AbstractBundleConfig implements GuiTableConfigInter
     {
         return 'Search';
     }
+
+    /**
+     * Specification:
+     * - Defines default timezone for formatting `DateTime` data to ISO 8601 format.
+     *
+     * @api
+     *
+     * @return string|null
+     */
+    public function getDefaultTimezone(): ?string
+    {
+        return null;
+    }
 }

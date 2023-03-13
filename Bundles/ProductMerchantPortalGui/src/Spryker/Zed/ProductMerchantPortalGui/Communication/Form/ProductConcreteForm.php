@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Form;
 
-use DateTime;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
@@ -15,10 +14,9 @@ use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Constraint\ValidFrom
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Constraint\ValidToRangeConstraint;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\EventSubscriber\ProductImageSetsEventSubscriber;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\Type\ProductImageSetFormType;
-use Symfony\Component\Form\CallbackTransformer;
+use Spryker\Zed\ZedUi\Communication\Form\Type\DateTimeIso8601Type;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
@@ -65,11 +63,6 @@ class ProductConcreteForm extends AbstractType
      * @var string
      */
     protected const LABEL_STOCK = 'Stock';
-
-    /**
-     * @var string
-     */
-    protected const DATE_TIME_FORMAT = 'Y-m-d H:i:s';
 
     /**
      * @var string
@@ -214,7 +207,7 @@ class ProductConcreteForm extends AbstractType
      */
     protected function addValidFromField(FormBuilderInterface $builder)
     {
-        $builder->add(ProductConcreteTransfer::VALID_FROM, DateTimeType::class, [
+        $builder->add(ProductConcreteTransfer::VALID_FROM, DateTimeIso8601Type::class, [
             'required' => false,
             'label' => static::LABEL_VALID_FROM,
             'constraints' => [
@@ -222,9 +215,6 @@ class ProductConcreteForm extends AbstractType
             ],
             'widget' => static::WIDGET_SINGLE_TEXT,
         ]);
-
-        $builder->get(ProductConcreteTransfer::VALID_FROM)
-            ->addModelTransformer($this->createDateTimeModelTransformer());
 
         return $this;
     }
@@ -236,7 +226,7 @@ class ProductConcreteForm extends AbstractType
      */
     protected function addValidToField(FormBuilderInterface $builder)
     {
-        $builder->add(ProductConcreteTransfer::VALID_TO, DateTimeType::class, [
+        $builder->add(ProductConcreteTransfer::VALID_TO, DateTimeIso8601Type::class, [
             'required' => false,
             'label' => static::LABEL_VALID_TO,
             'constraints' => [
@@ -245,33 +235,7 @@ class ProductConcreteForm extends AbstractType
             'widget' => static::WIDGET_SINGLE_TEXT,
         ]);
 
-        $builder->get(ProductConcreteTransfer::VALID_TO)
-            ->addModelTransformer($this->createDateTimeModelTransformer());
-
         return $this;
-    }
-
-    /**
-     * @return \Symfony\Component\Form\CallbackTransformer
-     */
-    protected function createDateTimeModelTransformer(): CallbackTransformer
-    {
-        return new CallbackTransformer(
-            function ($value) {
-                if ($value !== null) {
-                    return new DateTime($value);
-                }
-
-                return null;
-            },
-            function ($value) {
-                if ($value instanceof DateTime) {
-                    $value = $value->format(static::DATE_TIME_FORMAT);
-                }
-
-                return $value;
-            },
-        );
     }
 
     /**
