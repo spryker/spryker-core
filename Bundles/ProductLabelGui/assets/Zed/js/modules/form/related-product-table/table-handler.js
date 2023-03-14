@@ -72,8 +72,8 @@ function TableHandler(sourceTable, destinationTable, labelCaption, labelId, form
             .DataTable()
             .row.add([
                 idProduct,
-                decodeURIComponent((sku + '').replace(/\+/g, '%20')),
-                decodeURIComponent((name + '').replace(/\+/g, '%20')),
+                decodeURIComponent(String(sku).replace(/\+/g, '%20')),
+                String(name),
                 '<div><a data-id="' + idProduct + '" href="#" class="btn btn-xs remove-item">Remove</a></div>',
             ])
             .draw();
