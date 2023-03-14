@@ -9,8 +9,11 @@ namespace SprykerTest\Zed\Store;
 
 use Codeception\Actor;
 use Codeception\Test\Feature\Stub;
+use Generated\Shared\DataBuilder\AccessTokenRequestBuilder;
+use Generated\Shared\DataBuilder\AccessTokenRequestOptionsBuilder;
 use Generated\Shared\DataBuilder\MessageAttributesBuilder;
 use Generated\Shared\DataBuilder\MessageBrokerTestMessageBuilder;
+use Generated\Shared\Transfer\AccessTokenRequestTransfer;
 use Generated\Shared\Transfer\MessageAttributesTransfer;
 use Generated\Shared\Transfer\MessageBrokerTestMessageTransfer;
 
@@ -60,5 +63,17 @@ class StoreBusinessTester extends Actor
     public function createMessageAttributesTransfer(array $seed = []): MessageAttributesTransfer
     {
         return (new MessageAttributesBuilder($seed))->build();
+    }
+
+    /**
+     * @param array $seed
+     *
+     * @return \Generated\Shared\Transfer\AccessTokenRequestTransfer
+     */
+    public function createAccessTokenRequestTransfer(array $seed = []): AccessTokenRequestTransfer
+    {
+        return (new AccessTokenRequestBuilder($seed))->withAccessTokenRequestOptions(
+            new AccessTokenRequestOptionsBuilder(),
+        )->build();
     }
 }

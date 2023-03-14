@@ -18,4 +18,12 @@
         <property name="emitter" dataBuilderRule="word()"/>
         <!-- word instead of word() due to compitability with existed modules -->
     </transfer>
+
+    <transfer name="AccessTokenRequest">
+        <property name="accessTokenRequestOptions" dataBuilderRule="AccessTokenRequestOptions"/>
+    </transfer>
+
+    <transfer name="AccessTokenRequestOptions">
+        <property name="storeReference" dataBuilderRule="word()"/>
+    </transfer>
 </transfers>

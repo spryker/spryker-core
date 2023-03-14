@@ -73,6 +73,11 @@ class HttpSenderClient implements SenderClientInterface
     public function send(Envelope $envelope): Envelope
     {
         $configuration = $this->getConfiguration();
+
+        if (!$configuration) {
+            return $envelope;
+        }
+
         $client = $this->createSenderClient();
 
         $encodedMessage = $this->serializer->encode($envelope);

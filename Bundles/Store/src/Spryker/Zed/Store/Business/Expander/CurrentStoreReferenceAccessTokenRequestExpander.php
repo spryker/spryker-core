@@ -44,7 +44,8 @@ class CurrentStoreReferenceAccessTokenRequestExpander implements CurrentStoreRef
             $accessTokenRequestOptionsTransfer = new AccessTokenRequestOptionsTransfer();
         }
 
-        $accessTokenRequestOptionsTransfer->setStoreReference($storeTransfer->getStoreReferenceOrFail());
+        $accessTokenRequestOptionsTransfer->setStoreReference($storeTransfer->getStoreReference());
+
         $accessTokenRequestTransfer->setAccessTokenRequestOptions($accessTokenRequestOptionsTransfer);
 
         return $accessTokenRequestTransfer;

@@ -332,4 +332,44 @@ class StoreFacadeTest extends Unit
     {
         return new StoreFacade();
     }
+
+    /**
+     * @return void
+     */
+    public function testAccessTokenRequestNotExpandedWithStoreReferenceWhenItsMissing(): void
+    {
+        // Arrange
+        $this->tester->setStoreReferenceData([]);
+
+        $accessTokenRequestTransfer = $this->tester->createAccessTokenRequestTransfer(
+            [
+                'storeReference' => null,
+            ],
+        );
+
+        // Act
+        $accessTokenRequestTransfer = $this->tester->getFacade()->expandAccessTokenRequest($accessTokenRequestTransfer);
+
+        // Assert
+        $this->assertNull($accessTokenRequestTransfer->getAccessTokenRequestOptions()->getStoreReference());
+    }
+
+    /**
+     * @return void
+     */
+    public function testAccessTokenRequestSuccessfullyExpandedWithStoreReference(): void
+    {
+        // Arrange
+        $storeReference = 'dev-DE';
+        $accessTokenRequestTransfer = $this->tester->createAccessTokenRequestTransfer([
+            'storeReference' => $storeReference,
+        ]);
+
+        // Act
+        $accessTokenRequestTransfer = $this->tester->getFacade()->expandAccessTokenRequest($accessTokenRequestTransfer);
+
+        // Assert
+        $this->assertNotNull($accessTokenRequestTransfer->getAccessTokenRequestOptions()->getStoreReference());
+        $this->assertEquals($storeReference, $accessTokenRequestTransfer->getAccessTokenRequestOptions()->getStoreReference());
+    }
 }

@@ -48,6 +48,37 @@ class HttpMessageSenderPluginTest extends Unit
     /**
      * @return void
      */
+    public function testSendReturnsUnHandledEnvelopeWhenSenderConfigurationIsMissing(): void
+    {
+        // Arrange
+        $messageBrokerTestMessageTransfer = new MessageBrokerTestMessageTransfer();
+        $messageBrokerTestMessageTransfer->setKey('value');
+
+        $messageAttributesTransfer = new MessageAttributesTransfer();
+        $messageAttributesTransfer->setTransferName('MessageBrokerTestMessage');
+        $messageAttributesTransfer->setCorrelationId(Uuid::uuid4()->toString());
+        $messageAttributesTransfer->setTimestamp(microtime());
+
+        $messageBrokerTestMessageTransfer->setMessageAttributes($messageAttributesTransfer);
+
+        $this->tester->setMessageToChannelMap(MessageBrokerTestMessageTransfer::class, static::CHANNEL_NAME);
+        $this->tester->setChannelToSenderTransportMap(static::CHANNEL_NAME, 'http');
+
+        // Act
+        $httpMessageSenderPlugin = new HttpMessageSenderPlugin();
+        $httpMessageSenderPlugin->setFacade($this->tester->getFacade());
+        $envelope = $httpMessageSenderPlugin->send(Envelope::wrap($messageBrokerTestMessageTransfer));
+
+        // Assert
+        /** @var \Symfony\Component\Messenger\Stamp\SentStamp $sentStamp */
+        $sentStamp = $envelope->last(SentStamp::class);
+
+        $this->assertNull($sentStamp, sprintf('Expected not to have a "%s" but it is given.', SentStamp::class));
+    }
+
+    /**
+     * @return void
+     */
     public function testSendUsesHttpSenderWhenHttpSenderIsConfiguredForChannel(): void
     {
         $pathToServer = __DIR__ . '../../../../_support/Server/200_OK.php';
