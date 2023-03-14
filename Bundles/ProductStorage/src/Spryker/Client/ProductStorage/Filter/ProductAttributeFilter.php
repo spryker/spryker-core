@@ -67,7 +67,7 @@ class ProductAttributeFilter implements ProductAttributeFilterInterface
 
         $attributeVariantMap = $productViewTransfer->getAttributeMap()->getAttributeVariantMap();
 
-        foreach ($attributeVariantMap as $idProductConcrete => $productSuperAttributes) {
+        foreach ($attributeVariantMap as $productSuperAttributes) {
             if (!$this->isSubsetAttributes($selectedAttributes, $productSuperAttributes)) {
                 continue;
             }
@@ -154,7 +154,7 @@ class ProductAttributeFilter implements ProductAttributeFilterInterface
         string $superAttributeKey,
         string $superAttributeValue
     ): bool {
-        return isset($superAttributeHaystack[$superAttributeKey]) && $superAttributeHaystack[$superAttributeKey] === $superAttributeValue;
+        return isset($superAttributeHaystack[$superAttributeKey]) && (string)$superAttributeHaystack[$superAttributeKey] === $superAttributeValue;
     }
 
     /**

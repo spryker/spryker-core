@@ -10,6 +10,7 @@ namespace Spryker\Client\ProductDiscontinuedStorage\ProductViewExpander;
 use Generated\Shared\Transfer\AttributeMapStorageTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\ProductDiscontinuedStorage\Dependency\Client\ProductDiscontinuedStorageToGlossaryStorageClientInterface;
+use Spryker\Client\ProductDiscontinuedStorage\ProductDiscontinuedStorageConfig;
 use Spryker\Client\ProductDiscontinuedStorage\Storage\ProductDiscontinuedStorageReaderInterface;
 
 class DiscontinuedSuperAttributesProductViewExpander implements DiscontinuedSuperAttributesProductViewExpanderInterface
@@ -45,15 +46,23 @@ class DiscontinuedSuperAttributesProductViewExpander implements DiscontinuedSupe
     protected $glossaryStorageClient;
 
     /**
+     * @var \Spryker\Client\ProductDiscontinuedStorage\ProductDiscontinuedStorageConfig
+     */
+    protected ProductDiscontinuedStorageConfig $productDiscontinuedStorageConfig;
+
+    /**
      * @param \Spryker\Client\ProductDiscontinuedStorage\Storage\ProductDiscontinuedStorageReaderInterface $productDiscontinuedStorageReader
      * @param \Spryker\Client\ProductDiscontinuedStorage\Dependency\Client\ProductDiscontinuedStorageToGlossaryStorageClientInterface $glossaryStorageClient
+     * @param \Spryker\Client\ProductDiscontinuedStorage\ProductDiscontinuedStorageConfig $productDiscontinuedStorageConfig
      */
     public function __construct(
         ProductDiscontinuedStorageReaderInterface $productDiscontinuedStorageReader,
-        ProductDiscontinuedStorageToGlossaryStorageClientInterface $glossaryStorageClient
+        ProductDiscontinuedStorageToGlossaryStorageClientInterface $glossaryStorageClient,
+        ProductDiscontinuedStorageConfig $productDiscontinuedStorageConfig
     ) {
         $this->productDiscontinuedStorageReader = $productDiscontinuedStorageReader;
         $this->glossaryStorageClient = $glossaryStorageClient;
+        $this->productDiscontinuedStorageConfig = $productDiscontinuedStorageConfig;
     }
 
     /**
@@ -67,17 +76,18 @@ class DiscontinuedSuperAttributesProductViewExpander implements DiscontinuedSupe
         if (!$productViewTransfer->getAttributeMap()) {
             return $productViewTransfer;
         }
-        $superAttributes = $productViewTransfer->getAttributeMap()->getSuperAttributes();
+        $superAttributes = $productViewTransfer->getAttributeMapOrFail()->getSuperAttributes();
         $selectedAttributes = $productViewTransfer->getSelectedAttributes();
+
         if (count($superAttributes) - count($selectedAttributes) > 1) {
             return $productViewTransfer;
         }
 
-        if ($productViewTransfer->getAttributeMap()->getAttributeVariantMap()) {
+        if ($productViewTransfer->getAttributeMapOrFail()->getAttributeVariantMap()) {
             return $this->expandProductAttributeValuesWithDiscontinuedPostfix($productViewTransfer, $localeName);
         }
 
-        $this->prepareProductSuperAttributes($productViewTransfer->getAttributeMap(), $localeName);
+        $this->prepareProductSuperAttributes($productViewTransfer->getAttributeMapOrFail(), $localeName);
 
         return $productViewTransfer;
     }
@@ -126,41 +136,114 @@ class DiscontinuedSuperAttributesProductViewExpander implements DiscontinuedSupe
         string $localeName
     ): ProductViewTransfer {
         $attributeMapStorageTransfer = $productViewTransfer->getAttributeMapOrFail();
+        $selectedAttributes = $productViewTransfer->getSelectedAttributes();
 
         $superAttributes = $attributeMapStorageTransfer->getSuperAttributes();
         $attributeVariantMap = $attributeMapStorageTransfer->getAttributeVariantMap();
 
         foreach ($attributeVariantMap as $idProductConcrete => $attributes) {
-            foreach ($attributes as $attributeName => $attributeValue) {
-                $sku = $this->getSkuByIdProductConcrete($idProductConcrete, $attributeMapStorageTransfer);
-                $expandedAttributeValue = $this->expandAttributeName($attributeValue, $sku, $localeName);
+            $isWholeAttributeVariantSelected = $this->haveEqualAttributesSet($attributes, $selectedAttributes);
 
-                if ($attributeValue === $expandedAttributeValue) {
+            $sku = $this->getSkuByIdProductConcrete($idProductConcrete, $attributeMapStorageTransfer);
+            foreach ($attributes as $attributeName => $attributeValue) {
+                if (
+                    $this->isDiscontinuedPostfixSkippedForAttribute(
+                        $superAttributes,
+                        $selectedAttributes,
+                        $attributeName,
+                        $attributeValue,
+                    )
+                ) {
                     continue;
                 }
 
+                $expandedAttributeValue = $this->expandAttributeName($attributeValue, $sku, $localeName);
+                if ($attributeValue == $expandedAttributeValue) {
+                    continue;
+                }
                 $attributeVariantMap[$idProductConcrete][$attributeName] = $expandedAttributeValue;
-                $superAttributes[$attributeName] = $this->expandSuperAttributeValues(
-                    $superAttributes[$attributeName],
-                    $attributeValue,
-                    $expandedAttributeValue,
-                );
+
+                if ($this->isDiscontinuedPostfixApplicableForSuperAttributes($isWholeAttributeVariantSelected)) {
+                    $superAttributes[$attributeName] = $this->expandSuperAttributeValues(
+                        $superAttributes[$attributeName],
+                        $attributeValue,
+                        $expandedAttributeValue,
+                    );
+                }
+            }
+
+            if ($this->isDiscontinuedPostfixApplicableForSuperAttributes($isWholeAttributeVariantSelected)) {
+                $selectedAttributes = $attributeVariantMap[$idProductConcrete];
             }
         }
 
         $attributeMapStorageTransfer
             ->setSuperAttributes($superAttributes)
             ->setAttributeVariantMap($attributeVariantMap);
+        $productViewTransfer->setSelectedAttributes($selectedAttributes);
 
         return $productViewTransfer;
     }
 
     /**
-     * @param array $productAttributes
+     * @param bool $isWholeAttributeVariantSelected
+     *
+     * @return bool
+     */
+    protected function isDiscontinuedPostfixApplicableForSuperAttributes(bool $isWholeAttributeVariantSelected): bool
+    {
+        return !$this->productDiscontinuedStorageConfig->isOnlyDiscontinuedVariantAttributesPostfixEnabled()
+            || $isWholeAttributeVariantSelected;
+    }
+
+    /**
+     * @param array<string, list<mixed>> $superAttributes
+     * @param array<string, string> $selectedAttributes
+     * @param string $attributeName
+     * @param string $attributeValue
+     *
+     * @return bool
+     */
+    protected function isDiscontinuedPostfixSkippedForAttribute(
+        array $superAttributes,
+        array $selectedAttributes,
+        string $attributeName,
+        string $attributeValue
+    ): bool {
+        $isOnlyDiscontinuedVariantAttributesPostfixEnabled = $this->productDiscontinuedStorageConfig
+            ->isOnlyDiscontinuedVariantAttributesPostfixEnabled();
+
+        $unselectedAttributesCount = count($superAttributes) - count($selectedAttributes);
+        $isAttributeSelected = (bool)array_intersect_assoc($selectedAttributes, [$attributeName => $attributeValue]);
+
+        return $isOnlyDiscontinuedVariantAttributesPostfixEnabled &&
+            $unselectedAttributesCount &&
+            $isAttributeSelected;
+    }
+
+    /**
+     * @param array<string, mixed> $attributes
+     * @param array<string, string> $selectedAttributes
+     *
+     * @return bool
+     */
+    protected function haveEqualAttributesSet(array $attributes, array $selectedAttributes): bool
+    {
+        foreach ($attributes as $attributeKey => $attributeValue) {
+            if (!array_key_exists($attributeKey, $selectedAttributes) || $selectedAttributes[$attributeKey] !== (string)$attributeValue) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * @param list<mixed> $productAttributes
      * @param string $attributeValue
      * @param string $expandedAttributeValue
      *
-     * @return array
+     * @return list<mixed>
      */
     protected function expandSuperAttributeValues(
         array $productAttributes,
@@ -169,7 +252,7 @@ class DiscontinuedSuperAttributesProductViewExpander implements DiscontinuedSupe
     ): array {
         $newSuperAttributes = [];
         foreach ($productAttributes as $productAttributeValue) {
-            $newSuperAttributes[] = ($productAttributeValue === $attributeValue) ? $expandedAttributeValue : $productAttributeValue;
+            $newSuperAttributes[] = ((string)$productAttributeValue === $attributeValue) ? $expandedAttributeValue : $productAttributeValue;
         }
 
         return $newSuperAttributes;

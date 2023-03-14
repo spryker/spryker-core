@@ -27,7 +27,7 @@ class ProductDiscontinuedStorageToStorageClientBridge implements ProductDisconti
      *
      * @return mixed
      */
-    public function get($key)
+    public function get($key): mixed
     {
         return $this->storageClient->get($key);
     }

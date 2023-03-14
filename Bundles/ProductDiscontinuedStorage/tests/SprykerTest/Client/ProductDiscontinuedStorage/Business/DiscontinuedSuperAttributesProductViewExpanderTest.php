@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\ProductDiscontinuedStorageTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\ProductDiscontinuedStorage\Dependency\Client\ProductDiscontinuedStorageToGlossaryStorageClientBridge;
 use Spryker\Client\ProductDiscontinuedStorage\Dependency\Client\ProductDiscontinuedStorageToGlossaryStorageClientInterface;
+use Spryker\Client\ProductDiscontinuedStorage\ProductDiscontinuedStorageConfig;
 use Spryker\Client\ProductDiscontinuedStorage\ProductViewExpander\DiscontinuedSuperAttributesProductViewExpander;
 use Spryker\Client\ProductDiscontinuedStorage\ProductViewExpander\DiscontinuedSuperAttributesProductViewExpanderInterface;
 use Spryker\Client\ProductDiscontinuedStorage\Storage\ProductDiscontinuedStorageReader;
@@ -43,6 +44,11 @@ class DiscontinuedSuperAttributesProductViewExpanderTest extends Unit
     /**
      * @var int
      */
+    protected const FAKE_ID_PRODUCT_CONCRETE_3 = 6668;
+
+    /**
+     * @var int
+     */
     protected const FAKE_DISCONTINUED_ID_PRODUCT_CONCRETE = 7777;
 
     /**
@@ -58,15 +64,30 @@ class DiscontinuedSuperAttributesProductViewExpanderTest extends Unit
     /**
      * @var string
      */
+    protected const FAKE_SKU_3 = 'fake-sku-3';
+
+    /**
+     * @var string
+     */
     protected const FAKE_DISCONTINUED_SKU = 'fake-discontinued-sku';
 
     /**
-     * @var array
+     * @var array<string, list<string>>
      */
     protected const FAKE_SUPER_ATTRIBUTES = [
         'memory' => [
             '4 GB',
             '8 GB',
+        ],
+    ];
+
+    /**
+     * @var array<string, list<string>>
+     */
+    protected const FAKE_COLOR_SUPER_ATTRIBUTES = [
+        'color' => [
+            'black',
+            'white',
         ],
     ];
 
@@ -195,15 +216,124 @@ class DiscontinuedSuperAttributesProductViewExpanderTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testExpandRemainingProductAttributeValueWithDiscontinuedPostfixIfOnlyDiscontinuedVariantAttributesPostfixEnabled(): void
+    {
+        // Arrange
+        $attributeMapStorageTransfer = (new AttributeMapStorageTransfer())
+            ->setSuperAttributes(array_merge(static::FAKE_SUPER_ATTRIBUTES, static::FAKE_COLOR_SUPER_ATTRIBUTES))
+            ->setAttributeVariantMap([
+                static::FAKE_ID_PRODUCT_CONCRETE_1 => [
+                    'memory' => '4 GB',
+                    'color' => 'white',
+                ],
+                static::FAKE_ID_PRODUCT_CONCRETE_2 => [
+                    'memory' => '4 GB',
+                    'color' => 'black',
+                ],
+                static::FAKE_ID_PRODUCT_CONCRETE_3 => [
+                    'memory' => '8 GB',
+                    'color' => 'white',
+                ],
+                static::FAKE_DISCONTINUED_ID_PRODUCT_CONCRETE => [
+                    'memory' => '8 GB',
+                    'color' => 'black',
+                ],
+            ])
+            ->setProductConcreteIds([
+                static::FAKE_SKU_1 => static::FAKE_ID_PRODUCT_CONCRETE_1,
+                static::FAKE_SKU_2 => static::FAKE_ID_PRODUCT_CONCRETE_2,
+                static::FAKE_SKU_3 => static::FAKE_ID_PRODUCT_CONCRETE_3,
+                static::FAKE_DISCONTINUED_SKU => static::FAKE_DISCONTINUED_ID_PRODUCT_CONCRETE,
+            ]);
+
+        $productViewTransfer = (new ProductViewTransfer())
+            ->setAttributeMap($attributeMapStorageTransfer)
+            ->setSelectedAttributes(['color' => 'black']);
+
+        // Act
+        $productViewTransfer = $this->getProductConcreteStorageReaderMock(true)
+            ->expandDiscontinuedProductSuperAttributes($productViewTransfer, 'DE');
+
+        $attributeVariantMap = $productViewTransfer->getAttributeMapOrFail()->getAttributeVariantMap();
+        $superAttributes = $productViewTransfer->getAttributeMapOrFail()->getSuperAttributes();
+
+        // Assert
+        $this->assertSame('4 GB', $attributeVariantMap[static::FAKE_ID_PRODUCT_CONCRETE_2]['memory']);
+        $this->assertSame('8 GB - Discontinued', $attributeVariantMap[static::FAKE_DISCONTINUED_ID_PRODUCT_CONCRETE]['memory']);
+
+        $this->assertSame(['memory' => ['4 GB', '8 GB'], 'color' => ['black', 'white']], $superAttributes);
+        $this->assertSame(['color' => 'black'], $productViewTransfer->getSelectedAttributes());
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandProductAttributeValueWithDiscontinuedPostfixIfWholeAttributeVariantIsSelected(): void
+    {
+        // Arrange
+        $attributeMapStorageTransfer = (new AttributeMapStorageTransfer())
+            ->setSuperAttributes(array_merge(static::FAKE_SUPER_ATTRIBUTES, static::FAKE_COLOR_SUPER_ATTRIBUTES))
+            ->setAttributeVariantMap([
+                static::FAKE_ID_PRODUCT_CONCRETE_1 => [
+                    'memory' => '4 GB',
+                    'color' => 'white',
+                ],
+                static::FAKE_ID_PRODUCT_CONCRETE_2 => [
+                    'memory' => '4 GB',
+                    'color' => 'black',
+                ],
+                static::FAKE_ID_PRODUCT_CONCRETE_3 => [
+                    'memory' => '8 GB',
+                    'color' => 'white',
+                ],
+                static::FAKE_DISCONTINUED_ID_PRODUCT_CONCRETE => [
+                    'memory' => '8 GB',
+                    'color' => 'black',
+                ],
+            ])
+            ->setProductConcreteIds([
+                static::FAKE_SKU_1 => static::FAKE_ID_PRODUCT_CONCRETE_1,
+                static::FAKE_SKU_2 => static::FAKE_ID_PRODUCT_CONCRETE_2,
+                static::FAKE_SKU_3 => static::FAKE_ID_PRODUCT_CONCRETE_3,
+                static::FAKE_DISCONTINUED_SKU => static::FAKE_DISCONTINUED_ID_PRODUCT_CONCRETE,
+            ]);
+
+        $productViewTransfer = (new ProductViewTransfer())
+            ->setAttributeMap($attributeMapStorageTransfer)
+            ->setSelectedAttributes(['color' => 'black', 'memory' => '8 GB']);
+
+        // Act
+        $productViewTransfer = $this->getProductConcreteStorageReaderMock()
+            ->expandDiscontinuedProductSuperAttributes($productViewTransfer, 'DE');
+
+        $attributeVariantMap = $productViewTransfer->getAttributeMapOrFail()->getAttributeVariantMap();
+        $superAttributes = $productViewTransfer->getAttributeMapOrFail()->getSuperAttributes();
+        $selectedAttributes = $productViewTransfer->getSelectedAttributes();
+
+        // Assert
+        $this->assertSame('8 GB - Discontinued', $attributeVariantMap[static::FAKE_DISCONTINUED_ID_PRODUCT_CONCRETE]['memory']);
+        $this->assertSame('black - Discontinued', $attributeVariantMap[static::FAKE_DISCONTINUED_ID_PRODUCT_CONCRETE]['color']);
+
+        $this->assertSame(['memory' => ['4 GB', '8 GB - Discontinued'], 'color' => ['black - Discontinued', 'white']], $superAttributes);
+        $this->assertSame(['memory' => '8 GB - Discontinued', 'color' => 'black - Discontinued'], $selectedAttributes);
+    }
+
+    /**
+     * @param bool $isOnlyDiscontinuedVariantAttributesPostfixEnabled
+     *
      * @return \Spryker\Client\ProductDiscontinuedStorage\ProductViewExpander\DiscontinuedSuperAttributesProductViewExpanderInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getProductConcreteStorageReaderMock(): DiscontinuedSuperAttributesProductViewExpanderInterface
-    {
+    protected function getProductConcreteStorageReaderMock(
+        bool $isOnlyDiscontinuedVariantAttributesPostfixEnabled = false
+    ): DiscontinuedSuperAttributesProductViewExpanderInterface {
         return $this
             ->getMockBuilder(DiscontinuedSuperAttributesProductViewExpander::class)
             ->setConstructorArgs([
                 $this->getProductDiscontinuedStorageReaderMock(),
                 $this->getGlossaryStorageClientMock(),
+                $this->getProductDiscontinuedStorageConfigMock($isOnlyDiscontinuedVariantAttributesPostfixEnabled),
             ])
             ->onlyMethods([])
             ->getMock();
@@ -243,6 +373,24 @@ class DiscontinuedSuperAttributesProductViewExpanderTest extends Unit
             ->getMock();
 
         $glossaryStorageClientMock->method('translate')->willReturn('Discontinued');
+
+        return $glossaryStorageClientMock;
+    }
+
+    /**
+     * @param bool $isOnlyDiscontinuedVariantAttributesPostfixEnabled
+     *
+     * @return \Spryker\Client\ProductDiscontinuedStorage\ProductDiscontinuedStorageConfig|\PHPUnit\Framework\MockObject\MockObject
+     */
+    protected function getProductDiscontinuedStorageConfigMock(
+        bool $isOnlyDiscontinuedVariantAttributesPostfixEnabled = false
+    ): ProductDiscontinuedStorageConfig {
+        $glossaryStorageClientMock = $this
+            ->getMockBuilder(ProductDiscontinuedStorageConfig::class)
+            ->getMock();
+
+        $glossaryStorageClientMock->method('isOnlyDiscontinuedVariantAttributesPostfixEnabled')
+            ->willReturn($isOnlyDiscontinuedVariantAttributesPostfixEnabled);
 
         return $glossaryStorageClientMock;
     }

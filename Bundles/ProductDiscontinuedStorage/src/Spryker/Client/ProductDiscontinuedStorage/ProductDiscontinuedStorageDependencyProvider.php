@@ -14,6 +14,9 @@ use Spryker\Client\ProductDiscontinuedStorage\Dependency\Client\ProductDiscontin
 use Spryker\Client\ProductDiscontinuedStorage\Dependency\Client\ProductDiscontinuedStorageToStorageClientBridge;
 use Spryker\Client\ProductDiscontinuedStorage\Dependency\Service\ProductDiscontinuedStorageToSynchronizationServiceBridge;
 
+/**
+ * @method \Spryker\Client\ProductDiscontinuedStorage\ProductDiscontinuedStorageConfig getConfig()
+ */
 class ProductDiscontinuedStorageDependencyProvider extends AbstractDependencyProvider
 {
     /**

@@ -19,6 +19,13 @@ class ProductViewDiscontinuedOptionsExpanderPlugin extends AbstractPlugin implem
 {
     /**
      * {@inheritDoc}
+     * - Expands the product view super attributes and attribute variant map with discontinued postfix.
+     * - Expands the product view attribute variant map attribute value with discontinued postfix when there are still
+     *   attributes to be selected, attribute value is not in selected list, and {@link \Spryker\Client\ProductDiscontinuedStorage\ProductDiscontinuedStorageConfig::isOnlyDiscontinuedVariantAttributesPostfixEnabled()} is enabled.
+     * - Expands the product view super attributes and selected attributes with discontinued postfix when all the discontinued
+     *   variant attributes are selected and {@link \Spryker\Client\ProductDiscontinuedStorage\ProductDiscontinuedStorageConfig::isOnlyDiscontinuedVariantAttributesPostfixEnabled()} is enabled.
+     * - Returns the same `ProductViewTransfer` if `ProductViewTransfer.attributeMap` is not provided or there is more
+     *   than one attribute to be selected.
      *
      * @api
      *

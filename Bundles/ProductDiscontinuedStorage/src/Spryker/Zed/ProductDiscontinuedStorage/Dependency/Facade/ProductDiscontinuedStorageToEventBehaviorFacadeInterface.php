@@ -14,7 +14,7 @@ interface ProductDiscontinuedStorageToEventBehaviorFacadeInterface
      *
      * @return array
      */
-    public function getEventTransferIds(array $eventTransfers);
+    public function getEventTransferIds(array $eventTransfers): array;
 
     /**
      * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
@@ -22,5 +22,5 @@ interface ProductDiscontinuedStorageToEventBehaviorFacadeInterface
      *
      * @return array
      */
-    public function getEventTransferForeignKeys(array $eventTransfers, $foreignKeyColumnName);
+    public function getEventTransferForeignKeys(array $eventTransfers, $foreignKeyColumnName): array;
 }

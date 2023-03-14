@@ -50,6 +50,11 @@ class ProductStorageClientTest extends Unit
     /**
      * @var string
      */
+    protected const NUMERIC_SUPER_ATTRIBUTE_NAME = 'numeric_super_attribute_name';
+
+    /**
+     * @var string
+     */
     protected const SUPER_ATTRIBUTE_VALUE_1 = 'super_attribute_value_1';
 
     /**
@@ -61,6 +66,11 @@ class ProductStorageClientTest extends Unit
      * @var string
      */
     protected const SUPER_ATTRIBUTE_VALUE_2_2 = 'super_attribute_value_2_2';
+
+    /**
+     * @var int
+     */
+    protected const NUMERIC_SUPER_ATTRIBUTE_VALUE = 100;
 
     /**
      * @var int
@@ -290,6 +300,54 @@ class ProductStorageClientTest extends Unit
                 static::SUPER_ATTRIBUTE_VALUE_2_1,
                 static::SUPER_ATTRIBUTE_VALUE_2_2,
             ]],
+            $expandedProductViewTransfer->getAvailableAttributes(),
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandProductViewWithProductVariantSetsAvailableAttributesByAttributeVariantMapInCaseAttributeValueAndSelectedAttributeAreNotTheSameType(): void
+    {
+        // Arrange
+        $attributeMapStorageTransfer = $this->buildAttributeMapStorageTransfer([
+            AttributeMapStorageTransfer::PRODUCT_CONCRETE_IDS => [static::PRODUCT_CONCRETE_ID_1, static::PRODUCT_CONCRETE_ID_2],
+            AttributeMapStorageTransfer::SUPER_ATTRIBUTES => [
+                static::NUMERIC_SUPER_ATTRIBUTE_NAME => [
+                    static::NUMERIC_SUPER_ATTRIBUTE_VALUE,
+                ],
+                static::SUPER_ATTRIBUTE_NAME_2 => [
+                    static::SUPER_ATTRIBUTE_VALUE_2_1,
+                    static::SUPER_ATTRIBUTE_VALUE_2_2,
+                ],
+            ],
+            AttributeMapStorageTransfer::ATTRIBUTE_VARIANT_MAP => [
+                static::PRODUCT_CONCRETE_ID_1 => [
+                    static::NUMERIC_SUPER_ATTRIBUTE_NAME => static::NUMERIC_SUPER_ATTRIBUTE_VALUE,
+                    static::SUPER_ATTRIBUTE_NAME_2 => static::SUPER_ATTRIBUTE_VALUE_2_1,
+                ],
+                static::PRODUCT_CONCRETE_ID_2 => [
+                    static::NUMERIC_SUPER_ATTRIBUTE_NAME => static::NUMERIC_SUPER_ATTRIBUTE_VALUE,
+                    static::SUPER_ATTRIBUTE_NAME_2 => static::SUPER_ATTRIBUTE_VALUE_2_2,
+                ],
+            ],
+        ]);
+
+        $productViewTransfer = $this->tester->createProductViewTransfer();
+        $productViewTransfer->setAttributeMap($attributeMapStorageTransfer)
+            ->setSelectedAttributes([static::NUMERIC_SUPER_ATTRIBUTE_NAME => (string)static::NUMERIC_SUPER_ATTRIBUTE_VALUE]);
+
+        // Act
+        $expandedProductViewTransfer = $this->tester->getProductStorageClient()
+            ->expandProductViewWithProductVariant($productViewTransfer, static::LOCALE_NAME);
+
+        // Assert
+        $this->assertSame(
+            [
+                static::SUPER_ATTRIBUTE_NAME_2 => [
+                    static::SUPER_ATTRIBUTE_VALUE_2_1,
+                    static::SUPER_ATTRIBUTE_VALUE_2_2,
+                ]],
             $expandedProductViewTransfer->getAvailableAttributes(),
         );
     }

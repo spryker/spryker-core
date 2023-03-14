@@ -14,5 +14,5 @@ interface ProductDiscontinuedStorageToStorageClientInterface
      *
      * @return mixed
      */
-    public function get($key);
+    public function get($key): mixed;
 }

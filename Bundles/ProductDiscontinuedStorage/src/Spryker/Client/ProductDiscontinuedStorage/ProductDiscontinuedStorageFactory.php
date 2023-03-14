@@ -23,6 +23,9 @@ use Spryker\Client\ProductDiscontinuedStorage\Storage\ProductDiscontinuedStorage
 use Spryker\Client\ProductDiscontinuedStorage\Validator\ProductDiscontinuedItemValidator;
 use Spryker\Client\ProductDiscontinuedStorage\Validator\ProductDiscontinuedItemValidatorInterface;
 
+/**
+ * @method \Spryker\Client\ProductDiscontinuedStorage\ProductDiscontinuedStorageConfig getConfig()
+ */
 class ProductDiscontinuedStorageFactory extends AbstractFactory
 {
     /**
@@ -44,6 +47,7 @@ class ProductDiscontinuedStorageFactory extends AbstractFactory
         return new DiscontinuedSuperAttributesProductViewExpander(
             $this->createProductDiscontinuedStorageReader(),
             $this->getGlossaryStorageClient(),
+            $this->getConfig(),
         );
     }
 
