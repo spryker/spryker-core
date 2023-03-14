@@ -283,6 +283,77 @@ class PriceProductScheduleFallbackTest extends Unit
     }
 
     /**
+     * @dataProvider createNullableGrossNetCombinationsDataProvider
+     *
+     * @param int|null $netPrice
+     * @param int|null $grossPrice
+     *
+     * @return void
+     */
+    public function testApplyScheduledPricesChecksNullablePricesDuringApplyingScheduledPrices(?int $netPrice, ?int $grossPrice): void
+    {
+        // Assign
+        $productConcreteTransfer = $this->tester->haveProduct();
+        $defaultPriceTypeTransfer = $this->tester->havePriceType();
+
+        $priceProductTransfer = $this->tester->havePriceProduct([
+            PriceProductTransfer::SKU_PRODUCT_ABSTRACT => $productConcreteTransfer->getAbstractSku(),
+            PriceProductTransfer::PRICE_TYPE => $defaultPriceTypeTransfer,
+            PriceProductTransfer::MONEY_VALUE => [
+                MoneyValueTransfer::NET_AMOUNT => 100,
+                MoneyValueTransfer::GROSS_AMOUNT => 100,
+            ],
+        ]);
+
+        $this->tester->havePriceProductSchedule([
+            PriceProductScheduleTransfer::ACTIVE_FROM => (new DateTime('-4 days')),
+            PriceProductScheduleTransfer::ACTIVE_TO => (new DateTime('+4 hour')),
+            PriceProductScheduleTransfer::IS_CURRENT => false,
+            PriceProductScheduleTransfer::PRICE_PRODUCT => [
+                PriceProductTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
+                PriceProductTransfer::PRICE_TYPE => [
+                    PriceTypeTransfer::NAME => $defaultPriceTypeTransfer->getName(),
+                    PriceTypeTransfer::ID_PRICE_TYPE => $defaultPriceTypeTransfer->getIdPriceType(),
+                ],
+                PriceProductTransfer::MONEY_VALUE => [
+                    MoneyValueTransfer::FK_STORE => $priceProductTransfer->getMoneyValue()->getStore()->getIdStore(),
+                    MoneyValueTransfer::FK_CURRENCY => $priceProductTransfer->getMoneyValue()->getCurrency()->getIdCurrency(),
+                    MoneyValueTransfer::CURRENCY => $priceProductTransfer->getMoneyValue()->getCurrency(),
+                    MoneyValueTransfer::NET_AMOUNT => $netPrice,
+                    MoneyValueTransfer::GROSS_AMOUNT => $grossPrice,
+                ],
+            ],
+        ]);
+
+        // Act
+        $this->tester->getFacade()->applyScheduledPrices();
+
+        // Assert
+        $priceProductFilterTransfer = (new PriceProductFilterTransfer())
+            ->setSku($productConcreteTransfer->getSku())
+            ->setPriceTypeName($defaultPriceTypeTransfer->getName())
+            ->setCurrencyIsoCode($priceProductTransfer->getMoneyValue()->getCurrency()->getCode());
+
+        $priceProductTransfer = $this->priceProductFacade->findPriceProductFor($priceProductFilterTransfer);
+
+        $this->assertSame($netPrice ?? 100, $priceProductTransfer->getMoneyValue()->getNetAmount());
+        $this->assertSame($grossPrice ?? 100, $priceProductTransfer->getMoneyValue()->getGrossAmount());
+    }
+
+    /**
+     * @return array<string, list<int|null>>
+     */
+    public function createNullableGrossNetCombinationsDataProvider(): array
+    {
+        return [
+            'net price, gross price' => [200, 200],
+            '!net price, gross price' => [null, 200],
+            'net price, !gross price' => [200, null],
+            '!net price, !gross price' => [null, null],
+        ];
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
      * @return array
