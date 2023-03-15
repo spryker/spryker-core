@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\Product\Business;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 
@@ -25,6 +26,16 @@ use Orm\Zed\Product\Persistence\SpyProductAbstract;
  */
 class ProductManagementTest extends FacadeTestAbstract
 {
+    /**
+     * @var string
+     */
+    protected const STORE_NAME_DE = 'DE';
+
+    /**
+     * @var string
+     */
+    protected const STORE_NAME_US = 'US';
+
     /**
      * @return void
      */
@@ -166,7 +177,10 @@ class ProductManagementTest extends FacadeTestAbstract
     public function testCreateProductAbstractSavesStoreRelation(): void
     {
         // Assign
-        $expectedIdStores = [1, 3];
+        $expectedIdStores = [
+            $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE])->getIdStore(),
+            $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_US])->getIdStore(),
+        ];
         $this->productAbstractTransfer->setStoreRelation(
             (new StoreRelationTransfer())
                 ->setIdStores($expectedIdStores),
@@ -189,7 +203,10 @@ class ProductManagementTest extends FacadeTestAbstract
     public function testSaveProductAbstractUpdatesStoreRelation(): void
     {
         // Assign
-        $expectedIdStores = [1, 3];
+        $expectedIdStores = [
+            $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE])->getIdStore(),
+            $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_US])->getIdStore(),
+        ];
         $this->productAbstractTransfer->setStoreRelation(
             (new StoreRelationTransfer())
                 ->setIdStores([1]),
@@ -215,7 +232,10 @@ class ProductManagementTest extends FacadeTestAbstract
     public function testFindProductAbstractByIdRetrievesStoreRelation(): void
     {
         // Assign
-        $expectedIdStores = [1, 3];
+        $expectedIdStores = [
+            $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE])->getIdStore(),
+            $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_US])->getIdStore(),
+        ];
         $this->productAbstractTransfer->setStoreRelation(
             (new StoreRelationTransfer())
                 ->setIdStores($expectedIdStores),

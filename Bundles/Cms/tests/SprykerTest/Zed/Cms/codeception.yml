@@ -37,6 +37,7 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDataHelper
 
     Communication:
         path: Communication

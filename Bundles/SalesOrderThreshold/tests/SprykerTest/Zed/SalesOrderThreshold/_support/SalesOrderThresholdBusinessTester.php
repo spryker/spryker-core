@@ -45,6 +45,16 @@ class SalesOrderThresholdBusinessTester extends Actor
     use _generated\SalesOrderThresholdBusinessTesterActions;
 
     /**
+     * @var string
+     */
+    protected const STORE_NAME_DE = 'DE';
+
+    /**
+     * @var string
+     */
+    protected const CURRENCY_EUR = 'EUR';
+
+    /**
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function createTestQuoteTransfer(): QuoteTransfer
@@ -98,10 +108,9 @@ class SalesOrderThresholdBusinessTester extends Actor
      */
     public function getStoreTransfer(): StoreTransfer
     {
-        return $this->getLocator()
-            ->store()
-            ->facade()
-            ->getStoreByName('DE');
+        return $this->haveStore([
+            StoreTransfer::NAME => static::STORE_NAME_DE,
+        ]);
     }
 
     /**
@@ -112,7 +121,7 @@ class SalesOrderThresholdBusinessTester extends Actor
         return $this->getLocator()
             ->currency()
             ->facade()
-            ->getDefaultCurrencyForCurrentStore();
+            ->findCurrencyByIsoCode(static::CURRENCY_EUR);
     }
 
     /**

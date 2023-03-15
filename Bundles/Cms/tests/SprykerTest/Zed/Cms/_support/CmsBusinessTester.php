@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Cms;
 
 use Codeception\Actor;
+use Generated\Shared\Transfer\StoreTransfer;
 
 /**
  * @method void wantToTest($text)
@@ -26,4 +27,19 @@ use Codeception\Actor;
 class CmsBusinessTester extends Actor
 {
     use _generated\CmsBusinessTesterActions;
+
+    /**
+     * @param array<string> $storeNames
+     *
+     * @return array<int>
+     */
+    public function createStoresByNames(array $storeNames): array
+    {
+        $storeIds = [];
+        foreach ($storeNames as $storeName) {
+            $storeIds[] = $this->haveStore([StoreTransfer::NAME => $storeName])->getIdStore();
+        }
+
+        return $storeIds;
+    }
 }

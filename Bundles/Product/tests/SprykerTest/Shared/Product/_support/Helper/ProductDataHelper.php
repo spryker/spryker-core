@@ -19,6 +19,8 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Orm\Zed\Product\Persistence\SpyProductAbstractStoreQuery;
+use Orm\Zed\Store\Persistence\Map\SpyStoreTableMap;
 use Spryker\Zed\Locale\Business\LocaleFacadeInterface;
 use Spryker\Zed\Product\Business\ProductFacadeInterface;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
@@ -166,6 +168,21 @@ class ProductDataHelper extends Module
         });
 
         return $productConcreteTransfer;
+    }
+
+    /**
+     * @param int $idProductAbstract
+     *
+     * @return array<string>
+     */
+    public function getProductAbstractStoreNamesByIdProductAbstract(int $idProductAbstract): array
+    {
+        return SpyProductAbstractStoreQuery::create()
+            ->filterByFkProductAbstract($idProductAbstract)
+            ->innerJoinSpyStore()
+            ->select(SpyStoreTableMap::COL_NAME)
+            ->find()
+            ->getData();
     }
 
     /**

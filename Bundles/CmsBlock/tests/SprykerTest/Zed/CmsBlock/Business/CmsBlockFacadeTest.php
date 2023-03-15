@@ -29,6 +29,16 @@ use Spryker\Zed\CmsBlock\Business\CmsBlockFacadeInterface;
 class CmsBlockFacadeTest extends Unit
 {
     /**
+     * @var string
+     */
+    protected const STORE_NAME_DE = 'DE';
+
+    /**
+     * @var string
+     */
+    protected const STORE_NAME_US = 'US';
+
+    /**
      * @var \SprykerTest\Zed\CmsBlock\CmsBlockBusinessTester
      */
     protected $tester;
@@ -215,10 +225,12 @@ class CmsBlockFacadeTest extends Unit
     public function testUpdateCmsBlockUpdatesStoreRelation(array $originalRelation, array $modifiedRelation): void
     {
         // Assign
+        $originalRelationStoreIds = $this->tester->createStoresByNames($originalRelation);
+        $modifiedRelationStoreIds = $this->tester->createStoresByNames($modifiedRelation);
         $cmsBlockTransfer = $this->tester->haveCmsBlock(
             [
                 CmsBlockTransfer::STORE_RELATION => [
-                    StoreRelationTransfer::ID_STORES => $originalRelation,
+                    StoreRelationTransfer::ID_STORES => $originalRelationStoreIds,
                 ],
             ],
         );
@@ -226,7 +238,7 @@ class CmsBlockFacadeTest extends Unit
         $this->createCmsBlockFacade()->updateCmsBlock($cmsBlockTransfer);
 
         // Act
-        $cmsBlockTransfer->getStoreRelation()->setIdStores($modifiedRelation);
+        $cmsBlockTransfer->getStoreRelation()->setIdStores($modifiedRelationStoreIds);
         $this->createCmsBlockFacade()
             ->updateCmsBlock($cmsBlockTransfer);
 
@@ -237,7 +249,7 @@ class CmsBlockFacadeTest extends Unit
 
         // Assert
         sort($resultIdStores);
-        $this->assertEquals($modifiedRelation, $resultIdStores);
+        $this->assertEquals($modifiedRelationStoreIds, $resultIdStores);
     }
 
     /**
@@ -247,13 +259,13 @@ class CmsBlockFacadeTest extends Unit
     {
         return [
             [
-                [1, 2, 3], [2],
+                ['DE', 'AT', 'US'], ['AT'],
             ],
             [
-                [1], [1, 2],
+                ['DE'], ['DE', 'AT'],
             ],
             [
-                [2], [1, 3],
+                ['AT'], ['DE', 'US'],
             ],
         ];
     }
@@ -264,7 +276,11 @@ class CmsBlockFacadeTest extends Unit
     public function testCreateCmsBlockSavesStoreRelation(): void
     {
         // Assign
-        $expectedIdStores = [1, 3];
+        $expectedIdStores = $this->tester->createStoresByNames([
+            static::STORE_NAME_DE,
+            static::STORE_NAME_US,
+        ]);
+
         $cmsBlockTransfer = $this->tester->haveCmsBlock([
             CmsBlockTransfer::STORE_RELATION => [StoreRelationTransfer::ID_STORES => $expectedIdStores],
         ]);

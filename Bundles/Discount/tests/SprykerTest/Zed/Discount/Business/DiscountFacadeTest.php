@@ -20,6 +20,7 @@ use Generated\Shared\Transfer\DiscountVoucherTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
 use Spryker\Shared\Discount\DiscountConstants;
@@ -44,6 +45,21 @@ use Spryker\Zed\Kernel\Container;
  */
 class DiscountFacadeTest extends Unit
 {
+    /**
+     * @var string
+     */
+    protected const STORE_NAME_DE = 'DE';
+
+    /**
+     * @var string
+     */
+    protected const STORE_NAME_AT = 'AT';
+
+    /**
+     * @var string
+     */
+    protected const STORE_NAME_US = 'US';
+
     /**
      * @uses \Spryker\Zed\Discount\Persistence\Propel\Mapper\DiscountMapper::DATE_TIME_FORMAT
      *
@@ -592,8 +608,12 @@ class DiscountFacadeTest extends Unit
     public function testUpdateDiscountPersistsStoreRelation(): void
     {
         // Arrange
-        $originalIdStores = [2];
-        $expectedIdStores = [1, 3];
+        $usIdStore = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE])->getIdStore();
+        $atIdStore = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_AT])->getIdStore();
+        $deIdStore = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_US])->getIdStore();
+
+        $originalIdStores = [$atIdStore];
+        $expectedIdStores = [$deIdStore, $usIdStore];
 
         $discountConfiguratorTransfer = $this->tester->createDiscountConfiguratorTransfer();
         $discountConfiguratorTransfer
@@ -615,8 +635,11 @@ class DiscountFacadeTest extends Unit
 
         // Assert
         $discountConfiguratorTransfer = $discountFacade->getHydratedDiscountConfiguratorByIdDiscount($idDiscount);
+        $updatedStoreIds = $discountConfiguratorTransfer->getDiscountGeneral()->getStoreRelation()->getIdStores();
+        sort($updatedStoreIds);
+        sort($expectedIdStores);
         $this->assertEquals(
-            $discountConfiguratorTransfer->getDiscountGeneral()->getStoreRelation()->getIdStores(),
+            $updatedStoreIds,
             $expectedIdStores,
         );
     }

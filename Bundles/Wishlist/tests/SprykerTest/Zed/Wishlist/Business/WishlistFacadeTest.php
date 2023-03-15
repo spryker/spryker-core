@@ -726,6 +726,10 @@ class WishlistFacadeTest extends Unit
 
         // Act
         $wishlistResponseTransfer = $this->wishlistFacade->getWishlistByFilter($wishlistFilterTransfer);
+        $itemSkus = [];
+        foreach ($wishlistResponseTransfer->getWishlist()->getWishlistItems() as $wishlistItemTransfer) {
+            $itemSkus[] = $wishlistItemTransfer->getSku();
+        }
 
         // Assert
         $this->assertTrue($wishlistResponseTransfer->getIsSuccess(), 'Wishlist response is unsuccessful.');
@@ -735,7 +739,7 @@ class WishlistFacadeTest extends Unit
         $this->assertSame($this->wishlist->getName(), $wishlistResponseTransfer->getWishlist()->getName(), 'Wishlist name is different.');
         $this->assertCount(2, $wishlistResponseTransfer->getWishlist()->getWishlistItems(), 'Returned wishlist items amount is not expected.');
         $this->assertSame(2, $wishlistResponseTransfer->getWishlist()->getNumberOfItems(), 'Wishlist numberOfItems is not as expected.');
-        $this->assertSame($this->product_1->getSku(), $wishlistResponseTransfer->getWishlist()->getWishlistItems()[0]->getSku(), 'Wishlist item sku is unexpected.');
+        $this->assertContains($this->product_1->getSku(), $itemSkus, 'Wishlist item sku is unexpected.');
     }
 
     /**

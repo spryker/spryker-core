@@ -36,3 +36,4 @@ suites:
                 - \SprykerTest\Shared\Store\Helper\StoreReferenceHelper
                 - \SprykerTest\Shared\Product\Helper\ProductDataHelper
                 - \SprykerTest\Shared\ProductImage\Helper\ProductImageDataHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDataHelper

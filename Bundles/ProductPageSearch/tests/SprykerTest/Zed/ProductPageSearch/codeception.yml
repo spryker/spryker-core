@@ -48,6 +48,9 @@ suites:
                 - \SprykerTest\Zed\ProductAttribute\Helper\ProductAttributeDataHelper
                 - \SprykerTest\Shared\ProductImage\Helper\ProductImageDataHelper
                 - \SprykerTest\Shared\PriceProduct\Helper\PriceProductDataHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDataHelper
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
     Persistence:
         path: Persistence
         actor: ProductPageSearchPersistenceTester

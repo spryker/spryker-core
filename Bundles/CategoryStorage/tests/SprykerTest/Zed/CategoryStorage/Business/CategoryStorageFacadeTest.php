@@ -47,11 +47,6 @@ class CategoryStorageFacadeTest extends Unit
     /**
      * @var string
      */
-    protected const STORE_NAME_US = 'US';
-
-    /**
-     * @var string
-     */
     protected const STORE_NAME_AT = 'AT';
 
     /**
@@ -439,8 +434,8 @@ class CategoryStorageFacadeTest extends Unit
         $categoryTransferDE = $this->tester->haveLocalizedCategoryWithStoreRelation([], [StoreTransfer::NAME => static::STORE_NAME_DE]);
         $categoryTreeStorageDE = $this->tester->haveCategoryTreeStorageEntityByLocalizedCategoryAndStoreName($categoryTransferDE, static::STORE_NAME_DE);
 
-        $categoryTransferUS = $this->tester->haveLocalizedCategoryWithStoreRelation([], [StoreTransfer::NAME => static::STORE_NAME_US]);
-        $this->tester->haveCategoryTreeStorageEntityByLocalizedCategoryAndStoreName($categoryTransferUS, static::STORE_NAME_US);
+        $categoryTransferUS = $this->tester->haveLocalizedCategoryWithStoreRelation([], [StoreTransfer::NAME => static::STORE_NAME_AT]);
+        $this->tester->haveCategoryTreeStorageEntityByLocalizedCategoryAndStoreName($categoryTransferUS, static::STORE_NAME_AT);
 
         // Act
         $synchronizationDataTransfers = $this->tester->getFacade()->getCategoryTreeStorageSynchronizationDataTransfersByCategoryTreeStorageIds(0, 100, [$categoryTreeStorageDE->getIdCategoryTreeStorage()]);
@@ -457,7 +452,7 @@ class CategoryStorageFacadeTest extends Unit
         // Arrange
         $expectedCount = 1;
 
-        foreach ([static::STORE_NAME_DE, static::STORE_NAME_US, static::STORE_NAME_AT] as $storeName) {
+        foreach ([static::STORE_NAME_DE, static::STORE_NAME_AT] as $storeName) {
             $categoryTransfer = $this->tester->haveLocalizedCategoryWithStoreRelation([], [StoreTransfer::NAME => $storeName]);
             $this->tester->haveCategoryTreeStorageEntityByLocalizedCategoryAndStoreName($categoryTransfer, $storeName);
         }

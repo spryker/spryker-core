@@ -175,6 +175,9 @@ class ProductPageSearchListenerTest extends Unit
         // Prepare
         SpyProductAbstractPageSearchQuery::create()->filterByFkProductAbstract($this->productAbstractTransfer->getIdProductAbstract())->delete();
         $beforeCount = SpyProductAbstractPageSearchQuery::create()->count();
+        $productAbstractStoreNames = $this->tester->getProductAbstractStoreNamesByIdProductAbstract(
+            $this->productAbstractTransfer->getIdProductAbstract(),
+        );
 
         // Act
         $productPageProductAbstractListener = new ProductPageProductAbstractListener();
@@ -187,7 +190,7 @@ class ProductPageSearchListenerTest extends Unit
 
         // Assert
         $afterCount = SpyProductAbstractPageSearchQuery::create()->count();
-        $this->assertSame($beforeCount + static::NUMBER_OF_STORES * static::NUMBER_OF_LOCALES, $afterCount);
+        $this->assertSame($beforeCount + count($productAbstractStoreNames) * static::NUMBER_OF_LOCALES, $afterCount);
         $this->assertProductPageAbstractSearch();
     }
 
@@ -199,6 +202,9 @@ class ProductPageSearchListenerTest extends Unit
         // Prepare
         SpyProductAbstractPageSearchQuery::create()->filterByFkProductAbstract($this->productAbstractTransfer->getIdProductAbstract())->delete();
         $beforeCount = SpyProductAbstractPageSearchQuery::create()->count();
+        $productAbstractStoreNames = $this->tester->getProductAbstractStoreNamesByIdProductAbstract(
+            $this->productAbstractTransfer->getIdProductAbstract(),
+        );
 
         // Act
         $productPageProductAbstractPublishListener = new ProductPageProductAbstractPublishListener();
@@ -211,7 +217,7 @@ class ProductPageSearchListenerTest extends Unit
 
         // Assert
         $afterCount = SpyProductAbstractPageSearchQuery::create()->count();
-        $this->assertSame($beforeCount + static::NUMBER_OF_STORES * static::NUMBER_OF_LOCALES, $afterCount);
+        $this->assertSame($beforeCount + count($productAbstractStoreNames) * static::NUMBER_OF_LOCALES, $afterCount);
         $this->assertProductPageAbstractSearch();
     }
 
@@ -228,6 +234,9 @@ class ProductPageSearchListenerTest extends Unit
         });
         $idProductAbstract = $this->productAbstractTransfer->getIdProductAbstract();
         SpyProductAbstractPageSearchQuery::create()->filterByFkProductAbstract($idProductAbstract)->delete();
+        $productAbstractStoreNames = $this->tester->getProductAbstractStoreNamesByIdProductAbstract(
+            $this->productAbstractTransfer->getIdProductAbstract(),
+        );
 
         // Act
         $productPageProductAbstractListener = new ProductPageProductAbstractPublishListener();
@@ -249,7 +258,7 @@ class ProductPageSearchListenerTest extends Unit
 
         // Assert
         $afterCount = SpyProductAbstractPageSearchQuery::create()->count();
-        $this->assertSame($beforeCount - static::NUMBER_OF_STORES * static::NUMBER_OF_LOCALES, $afterCount);
+        $this->assertSame($beforeCount - count($productAbstractStoreNames) * static::NUMBER_OF_LOCALES, $afterCount);
     }
 
     /**

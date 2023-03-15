@@ -472,9 +472,12 @@ class CmsFacadePageTest extends Unit
      */
     public function testUpdateCmsPageUpdatesStoreRelation(array $originalRelation, array $modifiedRelation): void
     {
+        // Arrange
+        $originalRelationStoreIds = $this->tester->createStoresByNames($originalRelation);
+        $modifiedRelationStoreIds = $this->tester->createStoresByNames($modifiedRelation);
         $storeRelationSeed = [
             CmsPageTransfer::STORE_RELATION => [
-                StoreRelationTransfer::ID_STORES => $originalRelation,
+                StoreRelationTransfer::ID_STORES => $originalRelationStoreIds,
             ],
         ];
 
@@ -485,8 +488,9 @@ class CmsFacadePageTest extends Unit
         $idCmsPage = $this->cmsFacade->createPage($cmsPageTransfer);
 
         $persistedCmsPageTransfer = $this->cmsFacade->findCmsPageById($idCmsPage);
-        $persistedCmsPageTransfer->getStoreRelation()->setIdStores($modifiedRelation);
+        $persistedCmsPageTransfer->getStoreRelation()->setIdStores($modifiedRelationStoreIds);
 
+        // Act
         $this->cmsFacade->updatePage($persistedCmsPageTransfer);
 
         $persistedCmsPageTransfer = $this->cmsFacade->findCmsPageById($persistedCmsPageTransfer->getFkPage());
@@ -494,7 +498,7 @@ class CmsFacadePageTest extends Unit
 
         // Assert
         sort($resultIdStores);
-        $this->assertEquals($modifiedRelation, $resultIdStores);
+        $this->assertEquals($modifiedRelationStoreIds, $resultIdStores);
     }
 
     /**
@@ -617,13 +621,13 @@ class CmsFacadePageTest extends Unit
     {
         return [
             [
-                [1, 2, 3], [2],
+                ['DE', 'AT', 'US'], ['AT'],
             ],
             [
-                [1], [1, 2],
+                ['DE'], ['DE', 'AT'],
             ],
             [
-                [2], [1, 3],
+                ['AT'], ['DE', 'US'],
             ],
         ];
     }
