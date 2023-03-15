@@ -14,6 +14,7 @@
         <property name="merchantIds" type="int[]" singular="idMerchant"/>
         <property name="merchantProductAbstractIds" type="int[]" singular="merchantProductAbstractId"/>
         <property name="productConcreteSkus" type="string[]" singular="productConcreteSku"/>
+        <property name="productAbstractIds" type="int[]" singular="idProductAbstract"/>
     </transfer>
 
     <transfer name="MerchantProduct">
