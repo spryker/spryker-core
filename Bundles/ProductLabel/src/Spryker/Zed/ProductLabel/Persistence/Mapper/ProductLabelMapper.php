@@ -156,13 +156,13 @@ class ProductLabelMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductLabel\Persistence\SpyProductLabel> $productLabelEntities
+     * @param array<int, \Orm\Zed\ProductLabel\Persistence\SpyProductLabel> $productLabelEntities
      * @param \Generated\Shared\Transfer\ProductLabelCollectionTransfer $productLabelCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ProductLabelCollectionTransfer
      */
     public function mapProductLabelEntitiesToProductLabelCollectionTransfer(
-        ObjectCollection $productLabelEntities,
+        array $productLabelEntities,
         ProductLabelCollectionTransfer $productLabelCollectionTransfer
     ): ProductLabelCollectionTransfer {
         foreach ($productLabelEntities as $productLabelEntity) {

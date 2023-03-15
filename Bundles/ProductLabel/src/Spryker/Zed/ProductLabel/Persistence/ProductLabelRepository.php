@@ -361,14 +361,14 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
         $productLabelEntities = $productLabelQuery->find();
         $productLabelEntitiesIndexedByProductLabelIds = $this->indexProductLabelEntitiesByProductLabelIds($productLabelEntities);
 
-        $this->expandProductLabelWithProductLabelStores($productLabelEntitiesIndexedByProductLabelIds, $productLabelCriteriaTransfer);
-        $this->expandProductLabelWithProductLabelLocalizedAttributes($productLabelEntitiesIndexedByProductLabelIds, $productLabelCriteriaTransfer);
-        $this->expandProductLabelWithProductLabelProductAbstracts($productLabelEntitiesIndexedByProductLabelIds, $productLabelCriteriaTransfer);
+        $productLabelEntitiesIndexedByProductLabelIds = $this->expandProductLabelWithProductLabelStores($productLabelEntitiesIndexedByProductLabelIds, $productLabelCriteriaTransfer);
+        $productLabelEntitiesIndexedByProductLabelIds = $this->expandProductLabelWithProductLabelLocalizedAttributes($productLabelEntitiesIndexedByProductLabelIds, $productLabelCriteriaTransfer);
+        $productLabelEntitiesIndexedByProductLabelIds = $this->expandProductLabelWithProductLabelProductAbstracts($productLabelEntitiesIndexedByProductLabelIds, $productLabelCriteriaTransfer);
 
         return $this->getFactory()
             ->createProductLabelMapper()
             ->mapProductLabelEntitiesToProductLabelCollectionTransfer(
-                $productLabelEntities,
+                $productLabelEntitiesIndexedByProductLabelIds,
                 $productLabelCollectionTransfer,
             );
     }

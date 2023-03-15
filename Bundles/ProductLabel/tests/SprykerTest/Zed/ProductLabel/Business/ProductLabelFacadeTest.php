@@ -1180,6 +1180,52 @@ class ProductLabelFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testGetProductLabelCollectionShouldReturnUniqueProductLabelsFilteredByProductAbstractIds(): void
+    {
+        // Arrange
+        $this->tester->ensureDatabaseTableIsEmpty(SpyProductLabelQuery::create());
+
+        $firstProductTransfer = $this->tester->haveProduct();
+        $secondProductTransfer = $this->tester->haveProduct();
+
+        $firstProductLabelTransfer = $this->tester->haveProductLabel();
+        $secondProductLabelTransfer = $this->tester->haveProductLabel();
+
+        $this->tester->haveProductLabelToAbstractProductRelation(
+            $firstProductLabelTransfer->getIdProductLabel(),
+            $firstProductTransfer->getFkProductAbstract(),
+        );
+        $this->tester->haveProductLabelToAbstractProductRelation(
+            $secondProductLabelTransfer->getIdProductLabel(),
+            $firstProductTransfer->getFkProductAbstract(),
+        );
+        $this->tester->haveProductLabelToAbstractProductRelation(
+            $firstProductLabelTransfer->getIdProductLabel(),
+            $secondProductTransfer->getFkProductAbstract(),
+        );
+        $this->tester->haveProductLabelToAbstractProductRelation(
+            $secondProductLabelTransfer->getIdProductLabel(),
+            $secondProductTransfer->getFkProductAbstract(),
+        );
+
+        $productLabelCriteriaTransfer = (new ProductLabelCriteriaTransfer())
+            ->setProductLabelConditions(
+                (new ProductLabelConditionsTransfer())
+                    ->setIsActive(true)
+                    ->addProductAbstractId($firstProductTransfer->getFkProductAbstract())
+                    ->addProductAbstractId($secondProductTransfer->getFkProductAbstract()),
+            );
+
+        // Act
+        $productLabelCollectionTransfer = $this->tester->getFacade()->getProductLabelCollection($productLabelCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(2, $productLabelCollectionTransfer->getProductLabels());
+    }
+
+    /**
+     * @return void
+     */
     public function testExpandProductConcretesWithLabelsReturnsEmptyArrayWhenProductAreEmpty(): void
     {
         // Arrange
