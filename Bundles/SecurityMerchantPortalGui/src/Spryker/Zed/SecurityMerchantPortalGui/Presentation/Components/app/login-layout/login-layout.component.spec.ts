@@ -1,67 +1,53 @@
-import { async, TestBed, ComponentFixture } from '@angular/core/testing';
-import { Component } from '@angular/core';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
 import { CardModule } from '@spryker/card';
 import { LogoModule } from '@spryker/logo';
-import { By } from '@angular/platform-browser';
-
+import { createComponentWrapper, getTestingForComponent } from '@mp/zed-ui/testing';
 import { LoginLayoutComponent } from './login-layout.component';
 
 describe('LoginLayoutComponent', () => {
-    let component: TestComponent;
-    let fixture: ComponentFixture<TestComponent>;
-
-    @Component({
-        selector: 'test',
-        template: `
-            <mp-login-layout>
-                <div class="default-content"></div>
-                <div title class="title-content"></div>
-            </mp-login-layout>
-        `,
-    })
-    class TestComponent {}
-
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
+    const { testModule, createComponent } = getTestingForComponent(LoginLayoutComponent, {
+        ngModule: {
             imports: [CardModule, LogoModule],
-            declarations: [LoginLayoutComponent, TestComponent],
-        }).compileComponents();
-    }));
+            schemas: [NO_ERRORS_SCHEMA],
+        },
+        projectContent: `
+            <span title></span>
+            <span class="default-slot"></span>
+        `,
+    });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(TestComponent);
-        component = fixture.componentInstance;
+        TestBed.configureTestingModule({
+            imports: [testModule],
+        });
     });
 
-    it('should create component', () => {
-        expect(component).toBeTruthy();
+    it('should render <spy-logo> component', async () => {
+        const host = await createComponentWrapper(createComponent);
+        const logoComponent = host.queryCss('spy-logo');
+
+        expect(logoComponent).toBeTruthy();
     });
 
-    it('should render `spy-logo` component', () => {
-        const logoElem = fixture.debugElement.query(By.css('spy-logo'));
+    it('should render <spy-card> component', async () => {
+        const host = await createComponentWrapper(createComponent);
+        const cardComponent = host.queryCss('spy-card');
 
-        expect(logoElem).toBeTruthy();
+        expect(cardComponent).toBeTruthy();
     });
 
-    it('should render `spy-card` component', () => {
-        const cardElem = fixture.debugElement.query(By.css('spy-card'));
+    it('should render `title` slot to the `.ant-card-head-title` element', async () => {
+        const host = await createComponentWrapper(createComponent);
+        const titleSlot = host.queryCss('.ant-card-head-title [title]');
 
-        expect(cardElem).toBeTruthy();
+        expect(titleSlot).toBeTruthy();
     });
 
-    it('should render default content in the `.ant-card-body` element', () => {
-        fixture.detectChanges();
+    it('should render default slot to the `.ant-card-body` element', async () => {
+        const host = await createComponentWrapper(createComponent);
+        const defaultSlot = host.queryCss('.ant-card-body .default-slot');
 
-        const defaultContentElement = fixture.debugElement.query(By.css('.ant-card-body .default-content'));
-
-        expect(defaultContentElement).toBeTruthy();
-    });
-
-    it('should render title content in the `.ant-card-head-title` element', () => {
-        fixture.detectChanges();
-
-        const titleContentElement = fixture.debugElement.query(By.css('.ant-card-head-title .title-content'));
-
-        expect(titleContentElement).toBeTruthy();
+        expect(defaultSlot).toBeTruthy();
     });
 });

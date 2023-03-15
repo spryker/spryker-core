@@ -1,110 +1,72 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
 import { CardModule } from '@spryker/card';
-
+import { createComponentWrapper, getTestingForComponent } from '@mp/zed-ui/testing';
 import { EditAbstractProductVariantsComponent } from './edit-abstract-product-variants.component';
 
-@Component({
-    selector: 'test',
-    template: `
-        <mp-edit-abstract-product-variants [config]="config" [tableId]="tableId">
-            <div class="default-content"></div>
-            <div title class="title-content"></div>
-        </mp-edit-abstract-product-variants>
-    `,
-})
-class TestComponent {
-    config: any;
-    tableId: string;
-}
-
 describe('EditAbstractProductVariantsComponent', () => {
-    let component: TestComponent;
-    let fixture: ComponentFixture<TestComponent>;
+    const { testModule, createComponent } = getTestingForComponent(EditAbstractProductVariantsComponent, {
+        ngModule: {
+            imports: [CardModule],
+            schemas: [NO_ERRORS_SCHEMA],
+        },
+        projectContent: `
+            <span title></span>
+            <span class="default-slot"></span>
+        `,
+    });
 
-    describe('Host functionality', () => {
-        beforeEach(async(() => {
-            TestBed.configureTestingModule({
-                declarations: [EditAbstractProductVariantsComponent, TestComponent],
-                schemas: [NO_ERRORS_SCHEMA],
-            }).compileComponents();
-        }));
-
-        beforeEach(() => {
-            fixture = TestBed.createComponent(TestComponent);
-            component = fixture.componentInstance;
-        });
-
-        it('should create component', () => {
-            expect(component).toBeTruthy();
-        });
-
-        it('should render `spy-card` component', () => {
-            const cardComponent = fixture.debugElement.query(By.css('spy-card'));
-
-            expect(cardComponent).toBeTruthy();
-        });
-
-        it('should render `spy-table` component into `spy-card` component', () => {
-            const tableComponent = fixture.debugElement.query(By.css('spy-card spy-table'));
-
-            expect(tableComponent).toBeTruthy();
-        });
-
-        it('should bind @Input(config) to `config` of `spy-table` component', () => {
-            const mockTableConfig = {
-                config: 'config',
-                data: 'data',
-                columns: 'columns',
-            } as any;
-            const tableComponent = fixture.debugElement.query(By.css('spy-table'));
-
-            component.config = mockTableConfig;
-            fixture.detectChanges();
-
-            expect(tableComponent.properties.config).toEqual(mockTableConfig);
-        });
-
-        it('should bind @Input(tableId) to `tableId` of `spy-table` component', () => {
-            const mockTableId = 'mockTableId';
-            const tableComponent = fixture.debugElement.query(By.css('spy-table'));
-
-            component.tableId = mockTableId;
-            fixture.detectChanges();
-
-            expect(tableComponent.properties.tableId).toEqual(mockTableId);
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [testModule],
         });
     });
 
-    describe('Card element', () => {
-        beforeEach(async(() => {
-            TestBed.configureTestingModule({
-                imports: [CardModule],
-                declarations: [EditAbstractProductVariantsComponent, TestComponent],
-                schemas: [NO_ERRORS_SCHEMA],
-            }).compileComponents();
-        }));
+    it('should render <spy-card> component', async () => {
+        const host = await createComponentWrapper(createComponent);
+        const cardComponent = host.queryCss('spy-card');
 
-        beforeEach(() => {
-            fixture = TestBed.createComponent(TestComponent);
-            component = fixture.componentInstance;
-        });
+        expect(cardComponent).toBeTruthy();
+    });
 
-        it('should render default content in the `.ant-card-extra` element', () => {
-            fixture.detectChanges();
+    it('should render `title` slot to the `.ant-card-head-title` element', async () => {
+        const host = await createComponentWrapper(createComponent);
+        const titleSlot = host.queryCss('.ant-card-head-title [title]');
 
-            const titleContentElement = fixture.debugElement.query(By.css('.ant-card-extra .default-content'));
+        expect(titleSlot).toBeTruthy();
+    });
 
-            expect(titleContentElement).toBeTruthy();
-        });
+    it('should render default slot to the `.ant-card-extra` element', async () => {
+        const host = await createComponentWrapper(createComponent);
+        const defaultSlot = host.queryCss('.ant-card-extra .default-slot');
 
-        it('should render title content in the `.ant-card-head-title` element', () => {
-            fixture.detectChanges();
+        expect(defaultSlot).toBeTruthy();
+    });
 
-            const titleContentElement = fixture.debugElement.query(By.css('.ant-card-head-title .title-content'));
+    it('should render <spy-table> component to the <spy-card> component', async () => {
+        const host = await createComponentWrapper(createComponent);
+        const tableComponent = host.queryCss('spy-card spy-table');
 
-            expect(titleContentElement).toBeTruthy();
-        });
+        expect(tableComponent).toBeTruthy();
+    });
+
+    it('should bound `@Input(config)` to the `config` input of <spy-table> component', async () => {
+        const mockTableConfig = {
+            config: 'config',
+            data: 'data',
+            columns: 'columns',
+        };
+        const host = await createComponentWrapper(createComponent, { config: mockTableConfig });
+        const tableComponent = host.queryCss('spy-table');
+
+        expect(tableComponent.properties.config).toEqual(mockTableConfig);
+    });
+
+    it('should bound `@Input(tableId)` to the `tableId` input of <spy-table> component', async () => {
+        const mockTableId = 'mockTableId';
+        const host = await createComponentWrapper(createComponent, { tableId: mockTableId });
+        const tableComponent = host.queryCss('spy-table');
+
+        expect(tableComponent.properties.tableId).toEqual(mockTableId);
     });
 });

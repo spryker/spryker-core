@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@angular/core';
 import { TableConfig } from '@spryker/table';
-import { ToJson } from '@spryker/utils';
 
 @Component({
     selector: 'mp-offers-list-table',

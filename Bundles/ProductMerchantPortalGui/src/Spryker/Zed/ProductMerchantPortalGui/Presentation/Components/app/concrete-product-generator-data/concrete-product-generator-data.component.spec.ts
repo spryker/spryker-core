@@ -1,38 +1,30 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
+import { createComponentWrapper, getTestingForComponent } from '@mp/zed-ui/testing';
 import { ConcreteProductGeneratorDataComponent } from './concrete-product-generator-data.component';
 
 describe('ConcreteProductGeneratorDataComponent', () => {
-    let component: ConcreteProductGeneratorDataComponent;
-    let fixture: ComponentFixture<ConcreteProductGeneratorDataComponent>;
-
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [ConcreteProductGeneratorDataComponent],
-            schemas: [NO_ERRORS_SCHEMA],
-        }).compileComponents();
-    }));
+    const { testModule, createComponent } = getTestingForComponent(ConcreteProductGeneratorDataComponent, {
+        ngModule: { schemas: [NO_ERRORS_SCHEMA] },
+    });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(ConcreteProductGeneratorDataComponent);
-        component = fixture.componentInstance;
+        TestBed.configureTestingModule({
+            imports: [testModule],
+        });
     });
 
-    it('`getAbstractName` method should return value from `@Input(abstractName)`', () => {
+    it('`getAbstractName` method should return value from `@Input(abstractName)`', async () => {
         const expectedAbstractName = 'AbstractName';
+        const host = await createComponentWrapper(createComponent, { abstractName: expectedAbstractName });
 
-        component.abstractName = expectedAbstractName;
-        fixture.detectChanges();
-
-        expect(component.getAbstractName()).toEqual(expectedAbstractName);
+        expect(host.component.getAbstractName()).toEqual(expectedAbstractName);
     });
 
-    it('`getAbstractSku` method should return value from `@Input(abstractSku)`', () => {
+    it('`getAbstractSku` method should return value from `@Input(abstractSku)`', async () => {
         const expectedAbstractSku = 'AbstractSku';
+        const host = await createComponentWrapper(createComponent, { abstractSku: expectedAbstractSku });
 
-        component.abstractSku = expectedAbstractSku;
-        fixture.detectChanges();
-
-        expect(component.getAbstractSku()).toEqual(expectedAbstractSku);
+        expect(host.component.getAbstractSku()).toEqual(expectedAbstractSku);
     });
 });

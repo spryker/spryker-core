@@ -1,44 +1,32 @@
-import { Component } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { CardModule } from '@spryker/card';
-
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
+import { createComponentWrapper, getTestingForComponent } from '@mp/zed-ui/testing';
 import { DashboardStatsBlockComponent } from './dashboard-stats-block.component';
 
 describe('DashboardStatsComponent', () => {
-    let component: DashboardStatsBlockComponent;
-    let fixture: ComponentFixture<DashboardStatsBlockComponent>;
-
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [DashboardStatsBlockComponent],
-        }).compileComponents();
-    }));
+    const { testModule, createComponent } = getTestingForComponent(DashboardStatsBlockComponent, {
+        ngModule: { schemas: [NO_ERRORS_SCHEMA] },
+    });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(DashboardStatsBlockComponent);
-        component = fixture.componentInstance;
+        TestBed.configureTestingModule({
+            imports: [testModule],
+        });
     });
 
-    it('should render @Input(count) in the `.mp-dashboard-stats-block__text--count` element', () => {
+    it('should render `@Input(count)` to the `.mp-dashboard-stats-block__text--count` element', async () => {
         const mockCount = 'count';
+        const host = await createComponentWrapper(createComponent, { count: mockCount });
+        const countContentElem = host.queryCss('.mp-dashboard-stats-block__text--count');
 
-        component.count = mockCount;
-        fixture.detectChanges();
-
-        const countContentElement = fixture.debugElement.query(By.css('.mp-dashboard-stats-block__text--count'));
-
-        expect(countContentElement.nativeElement.textContent).toContain(mockCount);
+        expect(countContentElem.nativeElement.textContent).toContain(mockCount);
     });
 
-    it('should render @Input(name) in the `.mp-dashboard-stats-block__text:last-child` element', () => {
+    it('should render `@Input(name)` to the `.mp-dashboard-stats-block__text:last-child` element', async () => {
         const mockName = 'name';
+        const host = await createComponentWrapper(createComponent, { name: mockName });
+        const nameContentElem = host.queryCss('.mp-dashboard-stats-block__text:last-child');
 
-        component.name = mockName;
-        fixture.detectChanges();
-
-        const nameContentElement = fixture.debugElement.query(By.css('.mp-dashboard-stats-block__text:last-child'));
-
-        expect(nameContentElement.nativeElement.textContent).toContain(mockName);
+        expect(nameContentElem.nativeElement.textContent).toContain(mockName);
     });
 });

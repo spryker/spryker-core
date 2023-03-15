@@ -2,10 +2,7 @@ import { NgModule } from '@angular/core';
 import { UnsavedChangesModule } from '@spryker/unsaved-changes';
 import { UnsavedChangesBrowserGuardModule } from '@spryker/unsaved-changes.guard.browser';
 import { UnsavedChangesDrawerGuardModule } from '@spryker/unsaved-changes.guard.drawer';
-import {
-    UnsavedChangesGuardNavigationModule,
-    UnsavedChangesNavigationGuard,
-} from '@spryker/unsaved-changes.guard.navigation';
+import { UnsavedChangesGuardNavigationModule } from '@spryker/unsaved-changes.guard.navigation';
 
 @NgModule({
     imports: [

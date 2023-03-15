@@ -1,79 +1,62 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { TestBed } from '@angular/core/testing';
+import { createComponentWrapper, getTestingForComponent } from '@mp/zed-ui/testing';
 import { FormComponent } from './form.component';
-import { By } from '@angular/platform-browser';
 
 describe('FormComponent', () => {
-    let component: FormComponent;
-    let fixture: ComponentFixture<FormComponent>;
-
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [FormComponent],
-            schemas: [NO_ERRORS_SCHEMA],
-        }).compileComponents();
-    }));
-
-    beforeEach(() => {
-        fixture = TestBed.createComponent(FormComponent);
-        component = fixture.componentInstance;
+    const { testModule, createComponent } = getTestingForComponent(FormComponent, {
+        ngModule: { schemas: [NO_ERRORS_SCHEMA] },
     });
 
-    it('should render `form` component', () => {
-        const formComponent = fixture.debugElement.query(By.css('form'));
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [testModule],
+        });
+    });
+
+    it('should render <form> component', async () => {
+        const host = await createComponentWrapper(createComponent);
+        const formComponent = host.queryCss('form');
 
         expect(formComponent).toBeTruthy();
     });
 
-    it('should bind @Input(method) to `method` of `form` component', () => {
+    it('should bound `@Input(method)` to the `method` input of <form> component', async () => {
         const mockMethod = 'mockMethod';
-        const formComponent = fixture.debugElement.query(By.css('form'));
-
-        component.method = mockMethod;
-        fixture.detectChanges();
+        const host = await createComponentWrapper(createComponent, { method: mockMethod });
+        const formComponent = host.queryCss('form');
 
         expect(formComponent.properties.method).toBe(mockMethod);
     });
 
-    it('should bind @Input(action) to `action` of `form` component', () => {
+    it('should bound `@Input(action)` to the `action` input of <form> component', async () => {
         const mockAction = 'mockAction';
-        const formComponent = fixture.debugElement.query(By.css('form'));
-
-        component.action = mockAction;
-        fixture.detectChanges();
+        const host = await createComponentWrapper(createComponent, { action: mockAction });
+        const formComponent = host.queryCss('form');
 
         expect(formComponent.properties.action).toBe(mockAction);
     });
 
-    it('should bind @Input(name) to `name` of `form` component', () => {
+    it('should bound `@Input(name)` to the `name` input of <form> component', async () => {
         const mockName = 'mockName';
-        const formComponent = fixture.debugElement.query(By.css('form'));
-
-        component.name = mockName;
-        fixture.detectChanges();
+        const host = await createComponentWrapper(createComponent, { name: mockName });
+        const formComponent = host.queryCss('form');
 
         expect(formComponent.properties.name).toBe(mockName);
     });
 
-    it('should bind @Input(attrs) to `spyApplyAttrs` of `form` component', () => {
-        const mockAttrs = {
-            mock: 'mockValue',
-        };
-        const formComponent = fixture.debugElement.query(By.css('form'));
-
-        component.attrs = mockAttrs;
-        fixture.detectChanges();
+    it('should bound `@Input(attrs)` to the `spyApplyAttrs` input of <form> component', async () => {
+        const mockAttrs = { mock: 'mockValue' };
+        const host = await createComponentWrapper(createComponent, { attrs: mockAttrs });
+        const formComponent = host.queryCss('form');
 
         expect(formComponent.properties.spyApplyAttrs).toEqual(mockAttrs);
     });
 
-    it('should bind @Input(withMonitor) to `spyUnsavedChangesFormMonitor` of `form` component', () => {
+    it('should bound `@Input(withMonitor)` to the `spyUnsavedChangesFormMonitor` input of <form> component', async () => {
         const mockMonitor = true;
-        const formComponent = fixture.debugElement.query(By.css('form'));
-
-        component.withMonitor = mockMonitor;
-        fixture.detectChanges();
+        const host = await createComponentWrapper(createComponent, { withMonitor: mockMonitor });
+        const formComponent = host.queryCss('form');
 
         expect(formComponent.properties.spyUnsavedChangesFormMonitor).toBe(mockMonitor);
     });

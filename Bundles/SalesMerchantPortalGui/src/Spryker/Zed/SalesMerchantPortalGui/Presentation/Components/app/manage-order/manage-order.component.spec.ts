@@ -1,109 +1,83 @@
-import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
+import { createComponentWrapper, getTestingForComponent } from '@mp/zed-ui/testing';
 import { ManageOrderComponent } from './manage-order.component';
 
-const mockStateTransitionsClass = 'mockStateTransitionsClass';
-const mockStateTransitionsMessageClass = 'mockStateTransitionsMessageClass';
-const mockItemStatesClass = 'mockItemStatesClass';
-const mockItemStatesTitleClass = 'mockItemStatesTitleClass';
-const mockDefaultClass = 'mockDefaultClass';
-
 describe('ManageOrderComponent', () => {
-    let component: TestComponent;
-    let fixture: ComponentFixture<TestComponent>;
-
-    @Component({
-        selector: 'mp-test',
-        template: `
-            <mp-manage-order [orderDetails]="orderDetails">
-                <div state-transitions class="${mockStateTransitionsClass}"></div>
-                <div state-transitions-meessage class="${mockStateTransitionsMessageClass}"></div>
-                <div items-states class="${mockItemStatesClass}"></div>
-                <div items-states-title class="${mockItemStatesTitleClass}"></div>
-                <div class="${mockDefaultClass}"></div>
-            </mp-manage-order>
+    const { testModule, createComponent } = getTestingForComponent(ManageOrderComponent, {
+        ngModule: { schemas: [NO_ERRORS_SCHEMA] },
+        projectContent: `
+            <span state-transitions></span>
+            <span state-transitions-message></span>
+            <span items-states></span>
+            <span items-states-title></span>
+            <span class="default-slot"></span>
         `,
-    })
-    class TestComponent {
-        orderDetails: any;
-    }
-
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [ManageOrderComponent, TestComponent],
-            schemas: [NO_ERRORS_SCHEMA],
-        }).compileComponents();
-    }));
-
-    beforeEach(() => {
-        fixture = TestBed.createComponent(TestComponent);
-        component = fixture.componentInstance;
     });
 
-    it('should render component with `mp-manage-order` host class', () => {
-        const manageOrderElem = fixture.debugElement.query(By.css('.mp-manage-order'));
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [testModule],
+        });
+    });
+
+    it('should render component with `mp-manage-order` host class name', async () => {
+        const host = await createComponentWrapper(createComponent);
+        const manageOrderElem = host.queryCss('.mp-manage-order');
 
         expect(manageOrderElem).toBeTruthy();
     });
 
-    it('should render slot [state-transitions] in the last element with `mp-manage-order__heading-col` className', () => {
-        const stateTransitionsElem = fixture.debugElement.query(
-            By.css(`.mp-manage-order__heading-col:first-child .${mockStateTransitionsClass}`),
-        );
+    it('should render `state-transitions` slot to the `.mp-manage-order__heading-col--actions` element', async () => {
+        const host = await createComponentWrapper(createComponent);
+        const stateTransitionsSlot = host.queryCss('.mp-manage-order__heading-col--actions [state-transitions]');
 
-        expect(stateTransitionsElem).toBeTruthy();
+        expect(stateTransitionsSlot).toBeTruthy();
     });
 
-    it('should render slot [state-transitions-meessage] in the element with `mp-manage-order__transitions-message` className', () => {
-        const stateTransitionsMessageElem = fixture.debugElement.query(
-            By.css(`.mp-manage-order__transitions-message .${mockStateTransitionsMessageClass}`),
+    it('should render `state-transitions-message` slot to the `.mp-manage-order__transitions-message` element', async () => {
+        const host = await createComponentWrapper(createComponent);
+        const stateTransitionsMessageSlot = host.queryCss(
+            '.mp-manage-order__transitions-message [state-transitions-message]',
         );
 
-        fixture.detectChanges();
-
-        expect(stateTransitionsMessageElem).toBeTruthy();
+        expect(stateTransitionsMessageSlot).toBeTruthy();
     });
 
-    it('should render slot [items-states] in the last element with `mp-manage-order__states-col` className', () => {
-        const itemStatesElem = fixture.debugElement.query(
-            By.css(`.mp-manage-order__states-col:last-child .${mockItemStatesClass}`),
-        );
+    it('should render `items-states-title` slot to the `.mp-manage-order__states-col--title` element', async () => {
+        const host = await createComponentWrapper(createComponent);
+        const itemsStatesTitleSlot = host.queryCss('.mp-manage-order__states-col--title [items-states-title]');
 
-        expect(itemStatesElem).toBeTruthy();
+        expect(itemsStatesTitleSlot).toBeTruthy();
     });
 
-    it('should render slot [items-states-title] in the element with `mp-manage-order__states-col--title` className', () => {
-        const itemStatesTitleElem = fixture.debugElement.query(
-            By.css(`.mp-manage-order__states-col--title .${mockItemStatesTitleClass}`),
-        );
+    it('should render `items-states` slot to the `.mp-manage-order__states-col:last-child` element', async () => {
+        const host = await createComponentWrapper(createComponent);
+        const itemsStatesSlot = host.queryCss('.mp-manage-order__states-col:last-child [items-states]');
 
-        expect(itemStatesTitleElem).toBeTruthy();
+        expect(itemsStatesSlot).toBeTruthy();
     });
 
-    it('should render default slot after `.mp-manage-order__information` element', () => {
-        const defaultSlotElem = fixture.debugElement.query(
-            By.css(`.mp-manage-order__information + .${mockDefaultClass}`),
-        );
+    it('should render default slot after the `.mp-manage-order__information` element', async () => {
+        const host = await createComponentWrapper(createComponent);
+        const defaultSlot = host.queryCss('.mp-manage-order__information + .default-slot');
 
-        expect(defaultSlotElem).toBeTruthy();
+        expect(defaultSlot).toBeTruthy();
     });
 
-    it('should render @Input(orderDetails) data in the appropriate places', () => {
+    it('should render `@Input(orderDetails)` data to the appropriate places', async () => {
         const mockOrderDetails = {
             title: 'title',
             referenceTitle: 'referenceTitle',
             reference: 'reference',
         };
-        const titleHolderElem = fixture.debugElement.query(By.css('.mp-manage-order__title'));
-        const referenceTitleHolderElem = fixture.debugElement.query(By.css('.mp-manage-order__reference-title'));
-        const referenceHolderElem = fixture.debugElement.query(By.css('.mp-manage-order__reference'));
+        const host = await createComponentWrapper(createComponent, { orderDetails: mockOrderDetails });
+        const titleElem = host.queryCss('.mp-manage-order__title');
+        const referenceTitleElem = host.queryCss('.mp-manage-order__reference-title');
+        const referenceElem = host.queryCss('.mp-manage-order__reference');
 
-        component.orderDetails = mockOrderDetails;
-        fixture.detectChanges();
-
-        expect(titleHolderElem.nativeElement.textContent).toContain(mockOrderDetails.title);
-        expect(referenceTitleHolderElem.nativeElement.textContent).toContain(mockOrderDetails.referenceTitle);
-        expect(referenceHolderElem.nativeElement.textContent).toContain(mockOrderDetails.reference);
+        expect(titleElem.nativeElement.textContent).toContain(mockOrderDetails.title);
+        expect(referenceTitleElem.nativeElement.textContent).toContain(mockOrderDetails.referenceTitle);
+        expect(referenceElem.nativeElement.textContent).toContain(mockOrderDetails.reference);
     });
 });

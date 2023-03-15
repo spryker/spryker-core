@@ -1,58 +1,45 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { Component } from '@angular/core';
-import { By } from '@angular/platform-browser';
-
+import { TestBed } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { createComponentWrapper, getTestingForComponent } from '@mp/zed-ui/testing';
 import { LayoutCenteredComponent } from './layout-centered.component';
 import { LayoutFooterModule } from '../layout-footer/layout-footer.module';
 
-describe('LayoutCentralComponent', () => {
-    let component: TestComponent;
-    let fixture: ComponentFixture<TestComponent>;
-
-    @Component({
-        selector: 'test',
-        template: `
-            <mp-layout-centered>
-                <div class="default-content"></div>
-                <div footer class="footer-content"></div>
-            </mp-layout-centered>
-        `,
-    })
-    class TestComponent {}
-
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
+describe('LayoutCenteredComponent', () => {
+    const { testModule, createComponent } = getTestingForComponent(LayoutCenteredComponent, {
+        ngModule: {
             imports: [LayoutFooterModule],
-            declarations: [LayoutCenteredComponent, TestComponent],
-        }).compileComponents();
-    }));
+            schemas: [NO_ERRORS_SCHEMA],
+        },
+        projectContent: `
+            <span footer></span>
+            <span class="default-slot"></span>
+        `,
+    });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(TestComponent);
-        component = fixture.componentInstance;
+        TestBed.configureTestingModule({
+            imports: [testModule],
+        });
     });
 
-    it('should create component', () => {
-        expect(component).toBeTruthy();
+    it('should render <mp-layout-footer> component', async () => {
+        const host = await createComponentWrapper(createComponent);
+        const layoutFooterComponent = host.queryCss('mp-layout-footer');
+
+        expect(layoutFooterComponent).toBeTruthy();
     });
 
-    it('component must render `mp-layout-footer` component', () => {
-        const footerElem = fixture.debugElement.query(By.css('mp-layout-footer'));
+    it('should render `footer` slot to the <mp-layout-footer> component', async () => {
+        const host = await createComponentWrapper(createComponent);
+        const footerSlot = host.queryCss('mp-layout-footer [footer]');
 
-        expect(footerElem).toBeTruthy();
+        expect(footerSlot).toBeTruthy();
     });
 
-    it('should render default content in the `.mp-layout-centered__content` element', () => {
-        const defaultContentElement = fixture.debugElement.query(
-            By.css('.mp-layout-centered__content .default-content'),
-        );
+    it('should render default slot to the `.mp-layout-centered__content` element', async () => {
+        const host = await createComponentWrapper(createComponent);
+        const defaultSlot = host.queryCss('.mp-layout-centered__content .default-slot');
 
-        expect(defaultContentElement).toBeTruthy();
-    });
-
-    it('should render footer content in the `mp-layout-footer` component', () => {
-        const footerContentElem = fixture.debugElement.query(By.css('mp-layout-footer .footer-content'));
-
-        expect(footerContentElem).toBeTruthy();
+        expect(defaultSlot).toBeTruthy();
     });
 });

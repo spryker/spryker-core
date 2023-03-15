@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation, ViewChild, ElementRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation, ViewChild } from '@angular/core';
 import { ToJson, ToBoolean } from '@spryker/utils';
 import { UnsavedChangesFormMonitorDirective } from '@spryker/unsaved-changes.monitor.form';
 
@@ -19,7 +19,7 @@ export class FormComponent {
     @Input() @ToJson() attrs: Record<string, string> = {};
     @Input() @ToBoolean() withMonitor = false;
 
-    sumbitHandler() {
+    submitHandler() {
         this.unsavedChangesFormMonitorDirective?.reset();
     }
 }

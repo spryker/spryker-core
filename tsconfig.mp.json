@@ -16,10 +16,10 @@
         "lib": ["dom", "esnext"],
         "baseUrl": ".",
         "rootDir": ".",
-        "removeComments": true,
         "paths": {
+            "@mp/zed-ui/testing": ["./Bundles/ZedUi/mp.testing-api.ts"],
             "@mp/zed-ui/*": ["./Bundles/ZedUi/src/Spryker/Zed/ZedUi/Presentation/Components/*"]
         }
     },
-    "exclude": ["**/node_modules/**", "**/*.spec.ts", "public", "dist", "**/dist/**"]
+    "exclude": ["**/node_modules/**"]
 }

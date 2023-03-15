@@ -1,34 +1,17 @@
-import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
 import { CardModule } from '@spryker/card';
+import { createComponentWrapper, getTestingForComponent } from '@mp/zed-ui/testing';
 import { BulkEditProductVariantsComponent } from './bulk-edit-product-variants.component';
-import { BulkEditProductVariantSections } from './types';
-
-@Component({
-    selector: 'mp-test',
-    template: `
-        <mp-bulk-edit-product-variants [sections]="sections" [notificationText]="notificationText">
-            <span title class="projected-title"></span>
-            <span action class="projected-action"></span>
-            <span notification class="projected-notification"></span>
-        </mp-bulk-edit-product-variants>
-    `,
-})
-class TestComponent {
-    sections?: Partial<BulkEditProductVariantSections>;
-    notificationText?: string;
-}
 
 const mockStatusSection = {
     status: {
         title: 'Status',
         activationName: 'status_activationName',
-        name: 'statuus_name',
+        name: 'status_name',
         placeholder: 'Active',
     },
 };
-
 const mockValiditySection = {
     validity: {
         title: 'Validity Dates & Time',
@@ -38,242 +21,245 @@ const mockValiditySection = {
             to: 'validity_toName',
         },
         placeholder: {
-            from: 'formPlacehholder',
-            to: 'toPlacehholder',
+            from: 'formPlaceholder',
+            to: 'toPlaceholder',
         },
     },
 };
 
 describe('BulkEditProductVariantsComponent', () => {
-    const getTitleComponent = () => fixture.debugElement.query(By.css('spy-card spy-checkbox'));
-    let component: TestComponent;
-    let fixture: ComponentFixture<TestComponent>;
-
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
+    const { testModule, createComponent } = getTestingForComponent(BulkEditProductVariantsComponent, {
+        ngModule: {
             imports: [CardModule],
-            declarations: [BulkEditProductVariantsComponent, TestComponent],
             schemas: [NO_ERRORS_SCHEMA],
-        }).compileComponents();
-    }));
+        },
+        projectContent: `
+            <span title></span>
+            <span action></span>
+            <span notification></span>
+        `,
+    });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(TestComponent);
-        component = fixture.componentInstance;
+        TestBed.configureTestingModule({
+            imports: [testModule],
+        });
     });
 
-    it('should render default projected title in the `spy-headline` element', () => {
-        const projectedTitle = fixture.debugElement.query(By.css('spy-headline .projected-title'));
+    it('should render `title` slot to the <spy-headline> component', async () => {
+        const host = await createComponentWrapper(createComponent);
+        const titleSlot = host.queryCss('spy-headline [title]');
 
-        expect(projectedTitle).toBeTruthy();
+        expect(titleSlot).toBeTruthy();
     });
 
-    it('should render default projected action in the `spy-headline` element', () => {
-        const projectedAction = fixture.debugElement.query(By.css('spy-headline .projected-action'));
+    it('should render `action` slot to the <spy-headline> component', async () => {
+        const host = await createComponentWrapper(createComponent);
+        const actionSlot = host.queryCss('spy-headline [action]');
 
-        expect(projectedAction).toBeTruthy();
+        expect(actionSlot).toBeTruthy();
     });
 
-    it('should render projected notification in the `mp-bulk-edit-product-variants__content` element', () => {
-        const notificationComponent = fixture.debugElement.query(
-            By.css('.mp-bulk-edit-product-variants__content .projected-notification'),
-        );
+    it('should render `notification` slot to the `.mp-bulk-edit-product-variants__content` element', async () => {
+        const host = await createComponentWrapper(createComponent);
+        const notificationSlot = host.queryCss('.mp-bulk-edit-product-variants__content [notification]');
 
-        expect(notificationComponent).toBeTruthy();
+        expect(notificationSlot).toBeTruthy();
     });
 
     describe('Status section', () => {
-        const getToggleComponent = () => fixture.debugElement.query(By.css('spy-card spy-toggle'));
+        it('should render <spy-toggle> component if `sections.status` exist', async () => {
+            const host = await createComponentWrapper(createComponent, { sections: mockStatusSection });
+            const toggleComponent = host.queryCss('spy-card spy-toggle');
 
-        it('should render `spy-card spy-toggle` if `sections.status` exist', () => {
-            component.sections = mockStatusSection;
-            fixture.detectChanges();
-
-            expect(getToggleComponent()).toBeTruthy();
+            expect(toggleComponent).toBeTruthy();
         });
 
-        it('should render `spy-checkbox` if `sections.status` exist', () => {
-            component.sections = mockStatusSection;
-            fixture.detectChanges();
+        it('should render <spy-checkbox> component if `sections.status` exist', async () => {
+            const host = await createComponentWrapper(createComponent, { sections: mockStatusSection });
+            const checkboxComponent = host.queryCss('spy-card spy-checkbox');
 
-            expect(getTitleComponent()).toBeTruthy();
+            expect(checkboxComponent).toBeTruthy();
         });
 
-        it('should render `sections.status.placeholder` inside `spy-toggle` component', () => {
-            component.sections = mockStatusSection;
-            fixture.detectChanges();
+        it('should render `sections.status.placeholder` to the <spy-toggle> component', async () => {
+            const host = await createComponentWrapper(createComponent, { sections: mockStatusSection });
+            const toggleComponent = host.queryCss('spy-card spy-toggle');
 
-            expect(getToggleComponent().nativeElement.textContent).toContain(mockStatusSection.status.placeholder);
+            expect(toggleComponent.nativeElement.textContent).toContain(mockStatusSection.status.placeholder);
         });
 
-        it('should bound `sections.status.name` to the `name` property of the `spy-toggle` component', () => {
-            component.sections = mockStatusSection;
-            fixture.detectChanges();
+        it('should bound `sections.status.name` to the `name` input of <spy-toggle> component', async () => {
+            const host = await createComponentWrapper(createComponent, { sections: mockStatusSection });
+            const toggleComponent = host.queryCss('spy-card spy-toggle');
 
-            expect(getToggleComponent().properties.name).toBe(mockStatusSection.status.name);
+            expect(toggleComponent.properties.name).toBe(mockStatusSection.status.name);
         });
 
-        it('should bound `true` to the `disabled` property of the `spy-toggle` component by default', () => {
-            component.sections = mockStatusSection;
-            fixture.detectChanges();
+        it('should bound `true` to the `disabled` input of <spy-toggle> component by default', async () => {
+            const host = await createComponentWrapper(createComponent, { sections: mockStatusSection });
+            const toggleComponent = host.queryCss('spy-card spy-toggle');
 
-            expect(getToggleComponent().properties.disabled).toBe(true);
+            expect(toggleComponent.properties.disabled).toBe(true);
         });
 
-        it('should render `sections.status.title` inside `spy-checkbox` component', () => {
-            component.sections = mockStatusSection;
-            fixture.detectChanges();
+        it('should render `sections.status.title` to the <spy-checkbox> component', async () => {
+            const host = await createComponentWrapper(createComponent, { sections: mockStatusSection });
+            const checkboxComponent = host.queryCss('spy-card spy-checkbox');
 
-            expect(getTitleComponent().nativeElement.textContent).toContain(mockStatusSection.status.title);
+            expect(checkboxComponent.nativeElement.textContent).toContain(mockStatusSection.status.title);
         });
 
-        it('should bound `sections.status.activationName` to the `name` property of the `spy-checkbox` component', () => {
-            component.sections = mockStatusSection;
-            fixture.detectChanges();
+        it('should bound `sections.status.activationName` to the `name` input of <spy-checkbox> component', async () => {
+            const host = await createComponentWrapper(createComponent, { sections: mockStatusSection });
+            const checkboxComponent = host.queryCss('spy-card spy-checkbox');
 
-            expect(getTitleComponent().properties.name).toBe(mockStatusSection.status.activationName);
+            expect(checkboxComponent.properties.name).toBe(mockStatusSection.status.activationName);
         });
 
-        it('should change `spy-toggle` `disabled` property if `checkedChange` event of the `spy-checkbox` component has been called', () => {
-            component.sections = mockStatusSection;
-            fixture.detectChanges();
+        it('should change <spy-toggle> component `disabled` property if `checkedChange` event of <spy-checkbox> component has been called', async () => {
+            const host = await createComponentWrapper(createComponent, { sections: mockStatusSection });
+            const toggleComponent = host.queryCss('spy-card spy-toggle');
+            const checkboxComponent = host.queryCss('spy-card spy-checkbox');
 
-            expect(getToggleComponent().properties.disabled).toBe(true);
+            expect(toggleComponent.properties.disabled).toBe(true);
 
-            getTitleComponent().triggerEventHandler('checkedChange', true);
-            fixture.detectChanges();
+            checkboxComponent.triggerEventHandler('checkedChange', true);
+            host.detectChanges();
 
-            expect(getToggleComponent().properties.disabled).toBe(false);
+            expect(toggleComponent.properties.disabled).toBe(false);
 
-            getTitleComponent().triggerEventHandler('checkedChange', false);
-            fixture.detectChanges();
+            checkboxComponent.triggerEventHandler('checkedChange', false);
+            host.detectChanges();
 
-            expect(getToggleComponent().properties.disabled).toBe(true);
+            expect(toggleComponent.properties.disabled).toBe(true);
         });
 
-        it('should reset `spy-toggle` `value` property if `checkedChange` event of the `spy-checkbox` component has been called with `false`', () => {
-            component.sections = mockStatusSection;
-            fixture.detectChanges();
+        it('should reset <spy-toggle> component `value` property if `checkedChange` event of <spy-checkbox> component has been called with `false`', async () => {
+            const host = await createComponentWrapper(createComponent, { sections: mockStatusSection });
+            const toggleComponent = host.queryCss('spy-card spy-toggle');
+            const checkboxComponent = host.queryCss('spy-card spy-checkbox');
 
-            getTitleComponent().triggerEventHandler('checkedChange', true);
-            fixture.detectChanges();
-            getToggleComponent().triggerEventHandler('valueChange', true);
-            fixture.detectChanges();
+            checkboxComponent.triggerEventHandler('checkedChange', true);
+            host.detectChanges();
+            toggleComponent.triggerEventHandler('valueChange', true);
+            host.detectChanges();
 
-            expect(getToggleComponent().properties.value).toBe(true);
+            expect(toggleComponent.properties.value).toBe(true);
 
-            getTitleComponent().triggerEventHandler('checkedChange', false);
-            fixture.detectChanges();
+            checkboxComponent.triggerEventHandler('checkedChange', false);
+            host.detectChanges();
 
-            expect(getToggleComponent().properties.value).toBe(false);
+            expect(toggleComponent.properties.value).toBe(false);
         });
     });
 
     describe('Validity section', () => {
-        const getRangeComponent = () => fixture.debugElement.query(By.css('spy-card spy-date-range-picker'));
+        it('should render <spy-date-range-picker> component if `sections.validity` exist', async () => {
+            const host = await createComponentWrapper(createComponent, { sections: mockValiditySection });
+            const dateRangePickerComponent = host.queryCss('spy-card spy-date-range-picker');
 
-        it('should render `spy-card spy-date-range-picker` if `sections.validity` exist', () => {
-            component.sections = mockValiditySection;
-            fixture.detectChanges();
-
-            expect(getRangeComponent()).toBeTruthy();
+            expect(dateRangePickerComponent).toBeTruthy();
         });
 
-        it('should render `spy-checkbox` if `sections.status` exist', () => {
-            component.sections = mockValiditySection;
-            fixture.detectChanges();
+        it('should render <spy-checkbox> component if `sections.status` exist', async () => {
+            const host = await createComponentWrapper(createComponent, { sections: mockValiditySection });
+            const checkboxComponent = host.queryCss('spy-card spy-checkbox');
 
-            expect(getTitleComponent()).toBeTruthy();
+            expect(checkboxComponent).toBeTruthy();
         });
 
-        it('should bound `sections.validity.name.to` to `nameTo` of the `spy-date-range-picker` component', () => {
-            component.sections = mockValiditySection;
-            fixture.detectChanges();
+        it('should bound `sections.validity.name.to` to the `nameTo` input of <spy-date-range-picker> component', async () => {
+            const host = await createComponentWrapper(createComponent, { sections: mockValiditySection });
+            const dateRangePickerComponent = host.queryCss('spy-card spy-date-range-picker');
 
-            expect(getRangeComponent().properties.nameTo).toContain(mockValiditySection.validity.name.to);
+            expect(dateRangePickerComponent.properties.nameTo).toContain(mockValiditySection.validity.name.to);
         });
 
-        it('should bound `sections.validity.name.from` to `nameFrom` of the `spy-date-range-picker` component', () => {
-            component.sections = mockValiditySection;
-            fixture.detectChanges();
+        it('should bound `sections.validity.name.from` to the `nameFrom` input of <spy-date-range-picker> component', async () => {
+            const host = await createComponentWrapper(createComponent, { sections: mockValiditySection });
+            const dateRangePickerComponent = host.queryCss('spy-card spy-date-range-picker');
 
-            expect(getRangeComponent().properties.nameFrom).toContain(mockValiditySection.validity.name.from);
+            expect(dateRangePickerComponent.properties.nameFrom).toContain(mockValiditySection.validity.name.from);
         });
 
-        it('should bound `sections.validity.placeholder.to` to `placeholderTo` of the `spy-date-range-picker` component', () => {
-            component.sections = mockValiditySection;
-            fixture.detectChanges();
+        it('should bound `sections.validity.placeholder.to` to the `placeholderTo` input of <spy-date-range-picker> component', async () => {
+            const host = await createComponentWrapper(createComponent, { sections: mockValiditySection });
+            const dateRangePickerComponent = host.queryCss('spy-card spy-date-range-picker');
 
-            expect(getRangeComponent().properties.placeholderTo).toContain(mockValiditySection.validity.placeholder.to);
+            expect(dateRangePickerComponent.properties.placeholderTo).toContain(
+                mockValiditySection.validity.placeholder.to,
+            );
         });
 
-        it('should bound `sections.validity.placeholder.from` to `placeholderFrom` of the `spy-date-range-picker` component', () => {
-            component.sections = mockValiditySection;
-            fixture.detectChanges();
+        it('should bound `sections.validity.placeholder.from` to the `placeholderFrom` input of <spy-date-range-picker> component', async () => {
+            const host = await createComponentWrapper(createComponent, { sections: mockValiditySection });
+            const dateRangePickerComponent = host.queryCss('spy-card spy-date-range-picker');
 
-            expect(getRangeComponent().properties.placeholderFrom).toContain(
+            expect(dateRangePickerComponent.properties.placeholderFrom).toContain(
                 mockValiditySection.validity.placeholder.from,
             );
         });
 
-        it('should bound `true` to the `disabled` property of the `spy-date-range-picker` component by default', () => {
-            component.sections = mockValiditySection;
-            fixture.detectChanges();
+        it('should bound `true` to the `disabled` input of <spy-date-range-picker> component by default', async () => {
+            const host = await createComponentWrapper(createComponent, { sections: mockValiditySection });
+            const dateRangePickerComponent = host.queryCss('spy-card spy-date-range-picker');
 
-            expect(getRangeComponent().properties.disabled).toBe(true);
+            expect(dateRangePickerComponent.properties.disabled).toBe(true);
         });
 
-        it('should render `sections.validity.title` inside `spy-checkbox` component', () => {
-            component.sections = mockValiditySection;
-            fixture.detectChanges();
+        it('should render `sections.validity.title` to the <spy-checkbox> component', async () => {
+            const host = await createComponentWrapper(createComponent, { sections: mockValiditySection });
+            const checkboxComponent = host.queryCss('spy-card spy-checkbox');
 
-            expect(getTitleComponent().nativeElement.textContent).toContain(mockValiditySection.validity.title);
+            expect(checkboxComponent.nativeElement.textContent).toContain(mockValiditySection.validity.title);
         });
 
-        it('should bound `sections.validity.activationName` to the `name` property of the `spy-checkbox` component', () => {
-            component.sections = mockValiditySection;
-            fixture.detectChanges();
+        it('should bound `sections.validity.activationName` to the `name` input of <spy-checkbox> component', async () => {
+            const host = await createComponentWrapper(createComponent, { sections: mockValiditySection });
+            const checkboxComponent = host.queryCss('spy-card spy-checkbox');
 
-            expect(getTitleComponent().properties.name).toBe(mockValiditySection.validity.activationName);
+            expect(checkboxComponent.properties.name).toBe(mockValiditySection.validity.activationName);
         });
 
-        it('should change `spy-date-range-picker` `disabled` property if `checkedChange` event of the `spy-checkbox` component has been called', () => {
-            component.sections = mockValiditySection;
-            fixture.detectChanges();
+        it('should change <spy-date-range-picker> component `disabled` property if `checkedChange` event of <spy-checkbox> component has been called', async () => {
+            const host = await createComponentWrapper(createComponent, { sections: mockValiditySection });
+            const checkboxComponent = host.queryCss('spy-card spy-checkbox');
+            const dateRangePickerComponent = host.queryCss('spy-card spy-date-range-picker');
 
-            expect(getRangeComponent().properties.disabled).toBe(true);
+            expect(dateRangePickerComponent.properties.disabled).toBe(true);
 
-            getTitleComponent().triggerEventHandler('checkedChange', true);
-            fixture.detectChanges();
+            checkboxComponent.triggerEventHandler('checkedChange', true);
+            host.detectChanges();
 
-            expect(getRangeComponent().properties.disabled).toBe(false);
+            expect(dateRangePickerComponent.properties.disabled).toBe(false);
 
-            getTitleComponent().triggerEventHandler('checkedChange', false);
-            fixture.detectChanges();
+            checkboxComponent.triggerEventHandler('checkedChange', false);
+            host.detectChanges();
 
-            expect(getRangeComponent().properties.disabled).toBe(true);
+            expect(dateRangePickerComponent.properties.disabled).toBe(true);
         });
 
-        it('should reset `spy-date-range-picker` `value` property if `checkedChange` event of the `spy-checkbox` component has been called with `false`', () => {
+        it('should reset <spy-date-range-picker> component `value` property if `checkedChange` event of <spy-checkbox> component has been called with `false`', async () => {
             const mockDates = {
                 from: 'from',
                 to: 'to',
             };
+            const host = await createComponentWrapper(createComponent, { sections: mockValiditySection });
+            const checkboxComponent = host.queryCss('spy-card spy-checkbox');
+            const dateRangePickerComponent = host.queryCss('spy-card spy-date-range-picker');
 
-            component.sections = mockValiditySection;
-            fixture.detectChanges();
+            checkboxComponent.triggerEventHandler('checkedChange', true);
+            host.detectChanges();
+            dateRangePickerComponent.triggerEventHandler('datesChange', mockDates);
+            host.detectChanges();
 
-            getTitleComponent().triggerEventHandler('checkedChange', true);
-            fixture.detectChanges();
-            getRangeComponent().triggerEventHandler('datesChange', mockDates);
-            fixture.detectChanges();
+            expect(dateRangePickerComponent.properties.dates).toEqual(mockDates);
 
-            expect(getRangeComponent().properties.dates).toEqual(mockDates);
+            checkboxComponent.triggerEventHandler('checkedChange', false);
+            host.detectChanges();
 
-            getTitleComponent().triggerEventHandler('checkedChange', false);
-            fixture.detectChanges();
-
-            expect(getRangeComponent().properties.dates).toEqual({});
+            expect(dateRangePickerComponent.properties.dates).toEqual({});
         });
     });
 });

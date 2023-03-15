@@ -1,57 +1,45 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { Component } from '@angular/core';
-import { By } from '@angular/platform-browser';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
+import { createComponentWrapper, getTestingForComponent } from '@mp/zed-ui/testing';
+import { MerchantLayoutCenteredComponent } from './merchant-layout-centered.component';
+import { LayoutCenteredModule } from '../layout-centered/layout-centered.module';
 
-import { MerchantLayoutCenteredModule } from './merchant-layout-centered.module';
-
-describe('ZedMerchantLayoutCentralComponent', () => {
-    let component: TestComponent;
-    let fixture: ComponentFixture<TestComponent>;
-
-    @Component({
-        selector: 'test',
-        template: `
-            <mp-merchant-layout-centered>
-                <div class="default-content"></div>
-                <div footer class="footer-content"></div>
-            </mp-merchant-layout-centered>
+describe('MerchantLayoutCenteredComponent', () => {
+    const { testModule, createComponent } = getTestingForComponent(MerchantLayoutCenteredComponent, {
+        ngModule: {
+            imports: [LayoutCenteredModule],
+            schemas: [NO_ERRORS_SCHEMA],
+        },
+        projectContent: `
+            <span footer></span>
+            <span class="default-slot"></span>
         `,
-    })
-    class TestComponent {}
-
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [MerchantLayoutCenteredModule],
-            declarations: [TestComponent],
-        }).compileComponents();
-    }));
+    });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(TestComponent);
-        component = fixture.componentInstance;
-
-        fixture.detectChanges();
+        TestBed.configureTestingModule({
+            imports: [testModule],
+        });
     });
 
-    it('should create component', () => {
-        expect(component).toBeTruthy();
+    it('should render <mp-layout-centered> component', async () => {
+        const host = await createComponentWrapper(createComponent);
+        const layoutCenteredComponent = host.queryCss('mp-layout-centered');
+
+        expect(layoutCenteredComponent).toBeTruthy();
     });
 
-    it('should render <mp-layout-centered>', () => {
-        const centeredLayoutElem = fixture.debugElement.query(By.css('mp-layout-centered'));
+    it('should render `footer` slot to the `mp-layout-centered__footer` element', async () => {
+        const host = await createComponentWrapper(createComponent);
+        const footerSlot = host.queryCss('.mp-layout-centered__footer [footer]');
 
-        expect(centeredLayoutElem).toBeTruthy();
+        expect(footerSlot).toBeTruthy();
     });
 
-    it('should render default content in the `mp-layout-centered` component', () => {
-        const defaultContentElem = fixture.debugElement.query(By.css('mp-layout-centered .default-content'));
+    it('should render default slot to the <mp-layout-centered> component', async () => {
+        const host = await createComponentWrapper(createComponent);
+        const defaultSlot = host.queryCss('mp-layout-centered .default-slot');
 
-        expect(defaultContentElem).toBeTruthy();
-    });
-
-    it('should render footer content in the `mp-layout-centered__footer` element', () => {
-        const footerContentElem = fixture.debugElement.query(By.css('.mp-layout-centered__footer .footer-content'));
-
-        expect(footerContentElem).toBeTruthy();
+        expect(defaultSlot).toBeTruthy();
     });
 });

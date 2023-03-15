@@ -1,58 +1,68 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { ProductListComponent } from './product-list.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
+import { createComponentWrapper, getTestingForComponent } from '@mp/zed-ui/testing';
+import { ProductListComponent } from './product-list.component';
 
 describe('ProductListComponent', () => {
-    let component: ProductListComponent;
-    let fixture: ComponentFixture<ProductListComponent>;
-
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [ProductListComponent],
-            schemas: [NO_ERRORS_SCHEMA],
-        }).compileComponents();
-    }));
+    const { testModule, createComponent } = getTestingForComponent(ProductListComponent, {
+        ngModule: { schemas: [NO_ERRORS_SCHEMA] },
+        projectContent: `
+            <span title></span>
+            <span button-action></span>
+        `,
+    });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(ProductListComponent);
-        component = fixture.componentInstance;
+        TestBed.configureTestingModule({
+            imports: [testModule],
+        });
     });
 
-    it('should render `mp-product-list-table` component', () => {
-        const offerTableComponent = fixture.debugElement.query(By.css('mp-product-list-table'));
+    it('should render <mp-product-list-table> component', async () => {
+        const host = await createComponentWrapper(createComponent);
+        const productListTableComponent = host.queryCss('mp-product-list-table');
 
-        expect(offerTableComponent).toBeTruthy();
+        expect(productListTableComponent).toBeTruthy();
     });
 
-    it('should render `spy-headline` component', () => {
-        const headlineComponent = fixture.debugElement.query(By.css('spy-headline'));
+    it('should render <spy-headline> component', async () => {
+        const host = await createComponentWrapper(createComponent);
+        const headlineComponent = host.queryCss('spy-headline');
 
         expect(headlineComponent).toBeTruthy();
     });
 
-    it('should bind @Input(tableConfig) to `config` of `mp-product-list-table` component', () => {
+    it('should render `title` slot to the <spy-headline> component', async () => {
+        const host = await createComponentWrapper(createComponent);
+        const titleSlot = host.queryCss('spy-headline [title]');
+
+        expect(titleSlot).toBeTruthy();
+    });
+
+    it('should render `button-action` slot to the <spy-headline> component', async () => {
+        const host = await createComponentWrapper(createComponent);
+        const buttonActionSlot = host.queryCss('spy-headline [button-action]');
+
+        expect(buttonActionSlot).toBeTruthy();
+    });
+
+    it('should bound `@Input(tableConfig)` to the `config` input of <mp-product-list-table> component', async () => {
         const mockTableConfig = {
             config: 'config',
             data: 'data',
             columns: 'columns',
-        } as any;
-        const offerTableComponent = fixture.debugElement.query(By.css('mp-product-list-table'));
+        };
+        const host = await createComponentWrapper(createComponent, { tableConfig: mockTableConfig });
+        const productListTableComponent = host.queryCss('mp-product-list-table');
 
-        component.tableConfig = mockTableConfig;
-        fixture.detectChanges();
-
-        expect(offerTableComponent.properties.config).toEqual(mockTableConfig);
+        expect(productListTableComponent.properties.config).toEqual(mockTableConfig);
     });
 
-    it('should bind @Input(tableId) to `tableId` of `mp-product-list-table` component', () => {
+    it('should bound `@Input(tableId)` to the `tableId` input of <mp-product-list-table> component', async () => {
         const mockTableId = 'mockTableId';
+        const host = await createComponentWrapper(createComponent, { tableId: mockTableId });
+        const productListTableComponent = host.queryCss('mp-product-list-table');
 
-        const tableComponent = fixture.debugElement.query(By.css('mp-product-list-table'));
-
-        component.tableId = mockTableId;
-        fixture.detectChanges();
-
-        expect(tableComponent.properties.tableId).toEqual(mockTableId);
+        expect(productListTableComponent.properties.tableId).toEqual(mockTableId);
     });
 });

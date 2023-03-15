@@ -27,7 +27,9 @@ script:
     - chmod +x *.sh
     - bash travis_check_touched_modules.sh
     - npm run formatter
+    - npm run mp:stylelint
     - npm run mp:eslint
+    - npm run mp:test
 
 notifications:
     email: false

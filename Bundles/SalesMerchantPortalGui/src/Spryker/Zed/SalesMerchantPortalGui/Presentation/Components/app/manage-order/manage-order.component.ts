@@ -21,5 +21,5 @@ export interface OrderDetails {
 export class ManageOrderComponent {
     @Input() @ToJson() orderDetails?: OrderDetails;
 
-    transitionMaessgaeIcon = IconInfoModule.icon;
+    transitionMessageIcon = IconInfoModule.icon;
 }

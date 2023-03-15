@@ -1,21 +1,7 @@
-import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
+import { createComponentWrapper, getTestingForComponent } from '@mp/zed-ui/testing';
 import { EditAbstractProductComponent } from './edit-abstract-product.component';
-
-@Component({
-    selector: 'mp-test',
-    template: `
-        <mp-edit-abstract-product [product]="product">
-            <span title class="projected-title">Title</span>
-            <span action class="projected-action">Button</span>
-            <div class="projected-content">Content</div>
-        </mp-edit-abstract-product>
-    `,
-})
-class TestComponent {
-    product: any;
-}
 
 const mockProduct = {
     name: 'test name',
@@ -23,56 +9,53 @@ const mockProduct = {
 };
 
 describe('EditAbstractProductComponent', () => {
-    let component: TestComponent;
-    let fixture: ComponentFixture<TestComponent>;
-
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [EditAbstractProductComponent, TestComponent],
-            schemas: [NO_ERRORS_SCHEMA],
-        }).compileComponents();
-    }));
+    const { testModule, createComponent } = getTestingForComponent(EditAbstractProductComponent, {
+        ngModule: { schemas: [NO_ERRORS_SCHEMA] },
+        projectContent: `
+            <span title></span>
+            <span action></span>
+            <span class="default-slot"></span>
+        `,
+    });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(TestComponent);
-        component = fixture.componentInstance;
+        TestBed.configureTestingModule({
+            imports: [testModule],
+        });
     });
 
-    it('should render <spy-headline> component', () => {
-        const headlineElem = fixture.debugElement.query(By.css('spy-headline'));
+    it('should render <spy-headline> component', async () => {
+        const host = await createComponentWrapper(createComponent, { product: mockProduct });
+        const headlineComponent = host.queryCss('spy-headline');
 
-        expect(headlineElem).toBeTruthy();
+        expect(headlineComponent).toBeTruthy();
     });
 
-    it('should render default projected title to the `.mp-edit-abstract-product__title` element', () => {
-        const projectedTitle = fixture.debugElement.query(By.css('.mp-edit-abstract-product__title .projected-title'));
+    it('should render `title` slot to the `.mp-edit-abstract-product__title` element', async () => {
+        const host = await createComponentWrapper(createComponent, { product: mockProduct });
+        const titleSlot = host.queryCss('.mp-edit-abstract-product__title [title]');
 
-        expect(projectedTitle).toBeTruthy();
-        expect(projectedTitle.nativeElement.textContent).toBe('Title');
+        expect(titleSlot).toBeTruthy();
     });
 
-    it('should render `product.name` and `product.sku` to the `.mp-edit-abstract-product__sub-title` element', () => {
-        const titleHolder = fixture.debugElement.query(By.css('.mp-edit-abstract-product__sub-title'));
+    it('should render `action` slot to the <spy-headline> component', async () => {
+        const host = await createComponentWrapper(createComponent, { product: mockProduct });
+        const actionSlot = host.queryCss('spy-headline [action]');
 
-        component.product = mockProduct;
-        fixture.detectChanges();
-
-        expect(titleHolder.nativeElement.textContent).toContain(`${mockProduct.sku}, ${mockProduct.name}`);
+        expect(actionSlot).toBeTruthy();
     });
 
-    it('should render default projected action to the <spy-headline> component', () => {
-        const projectedAction = fixture.debugElement.query(By.css('spy-headline .projected-action'));
+    it('should render default slot to the `.mp-edit-abstract-product__content` element', async () => {
+        const host = await createComponentWrapper(createComponent, { product: mockProduct });
+        const defaultSlot = host.queryCss('.mp-edit-abstract-product__content .default-slot');
 
-        expect(projectedAction).toBeTruthy();
-        expect(projectedAction.nativeElement.textContent).toBe('Button');
+        expect(defaultSlot).toBeTruthy();
     });
 
-    it('should render default projected content to the `.mp-edit-abstract-product__content` element', () => {
-        const projectedContent = fixture.debugElement.query(
-            By.css('.mp-edit-abstract-product__content .projected-content'),
-        );
+    it('should render `@Input(product)` data to the `.mp-edit-abstract-product__sub-title` element', async () => {
+        const host = await createComponentWrapper(createComponent, { product: mockProduct });
+        const subTitleElem = host.queryCss('.mp-edit-abstract-product__sub-title');
 
-        expect(projectedContent).toBeTruthy();
-        expect(projectedContent.nativeElement.textContent).toBe('Content');
+        expect(subTitleElem.nativeElement.textContent).toContain(`${mockProduct.sku}, ${mockProduct.name}`);
     });
 });

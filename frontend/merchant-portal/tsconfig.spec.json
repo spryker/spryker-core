@@ -1,0 +1,16 @@
+{
+    "extends": "../../tsconfig.mp.json",
+    "compilerOptions": {
+        "outDir": "./out-tsc/spec",
+        "module": "commonjs",
+        "types": ["jest", "node"],
+        "emitDecoratorMetadata": false
+    },
+    "files": ["test-setup.ts"],
+    "include": [
+        "../../Bundles/*/src/Spryker/Zed/*/Presentation/Components/**/*.spec.ts",
+        "../../Bundles/*/src/Spryker/Zed/*/Presentation/Components/**/*.test.ts",
+        "../../Bundles/*/src/Spryker/Zed/*/Presentation/Components/**/*.d.ts",
+        "jest.config.ts"
+    ]
+}

@@ -6,12 +6,12 @@
             <div class="mp-manage-order__transitions-message">
                 <spy-icon
                     *ngIf="stateTransitionMessage.innerHTML.trim()"
-                    [name]="transitionMaessgaeIcon"
+                    [name]="transitionMessageIcon"
                     class="mp-manage-order__transitions-icon"
                 ></spy-icon>
 
                 <div #stateTransitionMessage>
-                    <ng-content select="[state-transitions-meessage]"></ng-content>
+                    <ng-content select="[state-transitions-message]"></ng-content>
                 </div>
             </div>
         </div>

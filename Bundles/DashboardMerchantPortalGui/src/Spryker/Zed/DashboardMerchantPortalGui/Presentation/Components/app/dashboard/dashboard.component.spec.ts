@@ -1,47 +1,41 @@
-import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
+import { createComponentWrapper, getTestingForComponent } from '@mp/zed-ui/testing';
 import { DashboardComponent } from './dashboard.component';
 
-describe('DashboardStatsComponent', () => {
-    let component: TestComponent;
-    let fixture: ComponentFixture<TestComponent>;
-
-    @Component({
-        template: `
-            <mp-dashboard [title]="title">
-                <div class="default-content"></div>
-            </mp-dashboard>
+describe('DashboardComponent', () => {
+    const { testModule, createComponent } = getTestingForComponent(DashboardComponent, {
+        ngModule: { schemas: [NO_ERRORS_SCHEMA] },
+        projectContent: `
+            <span title></span>
+            <span class="default-slot"></span>
         `,
-    })
-    class TestComponent {
-        title?: string;
-    }
-
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [TestComponent, DashboardComponent],
-            schemas: [NO_ERRORS_SCHEMA],
-        }).compileComponents();
-    }));
+    });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(TestComponent);
-        component = fixture.componentInstance;
+        TestBed.configureTestingModule({
+            imports: [testModule],
+        });
     });
 
-    it('should render default content after `spy-headline` component', () => {
-        fixture.detectChanges();
-
-        const defaultContentElement = fixture.debugElement.query(By.css('spy-headline + .default-content'));
-
-        expect(defaultContentElement).toBeTruthy();
-    });
-
-    it('should render `spy-headline` component', () => {
-        const headlineComponent = fixture.debugElement.query(By.css('spy-headline'));
+    it('should render <spy-headline> component', async () => {
+        const host = await createComponentWrapper(createComponent);
+        const headlineComponent = host.queryCss('spy-headline');
 
         expect(headlineComponent).toBeTruthy();
+    });
+
+    it('should render `title` slot to the <spy-headline> component', async () => {
+        const host = await createComponentWrapper(createComponent);
+        const titleSlot = host.queryCss('spy-headline [title]');
+
+        expect(titleSlot).toBeTruthy();
+    });
+
+    it('should render default slot after <spy-headline> component', async () => {
+        const host = await createComponentWrapper(createComponent);
+        const defaultSlot = host.queryCss('spy-headline + .default-slot');
+
+        expect(defaultSlot).toBeTruthy();
     });
 });

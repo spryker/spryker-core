@@ -85,5 +85,8 @@
         "@spryker/utils": "^1.0.0",
         "@spryker/utils.date.adapter.date-fns": "^1.0.0",
         "@spryker/web-components": "^1.0.0"
+    },
+    "devDependencies": {
+        "@orchestrator/ngx-testing": "~3.0.0"
     }
 }

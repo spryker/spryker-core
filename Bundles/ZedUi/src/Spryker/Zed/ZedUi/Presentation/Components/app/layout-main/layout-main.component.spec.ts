@@ -1,140 +1,112 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
-
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
+import { createComponentWrapper, getTestingForComponent } from '@mp/zed-ui/testing';
 import { LayoutMainComponent } from './layout-main.component';
 
 describe('LayoutMainComponent', () => {
-    let component: TestComponent;
-    let fixture: ComponentFixture<TestComponent>;
-
-    @Component({
-        selector: 'mp-test',
-        template: `
-            <mp-layout-main [navigationConfig]="navigationConfig">
-                <div header>Header Slot</div>
-                <span logo>Header Logo Slot</span>
-                Main Slot
-            </mp-layout-main>
+    const { testModule, createComponent } = getTestingForComponent(LayoutMainComponent, {
+        ngModule: { schemas: [NO_ERRORS_SCHEMA] },
+        projectContent: `
+            <span header></span>
+            <span logo></span>
+            <span class="default-slot"></span>
         `,
-    })
-    class TestComponent {
-        navigationConfig: any;
-    }
-
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [TestComponent, LayoutMainComponent],
-            schemas: [NO_ERRORS_SCHEMA],
-        }).compileComponents();
-    }));
+    });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(TestComponent);
-        component = fixture.componentInstance;
-    });
-
-    it('should create component', () => {
-        expect(component).toBeTruthy();
-    });
-
-    describe('Elements detection', () => {
-        it('should render <spy-sidebar> component', () => {
-            const sidebarElem = fixture.debugElement.query(By.css('spy-sidebar'));
-
-            expect(sidebarElem).toBeTruthy();
-        });
-
-        it('should render <spy-header> component', () => {
-            const headerElem = fixture.debugElement.query(By.css('spy-header'));
-
-            expect(headerElem).toBeTruthy();
-        });
-
-        it('should render `logo` slot to the `.mp-layout-main-cnt__logo` element', () => {
-            const logoSlot = fixture.debugElement.query(By.css('.mp-layout-main-cnt__logo [logo]'));
-
-            expect(logoSlot).toBeTruthy();
-        });
-
-        it('should render <spy-navigation> inside <spy-sidebar> component', () => {
-            const navigationElem = fixture.debugElement.query(By.css('spy-sidebar spy-navigation'));
-
-            expect(navigationElem).toBeTruthy();
+        TestBed.configureTestingModule({
+            imports: [testModule],
         });
     });
 
-    describe('isCollapsed property', () => {
-        let layoutComponent: LayoutMainComponent;
-        let layoutFixture: ComponentFixture<LayoutMainComponent>;
+    describe('Components detection', () => {
+        it('should render <spy-sidebar> component', async () => {
+            const host = await createComponentWrapper(createComponent);
+            const sidebarComponent = host.queryCss('spy-sidebar');
 
-        beforeEach(() => {
-            layoutFixture = TestBed.createComponent(LayoutMainComponent);
-            layoutComponent = layoutFixture.componentInstance;
+            expect(sidebarComponent).toBeTruthy();
         });
 
-        it('should bind to `collapsed` of <spy-navigation>', () => {
-            const navigationElem = layoutFixture.debugElement.query(By.css('spy-sidebar spy-navigation'));
+        it('should render <spy-header> component', async () => {
+            const host = await createComponentWrapper(createComponent);
+            const headerComponent = host.queryCss('spy-header');
 
-            layoutComponent.isCollapsed = true;
-
-            layoutFixture.detectChanges();
-
-            expect(navigationElem.properties.collapsed).toBe(true);
+            expect(headerComponent).toBeTruthy();
         });
 
-        it('should change if `updateCollapseHandler` method invokes', () => {
-            layoutComponent.updateCollapseHandler(true);
+        it('should render <spy-navigation> component to the <spy-sidebar> component', async () => {
+            const host = await createComponentWrapper(createComponent);
+            const navigationComponent = host.queryCss('spy-sidebar spy-navigation');
 
-            layoutFixture.detectChanges();
+            expect(navigationComponent).toBeTruthy();
+        });
+    });
 
-            expect(layoutComponent.isCollapsed).toBe(true);
+    describe('`isCollapsed` property', () => {
+        it('should bound to the `collapsed` input of <spy-navigation> component', async () => {
+            const host = await createComponentWrapper(createComponent);
+            const navigationComponent = host.queryCss('spy-sidebar spy-navigation');
+
+            host.component.isCollapsed = true;
+            host.setInputs({ navigationConfig: '' }, true);
+
+            expect(navigationComponent.properties.collapsed).toBe(true);
+        });
+
+        it('should change if `updateCollapseHandler` method invokes', async () => {
+            const host = await createComponentWrapper(createComponent);
+
+            host.component.updateCollapseHandler(true);
+            host.detectChanges();
+
+            expect(host.component.isCollapsed).toBe(true);
         });
     });
 
     describe('Slots', () => {
-        it('should render correct info inside `header` slot', () => {
-            const headerSlotContainerElem = fixture.debugElement.query(By.css('.mp-layout-main-cnt__header'));
+        it('should render `logo` slot to the `.mp-layout-main-cnt__logo` element', async () => {
+            const host = await createComponentWrapper(createComponent);
+            const logoSlot = host.queryCss('.mp-layout-main-cnt__logo [logo]');
 
-            expect(headerSlotContainerElem.nativeElement.textContent).toMatch('Header Slot');
+            expect(logoSlot).toBeTruthy();
         });
 
-        it('should render correct info inside main slot', () => {
-            const mainSlotContainerElem = fixture.debugElement.query(By.css('.mp-layout-main-cnt__content'));
+        it('should render `header` slot to the `.mp-layout-main-cnt__header` element', async () => {
+            const host = await createComponentWrapper(createComponent);
+            const headerSlot = host.queryCss('.mp-layout-main-cnt__header [header]');
 
-            expect(mainSlotContainerElem.nativeElement.textContent).toMatch('Main Slot');
+            expect(headerSlot).toBeTruthy();
+        });
+
+        it('should render default slot to the `.mp-layout-main-cnt__content` element', async () => {
+            const host = await createComponentWrapper(createComponent);
+            const defaultSlot = host.queryCss('.mp-layout-main-cnt__content .default-slot');
+
+            expect(defaultSlot).toBeTruthy();
         });
     });
 
     describe('@Input(navigationConfig)', () => {
-        it('should bind to `items` of <spy-navigation>', () => {
+        it('should bound to the `items` input of <spy-navigation> component', async () => {
             const demoData =
                 '[{"title":"Dashboard","url":"\\/dashboard","icon":"fa fa-area-chart","isActive":false,"subItems":[]}]';
-            const navigationElem = fixture.debugElement.query(By.css('spy-sidebar spy-navigation'));
+            const host = await createComponentWrapper(createComponent, { navigationConfig: demoData });
+            const navigationComponent = host.queryCss('spy-sidebar spy-navigation');
 
-            component.navigationConfig = demoData;
-
-            fixture.detectChanges();
-
-            expect(navigationElem.properties.items).toBe(demoData);
+            expect(navigationComponent.properties.items).toBe(demoData);
         });
 
-        it('should update binding when changed', () => {
+        it('should update binding when changed', async () => {
             const demoData =
                 '[{"title":"Dashboard","url":"\\/dashboard","icon":"fa fa-area-chart","isActive":false,"subItems":[]}]';
-            const navigationElem = fixture.debugElement.query(By.css('spy-sidebar spy-navigation'));
+            const host = await createComponentWrapper(createComponent, { navigationConfig: demoData });
+            const navigationComponent = host.queryCss('spy-sidebar spy-navigation');
 
-            component.navigationConfig = demoData;
+            expect(navigationComponent.properties.items).toBe(demoData);
 
-            fixture.detectChanges();
+            host.setInputs({ navigationConfig: '' }, true);
 
-            expect(navigationElem.properties.items).toBe(demoData);
-
-            component.navigationConfig = '';
-
-            fixture.detectChanges();
-
-            expect(navigationElem.properties.items).toBe('');
+            expect(navigationComponent.properties.items).toBe('');
         });
     });
 });

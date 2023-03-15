@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation, OnChanges } from '@angular/core';
-import { TableConfig } from '@spryker/table';
 import { ToJson } from '@spryker/utils';
 
 export interface Image {

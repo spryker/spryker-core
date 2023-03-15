@@ -13,11 +13,9 @@ export function appBootstrapProvider(): StaticProvider {
 export function appBootstrapFactory(injector: Injector) {
     return () => {
         return new Promise(() => {
-            /* eslint-disable deprecation/deprecation */
+            // eslint-disable-next-line deprecation/deprecation
             const compiler = injector.get(Compiler);
-            /* eslint-enable */
             const appRef = injector.get(ApplicationRef);
-
             const initComponentsModule = async (ngModule: ComponentsNgModule) => {
                 const moduleFactory = await compiler.compileModuleAsync(ngModule);
                 const moduleRef = moduleFactory.create(injector);
@@ -34,8 +32,7 @@ export function appBootstrapFactory(injector: Injector) {
     };
 }
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function hasNgBootstrap(ngModule: any): ngModule is DoBootstrap {
-    /* eslint-enable */
     return typeof ngModule.ngDoBootstrap === 'function';
 }

@@ -1,47 +1,68 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { OffersListComponent } from './offers-list.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
+import { createComponentWrapper, getTestingForComponent } from '@mp/zed-ui/testing';
+import { OffersListComponent } from './offers-list.component';
 
 describe('OffersListComponent', () => {
-    let component: OffersListComponent;
-    let fixture: ComponentFixture<OffersListComponent>;
-
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [OffersListComponent],
-            schemas: [NO_ERRORS_SCHEMA],
-        }).compileComponents();
-    }));
+    const { testModule, createComponent } = getTestingForComponent(OffersListComponent, {
+        ngModule: { schemas: [NO_ERRORS_SCHEMA] },
+        projectContent: `
+            <span title></span>
+            <span action></span>
+        `,
+    });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(OffersListComponent);
-        component = fixture.componentInstance;
+        TestBed.configureTestingModule({
+            imports: [testModule],
+        });
     });
 
-    it('should render `mp-offers-list-table` component', () => {
-        const listTableComponent = fixture.debugElement.query(By.css('mp-offers-list-table'));
+    it('should render <mp-offers-list-table> component', async () => {
+        const host = await createComponentWrapper(createComponent);
+        const offersListTableComponent = host.queryCss('mp-offers-list-table');
 
-        expect(listTableComponent).toBeTruthy();
+        expect(offersListTableComponent).toBeTruthy();
     });
 
-    it('should render `spy-headline` component', () => {
-        const headlineComponent = fixture.debugElement.query(By.css('spy-headline'));
+    it('should render <spy-headline> component', async () => {
+        const host = await createComponentWrapper(createComponent);
+        const headlineComponent = host.queryCss('spy-headline');
 
         expect(headlineComponent).toBeTruthy();
     });
 
-    it('should bind @Input(tableConfig) to `config` of `mp-offers-list-table` component', () => {
+    it('should render `title` slot to the <spy-headline> component', async () => {
+        const host = await createComponentWrapper(createComponent);
+        const titleSlot = host.queryCss('spy-headline [title]');
+
+        expect(titleSlot).toBeTruthy();
+    });
+
+    it('should render `action` slot to the <spy-headline> component', async () => {
+        const host = await createComponentWrapper(createComponent);
+        const actionSlot = host.queryCss('spy-headline [action]');
+
+        expect(actionSlot).toBeTruthy();
+    });
+
+    it('should bound `@Input(tableConfig)` to the `config` input of <mp-offers-list-table> component', async () => {
         const mockTableConfig = {
             config: 'config',
             data: 'data',
             columns: 'columns',
-        } as any;
-        const listTableComponent = fixture.debugElement.query(By.css('mp-offers-list-table'));
+        };
+        const host = await createComponentWrapper(createComponent, { tableConfig: mockTableConfig });
+        const offersListTableComponent = host.queryCss('mp-offers-list-table');
 
-        component.tableConfig = mockTableConfig;
-        fixture.detectChanges();
+        expect(offersListTableComponent.properties.config).toEqual(mockTableConfig);
+    });
 
-        expect(listTableComponent.properties.config).toEqual(mockTableConfig);
+    it('should bound `@Input(tableId)` to the `tableId` input of <mp-offers-list-table> component', async () => {
+        const mockTableId = 'mockTableId';
+        const host = await createComponentWrapper(createComponent, { tableId: mockTableId });
+        const offersListTableComponent = host.queryCss('mp-offers-list-table');
+
+        expect(offersListTableComponent.properties.tableId).toEqual(mockTableId);
     });
 });

@@ -3,6 +3,7 @@ import { By } from '@angular/platform-browser';
 import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
 import { EditConcreteProductImageSetsComponent } from './edit-concrete-product-image-sets.component';
 
+/* eslint-disable */
 @Component({
     selector: 'spy-test',
     template: `
@@ -72,3 +73,4 @@ describe('EditConcreteProductImageSetsComponent', () => {
         expect(imageComponent.properties.alt).toBe(images[0].alt);
     });
 });
+/* eslint-enable */

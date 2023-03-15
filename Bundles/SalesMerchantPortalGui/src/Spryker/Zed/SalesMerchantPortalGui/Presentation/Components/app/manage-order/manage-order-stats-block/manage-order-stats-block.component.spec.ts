@@ -1,42 +1,32 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
+import { createComponentWrapper, getTestingForComponent } from '@mp/zed-ui/testing';
 import { ManageOrderStatsBlockComponent } from './manage-order-stats-block.component';
 
 describe('ManageOrderStatsBlockComponent', () => {
-    let component: ManageOrderStatsBlockComponent;
-    let fixture: ComponentFixture<ManageOrderStatsBlockComponent>;
-
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [ManageOrderStatsBlockComponent],
-        }).compileComponents();
-    }));
+    const { testModule, createComponent } = getTestingForComponent(ManageOrderStatsBlockComponent, {
+        ngModule: { schemas: [NO_ERRORS_SCHEMA] },
+    });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(ManageOrderStatsBlockComponent);
-        component = fixture.componentInstance;
+        TestBed.configureTestingModule({
+            imports: [testModule],
+        });
     });
 
-    it('should render @Input(name) in the `.mp-manage-order-stats-block__text--name` element', () => {
+    it('should render `@Input(name)` to the `.mp-manage-order-stats-block__text--name` element', async () => {
         const mockName = 'name';
+        const host = await createComponentWrapper(createComponent, { name: mockName });
+        const orderStatsBlockNameElem = host.queryCss('.mp-manage-order-stats-block__text--name');
 
-        component.name = mockName;
-        fixture.detectChanges();
-
-        const countContentElement = fixture.debugElement.query(By.css('.mp-manage-order-stats-block__text--name'));
-
-        expect(countContentElement.nativeElement.textContent).toContain(mockName);
+        expect(orderStatsBlockNameElem.nativeElement.textContent).toContain(mockName);
     });
 
-    it('should render @Input(info) in the `.mp-manage-order-stats-block__text:last-child` element', () => {
+    it('should render `@Input(info)` to the `.mp-manage-order-stats-block__text:last-child` element', async () => {
         const mockInfo = 'info';
+        const host = await createComponentWrapper(createComponent, { info: mockInfo });
+        const orderStatsBlockInfoElem = host.queryCss('.mp-manage-order-stats-block__text:last-child');
 
-        component.info = mockInfo;
-        fixture.detectChanges();
-
-        const nameContentElement = fixture.debugElement.query(By.css('.mp-manage-order-stats-block__text:last-child'));
-
-        expect(nameContentElement.nativeElement.textContent).toContain(mockInfo);
+        expect(orderStatsBlockInfoElem.nativeElement.textContent).toContain(mockInfo);
     });
 });

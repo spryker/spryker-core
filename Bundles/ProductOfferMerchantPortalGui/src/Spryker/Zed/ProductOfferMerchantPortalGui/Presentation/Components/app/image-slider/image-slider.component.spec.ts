@@ -1,115 +1,81 @@
-import { Component } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
+import { createComponentWrapper, getTestingForComponent } from '@mp/zed-ui/testing';
+import { ImageSliderComponent } from './image-slider.component';
 
-import { ImageSliderModule } from './image-slider.module';
+const mockedImages = [
+    {
+        src: 'mockSrc1',
+        alt: 'mockAlt1',
+    },
+    {
+        src: 'mockSrc2',
+        alt: 'mockAlt2',
+    },
+    {
+        src: 'mockSrc3',
+        alt: 'mockAlt3',
+    },
+];
 
 describe('ImageSliderComponent', () => {
-    let component: TestComponent;
-    let fixture: ComponentFixture<TestComponent>;
-    const mockedImages = [
-        {
-            src: 'mockSrc1',
-            alt: 'mockAlt1',
-        },
-        {
-            src: 'mockSrc2',
-            alt: 'mockAlt2',
-        },
-        {
-            src: 'mockSrc3',
-            alt: 'mockAlt3',
-        },
-    ];
-
-    @Component({
-        selector: 'mp-test',
-        template: ` <mp-image-slider [images]="images"></mp-image-slider> `,
-    })
-    class TestComponent {
-        images: any;
-    }
-
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [ImageSliderModule],
-            declarations: [TestComponent],
-        }).compileComponents();
-    }));
+    const { testModule, createComponent } = getTestingForComponent(ImageSliderComponent, {
+        ngModule: { schemas: [NO_ERRORS_SCHEMA] },
+    });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(TestComponent);
-        component = fixture.componentInstance;
-        fixture.detectChanges();
+        TestBed.configureTestingModule({
+            imports: [testModule],
+        });
     });
 
-    it('should create', () => {
-        component.images = mockedImages;
-        fixture.detectChanges();
+    it('should render `.image-slider-preview` element if number of images > 1', async () => {
+        const host = await createComponentWrapper(createComponent, { images: mockedImages });
+        const sliderPreviewElem = host.queryCss('.image-slider-preview');
 
-        expect(component).toBeTruthy();
+        expect(sliderPreviewElem).toBeTruthy();
     });
 
-    it('should render div with image-slider-preview if number of images > 1', () => {
-        component.images = mockedImages;
-        fixture.detectChanges();
+    it('should NOT render image slider if number of images is 0', async () => {
+        const host = await createComponentWrapper(createComponent, { images: [] });
+        const sliderElem = host.queryCss('.image-slider');
 
-        const sliderPreview = fixture.debugElement.query(By.css('.image-slider-preview'));
-
-        expect(sliderPreview).toBeTruthy();
+        expect(sliderElem).toBeFalsy();
     });
 
-    it('should NOT render image slider if number of images is 0', () => {
-        component.images = [];
-        fixture.detectChanges();
+    it('should render only showcard if number of images is 1', async () => {
+        const host = await createComponentWrapper(createComponent, { images: [mockedImages[0]] });
+        const sliderPreviewElem = host.queryCss('.image-slider-preview');
 
-        const sliderPreview = fixture.debugElement.query(By.css('.image-slider'));
-
-        expect(sliderPreview).toBeFalsy();
+        expect(sliderPreviewElem).toBeFalsy();
     });
 
-    it('should render only showcard if number of images is 1', () => {
-        component.images = [mockedImages[0]];
-        fixture.detectChanges();
-
-        const sliderPreview = fixture.debugElement.query(By.css('.image-slider-preview'));
-
-        expect(sliderPreview).toBeFalsy();
-    });
-
-    it('should render div with image-slider-preview with only 3 images if images array length > 3', () => {
-        component.images = [...mockedImages, ...mockedImages];
-        fixture.detectChanges();
-
-        const sliderPreview = fixture.debugElement.query(By.css('.image-slider-preview'));
-        const imagesArrayLength = sliderPreview.nativeElement.children.length;
+    it('should render `.image-slider-preview` element with only 3 images if images array length > 3', async () => {
+        const host = await createComponentWrapper(createComponent, { images: [...mockedImages, ...mockedImages] });
+        const sliderPreviewElem = host.queryCss('.image-slider-preview');
+        const imagesArrayLength = sliderPreviewElem.nativeElement.children.length;
 
         expect(imagesArrayLength === 3).toBeTruthy();
     });
 
-    it('first image from the list should be shown by default', () => {
-        component.images = mockedImages;
-        fixture.detectChanges();
+    it('should show first image from the list by default', async () => {
+        const host = await createComponentWrapper(createComponent, { images: mockedImages });
+        const sliderShowcardImgElem = host.queryCss('.image-slider-showcard-image');
 
-        const sliderShowcardImg = fixture.debugElement.query(By.css('.image-slider-showcard-image'));
-
-        expect(sliderShowcardImg.properties.src).toBe(mockedImages[0].src);
-        expect(sliderShowcardImg.properties.alt).toBe(mockedImages[0].alt);
+        expect(sliderShowcardImgElem.properties.src).toBe(mockedImages[0].src);
+        expect(sliderShowcardImgElem.properties.alt).toBe(mockedImages[0].alt);
     });
 
-    it('mouseover event on image from preview should change showcard image src and alt', () => {
-        component.images = mockedImages;
-        fixture.detectChanges();
+    it('should change showcard image src and alt by mouseover event on image from preview', async () => {
+        const host = await createComponentWrapper(createComponent, { images: mockedImages });
+        const sliderPreviewElem = host.queryCss('.image-slider-preview-img:nth-child(2)');
 
-        const sliderPreview = fixture.debugElement.query(By.css('.image-slider-preview-img:nth-child(2)'));
+        sliderPreviewElem.triggerEventHandler('mouseover', null);
+        host.detectChanges();
 
-        sliderPreview.triggerEventHandler('mouseover', {});
+        const sliderShowcardImgElem = host.queryCss('.image-slider-showcard-image');
 
-        fixture.detectChanges();
-
-        const sliderShowcardImg = fixture.debugElement.query(By.css('.image-slider-showcard-image'));
-
-        expect(sliderShowcardImg.properties.src).toBe(mockedImages[1].src);
-        expect(sliderShowcardImg.properties.alt).toBe(mockedImages[1].alt);
+        expect(sliderShowcardImgElem.properties.src).toBe(mockedImages[1].src);
+        expect(sliderShowcardImgElem.properties.alt).toBe(mockedImages[1].alt);
     });
 });

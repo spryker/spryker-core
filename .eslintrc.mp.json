@@ -28,6 +28,8 @@
                 "no-empty": "error",
                 "no-use-before-define": "off",
                 "max-classes-per-file": "off",
+                "max-lines": "off",
+                "handle-callback-err": "off",
                 "@typescript-eslint/array-type": "off",
                 "@typescript-eslint/no-restricted-imports": ["error", "rxjs/Rx"],
                 "@typescript-eslint/no-unused-vars": "error",

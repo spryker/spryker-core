@@ -117,12 +117,12 @@ declare module '@spryker/table.feature.filters' {
             select: TableColumnSelectComponent,
             dynamic: TableColumnDynamicComponent,
             autocomplete: TableColumnAutocompleteComponent,
-        } as any),
+        }),
         TableFiltersFeatureModule.withFilterComponents({
             select: TableFilterSelectComponent,
             'date-range': TableFilterDateRangeComponent,
             'tree-select': TableFilterTreeSelectComponent,
-        } as any),
+        }),
 
         // Table Column Type Modules
         TableColumnChipModule,

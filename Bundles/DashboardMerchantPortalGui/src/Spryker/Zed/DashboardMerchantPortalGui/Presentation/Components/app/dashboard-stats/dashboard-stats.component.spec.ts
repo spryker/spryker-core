@@ -1,48 +1,38 @@
-import { Component } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-
-import { DashboardStatsModule } from './dashboard-stats.module';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
+import { CardModule } from '@spryker/card';
+import { createComponentWrapper, getTestingForComponent } from '@mp/zed-ui/testing';
+import { DashboardStatsComponent } from './dashboard-stats.component';
 
 describe('DashboardStatsComponent', () => {
-    let component: TestComponent;
-    let fixture: ComponentFixture<TestComponent>;
-
-    @Component({
-        template: `
-            <mp-dashboard-stats>
-                <div class="default-content"></div>
-                <div title class="title-content"></div>
-            </mp-dashboard-stats>
+    const { testModule, createComponent } = getTestingForComponent(DashboardStatsComponent, {
+        ngModule: {
+            imports: [CardModule],
+            schemas: [NO_ERRORS_SCHEMA],
+        },
+        projectContent: `
+            <span title></span>
+            <span class="default-slot"></span>
         `,
-    })
-    class TestComponent {}
-
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [DashboardStatsModule],
-            declarations: [TestComponent],
-        }).compileComponents();
-    }));
+    });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(TestComponent);
-        component = fixture.componentInstance;
+        TestBed.configureTestingModule({
+            imports: [testModule],
+        });
     });
 
-    it('should render default content in the `.ant-card-body` element', () => {
-        fixture.detectChanges();
+    it('should render `title` slot to the `.ant-card-head-title` element', async () => {
+        const host = await createComponentWrapper(createComponent);
+        const titleSlot = host.queryCss('.ant-card-head-title [title]');
 
-        const defaultContentElement = fixture.debugElement.query(By.css('.ant-card-body .default-content'));
-
-        expect(defaultContentElement).toBeTruthy();
+        expect(titleSlot).toBeTruthy();
     });
 
-    it('should render title content in the `.ant-card-head-title` element', () => {
-        fixture.detectChanges();
+    it('should render default slot to the `.ant-card-body` element', async () => {
+        const host = await createComponentWrapper(createComponent);
+        const defaultSlot = host.queryCss('.ant-card-body .default-slot');
 
-        const titleContentElement = fixture.debugElement.query(By.css('.ant-card-head-title .title-content'));
-
-        expect(titleContentElement).toBeTruthy();
+        expect(defaultSlot).toBeTruthy();
     });
 });

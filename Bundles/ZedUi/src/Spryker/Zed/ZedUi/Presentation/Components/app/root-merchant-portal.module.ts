@@ -6,7 +6,6 @@ import { appBootstrapProvider } from './app-bootstrap';
     providers: [appBootstrapProvider()],
 })
 export class RootMerchantPortalModule implements DoBootstrap {
-    /* eslint-disable */
+    // eslint-disable-next-line
     ngDoBootstrap(appRef: ApplicationRef): void {}
-    /* eslint-enable */
 }

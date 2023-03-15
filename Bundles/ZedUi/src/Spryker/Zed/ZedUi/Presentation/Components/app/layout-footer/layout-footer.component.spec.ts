@@ -1,43 +1,24 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { Component } from '@angular/core';
-import { By } from '@angular/platform-browser';
-
+import { TestBed } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { createComponentWrapper, getTestingForComponent } from '@mp/zed-ui/testing';
 import { LayoutFooterComponent } from './layout-footer.component';
-import { LayoutCenteredComponent } from '../layout-centered/layout-centered.component';
 
 describe('LayoutFooterComponent', () => {
-    let component: TestComponent;
-    let fixture: ComponentFixture<TestComponent>;
-
-    @Component({
-        selector: 'test',
-        template: `
-            <mp-layout-footer>
-                <div class="default-content"></div>
-            </mp-layout-footer>
-        `,
-    })
-    class TestComponent {}
-
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [],
-            declarations: [LayoutFooterComponent, TestComponent],
-        }).compileComponents();
-    }));
+    const { testModule, createComponent } = getTestingForComponent(LayoutFooterComponent, {
+        ngModule: { schemas: [NO_ERRORS_SCHEMA] },
+        projectContent: `<span class="default-slot"></span>`,
+    });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(TestComponent);
-        component = fixture.componentInstance;
+        TestBed.configureTestingModule({
+            imports: [testModule],
+        });
     });
 
-    it('should create component', () => {
-        expect(component).toBeTruthy();
-    });
+    it('should render default slot to the `.mp-layout-footer__content` element', async () => {
+        const host = await createComponentWrapper(createComponent);
+        const defaultSlot = host.queryCss('.mp-layout-footer__content .default-slot');
 
-    it('should render default content in the `.mp-layout-footer__content` element', () => {
-        const defaultContentElement = fixture.debugElement.query(By.css('.mp-layout-footer__content .default-content'));
-
-        expect(defaultContentElement).toBeTruthy();
+        expect(defaultSlot).toBeTruthy();
     });
 });

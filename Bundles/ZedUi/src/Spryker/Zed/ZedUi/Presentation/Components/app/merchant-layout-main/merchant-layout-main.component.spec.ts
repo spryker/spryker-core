@@ -1,57 +1,58 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
-
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
+import { createComponentWrapper, getTestingForComponent } from '@mp/zed-ui/testing';
 import { MerchantLayoutMainComponent } from './merchant-layout-main.component';
-import { LayoutMainComponent } from '../layout-main/layout-main.component';
 
 describe('MerchantLayoutMainComponent', () => {
-    let component: TestComponent;
-    let fixture: ComponentFixture<TestComponent>;
-
-    @Component({
-        selector: 'mp-test',
-        template: `
-            <mp-merchant-layout-main [navigationConfig]="navigationConfig">
-                <div name="header">Header Slot</div>
-                Main Slot
-            </mp-merchant-layout-main>
+    const { testModule, createComponent } = getTestingForComponent(MerchantLayoutMainComponent, {
+        ngModule: { schemas: [NO_ERRORS_SCHEMA] },
+        projectContent: `
+            <span header></span>
+            <span logo></span>
+            <span class="default-slot"></span>
         `,
-    })
-    class TestComponent {
-        navigationConfig: any;
-    }
-
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [TestComponent, MerchantLayoutMainComponent],
-            schemas: [NO_ERRORS_SCHEMA],
-        }).compileComponents();
-    }));
+    });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(TestComponent);
-        component = fixture.componentInstance;
+        TestBed.configureTestingModule({
+            imports: [testModule],
+        });
     });
 
-    it('should create component', () => {
-        expect(component).toBeTruthy();
+    it('should render <mp-layout-main> component', async () => {
+        const host = await createComponentWrapper(createComponent);
+        const layoutMainComponent = host.queryCss('mp-layout-main');
+
+        expect(layoutMainComponent).toBeTruthy();
     });
 
-    it('should render <mp-layout-main>', () => {
-        const centeredLayoutElem = fixture.debugElement.query(By.css('mp-layout-main'));
+    it('should render `header` slot to the <mp-layout-main> component', async () => {
+        const host = await createComponentWrapper(createComponent);
+        const headerSlot = host.queryCss('mp-layout-main [header]');
 
-        expect(centeredLayoutElem).toBeTruthy();
+        expect(headerSlot).toBeTruthy();
     });
 
-    it('should bound navigationConfig to `mp-layout-main`', () => {
-        const demoData =
+    it('should render `logo` slot to the <mp-layout-main> component', async () => {
+        const host = await createComponentWrapper(createComponent);
+        const logoSlot = host.queryCss('mp-layout-main [logo]');
+
+        expect(logoSlot).toBeTruthy();
+    });
+
+    it('should render default slot to the <mp-layout-main> component', async () => {
+        const host = await createComponentWrapper(createComponent);
+        const defaultSlot = host.queryCss('mp-layout-main .default-slot');
+
+        expect(defaultSlot).toBeTruthy();
+    });
+
+    it('should bound `@Input(navigationConfig)` to the `navigationConfig` input of <mp-layout-main> component', async () => {
+        const mockConfig =
             '[{"title":"Dashboard","url":"\\/dashboard","icon":"fa fa-area-chart","isActive":false,"subItems":[]}]';
-        const layoutMain = fixture.debugElement.query(By.css('mp-layout-main'));
+        const host = await createComponentWrapper(createComponent, { navigationConfig: mockConfig });
+        const layoutMainComponent = host.queryCss('mp-layout-main');
 
-        component.navigationConfig = demoData;
-        fixture.detectChanges();
-
-        expect(layoutMain.properties.navigationConfig).toBe(demoData);
+        expect(layoutMainComponent.properties.navigationConfig).toBe(mockConfig);
     });
 });

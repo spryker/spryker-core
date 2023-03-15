@@ -1,57 +1,49 @@
-import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
+import { createComponentWrapper, getTestingForComponent } from '@mp/zed-ui/testing';
 import { CreateSingleConcreteProductComponent } from './create-single-concrete-product.component';
 
-@Component({
-    selector: 'mp-test',
-    template: `
-        <mp-create-single-concrete-product>
-            <span title>Name</span>
-            <span action>Button</span>
-            <div class="content">Content</div>
-        </mp-create-single-concrete-product>
-    `,
-})
-class TestComponent {}
-
 describe('CreateSingleConcreteProductComponent', () => {
-    let component: TestComponent;
-    let fixture: ComponentFixture<TestComponent>;
-
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            declarations: [CreateSingleConcreteProductComponent, TestComponent],
-            schemas: [NO_ERRORS_SCHEMA],
-        }).compileComponents();
-    }));
+    const { testModule, createComponent } = getTestingForComponent(CreateSingleConcreteProductComponent, {
+        ngModule: { schemas: [NO_ERRORS_SCHEMA] },
+        projectContent: `
+            <span title></span>
+            <span action></span>
+            <span class="default-slot"></span>
+        `,
+    });
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(TestComponent);
-        component = fixture.componentInstance;
+        TestBed.configureTestingModule({
+            imports: [testModule],
+        });
     });
 
-    it('should render <spy-headline> component', () => {
-        const headlineElem = fixture.debugElement.query(By.css('spy-headline'));
+    it('should render <spy-headline> component', async () => {
+        const host = await createComponentWrapper(createComponent);
+        const headlineComponent = host.queryCss('spy-headline');
 
-        expect(headlineElem).toBeTruthy();
+        expect(headlineComponent).toBeTruthy();
     });
 
-    it('should render `title` slot to the `.mp-create-single-concrete-product__header` element', () => {
-        const titleSlot = fixture.debugElement.query(By.css('.mp-create-single-concrete-product__header [title]'));
+    it('should render `title` slot to the `.mp-create-single-concrete-product__header` element', async () => {
+        const host = await createComponentWrapper(createComponent);
+        const titleSlot = host.queryCss('.mp-create-single-concrete-product__header [title]');
 
         expect(titleSlot).toBeTruthy();
     });
 
-    it('should render `action` slot to the `.mp-create-single-concrete-product__header` element', () => {
-        const actionSlot = fixture.debugElement.query(By.css('.mp-create-single-concrete-product__header [action]'));
+    it('should render `action` slot to the `.mp-create-single-concrete-product__header` element', async () => {
+        const host = await createComponentWrapper(createComponent);
+        const actionSlot = host.queryCss('.mp-create-single-concrete-product__header [action]');
 
         expect(actionSlot).toBeTruthy();
     });
 
-    it('should render default slot to the `.mp-create-single-concrete-product__content` element', () => {
-        const contentSlot = fixture.debugElement.query(By.css('.mp-create-single-concrete-product__content .content'));
+    it('should render default slot to the `.mp-create-single-concrete-product__content` element', async () => {
+        const host = await createComponentWrapper(createComponent);
+        const defaultSlot = host.queryCss('.mp-create-single-concrete-product__content .default-slot');
 
-        expect(contentSlot).toBeTruthy();
+        expect(defaultSlot).toBeTruthy();
     });
 });
