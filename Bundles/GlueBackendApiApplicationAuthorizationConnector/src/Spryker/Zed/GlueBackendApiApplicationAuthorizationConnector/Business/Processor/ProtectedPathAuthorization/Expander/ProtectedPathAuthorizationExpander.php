@@ -48,7 +48,7 @@ class ProtectedPathAuthorizationExpander implements ProtectedPathAuthorizationEx
     /**
      * @var \Spryker\Zed\GlueBackendApiApplicationAuthorizationConnector\Business\Processor\ProtectedPathAuthorization\Checker\ProtectedPathAuthorizationCheckerInterface
      */
-    protected $protectedPathAuthorizationChecker;
+    protected ProtectedPathAuthorizationCheckerInterface $protectedPathAuthorizationChecker;
 
     /**
      * @param \Spryker\Zed\GlueBackendApiApplicationAuthorizationConnector\Business\Processor\ProtectedPathAuthorization\Checker\ProtectedPathAuthorizationCheckerInterface $protectedPathAuthorizationChecker
@@ -69,14 +69,14 @@ class ProtectedPathAuthorizationExpander implements ProtectedPathAuthorizationEx
         /** @var \ArrayObject<int, \Generated\Shared\Transfer\CustomRoutesContextTransfer> $customRoutesContextTransfers */
         $customRoutesContextTransfers = new ArrayObject();
         foreach ($apiApplicationSchemaContextTransfer->getCustomRoutesContexts() as $customRoutesContext) {
-            $customRoutesContextTransfers[] = $this->expandCustomRoutesContext($customRoutesContext);
+            $customRoutesContextTransfers->append($this->expandCustomRoutesContext($customRoutesContext));
         }
         $apiApplicationSchemaContextTransfer->setCustomRoutesContexts($customRoutesContextTransfers);
 
         /** @var \ArrayObject<int, \Generated\Shared\Transfer\ResourceContextTransfer> $resourceContextTransfers */
         $resourceContextTransfers = new ArrayObject();
         foreach ($apiApplicationSchemaContextTransfer->getResourceContexts() as $resourceContext) {
-            $resourceContextTransfers[] = $this->expandResource($resourceContext);
+            $resourceContextTransfers->append($this->expandResource($resourceContext));
         }
         $apiApplicationSchemaContextTransfer->setResourceContexts($resourceContextTransfers);
 

@@ -12,6 +12,8 @@ use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RequestBuilderPlugin
 use Spryker\Glue\Kernel\AbstractPlugin;
 
 /**
+ * @deprecated Use {@link \Spryker\Glue\OauthBackendApi\Plugin\GlueBackendApiApplication\UserRequestBuilderPlugin} instead.
+ *
  * @method \Spryker\Glue\OauthBackendApi\OauthBackendApiFactory getFactory()
  */
 class UserRequestBuilderPlugin extends AbstractPlugin implements RequestBuilderPluginInterface

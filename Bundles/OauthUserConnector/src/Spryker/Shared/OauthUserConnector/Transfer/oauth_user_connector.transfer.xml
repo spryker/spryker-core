@@ -4,6 +4,7 @@
     <transfer name="UserIdentifier">
         <property name="userReference" type="string"/>
         <property name="idUser" type="int"/>
+        <property name="uuid" type="string" strict="true"/>
     </transfer>
 
     <transfer name="OauthScope">

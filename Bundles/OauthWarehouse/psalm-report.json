@@ -1,0 +1,31 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 36,
+            "line_to": 36,
+            "type": "NonInvariantDocblockPropertyType",
+            "message": "Property Spryker\\Zed\\OauthWarehouse\\Business\\League\\Grant\\WarehouseTokenGrantType::$userRepository has type Spryker\\Zed\\Oauth\\Business\\Model\\League\\Repositories\\UserRepositoryInterface, not invariant with League\\OAuth2\\Server\\Grant\\AbstractGrant::$userRepository of type League\\OAuth2\\Server\\Repositories\\UserRepositoryInterface",
+            "file_name": "vendor/spryker/spryker/Bundles/OauthWarehouse/src/Spryker/Zed/OauthWarehouse/Business/League/Grant/WarehouseTokenGrantType.php",
+            "snippet": "    protected $userRepository;",
+            "selected_text": "$userRepository",
+            "error_level": 3,
+            "shortcode": 267
+        },
+        {
+            "severity": "info",
+            "line_from": 88,
+            "line_to": 88,
+            "type": "UndefinedInterfaceMethod",
+            "message": "Method League\\OAuth2\\Server\\Repositories\\UserRepositoryInterface::getUserEntityByRequest does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/OauthWarehouse/src/Spryker/Zed/OauthWarehouse/Business/League/Grant/WarehouseTokenGrantType.php",
+            "snippet": "        $userEntity = $this->userRepository->getUserEntityByRequest(",
+            "selected_text": "getUserEntityByRequest",
+            "error_level": 5,
+            "shortcode": 181
+        }
+    ],
+    "deprecation": [],
+    "count": 2
+}

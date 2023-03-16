@@ -29,26 +29,8 @@ class GlueBackendApiApplicationAuthorizationConnectorFactory extends AbstractFac
             $this->getAuthorizationFacade(),
             $this->getConfigExtractorStrategies(),
             $this->getConfig(),
+            $this->getAuthorizationRequestExpanderPlugins(),
         );
-    }
-
-    /**
-     * @return \Spryker\Glue\GlueBackendApiApplicationAuthorizationConnector\Dependency\Facade\GlueBackendApiApplicationAuthorizationConnectorToAuthorizationFacadeInterface
-     */
-    public function getAuthorizationFacade(): GlueBackendApiApplicationAuthorizationConnectorToAuthorizationFacadeInterface
-    {
-        return $this->getProvidedDependency(GlueBackendApiApplicationAuthorizationConnectorDependencyProvider::FACADE_AUTHORIZATION);
-    }
-
-    /**
-     * @return array<\Spryker\Glue\GlueBackendApiApplicationAuthorizationConnector\ConfigExtractorStrategy\ConfigExtractorStrategyInterface>
-     */
-    public function getConfigExtractorStrategies(): array
-    {
-        return [
-           $this->createAuthorizationStrategyAwareResourceRoutePluginConfigExtractorStrategy(),
-           $this->createDefaultAuthorizationStrategyAwareResourceRoutePluginConfigExtractorStrategy(),
-        ];
     }
 
     /**
@@ -65,5 +47,32 @@ class GlueBackendApiApplicationAuthorizationConnectorFactory extends AbstractFac
     public function createDefaultAuthorizationStrategyAwareResourceRoutePluginConfigExtractorStrategy(): ConfigExtractorStrategyInterface
     {
         return new DefaultAuthorizationStrategyAwareResourceRoutePluginConfigExtractorStrategy();
+    }
+
+    /**
+     * @return array<\Spryker\Glue\GlueBackendApiApplicationAuthorizationConnector\ConfigExtractorStrategy\ConfigExtractorStrategyInterface>
+     */
+    public function getConfigExtractorStrategies(): array
+    {
+        return [
+            $this->createAuthorizationStrategyAwareResourceRoutePluginConfigExtractorStrategy(),
+            $this->createDefaultAuthorizationStrategyAwareResourceRoutePluginConfigExtractorStrategy(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueBackendApiApplicationAuthorizationConnector\Dependency\Facade\GlueBackendApiApplicationAuthorizationConnectorToAuthorizationFacadeInterface
+     */
+    public function getAuthorizationFacade(): GlueBackendApiApplicationAuthorizationConnectorToAuthorizationFacadeInterface
+    {
+        return $this->getProvidedDependency(GlueBackendApiApplicationAuthorizationConnectorDependencyProvider::FACADE_AUTHORIZATION);
+    }
+
+    /**
+     * @return list<\Spryker\Glue\GlueBackendApiApplicationAuthorizationConnectorExtension\Dependency\Plugin\AuthorizationRequestExpanderPluginInterface>
+     */
+    public function getAuthorizationRequestExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(GlueBackendApiApplicationAuthorizationConnectorDependencyProvider::PLUGINS_AUTHORIZATION_REQUEST_EXPANDER);
     }
 }

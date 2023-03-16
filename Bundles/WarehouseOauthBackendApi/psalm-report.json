@@ -1,0 +1,31 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 33,
+            "line_to": 33,
+            "type": "LessSpecificImplementedReturnType",
+            "message": "The inherited return type 'callable():Generated\\Shared\\Transfer\\GlueResponseTransfer' for Spryker\\Glue\\GlueApplicationExtension\\Dependency\\Plugin\\ResourceInterface::getResource is more specific than the implemented return type for Spryker\\Glue\\GlueApplication\\Plugin\\GlueApplication\\Backend\\AbstractResourcePlugin::getresource 'callable'",
+            "file_name": "vendor/spryker/spryker/Bundles/GlueApplication/src/Spryker/Glue/GlueApplication/Plugin/GlueApplication/Backend/AbstractResourcePlugin.php",
+            "snippet": "     * @return callable",
+            "selected_text": "callable",
+            "error_level": 5,
+            "shortcode": 166
+        },
+        {
+            "severity": "info",
+            "line_from": 54,
+            "line_to": 54,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\WarehouseUserAssignmentTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/WarehouseOauthBackendApi/src/Spryker/Glue/WarehouseOauthBackendApi/Processor/Reader/WarehouseUserAssignmentReader.php",
+            "snippet": "            ->getIterator()",
+            "selected_text": "getIterator",
+            "error_level": 3,
+            "shortcode": 113
+        }
+    ],
+    "deprecation": [],
+    "count": 2
+}

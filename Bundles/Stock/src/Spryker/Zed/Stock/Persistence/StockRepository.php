@@ -360,6 +360,10 @@ class StockRepository extends AbstractRepository implements StockRepositoryInter
      */
     protected function applyStockQueryFilters(SpyStockQuery $stockQuery, StockCriteriaFilterTransfer $stockCriteriaFilterTransfer): SpyStockQuery
     {
+        if ($stockCriteriaFilterTransfer->getIdStock() !== null) {
+            $stockQuery->filterByIdStock($stockCriteriaFilterTransfer->getIdStockOrFail());
+        }
+
         if ($stockCriteriaFilterTransfer->getIsActive()) {
             $stockQuery->filterByIsActive(true);
         }

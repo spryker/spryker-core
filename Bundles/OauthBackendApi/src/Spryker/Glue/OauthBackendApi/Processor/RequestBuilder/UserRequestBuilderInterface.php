@@ -9,6 +9,9 @@ namespace Spryker\Glue\OauthBackendApi\Processor\RequestBuilder;
 
 use Generated\Shared\Transfer\GlueRequestTransfer;
 
+/**
+ * @deprecated Use {@link \Spryker\Glue\OauthBackendApi\Processor\Builder\RequestBuilderInterface} instead.
+ */
 interface UserRequestBuilderInterface
 {
     /**

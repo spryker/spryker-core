@@ -40,6 +40,11 @@ class OauthBackendApiDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_AUTHENTICATION = 'FACADE_AUTHENTICATION';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_USER_REQUEST_VALIDATION_PRE_CHECKER = 'PLUGINS_USER_REQUEST_VALIDATION_PRE_CHECKER';
+
+    /**
      * @param \Spryker\Glue\Kernel\Backend\Container $container
      *
      * @return \Spryker\Glue\Kernel\Backend\Container
@@ -51,6 +56,7 @@ class OauthBackendApiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addUtilEncodingService($container);
         $container = $this->addOauthFacade($container);
         $container = $this->addAuthenticationFacade($container);
+        $container = $this->addUserRequestValidationPreCheckerPlugins($container);
 
         return $container;
     }
@@ -113,5 +119,27 @@ class OauthBackendApiDependencyProvider extends AbstractBundleDependencyProvider
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Backend\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Backend\Container
+     */
+    protected function addUserRequestValidationPreCheckerPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_USER_REQUEST_VALIDATION_PRE_CHECKER, function (Container $container) {
+            return $this->getUserRequestValidationPreCheckerPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return list<\Spryker\Glue\OauthBackendApiExtension\Dependency\Plugin\UserRequestValidationPreCheckerPluginInterface>
+     */
+    protected function getUserRequestValidationPreCheckerPlugins(): array
+    {
+        return [];
     }
 }

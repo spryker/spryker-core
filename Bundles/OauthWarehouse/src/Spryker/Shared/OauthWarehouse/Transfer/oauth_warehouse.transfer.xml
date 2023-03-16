@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="OauthUser">
+        <property name="idWarehouse" type="int" strict="true"/>
+        <property name="isSuccess" type="bool"/>
+        <property name="userIdentifier" type="string"/>
+        <property name="grantType" type="string"/>
+    </transfer>
+
+    <transfer name="WarehouseIdentifier" strict="true">
+        <property name="idWarehouse" type="int"/>
+    </transfer>
+
+    <transfer name="StockCriteriaFilter">
+        <property name="idStock" type="int"/>
+    </transfer>
+
+    <transfer name="StockCollection">
+        <property name="stocks" type="Stock[]" singular="stock"/>
+    </transfer>
+
+    <transfer name="OauthScopeRequest">
+        <property name="defaultScopes" type="OauthScope[]" singular="scope"/>
+        <property name="grantType" type="string"/>
+    </transfer>
+
+    <transfer name="GlueAuthenticationRequestContext">
+        <property name="requestApplication" type="string"/>
+    </transfer>
+
+    <transfer name="OauthScope">
+        <property name="identifier" type="string"/>
+    </transfer>
+
+    <transfer name="AuthorizationRequest">
+        <property name="identity" type="AuthorizationIdentity"/>
+        <property name="entity" type="AuthorizationEntity"/>
+    </transfer>
+
+    <transfer name="AuthorizationIdentity">
+        <property name="identifier" type="string"/>
+    </transfer>
+
+    <transfer name="AuthorizationEntity">
+        <property name="identifier" type="string"/>
+        <property name="data" type="array" singular="data"/>
+    </transfer>
+
+    <transfer name="GlueRequestWarehouse" strict="true">
+        <property name="idWarehouse" type="int"/>
+    </transfer>
+
+    <transfer name="Stock">
+    </transfer>
+
+    <transfer name="OauthRequest">
+        <property name="grantType" type="string"/>
+    </transfer>
+
+    <transfer name="OauthGrantTypeConfiguration">
+        <property name="identifier" type="string"/>
+        <property name="fullyQualifiedClassName" type="string"/>
+    </transfer>
+
+    <transfer name="OauthClient">
+    </transfer>
+</transfers>

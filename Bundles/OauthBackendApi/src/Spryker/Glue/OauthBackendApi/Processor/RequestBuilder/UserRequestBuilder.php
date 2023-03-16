@@ -14,6 +14,9 @@ use Spryker\Glue\OauthBackendApi\Dependency\Service\OauthBackendApiToOauthServic
 use Spryker\Glue\OauthBackendApi\Dependency\Service\OauthBackendApiToUtilEncodingServiceInterface;
 use Spryker\Glue\OauthBackendApi\Processor\Extractor\AccessTokenExtractorInterface;
 
+/**
+ * @deprecated Use {@link \Spryker\Glue\OauthBackendApi\Processor\Builder\RequestBuilder} instead.
+ */
 class UserRequestBuilder implements UserRequestBuilderInterface
 {
     /**

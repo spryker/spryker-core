@@ -1,5 +1,19 @@
 {
     "error": [],
-    "warning": [],
-    "deprecation": []
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 33,
+            "line_to": 33,
+            "type": "LessSpecificImplementedReturnType",
+            "message": "The inherited return type 'callable():Generated\\Shared\\Transfer\\GlueResponseTransfer' for Spryker\\Glue\\GlueApplicationExtension\\Dependency\\Plugin\\ResourceInterface::getResource is more specific than the implemented return type for Spryker\\Glue\\GlueApplication\\Plugin\\GlueApplication\\Backend\\AbstractResourcePlugin::getresource 'callable'",
+            "file_name": "vendor/spryker/spryker/Bundles/GlueApplication/src/Spryker/Glue/GlueApplication/Plugin/GlueApplication/Backend/AbstractResourcePlugin.php",
+            "snippet": "     * @return callable",
+            "selected_text": "callable",
+            "error_level": 5,
+            "shortcode": 166
+        }
+    ],
+    "deprecation": [],
+    "count": 1
 }

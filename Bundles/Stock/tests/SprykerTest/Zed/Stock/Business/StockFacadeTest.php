@@ -54,6 +54,11 @@ class StockFacadeTest extends Unit
     protected const STOCK_NAME = 'Test Warehouse';
 
     /**
+     * @var int
+     */
+    protected const INVALID_STOCK_ID = 0;
+
+    /**
      * @var \SprykerTest\Zed\Stock\StockBusinessTester
      */
     protected $tester;
@@ -868,7 +873,9 @@ class StockFacadeTest extends Unit
     public function testGetStocksByStockCriteriaFilterWillFilterStocksByName(): void
     {
         // Arrange
-        $stockCriteriaFilterTransfer = (new StockCriteriaFilterTransfer())->addStockName($this->stockEntity1->getName());
+        $stockCriteriaFilterTransfer = (new StockCriteriaFilterTransfer())
+            ->setIdStock($this->stockEntity1->getIdStock())
+            ->addStockName($this->stockEntity1->getName());
 
         // Act
         $stockCollectionTransfer = $this->stockFacade->getStocksByStockCriteriaFilter($stockCriteriaFilterTransfer);
@@ -889,6 +896,21 @@ class StockFacadeTest extends Unit
     {
         // Arrange
         $stockCriteriaFilterTransfer = (new StockCriteriaFilterTransfer())->addStockName('SOME_RANDOM_STOCK_NAME');
+
+        // Act
+        $stockCollectionTransfer = $this->stockFacade->getStocksByStockCriteriaFilter($stockCriteriaFilterTransfer);
+
+        // Assert
+        $this->assertCount(0, $stockCollectionTransfer->getStocks(), 'Stocks count does not match expected value.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetStocksByStockCriteriaFilterWillReturnEmptyCollectionForNonExistingStockId(): void
+    {
+        // Arrange
+        $stockCriteriaFilterTransfer = (new StockCriteriaFilterTransfer())->setIdStock(static::INVALID_STOCK_ID);
 
         // Act
         $stockCollectionTransfer = $this->stockFacade->getStocksByStockCriteriaFilter($stockCriteriaFilterTransfer);

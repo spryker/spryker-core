@@ -50,31 +50,39 @@ class AuthorizationValidator implements AuthorizationValidatorInterface
     /**
      * @var \Spryker\Glue\GlueBackendApiApplicationAuthorizationConnector\Dependency\Facade\GlueBackendApiApplicationAuthorizationConnectorToAuthorizationFacadeInterface
      */
-    protected $authorizationFacade;
+    protected GlueBackendApiApplicationAuthorizationConnectorToAuthorizationFacadeInterface $authorizationFacade;
 
     /**
-     * @var array<\Spryker\Glue\GlueBackendApiApplicationAuthorizationConnector\ConfigExtractorStrategy\ConfigExtractorStrategyInterface>
+     * @var list<\Spryker\Glue\GlueBackendApiApplicationAuthorizationConnector\ConfigExtractorStrategy\ConfigExtractorStrategyInterface>
      */
-    protected $configExtractorStrategies = [];
+    protected array $configExtractorStrategies = [];
 
     /**
      * @var \Spryker\Glue\GlueBackendApiApplicationAuthorizationConnector\GlueBackendApiApplicationAuthorizationConnectorConfig
      */
-    protected $glueBackendApiApplicationAuthorizationConfig;
+    protected GlueBackendApiApplicationAuthorizationConnectorConfig $glueBackendApiApplicationAuthorizationConfig;
+
+    /**
+     * @var list<\Spryker\Glue\GlueBackendApiApplicationAuthorizationConnectorExtension\Dependency\Plugin\AuthorizationRequestExpanderPluginInterface>
+     */
+    protected array $authorizationRequestExpanderPlugins;
 
     /**
      * @param \Spryker\Glue\GlueBackendApiApplicationAuthorizationConnector\Dependency\Facade\GlueBackendApiApplicationAuthorizationConnectorToAuthorizationFacadeInterface $authorizationFacade
-     * @param array<\Spryker\Glue\GlueBackendApiApplicationAuthorizationConnector\ConfigExtractorStrategy\ConfigExtractorStrategyInterface> $configExtractorStrategies
+     * @param list<\Spryker\Glue\GlueBackendApiApplicationAuthorizationConnector\ConfigExtractorStrategy\ConfigExtractorStrategyInterface> $configExtractorStrategies
      * @param \Spryker\Glue\GlueBackendApiApplicationAuthorizationConnector\GlueBackendApiApplicationAuthorizationConnectorConfig $glueBackendApiApplicationAuthorizationConfig
+     * @param list<\Spryker\Glue\GlueBackendApiApplicationAuthorizationConnectorExtension\Dependency\Plugin\AuthorizationRequestExpanderPluginInterface> $authorizationRequestExpanderPlugins
      */
     public function __construct(
         GlueBackendApiApplicationAuthorizationConnectorToAuthorizationFacadeInterface $authorizationFacade,
         array $configExtractorStrategies,
-        GlueBackendApiApplicationAuthorizationConnectorConfig $glueBackendApiApplicationAuthorizationConfig
+        GlueBackendApiApplicationAuthorizationConnectorConfig $glueBackendApiApplicationAuthorizationConfig,
+        array $authorizationRequestExpanderPlugins
     ) {
         $this->authorizationFacade = $authorizationFacade;
         $this->configExtractorStrategies = $configExtractorStrategies;
         $this->glueBackendApiApplicationAuthorizationConfig = $glueBackendApiApplicationAuthorizationConfig;
+        $this->authorizationRequestExpanderPlugins = $authorizationRequestExpanderPlugins;
     }
 
     /**
@@ -117,7 +125,7 @@ class AuthorizationValidator implements AuthorizationValidatorInterface
                 }
             }
         }
-        if ($this->glueBackendApiApplicationAuthorizationConfig->getProtectedPaths() !== null) {
+        if ($this->glueBackendApiApplicationAuthorizationConfig->getProtectedPaths()) {
             $routeAuthorizationConfigTransfers[] = (new RouteAuthorizationConfigTransfer())
                 ->addStrategy(static::PROTECTED_PATH_STRATEGY_NAME)
                 ->setApiMessage(static::ERROR_MESSAGE_UNAUTHORIZED_REQUEST)
@@ -128,13 +136,15 @@ class AuthorizationValidator implements AuthorizationValidatorInterface
     }
 
     /**
-     * @param array<\Generated\Shared\Transfer\RouteAuthorizationConfigTransfer> $routeAuthorizationConfigTransfers
+     * @param list<\Generated\Shared\Transfer\RouteAuthorizationConfigTransfer> $routeAuthorizationConfigTransfers
      * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
      *
-     * @return mixed
+     * @return \Generated\Shared\Transfer\AuthorizationRequestTransfer
      */
-    protected function createAuthorizationRequestTransfer(array $routeAuthorizationConfigTransfers, GlueRequestTransfer $glueRequestTransfer)
-    {
+    protected function createAuthorizationRequestTransfer(
+        array $routeAuthorizationConfigTransfers,
+        GlueRequestTransfer $glueRequestTransfer
+    ): AuthorizationRequestTransfer {
         $authorizationEntityTransfer = (new AuthorizationEntityTransfer())->setData([
             static::METHOD => $glueRequestTransfer->getMethod(),
             static::PATH => $glueRequestTransfer->getPath(),
@@ -142,7 +152,9 @@ class AuthorizationValidator implements AuthorizationValidatorInterface
         ]);
         $authorizationIdentityTransfer = new AuthorizationIdentityTransfer();
         if ($glueRequestTransfer->getRequestUser() !== null) {
-            $authorizationIdentityTransfer->setIdentifier((string)$glueRequestTransfer->getRequestUser()->getSurrogateIdentifier());
+            $identifier = (string)$glueRequestTransfer->getRequestUserOrFail()->getSurrogateIdentifier();
+
+            $authorizationIdentityTransfer->setIdentifier($identifier);
         }
 
         $glueResourceTransfer = $glueRequestTransfer->getResource();
@@ -163,12 +175,35 @@ class AuthorizationValidator implements AuthorizationValidatorInterface
             ->setStrategies(array_unique($strategies))
             ->setEntity($authorizationEntityTransfer);
 
+        return $this->executeAuthorizationRequestExpanderPlugins(
+            $authorizationRequestTransfer,
+            $glueRequestTransfer,
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AuthorizationRequestTransfer $authorizationRequestTransfer
+     * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\AuthorizationRequestTransfer
+     */
+    protected function executeAuthorizationRequestExpanderPlugins(
+        AuthorizationRequestTransfer $authorizationRequestTransfer,
+        GlueRequestTransfer $glueRequestTransfer
+    ): AuthorizationRequestTransfer {
+        foreach ($this->authorizationRequestExpanderPlugins as $authorizationRequestExpanderPlugin) {
+            $authorizationRequestTransfer = $authorizationRequestExpanderPlugin->expand(
+                $authorizationRequestTransfer,
+                $glueRequestTransfer,
+            );
+        }
+
         return $authorizationRequestTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\AuthorizationResponseTransfer $authorizationResponseTransfer
-     * @param array<\Generated\Shared\Transfer\RouteAuthorizationConfigTransfer> $routeAuthorizationConfigTransfers
+     * @param list<\Generated\Shared\Transfer\RouteAuthorizationConfigTransfer> $routeAuthorizationConfigTransfers
      *
      * @return \Generated\Shared\Transfer\GlueRequestValidationTransfer
      */
@@ -188,7 +223,7 @@ class AuthorizationValidator implements AuthorizationValidatorInterface
 
     /**
      * @param \Generated\Shared\Transfer\AuthorizationResponseTransfer $authorizationResponseTransfer
-     * @param array<\Generated\Shared\Transfer\RouteAuthorizationConfigTransfer> $routeAuthorizationConfigTransfers
+     * @param list<\Generated\Shared\Transfer\RouteAuthorizationConfigTransfer> $routeAuthorizationConfigTransfers
      *
      * @return \Generated\Shared\Transfer\GlueRequestValidationTransfer
      */

@@ -12,8 +12,12 @@ use Spryker\Glue\OauthBackendApi\Dependency\Facade\OauthBackendApiToAuthenticati
 use Spryker\Glue\OauthBackendApi\Dependency\Facade\OauthBackendApiToOauthFacadeInterface;
 use Spryker\Glue\OauthBackendApi\Dependency\Service\OauthBackendApiToOauthServiceInterface;
 use Spryker\Glue\OauthBackendApi\Dependency\Service\OauthBackendApiToUtilEncodingServiceInterface;
+use Spryker\Glue\OauthBackendApi\Processor\Builder\RequestBuilder;
+use Spryker\Glue\OauthBackendApi\Processor\Builder\RequestBuilderInterface;
 use Spryker\Glue\OauthBackendApi\Processor\Extractor\AccessTokenExtractor;
 use Spryker\Glue\OauthBackendApi\Processor\Extractor\AccessTokenExtractorInterface;
+use Spryker\Glue\OauthBackendApi\Processor\Mapper\GlueRequestMapper;
+use Spryker\Glue\OauthBackendApi\Processor\Mapper\GlueRequestMapperInterface;
 use Spryker\Glue\OauthBackendApi\Processor\RequestBuilder\UserRequestBuilder;
 use Spryker\Glue\OauthBackendApi\Processor\RequestBuilder\UserRequestBuilderInterface;
 use Spryker\Glue\OauthBackendApi\Processor\Validator\AccessTokenValidator;
@@ -27,14 +31,6 @@ use Spryker\Glue\OauthBackendApi\Processor\Validator\UserRequestValidatorInterfa
 class OauthBackendApiFactory extends AbstractBackendApiFactory
 {
     /**
-     * @return \Spryker\Glue\OauthBackendApi\Dependency\Facade\OauthBackendApiToAuthenticationFacadeInterface
-     */
-    public function getAuthenticationFacade(): OauthBackendApiToAuthenticationFacadeInterface
-    {
-        return $this->getProvidedDependency(OauthBackendApiDependencyProvider::FACADE_AUTHENTICATION);
-    }
-
-    /**
      * @return \Spryker\Glue\OauthBackendApi\Processor\Validator\AccessTokenValidatorInterface
      */
     public function createAccessTokenValidator(): AccessTokenValidatorInterface
@@ -42,6 +38,60 @@ class OauthBackendApiFactory extends AbstractBackendApiFactory
         return new AccessTokenValidator(
             $this->getOauthFacade(),
             $this->createAccessTokenExtractor(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\OauthBackendApi\Processor\Extractor\AccessTokenExtractorInterface
+     */
+    public function createAccessTokenExtractor(): AccessTokenExtractorInterface
+    {
+        return new AccessTokenExtractor();
+    }
+
+    /**
+     * @return \Spryker\Glue\OauthBackendApi\Processor\Builder\RequestBuilderInterface
+     */
+    public function createRequestBuilder(): RequestBuilderInterface
+    {
+        return new RequestBuilder(
+            $this->getOauthService(),
+            $this->createGlueRequestMapper(),
+            $this->createAccessTokenExtractor(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\OauthBackendApi\Processor\Mapper\GlueRequestMapperInterface
+     */
+    public function createGlueRequestMapper(): GlueRequestMapperInterface
+    {
+        return new GlueRequestMapper(
+            $this->getUtilEncodingService(),
+        );
+    }
+
+    /**
+     * @deprecated Use {@link \Spryker\Glue\OauthBackendApi\OauthBackendApiFactory::createRequestBuilder()} instead.
+     *
+     * @return \Spryker\Glue\OauthBackendApi\Processor\RequestBuilder\UserRequestBuilderInterface
+     */
+    public function createUserRequestBuilder(): UserRequestBuilderInterface
+    {
+        return new UserRequestBuilder(
+            $this->getOauthService(),
+            $this->getUtilEncodingService(),
+            $this->createAccessTokenExtractor(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\OauthBackendApi\Processor\Validator\UserRequestValidatorInterface
+     */
+    public function createUserRequestValidator(): UserRequestValidatorInterface
+    {
+        return new UserRequestValidator(
+            $this->getUserRequestValidationPreCheckerPlugins(),
         );
     }
 
@@ -62,14 +112,6 @@ class OauthBackendApiFactory extends AbstractBackendApiFactory
     }
 
     /**
-     * @return \Spryker\Glue\OauthBackendApi\Processor\Extractor\AccessTokenExtractorInterface
-     */
-    public function createAccessTokenExtractor(): AccessTokenExtractorInterface
-    {
-        return new AccessTokenExtractor();
-    }
-
-    /**
      * @return \Spryker\Glue\OauthBackendApi\Dependency\Facade\OauthBackendApiToOauthFacadeInterface
      */
     public function getOauthFacade(): OauthBackendApiToOauthFacadeInterface
@@ -78,22 +120,18 @@ class OauthBackendApiFactory extends AbstractBackendApiFactory
     }
 
     /**
-     * @return \Spryker\Glue\OauthBackendApi\Processor\RequestBuilder\UserRequestBuilderInterface
+     * @return \Spryker\Glue\OauthBackendApi\Dependency\Facade\OauthBackendApiToAuthenticationFacadeInterface
      */
-    public function createUserRequestBuilder(): UserRequestBuilderInterface
+    public function getAuthenticationFacade(): OauthBackendApiToAuthenticationFacadeInterface
     {
-        return new UserRequestBuilder(
-            $this->getOauthService(),
-            $this->getUtilEncodingService(),
-            $this->createAccessTokenExtractor(),
-        );
+        return $this->getProvidedDependency(OauthBackendApiDependencyProvider::FACADE_AUTHENTICATION);
     }
 
     /**
-     * @return \Spryker\Glue\OauthBackendApi\Processor\Validator\UserRequestValidatorInterface
+     * @return list<\Spryker\Glue\OauthBackendApiExtension\Dependency\Plugin\UserRequestValidationPreCheckerPluginInterface>
      */
-    public function createUserRequestValidator(): UserRequestValidatorInterface
+    public function getUserRequestValidationPreCheckerPlugins(): array
     {
-        return new UserRequestValidator();
+        return $this->getProvidedDependency(OauthBackendApiDependencyProvider::PLUGINS_USER_REQUEST_VALIDATION_PRE_CHECKER);
     }
 }
