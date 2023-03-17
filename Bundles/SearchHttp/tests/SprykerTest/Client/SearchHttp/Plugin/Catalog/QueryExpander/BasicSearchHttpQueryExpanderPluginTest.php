@@ -43,7 +43,7 @@ class BasicSearchHttpQueryExpanderPluginTest extends Unit
         $requestData = [
             'page' => 5,
             'ipp' => 500,
-            'sort' => 'foo_asc',
+            'sort' => 'foo',
         ];
 
         // Act
@@ -59,7 +59,7 @@ class BasicSearchHttpQueryExpanderPluginTest extends Unit
             $expandedSearchHttpQueryPlugin->getSearchQuery()->getPagination()->getItemsPerPage(),
         );
         $this->assertSame(
-            'foo-param',
+            'foo',
             $expandedSearchHttpQueryPlugin->getSearchQuery()->getSort()->getFieldName(),
         );
         $this->assertSame(
@@ -91,13 +91,8 @@ class BasicSearchHttpQueryExpanderPluginTest extends Unit
             10,
             $expandedSearchHttpQueryPlugin->getSearchQuery()->getPagination()->getItemsPerPage(),
         );
-        $this->assertSame(
-            'foo-param',
-            $expandedSearchHttpQueryPlugin->getSearchQuery()->getSort()->getFieldName(),
-        );
-        $this->assertSame(
-            'asc',
-            $expandedSearchHttpQueryPlugin->getSearchQuery()->getSort()->getSortDirection(),
+        $this->assertNull(
+            $expandedSearchHttpQueryPlugin->getSearchQuery()->getSort(),
         );
     }
 }

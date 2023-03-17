@@ -47,6 +47,7 @@
 
     <transfer name="ProductConcrete">
         <property name="prices" type="PriceProduct[]" singular="price"/>
+        <property name="productAbstractPrices" type="PriceProduct[]" singular="productAbstractPrice"/>
         <property name="idProductConcrete" type="int"/>
         <property name="fkProductAbstract" type="int"/>
         <property name="sku" type="string"/>

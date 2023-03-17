@@ -17,9 +17,6 @@ use Generated\Shared\DataBuilder\CategoryNodeStorageBuilder;
 use Generated\Shared\DataBuilder\MoneyBuilder;
 use Generated\Shared\DataBuilder\SearchHttpResponseBuilder;
 use Generated\Shared\DataBuilder\SearchHttpResponsePaginationBuilder;
-use Generated\Shared\DataBuilder\SearchHttpResponseProductAttributeBuilder;
-use Generated\Shared\DataBuilder\SearchHttpResponseProductBuilder;
-use Generated\Shared\DataBuilder\SearchHttpResponseProductPriceBuilder;
 use Generated\Shared\DataBuilder\SearchQueryPaginationBuilder;
 use Generated\Shared\DataBuilder\SearchQueryRangeFacetFilterBuilder;
 use Generated\Shared\DataBuilder\SearchQuerySortingBuilder;
@@ -119,10 +116,14 @@ class SearchHttpClientTester extends Actor
      */
     public function mockMoneyClientDependency(): void
     {
-        $moneyClient = Stub::makeEmpty(SearchHttpToMoneyClientInterface::class);
-        $moneyClient->method('fromFloat')->willReturn(
-            (new MoneyBuilder())->build(),
-        );
+        $moneyClient = Stub::makeEmpty(SearchHttpToMoneyClientInterface::class, [
+            'fromFloat' => function ($price) {
+                $money = (new MoneyBuilder())->build();
+                $money->setAmount(($price * 100));
+
+                return $money;
+            },
+        ]);
 
         $this->mockFactoryMethod('getMoneyClient', $moneyClient);
         $this->setDependency(SearchHttpDependencyProvider::CLIENT_MONEY, $moneyClient);
@@ -258,10 +259,9 @@ class SearchHttpClientTester extends Actor
         $sortConfig = new SortConfig();
         $sortConfig->addSort(
             (new SortConfigTransfer())
-                ->setName('foo')
-                ->setParameterName('foo-param')
+                ->setParameterName('foo')
                 ->setFieldName('field-name')
-                ->setIsDescending(true)
+                ->setIsDescending(false)
                 ->setName('foo'),
         );
 
@@ -301,8 +301,8 @@ class SearchHttpClientTester extends Actor
                         'Category_3' => 100,
                     ],
                     'pricerange' => [
-                        'from' => 10,
-                        'to' => 100,
+                        'from' => 1000,
+                        'to' => 10000,
                     ],
                     'range' => [
                         'from' => 200,
@@ -311,31 +311,43 @@ class SearchHttpClientTester extends Actor
                 ],
             )
             ->setPagination((new SearchHttpResponsePaginationBuilder())->build())
-            ->setProducts(
-                new ArrayObject(
+            ->setItems(
+                [
                     [
-                        (new SearchHttpResponseProductBuilder())
-                            ->build()
-                            ->setImages(['image1', 'image2'])
-                            ->setCategories(['Category1', 'Category2'])
-                            ->setLabels(['label1', 'label2'])
-                            ->setMerchants(['merchant1', 'merchant2'])
-                            ->setAttributes(
-                                new ArrayObject(
-                                    [
-                                        (new SearchHttpResponseProductAttributeBuilder())->build(),
-                                    ],
-                                ),
-                            )
-                            ->setPrices(
-                                new ArrayObject(
-                                    [
-                                        (new SearchHttpResponseProductPriceBuilder())->build(),
-                                    ],
-                                ),
-                            ),
+                        'sku' => 'product-sku',
+                        'product_abstract_sku' => 'product-abstract-sku',
+                        'name' => 'product-name',
+                        'abstract_name' => 'product-abstract-name',
+                        'description' => 'product-description',
+                        'images' => [
+                            'default' => [
+                                0 => [
+                                    'small' => 'product-image-1',
+                                    'large' => 'product-image-2',
+                                ],
+                            ],
+                        ],
+                        'labels' => ['product-label-1', 'product-label-2'],
+                        'merchants' => ['product-merchant-1', 'product-merchant-2'],
+                        'keywords' => 'keyword-1,keyword-2',
+                        'url' => '/product-url',
+                        'rating' => 3,
+                        'categories' => ['category-1', 'category-2'],
+                        'attributes' => [
+                            [
+                                'name' => 'attribute-name-1',
+                                'value' => 'attribute-value-1',
+                            ],
+                        ],
+                        'prices' => [
+                            [
+                                'currency' => 'EUR',
+                                'price_gross' => 10,
+                                'price_net' => 9,
+                            ],
+                        ],
                     ],
-                ),
+                ],
             );
     }
 

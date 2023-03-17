@@ -18,6 +18,7 @@ use Orm\Zed\ProductLabel\Persistence\SpyProductLabelQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
+use Spryker\Zed\Kernel\Persistence\Repository\TransferObjectFormatter;
 
 /**
  * @method \Spryker\Zed\ProductLabel\Persistence\ProductLabelPersistenceFactory getFactory()
@@ -235,47 +236,26 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
             ->createProductRelationQuery()
             ->filterByFkProductAbstract_In($productAbstractIds)
             ->joinWithSpyProductLabel()
+            ->useSpyProductLabelQuery()
+            ->joinWithSpyProductLabelLocalizedAttributes()
+            ->useSpyProductLabelLocalizedAttributesQuery()
+            ->joinWithSpyLocale()
+            ->endUse()
+            ->endUse()
             ->orderBy(SpyProductLabelTableMap::COL_POSITION)
+            ->setFormatter(TransferObjectFormatter::class)
             ->find();
 
-        if (!$productLabelProductAbstractEntities->count()) {
+        if (!count($productLabelProductAbstractEntities)) {
             return [];
         }
 
-        $productLabelProductAbstractTransfer = $this->getFactory()
-            ->createProductLabelProductAbstractMapper()
-            ->mapProductLabelProductAbstractEntitiesToProductLabelProductTransfers($productLabelProductAbstractEntities, []);
-
-        return $this->mapProductLabelEntitiesToProductLabelTransfers(
-            $productLabelProductAbstractEntities,
-            $productLabelProductAbstractTransfer,
-        );
-    }
-
-    /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstract> $productLabelProductAbstractEntities
-     * @param array<\Generated\Shared\Transfer\ProductLabelProductAbstractTransfer> $productLabelProductAbstractTransfers
-     *
-     * @return array<\Generated\Shared\Transfer\ProductLabelProductAbstractTransfer>
-     */
-    protected function mapProductLabelEntitiesToProductLabelTransfers(
-        ObjectCollection $productLabelProductAbstractEntities,
-        array $productLabelProductAbstractTransfers
-    ): array {
-        foreach ($productLabelProductAbstractTransfers as $productLabelProductAbstractTransfer) {
-            foreach ($productLabelProductAbstractEntities as $productLabelProductAbstractEntity) {
-                if ($productLabelProductAbstractTransfer->getFkProductAbstract() === $productLabelProductAbstractEntity->getFkProductAbstract()) {
-                    $productLabelTransfer = $this->getFactory()->createProductLabelMapper()->mapProductLabelEntityToProductLabelTransfer(
-                        $productLabelProductAbstractEntity->getSpyProductLabel(),
-                        new ProductLabelTransfer(),
-                    );
-
-                    $productLabelProductAbstractTransfer->setProductLabel($productLabelTransfer);
-                }
-            }
-        }
-
-        return $productLabelProductAbstractTransfers;
+        return $this->getFactory()
+            ->createProductLabelMapper()
+            ->mapProductLabelProductAbstractEntitiesToProductLabelProductTransfersWithProductLabelData(
+                $productLabelProductAbstractEntities,
+                [],
+            );
     }
 
     /**
@@ -296,7 +276,7 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
         }
 
         return $this->getFactory()
-            ->createProductLabelProductAbstractMapper()
+            ->createProductLabelMapper()
             ->mapProductLabelProductAbstractEntitiesToProductLabelProductTransfers($productLabelProductAbstractEntities, []);
     }
 
@@ -319,7 +299,7 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
         }
 
         return $this->getFactory()
-            ->createProductLabelProductAbstractMapper()
+            ->createProductLabelMapper()
             ->mapProductLabelProductAbstractEntitiesToProductLabelProductTransfers($productLabelProductAbstractEntities, []);
     }
 

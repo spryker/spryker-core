@@ -39,6 +39,7 @@ class FacetSearchHttpQueryExpanderPluginTest extends Unit
         $this->tester->mockLocaleClientDependency();
         $this->tester->mockStoreClientDependency();
         $this->tester->mockCategoryStorageClientDependency();
+        $this->tester->mockMoneyClientDependency();
         $searchHttpQueryPlugin = $this->tester->getSearchHttpQueryPlugin();
         $facetSearchHttpQueryExpanderPlugin = new FacetSearchHttpQueryExpanderPlugin();
         $facetSearchHttpQueryExpanderPlugin->setFactory($this->tester->getFactory());
@@ -49,8 +50,8 @@ class FacetSearchHttpQueryExpanderPluginTest extends Unit
                 'max' => 100,
             ],
             'pricerange-param' => [
-                'min' => 1000,
-                'max' => 10000,
+                'min' => 10,
+                'max' => 100,
             ],
             'category-param' => 6,
         ];
@@ -77,11 +78,11 @@ class FacetSearchHttpQueryExpanderPluginTest extends Unit
         );
         $this->assertSame(
             1000,
-            $expandedSearchHttpQueryPlugin->getSearchQuery()->getSearchQueryFacetFilters()[1]->getFrom(),
+            (int)$expandedSearchHttpQueryPlugin->getSearchQuery()->getSearchQueryFacetFilters()[1]->getFrom(),
         );
         $this->assertSame(
             10000,
-            $expandedSearchHttpQueryPlugin->getSearchQuery()->getSearchQueryFacetFilters()[1]->getTo(),
+            (int)$expandedSearchHttpQueryPlugin->getSearchQuery()->getSearchQueryFacetFilters()[1]->getTo(),
         );
         $this->assertSame(
             'category-param',

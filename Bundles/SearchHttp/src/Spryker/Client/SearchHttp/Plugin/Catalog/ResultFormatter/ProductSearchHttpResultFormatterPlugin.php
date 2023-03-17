@@ -33,6 +33,11 @@ class ProductSearchHttpResultFormatterPlugin extends AbstractPlugin implements R
     /**
      * @var string
      */
+    protected const PRODUCT_COLLECTION_KEY = 'items';
+
+    /**
+     * @var string
+     */
     public const NAME = 'products';
 
     /**
@@ -58,7 +63,7 @@ class ProductSearchHttpResultFormatterPlugin extends AbstractPlugin implements R
      */
     public function formatResult($searchResult, array $requestParameters = []): array
     {
-        $products = $searchResult->toArray()['products'];
+        $products = $searchResult[static::PRODUCT_COLLECTION_KEY];
 
         $products = $this->extendWithProductIds($products);
         $products = $this->filterNotFoundInAbstractProducts($products);

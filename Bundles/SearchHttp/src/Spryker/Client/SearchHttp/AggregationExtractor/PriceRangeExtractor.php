@@ -60,13 +60,13 @@ class PriceRangeExtractor extends RangeExtractor
         array $aggregations,
         array $requestParameters
     ): RangeSearchResultTransfer {
+        $requestParameters = $this->convertFromFloatToIntegerRequestParametersPriceRange($requestParameters);
+
         $activeRange = $this->getActiveRangeData(
             $requestParameters,
             $aggregations[static::KEY_FROM],
             $aggregations[static::KEY_TO],
         );
-
-        array_walk($activeRange, [$this, 'convertFromFloatToInteger']);
 
         $rangeResultTransfer
             ->setMin($aggregations[static::KEY_FROM])
@@ -75,6 +75,26 @@ class PriceRangeExtractor extends RangeExtractor
             ->setActiveMax($activeRange[static::KEY_TO]);
 
         return $rangeResultTransfer;
+    }
+
+    /**
+     * @param array<string, mixed> $requestParameters
+     *
+     * @return array<string, mixed>
+     */
+    protected function convertFromFloatToIntegerRequestParametersPriceRange(array $requestParameters): array
+    {
+        $parameterName = $this->facetConfigTransfer->getParameterName();
+
+        if (!isset($requestParameters[$parameterName])) {
+            return $requestParameters;
+        }
+
+        $priceRange = $requestParameters[$parameterName];
+
+        $requestParameters[$parameterName] = array_map([$this, 'convertFromFloatToInteger'], $priceRange);
+
+        return $requestParameters;
     }
 
     /**

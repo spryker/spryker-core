@@ -59,21 +59,31 @@ class FacetSearchHttpResultFormatterPluginTest extends Unit
         $this->tester->mockAggregationExtractorFactory();
         $facetSearchHttpResultFormatterPlugin = new FacetSearchHttpResultFormatterPlugin();
         $facetSearchHttpResultFormatterPlugin->setFactory($this->tester->getFactory());
+        $requestParameters = [
+            'range-param' => [
+                'min' => 150,
+                'max' => 2500,
+            ],
+            'pricerange-param' => [
+                'min' => 5,
+                'max' => 500,
+            ],
+        ];
 
         // Act
-        $formattedResult = $facetSearchHttpResultFormatterPlugin->formatResult($searchResult);
+        $formattedResult = $facetSearchHttpResultFormatterPlugin->formatResult($searchResult, $requestParameters);
 
         // Assert
         $this->assertEquals('range', $formattedResult['range']->getName());
         $this->assertEquals(200, $formattedResult['range']->getMin());
         $this->assertEquals(2000, $formattedResult['range']->getMax());
-        $this->assertEquals(200, $formattedResult['range']->getActiveMin());
-        $this->assertEquals(2000, $formattedResult['range']->getActiveMax());
+        $this->assertEquals(150, $formattedResult['range']->getActiveMin());
+        $this->assertEquals(2500, $formattedResult['range']->getActiveMax());
         $this->assertEquals('pricerange', $formattedResult['pricerange']->getName());
-        $this->assertEquals(10, $formattedResult['pricerange']->getMin());
-        $this->assertEquals(100, $formattedResult['pricerange']->getMax());
-        $this->assertEquals(10.0, $formattedResult['pricerange']->getActiveMin());
-        $this->assertEquals(100.0, $formattedResult['pricerange']->getActiveMax());
+        $this->assertEquals(1000, $formattedResult['pricerange']->getMin());
+        $this->assertEquals(10000, $formattedResult['pricerange']->getMax());
+        $this->assertEquals(500, $formattedResult['pricerange']->getActiveMin());
+        $this->assertEquals(50000, $formattedResult['pricerange']->getActiveMax());
         $this->assertEquals('category', $formattedResult['category']->getName());
         $this->assertEquals('1', $formattedResult['category']->getValues()->offsetGet(0)->getValue());
         $this->assertEquals(1, $formattedResult['category']->getValues()->offsetGet(0)->getDocCount());

@@ -24,6 +24,16 @@ class RangeExtractor implements AggregationExtractorInterface
     protected const KEY_TO = 'to';
 
     /**
+     * @var string
+     */
+    protected const KEY_MIN = 'min';
+
+    /**
+     * @var string
+     */
+    protected const KEY_MAX = 'max';
+
+    /**
      * @var \Generated\Shared\Transfer\FacetConfigTransfer
      */
     protected $facetConfigTransfer;
@@ -89,8 +99,8 @@ class RangeExtractor implements AggregationExtractorInterface
     {
         $parameterName = $this->facetConfigTransfer->getParameterName();
 
-        $activeMin = $requestParameters[$parameterName][static::KEY_FROM] ?? $min;
-        $activeMax = $requestParameters[$parameterName][static::KEY_TO] ?? $max;
+        $activeMin = $requestParameters[$parameterName][static::KEY_MIN] ?? $min;
+        $activeMax = $requestParameters[$parameterName][static::KEY_MAX] ?? $max;
 
         return [static::KEY_FROM => $activeMin, static::KEY_TO => $activeMax];
     }

@@ -24,10 +24,10 @@ class ResultProductMapper implements ResultProductMapperInterface
             $result[] = [
                 'id_product_abstract' => $product['id_product_abstract'],
                 'type' => 'product_abstract',
-                'abstract_name' => $product['name'], # This is only one way to have abstract_name
+                'abstract_name' => $product['abstract_name'],
                 'abstract_sku' => $product['product_abstract_sku'],
                 'url' => $product['url'],
-                'images' => $this->mapSearchHttpImagesToOriginalImages($product['images']),
+                'images' => $this->getImagesFromImageSet($product['images']),
                 'prices' => $product['prices'],
                 'id_product_labels' => [],
             ];
@@ -37,7 +37,27 @@ class ResultProductMapper implements ResultProductMapperInterface
     }
 
     /**
-     * @param array<int, string> $images
+     * @param array<string, array<int, array<string, string>>> $images
+     *
+     * @return array<int, mixed>
+     */
+    protected function getImagesFromImageSet(array $images): array
+    {
+        $result = [];
+
+        if (!count($images)) {
+            return $result;
+        }
+
+        if (isset($images['default'])) {
+            return $this->mapSearchHttpImagesToOriginalImages($images['default']);
+        }
+
+        return $this->mapSearchHttpImagesToOriginalImages(current($images));
+    }
+
+    /**
+     * @param array<int, array<string, string>> $images
      *
      * @return array<int, mixed>
      */
@@ -49,8 +69,8 @@ class ResultProductMapper implements ResultProductMapperInterface
 
         foreach ($images as $image) {
             $result[] = [
-                'external_url_small' => $image,
-                'external_url_large' => $image,
+                'external_url_small' => $image['small'],
+                'external_url_large' => $image['large'],
             ];
         }
 

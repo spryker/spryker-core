@@ -72,36 +72,9 @@
     </transfer>
 
     <transfer name="SearchHttpResponse">
-        <property name="products" type="SearchHttpResponseProduct[]" singular="product"/>
+        <property name="items" type="array" singular="item"/>
         <property name="pagination" type="SearchHttpResponsePagination"/>
         <property name="facets" type="array" singular="facet"/>
-    </transfer>
-
-    <transfer name="SearchHttpResponseProduct">
-        <property name="sku" type="string"/>
-        <property name="productAbstractSku" type="string"/>
-        <property name="name" type="string"/>
-        <property name="description" type="string"/>
-        <property name="images" type="string[]" singular="image"/>
-        <property name="labels" type="string[]" singular="label"/>
-        <property name="attributes" type="SearchHttpResponseProductAttribute[]" singular="attribute"/>
-        <property name="merchants" type="string[]" singular="merchant"/>
-        <property name="keywords" type="string"/>
-        <property name="url" type="string"/>
-        <property name="rating" type="string"/>
-        <property name="categories" type="string[]" singular="category"/>
-        <property name="prices" type="SearchHttpResponseProductPrice[]" singular="price"/>
-    </transfer>
-
-    <transfer name="SearchHttpResponseProductAttribute">
-        <property name="name" type="string"/>
-        <property name="value" type="string"/>
-    </transfer>
-
-    <transfer name="SearchHttpResponseProductPrice">
-        <property name="currency" type="string"/>
-        <property name="priceGross" type="int"/>
-        <property name="priceNet" type="int"/>
     </transfer>
 
     <transfer name="SearchHttpResponsePagination">

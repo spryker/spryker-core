@@ -11,6 +11,8 @@ use ArrayObject;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
+use Generated\Shared\Transfer\SpyProductLabelEntityTransfer;
+use Generated\Shared\Transfer\SpyProductLabelLocalizedAttributesEntityTransfer;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabel;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabelLocalizedAttributes;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -76,5 +78,59 @@ class ProductLabelLocalizedAttributesMapper
         ProductLabelTransfer $productLabelTransfer
     ): ProductLabelTransfer {
         return $productLabelTransfer->fromArray($productLabelEntity->toArray(), true);
+    }
+
+    /**
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\SpyProductLabelLocalizedAttributesEntityTransfer> $productLabelLocalizedAttributesEntityTransfers
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer> $productLabelLocalizedAttributesTransfers
+     *
+     * @return \ArrayObject<int, \Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer>
+     */
+    public function mapProductLabelLocalizedAttributesEntityTransfersToProductLabelLocalizedAttributesTransfers(
+        ArrayObject $productLabelLocalizedAttributesEntityTransfers,
+        ArrayObject $productLabelLocalizedAttributesTransfers
+    ): ArrayObject {
+        foreach ($productLabelLocalizedAttributesEntityTransfers as $productLabelLocalizedAttributesEntityTransfer) {
+            $productLabelLocalizedAttributesTransfers->append($this->mapProductLabelLocalizedAttributesEntityTransferToProductLabelLocalizedAttributesTransfer(
+                $productLabelLocalizedAttributesEntityTransfer,
+                new ProductLabelLocalizedAttributesTransfer(),
+            ));
+        }
+
+        return $productLabelLocalizedAttributesTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyProductLabelLocalizedAttributesEntityTransfer $productLabelLocalizedAttributesEntityTransfer
+     * @param \Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer $productLabelLocalizedAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer
+     */
+    protected function mapProductLabelLocalizedAttributesEntityTransferToProductLabelLocalizedAttributesTransfer(
+        SpyProductLabelLocalizedAttributesEntityTransfer $productLabelLocalizedAttributesEntityTransfer,
+        ProductLabelLocalizedAttributesTransfer $productLabelLocalizedAttributesTransfer
+    ): ProductLabelLocalizedAttributesTransfer {
+        $productLabelLocalizedAttributesTransfer = $productLabelLocalizedAttributesTransfer->fromArray($productLabelLocalizedAttributesEntityTransfer->toArray(), true)
+            ->setLocale($this->localeMapper->mapLocaleEntityTransaferToLocaleTransfer($productLabelLocalizedAttributesEntityTransfer->getSpyLocale(), new LocaleTransfer()));
+
+        if ($productLabelLocalizedAttributesEntityTransfer->getSpyProductLabel()) {
+            $productLabelLocalizedAttributesTransfer
+                ->setProductLabel($this->mapProductLabelEntityTransferToProductLabelTransfer($productLabelLocalizedAttributesEntityTransfer->getSpyProductLabel(), new ProductLabelTransfer()));
+        }
+
+        return $productLabelLocalizedAttributesTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyProductLabelEntityTransfer $productLabelEntityTransfer
+     * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductLabelTransfer
+     */
+    protected function mapProductLabelEntityTransferToProductLabelTransfer(
+        SpyProductLabelEntityTransfer $productLabelEntityTransfer,
+        ProductLabelTransfer $productLabelTransfer
+    ): ProductLabelTransfer {
+        return $productLabelTransfer->fromArray($productLabelEntityTransfer->toArray(), true);
     }
 }

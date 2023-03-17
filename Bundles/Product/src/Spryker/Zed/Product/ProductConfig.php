@@ -45,7 +45,7 @@ class ProductConfig extends AbstractBundleConfig
      */
     public function getProductPublishToMessageBrokerChunkSize(): int
     {
-        return 10;
+        return 5;
     }
 
     /**

@@ -100,6 +100,7 @@ class PriceProductExpander implements PriceProductExpanderInterface
         );
 
         $productConcreteTransfer->setPrices(new ArrayObject($priceProductTransfers));
+        $productConcreteTransfer->setProductAbstractPrices($productAbstractTransfer->getPrices());
 
         return $productConcreteTransfer;
     }

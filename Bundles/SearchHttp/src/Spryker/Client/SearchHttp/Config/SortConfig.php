@@ -84,15 +84,14 @@ class SortConfig implements SortConfigInterface
     /**
      * @param array<string, mixed> $requestParameters
      *
-     * @return string
+     * @return string|null
      */
-    public function getActiveCleanedParamName(array $requestParameters): string
+    public function getActiveCleanedParamName(array $requestParameters): ?string
     {
         $sortConfigTransfer = $this->getActiveConfig($requestParameters);
 
         if (!$sortConfigTransfer) {
-            /** @var \Generated\Shared\Transfer\SortConfigTransfer $sortConfigTransfer */
-            $sortConfigTransfer = reset($this->sortConfigTransfers);
+            return null;
         }
 
         return $this->cleanSuffix($sortConfigTransfer->getParameterNameOrFail());
@@ -101,13 +100,17 @@ class SortConfig implements SortConfigInterface
     /**
      * @param array<string, mixed> $requestParameters
      *
-     * @return string
+     * @return string|null
      */
-    public function getSortDirection(array $requestParameters): string
+    public function getSortDirection(array $requestParameters): ?string
     {
         $sortConfigTransfer = $this->getActiveConfig($requestParameters);
 
-        if ($sortConfigTransfer && $sortConfigTransfer->getIsDescending()) {
+        if (!$sortConfigTransfer) {
+            return null;
+        }
+
+        if ($sortConfigTransfer->getIsDescending()) {
             return static::DIRECTION_DESC;
         }
 

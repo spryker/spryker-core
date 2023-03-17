@@ -1095,6 +1095,45 @@ class ProductLabelFacadeTest extends Unit
     }
 
     /**
+     * Tests if the repository do not set the wrong ProductLabelTransfer to a ProductLabelProductAbstractTransfer when
+     * the product has more then one label assigned to it.
+     *
+     * This bug was reported on https://spryker.atlassian.net/browse/PBC-845.
+     *
+     * @return void
+     */
+    public function testExpandProductConcretesWithLabelsAssignCorrectLabelsToProductWhenProductHasMoreThanOneLabels(): void
+    {
+        // Arrange
+        $productTransfer = $this->tester->haveProduct();
+        $idProductAbstract = $productTransfer->getFkProductAbstract();
+
+        $productLabelTransfer1 = $this->tester->haveProductLabel();
+        $idProductLabel1 = $productLabelTransfer1->getIdProductLabel();
+        $this->tester->haveProductLabelToAbstractProductRelation($idProductLabel1, $idProductAbstract);
+
+        $productLabelTransfer2 = $this->tester->haveProductLabel();
+        $idProductLabel2 = $productLabelTransfer2->getIdProductLabel();
+        $this->tester->haveProductLabelToAbstractProductRelation($idProductLabel2, $idProductAbstract);
+
+        $productConcreteTransfers = [$productTransfer];
+
+        // Act
+        $expandedProductConcreteTransfers = $this->tester->getFacade()->expandProductConcretesWithLabels(
+            $productConcreteTransfers,
+        );
+
+        $expandedLabelsids = [
+            $expandedProductConcreteTransfers[0]->getProductLabels()->offsetGet(0)->getIdProductLabel(),
+            $expandedProductConcreteTransfers[0]->getProductLabels()->offsetGet(1)->getIdProductLabel(),
+        ];
+
+        // Assert
+        $this->assertContains($productLabelTransfer1->getIdProductLabel(), $expandedLabelsids);
+        $this->assertContains($productLabelTransfer2->getIdProductLabel(), $expandedLabelsids);
+    }
+
+    /**
      * @return void
      */
     public function testGetProductLabelCollectionShouldReturnCollectionFilteredByIsActive(): void

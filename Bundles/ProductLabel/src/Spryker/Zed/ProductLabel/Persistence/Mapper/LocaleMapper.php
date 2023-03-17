@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductLabel\Persistence\Mapper;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\SpyLocaleEntityTransfer;
 use Orm\Zed\Locale\Persistence\SpyLocale;
 
 class LocaleMapper
@@ -21,5 +22,16 @@ class LocaleMapper
     public function mapLocaleEntityToLocaleTransfer(SpyLocale $localeEntity, LocaleTransfer $localeTransfer): LocaleTransfer
     {
         return $localeTransfer->fromArray($localeEntity->toArray(), true);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SpyLocaleEntityTransfer $localeEntityTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    public function mapLocaleEntityTransaferToLocaleTransfer(SpyLocaleEntityTransfer $localeEntityTransfer, LocaleTransfer $localeTransfer): LocaleTransfer
+    {
+        return $localeTransfer->fromArray($localeEntityTransfer->toArray(), true);
     }
 }

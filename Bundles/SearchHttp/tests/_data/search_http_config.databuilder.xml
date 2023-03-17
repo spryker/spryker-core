@@ -15,36 +15,9 @@
     </transfer>
 
     <transfer name="SearchHttpResponse">
-        <property name="products" dataBuilderRule="SearchHttpResponseProduct[]"/>
+        <property name="items" dataBuilderRule="=[]"/>
         <property name="pagination" dataBuilderRule="SearchHttpResponsePagination"/>
         <property name="facets" dataBuilderRule="=[]"/>
-    </transfer>
-
-    <transfer name="SearchHttpResponseProduct">
-        <property name="sku" dataBuilderRule="word()"/>
-        <property name="productAbstractSku" dataBuilderRule="word()"/>
-        <property name="name" dataBuilderRule="word()"/>
-        <property name="description" dataBuilderRule="word()"/>
-        <property name="images" dataBuilderRule="="/>
-        <property name="labels" dataBuilderRule="="/>
-        <property name="attributes" dataBuilderRule="SearchHttpResponseProductAttribute[]"/>
-        <property name="merchants" dataBuilderRule="="/>
-        <property name="keywords" dataBuilderRule="word()"/>
-        <property name="url" dataBuilderRule="word()"/>
-        <property name="rating" dataBuilderRule="word()"/>
-        <property name="categories" dataBuilderRule="="/>
-        <property name="prices" dataBuilderRule="SearchHttpResponseProductPrice[]"/>
-    </transfer>
-
-    <transfer name="SearchHttpResponseProductAttribute">
-        <property name="name" dataBuilderRule="word()"/>
-        <property name="value" dataBuilderRule="word()"/>
-    </transfer>
-
-    <transfer name="SearchHttpResponseProductPrice">
-        <property name="currency" dataBuilderRule="word()"/>
-        <property name="priceGross" dataBuilderRule="randomNumber(3)"/>
-        <property name="priceNet" dataBuilderRule="randomNumber(3)"/>
     </transfer>
 
     <transfer name="SearchHttpResponsePagination">

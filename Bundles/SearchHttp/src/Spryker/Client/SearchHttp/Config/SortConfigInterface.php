@@ -33,14 +33,14 @@ interface SortConfigInterface
     /**
      * @param array<string, mixed> $requestParameters
      *
-     * @return string
+     * @return string|null
      */
-    public function getActiveCleanedParamName(array $requestParameters): string;
+    public function getActiveCleanedParamName(array $requestParameters): ?string;
 
     /**
      * @param array<string, mixed> $requestParameters
      *
-     * @return string
+     * @return string|null
      */
-    public function getSortDirection(array $requestParameters): string;
+    public function getSortDirection(array $requestParameters): ?string;
 }

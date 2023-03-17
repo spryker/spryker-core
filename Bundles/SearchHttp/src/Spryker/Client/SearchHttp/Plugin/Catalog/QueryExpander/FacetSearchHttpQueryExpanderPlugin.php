@@ -73,9 +73,10 @@ class FacetSearchHttpQueryExpanderPlugin extends AbstractPlugin implements Query
         }
 
         return match ($facetConfigTransfer->getType()) {
-            SharedSearchHttpConfig::FACET_TYPE_RANGE,
-            SharedSearchHttpConfig::FACET_TYPE_PRICE_RANGE =>
+            SharedSearchHttpConfig::FACET_TYPE_RANGE =>
                 $this->addRangeFacetFilterToQuery($searchQuery, $facetConfigTransfer, $filterValue),
+            SharedSearchHttpConfig::FACET_TYPE_PRICE_RANGE =>
+                $this->addPriceRangeFacetFilterToQuery($searchQuery, $facetConfigTransfer, $filterValue),
             SharedSearchHttpConfig::FACET_TYPE_CATEGORY =>
                 $this->addCategoryFacetFilterToQuery($searchQuery, $facetConfigTransfer, $filterValue),
             default => $this->addValueFacetFilterToQuery($searchQuery, $facetConfigTransfer, $filterValue),
@@ -249,5 +250,47 @@ class FacetSearchHttpQueryExpanderPlugin extends AbstractPlugin implements Query
         }
 
         return false;
+    }
+
+    /**
+     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
+     * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
+     * @param mixed $filterValue
+     *
+     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
+     */
+    protected function addPriceRangeFacetFilterToQuery(QueryInterface $searchQuery, FacetConfigTransfer $facetConfigTransfer, mixed $filterValue)
+    {
+        $parameterName = $facetConfigTransfer->getParameterName();
+
+        $searchQueryRangeFacetFilterTransfer = (new SearchQueryRangeFacetFilterTransfer())->setFieldName($parameterName);
+
+        if (isset($filterValue[SharedSearchHttpConfig::FACET_TYPE_RANGE_VALUE_MIN])) {
+            $minPrice = $this->convertFromFloatToInteger($filterValue[SharedSearchHttpConfig::FACET_TYPE_RANGE_VALUE_MIN]);
+            $searchQueryRangeFacetFilterTransfer->setFrom((string)$minPrice);
+        }
+
+        if (isset($filterValue[SharedSearchHttpConfig::FACET_TYPE_RANGE_VALUE_MAX])) {
+            $maxPrice = $this->convertFromFloatToInteger($filterValue[SharedSearchHttpConfig::FACET_TYPE_RANGE_VALUE_MAX]);
+            $searchQueryRangeFacetFilterTransfer->setTo((string)$maxPrice);
+        }
+
+        $searchQuery->getSearchQuery()->addSearchQueryFacetFilter($searchQueryRangeFacetFilterTransfer);
+
+        return $searchQuery;
+    }
+
+    /**
+     * @param float|int|null $value
+     *
+     * @return int|null
+     */
+    protected function convertFromFloatToInteger(mixed $value): ?int
+    {
+        if ($value !== null) {
+            return (int)$this->getFactory()->getMoneyClient()->fromFloat((float)$value)->requireAmount()->getAmount();
+        }
+
+        return null;
     }
 }

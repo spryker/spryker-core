@@ -9,6 +9,7 @@
         <property name="fkProductAbstract" type="int"/>
         <property name="abstractSku" type="string"/>
         <property name="localizedAttributes" type="LocalizedAttributes[]" singular="localizedAttributes"/>
+        <property name="abstractLocalizedAttributes" type="LocalizedAttributes[]" singular="abstractLocalizedAttributes"/>
         <property name="stores" type="Store[]" singular="stores"/>
         <property name="url" type="ProductUrl"/>
     </transfer>

@@ -44,6 +44,8 @@ class ProductConcreteMerger implements ProductConcreteMergerInterface
             $this->getMergedAttributes($productConcreteTransfer, $productAbstractTransfer),
         );
 
+        $productConcreteTransfer->setAbstractLocalizedAttributes($productAbstractTransfer->getLocalizedAttributes());
+
         $this->mergeLocalizedAttributes($productConcreteTransfer, $productAbstractTransfer);
 
         return $this->executeMergerPlugins($productConcreteTransfer, $productAbstractTransfer);

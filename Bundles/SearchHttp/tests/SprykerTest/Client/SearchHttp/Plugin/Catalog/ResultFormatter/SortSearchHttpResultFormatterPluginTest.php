@@ -56,14 +56,14 @@ class SortSearchHttpResultFormatterPluginTest extends Unit
         $sortSearchHttpResultFormatterPlugin->setFactory($this->tester->getFactory());
 
         $requestData = [
-            'sort' => 'foo_asc',
+            'sort' => 'foo',
         ];
 
         // Act
         $formattedResult = $sortSearchHttpResultFormatterPlugin->formatResult($searchResult, $requestData);
 
         // Assert
-        $this->assertEquals('foo_asc', $formattedResult->getCurrentSortParam());
+        $this->assertEquals('foo', $formattedResult->getCurrentSortParam());
         $this->assertEquals('asc', $formattedResult->getCurrentSortOrder());
     }
 }

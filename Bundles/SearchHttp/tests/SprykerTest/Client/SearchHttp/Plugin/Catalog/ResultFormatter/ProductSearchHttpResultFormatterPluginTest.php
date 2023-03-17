@@ -54,7 +54,7 @@ class ProductSearchHttpResultFormatterPluginTest extends Unit
         $this->tester->mockSearchConfig();
         $this->tester->mockLocaleClientDependency();
         $this->tester->mockProductStorageClientDependency(
-            [$searchResult->getProducts()[0]->getProductAbstractSku() => 1],
+            [$searchResult->getItems()[0]['product_abstract_sku'] => 1],
         );
         $this->tester->addResultProductMapperToMockedFactory();
         $productSearchHttpResultFormatterPlugin = new ProductSearchHttpResultFormatterPlugin();
@@ -65,7 +65,7 @@ class ProductSearchHttpResultFormatterPluginTest extends Unit
 
         // Assert
         $this->assertEquals(
-            $searchResult->getProducts()->offsetGet(0)->getProductAbstractSku(),
+            $searchResult->getItems()[0]['product_abstract_sku'],
             $formattedResult[0]['abstract_sku'],
         );
     }
