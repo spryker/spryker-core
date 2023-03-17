@@ -479,6 +479,32 @@ class OauthFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testProcessAccessTokenRequestShouldReturnNewTokenEveryTimeForSameUser(): void
+    {
+        // Arrange
+        $this->createTestClient();
+        $this->setOauthUserProviderPluginMock(true);
+        $this->setOauthRequestGrantTypeConfigurationProviderPluginMock(UserPasswordGrantTypeBuilder::class, static::IDENTIFIER_PASSWORD);
+        $oauthRequestTransfer = $this->tester->createOauthRequestTransfer(
+            static::FAKE_USERNAME_BACKEND_API,
+            static::GLUE_BACKEND_API_APPLICATION,
+            static::IDENTIFIER_PASSWORD,
+        );
+
+        // Act
+        $oauthResponseTransfer1 = $this->getOauthFacade()->processAccessTokenRequest($oauthRequestTransfer);
+        $oauthResponseTransfer2 = $this->getOauthFacade()->processAccessTokenRequest($oauthRequestTransfer);
+
+        // Assert
+        $this->assertTrue($oauthResponseTransfer1->getIsValid());
+        $this->assertTrue($oauthResponseTransfer2->getIsValid());
+        $this->assertSame($oauthResponseTransfer1->getExpiresInOrFail(), $oauthResponseTransfer2->getExpiresInOrFail());
+        $this->assertNotSame($oauthResponseTransfer1->getAccessToken(), $oauthResponseTransfer2->getAccessToken());
+    }
+
+    /**
      * @param bool|null $isSuccess
      *
      * @return void
