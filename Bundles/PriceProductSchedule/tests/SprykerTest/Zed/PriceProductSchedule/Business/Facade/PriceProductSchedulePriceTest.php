@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\PriceProductSchedule\Business\Facade;
 
 use Codeception\Test\Unit;
+use DateInterval;
 use DateTime;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
@@ -60,7 +61,7 @@ class PriceProductSchedulePriceTest extends Unit
      */
     public function testPriceProductScheduleWithLowestGrossPriceShouldApply(): void
     {
-        // Assign
+        // Arrange
         $priceProductScheduleData = $this->getPriceProductScheduleData();
 
         $priceProductScheduleData[PriceProductScheduleTransfer::PRICE_PRODUCT][PriceProductTransfer::MONEY_VALUE][MoneyValueTransfer::GROSS_AMOUNT] = 100;
@@ -70,6 +71,7 @@ class PriceProductSchedulePriceTest extends Unit
 
         $priceProductScheduleData[PriceProductScheduleTransfer::PRICE_PRODUCT][PriceProductTransfer::MONEY_VALUE][MoneyValueTransfer::GROSS_AMOUNT] = 200;
         $priceProductScheduleData[PriceProductScheduleTransfer::PRICE_PRODUCT][PriceProductTransfer::MONEY_VALUE][MoneyValueTransfer::NET_AMOUNT] = 200;
+        $priceProductScheduleData[PriceProductScheduleTransfer::ACTIVE_FROM]->add(DateInterval::createFromDateString('1 minute'));
 
         $priceProductScheduleTransfer2 = $this->tester->havePriceProductSchedule($priceProductScheduleData);
 
@@ -95,7 +97,7 @@ class PriceProductSchedulePriceTest extends Unit
      */
     public function testPriceProductScheduleWithLowestNetPriceShouldApply(): void
     {
-        // Assign
+        // Arrange
         $priceProductScheduleData = $this->getPriceProductScheduleData();
 
         $priceProductScheduleData[PriceProductScheduleTransfer::PRICE_PRODUCT][PriceProductTransfer::MONEY_VALUE][MoneyValueTransfer::GROSS_AMOUNT] = 100;
@@ -105,6 +107,7 @@ class PriceProductSchedulePriceTest extends Unit
 
         $priceProductScheduleData[PriceProductScheduleTransfer::PRICE_PRODUCT][PriceProductTransfer::MONEY_VALUE][MoneyValueTransfer::GROSS_AMOUNT] = 100;
         $priceProductScheduleData[PriceProductScheduleTransfer::PRICE_PRODUCT][PriceProductTransfer::MONEY_VALUE][MoneyValueTransfer::NET_AMOUNT] = 200;
+        $priceProductScheduleData[PriceProductScheduleTransfer::ACTIVE_FROM]->add(DateInterval::createFromDateString('1 minute'));
 
         $priceProductScheduleTransfer2 = $this->tester->havePriceProductSchedule($priceProductScheduleData);
 

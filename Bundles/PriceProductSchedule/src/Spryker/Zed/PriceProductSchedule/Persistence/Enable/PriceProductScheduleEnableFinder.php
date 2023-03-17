@@ -10,6 +10,7 @@ namespace Spryker\Zed\PriceProductSchedule\Persistence\Enable;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\PriceProductSchedule\Persistence\Map\SpyPriceProductScheduleTableMap;
 use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery;
+use Propel\Runtime\Collection\ArrayCollection;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPropelFacadeInterface;
 use Spryker\Zed\PriceProductSchedule\Persistence\Exception\NotSupportedDbEngineException;
 use Spryker\Zed\PriceProductSchedule\Persistence\PriceProductSchedulePersistenceFactoryInterface;
@@ -22,22 +23,12 @@ class PriceProductScheduleEnableFinder implements PriceProductScheduleEnableFind
     /**
      * @var string
      */
-    protected const COL_PRODUCT_ID = 'product_id';
+    protected const COL_PRIORITY_TIME = 'prio_time';
 
     /**
      * @var string
      */
-    protected const COL_RESULT = 'result';
-
-    /**
-     * @var string
-     */
-    protected const ALIAS_CONCATENATED = 'concatenated';
-
-    /**
-     * @var string
-     */
-    protected const ALIAS_FILTERED = 'filtered';
+    protected const COL_PRIORITY_PRICE = 'prio_price';
 
     /**
      * @var string
@@ -47,51 +38,51 @@ class PriceProductScheduleEnableFinder implements PriceProductScheduleEnableFind
     /**
      * @var array<string, string>
      */
-    protected const EXPRESSION_CONCATENATED_RESULT_MAP = [
-        PropelConfig::DB_ENGINE_PGSQL => 'CAST(CONCAT(CONCAT(CAST(EXTRACT(epoch from now() - %s) + EXTRACT(epoch from %s - now()) AS INT), \'.\'), %s + %s) as DECIMAL)',
-        PropelConfig::DB_ENGINE_MYSQL => 'CONCAT(CONCAT(CAST(TIMESTAMPDIFF(minute, %s, now()) + TIMESTAMPDIFF(minute, now(), %s) AS BINARY), \'.\'), IFNULL(%s, 0) + IFNULL(%s, 0)) + 0',
+    protected const EXPRESSION_TIMESTAMP_DIFF_MAP = [
+        PropelConfig::DB_ENGINE_PGSQL => 'EXTRACT(EPOCH FROM (%s - now()))::INTEGER',
+        PropelConfig::DB_ENGINE_MYSQL => 'timestampdiff(second, now(), %s)',
     ];
 
     /**
      * @var string
      */
-    protected const EXPRESSION_CONCATENATED_PRODUCT_ID = 'CONCAT(%s, \' \', %s, \' \', COALESCE(%s, 0), \'_\', COALESCE(%s, 0))';
+    protected const EXPRESSION_WITH_NULL_CHECK = 'COALESCE(%s, 0) + COALESCE(%s, 0)';
 
     /**
      * @var \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPropelFacadeInterface
      */
-    protected $propelFacade;
+    protected PriceProductScheduleToPropelFacadeInterface $propelFacade;
 
     /**
      * @var \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductSchedulePersistenceFactoryInterface
      */
-    protected $factory;
+    protected PriceProductSchedulePersistenceFactoryInterface $priceProductSchedulePersistenceFactory;
 
     /**
      * @var \Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig
      */
-    protected $config;
+    protected PriceProductScheduleConfig $priceProductScheduleConfig;
 
     /**
      * @var \Spryker\Zed\PriceProductSchedule\Persistence\Propel\Mapper\PriceProductScheduleMapperInterface
      */
-    protected $priceProductScheduleMapper;
+    protected PriceProductScheduleMapperInterface $priceProductScheduleMapper;
 
     /**
      * @param \Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPropelFacadeInterface $propelFacade
-     * @param \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductSchedulePersistenceFactoryInterface $factory
-     * @param \Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig $config
+     * @param \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductSchedulePersistenceFactoryInterface $priceProductSchedulePersistenceFactory
+     * @param \Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig $priceProductScheduleConfig
      * @param \Spryker\Zed\PriceProductSchedule\Persistence\Propel\Mapper\PriceProductScheduleMapperInterface $priceProductScheduleMapper
      */
     public function __construct(
         PriceProductScheduleToPropelFacadeInterface $propelFacade,
-        PriceProductSchedulePersistenceFactoryInterface $factory,
-        PriceProductScheduleConfig $config,
+        PriceProductSchedulePersistenceFactoryInterface $priceProductSchedulePersistenceFactory,
+        PriceProductScheduleConfig $priceProductScheduleConfig,
         PriceProductScheduleMapperInterface $priceProductScheduleMapper
     ) {
         $this->propelFacade = $propelFacade;
-        $this->factory = $factory;
-        $this->config = $config;
+        $this->priceProductSchedulePersistenceFactory = $priceProductSchedulePersistenceFactory;
+        $this->priceProductScheduleConfig = $priceProductScheduleConfig;
         $this->priceProductScheduleMapper = $priceProductScheduleMapper;
     }
 
@@ -102,17 +93,12 @@ class PriceProductScheduleEnableFinder implements PriceProductScheduleEnableFind
      */
     public function findPriceProductSchedulesToEnableByStore(StoreTransfer $storeTransfer): array
     {
-        $currentDatabaseEngineName = $this->propelFacade->getCurrentDatabaseEngine();
-        $priceProductScheduleFilteredByMinResultSubQuery = $this->createPriceProductScheduleFilteredByMinResultSubQuery(
-            $storeTransfer,
-            $currentDatabaseEngineName,
-        );
+        $priceProductScheduleQuery = $this->priceProductSchedulePersistenceFactory->createPriceProductScheduleQuery();
+        $priceProductScheduleQuery->filterByFkStore($storeTransfer->getIdStore());
 
-        return $this->findPriceProductSchedulesToEnableByStoreResult(
-            $priceProductScheduleFilteredByMinResultSubQuery,
-            $storeTransfer,
-            $currentDatabaseEngineName,
-        );
+        $priceProductScheduleIds = $this->getPriceProductScheduleIds($priceProductScheduleQuery);
+
+        return $this->findPriceProductSchedulesToEnableByPriceProductScheduleIds($priceProductScheduleIds);
     }
 
     /**
@@ -125,18 +111,13 @@ class PriceProductScheduleEnableFinder implements PriceProductScheduleEnableFind
         StoreTransfer $storeTransfer,
         int $idProductAbstract
     ): array {
-        $currentDatabaseEngineName = $this->propelFacade->getCurrentDatabaseEngine();
-        $priceProductScheduleFilteredByMinResultSubQuery = $this->createPriceProductScheduleFilteredByMinResultSubQuery(
-            $storeTransfer,
-            $currentDatabaseEngineName,
-        );
+        $priceProductScheduleQuery = $this->priceProductSchedulePersistenceFactory->createPriceProductScheduleQuery();
+        $priceProductScheduleQuery->filterByFkStore($storeTransfer->getIdStore());
+        $priceProductScheduleQuery->filterByFkProductAbstract($idProductAbstract);
 
-        return $this->findPriceProductSchedulesToEnableByStoreAndIdProductAbstractResult(
-            $priceProductScheduleFilteredByMinResultSubQuery,
-            $storeTransfer,
-            $currentDatabaseEngineName,
-            $idProductAbstract,
-        );
+        $priceProductScheduleIds = $this->getPriceProductScheduleIds($priceProductScheduleQuery);
+
+        return $this->findPriceProductSchedulesToEnableByPriceProductScheduleIds($priceProductScheduleIds);
     }
 
     /**
@@ -149,108 +130,119 @@ class PriceProductScheduleEnableFinder implements PriceProductScheduleEnableFind
         StoreTransfer $storeTransfer,
         int $idProductConcrete
     ): array {
-        $currentDatabaseEngineName = $this->propelFacade->getCurrentDatabaseEngine();
-        $priceProductScheduleFilteredByMinResultSubQuery = $this->createPriceProductScheduleFilteredByMinResultSubQuery(
-            $storeTransfer,
-            $currentDatabaseEngineName,
-        );
+        $priceProductScheduleQuery = $this->priceProductSchedulePersistenceFactory->createPriceProductScheduleQuery();
+        $priceProductScheduleQuery->filterByFkStore($storeTransfer->getIdStore());
+        $priceProductScheduleQuery->filterByFkProduct($idProductConcrete);
 
-        return $this->findPriceProductSchedulesToEnableByStoreAndIdProductConcreteResult(
-            $priceProductScheduleFilteredByMinResultSubQuery,
-            $storeTransfer,
-            $currentDatabaseEngineName,
-            $idProductConcrete,
-        );
+        $priceProductScheduleIds = $this->getPriceProductScheduleIds($priceProductScheduleQuery);
+
+        return $this->findPriceProductSchedulesToEnableByPriceProductScheduleIds($priceProductScheduleIds);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * @param string $currentDatabaseEngineName
+     * @param list<int> $priceProductScheduleIds
      *
-     * @return \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery
+     * @return list<\Generated\Shared\Transfer\PriceProductScheduleTransfer>
      */
-    protected function createPriceProductScheduleFilteredByMinResultSubQuery(
-        StoreTransfer $storeTransfer,
-        string $currentDatabaseEngineName
-    ): SpyPriceProductScheduleQuery {
-        $priceProductScheduleConcatenatedSubQuery = $this->createPriceProductScheduleConcatenatedSubQuery(
-            $currentDatabaseEngineName,
-        );
+    protected function findPriceProductSchedulesToEnableByPriceProductScheduleIds(array $priceProductScheduleIds): array
+    {
+        $priceProductScheduleEntities = $this->priceProductSchedulePersistenceFactory->createPriceProductScheduleQuery()
+            ->joinWithCurrency()
+            ->joinWithPriceType()
+            ->leftJoinWithProduct()
+            ->leftJoinWithProductAbstract()
+            ->filterByIdPriceProductSchedule_In($priceProductScheduleIds)
+            ->find()
+            ->getData();
 
-        $priceProductScheduleConcatenatedSubQuery = $this->setConditionsForPriceProductScheduleQuery(
-            $priceProductScheduleConcatenatedSubQuery,
-            $storeTransfer,
-        );
-
-        $priceProductScheduleFilteredByMinResultSubQuery = $this->factory->createPriceProductScheduleQuery()
-            ->addSelectQuery($priceProductScheduleConcatenatedSubQuery, static::ALIAS_CONCATENATED, false)
-            ->addAsColumn(static::COL_PRODUCT_ID, static::ALIAS_CONCATENATED . '.' . static::COL_PRODUCT_ID)
-            ->addAsColumn(static::COL_RESULT, sprintf('min(%s)', static::ALIAS_CONCATENATED . '.' . static::COL_RESULT));
-
-        return $this->setConditionsForPriceProductScheduleQuery(
-            $priceProductScheduleFilteredByMinResultSubQuery,
-            $storeTransfer,
-        )->groupBy(static::COL_PRODUCT_ID);
+        return $this->priceProductScheduleMapper
+            ->mapPriceProductScheduleEntitiesToPriceProductScheduleTransfers($priceProductScheduleEntities);
     }
 
     /**
      * @param \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery $priceProductScheduleQuery
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery
+     * @return list<int>
      */
-    protected function setConditionsForPriceProductScheduleQuery(
-        SpyPriceProductScheduleQuery $priceProductScheduleQuery,
-        StoreTransfer $storeTransfer
-    ): SpyPriceProductScheduleQuery {
-        /** @var literal-string $activeFromCondition */
-        $activeFromCondition = sprintf('%s <= now()', SpyPriceProductScheduleTableMap::COL_ACTIVE_FROM);
-        /** @var literal-string $activeToCondition */
-        $activeToCondition = sprintf('%s >= now()', SpyPriceProductScheduleTableMap::COL_ACTIVE_TO);
+    protected function getPriceProductScheduleIds(SpyPriceProductScheduleQuery $priceProductScheduleQuery): array
+    {
+        $timestampDiffExpression = sprintf(
+            $this->createTimestampDifferenceExpression(),
+            SpyPriceProductScheduleTableMap::COL_ACTIVE_TO,
+        );
 
-        /** @phpstan-var \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery */
-        return $priceProductScheduleQuery
-            ->filterByFkStore($storeTransfer->getIdStore())
-            ->where($activeFromCondition)
-            ->where($activeToCondition)
-            ->usePriceProductScheduleListQuery()
+        $priceDiffExpression = sprintf(
+            static::EXPRESSION_WITH_NULL_CHECK,
+            SpyPriceProductScheduleTableMap::COL_NET_PRICE,
+            SpyPriceProductScheduleTableMap::COL_GROSS_PRICE,
+        );
+
+        $priceProductSchedulesWithWeights = $priceProductScheduleQuery
+            ->addAsColumn(static::COL_PRIORITY_TIME, $timestampDiffExpression)
+            ->addAsColumn(static::COL_PRIORITY_PRICE, $priceDiffExpression)
+            ->select([
+                static::COL_PRIORITY_TIME,
+                static::COL_PRIORITY_PRICE,
+                SpyPriceProductScheduleTableMap::COL_ID_PRICE_PRODUCT_SCHEDULE,
+                SpyPriceProductScheduleTableMap::COL_FK_PRICE_TYPE,
+                SpyPriceProductScheduleTableMap::COL_FK_PRODUCT,
+                SpyPriceProductScheduleTableMap::COL_FK_CURRENCY,
+                SpyPriceProductScheduleTableMap::COL_FK_PRODUCT_ABSTRACT,
+                SpyPriceProductScheduleTableMap::COL_IS_CURRENT,
+            ])
+            ->joinWithPriceProductScheduleList()
+            ->useInPriceProductScheduleListQuery()
                 ->filterByIsActive(true)
-            ->endUse();
+            ->endUse()
+            ->where(sprintf('%s <= now()', SpyPriceProductScheduleTableMap::COL_ACTIVE_FROM))
+            ->where(sprintf('%s >= now()', SpyPriceProductScheduleTableMap::COL_ACTIVE_TO))
+            ->limit($this->priceProductScheduleConfig->getApplyBatchSize())
+            ->find();
+
+        return $this->getPriceProductScheduleIdsFilteredByWeight($priceProductSchedulesWithWeights);
     }
 
     /**
-     * @param string $currentDatabaseEngineName
+     * @param \Propel\Runtime\Collection\ArrayCollection $priceProductSchedulesWithWeights
      *
-     * @return \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery
+     * @return array<int>
      */
-    protected function createPriceProductScheduleConcatenatedSubQuery(
-        string $currentDatabaseEngineName
-    ): SpyPriceProductScheduleQuery {
-        $concatenatedResultExpression = $this->getConcatenatedResultExpressionByDbEngineName($currentDatabaseEngineName);
+    protected function getPriceProductScheduleIdsFilteredByWeight(ArrayCollection $priceProductSchedulesWithWeights): array
+    {
+        $priceProductSchedulesIndexedByProductKey = [];
+        foreach ($priceProductSchedulesWithWeights as $priceProductSchedule) {
+            $uniqueProductKey = $this->createUniqueProductKey($priceProductSchedule);
+            if (!isset($priceProductSchedulesIndexedByProductKey[$uniqueProductKey])) {
+                $priceProductSchedulesIndexedByProductKey[$uniqueProductKey] = $priceProductSchedule;
 
-        return $this->factory->createPriceProductScheduleQuery()
-            ->select([static::COL_PRODUCT_ID])
-            ->addAsColumn(
-                static::COL_PRODUCT_ID,
-                sprintf(
-                    static::EXPRESSION_CONCATENATED_PRODUCT_ID,
-                    SpyPriceProductScheduleTableMap::COL_FK_PRICE_TYPE,
-                    SpyPriceProductScheduleTableMap::COL_FK_CURRENCY,
-                    SpyPriceProductScheduleTableMap::COL_FK_PRODUCT,
-                    SpyPriceProductScheduleTableMap::COL_FK_PRODUCT_ABSTRACT,
-                ),
-            )
-            ->addAsColumn(
-                static::COL_RESULT,
-                sprintf(
-                    $concatenatedResultExpression,
-                    SpyPriceProductScheduleTableMap::COL_ACTIVE_FROM,
-                    SpyPriceProductScheduleTableMap::COL_ACTIVE_TO,
-                    SpyPriceProductScheduleTableMap::COL_NET_PRICE,
-                    SpyPriceProductScheduleTableMap::COL_GROSS_PRICE,
-                    SpyPriceProductScheduleTableMap::COL_ID_PRICE_PRODUCT_SCHEDULE,
-                ),
-            );
+                continue;
+            }
+
+            if (
+                $priceProductSchedule[static::COL_PRIORITY_TIME] === $priceProductSchedulesIndexedByProductKey[$uniqueProductKey][static::COL_PRIORITY_TIME]
+                && $priceProductSchedule[static::COL_PRIORITY_PRICE] < $priceProductSchedulesIndexedByProductKey[$uniqueProductKey][static::COL_PRIORITY_PRICE]
+            ) {
+                $priceProductSchedulesIndexedByProductKey[$uniqueProductKey] = $priceProductSchedule;
+
+                continue;
+            }
+
+            if ($priceProductSchedule[static::COL_PRIORITY_TIME] < $priceProductSchedulesIndexedByProductKey[$uniqueProductKey][static::COL_PRIORITY_TIME]) {
+                $priceProductSchedulesIndexedByProductKey[$uniqueProductKey] = $priceProductSchedule;
+            }
+        }
+
+        return $this->getPriceProductScheduleIdsFilteredByEnabledSchedules($priceProductSchedulesIndexedByProductKey);
+    }
+
+    /**
+     * @return string
+     */
+    protected function createTimestampDifferenceExpression(): string
+    {
+        $currentDatabaseEngineName = $this->propelFacade->getCurrentDatabaseEngine();
+
+        return $this->getTimestampDiffExpressionByDbEngineName($currentDatabaseEngineName);
     }
 
     /**
@@ -260,197 +252,51 @@ class PriceProductScheduleEnableFinder implements PriceProductScheduleEnableFind
      *
      * @return string
      */
-    protected function getConcatenatedResultExpressionByDbEngineName(string $databaseEngineName): string
+    protected function getTimestampDiffExpressionByDbEngineName(string $databaseEngineName): string
     {
-        if (isset(static::EXPRESSION_CONCATENATED_RESULT_MAP[$databaseEngineName]) === false) {
+        if (!isset(static::EXPRESSION_TIMESTAMP_DIFF_MAP[$databaseEngineName])) {
             throw new NotSupportedDbEngineException(
                 sprintf(static::MESSAGE_NOT_SUPPORTED_DB_ENGINE, $databaseEngineName),
             );
         }
 
-        return static::EXPRESSION_CONCATENATED_RESULT_MAP[$databaseEngineName];
+        return static::EXPRESSION_TIMESTAMP_DIFF_MAP[$databaseEngineName];
     }
 
     /**
-     * @module Product
-     * @module PriceProduct
-     * @module Currency
+     * @param array<string, int|null> $pricesWithMinimal
      *
-     * @param \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery $subQuery
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * @param string $dbEngineName
-     *
-     * @return array<\Generated\Shared\Transfer\PriceProductScheduleTransfer>
-     */
-    protected function findPriceProductSchedulesToEnableByStoreResult(
-        SpyPriceProductScheduleQuery $subQuery,
-        StoreTransfer $storeTransfer,
-        string $dbEngineName
-    ): array {
-        /** @var literal-string $activeFromCondition */
-        $activeFromCondition = sprintf('%s <= now()', SpyPriceProductScheduleTableMap::COL_ACTIVE_FROM);
-        /** @var literal-string $activeToCondition */
-        $activeToCondition = sprintf('%s >= now()', SpyPriceProductScheduleTableMap::COL_ACTIVE_TO);
-
-        /** @var literal-string $filterByConcatenatedProductIdExpression */
-        $filterByConcatenatedProductIdExpression = $this->getFilterByConcatenatedProductIdExpression();
-        /** @var literal-string $filterByConcatenatedResultExpression */
-        $filterByConcatenatedResultExpression = $this->getFilterByConcatenatedResultExpression($dbEngineName);
-
-        $priceProductScheduleEntities = $this->factory->createPriceProductScheduleQuery()
-            ->addSelectQuery($subQuery, static::ALIAS_FILTERED, false)
-            ->joinWithCurrency()
-            ->joinWithPriceType()
-            ->leftJoinWithProduct()
-            ->leftJoinWithProductAbstract()
-            ->filterByIsCurrent(false)
-            ->filterByFkStore($storeTransfer->getIdStore())
-            ->where($filterByConcatenatedProductIdExpression)
-            ->where($filterByConcatenatedResultExpression)
-            ->where($activeFromCondition)
-            ->where($activeToCondition)
-            ->limit($this->config->getApplyBatchSize())
-            ->find()
-            ->getData();
-
-        return $this->priceProductScheduleMapper
-            ->mapPriceProductScheduleEntitiesToPriceProductScheduleTransfers($priceProductScheduleEntities);
-    }
-
-    /**
      * @return string
      */
-    protected function getFilterByConcatenatedProductIdExpression(): string
+    protected function createUniqueProductKey(array $pricesWithMinimal): string
     {
         return sprintf(
-            '(%s) = %s',
-            sprintf(
-                static::EXPRESSION_CONCATENATED_PRODUCT_ID,
-                SpyPriceProductScheduleTableMap::COL_FK_PRICE_TYPE,
-                SpyPriceProductScheduleTableMap::COL_FK_CURRENCY,
-                SpyPriceProductScheduleTableMap::COL_FK_PRODUCT,
-                SpyPriceProductScheduleTableMap::COL_FK_PRODUCT_ABSTRACT,
-            ),
-            static::ALIAS_FILTERED . '.' . static::COL_PRODUCT_ID,
+            '%s-%s-%s-%s',
+            $pricesWithMinimal[SpyPriceProductScheduleTableMap::COL_FK_PRICE_TYPE] ?? 0,
+            $pricesWithMinimal[SpyPriceProductScheduleTableMap::COL_FK_CURRENCY],
+            $pricesWithMinimal[SpyPriceProductScheduleTableMap::COL_FK_PRODUCT] ?? 0,
+            $pricesWithMinimal[SpyPriceProductScheduleTableMap::COL_FK_PRODUCT_ABSTRACT],
         );
     }
 
     /**
-     * @param string $databaseEngineName
+     * @param array<string, array> $priceProductSchedulesIndexedByProductKey
      *
-     * @return string
+     * @return list<int>
      */
-    protected function getFilterByConcatenatedResultExpression(string $databaseEngineName): string
-    {
-        $concatenatedResultExpression = $this->getConcatenatedResultExpressionByDbEngineName($databaseEngineName);
-
-        return sprintf(
-            '(%s) = %s',
-            sprintf(
-                $concatenatedResultExpression,
-                SpyPriceProductScheduleTableMap::COL_ACTIVE_FROM,
-                SpyPriceProductScheduleTableMap::COL_ACTIVE_TO,
-                SpyPriceProductScheduleTableMap::COL_NET_PRICE,
-                SpyPriceProductScheduleTableMap::COL_GROSS_PRICE,
-                SpyPriceProductScheduleTableMap::COL_ID_PRICE_PRODUCT_SCHEDULE,
-            ),
-            static::ALIAS_FILTERED . '.' . static::COL_RESULT,
-        );
-    }
-
-    /**
-     * @module Product
-     * @module PriceProduct
-     * @module Currency
-     *
-     * @param \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery $subQuery
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * @param string $dbEngineName
-     * @param int $idProductAbstract
-     *
-     * @return array<\Generated\Shared\Transfer\PriceProductScheduleTransfer>
-     */
-    protected function findPriceProductSchedulesToEnableByStoreAndIdProductAbstractResult(
-        SpyPriceProductScheduleQuery $subQuery,
-        StoreTransfer $storeTransfer,
-        string $dbEngineName,
-        int $idProductAbstract
+    protected function getPriceProductScheduleIdsFilteredByEnabledSchedules(
+        array $priceProductSchedulesIndexedByProductKey
     ): array {
-        /** @var literal-string $activeFromCondition */
-        $activeFromCondition = sprintf('%s <= now()', SpyPriceProductScheduleTableMap::COL_ACTIVE_FROM);
-        /** @var literal-string $activeToCondition */
-        $activeToCondition = sprintf('%s >= now()', SpyPriceProductScheduleTableMap::COL_ACTIVE_TO);
+        $priceProductScheduleIdsFilteredByEnabledSchedules = [];
+        foreach ($priceProductSchedulesIndexedByProductKey as $priceProductSchedule) {
+            if ($priceProductSchedule[SpyPriceProductScheduleTableMap::COL_IS_CURRENT] === 1) {
+                continue;
+            }
 
-        /** @var literal-string $filterByConcatenatedProductIdExpression */
-        $filterByConcatenatedProductIdExpression = $this->getFilterByConcatenatedProductIdExpression();
-        /** @var literal-string $filterByConcatenatedResultExpression */
-        $filterByConcatenatedResultExpression = $this->getFilterByConcatenatedResultExpression($dbEngineName);
+            $priceProductScheduleIdsFilteredByEnabledSchedules[] =
+                $priceProductSchedule[SpyPriceProductScheduleTableMap::COL_ID_PRICE_PRODUCT_SCHEDULE];
+        }
 
-        $priceProductScheduleEntities = $this->factory->createPriceProductScheduleQuery()
-            ->addSelectQuery($subQuery, static::ALIAS_FILTERED, false)
-            ->joinWithCurrency()
-            ->joinWithPriceType()
-            ->leftJoinWithProduct()
-            ->leftJoinWithProductAbstract()
-            ->filterByIsCurrent(false)
-            ->filterByFkStore($storeTransfer->getIdStore())
-            ->filterByFkProductAbstract($idProductAbstract)
-            ->where($filterByConcatenatedProductIdExpression)
-            ->where($filterByConcatenatedResultExpression)
-            ->where($activeFromCondition)
-            ->where($activeToCondition)
-            ->find()
-            ->getData();
-
-        return $this->priceProductScheduleMapper
-            ->mapPriceProductScheduleEntitiesToPriceProductScheduleTransfers($priceProductScheduleEntities);
-    }
-
-    /**
-     * @module Product
-     * @module PriceProduct
-     * @module Currency
-     *
-     * @param \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery $subQuery
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     * @param string $dbEngineName
-     * @param int $idProductConcrete
-     *
-     * @return array<\Generated\Shared\Transfer\PriceProductScheduleTransfer>
-     */
-    protected function findPriceProductSchedulesToEnableByStoreAndIdProductConcreteResult(
-        SpyPriceProductScheduleQuery $subQuery,
-        StoreTransfer $storeTransfer,
-        string $dbEngineName,
-        int $idProductConcrete
-    ): array {
-        /** @var literal-string $activeFromCondition */
-        $activeFromCondition = sprintf('%s <= now()', SpyPriceProductScheduleTableMap::COL_ACTIVE_FROM);
-        /** @var literal-string $activeToCondition */
-        $activeToCondition = sprintf('%s >= now()', SpyPriceProductScheduleTableMap::COL_ACTIVE_TO);
-
-        /** @var literal-string $filterByConcatenatedProductIdExpression */
-        $filterByConcatenatedProductIdExpression = $this->getFilterByConcatenatedProductIdExpression();
-        /** @var literal-string $filterByConcatenatedResultExpression */
-        $filterByConcatenatedResultExpression = $this->getFilterByConcatenatedResultExpression($dbEngineName);
-
-        $priceProductScheduleEntities = $this->factory->createPriceProductScheduleQuery()
-            ->addSelectQuery($subQuery, static::ALIAS_FILTERED, false)
-            ->joinWithCurrency()
-            ->joinWithPriceType()
-            ->leftJoinWithProduct()
-            ->leftJoinWithProductAbstract()
-            ->filterByIsCurrent(false)
-            ->filterByFkStore($storeTransfer->getIdStore())
-            ->filterByFkProduct($idProductConcrete)
-            ->where($filterByConcatenatedProductIdExpression)
-            ->where($filterByConcatenatedResultExpression)
-            ->where($activeFromCondition)
-            ->where($activeToCondition)
-            ->find()
-            ->getData();
-
-        return $this->priceProductScheduleMapper
-            ->mapPriceProductScheduleEntitiesToPriceProductScheduleTransfers($priceProductScheduleEntities);
+        return $priceProductScheduleIdsFilteredByEnabledSchedules;
     }
 }
