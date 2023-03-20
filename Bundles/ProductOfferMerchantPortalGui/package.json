@@ -19,7 +19,7 @@
         "@spryker/date-picker": "^1.0.1",
         "@spryker/headline": "^1.0.0",
         "@spryker/styles": "^1.0.1",
-        "@spryker/table": "^1.0.1",
+        "@spryker/table": "^1.0.2",
         "@spryker/unsaved-changes.monitor.form": "^1.0.0",
         "@spryker/utils": "^1.0.0",
         "@spryker/web-components": "^1.0.0"

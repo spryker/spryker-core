@@ -21,7 +21,7 @@
         "@spryker/html-renderer": "^1.0.0",
         "@spryker/icon": "^1.0.1",
         "@spryker/styles": "^1.0.1",
-        "@spryker/table": "^1.0.1",
+        "@spryker/table": "^1.0.2",
         "@spryker/tabs": "^1.0.1",
         "@spryker/utils": "^1.0.0",
         "@spryker/web-components": "^1.0.0"
