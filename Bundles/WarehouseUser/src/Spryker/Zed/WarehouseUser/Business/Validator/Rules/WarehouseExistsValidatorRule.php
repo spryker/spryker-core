@@ -57,7 +57,7 @@ class WarehouseExistsValidatorRule implements WarehouseUserAssignmentValidatorRu
         $stockCriteriaFilterTransfer = $this->createStockCriteriaFilterTransfer($warehouseUserAssignmentTransfers);
         $stockCollectionTransfer = $this->stockFacade->getStocksByStockCriteriaFilter($stockCriteriaFilterTransfer);
 
-        return $this->validateProvidedStocksExist(
+        return $this->validateProvidedWarehousesExist(
             $warehouseUserAssignmentTransfers,
             $stockCollectionTransfer,
             $warehouseUserAssignmentCollectionResponseTransfer,
@@ -97,18 +97,18 @@ class WarehouseExistsValidatorRule implements WarehouseUserAssignmentValidatorRu
      *
      * @return \Generated\Shared\Transfer\WarehouseUserAssignmentCollectionResponseTransfer
      */
-    protected function validateProvidedStocksExist(
+    protected function validateProvidedWarehousesExist(
         ArrayObject $warehouseUserAssignmentTransfers,
         StockCollectionTransfer $stockCollectionTransfer,
         WarehouseUserAssignmentCollectionResponseTransfer $warehouseUserAssignmentCollectionResponseTransfer
     ): WarehouseUserAssignmentCollectionResponseTransfer {
-        $indexedStockTransfers = $this->getStockTransfersIndexedByIdStock($stockCollectionTransfer);
+        $indexedStockTransfers = $this->getStockTransfersIndexedByUuid($stockCollectionTransfer);
         /** @var \Generated\Shared\Transfer\WarehouseUserAssignmentTransfer $warehouseUserAssignmentTransfer */
         foreach ($warehouseUserAssignmentTransfers as $warehouseUserAssignmentTransfer) {
             if ($warehouseUserAssignmentTransfer->getWarehouse() === null) {
                 continue;
             }
-            if (!isset($indexedStockTransfers[$warehouseUserAssignmentTransfer->getWarehouseOrFail()->getIdStockOrFail()])) {
+            if (!isset($indexedStockTransfers[$warehouseUserAssignmentTransfer->getWarehouseOrFail()->getUuidOrFail()])) {
                 $warehouseUserAssignmentCollectionResponseTransfer->addError(
                     $this->createErrorTransfer(
                         static::GLOSSARY_KEY_VALIDATION_WAREHOUSE_NOT_FOUND,
@@ -124,14 +124,14 @@ class WarehouseExistsValidatorRule implements WarehouseUserAssignmentValidatorRu
     /**
      * @param \Generated\Shared\Transfer\StockCollectionTransfer $stockCollectionTransfer
      *
-     * @return array<int, \Generated\Shared\Transfer\StockTransfer>
+     * @return array<string, \Generated\Shared\Transfer\StockTransfer>
      */
-    protected function getStockTransfersIndexedByIdStock(
+    protected function getStockTransfersIndexedByUuid(
         StockCollectionTransfer $stockCollectionTransfer
     ): array {
         $indexedStockTransfers = [];
         foreach ($stockCollectionTransfer->getStocks() as $stockTransfer) {
-            $indexedStockTransfers[$stockTransfer->getIdStockOrFail()] = $stockTransfer;
+            $indexedStockTransfers[$stockTransfer->getUuidOrFail()] = $stockTransfer;
         }
 
         return $indexedStockTransfers;

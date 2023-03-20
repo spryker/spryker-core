@@ -185,6 +185,32 @@ class UpdateWarehouseUserAssignmentCollectionFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testReturnsErrorWhenWarehouseWithIncorrectUuidWithoutIdStockIsProvided(): void
+    {
+        // Arrange
+        $userTransfer = $this->tester->haveUser();
+        $stockTransfer = $this->tester->haveStock();
+        $warehouseUserAssignmentTransfer = $this->tester->haveWarehouseUserAssignment(
+            $userTransfer,
+            $stockTransfer,
+        );
+        $warehouseUserAssignmentTransfer->setWarehouse($this->tester->getNotExistingStockTransfer()->setIdStock(null));
+        $warehouseUserAssignmentCollectionRequestTransfer = (new WarehouseUserAssignmentCollectionRequestTransfer())->addWarehouseUserAssignment($warehouseUserAssignmentTransfer);
+
+        // Act
+        $warehouseUserAssignmentCollectionResponseTransfer = $this->tester->getFacade()->updateWarehouseUserAssignmentCollection($warehouseUserAssignmentCollectionRequestTransfer);
+
+        // Assert
+        $this->assertCount(1, $warehouseUserAssignmentCollectionResponseTransfer->getWarehouseUserAssignments());
+        $this->assertCount(1, $warehouseUserAssignmentCollectionResponseTransfer->getErrors());
+
+        $errorTransfer = $warehouseUserAssignmentCollectionResponseTransfer->getErrors()->getIterator()->current();
+        $this->assertSame(static::GLOSSARY_KEY_VALIDATION_WAREHOUSE_NOT_FOUND, $errorTransfer->getMessage());
+    }
+
+    /**
+     * @return void
+     */
     public function testReturnsNoErrorsWhenActiveWarehouseUserAssignmentNotChanged(): void
     {
         // Arrange

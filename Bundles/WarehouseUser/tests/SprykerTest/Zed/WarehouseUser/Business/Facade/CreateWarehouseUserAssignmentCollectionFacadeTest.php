@@ -96,7 +96,7 @@ class CreateWarehouseUserAssignmentCollectionFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testReturnsErrorWhenUserNotExist(): void
+    public function testDoesNotPersistWarehouseUserAssignmentWhenValidationReturnsError(): void
     {
         // Arrange
         $stockTransfer = $this->tester->haveStock();
@@ -115,6 +115,26 @@ class CreateWarehouseUserAssignmentCollectionFacadeTest extends Unit
         $warehouseUserAssignmentTransfer = $warehouseUserAssignmentCollectionResponseTransfer->getWarehouseUserAssignments()->getIterator()->current();
         $this->assertNull($warehouseUserAssignmentTransfer->getIdWarehouseUserAssignment());
         $this->assertNull($warehouseUserAssignmentTransfer->getUuid());
+    }
+
+    /**
+     * @return void
+     */
+    public function testReturnsErrorWhenUserNotExist(): void
+    {
+        // Arrange
+        $stockTransfer = $this->tester->haveStock();
+        $warehouseUserAssignmentTransfer = (new WarehouseUserAssignmentBuilder())->build()
+            ->setWarehouse($stockTransfer)
+            ->setUserUuid(static::FAKE_USER_UUID);
+        $warehouseUserAssignmentCollectionRequestTransfer = (new WarehouseUserAssignmentCollectionRequestTransfer())->addWarehouseUserAssignment($warehouseUserAssignmentTransfer);
+
+        // Act
+        $warehouseUserAssignmentCollectionResponseTransfer = $this->tester->getFacade()->createWarehouseUserAssignmentCollection($warehouseUserAssignmentCollectionRequestTransfer);
+
+        // Assert
+        $this->assertCount(1, $warehouseUserAssignmentCollectionResponseTransfer->getWarehouseUserAssignments());
+        $this->assertCount(1, $warehouseUserAssignmentCollectionResponseTransfer->getErrors());
 
         $errorTransfer = $warehouseUserAssignmentCollectionResponseTransfer->getErrors()->getIterator()->current();
         $this->assertSame(static::GLOSSARY_KEY_VALIDATION_USER_NOT_FOUND, $errorTransfer->getMessage());
@@ -140,9 +160,31 @@ class CreateWarehouseUserAssignmentCollectionFacadeTest extends Unit
         $this->assertCount(1, $warehouseUserAssignmentCollectionResponseTransfer->getWarehouseUserAssignments());
         $this->assertCount(1, $warehouseUserAssignmentCollectionResponseTransfer->getErrors());
 
-        $warehouseUserAssignmentTransfer = $warehouseUserAssignmentCollectionResponseTransfer->getWarehouseUserAssignments()->getIterator()->current();
-        $this->assertNull($warehouseUserAssignmentTransfer->getIdWarehouseUserAssignment());
-        $this->assertNull($warehouseUserAssignmentTransfer->getUuid());
+        $errorTransfer = $warehouseUserAssignmentCollectionResponseTransfer->getErrors()->getIterator()->current();
+        $this->assertSame(static::GLOSSARY_KEY_VALIDATION_WAREHOUSE_NOT_FOUND, $errorTransfer->getMessage());
+    }
+
+    /**
+     * @return void
+     */
+    public function testReturnsErrorWhenWarehouseWithIncorrectUuidWithoutIdStockIsProvided(): void
+    {
+        // Arrange
+        $userTransfer = $this->tester->haveUser();
+        $stockTransfer = $this->tester->getNotExistingStockTransfer();
+        $stockTransfer->setIdStock(null);
+
+        $warehouseUserAssignmentTransfer = (new WarehouseUserAssignmentBuilder())->build()
+            ->setWarehouse($stockTransfer)
+            ->setUserUuid($userTransfer->getUuidOrFail());
+        $warehouseUserAssignmentCollectionRequestTransfer = (new WarehouseUserAssignmentCollectionRequestTransfer())->addWarehouseUserAssignment($warehouseUserAssignmentTransfer);
+
+        // Act
+        $warehouseUserAssignmentCollectionResponseTransfer = $this->tester->getFacade()->createWarehouseUserAssignmentCollection($warehouseUserAssignmentCollectionRequestTransfer);
+
+        // Assert
+        $this->assertCount(1, $warehouseUserAssignmentCollectionResponseTransfer->getWarehouseUserAssignments());
+        $this->assertCount(1, $warehouseUserAssignmentCollectionResponseTransfer->getErrors());
 
         $errorTransfer = $warehouseUserAssignmentCollectionResponseTransfer->getErrors()->getIterator()->current();
         $this->assertSame(static::GLOSSARY_KEY_VALIDATION_WAREHOUSE_NOT_FOUND, $errorTransfer->getMessage());
@@ -177,10 +219,6 @@ class CreateWarehouseUserAssignmentCollectionFacadeTest extends Unit
         $this->assertCount(2, $warehouseUserAssignmentCollectionResponseTransfer->getWarehouseUserAssignments());
         $this->assertCount(2, $warehouseUserAssignmentCollectionResponseTransfer->getErrors());
 
-        $warehouseUserAssignmentTransfer = $warehouseUserAssignmentCollectionResponseTransfer->getWarehouseUserAssignments()->getIterator()->current();
-        $this->assertNull($warehouseUserAssignmentTransfer->getIdWarehouseUserAssignment());
-        $this->assertNull($warehouseUserAssignmentTransfer->getUuid());
-
         $errorTransfersIterator = $warehouseUserAssignmentCollectionResponseTransfer->getErrors()->getIterator();
         $errorTransfer1 = $errorTransfersIterator->current();
         $this->assertSame(static::GLOSSARY_KEY_VALIDATION_TOO_MANY_ACTIVE_WAREHOUSE_ASSIGNMENTS, $errorTransfer1->getMessage());
@@ -214,10 +252,6 @@ class CreateWarehouseUserAssignmentCollectionFacadeTest extends Unit
         // Assert
         $this->assertCount(1, $warehouseUserAssignmentCollectionResponseTransfer->getWarehouseUserAssignments());
         $this->assertCount(1, $warehouseUserAssignmentCollectionResponseTransfer->getErrors());
-
-        $warehouseUserAssignmentTransfer = $warehouseUserAssignmentCollectionResponseTransfer->getWarehouseUserAssignments()->getIterator()->current();
-        $this->assertNull($warehouseUserAssignmentTransfer->getIdWarehouseUserAssignment());
-        $this->assertNull($warehouseUserAssignmentTransfer->getUuid());
 
         $errorTransfer = $warehouseUserAssignmentCollectionResponseTransfer->getErrors()->getIterator()->current();
         $this->assertSame(static::GLOSSARY_KEY_VALIDATION_WAREHOUSE_USER_ASSIGNMENT_ALREADY_EXISTS, $errorTransfer->getMessage());
