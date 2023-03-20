@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CustomerAccessStorage\Communication\Plugin\Event\Subscriber;
 
+use Spryker\Shared\CustomerAccessStorage\CustomerAccessStorageConfig;
 use Spryker\Zed\CustomerAccess\Dependency\CustomerAccessEvents;
 use Spryker\Zed\CustomerAccessStorage\Communication\Plugin\Event\Listener\CustomerAccessStorageBulkListener;
 use Spryker\Zed\Event\Dependency\EventCollectionInterface;
@@ -32,6 +33,7 @@ class CustomerAccessStorageEventSubscriber extends AbstractPlugin implements Eve
         $this->addUnauthenticatedCustomerAccessCreateListener($eventCollection);
         $this->addUnauthenticatedCustomerAccessUpdateListener($eventCollection);
         $this->addUnauthenticatedCustomerAccessDeleteListener($eventCollection);
+        $this->addUnauthenticatedCustomerAccessPublishListener($eventCollection);
 
         return $eventCollection;
     }
@@ -64,5 +66,15 @@ class CustomerAccessStorageEventSubscriber extends AbstractPlugin implements Eve
     protected function addUnauthenticatedCustomerAccessDeleteListener(EventCollectionInterface $eventCollection): void
     {
         $eventCollection->addListenerQueued(CustomerAccessEvents::ENTITY_SPY_UNAUTHENTICATED_CUSTOMER_ACCESS_DELETE, new CustomerAccessStorageBulkListener(), 0, null, $this->getConfig()->getEventQueueName());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addUnauthenticatedCustomerAccessPublishListener(EventCollectionInterface $eventCollection): void
+    {
+        $eventCollection->addListenerQueued(CustomerAccessStorageConfig::UNAUTHENTICATED_CUSTOMER_ACCESS_PUBLISH, new CustomerAccessStorageBulkListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 }
