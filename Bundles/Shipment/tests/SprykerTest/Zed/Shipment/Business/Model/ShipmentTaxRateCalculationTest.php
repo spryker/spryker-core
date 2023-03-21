@@ -41,9 +41,9 @@ use Spryker\Zed\Shipment\Persistence\ShipmentQueryContainer;
 class ShipmentTaxRateCalculationTest extends Unit
 {
     /**
-     * @var int
+     * @var float
      */
-    public const DEFAULT_TAX_RATE = 19;
+    public const DEFAULT_TAX_RATE = 19.0;
 
     /**
      * @var string

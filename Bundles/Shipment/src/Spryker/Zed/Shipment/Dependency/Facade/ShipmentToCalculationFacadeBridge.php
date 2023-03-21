@@ -30,7 +30,7 @@ class ShipmentToCalculationFacadeBridge implements ShipmentToCalculationFacadeIn
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function recalculateQuote(QuoteTransfer $quoteTransfer, bool $executeQuotePlugins = true)
+    public function recalculateQuote(QuoteTransfer $quoteTransfer, bool $executeQuotePlugins = true): QuoteTransfer
     {
         return $this->calculationFacade->recalculateQuote($quoteTransfer, $executeQuotePlugins);
     }

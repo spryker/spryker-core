@@ -12,5 +12,5 @@ interface ShipmentToPriceFacadeInterface
     /**
      * @return string
      */
-    public function getNetPriceModeIdentifier();
+    public function getNetPriceModeIdentifier(): string;
 }

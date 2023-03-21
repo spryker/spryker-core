@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Shipment\Dependency;
 
+use Generated\Shared\Transfer\TaxSetCollectionTransfer;
+
 class ShipmentToTaxBridge implements ShipmentToTaxInterface
 {
     /**
@@ -25,7 +27,7 @@ class ShipmentToTaxBridge implements ShipmentToTaxInterface
     /**
      * @return string
      */
-    public function getDefaultTaxCountryIso2Code()
+    public function getDefaultTaxCountryIso2Code(): string
     {
         return $this->taxFacade->getDefaultTaxCountryIso2Code();
     }
@@ -33,7 +35,7 @@ class ShipmentToTaxBridge implements ShipmentToTaxInterface
     /**
      * @return float
      */
-    public function getDefaultTaxRate()
+    public function getDefaultTaxRate(): float
     {
         return $this->taxFacade->getDefaultTaxRate();
     }
@@ -41,7 +43,7 @@ class ShipmentToTaxBridge implements ShipmentToTaxInterface
     /**
      * @return \Generated\Shared\Transfer\TaxSetCollectionTransfer
      */
-    public function getTaxSets()
+    public function getTaxSets(): TaxSetCollectionTransfer
     {
         return $this->taxFacade->getTaxSets();
     }

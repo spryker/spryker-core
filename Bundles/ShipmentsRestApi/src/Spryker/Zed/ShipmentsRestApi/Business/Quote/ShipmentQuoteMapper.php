@@ -10,6 +10,7 @@ namespace Spryker\Zed\ShipmentsRestApi\Business\Quote;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
+use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Shared\ShipmentsRestApi\ShipmentsRestApiConfig;
 use Spryker\Zed\ShipmentsRestApi\Dependency\Facade\ShipmentsRestApiToShipmentFacadeInterface;
@@ -48,9 +49,12 @@ class ShipmentQuoteMapper implements ShipmentQuoteMapperInterface
         }
         $idShipmentMethod = $restCheckoutRequestAttributesTransfer->getShipment()->getIdShipmentMethod();
 
+        $shipmentTransfer = $this->createShipmentTransfer($idShipmentMethod);
+        $quoteTransfer = $this->setShipmentTransferIntoQuote($quoteTransfer, $shipmentTransfer);
+
         $shipmentMethodTransfer = $this->shipmentFacade->findAvailableMethodById($idShipmentMethod, $quoteTransfer);
         if ($shipmentMethodTransfer === null) {
-            return $quoteTransfer;
+            return $this->removeShipmentTransferFromQuote($quoteTransfer);
         }
 
         $shipmentTransfer = new ShipmentTransfer();
@@ -100,6 +104,21 @@ class ShipmentQuoteMapper implements ShipmentQuoteMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function removeShipmentTransferFromQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        $quoteTransfer->setShipment(null);
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $itemTransfer->setShipment(null);
+        }
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ExpenseTransfer $expenseTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
@@ -117,5 +136,17 @@ class ShipmentQuoteMapper implements ShipmentQuoteMapperInterface
         $quoteTransfer->addExpense($expenseTransfer);
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param int $idShipmentMethod
+     *
+     * @return \Generated\Shared\Transfer\ShipmentTransfer
+     */
+    protected function createShipmentTransfer(int $idShipmentMethod): ShipmentTransfer
+    {
+        $shipmentMethodTransfer = (new ShipmentMethodTransfer())->setIdShipmentMethod($idShipmentMethod);
+
+        return (new ShipmentTransfer())->setMethod($shipmentMethodTransfer);
     }
 }

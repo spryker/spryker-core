@@ -9,15 +9,18 @@ namespace SprykerTest\Zed\Shipment\Business;
 
 use ArrayObject;
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierRequestTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodPrice;
@@ -26,6 +29,7 @@ use Spryker\Shared\Shipment\ShipmentConfig;
 use Spryker\Shared\Shipment\ShipmentConstants;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToCurrencyInterface;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
+use Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodPricePluginInterface;
 
 /**
  * Auto-generated group annotations
@@ -247,6 +251,82 @@ class ShipmentFacadeTest extends Unit
 
         // Assert
         $this->assertSame($shipmentMethodsTransfer->getStoreCurrencyPrice(), $expectedPriceResult);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindAvailableMethodByIdShouldReturnShipmentMethodWithPricePluginById(): void
+    {
+        // Arrange
+        $this->tester->ensureShipmentMethodTableIsEmpty();
+        $this->tester->setDependency(ShipmentDependencyProvider::PRICE_PLUGINS, [
+            static::PRICE_PLUGIN => $this->getShipmentMethodPricePluginMock(static::DEFAULT_PLUGIN_PRICE),
+        ]);
+
+        $priceList = $this->createDefaultPriceList();
+        $shipmentMethodTransfer = $this->tester->haveShipmentMethod([], [], $priceList, [$this->store->getIdStore()]);
+        $this->tester->assignShipmentPricePluginToShipmentMethod(
+            $shipmentMethodTransfer,
+            static::PRICE_PLUGIN,
+        );
+
+        $itemBuilder = (new ItemBuilder())->withShipment([
+            ShipmentTransfer::METHOD => [
+                ShipmentMethodTransfer::ID_SHIPMENT_METHOD => $shipmentMethodTransfer->getIdShipmentMethod(),
+            ],
+        ]);
+        $quoteTransfer = (new QuoteBuilder([QuoteTransfer::STORE => $this->store->toArray()]))
+            ->withItem($itemBuilder)
+            ->build();
+
+        // Act
+        $shipmentMethodsTransfer = $this->tester->getShipmentFacade()->findAvailableMethodById(
+            $shipmentMethodTransfer->getIdShipmentMethodOrFail(),
+            $quoteTransfer,
+        );
+
+        // Assert
+        $this->assertNotNull($shipmentMethodsTransfer);
+        $this->assertSame(static::DEFAULT_PLUGIN_PRICE, $shipmentMethodsTransfer->getStoreCurrencyPrice());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindAvailableMethodByIdShouldReturnNullWhenShipmentMethodHasPricePluginAndNotAllQuoteItemsHaveShipment(): void
+    {
+        // Arrange
+        $this->tester->ensureShipmentMethodTableIsEmpty();
+        $this->tester->setDependency(ShipmentDependencyProvider::PRICE_PLUGINS, [
+            static::PRICE_PLUGIN => $this->getShipmentMethodPricePluginMock(static::DEFAULT_PLUGIN_PRICE),
+        ]);
+
+        $priceList = $this->createDefaultPriceList();
+        $shipmentMethodTransfer = $this->tester->haveShipmentMethod([], [], $priceList, [$this->store->getIdStore()]);
+        $this->tester->assignShipmentPricePluginToShipmentMethod(
+            $shipmentMethodTransfer,
+            static::PRICE_PLUGIN,
+        );
+
+        $itemBuilder = (new ItemBuilder())->withShipment([
+            ShipmentTransfer::METHOD => [
+                ShipmentMethodTransfer::ID_SHIPMENT_METHOD => $shipmentMethodTransfer->getIdShipmentMethod(),
+            ],
+        ]);
+        $quoteTransfer = (new QuoteBuilder([QuoteTransfer::STORE => $this->store->toArray()]))
+            ->withItem($itemBuilder)
+            ->withAnotherItem([ItemTransfer::SHIPMENT => null])
+            ->build();
+
+        // Act
+        $shipmentMethodsTransfer = $this->tester->getShipmentFacade()->findAvailableMethodById(
+            $shipmentMethodTransfer->getIdShipmentMethodOrFail(),
+            $quoteTransfer,
+        );
+
+        // Assert
+        $this->assertNull($shipmentMethodsTransfer);
     }
 
     /**
@@ -615,5 +695,20 @@ class ShipmentFacadeTest extends Unit
         /** @var \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer */
         $shipmentMethodTransfer = $shipmentMethodsTransfer->getMethods()->getIterator()->current();
         $this->assertCount(2, $shipmentMethodTransfer->getPrices());
+    }
+
+    /**
+     * @param int $pluginPrice
+     *
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodPricePluginInterface
+     */
+    protected function getShipmentMethodPricePluginMock(int $pluginPrice): ShipmentMethodPricePluginInterface
+    {
+        $shipmentMethodPricePluginMock = $this->getMockBuilder(ShipmentMethodPricePluginInterface::class)->getMock();
+        $shipmentMethodPricePluginMock
+            ->method('getPrice')
+            ->willReturn($pluginPrice);
+
+        return $shipmentMethodPricePluginMock;
     }
 }

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Shipment\Dependency\Facade;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
+
 interface ShipmentToCurrencyInterface
 {
     /**
@@ -14,12 +16,12 @@ interface ShipmentToCurrencyInterface
      *
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function fromIsoCode($isoCode);
+    public function fromIsoCode(string $isoCode): CurrencyTransfer;
 
     /**
      * @param int $idCurrency
      *
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function getByIdCurrency($idCurrency);
+    public function getByIdCurrency(int $idCurrency): CurrencyTransfer;
 }

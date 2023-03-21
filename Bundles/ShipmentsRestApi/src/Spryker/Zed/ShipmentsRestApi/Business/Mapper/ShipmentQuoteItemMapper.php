@@ -7,12 +7,14 @@
 
 namespace Spryker\Zed\ShipmentsRestApi\Business\Mapper;
 
+use ArrayObject;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestAddressTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\RestShipmentsTransfer;
+use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Zed\ShipmentsRestApi\Dependency\Facade\ShipmentsRestApiToShipmentFacadeInterface;
 use Spryker\Zed\ShipmentsRestApi\ShipmentsRestApiConfig;
@@ -55,6 +57,7 @@ class ShipmentQuoteItemMapper implements ShipmentQuoteItemMapperInterface
             return $quoteTransfer;
         }
 
+        $this->expandQuoteItemsWithRequestShipmentsTransfer($restCheckoutRequestAttributesTransfer->getShipments(), $quoteTransfer);
         foreach ($restCheckoutRequestAttributesTransfer->getShipments() as $restShipmentsTransfer) {
             $shipmentTransfer = (new ShipmentTransfer())
                 ->fromArray($restShipmentsTransfer->toArray(), true);
@@ -86,6 +89,29 @@ class ShipmentQuoteItemMapper implements ShipmentQuoteItemMapperInterface
 
         $quoteTransfer = $this->setNoShipmentForGiftCards($quoteTransfer);
         $quoteTransfer = $this->shipmentFacade->expandQuoteWithShipmentGroups($quoteTransfer);
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\RestShipmentsTransfer> $restShipmentsTransfers
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function expandQuoteItemsWithRequestShipmentsTransfer(
+        ArrayObject $restShipmentsTransfers,
+        QuoteTransfer $quoteTransfer
+    ): QuoteTransfer {
+        foreach ($restShipmentsTransfers as $restShipmentsTransfer) {
+            $shipmentTransfer = $this->createShipmentTransfer($restShipmentsTransfer->getIdShipmentMethod());
+
+            $quoteTransfer = $this->assignShipmentTransferToItems(
+                $quoteTransfer,
+                $restShipmentsTransfer->getItems(),
+                $shipmentTransfer,
+            );
+        }
 
         return $quoteTransfer;
     }
@@ -209,6 +235,8 @@ class ShipmentQuoteItemMapper implements ShipmentQuoteItemMapperInterface
             ->findAvailableMethodById($restShipmentsTransfer->getIdShipmentMethod(), $quoteTransfer);
 
         if (!$shipmentMethodTransfer) {
+            $this->removeShipmentMethodTransferFromItems($quoteTransfer, $restShipmentsTransfer->getItems());
+
             return $shipmentTransfer;
         }
 
@@ -277,5 +305,38 @@ class ShipmentQuoteItemMapper implements ShipmentQuoteItemMapperInterface
         }
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param array<string> $itemsGroupKeys
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function removeShipmentMethodTransferFromItems(
+        QuoteTransfer $quoteTransfer,
+        array $itemsGroupKeys
+    ): QuoteTransfer {
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            if (!in_array($itemTransfer->getGroupKey(), $itemsGroupKeys, true)) {
+                continue;
+            }
+
+            $itemTransfer->getShipment()->setMethod(null);
+        }
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param int $idShipmentMethod
+     *
+     * @return \Generated\Shared\Transfer\ShipmentTransfer
+     */
+    protected function createShipmentTransfer(int $idShipmentMethod): ShipmentTransfer
+    {
+        $shipmentMethodTransfer = (new ShipmentMethodTransfer())->setIdShipmentMethod($idShipmentMethod);
+
+        return (new ShipmentTransfer())->setMethod($shipmentMethodTransfer);
     }
 }

@@ -25,7 +25,7 @@ class ShipmentToPriceFacadeBridge implements ShipmentToPriceFacadeInterface
     /**
      * @return string
      */
-    public function getNetPriceModeIdentifier()
+    public function getNetPriceModeIdentifier(): string
     {
         return $this->priceFacade->getNetPriceModeIdentifier();
     }

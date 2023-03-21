@@ -17,5 +17,5 @@ interface ShipmentToCalculationFacadeInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function recalculateQuote(QuoteTransfer $quoteTransfer, bool $executeQuotePlugins = true);
+    public function recalculateQuote(QuoteTransfer $quoteTransfer, bool $executeQuotePlugins = true): QuoteTransfer;
 }

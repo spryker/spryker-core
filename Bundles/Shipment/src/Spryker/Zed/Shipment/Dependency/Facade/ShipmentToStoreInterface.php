@@ -7,22 +7,24 @@
 
 namespace Spryker\Zed\Shipment\Dependency\Facade;
 
+use Generated\Shared\Transfer\StoreTransfer;
+
 interface ShipmentToStoreInterface
 {
     /**
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getCurrentStore();
+    public function getCurrentStore(): StoreTransfer;
 
     /**
      * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
-    public function getAllStores();
+    public function getAllStores(): array;
 
     /**
      * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getStoreByName($storeName);
+    public function getStoreByName(string $storeName): StoreTransfer;
 }

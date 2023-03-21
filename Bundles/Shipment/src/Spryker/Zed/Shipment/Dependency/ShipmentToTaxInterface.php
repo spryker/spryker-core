@@ -7,20 +7,22 @@
 
 namespace Spryker\Zed\Shipment\Dependency;
 
+use Generated\Shared\Transfer\TaxSetCollectionTransfer;
+
 interface ShipmentToTaxInterface
 {
     /**
      * @return string
      */
-    public function getDefaultTaxCountryIso2Code();
+    public function getDefaultTaxCountryIso2Code(): string;
 
     /**
      * @return float
      */
-    public function getDefaultTaxRate();
+    public function getDefaultTaxRate(): float;
 
     /**
      * @return \Generated\Shared\Transfer\TaxSetCollectionTransfer
      */
-    public function getTaxSets();
+    public function getTaxSets(): TaxSetCollectionTransfer;
 }

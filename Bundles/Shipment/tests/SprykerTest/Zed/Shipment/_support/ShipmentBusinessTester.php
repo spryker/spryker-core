@@ -118,7 +118,7 @@ class ShipmentBusinessTester extends Actor
      */
     public function updateShipmentMethod(array $data, ?array $idFilter = null): void
     {
-        $shipmentMethodQuery = SpyShipmentMethodQuery::create();
+        $shipmentMethodQuery = $this->getShipmentMethodQuery();
 
         if ($idFilter !== null) {
             $shipmentMethodQuery->filterByIdShipmentMethod($idFilter, Criteria::IN);
@@ -343,5 +343,30 @@ class ShipmentBusinessTester extends Actor
         return (new CalculableObjectTransfer())
             ->setExpenses(new ArrayObject($expenseTransfers))
             ->setTotals(new TotalsTransfer());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentMethodTransfer $shipmentMethodTransfer
+     * @param string $pricePluginDependencyKey
+     *
+     * @return void
+     */
+    public function assignShipmentPricePluginToShipmentMethod(
+        ShipmentMethodTransfer $shipmentMethodTransfer,
+        string $pricePluginDependencyKey
+    ): void {
+        $shipmentMethodEntity = $this->getShipmentMethodQuery()
+            ->findOneByIdShipmentMethod($shipmentMethodTransfer->getIdShipmentMethodOrFail());
+
+        $shipmentMethodEntity->setPricePlugin($pricePluginDependencyKey);
+        $shipmentMethodEntity->save();
+    }
+
+    /**
+     * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
+     */
+    protected function getShipmentMethodQuery(): SpyShipmentMethodQuery
+    {
+        return SpyShipmentMethodQuery::create();
     }
 }
