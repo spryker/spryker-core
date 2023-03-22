@@ -8,6 +8,8 @@
 namespace Spryker\Zed\PriceCartConnector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\PriceCartConnector\Business\Builder\ItemIdentifierBuilder;
+use Spryker\Zed\PriceCartConnector\Business\Builder\ItemIdentifierBuilderInterface;
 use Spryker\Zed\PriceCartConnector\Business\Filter\Comparator\ItemComparator;
 use Spryker\Zed\PriceCartConnector\Business\Filter\Comparator\ItemComparatorInterface;
 use Spryker\Zed\PriceCartConnector\Business\Filter\ItemFilterInterface;
@@ -21,6 +23,8 @@ use Spryker\Zed\PriceCartConnector\Business\Validator\PriceProductValidator;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartConnectorToCurrencyFacadeInterface;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToMessengerInterface;
 use Spryker\Zed\PriceCartConnector\Dependency\Service\PriceCartConnectorToPriceProductServiceInterface;
+use Spryker\Zed\PriceCartConnector\Dependency\Service\PriceCartConnectorToUtilEncodingServiceInterface;
+use Spryker\Zed\PriceCartConnector\Dependency\Service\PriceCartConnectorToUtilTextServiceInterface;
 use Spryker\Zed\PriceCartConnector\PriceCartConnectorDependencyProvider;
 
 /**
@@ -40,6 +44,7 @@ class PriceCartConnectorBusinessFactory extends AbstractBusinessFactory
             $this->createPriceProductFilter(),
             $this->getPriceProductService(),
             $this->getPriceProductExpanderPlugins(),
+            $this->createItemIdentifierBuilder(),
         );
     }
 
@@ -52,6 +57,7 @@ class PriceCartConnectorBusinessFactory extends AbstractBusinessFactory
             $this->getPriceProductFacade(),
             $this->createPriceProductFilter(),
             $this->getConfig(),
+            $this->createItemIdentifierBuilder(),
         );
     }
 
@@ -79,6 +85,7 @@ class PriceCartConnectorBusinessFactory extends AbstractBusinessFactory
             $this->getPriceProductFacade(),
             $this->getMessengerFacade(),
             $this->getPriceProductService(),
+            $this->createItemIdentifierBuilder(),
         );
     }
 
@@ -96,6 +103,18 @@ class PriceCartConnectorBusinessFactory extends AbstractBusinessFactory
     public function createItemComparator(): ItemComparatorInterface
     {
         return new ItemComparator($this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceCartConnector\Business\Builder\ItemIdentifierBuilderInterface
+     */
+    public function createItemIdentifierBuilder(): ItemIdentifierBuilderInterface
+    {
+        return new ItemIdentifierBuilder(
+            $this->getConfig(),
+            $this->getUtilEncodingService(),
+            $this->getUtilTextService(),
+        );
     }
 
     /**
@@ -152,5 +171,21 @@ class PriceCartConnectorBusinessFactory extends AbstractBusinessFactory
     public function getCartItemQuantityCounterStrategyPlugins(): array
     {
         return $this->getProvidedDependency(PriceCartConnectorDependencyProvider::PLUGINS_CART_ITEM_QUANTITY_COUNTER_STRATEGY);
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceCartConnector\Dependency\Service\PriceCartConnectorToUtilEncodingServiceInterface
+     */
+    public function getUtilEncodingService(): PriceCartConnectorToUtilEncodingServiceInterface
+    {
+        return $this->getProvidedDependency(PriceCartConnectorDependencyProvider::SERVICE_UTIL_ENCODING);
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceCartConnector\Dependency\Service\PriceCartConnectorToUtilTextServiceInterface
+     */
+    public function getUtilTextService(): PriceCartConnectorToUtilTextServiceInterface
+    {
+        return $this->getProvidedDependency(PriceCartConnectorDependencyProvider::SERVICE_UTIL_TEXT);
     }
 }

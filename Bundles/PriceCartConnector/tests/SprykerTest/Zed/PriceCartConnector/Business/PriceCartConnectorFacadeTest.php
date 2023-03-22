@@ -14,6 +14,7 @@ use Spryker\Zed\PriceCartConnector\Business\PriceCartConnectorFacadeInterface;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartConnectorToCurrencyFacadeInterface;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface;
 use Spryker\Zed\PriceCartConnector\PriceCartConnectorConfig;
+use SprykerTest\Zed\PriceCartConnector\PriceCartConnectorBusinessTester;
 
 /**
  * Auto-generated group annotations
@@ -54,9 +55,14 @@ class PriceCartConnectorFacadeTest extends Unit
     protected const TEST_CURRENCY_3 = 'TCT';
 
     /**
+     * @var string
+     */
+    protected const TEST_CURRENCY_4 = 'TCС';
+
+    /**
      * @var \SprykerTest\Zed\PriceCartConnector\PriceCartConnectorBusinessTester
      */
-    protected $tester;
+    protected PriceCartConnectorBusinessTester $tester;
 
     /**
      * @uses \Spryker\Zed\PriceCartConnector\Business\Validator\PriceProductValidator::CART_PRE_CHECK_PRICE_FAILED_TRANSLATION_KEY
@@ -68,17 +74,24 @@ class PriceCartConnectorFacadeTest extends Unit
     /**
      * @dataProvider getFilterItemsWithoutPriceDataProvider
      *
-     * @param array $itemsData
+     * @param array<string, int|null> $itemsData
      * @param string $currencyCode
-     * @param array<string> $expectedSkus
+     * @param list<string> $itemFieldsForIdentifier
+     * @param list<string> $expectedSkus
      *
      * @return void
      */
-    public function testFilterItemsWithoutPriceWillRemoveItemsWithoutPrices(array $itemsData, string $currencyCode, array $expectedSkus): void
-    {
+    public function testFilterItemsWithoutPriceWillRemoveItemsWithoutPrices(
+        array $itemsData,
+        string $currencyCode,
+        array $itemFieldsForIdentifier,
+        array $expectedSkus
+    ): void {
         // Arrange
         $currencyTransfer = $this->tester->haveCurrencyTransfer([CurrencyTransfer::CODE => $currencyCode]);
         $quoteTransfer = $this->tester->createQuoteWithItems($itemsData, $currencyTransfer);
+
+        $this->tester->mockConfigMethod('getItemFieldsForIdentifier', $itemFieldsForIdentifier);
 
         // Act
         $filteredQuoteTransfer = $this->tester->getFacade()->filterItemsWithoutPrice($quoteTransfer);
@@ -92,118 +105,229 @@ class PriceCartConnectorFacadeTest extends Unit
     }
 
     /**
-     * @return array
+     * @dataProvider getItemFieldsForIdentifierConfigDataProvider
+     *
+     * @param list<string> $itemFieldsForIdentifier
+     *
+     * @return void
      */
-    public function getFilterItemsWithoutPriceDataProvider(): array
+    public function testFilterItemsWithoutPriceWithEqualItems(array $itemFieldsForIdentifier): void
+    {
+        // Arrange
+        $currencyTransfer = $this->tester->haveCurrencyTransfer([CurrencyTransfer::CODE => static::TEST_CURRENCY_4]);
+        $quoteTransfer = $this->tester->createQuoteWithItems([static::TEST_SKU_1 => 1000], $currencyTransfer);
+
+        /** @var \Generated\Shared\Transfer\ItemTransfer $existingItemTransfer */
+        $existingItemTransfer = $quoteTransfer->getItems()->offsetGet(0);
+        $existingItemTransfer->setQuantity(1);
+        $quoteTransfer->addItem((new ItemTransfer())->fromArray($existingItemTransfer->toArray(), true));
+
+        $this->tester->mockConfigMethod('getItemFieldsForIdentifier', $itemFieldsForIdentifier);
+
+        // Act
+        $filteredQuoteTransfer = $this->tester->getFacade()->filterItemsWithoutPrice($quoteTransfer);
+
+        // Assert
+        $itemTransfers = $filteredQuoteTransfer->getItems()->getArrayCopy();
+        $this->assertCount(2, $itemTransfers);
+
+        $itemsSkus = array_map(function (ItemTransfer $itemTransfer) {
+            return $itemTransfer->getSku();
+        }, $itemTransfers);
+        $this->assertSame([static::TEST_SKU_1, static::TEST_SKU_1], $itemsSkus);
+    }
+
+    /**
+     * @dataProvider getValidatePricesDataProvider
+     *
+     * @param int $productPrice
+     * @param list<string> $itemFieldsForIdentifier
+     * @param bool $isZeroPriceEnabledForCartActions
+     * @param bool $expectedIsSuccess
+     * @param list<string> $expectedResponseMessages
+     *
+     * @return void
+     */
+    public function testValidatePrices(
+        int $productPrice,
+        array $itemFieldsForIdentifier,
+        bool $isZeroPriceEnabledForCartActions,
+        bool $expectedIsSuccess,
+        array $expectedResponseMessages
+    ): void {
+        // Arrange
+        $priceCartConnectorFacade = $this->getConfiguredPriceCartConnectorFacade(
+            static::TEST_SKU_1,
+            $productPrice,
+            $itemFieldsForIdentifier,
+            $isZeroPriceEnabledForCartActions,
+        );
+        $cartChangeTransfer = $this->tester->createCartChangeTransferWithItem();
+
+        // Act
+        $cartPreCheckResponseTransfer = $priceCartConnectorFacade->validatePrices($cartChangeTransfer);
+
+        // Assert
+        $this->assertSame($expectedIsSuccess, $cartPreCheckResponseTransfer->getIsSuccess());
+        $messages = $this->tester->getCartPreCheckResponseTransferMessages($cartPreCheckResponseTransfer);
+        $this->assertSame($expectedResponseMessages, $messages);
+    }
+
+    /**
+     * @dataProvider getItemFieldsForIdentifierConfigDataProvider
+     *
+     * @param list<string> $itemFieldsForIdentifier
+     *
+     * @return void
+     */
+    public function testValidatePricesWithEqualItems(array $itemFieldsForIdentifier): void
+    {
+        // Arrange
+        $priceCartConnectorFacade = $this->getConfiguredPriceCartConnectorFacade(
+            static::TEST_SKU_1,
+            1000,
+            $itemFieldsForIdentifier,
+            false,
+        );
+        $cartChangeTransfer = $this->tester->createCartChangeTransferWithItem();
+
+        /** @var \Generated\Shared\Transfer\ItemTransfer $existingItemTransfer */
+        $existingItemTransfer = $cartChangeTransfer->getItems()->offsetGet(0);
+        $existingItemTransfer->setQuantity(1);
+        $cartChangeTransfer->addItem((new ItemTransfer())->fromArray($existingItemTransfer->toArray(), true));
+
+        // Act
+        $cartPreCheckResponseTransfer = $priceCartConnectorFacade->validatePrices($cartChangeTransfer);
+
+        // Assert
+        $this->assertTrue($cartPreCheckResponseTransfer->getIsSuccess());
+        $this->assertSame([], $this->tester->getCartPreCheckResponseTransferMessages($cartPreCheckResponseTransfer));
+    }
+
+    /**
+     * @return array<string, array<array<string, int|null>|string|list<string>>
+     */
+    protected function getFilterItemsWithoutPriceDataProvider(): array
     {
         return [
-            [
+            'Should not filter items with 0 price when collection of item fields used for building identifier is empty.' => [
                 [
                     static::TEST_SKU_1 => 100,
                     static::TEST_SKU_2 => 0,
                 ],
                 static::TEST_CURRENCY_1,
+                [],
                 [
                     static::TEST_SKU_1,
                     static::TEST_SKU_2,
                 ],
             ],
-            [
+            'Should not filter items with 0 price when collection of item fields used for building identifier is not empty.' => [
+                [
+                    static::TEST_SKU_1 => 100,
+                    static::TEST_SKU_2 => 0,
+                ],
+                static::TEST_CURRENCY_1,
+                [ItemTransfer::SKU, ItemTransfer::QUANTITY],
+                [
+                    static::TEST_SKU_1,
+                    static::TEST_SKU_2,
+                ],
+            ],
+            'Should filter out items with null price when collection of item fields used for building identifier is empty.' => [
                 [
                     static::TEST_SKU_1 => 300,
                     static::TEST_SKU_2 => null,
                 ],
                 static::TEST_CURRENCY_2,
+                [],
                 [
                     static::TEST_SKU_1,
                 ],
             ],
-            [
+            'Should filter out items with null price when collection of item fields used for building identifier is not empty.' => [
+                [
+                    static::TEST_SKU_1 => 300,
+                    static::TEST_SKU_2 => null,
+                ],
+                static::TEST_CURRENCY_2,
+                [ItemTransfer::SKU, ItemTransfer::QUANTITY],
+                [
+                    static::TEST_SKU_1,
+                ],
+            ],
+            'Should filter out all items with null price when collection of item fields used for building identifier is empty.' => [
                 [
                     static::TEST_SKU_1 => null,
                     static::TEST_SKU_2 => null,
                 ],
                 static::TEST_CURRENCY_3,
                 [],
+                [],
+            ],
+            'Should filter out all items with null price when collection of item fields used for building identifier is not empty.' => [
+                [
+                    static::TEST_SKU_1 => null,
+                    static::TEST_SKU_2 => null,
+                ],
+                static::TEST_CURRENCY_3,
+                [ItemTransfer::SKU, ItemTransfer::QUANTITY],
+                [],
             ],
         ];
     }
 
     /**
-     * @return void
+     * @return array<string, list<string>>
      */
-    public function testValidatePricesWithNonZeroPriceAndDisabledZeroPriceConfig(): void
+    protected function getItemFieldsForIdentifierConfigDataProvider(): array
     {
-        // Arrange
-        $priceCartConnectorFacade = $this->getConfiguredPriceCartConnectorFacade(static::TEST_SKU_1, 1000, false);
-        $cartChangeTransfer = $this->tester->createCartChangeTransferWithItem();
-
-        // Act
-        $cartPreCheckResponseTransfer = $priceCartConnectorFacade->validatePrices($cartChangeTransfer);
-
-        // Assert
-        $this->assertTrue($cartPreCheckResponseTransfer->getIsSuccess());
-        $messages = $this->tester->getCartPreCheckResponseTransferMessages($cartPreCheckResponseTransfer);
-        $this->assertSame([], $messages);
+        return [
+            'Collection of item fields used for building identifier is empty.' => [[]],
+            'Collection of item fields used for building identifier is not empty.' => [[
+                ItemTransfer::SKU,
+                ItemTransfer::QUANTITY,
+            ]],
+        ];
     }
 
     /**
-     * @return void
+     * @return array
      */
-    public function testValidatePricesWithZeroPriceAndDisabledZeroPriceConfig(): void
+    protected function getValidatePricesDataProvider(): array
     {
-        // Arrange
-        $priceCartConnectorFacade = $this->getConfiguredPriceCartConnectorFacade(static::TEST_SKU_1, 0, false);
-        $cartChangeTransfer = $this->tester->createCartChangeTransferWithItem();
-
-        // Act
-        $cartPreCheckResponseTransfer = $priceCartConnectorFacade->validatePrices($cartChangeTransfer);
-
-        // Assert
-        $this->assertFalse($cartPreCheckResponseTransfer->getIsSuccess());
-        $messages = $this->tester->getCartPreCheckResponseTransferMessages($cartPreCheckResponseTransfer);
-        $this->assertSame([static::GLOSSARY_KEY_CART_PRE_CHECK_PRICE_FAILED], $messages);
-    }
-
-    /**
-     * @return void
-     */
-    public function testValidatePricesWithNonZeroPriceAndEnabledZeroPriceConfig(): void
-    {
-        // Arrange
-        $priceCartConnectorFacade = $this->getConfiguredPriceCartConnectorFacade(static::TEST_SKU_1, 1000, true);
-        $cartChangeTransfer = $this->tester->createCartChangeTransferWithItem();
-
-        // Act
-        $cartPreCheckResponseTransfer = $priceCartConnectorFacade->validatePrices($cartChangeTransfer);
-
-        // Assert
-        $this->assertTrue($cartPreCheckResponseTransfer->getIsSuccess());
-        $messages = $this->tester->getCartPreCheckResponseTransferMessages($cartPreCheckResponseTransfer);
-        $this->assertSame([], $messages);
-    }
-
-    /**
-     * @return void
-     */
-    public function testValidatePricesWithZeroPriceAndEnabledZeroPriceConfig(): void
-    {
-        // Arrange
-        $priceCartConnectorFacade = $this->getConfiguredPriceCartConnectorFacade(static::TEST_SKU_1, 0, true);
-        $cartChangeTransfer = $this->tester->createCartChangeTransferWithItem();
-
-        // Act
-        $cartPreCheckResponseTransfer = $priceCartConnectorFacade->validatePrices($cartChangeTransfer);
-
-        // Assert
-        $this->assertTrue($cartPreCheckResponseTransfer->getIsSuccess());
-        $messages = $this->tester->getCartPreCheckResponseTransferMessages($cartPreCheckResponseTransfer);
-        $this->assertSame([], $messages);
+        return [
+            'Should return success with non zero price, disabled zero price config and empty collection of item fields used for building identifier config.' => [
+                1000, [], false, true, [],
+            ],
+            'Should return success with non zero price, disabled zero price config and not empty collection of item fields used for building identifier config.' => [
+                1000, [ItemTransfer::SKU, ItemTransfer::QUANTITY], false, true, [],
+            ],
+            'Should not return success with zero price, disabled zero price config and empty collection of item fields used for building identifier config.' => [
+                0, [], false, false, [static::GLOSSARY_KEY_CART_PRE_CHECK_PRICE_FAILED],
+            ],
+            'Should not return success with zero price, disabled zero price config and not empty collection of item fields used for building identifier config.' => [
+                0, [ItemTransfer::SKU, ItemTransfer::QUANTITY], false, false, [static::GLOSSARY_KEY_CART_PRE_CHECK_PRICE_FAILED],
+            ],
+            'Should return success with non zero price, enabled zero price config and empty collection of item fields used for building identifier config.' => [
+                1000, [], false, true, [],
+            ],
+            'Should return success with non zero price, enabled zero price config and not empty collection of item fields used for building identifier config.' => [
+                1000, [ItemTransfer::SKU, ItemTransfer::QUANTITY], false, true, [],
+            ],
+            'Should return success with zero price, enabled zero price config and empty collection of item fields used for building identifier config.' => [
+                1000, [], false, true, [],
+            ],
+            'Should return success with zero price, enabled zero price config and not empty collection of item fields used for building identifier config.' => [
+                1000, [ItemTransfer::SKU, ItemTransfer::QUANTITY], false, true, [],
+            ],
+        ];
     }
 
     /**
      * @param string $sku
      * @param int $price
+     * @param list<string> $itemFieldsForIdentifier
      * @param bool $isZeroPriceEnabledForCartActions
      *
      * @return \Spryker\Zed\PriceCartConnector\Business\PriceCartConnectorFacadeInterface
@@ -211,20 +335,17 @@ class PriceCartConnectorFacadeTest extends Unit
     protected function getConfiguredPriceCartConnectorFacade(
         string $sku,
         int $price,
+        array $itemFieldsForIdentifier,
         bool $isZeroPriceEnabledForCartActions
     ): PriceCartConnectorFacadeInterface {
-        $priceCartConnectorConfigMock = $this->getPriceCartConnectorConfigMock();
         $priceProductFacadeStub = $this->tester->createPriceProductFacadeStub();
         $priceProductFacadeStub->addPriceStub($sku, $price);
-        $priceFacadeMock = $this->getPriceFacadeMock();
-        $currencyFacadeMock = $this->getCurrencyFacadeBridgeMock();
 
         return $this->tester->createAndConfigurePriceCartConnectorFacade(
-            $priceCartConnectorConfigMock,
+            $this->tester->createPriceCartConnectorConfigMock($itemFieldsForIdentifier, $isZeroPriceEnabledForCartActions),
             $priceProductFacadeStub,
-            $priceFacadeMock,
-            $currencyFacadeMock,
-            $isZeroPriceEnabledForCartActions,
+            $this->getPriceFacadeMock(),
+            $this->getCurrencyFacadeBridgeMock(),
         );
     }
 

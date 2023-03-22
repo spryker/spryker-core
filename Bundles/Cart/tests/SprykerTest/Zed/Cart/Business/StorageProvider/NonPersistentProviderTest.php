@@ -530,6 +530,55 @@ class NonPersistentProviderTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testAddItemsToQuoteWithOneThousandItems(): void
+    {
+        // Arrange
+        $quoteTransfer = new QuoteTransfer();
+        $cartChangeTransfer = (new CartChangeTransfer())->setQuote($quoteTransfer);
+        for ($i = 1; $i <= 1000; $i++) {
+            $quoteTransfer->addItem($this->createItem([
+                ItemTransfer::ID => $i,
+                ItemTransfer::GROUP_KEY => $i,
+                ItemTransfer::QUANTITY => 1,
+            ]));
+            $cartChangeTransfer->addItem($this->createItem([
+                ItemTransfer::ID => $i + 1000,
+                ItemTransfer::GROUP_KEY => $i + 1000,
+                ItemTransfer::QUANTITY => 1,
+            ]));
+        }
+
+        $existingItemId = 3333;
+        $existingItemTransfer = $this->createItem([
+            ItemTransfer::ID => $existingItemId,
+            ItemTransfer::GROUP_KEY => $existingItemId,
+            ItemTransfer::QUANTITY => 1,
+        ]);
+        $quoteTransfer->addItem($existingItemTransfer);
+
+        $cartChangeTransfer->addItem(
+            (new ItemTransfer())
+                ->fromArray($existingItemTransfer->toArray(), true)
+                ->setQuantity(2),
+        );
+
+        // Act
+        $changedQuoteTransfer = $this->provider->addItems($cartChangeTransfer);
+
+        // Assert
+        $changedItems = $changedQuoteTransfer->getItems()->getArrayCopy();
+        $this->assertCount(2001, $changedItems);
+
+        /** @var \Generated\Shared\Transfer\ItemTransfer $changedQuoteItemTransfer */
+        $changedQuoteItemTransfer = array_values(array_filter($changedItems, function (ItemTransfer $itemTransfer) use ($existingItemId) {
+            return (int)$itemTransfer->getId() === $existingItemId;
+        }))[0];
+        $this->assertSame(3, $changedQuoteItemTransfer->getQuantity());
+    }
+
+    /**
      * @param string $itemId
      * @param int $itemQuantity
      * @param int|null $unitGrossPrice

@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Spryker\Zed\PriceCartConnector\Business\Builder\ItemIdentifierBuilderInterface;
 use Spryker\Zed\PriceCartConnector\Business\Filter\PriceProductFilterInterface;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInterface;
 use Spryker\Zed\PriceCartConnector\PriceCartConnectorConfig;
@@ -47,18 +48,26 @@ class PriceProductValidator implements PriceProductValidatorInterface
     protected PriceCartConnectorConfig $priceCartConnectorConfig;
 
     /**
+     * @var \Spryker\Zed\PriceCartConnector\Business\Builder\ItemIdentifierBuilderInterface
+     */
+    protected ItemIdentifierBuilderInterface $itemIdentifierBuilder;
+
+    /**
      * @param \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInterface $priceProductFacade
      * @param \Spryker\Zed\PriceCartConnector\Business\Filter\PriceProductFilterInterface $priceProductFilter
      * @param \Spryker\Zed\PriceCartConnector\PriceCartConnectorConfig $priceCartConnectorConfig
+     * @param \Spryker\Zed\PriceCartConnector\Business\Builder\ItemIdentifierBuilderInterface $itemIdentifierBuilder
      */
     public function __construct(
         PriceCartToPriceProductInterface $priceProductFacade,
         PriceProductFilterInterface $priceProductFilter,
-        PriceCartConnectorConfig $priceCartConnectorConfig
+        PriceCartConnectorConfig $priceCartConnectorConfig,
+        ItemIdentifierBuilderInterface $itemIdentifierBuilder
     ) {
         $this->priceProductFacade = $priceProductFacade;
         $this->priceProductFilter = $priceProductFilter;
         $this->priceCartConnectorConfig = $priceCartConnectorConfig;
+        $this->itemIdentifierBuilder = $itemIdentifierBuilder;
     }
 
     /**
@@ -209,8 +218,11 @@ class PriceProductValidator implements PriceProductValidatorInterface
     protected function createPriceProductFilters(CartChangeTransfer $cartChangeTransfer): array
     {
         $priceProductFilters = [];
-        foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            $priceProductFilters[] = $this->priceProductFilter->createPriceProductFilterTransfer($cartChangeTransfer, $itemTransfer);
+        foreach ($cartChangeTransfer->getItems() as $key => $itemTransfer) {
+            $itemIdentifier = $this->itemIdentifierBuilder->buildItemIdentifier($itemTransfer) ?: $key;
+            if (!array_key_exists($itemIdentifier, $priceProductFilters)) {
+                $priceProductFilters[$itemIdentifier] = $this->priceProductFilter->createPriceProductFilterTransfer($cartChangeTransfer, $itemTransfer);
+            }
         }
 
         return $priceProductFilters;

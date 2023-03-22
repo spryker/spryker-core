@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\PriceCartConnector\Business\Builder\ItemIdentifierBuilderInterface;
 use Spryker\Zed\PriceCartConnector\Business\Exception\PriceMissingException;
 use Spryker\Zed\PriceCartConnector\Business\Filter\PriceProductFilterInterface;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface;
@@ -38,27 +39,32 @@ class PriceManager implements PriceManagerInterface
     /**
      * @var \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInterface
      */
-    protected $priceProductFacade;
+    protected PriceCartToPriceProductInterface $priceProductFacade;
 
     /**
      * @var \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface
      */
-    protected $priceFacade;
+    protected PriceCartToPriceInterface $priceFacade;
 
     /**
      * @var \Spryker\Zed\PriceCartConnector\Business\Filter\PriceProductFilterInterface
      */
-    protected $priceProductFilter;
+    protected PriceProductFilterInterface $priceProductFilter;
 
     /**
      * @var \Spryker\Zed\PriceCartConnector\Dependency\Service\PriceCartConnectorToPriceProductServiceInterface
      */
-    protected $priceProductService;
+    protected PriceCartConnectorToPriceProductServiceInterface $priceProductService;
 
     /**
-     * @var array<\Spryker\Zed\PriceCartConnectorExtension\Dependency\Plugin\PriceProductExpanderPluginInterface>
+     * @var list<\Spryker\Zed\PriceCartConnectorExtension\Dependency\Plugin\PriceProductExpanderPluginInterface>
      */
-    protected $priceProductExpanderPlugins;
+    protected array $priceProductExpanderPlugins;
+
+    /**
+     * @var \Spryker\Zed\PriceCartConnector\Business\Builder\ItemIdentifierBuilderInterface
+     */
+    protected ItemIdentifierBuilderInterface $itemIdentifierBuilder;
 
     /**
      * @param \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInterface $priceProductFacade
@@ -66,19 +72,22 @@ class PriceManager implements PriceManagerInterface
      * @param \Spryker\Zed\PriceCartConnector\Business\Filter\PriceProductFilterInterface $priceProductFilter
      * @param \Spryker\Zed\PriceCartConnector\Dependency\Service\PriceCartConnectorToPriceProductServiceInterface $priceProductService
      * @param array<\Spryker\Zed\PriceCartConnectorExtension\Dependency\Plugin\PriceProductExpanderPluginInterface> $priceProductExpanderPlugins
+     * @param \Spryker\Zed\PriceCartConnector\Business\Builder\ItemIdentifierBuilderInterface $itemIdentifierBuilder
      */
     public function __construct(
         PriceCartToPriceProductInterface $priceProductFacade,
         PriceCartToPriceInterface $priceFacade,
         PriceProductFilterInterface $priceProductFilter,
         PriceCartConnectorToPriceProductServiceInterface $priceProductService,
-        array $priceProductExpanderPlugins
+        array $priceProductExpanderPlugins,
+        ItemIdentifierBuilderInterface $itemIdentifierBuilder
     ) {
         $this->priceProductFacade = $priceProductFacade;
         $this->priceFacade = $priceFacade;
         $this->priceProductFilter = $priceProductFilter;
         $this->priceProductService = $priceProductService;
         $this->priceProductExpanderPlugins = $priceProductExpanderPlugins;
+        $this->itemIdentifierBuilder = $itemIdentifierBuilder;
     }
 
     /**
@@ -97,13 +106,20 @@ class PriceManager implements PriceManagerInterface
         $priceProductTransfers = $this->priceProductFacade->getValidPrices($priceProductFilterTransfers);
         $priceProductTransfers = $this->executePriceProductExpanderPlugins($priceProductTransfers, $cartChangeTransfer);
 
-        foreach ($cartChangeTransfer->getItems() as $key => $itemTransfer) {
-            $priceProductTransfer = $this->resolveProductPriceByPriceProductFilter(
-                $priceProductTransfers,
-                $this->priceProductFilter->createPriceProductFilterTransfer($cartChangeTransfer, $itemTransfer),
-            );
+        $priceProductTransfersIndexedByItemIdentifier = $this->getPriceProductTransfersIndexedByItemIdentifier(
+            $cartChangeTransfer,
+            $priceProductTransfers,
+            $priceProductFilterTransfers,
+        );
 
-            $itemTransfer = $this->setOriginUnitPrices($itemTransfer, $priceProductTransfer, $priceMode);
+        foreach ($cartChangeTransfer->getItems() as $key => $itemTransfer) {
+            $itemIdentifier = $this->getItemIdentifier($itemTransfer, (string)$key);
+
+            $itemTransfer = $this->setOriginUnitPrices(
+                $itemTransfer,
+                $priceProductTransfersIndexedByItemIdentifier[$itemIdentifier],
+                $priceMode,
+            );
 
             if ($this->hasForcedUnitGrossPrice($itemTransfer)) {
                 continue;
@@ -153,13 +169,18 @@ class PriceManager implements PriceManagerInterface
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return array<\Generated\Shared\Transfer\PriceProductFilterTransfer>
+     * @return array<string, \Generated\Shared\Transfer\PriceProductFilterTransfer>
      */
     protected function createPriceProductFilterTransfers(CartChangeTransfer $cartChangeTransfer): array
     {
         $priceProductFilterTransfers = [];
         foreach ($cartChangeTransfer->getItems() as $key => $itemTransfer) {
-            $priceProductFilterTransfers[$key] = $this->priceProductFilter->createPriceProductFilterTransfer(
+            $itemIdentifier = $this->getItemIdentifier($itemTransfer, (string)$key);
+            if (array_key_exists($itemIdentifier, $priceProductFilterTransfers)) {
+                continue;
+            }
+
+            $priceProductFilterTransfers[$itemIdentifier] = $this->priceProductFilter->createPriceProductFilterTransfer(
                 $cartChangeTransfer,
                 $itemTransfer,
             );
@@ -328,5 +349,44 @@ class PriceManager implements PriceManagerInterface
         }
 
         return $priceProductTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param list<\Generated\Shared\Transfer\PriceProductTransfer> $priceProductTransfers
+     * @param array<string, \Generated\Shared\Transfer\PriceProductFilterTransfer> $priceProductFilterTransfers
+     *
+     * @return array<string, \Generated\Shared\Transfer\PriceProductTransfer>
+     */
+    protected function getPriceProductTransfersIndexedByItemIdentifier(
+        CartChangeTransfer $cartChangeTransfer,
+        array $priceProductTransfers,
+        array $priceProductFilterTransfers
+    ): array {
+        $priceProductTransfersIndexedByItemIdentifier = [];
+        foreach ($cartChangeTransfer->getItems() as $key => $itemTransfer) {
+            $itemIdentifier = $this->getItemIdentifier($itemTransfer, (string)$key);
+            if (array_key_exists($itemIdentifier, $priceProductTransfersIndexedByItemIdentifier)) {
+                continue;
+            }
+
+            $priceProductTransfersIndexedByItemIdentifier[$itemIdentifier] = $this->resolveProductPriceByPriceProductFilter(
+                $priceProductTransfers,
+                $priceProductFilterTransfers[$itemIdentifier],
+            );
+        }
+
+        return $priceProductTransfersIndexedByItemIdentifier;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param string $fallbackIdentifier
+     *
+     * @return string
+     */
+    protected function getItemIdentifier(ItemTransfer $itemTransfer, string $fallbackIdentifier): string
+    {
+        return $this->itemIdentifierBuilder->buildItemIdentifier($itemTransfer) ?: $fallbackIdentifier;
     }
 }

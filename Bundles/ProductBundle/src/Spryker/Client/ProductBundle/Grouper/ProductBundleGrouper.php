@@ -30,6 +30,11 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
     protected const GROUP_KEY_FORMAT = '%s_%s';
 
     /**
+     * @var string
+     */
+    protected const EMPTY_BUNDLE_IDENTIFIER = 'EMPTY_BUNDLE_IDENTIFIER';
+
+    /**
      * @var array
      */
     protected $bundleGroupKeys = [];
@@ -63,19 +68,18 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
     {
         $groupedBundleQuantity = $this->getGroupedBundleQuantity($bundleItems, $items);
 
-        $singleItems = [];
         $groupedBundleItems = [];
-        foreach ($items as $itemTransfer) {
-            if (!$itemTransfer->getRelatedBundleItemIdentifier()) {
-                $singleItems[] = $itemTransfer;
+
+        $itemTransfersGroupedByRelatedBundleItemIdentifier = $this->getItemTransfersGroupedByRelatedBundleItemIdentifier($items);
+        foreach ($bundleItems as $bundleItemTransfer) {
+            if (!array_key_exists($bundleItemTransfer->getBundleItemIdentifier(), $itemTransfersGroupedByRelatedBundleItemIdentifier)) {
+                continue;
             }
 
-            foreach ($bundleItems as $bundleItemTransfer) {
-                if ($bundleItemTransfer->getBundleItemIdentifier() !== $itemTransfer->getRelatedBundleItemIdentifier()) {
-                    continue;
-                }
+            $bundleGroupKey = $this->getBundleItemGroupKey($bundleItemTransfer, $items);
 
-                $bundleGroupKey = $this->getBundleItemGroupKey($bundleItemTransfer, $items);
+            $itemTransfers = $itemTransfersGroupedByRelatedBundleItemIdentifier[$bundleItemTransfer->getBundleItemIdentifier()];
+            foreach ($itemTransfers as $itemTransfer) {
                 $groupedBundleItems = $this->getCurrentBundle(
                     $groupedBundleItems,
                     $bundleItemTransfer,
@@ -99,7 +103,7 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
         $groupedBundleItems = $this->updateGroupedBundleItemsAggregatedSubtotal($groupedBundleItems, $bundleItems);
 
         return array_merge(
-            $singleItems,
+            $itemTransfersGroupedByRelatedBundleItemIdentifier[static::EMPTY_BUNDLE_IDENTIFIER] ?? [],
             $groupedBundleItems,
         );
     }
@@ -309,15 +313,13 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
      */
     protected function updateGroupedBundleItemsAggregatedSubtotal(array $groupedBundleItems, ArrayObject $bundleItems)
     {
+        $bundleItemTransfersGroupedByGroupKey = $this->getBundleItemTransfersGroupedByGroupKey($bundleItems);
         foreach ($groupedBundleItems as $groupedBundle) {
             /** @var \Generated\Shared\Transfer\ItemTransfer $groupedBundleItemTransfer */
             $groupedBundleItemTransfer = $groupedBundle[static::BUNDLE_PRODUCT];
 
-            foreach ($bundleItems as $bundleItemTransfer) {
-                if ($groupedBundleItemTransfer->getGroupKey() !== $bundleItemTransfer->getGroupKey()) {
-                    continue;
-                }
-
+            $relatedBundleItems = $bundleItemTransfersGroupedByGroupKey[$groupedBundleItemTransfer->getGroupKey()] ?? [];
+            foreach ($relatedBundleItems as $bundleItemTransfer) {
                 $groupedBundleItemTransfer->setUnitSubtotalAggregation(
                     $groupedBundleItemTransfer->getUnitSubtotalAggregation() + $bundleItemTransfer->getUnitSubtotalAggregation(),
                 );
@@ -329,5 +331,41 @@ class ProductBundleGrouper implements ProductBundleGrouperInterface
         }
 
         return $groupedBundleItems;
+    }
+
+    /**
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $itemTransfers
+     *
+     * @return array<string, list<\Generated\Shared\Transfer\ItemTransfer>>
+     */
+    protected function getItemTransfersGroupedByRelatedBundleItemIdentifier(ArrayObject $itemTransfers): array
+    {
+        $itemTransfersGroupedByRelatedBundleItemIdentifier = [];
+        foreach ($itemTransfers as $itemTransfer) {
+            if ($itemTransfer->getRelatedBundleItemIdentifier() === null) {
+                $itemTransfersGroupedByRelatedBundleItemIdentifier[static::EMPTY_BUNDLE_IDENTIFIER][] = $itemTransfer;
+
+                continue;
+            }
+
+            $itemTransfersGroupedByRelatedBundleItemIdentifier[$itemTransfer->getRelatedBundleItemIdentifierOrFail()][] = $itemTransfer;
+        }
+
+        return $itemTransfersGroupedByRelatedBundleItemIdentifier;
+    }
+
+    /**
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\ItemTransfer> $bundleItemTransfers
+     *
+     * @return array<string, list<\Generated\Shared\Transfer\ItemTransfer>>
+     */
+    protected function getBundleItemTransfersGroupedByGroupKey(ArrayObject $bundleItemTransfers): array
+    {
+        $bundleItemTransfersGroupedByGroupKey = [];
+        foreach ($bundleItemTransfers as $bundleItemTransfer) {
+            $bundleItemTransfersGroupedByGroupKey[$bundleItemTransfer->getGroupKey()][] = $bundleItemTransfer;
+        }
+
+        return $bundleItemTransfersGroupedByGroupKey;
     }
 }

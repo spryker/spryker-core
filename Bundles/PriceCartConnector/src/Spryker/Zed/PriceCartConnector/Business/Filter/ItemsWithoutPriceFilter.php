@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\PriceCartConnector\Business\Builder\ItemIdentifierBuilderInterface;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToMessengerInterface;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInterface;
@@ -32,39 +33,47 @@ class ItemsWithoutPriceFilter implements ItemFilterInterface
     /**
      * @var \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInterface
      */
-    protected $priceProductFacade;
+    protected PriceCartToPriceProductInterface $priceProductFacade;
 
     /**
      * @var \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface
      */
-    protected $priceFacade;
+    protected PriceCartToPriceInterface $priceFacade;
 
     /**
      * @var \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToMessengerInterface
      */
-    protected $messengerFacade;
+    protected PriceCartToMessengerInterface $messengerFacade;
 
     /**
      * @var \Spryker\Zed\PriceCartConnector\Dependency\Service\PriceCartConnectorToPriceProductServiceInterface
      */
-    protected $priceProductService;
+    protected PriceCartConnectorToPriceProductServiceInterface $priceProductService;
+
+    /**
+     * @var \Spryker\Zed\PriceCartConnector\Business\Builder\ItemIdentifierBuilderInterface
+     */
+    protected ItemIdentifierBuilderInterface $itemIdentifierBuilder;
 
     /**
      * @param \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface $priceFacade
      * @param \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInterface $priceProductFacade
      * @param \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToMessengerInterface $messengerFacade
      * @param \Spryker\Zed\PriceCartConnector\Dependency\Service\PriceCartConnectorToPriceProductServiceInterface $priceProductService
+     * @param \Spryker\Zed\PriceCartConnector\Business\Builder\ItemIdentifierBuilderInterface $itemIdentifierBuilder
      */
     public function __construct(
         PriceCartToPriceInterface $priceFacade,
         PriceCartToPriceProductInterface $priceProductFacade,
         PriceCartToMessengerInterface $messengerFacade,
-        PriceCartConnectorToPriceProductServiceInterface $priceProductService
+        PriceCartConnectorToPriceProductServiceInterface $priceProductService,
+        ItemIdentifierBuilderInterface $itemIdentifierBuilder
     ) {
         $this->priceFacade = $priceFacade;
         $this->priceProductFacade = $priceProductFacade;
         $this->messengerFacade = $messengerFacade;
         $this->priceProductService = $priceProductService;
+        $this->itemIdentifierBuilder = $itemIdentifierBuilder;
     }
 
     /**
@@ -232,8 +241,11 @@ class ItemsWithoutPriceFilter implements ItemFilterInterface
     protected function createPriceProductFilters(QuoteTransfer $quoteTransfer): array
     {
         $priceProductFilters = [];
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $priceProductFilters[] = $this->createPriceProductFilter($itemTransfer, $quoteTransfer);
+        foreach ($quoteTransfer->getItems() as $key => $itemTransfer) {
+            $itemIdentifier = $this->itemIdentifierBuilder->buildItemIdentifier($itemTransfer) ?: $key;
+            if (!array_key_exists($itemIdentifier, $priceProductFilters)) {
+                $priceProductFilters[$itemIdentifier] = $this->createPriceProductFilter($itemTransfer, $quoteTransfer);
+            }
         }
 
         return $priceProductFilters;

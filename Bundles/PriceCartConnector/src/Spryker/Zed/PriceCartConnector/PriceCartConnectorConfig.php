@@ -49,4 +49,17 @@ class PriceCartConnectorConfig extends AbstractBundleConfig
     {
         return static::IS_ZERO_PRICE_ENABLED_FOR_CART_ACTIONS;
     }
+
+    /**
+     * Specification:
+     * - Returns the list of fields that are used to build item's identifier.
+     *
+     * @api
+     *
+     * @return list<string>
+     */
+    public function getItemFieldsForIdentifier(): array
+    {
+        return [];
+    }
 }

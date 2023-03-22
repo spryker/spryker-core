@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Cart\Business\StorageProvider;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface StorageProviderInterface
 {
@@ -16,7 +17,7 @@ interface StorageProviderInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addItems(CartChangeTransfer $cartChangeTransfer);
+    public function addItems(CartChangeTransfer $cartChangeTransfer): QuoteTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer

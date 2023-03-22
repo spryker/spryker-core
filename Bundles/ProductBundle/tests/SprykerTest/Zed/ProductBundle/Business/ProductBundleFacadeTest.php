@@ -7,27 +7,25 @@
 
 namespace SprykerTest\Zed\ProductBundle\Business;
 
+use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\QuoteBuilder;
+use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\MoneyValueTransfer;
-use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductBundleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductBundleTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductForBundleTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundleQuery;
 use Spryker\DecimalObject\Decimal;
-use Spryker\Zed\ProductBundle\Business\ProductBundle\Cache\ProductBundleCache;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartItemGroupKeyExpander;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityFacadeBridge;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityFacadeInterface;
+use SprykerTest\Zed\ProductBundle\ProductBundleBusinessTester;
 
 /**
  * Auto-generated group annotations
@@ -43,44 +41,21 @@ use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityFacad
 class ProductBundleFacadeTest extends Unit
 {
     /**
-     * @var string
-     */
-    public const SKU_BUNDLED_1 = 'sku-1-test-tester';
-
-    /**
-     * @var string
-     */
-    public const SKU_BUNDLED_2 = 'sku-2-test-tester';
-
-    /**
-     * @var string
-     */
-    public const BUNDLE_SKU_3 = 'sku-3-test-tester';
-
-    /**
-     * @var int
-     */
-    public const BUNDLED_PRODUCT_PRICE_1 = 50;
-
-    /**
-     * @var int
-     */
-    public const BUNDLED_PRODUCT_PRICE_2 = 100;
-
-    /**
      * @var int
      */
     public const ID_STORE = 1;
 
     /**
+     * @uses \Spryker\Shared\Price\PriceConfig::PRICE_MODE_GROSS
+     *
      * @var string
      */
-    protected const STORE_NAME_DE = 'DE';
+    protected const GROSS_MODE = 'GROSS_MODE';
 
     /**
      * @var \SprykerTest\Zed\ProductBundle\ProductBundleBusinessTester
      */
-    protected $tester;
+    protected ProductBundleBusinessTester $tester;
 
     /**
      * @return void
@@ -88,7 +63,7 @@ class ProductBundleFacadeTest extends Unit
     protected function tearDown(): void
     {
         parent::tearDown();
-        $this->cleanProductBundleCache();
+        $this->tester->cleanProductBundleCache();
     }
 
     /**
@@ -98,14 +73,14 @@ class ProductBundleFacadeTest extends Unit
     {
         $this->markTestSkipped();
         // Arrange
-        $bundlePrice = static::BUNDLED_PRODUCT_PRICE_2;
+        $bundlePrice = ProductBundleBusinessTester::BUNDLED_PRODUCT_PRICE_2;
 
-        $productConcreteTransfer = $this->createProductBundle($bundlePrice);
+        $productConcreteTransfer = $this->tester->createProductBundle($bundlePrice);
 
         $cartChangeTransfer = new CartChangeTransfer();
         $currencyTransfer = new CurrencyTransfer();
         $currencyTransfer->setCode('EUR');
-        $quoteTransfer = $this->createBaseQuoteTransfer();
+        $quoteTransfer = $this->tester->createBaseQuoteTransfer();
         $quoteTransfer->setCurrency($currencyTransfer);
         $cartChangeTransfer->setQuote($quoteTransfer);
 
@@ -152,7 +127,7 @@ class ProductBundleFacadeTest extends Unit
     public function testGetProductBundleCollectionByCriteriaFilterShouldReturnPersistedBundledProducts(): void
     {
         //Assign
-        $productConcreteBundleTransfer = $this->createProductBundle(static::BUNDLED_PRODUCT_PRICE_2);
+        $productConcreteBundleTransfer = $this->tester->createProductBundle(ProductBundleBusinessTester::BUNDLED_PRODUCT_PRICE_2);
 
         foreach ($productConcreteBundleTransfer->getProductBundle()->getBundledProducts() as $bundledProduct) {
             //Act
@@ -203,7 +178,7 @@ class ProductBundleFacadeTest extends Unit
     public function testPostSaveCartUpdateBundlesShouldReturnQuoteWithoutBundlesWhenBundleIsRemoved(): void
     {
         // Arrange
-        $quoteTransfer = $this->createBaseQuoteTransfer();
+        $quoteTransfer = $this->tester->createBaseQuoteTransfer();
 
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setBundleItemIdentifier('bundleid');
@@ -223,7 +198,7 @@ class ProductBundleFacadeTest extends Unit
     public function testPreCheckCartActiveWhenBundleProductIsActive(): void
     {
         // Arrange
-        $productConcreteTransfer = $this->createProductBundle(static::BUNDLED_PRODUCT_PRICE_2, true);
+        $productConcreteTransfer = $this->tester->createProductBundle(ProductBundleBusinessTester::BUNDLED_PRODUCT_PRICE_2, true, true);
 
         $cartChangeTransfer = new CartChangeTransfer();
 
@@ -246,7 +221,7 @@ class ProductBundleFacadeTest extends Unit
     public function testPreCheckCartActiveWhenBundleProductIsNotActive(): void
     {
         // Arrange
-        $productConcreteTransfer = $this->createProductBundle(static::BUNDLED_PRODUCT_PRICE_2, false);
+        $productConcreteTransfer = $this->tester->createProductBundle(ProductBundleBusinessTester::BUNDLED_PRODUCT_PRICE_2);
 
         $cartChangeTransfer = new CartChangeTransfer();
 
@@ -270,14 +245,14 @@ class ProductBundleFacadeTest extends Unit
     public function testPreCheckCartAvailabilityWhenBundleAvailable(): void
     {
         // Arrange
-        $productConcreteTransfer = $this->createProductBundle(static::BUNDLED_PRODUCT_PRICE_2, true);
+        $productConcreteTransfer = $this->tester->createProductBundle(ProductBundleBusinessTester::BUNDLED_PRODUCT_PRICE_2, true, true);
 
         $cartChangeTransfer = new CartChangeTransfer();
 
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setSku($productConcreteTransfer->getSku());
 
-        $quoteTransfer = $this->createBaseQuoteTransfer();
+        $quoteTransfer = $this->tester->createBaseQuoteTransfer();
         $quoteTransfer->addItem($itemTransfer);
 
         $cartChangeTransfer->setQuote($quoteTransfer);
@@ -301,7 +276,7 @@ class ProductBundleFacadeTest extends Unit
     public function testPreCheckCartAvailabilityWhenBundleUnavailable(): void
     {
         // Arrange
-        $productConcreteTransfer = $this->createProductBundle(static::BUNDLED_PRODUCT_PRICE_2);
+        $productConcreteTransfer = $this->tester->createProductBundle(ProductBundleBusinessTester::BUNDLED_PRODUCT_PRICE_2);
 
         $cartChangeTransfer = new CartChangeTransfer();
 
@@ -309,7 +284,7 @@ class ProductBundleFacadeTest extends Unit
         $itemTransfer->setQuantity(5);
         $itemTransfer->setSku($productConcreteTransfer->getSku());
 
-        $quoteTransfer = $this->createBaseQuoteTransfer();
+        $quoteTransfer = $this->tester->createBaseQuoteTransfer();
         $quoteTransfer->addItem($itemTransfer);
 
         $cartChangeTransfer->setQuote($quoteTransfer);
@@ -333,13 +308,13 @@ class ProductBundleFacadeTest extends Unit
     public function testPreCheckCheckoutAvailabilityWhenBundleUnavailable(): void
     {
         // Arrange
-        $productConcreteTransfer = $this->createProductBundle(static::BUNDLED_PRODUCT_PRICE_2);
+        $productConcreteTransfer = $this->tester->createProductBundle(ProductBundleBusinessTester::BUNDLED_PRODUCT_PRICE_2);
 
-        $quoteTransfer = $this->createBaseQuoteTransfer();
+        $quoteTransfer = $this->tester->createBaseQuoteTransfer();
 
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setQuantity(50);
-        $itemTransfer->setSku(static::SKU_BUNDLED_1);
+        $itemTransfer->setSku(ProductBundleBusinessTester::SKU_BUNDLED_1);
 
         $quoteTransfer->addItem($itemTransfer);
 
@@ -363,13 +338,13 @@ class ProductBundleFacadeTest extends Unit
     public function testPreCheckCheckoutAvailabilityWhenBundleAvailable(): void
     {
         // Arrange
-        $productConcreteTransfer = $this->createProductBundle(static::BUNDLED_PRODUCT_PRICE_2, true);
+        $productConcreteTransfer = $this->tester->createProductBundle(ProductBundleBusinessTester::BUNDLED_PRODUCT_PRICE_2, true, true);
 
-        $quoteTransfer = $this->createBaseQuoteTransfer();
+        $quoteTransfer = $this->tester->createBaseQuoteTransfer();
 
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setQuantity(static::ID_STORE);
-        $itemTransfer->setSku(static::SKU_BUNDLED_1);
+        $itemTransfer->setSku(ProductBundleBusinessTester::SKU_BUNDLED_1);
 
         $quoteTransfer->addItem($itemTransfer);
 
@@ -393,11 +368,12 @@ class ProductBundleFacadeTest extends Unit
     public function testUpdateAffectedBundleAvailabilityWhenOneOfBundledItemsUnavailable(): void
     {
         // Arrange
-        $productConcreteTransferToAssign1 = $this->createProduct(static::BUNDLED_PRODUCT_PRICE_1, static::SKU_BUNDLED_1);
-        $productConcreteTransferToAssign2 = $this->createProduct(static::BUNDLED_PRODUCT_PRICE_2, static::SKU_BUNDLED_2);
+        $productConcreteTransferToAssign1 = $this->tester->createProduct(ProductBundleBusinessTester::BUNDLED_PRODUCT_PRICE_1, ProductBundleBusinessTester::SKU_BUNDLED_1);
+        $productConcreteTransferToAssign2 = $this->tester->createProduct(ProductBundleBusinessTester::BUNDLED_PRODUCT_PRICE_2, ProductBundleBusinessTester::SKU_BUNDLED_2);
 
-        $this->createProductBundle(
-            static::BUNDLED_PRODUCT_PRICE_2,
+        $this->tester->createProductBundle(
+            ProductBundleBusinessTester::BUNDLED_PRODUCT_PRICE_2,
+            false,
             false,
             [
                 $productConcreteTransferToAssign1,
@@ -415,7 +391,7 @@ class ProductBundleFacadeTest extends Unit
 
         $bundledProductAvailability = $this->createAvailabilityFacade()
             ->findOrCreateProductConcreteAvailabilityBySkuForStore(
-                static::BUNDLE_SKU_3,
+                ProductBundleBusinessTester::BUNDLE_SKU_3,
                 $storeTransfer,
             );
 
@@ -429,8 +405,8 @@ class ProductBundleFacadeTest extends Unit
     public function testSaveBundledProductsShouldAddProvidedConcreteToBundle(): void
     {
         // Arrange
-        $productConcreteBundleTransfer = $this->createProduct(static::BUNDLED_PRODUCT_PRICE_1, static::BUNDLE_SKU_3);
-        $productConcreteToAssignTransfer = $this->createProduct(static::BUNDLED_PRODUCT_PRICE_1, static::SKU_BUNDLED_1);
+        $productConcreteBundleTransfer = $this->tester->createProduct(ProductBundleBusinessTester::BUNDLED_PRODUCT_PRICE_1, ProductBundleBusinessTester::BUNDLE_SKU_3);
+        $productConcreteToAssignTransfer = $this->tester->createProduct(ProductBundleBusinessTester::BUNDLED_PRODUCT_PRICE_1, ProductBundleBusinessTester::SKU_BUNDLED_1);
 
         $productBundleTransfer = new ProductBundleTransfer();
 
@@ -465,7 +441,7 @@ class ProductBundleFacadeTest extends Unit
     {
         $this->markTestIncomplete('Something with transactions');
         // Arrange
-        $productConcreteBundleTransfer = $this->createProductBundle(static::BUNDLED_PRODUCT_PRICE_2);
+        $productConcreteBundleTransfer = $this->tester->createProductBundle(ProductBundleBusinessTester::BUNDLED_PRODUCT_PRICE_2);
 
         $productBundleTransfer = $productConcreteBundleTransfer->getProductBundle();
         $bundledProducts = $productBundleTransfer->getBundledProducts();
@@ -488,7 +464,7 @@ class ProductBundleFacadeTest extends Unit
     {
         $this->markTestIncomplete('Something with transactions');
         // Arrange
-        $productConcreteBundleTransfer = $this->createProductBundle(static::BUNDLED_PRODUCT_PRICE_2);
+        $productConcreteBundleTransfer = $this->tester->createProductBundle(ProductBundleBusinessTester::BUNDLED_PRODUCT_PRICE_2);
 
         // Act
         $bundledProducts = $this->getProductBundleFacade()
@@ -506,7 +482,7 @@ class ProductBundleFacadeTest extends Unit
     {
         $this->markTestIncomplete('Something with transactions');
         // Arrange
-        $productConcreteBundleTransfer = $this->createProductBundle(static::BUNDLED_PRODUCT_PRICE_2);
+        $productConcreteBundleTransfer = $this->tester->createProductBundle(ProductBundleBusinessTester::BUNDLED_PRODUCT_PRICE_2);
 
         $productConcreteTransfer = new ProductConcreteTransfer();
         $productConcreteTransfer->setIdProductConcrete($productConcreteBundleTransfer->getIdProductConcrete());
@@ -525,7 +501,7 @@ class ProductBundleFacadeTest extends Unit
     public function testExpandProductConcreteTransfersWithBundledProductsSuccessful(): void
     {
         // Arrange
-        $productConcreteBundleTransfer = $this->createProductBundle(static::BUNDLED_PRODUCT_PRICE_2);
+        $productConcreteBundleTransfer = $this->tester->createProductBundle(ProductBundleBusinessTester::BUNDLED_PRODUCT_PRICE_2);
 
         $productConcreteTransferWithBundle = new ProductConcreteTransfer();
         $productConcreteTransferWithBundle->setIdProductConcrete($productConcreteBundleTransfer->getIdProductConcrete());
@@ -579,7 +555,7 @@ class ProductBundleFacadeTest extends Unit
     public function testDeactivateRelatedProductBundlesWithInactiveProductConcrete(): void
     {
         // Arrange
-        $productConcreteTransfer = $this->tester->createProductBundle(static::BUNDLED_PRODUCT_PRICE_2, false);
+        $productConcreteTransfer = $this->tester->createProductBundle(ProductBundleBusinessTester::BUNDLED_PRODUCT_PRICE_2);
 
         // Act
         $productConcreteTransfer = $this->getProductBundleFacade()
@@ -587,6 +563,262 @@ class ProductBundleFacadeTest extends Unit
 
         // Assert
         $this->assertFalse($productConcreteTransfer->getIsActive());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCalculateBundlePriceForCalculableObjectTransferShouldCalculateBundlePricesByRelatedItems(): void
+    {
+        // Arrange
+        $bundleItemTransfers = new ArrayObject([
+            (new ItemTransfer())
+                ->setBundleItemIdentifier(ProductBundleBusinessTester::FAKE_BUNDLE_ITEM_IDENTIFIER_1)
+                ->setUnitPrice(1000)
+                ->setSumPrice(1500)
+                ->setUnitNetPrice(500)
+                ->setSumNetPrice(550)
+                ->setUnitGrossPrice(600)
+                ->setSumGrossPrice(650)
+                ->setUnitSubtotalAggregation(200)
+                ->setSumSubtotalAggregation(250)
+                ->setUnitDiscountAmountFullAggregation(400)
+                ->setSumDiscountAmountFullAggregation(450)
+                ->setUnitDiscountAmountAggregation(100)
+                ->setSumDiscountAmountAggregation(150)
+                ->setUnitPriceToPayAggregation(200)
+                ->setSumPriceToPayAggregation(250),
+            (new ItemTransfer())
+                ->setBundleItemIdentifier(ProductBundleBusinessTester::FAKE_BUNDLE_ITEM_IDENTIFIER_2)
+                ->setUnitPrice(2000)
+                ->setSumPrice(2500)
+                ->setUnitNetPrice(1500)
+                ->setSumNetPrice(1550)
+                ->setUnitGrossPrice(1600)
+                ->setSumGrossPrice(1650)
+                ->setUnitSubtotalAggregation(1200)
+                ->setSumSubtotalAggregation(1250)
+                ->setUnitDiscountAmountFullAggregation(1400)
+                ->setSumDiscountAmountFullAggregation(1450)
+                ->setUnitDiscountAmountAggregation(1100)
+                ->setSumDiscountAmountAggregation(1150)
+                ->setUnitPriceToPayAggregation(1200)
+                ->setSumPriceToPayAggregation(1250),
+        ]);
+
+        $itemTransfers = new ArrayObject([
+            (new ItemTransfer())
+                ->setRelatedBundleItemIdentifier(ProductBundleBusinessTester::FAKE_BUNDLE_ITEM_IDENTIFIER_1)
+                ->setUnitPrice(100)
+                ->setSumPrice(150)
+                ->setUnitNetPrice(200)
+                ->setSumNetPrice(250)
+                ->setUnitGrossPrice(100)
+                ->setSumGrossPrice(150)
+                ->setUnitSubtotalAggregation(100)
+                ->setSumSubtotalAggregation(200)
+                ->setUnitDiscountAmountFullAggregation(150)
+                ->setSumDiscountAmountFullAggregation(250)
+                ->setUnitDiscountAmountAggregation(200)
+                ->setSumDiscountAmountAggregation(100)
+                ->setUnitPriceToPayAggregation(200)
+                ->setSumPriceToPayAggregation(300),
+            (new ItemTransfer())
+                ->setRelatedBundleItemIdentifier(ProductBundleBusinessTester::FAKE_BUNDLE_ITEM_IDENTIFIER_1)
+                ->setUnitPrice(200)
+                ->setSumPrice(250)
+                ->setUnitNetPrice(300)
+                ->setSumNetPrice(350)
+                ->setUnitGrossPrice(200)
+                ->setSumGrossPrice(250)
+                ->setUnitSubtotalAggregation(200)
+                ->setSumSubtotalAggregation(300)
+                ->setUnitDiscountAmountFullAggregation(250)
+                ->setSumDiscountAmountFullAggregation(350)
+                ->setUnitDiscountAmountAggregation(300)
+                ->setSumDiscountAmountAggregation(200)
+                ->setUnitPriceToPayAggregation(300)
+                ->setSumPriceToPayAggregation(400),
+            (new ItemTransfer())
+                ->setUnitPrice(100)
+                ->setSumPrice(150)
+                ->setUnitNetPrice(200)
+                ->setSumNetPrice(250)
+                ->setUnitGrossPrice(100)
+                ->setSumGrossPrice(150)
+                ->setUnitSubtotalAggregation(100)
+                ->setSumSubtotalAggregation(200)
+                ->setUnitDiscountAmountFullAggregation(150)
+                ->setSumDiscountAmountFullAggregation(250)
+                ->setUnitDiscountAmountAggregation(200)
+                ->setSumDiscountAmountAggregation(100)
+                ->setUnitPriceToPayAggregation(200)
+                ->setSumPriceToPayAggregation(300),
+        ]);
+
+        // Act
+        $calculableObjectTransfer = $this->getProductBundleFacade()->calculateBundlePriceForCalculableObjectTransfer(
+            (new CalculableObjectTransfer())
+                ->setBundleItems($bundleItemTransfers)
+                ->setItems($itemTransfers),
+        );
+
+        // Assert
+        $this->assertItemPrices($calculableObjectTransfer->getBundleItems()->offsetGet(0), [
+            ItemTransfer::UNIT_PRICE => 300,
+            ItemTransfer::SUM_PRICE => 400,
+            ItemTransfer::UNIT_NET_PRICE => 500,
+            ItemTransfer::SUM_NET_PRICE => 600,
+            ItemTransfer::UNIT_GROSS_PRICE => 300,
+            ItemTransfer::SUM_GROSS_PRICE => 400,
+            ItemTransfer::UNIT_SUBTOTAL_AGGREGATION => 300,
+            ItemTransfer::SUM_SUBTOTAL_AGGREGATION => 500,
+            ItemTransfer::UNIT_DISCOUNT_AMOUNT_FULL_AGGREGATION => 400,
+            ItemTransfer::SUM_DISCOUNT_AMOUNT_FULL_AGGREGATION => 600,
+            ItemTransfer::UNIT_DISCOUNT_AMOUNT_AGGREGATION => 500,
+            ItemTransfer::SUM_DISCOUNT_AMOUNT_AGGREGATION => 300,
+            ItemTransfer::UNIT_PRICE_TO_PAY_AGGREGATION => 500,
+            ItemTransfer::SUM_PRICE_TO_PAY_AGGREGATION => 700,
+        ]);
+        $this->assertItemPrices($calculableObjectTransfer->getBundleItems()->offsetGet(1), [
+            ItemTransfer::UNIT_PRICE => 0,
+            ItemTransfer::SUM_PRICE => 0,
+            ItemTransfer::UNIT_NET_PRICE => 0,
+            ItemTransfer::SUM_NET_PRICE => 0,
+            ItemTransfer::UNIT_GROSS_PRICE => 0,
+            ItemTransfer::SUM_GROSS_PRICE => 0,
+            ItemTransfer::UNIT_SUBTOTAL_AGGREGATION => 0,
+            ItemTransfer::SUM_SUBTOTAL_AGGREGATION => 0,
+            ItemTransfer::UNIT_DISCOUNT_AMOUNT_FULL_AGGREGATION => 0,
+            ItemTransfer::SUM_DISCOUNT_AMOUNT_FULL_AGGREGATION => 0,
+            ItemTransfer::UNIT_DISCOUNT_AMOUNT_AGGREGATION => 0,
+            ItemTransfer::SUM_DISCOUNT_AMOUNT_AGGREGATION => 0,
+            ItemTransfer::UNIT_PRICE_TO_PAY_AGGREGATION => 0,
+            ItemTransfer::SUM_PRICE_TO_PAY_AGGREGATION => 0,
+        ]);
+    }
+
+    /**
+     * @return void
+     */
+    public function testPreCheckBundledProductPricesShouldBeSuccessfulWhenAllRelatedProductsHavePrices(): void
+    {
+        // Arrange
+        $currencyTransfer = $this->tester->haveCurrencyTransfer([CurrencyTransfer::CODE => ProductBundleBusinessTester::FAKE_CURRENCY_CODE]);
+
+        $bundleProductTransfer = $this->tester->createProductBundle(
+            ProductBundleBusinessTester::BUNDLED_PRODUCT_PRICE_2,
+            true,
+            false,
+            [
+                $this->tester->createProduct(
+                    ProductBundleBusinessTester::BUNDLED_PRODUCT_PRICE_1,
+                    ProductBundleBusinessTester::SKU_BUNDLED_1,
+                    true,
+                    true,
+                    $currencyTransfer,
+                ),
+                $this->tester->createProduct(
+                    ProductBundleBusinessTester::BUNDLED_PRODUCT_PRICE_2,
+                    ProductBundleBusinessTester::SKU_BUNDLED_2,
+                    true,
+                    true,
+                    $currencyTransfer,
+                ),
+            ],
+        );
+
+        $itemTransfers = new ArrayObject([
+            (new ItemTransfer())
+                ->setBundleItemIdentifier(ProductBundleBusinessTester::FAKE_BUNDLE_ITEM_IDENTIFIER_1)
+                ->setSku($bundleProductTransfer->getSkuOrFail())
+                ->setQuantity(1),
+            (new ItemTransfer())
+                ->setBundleItemIdentifier(ProductBundleBusinessTester::FAKE_BUNDLE_ITEM_IDENTIFIER_2)
+                ->setSku($bundleProductTransfer->getSkuOrFail()),
+        ]);
+
+        $quoteTransfer = $this->tester->createBaseQuoteTransfer()
+            ->setPriceMode(static::GROSS_MODE)
+            ->setCurrency($currencyTransfer);
+
+        $cartChangeTransfer = (new CartChangeTransfer())
+            ->setItems($itemTransfers)
+            ->setQuote($quoteTransfer);
+
+        // Act
+        $cartPreCheckResponseTransfer = $this->getProductBundleFacade()->preCheckBundledProductPrices($cartChangeTransfer);
+
+        // Assert
+        $this->assertTrue($cartPreCheckResponseTransfer->getIsSuccess());
+    }
+
+    /**
+     * @return void
+     */
+    public function testPreCheckBundledProductPricesShouldBeNotSuccessfulWhenAtLeastOneRelatedProductDoesNotHavePrice(): void
+    {
+        // Arrange
+        $currencyTransfer = $this->tester->haveCurrencyTransfer([CurrencyTransfer::CODE => ProductBundleBusinessTester::FAKE_CURRENCY_CODE]);
+
+        $bundleProductTransfer = $this->tester->createProductBundle(
+            ProductBundleBusinessTester::BUNDLED_PRODUCT_PRICE_1,
+            true,
+            false,
+            [
+                $this->tester->createProduct(
+                    ProductBundleBusinessTester::BUNDLED_PRODUCT_PRICE_1,
+                    ProductBundleBusinessTester::SKU_BUNDLED_1,
+                    true,
+                    true,
+                    $currencyTransfer,
+                ),
+            ],
+        );
+
+        $secondBundleProductTransfer = $this->tester->createProductBundle(
+            ProductBundleBusinessTester::BUNDLED_PRODUCT_PRICE_2,
+            true,
+            false,
+            [
+                $this->tester->createProduct(
+                    0,
+                    ProductBundleBusinessTester::SKU_BUNDLED_2,
+                    true,
+                    true,
+                    $currencyTransfer,
+                ),
+            ],
+            ProductBundleBusinessTester::SKU_BUNDLED_4,
+        );
+
+        $itemTransfers = new ArrayObject([
+            (new ItemTransfer())
+                ->setBundleItemIdentifier(ProductBundleBusinessTester::FAKE_BUNDLE_ITEM_IDENTIFIER_1)
+                ->setSku($bundleProductTransfer->getSkuOrFail())
+                ->setQuantity(1),
+            (new ItemTransfer())
+                ->setBundleItemIdentifier(ProductBundleBusinessTester::FAKE_BUNDLE_ITEM_IDENTIFIER_2)
+                ->setSku($secondBundleProductTransfer->getSkuOrFail())
+                ->setQuantity(2),
+            (new ItemTransfer())
+                ->setBundleItemIdentifier(ProductBundleBusinessTester::FAKE_BUNDLE_ITEM_IDENTIFIER_1)
+                ->setSku($bundleProductTransfer->getSkuOrFail()),
+        ]);
+
+        $quoteTransfer = $this->tester->createBaseQuoteTransfer()
+            ->setPriceMode(static::GROSS_MODE)
+            ->setCurrency($currencyTransfer);
+
+        $cartChangeTransfer = (new CartChangeTransfer())
+            ->setItems($itemTransfers)
+            ->setQuote($quoteTransfer);
+
+        // Act
+        $cartPreCheckResponseTransfer = $this->getProductBundleFacade()->preCheckBundledProductPrices($cartChangeTransfer);
+
+        // Assert
+        $this->assertFalse($cartPreCheckResponseTransfer->getIsSuccess());
     }
 
     /**
@@ -606,92 +838,15 @@ class ProductBundleFacadeTest extends Unit
     }
 
     /**
-     * @param int $price
-     * @param string $sku
-     * @param bool $isAlwaysAvailable
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param array<string, int> $expectedPrices
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
-    protected function createProduct(int $price, string $sku, bool $isAlwaysAvailable = false): ProductConcreteTransfer
-    {
-        $currencyTransfer = $this->tester->haveCurrencyTransfer([CurrencyTransfer::CODE => 'EUR']);
-        $productConcreteTransfer = $this->tester->haveProduct([
-            ProductConcreteTransfer::SKU => $sku,
-            ProductConcreteTransfer::IS_ACTIVE => $isAlwaysAvailable,
-        ]);
-
-        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
-        $this->tester->haveProductInStockForStore($storeTransfer, [
-            StockProductTransfer::SKU => $productConcreteTransfer->getSku(),
-            StockProductTransfer::QUANTITY => 10,
-            StockProductTransfer::IS_NEVER_OUT_OF_STOCK => $isAlwaysAvailable,
-        ]);
-        $this->tester->haveAvailabilityConcrete($productConcreteTransfer->getSku(), $storeTransfer, 10);
-
-        $this->tester->havePriceProduct([
-            PriceProductTransfer::SKU_PRODUCT_ABSTRACT => $productConcreteTransfer->getAbstractSku(),
-            PriceProductTransfer::MONEY_VALUE => [
-                MoneyValueTransfer::NET_AMOUNT => $price,
-                MoneyValueTransfer::GROSS_AMOUNT => $price,
-                MoneyValueTransfer::CURRENCY => $currencyTransfer,
-            ],
-        ]);
-
-        return $productConcreteTransfer;
-    }
-
-    /**
-     * @param int $bundlePrice
-     * @param bool $isAlwaysAvailable
-     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productsToAssign
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
-     */
-    protected function createProductBundle($bundlePrice, $isAlwaysAvailable = false, array $productsToAssign = []): ProductConcreteTransfer
-    {
-        if ($productsToAssign === []) {
-            $productsToAssign = [
-                $this->createProduct(static::BUNDLED_PRODUCT_PRICE_1, static::SKU_BUNDLED_1, $isAlwaysAvailable),
-                $this->createProduct(static::BUNDLED_PRODUCT_PRICE_2, static::SKU_BUNDLED_2, $isAlwaysAvailable),
-            ];
-        }
-
-        $productBundleTransfer = new ProductBundleTransfer();
-        if ($isAlwaysAvailable) {
-            $productBundleTransfer->setIsNeverOutOfStock(true);
-        }
-
-        foreach ($productsToAssign as $productConcreteTransferToAssign) {
-            $bundledProductTransfer = new ProductForBundleTransfer();
-            $bundledProductTransfer->setQuantity(1);
-            $bundledProductTransfer->setIdProductConcrete($productConcreteTransferToAssign->getIdProductConcrete());
-            $productBundleTransfer->addBundledProduct($bundledProductTransfer);
-        }
-
-        $productConcreteTransfer = $this->createProduct($bundlePrice, static::BUNDLE_SKU_3, $isAlwaysAvailable);
-        $productConcreteTransfer->setProductBundle($productBundleTransfer);
-
-        $this->getProductBundleFacade()->saveBundledProducts($productConcreteTransfer);
-
-        return $productConcreteTransfer;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    protected function createBaseQuoteTransfer(): QuoteTransfer
-    {
-        $storeTransfer = (new StoreTransfer())->setName(static::STORE_NAME_DE);
-
-        return (new QuoteTransfer())
-            ->setStore($storeTransfer);
-    }
-
-    /**
      * @return void
      */
-    protected function cleanProductBundleCache(): void
+    protected function assertItemPrices(ItemTransfer $itemTransfer, array $expectedPrices): void
     {
-        (new ProductBundleCache())->cleanCache();
+        foreach ($expectedPrices as $priceType => $expectedPrice) {
+            $this->assertSame($expectedPrice, $itemTransfer[$priceType]);
+        }
     }
 }

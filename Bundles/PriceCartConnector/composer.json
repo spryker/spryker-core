@@ -11,7 +11,9 @@
         "spryker/messenger": "^3.0.0",
         "spryker/price": "^5.0.0",
         "spryker/price-cart-connector-extension": "^1.1.0",
-        "spryker/price-product": "^1.4.0 || ^2.3.0 || ^4.1.0"
+        "spryker/price-product": "^1.4.0 || ^2.3.0 || ^4.1.0",
+        "spryker/util-encoding": "^2.0.0",
+        "spryker/util-text": "^1.1.0"
     },
     "require-dev": {
         "spryker/cart": "*",

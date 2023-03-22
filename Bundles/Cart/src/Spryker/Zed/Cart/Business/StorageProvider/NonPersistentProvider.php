@@ -42,33 +42,36 @@ class NonPersistentProvider implements StorageProviderInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function addItems(CartChangeTransfer $cartChangeTransfer)
+    public function addItems(CartChangeTransfer $cartChangeTransfer): QuoteTransfer
     {
+        $quoteTransfer = $cartChangeTransfer->getQuoteOrFail();
+        $cartIndex = $this->createCartIndex($quoteTransfer->getItems());
+
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            $this->addItem($itemTransfer, $cartChangeTransfer->getQuote());
+            $cartIndex = $this->addItem($itemTransfer, $quoteTransfer, $cartIndex);
         }
 
-        return $cartChangeTransfer->getQuote();
+        return $quoteTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param array<string, int> $cartIndex
      *
-     * @return void
+     * @return array<string, int>
      */
-    protected function addItem(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer): void
+    protected function addItem(ItemTransfer $itemTransfer, QuoteTransfer $quoteTransfer, array $cartIndex): array
     {
         $this->isValidQuantity($itemTransfer);
         foreach ($this->cartAddItemStrategyPlugins as $cartAddItemStrategyPlugin) {
             if ($cartAddItemStrategyPlugin->isApplicable($itemTransfer, $quoteTransfer)) {
                 $cartAddItemStrategyPlugin->execute($itemTransfer, $quoteTransfer);
 
-                return;
+                return $cartIndex;
             }
         }
 
-        $cartIndex = $this->createCartIndex($quoteTransfer->getItems());
         $itemIdentifier = $this->getItemIdentifier($itemTransfer);
         if (isset($cartIndex[$itemIdentifier])) {
             $this->increaseExistingItem(
@@ -76,10 +79,13 @@ class NonPersistentProvider implements StorageProviderInterface
                 $itemTransfer,
             );
 
-            return;
+            return $cartIndex;
         }
 
         $quoteTransfer->getItems()->append($itemTransfer);
+        $cartIndex[$itemIdentifier] = (int)array_key_last($quoteTransfer->getItems()->getArrayCopy());
+
+        return $cartIndex;
     }
 
     /**

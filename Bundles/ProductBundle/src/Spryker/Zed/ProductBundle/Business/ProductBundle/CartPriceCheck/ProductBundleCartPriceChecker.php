@@ -60,8 +60,10 @@ class ProductBundleCartPriceChecker implements ProductBundleCartPriceCheckerInte
     {
         $cartPreCheckResponseTransfer = (new CartPreCheckResponseTransfer())
             ->setIsSuccess(true);
+
+        $checkedItems = [];
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            if (!$itemTransfer->getBundleItemIdentifier()) {
+            if (!$itemTransfer->getBundleItemIdentifier() || in_array($itemTransfer->getSkuOrFail(), $checkedItems, true)) {
                 continue;
             }
 
@@ -69,6 +71,7 @@ class ProductBundleCartPriceChecker implements ProductBundleCartPriceCheckerInte
                 ->requireQuantity();
 
             $cartPreCheckResponseTransfer = $this->checkItemPrice($itemTransfer, $cartPreCheckResponseTransfer, $cartChangeTransfer);
+            $checkedItems[] = $itemTransfer->getSkuOrFail();
         }
 
         return $cartPreCheckResponseTransfer;

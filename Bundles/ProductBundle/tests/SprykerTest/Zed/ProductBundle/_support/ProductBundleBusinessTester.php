@@ -24,6 +24,7 @@ use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Cache\ProductBundleCache;
 use Spryker\Zed\ProductBundle\Communication\Plugin\Checkout\ProductBundleOrderSaverPlugin;
 use SprykerTest\Zed\Sales\Helper\BusinessHelper;
 
@@ -62,6 +63,11 @@ class ProductBundleBusinessTester extends Actor
     public const BUNDLE_SKU_3 = 'sku-3-test-tester';
 
     /**
+     * @var string
+     */
+    public const SKU_BUNDLED_4 = 'sku-4-test-tester';
+
+    /**
      * @var int
      */
     public const BUNDLED_PRODUCT_PRICE_1 = 50;
@@ -94,6 +100,11 @@ class ProductBundleBusinessTester extends Actor
     /**
      * @var string
      */
+    public const FAKE_CURRENCY_CODE = 'FAKE';
+
+    /**
+     * @var string
+     */
     protected const STORE_NAME_DE = 'DE';
 
     /**
@@ -101,14 +112,16 @@ class ProductBundleBusinessTester extends Actor
      * @param bool $isAlwaysAvailable
      * @param bool $isNeverOutOfStock
      * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productsToAssign
+     * @param string|null $bundleProductSku
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     public function createProductBundle(
-        $bundlePrice,
-        $isAlwaysAvailable = false,
-        $isNeverOutOfStock = false,
-        array $productsToAssign = []
+        int $bundlePrice,
+        bool $isAlwaysAvailable = false,
+        bool $isNeverOutOfStock = false,
+        array $productsToAssign = [],
+        ?string $bundleProductSku = null
     ): ProductConcreteTransfer {
         if ($productsToAssign === []) {
             $productsToAssign = [
@@ -139,7 +152,7 @@ class ProductBundleBusinessTester extends Actor
             $productBundleTransfer->addBundledProduct($bundledProductTransfer);
         }
 
-        $productConcreteTransfer = $this->createProduct($bundlePrice, static::BUNDLE_SKU_3, $isAlwaysAvailable);
+        $productConcreteTransfer = $this->createProduct($bundlePrice, $bundleProductSku ?? static::BUNDLE_SKU_3, $isAlwaysAvailable);
         $productConcreteTransfer->setProductBundle($productBundleTransfer);
 
         $this->getFacade()->saveBundledProducts($productConcreteTransfer);
@@ -152,6 +165,7 @@ class ProductBundleBusinessTester extends Actor
      * @param string $sku
      * @param bool $isActive
      * @param bool $isNeverOutOfStock
+     * @param \Generated\Shared\Transfer\CurrencyTransfer|null $currencyTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
@@ -159,9 +173,9 @@ class ProductBundleBusinessTester extends Actor
         int $price,
         string $sku,
         bool $isActive = false,
-        $isNeverOutOfStock = false
+        bool $isNeverOutOfStock = false,
+        ?CurrencyTransfer $currencyTransfer = null
     ): ProductConcreteTransfer {
-        $currencyTransfer = $this->haveCurrencyTransfer([CurrencyTransfer::CODE => 'EUR']);
         $productConcreteTransfer = $this->haveProduct([
             ProductConcreteTransfer::SKU => $sku,
             ProductConcreteTransfer::IS_ACTIVE => $isActive,
@@ -175,6 +189,9 @@ class ProductBundleBusinessTester extends Actor
         ]);
         $this->haveAvailabilityConcrete($productConcreteTransfer->getSku(), $storeTransfer, 10);
 
+        if ($currencyTransfer === null) {
+            $currencyTransfer = $this->haveCurrencyTransfer([CurrencyTransfer::CODE => static::FAKE_CURRENCY_CODE]);
+        }
         $this->havePriceProduct([
             PriceProductTransfer::SKU_PRODUCT_ABSTRACT => $productConcreteTransfer->getAbstractSku(),
             PriceProductTransfer::MONEY_VALUE => [
@@ -282,5 +299,22 @@ class ProductBundleBusinessTester extends Actor
         }
 
         return $orderBuilder->build();
+    }
+
+    /**
+     * @return void
+     */
+    public function cleanProductBundleCache(): void
+    {
+        (new ProductBundleCache())->cleanCache();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function createBaseQuoteTransfer(): QuoteTransfer
+    {
+        return (new QuoteTransfer())
+            ->setStore((new StoreTransfer())->setName(static::STORE_NAME_DE));
     }
 }

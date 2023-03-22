@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\PriceCartConnector;
 
 use ArrayObject;
 use Codeception\Actor;
+use Codeception\Stub;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
@@ -21,12 +22,18 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\PriceCartConnector\Business\Builder\ItemIdentifierBuilder;
+use Spryker\Zed\PriceCartConnector\Business\Builder\ItemIdentifierBuilderInterface;
 use Spryker\Zed\PriceCartConnector\Business\PriceCartConnectorBusinessFactory;
 use Spryker\Zed\PriceCartConnector\Business\PriceCartConnectorFacade;
 use Spryker\Zed\PriceCartConnector\Business\PriceCartConnectorFacadeInterface;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartConnectorToCurrencyFacadeInterface;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInterface;
+use Spryker\Zed\PriceCartConnector\Dependency\Service\PriceCartConnectorToUtilEncodingServiceBridge;
+use Spryker\Zed\PriceCartConnector\Dependency\Service\PriceCartConnectorToUtilEncodingServiceInterface;
+use Spryker\Zed\PriceCartConnector\Dependency\Service\PriceCartConnectorToUtilTextServiceBridge;
+use Spryker\Zed\PriceCartConnector\Dependency\Service\PriceCartConnectorToUtilTextServiceInterface;
 use Spryker\Zed\PriceCartConnector\PriceCartConnectorConfig;
 use Spryker\Zed\PriceCartConnector\PriceCartConnectorDependencyProvider;
 use SprykerTest\Zed\PriceCartConnector\Business\Fixture\PriceProductFacadeStub;
@@ -143,7 +150,6 @@ class PriceCartConnectorBusinessTester extends Actor
      * @param \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInterface $priceProductFacadeStub
      * @param \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface $priceFacadeMock
      * @param \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartConnectorToCurrencyFacadeInterface $currencyFacadeMock
-     * @param bool $isZeroPriceEnabledForCartActions
      *
      * @return \Spryker\Zed\PriceCartConnector\Business\PriceCartConnectorFacadeInterface
      */
@@ -151,15 +157,13 @@ class PriceCartConnectorBusinessTester extends Actor
         PriceCartConnectorConfig $priceCartConnectorConfigMock,
         PriceCartToPriceProductInterface $priceProductFacadeStub,
         PriceCartToPriceInterface $priceFacadeMock,
-        PriceCartConnectorToCurrencyFacadeInterface $currencyFacadeMock,
-        bool $isZeroPriceEnabledForCartActions
+        PriceCartConnectorToCurrencyFacadeInterface $currencyFacadeMock
     ): PriceCartConnectorFacadeInterface {
         $priceCartConnectorBusinessFactory = $this->createAndConfigurePriceCartConnectorBusinessFactory(
             $priceCartConnectorConfigMock,
             $priceProductFacadeStub,
             $priceFacadeMock,
             $currencyFacadeMock,
-            $isZeroPriceEnabledForCartActions,
         );
 
         $priceCartConnectorFacade = $this->createPriceCartConnectorFacade();
@@ -211,6 +215,57 @@ class PriceCartConnectorBusinessTester extends Actor
     }
 
     /**
+     * @return \Spryker\Zed\PriceCartConnector\Dependency\Service\PriceCartConnectorToUtilEncodingServiceInterface
+     */
+    public function createPriceCartConnectorToUtilEncodingServiceBridge(): PriceCartConnectorToUtilEncodingServiceInterface
+    {
+        return new PriceCartConnectorToUtilEncodingServiceBridge(
+            $this->getLocator()->utilEncoding()->service(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceCartConnector\Dependency\Service\PriceCartConnectorToUtilTextServiceInterface
+     */
+    public function createPriceCartConnectorToUtilTextServiceBridge(): PriceCartConnectorToUtilTextServiceInterface
+    {
+        return new PriceCartConnectorToUtilTextServiceBridge(
+            $this->getLocator()->utilText()->service(),
+        );
+    }
+
+    /**
+     * @param \Spryker\Zed\PriceCartConnector\PriceCartConnectorConfig $priceCartConnectorConfig
+     *
+     * @return \Spryker\Zed\PriceCartConnector\Business\Builder\ItemIdentifierBuilderInterface
+     */
+    public function createItemIdentifierBuilder(PriceCartConnectorConfig $priceCartConnectorConfig): ItemIdentifierBuilderInterface
+    {
+        return new ItemIdentifierBuilder(
+            $priceCartConnectorConfig,
+            $this->createPriceCartConnectorToUtilEncodingServiceBridge(),
+            $this->createPriceCartConnectorToUtilTextServiceBridge(),
+        );
+    }
+
+    /**
+     * @param list<string> $itemFieldsForIdentifier
+     * @param bool $isZeroPriceEnabledForCartActions
+     *
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\PriceCartConnector\PriceCartConnectorConfig
+     */
+    public function createPriceCartConnectorConfigMock(
+        array $itemFieldsForIdentifier = [],
+        bool $isZeroPriceEnabledForCartActions = false
+    ): PriceCartConnectorConfig {
+        return Stub::make(PriceCartConnectorConfig::class, [
+            'getItemFieldsForIdentifier' => $itemFieldsForIdentifier,
+            'isZeroPriceEnabledForCartActions' => $isZeroPriceEnabledForCartActions,
+            'getItemFieldsForIsSameItemComparison' => [ItemTransfer::SKU],
+        ]);
+    }
+
+    /**
      * @return \Spryker\Zed\Kernel\Container
      */
     protected function createContainer(): Container
@@ -246,6 +301,14 @@ class PriceCartConnectorBusinessTester extends Actor
 
         $container->set(PriceCartConnectorDependencyProvider::PLUGINS_CART_ITEM_QUANTITY_COUNTER_STRATEGY, function (Container $container) {
             return [];
+        });
+
+        $container->set(PriceCartConnectorDependencyProvider::SERVICE_UTIL_TEXT, function (Container $container) {
+            return $this->createPriceCartConnectorToUtilTextServiceBridge();
+        });
+
+        $container->set(PriceCartConnectorDependencyProvider::SERVICE_UTIL_ENCODING, function (Container $container) {
+            return $this->createPriceCartConnectorToUtilEncodingServiceBridge();
         });
 
         return $container;
@@ -293,7 +356,6 @@ class PriceCartConnectorBusinessTester extends Actor
      * @param \Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInterface $priceProductFacadeStub
      * @param \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface $priceFacadeMock
      * @param \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartConnectorToCurrencyFacadeInterface $currencyFacadeMock
-     * @param bool $isZeroPriceEnabledForCartActions
      *
      * @return \Spryker\Zed\PriceCartConnector\Business\PriceCartConnectorBusinessFactory
      */
@@ -301,12 +363,11 @@ class PriceCartConnectorBusinessTester extends Actor
         PriceCartConnectorConfig $priceCartConnectorConfigMock,
         PriceCartToPriceProductInterface $priceProductFacadeStub,
         PriceCartToPriceInterface $priceFacadeMock,
-        PriceCartConnectorToCurrencyFacadeInterface $currencyFacadeMock,
-        bool $isZeroPriceEnabledForCartActions
+        PriceCartConnectorToCurrencyFacadeInterface $currencyFacadeMock
     ): PriceCartConnectorBusinessFactory {
-        $priceCartConnectorConfigMock = $this->configurePriceCartConnectorConfigMock($priceCartConnectorConfigMock, $isZeroPriceEnabledForCartActions);
         $container = $this->createContainer();
         $container = $this->configureContainer($container, $priceProductFacadeStub, $priceFacadeMock, $currencyFacadeMock);
+
         $priceCartConnectorBusinessFactory = $this->createPriceCartConnectorBusinessFactory();
         $priceCartConnectorBusinessFactory->setConfig($priceCartConnectorConfigMock);
         $priceCartConnectorBusinessFactory->setContainer($container);

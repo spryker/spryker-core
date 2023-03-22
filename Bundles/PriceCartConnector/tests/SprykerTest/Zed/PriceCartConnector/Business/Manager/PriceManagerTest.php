@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Zed\PriceCartConnector\Business\Exception\PriceMissingException;
 use Spryker\Zed\PriceCartConnector\Business\Filter\Comparator\ItemComparator;
 use Spryker\Zed\PriceCartConnector\Business\Filter\Comparator\ItemComparatorInterface;
 use Spryker\Zed\PriceCartConnector\Business\Filter\PriceProductFilter;
@@ -24,8 +25,8 @@ use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceInterface;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceProductInterface;
 use Spryker\Zed\PriceCartConnector\Dependency\Service\PriceCartConnectorToPriceProductServiceBridge;
 use Spryker\Zed\PriceCartConnector\Dependency\Service\PriceCartConnectorToPriceProductServiceInterface;
-use Spryker\Zed\PriceCartConnector\PriceCartConnectorConfig;
 use SprykerTest\Zed\PriceCartConnector\Business\Fixture\PriceProductFacadeStub;
+use SprykerTest\Zed\PriceCartConnector\PriceCartConnectorBusinessTester;
 
 /**
  * Auto-generated group annotations
@@ -41,25 +42,46 @@ use SprykerTest\Zed\PriceCartConnector\Business\Fixture\PriceProductFacadeStub;
 class PriceManagerTest extends Unit
 {
     /**
-     * @var \SprykerTest\Zed\PriceCartConnector\PriceCartConnectorBusinessTester
+     * @var string
      */
-    protected $tester;
+    protected const TEST_ITEM_SKU_1 = '123';
 
     /**
+     * @var string
+     */
+    protected const TEST_ITEM_SKU_2 = '124';
+
+    /**
+     * @var string
+     */
+    protected const TEST_ITEM_SKU_3 = '125';
+
+    /**
+     * @var \SprykerTest\Zed\PriceCartConnector\PriceCartConnectorBusinessTester
+     */
+    protected PriceCartConnectorBusinessTester $tester;
+
+    /**
+     * @dataProvider getItemFieldsForIdentifierConfigDataProvider
+     *
+     * @param list<string> $itemFieldsForIdentifier
+     *
      * @return void
      */
-    public function testAddPriceToItems(): void
+    public function testAddPriceToItems(array $itemFieldsForIdentifier): void
     {
+        // Arrange
         $priceProductFacadeStub = $this->createPriceProductFacadeStub();
-        $priceProductFacadeStub->addPriceStub('123', 1000);
-        $priceProductFacadeStub->addValidityStub('123', true);
+        $priceProductFacadeStub->addPriceStub(static::TEST_ITEM_SKU_1, 1000);
+        $priceProductFacadeStub->addValidityStub(static::TEST_ITEM_SKU_1, true);
 
         $cartChangeTransfer = $this->createCartChangeTransferWithItem();
 
-        $priceManager = $this->createPriceManager($priceProductFacadeStub);
+        // Act
+        $modifiedItemCollection = $this->createPriceManager($priceProductFacadeStub, $itemFieldsForIdentifier)
+            ->addPriceToItems($cartChangeTransfer);
 
-        $modifiedItemCollection = $priceManager->addPriceToItems($cartChangeTransfer);
-
+        // Assert
         $this->assertSame(1, $modifiedItemCollection->getItems()->count());
 
         foreach ($modifiedItemCollection->getItems() as $modifiedItem) {
@@ -68,32 +90,37 @@ class PriceManagerTest extends Unit
     }
 
     /**
+     * @dataProvider getItemFieldsForIdentifierConfigDataProvider
+     *
+     * @param list<string> $itemFieldsForIdentifier
+     *
      * @return void
      */
-    public function testSourceUnitPriceHasHighestPriority(): void
+    public function testSourceUnitPriceHasHighestPriority(array $itemFieldsForIdentifier): void
     {
+        // Arrange
         $priceProductFacadeStub = $this->createPriceProductFacadeStub();
-        $priceProductFacadeStub->addPriceStub('123', 1000);
-        $priceProductFacadeStub->addValidityStub('123', true);
-        $priceProductFacadeStub->addPriceStub('124', 2000);
-        $priceProductFacadeStub->addValidityStub('124', true);
-        $priceProductFacadeStub->addPriceStub('125', 3000);
-        $priceProductFacadeStub->addValidityStub('125', true);
+        $priceProductFacadeStub->addPriceStub(static::TEST_ITEM_SKU_1, 1000);
+        $priceProductFacadeStub->addValidityStub(static::TEST_ITEM_SKU_1, true);
+        $priceProductFacadeStub->addPriceStub(static::TEST_ITEM_SKU_2, 2000);
+        $priceProductFacadeStub->addValidityStub(static::TEST_ITEM_SKU_2, true);
+        $priceProductFacadeStub->addPriceStub(static::TEST_ITEM_SKU_3, 3000);
+        $priceProductFacadeStub->addValidityStub(static::TEST_ITEM_SKU_3, true);
 
         $cartChangeTransfer = $this->createCartChangeTransfer();
 
         $itemTransferWithForcedPrice = (new ItemTransfer())
-            ->setSku(123)
-            ->setId(123)
+            ->setSku(static::TEST_ITEM_SKU_1)
+            ->setId((int)static::TEST_ITEM_SKU_1)
             ->setSourceUnitGrossPrice(1001);
 
         $itemTransferWithEmptyForcedPrice = (new ItemTransfer())
-            ->setSku(124)
-            ->setId(124);
+            ->setSku(static::TEST_ITEM_SKU_2)
+            ->setId((int)static::TEST_ITEM_SKU_2);
 
         $itemTransferWithZeroForcedPrice = (new ItemTransfer())
-            ->setSku(125)
-            ->setId(125)
+            ->setSku(static::TEST_ITEM_SKU_3)
+            ->setId((int)static::TEST_ITEM_SKU_3)
             ->setSourceUnitGrossPrice(0);
 
         $cartChangeTransfer
@@ -101,10 +128,11 @@ class PriceManagerTest extends Unit
             ->addItem($itemTransferWithEmptyForcedPrice)
             ->addItem($itemTransferWithZeroForcedPrice);
 
-        $priceManager = $this->createPriceManager($priceProductFacadeStub);
+        // Act
+        $modifiedItemCollection = $this->createPriceManager($priceProductFacadeStub, $itemFieldsForIdentifier)
+            ->addPriceToItems($cartChangeTransfer);
 
-        $modifiedItemCollection = $priceManager->addPriceToItems($cartChangeTransfer);
-
+        // Assert
         $this->assertSame(3, $modifiedItemCollection->getItems()->count());
 
         $modifiedItemIterator = $modifiedItemCollection->getItems()->getIterator();
@@ -125,21 +153,82 @@ class PriceManagerTest extends Unit
     }
 
     /**
+     * @dataProvider getItemFieldsForIdentifierConfigDataProvider
+     *
+     * @param list<string> $itemFieldsForIdentifier
+     *
      * @return void
      */
-    public function testIsNotPriceAbleWithInvalidPrice(): void
+    public function testIsNotPriceAbleWithInvalidPrice(array $itemFieldsForIdentifier): void
     {
-        $this->expectException('Spryker\Zed\PriceCartConnector\Business\Exception\PriceMissingException');
+        // Asset
+        $this->expectException(PriceMissingException::class);
+
+        // Arrange
         $priceProductFacadeStub = $this->createPriceProductFacadeStub();
-        $priceProductFacadeStub->addPriceStub('123', 1000);
-        $priceProductFacadeStub->addValidityStub('123', false);
+        $priceProductFacadeStub->addPriceStub(static::TEST_ITEM_SKU_1, 1000);
+        $priceProductFacadeStub->addValidityStub(static::TEST_ITEM_SKU_1, false);
 
         $cartChangeTransfer = $this->createCartChangeTransferWithItem();
 
         $cartChangeTransfer->getItems()[0]->setSku('non existing');
 
-        $priceManager = $this->createPriceManager($priceProductFacadeStub);
-        $priceManager->addPriceToItems($cartChangeTransfer);
+        // Act
+        $this->createPriceManager($priceProductFacadeStub, $itemFieldsForIdentifier)
+            ->addPriceToItems($cartChangeTransfer);
+    }
+
+    /**
+     * @dataProvider getItemFieldsForIdentifierConfigDataProvider
+     *
+     * @param list<string> $itemFieldsForIdentifier
+     *
+     * @return void
+     */
+    public function testAddPriceToItemsWithEqualItems(array $itemFieldsForIdentifier): void
+    {
+        // Arrange
+        $priceProductFacadeStub = $this->createPriceProductFacadeStub();
+        $priceProductFacadeStub->addPriceStub(static::TEST_ITEM_SKU_1, 1000);
+        $priceProductFacadeStub->addValidityStub(static::TEST_ITEM_SKU_1, true);
+        $priceProductFacadeStub->addPriceStub(static::TEST_ITEM_SKU_2, 2000);
+        $priceProductFacadeStub->addValidityStub(static::TEST_ITEM_SKU_2, true);
+
+        $cartChangeTransfer = $this->createCartChangeTransferWithItem();
+
+        $existingItemTransfer = (new ItemTransfer())
+            ->setSku(static::TEST_ITEM_SKU_2)
+            ->setId((int)static::TEST_ITEM_SKU_2)
+            ->setQuantity(1);
+
+        $cartChangeTransfer->addItem($existingItemTransfer);
+        $cartChangeTransfer->addItem((new ItemTransfer())->fromArray($existingItemTransfer->toArray(), true));
+
+        // Act
+        $modifiedItemCollection = $this->createPriceManager($priceProductFacadeStub, $itemFieldsForIdentifier)
+            ->addPriceToItems($cartChangeTransfer);
+
+        // Assert
+        $itemTransfers = $modifiedItemCollection->getItems();
+
+        $this->assertSame(3, $itemTransfers->count());
+        $this->assertSame(1000, $itemTransfers->getIterator()->offsetGet(0)->getUnitGrossPrice());
+        $this->assertSame(2000, $itemTransfers->getIterator()->offsetGet(1)->getUnitGrossPrice());
+        $this->assertSame(2000, $itemTransfers->getIterator()->offsetGet(2)->getUnitGrossPrice());
+    }
+
+    /**
+     * @return array<string, list<string>>
+     */
+    protected function getItemFieldsForIdentifierConfigDataProvider(): array
+    {
+        return [
+            'Collection of item fields used for building identifier is empty.' => [[]],
+            'Collection of item fields used for building identifier is not empty.' => [[
+                ItemTransfer::SKU,
+                ItemTransfer::QUANTITY,
+            ]],
+        ];
     }
 
     /**
@@ -190,25 +279,16 @@ class PriceManagerTest extends Unit
      */
     protected function createItemComparator(): ItemComparatorInterface
     {
-        return new ItemComparator($this->createPriceCartConnectorConfigMock());
-    }
-
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\PriceCartConnector\PriceCartConnectorConfig
-     */
-    protected function createPriceCartConnectorConfigMock(): PriceCartConnectorConfig
-    {
-        return $this->getMockBuilder(PriceCartConnectorConfig::class)
-            ->enableProxyingToOriginalMethods()
-            ->getMock();
+        return new ItemComparator($this->tester->createPriceCartConnectorConfigMock());
     }
 
     /**
      * @param \SprykerTest\Zed\PriceCartConnector\Business\Fixture\PriceProductFacadeStub $priceProductFacadeStub
+     * @param list<string> $itemFieldsForIdentifier
      *
      * @return \Spryker\Zed\PriceCartConnector\Business\Manager\PriceManager
      */
-    protected function createPriceManager(PriceProductFacadeStub $priceProductFacadeStub): PriceManager
+    protected function createPriceManager(PriceProductFacadeStub $priceProductFacadeStub, array $itemFieldsForIdentifier = []): PriceManager
     {
         $priceProductCartToPriceAdapter = new PriceCartConnectorToPriceProductAdapter($priceProductFacadeStub);
 
@@ -225,7 +305,16 @@ class PriceManagerTest extends Unit
 
         $priceProductFilterMock = $this->createPriceProductFilterMock($priceProductCartToPriceAdapter, $priceFacadeMock);
 
-        return new PriceManager($priceProductCartToPriceAdapter, $priceFacadeMock, $priceProductFilterMock, $this->createPriceCartConnectorToPriceProductServiceBridge(), []);
+        return new PriceManager(
+            $priceProductCartToPriceAdapter,
+            $priceFacadeMock,
+            $priceProductFilterMock,
+            $this->createPriceCartConnectorToPriceProductServiceBridge(),
+            [],
+            $this->tester->createItemIdentifierBuilder(
+                $this->tester->createPriceCartConnectorConfigMock($itemFieldsForIdentifier),
+            ),
+        );
     }
 
     /**
@@ -264,13 +353,12 @@ class PriceManagerTest extends Unit
      */
     protected function createCartChangeTransferWithItem(): CartChangeTransfer
     {
-        $itemCollection = $this->createCartChangeTransfer();
-
-        $item = new ItemTransfer();
-        $item->setSku(123);
-        $item->setId(123);
-        $itemCollection->addItem($item);
-
-        return $itemCollection;
+        return $this->createCartChangeTransfer()
+            ->addItem(
+                (new ItemTransfer())
+                    ->setSku(static::TEST_ITEM_SKU_1)
+                    ->setId((int)static::TEST_ITEM_SKU_1)
+                    ->setQuantity(1),
+            );
     }
 }

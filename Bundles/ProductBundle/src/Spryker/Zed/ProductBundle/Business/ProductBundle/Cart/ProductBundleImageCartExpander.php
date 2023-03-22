@@ -9,8 +9,6 @@ namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Cart;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToLocaleFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductImageFacadeInterface;
 
@@ -50,33 +48,29 @@ class ProductBundleImageCartExpander implements ProductBundleCartExpanderInterfa
      */
     public function expandBundleItems(CartChangeTransfer $cartChangeTransfer)
     {
-        $currentLocaleTransfer = $this->localeFacade->getCurrentLocale();
+        $currentLocaleId = $this->localeFacade->getCurrentLocale()->getIdLocale();
+
+        $productImageTransfersIndexedByItemId = [];
         foreach ($cartChangeTransfer->getQuote()->getBundleItems() as $itemTransfer) {
-            $this->expandItemsWithImages($itemTransfer, $currentLocaleTransfer);
+            if (array_key_exists($itemTransfer->getId(), $productImageTransfersIndexedByItemId)) {
+                $itemTransfer->setImages($productImageTransfersIndexedByItemId[$itemTransfer->getId()]);
+
+                continue;
+            }
+
+            $imageSets = $this->productImageFacade->getCombinedConcreteImageSets(
+                $itemTransfer->getId(),
+                $itemTransfer->getIdProductAbstract(),
+                $currentLocaleId,
+            );
+
+            $productImages = $this->getProductImages($imageSets);
+
+            $itemTransfer->setImages($productImages);
+            $productImageTransfersIndexedByItemId[$itemTransfer->getId()] = $productImages;
         }
 
         return $cartChangeTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return void
-     */
-    protected function expandItemsWithImages(ItemTransfer $itemTransfer, LocaleTransfer $localeTransfer)
-    {
-        $imageSets = $this->productImageFacade->getCombinedConcreteImageSets(
-            $itemTransfer->getId(),
-            $itemTransfer->getIdProductAbstract(),
-            $localeTransfer->getIdLocale(),
-        );
-
-        if (!$imageSets) {
-            return;
-        }
-
-        $itemTransfer->setImages($this->getProductImages($imageSets));
     }
 
     /**
@@ -84,7 +78,7 @@ class ProductBundleImageCartExpander implements ProductBundleCartExpanderInterfa
      *
      * @return \ArrayObject<int, \Generated\Shared\Transfer\ProductImageTransfer>
      */
-    protected function getProductImages(array $imageSets)
+    protected function getProductImages(array $imageSets): ArrayObject
     {
         foreach ($imageSets as $imageSet) {
             if ($imageSet->getName() === static::DEFAULT_IMAGE_SET_NAME) {

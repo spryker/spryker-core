@@ -46,11 +46,10 @@ class ProductBundlePriceCalculation implements ProductBundlePriceCalculationInte
     {
         $this->resetBundlePriceAmountsCalculableObjectTransfer($calculableObjectTransfer);
 
+        $itemTransfersGroupedByRelatedBundleItemIdentifier = $this->getItemTransfersGroupedByRelatedBundleItemIdentifier($calculableObjectTransfer);
         foreach ($calculableObjectTransfer->getBundleItems() as $bundleItemTransfer) {
-            foreach ($calculableObjectTransfer->getItems() as $itemTransfer) {
-                if ($bundleItemTransfer->getBundleItemIdentifier() !== $itemTransfer->getRelatedBundleItemIdentifier()) {
-                    continue;
-                }
+            $itemTransfers = $itemTransfersGroupedByRelatedBundleItemIdentifier[$bundleItemTransfer->getBundleItemIdentifier()] ?? [];
+            foreach ($itemTransfers as $itemTransfer) {
                 $this->calculateBundleAmounts($bundleItemTransfer, $itemTransfer);
             }
         }
@@ -286,5 +285,24 @@ class ProductBundlePriceCalculation implements ProductBundlePriceCalculationInte
         $bundleItemTransfer->setSumPriceToPayAggregation(0);
 
         return $bundleItemTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return array<string, list<\Generated\Shared\Transfer\ItemTransfer>>
+     */
+    protected function getItemTransfersGroupedByRelatedBundleItemIdentifier(CalculableObjectTransfer $calculableObjectTransfer): array
+    {
+        $itemTransfersGroupedByRelatedBundleItemIdentifier = [];
+        foreach ($calculableObjectTransfer->getItems() as $itemTransfer) {
+            if ($itemTransfer->getRelatedBundleItemIdentifier() === null) {
+                continue;
+            }
+
+            $itemTransfersGroupedByRelatedBundleItemIdentifier[$itemTransfer->getRelatedBundleItemIdentifierOrFail()][] = $itemTransfer;
+        }
+
+        return $itemTransfersGroupedByRelatedBundleItemIdentifier;
     }
 }

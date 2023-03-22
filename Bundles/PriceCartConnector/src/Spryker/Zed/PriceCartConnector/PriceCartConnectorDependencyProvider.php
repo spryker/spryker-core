@@ -14,6 +14,8 @@ use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartConnectorToPricePr
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToMessengerFacadeBridge;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceBridge;
 use Spryker\Zed\PriceCartConnector\Dependency\Service\PriceCartConnectorToPriceProductServiceBridge;
+use Spryker\Zed\PriceCartConnector\Dependency\Service\PriceCartConnectorToUtilEncodingServiceBridge;
+use Spryker\Zed\PriceCartConnector\Dependency\Service\PriceCartConnectorToUtilTextServiceBridge;
 
 /**
  * @method \Spryker\Zed\PriceCartConnector\PriceCartConnectorConfig getConfig()
@@ -29,6 +31,16 @@ class PriceCartConnectorDependencyProvider extends AbstractBundleDependencyProvi
      * @var string
      */
     public const SERVICE_PRICE_PRODUCT = 'SERVICE_PRICE_PRODUCT';
+
+    /**
+     * @var string
+     */
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+
+    /**
+     * @var string
+     */
+    public const SERVICE_UTIL_TEXT = 'SERVICE_UTIL_TEXT';
 
     /**
      * @var string
@@ -60,10 +72,14 @@ class PriceCartConnectorDependencyProvider extends AbstractBundleDependencyProvi
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideBusinessLayerDependencies(Container $container)
+    public function provideBusinessLayerDependencies(Container $container): Container
     {
+        $container = parent::provideBusinessLayerDependencies($container);
+
         $container = $this->addPriceProductFacade($container);
         $container = $this->addPriceProductService($container);
+        $container = $this->addUtilEncodingService($container);
+        $container = $this->addUtilTextService($container);
         $container = $this->addPriceFacade($container);
         $container = $this->addMessengerFacade($container);
         $container = $this->addCurrencyFacade($container);
@@ -96,6 +112,38 @@ class PriceCartConnectorDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container->set(static::SERVICE_PRICE_PRODUCT, function (Container $container) {
             return new PriceCartConnectorToPriceProductServiceBridge($container->getLocator()->priceProduct()->service());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilEncodingService(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
+            return new PriceCartConnectorToUtilEncodingServiceBridge(
+                $container->getLocator()->utilEncoding()->service(),
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilTextService(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_TEXT, function (Container $container) {
+            return new PriceCartConnectorToUtilTextServiceBridge(
+                $container->getLocator()->utilText()->service(),
+            );
         });
 
         return $container;

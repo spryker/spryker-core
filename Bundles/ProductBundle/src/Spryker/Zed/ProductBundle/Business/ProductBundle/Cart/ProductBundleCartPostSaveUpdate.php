@@ -19,19 +19,38 @@ class ProductBundleCartPostSaveUpdate implements ProductBundleCartPostSaveUpdate
      */
     public function updateBundles(QuoteTransfer $quoteTransfer)
     {
+        $itemTransfersIndexedByRelatedBundleItemIdentifier = $this->getItemTransfersIndexedByRelatedBundleItemIdentifier($quoteTransfer);
+
         $bundleItems = new ArrayObject();
         foreach ($quoteTransfer->getBundleItems() as $bundleItemTransfer) {
-            foreach ($quoteTransfer->getItems() as $itemTransfer) {
-                if ($bundleItemTransfer->getBundleItemIdentifier() == $itemTransfer->getRelatedBundleItemIdentifier()) {
-                    $bundleItems->append($bundleItemTransfer);
-
-                    break;
-                }
+            if (!array_key_exists($bundleItemTransfer->getBundleItemIdentifier(), $itemTransfersIndexedByRelatedBundleItemIdentifier)) {
+                continue;
             }
+
+            $bundleItems->append($bundleItemTransfer);
         }
 
         $quoteTransfer->setBundleItems($bundleItems);
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return array<string, \Generated\Shared\Transfer\ItemTransfer>
+     */
+    protected function getItemTransfersIndexedByRelatedBundleItemIdentifier(QuoteTransfer $quoteTransfer): array
+    {
+        $itemTransfersIndexedByRelatedBundleItemIdentifier = [];
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            if ($itemTransfer->getRelatedBundleItemIdentifier() === null) {
+                continue;
+            }
+
+            $itemTransfersIndexedByRelatedBundleItemIdentifier[$itemTransfer->getRelatedBundleItemIdentifierOrFail()] = $itemTransfer;
+        }
+
+        return $itemTransfersIndexedByRelatedBundleItemIdentifier;
     }
 }
