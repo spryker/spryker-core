@@ -53,8 +53,6 @@ class StockWriterStep implements DataImportStepInterface
      */
     protected function saveStock(SpyStock $stockEntity, DataSetInterface $dataSet): void
     {
-        $stockEntity->setName($dataSet[StockDataSetInterface::COLUMN_NAME])
-            ->setIsActive($dataSet[StockDataSetInterface::COLUMN_IS_ACTIVE])
-            ->save();
+        $stockEntity->fromArray($dataSet->getArrayCopy())->save();
     }
 }

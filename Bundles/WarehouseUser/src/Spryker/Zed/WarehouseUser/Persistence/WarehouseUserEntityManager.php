@@ -50,6 +50,10 @@ class WarehouseUserEntityManager extends AbstractEntityManager implements Wareho
             ->filterByUuid($warehouseUserAssignmentTransfer->getUuid())
             ->findOne();
 
+        if (!$warehouseUserAssignmentEntity) {
+            return $warehouseUserAssignmentTransfer;
+        }
+
         $warehouseUserMapper = $this->getFactory()->createWarehouseUserMapper();
         $warehouseUserAssignmentEntity = $warehouseUserMapper->mapWarehouseUserAssignmentTransferToWarehouseUserAssignmentEntity(
             $warehouseUserAssignmentTransfer,
@@ -71,9 +75,10 @@ class WarehouseUserEntityManager extends AbstractEntityManager implements Wareho
      */
     public function deleteWarehouseUserAssignments(WarehouseUserAssignmentCollectionTransfer $warehouseUserAssignmentCollectionTransfer): void
     {
-        $warehouseUserAssignmentIds = array_map(function (WarehouseUserAssignmentTransfer $warehouseUserAssignmentTransfer) {
-            return $warehouseUserAssignmentTransfer->getIdWarehouseUserAssignmentOrFail();
-        }, $warehouseUserAssignmentCollectionTransfer->getWarehouseUserAssignments()->getArrayCopy());
+        $warehouseUserAssignmentIds = [];
+        foreach ($warehouseUserAssignmentCollectionTransfer->getWarehouseUserAssignments() as $warehouseUserAssignmentTransfer) {
+            $warehouseUserAssignmentIds[] = $warehouseUserAssignmentTransfer->getIdWarehouseUserAssignmentOrFail();
+        }
 
         $this->getFactory()
             ->createWarehouseUserAssignmentQuery()

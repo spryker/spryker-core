@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+    <transfer name="PickingListOrderItemGroup" strict="true">
+        <property name="orderItems" type="Item[]" singular="orderItem"/>
+        <property name="warehouse" type="Stock"/>
+    </transfer>
+
+    <transfer name="PickingListCollection" strict="true">
+        <property name="pickingLists" type="PickingList[]" singular="pickingList"/>
+    </transfer>
+
+    <transfer name="ShipmentGroup">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="PickingListItem" strict="true">
+        <property name="quantity" type="int"/>
+        <property name="orderItem" type="Item"/>
+        <property name="numberOfNotPicked" type="int"/>
+        <property name="numberOfPicked" type="int"/>
+    </transfer>
+
+    <transfer name="PickingList" strict="true">
+        <property name="warehouse" type="Stock"/>
+        <property name="status" type="string"/>
+        <property name="pickingListItems" type="PickingListItem[]" singular="pickingListItem"/>
+    </transfer>
+
+    <transfer name="Stock">
+        <property name="pickingListStrategy" type="string"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="quantity" type="int"/>
+    </transfer>
+</transfers>

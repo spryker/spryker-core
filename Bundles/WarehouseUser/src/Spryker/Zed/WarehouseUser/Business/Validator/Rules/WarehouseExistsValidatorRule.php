@@ -10,10 +10,9 @@ namespace Spryker\Zed\WarehouseUser\Business\Validator\Rules;
 use ArrayObject;
 use Generated\Shared\Transfer\ErrorTransfer;
 use Generated\Shared\Transfer\StockCollectionTransfer;
-use Generated\Shared\Transfer\StockCriteriaFilterTransfer;
 use Generated\Shared\Transfer\WarehouseUserAssignmentCollectionResponseTransfer;
 use Spryker\Zed\WarehouseUser\Business\IdentifierBuilder\WarehouseUserAssignmentIdentifierBuilderInterface;
-use Spryker\Zed\WarehouseUser\Dependency\Facade\WarehouseUserToStockFacadeInterface;
+use Spryker\Zed\WarehouseUser\Business\Reader\WarehouseReaderInterface;
 
 class WarehouseExistsValidatorRule implements WarehouseUserAssignmentValidatorRuleInterface
 {
@@ -23,9 +22,9 @@ class WarehouseExistsValidatorRule implements WarehouseUserAssignmentValidatorRu
     protected const GLOSSARY_KEY_VALIDATION_WAREHOUSE_NOT_FOUND = 'warehouse_user_assignment.validation.warehouse_not_found';
 
     /**
-     * @var \Spryker\Zed\WarehouseUser\Dependency\Facade\WarehouseUserToStockFacadeInterface
+     * @var \Spryker\Zed\WarehouseUser\Business\Reader\WarehouseReaderInterface
      */
-    protected WarehouseUserToStockFacadeInterface $stockFacade;
+    protected WarehouseReaderInterface $warehouseReader;
 
     /**
      * @var \Spryker\Zed\WarehouseUser\Business\IdentifierBuilder\WarehouseUserAssignmentIdentifierBuilderInterface
@@ -33,19 +32,19 @@ class WarehouseExistsValidatorRule implements WarehouseUserAssignmentValidatorRu
     protected WarehouseUserAssignmentIdentifierBuilderInterface $warehouseUserAssignmentIdentifierBuilder;
 
     /**
-     * @param \Spryker\Zed\WarehouseUser\Dependency\Facade\WarehouseUserToStockFacadeInterface $stockFacade
+     * @param \Spryker\Zed\WarehouseUser\Business\Reader\WarehouseReaderInterface $warehouseReader
      * @param \Spryker\Zed\WarehouseUser\Business\IdentifierBuilder\WarehouseUserAssignmentIdentifierBuilderInterface $warehouseUserAssignmentIdentifierBuilder
      */
     public function __construct(
-        WarehouseUserToStockFacadeInterface $stockFacade,
+        WarehouseReaderInterface $warehouseReader,
         WarehouseUserAssignmentIdentifierBuilderInterface $warehouseUserAssignmentIdentifierBuilder
     ) {
-        $this->stockFacade = $stockFacade;
+        $this->warehouseReader = $warehouseReader;
         $this->warehouseUserAssignmentIdentifierBuilder = $warehouseUserAssignmentIdentifierBuilder;
     }
 
     /**
-     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\WarehouseUserAssignmentTransfer> $warehouseUserAssignmentTransfers
+     * @param \ArrayObject<\Generated\Shared\Transfer\WarehouseUserAssignmentTransfer> $warehouseUserAssignmentTransfers
      * @param \Generated\Shared\Transfer\WarehouseUserAssignmentCollectionResponseTransfer $warehouseUserAssignmentCollectionResponseTransfer
      *
      * @return \Generated\Shared\Transfer\WarehouseUserAssignmentCollectionResponseTransfer
@@ -54,8 +53,7 @@ class WarehouseExistsValidatorRule implements WarehouseUserAssignmentValidatorRu
         ArrayObject $warehouseUserAssignmentTransfers,
         WarehouseUserAssignmentCollectionResponseTransfer $warehouseUserAssignmentCollectionResponseTransfer
     ): WarehouseUserAssignmentCollectionResponseTransfer {
-        $stockCriteriaFilterTransfer = $this->createStockCriteriaFilterTransfer($warehouseUserAssignmentTransfers);
-        $stockCollectionTransfer = $this->stockFacade->getStocksByStockCriteriaFilter($stockCriteriaFilterTransfer);
+        $stockCollectionTransfer = $this->warehouseReader->getStockCollection($warehouseUserAssignmentTransfers);
 
         return $this->validateProvidedWarehousesExist(
             $warehouseUserAssignmentTransfers,
@@ -65,33 +63,7 @@ class WarehouseExistsValidatorRule implements WarehouseUserAssignmentValidatorRu
     }
 
     /**
-     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\WarehouseUserAssignmentTransfer> $warehouseUserAssignmentTransfers
-     *
-     * @return \Generated\Shared\Transfer\StockCriteriaFilterTransfer
-     */
-    protected function createStockCriteriaFilterTransfer(ArrayObject $warehouseUserAssignmentTransfers): StockCriteriaFilterTransfer
-    {
-        $stockCriteriaFilterTransfer = new StockCriteriaFilterTransfer();
-        foreach ($warehouseUserAssignmentTransfers as $warehouseUserAssignmentTransfer) {
-            if (!$warehouseUserAssignmentTransfer->getWarehouse()) {
-                continue;
-            }
-
-            $stockTransfer = $warehouseUserAssignmentTransfer->getWarehouseOrFail();
-            if ($stockTransfer->getIdStock()) {
-                $stockCriteriaFilterTransfer->addIdStock($stockTransfer->getIdStockOrFail());
-            }
-
-            if ($stockTransfer->getUuid()) {
-                $stockCriteriaFilterTransfer->addUuid($stockTransfer->getUuidOrFail());
-            }
-        }
-
-        return $stockCriteriaFilterTransfer;
-    }
-
-    /**
-     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\WarehouseUserAssignmentTransfer> $warehouseUserAssignmentTransfers
+     * @param \ArrayObject<\Generated\Shared\Transfer\WarehouseUserAssignmentTransfer> $warehouseUserAssignmentTransfers
      * @param \Generated\Shared\Transfer\StockCollectionTransfer $stockCollectionTransfer
      * @param \Generated\Shared\Transfer\WarehouseUserAssignmentCollectionResponseTransfer $warehouseUserAssignmentCollectionResponseTransfer
      *

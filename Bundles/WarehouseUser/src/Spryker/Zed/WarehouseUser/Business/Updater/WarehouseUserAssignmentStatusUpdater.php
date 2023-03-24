@@ -87,7 +87,7 @@ class WarehouseUserAssignmentStatusUpdater implements WarehouseUserAssignmentSta
     {
         $userUuids = [];
         foreach ($warehouseUserAssignmentTransfers as $warehouseUserAssignmentTransfer) {
-            if ($warehouseUserAssignmentTransfer->getIsActiveOrFail()) {
+            if ($warehouseUserAssignmentTransfer->getIsActive()) {
                 $userUuids[] = $warehouseUserAssignmentTransfer->getUserUuidOrFail();
             }
         }

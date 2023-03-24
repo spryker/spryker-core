@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\Stock\Persistence;
 
+use Generated\Shared\Transfer\StockCollectionTransfer;
 use Generated\Shared\Transfer\StockCriteriaFilterTransfer;
+use Generated\Shared\Transfer\StockCriteriaTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\StockTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
@@ -353,6 +355,75 @@ class StockRepository extends AbstractRepository implements StockRepositoryInter
     }
 
     /**
+     * @param \Generated\Shared\Transfer\StockCriteriaTransfer $stockCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockCollectionTransfer
+     */
+    public function getStockCollection(StockCriteriaTransfer $stockCriteriaTransfer): StockCollectionTransfer
+    {
+        $stockQuery = $this->applyStockCriteriaTransferFilters(
+            $this->getFactory()->createStockQuery(),
+            $stockCriteriaTransfer,
+        );
+
+        return $this->getFactory()
+            ->createStockMapper()
+            ->mapStockEntityCollectionToStockCollectionTransfer(
+                $stockQuery->find()->getArrayCopy(),
+                new StockCollectionTransfer(),
+            );
+    }
+
+    /**
+     * @module Store
+     *
+     * @param \Orm\Zed\Stock\Persistence\SpyStockQuery $stockQuery
+     * @param \Generated\Shared\Transfer\StockCriteriaTransfer $stockCriteriaTransfer
+     *
+     * @return \Orm\Zed\Stock\Persistence\SpyStockQuery
+     */
+    protected function applyStockCriteriaTransferFilters(
+        SpyStockQuery $stockQuery,
+        StockCriteriaTransfer $stockCriteriaTransfer
+    ): SpyStockQuery {
+        $stockConditionsTransfer = $stockCriteriaTransfer->getStockConditions();
+        if ($stockConditionsTransfer === null) {
+            return $stockQuery;
+        }
+
+        $stockIds = $stockConditionsTransfer->getStockIds();
+        if ($stockIds) {
+            $stockQuery->filterByIdStock_In($stockIds);
+        }
+
+        $stockUuids = $stockConditionsTransfer->getUuids();
+        if ($stockUuids && $this->isUuidColumn($stockQuery)) {
+            $stockQuery->filterByUuid_In($stockUuids);
+        }
+
+        if ($stockConditionsTransfer->getIsActive()) {
+            $stockQuery->filterByIsActive(true);
+        }
+
+        $stockNames = $stockConditionsTransfer->getStockNames();
+        if ($stockNames) {
+            $stockQuery->filterByName_In($stockNames);
+        }
+
+        $storeNames = $stockConditionsTransfer->getStoreNames();
+        if ($storeNames) {
+            $stockQuery
+                ->useStockStoreQuery(null, Criteria::LEFT_JOIN)
+                    ->useStoreQuery(null, Criteria::LEFT_JOIN)
+                        ->filterByName_In($storeNames)
+                    ->endUse()
+                ->endUse();
+        }
+
+        return $stockQuery;
+    }
+
+    /**
      * @param \Orm\Zed\Stock\Persistence\SpyStockQuery $stockQuery
      * @param \Generated\Shared\Transfer\StockCriteriaFilterTransfer $stockCriteriaFilterTransfer
      *
@@ -384,10 +455,20 @@ class StockRepository extends AbstractRepository implements StockRepositoryInter
                 ->endUse();
         }
 
-        if ($stockCriteriaFilterTransfer->getUuids() !== [] && $stockQuery->getTableMap()->hasColumn(static::COLUMN_UUID)) {
+        if ($stockCriteriaFilterTransfer->getUuids() !== [] && $this->isUuidColumn($stockQuery)) {
             $stockQuery->filterByUuid_In($stockCriteriaFilterTransfer->getUuids());
         }
 
         return $stockQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\Stock\Persistence\SpyStockQuery $stockQuery
+     *
+     * @return bool
+     */
+    protected function isUuidColumn(SpyStockQuery $stockQuery): bool
+    {
+        return $stockQuery->getTableMap()->hasColumn(static::COLUMN_UUID);
     }
 }

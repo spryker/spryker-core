@@ -20,4 +20,7 @@
         <property name="isActive" dataBuilderRule="numberBetween(0,1)"/>
     </transfer>
 
+    <transfer name="StockCriteria" strict="true"/>
+    <transfer name="StockConditions" strict="true"/>
+
 </transfers>

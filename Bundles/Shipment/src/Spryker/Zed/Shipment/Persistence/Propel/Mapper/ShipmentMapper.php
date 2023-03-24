@@ -10,11 +10,13 @@ namespace Spryker\Zed\Shipment\Persistence\Propel\Mapper;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CountryTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
+use Generated\Shared\Transfer\ShipmentCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Orm\Zed\Country\Persistence\SpyCountry;
 use Orm\Zed\Sales\Persistence\SpySalesShipment;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
+use Propel\Runtime\Collection\ObjectCollection;
 
 class ShipmentMapper implements ShipmentMapperInterface
 {
@@ -203,5 +205,27 @@ class ShipmentMapper implements ShipmentMapperInterface
         }
 
         return $shipmentTransfers;
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Sales\Persistence\SpySalesShipmentQuery> $shipmentEntityCollection
+     * @param \Generated\Shared\Transfer\ShipmentCollectionTransfer $shipmentCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentCollectionTransfer
+     */
+    public function mapSalesShipmentEntityCollectionToShipmentCollectionTransfer(
+        ObjectCollection $shipmentEntityCollection,
+        ShipmentCollectionTransfer $shipmentCollectionTransfer
+    ): ShipmentCollectionTransfer {
+        foreach ($shipmentEntityCollection->getData() as $shipmentEntity) {
+            $shipmentTransfer = $this->mapShipmentEntityToShipmentTransfer(
+                $shipmentEntity,
+                new ShipmentTransfer(),
+            );
+
+            $shipmentCollectionTransfer->addShipment($shipmentTransfer);
+        }
+
+        return $shipmentCollectionTransfer;
     }
 }

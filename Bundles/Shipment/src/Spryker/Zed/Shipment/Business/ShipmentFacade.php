@@ -434,6 +434,22 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      *
      * @api
      *
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
+     */
+    public function expandOrderItemsWithShipment(array $itemTransfers): array
+    {
+        return $this->getFactory()
+            ->createOrderItemShipmentExpander()
+            ->expandOrderItemsWithShipment($itemTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param array $events
      * @param iterable<\Generated\Shared\Transfer\ItemTransfer> $orderItemTransfers
      *

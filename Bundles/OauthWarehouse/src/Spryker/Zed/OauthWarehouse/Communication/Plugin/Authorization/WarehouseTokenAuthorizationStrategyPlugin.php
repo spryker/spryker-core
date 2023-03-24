@@ -8,8 +8,8 @@
 namespace Spryker\Zed\OauthWarehouse\Communication\Plugin\Authorization;
 
 use Generated\Shared\Transfer\AuthorizationRequestTransfer;
-use Spryker\Glue\Kernel\AbstractPlugin;
 use Spryker\Shared\AuthorizationExtension\Dependency\Plugin\AuthorizationStrategyPluginInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\OauthWarehouse\OauthWarehouseConfig getConfig()

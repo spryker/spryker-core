@@ -35,6 +35,11 @@ class GlueJsonApiConventionTester extends Actor
     /**
      * @var string
      */
+    public const COMPONENTS_PARAMETERS_CONTENT_TYPE = '#/components/parameters/ContentType';
+
+    /**
+     * @var string
+     */
     public const COMPONENTS_PARAMETERS_PAGE = '#/components/parameters/Page';
 
     /**
@@ -46,6 +51,11 @@ class GlueJsonApiConventionTester extends Actor
      * @var string
      */
     public const COMPONENTS_PARAMETERS_FILTER = '#/components/parameters/Filter';
+
+    /**
+     * @var string
+     */
+    public const COMPONENTS_PARAMETERS_SORT = '#/components/parameters/Sort';
 
     /**
      * @var string

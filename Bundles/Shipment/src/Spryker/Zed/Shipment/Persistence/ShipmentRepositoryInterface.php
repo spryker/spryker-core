@@ -11,6 +11,8 @@ use ArrayObject;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierRequestTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
+use Generated\Shared\Transfer\ShipmentCollectionTransfer;
+use Generated\Shared\Transfer\ShipmentCriteriaTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentPriceTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
@@ -170,4 +172,13 @@ interface ShipmentRepositoryInterface
      * @return array<\Generated\Shared\Transfer\ShipmentCarrierTransfer>
      */
     public function getActiveShipmentCarriers(): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentCriteriaTransfer $shipmentCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentCollectionTransfer
+     */
+    public function getSalesShipmentCollection(
+        ShipmentCriteriaTransfer $shipmentCriteriaTransfer
+    ): ShipmentCollectionTransfer;
 }

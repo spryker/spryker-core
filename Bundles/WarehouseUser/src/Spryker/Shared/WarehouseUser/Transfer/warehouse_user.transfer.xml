@@ -93,6 +93,15 @@
         <property name="stockIds" type="int[]" singular="idStock" strict="true"/>
     </transfer>
 
+    <transfer name="StockCriteria" strict="true">
+        <property name="stockConditions" type="StockConditions"/>
+    </transfer>
+
+    <transfer name="StockConditions" strict="true">
+        <property name="stockIds" type="int[]" singular="idStock"/>
+        <property name="uuids" type="string[]" singular="uuid"/>
+    </transfer>
+
     <transfer name="UserConditions" strict="true">
         <property name="uuids" type="string[]" singular="uuid"/>
     </transfer>

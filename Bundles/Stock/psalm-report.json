@@ -271,7 +271,7 @@
             "line_from": 54,
             "line_to": 54,
             "type": "InvalidNullableReturnType",
-            "message": "The declared return type 'string' for /users/khabiuk/projects/suite-nonsplit/vendor/spryker/spryker/bundles/stock/src/spryker/zed/stock/business/stock/stockmapper.php:54:1753:-:closure is not nullable, but 'null|string' contains null",
+            "message": "The declared return type 'string' for /data/vendor/spryker/spryker/bundles/stock/src/spryker/zed/stock/business/stock/stockmapper.php:54:1753:-:closure is not nullable, but 'null|string' contains null",
             "file_name": "vendor/spryker/spryker/Bundles/Stock/src/Spryker/Zed/Stock/Business/Stock/StockMapper.php",
             "snippet": "        return array_map(function (StoreTransfer $storeTransfer): string {",
             "selected_text": "string",
@@ -283,7 +283,7 @@
             "line_from": 55,
             "line_to": 55,
             "type": "NullableReturnStatement",
-            "message": "The declared return type 'string' for /users/khabiuk/projects/suite-nonsplit/vendor/spryker/spryker/bundles/stock/src/spryker/zed/stock/business/stock/stockmapper.php:54:1753:-:closure is not nullable, but the function returns 'null|string'",
+            "message": "The declared return type 'string' for /data/vendor/spryker/spryker/bundles/stock/src/spryker/zed/stock/business/stock/stockmapper.php:54:1753:-:closure is not nullable, but the function returns 'null|string'",
             "file_name": "vendor/spryker/spryker/Bundles/Stock/src/Spryker/Zed/Stock/Business/Stock/StockMapper.php",
             "snippet": "            return $storeTransfer->getName();",
             "selected_text": "$storeTransfer->getName()",
@@ -328,8 +328,8 @@
         },
         {
             "severity": "info",
-            "line_from": 81,
-            "line_to": 81,
+            "line_from": 82,
+            "line_to": 82,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\Stock\\Persistence\\StockRepositoryInterface::getStockNamesForStore cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Stock/src/Spryker/Zed/Stock/Business/Stock/StockReader.php",
@@ -340,8 +340,8 @@
         },
         {
             "severity": "info",
-            "line_from": 106,
-            "line_to": 106,
+            "line_from": 107,
+            "line_to": 107,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\StockTransfer> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/Stock/src/Spryker/Zed/Stock/Business/Stock/StockReader.php",
@@ -352,8 +352,8 @@
         },
         {
             "severity": "info",
-            "line_from": 135,
-            "line_to": 135,
+            "line_from": 136,
+            "line_to": 136,
             "type": "InvalidNullableReturnType",
             "message": "The declared return type 'int' for Spryker\\Zed\\Stock\\Business\\Stock\\StockReader::getStockTypeIdByName is not nullable, but 'int|null' contains null",
             "file_name": "vendor/spryker/spryker/Bundles/Stock/src/Spryker/Zed/Stock/Business/Stock/StockReader.php",
@@ -364,8 +364,8 @@
         },
         {
             "severity": "info",
-            "line_from": 145,
-            "line_to": 145,
+            "line_from": 146,
+            "line_to": 146,
             "type": "NullableReturnStatement",
             "message": "The declared return type 'int' for Spryker\\Zed\\Stock\\Business\\Stock\\StockReader::getStockTypeIdByName is not nullable, but the function returns 'int|null'",
             "file_name": "vendor/spryker/spryker/Bundles/Stock/src/Spryker/Zed/Stock/Business/Stock/StockReader.php",
@@ -523,7 +523,7 @@
             "line_from": 73,
             "line_to": 73,
             "type": "InvalidNullableReturnType",
-            "message": "The declared return type 'int' for /users/khabiuk/projects/suite-nonsplit/vendor/spryker/spryker/bundles/stock/src/spryker/zed/stock/persistence/propel/mapper/stockstorerelationmapper.php:73:2470:-:closure is not nullable, but 'int|null' contains null",
+            "message": "The declared return type 'int' for /data/vendor/spryker/spryker/bundles/stock/src/spryker/zed/stock/persistence/propel/mapper/stockstorerelationmapper.php:73:2470:-:closure is not nullable, but 'int|null' contains null",
             "file_name": "vendor/spryker/spryker/Bundles/Stock/src/Spryker/Zed/Stock/Persistence/Propel/Mapper/StockStoreRelationMapper.php",
             "snippet": "        return array_map(function (StoreTransfer $storeTransfer): int {",
             "selected_text": "int",
@@ -535,7 +535,7 @@
             "line_from": 74,
             "line_to": 74,
             "type": "NullableReturnStatement",
-            "message": "The declared return type 'int' for /users/khabiuk/projects/suite-nonsplit/vendor/spryker/spryker/bundles/stock/src/spryker/zed/stock/persistence/propel/mapper/stockstorerelationmapper.php:73:2470:-:closure is not nullable, but the function returns 'int|null'",
+            "message": "The declared return type 'int' for /data/vendor/spryker/spryker/bundles/stock/src/spryker/zed/stock/persistence/propel/mapper/stockstorerelationmapper.php:73:2470:-:closure is not nullable, but the function returns 'int|null'",
             "file_name": "vendor/spryker/spryker/Bundles/Stock/src/Spryker/Zed/Stock/Persistence/Propel/Mapper/StockStoreRelationMapper.php",
             "snippet": "            return $storeTransfer->getIdStore();",
             "selected_text": "$storeTransfer->getIdStore()",
@@ -581,5 +581,5 @@
             "shortcode": 152
         }
     ],
-    "count": 48
+    "count": 47
 }

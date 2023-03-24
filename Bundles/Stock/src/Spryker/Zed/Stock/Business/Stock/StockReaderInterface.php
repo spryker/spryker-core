@@ -9,6 +9,7 @@ namespace Spryker\Zed\Stock\Business\Stock;
 
 use Generated\Shared\Transfer\StockCollectionTransfer;
 use Generated\Shared\Transfer\StockCriteriaFilterTransfer;
+use Generated\Shared\Transfer\StockCriteriaTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 
 interface StockReaderInterface
@@ -50,9 +51,18 @@ interface StockReaderInterface
     public function getStockTypeIdByName(string $stockType): int;
 
     /**
+     * @deprecated Use {@link getStockCollection()} instead.
+     *
      * @param \Generated\Shared\Transfer\StockCriteriaFilterTransfer $stockCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\StockCollectionTransfer
      */
     public function getStocksByStockCriteriaFilter(StockCriteriaFilterTransfer $stockCriteriaFilterTransfer): StockCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\StockCriteriaTransfer $stockCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockCollectionTransfer
+     */
+    public function getStockCollection(StockCriteriaTransfer $stockCriteriaTransfer): StockCollectionTransfer;
 }

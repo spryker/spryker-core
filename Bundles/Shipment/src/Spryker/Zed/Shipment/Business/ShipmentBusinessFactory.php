@@ -18,8 +18,14 @@ use Spryker\Zed\Shipment\Business\Checkout\MultiShipmentOrderSaverInterface;
 use Spryker\Zed\Shipment\Business\Checkout\ShipmentOrderSaver as CheckoutShipmentOrderSaver;
 use Spryker\Zed\Shipment\Business\Event\ShipmentEventGrouper;
 use Spryker\Zed\Shipment\Business\Event\ShipmentEventGrouperInterface;
+use Spryker\Zed\Shipment\Business\Expander\OrderItemShipmentExpander;
+use Spryker\Zed\Shipment\Business\Expander\OrderItemShipmentExpanderInterface;
 use Spryker\Zed\Shipment\Business\Expander\QuoteShipmentExpander;
 use Spryker\Zed\Shipment\Business\Expander\QuoteShipmentExpanderInterface;
+use Spryker\Zed\Shipment\Business\Grouper\ItemGrouper;
+use Spryker\Zed\Shipment\Business\Grouper\ItemGrouperInterface;
+use Spryker\Zed\Shipment\Business\Grouper\ShipmentGrouper;
+use Spryker\Zed\Shipment\Business\Grouper\ShipmentGrouperInterface;
 use Spryker\Zed\Shipment\Business\Mail\ShipmentOrderMailExpander;
 use Spryker\Zed\Shipment\Business\Mail\ShipmentOrderMailExpanderInterface;
 use Spryker\Zed\Shipment\Business\Mapper\ShipmentMapper;
@@ -627,6 +633,34 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     public function createShipmentOrderMailExpander(): ShipmentOrderMailExpanderInterface
     {
         return new ShipmentOrderMailExpander($this->getShipmentService());
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\Expander\OrderItemShipmentExpanderInterface
+     */
+    public function createOrderItemShipmentExpander(): OrderItemShipmentExpanderInterface
+    {
+        return new OrderItemShipmentExpander(
+            $this->createItemGrouper(),
+            $this->createShipmentGrouper(),
+            $this->getRepository(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\Grouper\ShipmentGrouperInterface
+     */
+    public function createShipmentGrouper(): ShipmentGrouperInterface
+    {
+        return new ShipmentGrouper();
+    }
+
+    /**
+     * @return \Spryker\Zed\Shipment\Business\Grouper\ItemGrouperInterface
+     */
+    public function createItemGrouper(): ItemGrouperInterface
+    {
+        return new ItemGrouper();
     }
 
     /**

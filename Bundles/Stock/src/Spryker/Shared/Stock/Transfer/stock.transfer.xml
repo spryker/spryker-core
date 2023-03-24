@@ -37,6 +37,18 @@
         <property name="uuids" type="string[]" singular="uuid" strict="true"/>
     </transfer>
 
+    <transfer name="StockCriteria" strict="true">
+        <property name="stockConditions" type="StockConditions"/>
+    </transfer>
+
+    <transfer name="StockConditions" strict="true">
+        <property name="stockIds" type="int[]" singular="idStock"/>
+        <property name="uuids" type="string[]" singular="uuid"/>
+        <property name="isActive" type="bool"/>
+        <property name="storeNames" type="string[]" singular="storeName"/>
+        <property name="stockNames" type="string[]" singular="stockName"/>
+    </transfer>
+
     <transfer name="StockResponse">
         <property name="isSuccessful" type="bool"/>
         <property name="stock" type="Stock"/>

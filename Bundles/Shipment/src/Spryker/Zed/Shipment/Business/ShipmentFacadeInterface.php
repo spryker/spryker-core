@@ -410,6 +410,18 @@ interface ShipmentFacadeInterface
 
     /**
      * Specification:
+     * - Expands order items with shipment.
+     *
+     * @api
+     *
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
+     */
+    public function expandOrderItemsWithShipment(array $itemTransfers): array;
+
+    /**
+     * Specification:
      * - Groups manual events by sales shipment id.
      *
      * @api

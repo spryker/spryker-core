@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\WarehouseUserAssignmentCollectionResponseTransfer;
 interface WarehouseUserAssignmentValidatorInterface
 {
     /**
-     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\WarehouseUserAssignmentTransfer> $warehouseUserAssignmentTransfers
+     * @param \ArrayObject<\Generated\Shared\Transfer\WarehouseUserAssignmentTransfer> $warehouseUserAssignmentTransfers
      *
      * @return \Generated\Shared\Transfer\WarehouseUserAssignmentCollectionResponseTransfer
      */

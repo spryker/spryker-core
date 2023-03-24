@@ -12,12 +12,15 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierRequestTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
+use Generated\Shared\Transfer\ShipmentCollectionTransfer;
+use Generated\Shared\Transfer\ShipmentCriteriaTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentPriceTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
+use Orm\Zed\Sales\Persistence\SpySalesShipmentQuery;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodPriceQuery;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
@@ -702,6 +705,54 @@ class ShipmentRepository extends AbstractRepository implements ShipmentRepositor
         return $this->getFactory()
             ->createShipmentCarrierMapper()
             ->mapShipmentCarrierEntityCollectionToShipmentCarrierTransferCollection($shipmentCarrierEntityCollection, []);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentCriteriaTransfer $shipmentCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentCollectionTransfer
+     */
+    public function getSalesShipmentCollection(
+        ShipmentCriteriaTransfer $shipmentCriteriaTransfer
+    ): ShipmentCollectionTransfer {
+        $salesShipmentQuery = $this->applySalesShipmentFilters(
+            $this->getFactory()->createSalesShipmentQuery(),
+            $shipmentCriteriaTransfer,
+        );
+
+        return $this->getFactory()
+            ->createShipmentMapper()
+            ->mapSalesShipmentEntityCollectionToShipmentCollectionTransfer(
+                $salesShipmentQuery->find(),
+                new ShipmentCollectionTransfer(),
+            );
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesShipmentQuery $salesShipmentQuery
+     * @param \Generated\Shared\Transfer\ShipmentCriteriaTransfer $shipmentCriteriaTransfer
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesShipmentQuery
+     */
+    protected function applySalesShipmentFilters(
+        SpySalesShipmentQuery $salesShipmentQuery,
+        ShipmentCriteriaTransfer $shipmentCriteriaTransfer
+    ): SpySalesShipmentQuery {
+        $shipmentConditionsTransfer = $shipmentCriteriaTransfer->getShipmentConditions();
+        if (!$shipmentConditionsTransfer) {
+            return $salesShipmentQuery;
+        }
+
+        $salesOrderItemIds = $shipmentConditionsTransfer->getSalesOrderItemIds();
+        if ($salesOrderItemIds) {
+            $salesShipmentQuery->useSpySalesOrderItemQuery()
+                ->filterByIdSalesOrderItem_In(
+                    $salesOrderItemIds,
+                )
+                ->endUse();
+        }
+
+        return $salesShipmentQuery;
     }
 
     /**

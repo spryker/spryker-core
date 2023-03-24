@@ -10,6 +10,7 @@ namespace Spryker\Zed\Stock\Business;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StockCollectionTransfer;
 use Generated\Shared\Transfer\StockCriteriaFilterTransfer;
+use Generated\Shared\Transfer\StockCriteriaTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\StockResponseTransfer;
 use Generated\Shared\Transfer\StockTransfer;
@@ -399,9 +400,32 @@ interface StockFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link getStockCollection()} instead.
+     *
      * @param \Generated\Shared\Transfer\StockCriteriaFilterTransfer $stockCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\StockCollectionTransfer
      */
     public function getStocksByStockCriteriaFilter(StockCriteriaFilterTransfer $stockCriteriaFilterTransfer): StockCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Gets Stock collection by criteria.
+     * - Uses `StockCriteriaTransfer.StockConditions.stockIds` to filter stocks by stockIds.
+     * - Uses `StockCriteriaTransfer.StockConditions.uuids` to filter stocks by uuids.
+     * - Uses `StockCriteriaTransfer.StockConditions.isActive` to filter active stocks.
+     * - Uses `StockCriteriaTransfer.StockConditions.storeNames` to filter stocks by store names.
+     * - Uses `StockCriteriaTransfer.StockConditions.stockNames` to filter stocks by stock names.
+     * - Executes the stack of {@link \Spryker\Zed\StockExtension\Dependency\Plugin\StockCollectionExpanderPluginInterface} plugins.
+     * - Returns `StockCollectionTransfer` filled with found stocks.
+     *
+     * @api
+     *
+     * {@internal filter by uuids works if `StockTransfer.uuid` field is provided by another module.}
+     *
+     * @param \Generated\Shared\Transfer\StockCriteriaTransfer $stockCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockCollectionTransfer
+     */
+    public function getStockCollection(StockCriteriaTransfer $stockCriteriaTransfer): StockCollectionTransfer;
 }

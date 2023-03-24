@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Stock\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\StockCollectionTransfer;
 use Generated\Shared\Transfer\StockTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Orm\Zed\Stock\Persistence\SpyStock;
@@ -72,5 +73,24 @@ class StockMapper
         $stockEntity->fromArray($stockTransfer->modifiedToArray());
 
         return $stockEntity;
+    }
+
+    /**
+     * @param list<\Orm\Zed\Stock\Persistence\SpyStock> $stockEntityCollection
+     * @param \Generated\Shared\Transfer\StockCollectionTransfer $stockCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockCollectionTransfer
+     */
+    public function mapStockEntityCollectionToStockCollectionTransfer(
+        array $stockEntityCollection,
+        StockCollectionTransfer $stockCollectionTransfer
+    ): StockCollectionTransfer {
+        foreach ($stockEntityCollection as $stockEntity) {
+            $stockCollectionTransfer->addStock(
+                $this->mapStockEntityToStockTransfer($stockEntity, new StockTransfer()),
+            );
+        }
+
+        return $stockCollectionTransfer;
     }
 }

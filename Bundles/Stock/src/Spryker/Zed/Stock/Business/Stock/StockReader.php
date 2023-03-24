@@ -10,6 +10,7 @@ namespace Spryker\Zed\Stock\Business\Stock;
 use ArrayObject;
 use Generated\Shared\Transfer\StockCollectionTransfer;
 use Generated\Shared\Transfer\StockCriteriaFilterTransfer;
+use Generated\Shared\Transfer\StockCriteriaTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use InvalidArgumentException;
 use Spryker\Zed\Stock\Dependency\Facade\StockToStoreFacadeInterface;
@@ -146,6 +147,8 @@ class StockReader implements StockReaderInterface
     }
 
     /**
+     * @deprecated Use {@link getStockCollection()} instead.
+     *
      * @param \Generated\Shared\Transfer\StockCriteriaFilterTransfer $stockCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\StockCollectionTransfer
@@ -155,6 +158,18 @@ class StockReader implements StockReaderInterface
         $stockTransfers = $this->stockRepository->getStocksWithRelatedStoresByCriteriaFilter($stockCriteriaFilterTransfer);
 
         $stockCollectionTransfer = (new StockCollectionTransfer())->setStocks(new ArrayObject($stockTransfers));
+
+        return $this->executeStockCollectionExpanderPlugins($stockCollectionTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StockCriteriaTransfer $stockCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockCollectionTransfer
+     */
+    public function getStockCollection(StockCriteriaTransfer $stockCriteriaTransfer): StockCollectionTransfer
+    {
+        $stockCollectionTransfer = $this->stockRepository->getStockCollection($stockCriteriaTransfer);
 
         return $this->executeStockCollectionExpanderPlugins($stockCollectionTransfer);
     }

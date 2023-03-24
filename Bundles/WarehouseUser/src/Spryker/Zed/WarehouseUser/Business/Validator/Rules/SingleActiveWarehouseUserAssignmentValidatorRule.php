@@ -36,7 +36,7 @@ class SingleActiveWarehouseUserAssignmentValidatorRule implements WarehouseUserA
     }
 
     /**
-     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\WarehouseUserAssignmentTransfer> $warehouseUserAssignmentTransfers
+     * @param \ArrayObject<\Generated\Shared\Transfer\WarehouseUserAssignmentTransfer> $warehouseUserAssignmentTransfers
      * @param \Generated\Shared\Transfer\WarehouseUserAssignmentCollectionResponseTransfer $warehouseUserAssignmentCollectionResponseTransfer
      *
      * @return \Generated\Shared\Transfer\WarehouseUserAssignmentCollectionResponseTransfer
@@ -56,7 +56,7 @@ class SingleActiveWarehouseUserAssignmentValidatorRule implements WarehouseUserA
     }
 
     /**
-     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\WarehouseUserAssignmentTransfer> $warehouseUserAssignmentTransfers
+     * @param \ArrayObject<\Generated\Shared\Transfer\WarehouseUserAssignmentTransfer> $warehouseUserAssignmentTransfers
      *
      * @return bool
      */
@@ -73,7 +73,7 @@ class SingleActiveWarehouseUserAssignmentValidatorRule implements WarehouseUserA
     }
 
     /**
-     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\WarehouseUserAssignmentTransfer> $warehouseUserAssignmentTransfers
+     * @param \ArrayObject<\Generated\Shared\Transfer\WarehouseUserAssignmentTransfer> $warehouseUserAssignmentTransfers
      *
      * @return \Generated\Shared\Transfer\WarehouseUserAssignmentCriteriaTransfer
      */
@@ -90,7 +90,7 @@ class SingleActiveWarehouseUserAssignmentValidatorRule implements WarehouseUserA
     }
 
     /**
-     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\WarehouseUserAssignmentTransfer> $requestedWarehouseUserAssignmentTransfers
+     * @param \ArrayObject<\Generated\Shared\Transfer\WarehouseUserAssignmentTransfer> $requestedWarehouseUserAssignmentTransfers
      * @param \Generated\Shared\Transfer\WarehouseUserAssignmentCollectionResponseTransfer $warehouseUserAssignmentCollectionResponseTransfer
      *
      * @return \Generated\Shared\Transfer\WarehouseUserAssignmentCollectionResponseTransfer
@@ -131,7 +131,7 @@ class SingleActiveWarehouseUserAssignmentValidatorRule implements WarehouseUserA
     }
 
     /**
-     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\WarehouseUserAssignmentTransfer> $warehouseUserAssignmentTransfers
+     * @param \ArrayObject<\Generated\Shared\Transfer\WarehouseUserAssignmentTransfer> $warehouseUserAssignmentTransfers
      *
      * @return array<string, list<\Generated\Shared\Transfer\WarehouseUserAssignmentTransfer>>
      */

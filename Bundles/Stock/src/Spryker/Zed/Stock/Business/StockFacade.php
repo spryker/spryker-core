@@ -10,6 +10,7 @@ namespace Spryker\Zed\Stock\Business;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StockCollectionTransfer;
 use Generated\Shared\Transfer\StockCriteriaFilterTransfer;
+use Generated\Shared\Transfer\StockCriteriaTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\StockResponseTransfer;
 use Generated\Shared\Transfer\StockTransfer;
@@ -440,6 +441,8 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link getStockCollection()} instead.
+     *
      * @param \Generated\Shared\Transfer\StockCriteriaFilterTransfer $stockCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\StockCollectionTransfer
@@ -449,5 +452,21 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
         return $this->getFactory()
             ->createStockReader()
             ->getStocksByStockCriteriaFilter($stockCriteriaFilterTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\StockCriteriaTransfer $stockCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockCollectionTransfer
+     */
+    public function getStockCollection(StockCriteriaTransfer $stockCriteriaTransfer): StockCollectionTransfer
+    {
+        return $this->getFactory()
+            ->createStockReader()
+            ->getStockCollection($stockCriteriaTransfer);
     }
 }

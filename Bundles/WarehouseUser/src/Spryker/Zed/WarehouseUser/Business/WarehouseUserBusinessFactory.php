@@ -18,6 +18,8 @@ use Spryker\Zed\WarehouseUser\Business\IdentifierBuilder\WarehouseUserAssignment
 use Spryker\Zed\WarehouseUser\Business\IdentifierBuilder\WarehouseUserAssignmentIdentifierBuilderInterface;
 use Spryker\Zed\WarehouseUser\Business\Mapper\WarehouseUserAssignmentCriteriaMapper;
 use Spryker\Zed\WarehouseUser\Business\Mapper\WarehouseUserAssignmentCriteriaMapperInterface;
+use Spryker\Zed\WarehouseUser\Business\Reader\WarehouseReader;
+use Spryker\Zed\WarehouseUser\Business\Reader\WarehouseReaderInterface;
 use Spryker\Zed\WarehouseUser\Business\Updater\WarehouseUserAssignmentStatusUpdater;
 use Spryker\Zed\WarehouseUser\Business\Updater\WarehouseUserAssignmentStatusUpdaterInterface;
 use Spryker\Zed\WarehouseUser\Business\Updater\WarehouseUserAssignmentUpdater;
@@ -104,7 +106,7 @@ class WarehouseUserBusinessFactory extends AbstractBusinessFactory
      */
     public function createWarehouseUserAssignmentExpander(): WarehouseUserAssignmentExpanderInterface
     {
-        return new WarehouseUserAssignmentExpander($this->getStockFacade());
+        return new WarehouseUserAssignmentExpander($this->createWarehouseReader());
     }
 
     /**
@@ -113,6 +115,14 @@ class WarehouseUserBusinessFactory extends AbstractBusinessFactory
     public function createWarehouseUserAssignmentCriteriaMapper(): WarehouseUserAssignmentCriteriaMapperInterface
     {
         return new WarehouseUserAssignmentCriteriaMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\WarehouseUser\Business\Reader\WarehouseReaderInterface
+     */
+    public function createWarehouseReader(): WarehouseReaderInterface
+    {
+        return new WarehouseReader($this->getStockFacade());
     }
 
     /**
@@ -148,7 +158,7 @@ class WarehouseUserBusinessFactory extends AbstractBusinessFactory
     public function createWarehouseExistsValidatorRule(): WarehouseUserAssignmentValidatorRuleInterface
     {
         return new WarehouseExistsValidatorRule(
-            $this->getStockFacade(),
+            $this->createWarehouseReader(),
             $this->createWarehouseUserAssignmentIdentifierBuilder(),
         );
     }

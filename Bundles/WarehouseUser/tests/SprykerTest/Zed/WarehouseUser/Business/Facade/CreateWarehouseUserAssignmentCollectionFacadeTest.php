@@ -292,4 +292,40 @@ class CreateWarehouseUserAssignmentCollectionFacadeTest extends Unit
         $this->assertSame($newWarehouseUserAssignmentTransfer->getUserUuidOrFail(), $activeWarehouseUserAssignmentEntity->getUserUuid());
         $this->assertSame($newWarehouseUserAssignmentTransfer->getWarehouseOrFail()->getIdStockOrFail(), $activeWarehouseUserAssignmentEntity->getFkWarehouse());
     }
+
+    /**
+     * @return void
+     */
+    public function testShouldNotReturnErrorWhenIsActiveIsNotProvided(): void
+    {
+        // Arrange
+        $userTransfer = $this->tester->haveUser();
+        $warehouseUserAssignmentTransfer = $this->tester->haveWarehouseUserAssignment(
+            $userTransfer,
+            $this->tester->haveStock(),
+            [WarehouseUserAssignmentTransfer::IS_ACTIVE => true],
+        );
+        $warehouseUserAssignmentWithEmptyIsActiveTransfer = (new WarehouseUserAssignmentBuilder([
+            WarehouseUserAssignmentTransfer::USER_UUID => $userTransfer->getUuidOrFail(),
+            WarehouseUserAssignmentTransfer::IS_ACTIVE => null,
+        ]))->build()->setWarehouse($this->tester->haveStock());
+
+        $warehouseUserAssignmentCollectionRequestTransfer = (new WarehouseUserAssignmentCollectionRequestTransfer())
+            ->addWarehouseUserAssignment($warehouseUserAssignmentWithEmptyIsActiveTransfer);
+
+        // Act
+        $warehouseUserAssignmentCollectionResponseTransfer = $this->tester->getFacade()
+            ->createWarehouseUserAssignmentCollection($warehouseUserAssignmentCollectionRequestTransfer);
+
+        // Assert
+        $this->assertCount(0, $warehouseUserAssignmentCollectionResponseTransfer->getErrors());
+
+        $oldWarehouseUserAssignmentTransfer = $this->tester->findWarehouseUserAssignment($warehouseUserAssignmentTransfer->getIdWarehouseUserAssignmentOrFail());
+        $this->assertNotNull($oldWarehouseUserAssignmentTransfer);
+        $this->assertTrue($oldWarehouseUserAssignmentTransfer->getIsActive());
+
+        $newWarehouseUserAssignmentTransfer = $this->tester->findWarehouseUserAssignment($warehouseUserAssignmentWithEmptyIsActiveTransfer->getIdWarehouseUserAssignmentOrFail());
+        $this->assertNotNull($newWarehouseUserAssignmentTransfer);
+        $this->assertFalse($newWarehouseUserAssignmentTransfer->getIsActive());
+    }
 }

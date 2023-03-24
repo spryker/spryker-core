@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\Stock\Persistence;
 
+use Generated\Shared\Transfer\StockCollectionTransfer;
 use Generated\Shared\Transfer\StockCriteriaFilterTransfer;
+use Generated\Shared\Transfer\StockCriteriaTransfer;
 use Generated\Shared\Transfer\StockTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -113,4 +115,11 @@ interface StockRepositoryInterface
      * @return array<int, array<\Generated\Shared\Transfer\StockProductTransfer>>
      */
     public function getStockTransfersGroupedByIdProductConcrete(array $productConcreteIds): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\StockCriteriaTransfer $stockCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockCollectionTransfer
+     */
+    public function getStockCollection(StockCriteriaTransfer $stockCriteriaTransfer): StockCollectionTransfer;
 }

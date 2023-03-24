@@ -41,10 +41,12 @@ class JsonApiSchemaParametersFormatterTest extends Unit
 
         //Assert
         $this->assertIsArray($operation['parameters']);
-        $this->assertEquals(3, count($operation['parameters']));
-        $this->assertEquals($this->tester::COMPONENTS_PARAMETERS_PAGE, $operation['parameters'][0]['$ref']);
-        $this->assertEquals($this->tester::COMPONENTS_PARAMETERS_FIELDS, $operation['parameters'][1]['$ref']);
-        $this->assertEquals($this->tester::COMPONENTS_PARAMETERS_FILTER, $operation['parameters'][2]['$ref']);
+        $this->assertEquals(5, count($operation['parameters']));
+        $this->assertEquals($this->tester::COMPONENTS_PARAMETERS_CONTENT_TYPE, $operation['parameters'][0]['$ref']);
+        $this->assertEquals($this->tester::COMPONENTS_PARAMETERS_PAGE, $operation['parameters'][1]['$ref']);
+        $this->assertEquals($this->tester::COMPONENTS_PARAMETERS_FIELDS, $operation['parameters'][2]['$ref']);
+        $this->assertEquals($this->tester::COMPONENTS_PARAMETERS_FILTER, $operation['parameters'][3]['$ref']);
+        $this->assertEquals($this->tester::COMPONENTS_PARAMETERS_SORT, $operation['parameters'][4]['$ref']);
     }
 
     /**
@@ -63,10 +65,12 @@ class JsonApiSchemaParametersFormatterTest extends Unit
 
         //Assert
         $this->assertIsArray($operation['parameters']);
-        $this->assertEquals(5, count($operation['parameters']));
-        $this->assertEquals($this->tester::COMPONENTS_PARAMETERS_PAGE, $operation['parameters'][2]['$ref']);
-        $this->assertEquals($this->tester::COMPONENTS_PARAMETERS_FIELDS, $operation['parameters'][3]['$ref']);
-        $this->assertEquals($this->tester::COMPONENTS_PARAMETERS_FILTER, $operation['parameters'][4]['$ref']);
+        $this->assertEquals(7, count($operation['parameters']));
+        $this->assertEquals($this->tester::COMPONENTS_PARAMETERS_CONTENT_TYPE, $operation['parameters'][2]['$ref']);
+        $this->assertEquals($this->tester::COMPONENTS_PARAMETERS_PAGE, $operation['parameters'][3]['$ref']);
+        $this->assertEquals($this->tester::COMPONENTS_PARAMETERS_FIELDS, $operation['parameters'][4]['$ref']);
+        $this->assertEquals($this->tester::COMPONENTS_PARAMETERS_FILTER, $operation['parameters'][5]['$ref']);
+        $this->assertEquals($this->tester::COMPONENTS_PARAMETERS_SORT, $operation['parameters'][6]['$ref']);
     }
 
     /**
@@ -76,14 +80,14 @@ class JsonApiSchemaParametersFormatterTest extends Unit
     {
         //Arrange
         $resourceContextTransfer = new ResourceContextTransfer();
-        $operation = $this->createOperationWithRefs(['Fields', 'Filter']);
+        $operation = $this->createOperationWithRefs(['ContentType', 'Fields', 'Filter', 'Sort']);
         $formatter = new JsonApiSchemaParametersFormatter();
 
         //Act
         $operation = $formatter->setOperationParameters($operation, $resourceContextTransfer);
 
         //Assert
-        $this->assertEquals(5, count($operation['parameters']));
+        $this->assertEquals(7, count($operation['parameters']));
     }
 
     /**
@@ -100,12 +104,16 @@ class JsonApiSchemaParametersFormatterTest extends Unit
         $parameters = $formattedData['components']['parameters'];
 
         //Assert
+        $this->assertArrayHasKey('ContentType', $parameters);
+        $this->assertIsArray($parameters['ContentType']);
         $this->assertArrayHasKey('Page', $parameters);
         $this->assertIsArray($parameters['Page']);
         $this->assertArrayHasKey('Fields', $parameters);
         $this->assertIsArray($parameters['Fields']);
         $this->assertArrayHasKey('Filter', $parameters);
         $this->assertIsArray($parameters['Filter']);
+        $this->assertArrayHasKey('Sort', $parameters);
+        $this->assertIsArray($parameters['Sort']);
     }
 
     /**

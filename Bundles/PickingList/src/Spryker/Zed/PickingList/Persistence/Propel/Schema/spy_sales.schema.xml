@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Sales\Persistence" package="src.Orm.Zed.Sales.Persistence">
+
+    <table name="spy_sales_order_item" idMethod="native" allowPkInsert="true">
+        <column name="uuid" required="false" type="VARCHAR" size="36"/>
+
+        <unique name="spy_sales-order-item-uuid">
+            <unique-column name="uuid"/>
+        </unique>
+
+        <behavior name="uuid">
+            <parameter name="key_columns" value="id_sales_order_item"/>
+        </behavior>
+    </table>
+
+</database>

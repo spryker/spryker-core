@@ -1,0 +1,32 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 33,
+            "line_to": 33,
+            "type": "LessSpecificImplementedReturnType",
+            "message": "The inherited return type 'callable():Generated\\Shared\\Transfer\\GlueResponseTransfer' for Spryker\\Glue\\GlueApplicationExtension\\Dependency\\Plugin\\ResourceInterface::getResource is more specific than the implemented return type for Spryker\\Glue\\GlueApplication\\Plugin\\GlueApplication\\AbstractResourcePlugin::getresource 'callable'",
+            "file_name": "vendor/spryker/spryker/Bundles/GlueApplication/src/Spryker/Glue/GlueApplication/Plugin/GlueApplication/AbstractResourcePlugin.php",
+            "snippet": "     * @return callable",
+            "selected_text": "callable",
+            "error_level": 5,
+            "shortcode": 166
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 118,
+            "line_to": 118,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Glue\\PickingListsBackendApi\\Processor\\Mapper\\PickingListRequestMapperInterface::mapRequestBodyToGlueResourceTransferCollection has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/PickingListsBackendApi/src/Spryker/Glue/PickingListsBackendApi/Processor/Updater/PickingListItemUpdater.php",
+            "snippet": "            ->mapRequestBodyToGlueResourceTransferCollection(",
+            "selected_text": "mapRequestBodyToGlueResourceTransferCollection",
+            "error_level": 2,
+            "shortcode": 1
+        }
+    ],
+    "count": 2
+}

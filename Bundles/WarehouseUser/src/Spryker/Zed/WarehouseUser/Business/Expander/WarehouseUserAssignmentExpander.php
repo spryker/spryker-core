@@ -9,33 +9,31 @@ namespace Spryker\Zed\WarehouseUser\Business\Expander;
 
 use ArrayObject;
 use Generated\Shared\Transfer\StockCollectionTransfer;
-use Generated\Shared\Transfer\StockCriteriaFilterTransfer;
-use Spryker\Zed\WarehouseUser\Dependency\Facade\WarehouseUserToStockFacadeInterface;
+use Spryker\Zed\WarehouseUser\Business\Reader\WarehouseReaderInterface;
 
 class WarehouseUserAssignmentExpander implements WarehouseUserAssignmentExpanderInterface
 {
     /**
-     * @var \Spryker\Zed\WarehouseUser\Dependency\Facade\WarehouseUserToStockFacadeInterface
+     * @var \Spryker\Zed\WarehouseUser\Business\Reader\WarehouseReaderInterface
      */
-    protected WarehouseUserToStockFacadeInterface $stockFacade;
+    protected WarehouseReaderInterface $warehouseReader;
 
     /**
-     * @param \Spryker\Zed\WarehouseUser\Dependency\Facade\WarehouseUserToStockFacadeInterface $stockFacade
+     * @param \Spryker\Zed\WarehouseUser\Business\Reader\WarehouseReaderInterface $warehouseReader
      */
-    public function __construct(WarehouseUserToStockFacadeInterface $stockFacade)
+    public function __construct(WarehouseReaderInterface $warehouseReader)
     {
-        $this->stockFacade = $stockFacade;
+        $this->warehouseReader = $warehouseReader;
     }
 
     /**
-     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\WarehouseUserAssignmentTransfer> $warehouseUserAssignmentTransfers
+     * @param \ArrayObject<\Generated\Shared\Transfer\WarehouseUserAssignmentTransfer> $warehouseUserAssignmentTransfers
      *
-     * @return \ArrayObject<array-key, \Generated\Shared\Transfer\WarehouseUserAssignmentTransfer>
+     * @return \ArrayObject<\Generated\Shared\Transfer\WarehouseUserAssignmentTransfer>
      */
     public function expandWarehouseUserAssignmentTransfersWithWarehouses(ArrayObject $warehouseUserAssignmentTransfers): ArrayObject
     {
-        $stockCriteriaFilterTransfer = $this->createStockCriteriaFilterTransfer($warehouseUserAssignmentTransfers);
-        $stockCollectionTransfer = $this->stockFacade->getStocksByStockCriteriaFilter($stockCriteriaFilterTransfer);
+        $stockCollectionTransfer = $this->warehouseReader->getStockCollection($warehouseUserAssignmentTransfers);
 
         $indexedStockTransfers = $this->getStockTransfersIndexedByUuid($stockCollectionTransfer);
         foreach ($warehouseUserAssignmentTransfers as $warehouseUserAssignmentTransfer) {
@@ -50,28 +48,6 @@ class WarehouseUserAssignmentExpander implements WarehouseUserAssignmentExpander
         }
 
         return $warehouseUserAssignmentTransfers;
-    }
-
-    /**
-     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\WarehouseUserAssignmentTransfer> $warehouseUserAssignmentTransfers
-     *
-     * @return \Generated\Shared\Transfer\StockCriteriaFilterTransfer
-     */
-    protected function createStockCriteriaFilterTransfer(ArrayObject $warehouseUserAssignmentTransfers): StockCriteriaFilterTransfer
-    {
-        $stockCriteriaFilterTransfer = new StockCriteriaFilterTransfer();
-        foreach ($warehouseUserAssignmentTransfers as $warehouseUserAssignmentTransfer) {
-            if (!$warehouseUserAssignmentTransfer->getWarehouse() || $warehouseUserAssignmentTransfer->getWarehouseOrFail()->getIdStock()) {
-                continue;
-            }
-
-            $stockTransfer = $warehouseUserAssignmentTransfer->getWarehouseOrFail();
-            if ($stockTransfer->getUuid()) {
-                $stockCriteriaFilterTransfer->addUuid($stockTransfer->getUuidOrFail());
-            }
-        }
-
-        return $stockCriteriaFilterTransfer;
     }
 
     /**

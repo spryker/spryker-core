@@ -41,9 +41,13 @@ class WarehouseUserRepository extends AbstractRepository implements WarehouseUse
             $warehouseUserAssignmentQuery,
             $warehouseUserAssignmentCriteriaTransfer->getWarehouseUserAssignmentConditions(),
         );
+
+        /** @var \ArrayObject<\Generated\Shared\Transfer\SortTransfer> $sortTransferCollection */
+        $sortTransferCollection = $warehouseUserAssignmentCriteriaTransfer->getSortCollection();
+
         $warehouseUserAssignmentQuery = $this->applyWarehouseUserAssignmentSorting(
             $warehouseUserAssignmentQuery,
-            $warehouseUserAssignmentCriteriaTransfer->getSortCollection(),
+            $sortTransferCollection,
         );
         $paginationTransfer = $warehouseUserAssignmentCriteriaTransfer->getPagination();
         if ($paginationTransfer !== null) {
@@ -108,7 +112,7 @@ class WarehouseUserRepository extends AbstractRepository implements WarehouseUse
 
     /**
      * @param \Orm\Zed\WarehouseUser\Persistence\SpyWarehouseUserAssignmentQuery<\Orm\Zed\WarehouseUser\Persistence\SpyWarehouseUserAssignment> $warehouseUserAssignmentQuery
-     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\SortTransfer> $sortTransfers
+     * @param \ArrayObject<\Generated\Shared\Transfer\SortTransfer> $sortTransfers
      *
      * @return \Orm\Zed\WarehouseUser\Persistence\SpyWarehouseUserAssignmentQuery<\Orm\Zed\WarehouseUser\Persistence\SpyWarehouseUserAssignment>
      */

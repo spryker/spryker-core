@@ -43,6 +43,18 @@
         <property name="storeRelation" type="StoreRelation"/>
     </transfer>
 
+    <transfer name="ShipmentCriteria" strict="true">
+        <property name="shipmentConditions" type="ShipmentConditions"/>
+    </transfer>
+
+    <transfer name="ShipmentConditions" strict="true">
+        <property name="salesOrderItemIds" type="int[]" singular="idSalesOrderItem"/>
+    </transfer>
+
+    <transfer name="ShipmentCollection" strict="true">
+        <property name="shipments" type="Shipment[]" singular="shipment"/>
+    </transfer>
+
     <transfer name="Order">
         <property name="idShipmentMethod" type="int" deprecated="Use item level shipment method (item.shipment.method.idShipmentMethod) instead."/>
         <property name="shipmentDeliveryTime" type="int" deprecated="Use item level shipment method delivery time (item.shipment.method.deliveryTime) instead."/>
@@ -103,6 +115,7 @@
         <property name="shipment" type="Shipment"/>
         <property name="sku" type="string"/>
         <property name="idSalesOrderItem" type="int"/>
+        <property name="fkSalesOrder" type="int"/>
     </transfer>
 
     <transfer name="SaveOrder">

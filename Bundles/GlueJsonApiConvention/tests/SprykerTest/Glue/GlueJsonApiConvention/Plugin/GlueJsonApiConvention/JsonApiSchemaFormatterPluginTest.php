@@ -99,10 +99,12 @@ class JsonApiSchemaFormatterPluginTest extends Unit
     protected function assertPathsGetTestsById(array $formattedData): void
     {
         $data = $formattedData['paths']['/tests/{testId}']['get'];
-        $this->assertEquals(5, count($data['parameters']));
-        $this->assertEquals($this->tester::COMPONENTS_PARAMETERS_PAGE, $data['parameters'][2]['$ref']);
-        $this->assertEquals($this->tester::COMPONENTS_PARAMETERS_FIELDS, $data['parameters'][3]['$ref']);
-        $this->assertEquals($this->tester::COMPONENTS_PARAMETERS_FILTER, $data['parameters'][4]['$ref']);
+        $this->assertEquals(7, count($data['parameters']));
+        $this->assertEquals($this->tester::COMPONENTS_PARAMETERS_CONTENT_TYPE, $data['parameters'][2]['$ref']);
+        $this->assertEquals($this->tester::COMPONENTS_PARAMETERS_PAGE, $data['parameters'][3]['$ref']);
+        $this->assertEquals($this->tester::COMPONENTS_PARAMETERS_FIELDS, $data['parameters'][4]['$ref']);
+        $this->assertEquals($this->tester::COMPONENTS_PARAMETERS_FILTER, $data['parameters'][5]['$ref']);
+        $this->assertEquals($this->tester::COMPONENTS_PARAMETERS_SORT, $data['parameters'][6]['$ref']);
 
         $responseData = $data['responses'];
 
@@ -134,10 +136,12 @@ class JsonApiSchemaFormatterPluginTest extends Unit
         $responseData = $data['responses'];
         $requestBody = $data['requestBody'];
 
-        $this->assertEquals(5, count($data['parameters']));
-        $this->assertEquals($this->tester::COMPONENTS_PARAMETERS_PAGE, $data['parameters'][2]['$ref']);
-        $this->assertEquals($this->tester::COMPONENTS_PARAMETERS_FIELDS, $data['parameters'][3]['$ref']);
-        $this->assertEquals($this->tester::COMPONENTS_PARAMETERS_FILTER, $data['parameters'][4]['$ref']);
+        $this->assertEquals(7, count($data['parameters']));
+        $this->assertEquals($this->tester::COMPONENTS_PARAMETERS_CONTENT_TYPE, $data['parameters'][2]['$ref']);
+        $this->assertEquals($this->tester::COMPONENTS_PARAMETERS_PAGE, $data['parameters'][3]['$ref']);
+        $this->assertEquals($this->tester::COMPONENTS_PARAMETERS_FIELDS, $data['parameters'][4]['$ref']);
+        $this->assertEquals($this->tester::COMPONENTS_PARAMETERS_FILTER, $data['parameters'][5]['$ref']);
+        $this->assertEquals($this->tester::COMPONENTS_PARAMETERS_SORT, $data['parameters'][6]['$ref']);
 
         $this->assertArrayHasKey(static::APPLICATION_API_JSON, $responseData['200']['content']);
         $this->assertEquals(
@@ -171,10 +175,12 @@ class JsonApiSchemaFormatterPluginTest extends Unit
         $data = $formattedData['paths']['/tests/{testId}']['delete'];
         $responseData = $data['responses'];
 
-        $this->assertEquals(5, count($data['parameters']));
-        $this->assertEquals($this->tester::COMPONENTS_PARAMETERS_PAGE, $data['parameters'][2]['$ref']);
-        $this->assertEquals($this->tester::COMPONENTS_PARAMETERS_FIELDS, $data['parameters'][3]['$ref']);
-        $this->assertEquals($this->tester::COMPONENTS_PARAMETERS_FILTER, $data['parameters'][4]['$ref']);
+        $this->assertEquals(7, count($data['parameters']));
+        $this->assertEquals($this->tester::COMPONENTS_PARAMETERS_CONTENT_TYPE, $data['parameters'][2]['$ref']);
+        $this->assertEquals($this->tester::COMPONENTS_PARAMETERS_PAGE, $data['parameters'][3]['$ref']);
+        $this->assertEquals($this->tester::COMPONENTS_PARAMETERS_FIELDS, $data['parameters'][4]['$ref']);
+        $this->assertEquals($this->tester::COMPONENTS_PARAMETERS_FILTER, $data['parameters'][5]['$ref']);
+        $this->assertEquals($this->tester::COMPONENTS_PARAMETERS_SORT, $data['parameters'][6]['$ref']);
 
         $this->assertArrayHasKey(static::APPLICATION_API_JSON, $responseData['200']['content']);
         $this->assertEquals(
@@ -203,10 +209,12 @@ class JsonApiSchemaFormatterPluginTest extends Unit
         $data = $formattedData['paths']['/tests']['get'];
         $responseData = $data['responses'];
 
-        $this->assertEquals(5, count($data['parameters']));
-        $this->assertEquals($this->tester::COMPONENTS_PARAMETERS_PAGE, $data['parameters'][2]['$ref']);
-        $this->assertEquals($this->tester::COMPONENTS_PARAMETERS_FIELDS, $data['parameters'][3]['$ref']);
-        $this->assertEquals($this->tester::COMPONENTS_PARAMETERS_FILTER, $data['parameters'][4]['$ref']);
+        $this->assertEquals(7, count($data['parameters']));
+        $this->assertEquals($this->tester::COMPONENTS_PARAMETERS_CONTENT_TYPE, $data['parameters'][2]['$ref']);
+        $this->assertEquals($this->tester::COMPONENTS_PARAMETERS_PAGE, $data['parameters'][3]['$ref']);
+        $this->assertEquals($this->tester::COMPONENTS_PARAMETERS_FIELDS, $data['parameters'][4]['$ref']);
+        $this->assertEquals($this->tester::COMPONENTS_PARAMETERS_FILTER, $data['parameters'][5]['$ref']);
+        $this->assertEquals($this->tester::COMPONENTS_PARAMETERS_SORT, $data['parameters'][6]['$ref']);
 
         $this->assertArrayHasKey(static::APPLICATION_API_JSON, $responseData['200']['content']);
         $this->assertEquals(
@@ -232,10 +240,12 @@ class JsonApiSchemaFormatterPluginTest extends Unit
         $responseData = $data['responses'];
         $requestBody = $data['requestBody'];
 
-        $this->assertEquals(5, count($data['parameters']));
-        $this->assertEquals($this->tester::COMPONENTS_PARAMETERS_PAGE, $data['parameters'][2]['$ref']);
-        $this->assertEquals($this->tester::COMPONENTS_PARAMETERS_FIELDS, $data['parameters'][3]['$ref']);
-        $this->assertEquals($this->tester::COMPONENTS_PARAMETERS_FILTER, $data['parameters'][4]['$ref']);
+        $this->assertEquals(7, count($data['parameters']));
+        $this->assertEquals($this->tester::COMPONENTS_PARAMETERS_CONTENT_TYPE, $data['parameters'][2]['$ref']);
+        $this->assertEquals($this->tester::COMPONENTS_PARAMETERS_PAGE, $data['parameters'][3]['$ref']);
+        $this->assertEquals($this->tester::COMPONENTS_PARAMETERS_FIELDS, $data['parameters'][4]['$ref']);
+        $this->assertEquals($this->tester::COMPONENTS_PARAMETERS_FILTER, $data['parameters'][5]['$ref']);
+        $this->assertEquals($this->tester::COMPONENTS_PARAMETERS_SORT, $data['parameters'][6]['$ref']);
 
         $this->assertArrayHasKey(static::APPLICATION_API_JSON, $responseData['200']['content']);
         $this->assertEquals(

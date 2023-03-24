@@ -1,0 +1,56 @@
+{
+    "name": "spryker/picking-list",
+    "type": "library",
+    "description": "PickingList module",
+    "license": "proprietary",
+    "require": {
+        "php": ">=8.0",
+        "spryker/kernel": "^3.30.0",
+        "spryker/picking-list-extension": "^0.1.0",
+        "spryker/propel-orm": "^1.6.0",
+        "spryker/sales": "^11.7.0",
+        "spryker/stock": "^8.0.0",
+        "spryker/transfer": "^3.27.0",
+        "spryker/uuid-behavior": "^1.0.0",
+        "spryker/warehouse-user": "^0.1.0"
+    },
+    "require-dev": {
+        "spryker/code-sniffer": "*",
+        "spryker/container": "*",
+        "spryker/oms": "*",
+        "spryker/propel": "*",
+        "spryker/testify": "*",
+        "spryker/user": "*"
+    },
+    "suggest": {
+        "spryker/oms": "If you want to use OMS plugins."
+    },
+    "autoload": {
+        "psr-4": {
+            "Spryker\\": "src/Spryker/",
+            "SprykerTest\\Zed\\PickingList\\Helper\\": "tests/SprykerTest/Zed/PickingList/_support/Helper/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SprykerTest\\": "tests/SprykerTest/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "scripts": {
+        "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/",
+        "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
+}

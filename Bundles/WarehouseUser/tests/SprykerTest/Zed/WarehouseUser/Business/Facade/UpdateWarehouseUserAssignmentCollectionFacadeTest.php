@@ -333,4 +333,32 @@ class UpdateWarehouseUserAssignmentCollectionFacadeTest extends Unit
         $this->assertNotNull($activeWarehouseUserAssignmentEntity);
         $this->assertTrue($activeWarehouseUserAssignmentEntity->getIsActive());
     }
+
+    /**
+     * @return void
+     */
+    public function testShouldNotReturnErrorWhenIsActiveIsNotProvided(): void
+    {
+        // Arrange
+        $userTransfer = $this->tester->haveUser();
+        $activeWarehouseUserAssignmentTransfer = $this->tester->haveWarehouseUserAssignment(
+            $userTransfer,
+            $this->tester->haveStock(),
+            [WarehouseUserAssignmentTransfer::IS_ACTIVE => false],
+        );
+
+        $warehouseUserAssignmentCollectionRequestTransfer = (new WarehouseUserAssignmentCollectionRequestTransfer())
+            ->addWarehouseUserAssignment($activeWarehouseUserAssignmentTransfer->setIsActive());
+
+        // Act
+        $warehouseUserAssignmentCollectionResponseTransfer = $this->tester->getFacade()
+            ->updateWarehouseUserAssignmentCollection($warehouseUserAssignmentCollectionRequestTransfer);
+
+        // Assert
+        $this->assertCount(0, $warehouseUserAssignmentCollectionResponseTransfer->getErrors());
+
+        $inactiveWarehouseUserAssignmentEntity = $this->tester->findWarehouseUserAssignment($activeWarehouseUserAssignmentTransfer->getIdWarehouseUserAssignmentOrFail());
+        $this->assertNotNull($inactiveWarehouseUserAssignmentEntity);
+        $this->assertFalse($inactiveWarehouseUserAssignmentEntity->getIsActive());
+    }
 }

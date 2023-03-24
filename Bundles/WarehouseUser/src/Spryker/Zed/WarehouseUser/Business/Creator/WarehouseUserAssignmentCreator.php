@@ -76,16 +76,21 @@ class WarehouseUserAssignmentCreator implements WarehouseUserAssignmentCreatorIn
     public function createWarehouseUserAssignmentCollection(
         WarehouseUserAssignmentCollectionRequestTransfer $warehouseUserAssignmentCollectionRequestTransfer
     ): WarehouseUserAssignmentCollectionResponseTransfer {
-        $warehouseUserAssignmentTransfers = $this->warehouseUserAssignmentExpander->expandWarehouseUserAssignmentTransfersWithWarehouses(
-            $warehouseUserAssignmentCollectionRequestTransfer->getWarehouseUserAssignments(),
-        );
+        /** @var \ArrayObject<\Generated\Shared\Transfer\WarehouseUserAssignmentTransfer> $warehouseUserAssignmentTransfers */
+        $warehouseUserAssignmentTransfers = $warehouseUserAssignmentCollectionRequestTransfer->getWarehouseUserAssignments();
+        $warehouseUserAssignmentTransfers = $this->warehouseUserAssignmentExpander
+            ->expandWarehouseUserAssignmentTransfersWithWarehouses($warehouseUserAssignmentTransfers);
+
         $warehouseUserAssignmentCollectionResponseTransfer = $this->warehouseUserAssignmentValidator->validateCollection(
             $warehouseUserAssignmentTransfers,
         );
 
+        /** @var \ArrayObject<\Generated\Shared\Transfer\ErrorTransfer> $errorTransferCollection */
+        $errorTransferCollection = $warehouseUserAssignmentCollectionResponseTransfer->getErrors();
+
         if (
             $warehouseUserAssignmentCollectionRequestTransfer->getIsTransactional()
-            && $warehouseUserAssignmentCollectionResponseTransfer->getErrors()->count() !== 0
+            && $errorTransferCollection->count() !== 0
         ) {
             return $warehouseUserAssignmentCollectionResponseTransfer;
         }
@@ -133,8 +138,11 @@ class WarehouseUserAssignmentCreator implements WarehouseUserAssignmentCreatorIn
     protected function splitWarehouseUserAssignmentTransfersByValidity(
         WarehouseUserAssignmentCollectionResponseTransfer $warehouseUserAssignmentCollectionResponseTransfer
     ): array {
+        /** @var \ArrayObject<\Generated\Shared\Transfer\ErrorTransfer> $errorTransferCollection */
+        $errorTransferCollection = $warehouseUserAssignmentCollectionResponseTransfer->getErrors();
+
         $warehouseUserAssignmentIdsWithErrors = $this->getErroredWarehouseUserAssignmentsIdentifiers(
-            $warehouseUserAssignmentCollectionResponseTransfer->getErrors(),
+            $errorTransferCollection,
         );
 
         $validWarehouseUserAssignmentTransfers = [];
@@ -156,7 +164,7 @@ class WarehouseUserAssignmentCreator implements WarehouseUserAssignmentCreatorIn
     }
 
     /**
-     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\ErrorTransfer> $errorTransfers
+     * @param \ArrayObject<\Generated\Shared\Transfer\ErrorTransfer> $errorTransfers
      *
      * @return list<string>
      */

@@ -20,9 +20,11 @@ class JsonApiSchemaParametersFormatter implements JsonApiSchemaParametersFormatt
     public function setOperationParameters(array $operation, ResourceContextTransfer $resourceContext): array
     {
         $operation = $this->setIncludes($operation, $resourceContext);
+        $operation = $this->setOperationParameter($operation, 'ContentType');
         $operation = $this->setOperationParameter($operation, 'Page');
         $operation = $this->setOperationParameter($operation, 'Fields');
         $operation = $this->setOperationParameter($operation, 'Filter');
+        $operation = $this->setOperationParameter($operation, 'Sort');
 
         return $operation;
     }
@@ -34,11 +36,34 @@ class JsonApiSchemaParametersFormatter implements JsonApiSchemaParametersFormatt
      */
     public function setComponentParameters(array $formattedData): array
     {
+        $formattedData = $this->formatContentTypeParameter($formattedData);
         $formattedData = $this->formatPageParameter($formattedData);
         $formattedData = $this->formatFieldsParameter($formattedData);
         $formattedData = $this->formatFilterParameter($formattedData);
+        $formattedData = $this->formatSortParameter($formattedData);
 
         return $formattedData;
+    }
+
+    /**
+     * @param array<mixed> $formattedData
+     *
+     * @return array<mixed>
+     */
+    protected function formatContentTypeParameter(array $formattedData): array
+    {
+        $contentType = [
+            'name' => 'Content-Type',
+            'in' => 'header',
+            'required' => true,
+            'description' => 'Content-Type header is required for POST and PATCH requests.',
+            'schema' => [
+                'type' => 'string',
+                'example' => 'application/vnd.api+json',
+            ],
+        ];
+
+        return $this->setComponentParametersToOpenApi($formattedData, $contentType, 'ContentType');
     }
 
     /**
@@ -87,6 +112,7 @@ class JsonApiSchemaParametersFormatter implements JsonApiSchemaParametersFormatt
             $includes = [
                 'name' => 'include',
                 'in' => 'query',
+                'description' => 'Parameter is used to add relationships which should be included.',
                 'required' => false,
                 'schema' => [
                     'type' => 'array',
@@ -188,7 +214,7 @@ class JsonApiSchemaParametersFormatter implements JsonApiSchemaParametersFormatt
             'name' => 'filter',
             'in' => 'query',
             'required' => false,
-            'description' => 'Parameter is used to sort items by specified values.',
+            'description' => 'Parameter is used to filter items by specified values.',
             'style' => 'deepObject',
             'explode' => true,
             'schema' => [
@@ -206,6 +232,29 @@ class JsonApiSchemaParametersFormatter implements JsonApiSchemaParametersFormatt
         ];
 
         return $this->setComponentParametersToOpenApi($formattedData, $filter, 'Filter');
+    }
+
+    /**
+     * @param array<mixed> $formattedData
+     *
+     * @return array<mixed>
+     */
+    protected function formatSortParameter(array $formattedData): array
+    {
+        $sort = [
+            'name' => 'sort',
+            'in' => 'query',
+            'description' => 'Parameter is used to sort items. Use dash `-` for DESC direction.',
+            'required' => false,
+            'style' => 'form',
+            'explode' => false,
+            'schema' => [
+                'type' => 'string',
+                'example' => '-field',
+            ],
+        ];
+
+        return $this->setComponentParametersToOpenApi($formattedData, $sort, 'Sort');
     }
 
     /**

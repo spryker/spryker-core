@@ -1,0 +1,283 @@
+openapi: 3.0.3
+info:
+    title: Picking List Backend API
+    version: 1.0.0
+servers:
+    - url: http://glue-backend.de.spryker.local
+security:
+    - bearerAuth: []
+paths:
+    /picking-lists:
+        get:
+            description: Retrieves the picking list collection.
+            parameters:
+                - $ref: '#/components/parameters/acceptLanguage'
+                - $ref: '#/components/parameters/ContentType'
+                - $ref: '#/components/parameters/Page'
+                - $ref: '#/components/parameters/Fields'
+                - $ref: '#/components/parameters/Sort'
+            responses:
+                '200':
+                    description: Retrieves the picking list collection.
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/ApiPickingListsAttributes'
+                '403':
+                    description: Unauthorized request.
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/ApiErrorResponse'
+    /picking-lists/{pickingListUuid}:
+        parameters:
+            - $ref: '#/components/parameters/acceptLanguage'
+            - $ref: '#/components/parameters/ContentType'
+            - $ref: '#/components/parameters/Fields'
+            - name: pickingListUuid
+              in: path
+              required: true
+              description: Picking List UUID
+              schema:
+                  type: string
+        get:
+            description: Retrieves the picking list.
+            responses:
+                '200':
+                    description: Retrieves the picking list.
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                $ref: '#/components/schemas/ApiPickingListsAttributes'
+                '403':
+                    description: Unauthorized request.
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/ApiErrorResponse'
+                '404':
+                    description: Not found.
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/ApiErrorResponse'
+        patch:
+            description: Assigns the warehouse user to the picking list.
+            requestBody:
+                required: true
+                content:
+                    application/vnd.api+json:
+                        schema:
+                            $ref: '#/components/schemas/ApiPickingListsRequestAttributes'
+            responses:
+                '200':
+                    description: Assigns the warehouse user to the picking list.
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                $ref: '#/components/schemas/ApiPickingListsAttributes'
+                '400':
+                    description: Bad request.
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/ApiErrorResponse'
+                '403':
+                    description: Unauthorized.
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/ApiErrorResponse'
+                '404':
+                    description: Not found.
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/ApiErrorResponse'
+    /picking-lists/{pickingListUuid}/picking-list-items:
+        parameters:
+            - $ref: '#/components/parameters/acceptLanguage'
+            - $ref: '#/components/parameters/ContentType'
+            - name: pickingListUuid
+              in: path
+              required: true
+              description: Picking List UUID
+              schema:
+                  type: string
+        patch:
+            description: Updates `PickingListItems.numberOfPicked` and `PickingListItems.numberOfNotPicked`.
+            requestBody:
+                required: true
+                content:
+                    application/vnd.api+json:
+                        schema:
+                            type: array
+                            items:
+                                $ref: '#/components/schemas/ApiPickingListItemsAttributes'
+            responses:
+                '200':
+                    description: Updates `PickingListItems.numberOfPicked` and `PickingListItems.numberOfNotPicked`.
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                $ref: '#/components/schemas/ApiPickingListsAttributes'
+                '400':
+                    description: Bad request.
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/ApiErrorResponse'
+                '403':
+                    description: Unauthorized.
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/ApiErrorResponse'
+                '404':
+                    description: Not found.
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/ApiErrorResponse'
+
+components:
+    securitySchemes:
+        bearerAuth:
+            type: http
+            scheme: bearer
+            bearerFormat: JWT
+
+    parameters:
+        acceptLanguage:
+            name: Accept-Language
+            in: header
+            description: 'Locale value relevant for the store.'
+            schema:
+                type: string
+            required: false
+        ContentType:
+            name: Content-Type
+            in: header
+            description: 'Content-Type header required for all the requests.'
+            required: true
+            schema:
+                type: string
+                example: application/vnd.api+json
+        Page:
+            name: page
+            in: query
+            description: 'Parameter is used to limit requested items.'
+            required: false
+            style: deepObject
+            explode: true
+            schema:
+                type: object
+                properties:
+                    offset:
+                        type: integer
+                        description: 'The number of items to skip before starting to collect the result set.'
+                    limit:
+                        type: integer
+                        description: 'The numbers of items to return.'
+                example:
+                    offset: 0
+                    limit: 10
+        Fields:
+            name: fields
+            in: query
+            description: 'Parameter is used to extract specified items\` fields.'
+            required: false
+            style: deepObject
+            explode: true
+            schema:
+                type: object
+                properties:
+                    resourceName:
+                        type: array
+                        items:
+                            type: string
+                        description: 'The name of resource.'
+                example:
+                    people: 'name,last-name'
+        Sort:
+            name: sort
+            in: query
+            description: 'Parameter is used to sort items. Use dash `-` for DESC direction.'
+            required: false
+            style: form
+            explode: false
+            schema:
+                type: string
+                example: -sku
+    schemas:
+        ApiPickingListItemsAttributes:
+            required:
+                - numberOfPicked
+                - numberOfNotPicked
+            properties:
+                numberOfPicked:
+                    type: integer
+                    example: 3
+                numberOfNotPicked:
+                    type: integer
+                    example: 0
+        ApiPickingListsRequestAttributes:
+            required:
+                - action
+            properties:
+                action:
+                    type: string
+                    example: startPicking
+        ApiPickingListsAttributes:
+            properties:
+                status:
+                    type: string
+                    example: ready-for-picking
+                createdAt:
+                    type: string
+                    example: 2023-01-31 12:56:59.000000
+                updatedAt:
+                    type: string
+                    example: 2023-02-01 16:42:44.000000
+        ApiErrorResponse:
+            properties:
+                errors:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ApiError'
+        ApiError:
+            properties:
+                status:
+                    type: number
+                    example: 403
+                code:
+                    type: string
+                    example: 5301
+                message:
+                    type: string
+                    example: Unauthorized request.
+        ApiLinks:
+            properties:
+                self:
+                    type: string
+                    example: https://glue-backend.de.spryker.local/picking-lists

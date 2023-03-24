@@ -1,0 +1,9 @@
+[
+    {
+        "fileName": "src/Spryker/Zed/PickingList/Dependency/Facade/PickingListToSalesFacadeBridge.php",
+        "description": "Bridges: Method `getOrderItems()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

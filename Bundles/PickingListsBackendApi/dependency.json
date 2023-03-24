@@ -1,0 +1,7 @@
+{
+    "include": {
+        "spryker/transfer": "Provides transfer objects definition with `::get*OrFail()` functionality.",
+        "spryker/glue-application": "Added for forward compatibility.",
+        "spryker/oauth-warehouse": "Provides `WarehouseTokenAuthorizationStrategy` plugin."
+    }
+}

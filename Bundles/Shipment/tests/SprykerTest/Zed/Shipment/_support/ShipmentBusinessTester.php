@@ -23,11 +23,13 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\TaxRateTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 use Spryker\Service\Shipment\ShipmentServiceInterface;
+use Spryker\Shared\Price\PriceConfig;
 use Spryker\Shared\Shipment\ShipmentConfig as SharedShipmentConfig;
 use Spryker\Shared\Tax\TaxConstants;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
@@ -343,6 +345,41 @@ class ShipmentBusinessTester extends Actor
         return (new CalculableObjectTransfer())
             ->setExpenses(new ArrayObject($expenseTransfers))
             ->setTotals(new TotalsTransfer());
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function createQuoteTransfer(): QuoteTransfer
+    {
+        return (new QuoteBuilder([
+            QuoteTransfer::PRICE_MODE => PriceConfig::PRICE_MODE_NET,
+        ]))
+            ->withItem(
+                (new ItemBuilder())
+                    ->withShipment(
+                        (new ShipmentBuilder())
+                            ->withShippingAddress()
+                            ->withMethod([
+                                ShipmentMethodTransfer::STORE_RELATION => new StoreRelationTransfer(),
+                            ]),
+                    ),
+            )
+            ->withAnotherItem(
+                (new ItemBuilder())
+                    ->withShipment(
+                        (new ShipmentBuilder())
+                            ->withShippingAddress()
+                            ->withMethod([
+                                ShipmentMethodTransfer::STORE_RELATION => new StoreRelationTransfer(),
+                            ]),
+                    ),
+            )
+            ->withBillingAddress()
+            ->withCustomer()
+            ->withTotals()
+            ->withCurrency()
+            ->build();
     }
 
     /**

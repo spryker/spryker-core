@@ -8,7 +8,7 @@
 namespace Spryker\Zed\WarehouseUser\Dependency\Facade;
 
 use Generated\Shared\Transfer\StockCollectionTransfer;
-use Generated\Shared\Transfer\StockCriteriaFilterTransfer;
+use Generated\Shared\Transfer\StockCriteriaTransfer;
 
 class WarehouseUserToStockFacadeBridge implements WarehouseUserToStockFacadeInterface
 {
@@ -26,12 +26,12 @@ class WarehouseUserToStockFacadeBridge implements WarehouseUserToStockFacadeInte
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StockCriteriaFilterTransfer $stockCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\StockCriteriaTransfer $stockCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\StockCollectionTransfer
      */
-    public function getStocksByStockCriteriaFilter(StockCriteriaFilterTransfer $stockCriteriaFilterTransfer): StockCollectionTransfer
+    public function getStockCollection(StockCriteriaTransfer $stockCriteriaTransfer): StockCollectionTransfer
     {
-        return $this->stockFacade->getStocksByStockCriteriaFilter($stockCriteriaFilterTransfer);
+        return $this->stockFacade->getStockCollection($stockCriteriaTransfer);
     }
 }
