@@ -152,8 +152,9 @@ class MerchantProfileFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testShouldHydrateOrderTransferWithMerchantsInfo(): void
+    public function testHydrateOrderTransferWithMerchantsHasMerchantsInfoWhenMerchantsProvided(): void
     {
+        // Arrange
         $merchantTransfer1 = $this->tester->haveMerchant(['merchantReference' => 'M001']);
         $expectedMerchantProfileTransfer1 = $this->tester->haveMerchantProfile($merchantTransfer1);
 
@@ -166,10 +167,11 @@ class MerchantProfileFacadeTest extends Unit
             $expectedMerchantProfileTransfer2->getMerchantReference(),
         ]);
 
+        // Act
         $this->tester->getFacade()->hydrateOrderMerchants($orderTransfer);
-
         $merchants = $orderTransfer->getMerchants();
 
+        // Assert
         $this->assertCount(2, $merchants);
 
         $this->assertEquals($expectedMerchantProfileTransfer1->getMerchantReference(), $merchants[0]->getMerchantReference());
@@ -179,5 +181,21 @@ class MerchantProfileFacadeTest extends Unit
         $this->assertEquals($expectedMerchantProfileTransfer2->getMerchantReference(), $merchants[1]->getMerchantReference());
         $this->assertEquals($expectedMerchantProfileTransfer2->getMerchantName(), $merchants[1]->getName());
         $this->assertEquals($expectedMerchantProfileTransfer2->getLogoUrl(), $merchants[1]->getImageUrl());
+    }
+
+    /**
+     * @return void
+     */
+    public function testHydrateOrderTransferWithMerchantsHasNoMerchantsWhenNoMerchantsProvided(): void
+    {
+        // Arrange
+        $orderTransfer = new OrderTransfer();
+
+        // Act
+        $this->tester->getFacade()->hydrateOrderMerchants($orderTransfer);
+        $merchants = $orderTransfer->getMerchants();
+
+        // Assert
+        $this->assertCount(0, $merchants);
     }
 }

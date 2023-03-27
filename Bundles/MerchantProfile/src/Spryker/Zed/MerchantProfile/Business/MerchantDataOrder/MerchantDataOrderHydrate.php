@@ -37,6 +37,10 @@ class MerchantDataOrderHydrate implements MerchantDataOrderInterface
      */
     public function hydrateOrderWithMerchantData(OrderTransfer $orderTransfer): OrderTransfer
     {
+        if (!$orderTransfer->getMerchantReferences()) {
+            return $orderTransfer;
+        }
+
         $merchantProfileCriteriaTransfer = new MerchantProfileCriteriaTransfer();
 
         $merchantProfileCriteriaTransfer->setMerchantReferences(
