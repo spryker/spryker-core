@@ -162,6 +162,8 @@ class MerchantProfileGlossaryAttributeValuesFormType extends AbstractType
             ],
             'required' => false,
             'constraints' => $this->getTextareaConstrains(),
+            'sanitize_xss' => true,
+            'allowed_attributes' => ['style'],
         ]);
 
         return $this;
@@ -180,6 +182,7 @@ class MerchantProfileGlossaryAttributeValuesFormType extends AbstractType
                 'placeholder' => static::PLACEHOLDER_BANNER_URL_GLOSSARY,
             ],
             'required' => false,
+            'sanitize_xss' => true,
         ]);
 
         return $this;
@@ -199,6 +202,8 @@ class MerchantProfileGlossaryAttributeValuesFormType extends AbstractType
             ],
             'required' => false,
             'constraints' => $this->getTextareaConstrains(),
+            'sanitize_xss' => true,
+            'allowed_attributes' => ['style'],
         ]);
 
         return $this;
@@ -219,6 +224,8 @@ class MerchantProfileGlossaryAttributeValuesFormType extends AbstractType
                 'placeholder' => static::PLACEHOLDER_TERMS_CONDITIONS_GLOSSARY,
             ],
             'constraints' => $this->getTextareaConstrains(),
+            'sanitize_xss' => true,
+            'allowed_attributes' => ['style'],
         ]);
 
         return $this;
@@ -239,6 +246,8 @@ class MerchantProfileGlossaryAttributeValuesFormType extends AbstractType
                 'placeholder' => static::PLACEHOLDER_CANCELLATION_POLICY_GLOSSARY,
             ],
             'constraints' => $this->getTextareaConstrains(),
+            'sanitize_xss' => true,
+            'allowed_attributes' => ['style'],
         ]);
 
         return $this;
@@ -259,6 +268,8 @@ class MerchantProfileGlossaryAttributeValuesFormType extends AbstractType
                 'placeholder' => static::PLACEHOLDER_IMPRINT_GLOSSARY,
             ],
             'constraints' => $this->getTextareaConstrains(),
+            'sanitize_xss' => true,
+            'allowed_attributes' => ['style'],
         ]);
 
         return $this;
@@ -279,6 +290,8 @@ class MerchantProfileGlossaryAttributeValuesFormType extends AbstractType
                 'placeholder' => static::PLACEHOLDER_DATA_PRIVACY_GLOSSARY,
             ],
             'constraints' => $this->getTextareaConstrains(),
+            'sanitize_xss' => true,
+            'allowed_attributes' => ['style'],
         ]);
 
         return $this;

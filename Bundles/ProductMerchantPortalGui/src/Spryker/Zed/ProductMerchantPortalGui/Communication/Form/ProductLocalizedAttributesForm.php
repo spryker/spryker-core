@@ -139,6 +139,8 @@ class ProductLocalizedAttributesForm extends AbstractType
                     'max' => 255,
                 ]),
             ],
+            'sanitize_xss' => true,
+            'allowed_attributes' => ['style'],
         ]);
 
         return $this;
@@ -157,6 +159,8 @@ class ProductLocalizedAttributesForm extends AbstractType
             ],
             'required' => false,
             'empty_data' => '',
+            'sanitize_xss' => true,
+            'allowed_attributes' => ['style'],
         ]);
 
         return $this;

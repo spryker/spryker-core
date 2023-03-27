@@ -96,6 +96,7 @@ class MerchantProfileUrlCollectionFormType extends AbstractType
                     'message' => 'Invalid path provided. "Space" and "\" character is not allowed.',
                 ]),
             ],
+            'sanitize_xss' => true,
         ]);
 
         return $this;

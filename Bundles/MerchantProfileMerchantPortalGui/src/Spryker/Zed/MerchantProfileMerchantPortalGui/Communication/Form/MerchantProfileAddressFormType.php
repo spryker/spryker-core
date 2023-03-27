@@ -170,6 +170,7 @@ class MerchantProfileAddressFormType extends AbstractType
             'constraints' => [
                 new Length(['max' => 255]),
             ],
+            'sanitize_xss' => true,
         ]);
 
         return $this;
@@ -188,6 +189,7 @@ class MerchantProfileAddressFormType extends AbstractType
             'constraints' => [
                 new Length(['max' => 10]),
             ],
+            'sanitize_xss' => true,
         ]);
 
         return $this;
@@ -206,6 +208,7 @@ class MerchantProfileAddressFormType extends AbstractType
             'constraints' => [
                 new Length(['max' => 255]),
             ],
+            'sanitize_xss' => true,
         ]);
 
         return $this;
@@ -222,6 +225,7 @@ class MerchantProfileAddressFormType extends AbstractType
             'label' => static::LABEL_ADDRESS_2,
             'required' => false,
             'constraints' => [new Length(['max' => 255])],
+            'sanitize_xss' => true,
         ]);
 
         return $this;
@@ -238,6 +242,7 @@ class MerchantProfileAddressFormType extends AbstractType
             'label' => static::LABEL_ADDRESS_3,
             'required' => false,
             'constraints' => [new Length(['max' => 255])],
+            'sanitize_xss' => true,
         ]);
 
         return $this;
