@@ -77,17 +77,16 @@ class CategoryDecisionRuleChecker implements CategoryDecisionRuleCheckerInterfac
 
         $productCategoryTransfers = $groupedProductCategoryTransfers[$itemTransfer->getIdProductAbstractOrFail()] ?? [];
 
+        $categoryKeys = [];
         foreach ($productCategoryTransfers as $productCategoryTransfer) {
             $categoryTransfer = $productCategoryTransfer->getCategoryOrFail();
-            $ascendantCategoryKeys = $groupedCategoryKeys[$categoryTransfer->getCategoryNodeOrFail()->getIdCategoryNodeOrFail()]
+            $categoryKeys[] = $groupedCategoryKeys[$categoryTransfer->getCategoryNodeOrFail()->getIdCategoryNodeOrFail()]
                 ?? [$categoryTransfer->getCategoryKeyOrFail()];
-
-            if ($this->isSatisfiedBy($clauseTransfer, $ascendantCategoryKeys)) {
-                return true;
-            }
         }
 
-        return false;
+        $categoryKeys = array_unique(array_merge(...$categoryKeys));
+
+        return $this->isSatisfiedBy($clauseTransfer, $categoryKeys);
     }
 
     /**
