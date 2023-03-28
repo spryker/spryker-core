@@ -1,0 +1,19 @@
+{
+    "error": [],
+    "warning": [],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 101,
+            "line_to": 101,
+            "type": "DeprecatedConstant",
+            "message": "Constant Symfony\\Component\\Security\\Core\\AuthenticationEvents::AUTHENTICATION_FAILURE is deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/SecurityBlockerMerchantPortalGui/src/Spryker/Zed/SecurityBlockerMerchantPortalGui/Communication/EventSubscriber/SecurityBlockerMerchantPortalUserEventSubscriber.php",
+            "snippet": "            AuthenticationEvents::AUTHENTICATION_FAILURE => 'onAuthenticationFailure',",
+            "selected_text": "AuthenticationEvents::AUTHENTICATION_FAILURE",
+            "error_level": 2,
+            "shortcode": 170
+        }
+    ],
+    "count": 1
+}

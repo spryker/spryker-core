@@ -13,15 +13,24 @@ use Spryker\Client\SecurityBlocker\SecurityBlockerConfig;
 class ConfigurationResolver implements ConfigurationResolverInterface
 {
     /**
-     * @var \Spryker\Client\SecurityBlocker\SecurityBlockerConfig
+     * @var list<\Spryker\Client\SecurityBlockerExtension\Dependency\Plugin\SecurityBlockerConfigurationSettingsExpanderPluginInterface>
      */
-    protected $securityBlockerConfig;
+    protected array $securityBlockerConfigurationSettingsExpanderPlugins;
 
     /**
+     * @var \Spryker\Client\SecurityBlocker\SecurityBlockerConfig
+     */
+    protected SecurityBlockerConfig $securityBlockerConfig;
+
+    /**
+     * @param list<\Spryker\Client\SecurityBlockerExtension\Dependency\Plugin\SecurityBlockerConfigurationSettingsExpanderPluginInterface> $securityBlockerConfigurationSettingsExpanderPlugins
      * @param \Spryker\Client\SecurityBlocker\SecurityBlockerConfig $securityBlockerConfig
      */
-    public function __construct(SecurityBlockerConfig $securityBlockerConfig)
-    {
+    public function __construct(
+        array $securityBlockerConfigurationSettingsExpanderPlugins,
+        SecurityBlockerConfig $securityBlockerConfig
+    ) {
+        $this->securityBlockerConfigurationSettingsExpanderPlugins = $securityBlockerConfigurationSettingsExpanderPlugins;
         $this->securityBlockerConfig = $securityBlockerConfig;
     }
 
@@ -33,8 +42,8 @@ class ConfigurationResolver implements ConfigurationResolverInterface
     public function getSecurityBlockerConfigurationSettingsForType(string $type): SecurityBlockerConfigurationSettingsTransfer
     {
         $securityConfigurationSettingTransfers = $this->securityBlockerConfig->getSecurityBlockerConfigurationSettings();
-        $defaultSecurityBlockerConfigurationSettingsTransfer = $this->securityBlockerConfig
-            ->getDefaultSecurityBlockerConfigurationSettings();
+        $securityConfigurationSettingTransfers = $this->executeSecurityBlockerSettingsConfigurationExpanderPlugins($securityConfigurationSettingTransfers);
+        $defaultSecurityBlockerConfigurationSettingsTransfer = $this->securityBlockerConfig->getDefaultSecurityBlockerConfigurationSettings();
 
         if (empty($securityConfigurationSettingTransfers[$type])) {
             return $defaultSecurityBlockerConfigurationSettingsTransfer;
@@ -52,5 +61,19 @@ class ConfigurationResolver implements ConfigurationResolverInterface
         }
 
         return $securityConfigurationSettingTransfers[$type];
+    }
+
+    /**
+     * @param array<string, \Generated\Shared\Transfer\SecurityBlockerConfigurationSettingsTransfer> $securityConfigurationSettingTransfers
+     *
+     * @return array<string, \Generated\Shared\Transfer\SecurityBlockerConfigurationSettingsTransfer>
+     */
+    protected function executeSecurityBlockerSettingsConfigurationExpanderPlugins(array $securityConfigurationSettingTransfers): array
+    {
+        foreach ($this->securityBlockerConfigurationSettingsExpanderPlugins as $securityBlockerConfigurationSettingsExpanderPlugin) {
+            $securityConfigurationSettingTransfers = $securityBlockerConfigurationSettingsExpanderPlugin->expand($securityConfigurationSettingTransfers);
+        }
+
+        return $securityConfigurationSettingTransfers;
     }
 }

@@ -138,6 +138,8 @@ interface SecurityBlockerConstants
      * Specification:
      * - Specifies the TTL configuration, the period when number of unsuccessful tries will be counted for agent.
      *
+     * @deprecated Use {@link \Spryker\Shared\SecurityBlockerStorefrontAgent\SecurityBlockerStorefrontAgentConstants::AGENT_BLOCKING_TTL} instead.
+     *
      * @api
      *
      * @var string
@@ -148,6 +150,8 @@ interface SecurityBlockerConstants
      * Specification:
      * - Specifies number of failed login attempt an agent can make during the `SECURITY_BLOCKER_AGENT_BLOCKING_TTL` time before it is blocked.
      *
+     * @deprecated Use {@link \Spryker\Shared\SecurityBlockerStorefrontAgent\SecurityBlockerStorefrontAgentConstants::AGENT_BLOCKING_NUMBER_OF_ATTEMPTS} instead.
+     *
      * @api
      *
      * @var string
@@ -157,6 +161,8 @@ interface SecurityBlockerConstants
     /**
      * Specification:
      * - Specifies the TTL configuration, the period for which the agent is blocked if the number of attempts is exceeded for agent.
+     *
+     * @deprecated Use {@link \Spryker\Shared\SecurityBlockerStorefrontAgent\SecurityBlockerStorefrontAgentConstants::AGENT_BLOCK_FOR_SECONDS} instead.
      *
      * @api
      *

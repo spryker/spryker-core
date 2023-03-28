@@ -24,12 +24,13 @@ class ErrorController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function error404Action(Request $request): array
     {
         return $this->viewResponse([
-            'error' => $this->getErrorMessage($request),
+            'error' => $this->defineErrorMessage($request),
+            'errorCode' => $this->defineErrorCode($request),
             'hideUserMenu' => true,
         ]);
     }
@@ -37,9 +38,23 @@ class ErrorController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return string
+     * @return array<string, mixed>
      */
-    protected function getErrorMessage(Request $request): string
+    public function error429Action(Request $request): array
+    {
+        return $this->viewResponse([
+            'error' => $this->defineErrorMessage($request),
+            'errorCode' => $this->defineErrorCode($request),
+            'hideUserMenu' => true,
+        ]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return string|null
+     */
+    protected function defineErrorMessage(Request $request): ?string
     {
         /** @var \Symfony\Component\ErrorHandler\Exception\FlattenException|null $exception */
         $exception = $request->query->all()[static::REQUEST_PARAM_EXCEPTION] ?? null;
@@ -48,6 +63,23 @@ class ErrorController extends AbstractController
             return $exception->getMessage();
         }
 
-        return '';
+        return null;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return int|null
+     */
+    protected function defineErrorCode(Request $request): ?int
+    {
+        /** @var \Symfony\Component\ErrorHandler\Exception\FlattenException|null $exception */
+        $exception = $request->query->get(static::REQUEST_PARAM_EXCEPTION);
+
+        if ($exception instanceof FlattenException) {
+            return (int)$exception->getStatusCode();
+        }
+
+        return null;
     }
 }

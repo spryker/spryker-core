@@ -73,7 +73,18 @@ class SecurityBlockerFactory extends AbstractFactory
      */
     public function createConfigurationResolver(): ConfigurationResolverInterface
     {
-        return new ConfigurationResolver($this->getConfig());
+        return new ConfigurationResolver(
+            $this->getSecurityBlockerConfigurationSettingsExpanderPlugins(),
+            $this->getConfig(),
+        );
+    }
+
+    /**
+     * @return list<\Spryker\Client\SecurityBlockerExtension\Dependency\Plugin\SecurityBlockerConfigurationSettingsExpanderPluginInterface>
+     */
+    public function getSecurityBlockerConfigurationSettingsExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(SecurityBlockerDependencyProvider::PLUGINS_SECURITY_BLOCKER_CONFIGURATION_SETTINGS_EXPANDER);
     }
 
     /**

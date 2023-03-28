@@ -16,6 +16,8 @@ use Spryker\Shared\SecurityBlocker\SecurityBlockerConstants;
 class SecurityBlockerConfig extends AbstractBundleConfig
 {
     /**
+     * @deprecated Use {@link \Spryker\Client\SecurityBlockerStorefrontAgent\SecurityBlockerStorefrontAgentConfig::SECURITY_BLOCKER_AGENT_ENTITY_TYPE} instead.
+     *
      * @var string
      */
     protected const SECURITY_BLOCKER_AGENT_ENTITY_TYPE = 'agent';
@@ -105,7 +107,9 @@ class SecurityBlockerConfig extends AbstractBundleConfig
      *
      * @api
      *
-     * @return array<\Generated\Shared\Transfer\SecurityBlockerConfigurationSettingsTransfer>
+     * @deprecated Exists for BC reasons. Use {@link \Spryker\Client\SecurityBlockerStorefrontAgent\Plugin\SecurityBlocker\AgentSecurityBlockerConfigurationSettingsExpanderPlugin}.
+     *
+     * @return array<string, \Generated\Shared\Transfer\SecurityBlockerConfigurationSettingsTransfer>
      */
     public function getSecurityBlockerConfigurationSettings(): array
     {
