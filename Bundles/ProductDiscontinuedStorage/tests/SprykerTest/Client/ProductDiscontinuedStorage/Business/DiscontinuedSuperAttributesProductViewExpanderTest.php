@@ -317,7 +317,93 @@ class DiscontinuedSuperAttributesProductViewExpanderTest extends Unit
         $this->assertSame('black - Discontinued', $attributeVariantMap[static::FAKE_DISCONTINUED_ID_PRODUCT_CONCRETE]['color']);
 
         $this->assertSame(['memory' => ['4 GB', '8 GB - Discontinued'], 'color' => ['black - Discontinued', 'white']], $superAttributes);
-        $this->assertSame(['memory' => '8 GB - Discontinued', 'color' => 'black - Discontinued'], $selectedAttributes);
+        $this->assertSame(['color' => 'black - Discontinued', 'memory' => '8 GB - Discontinued'], $selectedAttributes);
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandDiscontinuedProductSuperAttributesEnsureThatSelectedAttributesNotOverridden(): void
+    {
+        // Arrange
+        $attributeMapStorageTransfer = (new AttributeMapStorageTransfer())
+            ->setSuperAttributes(array_merge(static::FAKE_SUPER_ATTRIBUTES, static::FAKE_COLOR_SUPER_ATTRIBUTES))
+            ->setAttributeVariantMap([
+                static::FAKE_ID_PRODUCT_CONCRETE_1 => [
+                    'memory' => '4 GB',
+                    'color' => 'white',
+                ],
+                static::FAKE_ID_PRODUCT_CONCRETE_2 => [
+                    'memory' => '4 GB',
+                    'color' => 'black',
+                ],
+            ])
+            ->setProductConcreteIds([
+                static::FAKE_SKU_1 => static::FAKE_ID_PRODUCT_CONCRETE_1,
+                static::FAKE_SKU_2 => static::FAKE_ID_PRODUCT_CONCRETE_2,
+            ]);
+
+        $productViewTransfer = (new ProductViewTransfer())
+            ->setAttributeMap($attributeMapStorageTransfer)
+            ->setSelectedAttributes(['color' => 'black', 'memory' => '4 GB', 'fake-selected-attributes' => 'fake-value']);
+
+        // Act
+        $productViewTransfer = $this->getProductConcreteStorageReaderMock()
+            ->expandDiscontinuedProductSuperAttributes($productViewTransfer, 'DE');
+
+        // Assert
+        $this->assertEquals(
+            ['memory' => '4 GB', 'color' => 'black', 'fake-selected-attributes' => 'fake-value'],
+            $productViewTransfer->getSelectedAttributes(),
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandDiscontinuedProductSuperAttributesEnsureThatSelectedAttributesNotOverriddenByDiscontinuedValues(): void
+    {
+        // Arrange
+        $attributeMapStorageTransfer = (new AttributeMapStorageTransfer())
+            ->setSuperAttributes(array_merge(static::FAKE_SUPER_ATTRIBUTES, static::FAKE_COLOR_SUPER_ATTRIBUTES))
+            ->setAttributeVariantMap([
+                static::FAKE_ID_PRODUCT_CONCRETE_1 => [
+                    'memory' => '4 GB',
+                    'color' => 'white',
+                ],
+                static::FAKE_ID_PRODUCT_CONCRETE_2 => [
+                    'memory' => '4 GB',
+                    'color' => 'black',
+                ],
+                static::FAKE_ID_PRODUCT_CONCRETE_3 => [
+                    'memory' => '8 GB',
+                    'color' => 'white',
+                ],
+                static::FAKE_DISCONTINUED_ID_PRODUCT_CONCRETE => [
+                    'memory' => '8 GB',
+                    'color' => 'black',
+                ],
+            ])
+            ->setProductConcreteIds([
+                static::FAKE_SKU_1 => static::FAKE_ID_PRODUCT_CONCRETE_1,
+                static::FAKE_SKU_2 => static::FAKE_ID_PRODUCT_CONCRETE_2,
+                static::FAKE_SKU_3 => static::FAKE_ID_PRODUCT_CONCRETE_3,
+                static::FAKE_DISCONTINUED_SKU => static::FAKE_DISCONTINUED_ID_PRODUCT_CONCRETE,
+            ]);
+
+        $productViewTransfer = (new ProductViewTransfer())
+            ->setAttributeMap($attributeMapStorageTransfer)
+            ->setSelectedAttributes(['color' => 'black', 'memory' => '8 GB', 'fake-selected-attributes' => 'fake-value']);
+
+        // Act
+        $productViewTransfer = $this->getProductConcreteStorageReaderMock()
+            ->expandDiscontinuedProductSuperAttributes($productViewTransfer, 'DE');
+
+        // Assert
+        $this->assertEquals(
+            ['memory' => '8 GB - Discontinued', 'color' => 'black - Discontinued', 'fake-selected-attributes' => 'fake-value'],
+            $productViewTransfer->getSelectedAttributes(),
+        );
     }
 
     /**

@@ -164,16 +164,13 @@ class DiscontinuedSuperAttributesProductViewExpander implements DiscontinuedSupe
                 $attributeVariantMap[$idProductConcrete][$attributeName] = $expandedAttributeValue;
 
                 if ($this->isDiscontinuedPostfixApplicableForSuperAttributes($isWholeAttributeVariantSelected)) {
+                    $selectedAttributes[$attributeName] = $expandedAttributeValue;
                     $superAttributes[$attributeName] = $this->expandSuperAttributeValues(
                         $superAttributes[$attributeName],
                         $attributeValue,
                         $expandedAttributeValue,
                     );
                 }
-            }
-
-            if ($this->isDiscontinuedPostfixApplicableForSuperAttributes($isWholeAttributeVariantSelected)) {
-                $selectedAttributes = $attributeVariantMap[$idProductConcrete];
             }
         }
 
