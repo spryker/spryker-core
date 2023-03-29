@@ -60,9 +60,17 @@ class FlysystemDependencyProvider extends AbstractBundleDependencyProvider
     protected function addFilesystemBuilderPluginCollection($container)
     {
         $container->set(static::PLUGIN_COLLECTION_FILESYSTEM_BUILDER, function (Container $container) {
-            return [];
+            return $this->getFilesystemBuilderPluginCollection();
         });
 
         return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Service\Flysystem\Dependency\Plugin\FlysystemFilesystemBuilderPluginInterface>
+     */
+    protected function getFilesystemBuilderPluginCollection(): array
+    {
+        return [];
     }
 }

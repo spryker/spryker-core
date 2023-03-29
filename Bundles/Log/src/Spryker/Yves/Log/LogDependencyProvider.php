@@ -73,10 +73,18 @@ class LogDependencyProvider extends AbstractBundleDependencyProvider
     protected function addLogHandlers(Container $container)
     {
         $container->set(static::LOG_HANDLERS, function () {
-            return [];
+            return $this->getLogHandlers();
         });
 
         return $container;
+    }
+
+    /**
+     * @return array<\Monolog\Handler\HandlerInterface>
+     */
+    protected function getLogHandlers(): array
+    {
+        return [];
     }
 
     /**
@@ -87,10 +95,18 @@ class LogDependencyProvider extends AbstractBundleDependencyProvider
     protected function addProcessors(Container $container)
     {
         $container->set(static::LOG_PROCESSORS, function () {
-            return [];
+            return $this->getProcessors();
         });
 
         return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Shared\Log\Dependency\Plugin\LogProcessorPluginInterface>
+     */
+    protected function getProcessors(): array
+    {
+        return [];
     }
 
     /**
