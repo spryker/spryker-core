@@ -1,0 +1,30 @@
+<script>
+    class Profiler {
+        downloadLink = document.querySelector('.js-profiler-svg-graph-button');
+        svgContainer = document.querySelector('.js-profiler-svg-graph');
+
+        init() {
+            this.setDownloadUrl();
+            this.setScrollPosition();
+        }
+
+        setDownloadUrl() {
+            const svg = this.svgContainer.innerHTML;
+            const blob = new Blob([svg.toString()]);
+
+            this.downloadLink.download = 'profiler-call-graph.svg';
+            this.downloadLink.href = window.URL.createObjectURL(blob);
+        }
+
+        setScrollPosition() {
+            const wrapperWidth = this.svgContainer.offsetWidth;
+            const svgRootNodeOffset = this.svgContainer.querySelector('svg #node1 text').getBBox().x;
+            const ptToPxRatio = 1.33;
+
+            this.svgContainer.scroll(svgRootNodeOffset * ptToPxRatio - wrapperWidth/2, 0);
+        }
+    }
+
+    const profiler = new Profiler();
+    profiler.init();
+</script>

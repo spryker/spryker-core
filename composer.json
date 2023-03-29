@@ -736,6 +736,7 @@
         "spryker/products-categories-resource-relationship": "*",
         "spryker/products-rest-api": "*",
         "spryker/products-rest-api-extension": "*",
+        "spryker/profiler": "*",
         "spryker/propel": "*",
         "spryker/propel-orm": "*",
         "spryker/propel-orm-extension": "*",
