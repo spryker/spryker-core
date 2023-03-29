@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Oms\Business\OrderStatusChanged;
 
 use ArrayObject;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\MessageAttributesTransfer;
 use Generated\Shared\Transfer\OrderItemTransfer;
 use Generated\Shared\Transfer\OrderStatusChangedTransfer;
@@ -17,6 +18,7 @@ use Spryker\Zed\Oms\Dependency\Facade\OmsToMessageBrokerInterface;
 use Spryker\Zed\Oms\Dependency\Facade\OmsToSalesInterface;
 use Spryker\Zed\Oms\Dependency\Facade\OmsToStoreFacadeInterface;
 use Spryker\Zed\Oms\OmsConfig;
+use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 
 class OrderStatusChangedMessageSender implements OrderStatusChangedMessageSenderInterface
 {
@@ -41,21 +43,29 @@ class OrderStatusChangedMessageSender implements OrderStatusChangedMessageSender
     protected $omsConfig;
 
     /**
+     * @var \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface
+     */
+    protected $queryContainer;
+
+    /**
      * @param \Spryker\Zed\Oms\Dependency\Facade\OmsToMessageBrokerInterface $messageBrokerFacade
      * @param \Spryker\Zed\Oms\Dependency\Facade\OmsToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\Oms\Dependency\Facade\OmsToSalesInterface $salesFacade
      * @param \Spryker\Zed\Oms\OmsConfig $omsConfig
+     * @param \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface $queryContainer
      */
     public function __construct(
         OmsToMessageBrokerInterface $messageBrokerFacade,
         OmsToStoreFacadeInterface $storeFacade,
         OmsToSalesInterface $salesFacade,
-        OmsConfig $omsConfig
+        OmsConfig $omsConfig,
+        OmsQueryContainerInterface $queryContainer
     ) {
         $this->messageBrokerFacade = $messageBrokerFacade;
         $this->storeFacade = $storeFacade;
         $this->salesFacade = $salesFacade;
         $this->omsConfig = $omsConfig;
+        $this->queryContainer = $queryContainer;
     }
 
     /**
@@ -79,6 +89,7 @@ class OrderStatusChangedMessageSender implements OrderStatusChangedMessageSender
     protected function createOrderStatusChangedTransfer(int $idSalesOrder): OrderStatusChangedTransfer
     {
         $orderTransfer = $this->salesFacade->getOrderByIdSalesOrder($idSalesOrder);
+        $this->expandOrderTransferWithLocale($orderTransfer, $idSalesOrder);
 
         $filteredDataFromOrder = $this->mapOrderDataByAllowedFields($orderTransfer, $this->omsConfig->getOrderFieldsForOrderStatusChangedMessage());
 
@@ -178,5 +189,30 @@ class OrderStatusChangedMessageSender implements OrderStatusChangedMessageSender
         }
 
         return $mappedData;
+    }
+
+    /**
+     * @deprecated This is just for backward compatibility for projects using Sales module lower than version 8.14.1.
+     * Will be replaced by SalesFacade::findOrderByIdSalesOrder which already takes care of locale when all projects require spryker/sales:v8.14.1 as minimum.
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param int $idSalesOrder
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected function expandOrderTransferWithLocale(OrderTransfer $orderTransfer, int $idSalesOrder): OrderTransfer
+    {
+        if ($orderTransfer->getLocale()) {
+            return $orderTransfer;
+        }
+
+        $orderEntity = $this->queryContainer->querySalesOrderById($idSalesOrder)->findOne();
+
+        if ($orderEntity->getLocale()) {
+            $localeTransfer = (new LocaleTransfer())->fromArray($orderEntity->getLocale()->toArray(), true);
+            $orderTransfer->setLocale($localeTransfer);
+        }
+
+        return $orderTransfer;
     }
 }

@@ -11,7 +11,6 @@ use Codeception\Test\Unit;
 use DateTime;
 use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\ItemMetadataBuilder;
-use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\OmsProductReservationTransfer;
 use Generated\Shared\Transfer\OrderStatusChangedTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
@@ -446,7 +445,6 @@ class OmsFacadeTest extends Unit
         $orderTransfer = $this->tester->createOrderByStateMachineProcessName($testStateMachineProcessName);
         $orderTransfer->setCreatedAt(date('Y-m-d h:i:s'));
         $orderTransfer->setEmail($orderTransfer->getCustomer()->getEmail());
-        $orderTransfer->setLocale((new LocaleTransfer())->setLocaleName($localeName));
 
         $itemMetadataTransfer = (new ItemMetadataBuilder())->build();
         $itemMetadataTransfer->setImage('https://image.url');
@@ -480,6 +478,11 @@ class OmsFacadeTest extends Unit
                 $message = $envelopes[0]->getMessage();
 
                 $this->assertEquals($properties, array_intersect_key($message->toArray(), $properties));
+                $this->assertNotNull($message->getEmailAddress());
+                $this->assertNotNull($message->getLocaleName());
+                $this->assertNotNull($message->getTransactionDate());
+                $this->assertNotNull($message->getUserName());
+                $this->assertGreaterThan(0, $message->getOrderItems()->count());
             },
             OrderStatusChangedTransfer::class,
         );
