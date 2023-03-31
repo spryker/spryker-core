@@ -7,13 +7,16 @@
 
 namespace Spryker\Zed\Locale\Business;
 
+use Generated\Shared\Transfer\LocaleCriteriaTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Shared\Kernel\Store;
+use Generated\Shared\Transfer\StoreResponseTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Locale\Business\LocaleBusinessFactory getFactory()
  * @method \Spryker\Zed\Locale\Persistence\LocaleRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Locale\Persistence\LocaleEntityManagerInterface getEntityManager()
  */
 class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
 {
@@ -26,11 +29,11 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
      *
      * @return bool
      */
-    public function hasLocale($localeName)
+    public function hasLocale(string $localeName): bool
     {
-        $localeManager = $this->getFactory()->createLocaleManager();
-
-        return $localeManager->hasLocale($localeName);
+        return $this->getFactory()
+            ->createLocaleReader()
+            ->localeExists($localeName);
     }
 
     /**
@@ -44,29 +47,11 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getLocale($localeName)
+    public function getLocale(string $localeName): LocaleTransfer
     {
-        $localeManager = $this->getFactory()->createLocaleReader();
-
-        return $localeManager->getLocaleByName($localeName);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @deprecated Use {@link \Spryker\Zed\Locale\Business\LocaleFacade::getLocale()} instead.
-     *
-     * @param string $localeCode
-     *
-     * @return \Generated\Shared\Transfer\LocaleTransfer
-     */
-    public function getLocaleByCode($localeCode)
-    {
-        $localeManager = $this->getFactory()->createLocaleManager();
-
-        return $localeManager->getLocale($localeCode);
+        return $this->getFactory()
+            ->createLocaleReader()
+            ->getLocaleByName($localeName);
     }
 
     /**
@@ -78,7 +63,7 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getLocaleById($idLocale)
+    public function getLocaleById(int $idLocale): LocaleTransfer
     {
         return $this->getFactory()
             ->createLocaleReader()
@@ -92,9 +77,9 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
      *
      * @return string
      */
-    public function getCurrentLocaleName()
+    public function getCurrentLocaleName(): string
     {
-        return Store::getInstance()->getCurrentLocale();
+        return $this->getFactory()->getCurrentLocale();
     }
 
     /**
@@ -104,11 +89,11 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
      *
      * @return array<string>
      */
-    public function getAvailableLocales()
+    public function getAvailableLocales(): array
     {
-        $localeManager = $this->getFactory()->createLocaleManager();
+        $localeReader = $this->getFactory()->createLocaleReader();
 
-        return $localeManager->getAvailableLocales();
+        return $localeReader->getAvailableLocales();
     }
 
     /**
@@ -118,7 +103,7 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getCurrentLocale()
+    public function getCurrentLocale(): LocaleTransfer
     {
         $localeName = $this->getCurrentLocaleName();
 
@@ -134,11 +119,11 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function createLocale($localeName)
+    public function createLocale(string $localeName): LocaleTransfer
     {
-        $localeManager = $this->getFactory()->createLocaleManager();
-
-        return $localeManager->createLocale($localeName);
+        return $this->getFactory()
+            ->createLocaleWriter()
+            ->createLocale($localeName);
     }
 
     /**
@@ -150,10 +135,11 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
      *
      * @return void
      */
-    public function deleteLocale($localeName)
+    public function deleteLocale(string $localeName): void
     {
-        $localeManager = $this->getFactory()->createLocaleManager();
-        $localeManager->deleteLocale($localeName);
+        $this->getFactory()
+            ->createLocaleWriter()
+            ->deleteLocale($localeName);
     }
 
     /**
@@ -163,7 +149,7 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
      *
      * @return void
      */
-    public function install()
+    public function install(): void
     {
         $this->getFactory()->createInstaller()->install();
     }
@@ -173,13 +159,15 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\LocaleCriteriaTransfer|null $localeCriteriaTransfer
+     *
      * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
-    public function getLocaleCollection()
+    public function getLocaleCollection(?LocaleCriteriaTransfer $localeCriteriaTransfer = null): array
     {
-        $localeManager = $this->getFactory()->createLocaleManager();
-
-        return $localeManager->getLocaleCollection();
+        return $this->getFactory()
+            ->createLocaleReader()
+            ->getLocaleCollection($localeCriteriaTransfer);
     }
 
     /**
@@ -187,15 +175,62 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param array<\Generated\Shared\Transfer\StoreTransfer> $storeTransfers
      *
-     * @return \Generated\Shared\Transfer\LocaleTransfer
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
-    public function setCurrentLocale(LocaleTransfer $localeTransfer): LocaleTransfer
+    public function expandStoreTransfersWithLocales(array $storeTransfers): array
     {
-        $this->getFactory()->getStore()->setCurrentLocale($localeTransfer->getLocaleName());
+        return $this->getFactory()
+            ->createStoreExpander()
+            ->expandStoreTransfersWithLocales($storeTransfers);
+    }
 
-        return $localeTransfer;
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\StoreResponseTransfer
+     */
+    public function updateStoreDefaultLocale(StoreTransfer $storeTransfer): StoreResponseTransfer
+    {
+        return $this->getFactory()
+            ->createLocaleWriter()
+            ->updateStoreDefaultLocale($storeTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\StoreResponseTransfer
+     */
+    public function validateStoreLocale(StoreTransfer $storeTransfer): StoreResponseTransfer
+    {
+        return $this->getFactory()
+            ->createLocaleValidator()
+            ->validateStoreLocale($storeTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\StoreResponseTransfer
+     */
+    public function updateStoreLocales(StoreTransfer $storeTransfer): StoreResponseTransfer
+    {
+        return $this->getFactory()->createLocaleWriter()
+            ->updateStoreLocales($storeTransfer);
     }
 
     /**
@@ -207,6 +242,6 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
      */
     public function getSupportedLocaleCodes(): array
     {
-        return $this->getFactory()->createLocaleManager()->getSupportedLocaleCodes();
+        return $this->getFactory()->getConfig()->getBackofficeUILocales();
     }
 }

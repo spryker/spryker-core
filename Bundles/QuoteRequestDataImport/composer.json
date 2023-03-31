@@ -14,8 +14,10 @@
         "spryker/code-sniffer": "*",
         "spryker/company": "*",
         "spryker/company-business-unit": "*",
+        "spryker/container": "*",
         "spryker/customer": "*",
         "spryker/propel": "*",
+        "spryker/store": "*",
         "spryker/testify": "*"
     },
     "autoload": {

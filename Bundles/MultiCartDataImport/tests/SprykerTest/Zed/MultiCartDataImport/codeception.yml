@@ -27,3 +27,5 @@ suites:
                 - \SprykerTest\Zed\MultiCartDataImport\Helper\MultiCartDataImportHelper
                 - \SprykerTest\Shared\Testify\Helper\TableRelationsCleanupHelper
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper

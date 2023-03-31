@@ -11,6 +11,8 @@ use Psr\Log\LoggerInterface;
 use Spryker\Zed\SearchElasticsearch\Business\Definition\Builder\IndexDefinitionBuilderInterface;
 use Spryker\Zed\SearchElasticsearch\Business\Installer\IndexMap\Cleaner\IndexMapCleanerInterface;
 use Spryker\Zed\SearchElasticsearch\Business\Installer\IndexMap\Generator\IndexMapGeneratorInterface;
+use Spryker\Zed\SearchElasticsearch\Dependency\Facade\SearchElasticsearchToStoreFacadeInterface;
+use Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig;
 
 class IndexMapInstaller implements IndexMapInstallerInterface
 {
@@ -30,18 +32,34 @@ class IndexMapInstaller implements IndexMapInstallerInterface
     protected $indexMapGenerator;
 
     /**
+     * @var \Spryker\Zed\SearchElasticsearch\Dependency\Facade\SearchElasticsearchToStoreFacadeInterface
+     */
+    protected SearchElasticsearchToStoreFacadeInterface $storeFacade;
+
+    /**
+     * @var \Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig
+     */
+    protected SearchElasticsearchConfig $config;
+
+    /**
      * @param \Spryker\Zed\SearchElasticsearch\Business\Definition\Builder\IndexDefinitionBuilderInterface $indexDefinitionBuilder
      * @param \Spryker\Zed\SearchElasticsearch\Business\Installer\IndexMap\Cleaner\IndexMapCleanerInterface $indexMapCleaner
      * @param \Spryker\Zed\SearchElasticsearch\Business\Installer\IndexMap\Generator\IndexMapGeneratorInterface $indexMapGenerator
+     * @param \Spryker\Zed\SearchElasticsearch\Dependency\Facade\SearchElasticsearchToStoreFacadeInterface $storeFacade
+     * @param \Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig $config
      */
     public function __construct(
         IndexDefinitionBuilderInterface $indexDefinitionBuilder,
         IndexMapCleanerInterface $indexMapCleaner,
-        IndexMapGeneratorInterface $indexMapGenerator
+        IndexMapGeneratorInterface $indexMapGenerator,
+        SearchElasticsearchToStoreFacadeInterface $storeFacade,
+        SearchElasticsearchConfig $config
     ) {
         $this->indexDefinitionBuilder = $indexDefinitionBuilder;
         $this->indexMapCleaner = $indexMapCleaner;
         $this->indexMapGenerator = $indexMapGenerator;
+        $this->storeFacade = $storeFacade;
+        $this->config = $config;
     }
 
     /**
@@ -53,10 +71,39 @@ class IndexMapInstaller implements IndexMapInstallerInterface
     {
         $this->indexMapCleaner->cleanDirectory();
 
-        foreach ($this->indexDefinitionBuilder->build() as $indexDefinitionTransfer) {
+        foreach ($this->getGetIndexDefinitionTransfers() as $indexDefinitionTransfer) {
             $logger->info(sprintf('Generating index map classes for index "%s"', $indexDefinitionTransfer->getIndexName()));
 
             $this->indexMapGenerator->generate($indexDefinitionTransfer);
         }
+    }
+
+    /**
+     * @return array<\Generated\Shared\Transfer\IndexDefinitionTransfer>
+     */
+    protected function getGetIndexDefinitionTransfers(): array
+    {
+        if (!$this->storeFacade->isDynamicStoreEnabled()) {
+            return $this->indexDefinitionBuilder->build($this->getCurrentStore());
+        }
+
+        $indexDefinitionTransfers = [];
+        foreach ($this->config->getAllowedStoresForSourceIdentifierPrefixing() as $storeName) {
+            $indexDefinitionTransfers = array_merge($indexDefinitionTransfers, $this->indexDefinitionBuilder->build($storeName));
+        }
+
+        if ($indexDefinitionTransfers) {
+            return $indexDefinitionTransfers;
+        }
+
+        return $this->indexDefinitionBuilder->build(null);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getCurrentStore(): string
+    {
+        return APPLICATION_STORE;
     }
 }

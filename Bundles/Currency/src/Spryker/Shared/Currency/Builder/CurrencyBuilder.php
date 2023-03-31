@@ -34,8 +34,8 @@ class CurrencyBuilder implements CurrencyBuilderInterface
      */
     public function __construct(
         CurrencyToInternationalizationInterface $currencyRepository,
-        $defaultIsoCode,
-        $currentCurrencyIsoCode
+        string $defaultIsoCode,
+        string $currentCurrencyIsoCode
     ) {
         $this->currencyRepository = $currencyRepository;
         $this->defaultIsoCode = $defaultIsoCode;
@@ -47,7 +47,7 @@ class CurrencyBuilder implements CurrencyBuilderInterface
      *
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function fromIsoCode($isoCode)
+    public function fromIsoCode(string $isoCode): CurrencyTransfer
     {
         $currencyTransfer = new CurrencyTransfer();
         $currencyTransfer->setCode($isoCode);
@@ -62,7 +62,7 @@ class CurrencyBuilder implements CurrencyBuilderInterface
     /**
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function getCurrent()
+    public function getCurrent(): CurrencyTransfer
     {
         return $this->fromIsoCode($this->currentCurrencyIsoCode);
     }

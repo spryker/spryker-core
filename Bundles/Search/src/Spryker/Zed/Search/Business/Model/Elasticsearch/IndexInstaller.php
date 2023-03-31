@@ -69,9 +69,11 @@ class IndexInstaller implements SearchInstallerInterface
     }
 
     /**
+     * @param string|null $storeName
+     *
      * @return void
      */
-    public function install()
+    public function install(?string $storeName = null): void
     {
         $indexDefinitions = $this->indexDefinitionLoader->loadIndexDefinitions();
 

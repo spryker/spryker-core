@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
 use Generated\Shared\Transfer\ReservationRequestTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\ValidationResponseTransfer;
 use SplObjectStorage;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Exception\ProductConcreteNotFoundException;
@@ -292,13 +293,6 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
                 $productConcreteTransfer->getLocalizedAttributes(),
                 $localeTransfer,
             );
-        $reservationResponseTransfer = $this->getFactory()
-            ->getOmsFacade()
-            ->getOmsReservedProductQuantity(
-                (new ReservationRequestTransfer())
-                    ->setSku($productConcreteTransfer->getSku())
-                    ->setStore($this->getFactory()->getStoreFacade()->getCurrentStore()),
-            );
 
         $imageSetTabNames = $this->getImageSetTabNames($productConcreteTransfer);
         $imageSetsGroupedByIdLocale = $this->getImageSetsGroupedByIdLocale($productConcreteTransfer->getImageSets());
@@ -319,7 +313,7 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
                 'productAttributeTableConfiguration' => $this->getFactory()
                     ->createProductConcreteAttributeGuiTableConfigurationProvider()
                     ->getConfiguration($productConcreteTransfer->getIdProductConcreteOrFail(), $attributesInitialData),
-                'reservedStock' => $reservationResponseTransfer->getReservationQuantityOrFail()->toFloat(),
+                'reservedStock' => $this->getReservedStock($productConcreteTransfer->getSkuOrFail()),
             ])->getContent(),
         ];
 
@@ -552,5 +546,45 @@ class UpdateProductConcreteController extends AbstractUpdateProductController
         }
 
         return $mappedImageSetsTransfers;
+    }
+
+    /**
+     * @param string $productConcreteSku
+     *
+     * @return float
+     */
+    protected function getReservedStock(string $productConcreteSku): float
+    {
+        if (!$this->getFactory()->getStoreFacade()->isDynamicStoreEnabled()) {
+            return $this->getReservationQuantity($productConcreteSku, $this->getFactory()->getStoreFacade()->getCurrentStore());
+        }
+
+        $reservedStock = 0;
+        foreach ($this->getFactory()->getStoreFacade()->getAllStores() as $storeTransfer) {
+            $reservedStock += $this->getReservationQuantity($productConcreteSku, $storeTransfer);
+        }
+
+        return $reservedStock;
+    }
+
+    /**
+     * @param string $productConcreteSku
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return float
+     */
+    protected function getReservationQuantity(
+        string $productConcreteSku,
+        StoreTransfer $storeTransfer
+    ): float {
+        $reservationResponseTransfer = $this->getFactory()
+            ->getOmsFacade()
+            ->getOmsReservedProductQuantity(
+                (new ReservationRequestTransfer())
+                    ->setSku($productConcreteSku)
+                    ->setStore($storeTransfer),
+            );
+
+        return $reservationResponseTransfer->getReservationQuantityOrFail()->toFloat();
     }
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Sales;
 
+use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCalculationBridge;
@@ -73,7 +74,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
-    public const QUERY_CONTAINER_LOCALE = 'QUERY_CONTAINER_LOCALE';
+    public const PROPEL_QUERY_LOCALE = 'PROPEL_QUERY_LOCALE';
 
     /**
      * @var string
@@ -170,7 +171,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addStoreFacade($container);
         $container = $this->addSequenceNumberFacade($container);
         $container = $this->addOmsFacade($container);
-        $container = $this->addLocaleQueryContainer($container);
+        $container = $this->addLocalePropelQuery($container);
         $container = $this->addOrderExpanderPreSavePlugins($container);
         $container = $this->addHydrateOrderPlugins($container);
         $container = $this->addCalculationFacade($container);
@@ -411,11 +412,11 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addLocaleQueryContainer(Container $container)
+    protected function addLocalePropelQuery(Container $container)
     {
-        $container->set(static::QUERY_CONTAINER_LOCALE, function (Container $container) {
-            return $container->getLocator()->locale()->queryContainer();
-        });
+        $container->set(static::PROPEL_QUERY_LOCALE, $container->factory(function (Container $container) {
+            return SpyLocaleQuery::create();
+        }));
 
         return $container;
     }

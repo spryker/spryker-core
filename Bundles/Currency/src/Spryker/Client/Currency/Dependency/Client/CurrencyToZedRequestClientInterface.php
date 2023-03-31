@@ -12,7 +12,7 @@ interface CurrencyToZedRequestClientInterface
     /**
      * @return void
      */
-    public function addFlashMessagesFromLastZedRequest();
+    public function addFlashMessagesFromLastZedRequest(): void;
 
     /**
      * @return void

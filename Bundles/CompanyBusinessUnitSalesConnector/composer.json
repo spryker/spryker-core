@@ -17,10 +17,12 @@
         "spryker/company": "*",
         "spryker/company-role": "*",
         "spryker/company-user": "*",
+        "spryker/container": "*",
         "spryker/customer": "*",
         "spryker/oms": "*",
         "spryker/permission": "*",
         "spryker/propel": "*",
+        "spryker/store": "*",
         "spryker/testify": "*"
     },
     "autoload": {

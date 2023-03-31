@@ -129,6 +129,10 @@ class CategoryWriterStep extends PublishAwareStep implements DataImportStepInter
     {
         $localizedAttributeCollection = $dataSet[LocalizedAttributesExtractorStep::KEY_LOCALIZED_ATTRIBUTES];
         foreach ($localizedAttributeCollection as $idLocale => $localizedAttributes) {
+            if ($localizedAttributes === []) {
+                continue;
+            }
+
             $categoryAttributeEntity = SpyCategoryAttributeQuery::create()
                 ->filterByCategory($categoryEntity)
                 ->filterByFkLocale($idLocale)
@@ -219,7 +223,8 @@ class CategoryWriterStep extends PublishAwareStep implements DataImportStepInter
      */
     protected function getLanguageIdentifier($idLocale, DataSetInterface $dataSet)
     {
-        foreach ($dataSet[AddLocalesStep::KEY_LOCALES] as $localeName => $localeId) {
+        $locales = $dataSet[AddLocalesStep::KEY_LOCALES];
+        foreach ($locales as $localeName => $localeId) {
             if ($idLocale === $localeId) {
                 return mb_substr($localeName, 0, 2);
             }

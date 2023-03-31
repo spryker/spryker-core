@@ -24,6 +24,7 @@ class ListController extends AbstractController
 
         return $this->viewResponse([
             'storeTable' => $storeTable->render(),
+            'isDynamicMultiStoreEnabled' => $this->getFactory()->getStoreFacade()->isDynamicStoreEnabled(),
         ]);
     }
 

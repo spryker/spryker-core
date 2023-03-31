@@ -19,12 +19,12 @@ interface RegionInstallInterface
      *
      * @return array<string>
      */
-    public function getCodeArray();
+    public function getCodeArray(): array;
 
     /**
      * iso3661 alpha 2 code for country
      *
      * @return string
      */
-    public function getCountryIso();
+    public function getCountryIso(): string;
 }

@@ -28,6 +28,8 @@ suites:
                 - \SprykerTest\Zed\ProductAttribute\Helper\ProductAttributeDataHelper
                 - \SprykerTest\Shared\ProductRelation\Helper\ProductRelationDataHelper
                 - \SprykerTest\Shared\Store\Helper\StoreDataHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
     Business:
         path: Business
         actor: ProductRelationStorageBusinessTester
@@ -44,3 +46,5 @@ suites:
                 - \SprykerTest\Zed\ProductAttribute\Helper\ProductAttributeDataHelper
                 - \SprykerTest\Shared\ProductRelation\Helper\ProductRelationDataHelper
                 - \SprykerTest\Shared\Store\Helper\StoreDataHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper

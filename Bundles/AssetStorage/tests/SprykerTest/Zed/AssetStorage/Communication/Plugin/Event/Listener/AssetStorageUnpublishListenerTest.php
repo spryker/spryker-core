@@ -111,7 +111,7 @@ class AssetStorageUnpublishListenerTest extends Unit
                     ],
                 ],
             ],
-            'asset_slot:en:header-test' => [
+            'asset_slot:at:header-test' => [
                 'assetSlot' => AssetStorageCommunicationTester::ASSET_SLOT_DEFAULT,
                 'assets' => [
                     [

@@ -14,8 +14,6 @@ use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilder;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Spryker\Service\Container\Container;
-use Spryker\Shared\Kernel\Container\GlobalContainer;
 
 /**
  * Auto-generated group annotations
@@ -53,10 +51,10 @@ class CartsRestApiResourceTest extends Unit
     {
         parent::_before();
 
-        $globalContainer = new GlobalContainer();
-        $globalContainer->setContainer(new Container([
-            static::SERVICE_RESOURCE_BUILDER => new RestResourceBuilder(),
-        ]));
+        $this->tester->getContainer()->set(
+            static::SERVICE_RESOURCE_BUILDER,
+            new RestResourceBuilder(),
+        );
     }
 
     /**

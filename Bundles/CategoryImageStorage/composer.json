@@ -22,6 +22,7 @@
         "spryker/event": "*",
         "spryker/locale": "*",
         "spryker/propel": "*",
+        "spryker/publisher": "*",
         "spryker/queue": "*",
         "spryker/testify": "*"
     },

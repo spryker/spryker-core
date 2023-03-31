@@ -24,6 +24,7 @@ use Spryker\Zed\Discount\Communication\Table\DiscountsTable;
 use Spryker\Zed\Discount\Communication\Table\DiscountVoucherCodesTable;
 use Spryker\Zed\Discount\Communication\Tabs\DiscountFormTabs;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToLocaleFacadeInterface;
+use Spryker\Zed\Discount\Dependency\Facade\DiscountToStoreFacadeInterface;
 use Spryker\Zed\Discount\Dependency\Facade\DiscountToTranslatorFacadeInterface;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
@@ -195,7 +196,10 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createDiscountAmountFormatter()
     {
-        return new DiscountAmountFormatter($this->getCalculatorPlugins());
+        return new DiscountAmountFormatter(
+            $this->getCalculatorPlugins(),
+            $this->getStoreFacade(),
+        );
     }
 
     /**
@@ -260,6 +264,14 @@ class DiscountCommunicationFactory extends AbstractCommunicationFactory
     public function getLocaleFacade(): DiscountToLocaleFacadeInterface
     {
         return $this->getProvidedDependency(DiscountDependencyProvider::FACADE_LOCALE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Dependency\Facade\DiscountToStoreFacadeInterface
+     */
+    public function getStoreFacade(): DiscountToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(DiscountDependencyProvider::FACADE_STORE);
     }
 
     /**

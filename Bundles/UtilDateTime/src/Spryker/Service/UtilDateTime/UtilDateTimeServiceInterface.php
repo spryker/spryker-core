@@ -63,4 +63,17 @@ interface UtilDateTimeServiceInterface
      * @return string
      */
     public function formatTime($date);
+
+    /**
+     * Specification:
+     * - Formats a given datetime string into the custom datetime format.
+     *
+     * @api
+     *
+     * @param \DateTime|string $dateTime
+     * @param string $format
+     *
+     * @return string
+     */
+    public function formatDateTimeToCustomFormat($dateTime, string $format): string;
 }

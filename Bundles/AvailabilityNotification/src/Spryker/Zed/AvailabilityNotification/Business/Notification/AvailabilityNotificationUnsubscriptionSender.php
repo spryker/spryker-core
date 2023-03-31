@@ -82,6 +82,7 @@ class AvailabilityNotificationUnsubscriptionSender implements AvailabilityNotifi
         $mailTransfer = (new MailTransfer())
             ->setType(AvailabilityNotificationUnsubscribedMailTypePlugin::AVAILABILITY_NOTIFICATION_UNSUBSCRIBED_MAIL)
             ->setLocale($availabilityNotificationSubscriptionTransfer->getLocale())
+            ->setStoreName($availabilityNotificationSubscriptionTransfer->getStoreOrFail()->getNameOrFail())
             ->setAvailabilityNotificationSubscriptionMailData($mailData);
 
         $this->mailFacade->handleMail($mailTransfer);

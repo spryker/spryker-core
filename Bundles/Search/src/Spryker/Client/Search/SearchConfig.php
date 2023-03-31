@@ -8,6 +8,7 @@
 namespace Spryker\Client\Search;
 
 use Spryker\Client\Kernel\AbstractBundleConfig;
+use Spryker\Shared\Kernel\Container\GlobalContainer;
 use Spryker\Shared\Search\SearchConstants;
 
 /**
@@ -26,6 +27,11 @@ class SearchConfig extends AbstractBundleConfig
     protected const DEFAULT_SOURCE_IDENTIFIER = 'page';
 
     /**
+     * @var string
+     */
+    protected const SERVICE_STORE = 'store';
+
+    /**
      * @api
      *
      * @deprecated Use source identifiers instead.
@@ -34,7 +40,7 @@ class SearchConfig extends AbstractBundleConfig
      */
     public function getSearchIndexName()
     {
-        return $this->get(SearchConstants::ELASTICA_PARAMETER__INDEX_NAME, sprintf('%s_search', strtolower(APPLICATION_STORE)));
+        return $this->get(SearchConstants::ELASTICA_PARAMETER__INDEX_NAME, sprintf('%s_search', strtolower($this->getCurrentStore())));
     }
 
     /**
@@ -52,7 +58,7 @@ class SearchConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array<string, mixed>
+     * @return array
      */
     public function getElasticsearchConfig()
     {
@@ -99,5 +105,20 @@ class SearchConfig extends AbstractBundleConfig
     public function getDefaultSourceIdentifier(): string
     {
         return static::DEFAULT_SOURCE_IDENTIFIER;
+    }
+
+    /**
+     * @deprecated Will be removed after dynamic multi-store is always enabled
+     *
+     * @return string
+     */
+    protected function getCurrentStore(): string
+    {
+        $container = (new GlobalContainer())->getContainer();
+        if ($container->has(static::SERVICE_STORE)) {
+            return $container->get(static::SERVICE_STORE);
+        }
+
+        return APPLICATION_STORE;
     }
 }

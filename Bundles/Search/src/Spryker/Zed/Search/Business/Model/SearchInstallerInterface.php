@@ -10,7 +10,9 @@ namespace Spryker\Zed\Search\Business\Model;
 interface SearchInstallerInterface
 {
     /**
+     * @param string|null $storeName
+     *
      * @return void
      */
-    public function install();
+    public function install(?string $storeName = null): void;
 }

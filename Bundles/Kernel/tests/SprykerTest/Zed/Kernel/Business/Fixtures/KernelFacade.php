@@ -9,6 +9,9 @@ namespace SprykerTest\Zed\Kernel\Business\Fixtures;
 
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
+/**
+ * @method \Spryker\Zed\Kernel\Business\KernelBusinessFactory getFactory()
+ */
 class KernelFacade extends AbstractFacade implements KernelFacadeInterface
 {
 }

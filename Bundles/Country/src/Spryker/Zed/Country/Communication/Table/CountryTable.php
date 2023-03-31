@@ -15,12 +15,12 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 class CountryTable extends AbstractTable
 {
     /**
-     * @var \Orm\Zed\Country\Persistence\SpyCountryQuery
+     * @var \Orm\Zed\Country\Persistence\SpyCountryQuery<mixed>
      */
     protected $countryQuery;
 
     /**
-     * @param \Orm\Zed\Country\Persistence\SpyCountryQuery $countryQuery
+     * @param \Orm\Zed\Country\Persistence\SpyCountryQuery<mixed> $countryQuery
      */
     public function __construct(SpyCountryQuery $countryQuery)
     {
@@ -32,7 +32,7 @@ class CountryTable extends AbstractTable
      *
      * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
-    protected function configure(TableConfiguration $config)
+    protected function configure(TableConfiguration $config): TableConfiguration
     {
         $config->setHeader([
             SpyCountryTableMap::COL_ISO2_CODE => 'ISO2 code',
@@ -47,6 +47,8 @@ class CountryTable extends AbstractTable
     }
 
     /**
+     * @phpstan-return \Propel\Runtime\Collection\ObjectCollection<mixed>|array<mixed>
+     *
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return \Propel\Runtime\Collection\ObjectCollection|array

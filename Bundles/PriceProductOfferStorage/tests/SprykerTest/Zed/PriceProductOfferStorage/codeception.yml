@@ -32,3 +32,5 @@ suites:
                 - \SprykerTest\Shared\Store\Helper\StoreDataHelper
                 - \SprykerTest\Shared\PriceProduct\Helper\PriceProductDataHelper
                 - \SprykerTest\Shared\Currency\Helper\CurrencyDataHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper

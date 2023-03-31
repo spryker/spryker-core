@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductPackagingUnit\Dependency\Facade;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+
 interface ProductPackagingUnitToLocaleFacadeInterface
 {
     /**
@@ -15,9 +17,11 @@ interface ProductPackagingUnitToLocaleFacadeInterface
     public function getLocaleCollection();
 
     /**
-     * @param string $localeCode
+     * @param string $localeName
+     *
+     * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getLocaleByCode($localeCode);
+    public function getLocale(string $localeName): LocaleTransfer;
 }

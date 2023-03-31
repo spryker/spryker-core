@@ -81,7 +81,7 @@ class AssetWritePublisherTest extends Unit
                     'assetContent' => $this->assetTransfer->getAssetContent(),
                 ]],
             ],
-            'asset_slot:en:header-test' => [
+            'asset_slot:at:header-test' => [
                 'assetSlot' => AssetStorageCommunicationTester::ASSET_SLOT_DEFAULT,
                 'assets' => [[
                     'assetId' => $this->assetTransfer->getIdAsset(),
@@ -135,7 +135,7 @@ class AssetWritePublisherTest extends Unit
         $assetWritePublisherPlugin = new AssetWritePublisherPlugin();
         $assetWritePublisherPlugin->setFacade($this->tester->getFacade());
 
-        $this->assetTransfer->addStore('AT');
+        $this->assetTransfer->setStores(['DE', 'AT']);
 
         $eventTransfer = (new EventEntityTransfer())
             ->setId($this->assetTransfer->getIdAsset())
@@ -150,14 +150,6 @@ class AssetWritePublisherTest extends Unit
         // Assert
         $this->tester->assertAssetStorage([
             'asset_slot:de:header-test' => [
-                'assetSlot' => AssetStorageCommunicationTester::ASSET_SLOT_DEFAULT,
-                'assets' => [[
-                    'assetId' => $this->assetTransfer->getIdAsset(),
-                    'assetUuid' => $this->assetTransfer->getAssetUuid(),
-                    'assetContent' => $this->assetTransfer->getAssetContent(),
-                ]],
-            ],
-            'asset_slot:en:header-test' => [
                 'assetSlot' => AssetStorageCommunicationTester::ASSET_SLOT_DEFAULT,
                 'assets' => [[
                     'assetId' => $this->assetTransfer->getIdAsset(),
@@ -208,7 +200,7 @@ class AssetWritePublisherTest extends Unit
                     'assetContent' => $this->assetTransfer->getAssetContent(),
                 ]],
             ],
-            sprintf('asset_slot:en:%s', $accessSlot) => [
+            sprintf('asset_slot:at:%s', $accessSlot) => [
                 'assetSlot' => $accessSlot,
                 'assets' => [[
                     'assetId' => $this->assetTransfer->getIdAsset(),
@@ -264,7 +256,7 @@ class AssetWritePublisherTest extends Unit
                     ],
                 ],
             ],
-            'asset_slot:en:header-test' => [
+            'asset_slot:at:header-test' => [
                 'assetSlot' => AssetStorageCommunicationTester::ASSET_SLOT_DEFAULT,
                 'assets' => [
                     [

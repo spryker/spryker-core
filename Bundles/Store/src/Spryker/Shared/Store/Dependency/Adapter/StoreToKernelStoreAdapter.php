@@ -9,6 +9,9 @@ namespace Spryker\Shared\Store\Dependency\Adapter;
 
 use Spryker\Shared\Kernel\Store;
 
+/**
+ * @deprecated Will be removed after dynamic multi-store is always enabled.
+ */
 class StoreToKernelStoreAdapter implements StoreToStoreInterface
 {
     /**
@@ -33,7 +36,7 @@ class StoreToKernelStoreAdapter implements StoreToStoreInterface
     }
 
     /**
-     * @deprecated Unused method will be removed in next major
+     * @deprecated Unused method will be removed in next major.
      *
      * @return array<string>
      */
@@ -43,7 +46,7 @@ class StoreToKernelStoreAdapter implements StoreToStoreInterface
     }
 
     /**
-     * @deprecated Unused method will be removed in next major
+     * @deprecated Unused method will be removed in next major.
      *
      * @return string
      */
@@ -61,7 +64,7 @@ class StoreToKernelStoreAdapter implements StoreToStoreInterface
     }
 
     /**
-     * @deprecated Unused method will be removed in next major
+     * @deprecated Unused method will be removed in next major.
      *
      * @return array<string>
      */
@@ -81,7 +84,7 @@ class StoreToKernelStoreAdapter implements StoreToStoreInterface
     /**
      * @param string $storeName
      *
-     * @return array
+     * @return array<string>
      */
     public function getAvailableCurrenciesFor($storeName)
     {
@@ -91,7 +94,7 @@ class StoreToKernelStoreAdapter implements StoreToStoreInterface
     /**
      * @param string $storeName
      *
-     * @return array
+     * @return array<string>
      */
     public function getAvailableLocaleIsoCodesFor($storeName)
     {
@@ -105,6 +108,7 @@ class StoreToKernelStoreAdapter implements StoreToStoreInterface
      */
     public function getDefaultCurrencyFor($storeName)
     {
+        /** @phpstan-var non-empty-array<string> $currencyIsoCodes */
         $currencyIsoCodes = $this->getAvailableCurrenciesFor($storeName);
 
         return current($currencyIsoCodes);
@@ -129,7 +133,7 @@ class StoreToKernelStoreAdapter implements StoreToStoreInterface
     /**
      * @param string $storeName
      *
-     * @return array
+     * @return array<mixed>
      */
     protected function getConfigurationForStore($storeName)
     {
@@ -137,7 +141,7 @@ class StoreToKernelStoreAdapter implements StoreToStoreInterface
     }
 
     /**
-     * @return array
+     * @return array<mixed>
      */
     public function getQueuePools()
     {

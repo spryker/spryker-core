@@ -22,7 +22,7 @@
     },
     {
         "fileName": "src/Spryker/Zed/ProductDiscontinuedGui/Dependency/Facade/ProductDiscontinuedGuiToLocaleFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `getLocale()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getLocale()`. Got `$localeName` but expected to be `string $localeName`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -31,13 +31,6 @@
         "fileName": "src/Spryker/Zed/ProductDiscontinuedGui/Dependency/Facade/ProductDiscontinuedGuiToLocaleFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getAvailableLocales()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/ProductDiscontinuedGui/Dependency/Facade/ProductDiscontinuedGuiToProductDiscontinuedFacadeBridge.php",
-        "description": "Bridges: Method `findProductDiscontinuedByProductId()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
-        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     }

@@ -55,6 +55,16 @@ class FixedPluginTest extends Unit
      */
     private function setLocaleForTest(): void
     {
-        Store::getInstance()->setCurrentLocale('de_DE');
+        if ($this->isDynamicStoreEnabled() === false) {
+            Store::getInstance()->setCurrentLocale('de_DE');
+        }
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isDynamicStoreEnabled(): bool
+    {
+        return (bool)getenv('SPRYKER_DYNAMIC_STORE_MODE');
     }
 }

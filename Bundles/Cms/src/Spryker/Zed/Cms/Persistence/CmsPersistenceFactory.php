@@ -13,10 +13,10 @@ use Orm\Zed\Cms\Persistence\SpyCmsPageQuery;
 use Orm\Zed\Cms\Persistence\SpyCmsPageStoreQuery;
 use Orm\Zed\Cms\Persistence\SpyCmsTemplateQuery;
 use Orm\Zed\Cms\Persistence\SpyCmsVersionQuery;
+use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use Spryker\Zed\Cms\CmsDependencyProvider;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface;
 
 /**
  * @method \Spryker\Zed\Cms\CmsConfig getConfig()
@@ -51,11 +51,11 @@ class CmsPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface
+     * @return \Orm\Zed\Locale\Persistence\SpyLocaleQuery
      */
-    public function getLocaleQuery(): LocaleQueryContainerInterface
+    public function getLocalePropelQuery(): SpyLocaleQuery
     {
-        return $this->getProvidedDependency(CmsDependencyProvider::QUERY_CONTAINER_LOCALE);
+        return $this->getProvidedDependency(CmsDependencyProvider::PROPEL_QUERY_LOCALE);
     }
 
     /**

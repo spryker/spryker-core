@@ -57,7 +57,9 @@ class HeaderEventDispatcherPlugin extends AbstractPlugin implements EventDispatc
         $localeFacade = $this->getFactory()->getLocaleFacade();
         $storeFacade = $this->getFactory()->getStoreFacade();
 
-        $response->headers->set('X-Store', $storeFacade->getCurrentStore()->getNameOrFail());
+        if (!$storeFacade->isDynamicStoreEnabled()) {
+            $response->headers->set('X-Store', $storeFacade->getCurrentStore()->getNameOrFail());
+        }
 
         $response->headers->set('X-CodeBucket', APPLICATION_CODE_BUCKET);
         $response->headers->set('X-Env', APPLICATION_ENV);

@@ -39,6 +39,10 @@ class PlaceholderExtractorStep implements DataImportStepInterface
             $placeholder = [];
 
             foreach ($this->placeholderNames as $placeholderName) {
+                if (!isset($dataSet[$placeholderName . '.' . $localeName])) {
+                    continue;
+                }
+
                 $key = str_replace('placeholder.', '', $placeholderName);
                 $placeholder[$key] = $dataSet[$placeholderName . '.' . $localeName];
             }

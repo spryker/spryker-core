@@ -48,7 +48,19 @@ class GetPaymentProviderCollectionTest extends Unit
     {
         parent::setUp();
 
+        $this->tester->ensurePaymentProviderTableIsEmpty();
+
         $this->paymentFacade = $this->tester->getFacade();
+    }
+
+    /**
+     * @return void
+     */
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        $this->tester->ensurePaymentProviderTableIsEmpty();
     }
 
     /**
@@ -57,8 +69,6 @@ class GetPaymentProviderCollectionTest extends Unit
     public function testGetPaymentProviderCollectionReturnsCollectionWithPersistedPaymentProviders(): void
     {
         // Arrange
-        $this->tester->ensurePaymentProviderTableIsEmpty();
-        $this->tester->ensurePaymentMethodTableIsEmpty();
         $this->tester->havePaymentProvider();
         $this->tester->havePaymentProvider();
 
@@ -77,7 +87,6 @@ class GetPaymentProviderCollectionTest extends Unit
     public function testGetPaymentProviderCollectionReturnsCollectionWithPaymentProviderByKeys(): void
     {
         // Arrange
-        $this->tester->ensurePaymentProviderTableIsEmpty();
         $this->tester->havePaymentProvider();
         $this->tester->havePaymentProvider([
             PaymentProviderTransfer::PAYMENT_PROVIDER_KEY => static::PAYMENT_PROVIDER,
@@ -99,7 +108,6 @@ class GetPaymentProviderCollectionTest extends Unit
     public function testGetPaymentProviderCollectionReturnsCollectionWithPaymentProviderByNames(): void
     {
         // Arrange
-        $this->tester->ensurePaymentProviderTableIsEmpty();
         $this->tester->havePaymentProvider();
         $this->tester->havePaymentProvider([
             PaymentProviderTransfer::NAME => static::PAYMENT_PROVIDER,
@@ -121,7 +129,6 @@ class GetPaymentProviderCollectionTest extends Unit
     public function testGetPaymentProviderCollectionReturnsCollectionWithNoPaymentProviderByNames(): void
     {
         // Arrange
-        $this->tester->ensurePaymentProviderTableIsEmpty();
         $this->tester->havePaymentProvider();
 
         $paymentProviderConditionsTransfer = (new PaymentProviderConditionsTransfer())->addName(static::PAYMENT_PROVIDER);
@@ -140,9 +147,6 @@ class GetPaymentProviderCollectionTest extends Unit
     public function testGetPaymentProviderCollectionReturnsCollectionWithPaymentProviderHavingCorrectProperties(): void
     {
         // Arrange
-        $this->tester->ensurePaymentProviderTableIsEmpty();
-        $this->tester->ensurePaymentMethodTableIsEmpty();
-
         $paymentProviderTransfer = $this->tester->havePaymentProvider();
         $this->tester->havePaymentMethod([
             PaymentMethodTransfer::ID_PAYMENT_PROVIDER => $paymentProviderTransfer->getIdPaymentProvider(),

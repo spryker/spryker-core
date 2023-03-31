@@ -133,4 +133,20 @@ class PersistentCartClient extends AbstractClient implements PersistentCartClien
             ->createCustomerQuoteCleaner()
             ->reloadQuoteForCustomer($customerTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function syncQuote(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        return $this->getFactory()
+            ->createCustomerLoginQuoteSync()
+            ->syncQuote($quoteTransfer);
+    }
 }

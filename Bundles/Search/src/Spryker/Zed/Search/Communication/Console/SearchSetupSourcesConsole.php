@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Search\Communication\Console;
 
-use Spryker\Zed\Kernel\Communication\Console\Console;
+use Spryker\Zed\Kernel\Communication\Console\StoreAwareConsole;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -15,7 +15,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @method \Spryker\Zed\Search\Business\SearchFacadeInterface getFacade()
  * @method \Spryker\Zed\Search\Communication\SearchCommunicationFactory getFactory()
  */
-class SearchSetupSourcesConsole extends Console
+class SearchSetupSourcesConsole extends StoreAwareConsole
 {
     /**
      * @var string
@@ -46,7 +46,7 @@ class SearchSetupSourcesConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->getFacade()->installSources($this->getMessenger());
+        $this->getFacade()->installSources($this->getMessenger(), $this->getStore($input));
 
         return static::CODE_SUCCESS;
     }

@@ -9,10 +9,16 @@ namespace SprykerTest\Yves\Money\Plugin\ServiceProvider;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\MoneyTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Silex\Application;
-use Spryker\Shared\Kernel\Store;
+use Spryker\Client\Currency\CurrencyDependencyProvider;
+use Spryker\Client\Currency\Dependency\Client\CurrencyToStoreClientInterface;
+use Spryker\Client\Locale\LocaleDependencyProvider;
+use Spryker\Yves\Money\Dependency\Client\MoneyToLocaleClientInterface;
 use Spryker\Yves\Money\Plugin\ServiceProvider\TwigMoneyServiceProvider;
+use SprykerTest\Service\Container\Helper\ContainerHelperTrait;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
@@ -31,10 +37,35 @@ use Twig\Loader\FilesystemLoader;
  */
 class TwigMoneyServiceProviderTest extends Unit
 {
+    use ContainerHelperTrait;
+
+    /**
+     * @var string
+     */
+    protected const DEFAULT_STORE = 'DE';
+
+    /**
+     * @var string
+     */
+    protected const DEFAULT_CURRENCY = 'EUR';
+
     /**
      * @var \SprykerTest\Yves\Money\MoneyYvesTester
      */
     protected $tester;
+
+    /**
+     * @return void
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->tester->setDependency(
+            CurrencyDependencyProvider::CLIENT_STORE,
+            $this->createCurrencyToStoreClientMock(),
+        );
+    }
 
     /**
      * @return void
@@ -85,7 +116,7 @@ class TwigMoneyServiceProviderTest extends Unit
 
         $callable = $filter->getCallable();
 
-        Store::getInstance()->setCurrentLocale($locale);
+        $this->tester->setDependency(LocaleDependencyProvider::LOCALE_CURRENT, $locale);
 
         $result = $callable($input, $withSymbol);
         $this->assertSame($expected, $result);
@@ -139,5 +170,36 @@ class TwigMoneyServiceProviderTest extends Unit
         $moneyTransfer->setCurrency($currencyTransfer);
 
         return $moneyTransfer;
+    }
+
+    /**
+     * @param $locale
+     *
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Yves\Money\Dependency\Client\MoneyToLocaleClientInterface
+     */
+    protected function createLocaleClientMock(string $locale): MoneyToLocaleClientInterface
+    {
+        $localeFacadeMock = $this->createMock(MoneyToLocaleClientInterface::class);
+        $localeFacadeMock->method('getCurrentLocale')
+            ->willReturn(
+                (new LocaleTransfer())
+                    ->setLocaleName($locale),
+            );
+
+        return $localeFacadeMock;
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Currency\Dependency\Client\CurrencyToStoreClientInterface
+     */
+    protected function createCurrencyToStoreClientMock(): CurrencyToStoreClientInterface
+    {
+        $currencyToStoreClientMock = $this->createMock(CurrencyToStoreClientInterface::class);
+        $currencyToStoreClientMock->method('getCurrentStore')
+            ->willReturn((new StoreTransfer())
+                ->setName(static::DEFAULT_STORE)
+                ->setAvailableCurrencyIsoCodes([static::DEFAULT_CURRENCY]));
+
+        return $currencyToStoreClientMock;
     }
 }

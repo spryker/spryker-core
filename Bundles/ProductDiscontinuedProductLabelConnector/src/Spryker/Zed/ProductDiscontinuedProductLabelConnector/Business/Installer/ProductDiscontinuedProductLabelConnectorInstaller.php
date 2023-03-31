@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductDiscontinuedProductLabelConnector\Business\Installer;
 
+use Generated\Shared\Transfer\LocaleConditionsTransfer;
+use Generated\Shared\Transfer\LocaleCriteriaTransfer;
 use Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
@@ -97,7 +99,9 @@ class ProductDiscontinuedProductLabelConnectorInstaller implements ProductDiscon
             ->setIsDynamic(true)
             ->setIsPublished(true);
 
-        foreach ($this->localeFacade->getLocaleCollection() as $localeTransfer) {
+        $localeCriteriaTransfer = $this->getAllActiveLocalesCriteria();
+
+        foreach ($this->localeFacade->getLocaleCollection($localeCriteriaTransfer) as $localeTransfer) {
             $localizedAttributesTransfer = new ProductLabelLocalizedAttributesTransfer();
             $localizedAttributesTransfer->setFkLocale($localeTransfer->getIdLocale());
             $localizedAttributesTransfer->setFkProductLabel($productLabelTransfer->getIdProductLabel());
@@ -108,5 +112,16 @@ class ProductDiscontinuedProductLabelConnectorInstaller implements ProductDiscon
         }
 
         return $productLabelTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\LocaleCriteriaTransfer
+     */
+    protected function getAllActiveLocalesCriteria(): LocaleCriteriaTransfer
+    {
+        $localeConditions = (new LocaleConditionsTransfer())->setIsActive(true);
+
+        return (new LocaleCriteriaTransfer())
+            ->setLocaleConditions($localeConditions);
     }
 }

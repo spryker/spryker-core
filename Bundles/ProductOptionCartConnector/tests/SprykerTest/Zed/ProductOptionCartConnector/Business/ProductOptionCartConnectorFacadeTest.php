@@ -61,6 +61,7 @@ class ProductOptionCartConnectorFacadeTest extends Unit
         parent::setUp();
 
         $this->productOptionCartConnectorFacade = $this->tester->getLocator()->productOptionCartConnector()->facade();
+        $this->tester->addDependencies();
     }
 
     /**

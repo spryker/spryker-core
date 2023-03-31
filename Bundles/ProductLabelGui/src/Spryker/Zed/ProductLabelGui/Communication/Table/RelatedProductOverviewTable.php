@@ -73,15 +73,23 @@ class RelatedProductOverviewTable extends AbstractRelatedProductTable
      */
     protected function configureHeader(TableConfiguration $config)
     {
-        $config->setHeader([
+        $header = [
             static::COL_PRODUCT_ABSTRACT_SKU => 'SKU',
             static::COL_PRODUCT_ABSTRACT_NAME => 'Name',
             static::COL_PRODUCT_ABSTRACT_CATEGORIES => 'Categories',
-            static::COL_PRODUCT_ABSTRACT_PRICE => 'Price',
+        ];
+
+        if (!$this->storeFacade->isDynamicStoreEnabled()) {
+            $header[static::COL_PRODUCT_ABSTRACT_PRICE] = 'Price';
+        }
+
+        $header = array_merge($header, [
             static::COL_PRODUCT_ABSTRACT_RELATION_COUNT => '# of Other Labels',
             static::COL_PRODUCT_ABSTRACT_STATUS => 'Status',
             static::COL_ACTIONS => 'Actions',
         ]);
+
+        $config->setHeader($header);
     }
 
     /**

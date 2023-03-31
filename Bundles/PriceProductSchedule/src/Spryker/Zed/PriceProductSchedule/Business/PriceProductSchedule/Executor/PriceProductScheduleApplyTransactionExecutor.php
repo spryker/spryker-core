@@ -10,6 +10,7 @@ namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Executo
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\PriceProductScheduleDisablerInterface;
 use Spryker\Zed\PriceProductSchedule\Dependency\Facade\PriceProductScheduleToPriceProductFacadeInterface;
@@ -88,13 +89,15 @@ class PriceProductScheduleApplyTransactionExecutor implements PriceProductSchedu
     protected function preparePriceProductTransferForPersist(
         PriceProductScheduleTransfer $priceProductScheduleTransfer
     ): PriceProductTransfer {
-        $priceProductScheduleTransfer->requirePriceProduct();
-        $priceProductTransfer = $priceProductScheduleTransfer->getPriceProduct();
+        $priceProductTransfer = $priceProductScheduleTransfer->getPriceProductOrFail();
 
         $priceProductTransfer->requireMoneyValue();
         $moneyValueTransfer = $priceProductTransfer->getMoneyValue();
 
-        $priceProductTransferForPersist = $this->getPriceProductForPersist($priceProductTransfer);
+        $priceProductTransferForPersist = $this->getPriceProductForPersist(
+            $priceProductTransfer,
+            $priceProductScheduleTransfer->getStore(),
+        );
 
         $priceProductTransferForPersist->getMoneyValue()
             ->setGrossAmount($moneyValueTransfer->getGrossAmount())
@@ -105,10 +108,11 @@ class PriceProductScheduleApplyTransactionExecutor implements PriceProductSchedu
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
-    protected function getPriceProductForPersist(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
+    protected function getPriceProductForPersist(PriceProductTransfer $priceProductTransfer, ?StoreTransfer $storeTransfer): PriceProductTransfer
     {
         $priceProductTransfer
             ->requireMoneyValue()
@@ -120,6 +124,10 @@ class PriceProductScheduleApplyTransactionExecutor implements PriceProductSchedu
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
             ->setPriceTypeName($priceProductTransfer->getPriceType()->getName())
             ->setCurrencyIsoCode($moneyValueTransfer->getCurrency()->getCode());
+
+        if ($storeTransfer) {
+            $priceProductFilterTransfer->setStoreName($storeTransfer->getNameOrFail());
+        }
 
         if ($priceProductTransfer->getSkuProductAbstract() !== null) {
             $priceProductFilterTransfer->setSku($priceProductTransfer->getSkuProductAbstract());

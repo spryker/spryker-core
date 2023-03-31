@@ -8,7 +8,7 @@
         "spryker/event": "^1.0.0 || ^2.0.0",
         "spryker/kernel": "^3.52.0",
         "spryker/key-builder": "^1.0.0",
-        "spryker/locale": "^3.1.0",
+        "spryker/locale": "^3.1.0 || ^4.0.0",
         "spryker/log": "^3.0.0",
         "spryker/message-broker-extension": "^1.0.0",
         "spryker/product": "^5.2.0 || ^6.14.0",
@@ -32,6 +32,7 @@
         "spryker/ramsey-uuid": "*",
         "spryker/search-elasticsearch": "*",
         "spryker/silex": "^2.0.0",
+        "spryker/store": "*",
         "spryker/testify": "*"
     },
     "suggest": {

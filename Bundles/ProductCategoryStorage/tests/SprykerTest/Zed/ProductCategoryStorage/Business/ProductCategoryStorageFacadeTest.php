@@ -23,6 +23,7 @@ use ReflectionClass;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Zed\ProductCategoryStorage\Business\Reader\ProductCategoryStorageReader;
+use Spryker\Zed\Store\StoreDependencyProvider;
 
 /**
  * Auto-generated group annotations
@@ -73,6 +74,16 @@ class ProductCategoryStorageFacadeTest extends Unit
     protected const ASSET_MESSAGE_COUNT_IS_WRONG = 'Product Category Storage record count is wrong.';
 
     /**
+     * @var string
+     */
+    protected const LOCALE_DE = 'de_DE';
+
+    /**
+     * @var string
+     */
+    protected const LOCALE_EN = 'en_US';
+
+    /**
      * @var \SprykerTest\Zed\ProductCategoryStorage\ProductCategoryStorageBusinessTester
      */
     protected $tester;
@@ -95,7 +106,12 @@ class ProductCategoryStorageFacadeTest extends Unit
             ];
         });
 
-        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_DE]);
+        $storeTransfer = $this->tester->haveStore(
+            [
+                StoreTransfer::NAME => static::STORE_DE,
+                StoreTransfer::AVAILABLE_LOCALE_ISO_CODES => [static::LOCALE_DE, static::LOCALE_EN],
+            ],
+        );
 
         $this->categoryTransfer = $this->tester->haveLocalizedCategory([
             CategoryTransfer::PARENT_CATEGORY_NODE => $this->tester->getRootCategoryNode()->toArray(),
@@ -183,7 +199,11 @@ class ProductCategoryStorageFacadeTest extends Unit
     public function testWriteCollectionByCategoryStoreEventsWithTwoStoreRelations(): void
     {
         // Arrange
-        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_AT]);
+        $this->tester->setDependency(StoreDependencyProvider::PLUGINS_STORE_COLLECTION_EXPANDER, []);
+        $storeTransfer = $this->tester->haveStore([
+            StoreTransfer::NAME => static::STORE_AT,
+            StoreTransfer::AVAILABLE_LOCALE_ISO_CODES => [static::LOCALE_DE, static::LOCALE_EN],
+        ]);
 
         $this->tester->haveCategoryStoreRelation(
             $this->categoryTransfer->getIdCategory(),

@@ -42,7 +42,9 @@ class GlueBackendApiHelper extends Module implements LastConnectionProviderInter
      * @var array<string, string>
      */
     protected const DEFAULT_HEADERS = [
-        'content-type' => 'application/vnd.api+json', // Without this header the GlueBackendApi will not handle the request.
+        'Content-Type' => 'application/vnd.api+json', // Without this header the GlueBackendApi will not handle the request.
+        'Accept-Language' => 'en',
+        'Store' => 'DE',
     ];
 
     /**

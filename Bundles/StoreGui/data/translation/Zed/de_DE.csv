@@ -1,6 +1,20 @@
-Administration,Administration
+Administration,Verwaltung
 "Manage Stores","Stores verwalten"
 Name,Name
 "Store ID","Store ID"
 Stores,Stores
 "Stores (Multi-store per Zed feature is disabled)","Stores (Die Multi-Store-Funktion pro Zed ist deaktiviert)"
+"Create Store","Store erstellen"
+"Back to Stores","Zurück zu Stores"
+"Edit Store","Store bearbeiten"
+"View Store","Store ansehen"
+Actions,Aktionen
+Locales,Regionen
+Currencies,Währungen
+"Store created successfully","Store erfolgreich erstellt"
+"Store updated successfully","Store erfolgreich aktualisiert"
+"Store with id `%s` does not exist","Es existiert kein Store mit der ID `%s`"
+Store,Store
+"Store: %s","Store: %s"
+Important,Wichtig
+"Store Name is not editable after creation. Store is not deletable after creation, please refer to Spryker documentation.","Der Name des Stores kann nach der Erstellung nicht bearbeitet werden. Der Store kann nach der Erstellung nicht gelöscht werden. Mehr Informationen finden Sie in der Spryker Dokumentation."

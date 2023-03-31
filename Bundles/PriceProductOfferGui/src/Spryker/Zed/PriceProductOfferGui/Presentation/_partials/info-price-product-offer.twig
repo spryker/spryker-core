@@ -85,11 +85,11 @@
 
                                     <td>
                                         {% if (priceTypeTransfer.priceModeConfiguration == priceModeGross or priceTypeTransfer.priceModeConfiguration == priceModeBoth) and priceMode == priceModeGross %}
-                                            {{ moneyValue.grossAmount | default(0) | money(false) }}
+                                            {{ moneyValue.grossAmount | default(0) | money(false, moneyValue.currency.code) }}
                                         {%  endif %}
 
                                         {%  if (priceTypeTransfer.priceModeConfiguration == priceModeNet or priceTypeTransfer.priceModeConfiguration == priceModeBoth) and priceMode == priceModeNet %}
-                                            {{ moneyValue.netAmount | default(0) | money(false) }}
+                                            {{ moneyValue.netAmount | default(0) | money(false, moneyValue.currency.code) }}
                                         {%  endif %}
                                     </td>
 

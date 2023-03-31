@@ -27,7 +27,7 @@ class CurrencyToStoreFacadeBridge implements CurrencyToStoreFacadeInterface
     /**
      * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
-    public function getAllStores()
+    public function getAllStores(): array
     {
         return $this->storeFacade->getAllStores();
     }
@@ -35,19 +35,19 @@ class CurrencyToStoreFacadeBridge implements CurrencyToStoreFacadeInterface
     /**
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getCurrentStore()
+    public function getCurrentStore(): StoreTransfer
     {
         return $this->storeFacade->getCurrentStore();
     }
 
     /**
-     * @param string $name
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\StoreTransfer|null
      */
-    public function findStoreByName(string $name): ?StoreTransfer
+    public function findStoreByName(string $storeName): ?StoreTransfer
     {
-        return $this->storeFacade->findStoreByName($name);
+        return $this->storeFacade->findStoreByName($storeName);
     }
 
     /**
@@ -55,8 +55,16 @@ class CurrencyToStoreFacadeBridge implements CurrencyToStoreFacadeInterface
      *
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getStoreById($idStore)
+    public function getStoreById(int $idStore): StoreTransfer
     {
         return $this->storeFacade->getStoreById($idStore);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDynamicStoreEnabled(): bool
+    {
+        return $this->storeFacade->isDynamicStoreEnabled();
     }
 }

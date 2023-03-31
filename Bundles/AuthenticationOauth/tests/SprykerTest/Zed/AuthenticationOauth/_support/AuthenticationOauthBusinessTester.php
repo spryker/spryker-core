@@ -8,12 +8,16 @@
 namespace SprykerTest\Zed\AuthenticationOauth;
 
 use Codeception\Actor;
+use Codeception\Stub;
 use Generated\Shared\DataBuilder\GlueAuthenticationRequestBuilder;
 use Generated\Shared\DataBuilder\OauthRequestBuilder;
 use Generated\Shared\Transfer\ApiTokenAttributesTransfer;
 use Generated\Shared\Transfer\GlueAuthenticationRequestContextTransfer;
 use Generated\Shared\Transfer\GlueAuthenticationRequestTransfer;
 use Generated\Shared\Transfer\OauthRequestTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Client\Store\StoreDependencyProvider as ClientStoreDependencyProvider;
+use Spryker\Client\StoreExtension\Dependency\Plugin\StoreExpanderPluginInterface;
 
 /**
  * Inherited Methods
@@ -51,6 +55,26 @@ class AuthenticationOauthBusinessTester extends Actor
     protected const TEST_PASSWORD = 'change123';
 
     /**
+     * @var string
+     */
+    protected const DEFAULT_STORE_NAME = 'DE';
+
+    /**
+     * @var string
+     */
+    protected const DEFAULT_CURRENCY = 'EUR';
+
+    /**
+     * @return void
+     */
+    public function addDependencies(): void
+    {
+        $this->setDependency(ClientStoreDependencyProvider::PLUGINS_STORE_EXPANDER, [
+            $this->createStoreStorageStoreExpanderPluginMock(),
+        ]);
+    }
+
+    /**
      * @param string $username
      *
      * @return \Generated\Shared\Transfer\GlueAuthenticationRequestTransfer
@@ -82,5 +106,21 @@ class AuthenticationOauthBusinessTester extends Actor
                 ApiTokenAttributesTransfer::PASSWORD => static::TEST_PASSWORD,
             ],
         ))->build();
+    }
+
+    /**
+     * @return \Spryker\Client\StoreExtension\Dependency\Plugin\StoreExpanderPluginInterface
+     */
+    protected function createStoreStorageStoreExpanderPluginMock(): StoreExpanderPluginInterface
+    {
+        $storeTransfer = (new StoreTransfer())
+            ->setName(static::DEFAULT_STORE_NAME)
+            ->setDefaultCurrencyIsoCode(static::DEFAULT_CURRENCY);
+
+        $storeStorageStoreExpanderPluginMock = Stub::makeEmpty(StoreExpanderPluginInterface::class, [
+            'expand' => $storeTransfer,
+        ]);
+
+        return $storeStorageStoreExpanderPluginMock;
     }
 }

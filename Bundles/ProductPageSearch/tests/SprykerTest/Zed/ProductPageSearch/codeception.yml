@@ -28,6 +28,9 @@ suites:
                 - \SprykerTest\Zed\ProductAttribute\Helper\ProductAttributeDataHelper
                 - \SprykerTest\Shared\ProductImage\Helper\ProductImageDataHelper
                 - \SprykerTest\Zed\Locale\Helper\LocaleDataHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
+                - \SprykerTest\Shared\Storage\Helper\StorageRedisConfigHelper
 
     Communication:
         path: Communication
@@ -51,6 +54,10 @@ suites:
                 - \SprykerTest\Shared\Store\Helper\StoreDataHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
+                - \SprykerTest\Shared\Storage\Helper\StorageRedisConfigHelper
+
     Persistence:
         path: Persistence
         actor: ProductPageSearchPersistenceTester

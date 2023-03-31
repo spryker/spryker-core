@@ -76,6 +76,11 @@ class ProductCategoryFilterGuiDependencyProvider extends AbstractBundleDependenc
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_PRODUCT_CATEGORY_LIST_ACTION_VIEW_DATA_EXPANDER = 'PLUGINS_PRODUCT_CATEGORY_LIST_ACTION_VIEW_DATA_EXPANDER';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -91,6 +96,7 @@ class ProductCategoryFilterGuiDependencyProvider extends AbstractBundleDependenc
         $this->addCatalogClient($container);
         $this->addProductCategoryFilterClient($container);
         $this->addUtilEncodingService($container);
+        $this->addProductCategoryListActionViewDataExpanderPlugins($container);
 
         return $container;
     }
@@ -232,5 +238,27 @@ class ProductCategoryFilterGuiDependencyProvider extends AbstractBundleDependenc
         $container->set(static::CLIENT_PRODUCT_CATEGORY_FILTER, function (Container $container) {
             return new ProductCategoryFilterGuiToProductCategoryFilterClientBridge($container->getLocator()->productCategoryFilter()->client());
         });
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductCategoryListActionViewDataExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRODUCT_CATEGORY_LIST_ACTION_VIEW_DATA_EXPANDER, function () {
+            return $this->getProductCategoryListActionViewDataExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Zed\ProductCategoryFilterGuiExtension\Dependency\Plugin\ProductCategoryListActionViewDataExpanderPluginInterface>
+     */
+    protected function getProductCategoryListActionViewDataExpanderPlugins(): array
+    {
+        return [];
     }
 }

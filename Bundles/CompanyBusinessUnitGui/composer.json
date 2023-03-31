@@ -18,8 +18,10 @@
     "require-dev": {
         "spryker/code-sniffer": "*",
         "spryker/company-user": "*",
+        "spryker/container": "*",
         "spryker/customer": "*",
         "spryker/propel": "*",
+        "spryker/store": "*",
         "spryker/testify": "*"
     },
     "autoload": {

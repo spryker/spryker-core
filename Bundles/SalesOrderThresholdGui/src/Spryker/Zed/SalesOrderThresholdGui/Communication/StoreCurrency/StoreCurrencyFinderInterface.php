@@ -20,9 +20,10 @@ interface StoreCurrencyFinderInterface
     public function getStoreTransferFromRequestParam(?string $storeCurrencyRequestParam): StoreTransfer;
 
     /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param string|null $storeCurrencyRequestParam
      *
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function getCurrencyTransferFromRequestParam(?string $storeCurrencyRequestParam): CurrencyTransfer;
+    public function getCurrencyTransferFromRequestParam(StoreTransfer $storeTransfer, ?string $storeCurrencyRequestParam): CurrencyTransfer;
 }

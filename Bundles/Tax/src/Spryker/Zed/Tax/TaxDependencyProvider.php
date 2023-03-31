@@ -12,12 +12,18 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Tax\Dependency\Facade\TaxToCountryBridge;
 use Spryker\Zed\Tax\Dependency\Facade\TaxToLocaleFacadeBridge;
+use Spryker\Zed\Tax\Dependency\Facade\TaxToStoreFacadeBridge;
 
 /**
  * @method \Spryker\Zed\Tax\TaxConfig getConfig()
  */
 class TaxDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
+    public const FACADE_STORE = 'FACADE_STORE';
+
     /**
      * @var string
      */
@@ -47,6 +53,7 @@ class TaxDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = parent::provideBusinessLayerDependencies($container);
 
+        $container = $this->addStoreFacade($container);
         $container = $this->addStoreConfig($container);
 
         return $container;
@@ -120,6 +127,22 @@ class TaxDependencyProvider extends AbstractBundleDependencyProvider
         $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new TaxToLocaleFacadeBridge(
                 $container->getLocator()->locale()->facade(),
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_STORE, function (Container $container) {
+            return new TaxToStoreFacadeBridge(
+                $container->getLocator()->store()->facade(),
             );
         });
 

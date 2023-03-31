@@ -37,6 +37,11 @@ class SearchElasticsearchZedTester extends Actor
     /**
      * @var string
      */
+    protected const CURRENT_STORE = 'DE';
+
+    /**
+     * @var string
+     */
     protected const INDEX_MAP_DESTINATION_DIR = 'IndexMap';
 
     /**
@@ -61,7 +66,7 @@ class SearchElasticsearchZedTester extends Actor
     {
         return $this->getSearchElasticsearchBusinessFactory()
             ->createSourceIdentifier()
-            ->translateToIndexName($sourceIdentifier);
+            ->translateToIndexName($sourceIdentifier, static::CURRENT_STORE);
     }
 
     /**

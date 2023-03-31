@@ -43,6 +43,13 @@
     },
     {
         "fileName": "src/Spryker/Zed/Discount/Dependency/Facade/DiscountToCurrencyBridge.php",
+        "description": "Bridges: Method `getAllStoresWithCurrencies()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Discount/Dependency/Facade/DiscountToCurrencyBridge.php",
         "description": "Bridges: Type should be defined for param `idCurrency` in method `Spryker\\Zed\\Discount\\Dependency\\Facade\\DiscountToCurrencyBridge::getByIdCurrency()`.",
         "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
@@ -59,6 +66,13 @@
         "fileName": "src/Spryker/Zed/Discount/Dependency/Facade/DiscountToCurrencyBridge.php",
         "description": "Bridges: Method `getCurrent()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/Discount/Dependency/Facade/DiscountToCurrencyInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getByIdCurrency()`. Got `$idCurrency` but expected to be `int $idCurrency`. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

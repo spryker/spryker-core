@@ -43,6 +43,8 @@ class MoneyDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Will be removed in the next major without replacement.
+     *
      * @return \Spryker\Shared\Kernel\Store
      */
     protected function getStore()

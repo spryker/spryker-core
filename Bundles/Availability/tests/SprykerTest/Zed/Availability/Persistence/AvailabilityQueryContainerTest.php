@@ -31,7 +31,7 @@ class AvailabilityQueryContainerTest extends Unit
     /**
      * @var string
      */
-    protected const STORE_NAME = 'Test store';
+    protected const STORE_NAME = 'DE';
 
     /**
      * @var string
@@ -164,8 +164,7 @@ class AvailabilityQueryContainerTest extends Unit
     public function testQuerySpyProductAbstractAvailabilityWithStockWillReturnCorrectDataWhenStoreDoesNotHaveAssignedStocks(): void
     {
         // Arrange
-        $storeName = 'Store without stocks';
-        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => $storeName]);
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => 'AT']);
 
         $productQuantity = random_int(1, 25);
         $this->tester->haveProductWithStockAndAvailability(

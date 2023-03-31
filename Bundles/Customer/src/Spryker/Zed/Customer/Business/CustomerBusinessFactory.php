@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Customer\Business;
 
+use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
 use Spryker\Service\Customer\CustomerServiceInterface;
 use Spryker\Zed\Customer\Business\Anonymizer\CustomerAnonymizer;
 use Spryker\Zed\Customer\Business\Checkout\CustomerOrderSaver;
@@ -61,7 +62,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
             $config,
             $this->createEmailValidator(),
             $this->getMailFacade(),
-            $this->getLocaleQueryContainer(),
+            $this->getPropelQueryLocale(),
             $this->getLocaleFacade(),
             $this->createCustomerExpander(),
             $this->createCustomerPasswordPolicyValidator(),
@@ -258,11 +259,11 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface
+     * @return \Orm\Zed\Locale\Persistence\SpyLocaleQuery
      */
-    public function getLocaleQueryContainer()
+    public function getPropelQueryLocale(): SpyLocaleQuery
     {
-        return $this->getProvidedDependency(CustomerDependencyProvider::QUERY_CONTAINER_LOCALE);
+        return $this->getProvidedDependency(CustomerDependencyProvider::PROPEL_QUERY_LOCALE);
     }
 
     /**

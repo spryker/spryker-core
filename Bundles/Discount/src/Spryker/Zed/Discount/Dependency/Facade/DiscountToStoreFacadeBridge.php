@@ -33,4 +33,12 @@ class DiscountToStoreFacadeBridge implements DiscountToStoreFacadeInterface
     {
         return $this->storeFacade->getStoreByName($storeName);
     }
+
+    /**
+     * @return bool
+     */
+    public function isDynamicStoreEnabled(): bool
+    {
+        return $this->storeFacade->isDynamicStoreEnabled();
+    }
 }

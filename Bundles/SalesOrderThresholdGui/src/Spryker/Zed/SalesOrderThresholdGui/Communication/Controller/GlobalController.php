@@ -43,8 +43,8 @@ class GlobalController extends AbstractController
     {
         $storeCurrencyRequestParam = (string)$request->query->get(static::PARAM_STORE_CURRENCY_REQUEST) ?: null;
 
-        $currencyTransfer = $this->getCurrencyTransferFromRequest($storeCurrencyRequestParam);
         $storeTransfer = $this->getStoreTransferFromRequest($storeCurrencyRequestParam);
+        $currencyTransfer = $this->getCurrencyTransferFromRequest($storeTransfer, $storeCurrencyRequestParam);
 
         $globalThresholdForm = $this->getFactory()->createGlobalThresholdForm($storeTransfer, $currencyTransfer);
         $globalThresholdForm->handleRequest($request);
@@ -177,15 +177,16 @@ class GlobalController extends AbstractController
     }
 
     /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param string|null $storeCurrencyRequestParam
      *
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    protected function getCurrencyTransferFromRequest(?string $storeCurrencyRequestParam): CurrencyTransfer
+    protected function getCurrencyTransferFromRequest(StoreTransfer $storeTransfer, ?string $storeCurrencyRequestParam): CurrencyTransfer
     {
         return $this->getFactory()
             ->createStoreCurrencyFinder()
-            ->getCurrencyTransferFromRequestParam($storeCurrencyRequestParam);
+            ->getCurrencyTransferFromRequestParam($storeTransfer, $storeCurrencyRequestParam);
     }
 
     /**

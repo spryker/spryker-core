@@ -10,7 +10,7 @@
         "spryker/checkout-extension": "^1.2.0",
         "spryker/guzzle": "^2.2.0",
         "spryker/kernel": "^3.30.0",
-        "spryker/locale": "^3.0.0",
+        "spryker/locale": "^3.0.0 || ^4.0.0",
         "spryker/message-broker": "^1.0.0",
         "spryker/message-broker-extension": "^1.0.0",
         "spryker/oms": "^7.0.0 || ^8.0.0 || ^10.0.0 || ^11.0.0",
@@ -28,6 +28,7 @@
         "spryker/calculation": "*",
         "spryker/checkout": "*",
         "spryker/code-sniffer": "*",
+        "spryker/container": "*",
         "spryker/propel": "*",
         "spryker/testify": "*"
     },

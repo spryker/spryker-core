@@ -12,7 +12,14 @@ use Generated\Shared\Transfer\StoreTransfer;
 interface AvailabilityNotificationToStoreFacadeInterface
 {
     /**
+     * @param bool $fallbackToDefault
+     *
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getCurrentStore(): StoreTransfer;
+    public function getCurrentStore(bool $fallbackToDefault = false): StoreTransfer;
+
+    /**
+     * @return bool
+     */
+    public function isDynamicStoreEnabled(): bool;
 }

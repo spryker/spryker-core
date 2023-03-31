@@ -20,17 +20,19 @@
     "require-dev": {
         "spryker/code-sniffer": "*",
         "spryker/elastica": "*",
+        "spryker/event": "*",
         "spryker/propel": "*",
+        "spryker/publisher": "*",
         "spryker/queue": "*",
         "spryker/search-elasticsearch": "*",
         "spryker/testify": "*"
     },
     "suggest": {
+        "spryker/category": "If you want to use Entity.spy_category.update Event",
         "spryker/elastica": "If you want to use Elastica plugins.",
-        "spryker/search-elasticsearch": "If you want to use search plugins.",
-        "spryker/merchant-profile": "If you want to use Entity.spy_merchant_profile.update Event",
         "spryker/merchant-category": "If you want to use Entity.spy_merchant_category.update Event",
-        "spryker/category": "If you want to use Entity.spy_category.update Event"
+        "spryker/merchant-profile": "If you want to use Entity.spy_merchant_profile.update Event",
+        "spryker/search-elasticsearch": "If you want to use search plugins."
     },
     "autoload": {
         "psr-4": {

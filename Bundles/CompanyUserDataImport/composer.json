@@ -13,7 +13,9 @@
     },
     "require-dev": {
         "spryker/code-sniffer": "*",
+        "spryker/container": "*",
         "spryker/propel": "*",
+        "spryker/store": "*",
         "spryker/testify": "*"
     },
     "autoload": {

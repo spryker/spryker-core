@@ -10,7 +10,6 @@ namespace Spryker\Client\Money;
 use Money\Currencies\ISOCurrencies;
 use Money\Parser\IntlMoneyParser;
 use NumberFormatter;
-use Spryker\Client\Currency\Plugin\CurrencyPlugin;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Money\Dependency\Client\MoneyToCurrencyClientBridge;
@@ -32,13 +31,6 @@ class MoneyDependencyProvider extends AbstractDependencyProvider
     public const CLIENT_LOCALE = 'CLIENT_LOCALE';
 
     /**
-     * @deprecated Exists for Backward Compatibility reasons only.
-     *
-     * @var string
-     */
-    public const PLUGIN_CURRENCY = 'currency plugin';
-
-    /**
      * @var string
      */
     public const MONEY_PARSER = 'money parser';
@@ -50,26 +42,9 @@ class MoneyDependencyProvider extends AbstractDependencyProvider
      */
     public function provideServiceLayerDependencies(Container $container)
     {
-        $container = $this->addCurrencyPlugin($container);
         $container = $this->addCurrencyClient($container);
         $container = $this->addMoneyParser($container);
         $container = $this->addLocaleClient($container);
-
-        return $container;
-    }
-
-    /**
-     * @deprecated Exists for Backward Compatibility reasons only.
-     *
-     * @param \Spryker\Client\Kernel\Container $container
-     *
-     * @return \Spryker\Client\Kernel\Container
-     */
-    protected function addCurrencyPlugin(Container $container)
-    {
-        $container->set(static::PLUGIN_CURRENCY, function () {
-            return new CurrencyPlugin();
-        });
 
         return $container;
     }
@@ -105,6 +80,8 @@ class MoneyDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
+     * @deprecated Will be removed in the next major without replacement.
+     *
      * @return \Spryker\Shared\Kernel\Store
      */
     protected function getStore()

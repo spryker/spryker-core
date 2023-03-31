@@ -12,6 +12,32 @@
                 <controller>list</controller>
                 <action>index</action>
                 <icon>fa-angle-double-right</icon>
+                <pages>
+                    <stores-view>
+                        <label>View store</label>
+                        <title>View store</title>
+                        <bundle>store-gui</bundle>
+                        <controller>view</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </stores-view>
+                    <stores-create>
+                        <label>Create store</label>
+                        <title>Create store</title>
+                        <bundle>store-gui</bundle>
+                        <controller>create</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </stores-create>
+                    <stores-edit>
+                        <label>Edit store</label>
+                        <title>Edit store</title>
+                        <bundle>store-gui</bundle>
+                        <controller>edit</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </stores-edit>
+                </pages>
             </stores>
         </pages>
     </administration>

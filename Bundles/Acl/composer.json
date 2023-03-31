@@ -29,6 +29,7 @@
         "spryker/propel": "*",
         "spryker/router": "*",
         "spryker/silex": "*",
+        "spryker/store": "*",
         "spryker/testify": "*",
         "spryker/twig": "*",
         "spryker/validator": "*",

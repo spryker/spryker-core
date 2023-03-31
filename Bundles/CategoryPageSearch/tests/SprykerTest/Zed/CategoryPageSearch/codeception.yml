@@ -24,6 +24,8 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Shared\Propel\Helper\ConnectionHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
 
     Business:
         path: Business
@@ -41,6 +43,9 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
                 - \SprykerTest\Zed\Category\Helper\CategoryDataHelper
                 - \SprykerTest\Shared\Store\Helper\StoreDataHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
+                - \SprykerTest\Shared\Storage\Helper\StorageRedisConfigHelper
 
     Persistence:
         path: Persistence

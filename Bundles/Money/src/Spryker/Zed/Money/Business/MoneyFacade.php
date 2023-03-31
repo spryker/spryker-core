@@ -29,7 +29,10 @@ class MoneyFacade extends AbstractFacade implements MoneyFacadeInterface
      */
     public function fromInteger($amount, $isoCode = null)
     {
-        return $this->getFactory()->createMoneyBuilder()->fromInteger($amount, $isoCode);
+        return $this->getFactory()
+            ->createMoneyBuilder()
+            ->setDefaultIsoCode($isoCode)
+            ->fromInteger($amount, $isoCode);
     }
 
     /**
@@ -44,7 +47,10 @@ class MoneyFacade extends AbstractFacade implements MoneyFacadeInterface
      */
     public function fromFloat($amount, $isoCode = null)
     {
-        return $this->getFactory()->createMoneyBuilder()->fromFloat($amount, $isoCode);
+        return $this->getFactory()
+            ->createMoneyBuilder()
+            ->setDefaultIsoCode($isoCode)
+            ->fromFloat($amount, $isoCode);
     }
 
     /**
@@ -59,7 +65,10 @@ class MoneyFacade extends AbstractFacade implements MoneyFacadeInterface
      */
     public function fromString($amount, $isoCode = null)
     {
-        return $this->getFactory()->createMoneyBuilder()->fromString($amount, $isoCode);
+        return $this->getFactory()
+            ->createMoneyBuilder()
+            ->setDefaultIsoCode($isoCode)
+            ->fromString($amount, $isoCode);
     }
 
     /**

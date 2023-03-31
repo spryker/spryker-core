@@ -36,12 +36,14 @@ class IndexDefinitionBuilder implements IndexDefinitionBuilderInterface
     }
 
     /**
+     * @param string|null $storeName
+     *
      * @return array<\Generated\Shared\Transfer\IndexDefinitionTransfer>
      */
-    public function build(): array
+    public function build(?string $storeName = null): array
     {
         $indexDefinitions = [];
-        foreach ($this->indexDefinitionLoader->load() as $indexDefinition) {
+        foreach ($this->indexDefinitionLoader->load($storeName) as $indexDefinition) {
             $indexDefinitions = $this->mergeAndAddIndexDefinition($indexDefinitions, $indexDefinition);
         }
 

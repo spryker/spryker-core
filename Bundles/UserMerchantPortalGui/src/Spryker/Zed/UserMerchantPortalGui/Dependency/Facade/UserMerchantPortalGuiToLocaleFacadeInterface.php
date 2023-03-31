@@ -7,10 +7,18 @@
 
 namespace Spryker\Zed\UserMerchantPortalGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\LocaleCriteriaTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 
 interface UserMerchantPortalGuiToLocaleFacadeInterface
 {
+    /**
+     * @param \Generated\Shared\Transfer\LocaleCriteriaTransfer|null $localeCriteriaTransfer
+     *
+     * @return array<\Generated\Shared\Transfer\LocaleTransfer>
+     */
+    public function getLocaleCollection(?LocaleCriteriaTransfer $localeCriteriaTransfer = null): array;
+
     /**
      * @return array<string>
      */
@@ -26,9 +34,7 @@ interface UserMerchantPortalGuiToLocaleFacadeInterface
     public function getLocaleById(int $idLocale): LocaleTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return \Generated\Shared\Transfer\LocaleTransfer
+     * @return array<int, string>
      */
-    public function setCurrentLocale(LocaleTransfer $localeTransfer): LocaleTransfer;
+    public function getSupportedLocaleCodes(): array;
 }

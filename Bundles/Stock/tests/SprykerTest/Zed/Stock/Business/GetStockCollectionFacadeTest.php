@@ -12,6 +12,7 @@ use Generated\Shared\DataBuilder\StockBuilder;
 use Generated\Shared\DataBuilder\StockCriteriaBuilder;
 use Generated\Shared\Transfer\StockConditionsTransfer;
 use Generated\Shared\Transfer\StockTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use SprykerTest\Zed\Stock\StockBusinessTester;
 
 /**
@@ -170,7 +171,7 @@ class GetStockCollectionFacadeTest extends Unit
     {
         // Arrange
         $stockTransfer = $this->tester->haveStock();
-        $storeTransfer = $this->tester->haveStore();
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => 'FR']);
         $this->tester->haveStockStoreRelation($stockTransfer, $storeTransfer);
 
         $stockCriteriaTransfer = (new StockCriteriaBuilder())->withStockConditions([

@@ -130,13 +130,12 @@ class SalesOrderThresholdWriterStep implements DataImportStepInterface
     protected function getStoreByName(string $storeName): StoreTransfer
     {
         if (!isset($this->storesHeap[$storeName])) {
-            try {
-                $storeTransfer = $this->storeFacade->getStoreByName($storeName);
-
-                $this->storesHeap[$storeName] = $storeTransfer;
-            } catch (Throwable $t) {
+            $storeTransfer = $this->storeFacade->findStoreByName($storeName);
+            if (!$storeTransfer) {
                 throw new EntityNotFoundException(sprintf('Store not found: %s', $storeName));
             }
+
+            $this->storesHeap[$storeName] = $storeTransfer;
         }
 
         return $this->storesHeap[$storeName];

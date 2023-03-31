@@ -8,12 +8,18 @@
 namespace SprykerTest\Zed\CategoryStorage;
 
 use Codeception\Actor;
+use Codeception\Stub;
 use Generated\Shared\Transfer\CategoryTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\CategoryStorage\Persistence\SpyCategoryNodeStorage;
 use Orm\Zed\CategoryStorage\Persistence\SpyCategoryNodeStorageQuery;
 use Orm\Zed\CategoryStorage\Persistence\SpyCategoryTreeStorage;
 use Orm\Zed\CategoryStorage\Persistence\SpyCategoryTreeStorageQuery;
 use Propel\Runtime\Collection\ObjectCollection;
+use Spryker\Client\Kernel\Container;
+use Spryker\Client\Queue\QueueDependencyProvider;
+use Spryker\Client\Store\StoreDependencyProvider;
+use Spryker\Client\StoreExtension\Dependency\Plugin\StoreExpanderPluginInterface;
 
 /**
  * Inherited Methods
@@ -35,6 +41,32 @@ use Propel\Runtime\Collection\ObjectCollection;
 class CategoryStorageBusinessTester extends Actor
 {
     use _generated\CategoryStorageBusinessTesterActions;
+
+    /**
+     * @var string
+     */
+    protected const DEFAULT_STORE = 'DE';
+
+    /**
+     * @var string
+     */
+    protected const DEFAULT_CURRENCY = 'EUR';
+
+    /**
+     * @return void
+     */
+    public function addDependencies(): void
+    {
+        $this->setDependency(QueueDependencyProvider::QUEUE_ADAPTERS, function (Container $container) {
+            return [
+                $container->getLocator()->rabbitMq()->client()->createQueueAdapter(),
+            ];
+        });
+
+        $this->setDependency(StoreDependencyProvider::PLUGINS_STORE_EXPANDER, [
+            $this->createStoreStorageStoreExpanderPluginMock(),
+        ]);
+    }
 
     /**
      * @return void
@@ -170,5 +202,21 @@ class CategoryStorageBusinessTester extends Actor
             ->offsetGet(0)
             ->getLocale()
             ->getLocaleName();
+    }
+
+    /**
+     * @return \Spryker\Client\StoreExtension\Dependency\Plugin\StoreExpanderPluginInterface
+     */
+    protected function createStoreStorageStoreExpanderPluginMock(): StoreExpanderPluginInterface
+    {
+        $storeTransfer = (new StoreTransfer())
+            ->setName(static::DEFAULT_STORE)
+            ->setDefaultCurrencyIsoCode(static::DEFAULT_CURRENCY);
+
+        $storeStorageStoreExpanderPluginMock = Stub::makeEmpty(StoreExpanderPluginInterface::class, [
+            'expand' => $storeTransfer,
+        ]);
+
+        return $storeStorageStoreExpanderPluginMock;
     }
 }

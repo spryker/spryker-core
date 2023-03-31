@@ -10,7 +10,9 @@ namespace Spryker\Zed\Scheduler\Business\PhpScheduleReader\Mapper;
 use Generated\Shared\Transfer\SchedulerFilterTransfer;
 use Generated\Shared\Transfer\SchedulerJobTransfer;
 use Generated\Shared\Transfer\SchedulerScheduleTransfer;
+use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Scheduler\Business\PhpScheduleReader\Filter\JobsFilterInterface;
+use Spryker\Zed\Scheduler\SchedulerConfig;
 
 class PhpScheduleMapper implements PhpScheduleMapperInterface
 {
@@ -50,11 +52,18 @@ class PhpScheduleMapper implements PhpScheduleMapperInterface
     protected $jobsFilter;
 
     /**
-     * @param \Spryker\Zed\Scheduler\Business\PhpScheduleReader\Filter\JobsFilterInterface $jobsFilter
+     * @var \Spryker\Zed\Scheduler\SchedulerConfig
      */
-    public function __construct(JobsFilterInterface $jobsFilter)
+    protected SchedulerConfig $schedulerConfig;
+
+    /**
+     * @param \Spryker\Zed\Scheduler\Business\PhpScheduleReader\Filter\JobsFilterInterface $jobsFilter
+     * @param \Spryker\Zed\Scheduler\SchedulerConfig $schedulerConfig
+     */
+    public function __construct(JobsFilterInterface $jobsFilter, SchedulerConfig $schedulerConfig)
     {
         $this->jobsFilter = $jobsFilter;
+        $this->schedulerConfig = $schedulerConfig;
     }
 
     /**
@@ -69,12 +78,41 @@ class PhpScheduleMapper implements PhpScheduleMapperInterface
         SchedulerScheduleTransfer $scheduleTransfer,
         array $jobs
     ): SchedulerScheduleTransfer {
-        $filterTransfer->requireStore();
-
-        $storeName = $filterTransfer->getStore();
         $filteredJobs = $this->jobsFilter->filterJobs($filterTransfer, $jobs);
 
         foreach ($filteredJobs as $job) {
+            $storeNames = $this->getStoreNamesFromJob($job);
+            if ($storeNames !== []) {
+                $scheduleTransfer = $this->addJobByStore($filterTransfer, $scheduleTransfer, $storeNames, $job);
+
+                continue;
+            }
+
+            $jobTransfer = $this->mapJobFromArrayBasedOnStore($job);
+            $scheduleTransfer->addJob($jobTransfer);
+        }
+
+        return $scheduleTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SchedulerFilterTransfer $filterTransfer
+     * @param \Generated\Shared\Transfer\SchedulerScheduleTransfer $scheduleTransfer
+     * @param array<string> $storeNames
+     * @param array $job
+     *
+     * @return \Generated\Shared\Transfer\SchedulerScheduleTransfer
+     */
+    protected function addJobByStore(
+        SchedulerFilterTransfer $filterTransfer,
+        SchedulerScheduleTransfer $scheduleTransfer,
+        array $storeNames,
+        array $job
+    ): SchedulerScheduleTransfer {
+        foreach ($storeNames as $storeName) {
+            if ($filterTransfer->getStore() && $filterTransfer->getStore() !== $storeName) {
+                continue;
+            }
             $jobTransfer = $this->mapJobFromArrayBasedOnStore($job, $storeName);
             $scheduleTransfer->addJob($jobTransfer);
         }
@@ -84,11 +122,11 @@ class PhpScheduleMapper implements PhpScheduleMapperInterface
 
     /**
      * @param array $job
-     * @param string $storeName
+     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\SchedulerJobTransfer
      */
-    protected function mapJobFromArrayBasedOnStore(array $job, string $storeName): SchedulerJobTransfer
+    protected function mapJobFromArrayBasedOnStore(array $job, ?string $storeName = null): SchedulerJobTransfer
     {
         return (new SchedulerJobTransfer())
             ->setName($this->getJobName($job, $storeName))
@@ -96,6 +134,7 @@ class PhpScheduleMapper implements PhpScheduleMapperInterface
             ->setEnable($job[static::KEY_ENABLE] ?? false)
             ->setRepeatPattern($job[static::KEY_SCHEDULE] ?? null)
             ->setStore($storeName)
+            ->setRegion($this->schedulerConfig->getCurrentRegion())
             ->setPayload($this->mapPayloadFromArray($job));
     }
 
@@ -118,12 +157,53 @@ class PhpScheduleMapper implements PhpScheduleMapperInterface
 
     /**
      * @param array $job
-     * @param string $currentStoreName
+     * @param string|null $currentStoreName
      *
      * @return string
      */
-    protected function getJobName(array $job, string $currentStoreName): string
+    protected function getJobName(array $job, ?string $currentStoreName): string
     {
-        return sprintf('%s__%s', $currentStoreName, $job[static::KEY_NAME] ?? '');
+        $jobNameParts = [];
+        $jobNameParts[] = $this->schedulerConfig->getCurrentRegion();
+        $jobNameParts[] = $currentStoreName;
+        $jobNameParts[] = $job[static::KEY_NAME] ?? '';
+
+        return implode('_', array_filter($jobNameParts));
+    }
+
+    /**
+     * @param array $job
+     *
+     * @return array<string>
+     */
+    protected function getStoreNamesFromJob(array $job): array
+    {
+        $storeNames = array_key_exists(static::KEY_STORES, $job) ? (array)$job[static::KEY_STORES] : [];
+
+        if (!$storeNames && !$this->isDynamicStoreEnabled()) {
+            $storeNames = $this->getStoreList();
+        }
+
+        return $storeNames;
+    }
+
+    /**
+     * @deprecated Exists for BC-reasons only. Will be removed when dynamic store enabled.
+     *
+     * @return bool
+     */
+    protected function isDynamicStoreEnabled(): bool
+    {
+        return Store::isDynamicStoreMode();
+    }
+
+    /**
+     * @deprecated Exists for BC-reasons only. Will be removed when dynamic store enabled.
+     *
+     * @return array<string>
+     */
+    protected function getStoreList(): array
+    {
+        return Store::getInstance()->getAllowedStores();
     }
 }

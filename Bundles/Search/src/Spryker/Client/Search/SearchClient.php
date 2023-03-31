@@ -72,7 +72,7 @@ class SearchClient extends AbstractClient implements SearchClientInterface
      * @param array<\Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface> $resultFormatters
      * @param array<mixed> $requestParameters
      *
-     * @return \Elastica\ResultSet|mixed|array Deprecated: Only `mixed` will be supported with the next major.
+     * @return \Elastica\ResultSet|mixed|array (@deprecated Only mixed will be supported with the next major)
      */
     public function search(QueryInterface $searchQuery, array $resultFormatters = [], array $requestParameters = [])
     {
@@ -91,7 +91,7 @@ class SearchClient extends AbstractClient implements SearchClientInterface
      * @param int|null $limit
      * @param int|null $offset
      *
-     * @return \Elastica\ResultSet|mixed|array Deprecated: Only `mixed` will be supported with the next major.
+     * @return \Elastica\ResultSet|mixed|array (@deprecated Only mixed will be supported with the next major)
      */
     public function searchKeys($searchString, $limit = null, $offset = null)
     {
@@ -203,7 +203,7 @@ class SearchClient extends AbstractClient implements SearchClientInterface
      * @param int|null $limit
      * @param int|null $offset
      *
-     * @return \Elastica\ResultSet|mixed|array Deprecated: Only `mixed` will be supported with the next major.
+     * @return \Elastica\ResultSet|mixed|array (@deprecated Only mixed will be supported with the next major)
      */
     public function searchQueryString($searchString, $limit = null, $offset = null)
     {

@@ -179,6 +179,10 @@ class ProductBundleReader implements ProductBundleReaderInterface
      */
     protected function getProductConcreteAvailabilityIndexedBySkuForStore(array $productConcreteSkus): array
     {
+        if (!$this->storeFacade->isCurrentStoreDefined()) {
+            return [];
+        }
+
         $storeTransfer = $this->storeFacade->getCurrentStore();
 
         $productAvailabilityCriteriaTransfer = (new ProductAvailabilityCriteriaTransfer())

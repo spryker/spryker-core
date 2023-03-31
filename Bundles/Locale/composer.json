@@ -11,7 +11,10 @@
         "spryker/kernel": "^3.52.0",
         "spryker/locale-extension": "^1.0.0",
         "spryker/propel-orm": "^1.8.0",
-        "spryker/transfer": "^3.25.0"
+        "spryker/store": "^1.19.0",
+        "spryker/store-extension": "^1.0.0",
+        "spryker/transfer": "^3.25.0",
+        "spryker/zed-request-extension": "^1.1.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*",
@@ -20,6 +23,7 @@
         "spryker/event-dispatcher": "*",
         "spryker/installer": "*",
         "spryker/propel": "*",
+        "spryker/storage": "*",
         "spryker/symfony": "*",
         "spryker/testify": "*"
     },
@@ -34,7 +38,8 @@
         "psr-4": {
             "Spryker\\": "src/Spryker/",
             "SprykerTest\\Yves\\Locale\\Helper\\": "tests/SprykerTest/Yves/Locale/_support/Helper/",
-            "SprykerTest\\Zed\\Locale\\Helper\\": "tests/SprykerTest/Zed/Locale/_support/Helper/"
+            "SprykerTest\\Zed\\Locale\\Helper\\": "tests/SprykerTest/Zed/Locale/_support/Helper/",
+            "SprykerTest\\Shared\\Locale\\Helper\\": "tests/SprykerTest/Shared/Locale/_support/Helper/"
         }
     },
     "autoload-dev": {
@@ -50,7 +55,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "3.0.x-dev"
+            "dev-master": "4.0.x-dev"
         }
     },
     "config": {

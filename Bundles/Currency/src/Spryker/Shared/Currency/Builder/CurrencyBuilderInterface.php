@@ -7,6 +7,8 @@
 
 namespace Spryker\Shared\Currency\Builder;
 
+use Generated\Shared\Transfer\CurrencyTransfer;
+
 interface CurrencyBuilderInterface
 {
     /**
@@ -14,10 +16,10 @@ interface CurrencyBuilderInterface
      *
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function fromIsoCode($isoCode);
+    public function fromIsoCode(string $isoCode): CurrencyTransfer;
 
     /**
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function getCurrent();
+    public function getCurrent(): CurrencyTransfer;
 }

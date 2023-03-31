@@ -9,9 +9,11 @@ namespace SprykerTest\Zed\AvailabilityNotification\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\AvailabilityNotificationCriteriaTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\AvailabilityNotification\AvailabilityNotificationDependencyProvider;
+use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToLocaleFacadeInterface;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToMailFacadeInterface;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToProductFacadeInterface;
 use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToStoreFacadeInterface;
@@ -48,6 +50,11 @@ class AvailabilityNotificationFacadeTest extends Unit
      * @var string
      */
     protected const STORE_AT = 'AT';
+
+    /**
+     * @var string
+     */
+    protected const LOCALE_DE = 'de_DE';
 
     /**
      * @var \SprykerTest\Zed\AvailabilityNotification\AvailabilityNotificationBusinessTester|\SprykerTest\Zed\AvailabilityNotification\Helper\AvailabilityNotificationDataHelper|\SprykerTest\Shared\Product\Helper\ProductDataHelper|\SprykerTest\Shared\Customer\Helper\CustomerDataHelper
@@ -291,14 +298,18 @@ class AvailabilityNotificationFacadeTest extends Unit
 
         $storeTransferDE = $this->tester->haveStore([
             StoreTransfer::NAME => static::STORE_DE,
-        ]);
+        ], false);
         $storeTransferAT = $this->tester->haveStore([
             StoreTransfer::NAME => static::STORE_AT,
+        ], false);
+        $localeTransfer = $this->tester->haveLocale([
+            LocaleTransfer::LOCALE_NAME => static::LOCALE_DE,
         ]);
 
         $this->mockMailDependency();
 
         $this->mockStoreFacadeDependency($storeTransferDE);
+        $this->mockLocaleFacadeDependency($localeTransfer);
         $this->mockProductFacadeDependency($productConcreteTransfer);
         $availabilityNotificationSubscriptionTransfer = $this->tester->haveAvailabilityNotificationSubscriptionTransfer(
             $productConcreteTransfer,
@@ -307,6 +318,7 @@ class AvailabilityNotificationFacadeTest extends Unit
         $this->availabilityNotificationFacade->subscribe($availabilityNotificationSubscriptionTransfer);
 
         $this->mockStoreFacadeDependency($storeTransferAT);
+        $this->mockLocaleFacadeDependency($localeTransfer);
         $this->mockProductFacadeDependency($productConcreteTransfer2);
         $this->availabilityNotificationFacade->subscribe(
             $this->tester->haveAvailabilityNotificationSubscriptionTransfer(
@@ -357,6 +369,22 @@ class AvailabilityNotificationFacadeTest extends Unit
         $this->tester->setDependency(
             AvailabilityNotificationDependencyProvider::FACADE_STORE,
             $storeFacadeMock,
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     *
+     * @return void
+     */
+    protected function mockLocaleFacadeDependency(LocaleTransfer $localeTransfer): void
+    {
+        $localeFacadeMock = $this->createMock(AvailabilityNotificationToLocaleFacadeInterface::class);
+        $localeFacadeMock->method('getCurrentLocale')->willReturn($localeTransfer);
+
+        $this->tester->setDependency(
+            AvailabilityNotificationDependencyProvider::FACADE_LOCALE,
+            $localeFacadeMock,
         );
     }
 

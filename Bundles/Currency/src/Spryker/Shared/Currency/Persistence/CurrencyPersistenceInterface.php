@@ -14,10 +14,10 @@ interface CurrencyPersistenceInterface
      *
      * @return void
      */
-    public function setCurrentCurrencyIsoCode($currencyIsoCode);
+    public function setCurrentCurrencyIsoCode(string $currencyIsoCode): void;
 
     /**
      * @return string
      */
-    public function getCurrentCurrencyIsoCode();
+    public function getCurrentCurrencyIsoCode(): string;
 }

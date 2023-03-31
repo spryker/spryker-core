@@ -75,8 +75,7 @@ class AbstractProductPriceProductScheduleApplier implements AbstractProductPrice
      */
     protected function executeApplyScheduledPrices(PriceProductScheduleTransfer $priceProductScheduleTransfer): void
     {
-        $priceProductScheduleTransfer->requirePriceProduct();
-        $priceProductTransfer = $priceProductScheduleTransfer->getPriceProduct();
+        $priceProductTransfer = $priceProductScheduleTransfer->getPriceProductOrFail();
         $priceProductTransfer->requireIdProductAbstract();
         $this->priceProductScheduleDisabler
             ->disableNotActiveScheduledPricesByIdProductAbstract($priceProductTransfer->getIdProductAbstract());
@@ -94,7 +93,7 @@ class AbstractProductPriceProductScheduleApplier implements AbstractProductPrice
      */
     protected function findPriceProductSchedulesToEnableForCurrentStoreAndIdProductAbstract(PriceProductScheduleTransfer $priceProductScheduleTransfer): array
     {
-        $storeTransfer = $this->storeFacade->getCurrentStore();
+        $storeTransfer = $priceProductScheduleTransfer->getStore() ?? $this->storeFacade->getCurrentStore();
 
         return $this->priceProductScheduleRepository
             ->findPriceProductSchedulesToEnableByStoreAndIdProductAbstract(

@@ -156,7 +156,7 @@ class ProductPageSearchBusinessTester extends Actor
      */
     protected function setUpData(): void
     {
-        $this->productConcreteTransfer = $this->haveProduct();
+        $this->productConcreteTransfer = $this->haveFullProduct();
         $this->productAbstractTransfer = $this->getProductFacade()->findProductAbstractById(
             $this->productConcreteTransfer->getFkProductAbstract(),
         );

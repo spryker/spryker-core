@@ -85,6 +85,7 @@
 
     <transfer name="Store">
         <property name="availableLocaleIsoCodes" type="array" singular="availableLocaleCode"/>
+        <property name="defaultLocaleIsoCode" type="string"/>
     </transfer>
 
     <transfer name="GlueResource">

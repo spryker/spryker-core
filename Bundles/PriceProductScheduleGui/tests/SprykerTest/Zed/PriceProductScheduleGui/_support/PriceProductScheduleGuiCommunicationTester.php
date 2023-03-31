@@ -9,6 +9,8 @@ namespace SprykerTest\Zed\PriceProductScheduleGui;
 
 use Codeception\Actor;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Zed\PriceProductScheduleGui\Dependency\Service\PriceProductScheduleGuiToUtilDateTimeServiceBridge;
+use Spryker\Zed\PriceProductScheduleGui\Dependency\Service\PriceProductScheduleGuiToUtilDateTimeServiceInterface;
 
 /**
  * Inherited Methods
@@ -36,5 +38,15 @@ class PriceProductScheduleGuiCommunicationTester extends Actor
     public function getCurrentStore(): StoreTransfer
     {
         return $this->getLocator()->store()->facade()->getCurrentStore();
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductScheduleGui\Dependency\Service\PriceProductScheduleGuiToUtilDateTimeServiceInterface
+     */
+    public function getUtilDateTimeService(): PriceProductScheduleGuiToUtilDateTimeServiceInterface
+    {
+        return new PriceProductScheduleGuiToUtilDateTimeServiceBridge(
+            $this->getLocator()->utilDateTime()->service(),
+        );
     }
 }

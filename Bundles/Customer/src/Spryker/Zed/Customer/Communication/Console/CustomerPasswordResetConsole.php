@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Customer\Communication\Console;
 
 use Generated\Shared\Transfer\CustomerCriteriaFilterTransfer;
-use Spryker\Zed\Kernel\Communication\Console\Console;
+use Spryker\Zed\Kernel\Communication\Console\StoreAwareConsole;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -20,7 +20,7 @@ use Symfony\Component\Console\Question\ConfirmationQuestion;
  * @method \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Customer\Persistence\CustomerRepositoryInterface getRepository()
  */
-class CustomerPasswordResetConsole extends Console
+class CustomerPasswordResetConsole extends StoreAwareConsole
 {
     /**
      * @var string
@@ -41,6 +41,11 @@ class CustomerPasswordResetConsole extends Console
      * @var string
      */
     protected const OPTION_NO_TOKEN = 'no-token';
+
+    /**
+     * @var string
+     */
+    protected const ERROR_MESSAGE_STORE = 'Option store should be provided for Dynamic Store environment.';
 
     /**
      * @return void
@@ -66,6 +71,18 @@ class CustomerPasswordResetConsole extends Console
         $noToken = $input->getOption(static::OPTION_NO_TOKEN);
         $customerCriteriaFilterTransfer = $this->createCustomerCriteriaFilterTransfer($noToken);
         $customerCollection = $this->getFacade()->getCustomerCollectionByCriteria($customerCriteriaFilterTransfer);
+
+        if ($this->getFactory()->getStoreFacade()->isDynamicStoreEnabled() === true) {
+            $storeName = $this->getStore($input);
+            if ($storeName === null) {
+                $this->error(static::ERROR_MESSAGE_STORE);
+
+                return static::CODE_ERROR;
+            }
+            foreach ($customerCollection->getCustomers() as $customer) {
+                $customer->setStoreName($storeName);
+            }
+        }
 
         if (!$input->getOption(static::OPTION_FORCE)) {
             if (!$this->getQuestionHelper()->ask($input, $output, $this->createConfirmationQuestion($customerCollection->getCustomers()->count()))) {

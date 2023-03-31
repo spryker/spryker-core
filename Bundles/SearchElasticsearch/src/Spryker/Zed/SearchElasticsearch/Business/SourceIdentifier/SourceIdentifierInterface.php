@@ -11,24 +11,27 @@ interface SourceIdentifierInterface
 {
     /**
      * @param string $sourceIdentifier
+     * @param string|null $storeName
      *
      * @throws \Spryker\Zed\SearchElasticsearch\Business\Exception\InvalidSourceIdentifierException
      *
      * @return string
      */
-    public function translateToIndexName(string $sourceIdentifier): string;
+    public function translateToIndexName(string $sourceIdentifier, ?string $storeName): string;
 
     /**
      * @param string $sourceIdentifier
+     * @param string|null $storeName
      *
      * @return bool
      */
-    public function isSupported(string $sourceIdentifier): bool;
+    public function isSupported(string $sourceIdentifier, ?string $storeName): bool;
 
     /**
      * @param string $sourceIdentifier
+     * @param string|null $storeName
      *
      * @return bool
      */
-    public function isPrefixedWithStoreName(string $sourceIdentifier): bool;
+    public function isPrefixedWithStoreName(string $sourceIdentifier, ?string $storeName): bool;
 }

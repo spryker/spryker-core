@@ -5,7 +5,7 @@
     "license": "MIT",
     "require": {
         "php": ">=8.0",
-        "spryker/currency": "^3.0.0",
+        "spryker/currency": "^3.0.0 || ^4.0.0",
         "spryker/data-import": "^1.0.0",
         "spryker/kernel": "^3.33.0",
         "spryker/price-product": "^4.9.0",

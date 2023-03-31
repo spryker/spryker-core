@@ -68,6 +68,7 @@ class CategoryPageSearchFacadeTest extends Unit
                 $container->getLocator()->rabbitMq()->client()->createQueueAdapter(),
             ];
         });
+        $this->tester->addDependencies();
     }
 
     /**
@@ -305,6 +306,7 @@ class CategoryPageSearchFacadeTest extends Unit
     protected function executeCategoryNodePageSearchWriterAsserts(CategoryTransfer $categoryTransfer): void
     {
         $categoryNodePageSearchEntity = $this->tester->findCategoryNodePageSearchEntityByLocalizedCategory($categoryTransfer);
+
         $this->assertNotNull($categoryNodePageSearchEntity, 'CategoryNodePageSearchEntity should exist.');
 
         /** @var \Generated\Shared\Transfer\CategoryLocalizedAttributesTransfer $categoryLocalizedAttributesTransfer */

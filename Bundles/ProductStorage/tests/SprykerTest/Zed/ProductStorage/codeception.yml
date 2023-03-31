@@ -40,3 +40,6 @@ suites:
                 - \SprykerTest\Shared\Propel\Helper\ConnectionHelper
                 - \SprykerTest\Shared\Product\Helper\ProductDataHelper
                 - \SprykerTest\Zed\ProductAttribute\Helper\ProductAttributeDataHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
+                - \SprykerTest\Shared\Storage\Helper\StorageRedisConfigHelper

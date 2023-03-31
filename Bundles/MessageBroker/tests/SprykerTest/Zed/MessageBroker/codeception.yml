@@ -27,6 +27,8 @@ suites:
                 - \SprykerTest\Service\Container\Helper\ContainerHelper
                 - \SprykerTest\Zed\Application\Helper\ApplicationHelper
                 - \SprykerTest\Zed\EventDispatcher\Helper\EventDispatcherHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
+
     Communication:
         path: Communication
         actor: MessageBrokerCommunicationTester

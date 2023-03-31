@@ -32,3 +32,5 @@ suites:
                 - \SprykerTest\Shared\QuoteRequest\Helper\QuoteRequestHelper
                 - \SprykerTest\Shared\Shipment\Helper\ShipmentMethodDataHelper
                 - \SprykerTest\Shared\UtilText\Helper\UtilTextHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper

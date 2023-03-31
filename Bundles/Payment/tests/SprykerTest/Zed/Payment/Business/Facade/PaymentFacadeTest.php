@@ -90,6 +90,9 @@ class PaymentFacadeTest extends Unit
     protected function setUp(): void
     {
         parent::setUp();
+
+        $this->tester->ensurePaymentProviderTableIsEmpty();
+
         $this->paymentFacade = $this->tester->getFacade();
         $configMock = $this->createMock(PaymentConfig::class);
         $configMock->method('getPaymentStatemachineMappings')->willReturn([]);
@@ -101,6 +104,16 @@ class PaymentFacadeTest extends Unit
             'DE' => 'dev-DE',
             'AT' => 'dev-AT',
         ]);
+    }
+
+    /**
+     * @return void
+     */
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        $this->tester->ensurePaymentProviderTableIsEmpty();
     }
 
     /**
@@ -127,9 +140,6 @@ class PaymentFacadeTest extends Unit
      */
     public function testFindPaymentMethodByIdWithNotExistingIdShouldNotFindPaymentMethod(): void
     {
-        // Arrange
-        $this->tester->ensurePaymentMethodTableIsEmpty();
-
         // Act
         $paymentMethodResponseTransfer = $this->paymentFacade->findPaymentMethodById(1);
 
@@ -143,7 +153,6 @@ class PaymentFacadeTest extends Unit
     public function testUpdatePaymentMethodShouldUpdatePaymentMethodWithStoreRelation(): void
     {
         // Arrange
-        $this->tester->ensurePaymentMethodTableIsEmpty();
         $paymentProviderTransfer = $this->tester->havePaymentProvider();
         $paymentMethodTransfer = $this->tester->havePaymentMethod([
             PaymentMethodTransfer::PAYMENT_METHOD_KEY => 'test',
@@ -188,7 +197,6 @@ class PaymentFacadeTest extends Unit
     public function testGetAvailablePaymentMethodsShouldReturnActivePaymentMethod(): void
     {
         // Arrange
-        $this->tester->ensurePaymentProviderTableIsEmpty();
         $paymentProviderTransfer = $this->tester->havePaymentProvider([
             PaymentProviderTransfer::PAYMENT_PROVIDER_KEY => 'dummyPayment',
         ]);
@@ -234,7 +242,6 @@ class PaymentFacadeTest extends Unit
      */
     public function testGetAvailablePaymentMethodsShouldCollectPersistentAndInfrastructuralPaymentMethods(): void
     {
-        $this->tester->ensurePaymentProviderTableIsEmpty();
         $paymentProviderTransfer = $this->tester->havePaymentProvider([
             PaymentProviderTransfer::PAYMENT_PROVIDER_KEY => 'dummyPayment',
         ]);
@@ -298,7 +305,6 @@ class PaymentFacadeTest extends Unit
     public function testGetAvailablePaymentProvidersForStoreShouldReturnActivePaymentProviderForGivenStore(): void
     {
         // Arrange
-        $this->tester->ensurePaymentProviderTableIsEmpty();
         $storeTransfer = $this->tester->haveStore([
             StoreTransfer::NAME => 'DE',
         ]);
@@ -392,7 +398,6 @@ class PaymentFacadeTest extends Unit
     public function testCreatePaymentProvider(): void
     {
         // Arrange
-        $this->tester->ensurePaymentMethodTableIsEmpty();
         $paymentProviderTransfer = (new PaymentProviderBuilder())->build();
         $storeTransfer = $this->tester->haveStore([
             StoreTransfer::NAME => 'DE',
@@ -425,7 +430,6 @@ class PaymentFacadeTest extends Unit
     public function testCreatePaymentMethod(): void
     {
         // Arrange
-        $this->tester->ensurePaymentMethodTableIsEmpty();
         $paymentProviderTransfer = $this->tester->havePaymentProvider();
         $storeTransfer = $this->tester->haveStore([
             StoreTransfer::NAME => 'DE',
@@ -459,7 +463,6 @@ class PaymentFacadeTest extends Unit
     public function testDeactivatePaymentMethod(): void
     {
         // Arrange
-        $this->tester->ensurePaymentMethodTableIsEmpty();
         $paymentProviderTransfer = $this->tester->havePaymentProvider();
         $storeTransfer = $this->tester->haveStore([
             StoreTransfer::NAME => 'DE',
@@ -494,7 +497,6 @@ class PaymentFacadeTest extends Unit
     public function testActivatePaymentMethod(): void
     {
         // Arrange
-        $this->tester->ensurePaymentMethodTableIsEmpty();
         $paymentProviderTransfer = $this->tester->havePaymentProvider();
         $storeTransfer = $this->tester->haveStore([
             StoreTransfer::NAME => 'DE',

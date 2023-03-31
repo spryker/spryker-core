@@ -91,6 +91,7 @@ interface CustomerConstants
      * Specification:
      * - Provides format of registration confirmation token url.
      * - Should contain %s for the token.
+     * - Should contain also %s for the store if Dynamic Store mode is enabled.
      *
      * @var string
      */

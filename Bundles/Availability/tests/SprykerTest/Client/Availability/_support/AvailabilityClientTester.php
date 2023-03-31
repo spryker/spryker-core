@@ -8,6 +8,10 @@
 namespace SprykerTest\Client\Availability;
 
 use Codeception\Actor;
+use Codeception\Stub;
+use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Client\Store\StoreDependencyProvider as ClientStoreDependencyProvider;
+use Spryker\Client\StoreExtension\Dependency\Plugin\StoreExpanderPluginInterface;
 
 /**
  * @method void wantToTest($text)
@@ -26,4 +30,40 @@ use Codeception\Actor;
 class AvailabilityClientTester extends Actor
 {
     use _generated\AvailabilityClientTesterActions;
+
+    /**
+     * @var string
+     */
+    protected const DEFAULT_STORE_NAME = 'DE';
+
+    /**
+     * @var string
+     */
+    protected const DEFAULT_CURRENCY = 'EUR';
+
+    /**
+     * @return void
+     */
+    public function addDependencies(): void
+    {
+        $this->setDependency(ClientStoreDependencyProvider::PLUGINS_STORE_EXPANDER, [
+            $this->createStoreStorageStoreExpanderPluginMock(),
+        ]);
+    }
+
+    /**
+     * @return \Spryker\Client\StoreExtension\Dependency\Plugin\StoreExpanderPluginInterface
+     */
+    protected function createStoreStorageStoreExpanderPluginMock(): StoreExpanderPluginInterface
+    {
+        $storeTransfer = (new StoreTransfer())
+            ->setName(static::DEFAULT_STORE_NAME)
+            ->setDefaultCurrencyIsoCode(static::DEFAULT_CURRENCY);
+
+        $storeStorageStoreExpanderPluginMock = Stub::makeEmpty(StoreExpanderPluginInterface::class, [
+            'expand' => $storeTransfer,
+        ]);
+
+        return $storeStorageStoreExpanderPluginMock;
+    }
 }

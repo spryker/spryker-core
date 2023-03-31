@@ -7,19 +7,20 @@
 
 namespace Spryker\Zed\Currency\Business;
 
+use Generated\Shared\Transfer\CurrencyCollectionTransfer;
+use Generated\Shared\Transfer\CurrencyCriteriaTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
+use Generated\Shared\Transfer\StoreResponseTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\StoreWithCurrencyTransfer;
 
-/**
- * @method \Spryker\Zed\Currency\Business\CurrencyBusinessFactory getFactory()
- */
 interface CurrencyFacadeInterface
 {
     /**
      * Specification:
-     * - Returns CurrencyTransfer object for given ISO code
+     * - Returns CurrencyTransfer object for given ISO code.
      *
      * @api
      *
@@ -27,17 +28,17 @@ interface CurrencyFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function fromIsoCode($isoCode);
+    public function fromIsoCode(string $isoCode): CurrencyTransfer;
 
     /**
      * Specification:
-     * - Returns CurrencyTransfer object for current ISO code
+     * - Returns CurrencyTransfer object for current ISO code.
      *
      * @api
      *
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function getCurrent();
+    public function getCurrent(): CurrencyTransfer;
 
     /**
      * Specification:
@@ -51,7 +52,7 @@ interface CurrencyFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function getByIdCurrency($idCurrency);
+    public function getByIdCurrency(int $idCurrency): CurrencyTransfer;
 
     /**
      * Specification:
@@ -63,7 +64,7 @@ interface CurrencyFacadeInterface
      *
      * @return int
      */
-    public function createCurrency(CurrencyTransfer $currencyTransfer);
+    public function createCurrency(CurrencyTransfer $currencyTransfer): int;
 
     /**
      * Specification:
@@ -75,7 +76,7 @@ interface CurrencyFacadeInterface
      *
      * @return \Generated\Shared\Transfer\StoreWithCurrencyTransfer
      */
-    public function getCurrentStoreWithCurrencies();
+    public function getCurrentStoreWithCurrencies(): StoreWithCurrencyTransfer;
 
     /**
      * Specification:
@@ -87,7 +88,7 @@ interface CurrencyFacadeInterface
      *
      * @return array<\Generated\Shared\Transfer\StoreWithCurrencyTransfer>
      */
-    public function getAllStoresWithCurrencies();
+    public function getAllStoresWithCurrencies(): array;
 
     /**
      * Specification:
@@ -97,7 +98,7 @@ interface CurrencyFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function getDefaultCurrencyForCurrentStore();
+    public function getDefaultCurrencyForCurrentStore(): CurrencyTransfer;
 
     /**
      * Specification:
@@ -147,4 +148,55 @@ interface CurrencyFacadeInterface
      * @return \Generated\Shared\Transfer\StoreWithCurrencyTransfer
      */
     public function getStoreWithCurrenciesByIdStore(int $idStore): StoreWithCurrencyTransfer;
+
+    /**
+     * Specification:
+     * - Expands collection of store transfers with available currency codes.
+     * - Expands collection of store transfers only if `Dynamic Store` is enabled.
+     *
+     * @api
+     *
+     * @param array<\Generated\Shared\Transfer\StoreTransfer> $storeTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
+     */
+    public function expandStoreTransfersWithCurrencies(array $storeTransfers): array;
+
+    /**
+     * Specification:
+     * - Checks if default currency in list of available currencies.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\StoreResponseTransfer
+     */
+    public function validateStoreCurrencies(StoreTransfer $storeTransfer): StoreResponseTransfer;
+
+    /**
+     * Specification:
+     * - Drops all relations between store and currencies.
+     * - Persists new `CurrencyStore` entities to a database.
+     * - Returns a `StoreResponseTransfer` with the store data and its currencies.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\StoreResponseTransfer
+     */
+    public function updateStoreCurrencies(StoreTransfer $storeTransfer): StoreResponseTransfer;
+
+    /**
+     * Specification:
+     * - Returns currency collection based on incoming criteria.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CurrencyCriteriaTransfer $currencyCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\CurrencyCollectionTransfer
+     */
+    public function getCurrencyCollection(CurrencyCriteriaTransfer $currencyCriteriaTransfer): CurrencyCollectionTransfer;
 }

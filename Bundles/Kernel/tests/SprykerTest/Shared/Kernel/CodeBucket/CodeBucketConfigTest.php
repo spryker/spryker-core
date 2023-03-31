@@ -53,6 +53,10 @@ class CodeBucketConfigTest extends Unit
      */
     public function testGetCurrentCodeBucketWithoutDynamicStoreModeAndWithoutCustomCodeBucketShouldReturnCurrentStore(): void
     {
+        if ($this->isDynamicStoreEnabled()) {
+            $this->markTestSkipped('Test is valid for Dynamic Store on-mode only.');
+        }
+
         // Arrange
         $codeBucketContext = $this->createCodeBucketConfig(new DefaultCodeBucketConfig(false));
 
@@ -122,5 +126,13 @@ class CodeBucketConfigTest extends Unit
         ?CodeBucketConfigInterface $codeBucketConfig = null
     ): CodeBucketConfigInterface {
         return new CodeBucketConfig($codeBucketConfig);
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isDynamicStoreEnabled(): bool
+    {
+        return (bool)getenv('SPRYKER_DYNAMIC_STORE_MODE');
     }
 }

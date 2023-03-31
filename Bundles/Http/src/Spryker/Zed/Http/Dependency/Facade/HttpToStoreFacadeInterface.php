@@ -13,4 +13,9 @@ interface HttpToStoreFacadeInterface
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
     public function getCurrentStore();
+
+    /**
+     * @return bool
+     */
+    public function isDynamicStoreEnabled(): bool;
 }

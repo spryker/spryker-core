@@ -96,7 +96,8 @@ class GiftCardCarrier implements GiftCardCarrierInterface
         $mailTransfer = $mailTransfer
             ->setType(GiftCardDeliveryMailTypePlugin::MAIL_TYPE)
             ->setCustomer($customerTransfer)
-            ->addGiftCard($giftCardTransfer);
+            ->addGiftCard($giftCardTransfer)
+            ->setStoreName($orderTransfer->getStoreOrFail());
 
         return $mailTransfer;
     }

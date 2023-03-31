@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\ProductLabelTransfer;
 use Generated\Shared\Transfer\ProductPageLoadTransfer;
 use Generated\Shared\Transfer\ProductPayloadTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\ProductLabelSearch\Dependency\Facade\ProductLabelSearchToProductPageSearchInterface;
 use Spryker\Zed\ProductLabelSearch\ProductLabelSearchDependencyProvider;
 
@@ -49,6 +50,11 @@ class ProductLabelSearchFacadeTest extends Unit
      * @var string
      */
     protected const COL_PRODUCT_LABEL_STORE_FK_PRODUCT_LABEL = 'spy_product_label_store.fk_product_label';
+
+    /**
+     * @var string
+     */
+    protected const STORE_NAME_DE = 'DE';
 
     /**
      * @return void
@@ -258,7 +264,7 @@ class ProductLabelSearchFacadeTest extends Unit
         // Arrange
         $productTransfer1 = $this->tester->haveProduct();
         $productTransfer2 = $this->tester->haveProduct();
-        $storeTransfer = $this->tester->haveStore();
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
         $storeRelationSeedData = [
             StoreRelationTransfer::ID_STORES => [
                 $storeTransfer->getIdStore(),

@@ -21,6 +21,13 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/AvailabilityGui/Dependency/Facade/AvailabilityGuiToLocaleBridge.php",
+        "description": "Bridges: Method `getCurrentLocaleName()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/AvailabilityGui/Dependency/Facade/AvailabilityGuiToOmsFacadeBridge.php",
         "description": "Bridges: Method `getReservationsFromOtherStores()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
@@ -126,13 +133,6 @@
         "priority": "2"
     },
     {
-        "fileName": "src/Spryker/Zed/AvailabilityGui/Dependency/Facade/AvailabilityToStoreFacadeBridge.php",
-        "description": "Bridges: Method `getStoresWithSharedPersistence()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
-        "rule": "BridgeFacadeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
         "fileName": "src/Spryker/Zed/AvailabilityGui/Dependency/QueryContainer/AvailabilityGuiToAvailabilityQueryContainerBridge.php",
         "description": "Bridges: Type should be defined for param `idLocale` in method `Spryker\\Zed\\AvailabilityGui\\Dependency\\QueryContainer\\AvailabilityGuiToAvailabilityQueryContainerBridge::queryAvailabilityAbstractWithStockByIdLocale()`.",
         "rule": "BridgeMethodsRule",
@@ -192,13 +192,6 @@
         "fileName": "src/Spryker/Zed/AvailabilityGui/Dependency/QueryContainer/AvailabilityGuiToProductBundleQueryContainerBridge.php",
         "description": "Bridges: Type should be defined for param `idProductConcrete` in method `Spryker\\Zed\\AvailabilityGui\\Dependency\\QueryContainer\\AvailabilityGuiToProductBundleQueryContainerBridge::queryBundleProduct()`.",
         "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/AvailabilityGui/Dependency/Facade/AvailabilityGuiToLocaleBridge.php",
-        "description": "Bridges: Method `getCurrentLocaleName()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
-        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     }

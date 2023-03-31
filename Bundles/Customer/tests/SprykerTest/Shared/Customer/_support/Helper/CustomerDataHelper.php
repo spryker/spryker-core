@@ -40,6 +40,7 @@ class CustomerDataHelper extends Module
         $customerTransfer = (new CustomerBuilder($override))
             ->withBillingAddress()
             ->withShippingAddress()
+            ->withLocale()
             ->build();
 
         $this->ensureCustomerWithReferenceDoesNotExist($customerTransfer);

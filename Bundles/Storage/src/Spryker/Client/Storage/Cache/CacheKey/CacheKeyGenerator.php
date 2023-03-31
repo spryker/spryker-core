@@ -144,7 +144,11 @@ class CacheKeyGenerator implements CacheKeyGeneratorInterface
      */
     protected function buildCacheKey(string $urlSegments, string $queryStringParametersKey): string
     {
-        $storeName = $this->getStoreName();
+        $storeName = '';
+        if ($this->storeClient->isCurrentStoreDefined()) {
+            $storeName = $this->getStoreName();
+        }
+
         $locale = $this->localeClient->getCurrentLocale();
 
         return implode(static::KEY_NAME_SEPARATOR, [

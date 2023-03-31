@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\Country\Business\CountryFacadeInterface getFacade()
  * @method \Spryker\Zed\Country\CountryConfig getConfig()
  * @method \Spryker\Zed\Country\Communication\CountryCommunicationFactory getFactory()
- * @method \Spryker\Zed\Country\Persistence\CountryQueryContainerInterface getQueryContainer()
  */
 class CountryMerchantAclEntityRuleExpanderPlugin extends AbstractPlugin implements MerchantAclEntityRuleExpanderPluginInterface
 {

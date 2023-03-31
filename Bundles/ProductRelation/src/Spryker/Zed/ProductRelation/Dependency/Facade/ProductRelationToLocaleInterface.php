@@ -7,10 +7,19 @@
 
 namespace Spryker\Zed\ProductRelation\Dependency\Facade;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+
 interface ProductRelationToLocaleInterface
 {
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getCurrentLocale();
+    public function getCurrentLocale(): LocaleTransfer;
+
+    /**
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    public function getLocale(string $localeName): LocaleTransfer;
 }

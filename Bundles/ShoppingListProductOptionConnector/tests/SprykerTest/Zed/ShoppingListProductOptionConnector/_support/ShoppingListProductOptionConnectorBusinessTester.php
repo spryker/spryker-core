@@ -8,10 +8,14 @@
 namespace SprykerTest\Zed\ShoppingListProductOptionConnector;
 
 use Codeception\Actor;
+use Codeception\Stub;
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\ProductOptionGroupTransfer;
 use Generated\Shared\Transfer\ProductOptionValueTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Orm\Zed\ShoppingListProductOptionConnector\Persistence\SpyShoppingListProductOptionQuery;
+use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToCurrencyFacadeInterface;
+use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
 
 /**
  * @method void wantToTest($text)
@@ -32,6 +36,19 @@ use Orm\Zed\ShoppingListProductOptionConnector\Persistence\SpyShoppingListProduc
 class ShoppingListProductOptionConnectorBusinessTester extends Actor
 {
     use _generated\ShoppingListProductOptionConnectorBusinessTesterActions;
+
+    /**
+     * @var string
+     */
+    protected const DEFAULT_CURRENCY = 'EUR';
+
+    /**
+     * @return void
+     */
+    public function addDependencies(): void
+    {
+        $this->setDependency(ProductOptionDependencyProvider::FACADE_CURRENCY, $this->createProductOptionToCurrencyFacadeMock());
+    }
 
     /**
      * @param array $override
@@ -112,5 +129,17 @@ class ShoppingListProductOptionConnectorBusinessTester extends Actor
                 ],
             ],
         ];
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToCurrencyFacadeInterface
+     */
+    protected function createProductOptionToCurrencyFacadeMock(): ProductOptionToCurrencyFacadeInterface
+    {
+        $currencyTransfer = (new CurrencyTransfer())->setCode(static::DEFAULT_CURRENCY);
+
+        return Stub::makeEmpty(ProductOptionToCurrencyFacadeInterface::class, [
+            'getCurrent' => $currencyTransfer,
+        ]);
     }
 }

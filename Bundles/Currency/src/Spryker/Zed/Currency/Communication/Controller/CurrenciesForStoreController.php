@@ -12,9 +12,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method \Spryker\Zed\Currency\Persistence\CurrencyQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Currency\Persistence\CurrencyRepositoryInterface getRepository()
  * @method \Spryker\Zed\Currency\Business\CurrencyFacadeInterface getFacade()
+ * @method \Spryker\Zed\Currency\Communication\CurrencyCommunicationFactory getFactory()
  */
 class CurrenciesForStoreController extends AbstractController
 {

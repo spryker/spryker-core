@@ -8,10 +8,14 @@
 namespace SprykerTest\Client\Quote\QuoteClient;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Client\Quote\Dependency\Client\QuoteToCurrencyClientInterface;
 use Spryker\Client\Quote\QuoteClient;
+use Spryker\Client\Quote\QuoteDependencyProvider;
 use Spryker\Client\Session\SessionClient;
+use SprykerTest\Shared\Testify\Helper\DependencyHelperTrait;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 
@@ -27,6 +31,13 @@ use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
  */
 class SessionQuoteClientTest extends Unit
 {
+    use DependencyHelperTrait;
+
+    /**
+     * @var string
+     */
+    protected const DEFAULT_CURRENCY = 'EUR';
+
     /**
      * @return void
      */
@@ -35,6 +46,8 @@ class SessionQuoteClientTest extends Unit
         $sessionContainer = new Session(new MockArraySessionStorage());
         $sessionClient = new SessionClient();
         $sessionClient->setContainer($sessionContainer);
+
+        $this->getDependencyHelper()->setDependency(QuoteDependencyProvider::CLIENT_CURRENCY, $this->createQuoteToCurrencyClientInterface());
     }
 
     /**
@@ -72,5 +85,18 @@ class SessionQuoteClientTest extends Unit
         $quoteClient->clearQuote();
 
         $this->assertNotSame($quoteTransfer, $quoteClient->getQuote());
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Quote\Dependency\Client\QuoteToCurrencyClientInterface
+     */
+    protected function createQuoteToCurrencyClientInterface(): QuoteToCurrencyClientInterface
+    {
+        $quoteToCurrencyClientMock = $this->createMock(QuoteToCurrencyClientInterface::class);
+        $quoteToCurrencyClientMock->method('getCurrent')
+            ->willReturn((new CurrencyTransfer())
+                ->setCode(static::DEFAULT_CURRENCY));
+
+        return $quoteToCurrencyClientMock;
     }
 }

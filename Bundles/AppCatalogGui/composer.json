@@ -6,16 +6,17 @@
     "require": {
         "php": ">=8.0",
         "spryker/kernel": "^3.30.0",
-        "spryker/locale": "^1.0.0 || ^2.0.0 || ^3.0.0",
+        "spryker/locale": "^1.0.0 || ^2.0.0 || ^3.0.0 || ^4.0.0",
         "spryker/log": "^2.0.0 || ^3.0.0",
         "spryker/oauth-client": "^1.0.0",
-        "spryker/store": "^1.16.0",
+        "spryker/store": "^1.19.0",
         "spryker/symfony": "^3.0.0",
         "spryker/transfer": "^3.27.0",
         "spryker/translator": "^1.5.1"
     },
     "require-dev": {
         "spryker/code-sniffer": "*",
+        "spryker/container": "*",
         "spryker/propel": "*",
         "spryker/testify": "*"
     },

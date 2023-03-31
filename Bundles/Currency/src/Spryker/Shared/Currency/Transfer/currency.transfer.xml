@@ -40,10 +40,53 @@
         <property name="availableCurrencyIsoCodes" type="array" singular="availableCurrencyIsoCode"/>
         <property name="defaultCurrencyIsoCode" type="string"/>
         <property name="selectedCurrencyIsoCode" type="string"/>
+        <property name="idStore" type="int"/>
     </transfer>
 
     <transfer name="Message">
         <property name="value" type="string"/>
+        <property name="parameters" type="array" singular="parameters"/>
+    </transfer>
+
+    <transfer name="StoreResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="store" type="Store"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
+    <transfer name="CurrencyCriteria">
+        <property name="currencyConditions" type="CurrencyConditions"/>
+        <property name="sortCollection" type="Sort[]" singular="sort"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="CurrencyConditions">
+        <property name="names" type="string[]" singular="name"/>
+        <property name="codes" type="string[]" singular="code"/>
+    </transfer>
+
+    <transfer name="CurrencyCollection">
+        <property name="currencies" type="Currency[]" singular="currency"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="Sort">
+        <property name="field" type="string"/>
+        <property name="isAscending" type="bool"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
+        <property name="page" type="int"/>
+        <property name="maxPerPage" type="int"/>
+        <property name="nbResults" type="int"/>
+        <property name="previousPage" type="int"/>
+        <property name="nextPage" type="int"/>
+        <property name="firstIndex" type="int"/>
+        <property name="lastIndex" type="int"/>
+        <property name="firstPage" type="int"/>
+        <property name="lastPage" type="int"/>
     </transfer>
 
     <transfer name="AclEntityMetadataConfig">

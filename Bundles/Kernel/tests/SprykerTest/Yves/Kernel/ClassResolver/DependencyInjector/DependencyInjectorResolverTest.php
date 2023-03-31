@@ -54,12 +54,12 @@ class DependencyInjectorResolverTest extends Unit
     /**
      * @var string
      */
-    protected $storeClass = 'ProjectNamespace\\Yves\\KernelDE\\ClassResolver\\FooDependencyInjector';
+    protected $storeClass = 'ProjectNamespace\\Yves\\Kernel' . APPLICATION_CODE_BUCKET . '\\ClassResolver\\FooDependencyInjector';
 
     /**
      * @var string
      */
-    protected $codeBucketClass = 'CodeBucketNamespace\\Yves\\KernelDE\\ClassResolver\\FooDependencyInjector';
+    protected $codeBucketClass = 'CodeBucketNamespace\\Yves\\Kernel' . APPLICATION_CODE_BUCKET . '\\ClassResolver\\FooDependencyInjector';
 
     /**
      * @var string

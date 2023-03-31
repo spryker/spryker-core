@@ -10,8 +10,6 @@ namespace SprykerTest\Zed\ConfigurableBundleStorage\Communication\Plugin\Event\L
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
-use Spryker\Client\Kernel\Container;
-use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Zed\ConfigurableBundle\Dependency\ConfigurableBundleEvents;
 use Spryker\Zed\ConfigurableBundleStorage\Communication\Plugin\Event\Listener\ConfigurableBundleTemplateImageStoragePublishListener;
 use Spryker\Zed\ConfigurableBundleStorage\Communication\Plugin\Event\Listener\ConfigurableBundleTemplateImageStorageUnpublishListener;
@@ -50,11 +48,7 @@ class ConfigurableBundleTemplateImageStorageUnpublishListenerTest extends Unit
         parent::setUp();
 
         $this->configurableBundleStorageRepository = new ConfigurableBundleStorageRepository();
-        $this->tester->setDependency(QueueDependencyProvider::QUEUE_ADAPTERS, function (Container $container) {
-            return [
-                $container->getLocator()->rabbitMq()->client()->createQueueAdapter(),
-            ];
-        });
+        $this->tester->addDependencies();
     }
 
     /**

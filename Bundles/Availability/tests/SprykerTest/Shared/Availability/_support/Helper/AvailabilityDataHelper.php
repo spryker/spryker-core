@@ -33,17 +33,24 @@ class AvailabilityDataHelper extends Module
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param \Spryker\DecimalObject\Decimal|null $quantity
+     * @param int|null $idStore
      *
      * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstract
      */
-    public function haveAvailabilityAbstract(ProductConcreteTransfer $productConcreteTransfer, ?Decimal $quantity = null): SpyAvailabilityAbstract
-    {
+    public function haveAvailabilityAbstract(
+        ProductConcreteTransfer $productConcreteTransfer,
+        ?Decimal $quantity = null,
+        ?int $idStore = null
+    ): SpyAvailabilityAbstract {
         $quantity = $quantity ?? new Decimal(static::DEFAULT_QUANTITY);
-        $storeTransfer = $this->getStoreFacade()->getCurrentStore();
+        if ($idStore === null) {
+            $storeTransfer = $this->getStoreFacade()->getCurrentStore();
+            $idStore = $storeTransfer->getIdStore();
+        }
 
         $availabilityAbstractEntity = (new SpyAvailabilityAbstractQuery())
             ->filterByAbstractSku($productConcreteTransfer->getAbstractSku())
-            ->filterByFkStore($storeTransfer->getIdStore())
+            ->filterByFkStore($idStore)
             ->findOneOrCreate();
 
         $availabilityAbstractEntity
@@ -51,7 +58,7 @@ class AvailabilityDataHelper extends Module
             ->save();
 
         (new SpyAvailabilityQuery())
-            ->filterByFkStore($storeTransfer->getIdStore())
+            ->filterByFkStore($idStore)
             ->filterBySku($productConcreteTransfer->getSku())
             ->filterByFkAvailabilityAbstract($availabilityAbstractEntity->getIdAvailabilityAbstract())
             ->findOneOrCreate()

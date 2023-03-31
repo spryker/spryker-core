@@ -10,7 +10,7 @@ namespace Spryker\Zed\Country\Business\Validator;
 use Generated\Shared\Transfer\CheckoutDataTransfer;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use Spryker\Zed\Country\Business\CountryManagerInterface;
+use Spryker\Zed\Country\Business\Country\CountryReaderInterface;
 use Spryker\Zed\Country\Persistence\CountryRepositoryInterface;
 
 class CountryCheckoutDataValidator implements CountryCheckoutDataValidatorInterface
@@ -36,9 +36,9 @@ class CountryCheckoutDataValidator implements CountryCheckoutDataValidatorInterf
     protected const COUNTRY_CODE_PARAMETER = '%code%';
 
     /**
-     * @var \Spryker\Zed\Country\Business\CountryManagerInterface
+     * @var \Spryker\Zed\Country\Business\Country\CountryReaderInterface
      */
-    protected $countryManager;
+    protected $countryReader;
 
     /**
      * @var \Spryker\Zed\Country\Persistence\CountryRepositoryInterface
@@ -46,14 +46,14 @@ class CountryCheckoutDataValidator implements CountryCheckoutDataValidatorInterf
     protected $countryRepository;
 
     /**
-     * @param \Spryker\Zed\Country\Business\CountryManagerInterface $countryManager
+     * @param \Spryker\Zed\Country\Business\Country\CountryReaderInterface $countryReader
      * @param \Spryker\Zed\Country\Persistence\CountryRepositoryInterface $countryRepository
      */
     public function __construct(
-        CountryManagerInterface $countryManager,
+        CountryReaderInterface $countryReader,
         CountryRepositoryInterface $countryRepository
     ) {
-        $this->countryManager = $countryManager;
+        $this->countryReader = $countryReader;
         $this->countryRepository = $countryRepository;
     }
 
@@ -66,12 +66,6 @@ class CountryCheckoutDataValidator implements CountryCheckoutDataValidatorInterf
     {
         $checkoutResponseTransfer = (new CheckoutResponseTransfer())->setIsSuccess(true);
         $checkoutResponseTransfer = $this->validateCountryInBillingAddress($checkoutDataTransfer, $checkoutResponseTransfer);
-
-        if (!$checkoutResponseTransfer->getIsSuccess()) {
-            return $checkoutResponseTransfer;
-        }
-
-        $checkoutResponseTransfer = $this->validateCountryInShippingAddress($checkoutDataTransfer, $checkoutResponseTransfer);
 
         if (!$checkoutResponseTransfer->getIsSuccess()) {
             return $checkoutResponseTransfer;
@@ -97,42 +91,13 @@ class CountryCheckoutDataValidator implements CountryCheckoutDataValidatorInterf
             );
         }
 
-        $billingAddressCountryIso2Code = $checkoutDataTransfer->getBillingAddress()->getIso2Code();
+        $billingAddressCountryIso2Code = $checkoutDataTransfer->getBillingAddressOrFail()->getIso2Code();
 
-        if (!$this->countryManager->hasCountry($billingAddressCountryIso2Code)) {
+        if ($billingAddressCountryIso2Code === null || !$this->countryReader->countryExists($billingAddressCountryIso2Code)) {
             $checkoutResponseTransfer = $this->addErrorToCheckoutResponseTransfer(
                 $checkoutResponseTransfer,
                 static::GLOSSARY_KEY_BILLING_ADDRESS_COUNTRY_NOT_FOUND,
                 [static::COUNTRY_CODE_PARAMETER => $billingAddressCountryIso2Code],
-            );
-        }
-
-        return $checkoutResponseTransfer;
-    }
-
-    /**
-     * @deprecated Exists for Backward Compatibility reasons only.
-     *
-     * @param \Generated\Shared\Transfer\CheckoutDataTransfer $checkoutDataTransfer
-     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
-     *
-     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
-     */
-    protected function validateCountryInShippingAddress(
-        CheckoutDataTransfer $checkoutDataTransfer,
-        CheckoutResponseTransfer $checkoutResponseTransfer
-    ): CheckoutResponseTransfer {
-        if (!$checkoutDataTransfer->getShippingAddress()) {
-            return $checkoutResponseTransfer;
-        }
-
-        $shippingAddressCountryIso2Code = $checkoutDataTransfer->getShippingAddress()->getIso2Code();
-
-        if (!$this->countryManager->hasCountry($shippingAddressCountryIso2Code)) {
-            $checkoutResponseTransfer = $this->addErrorToCheckoutResponseTransfer(
-                $checkoutResponseTransfer,
-                static::GLOSSARY_KEY_SHIPPING_ADDRESS_COUNTRY_NOT_FOUND,
-                [static::COUNTRY_CODE_PARAMETER => $shippingAddressCountryIso2Code],
             );
         }
 
@@ -149,7 +114,7 @@ class CountryCheckoutDataValidator implements CountryCheckoutDataValidatorInterf
         CheckoutDataTransfer $checkoutDataTransfer,
         CheckoutResponseTransfer $checkoutResponseTransfer
     ): CheckoutResponseTransfer {
-        if (!$checkoutDataTransfer->getShipments()->count()) {
+        if (!count($checkoutDataTransfer->getShipments())) {
             return $checkoutResponseTransfer;
         }
 
@@ -179,8 +144,9 @@ class CountryCheckoutDataValidator implements CountryCheckoutDataValidatorInterf
         $iso2Codes = [];
 
         foreach ($checkoutDataTransfer->getShipments() as $restShipmentsTransfer) {
-            if ($restShipmentsTransfer->getShippingAddress() && $restShipmentsTransfer->getShippingAddress()->getIso2Code()) {
-                $iso2Codes[] = $restShipmentsTransfer->getShippingAddress()->getIso2Code();
+            $restAddressTransfer = $restShipmentsTransfer->getShippingAddress();
+            if ($restAddressTransfer !== null && $restAddressTransfer->getIso2Code()) {
+                $iso2Codes[] = $restAddressTransfer->getIso2CodeOrFail();
             }
         }
 
@@ -195,13 +161,13 @@ class CountryCheckoutDataValidator implements CountryCheckoutDataValidatorInterf
     protected function getCountriesIsoCodes(array $iso2Codes): array
     {
         $countryTransfers = $this->countryRepository
-            ->findCountriesByIso2Codes($iso2Codes)
+            ->getCountriesByIso2Codes($iso2Codes)
             ->getCountries();
 
         $countryIso2Codes = [];
 
         foreach ($countryTransfers as $countryTransfer) {
-            $countryIso2Codes[] = $countryTransfer->getIso2Code();
+            $countryIso2Codes[] = $countryTransfer->getIso2CodeOrFail();
         }
 
         return $countryIso2Codes;

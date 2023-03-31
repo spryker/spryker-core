@@ -12,6 +12,7 @@ use Generated\Shared\DataBuilder\MerchantUserBuilder;
 use Generated\Shared\DataBuilder\StoreRelationBuilder;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\DataProvider\ProductAbstractFormDataProvider;
 use Spryker\Zed\ProductMerchantPortalGui\Dependency\Facade\ProductMerchantPortalGuiToMerchantUserFacadeInterface;
 use SprykerTest\Zed\ProductMerchantPortalGui\ProductMerchantPortalGuiCommunicationTester;
@@ -43,6 +44,11 @@ class ProductAbstractFormDataProviderTest extends Unit
      * @var string
      */
     protected const OPTION_PRODUCT_CATEGORY_CHOICES = 'OPTION_PRODUCT_CATEGORY_CHOICES';
+
+    /**
+     * @var string
+     */
+    protected const STORE_NAME = 'DE';
 
     /**
      * @var \SprykerTest\Zed\ProductMerchantPortalGui\ProductMerchantPortalGuiCommunicationTester
@@ -83,8 +89,8 @@ class ProductAbstractFormDataProviderTest extends Unit
     public function testGetOptionsShouldReturnOnlyValidStoreChoicesForCurrentMerchantUser(): void
     {
         // Arrange
-        $merchantUserRelatedStoreTransfer = $this->tester->haveStore();
-        $anotherStoreTransfer = $this->tester->haveStore();
+        $merchantUserRelatedStoreTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME]);
+        $anotherStoreTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME]);
 
         $storeRelationTransfer = (new StoreRelationBuilder())
             ->withStores($merchantUserRelatedStoreTransfer->toArray())
@@ -120,7 +126,7 @@ class ProductAbstractFormDataProviderTest extends Unit
     public function testGetOptionsShouldReturnEmptyStoreChoicesForCurrentMerchantWhileNoStoreRelationsGiven(): void
     {
         // Arrange
-        $this->tester->haveStore();
+        $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME]);
 
         $merchantUserTransfer = (new MerchantUserBuilder())
             ->withMerchant([

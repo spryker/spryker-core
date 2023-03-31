@@ -25,6 +25,9 @@ suites:
                 - \SprykerTest\Shared\Sales\Helper\SalesDataHelper
                 - \SprykerTest\Shared\Sales\Helper\SalesHelper
                 - \SprykerTest\Zed\Oms\Helper\OmsHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
     Communication:
         path: Communication
         actor: SalesOmsCommunicationTester

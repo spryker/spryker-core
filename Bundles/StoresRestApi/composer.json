@@ -5,8 +5,9 @@
     "license": "proprietary",
     "require": {
         "php": ">=8.0",
-        "spryker/country": "^3.2.0",
-        "spryker/currency": "^3.0.0",
+        "spryker/application-extension": "^1.1.0",
+        "spryker/country": "^3.2.0 || ^4.0.0",
+        "spryker/currency": "^3.2.0 || ^4.0.0",
         "spryker/glue-application": "^1.0.0",
         "spryker/glue-application-extension": "^1.0.0",
         "spryker/kernel": "^3.30.0",
@@ -14,7 +15,11 @@
         "spryker/symfony": "^3.0.0"
     },
     "require-dev": {
-        "spryker/code-sniffer": "*"
+        "spryker/code-sniffer": "*",
+        "spryker/container": "*"
+    },
+    "suggest": {
+        "spryker/container": "Add this module when you want to use the Container."
     },
     "autoload": {
         "psr-4": {

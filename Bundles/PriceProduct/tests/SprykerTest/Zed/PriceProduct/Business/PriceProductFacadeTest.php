@@ -106,6 +106,33 @@ class PriceProductFacadeTest extends Unit
     protected const VALIDATION_MESSAGE_STORE_AND_CURRENCY_NEEDS_TO_BE_UNIQUE = 'The set of inputs Store and Currency needs to be unique.';
 
     /**
+     * @uses \Spryker\Zed\Store\StoreDependencyProvider::STORE_CURRENT
+     *
+     * @var string
+     */
+    protected const STORE_CURRENT = 'STORE_CURRENT';
+
+    /**
+     * @var string
+     */
+    protected const STORE_NAME = 'DE';
+
+    /**
+     * @var string
+     */
+    protected const SERVICE_CURRENCY = 'currency';
+
+    /**
+     * @var string
+     */
+    protected const SERVICE_LOCALE = 'locale';
+
+    /**
+     * @var string
+     */
+    protected const DEFAULT_LOCALE = 'en';
+
+    /**
      * @var \SprykerTest\Zed\PriceProduct\PriceProductBusinessTester
      */
     protected $tester;
@@ -122,6 +149,10 @@ class PriceProductFacadeTest extends Unit
         ];
 
         $this->tester->setDependency(PriceProductDependencyProvider::PLUGIN_PRICE_DIMENSION_QUERY_CRITERIA, $priceDimensionQueryCriteriaPlugins);
+        $this->tester->setDependency(static::STORE_CURRENT, static::STORE_NAME);
+        $container = $this->tester->getContainer();
+        $container->set(static::SERVICE_CURRENCY, static::EUR_ISO_CODE);
+        $container->set(static::SERVICE_LOCALE, static::DEFAULT_LOCALE);
     }
 
     /**
@@ -862,7 +893,12 @@ class PriceProductFacadeTest extends Unit
             $priceProductTransfer = $this->buildProduct($priceProductTransfer);
         }
 
-        $storeTransfer = $this->createStoreFacade()->getCurrentStore();
+        $storeTransfer = $this->createStoreFacade()->getStoreByName(static::STORE_NAME);
+        if ($storeTransfer->getDefaultCurrencyIsoCode() === null && $currencyIsoCode === '') {
+            $expandedStoreTransfers = $this->createCurrencyFacade()->expandStoreTransfersWithCurrencies([$storeTransfer]);
+            $currencyIsoCode = $expandedStoreTransfers[0]->getDefaultCurrencyIsoCode();
+        }
+
         $currencyTransfer = $this->getCurrencyTransfer($currencyIsoCode);
 
         $moneyValueTransfer = $this->createMoneyValueTransfer(

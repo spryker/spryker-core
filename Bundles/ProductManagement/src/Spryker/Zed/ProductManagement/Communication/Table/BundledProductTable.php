@@ -160,16 +160,19 @@ class BundledProductTable extends AbstractTable
 
         $priceLabel = sprintf('Price (%s)', $defaultPriceMode);
 
-        $config->setHeader([
+        $header = [
             static::COL_SELECT => 'Select',
             static::COL_ID_PRODUCT_CONCRETE => 'id product',
             SpyProductLocalizedAttributesTableMap::COL_NAME => 'Product name',
             SpyProductTableMap::COL_SKU => 'SKU',
-            static::COL_PRICE => $priceLabel,
-            static::SPY_STOCK_PRODUCT_ALIAS_QUANTITY => 'Stock',
-            static::COL_AVAILABILITY => 'Availability',
-            SpyStockProductTableMap::COL_IS_NEVER_OUT_OF_STOCK => 'Is never out of stock',
-        ]);
+        ];
+        if (!$this->storeFacade->isDynamicStoreEnabled()) {
+            $header[static::COL_PRICE] = $priceLabel;
+            $header[static::SPY_STOCK_PRODUCT_ALIAS_QUANTITY] = 'Stock';
+            $header[static::COL_AVAILABILITY] = 'Availability';
+            $header[SpyStockProductTableMap::COL_IS_NEVER_OUT_OF_STOCK] = 'Is never out of stock';
+        }
+        $config->setHeader($header);
 
         $config->setRawColumns([
             static::COL_SELECT,
@@ -220,19 +223,28 @@ class BundledProductTable extends AbstractTable
 
         $productAbstractCollection = [];
         foreach ($queryResults as $productEntity) {
-            $stockQuantity = (new Decimal($productEntity->getVirtualColumn(static::SPY_STOCK_PRODUCT_ALIAS_QUANTITY) ?? 0))->trim();
-            $availability = $this->getAvailability($productEntity)->trim();
-
             $productAbstractCollection[] = [
                 static::COL_SELECT => $this->addCheckBox($productEntity),
                 static::COL_ID_PRODUCT_CONCRETE => $this->formatInt($productEntity->getIdProduct()),
-                SpyProductLocalizedAttributesTableMap::COL_NAME => $productEntity->getVirtualColumn(static::SPY_PRODUCT_LOCALIZED_ATTRIBUTE_ALIAS_NAME),
-                SpyProductTableMap::COL_SKU => $this->getProductEditPageLink($productEntity->getSku(), $productEntity->getFkProductAbstract(), $productEntity->getIdProduct()),
-                static::COL_PRICE => $this->getFormattedPrice($productEntity->getSku()),
-                static::SPY_STOCK_PRODUCT_ALIAS_QUANTITY => $this->formatFloat($stockQuantity->toFloat()),
-                static::COL_AVAILABILITY => $this->formatFloat($availability->toFloat()),
+                static::SPY_STOCK_PRODUCT_ALIAS_QUANTITY => (new Decimal(
+                    $productEntity->getVirtualColumn(static::SPY_STOCK_PRODUCT_ALIAS_QUANTITY) ?? 0,
+                ))->trim(),
+                SpyProductLocalizedAttributesTableMap::COL_NAME => $productEntity->getVirtualColumn(
+                    static::SPY_PRODUCT_LOCALIZED_ATTRIBUTE_ALIAS_NAME,
+                ),
+                SpyProductTableMap::COL_SKU => $this->getProductEditPageLink(
+                    $productEntity->getSku(),
+                    $productEntity->getFkProductAbstract(),
+                    $productEntity->getIdProduct(),
+                ),
                 SpyStockProductTableMap::COL_IS_NEVER_OUT_OF_STOCK => $productEntity->getIsNeverOutOfStock(),
             ];
+
+            if (!$this->storeFacade->isDynamicStoreEnabled()) {
+                $availability = $this->getAvailability($productEntity)->trim();
+                $productAbstractCollection[array_key_last($productAbstractCollection)][static::COL_PRICE] = $this->getFormattedPrice($productEntity->getSku());
+                $productAbstractCollection[array_key_last($productAbstractCollection)][static::COL_AVAILABILITY] = $this->formatFloat($availability->toFloat());
+            }
         }
 
         return $productAbstractCollection;

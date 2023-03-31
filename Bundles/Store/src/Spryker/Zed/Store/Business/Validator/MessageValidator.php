@@ -28,11 +28,18 @@ class MessageValidator implements MessageValidatorInterface
     protected $storeReader;
 
     /**
-     * @param \Spryker\Zed\Store\Business\Model\StoreReaderInterface $storeReader
+     * @var string
      */
-    public function __construct(StoreReaderInterface $storeReader)
+    protected string $storeName;
+
+    /**
+     * @param \Spryker\Zed\Store\Business\Model\StoreReaderInterface $storeReader
+     * @param string $storeName
+     */
+    public function __construct(StoreReaderInterface $storeReader, string $storeName)
     {
         $this->storeReader = $storeReader;
+        $this->storeName = $storeName;
     }
 
     /**
@@ -45,14 +52,15 @@ class MessageValidator implements MessageValidatorInterface
         $messageValidationResponse = new MessageValidationResponseTransfer();
 
         try {
-            $storeReference = $this->storeReader->getCurrentStore()->getStoreReference();
+            $storeReference = $this->storeReader->getStoreByName($this->storeName)->getStoreReference();
         } catch (StoreReferenceNotFoundException $exception) {
             $this->getLogger()->error('Store reference map is not configured');
 
             return $messageValidationResponse->setIsValid(false);
         }
 
-        if ($storeReference !== $messageTransfer->getMessageAttributes()->getStoreReference()) {
+        /** @phpstan-var \Generated\Shared\Transfer\MessageBrokerTestMessageTransfer $messageTransfer */
+        if ($storeReference !== $messageTransfer->getMessageAttributesOrFail()->getStoreReference()) {
             $this->getLogger()->error(
                 sprintf(static::VALIDATION_ERROR_STORE_REFERENCE_ERROR, get_class($messageTransfer)),
                 [

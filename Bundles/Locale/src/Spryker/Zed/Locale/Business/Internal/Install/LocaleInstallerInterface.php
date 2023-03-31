@@ -12,5 +12,5 @@ interface LocaleInstallerInterface
     /**
      * @return void
      */
-    public function install();
+    public function install(): void;
 }

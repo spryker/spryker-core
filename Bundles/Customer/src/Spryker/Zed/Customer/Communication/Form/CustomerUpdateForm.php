@@ -11,6 +11,8 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
  * @method \Spryker\Zed\Customer\Business\CustomerFacadeInterface getFacade()
@@ -61,6 +63,43 @@ class CustomerUpdateForm extends CustomerForm
         $this
             ->addDefaultBillingAddressField($builder, $options[static::OPTION_ADDRESS_CHOICES])
             ->addDefaultShippingAddressField($builder, $options[static::OPTION_ADDRESS_CHOICES]);
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array<mixed> $choices
+     *
+     * @return $this
+     */
+    protected function addStoreField(FormBuilderInterface $builder, array $choices)
+    {
+        if (!$this->getFactory()->getStoreFacade()->isDynamicStoreEnabled()) {
+            return $this;
+        }
+
+        $builder->add(static::FIELD_STORE_NAME, ChoiceType::class, [
+            'label' => 'Store',
+            'placeholder' => 'Select one',
+            'choices' => $choices,
+            'help' => 'Used to provide context in email templates.',
+            'row_attr' => [
+                'id' => 'customer_store_name_form_group',
+            ],
+            'attr' => [
+                'disabled' => true,
+            ],
+            'constraints' => [
+                new Callback([
+                    'callback' => function ($object, ExecutionContextInterface $context) {
+                        $form = $context->getRoot();
+                        if ($form[self::FIELD_SEND_PASSWORD_TOKEN]->getData() === true && !$object) {
+                            $context->buildViolation('This field is required.')->addViolation();
+                        }
+                    },
+                ]),
+            ]]);
+
+        return $this;
     }
 
     /**

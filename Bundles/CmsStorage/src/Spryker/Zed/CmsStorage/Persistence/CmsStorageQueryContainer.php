@@ -30,8 +30,7 @@ class CmsStorageQueryContainer extends AbstractQueryContainer implements CmsStor
     public function queryLocalesWithLocaleNames(array $localeNames)
     {
         return $this->getFactory()
-            ->getLocaleQueryContainer()
-            ->queryLocales()
+            ->getLocalePropelQuery()
             ->filterByLocaleName_In($localeNames);
     }
 

@@ -15,6 +15,7 @@ use Spryker\Zed\Synchronization\Business\Iterator\SynchronizationDataBulkReposit
 use Spryker\Zed\Synchronization\Business\Iterator\SynchronizationDataRepositoryPluginIterator;
 use Spryker\Zed\Synchronization\Business\Message\QueueMessageCreatorInterface;
 use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToQueueClientInterface;
+use Spryker\Zed\Synchronization\Dependency\Facade\SynchronizationToStoreFacadeInterface;
 use Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingServiceInterface;
 use Spryker\Zed\Synchronization\SynchronizationConfig;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface;
@@ -51,13 +52,20 @@ class RepositoryExporter implements ExporterInterface
     protected $utilEncodingService;
 
     /**
+     * @var \Spryker\Zed\Synchronization\Dependency\Facade\SynchronizationToStoreFacadeInterface
+     */
+    protected SynchronizationToStoreFacadeInterface $storeFacade;
+
+    /**
      * @param \Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToQueueClientInterface $queueClient
+     * @param \Spryker\Zed\Synchronization\Dependency\Facade\SynchronizationToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\Synchronization\Business\Message\QueueMessageCreatorInterface $synchronizationQueueMessageCreator
      * @param \Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingServiceInterface $utilEncodingService
      * @param \Spryker\Zed\Synchronization\SynchronizationConfig $synchronizationConfig
      */
     public function __construct(
         SynchronizationToQueueClientInterface $queueClient,
+        SynchronizationToStoreFacadeInterface $storeFacade,
         QueueMessageCreatorInterface $synchronizationQueueMessageCreator,
         SynchronizationToUtilEncodingServiceInterface $utilEncodingService,
         SynchronizationConfig $synchronizationConfig
@@ -65,6 +73,7 @@ class RepositoryExporter implements ExporterInterface
         $this->queueClient = $queueClient;
         $this->queueMessageCreator = $synchronizationQueueMessageCreator;
         $this->utilEncodingService = $utilEncodingService;
+        $this->storeFacade = $storeFacade;
         $this->synchronizationConfig = $synchronizationConfig;
     }
 
@@ -165,7 +174,7 @@ class RepositoryExporter implements ExporterInterface
         $queueSendMessageTransfers = [];
         foreach ($synchronizationEntities as $synchronizationEntity) {
             $store = $this->getStore($plugin->hasStore(), $synchronizationEntity);
-            $synchronizationQueueMessageTransfers = $this->createSynchronizationQueueMessageTransfers($plugin, $synchronizationEntity);
+            $synchronizationQueueMessageTransfers = $this->getSynchronizationQueueMessageTransfers($plugin, $synchronizationEntity, $store);
 
             foreach ($synchronizationQueueMessageTransfers as $synchronizationQueueMessageTransfer) {
                 $queueSendMessageTransfers[] = $this->queueMessageCreator->createQueueMessage(
@@ -197,25 +206,63 @@ class RepositoryExporter implements ExporterInterface
     /**
      * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface $plugin
      * @param \Generated\Shared\Transfer\SynchronizationDataTransfer $synchronizationDataTransfer
+     * @param string|null $store
+     *
+     * @return array<\Generated\Shared\Transfer\SynchronizationQueueMessageTransfer>
+     */
+    protected function getSynchronizationQueueMessageTransfers(
+        SynchronizationDataPluginInterface $plugin,
+        SynchronizationDataTransfer $synchronizationDataTransfer,
+        ?string $store = null
+    ): array {
+        $synchronizationQueueMessageTransfers = [];
+        if ($store || !$this->storeFacade->isDynamicStoreEnabled()) {
+            return $this->createSynchronizationQueueMessageTransfers(
+                $plugin,
+                $synchronizationDataTransfer,
+                $synchronizationQueueMessageTransfers,
+                $store,
+            );
+        }
+
+        foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
+            $synchronizationQueueMessageTransfers = $this->createSynchronizationQueueMessageTransfers(
+                $plugin,
+                $synchronizationDataTransfer,
+                $synchronizationQueueMessageTransfers,
+                $storeTransfer->getNameOrFail(),
+            );
+        }
+
+        return $synchronizationQueueMessageTransfers;
+    }
+
+    /**
+     * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface $plugin
+     * @param \Generated\Shared\Transfer\SynchronizationDataTransfer $synchronizationDataTransfer
+     * @param array<\Generated\Shared\Transfer\SynchronizationQueueMessageTransfer> $synchronizationQueueMessageTransfers
+     * @param string|null $store
      *
      * @return array<\Generated\Shared\Transfer\SynchronizationQueueMessageTransfer>
      */
     protected function createSynchronizationQueueMessageTransfers(
         SynchronizationDataPluginInterface $plugin,
-        SynchronizationDataTransfer $synchronizationDataTransfer
+        SynchronizationDataTransfer $synchronizationDataTransfer,
+        array $synchronizationQueueMessageTransfers,
+        ?string $store = null
     ): array {
         /** @var array $data */
         $data = $synchronizationDataTransfer->getData();
 
-        $synchronizationQueueMessageTransfers = [];
         $synchronizationQueueMessageTransfers[] = $this->createSynchronizationQueueMessageTransfer(
             $plugin,
             $synchronizationDataTransfer->getKey(),
             $data,
+            $store,
         );
 
         foreach ($this->getSynchronizationMappings($synchronizationDataTransfer) as $mappingKey => $mappingData) {
-            $synchronizationQueueMessageTransfers[] = $this->createSynchronizationQueueMessageTransfer($plugin, $mappingKey, $mappingData);
+            $synchronizationQueueMessageTransfers[] = $this->createSynchronizationQueueMessageTransfer($plugin, $mappingKey, $mappingData, $store);
         }
 
         return $synchronizationQueueMessageTransfers;
@@ -225,19 +272,22 @@ class RepositoryExporter implements ExporterInterface
      * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface $plugin
      * @param string $synchronizationKey
      * @param array<string, mixed> $data
+     * @param string|null $store
      *
      * @return \Generated\Shared\Transfer\SynchronizationQueueMessageTransfer
      */
     protected function createSynchronizationQueueMessageTransfer(
         SynchronizationDataPluginInterface $plugin,
         string $synchronizationKey,
-        array $data
+        array $data,
+        ?string $store = null
     ): SynchronizationQueueMessageTransfer {
         return (new SynchronizationQueueMessageTransfer())
             ->setKey($synchronizationKey)
             ->setValue($data)
             ->setResource($plugin->getResourceName())
-            ->setParams($plugin->getParams());
+            ->setParams($plugin->getParams())
+            ->setStore($store);
     }
 
     /**

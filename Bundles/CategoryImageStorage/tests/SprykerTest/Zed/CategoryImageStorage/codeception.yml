@@ -27,3 +27,9 @@ suites:
                 - \SprykerTest\Zed\Category\Helper\CategoryDataHelper
                 - \SprykerTest\Zed\CategoryImage\Helper\CategoryImageDataHelper
                 - \SprykerTest\Zed\Locale\Helper\LocaleDataHelper
+                - \SprykerTest\Client\Testify\Helper\ClientHelper
+                - \SprykerTest\Zed\Publisher\Helper\PublishAndSynchronizeHelper
+                - \SprykerTest\Zed\Event\Helper\EventHelper
+                - \SprykerTest\Client\Queue\Helper\QueueHelper
+                - \SprykerTest\Zed\EventBehavior\Helper\EventBehaviorHelper
+                - \SprykerTest\Zed\Testify\Helper\Business\DependencyProviderHelper

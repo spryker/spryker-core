@@ -8,6 +8,7 @@
         <property name="subject" type="string"/>
         <property name="templates" type="MailTemplate[]" singular="template"/>
         <property name="recipients" type="MailRecipient[]" singular="recipient"/>
+        <property name="storeName" type="string"/>
     </transfer>
 
     <transfer name="Order">
@@ -15,6 +16,7 @@
         <property name="email" type="string"/>
         <property name="lastName" type="string"/>
         <property name="firstName" type="string"/>
+        <property name="store" type="string"/>
     </transfer>
 
     <transfer name="Customer">
@@ -26,6 +28,7 @@
     <transfer name="Quote">
         <property name="customer" type="Customer"/>
         <property name="giftCards" type="GiftCard[]" singular="giftCard"/>
+        <property name="store" type="Store"/>
     </transfer>
 
     <transfer name="GiftCard">
@@ -43,6 +46,10 @@
     <transfer name="MailTemplate">
         <property name="name" type="string"/>
         <property name="isHtml" type="bool"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="name" type="string"/>
     </transfer>
 
 </transfers>

@@ -20,9 +20,11 @@
         "spryker/company": "*",
         "spryker/company-business-unit": "*",
         "spryker/company-user": "*",
+        "spryker/container": "*",
         "spryker/customer": "*",
         "spryker/propel": "*",
         "spryker/quote": "*",
+        "spryker/store": "*",
         "spryker/testify": "*"
     },
     "autoload": {

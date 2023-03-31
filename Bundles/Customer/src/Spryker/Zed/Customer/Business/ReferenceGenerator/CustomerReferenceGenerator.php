@@ -45,16 +45,20 @@ class CustomerReferenceGenerator implements CustomerReferenceGeneratorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return string
      */
-    public function generateCustomerReference(CustomerTransfer $orderTransfer)
+    public function generateCustomerReference(CustomerTransfer $customerTransfer)
     {
-        $storeName = $this->storeFacade->getCurrentStore()->getNameOrFail();
+        $sequenceNumberPrefix = $this->config->getCustomerSequenceNumberPrefix();
+
+        if (!$sequenceNumberPrefix) {
+            $sequenceNumberPrefix = $this->storeFacade->getCurrentStore()->getNameOrFail();
+        }
 
         return $this->sequenceNumberFacade->generate(
-            $this->config->getCustomerReferenceDefaults($storeName),
+            $this->config->getCustomerReferenceDefaults($sequenceNumberPrefix),
         );
     }
 }

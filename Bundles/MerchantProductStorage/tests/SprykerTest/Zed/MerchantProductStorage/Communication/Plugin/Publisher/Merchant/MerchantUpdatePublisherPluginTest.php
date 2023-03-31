@@ -68,6 +68,8 @@ class MerchantUpdatePublisherPluginTest extends Unit
             ];
         });
 
+        $this->tester->addDependencies();
+
         $this->merchantUpdatePublisherPlugin = new MerchantUpdatePublisherPlugin();
         $this->merchantProductWritePublisherPlugin = new MerchantProductWritePublisherPlugin();
     }

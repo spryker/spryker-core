@@ -7,7 +7,7 @@
         "php": ">=8.0",
         "spryker/event-behavior": "^1.17.0",
         "spryker/kernel": "^3.30.0",
-        "spryker/locale": "^3.5.0",
+        "spryker/locale": "^3.5.0 || ^4.0.0",
         "spryker/merchant-product": "^1.5.0",
         "spryker/merchant-product-offer-storage-extension": "^1.0.0",
         "spryker/product-offer-storage-extension": "^1.0.0",
@@ -19,10 +19,14 @@
     },
     "require-dev": {
         "spryker/code-sniffer": "*",
+        "spryker/container": "*",
         "spryker/merchant": "*",
         "spryker/product": "*",
         "spryker/propel": "*",
         "spryker/queue": "*",
+        "spryker/storage": "*",
+        "spryker/store": "*",
+        "spryker/store-extension": "*",
         "spryker/testify": "*"
     },
     "suggest": {

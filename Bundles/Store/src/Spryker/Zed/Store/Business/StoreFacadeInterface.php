@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\MessageAttributesTransfer;
 use Generated\Shared\Transfer\MessageValidationResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
+use Generated\Shared\Transfer\StoreCollectionTransfer;
+use Generated\Shared\Transfer\StoreCriteriaTransfer;
+use Generated\Shared\Transfer\StoreResponseTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
@@ -22,17 +25,21 @@ interface StoreFacadeInterface
 {
     /**
      * Specification:
-     *  - Returns currently selected store transfer
+     * - Returns currently selected store transfer.
+     * - Executes stack of {@link \Spryker\Zed\StoreExtension\Dependency\Plugin\StoreCollectionExpanderPluginInterface} plugins.
      *
      * @api
      *
+     * @param bool $fallbackToDefault
+     *
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getCurrentStore();
+    public function getCurrentStore(bool $fallbackToDefault = false);
 
     /**
      * Specification:
-     *  - Reads all active stores and returns list of transfers
+     * - Reads all active stores and returns list of transfers.
+     * - Executes stack of {@link \Spryker\Zed\StoreExtension\Dependency\Plugin\StoreCollectionExpanderPluginInterface} plugins.
      *
      * @api
      *
@@ -42,7 +49,20 @@ interface StoreFacadeInterface
 
     /**
      * Specification:
-     *  - Read store by primary id from database
+     * - Retrieves filtered stores using StoreCriteriaTransfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\StoreCriteriaTransfer $storeCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\StoreCollectionTransfer
+     */
+    public function getStoreCollection(StoreCriteriaTransfer $storeCriteriaTransfer): StoreCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Read store by primary id from database.
+     * - Executes stack of {@link \Spryker\Zed\StoreExtension\Dependency\Plugin\StoreCollectionExpanderPluginInterface} plugins.
      *
      * @api
      *
@@ -56,7 +76,8 @@ interface StoreFacadeInterface
 
     /**
      * Specification:
-     *  - Read store by store name
+     * - Read store by store name.
+     * - Executes stack of {@link \Spryker\Zed\StoreExtension\Dependency\Plugin\StoreCollectionExpanderPluginInterface} plugins.
      *
      * @api
      *
@@ -68,7 +89,8 @@ interface StoreFacadeInterface
 
     /**
      * Specification:
-     *  - Retrieves store by store name
+     * - Retrieves store by store name.
+     * - Executes stack of {@link \Spryker\Zed\StoreExtension\Dependency\Plugin\StoreCollectionExpanderPluginInterface} plugins.
      *
      * @api
      *
@@ -80,8 +102,9 @@ interface StoreFacadeInterface
 
     /**
      * Specification:
-     *  - Reads all shared store from Store transfer and populates data from configuration.
-     *  - The list of stores with which this store shares database, the value is store name.
+     * - Reads all shared store from Store transfer and populates data from configuration.
+     * - The list of stores with which this store shares database, the value is store name.
+     * - Executes stack of {@link \Spryker\Zed\StoreExtension\Dependency\Plugin\StoreCollectionExpanderPluginInterface} plugins.
      *
      * @api
      *
@@ -93,9 +116,11 @@ interface StoreFacadeInterface
 
     /**
      * Specification:
-     * - Returns store countries
+     * - Returns store countries.
      *
      * @api
+     *
+     * @deprecated Unused method will be removed in next major.
      *
      * @return array<string>
      */
@@ -103,7 +128,7 @@ interface StoreFacadeInterface
 
     /**
      * Specification:
-     * - Validates store transfer in quote
+     * - Validates store transfer in the Quote.
      * - Returns QuoteValidationResponseTransfer.isSuccessful=false if QuoteTransfer.Store does not exist
      * - Returns QuoteValidationResponseTransfer.isSuccessful=false if QuoteTransfer.Store does not have a name
      * - Returns QuoteValidationResponseTransfer.isSuccessful=false if QuoteTransfer.Store has a store that does not exist
@@ -119,6 +144,7 @@ interface StoreFacadeInterface
     /**
      * Specification:
      * - Gets array of StoreTransfer by array of store names.
+     * - Executes stack of {@link \Spryker\Zed\StoreExtension\Dependency\Plugin\StoreCollectionExpanderPluginInterface} plugins.
      *
      * @api
      *
@@ -130,7 +156,7 @@ interface StoreFacadeInterface
 
     /**
      * Specification:
-     * - Checks if multi store per Zed is enabled.
+     * - Checks if multi-store per Zed is enabled.
      * - Gets the value from module configuration.
      *
      * @api
@@ -144,8 +170,11 @@ interface StoreFacadeInterface
      * - Gets currently selected store transfer.
      * - Fetches all shared stores related to current store transfer.
      * - Returns a list of stores available for current persistence.
+     * - Executes stack of {@link \Spryker\Zed\StoreExtension\Dependency\Plugin\StoreCollectionExpanderPluginInterface} plugins.
      *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\Store\Business\StoreFacade::getAllStores()} instead.
      *
      * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
@@ -153,8 +182,57 @@ interface StoreFacadeInterface
 
     /**
      * Specification:
-     * - Finds Store by storeReference.
-     * - Returns StoreTransfer if Store has provided storeReference, otherwise throws the exception.
+     * - Creates a Store from provided `StoreTransfer`.
+     * - Executes stack of {@link \Spryker\Zed\StoreExtension\Dependency\Plugin\StorePreCreateValidationPluginInterface} plugins.
+     * - Executes stack of {@link \Spryker\Zed\StoreExtension\Dependency\Plugin\StorePostCreatePluginInterface} plugins.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\StoreResponseTransfer
+     */
+    public function createStore(StoreTransfer $storeTransfer): StoreResponseTransfer;
+
+    /**
+     * Specification:
+     * - Updates a Store from provided `StoreTransfer`.
+     * - Executes stack of {@link \Spryker\Zed\StoreExtension\Dependency\Plugin\StorePreUpdateValidationPluginInterface} plugins.
+     * - Executes stack of {@link \Spryker\Zed\StoreExtension\Dependency\Plugin\StorePostUpdatePluginInterface} plugins.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\StoreResponseTransfer
+     */
+    public function updateStore(StoreTransfer $storeTransfer): StoreResponseTransfer;
+
+    /**
+     * Specification:
+     * - Returns true if dynamic store functionality is enabled.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isDynamicStoreEnabled(): bool;
+
+    /**
+     * Specification:
+     * - Returns true if the current store is provided in the application.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isCurrentStoreDefined(): bool;
+
+    /**
+     * Specification:
+     * - Finds Store by `storeReference`.
+     * - Returns `StoreTransfer` if Store has provided `storeReference`, otherwise throws the exception.
+     * - Executes stack of {@link \Spryker\Zed\StoreExtension\Dependency\Plugin\StoreCollectionExpanderPluginInterface} plugins.
      *
      * @api
      *
@@ -168,8 +246,9 @@ interface StoreFacadeInterface
 
     /**
      * Specification:
-     * - Finds a store reference for currently selected store.
+     * - Finds a store reference for the currently selected store.
      * - Expands `AccessTokenRequest.accessTokenRequestOptions` with found store reference.
+     * - Executes stack of {@link \Spryker\Zed\StoreExtension\Dependency\Plugin\StoreCollectionExpanderPluginInterface} plugins.
      *
      * @api
      *
@@ -181,7 +260,8 @@ interface StoreFacadeInterface
 
     /**
      * Specification:
-     * - Validates is storeReference from message is equals to storeReference of current store.
+     * - Validates if `storeReference` from the message equals `storeReference` of the current store.
+     * - Executes stack of {@link \Spryker\Zed\StoreExtension\Dependency\Plugin\StoreCollectionExpanderPluginInterface} plugins.
      *
      * @api
      *
@@ -194,6 +274,7 @@ interface StoreFacadeInterface
     /**
      * Specification:
      * - Expands message attributes with store reference from a store set in the application environment.
+     * - Executes stack of {@link \Spryker\Zed\StoreExtension\Dependency\Plugin\StoreCollectionExpanderPluginInterface} plugins.
      *
      * @api
      *

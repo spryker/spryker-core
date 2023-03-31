@@ -13,6 +13,7 @@ use Spryker\Zed\StoreGui\Communication\Form\Type\StoreRelationDropdownType;
 
 /**
  * @method \Spryker\Zed\StoreGui\Communication\StoreGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\StoreGui\StoreGuiConfig getConfig()
  */
 class StoreRelationDropdownFormTypePlugin extends AbstractPlugin implements FormTypeInterface
 {

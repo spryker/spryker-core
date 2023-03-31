@@ -30,6 +30,7 @@
         "spryker/application": "*",
         "spryker/checkout": "*",
         "spryker/code-sniffer": "*",
+        "spryker/container": "*",
         "spryker/customer": "*",
         "spryker/sales-payment": "*",
         "spryker/testify": "*"

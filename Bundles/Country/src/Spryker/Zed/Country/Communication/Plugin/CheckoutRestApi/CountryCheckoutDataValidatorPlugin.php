@@ -15,15 +15,14 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 /**
  * @method \Spryker\Zed\Country\Business\CountryFacadeInterface getFacade()
  * @method \Spryker\Zed\Country\CountryConfig getConfig()
- * @method \Spryker\Zed\Country\Persistence\CountryQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Country\Communication\CountryCommunicationFactory getFactory()
  */
 class CountryCheckoutDataValidatorPlugin extends AbstractPlugin implements CheckoutDataValidatorPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Verifies if countries can be found by countryIso2Codes given in billingAddress and shippingAddress.
-     * - Verifies if billingAddress and shippingAddress are set.
+     * - Verifies if countries can be found by countryIso2Codes given in billingAddress.
+     * - Verifies if billingAddress is set.
      * - Verifies if countries can be found by countryIso2Codes given in CheckoutDataTransfer.shipments.shippingAddress.
      * - Returns CheckoutResponseTransfer with error if any check was failed.
      *

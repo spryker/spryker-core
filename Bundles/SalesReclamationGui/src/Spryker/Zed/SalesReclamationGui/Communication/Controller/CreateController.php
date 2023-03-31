@@ -81,7 +81,7 @@ class CreateController extends AbstractController
             ->getSalesReclamationFacade()
             ->mapOrderTransferToReclamationTransfer($orderTransfer, new ReclamationTransfer());
 
-        $orderItemIds = $request->request->getDigits(static::PARAM_IDS_SALES_ORDER_ITEMS);
+        $orderItemIds = $request->request->all(static::PARAM_IDS_SALES_ORDER_ITEMS);
 
         if (!$orderItemIds) {
             return $this->viewResponse([
@@ -89,7 +89,7 @@ class CreateController extends AbstractController
             ]);
         }
 
-        $reclamationTransfer = $this->createReclamation($orderTransfer, (array)$orderItemIds);
+        $reclamationTransfer = $this->createReclamation($orderTransfer, $orderItemIds);
 
         if ($reclamationTransfer) {
             $this->addSuccessMessage('Reclamation id:%s for order %s successfully created', [

@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer;
 use Generated\Shared\Transfer\ProductOfferStockTransfer;
 use Generated\Shared\Transfer\StockTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 
 /**
  * Auto-generated group annotations
@@ -28,6 +29,11 @@ use Generated\Shared\Transfer\StoreRelationTransfer;
 class ProductOfferAvailabilityFacadeTest extends Unit
 {
     /**
+     * @var string
+     */
+    protected const STORE_NAME = 'DE';
+
+    /**
      * @var \SprykerTest\Zed\ProductOfferAvailability\ProductOfferAvailabilityBusinessTester
      */
     protected $tester;
@@ -42,7 +48,7 @@ class ProductOfferAvailabilityFacadeTest extends Unit
         $reservedQuantity = 3;
         $expectedAvailability = $stockQuantity - $reservedQuantity;
 
-        $storeTransfer = $this->tester->haveStore();
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME]);
         $productOfferTransfer = $this->tester->haveProductOffer();
         $this->tester->haveProductOfferStock([
             ProductOfferStockTransfer::ID_PRODUCT_OFFER => $productOfferTransfer->getIdProductOffer(),

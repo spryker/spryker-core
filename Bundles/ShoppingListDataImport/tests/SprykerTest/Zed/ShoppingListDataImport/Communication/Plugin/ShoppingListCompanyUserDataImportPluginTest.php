@@ -107,7 +107,6 @@ class ShoppingListCompanyUserDataImportPluginTest extends Unit
 
         $this->tester->ensureShoppingListCompanyUserDatabaseTableIsEmpty();
         $this->tester->deleteShoppingList($this->shoppingListTransfer);
-        $this->tester->deleteCompanyUser($this->companyUser);
     }
 
     /**

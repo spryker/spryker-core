@@ -6,4 +6,12 @@
         <property name="localeName" type="string"/>
     </transfer>
 
+    <transfer name="LocaleCriteria">
+        <property name="localeConditions" type="LocaleConditions"/>
+    </transfer>
+
+    <transfer name="LocaleConditions">
+        <property name="localeNames" type="string[]" singular="localeName"/>
+    </transfer>
+
 </transfers>

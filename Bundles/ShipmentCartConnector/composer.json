@@ -13,6 +13,7 @@
     "require-dev": {
         "spryker/cart": "*",
         "spryker/code-sniffer": "*",
+        "spryker/container": "*",
         "spryker/currency": "*",
         "spryker/propel": "*",
         "spryker/store": "*",

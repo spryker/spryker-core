@@ -9,6 +9,10 @@ namespace SprykerTest\Zed\Kernel\Communication\Fixture;
 
 use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
+/**
+ * @method \Spryker\Zed\Kernel\Communication\KernelCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Kernel\Business\KernelFacadeInterface getFacade()
+ */
 class FixtureGatewayController extends AbstractGatewayController
 {
 }

@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\MerchantProfileTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\DataImport\Business\Exception\InvalidDataException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\LocalizedAttributesExtractorStep;
@@ -177,7 +178,16 @@ class MerchantWriterStep extends PublishAwareStep implements DataImportStepInter
      */
     protected function addMerchantUrl(int $idMerchant, int $idLocale, string $url): void
     {
-        $urlEntity = SpyUrlQuery::create()
+        $redirectUrlEntity = $this->getUrlPropelQuery()
+            ->filterByFkResourceRedirect(null, Criteria::NOT_EQUAL)
+            ->filterByUrl($url)
+            ->findOne();
+
+        if ($redirectUrlEntity) {
+            return;
+        }
+
+        $urlEntity = $this->getUrlPropelQuery()
             ->filterByFkResourceMerchant($idMerchant)
             ->filterByFkLocale($idLocale)
             ->findOneOrCreate();
@@ -187,5 +197,13 @@ class MerchantWriterStep extends PublishAwareStep implements DataImportStepInter
         $urlEntity->save();
 
         $this->addPublishEvents(UrlEvents::URL_PUBLISH, $urlEntity->getIdUrl());
+    }
+
+    /**
+     * @return \Orm\Zed\Url\Persistence\SpyUrlQuery
+     */
+    protected function getUrlPropelQuery(): SpyUrlQuery
+    {
+        return SpyUrlQuery::create();
     }
 }

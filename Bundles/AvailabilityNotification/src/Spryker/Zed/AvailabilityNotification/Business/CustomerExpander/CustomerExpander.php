@@ -45,11 +45,12 @@ class CustomerExpander implements CustomerExpanderInterface
     {
         $customerTransfer->requireCustomerReference();
 
+        $storeName = $customerTransfer->getStoreName() ?? $this->storeFacade->getCurrentStore(true)->getName();
         $availabilityNotificationSubscriptions = $this->availabilityNotificationSubscriptionReader
             ->getAvailabilityNotifications(
                 (new AvailabilityNotificationCriteriaTransfer())
                     ->addCustomerReference($customerTransfer->getCustomerReference())
-                    ->addStoreName($this->storeFacade->getCurrentStore()->getName()),
+                    ->addStoreName($storeName),
             )
             ->getAvailabilityNotificationSubscriptions();
 

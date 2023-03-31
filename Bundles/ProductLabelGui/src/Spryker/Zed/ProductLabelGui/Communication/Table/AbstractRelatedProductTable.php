@@ -14,6 +14,7 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToLocaleInterface;
 use Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToMoneyInterface;
 use Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToPriceProductFacadeInterface;
+use Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToStoreFacadeInterface;
 use Spryker\Zed\ProductLabelGui\Persistence\ProductLabelGuiRepositoryInterface;
 
 abstract class AbstractRelatedProductTable extends AbstractTable
@@ -72,11 +73,17 @@ abstract class AbstractRelatedProductTable extends AbstractTable
     protected $idProductLabel;
 
     /**
+     * @var \Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToStoreFacadeInterface
+     */
+    protected ProductLabelGuiToStoreFacadeInterface $storeFacade;
+
+    /**
      * @param \Spryker\Zed\ProductLabelGui\Communication\Table\RelatedProductTableQueryBuilderInterface $tableQueryBuilder
      * @param \Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToMoneyInterface $moneyFacade
      * @param \Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToPriceProductFacadeInterface $priceProductFacade
      * @param \Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToLocaleInterface $localeFacade
      * @param \Spryker\Zed\ProductLabelGui\Persistence\ProductLabelGuiRepositoryInterface $productLabelGuiRepository
+     * @param \Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToStoreFacadeInterface $storeFacade
      * @param int|null $idProductLabel
      */
     public function __construct(
@@ -85,6 +92,7 @@ abstract class AbstractRelatedProductTable extends AbstractTable
         ProductLabelGuiToPriceProductFacadeInterface $priceProductFacade,
         ProductLabelGuiToLocaleInterface $localeFacade,
         ProductLabelGuiRepositoryInterface $productLabelGuiRepository,
+        ProductLabelGuiToStoreFacadeInterface $storeFacade,
         ?int $idProductLabel = null
     ) {
         $this->tableQueryBuilder = $tableQueryBuilder;
@@ -93,6 +101,7 @@ abstract class AbstractRelatedProductTable extends AbstractTable
         $this->localeFacade = $localeFacade;
         $this->productLabelGuiRepository = $productLabelGuiRepository;
         $this->idProductLabel = $idProductLabel;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -155,12 +164,17 @@ abstract class AbstractRelatedProductTable extends AbstractTable
      */
     protected function prepareRowData(SpyProductAbstract $productAbstractEntity, array $categoryNames, array $additionalRelationsCount = []): array
     {
-        return [
+        $rowData = [
             static::COL_PRODUCT_ABSTRACT_NAME => $this->getNameColumn($productAbstractEntity),
             static::COL_PRODUCT_ABSTRACT_CATEGORIES => $this->getCategoryNameColumn($categoryNames, $productAbstractEntity->getIdProductAbstract()),
-            static::COL_PRODUCT_ABSTRACT_PRICE => $this->getPriceColumn($productAbstractEntity),
             static::COL_PRODUCT_ABSTRACT_STATUS => $this->getStatusColumn($productAbstractEntity),
         ];
+
+        if (!$this->storeFacade->isDynamicStoreEnabled()) {
+            $rowData[static::COL_PRODUCT_ABSTRACT_PRICE] = $this->getPriceColumn($productAbstractEntity);
+        }
+
+        return $rowData;
     }
 
     /**

@@ -16,7 +16,7 @@ interface ProductOptionToLocaleFacadeInterface
      *
      * @return bool
      */
-    public function hasLocale($localeName): bool;
+    public function hasLocale(string $localeName): bool;
 
     /**
      * @param string $localeName
@@ -25,14 +25,7 @@ interface ProductOptionToLocaleFacadeInterface
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getLocale($localeName): LocaleTransfer;
-
-    /**
-     * @param string $localeCode
-     *
-     * @return \Generated\Shared\Transfer\LocaleTransfer
-     */
-    public function getLocaleByCode($localeCode): LocaleTransfer;
+    public function getLocale(string $localeName): LocaleTransfer;
 
     /**
      * @return array<\Generated\Shared\Transfer\LocaleTransfer>

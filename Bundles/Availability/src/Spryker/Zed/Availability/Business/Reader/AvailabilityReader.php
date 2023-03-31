@@ -46,14 +46,42 @@ class AvailabilityReader implements AvailabilityReaderInterface
             return [];
         }
 
-        $storeTransfer = $this->storeFacade->getCurrentStore();
-        /** @var array<int> $productConcreteIds */
-        $productConcreteIds = $this->extractProductConcreteIdsFromProductConcreteTransfers($productConcreteTransfers);
+        $indexedStoreTransfers = [];
+        $productConcreteTransfersByStore = [];
+        foreach ($productConcreteTransfers as $productConcreteTransfer) {
+            $storeTransfers = $productConcreteTransfer->getStores();
+            if ($storeTransfers->count() === 0) {
+                $storeTransfers = [$this->storeFacade->getCurrentStore()];
+            }
 
-        $mappedProductConcreteAvailabilityTransfers = $this->availabilityRepository
-            ->getMappedProductConcreteAvailabilitiesByProductConcreteIds($productConcreteIds, $storeTransfer);
+            foreach ($storeTransfers as $storeTransfer) {
+                $productConcreteTransfersByStore[$storeTransfer->getIdStoreOrFail()][] = $productConcreteTransfer;
+                $indexedStoreTransfers[$storeTransfer->getIdStoreOrFail()] = $storeTransfer;
+            }
+        }
+
+        $mappedProductConcreteAvailabilityTransfers = $this->mapProductConcreteAvailabilitiesByProductConcreteIds($productConcreteTransfersByStore, $indexedStoreTransfers);
 
         return $this->getEligibleProductConcreteTransfers($productConcreteTransfers, $mappedProductConcreteAvailabilityTransfers);
+    }
+
+    /**
+     * @param array<int, array<int, \Generated\Shared\Transfer\ProductConcreteTransfer>> $productConcreteTransfersByStore
+     * @param array<int, \Generated\Shared\Transfer\StoreTransfer> $indexedStoreTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer>
+     */
+    protected function mapProductConcreteAvailabilitiesByProductConcreteIds(array $productConcreteTransfersByStore, array $indexedStoreTransfers): array
+    {
+        $mappedProductConcreteAvailabilityTransfers = [];
+        foreach ($productConcreteTransfersByStore as $storeId => $storeProductConcreteTransfers) {
+            /** @var array<int> $productConcreteIds */
+            $productConcreteIds = $this->extractProductConcreteIdsFromProductConcreteTransfers($storeProductConcreteTransfers);
+            $mappedProductConcreteAvailabilityTransfers += $this->availabilityRepository
+                ->getMappedProductConcreteAvailabilitiesByProductConcreteIds($productConcreteIds, $indexedStoreTransfers[$storeId]);
+        }
+
+        return $mappedProductConcreteAvailabilityTransfers;
     }
 
     /**

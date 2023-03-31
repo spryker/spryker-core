@@ -31,7 +31,12 @@
                 {%- block setup %}
                     [ -z "${PHP_BIN}" ] &amp;&amp; export PHP_BIN=php
                     export APPLICATION_ENV={{ getenv('APPLICATION_ENV') }}
+                    {% if job.store is not empty %}
                     export APPLICATION_STORE={{ job.store }}
+                    {% endif %}
+                    {% if job.region is not empty %}
+                    export SPRYKER_CURRENT_REGION ={{ job.region }}
+                    {% endif %}
                     cd {{ working_dir }}
                 {% endblock setup -%}
                 {%- block command %}

@@ -12,6 +12,8 @@ use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInter
 use Spryker\Yves\Kernel\AbstractPlugin;
 
 /**
+ * @deprecated Use {@link \SprykerShop\Yves\StoreWidget\Plugin\ShopApplication\StoreApplicationPlugin} instead.
+ *
  * @method \Spryker\Client\Store\StoreClientInterface getClient()
  */
 class StoreApplicationPlugin extends AbstractPlugin implements ApplicationPluginInterface
@@ -44,9 +46,9 @@ class StoreApplicationPlugin extends AbstractPlugin implements ApplicationPlugin
      */
     protected function addStore(ContainerInterface $container): ContainerInterface
     {
-        $container[static::STORE] = function () {
+        $container->set(static::STORE, function () {
             return $this->getStoreName();
-        };
+        });
 
         return $container;
     }
@@ -56,6 +58,6 @@ class StoreApplicationPlugin extends AbstractPlugin implements ApplicationPlugin
      */
     protected function getStoreName(): string
     {
-        return $this->getClient()->getCurrentStore()->getName();
+        return $this->getClient()->getCurrentStore()->getNameOrFail();
     }
 }

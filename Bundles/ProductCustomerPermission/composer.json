@@ -9,7 +9,7 @@
         "spryker/glossary": "^3.0.0",
         "spryker/kernel": "^3.30.0",
         "spryker/key-builder": "^1.0.0",
-        "spryker/locale": "^3.0.0",
+        "spryker/locale": "^3.0.0 || ^4.0.0",
         "spryker/product": "^5.0.0 || ^6.0.0",
         "spryker/storage": "^3.0.0",
         "spryker/touch": "^3.0.0 || ^4.0.0"
@@ -18,9 +18,11 @@
         "spryker/cart": "*",
         "spryker/checkout": "*",
         "spryker/code-sniffer": "*",
+        "spryker/container": "*",
         "spryker/elastica": "*",
         "spryker/propel": "*",
         "spryker/search": "^6.0.0 || ^7.0.0 || ^8.0.0",
+        "spryker/store": "*",
         "spryker/testify": "*"
     },
     "suggest": {

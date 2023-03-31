@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\MessageAttributesTransfer;
 use Generated\Shared\Transfer\MessageValidationResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
+use Generated\Shared\Transfer\StoreCollectionTransfer;
+use Generated\Shared\Transfer\StoreCriteriaTransfer;
+use Generated\Shared\Transfer\StoreResponseTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -19,6 +22,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\Store\Business\StoreBusinessFactory getFactory()
  * @method \Spryker\Zed\Store\Persistence\StoreRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Store\Persistence\StoreEntityManagerInterface getEntityManager()
  */
 class StoreFacade extends AbstractFacade implements StoreFacadeInterface
 {
@@ -27,11 +31,13 @@ class StoreFacade extends AbstractFacade implements StoreFacadeInterface
      *
      * @api
      *
+     * @param bool $fallbackToDefault
+     *
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getCurrentStore()
+    public function getCurrentStore(bool $fallbackToDefault = false)
     {
-        return $this->getFactory()->createStoreReader()->getCurrentStore();
+        return $this->getFactory()->getCurrentStoreTransfer($fallbackToDefault);
     }
 
     /**
@@ -44,6 +50,20 @@ class StoreFacade extends AbstractFacade implements StoreFacadeInterface
     public function getAllStores()
     {
         return $this->getFactory()->createStoreReader()->getAllStores();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\StoreCriteriaTransfer $storeCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\StoreCollectionTransfer
+     */
+    public function getStoreCollection(StoreCriteriaTransfer $storeCriteriaTransfer): StoreCollectionTransfer
+    {
+        return $this->getFactory()->createStoreReader()->getStoreCollection($storeCriteriaTransfer);
     }
 
     /**
@@ -105,9 +125,7 @@ class StoreFacade extends AbstractFacade implements StoreFacadeInterface
      */
     public function getStoresWithSharedPersistence(StoreTransfer $storeTransfer)
     {
-        return $this->getFactory()
-            ->createStoreReader()
-            ->getStoresWithSharedPersistence($storeTransfer);
+        return $this->getAllStores();
     }
 
     /**
@@ -115,12 +133,14 @@ class StoreFacade extends AbstractFacade implements StoreFacadeInterface
      *
      * @api
      *
+     * @deprecated Unused method will be removed in next major.
+     *
      * @return array<string>
      */
     public function getCountries()
     {
         return $this->getFactory()
-            ->createStoreReader()
+            ->getSharedStore()
             ->getCountries();
     }
 
@@ -175,13 +195,69 @@ class StoreFacade extends AbstractFacade implements StoreFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\Store\Business\StoreFacade::getAllStores()} instead.
+     *
      * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     public function getStoresAvailableForCurrentPersistence(): array
     {
+        return $this->getAllStores();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\StoreResponseTransfer
+     */
+    public function createStore(StoreTransfer $storeTransfer): StoreResponseTransfer
+    {
         return $this->getFactory()
-            ->createStoreReader()
-            ->getStoresAvailableForCurrentPersistence();
+            ->createStoreWriter()
+            ->createStore($storeTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\StoreResponseTransfer
+     */
+    public function updateStore(StoreTransfer $storeTransfer): StoreResponseTransfer
+    {
+        return $this->getFactory()
+            ->createStoreWriter()
+            ->updateStore($storeTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isDynamicStoreEnabled(): bool
+    {
+        return $this->getFactory()->getIsDynamicStoreModeEnabled();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isCurrentStoreDefined(): bool
+    {
+        return $this->getFactory()->getCurrentStoreDefinedFlag();
     }
 
     /**

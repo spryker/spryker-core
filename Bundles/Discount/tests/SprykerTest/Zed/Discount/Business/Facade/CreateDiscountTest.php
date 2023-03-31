@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\Discount\Business\Facade;
 use Codeception\Test\Unit;
 use DateTime;
 use Generated\Shared\Transfer\MoneyValueTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
 use Spryker\Shared\Discount\DiscountConstants;
 
@@ -39,6 +40,11 @@ class CreateDiscountTest extends Unit
      * @var string
      */
     protected const PLUGIN_CALCULATOR_PERCENTAGE = 'PLUGIN_CALCULATOR_PERCENTAGE';
+
+    /**
+     * @var string
+     */
+    protected const STORE_NAME = 'DE';
 
     /**
      * @var \SprykerTest\Zed\Discount\DiscountBusinessTester
@@ -118,7 +124,7 @@ class CreateDiscountTest extends Unit
     public function testWillPersisStoreRelation(): void
     {
         // Arrange
-        $storeTransfer = $this->tester->haveStore();
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME]);
         $storeIds = [$storeTransfer->getIdStore()];
 
         $discountConfiguratorTransfer = $this->tester->createDiscountConfiguratorTransfer($storeIds);

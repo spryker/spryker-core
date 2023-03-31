@@ -7,10 +7,22 @@
 
 namespace Spryker\Zed\ProductSetPageSearch\Dependency\Facade;
 
+use Generated\Shared\Transfer\StoreTransfer;
+
 interface ProductSetPageSearchToStoreFacadeInterface
 {
     /**
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getCurrentStore();
+    public function getCurrentStore(): StoreTransfer;
+
+    /**
+     * @return bool
+     */
+    public function isDynamicStoreEnabled(): bool;
+
+    /**
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
+     */
+    public function getAllStores(): array;
 }

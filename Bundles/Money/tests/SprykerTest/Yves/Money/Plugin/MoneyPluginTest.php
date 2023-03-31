@@ -10,7 +10,6 @@ namespace SprykerTest\Yves\Money\Plugin;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyTransfer;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\Money\Plugin\MoneyPlugin;
 
 /**
@@ -30,6 +29,9 @@ class MoneyPluginTest extends Unit
      */
     public const AMOUNT_INTEGER = 1000;
 
+    /**
+     * @var int
+     */
     public const AMOUNT_FLOAT = 10.00;
 
     /**
@@ -48,9 +50,19 @@ class MoneyPluginTest extends Unit
     public const LOCALE_DE_DE = 'de_DE';
 
     /**
-     * @var string
+     * @var \SprykerTest\Yves\Money\MoneyYvesTester
      */
-    public const LOCALE_EN_US = 'en_US';
+    protected $tester;
+
+    /**
+     * @return void
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->tester->addDependencies();
+    }
 
     /**
      * @return void
@@ -58,7 +70,7 @@ class MoneyPluginTest extends Unit
     public function testFromIntegerShouldReturnMoneyTransfer(): void
     {
         $moneyPlugin = new MoneyPlugin();
-        $moneyTransfer = $moneyPlugin->fromInteger(static::AMOUNT_INTEGER);
+        $moneyTransfer = $moneyPlugin->fromInteger(static::AMOUNT_INTEGER, static::CURRENCY_EUR);
 
         $this->assertInstanceOf(MoneyTransfer::class, $moneyTransfer);
         $this->assertSame(static::AMOUNT_STRING, $moneyTransfer->getAmount());
@@ -70,7 +82,7 @@ class MoneyPluginTest extends Unit
     public function testFromFloatShouldReturnMoneyTransfer(): void
     {
         $moneyPlugin = new MoneyPlugin();
-        $moneyTransfer = $moneyPlugin->fromFloat(static::AMOUNT_FLOAT);
+        $moneyTransfer = $moneyPlugin->fromFloat(static::AMOUNT_FLOAT, static::CURRENCY_EUR);
 
         $this->assertInstanceOf(MoneyTransfer::class, $moneyTransfer);
         $this->assertSame(static::AMOUNT_STRING, $moneyTransfer->getAmount());
@@ -82,7 +94,7 @@ class MoneyPluginTest extends Unit
     public function testFromStringShouldReturnMoneyTransfer(): void
     {
         $moneyPlugin = new MoneyPlugin();
-        $moneyTransfer = $moneyPlugin->fromString(static::AMOUNT_STRING);
+        $moneyTransfer = $moneyPlugin->fromString(static::AMOUNT_STRING, static::CURRENCY_EUR);
 
         $this->assertInstanceOf(MoneyTransfer::class, $moneyTransfer);
         $this->assertSame(static::AMOUNT_STRING, $moneyTransfer->getAmount());
@@ -94,7 +106,7 @@ class MoneyPluginTest extends Unit
     public function testGetMoneyShouldReturnMoneyTransferWithConfiguredDefaultCurrency(): void
     {
         $moneyPlugin = new MoneyPlugin();
-        $moneyTransfer = $moneyPlugin->fromInteger(static::AMOUNT_INTEGER);
+        $moneyTransfer = $moneyPlugin->fromInteger(static::AMOUNT_INTEGER, static::CURRENCY_EUR);
 
         $this->assertInstanceOf(MoneyTransfer::class, $moneyTransfer);
         $this->assertSame(static::AMOUNT_STRING, $moneyTransfer->getAmount());
@@ -122,8 +134,6 @@ class MoneyPluginTest extends Unit
      */
     public function testFormatWithSymbolShouldReturnFormattedStringWithCurrencySymbol(): void
     {
-        Store::getInstance()->setCurrentLocale(static::LOCALE_DE_DE);
-
         $moneyPlugin = new MoneyPlugin();
         $moneyTransfer = $moneyPlugin->fromInteger(static::AMOUNT_INTEGER, static::CURRENCY_EUR);
 

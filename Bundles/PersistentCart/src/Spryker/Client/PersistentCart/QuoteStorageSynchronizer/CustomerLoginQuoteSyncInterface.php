@@ -8,6 +8,7 @@
 namespace Spryker\Client\PersistentCart\QuoteStorageSynchronizer;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CustomerLoginQuoteSyncInterface
 {
@@ -17,4 +18,11 @@ interface CustomerLoginQuoteSyncInterface
      * @return void
      */
     public function syncQuoteForCustomer(CustomerTransfer $customerTransfer): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function syncQuote(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }

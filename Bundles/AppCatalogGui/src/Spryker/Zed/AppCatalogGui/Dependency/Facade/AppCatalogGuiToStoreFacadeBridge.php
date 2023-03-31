@@ -31,4 +31,12 @@ class AppCatalogGuiToStoreFacadeBridge implements AppCatalogGuiToStoreFacadeInte
     {
         return $this->storeFacade->getCurrentStore();
     }
+
+    /**
+     * @return bool
+     */
+    public function isCurrentStoreDefined(): bool
+    {
+        return $this->storeFacade->isCurrentStoreDefined();
+    }
 }

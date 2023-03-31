@@ -21,8 +21,10 @@
         "spryker/code-sniffer": "*",
         "spryker/company": "*",
         "spryker/company-role": "*",
+        "spryker/container": "*",
         "spryker/customer": "*",
         "spryker/propel": "*",
+        "spryker/store": "*",
         "spryker/testify": "*"
     },
     "autoload": {

@@ -16,10 +16,10 @@ use Orm\Zed\Glossary\Persistence\SpyGlossaryKey;
 use Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery;
 use Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery;
 use Orm\Zed\GlossaryStorage\Persistence\SpyGlossaryStorageQuery;
+use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Zed\GlossaryStorage\Business\GlossaryStorageBusinessFactory;
 use Spryker\Zed\GlossaryStorage\Business\GlossaryStorageFacade;
-use Spryker\Zed\Kernel\Container;
 use SprykerTest\Zed\GlossaryStorage\GlossaryStorageConfigMock;
 
 /**

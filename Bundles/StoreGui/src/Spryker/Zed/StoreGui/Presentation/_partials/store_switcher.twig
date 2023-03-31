@@ -1,0 +1,14 @@
+<form method="GET" data-component="store-switch">
+    {% if stores is defined and stores is not empty %}
+        <span class="m-r-sm">
+            <label>{{ lableName }}</label>
+            <select name="_store">
+                <option value="">{{ 'Choose store' | trans }}</option>
+                {% for store in stores %}
+                    <option value="{{ store.name }}" {{ (store.name == app.request.get('_store')) ? 'selected' : ''}}>{{ store.name }}</option>
+                {% endfor %}
+            </select>
+            <input type="submit" class="btn btn-primary" value="{{ 'Submit' | trans }}">
+        </span>
+    {% endif %}
+</form>

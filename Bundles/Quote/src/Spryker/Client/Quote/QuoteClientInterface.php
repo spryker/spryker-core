@@ -14,6 +14,7 @@ interface QuoteClientInterface
     /**
      * Specification:
      * - Returns the stored quote from session.
+     * - Executes stack of {@link \Spryker\Client\QuoteExtension\Dependency\Plugin\DatabaseStrategyReaderPluginInterface} plugins.
      *
      * @api
      *

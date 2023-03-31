@@ -28,7 +28,6 @@ use Orm\Zed\Tax\Persistence\SpyTaxSet;
 use Orm\Zed\Tax\Persistence\SpyTaxSetTax;
 use Spryker\Zed\ProductOption\Communication\Plugin\Checkout\ProductOptionOrderSaverPlugin;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToCurrencyFacadeBridge;
-use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToStoreFacadeBridge;
 use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
 use SprykerTest\Shared\ProductOption\Helper\ProductOptionGroupDataHelper;
 
@@ -50,6 +49,24 @@ use SprykerTest\Shared\ProductOption\Helper\ProductOptionGroupDataHelper;
 class ProductOptionBusinessTester extends Actor
 {
     use _generated\ProductOptionBusinessTesterActions;
+
+    /**
+     * @var string
+     */
+    protected const SERVICE_CURRENCY = 'currency';
+
+    /**
+     * @var string
+     */
+    protected const DEFAULT_CURRENCY = 'EUR';
+
+    /**
+     * @return void
+     */
+    public function addDependencies(): void
+    {
+        $this->getContainer()->set(static::SERVICE_CURRENCY, static::DEFAULT_CURRENCY);
+    }
 
     /**
      * @param \Generated\Shared\Transfer\ProductOptionValueTransfer $productOptionValueTransfer
@@ -166,19 +183,6 @@ class ProductOptionBusinessTester extends Actor
     }
 
     /**
-     * @param \Spryker\Zed\Store\Business\StoreFacade|\PHPUnit\Framework\MockObject\MockObject $storeFacade
-     *
-     * @return void
-     */
-    public function setDependencyStoreFacade($storeFacade): void
-    {
-        $this->setDependency(
-            ProductOptionDependencyProvider::FACADE_STORE,
-            new ProductOptionToStoreFacadeBridge($storeFacade),
-        );
-    }
-
-    /**
      * @param \Spryker\Zed\Currency\Business\CurrencyFacade|\PHPUnit\Framework\MockObject\MockObject $currencyFacade
      *
      * @return void
@@ -228,7 +232,7 @@ class ProductOptionBusinessTester extends Actor
      */
     public function createOrderWithProductOptions(string $stateMachineProcessName): OrderTransfer
     {
-        $storeTransfer = $this->haveStore([StoreTransfer::NAME => 'DE']);
+        $storeTransfer = $this->haveStore([StoreTransfer::NAME => 'DE', StoreTransfer::DEFAULT_CURRENCY_ISO_CODE => 'EUR']);
 
         $quoteTransfer = (new QuoteBuilder())
             ->withItem()

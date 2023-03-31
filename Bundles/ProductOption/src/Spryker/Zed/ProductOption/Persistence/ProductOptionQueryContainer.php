@@ -489,8 +489,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     protected function queryCountryListByIso2Codes(array $countryIso2Codes): SpyCountryQuery
     {
         return $this->getFactory()
-            ->getCountryQueryContainer()
-            ->queryCountries()
+            ->getCountryQuery()
             ->filterByIso2Code($countryIso2Codes, Criteria::IN);
     }
 

@@ -81,4 +81,21 @@ class SchedulerConfig extends AbstractBundleConfig
     {
         return $this->get(SchedulerConstants::ENABLED_SCHEDULERS, []);
     }
+
+    /**
+     * Specification:
+     * - Returns current region if defined.
+     *
+     * @api
+     *
+     * @return string|null
+     */
+    public function getCurrentRegion(): ?string
+    {
+        if (defined('APPLICATION_REGION')) {
+            return APPLICATION_REGION;
+        }
+
+        return null;
+    }
 }

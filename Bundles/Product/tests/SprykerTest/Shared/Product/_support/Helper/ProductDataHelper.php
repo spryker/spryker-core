@@ -34,12 +34,18 @@ class ProductDataHelper extends Module
     use LocatorHelperTrait;
 
     /**
+     * @var string
+     */
+    protected const LOCALE_US = 'en_US';
+
+    /**
      * @param array $productConcreteOverride
      * @param array $productAbstractOverride
+     * @param string|null $locale
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function haveProduct(array $productConcreteOverride = [], array $productAbstractOverride = []): ProductConcreteTransfer
+    public function haveProduct(array $productConcreteOverride = [], array $productAbstractOverride = [], ?string $locale = null): ProductConcreteTransfer
     {
         $productAbstractTransfer = (new ProductAbstractBuilder($productAbstractOverride))->build();
 
@@ -152,7 +158,7 @@ class ProductDataHelper extends Module
 
         $productFacade->createProductConcrete($productConcreteTransfer);
 
-        $productFacade->createProductUrl(
+        $url = $productFacade->createProductUrl(
             $productAbstractTransfer->setIdProductAbstract($productConcreteTransfer->getFkProductAbstract()),
         );
 
@@ -214,7 +220,11 @@ class ProductDataHelper extends Module
      */
     protected function getCurrentLocale(): LocaleTransfer
     {
-        return $this->getLocaleFacade()->getCurrentLocale();
+        if ((bool)getenv('SPRYKER_DYNAMIC_STORE_MODE') === false) {
+            return $this->getLocaleFacade()->getCurrentLocale();
+        }
+
+        return $this->getLocaleFacade()->getLocale(static::LOCALE_US);
     }
 
     /**

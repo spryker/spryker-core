@@ -40,6 +40,11 @@ class ProductAttributeDataHelper extends Module
     protected const COLUMN_PRODUCT_MANAGEMENT_ATTRIBUTE_FK_PRODUCT_ATTRIBUTE_KEY = 'fk_product_attribute_key';
 
     /**
+     * @var string
+     */
+    protected const LOCALE_US = 'en_US';
+
+    /**
      * @param array $seedData
      *
      * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer
@@ -171,7 +176,11 @@ class ProductAttributeDataHelper extends Module
      */
     protected function getLocaleTransfer(): LocaleTransfer
     {
-        return $this->getLocaleFacade()->getCurrentLocale();
+        if ((bool)getenv('SPRYKER_DYNAMIC_STORE_MODE') === false) {
+            return $this->getLocaleFacade()->getCurrentLocale();
+        }
+
+        return $this->getLocaleFacade()->getLocale(static::LOCALE_US);
     }
 
     /**

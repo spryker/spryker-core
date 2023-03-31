@@ -38,13 +38,7 @@ class ZedRequestClient extends AbstractClient implements ZedRequestClientInterfa
      */
     public function call($url, TransferInterface $object, $requestOptions = null)
     {
-        $localeName = $this->getFactory()
-            ->getLocaleClient()
-            ->getCurrentLocale();
-        $localeTransfer = new LocaleTransfer();
-        $localeTransfer->setLocaleName($localeName);
-
-        $this->getClient()->addMetaTransfer('locale', $localeTransfer);
+        $this->addLocaleMeta();
 
         $this->applyMetaData($object);
 
@@ -202,5 +196,21 @@ class ZedRequestClient extends AbstractClient implements ZedRequestClientInterfa
     public function getRequestId(): string
     {
         return $this->getFactory()->createRequestId()->getRequestId();
+    }
+
+    /**
+     * @deprecated Will be removed in next major. Use {@link \Spryker\Client\Locale\Plugin\ZedRequest\LocaleMetaDataProviderPlugin} instead.
+     *
+     * @return void
+     */
+    protected function addLocaleMeta(): void
+    {
+        $localeName = $this->getFactory()
+            ->getLocaleClient()
+            ->getCurrentLocale();
+        $localeTransfer = new LocaleTransfer();
+        $localeTransfer->setLocaleName($localeName);
+
+        $this->getClient()->addMetaTransfer('locale', $localeTransfer);
     }
 }

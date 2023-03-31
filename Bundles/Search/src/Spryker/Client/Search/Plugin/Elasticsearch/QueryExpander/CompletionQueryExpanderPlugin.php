@@ -52,7 +52,6 @@ class CompletionQueryExpanderPlugin extends AbstractPlugin implements QueryExpan
         $query = $searchQuery->getSearchQuery();
         $this->addAggregation($query, $searchQuery->getSearchString());
 
-        /** @phpstan-var \Spryker\Client\Search\Dependency\Plugin\QueryInterface */
         return $searchQuery;
     }
 

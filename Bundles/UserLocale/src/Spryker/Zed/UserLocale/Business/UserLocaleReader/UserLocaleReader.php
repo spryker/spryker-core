@@ -10,6 +10,7 @@ namespace Spryker\Zed\UserLocale\Business\UserLocaleReader;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\UserLocale\Dependency\Facade\UserLocaleToLocaleFacadeBridgeInterface;
+use Spryker\Zed\UserLocale\Dependency\Facade\UserLocaleToStoreFacadeInterface;
 use Spryker\Zed\UserLocale\Dependency\Facade\UserLocaleToUserFacadeBridgeInterface;
 
 class UserLocaleReader implements UserLocaleReaderInterface
@@ -17,23 +18,31 @@ class UserLocaleReader implements UserLocaleReaderInterface
     /**
      * @var \Spryker\Zed\UserLocale\Dependency\Facade\UserLocaleToUserFacadeBridgeInterface
      */
-    protected $userFacade;
+    protected UserLocaleToUserFacadeBridgeInterface $userFacade;
 
     /**
      * @var \Spryker\Zed\UserLocale\Dependency\Facade\UserLocaleToLocaleFacadeBridgeInterface
      */
-    protected $localeFacade;
+    protected UserLocaleToLocaleFacadeBridgeInterface $localeFacade;
+
+    /**
+     * @var \Spryker\Zed\UserLocale\Dependency\Facade\UserLocaleToStoreFacadeInterface
+     */
+    protected UserLocaleToStoreFacadeInterface $storeFacade;
 
     /**
      * @param \Spryker\Zed\UserLocale\Dependency\Facade\UserLocaleToUserFacadeBridgeInterface $userFacade
      * @param \Spryker\Zed\UserLocale\Dependency\Facade\UserLocaleToLocaleFacadeBridgeInterface $localeFacade
+     * @param \Spryker\Zed\UserLocale\Dependency\Facade\UserLocaleToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         UserLocaleToUserFacadeBridgeInterface $userFacade,
-        UserLocaleToLocaleFacadeBridgeInterface $localeFacade
+        UserLocaleToLocaleFacadeBridgeInterface $localeFacade,
+        UserLocaleToStoreFacadeInterface $storeFacade
     ) {
         $this->userFacade = $userFacade;
         $this->localeFacade = $localeFacade;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -59,14 +68,6 @@ class UserLocaleReader implements UserLocaleReaderInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\LocaleTransfer
-     */
-    protected function getCurrentLocaleTransfer(): LocaleTransfer
-    {
-        return $this->localeFacade->getCurrentLocale();
-    }
-
-    /**
      * @return \Generated\Shared\Transfer\UserTransfer
      */
     protected function getCurrentUser(): UserTransfer
@@ -79,6 +80,14 @@ class UserLocaleReader implements UserLocaleReaderInterface
      */
     protected function getCurrentLocale(): LocaleTransfer
     {
-        return $this->localeFacade->getCurrentLocale();
+        if (!$this->storeFacade->isDynamicStoreEnabled()) {
+            return $this->localeFacade->getCurrentLocale();
+        }
+
+        $supportedLocaleCodes = $this->localeFacade->getSupportedLocaleCodes();
+        /** @phpstan-var string */
+        $supportedLocaleCode = reset($supportedLocaleCodes);
+
+        return $this->localeFacade->getLocale($supportedLocaleCode);
     }
 }

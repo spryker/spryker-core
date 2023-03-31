@@ -27,6 +27,7 @@
         <property name="email" type="string"/>
         <property name="firstName" type="string"/>
         <property name="lastName" type="string"/>
+        <property name="store" type="string"/>
     </transfer>
 
     <transfer name="OrderInvoiceCriteria">
@@ -62,6 +63,7 @@
         <property name="recipients" type="MailRecipient[]" singular="recipient"/>
         <property name="recipientBccs" type="MailRecipient[]" singular="recipientBcc"/>
         <property name="templates" type="MailTemplate[]" singular="template"/>
+        <property name="storeName" type="string"/>
     </transfer>
 
     <transfer name="MailRecipient">

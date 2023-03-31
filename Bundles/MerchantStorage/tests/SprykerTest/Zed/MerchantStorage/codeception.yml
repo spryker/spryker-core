@@ -26,3 +26,6 @@ suites:
                 - \SprykerTest\Zed\Merchant\Helper\MerchantHelper
                 - \SprykerTest\Shared\Store\Helper\StoreDataHelper
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
+                - \SprykerTest\Shared\Storage\Helper\StorageRedisConfigHelper

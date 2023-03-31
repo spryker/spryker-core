@@ -39,14 +39,15 @@ class IndexNameResolver implements IndexNameResolverInterface
 
     /**
      * @param string $sourceIdentifier
+     * @param string|null $storeName
      *
      * @return string
      */
-    public function resolve(string $sourceIdentifier): string
+    public function resolve(string $sourceIdentifier, ?string $storeName = null): string
     {
         $indexParameters = [
             $this->searchElasticsearchConfig->getIndexPrefix(),
-            $this->getStoreName(),
+            $storeName ?? $this->getStoreName(),
             $sourceIdentifier,
         ];
 

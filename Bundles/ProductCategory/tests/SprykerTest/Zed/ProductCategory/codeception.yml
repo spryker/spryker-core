@@ -49,6 +49,8 @@ suites:
                 - \SprykerTest\Zed\Category\Helper\CategoryDataHelper
                 - \SprykerTest\Zed\ProductCategory\Helper\AssignHelper
                 - \SprykerTest\Zed\Locale\Helper\LocaleDataHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
     Persistence:
         path: Persistence
         actor: ProductCategoryPersistenceTester

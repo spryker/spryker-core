@@ -15,8 +15,6 @@ use Orm\Zed\CmsBlockStorage\Persistence\Map\SpyCmsBlockStorageTableMap;
 use Orm\Zed\CmsBlockStorage\Persistence\SpyCmsBlockStorageQuery;
 use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
 use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
-use Spryker\Client\Kernel\Container;
-use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Zed\CmsBlock\Dependency\CmsBlockEvents;
 use Spryker\Zed\CmsBlockStorage\Business\CmsBlockStorageBusinessFactory;
 use Spryker\Zed\CmsBlockStorage\Business\CmsBlockStorageFacade;
@@ -64,11 +62,7 @@ class CmsBlockStorageListenerTest extends Unit
     {
         parent::setUp();
 
-        $this->tester->setDependency(QueueDependencyProvider::QUEUE_ADAPTERS, function (Container $container) {
-            return [
-                $container->getLocator()->rabbitMq()->client()->createQueueAdapter(),
-            ];
-        });
+        $this->tester->addDependencies();
 
         $this->storeIds = $this->getStoreIds();
         $this->localeIds = $this->getLocaleIds();

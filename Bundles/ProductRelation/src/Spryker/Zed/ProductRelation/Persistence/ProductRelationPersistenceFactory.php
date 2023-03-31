@@ -12,6 +12,8 @@ use Orm\Zed\ProductRelation\Persistence\SpyProductRelationQuery;
 use Orm\Zed\ProductRelation\Persistence\SpyProductRelationStoreQuery;
 use Orm\Zed\ProductRelation\Persistence\SpyProductRelationTypeQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToLocaleInterface;
+use Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToStoreInterface;
 use Spryker\Zed\ProductRelation\Dependency\Service\ProductRelationToUtilEncodingInterface;
 use Spryker\Zed\ProductRelation\Persistence\Propel\Mapper\ProductMapper;
 use Spryker\Zed\ProductRelation\Persistence\Propel\Mapper\ProductRelationMapper;
@@ -126,7 +128,12 @@ class ProductRelationPersistenceFactory extends AbstractPersistenceFactory
      */
     protected function createProductQuery()
     {
-        return new ProductQuery($this->getProductQueryContainer(), $this->getLocaleFacade());
+        return new ProductQuery(
+            $this->getProductQueryContainer(),
+            $this->getLocaleFacade(),
+            $this->getStoreFacade(),
+            $this->getConfig()->getFallbackLocale(),
+        );
     }
 
     /**
@@ -140,9 +147,17 @@ class ProductRelationPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToLocaleInterface
      */
-    protected function getLocaleFacade()
+    protected function getLocaleFacade(): ProductRelationToLocaleInterface
     {
         return $this->getProvidedDependency(ProductRelationDependencyProvider::FACADE_LOCALE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToStoreInterface
+     */
+    protected function getStoreFacade(): ProductRelationToStoreInterface
+    {
+        return $this->getProvidedDependency(ProductRelationDependencyProvider::FACADE_STORE);
     }
 
     /**

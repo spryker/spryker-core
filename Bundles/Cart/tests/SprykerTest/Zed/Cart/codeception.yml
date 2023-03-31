@@ -26,6 +26,8 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
                 - \SprykerTest\Shared\Product\Helper\ProductDataHelper
                 - \SprykerTest\Shared\PriceProduct\Helper\PriceProductDataHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
 
     Communication:
         path: Communication

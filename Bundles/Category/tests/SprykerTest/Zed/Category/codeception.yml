@@ -29,6 +29,8 @@ suites:
                 - \SprykerTest\Zed\Testify\Helper\Business\DependencyProviderHelper
                 - \SprykerTest\Service\Container\Helper\ContainerHelper
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
                 - \SprykerTest\Zed\Category\Helper\CategoryCrudHelper
                 - \SprykerTest\Zed\Category\Helper\CategoryDataHelper
                 - \SprykerTest\Zed\Locale\Helper\LocaleDataHelper

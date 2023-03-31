@@ -13,18 +13,20 @@
         "spryker/product-page-search-extension": "^1.2.0",
         "spryker/publisher-extension": "^1.0.0",
         "spryker/search-extension": "^1.0.0",
-        "spryker/store": "^1.0.0",
+        "spryker/store": "^1.19.0",
         "spryker/transfer": "^3.27.0"
     },
     "require-dev": {
         "spryker/category": "*",
         "spryker/code-sniffer": "*",
+        "spryker/container": "*",
         "spryker/elastica": "*",
         "spryker/product": "*",
         "spryker/product-attribute": "*",
         "spryker/propel": "*",
         "spryker/queue": "*",
         "spryker/search": "*",
+        "spryker/store-extension": "*",
         "spryker/testify": "*"
     },
     "suggest": {

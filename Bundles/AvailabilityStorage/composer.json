@@ -21,6 +21,7 @@
     },
     "require-dev": {
         "spryker/code-sniffer": "*",
+        "spryker/container": "*",
         "spryker/decimal-object": "*",
         "spryker/event": "*",
         "spryker/product-storage": "*",

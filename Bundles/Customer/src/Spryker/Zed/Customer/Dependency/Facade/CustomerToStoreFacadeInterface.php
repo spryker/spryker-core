@@ -20,4 +20,9 @@ interface CustomerToStoreFacadeInterface
      * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     public function getAllStores(): array;
+
+    /**
+     * @return bool
+     */
+    public function isDynamicStoreEnabled(): bool;
 }

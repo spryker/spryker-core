@@ -18,7 +18,7 @@ interface UserLocaleToLocaleFacadeBridgeInterface
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getLocaleById($idLocale): LocaleTransfer;
+    public function getLocaleById(int $idLocale): LocaleTransfer;
 
     /**
      * @param string $localeName
@@ -27,7 +27,12 @@ interface UserLocaleToLocaleFacadeBridgeInterface
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getLocale($localeName): LocaleTransfer;
+    public function getLocale(string $localeName): LocaleTransfer;
+
+    /**
+     * @return array<int, string>
+     */
+    public function getSupportedLocaleCodes(): array;
 
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer

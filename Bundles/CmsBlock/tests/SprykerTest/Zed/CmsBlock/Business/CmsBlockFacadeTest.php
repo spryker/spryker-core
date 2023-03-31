@@ -36,7 +36,7 @@ class CmsBlockFacadeTest extends Unit
     /**
      * @var string
      */
-    protected const STORE_NAME_US = 'US';
+    protected const STORE_NAME_AT = 'AT';
 
     /**
      * @var \SprykerTest\Zed\CmsBlock\CmsBlockBusinessTester
@@ -259,13 +259,13 @@ class CmsBlockFacadeTest extends Unit
     {
         return [
             [
-                ['DE', 'AT', 'US'], ['AT'],
+                ['DE', 'AT'], ['AT'],
             ],
             [
                 ['DE'], ['DE', 'AT'],
             ],
             [
-                ['AT'], ['DE', 'US'],
+                ['AT'], ['DE'],
             ],
         ];
     }
@@ -278,7 +278,7 @@ class CmsBlockFacadeTest extends Unit
         // Assign
         $expectedIdStores = $this->tester->createStoresByNames([
             static::STORE_NAME_DE,
-            static::STORE_NAME_US,
+            static::STORE_NAME_AT,
         ]);
 
         $cmsBlockTransfer = $this->tester->haveCmsBlock([

@@ -219,6 +219,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addStoreRelationFormTypePlugin($container);
         $container = $this->addLocaleFacade($container);
         $container = $this->addTranslatorFacade($container);
+        $container = $this->addStoreFacade($container);
         $container = $this->addMoneyCollectionFormTypePlugin($container);
 
         return $container;

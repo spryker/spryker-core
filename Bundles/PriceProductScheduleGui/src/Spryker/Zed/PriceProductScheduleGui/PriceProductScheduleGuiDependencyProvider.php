@@ -20,12 +20,18 @@ use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGu
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToStoreFacadeBridge;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToTranslatorFacadeBridge;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Service\PriceProductScheduleGuiToUtilCsvServiceBridge;
+use Spryker\Zed\PriceProductScheduleGui\Dependency\Service\PriceProductScheduleGuiToUtilDateTimeServiceBridge;
 
 /**
  * @method \Spryker\Zed\PriceProductScheduleGui\PriceProductScheduleGuiConfig getConfig()
  */
 class PriceProductScheduleGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
+    public const SERVICE_UTIL_DATE_TIME = 'SERVICE_UTIL_DATE_TIME';
+
     /**
      * @var string
      */
@@ -98,6 +104,7 @@ class PriceProductScheduleGuiDependencyProvider extends AbstractBundleDependency
         $container = $this->addUtilCsvService($container);
         $container = $this->addCurrencyFacade($container);
         $container = $this->addProductFacade($container);
+        $container = $this->addUtilDateTimeService($container);
         $container = $this->addLocaleFacade($container);
 
         return $container;
@@ -269,6 +276,22 @@ class PriceProductScheduleGuiDependencyProvider extends AbstractBundleDependency
         $container->set(static::PROPEL_QUERY_PRICE_PRODUCT_SCHEDULE_LIST, $container->factory(function () {
             return SpyPriceProductScheduleListQuery::create();
         }));
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilDateTimeService(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_DATE_TIME, function (Container $container) {
+            return new PriceProductScheduleGuiToUtilDateTimeServiceBridge(
+                $container->getLocator()->utilDateTime()->service(),
+            );
+        });
 
         return $container;
     }

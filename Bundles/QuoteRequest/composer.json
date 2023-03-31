@@ -30,8 +30,10 @@
         "spryker/checkout": "*",
         "spryker/code-sniffer": "*",
         "spryker/company-business-unit": "*",
+        "spryker/container": "*",
         "spryker/propel": "*",
         "spryker/shipment": "*",
+        "spryker/store": "*",
         "spryker/testify": "*",
         "spryker/util-text": "*"
     },

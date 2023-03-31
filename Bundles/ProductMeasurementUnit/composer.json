@@ -21,6 +21,7 @@
     "require-dev": {
         "spryker/cart": "*",
         "spryker/code-sniffer": "*",
+        "spryker/container": "*",
         "spryker/customer": "*",
         "spryker/installer": "*",
         "spryker/oms": "*",

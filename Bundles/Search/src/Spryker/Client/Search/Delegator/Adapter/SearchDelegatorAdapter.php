@@ -116,7 +116,8 @@ class SearchDelegatorAdapter implements SearchDelegatorAdapterInterface
     protected function createSearchDocumentTransfer(string $documentId, ?string $typeName = null, ?array $documentData = null): SearchDocumentTransfer
     {
         $sourceIdentifier = $this->getSourceIdentifier($typeName);
-        $searchContextTransfer = (new SearchContextTransfer())->setSourceIdentifier($sourceIdentifier);
+        $searchContextTransfer = (new SearchContextTransfer())->setSourceIdentifier($sourceIdentifier)
+            ->setStoreName($documentData['store_name'] ?? null);
 
         return (new SearchDocumentTransfer())->setId($documentId)
             ->setData($documentData)
@@ -146,14 +147,16 @@ class SearchDelegatorAdapter implements SearchDelegatorAdapterInterface
 
     /**
      * @param string|null $typeName
+     * @param string|null $storeName
      *
      * @return \Generated\Shared\Transfer\SearchContextTransfer
      */
-    protected function createSearchContextTransferFromType(?string $typeName = null): SearchContextTransfer
+    protected function createSearchContextTransferFromType(?string $typeName = null, ?string $storeName = null): SearchContextTransfer
     {
         $sourceIdentifier = $this->getSourceIdentifier($typeName);
         $searchContextTransfer = new SearchContextTransfer();
-        $searchContextTransfer->setSourceIdentifier($sourceIdentifier);
+        $searchContextTransfer->setSourceIdentifier($sourceIdentifier)
+            ->setStoreName($storeName);
 
         return $searchContextTransfer;
     }
@@ -177,7 +180,7 @@ class SearchDelegatorAdapter implements SearchDelegatorAdapterInterface
      */
     protected function addSearchContextToSearchDocumentTransfer(SearchDocumentTransfer $searchDocumentTransfer): SearchDocumentTransfer
     {
-        $searchContextTransfer = $this->createSearchContextTransferFromType($searchDocumentTransfer->getType());
+        $searchContextTransfer = $this->createSearchContextTransferFromType($searchDocumentTransfer->getType(), $searchDocumentTransfer->getStoreName());
         $searchDocumentTransfer->setSearchContext($searchContextTransfer);
 
         return $searchDocumentTransfer;

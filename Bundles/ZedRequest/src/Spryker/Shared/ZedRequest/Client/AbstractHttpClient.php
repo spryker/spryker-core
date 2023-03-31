@@ -282,6 +282,7 @@ Configured with %s %s:%s in %s. Error: Stacktrace:';
             if ($response) {
                 $message .= PHP_EOL . PHP_EOL . $response->getBody();
             }
+
             $requestException = new RequestException($message, $e->getCode(), $e);
 
             $this->logException($requestException);

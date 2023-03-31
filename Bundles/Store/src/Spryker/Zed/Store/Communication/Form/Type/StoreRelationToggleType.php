@@ -20,8 +20,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  * @method \Spryker\Zed\Store\Business\StoreFacadeInterface getFacade()
  * @method \Spryker\Zed\Store\Communication\StoreCommunicationFactory getFactory()
  * @method \Spryker\Zed\Store\StoreConfig getConfig()
- * @method \Spryker\Zed\Store\Persistence\StoreQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Store\Persistence\StoreRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Store\Persistence\StoreQueryContainerInterface getQueryContainer()
  */
 class StoreRelationToggleType extends AbstractType
 {
@@ -51,7 +51,7 @@ class StoreRelationToggleType extends AbstractType
     public const MESSAGE_MULTI_STORE_PER_ZED_DISABLED = 'Multi-store per Zed feature is disabled';
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<string, \Symfony\Component\Form\FormBuilderInterface> $builder
      * @param array<string> $options
      *
      * @return void
@@ -101,7 +101,7 @@ class StoreRelationToggleType extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<string, \Symfony\Component\Form\FormBuilderInterface> $builder
      *
      * @return $this
      */
@@ -113,7 +113,7 @@ class StoreRelationToggleType extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<string, \Symfony\Component\Form\FormBuilderInterface> $builder
      *
      * @return $this
      */
@@ -131,7 +131,7 @@ class StoreRelationToggleType extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<string, \Symfony\Component\Form\FormBuilderInterface> $builder
      *
      * @return $this
      */
@@ -152,7 +152,7 @@ class StoreRelationToggleType extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<string, \Symfony\Component\Form\FormBuilderInterface> $builder
      *
      * @return $this
      */
@@ -190,7 +190,7 @@ class StoreRelationToggleType extends AbstractType
 
         $storeNameMap = [];
         foreach ($storeTransferCollection as $storeTransfer) {
-            $storeNameMap[$storeTransfer->getIdStore()] = $storeTransfer->getName();
+            $storeNameMap[$storeTransfer->getIdStore()] = $storeTransfer->getNameOrFail();
         }
 
         return $storeNameMap;

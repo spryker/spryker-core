@@ -14,19 +14,19 @@ interface CurrencyToInternationalizationInterface
      *
      * @return string
      */
-    public function getSymbolByIsoCode($isoCode);
+    public function getSymbolByIsoCode(string $isoCode): string;
 
     /**
      * @param string $isoCode
      *
      * @return string
      */
-    public function getNameByIsoCode($isoCode);
+    public function getNameByIsoCode(string $isoCode): string;
 
     /**
      * @param string $isoCode
      *
      * @return int|null
      */
-    public function getFractionDigits($isoCode);
+    public function getFractionDigits(string $isoCode): ?int;
 }

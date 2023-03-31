@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Discount\Communication\AmountFormatter;
 
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
+use Spryker\Zed\Discount\Dependency\Facade\DiscountToStoreFacadeInterface;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
 
 class DiscountAmountFormatter implements DiscountAmountFormatterInterface
@@ -18,11 +19,18 @@ class DiscountAmountFormatter implements DiscountAmountFormatterInterface
     protected $calculatorPlugins = [];
 
     /**
-     * @param array<string, \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface> $calculatorPlugins
+     * @var \Spryker\Zed\Discount\Dependency\Facade\DiscountToStoreFacadeInterface
      */
-    public function __construct(array $calculatorPlugins)
+    protected DiscountToStoreFacadeInterface $storeFacade;
+
+    /**
+     * @param array<string, \Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface> $calculatorPlugins
+     * @param \Spryker\Zed\Discount\Dependency\Facade\DiscountToStoreFacadeInterface $storeFacade
+     */
+    public function __construct(array $calculatorPlugins, DiscountToStoreFacadeInterface $storeFacade)
     {
         $this->calculatorPlugins = $calculatorPlugins;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -40,10 +48,16 @@ class DiscountAmountFormatter implements DiscountAmountFormatterInterface
         $calculatorPlugin = $this->calculatorPlugins[$calculatorPluginName];
 
         $discountConfiguratorTransfer = $this->formatDiscountMoneyAmounts($discountConfiguratorTransfer, $calculatorPlugin);
+        $defaultIsoCode = null;
+        if ($this->storeFacade->isDynamicStoreEnabled()) {
+            $moveyValueTransfer = $discountConfiguratorTransfer->getDiscountCalculator()->getMoneyValueCollection()->offsetGet(0);
+            $defaultIsoCode = $moveyValueTransfer->getCurrency()->getCode();
+        }
 
         $formatterAmount = $this->formatAmount(
             $calculatorPlugin,
             (int)$discountConfiguratorTransfer->getDiscountCalculator()->getAmount(),
+            $defaultIsoCode,
         );
 
         $discountConfiguratorTransfer->getDiscountCalculator()->setAmount($formatterAmount);

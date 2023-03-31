@@ -14,11 +14,11 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\SpySalesOrderEntityTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
+use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrderTotals;
-use Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 use Spryker\Zed\Sales\Business\StateMachineResolver\OrderStateMachineResolverInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCountryInterface;
@@ -56,9 +56,9 @@ class SalesOrderSaver implements SalesOrderSaverInterface
     protected $salesConfiguration;
 
     /**
-     * @var \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface
+     * @var \Orm\Zed\Locale\Persistence\SpyLocaleQuery
      */
-    protected $localeQueryContainer;
+    protected $localePropelQuery;
 
     /**
      * @var array<\Spryker\Zed\Sales\Dependency\Plugin\OrderExpanderPreSavePluginInterface>
@@ -100,7 +100,7 @@ class SalesOrderSaver implements SalesOrderSaverInterface
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface $omsFacade
      * @param \Spryker\Zed\Sales\Business\Model\Order\OrderReferenceGeneratorInterface $orderReferenceGenerator
      * @param \Spryker\Zed\Sales\SalesConfig $salesConfiguration
-     * @param \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface $localeQueryContainer
+     * @param \Orm\Zed\Locale\Persistence\SpyLocaleQuery $localePropelQuery
      * @param array<\Spryker\Zed\Sales\Dependency\Plugin\OrderExpanderPreSavePluginInterface> $orderExpanderPreSavePlugins
      * @param \Spryker\Zed\Sales\Business\Model\Order\SalesOrderSaverPluginExecutorInterface $salesOrderSaverPluginExecutor
      * @param \Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesOrderItemMapperInterface $salesOrderItemMapper
@@ -114,7 +114,7 @@ class SalesOrderSaver implements SalesOrderSaverInterface
         SalesToOmsInterface $omsFacade,
         OrderReferenceGeneratorInterface $orderReferenceGenerator,
         SalesConfig $salesConfiguration,
-        LocaleQueryContainerInterface $localeQueryContainer,
+        SpyLocaleQuery $localePropelQuery,
         $orderExpanderPreSavePlugins,
         SalesOrderSaverPluginExecutorInterface $salesOrderSaverPluginExecutor,
         SalesOrderItemMapperInterface $salesOrderItemMapper,
@@ -127,7 +127,7 @@ class SalesOrderSaver implements SalesOrderSaverInterface
         $this->omsFacade = $omsFacade;
         $this->orderReferenceGenerator = $orderReferenceGenerator;
         $this->salesConfiguration = $salesConfiguration;
-        $this->localeQueryContainer = $localeQueryContainer;
+        $this->localePropelQuery = $localePropelQuery;
         $this->orderExpanderPreSavePlugins = $orderExpanderPreSavePlugins;
         $this->salesOrderSaverPluginExecutor = $salesOrderSaverPluginExecutor;
         $this->salesOrderItemMapper = $salesOrderItemMapper;
@@ -247,8 +247,8 @@ class SalesOrderSaver implements SalesOrderSaverInterface
     protected function addLocale(SpySalesOrder $salesOrderEntity)
     {
         $localeTransfer = $this->localeFacade->getCurrentLocale();
-        $localeEntity = $this->localeQueryContainer
-            ->queryLocaleByName($localeTransfer->getLocaleNameOrFail())
+        $localeEntity = $this->localePropelQuery
+            ->filterByLocaleName($localeTransfer->getLocaleNameOrFail())
             ->findOne();
 
         if ($localeEntity) {

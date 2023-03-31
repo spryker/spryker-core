@@ -116,7 +116,10 @@ class ContentGuiFacadeTest extends Unit
     public function testCmsBlockGlossaryTwigExpressionToHtml(string $input, string $expectedResult, string $localeName = 'en_US'): void
     {
         // Arrange
-        Store::getInstance()->setCurrentLocale($localeName);
+        if (!$this->isDynamicStoreEnabled()) {
+            Store::getInstance()->setCurrentLocale($localeName);
+        }
+
         $cmsBlockGlossaryTransfer = $this->createCmsBlockGlossaryTransfer($input);
 
         // Act
@@ -138,7 +141,10 @@ class ContentGuiFacadeTest extends Unit
     public function testCmsGlossaryTwigExpressionToHtml(string $input, string $expectedResult, string $localeName = 'en_US'): void
     {
         // Arrange
-        Store::getInstance()->setCurrentLocale($localeName);
+        if (!$this->isDynamicStoreEnabled()) {
+            Store::getInstance()->setCurrentLocale($localeName);
+        }
+
         $cmsGlossaryTransfer = $this->createCmsGlossaryTransfer($input);
 
         // Act
@@ -392,5 +398,13 @@ class ContentGuiFacadeTest extends Unit
         $facade->setFactory($factory);
 
         return $facade;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isDynamicStoreEnabled(): bool
+    {
+        return (bool)getenv('SPRYKER_DYNAMIC_STORE_MODE');
     }
 }

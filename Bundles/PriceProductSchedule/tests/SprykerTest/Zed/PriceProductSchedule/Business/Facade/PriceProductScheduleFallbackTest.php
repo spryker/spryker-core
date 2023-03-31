@@ -16,6 +16,10 @@ use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceTypeTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Zed\PriceProduct\Business\PriceProductFacade;
+use Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface;
+use Spryker\Zed\PriceProduct\Dependency\Facade\PriceProductToStoreFacadeInterface;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleBusinessFactory;
 use Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig;
 
@@ -43,6 +47,16 @@ class PriceProductScheduleFallbackTest extends Unit
     public const PRICE_TYPE_ID = 2;
 
     public const PRICE_TYPE_NAME_ORIGINAL = PriceProductScheduleConfig::PRICE_TYPE_ORIGINAL;
+
+    /**
+     * @var string
+     */
+    protected const DEFAULT_STORE = 'DE';
+
+    /**
+     * @var string
+     */
+    protected const DEFAULT_CURRENCY = 'EUR';
 
     /**
      * @var \SprykerTest\Zed\PriceProductSchedule\PriceProductScheduleBusinessTester
@@ -275,7 +289,7 @@ class PriceProductScheduleFallbackTest extends Unit
             ->setCurrency($priceProductScheduleTransfer->getPriceProduct()->getMoneyValue()->getCurrency())
             ->setIdProduct($productConcreteTransfer->getIdProductConcrete());
 
-        $priceProductTransfer = $this->priceProductFacade->findPriceProductFor($priceProductFilterTransfer);
+        $priceProductTransfer = $this->createPriceProductFacadeMock()->findPriceProductFor($priceProductFilterTransfer);
         $this->assertNull(
             $priceProductTransfer,
             'Product price type should be removed after scheduled price is over if no fallback price os configured.',
@@ -412,5 +426,25 @@ class PriceProductScheduleFallbackTest extends Unit
             ->willReturn([]);
 
         return $configMock;
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface
+     */
+    protected function createPriceProductFacadeMock(): PriceProductFacadeInterface
+    {
+        $storeFacadeMock = $this->getMockBuilder(PriceProductToStoreFacadeInterface::class)
+            ->setMethods(['getCurrentStore', 'getStoreByName', 'getStoreById', 'getStoreTransfersByStoreNames'])
+            ->getMock();
+        $storeFacadeMock->method('getStoreByName')
+            ->willReturn((new StoreTransfer())
+                ->setName(static::DEFAULT_STORE)
+                ->setDefaultCurrencyIsoCode(static::DEFAULT_CURRENCY));
+
+        $priceProductFactoryMock = $this->tester->mockFactoryMethod('getStoreFacade', $storeFacadeMock);
+        $priceProductFacadeMock = $this->createMock(PriceProductFacade::class);
+        $priceProductFacadeMock->setFactory($priceProductFactoryMock);
+
+        return $priceProductFacadeMock;
     }
 }

@@ -6,7 +6,7 @@
     "require": {
         "php": ">=8.0",
         "spryker/kernel": "^3.30.0",
-        "spryker/locale": "^3.0.0",
+        "spryker/locale": "^3.0.0 || ^4.0.0",
         "spryker/price-product": "^2.11.0 || ^4.0.0",
         "spryker/price-product-extension": "^1.5.0",
         "spryker/price-product-storage": "^2.17.0 || ^4.6.0",
@@ -18,7 +18,9 @@
     },
     "require-dev": {
         "spryker/code-sniffer": "*",
+        "spryker/container": "*",
         "spryker/propel": "*",
+        "spryker/store": "*",
         "spryker/testify": "*"
     },
     "autoload": {

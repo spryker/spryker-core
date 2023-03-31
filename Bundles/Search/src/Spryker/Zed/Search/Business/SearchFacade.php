@@ -24,15 +24,16 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      * @api
      *
      * @param \Psr\Log\LoggerInterface $messenger
+     * @param string|null $storeName
      *
      * @return void
      */
-    public function install(LoggerInterface $messenger)
+    public function install(LoggerInterface $messenger, ?string $storeName = null)
     {
         $this
             ->getFactory()
             ->createSearchInstaller($messenger)
-            ->install();
+            ->install($storeName);
     }
 
     /**
@@ -44,7 +45,7 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      * @param int|null $limit
      * @param int|null $offset
      *
-     * @return \Elastica\ResultSet|mixed|array Deprecated: Only `mixed` will be supported with the next major.
+     * @return \Elastica\ResultSet|mixed|array (@deprecated Only mixed will be supported with the next major)
      */
     public function searchKeys($searchString, $limit = null, $offset = null)
     {
@@ -76,12 +77,13 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      * @api
      *
      * @param \Psr\Log\LoggerInterface $messenger
+     * @param string|null $storeName
      *
      * @return void
      */
-    public function installSources(LoggerInterface $messenger): void
+    public function installSources(LoggerInterface $messenger, ?string $storeName = null): void
     {
-        $this->getFactory()->createSearchSourceInstaller($messenger)->install();
+        $this->getFactory()->createSearchSourceInstaller($messenger)->install($storeName);
     }
 
     /**
@@ -250,7 +252,7 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      *
      * @param string $repositoryName
      * @param string $snapshotName
-     * @param array<string, mixed> $options
+     * @param array $options
      *
      * @return bool
      */
@@ -314,7 +316,7 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      *
      * @api
      *
-     * @deprecated Use {@link \Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacade::registerSnapshotRepository()} instead.
+     * @deprecated Use {@link \Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface::registerSnapshotRepository()} instead.
      *
      * @param string $repositoryName
      * @param string $type
@@ -336,7 +338,7 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      *
      * @param string $repositoryName
      * @param string $snapshotName
-     * @param array<string, mixed> $options
+     * @param array $options
      *
      * @return bool
      */

@@ -7,24 +7,43 @@
 
 namespace Spryker\Zed\Country\Communication;
 
+use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Spryker\Zed\Country\Communication\Table\CountryTable;
+use Spryker\Zed\Country\CountryDependencyProvider;
+use Spryker\Zed\Country\Dependency\Facade\CountryToStoreFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\Country\CountryConfig getConfig()
- * @method \Spryker\Zed\Country\Persistence\CountryQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Country\Persistence\CountryRepositoryInterface getRepository()
  * @method \Spryker\Zed\Country\Business\CountryFacadeInterface getFacade()
+ * @method \Spryker\Zed\Country\Persistence\CountryEntityManagerInterface getEntityManager()
  */
 class CountryCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
      * @return \Spryker\Zed\Country\Communication\Table\CountryTable
      */
-    public function createCountryTable()
+    public function createCountryTable(): CountryTable
     {
-        $countryQuery = $this->getQueryContainer()->queryCountries();
+        return new CountryTable(
+            $this->getCountryQuery(),
+        );
+    }
 
-        return new CountryTable($countryQuery);
+    /**
+     * @return \Orm\Zed\Country\Persistence\SpyCountryQuery<mixed>
+     */
+    public function getCountryQuery(): SpyCountryQuery
+    {
+        return SpyCountryQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\Country\Dependency\Facade\CountryToStoreFacadeInterface
+     */
+    public function getStoreFacade(): CountryToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(CountryDependencyProvider::FACADE_STORE);
     }
 }

@@ -22,12 +22,14 @@
     "require-dev": {
         "spryker/category": "*",
         "spryker/code-sniffer": "*",
+        "spryker/container": "*",
         "spryker/elastica": "*",
         "spryker/event": "*",
         "spryker/product-attribute": "*",
         "spryker/propel": "*",
         "spryker/queue": "*",
         "spryker/search": "*",
+        "spryker/store-extension": "*",
         "spryker/testify": "*"
     },
     "suggest": {

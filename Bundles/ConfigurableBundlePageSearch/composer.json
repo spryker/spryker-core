@@ -20,11 +20,14 @@
     },
     "require-dev": {
         "spryker/code-sniffer": "*",
+        "spryker/container": "*",
         "spryker/elastica": "*",
         "spryker/event": "*",
         "spryker/glossary": "*",
         "spryker/propel": "*",
+        "spryker/publisher": "*",
         "spryker/queue": "*",
+        "spryker/store": "*",
         "spryker/testify": "*"
     },
     "suggest": {

@@ -155,4 +155,7 @@
         <property name="realPath" type="string"/>
     </transfer>
 
+    <transfer name="StoreResponse">
+    </transfer>
+
 </transfers>

@@ -9,7 +9,6 @@ namespace Spryker\Zed\ContentStorage\Business\ContentStorage;
 
 use Generated\Shared\Transfer\ContentStorageTransfer;
 use Generated\Shared\Transfer\ContentTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Shared\ContentStorage\ContentStorageConfig;
 use Spryker\Zed\ContentStorage\Dependency\Facade\ContentStorageToStoreFacadeInterface;
 use Spryker\Zed\ContentStorage\Dependency\Service\ContentStorageToUtilEncodingInterface;
@@ -87,7 +86,7 @@ class ContentStorageWriter implements ContentStorageWriterInterface
      */
     protected function executePublishTransaction(iterable $contentTransfers, iterable $contentStorageTransfers): bool
     {
-        $availableLocales = $this->getSharedPersistenceLocaleNames($this->storeFacade->getCurrentStore());
+        $availableLocales = $this->getSharedPersistenceLocaleNames();
 
         $contentStorageTransfers = $this->groupByIdContentAndLocale($contentStorageTransfers);
         foreach ($contentTransfers as $contentTransfer) {
@@ -98,20 +97,16 @@ class ContentStorageWriter implements ContentStorageWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
      * @return array<string>
      */
-    protected function getSharedPersistenceLocaleNames(StoreTransfer $storeTransfer): array
+    protected function getSharedPersistenceLocaleNames(): array
     {
         $localeNames = [];
-        $localeNames[] = $storeTransfer->getAvailableLocaleIsoCodes();
-
-        foreach ($this->storeFacade->getStoresWithSharedPersistence($storeTransfer) as $store) {
+        foreach ($this->storeFacade->getAllStores() as $store) {
             $localeNames[] = $store->getAvailableLocaleIsoCodes();
         }
 
-        return array_merge(...$localeNames);
+        return array_unique(array_merge(...$localeNames));
     }
 
     /**

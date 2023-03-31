@@ -27,3 +27,6 @@ suites:
                 - \SprykerTest\Zed\Merchant\Helper\MerchantHelper
                 - \SprykerTest\Shared\Product\Helper\ProductDataHelper
                 - \SprykerTest\Shared\MerchantProduct\Helper\MerchantProductHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper

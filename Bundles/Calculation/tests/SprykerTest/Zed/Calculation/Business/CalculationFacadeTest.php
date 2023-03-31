@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Spryker\Shared\Calculation\CalculationPriceMode;
 use Spryker\Zed\Calculation\Business\CalculationBusinessFactory;
@@ -67,6 +68,11 @@ class CalculationFacadeTest extends Unit
      * @var string
      */
     protected const VOUCHER_CODE = 'VOUCHER_CODE';
+
+    /**
+     * @var string
+     */
+    protected const STORE_NAME = 'DE';
 
     /**
      * @var \SprykerTest\Zed\Calculation\CalculationBusinessTester
@@ -673,7 +679,7 @@ class CalculationFacadeTest extends Unit
         // Arrange
         $calculationFacade = new CalculationFacade();
         $orderTransfer = new OrderTransfer();
-        $storeTransfer = $this->tester->haveStore();
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME]);
         $orderTransfer->setStore($storeTransfer->getNameOrFail());
         $orderTransfer->addItem(new ItemTransfer());
 

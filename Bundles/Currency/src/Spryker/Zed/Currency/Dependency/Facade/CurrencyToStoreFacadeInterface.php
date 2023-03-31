@@ -14,24 +14,29 @@ interface CurrencyToStoreFacadeInterface
     /**
      * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
-    public function getAllStores();
+    public function getAllStores(): array;
 
     /**
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getCurrentStore();
+    public function getCurrentStore(): StoreTransfer;
 
     /**
-     * @param string $name
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\StoreTransfer|null
      */
-    public function findStoreByName(string $name): ?StoreTransfer;
+    public function findStoreByName(string $storeName): ?StoreTransfer;
 
     /**
      * @param int $idStore
      *
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getStoreById($idStore);
+    public function getStoreById(int $idStore): StoreTransfer;
+
+    /**
+     * @return bool
+     */
+    public function isDynamicStoreEnabled(): bool;
 }

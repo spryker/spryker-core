@@ -11,21 +11,26 @@ use Spryker\Client\Currency\CurrencyChange\CurrencyPostChangePluginExecutor;
 use Spryker\Client\Currency\CurrencyChange\CurrencyPostChangePluginExecutorInterface;
 use Spryker\Client\Currency\CurrencyChange\CurrencyUpdater;
 use Spryker\Client\Currency\CurrencyChange\CurrencyUpdaterInterface;
+use Spryker\Client\Currency\Dependency\Client\CurrencyToStoreClientInterface;
 use Spryker\Client\Currency\Dependency\Client\CurrencyToZedRequestClientInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Shared\Currency\Builder\CurrencyBuilder;
+use Spryker\Shared\Currency\Builder\CurrencyBuilderInterface;
+use Spryker\Shared\Currency\Dependency\Client\CurrencyToSessionInterface;
+use Spryker\Shared\Currency\Dependency\Internationalization\CurrencyToInternationalizationInterface;
 use Spryker\Shared\Currency\Persistence\CurrencyPersistence;
+use Spryker\Shared\Currency\Persistence\CurrencyPersistenceInterface;
 
 class CurrencyFactory extends AbstractFactory
 {
     /**
      * @return \Spryker\Shared\Currency\Builder\CurrencyBuilderInterface
      */
-    public function createCurrencyBuilder()
+    public function createCurrencyBuilder(): CurrencyBuilderInterface
     {
         return new CurrencyBuilder(
             $this->getInternationalization(),
-            $this->getStore()->getDefaultCurrencyCode(),
+            $this->getStoreClient()->getCurrentStore()->getDefaultCurrencyIsoCodeOrFail(),
             $this->createCurrencyPersistence()->getCurrentCurrencyIsoCode(),
         );
     }
@@ -33,9 +38,9 @@ class CurrencyFactory extends AbstractFactory
     /**
      * @return \Spryker\Shared\Currency\Persistence\CurrencyPersistenceInterface
      */
-    public function createCurrencyPersistence()
+    public function createCurrencyPersistence(): CurrencyPersistenceInterface
     {
-        return new CurrencyPersistence($this->getSessionClient(), $this->getStore());
+        return new CurrencyPersistence($this->getSessionClient(), $this->getStoreClient()->getCurrentStore()->getDefaultCurrencyIsoCodeOrFail());
     }
 
     /**
@@ -65,23 +70,15 @@ class CurrencyFactory extends AbstractFactory
     /**
      * @return \Spryker\Shared\Currency\Dependency\Internationalization\CurrencyToInternationalizationInterface
      */
-    protected function getInternationalization()
+    public function getInternationalization(): CurrencyToInternationalizationInterface
     {
         return $this->getProvidedDependency(CurrencyDependencyProvider::INTERNATIONALIZATION);
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    protected function getStore()
-    {
-        return $this->getProvidedDependency(CurrencyDependencyProvider::STORE);
-    }
-
-    /**
      * @return \Spryker\Client\Currency\Dependency\Client\CurrencyToStoreClientInterface
      */
-    protected function getStoreClient()
+    public function getStoreClient(): CurrencyToStoreClientInterface
     {
         return $this->getProvidedDependency(CurrencyDependencyProvider::CLIENT_STORE);
     }
@@ -89,7 +86,7 @@ class CurrencyFactory extends AbstractFactory
     /**
      * @return \Spryker\Shared\Currency\Dependency\Client\CurrencyToSessionInterface
      */
-    protected function getSessionClient()
+    public function getSessionClient(): CurrencyToSessionInterface
     {
         return $this->getProvidedDependency(CurrencyDependencyProvider::CLIENT_SESSION);
     }
@@ -105,7 +102,7 @@ class CurrencyFactory extends AbstractFactory
     /**
      * @return array<\Spryker\Client\CurrencyExtension\Dependency\CurrencyPostChangePluginInterface>
      */
-    protected function getCurrencyPostChangePlugins(): array
+    public function getCurrencyPostChangePlugins(): array
     {
         return $this->getProvidedDependency(CurrencyDependencyProvider::PLUGINS_CURRENCY_POST_CHANGE);
     }

@@ -21,10 +21,13 @@
     "require-dev": {
         "spryker/availability": "*",
         "spryker/code-sniffer": "*",
+        "spryker/container": "*",
         "spryker/currency": "*",
+        "spryker/event": "*",
         "spryker/price-product": "*",
         "spryker/product": "*",
         "spryker/propel": "*",
+        "spryker/publisher": "*",
         "spryker/queue": "*",
         "spryker/stock": "*",
         "spryker/store": "*",

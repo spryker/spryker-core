@@ -103,6 +103,16 @@ class UnfoldBundlesToUnitedItemsTest extends Unit
     protected const CURRENCY_CODE_TEST_CODE = 'TEST';
 
     /**
+     * @var string
+     */
+    protected const SERVICE_LOCALE = 'locale';
+
+    /**
+     * @var string
+     */
+    protected const DEFAULT_LOCALE = 'en_US';
+
+    /**
      * @var \SprykerTest\Zed\ProductBundle\ProductBundleBusinessTester
      */
     protected $tester;
@@ -113,6 +123,8 @@ class UnfoldBundlesToUnitedItemsTest extends Unit
     public function testBundleUnfoldedSuccessfullyWhenPresentInCartChangeItems(): void
     {
         // Arrange
+        $container = $this->tester->getContainer();
+        $container->set(static::SERVICE_LOCALE, static::DEFAULT_LOCALE);
         $cartChangeTransfer = $this->setupCartChangeTransferWithBundle();
 
         // Act

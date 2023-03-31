@@ -35,6 +35,11 @@ class OmsProductOfferReservationFacadeTest extends Unit
     protected const STORE_NAME_DE = 'DE';
 
     /**
+     * @var string
+     */
+    protected const STORE_NAME_AT = 'AT';
+
+    /**
      * @var \SprykerTest\Zed\OmsProductOfferReservation\OmsProductOfferReservationBusinessTester
      */
     protected $tester;
@@ -46,7 +51,7 @@ class OmsProductOfferReservationFacadeTest extends Unit
     {
         // Arrange
         $productOfferTransfer = $this->tester->haveProductOffer();
-        $storeTransfer = $this->tester->haveStore();
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
         $this->tester->haveOmsProductOfferReservation([
             OmsProductOfferReservationTransfer::PRODUCT_OFFER_REFERENCE => $productOfferTransfer->getProductOfferReference(),
             OmsProductOfferReservationTransfer::ID_STORE => $storeTransfer->getIdStore(),
@@ -72,7 +77,7 @@ class OmsProductOfferReservationFacadeTest extends Unit
     {
         // Arrange
         $productOfferTransfer = $this->tester->haveProductOffer();
-        $storeTransfer = $this->tester->haveStore();
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
 
         $omsProductOfferReservationCriteriaTransfer = (new OmsProductOfferReservationCriteriaTransfer())
             ->setProductOfferReference($productOfferTransfer->getProductOfferReference())
@@ -93,8 +98,8 @@ class OmsProductOfferReservationFacadeTest extends Unit
     {
         // Arrange
         $productOfferTransfer = $this->tester->haveProductOffer();
-        $storeTransfer = $this->tester->haveStore();
-        $wrongStoreTransfer = $this->tester->haveStore();
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $wrongStoreTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_AT]);
         $this->tester->haveOmsProductOfferReservation([
             OmsProductOfferReservationTransfer::PRODUCT_OFFER_REFERENCE => $productOfferTransfer->getProductOfferReference(),
             OmsProductOfferReservationTransfer::ID_STORE => $storeTransfer->getIdStore(),
@@ -160,7 +165,7 @@ class OmsProductOfferReservationFacadeTest extends Unit
     public function testWriteReservationUpdatesReservationQuantityForProductOffer(): void
     {
         // Arrange
-        $storeTransfer = $this->tester->haveStore();
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
         $reservationRequestTransfer = (new ReservationRequestTransfer())
             ->setProductOfferReference('test')
             ->setStore($storeTransfer)

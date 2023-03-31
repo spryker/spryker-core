@@ -53,6 +53,16 @@ class CmsStorageListenerTest extends Unit
     /**
      * @return void
      */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->tester->addDependencies();
+    }
+
+    /**
+     * @return void
+     */
     public function testCmsPageVersionStorageListenerStoreData(): void
     {
         $this->markTestSkipped('Requires refactoring');

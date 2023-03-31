@@ -39,4 +39,12 @@ class CustomerToStoreFacadeBridge implements CustomerToStoreFacadeInterface
     {
         return $this->storeFacade->getAllStores();
     }
+
+    /**
+     * @return bool
+     */
+    public function isDynamicStoreEnabled(): bool
+    {
+        return $this->storeFacade->isDynamicStoreEnabled();
+    }
 }

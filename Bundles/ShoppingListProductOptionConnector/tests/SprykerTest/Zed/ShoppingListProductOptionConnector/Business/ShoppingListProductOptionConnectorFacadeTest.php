@@ -97,6 +97,8 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
             new ShoppingListPermissionStoragePlugin(),
         ]);
 
+        $this->tester->addDependencies();
+
         $this->prepareData();
     }
 

@@ -32,6 +32,9 @@ suites:
                 - \SprykerTest\Zed\Category\Helper\CategoryCrudHelper
                 - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper
                 - \SprykerTest\Shared\Store\Helper\StoreDataHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
             config:
                 \SprykerTest\Glue\Testify\Helper\GlueRest:
                     depends: PhpBrowser

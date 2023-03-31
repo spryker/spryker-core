@@ -69,6 +69,7 @@ use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGu
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToStoreFacadeInterface;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToTranslatorFacadeInterface;
 use Spryker\Zed\PriceProductScheduleGui\Dependency\Service\PriceProductScheduleGuiToUtilCsvServiceInterface;
+use Spryker\Zed\PriceProductScheduleGui\Dependency\Service\PriceProductScheduleGuiToUtilDateTimeServiceInterface;
 use Spryker\Zed\PriceProductScheduleGui\PriceProductScheduleGuiDependencyProvider;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\FormInterface;
@@ -243,7 +244,7 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
     {
         return new PriceProductScheduleListTable(
             $this->getPriceProductScheduleListPropelQuery(),
-            $this->getStoreFacade(),
+            $this->getUtilDateTimeService(),
         );
     }
 
@@ -549,6 +550,14 @@ class PriceProductScheduleGuiCommunicationFactory extends AbstractCommunicationF
     public function getProductFacade(): PriceProductScheduleGuiToProductFacadeInterface
     {
         return $this->getProvidedDependency(PriceProductScheduleGuiDependencyProvider::FACADE_PRODUCT);
+    }
+
+    /**
+     * @return \Spryker\Zed\PriceProductScheduleGui\Dependency\Service\PriceProductScheduleGuiToUtilDateTimeServiceInterface
+     */
+    public function getUtilDateTimeService(): PriceProductScheduleGuiToUtilDateTimeServiceInterface
+    {
+        return $this->getProvidedDependency(PriceProductScheduleGuiDependencyProvider::SERVICE_UTIL_DATE_TIME);
     }
 
     /**

@@ -25,6 +25,8 @@ suites:
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Shared\Sales\Helper\SalesDataHelper
                 - \SprykerTest\Zed\Oms\Helper\OmsHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
 
     Communication:
         path: Communication

@@ -34,6 +34,10 @@ class StoreTest extends Unit
     {
         parent::setUp();
 
+        if ($this->isDynamicStoreEnabled()) {
+            $this->markTestSkipped('Test is valid for Dynamic Store on-mode only.');
+        }
+
         $this->Store = Store::getInstance();
 
         $locales = $this->Store->getLocales();
@@ -123,5 +127,13 @@ class StoreTest extends Unit
             ->disableOriginalConstructor()
             ->setMethods(['getStoreSetup'])
             ->getMock();
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isDynamicStoreEnabled(): bool
+    {
+        return (bool)getenv('SPRYKER_DYNAMIC_STORE_MODE');
     }
 }

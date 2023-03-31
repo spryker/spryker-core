@@ -127,7 +127,8 @@ class OrderInvoiceEmailSender implements OrderInvoiceEmailSenderInterface
             ->setType(SalesInvoiceConfig::ORDER_INVOICE_MAIL_TYPE)
             ->setOrderInvoice($orderInvoiceTransfer)
             ->setOrder($orderTransfer)
-            ->setLocale($orderTransfer->getLocale());
+            ->setLocale($orderTransfer->getLocale())
+            ->setStoreName($orderTransfer->getStoreOrFail());
 
         $this->mailFacade->handleMail($mailTransfer);
     }

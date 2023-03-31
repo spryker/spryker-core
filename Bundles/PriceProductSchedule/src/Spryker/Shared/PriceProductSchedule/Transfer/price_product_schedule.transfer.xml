@@ -130,6 +130,7 @@
         <property name="priceTypeName" type="string"/>
         <property name="currencyIsoCode" type="string"/>
         <property name="sku" type="string"/>
+        <property name="storeName" type="string"/>
     </transfer>
 
     <transfer name="PriceType">

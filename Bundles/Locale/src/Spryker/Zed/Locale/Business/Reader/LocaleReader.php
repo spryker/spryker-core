@@ -7,9 +7,13 @@
 
 namespace Spryker\Zed\Locale\Business\Reader;
 
+use Generated\Shared\Transfer\LocaleConditionsTransfer;
+use Generated\Shared\Transfer\LocaleCriteriaTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Locale\Business\Cache\LocaleCacheInterface;
 use Spryker\Zed\Locale\Business\Exception\MissingLocaleException;
+use Spryker\Zed\Locale\Dependency\Facade\LocaleToStoreFacadeInterface;
 use Spryker\Zed\Locale\Persistence\LocaleRepositoryInterface;
 
 class LocaleReader implements LocaleReaderInterface
@@ -25,13 +29,20 @@ class LocaleReader implements LocaleReaderInterface
     protected $localeCache;
 
     /**
+     * @var \Spryker\Zed\Locale\Dependency\Facade\LocaleToStoreFacadeInterface
+     */
+    protected LocaleToStoreFacadeInterface $storeFacade;
+
+    /**
      * @param \Spryker\Zed\Locale\Persistence\LocaleRepositoryInterface $localeRepository
      * @param \Spryker\Zed\Locale\Business\Cache\LocaleCacheInterface $localeCache
+     * @param \Spryker\Zed\Locale\Dependency\Facade\LocaleToStoreFacadeInterface $storeFacade
      */
-    public function __construct(LocaleRepositoryInterface $localeRepository, LocaleCacheInterface $localeCache)
+    public function __construct(LocaleRepositoryInterface $localeRepository, LocaleCacheInterface $localeCache, LocaleToStoreFacadeInterface $storeFacade)
     {
         $this->localeRepository = $localeRepository;
         $this->localeCache = $localeCache;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -92,5 +103,68 @@ class LocaleReader implements LocaleReaderInterface
                 $idLocale,
             ),
         );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\LocaleCriteriaTransfer|null $localeCriteriaTransfer
+     *
+     * @return array<\Generated\Shared\Transfer\LocaleTransfer>
+     */
+    public function getLocaleCollection(?LocaleCriteriaTransfer $localeCriteriaTransfer = null): array
+    {
+        $indexedLocaleTransfers = [];
+
+        foreach ($this->getLocaleTransfers($localeCriteriaTransfer) as $localeTransfer) {
+            $indexedLocaleTransfers[$localeTransfer->getLocaleNameOrFail()] = $localeTransfer;
+        }
+
+        return $indexedLocaleTransfers;
+    }
+
+    /**
+     * @param string $localeName
+     *
+     * @return bool
+     */
+    public function localeExists(string $localeName): bool
+    {
+        return $this->localeRepository->getLocalesCountByLocaleName($localeName) > 0;
+    }
+
+    /**
+     * @return array<string>
+     */
+    public function getAvailableLocales(): array
+    {
+        $locales = [];
+        foreach ($this->getLocaleTransfers() as $localeTransfer) {
+            $locales[$localeTransfer->getIdLocale()] = $localeTransfer->getLocaleNameOrFail();
+        }
+
+        return $locales;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\LocaleCriteriaTransfer|null $localeCriteriaTransfer
+     *
+     * @return array<\Generated\Shared\Transfer\LocaleTransfer>
+     */
+    protected function getLocaleTransfers(?LocaleCriteriaTransfer $localeCriteriaTransfer = null): array
+    {
+        if (!$this->storeFacade->isDynamicStoreEnabled()) {
+            $availableLocales = Store::getInstance()->getLocales();
+
+            return $this->localeRepository->getLocaleTransfersByLocaleNames($availableLocales);
+        }
+
+        if (!$localeCriteriaTransfer) {
+            $localeCriteriaTransfer = (new LocaleCriteriaTransfer())
+                ->setLocaleConditions(
+                    (new LocaleConditionsTransfer())
+                        ->setAssignedToStore(true),
+                );
+        }
+
+        return $this->localeRepository->getLocaleCollectionByCriteria($localeCriteriaTransfer);
     }
 }

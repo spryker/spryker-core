@@ -9,6 +9,7 @@
 
     <transfer name="Customer">
         <property name="customerReference" type="string"/>
+        <property name="storeName" type="string"/>
         <property name="availabilityNotificationSubscriptionSkus" type="string[]" singular="availabilityNotificationSubscriptionSku"/>
     </transfer>
 
@@ -20,6 +21,7 @@
         <property name="subjectTranslationParameters" type="string[]" associative="true" singular="subjectTranslationParameter"/>
         <property name="templates" type="MailTemplate[]" singular="template"/>
         <property name="recipients" type="MailRecipient[]" singular="recipient"/>
+        <property name="storeName" type="string"/>
     </transfer>
 
     <transfer name="Store">

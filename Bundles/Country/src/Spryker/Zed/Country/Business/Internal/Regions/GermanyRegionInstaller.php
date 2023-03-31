@@ -12,7 +12,7 @@ class GermanyRegionInstaller implements RegionInstallInterface
     /**
      * @return array<string>
      */
-    public function getCodeArray()
+    public function getCodeArray(): array
     {
         return [
             'DE-BW' => 'Baden-Württemberg',
@@ -37,7 +37,7 @@ class GermanyRegionInstaller implements RegionInstallInterface
     /**
      * @return string
      */
-    public function getCountryIso()
+    public function getCountryIso(): string
     {
         return 'DE';
     }

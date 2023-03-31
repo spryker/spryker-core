@@ -21,8 +21,12 @@
     },
     "require-dev": {
         "spryker/code-sniffer": "*",
+        "spryker/container": "*",
         "spryker/event": "*",
         "spryker/propel": "*",
+        "spryker/publisher": "*",
+        "spryker/queue": "*",
+        "spryker/store": "*",
         "spryker/testify": "*"
     },
     "suggest": {

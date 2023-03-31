@@ -16,8 +16,6 @@ use Spryker\Glue\CategoriesRestApi\Dependency\Client\CategoriesRestApiToCategory
 use Spryker\Glue\CategoriesRestApi\Dependency\Client\CategoriesRestApiToStoreClientInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilder;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
-use Spryker\Service\Container\Container;
-use Spryker\Shared\Kernel\Container\GlobalContainer;
 
 /**
  * Auto-generated group annotations
@@ -66,10 +64,10 @@ class CategoriesRestApiResourceTest extends Unit
     {
         parent::_before();
 
-        $globalContainer = new GlobalContainer();
-        $globalContainer->setContainer(new Container([
-            static::SERVICE_RESOURCE_BUILDER => new RestResourceBuilder(),
-        ]));
+        $this->tester->getContainer()->set(
+            static::SERVICE_RESOURCE_BUILDER,
+            new RestResourceBuilder(),
+        );
     }
 
     /**

@@ -27,3 +27,5 @@ suites:
                 - \SprykerTest\Shared\Sales\Helper\SalesDataHelper
                 - \SprykerTest\Zed\Sales\Helper\BusinessHelper
                 - \SprykerTest\Zed\Oms\Helper\OmsHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper

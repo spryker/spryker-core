@@ -9,6 +9,10 @@ namespace Spryker\Zed\Router\Communication\Controller;
 
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 
+/**
+ * @method \Spryker\Zed\Router\Communication\RouterCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Router\Business\RouterFacadeInterface getFacade()
+ */
 class MockController extends AbstractController
 {
     /**

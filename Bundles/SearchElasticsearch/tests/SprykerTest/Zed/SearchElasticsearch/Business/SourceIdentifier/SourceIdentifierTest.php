@@ -26,6 +26,11 @@ use Spryker\Zed\SearchElasticsearch\Business\SourceIdentifier\SourceIdentifier;
 class SourceIdentifierTest extends Unit
 {
     /**
+     * @var string
+     */
+    protected const CURRENT_STORE = 'DE';
+
+    /**
      * @dataProvider sourceIdentifierTranslationDataProvider
      *
      * @param array<string> $supportedSourceIdentifiers
@@ -48,7 +53,7 @@ class SourceIdentifierTest extends Unit
         $sourceIdentifierModel = new SourceIdentifier($this->tester->getModuleConfig());
 
         // Act
-        $resolvedIndexName = $sourceIdentifierModel->translateToIndexName($sourceIdentifier);
+        $resolvedIndexName = $sourceIdentifierModel->translateToIndexName($sourceIdentifier, static::CURRENT_STORE);
 
         // Assert
         $this->assertEquals($expectedIndexName, $resolvedIndexName);
@@ -62,13 +67,13 @@ class SourceIdentifierTest extends Unit
         return [
             'no store prefix one' => [
                 ['foo', 'bar'],
-                $this->buildIndexName('foo', '', $this->getCurrentStore()),
+                $this->buildIndexName('foo', '', static::CURRENT_STORE),
                 '',
                 'foo',
             ],
             'no store prefix two' => [
                 ['foo', 'bar'],
-                 $this->buildIndexName('foo', 'test', $this->getCurrentStore()),
+                 $this->buildIndexName('foo', 'test', static::CURRENT_STORE),
                 'test',
                 'foo',
             ],
@@ -103,13 +108,5 @@ class SourceIdentifierTest extends Unit
         ];
 
         return mb_strtolower(implode('_', array_filter($indexParameters)));
-    }
-
-    /**
-     * @return string
-     */
-    protected function getCurrentStore(): string
-    {
-        return APPLICATION_STORE;
     }
 }

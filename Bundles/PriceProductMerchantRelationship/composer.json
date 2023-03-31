@@ -20,9 +20,11 @@
         "spryker/code-sniffer": "*",
         "spryker/company": "*",
         "spryker/company-business-unit": "*",
+        "spryker/container": "*",
         "spryker/customer": "*",
         "spryker/merchant": "*",
         "spryker/propel": "*",
+        "spryker/store": "*",
         "spryker/testify": "*"
     },
     "suggest": {

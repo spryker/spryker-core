@@ -18,6 +18,7 @@
         "spryker/catalog": "*",
         "spryker/checkout": "*",
         "spryker/code-sniffer": "*",
+        "spryker/container": "*",
         "spryker/customer": "*",
         "spryker/oms": "*",
         "spryker/product-image": "*",

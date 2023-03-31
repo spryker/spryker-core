@@ -84,6 +84,7 @@
 
     <transfer name="Store">
         <property name="name" type="string"/>
+        <property name="countries" type="array" singular="country"/>
     </transfer>
 
     <transfer name="Address">

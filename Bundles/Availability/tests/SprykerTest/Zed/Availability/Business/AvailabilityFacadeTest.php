@@ -52,22 +52,27 @@ class AvailabilityFacadeTest extends Unit
     /**
      * @var string
      */
-    public const ABSTRACT_SKU = '123_availability_test';
+    protected const ABSTRACT_SKU = '123_availability_test';
 
     /**
      * @var string
      */
-    public const CONCRETE_SKU = '123_availability_test-concrete';
+    protected const CONCRETE_SKU = '123_availability_test-concrete';
 
     /**
      * @var int
      */
-    public const ID_STORE = 1;
+    protected const ID_STORE = 1;
 
     /**
      * @var string
      */
-    public const STORE_NAME_DE = 'DE';
+    protected const STORE_NAME_DE = 'DE';
+
+    /**
+     * @var string
+     */
+    protected const STORE_NAME_AT = 'AT';
 
     /**
      * @var string
@@ -386,7 +391,7 @@ class AvailabilityFacadeTest extends Unit
         // Arrange
         $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
         $productTransfer = $this->tester->haveProduct([], ['sku' => static::ABSTRACT_SKU]);
-        $this->tester->haveAvailabilityAbstract($productTransfer, new Decimal(2));
+        $this->tester->haveAvailabilityAbstract($productTransfer, new Decimal(2), $storeTransfer->getIdStore());
 
         // Act
         $productAbstractAvailabilityTransfer = $this->getAvailabilityFacade()
@@ -764,8 +769,8 @@ class AvailabilityFacadeTest extends Unit
     {
         // Arrange
         $this->tester->ensureAvailabilityTableIsEmpty();
-        $storeTransfer1 = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
-        $storeTransfer2 = $this->tester->haveStore([StoreTransfer::NAME => 'US']);
+        $storeTransfer1 = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE], false);
+        $storeTransfer2 = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_AT], false);
         $productTransfer1 = $this->tester->haveProduct(['sku' => static::CONCRETE_SKU]);
         $productTransfer2 = $this->tester->haveProduct(['sku' => static::CONCRETE_SKU . 1]);
         $this->tester->haveAvailabilityConcrete($productTransfer1->getSku(), $storeTransfer1, new Decimal(1));

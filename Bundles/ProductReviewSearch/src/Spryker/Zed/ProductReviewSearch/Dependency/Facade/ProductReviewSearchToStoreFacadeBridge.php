@@ -31,4 +31,20 @@ class ProductReviewSearchToStoreFacadeBridge implements ProductReviewSearchToSto
     {
         return $this->storeFacade->getCurrentStore();
     }
+
+    /**
+     * @return bool
+     */
+    public function isDynamicStoreEnabled(): bool
+    {
+        return $this->storeFacade->isDynamicStoreEnabled();
+    }
+
+    /**
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
+     */
+    public function getAllStores(): array
+    {
+        return $this->storeFacade->getAllStores();
+    }
 }

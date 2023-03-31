@@ -124,4 +124,19 @@ interface PersistentCartClientInterface
      * @return void
      */
     public function reloadQuoteForCustomer(CustomerTransfer $customerTransfer): void;
+
+    /**
+     * Specification:
+     * - Makes Zed request in case of persistent strategy is used and `QuoteTransfer.id` and `QuoteTransfer.items` are empty.
+     * - Retrieves a quote from Persistence using the provided customer in case of persistent strategy is used and `QuoteTransfer.id` and `QuoteTransfer.items` are empty.
+     * - Sets retrieved quote from Persistence in session storage in case of persistent strategy is used and `QuoteTransfer.id` and `QuoteTransfer.items` are empty.
+     * - Executes {@link \Spryker\Client\PersistentCart\QuoteUpdatePluginExecutor\QuoteUpdatePluginExecutorInterface} plugins in case of persistent strategy is used and `QuoteTransfer.id` and `QuoteTransfer.items` are empty.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function syncQuote(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }

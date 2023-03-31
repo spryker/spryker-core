@@ -112,7 +112,7 @@ class StorageDatabaseConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return string
+     * @return class-string<\Propel\Runtime\Adapter\AdapterInterface>
      */
     public function getDbEngineName(): string
     {

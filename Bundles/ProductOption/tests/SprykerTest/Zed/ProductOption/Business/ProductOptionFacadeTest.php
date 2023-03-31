@@ -76,6 +76,16 @@ class ProductOptionFacadeTest extends Unit
     /**
      * @return void
      */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->tester->addDependencies();
+    }
+
+    /**
+     * @return void
+     */
     public function testGetProductAbstractOptionGroupStatusesByProductAbstractIdsShouldReturnStatusesWhenAbstractProductsHaveProductOptions(): void
     {
         // Arrange
@@ -1114,8 +1124,6 @@ class ProductOptionFacadeTest extends Unit
             ->expects($this->any())
             ->method('getCurrentStore')
             ->willReturn($storeTransfer);
-
-        $this->tester->setDependencyStoreFacade($storeFacadeMock);
     }
 
     /**

@@ -27,3 +27,4 @@ suites:
                 - \SprykerTest\Zed\Touch\Helper\TouchAssertionHelper
                 - \SprykerTest\Zed\CmsBlock\Helper\CmsBlockDataHelper
                 - \SprykerTest\Shared\Store\Helper\StoreDataHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper

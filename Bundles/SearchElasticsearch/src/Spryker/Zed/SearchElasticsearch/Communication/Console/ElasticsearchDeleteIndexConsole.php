@@ -10,6 +10,7 @@ namespace Spryker\Zed\SearchElasticsearch\Communication\Console;
 use Generated\Shared\Transfer\ElasticsearchSearchContextTransfer;
 use Generated\Shared\Transfer\SearchContextTransfer;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
 
 /**
  * @method \Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface getFacade()
@@ -66,11 +67,13 @@ class ElasticsearchDeleteIndexConsole extends AbstractIndexNameAwareSearchIndexC
     }
 
     /**
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     *
      * @return int
      */
-    protected function executeForAllIndexes(): int
+    protected function executeForAllIndexes(InputInterface $input): int
     {
-        if ($this->getFacade()->deleteIndexes()) {
+        if ($this->getFacade()->deleteIndexes($this->getStore($input))) {
             $this->info('Search indexes are successfully deleted');
 
             return static::CODE_SUCCESS;

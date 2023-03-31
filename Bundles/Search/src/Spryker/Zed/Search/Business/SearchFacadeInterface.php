@@ -28,10 +28,11 @@ interface SearchFacadeInterface
      * @api
      *
      * @param \Psr\Log\LoggerInterface $messenger
+     * @param string|null $storeName
      *
      * @return void
      */
-    public function install(LoggerInterface $messenger);
+    public function install(LoggerInterface $messenger, ?string $storeName = null);
 
     /**
      * Specification:
@@ -81,7 +82,7 @@ interface SearchFacadeInterface
      * @param string $key
      * @param string $type
      *
-     * @return \Elastica\Document|mixed Deprecated: Only `mixed` will be supported with the next major.
+     * @return \Elastica\Document|mixed (@deprecated Only mixed will be supported with the next major)
      */
     public function getDocument($key, $type);
 
@@ -96,7 +97,7 @@ interface SearchFacadeInterface
      * @param int|null $limit
      * @param int|null $offset
      *
-     * @return \Elastica\ResultSet|mixed|array Deprecated: Only `mixed` will be supported with the next major.
+     * @return \Elastica\ResultSet|mixed|array (@deprecated Only mixed will be supported with the next major)
      */
     public function searchKeys($searchString, $limit = null, $offset = null);
 
@@ -178,7 +179,7 @@ interface SearchFacadeInterface
      *
      * @param string $repositoryName
      * @param string $snapshotName
-     * @param array<string, mixed> $options
+     * @param array $options
      *
      * @return bool
      */
@@ -254,7 +255,7 @@ interface SearchFacadeInterface
      *
      * @param string $repositoryName
      * @param string $snapshotName
-     * @param array<string, mixed> $options
+     * @param array $options
      *
      * @return bool
      */
@@ -331,14 +332,16 @@ interface SearchFacadeInterface
     /**
      * Specification:
      * - Sets up search sources based on the loaded schema definitions if they don't exist.
+     * - Executes stack of {@link \Spryker\Zed\SearchExtension\Dependency\Plugin\StoreAwareInstallPluginInterface} plugins.
      *
      * @api
      *
      * @param \Psr\Log\LoggerInterface $messenger
+     * @param string|null $storeName
      *
      * @return void
      */
-    public function installSources(LoggerInterface $messenger): void;
+    public function installSources(LoggerInterface $messenger, ?string $storeName = null): void;
 
     /**
      * Specification:

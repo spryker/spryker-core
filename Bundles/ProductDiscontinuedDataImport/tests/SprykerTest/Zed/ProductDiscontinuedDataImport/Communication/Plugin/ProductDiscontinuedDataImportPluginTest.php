@@ -93,6 +93,8 @@ class ProductDiscontinuedDataImportPluginTest extends Unit
      */
     public function testImportThrowsExceptionWhenLocalizedNoteMissing(): void
     {
+        $this->markTestSkipped('Marked as skipped while we`re allowing not strict import for localized data for ProductDiscontinued module.');
+
         $this->tester->ensureDatabaseTableIsEmpty();
 
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();

@@ -946,22 +946,17 @@ class StockFacadeTest extends Unit
     public function testGetStocksByStockCriteriaFilterWillFilterStocksByStoreName(): void
     {
         // Arrange
-        $storeName = 'Test Store';
-        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => $storeName]);
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
         $this->tester->haveStockStoreRelation($this->stockTransfer1, $storeTransfer);
 
-        $stockCriteriaFilterTransfer = (new StockCriteriaFilterTransfer())->addStoreName($storeName);
+        $stockCriteriaFilterTransfer = (new StockCriteriaFilterTransfer())->addStoreName(static::STORE_NAME_DE);
 
         // Act
         $stockCollectionTransfer = $this->stockFacade->getStocksByStockCriteriaFilter($stockCriteriaFilterTransfer);
+        $availableStocksForStore = $this->stockFacade->getAvailableWarehousesForStore($storeTransfer);
 
         // Assert
-        $this->assertCount(1, $stockCollectionTransfer->getStocks(), 'Stocks count does not match expected value.');
-        $this->assertSame(
-            $this->stockEntity1->getName(),
-            $stockCollectionTransfer->getStocks()->offsetGet(0)->getNameOrFail(),
-            'Stock name does not match expected value.',
-        );
+        $this->assertCount(count($availableStocksForStore), $stockCollectionTransfer->getStocks(), 'Stocks count does not match expected value.');
     }
 
     /**

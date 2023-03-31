@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\ElasticsearchSearchContextTransfer;
 use Generated\Shared\Transfer\SearchContextTransfer;
 use Spryker\Shared\ErrorHandler\ErrorLogger;
 use Spryker\Zed\SearchElasticsearch\Business\SourceIdentifier\SourceIdentifierInterface;
+use Spryker\Zed\SearchElasticsearch\Dependency\Facade\SearchElasticsearchToStoreFacadeInterface;
 use Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig;
 
 class Index implements IndexInterface
@@ -35,18 +36,26 @@ class Index implements IndexInterface
     protected $config;
 
     /**
+     * @var \Spryker\Zed\SearchElasticsearch\Dependency\Facade\SearchElasticsearchToStoreFacadeInterface
+     */
+    protected $storeFacade;
+
+    /**
      * @param \Elastica\Client $elasticaClient
      * @param \Spryker\Zed\SearchElasticsearch\Business\SourceIdentifier\SourceIdentifierInterface $sourceIdentifier
      * @param \Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig $config
+     * @param \Spryker\Zed\SearchElasticsearch\Dependency\Facade\SearchElasticsearchToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         Client $elasticaClient,
         SourceIdentifierInterface $sourceIdentifier,
-        SearchElasticsearchConfig $config
+        SearchElasticsearchConfig $config,
+        SearchElasticsearchToStoreFacadeInterface $storeFacade
     ) {
         $this->elasticaClient = $elasticaClient;
         $this->sourceIdentifier = $sourceIdentifier;
         $this->config = $config;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -60,17 +69,22 @@ class Index implements IndexInterface
     }
 
     /**
+     * @param string|null $storeName
+     *
      * @return bool
      */
-    public function openIndexes(): bool
+    public function openIndexes(?string $storeName = null): bool
     {
-        $allIndexes = $this->getAllIndexes();
+        if (!$storeName) {
+            $success = true;
+            foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
+                $success &= $this->executeOpenIndexes($storeTransfer->getName());
+            }
 
-        if ($allIndexes) {
-            return $allIndexes->open()->isOk();
+            return (bool)$success;
         }
 
-        return true;
+        return $this->executeOpenIndexes($storeName);
     }
 
     /**
@@ -84,17 +98,23 @@ class Index implements IndexInterface
     }
 
     /**
+     * @param string|null $storeName
+     *
      * @return bool
      */
-    public function closeIndexes(): bool
+    public function closeIndexes(?string $storeName = null): bool
     {
-        $allIndexes = $this->getAllIndexes();
+        if (!$storeName) {
+            $success = true;
 
-        if ($allIndexes) {
-            return $allIndexes->close()->isOk();
+            foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
+                $success &= $this->executeCloseIndexes($storeTransfer->getName());
+            }
+
+            return (bool)$success;
         }
 
-        return true;
+        return $this->executeCloseIndexes($storeName);
     }
 
     /**
@@ -108,17 +128,22 @@ class Index implements IndexInterface
     }
 
     /**
+     * @param string|null $storeName
+     *
      * @return bool
      */
-    public function deleteIndexes(): bool
+    public function deleteIndexes(?string $storeName = null): bool
     {
-        $allIndexes = $this->getAllIndexes();
+        if (!$storeName) {
+            $success = true;
+            foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
+                $success &= $this->executeDeleteIndexes($storeTransfer->getName());
+            }
 
-        if ($allIndexes) {
-            return $allIndexes->delete()->isOk();
+            return (bool)$success;
         }
 
-        return true;
+        return $this->executeDeleteIndexes($storeName);
     }
 
     /**
@@ -177,11 +202,22 @@ class Index implements IndexInterface
     }
 
     /**
+     * @param string|null $storeName
+     *
      * @return array<string>
      */
-    public function getIndexNames(): array
+    public function getIndexNames(?string $storeName = null): array
     {
-        return $this->getAvailableIndexNames();
+        if ($storeName === null) {
+            $result = [];
+            foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
+                $result = array_merge($result, $this->getAvailableIndexNames($storeTransfer->getName()));
+            }
+
+            return $result;
+        }
+
+        return $this->getAvailableIndexNames($storeName);
     }
 
     /**
@@ -220,11 +256,13 @@ class Index implements IndexInterface
     }
 
     /**
+     * @param string $storeName
+     *
      * @return \Elastica\Index|null
      */
-    protected function getAllIndexes(): ?ElasticaIndex
+    protected function getAllIndexes(string $storeName): ?ElasticaIndex
     {
-        $availableIndexNamesFormattedString = $this->getAvailableIndexNamesFormattedString();
+        $availableIndexNamesFormattedString = $this->getAvailableIndexNamesFormattedString($storeName);
 
         if (!$availableIndexNamesFormattedString) {
             return null;
@@ -256,24 +294,76 @@ class Index implements IndexInterface
     }
 
     /**
+     * @param string $storeName
+     *
      * @return string
      */
-    protected function getAvailableIndexNamesFormattedString(): string
+    protected function getAvailableIndexNamesFormattedString(string $storeName): string
     {
-        return implode(',', $this->getAvailableIndexNames());
+        return implode(',', $this->getAvailableIndexNames($storeName));
     }
 
     /**
+     * @param string $storeName
+     *
      * @return array<string>
      */
-    protected function getAvailableIndexNames(): array
+    protected function getAvailableIndexNames(string $storeName): array
     {
         $supportedSourceIdentifiers = $this->config->getSupportedSourceIdentifiers();
 
-        $supportedIndexNames = array_map(function (string $sourceIdentifier) {
-            return $this->sourceIdentifier->translateToIndexName($sourceIdentifier);
+        $supportedIndexNames = array_map(function (string $sourceIdentifier) use ($storeName) {
+            return $this->sourceIdentifier->translateToIndexName($sourceIdentifier, $storeName);
         }, $supportedSourceIdentifiers);
 
         return array_intersect($supportedIndexNames, $this->elasticaClient->getCluster()->getIndexNames());
+    }
+
+    /**
+     * @param string $storeName
+     *
+     * @return bool
+     */
+    protected function executeOpenIndexes(string $storeName): bool
+    {
+        $allIndexes = $this->getAllIndexes($storeName);
+
+        if ($allIndexes) {
+            return $allIndexes->open()->isOk();
+        }
+
+        return true;
+    }
+
+    /**
+     * @param string $storeName
+     *
+     * @return bool
+     */
+    protected function executeCloseIndexes(string $storeName): bool
+    {
+        $allIndexes = $this->getAllIndexes($storeName);
+
+        if ($allIndexes) {
+            return $allIndexes->close()->isOk();
+        }
+
+        return true;
+    }
+
+    /**
+     * @param string $storeName
+     *
+     * @return bool
+     */
+    protected function executeDeleteIndexes(string $storeName): bool
+    {
+        $allIndexes = $this->getAllIndexes($storeName);
+
+        if ($allIndexes) {
+            return $allIndexes->delete()->isOk();
+        }
+
+        return true;
     }
 }

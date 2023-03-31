@@ -31,6 +31,7 @@
         "spryker/code-sniffer": "*",
         "spryker/company": "*",
         "spryker/company-business-unit": "*",
+        "spryker/container": "*",
         "spryker/installer": "*",
         "spryker/propel": "*",
         "spryker/resource-share": "*",

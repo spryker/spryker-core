@@ -7,12 +7,11 @@
 
 namespace Spryker\Client\Quote;
 
-use Spryker\Client\Currency\Plugin\CurrencyPlugin;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Quote\Dependency\Client\QuoteToCurrencyClientBridge;
 use Spryker\Client\Quote\Dependency\Client\QuoteToCustomerClientBridge;
-use Spryker\Client\Quote\Dependency\Plugin\QuoteToCurrencyBridge;
+use Spryker\Client\Quote\Dependency\Client\QuoteToStoreClientBridge;
 
 /**
  * @method \Spryker\Client\Quote\QuoteConfig getConfig()
@@ -23,11 +22,6 @@ class QuoteDependencyProvider extends AbstractDependencyProvider
      * @var string
      */
     public const CLIENT_SESSION = 'session client';
-
-    /**
-     * @var string
-     */
-    public const CURRENCY_PLUGIN = 'currency plugin';
 
     /**
      * @var string
@@ -55,6 +49,16 @@ class QuoteDependencyProvider extends AbstractDependencyProvider
     public const PLUGINS_DATABASE_STRATEGY_PRE_CHECK_PLUGINS = 'PLUGINS_DATABASE_STRATEGY_PRE_CHECK_PLUGINS';
 
     /**
+     * @var string
+     */
+    public const CLIENT_STORE = 'CLIENT_STORE';
+
+    /**
+     * @var string
+     */
+    public const PLUGINS_DATABASE_STRATEGY_READER_PLUGINS = 'PLUGINS_DATABASE_STRATEGY_READER_PLUGINS';
+
+    /**
      * @param \Spryker\Client\Kernel\Container $container
      *
      * @return \Spryker\Client\Kernel\Container
@@ -62,12 +66,13 @@ class QuoteDependencyProvider extends AbstractDependencyProvider
     public function provideServiceLayerDependencies(Container $container)
     {
         $container = $this->addSessionClient($container);
-        $container = $this->addCurrencyPlugin($container);
         $container = $this->addQuoteTransferExpanderPlugins($container);
         $container = $this->addCustomerClient($container);
         $container = $this->addZedSevice($container);
         $container = $this->addCurrencyClient($container);
         $container = $this->addDatabaseStrategyPreCheckPlugins($container);
+        $container = $this->addStoreClient($container);
+        $container = $this->addDatabaseStrategyReaderPlugins($container);
 
         return $container;
     }
@@ -81,20 +86,6 @@ class QuoteDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::CLIENT_SESSION, function (Container $container) {
             return $container->getLocator()->session()->client();
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Client\Kernel\Container $container
-     *
-     * @return \Spryker\Client\Kernel\Container
-     */
-    protected function addCurrencyPlugin(Container $container)
-    {
-        $container->set(static::CURRENCY_PLUGIN, function (Container $container) {
-            return new QuoteToCurrencyBridge(new CurrencyPlugin());
         });
 
         return $container;
@@ -184,6 +175,42 @@ class QuoteDependencyProvider extends AbstractDependencyProvider
      * @return array<\Spryker\Client\QuoteExtension\Dependency\Plugin\DatabaseStrategyPreCheckPluginInterface>
      */
     protected function getDatabaseStrategyPreCheckPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addStoreClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_STORE, function (Container $container) {
+            return new QuoteToStoreClientBridge($container->getLocator()->store()->client());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addDatabaseStrategyReaderPlugins(Container $container)
+    {
+        $container->set(static::PLUGINS_DATABASE_STRATEGY_READER_PLUGINS, function () {
+            return $this->getDatabaseStrategyReaderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Client\QuoteExtension\Dependency\Plugin\DatabaseStrategyReaderPluginInterface>
+     */
+    protected function getDatabaseStrategyReaderPlugins(): array
     {
         return [];
     }

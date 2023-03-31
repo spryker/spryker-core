@@ -9,7 +9,7 @@
         "spryker/category-image": "^1.1.0",
         "spryker/glue-json-api-convention-extension": "^1.0.0",
         "spryker/kernel": "^3.30.0",
-        "spryker/locale": "^3.0.0",
+        "spryker/locale": "^3.0.0 || ^4.0.0",
         "spryker/store": "^1.12.0",
         "spryker/symfony": "^3.0.0",
         "spryker/transfer": "^3.27.0"
@@ -17,6 +17,7 @@
     "require-dev": {
         "spryker/code-sniffer": "*",
         "spryker/config": "*",
+        "spryker/container": "*",
         "spryker/glue-application": "*",
         "spryker/glue-backend-api-application": "*",
         "spryker/propel": "*",

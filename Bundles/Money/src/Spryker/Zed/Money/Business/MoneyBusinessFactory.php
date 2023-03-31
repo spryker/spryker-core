@@ -17,8 +17,11 @@ use Spryker\Shared\Money\Formatter\MoneyFormatterCollection;
 use Spryker\Shared\Money\Mapper\TransferToMoneyMapper;
 use Spryker\Shared\Money\Parser\Parser;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Money\Business\Model\CurrencyReader;
+use Spryker\Zed\Money\Business\Model\CurrencyReaderInterface;
 use Spryker\Zed\Money\Business\Model\Mapper\MoneyToTransferMapper;
 use Spryker\Zed\Money\Dependency\Facade\MoneyToLocaleFacadeInterface;
+use Spryker\Zed\Money\Dependency\Facade\MoneyToStoreInterface;
 use Spryker\Zed\Money\MoneyDependencyProvider;
 
 /**
@@ -27,14 +30,14 @@ use Spryker\Zed\Money\MoneyDependencyProvider;
 class MoneyBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Shared\Money\Builder\MoneyBuilderInterface
+     * @return \Spryker\Shared\Money\Builder\MoneyBuilder
      */
     public function createMoneyBuilder()
     {
         return new MoneyBuilder(
             $this->createMoneyToTransferMapper(),
             $this->createDecimalToIntegerConverter(),
-            $this->getCurrencyFacade()->getCurrent()->getCodeOrFail(),
+            $this->getCurrencyIsoCode(),
         );
     }
 
@@ -156,5 +159,32 @@ class MoneyBusinessFactory extends AbstractBusinessFactory
     public function getLocaleFacade(): MoneyToLocaleFacadeInterface
     {
         return $this->getProvidedDependency(MoneyDependencyProvider::FACADE_LOCALE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Money\Dependency\Facade\MoneyToStoreInterface
+     */
+    public function getStoreFacade(): MoneyToStoreInterface
+    {
+        return $this->getProvidedDependency(MoneyDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Money\Business\Model\CurrencyReaderInterface
+     */
+    public function createCurrencyReader(): CurrencyReaderInterface
+    {
+        return new CurrencyReader(
+            $this->getStoreFacade(),
+            $this->getCurrencyFacade(),
+        );
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getCurrencyIsoCode(): ?string
+    {
+        return $this->createCurrencyReader()->readCurrencyIsoCode();
     }
 }

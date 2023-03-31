@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
+use Spryker\Zed\Store\StoreDependencyProvider;
 
 /**
  * Auto-generated group annotations
@@ -34,7 +35,7 @@ class ProductManagementTest extends FacadeTestAbstract
     /**
      * @var string
      */
-    protected const STORE_NAME_US = 'US';
+    protected const STORE_NAME_AT = 'AT';
 
     /**
      * @return void
@@ -177,9 +178,11 @@ class ProductManagementTest extends FacadeTestAbstract
     public function testCreateProductAbstractSavesStoreRelation(): void
     {
         // Assign
+        $this->tester->setDependency(StoreDependencyProvider::PLUGINS_STORE_COLLECTION_EXPANDER, []);
+
         $expectedIdStores = [
             $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE])->getIdStore(),
-            $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_US])->getIdStore(),
+            $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_AT])->getIdStore(),
         ];
         $this->productAbstractTransfer->setStoreRelation(
             (new StoreRelationTransfer())
@@ -203,9 +206,11 @@ class ProductManagementTest extends FacadeTestAbstract
     public function testSaveProductAbstractUpdatesStoreRelation(): void
     {
         // Assign
+        $this->tester->setDependency(StoreDependencyProvider::PLUGINS_STORE_COLLECTION_EXPANDER, []);
+
         $expectedIdStores = [
             $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE])->getIdStore(),
-            $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_US])->getIdStore(),
+            $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_AT])->getIdStore(),
         ];
         $this->productAbstractTransfer->setStoreRelation(
             (new StoreRelationTransfer())
@@ -232,9 +237,11 @@ class ProductManagementTest extends FacadeTestAbstract
     public function testFindProductAbstractByIdRetrievesStoreRelation(): void
     {
         // Assign
+        $this->tester->setDependency(StoreDependencyProvider::PLUGINS_STORE_COLLECTION_EXPANDER, []);
+
         $expectedIdStores = [
             $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE])->getIdStore(),
-            $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_US])->getIdStore(),
+            $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_AT])->getIdStore(),
         ];
         $this->productAbstractTransfer->setStoreRelation(
             (new StoreRelationTransfer())

@@ -10,8 +10,6 @@ namespace SprykerTest\Zed\CompanyUserStorage\Communication\Plugin\Event\Listener
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage;
-use Spryker\Client\Kernel\Container;
-use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Zed\Company\Dependency\CompanyEvents;
 use Spryker\Zed\CompanyUserStorage\Communication\Plugin\Event\Listener\CompanyUserCompanyStoragePublishListener;
 use Spryker\Zed\CompanyUserStorage\Persistence\CompanyUserStorageRepository;
@@ -58,11 +56,7 @@ class CompanyUserCompanyStoragePublishListenerTest extends Unit
     {
         parent::setUp();
 
-        $this->tester->setDependency(QueueDependencyProvider::QUEUE_ADAPTERS, function (Container $container) {
-            return [
-                $container->getLocator()->rabbitMq()->client()->createQueueAdapter(),
-            ];
-        });
+        $this->tester->addDependencies();
 
         $this->companyUserStorageRepository = new CompanyUserStorageRepository();
         $this->companyUserCompanyStoragePublishListener = new CompanyUserCompanyStoragePublishListener();

@@ -8,6 +8,7 @@
 namespace Spryker\Yves\Currency\Controller;
 
 use Spryker\Yves\Kernel\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -31,7 +32,7 @@ class CurrencySwitchController extends AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function indexAction(Request $request)
+    public function indexAction(Request $request): RedirectResponse
     {
         $currencyIsoCode = $request->get(static::URL_PARAM_CURRENCY_ISO_CODE);
         $this->getClient()->setCurrentCurrencyIsoCode($currencyIsoCode);

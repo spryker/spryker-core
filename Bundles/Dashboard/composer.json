@@ -15,6 +15,7 @@
         "spryker/gui": "*",
         "spryker/propel": "*",
         "spryker/router": "*",
+        "spryker/store": "*",
         "spryker/testify": "*",
         "spryker/twig": "*",
         "spryker/zed-navigation": "*"

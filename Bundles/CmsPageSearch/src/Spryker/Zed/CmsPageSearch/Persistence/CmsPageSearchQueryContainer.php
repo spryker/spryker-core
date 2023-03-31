@@ -29,8 +29,7 @@ class CmsPageSearchQueryContainer extends AbstractQueryContainer implements CmsP
     public function queryLocalesWithLocaleNames(array $localeNames)
     {
         return $this->getFactory()
-            ->getLocaleQueryContainer()
-            ->queryLocales()
+            ->getLocalePropelQuery()
             ->filterByLocaleName_In($localeNames);
     }
 

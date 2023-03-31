@@ -77,6 +77,13 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/ZedRequest/Business/ZedRequestFacade.php",
+        "description": "Zed Business Layer - Facade: The method `Spryker\\Zed\\ZedRequest\\Business\\ZedRequestFacade::getCurrentZedRequest()()` is using an invalid return type `\\Spryker\\Shared\\ZedRequest\\Client\\AbstractRequest` which violates the rule \"Every Facade should only return native types or transfer objects.\"",
+        "rule": "FacadeReturnValueRule",
+        "ruleset": "Spryker Zed",
+        "priority": "1"
+    },
+    {
         "fileName": "src/Spryker/Zed/ZedRequest/Dependency/Facade/ZedRequestToMessengerBridge.php",
         "description": "Bridges: Method `getStoredMessages()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",

@@ -687,9 +687,6 @@ class AbstractProductFormDataProvider
             }
         }
 
-        /** @var array<string> $productAttributeValues */
-        $productAttributeValues = [];
-
         $values = [];
         foreach ($productAttributeKeys as $type) {
             $isDefined = $this->attributeTransferCollection->has($type);
@@ -698,8 +695,7 @@ class AbstractProductFormDataProvider
             $id = null;
             $inputType = static::DEFAULT_INPUT_TYPE;
             $allowInput = false;
-            $value = $productAttributeValues[$type] ?? '';
-            $shouldBeTextArea = mb_strlen($value) > 255;
+            $value = '';
             $isSuper = false;
 
             if ($isDefined) {
@@ -712,9 +708,7 @@ class AbstractProductFormDataProvider
                 $isSuper = $attributeTransfer->getIsSuper();
             }
 
-            if ($shouldBeTextArea) {
-                $inputType = static::TEXT_AREA_INPUT_TYPE;
-            }
+            $inputType = static::TEXT_AREA_INPUT_TYPE;
 
             $checkboxDisabled = false;
             $valueDisabled = true;
@@ -738,7 +732,7 @@ class AbstractProductFormDataProvider
             $id = $attributeTransfer->getIdProductManagementAttribute();
             $allowInput = $attributeTransfer->getAllowInput();
 
-            $value = $productAttributeValues[$type] ?? null;
+            $value = null;
 
             $checkboxDisabled = false;
             $valueDisabled = true;

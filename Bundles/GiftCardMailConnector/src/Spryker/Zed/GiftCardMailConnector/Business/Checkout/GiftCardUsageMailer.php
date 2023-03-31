@@ -68,6 +68,7 @@ class GiftCardUsageMailer implements GiftCardUsageMailerInterface
     {
         $mailTransfer->setType(GiftCardUsageMailTypePlugin::MAIL_TYPE);
         $mailTransfer->setCustomer($quoteTransfer->getCustomer());
+        $mailTransfer->setStoreName($quoteTransfer->getStoreOrFail()->getNameOrFail());
 
         foreach ($quoteTransfer->getGiftCards() as $giftCardTransfer) {
             $giftCardTransfer = $this->giftCardFacade->findById($giftCardTransfer->getIdGiftCard());

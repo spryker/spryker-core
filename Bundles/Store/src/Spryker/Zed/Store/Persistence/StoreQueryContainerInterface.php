@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Store\Persistence;
 
 /**
+ * @deprecated Will be removed without replacement.
+ *
  * @method \Spryker\Zed\Store\Persistence\StorePersistenceFactory getFactory()
  */
 interface StoreQueryContainerInterface
@@ -30,7 +32,7 @@ interface StoreQueryContainerInterface
      *
      * @api
      *
-     * @param array $stores
+     * @param array<string> $stores
      *
      * @return \Orm\Zed\Store\Persistence\SpyStoreQuery
      */

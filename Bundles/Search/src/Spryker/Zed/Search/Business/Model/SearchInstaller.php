@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Search\Business\Model;
 
 use Psr\Log\LoggerInterface;
+use Spryker\Zed\SearchExtension\Dependency\Plugin\StoreAwareInstallPluginInterface;
 
 class SearchInstaller implements SearchInstallerInterface
 {
@@ -34,13 +35,21 @@ class SearchInstaller implements SearchInstallerInterface
     }
 
     /**
+     * @param string|null $storeName
+     *
      * @return void
      */
-    public function install()
+    public function install(?string $storeName = null): void
     {
         foreach ($this->installer as $installer) {
             if ($installer instanceof SearchInstallerInterface) {
                 $installer->install();
+
+                continue;
+            }
+
+            if ($installer instanceof StoreAwareInstallPluginInterface) {
+                $installer->install($this->logger, $storeName);
 
                 continue;
             }

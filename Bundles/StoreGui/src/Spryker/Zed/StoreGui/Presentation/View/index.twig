@@ -1,0 +1,51 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Store: %s' | format(store.name) | trans %}
+
+{% block head_title -%}
+    {{ widget_title }}
+{%- endblock %}
+
+{% block section_title %}{{ widget_title }}{% endblock %}
+
+{% block action %}
+    {{ backActionButton(url('/store-gui/list'), 'Back to Stores' | trans) }}
+    {{ editActionButton('/store-gui/edit?id-store=' ~ store.idStore, 'Edit Store' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Store' | trans } %}
+
+        {% block widget_content %}
+            <div class="row">
+                <div class="col-xs-12 col-md-6 col-lg-3">
+                    <dl>
+                        <dt>{{ 'Store ID' | trans }}</dt>
+                        <dd>{{ store.idStore }}</dd>
+                    </dl>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <dl>
+                        <dt>{{ 'Name' | trans }}</dt>
+                        <dd>{{ store.name }}</dd>
+                    </dl>
+                </div>
+            </div>
+
+            {% for templatePath, data in additional_blocks %}
+                <hr />
+                <div class="row">
+                    <div class="col-xs-12">
+                        {{ include(templatePath, data) }}
+                    </div>
+                </div>
+            {% endfor %}
+
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}

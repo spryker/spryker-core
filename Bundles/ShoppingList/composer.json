@@ -29,6 +29,7 @@
     "require-dev": {
         "spryker/code-sniffer": "*",
         "spryker/company": "*",
+        "spryker/container": "*",
         "spryker/installer": "*",
         "spryker/propel": "*",
         "spryker/quote": "*",

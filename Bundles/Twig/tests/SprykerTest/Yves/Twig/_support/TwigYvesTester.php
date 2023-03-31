@@ -44,7 +44,7 @@ class TwigYvesTester extends Actor
      */
     public function getDefaultPathProjectWithStore(): string
     {
-        return rtrim(APPLICATION_ROOT_DIR, '/') . '/src/Foo/Yves/%sDE/Theme/default';
+        return rtrim(APPLICATION_ROOT_DIR, '/') . '/src/Foo/Yves/%s' . APPLICATION_CODE_BUCKET . '/Theme/default';
     }
 
     /**
@@ -60,7 +60,7 @@ class TwigYvesTester extends Actor
      */
     public function getCustomPathProjectWithStore(): string
     {
-        return rtrim(APPLICATION_ROOT_DIR, '/') . '/src/Foo/Yves/%sDE/Theme/custom';
+        return rtrim(APPLICATION_ROOT_DIR, '/') . '/src/Foo/Yves/%s' . APPLICATION_CODE_BUCKET . '/Theme/custom';
     }
 
     /**
@@ -76,7 +76,7 @@ class TwigYvesTester extends Actor
      */
     public function getDefaultPathProjectSharedWithStore(): string
     {
-        return rtrim(APPLICATION_ROOT_DIR, '/') . '/src/Foo/Shared/%sDE/Theme/default';
+        return rtrim(APPLICATION_ROOT_DIR, '/') . '/src/Foo/Shared/%s' . APPLICATION_CODE_BUCKET . '/Theme/default';
     }
 
     /**
@@ -92,7 +92,7 @@ class TwigYvesTester extends Actor
      */
     public function getCustomPathProjectSharedWithStore(): string
     {
-        return rtrim(APPLICATION_ROOT_DIR, '/') . '/src/Foo/Shared/%sDE/Theme/custom';
+        return rtrim(APPLICATION_ROOT_DIR, '/') . '/src/Foo/Shared/%s' . APPLICATION_CODE_BUCKET . '/Theme/custom';
     }
 
     /**

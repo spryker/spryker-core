@@ -38,15 +38,20 @@ abstract class AbstractRelatedProductRelationTable extends AbstractRelatedProduc
      */
     protected function configureHeader(TableConfiguration $config)
     {
-        $config->setHeader([
+        $header = [
             static::COL_SELECT_CHECKBOX => 'Select',
             SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT => 'ID',
             SpyProductAbstractTableMap::COL_SKU => 'SKU',
             SpyProductAbstractLocalizedAttributesTableMap::COL_NAME => 'Name',
             RelatedProductTableQueryBuilder::RESULT_FIELD_PRODUCT_ABSTRACT_CATEGORY_NAMES_CSV => 'Categories',
-            RelatedProductTableQueryBuilder::RESULT_FIELD_PRODUCT_ABSTRACT_PRICE => 'Price',
             RelatedProductTableQueryBuilder::RESULT_FIELD_PRODUCT_CONCRETE_STATES_CSV => 'Status',
-        ]);
+        ];
+
+        if (!$this->storeFacade->isDynamicStoreEnabled()) {
+            $header[RelatedProductTableQueryBuilder::RESULT_FIELD_PRODUCT_ABSTRACT_PRICE] = 'Price';
+        }
+
+        $config->setHeader($header);
     }
 
     /**

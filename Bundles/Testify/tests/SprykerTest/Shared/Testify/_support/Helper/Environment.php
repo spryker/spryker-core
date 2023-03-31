@@ -55,6 +55,9 @@ class Environment extends Module
 
         defined('APPLICATION_CODE_BUCKET') || define('APPLICATION_CODE_BUCKET', $this->getCodeBucket());
         putenv('APPLICATION_CODE_BUCKET=' . APPLICATION_CODE_BUCKET);
+
+        defined('SPRYKER_ACTIVE_STORES') || define('SPRYKER_ACTIVE_STORES', 'DE,AT');
+        putenv('SPRYKER_ACTIVE_STORES=' . SPRYKER_ACTIVE_STORES);
     }
 
     /**

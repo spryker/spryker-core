@@ -30,6 +30,8 @@ suites:
                 - \SprykerTest\Shared\Quote\Helper\PersistentQuoteHelper
                 - \SprykerTest\Shared\SharedCart\Helper\SharedCartHelper
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
     Communication:
         path: Communication
         actor: QuotePermissionGroupQuoteExpanderPluginTester
@@ -48,3 +50,5 @@ suites:
                 - \SprykerTest\Shared\Quote\Helper\PersistentQuoteHelper
                 - \SprykerTest\Shared\SharedCart\Helper\SharedCartHelper
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper

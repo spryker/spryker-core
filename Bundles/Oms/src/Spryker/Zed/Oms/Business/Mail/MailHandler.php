@@ -61,7 +61,8 @@ class MailHandler
         $mailTransfer = (new MailTransfer())
             ->setOrder($orderTransfer)
             ->setType(OrderConfirmationMailTypePlugin::MAIL_TYPE)
-            ->setLocale($orderTransfer->getLocale());
+            ->setLocale($orderTransfer->getLocale())
+            ->setStoreName($salesOrderEntity->getStore());
 
         $mailTransfer = $this->expandOrderMailTransfer($mailTransfer, $orderTransfer);
 
@@ -81,6 +82,7 @@ class MailHandler
         $mailTransfer->setOrder($orderTransfer);
         $mailTransfer->setType(OrderShippedMailTypePlugin::MAIL_TYPE);
         $mailTransfer->setLocale($orderTransfer->getLocale());
+        $mailTransfer->setStoreName($orderTransfer->getStore());
 
         $mailTransfer = $this->expandOrderMailTransfer($mailTransfer, $orderTransfer);
 

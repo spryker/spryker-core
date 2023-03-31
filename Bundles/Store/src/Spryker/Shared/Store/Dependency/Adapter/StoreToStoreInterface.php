@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\Store\Dependency\Adapter;
 
+/**
+ * @deprecated Will be removed after dynamic multi-store is always enabled.
+ */
 interface StoreToStoreInterface
 {
     /**
@@ -20,21 +23,21 @@ interface StoreToStoreInterface
     public function getAllStoreNames();
 
     /**
-     * @deprecated Unused method will be removed in next major
+     * @deprecated Unused method will be removed in next major.
      *
      * @return array<string>
      */
     public function getCurrentStoreAvailableCurrencyIsoCodes();
 
     /**
-     * @deprecated Unused method will be removed in next major
+     * @deprecated Unused method will be removed in next major.
      *
      * @return string
      */
     public function getCurrentStoreSelectedLocaleIsoCode();
 
     /**
-     * @deprecated Unused method will be removed in next major
+     * @deprecated Unused method will be removed in next major.
      *
      * @return array<string>
      */
@@ -43,14 +46,14 @@ interface StoreToStoreInterface
     /**
      * @param string $storeName
      *
-     * @return array
+     * @return array<string>
      */
     public function getAvailableCurrenciesFor($storeName);
 
     /**
      * @param string $storeName
      *
-     * @return array
+     * @return array<string>
      */
     public function getAvailableLocaleIsoCodesFor($storeName);
 
@@ -67,7 +70,7 @@ interface StoreToStoreInterface
     public function getCurrentStoreSelectedCurrencyIsoCode();
 
     /**
-     * @return array
+     * @return array<mixed>
      */
     public function getQueuePools();
 

@@ -105,7 +105,7 @@ class RestRequestValidatorBusinessFactory extends AbstractBusinessFactory
             $this->getFinderAdapter(),
             $this->getConfig(),
             $this->getKernelFacade(),
-            $this->getStore(),
+            $this->getStoreFacade(),
         );
     }
 

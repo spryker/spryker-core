@@ -8,10 +8,14 @@
 namespace SprykerTest\Zed\MerchantProductOfferStorage;
 
 use Codeception\Actor;
+use Codeception\Stub;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOfferStoreQuery;
 use Orm\Zed\ProductOfferStorage\Persistence\SpyProductConcreteProductOffersStorageQuery;
 use Orm\Zed\ProductOfferStorage\Persistence\SpyProductOfferStorageQuery;
 use Propel\Runtime\Collection\ObjectCollection;
+use Spryker\Client\Store\StoreDependencyProvider as ClientStoreDependencyProvider;
+use Spryker\Client\StoreExtension\Dependency\Plugin\StoreExpanderPluginInterface;
 
 /**
  * @method void wantToTest($text)
@@ -30,6 +34,26 @@ use Propel\Runtime\Collection\ObjectCollection;
 class MerchantProductOfferStorageTester extends Actor
 {
     use _generated\MerchantProductOfferStorageTesterActions;
+
+    /**
+     * @var string
+     */
+    protected const DEFAULT_STORE = 'DE';
+
+    /**
+     * @var string
+     */
+    protected const DEFAULT_CURRENCY = 'EUR';
+
+    /**
+     * @return void
+     */
+    public function addDependencies(): void
+    {
+        $this->setDependency(ClientStoreDependencyProvider::PLUGINS_STORE_EXPANDER, [
+            $this->createStoreStorageStoreExpanderPluginMock(),
+        ]);
+    }
 
     /**
      * @return void
@@ -59,5 +83,21 @@ class MerchantProductOfferStorageTester extends Actor
     public function getProductOfferEntities(string $productOfferReference): ObjectCollection
     {
         return SpyProductOfferStorageQuery::create()->findByProductOfferReference($productOfferReference);
+    }
+
+    /**
+     * @return \Spryker\Client\StoreExtension\Dependency\Plugin\StoreExpanderPluginInterface
+     */
+    protected function createStoreStorageStoreExpanderPluginMock(): StoreExpanderPluginInterface
+    {
+        $storeTransfer = (new StoreTransfer())
+            ->setName(static::DEFAULT_STORE)
+            ->setDefaultCurrencyIsoCode(static::DEFAULT_CURRENCY);
+
+        $storeStorageStoreExpanderPluginMock = Stub::makeEmpty(StoreExpanderPluginInterface::class, [
+            'expand' => $storeTransfer,
+        ]);
+
+        return $storeStorageStoreExpanderPluginMock;
     }
 }

@@ -10,7 +10,7 @@ namespace Spryker\Zed\Country\Business\Cldr;
 interface CldrDataProviderInterface
 {
     /**
-     * @return array
+     * @return array<mixed>
      */
-    public function getCldrData();
+    public function getCldrData(): array;
 }

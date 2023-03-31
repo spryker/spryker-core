@@ -24,9 +24,9 @@ class StoreClient extends AbstractClient implements StoreClientInterface
      */
     public function getCurrentStore()
     {
-        return $this->getFactory()
-            ->createStoreReader()
-            ->getCurrentStore();
+        return $this->getStoreByName(
+            $this->getFactory()->getStoreService(),
+        );
     }
 
     /**
@@ -43,5 +43,29 @@ class StoreClient extends AbstractClient implements StoreClientInterface
         return $this->getFactory()
             ->createStoreReader()
             ->getStoreByName($storeName);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isDynamicStoreEnabled(): bool
+    {
+        return $this->getFactory()->getIsDynamicStoreModeEnabled();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isCurrentStoreDefined(): bool
+    {
+        return $this->getFactory()->getCurrentStoreDefinedFlag();
     }
 }

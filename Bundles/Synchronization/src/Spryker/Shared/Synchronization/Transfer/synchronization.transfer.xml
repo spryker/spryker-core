@@ -15,6 +15,7 @@
         <property name="value" type="array" singular="value"/>
         <property name="resource" type="string"/>
         <property name="params" type="array" singular="params"/>
+        <property name="store" type="string"/>
     </transfer>
 
     <transfer name="QueueReceiveMessage">
@@ -38,11 +39,16 @@
         <property name="index" type="string"/>
         <property name="id" type="string"/>
         <property name="data" type="array" singular="data"/>
+        <property name="storeName" type="string"/>
     </transfer>
 
     <transfer name="SynchronizationDataQueryExpanderStrategyConfiguration">
         <property name="offset" type="int"/>
         <property name="chunkSize" type="int"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="name" type="string"/>
     </transfer>
 
 </transfers>

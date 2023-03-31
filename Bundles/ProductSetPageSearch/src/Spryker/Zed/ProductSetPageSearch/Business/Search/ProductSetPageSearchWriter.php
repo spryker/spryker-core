@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductSetPageSearchTransfer;
 use Generated\Shared\Transfer\StorageProductImageTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\ProductSetPageSearch\Persistence\SpyProductSetPageSearch;
 use Spryker\Zed\ProductSetPageSearch\Business\DataMapper\ProductSetSearchDataMapperInterface;
 use Spryker\Zed\ProductSetPageSearch\Dependency\Facade\ProductSetPageSearchToProductSetInterface;
@@ -44,11 +45,6 @@ class ProductSetPageSearchWriter implements ProductSetPageSearchWriterInterface
      * @var \Spryker\Zed\ProductSetPageSearch\Dependency\Facade\ProductSetPageSearchToProductSetInterface
      */
     protected $productSetFacade;
-
-    /**
-     * @var \Spryker\Shared\Kernel\Store
-     */
-    protected $store;
 
     /**
      * @deprecated Use {@link \Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()} instead.
@@ -96,7 +92,16 @@ class ProductSetPageSearchWriter implements ProductSetPageSearchWriterInterface
         $spyProductSetEntities = $this->findProductSetLocalizedEntities($productSetIds);
         $spyProductSetPageSearchEntities = $this->findProductSetPageSearchEntitiesByProductSetIds($productSetIds);
 
-        $this->storeData($spyProductSetEntities, $spyProductSetPageSearchEntities);
+        if (!$this->storeFacade->isDynamicStoreEnabled()) {
+            $storeTransfer = $this->storeFacade->getCurrentStore();
+            $this->storeData($spyProductSetEntities, $spyProductSetPageSearchEntities, $storeTransfer);
+
+            return;
+        }
+
+        foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
+            $this->storeData($spyProductSetEntities, $spyProductSetPageSearchEntities, $storeTransfer);
+        }
     }
 
     /**
@@ -117,32 +122,37 @@ class ProductSetPageSearchWriter implements ProductSetPageSearchWriterInterface
     /**
      * @param array $spyProductSetLocalizedEntities
      * @param array $spyProductSetStorageEntities
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return void
      */
-    protected function storeData(array $spyProductSetLocalizedEntities, array $spyProductSetStorageEntities)
+    protected function storeData(array $spyProductSetLocalizedEntities, array $spyProductSetStorageEntities, StoreTransfer $storeTransfer)
     {
         foreach ($spyProductSetLocalizedEntities as $spyProductSetLocalizedEntity) {
             $idProductSet = $spyProductSetLocalizedEntity['SpyProductSet'][static::COL_ID_PRODUCT_SET];
             $localeName = $spyProductSetLocalizedEntity['SpyLocale']['locale_name'];
             if (isset($spyProductSetStorageEntities[$idProductSet][$localeName])) {
-                $this->storeDataSet($spyProductSetLocalizedEntity, $spyProductSetStorageEntities[$idProductSet][$localeName]);
+                $this->storeDataSet($spyProductSetLocalizedEntity, $storeTransfer, $spyProductSetStorageEntities[$idProductSet][$localeName]);
 
                 continue;
             }
 
-            $this->storeDataSet($spyProductSetLocalizedEntity);
+            $this->storeDataSet($spyProductSetLocalizedEntity, $storeTransfer);
         }
     }
 
     /**
      * @param array $spyProductSetLocalizedEntity
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param \Orm\Zed\ProductSetPageSearch\Persistence\SpyProductSetPageSearch|null $spyProductSetPageSearchEntity
      *
      * @return void
      */
-    protected function storeDataSet(array $spyProductSetLocalizedEntity, ?SpyProductSetPageSearch $spyProductSetPageSearchEntity = null)
-    {
+    protected function storeDataSet(
+        array $spyProductSetLocalizedEntity,
+        StoreTransfer $storeTransfer,
+        ?SpyProductSetPageSearch $spyProductSetPageSearchEntity = null
+    ) {
         if ($spyProductSetPageSearchEntity === null) {
             $spyProductSetPageSearchEntity = new SpyProductSetPageSearch();
         }
@@ -155,7 +165,7 @@ class ProductSetPageSearchWriter implements ProductSetPageSearchWriterInterface
             return;
         }
 
-        $productSetPageSearchTransfer = $this->getProductSetPageSearchTransfer($spyProductSetLocalizedEntity);
+        $productSetPageSearchTransfer = $this->getProductSetPageSearchTransfer($spyProductSetLocalizedEntity, $storeTransfer);
         $localeTransfer = (new LocaleTransfer())
             ->setLocaleName($spyProductSetLocalizedEntity['SpyLocale']['locale_name'])
             ->setIdLocale($spyProductSetLocalizedEntity['SpyLocale']['id_locale']);
@@ -172,11 +182,14 @@ class ProductSetPageSearchWriter implements ProductSetPageSearchWriterInterface
 
     /**
      * @param array $spyProductAbstractLocalizedEntity
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return \Generated\Shared\Transfer\ProductSetPageSearchTransfer
      */
-    protected function getProductSetPageSearchTransfer(array $spyProductAbstractLocalizedEntity)
-    {
+    protected function getProductSetPageSearchTransfer(
+        array $spyProductAbstractLocalizedEntity,
+        StoreTransfer $storeTransfer
+    ) {
         $productAbstractIds = [];
         foreach ($spyProductAbstractLocalizedEntity['SpyProductSet']['SpyProductAbstractSets'] as $spyProductAbstractSet) {
             $productAbstractIds[] = $spyProductAbstractSet['fk_product_abstract'];
@@ -185,7 +198,7 @@ class ProductSetPageSearchWriter implements ProductSetPageSearchWriterInterface
         $productSetPageSearchTransfer->fromArray($spyProductAbstractLocalizedEntity, true);
         $productSetPageSearchTransfer->fromArray($spyProductAbstractLocalizedEntity['SpyProductSet'], true);
         $productSetPageSearchTransfer->setLocale($spyProductAbstractLocalizedEntity['SpyLocale']['locale_name']);
-        $productSetPageSearchTransfer->setStore($this->storeFacade->getCurrentStore()->getNameOrFail());
+        $productSetPageSearchTransfer->setStore($storeTransfer->getNameOrFail());
         $productSetPageSearchTransfer->setIdProductAbstracts($productAbstractIds);
         $productSetPageSearchTransfer->setType('product_set');
         $productSetPageSearchTransfer->setImageSets($this->getProductSetImageSets($spyProductAbstractLocalizedEntity['fk_product_set'], $spyProductAbstractLocalizedEntity['SpyLocale']['id_locale']));

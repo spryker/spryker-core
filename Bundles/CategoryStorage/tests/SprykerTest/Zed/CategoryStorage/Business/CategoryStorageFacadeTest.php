@@ -16,8 +16,6 @@ use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryStoreTableMap;
 use Orm\Zed\CategoryStorage\Persistence\SpyCategoryTreeStorageQuery;
-use Spryker\Client\Kernel\Container;
-use Spryker\Client\Queue\QueueDependencyProvider;
 
 /**
  * Auto-generated group annotations
@@ -60,6 +58,16 @@ class CategoryStorageFacadeTest extends Unit
     protected const KEY_CATEGORY_NODE_ID = 'category-node-id';
 
     /**
+     * @var string
+     */
+    protected const LOCALE_NAME_DE = 'de_DE';
+
+    /**
+     * @var string
+     */
+    protected const LOCALE_NAME_US = 'en_US';
+
+    /**
      * @var \SprykerTest\Zed\CategoryStorage\CategoryStorageBusinessTester
      */
     protected $tester;
@@ -71,11 +79,7 @@ class CategoryStorageFacadeTest extends Unit
     {
         parent::setUp();
 
-        $this->tester->setDependency(QueueDependencyProvider::QUEUE_ADAPTERS, function (Container $container) {
-            return [
-                $container->getLocator()->rabbitMq()->client()->createQueueAdapter(),
-            ];
-        });
+        $this->tester->addDependencies();
     }
 
     /**
@@ -84,7 +88,7 @@ class CategoryStorageFacadeTest extends Unit
     public function testWriteCategoryNodeStorageCollectionByCategoryStorePublishEventsWillWriteStorageData(): void
     {
         // Arrange
-        $categoryTransfer = $this->tester->haveLocalizedCategoryWithStoreRelation([], [StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $categoryTransfer = $this->tester->haveLocalizedCategoryWithStoreRelation([], $this->getStoreData());
         $eventEntityTransfer = (new EventEntityTransfer())->setId($categoryTransfer->getIdCategory());
 
         // Act
@@ -100,7 +104,7 @@ class CategoryStorageFacadeTest extends Unit
     public function testWriteCategoryNodeStorageCollectionByCategoryStoreEventsWillWriteStorageData(): void
     {
         // Arrange
-        $categoryTransfer = $this->tester->haveLocalizedCategoryWithStoreRelation([], [StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $categoryTransfer = $this->tester->haveLocalizedCategoryWithStoreRelation([], $this->getStoreData());
 
         $eventEntityTransfer = (new EventEntityTransfer())->setForeignKeys([
             SpyCategoryStoreTableMap::COL_FK_CATEGORY => $categoryTransfer->getIdCategory(),
@@ -122,7 +126,7 @@ class CategoryStorageFacadeTest extends Unit
         $expectedCount = 1;
         $this->tester->ensureCategoryTreeStorageDatabaseTableIsEmpty();
 
-        $categoryTransfer = $this->tester->haveLocalizedCategoryWithStoreRelation([], [StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $categoryTransfer = $this->tester->haveLocalizedCategoryWithStoreRelation([], $this->getStoreData());
 
         // Act
         $this->tester->getFacade()->writeCategoryTreeStorageCollection();
@@ -143,7 +147,7 @@ class CategoryStorageFacadeTest extends Unit
         // Arrange
         $this->tester->ensureCategoryTreeStorageDatabaseTableIsEmpty();
 
-        $categoryTransfer = $this->tester->haveLocalizedCategoryWithStoreRelation([], [StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $categoryTransfer = $this->tester->haveLocalizedCategoryWithStoreRelation([], $this->getStoreData());
         $this->tester->getFacade()->writeCategoryTreeStorageCollection();
 
         // Act
@@ -160,7 +164,7 @@ class CategoryStorageFacadeTest extends Unit
     public function testWriteCategoryNodeStorageCollectionByCategoryAttributeEventsWillWriteStorageData(): void
     {
         // Arrange
-        $categoryTransfer = $this->tester->haveLocalizedCategoryWithStoreRelation([], [StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $categoryTransfer = $this->tester->haveLocalizedCategoryWithStoreRelation([], $this->getStoreData());
 
         $eventEntityTransfer = (new EventEntityTransfer())->setForeignKeys([
             SpyCategoryAttributeTableMap::COL_FK_CATEGORY => $categoryTransfer->getIdCategory(),
@@ -179,7 +183,7 @@ class CategoryStorageFacadeTest extends Unit
     public function testWriteCategoryNodeStorageCollectionByCategoryEventsWillWriteStorageData(): void
     {
         // Arrange
-        $categoryTransfer = $this->tester->haveLocalizedCategoryWithStoreRelation([], [StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $categoryTransfer = $this->tester->haveLocalizedCategoryWithStoreRelation([], $this->getStoreData());
 
         $eventEntityTransfer = (new EventEntityTransfer())->setId($categoryTransfer->getIdCategory());
 
@@ -201,7 +205,7 @@ class CategoryStorageFacadeTest extends Unit
         $categorySeedData = [
             CategoryTransfer::CATEGORY_TEMPLATE => $categoryTemplateTranfer->toArray(),
         ];
-        $categoryTransfer = $this->tester->haveLocalizedCategoryWithStoreRelation($categorySeedData, [StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $categoryTransfer = $this->tester->haveLocalizedCategoryWithStoreRelation($categorySeedData, $this->getStoreData());
 
         $eventEntityTransfer = (new EventEntityTransfer())->setId($categoryTemplateTranfer->getIdCategoryTemplate());
 
@@ -218,7 +222,7 @@ class CategoryStorageFacadeTest extends Unit
     public function testWriteCategoryNodeStorageCollectionByParentCategoryEventsWithoutParentWillWriteStorageData(): void
     {
         // Arrange
-        $categoryTransfer = $this->tester->haveLocalizedCategoryWithStoreRelation([], [StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $categoryTransfer = $this->tester->haveLocalizedCategoryWithStoreRelation([], $this->getStoreData());
 
         $eventEntityTransfer = (new EventEntityTransfer())->setForeignKeys([
             SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE => $categoryTransfer->getCategoryNode()->getIdCategoryNode(),
@@ -237,7 +241,7 @@ class CategoryStorageFacadeTest extends Unit
     public function testWriteCategoryNodeStorageCollectionByParentCategoryEventsWithOriginalParentWillWriteStorageData(): void
     {
         // Arrange
-        $storeData = [StoreTransfer::NAME => static::STORE_NAME_DE];
+        $storeData = $this->getStoreData();
 
         $categoryTransfer = $this->tester->haveLocalizedCategoryWithStoreRelation([], $storeData);
         $originalParentCategoryTransfer = $this->tester->haveLocalizedCategoryWithStoreRelation([], $storeData);
@@ -264,7 +268,7 @@ class CategoryStorageFacadeTest extends Unit
     public function testWriteCategoryNodeStorageCollectionByCategoryNodeEventsWillWriteStorageData(): void
     {
         // Arrange
-        $categoryTransfer = $this->tester->haveLocalizedCategoryWithStoreRelation([], [StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $categoryTransfer = $this->tester->haveLocalizedCategoryWithStoreRelation([], $this->getStoreData());
 
         $eventEntityTransfer = (new EventEntityTransfer())->setId(
             $categoryTransfer->getCategoryNode()->getIdCategoryNode(),
@@ -285,7 +289,7 @@ class CategoryStorageFacadeTest extends Unit
         // Arrange
         $categoryTransfer = $this->tester->haveLocalizedCategoryWithStoreRelation([
             CategoryTransfer::IS_ACTIVE => false,
-        ], [StoreTransfer::NAME => static::STORE_NAME_DE]);
+        ], $this->getStoreData());
 
         $eventEntityTransfer = (new EventEntityTransfer())->setId(
             $categoryTransfer->getCategoryNode()->getIdCategoryNode(),
@@ -304,7 +308,7 @@ class CategoryStorageFacadeTest extends Unit
     public function testDeleteCategoryNodeStorageCollectionByCategoryEventsWillDeleteCategoryStorageData(): void
     {
         // Arrange
-        $categoryTransfer = $this->tester->haveLocalizedCategoryWithStoreRelation([], [StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $categoryTransfer = $this->tester->haveLocalizedCategoryWithStoreRelation([], $this->getStoreData());
         $this->tester->haveCategoryNodeStorageByLocalizedCategory($categoryTransfer, static::STORE_NAME_DE);
 
         $eventEntityTransfer = (new EventEntityTransfer())->setId($categoryTransfer->getIdCategory());
@@ -322,7 +326,7 @@ class CategoryStorageFacadeTest extends Unit
     public function testDeleteCategoryNodeStorageCollectionByCategoryAttributeEventsWillDeleteCategoryStorageData(): void
     {
         // Arrange
-        $categoryTransfer = $this->tester->haveLocalizedCategoryWithStoreRelation([], [StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $categoryTransfer = $this->tester->haveLocalizedCategoryWithStoreRelation([], $this->getStoreData());
         $this->tester->haveCategoryNodeStorageByLocalizedCategory($categoryTransfer, static::STORE_NAME_DE);
 
         $eventEntityTransfer = (new EventEntityTransfer())->setForeignKeys([
@@ -348,7 +352,7 @@ class CategoryStorageFacadeTest extends Unit
             CategoryTransfer::CATEGORY_TEMPLATE => $categoryTemplateTranfer->toArray(),
         ];
 
-        $categoryTransfer = $this->tester->haveLocalizedCategoryWithStoreRelation($categorySeedData, [StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $categoryTransfer = $this->tester->haveLocalizedCategoryWithStoreRelation($categorySeedData, $this->getStoreData());
         $this->tester->haveCategoryNodeStorageByLocalizedCategory($categoryTransfer, static::STORE_NAME_DE);
 
         $eventEntityTransfer = (new EventEntityTransfer())->setId($categoryTemplateTranfer->getIdCategoryTemplate());
@@ -366,7 +370,7 @@ class CategoryStorageFacadeTest extends Unit
     public function testDeleteCategoryNodeStorageCollectionByCategoryNodeEventsWillDeleteCategoryStorageData(): void
     {
         // Arrange
-        $categoryTransfer = $this->tester->haveLocalizedCategoryWithStoreRelation([], [StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $categoryTransfer = $this->tester->haveLocalizedCategoryWithStoreRelation([], $this->getStoreData());
         $this->tester->haveCategoryNodeStorageByLocalizedCategory($categoryTransfer, static::STORE_NAME_DE);
 
         $eventEntityTransfer = (new EventEntityTransfer())->setId($categoryTransfer->getCategoryNode()->getIdCategoryNode());
@@ -384,7 +388,7 @@ class CategoryStorageFacadeTest extends Unit
     public function testGetCategoryNodeStorageSynchronizationDataTransfersByCategoryNodeIdsWillReturnCategoryStorageDataFilteredByIds(): void
     {
         // Arrange
-        $categoryTransfer = $this->tester->haveLocalizedCategoryWithStoreRelation([], [StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $categoryTransfer = $this->tester->haveLocalizedCategoryWithStoreRelation([], $this->getStoreData());
         $categoryNodeId = $categoryTransfer->getCategoryNode()->getIdCategoryNode();
         $this->tester->haveCategoryNodeStorageByLocalizedCategory(
             $categoryTransfer,
@@ -412,7 +416,10 @@ class CategoryStorageFacadeTest extends Unit
         // Arrange
         $expectedCount = 1;
         for ($i = 0; $i < 3; $i++) {
-            $categoryTransfer = $this->tester->haveLocalizedCategoryWithStoreRelation([], [StoreTransfer::NAME => static::STORE_NAME_DE]);
+            $categoryTransfer = $this->tester->haveLocalizedCategoryWithStoreRelation(
+                [],
+                $this->getStoreData(),
+            );
             $this->tester->haveCategoryNodeStorageByLocalizedCategory($categoryTransfer, static::STORE_NAME_DE);
         }
 
@@ -431,11 +438,11 @@ class CategoryStorageFacadeTest extends Unit
         // Arrange
         $expectedCount = 1;
 
-        $categoryTransferDE = $this->tester->haveLocalizedCategoryWithStoreRelation([], [StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $categoryTransferDE = $this->tester->haveLocalizedCategoryWithStoreRelation([], $this->getStoreData());
         $categoryTreeStorageDE = $this->tester->haveCategoryTreeStorageEntityByLocalizedCategoryAndStoreName($categoryTransferDE, static::STORE_NAME_DE);
 
-        $categoryTransferUS = $this->tester->haveLocalizedCategoryWithStoreRelation([], [StoreTransfer::NAME => static::STORE_NAME_AT]);
-        $this->tester->haveCategoryTreeStorageEntityByLocalizedCategoryAndStoreName($categoryTransferUS, static::STORE_NAME_AT);
+        $categoryTransferAT = $this->tester->haveLocalizedCategoryWithStoreRelation([], [StoreTransfer::NAME => static::STORE_NAME_AT]);
+        $this->tester->haveCategoryTreeStorageEntityByLocalizedCategoryAndStoreName($categoryTransferAT, static::STORE_NAME_AT);
 
         // Act
         $synchronizationDataTransfers = $this->tester->getFacade()->getCategoryTreeStorageSynchronizationDataTransfersByCategoryTreeStorageIds(0, 100, [$categoryTreeStorageDE->getIdCategoryTreeStorage()]);
@@ -495,5 +502,16 @@ class CategoryStorageFacadeTest extends Unit
     {
         $categoryNodeStorageEntity = $this->tester->findCategoryNodeStorageEntityByLocalizedCategoryAndStoreName($categoryTransfer, static::STORE_NAME_DE);
         $this->assertNull($categoryNodeStorageEntity, 'CategoryNodeStorageEntity should not exist.');
+    }
+
+    /**
+     * @return array<mixed>
+     */
+    protected function getStoreData(): array
+    {
+        return [
+            StoreTransfer::NAME => static::STORE_NAME_DE,
+            StoreTransfer::AVAILABLE_LOCALE_ISO_CODES => [static::LOCALE_NAME_DE, static::LOCALE_NAME_US],
+        ];
     }
 }

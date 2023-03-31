@@ -4,3 +4,17 @@ Name,Name
 "Store ID","Store ID"
 Stores,Stores
 "Stores (Multi-store per Zed feature is disabled)","Stores (Multi-store per Zed feature is disabled)"
+"Create Store","Create Store"
+"Back to Stores","Back to Stores"
+"Edit Store","Edit Store"
+"View Store","View Store"
+Actions,Actions
+Locales,Locales
+Currencies,Currencies
+"Store created successfully","Store created successfully"
+"Store updated successfully","Store updated successfully"
+"Store with id `%s` does not exist","Store with id `%s` does not exist"
+Store,Store
+"Store: %s","Store: %s"
+Important,Important
+"Store Name is not editable after creation. Store is not deletable after creation, please refer to Spryker documentation.","Store Name is not editable after creation. Store is not deletable after creation, please refer to Spryker documentation."

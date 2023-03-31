@@ -20,6 +20,13 @@ interface DiscountToCurrencyInterface
     public function getCurrentStoreWithCurrencies(): StoreWithCurrencyTransfer;
 
     /**
+     * @throws \Spryker\Zed\Currency\Business\Model\Exception\CurrencyNotFoundException
+     *
+     * @return array<\Generated\Shared\Transfer\StoreWithCurrencyTransfer>
+     */
+    public function getAllStoresWithCurrencies(): array;
+
+    /**
      * @param int $idCurrency
      *
      * @throws \Spryker\Zed\Currency\Business\Model\Exception\CurrencyNotFoundException

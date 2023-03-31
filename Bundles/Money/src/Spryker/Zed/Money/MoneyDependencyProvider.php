@@ -25,12 +25,12 @@ class MoneyDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
-    public const FACADE_CURRENCY = 'currency facade';
+    public const FACADE_CURRENCY = 'FACADE_CURRENCY';
 
     /**
      * @var string
      */
-    public const FACADE_STORE = 'store facade';
+    public const FACADE_STORE = 'FACADE_STORE';
 
     /**
      * @var string
@@ -52,6 +52,7 @@ class MoneyDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCurrencyFacade($container);
         $container = $this->addMoneyParser($container);
         $container = $this->addLocaleFacade($container);
+        $container = $this->addStoreFacade($container);
 
         return $container;
     }

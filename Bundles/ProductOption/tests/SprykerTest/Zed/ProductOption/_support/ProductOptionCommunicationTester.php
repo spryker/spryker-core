@@ -32,6 +32,24 @@ class ProductOptionCommunicationTester extends Actor
     use _generated\ProductOptionCommunicationTesterActions;
 
     /**
+     * @var string
+     */
+    protected const SERVICE_CURRENCY = 'currency';
+
+    /**
+     * @var string
+     */
+    protected const DEFAULT_CURRENCY = 'EUR';
+
+    /**
+     * @return void
+     */
+    public function addDependencies(): void
+    {
+        $this->getContainer()->set(static::SERVICE_CURRENCY, static::DEFAULT_CURRENCY);
+    }
+
+    /**
      * @param string $sku
      * @param int $idProductOptionGroup
      *

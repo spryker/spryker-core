@@ -10,11 +10,15 @@ namespace Spryker\Zed\Country\Business;
 use Generated\Shared\Transfer\CheckoutDataTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CountryCollectionTransfer;
+use Generated\Shared\Transfer\CountryTransfer;
+use Generated\Shared\Transfer\StoreResponseTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Country\Business\CountryBusinessFactory getFactory()
  * @method \Spryker\Zed\Country\Persistence\CountryRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Country\Persistence\CountryEntityManagerInterface getEntityManager()
  */
 class CountryFacade extends AbstractFacade implements CountryFacadeInterface
 {
@@ -25,7 +29,7 @@ class CountryFacade extends AbstractFacade implements CountryFacadeInterface
      *
      * @return void
      */
-    public function install()
+    public function install(): void
     {
         $this->getFactory()->createInstaller()->install();
     }
@@ -39,25 +43,9 @@ class CountryFacade extends AbstractFacade implements CountryFacadeInterface
      *
      * @return bool
      */
-    public function hasCountry($iso2Code)
+    public function hasCountry(string $iso2Code): bool
     {
-        return $this->getFactory()->createCountryManager()->hasCountry($iso2Code);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @deprecated Use {@link getCountryByIso2Code()} instead.
-     *
-     * @param string $iso2Code
-     *
-     * @return int
-     */
-    public function getIdCountryByIso2Code($iso2Code)
-    {
-        return $this->getFactory()->createCountryManager()->getIdCountryByIso2Code($iso2Code);
+        return $this->getFactory()->createCountryReader()->countryExists($iso2Code);
     }
 
     /**
@@ -69,9 +57,9 @@ class CountryFacade extends AbstractFacade implements CountryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CountryTransfer
      */
-    public function getCountryByIso2Code($iso2Code)
+    public function getCountryByIso2Code(string $iso2Code): CountryTransfer
     {
-        return $this->getFactory()->createCountryManager()->getCountryByIso2Code($iso2Code);
+        return $this->getFactory()->createCountryReader()->getCountryByIso2Code($iso2Code);
     }
 
     /**
@@ -97,9 +85,9 @@ class CountryFacade extends AbstractFacade implements CountryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CountryTransfer
      */
-    public function getCountryByIso3Code($iso3Code)
+    public function getCountryByIso3Code(string $iso3Code): CountryTransfer
     {
-        return $this->getFactory()->createCountryManager()->getCountryByIso3Code($iso3Code);
+        return $this->getFactory()->createCountryReader()->getCountryByIso3Code($iso3Code);
     }
 
     /**
@@ -109,13 +97,11 @@ class CountryFacade extends AbstractFacade implements CountryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CountryCollectionTransfer
      */
-    public function getAvailableCountries()
+    public function getAvailableCountries(): CountryCollectionTransfer
     {
-        $countries = $this->getFactory()
-            ->createCountryManager()
+        return $this->getFactory()
+            ->createCountryReader()
             ->getCountryCollection();
-
-        return $countries;
     }
 
     /**
@@ -127,13 +113,11 @@ class CountryFacade extends AbstractFacade implements CountryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CountryTransfer
      */
-    public function getPreferredCountryByName($countryName)
+    public function getPreferredCountryByName(string $countryName): CountryTransfer
     {
-        $countryTransfer = $this->getFactory()
-            ->createCountryManager()
+        return $this->getFactory()
+            ->createCountryReader()
             ->getPreferredCountryByName($countryName);
-
-        return $countryTransfer;
     }
 
     /**
@@ -149,6 +133,38 @@ class CountryFacade extends AbstractFacade implements CountryFacadeInterface
     {
         return $this->getFactory()
             ->createCountryReader()
-            ->findCountriesByIso2Codes($countryCollectionTransfer);
+            ->getCountriesByIso2CodesFromCountryCollection($countryCollectionTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\StoreResponseTransfer
+     */
+    public function updateStoreCountries(StoreTransfer $storeTransfer): StoreResponseTransfer
+    {
+        return $this->getFactory()
+            ->createCountryWriter()
+            ->updateStoreCountries($storeTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array<\Generated\Shared\Transfer\StoreTransfer> $storeTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
+     */
+    public function expandStoreTransfersWithCountries(array $storeTransfers): array
+    {
+        return $this->getFactory()
+            ->createStoreExpander()
+            ->expandStoreTransfersWithCountries($storeTransfers);
     }
 }

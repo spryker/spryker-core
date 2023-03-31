@@ -28,10 +28,20 @@ class JobsFilterByStore extends AbstractJobsFilter implements ChainableJobsFilte
     {
         $storeName = $filterTransfer->getStore();
 
+        if (!$storeName) {
+            return $this->next($filterTransfer, $jobs);
+        }
+
         $filteredJobs = [];
 
         foreach ($jobs as $job) {
             $jobStores = $this->getStoreNamesFromJob($job);
+
+            if (!$jobStores) {
+                $filteredJobs[] = $job;
+
+                continue;
+            }
 
             if (in_array($storeName, $jobStores, true)) {
                 $filteredJobs[] = $job;

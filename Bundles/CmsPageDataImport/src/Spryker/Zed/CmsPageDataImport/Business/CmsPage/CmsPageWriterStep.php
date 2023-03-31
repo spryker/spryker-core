@@ -62,8 +62,11 @@ class CmsPageWriterStep extends PublishAwareStep implements DataImportStepInterf
         }
 
         foreach ($dataSet[LocalizedAttributesExtractorStep::KEY_LOCALIZED_ATTRIBUTES] as $idLocale => $attributes) {
-            $this->addCmsPageLocalizedAttributes($cmsPageEntity, $idLocale, $attributes);
+            if ($attributes === []) {
+                continue;
+            }
 
+            $this->addCmsPageLocalizedAttributes($cmsPageEntity, $idLocale, $attributes);
             $this->addCmsPageUrl($cmsPageEntity, $idLocale, $attributes);
         }
 

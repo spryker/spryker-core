@@ -9,9 +9,16 @@ namespace SprykerTest\Zed\Money\Communication\Plugin;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\MoneyTransfer;
-use Spryker\Shared\Kernel\Store;
+use Money\Currencies\ISOCurrencies;
+use Money\Parser\IntlMoneyParser;
+use NumberFormatter;
+use Spryker\Shared\Money\Dependency\Parser\MoneyToParserBridge;
+use Spryker\Shared\Money\Dependency\Parser\MoneyToParserInterface;
 use Spryker\Zed\Money\Communication\Plugin\MoneyPlugin;
+use Spryker\Zed\Money\Dependency\Facade\MoneyToLocaleFacadeInterface;
+use Spryker\Zed\Money\MoneyDependencyProvider;
 
 /**
  * Auto-generated group annotations
@@ -51,7 +58,23 @@ class MoneyPluginTest extends Unit
     /**
      * @var string
      */
-    public const LOCALE_EN_US = 'en_US';
+    protected const DEFAULT_STORE = 'DE';
+
+    /**
+     * @var \SprykerTest\Zed\Money\MoneyCommunicationTester
+     */
+    protected $tester;
+
+    /**
+     * @return void
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->tester->setDependency(MoneyDependencyProvider::MONEY_PARSER, $this->createMoneyParser());
+        $this->tester->setDependency(MoneyDependencyProvider::FACADE_LOCALE, $this->createLocaleFacadeMock());
+    }
 
     /**
      * @return void
@@ -59,7 +82,7 @@ class MoneyPluginTest extends Unit
     public function testFromIntegerShouldReturnMoneyTransfer(): void
     {
         $moneyPlugin = new MoneyPlugin();
-        $moneyTransfer = $moneyPlugin->fromInteger(static::AMOUNT_INTEGER);
+        $moneyTransfer = $moneyPlugin->fromInteger(static::AMOUNT_INTEGER, static::CURRENCY_EUR);
 
         $this->assertInstanceOf(MoneyTransfer::class, $moneyTransfer);
         $this->assertSame(static::AMOUNT_STRING, $moneyTransfer->getAmount());
@@ -71,7 +94,7 @@ class MoneyPluginTest extends Unit
     public function testFromFloatShouldReturnMoneyTransfer(): void
     {
         $moneyPlugin = new MoneyPlugin();
-        $moneyTransfer = $moneyPlugin->fromFloat(static::AMOUNT_FLOAT);
+        $moneyTransfer = $moneyPlugin->fromFloat(static::AMOUNT_FLOAT, static::CURRENCY_EUR);
 
         $this->assertInstanceOf(MoneyTransfer::class, $moneyTransfer);
         $this->assertSame(static::AMOUNT_STRING, $moneyTransfer->getAmount());
@@ -83,7 +106,7 @@ class MoneyPluginTest extends Unit
     public function testFromStringShouldReturnMoneyTransfer(): void
     {
         $moneyPlugin = new MoneyPlugin();
-        $moneyTransfer = $moneyPlugin->fromString(static::AMOUNT_STRING);
+        $moneyTransfer = $moneyPlugin->fromString(static::AMOUNT_STRING, static::CURRENCY_EUR);
 
         $this->assertInstanceOf(MoneyTransfer::class, $moneyTransfer);
         $this->assertSame(static::AMOUNT_STRING, $moneyTransfer->getAmount());
@@ -95,7 +118,7 @@ class MoneyPluginTest extends Unit
     public function testGetMoneyShouldReturnMoneyTransferWithConfiguredDefaultCurrency(): void
     {
         $moneyPlugin = new MoneyPlugin();
-        $moneyTransfer = $moneyPlugin->fromInteger(static::AMOUNT_INTEGER);
+        $moneyTransfer = $moneyPlugin->fromInteger(static::AMOUNT_INTEGER, static::CURRENCY_EUR);
 
         $this->assertInstanceOf(MoneyTransfer::class, $moneyTransfer);
         $this->assertSame(static::AMOUNT_STRING, $moneyTransfer->getAmount());
@@ -123,8 +146,6 @@ class MoneyPluginTest extends Unit
      */
     public function testFormatWithSymbolShouldReturnFormattedStringWithCurrencySymbol(): void
     {
-        Store::getInstance()->setCurrentLocale(static::LOCALE_DE_DE);
-
         $moneyPlugin = new MoneyPlugin();
         $moneyTransfer = $moneyPlugin->fromInteger(static::AMOUNT_INTEGER, static::CURRENCY_EUR);
 
@@ -136,8 +157,6 @@ class MoneyPluginTest extends Unit
      */
     public function testFormatWithoutSymbolShouldReturnFormattedStringWithoutCurrencySymbol(): void
     {
-        Store::getInstance()->setCurrentLocale(static::LOCALE_DE_DE);
-
         $moneyPlugin = new MoneyPlugin();
         $moneyTransfer = $moneyPlugin->fromInteger(static::AMOUNT_INTEGER, static::CURRENCY_EUR);
 
@@ -196,5 +215,34 @@ class MoneyPluginTest extends Unit
         $converted = $moneyPlugin->convertDecimalToInteger(10.00);
         $this->assertIsInt($converted);
         $this->assertSame(1000, $converted);
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Money\Dependency\Facade\MoneyToLocaleFacadeInterface
+     */
+    protected function createLocaleFacadeMock(): MoneyToLocaleFacadeInterface
+    {
+        $localeFacadeMock = $this->createMock(MoneyToLocaleFacadeInterface::class);
+        $localeFacadeMock->method('getCurrentLocale')
+            ->willReturn(
+                (new LocaleTransfer())
+                    ->setLocaleName(static::LOCALE_DE_DE),
+            );
+
+        return $localeFacadeMock;
+    }
+
+    /**
+     * @return \Spryker\Shared\Money\Dependency\Parser\MoneyToParserInterface
+     */
+    protected function createMoneyParser(): MoneyToParserInterface
+    {
+        $numberFormatter = new NumberFormatter(
+            static::LOCALE_DE_DE,
+            NumberFormatter::CURRENCY,
+        );
+        $intlMoneyParser = new IntlMoneyParser($numberFormatter, new ISOCurrencies());
+
+        return new MoneyToParserBridge($intlMoneyParser);
     }
 }

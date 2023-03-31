@@ -8,11 +8,15 @@
 namespace SprykerTest\Client\CategoryStorage;
 
 use Codeception\Actor;
+use Codeception\Stub;
+use Generated\Shared\Transfer\StoreTransfer;
 use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Client\CategoryStorage\CategoryStorageClientInterface;
 use Spryker\Client\CategoryStorage\CategoryStorageConfig;
 use Spryker\Client\CategoryStorage\CategoryStorageDependencyProvider;
 use Spryker\Client\Kernel\Container;
+use Spryker\Client\Store\StoreDependencyProvider as ClientStoreDependencyProvider;
+use Spryker\Client\StoreExtension\Dependency\Plugin\StoreExpanderPluginInterface;
 
 /**
  * @method void wantToTest($text)
@@ -31,6 +35,26 @@ use Spryker\Client\Kernel\Container;
 class CategoryStorageClientTester extends Actor
 {
     use _generated\CategoryStorageClientTesterActions;
+
+    /**
+     * @var string
+     */
+    protected const DEFAULT_STORE = 'DE';
+
+    /**
+     * @var string
+     */
+    protected const DEFAULT_CURRENCY = 'EUR';
+
+    /**
+     * @return void
+     */
+    public function addDependencies(): void
+    {
+        $this->setDependency(ClientStoreDependencyProvider::PLUGINS_STORE_EXPANDER, [
+            $this->createStoreStorageStoreExpanderPluginMock(),
+        ]);
+    }
 
     /**
      * @param \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\CategoryStorage\CategoryStorageFactory $categoryStorageFactoryMock
@@ -62,5 +86,21 @@ class CategoryStorageClientTester extends Actor
     public function getClient(): CategoryStorageClientInterface
     {
         return $this->getLocator()->categoryStorage()->client();
+    }
+
+    /**
+     * @return \Spryker\Client\StoreExtension\Dependency\Plugin\StoreExpanderPluginInterface
+     */
+    protected function createStoreStorageStoreExpanderPluginMock(): StoreExpanderPluginInterface
+    {
+        $storeTransfer = (new StoreTransfer())
+            ->setName(static::DEFAULT_STORE)
+            ->setDefaultCurrencyIsoCode(static::DEFAULT_CURRENCY);
+
+        $storeStorageStoreExpanderPluginMock = Stub::makeEmpty(StoreExpanderPluginInterface::class, [
+            'expand' => $storeTransfer,
+        ]);
+
+        return $storeStorageStoreExpanderPluginMock;
     }
 }

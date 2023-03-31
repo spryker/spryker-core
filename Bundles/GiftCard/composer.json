@@ -25,11 +25,13 @@
         "spryker/cart": "*",
         "spryker/checkout": "*",
         "spryker/code-sniffer": "*",
+        "spryker/container": "*",
         "spryker/discount": "*",
         "spryker/oms": "*",
         "spryker/propel": "*",
         "spryker/sales-payment": "*",
         "spryker/shipment": "*",
+        "spryker/store": "*",
         "spryker/testify": "*"
     },
     "suggest": {

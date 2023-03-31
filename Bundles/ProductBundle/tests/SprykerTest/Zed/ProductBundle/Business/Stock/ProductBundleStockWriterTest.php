@@ -147,7 +147,7 @@ class ProductBundleStockWriterTest extends Unit
                 ->build();
             $storeFacadeMock->method('getCurrentStore')->willReturn($storeTransfer);
             $storeFacadeMock->method('getStoreByName')->willReturn($storeTransfer);
-            $storeFacadeMock->method('getStoresWithSharedPersistence')->willReturn([]);
+            $storeFacadeMock->method('getAllStores')->willReturn([$storeTransfer]);
         }
 
         $connectionMock = $this->getMockBuilder(ConnectionInterface::class)->getMock();

@@ -12,6 +12,9 @@ use InvalidArgumentException;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\Locale\LocaleNotFoundException;
 
+/**
+ * @deprecated Will be removed after dynamic multi-store is always enabled.
+ */
 class Store
 {
     /**
@@ -122,6 +125,8 @@ class Store
      */
     public static function getInstance()
     {
+        static::assertDynamicStoreModeDisabled();
+
         if (!static::$instance) {
             static::$instance = new static();
         }
@@ -134,6 +139,10 @@ class Store
      */
     public static function isDynamicStoreMode(): bool
     {
+        if (getenv('SPRYKER_DYNAMIC_STORE_MODE')) {
+            return (bool)getenv('SPRYKER_DYNAMIC_STORE_MODE');
+        }
+
         if (static::$isDynamicStoreMode === null) {
             static::$isDynamicStoreMode = !file_exists(APPLICATION_ROOT_DIR . '/config/Shared/stores.php');
         }
@@ -142,10 +151,24 @@ class Store
     }
 
     /**
+     * @throws \Exception
+     *
+     * @return void
+     */
+    public static function assertDynamicStoreModeDisabled(): void
+    {
+        if (static::isDynamicStoreMode()) {
+            throw new Exception('Dynamic store mode enabled. Store object cannot be used anymore.');
+        }
+    }
+
+    /**
      * @return string
      */
     public static function getDefaultStore()
     {
+        static::assertDynamicStoreModeDisabled();
+
         if (static::$defaultStore === null) {
             static::$defaultStore = require APPLICATION_ROOT_DIR . '/config/Shared/default_store.php';
         }
@@ -155,6 +178,8 @@ class Store
 
     protected function __construct()
     {
+        static::assertDynamicStoreModeDisabled();
+
         $currentStoreName = APPLICATION_STORE;
         $this->initializeSetup($currentStoreName);
         $this->publish();

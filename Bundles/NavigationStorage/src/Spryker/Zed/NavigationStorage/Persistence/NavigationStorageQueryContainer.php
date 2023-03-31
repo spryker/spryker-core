@@ -33,8 +33,7 @@ class NavigationStorageQueryContainer extends AbstractQueryContainer implements 
     public function queryLocalesWithLocaleNames(array $localeNames)
     {
         return $this->getFactory()
-            ->getLocaleQueryContainer()
-            ->queryLocales()
+            ->getLocalePropelQuery()
             ->filterByLocaleName_In($localeNames);
     }
 

@@ -31,6 +31,8 @@ suites:
                 - \SprykerTest\Shared\Sales\Helper\SalesDataHelper
                 - \SprykerTest\Shared\Sales\Helper\SalesHelper
                 - \SprykerTest\Shared\Tax\Helper\TaxSetDataHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
                 - \SprykerTest\Shared\Store\Helper\StoreDataHelper
     Persistence:
         path: Persistence

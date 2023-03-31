@@ -22,3 +22,6 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Shared\Shipment\Helper\ShipmentMethodDataHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper

@@ -5,23 +5,27 @@
 
 {% block content %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Root nodes list' } %}
+    {% include '@ProductCategoryFilterGui/Index/_partials/filters.twig' %}
 
-        {% block widget_content %}
-            {{ RootCategoriesTable | raw }}
-        {% endblock %}
+    {% if not hideCategoryFilters | default(false) %}
+        {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Root nodes list' } %}
 
-    {% endembed %}
+            {% block widget_content %}
+                {{ RootCategoriesTable | raw }}
+            {% endblock %}
 
-    <div class="row">
-        <div class="col-lg-6">
-            {% include '@ProductCategoryFilterGui/Index/_partials/category-tree.twig' %}
+        {% endembed %}
+
+        <div class="row">
+            <div class="col-lg-6">
+                {% include '@ProductCategoryFilterGui/Index/_partials/category-tree.twig' %}
+            </div>
+
+            <div class="col-lg-6">
+                {% include '@ProductCategoryFilterGui/Index/_partials/product-category-filter-container.twig' %}
+            </div>
         </div>
-
-        <div class="col-lg-6">
-            {% include '@ProductCategoryFilterGui/Index/_partials/product-category-filter-container.twig' %}
-        </div>
-    </div>
+    {% endif %}
 {% endblock %}
 
 {% block head_css %}

@@ -38,6 +38,11 @@ use SprykerTest\Zed\AvailabilityStorage\AvailabilityStorageConfigMock;
 class AvailabilityStorageListenerTest extends Unit
 {
     /**
+     * @var int
+     */
+    protected const ID_STORE = 1;
+
+    /**
      * @var \Generated\Shared\Transfer\ProductConcreteTransfer
      */
     protected $productConcreteTransfer;
@@ -60,7 +65,11 @@ class AvailabilityStorageListenerTest extends Unit
         parent::setUp();
 
         $this->productConcreteTransfer = $this->tester->haveProduct();
-        $this->spyAvailabilityAbstract = $this->tester->haveAvailabilityAbstract($this->productConcreteTransfer);
+        $this->spyAvailabilityAbstract = $this->tester->haveAvailabilityAbstract(
+            $this->productConcreteTransfer,
+            new Decimal(2),
+            static::ID_STORE,
+        );
     }
 
     /**

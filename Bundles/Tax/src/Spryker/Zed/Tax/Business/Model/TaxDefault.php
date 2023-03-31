@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Tax\Business\Model;
 
-use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\Tax\Dependency\Facade\TaxToStoreFacadeInterface;
 use Spryker\Zed\Tax\TaxConfig;
 
 class TaxDefault implements TaxDefaultInterface
@@ -23,13 +23,18 @@ class TaxDefault implements TaxDefaultInterface
     protected $config;
 
     /**
-     * @param \Spryker\Shared\Kernel\Store $store
+     * @var \Spryker\Zed\Tax\Dependency\Facade\TaxToStoreFacadeInterface
+     */
+    protected TaxToStoreFacadeInterface $storeFacade;
+
+    /**
+     * @param \Spryker\Zed\Tax\Dependency\Facade\TaxToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\Tax\TaxConfig $config
      */
-    public function __construct(Store $store, TaxConfig $config)
+    public function __construct(TaxToStoreFacadeInterface $storeFacade, TaxConfig $config)
     {
-        $this->store = $store;
         $this->config = $config;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -37,7 +42,9 @@ class TaxDefault implements TaxDefaultInterface
      */
     public function getDefaultCountryIso2Code()
     {
-        return $this->store->getCurrentCountry();
+        $countryList = $this->storeFacade->getCurrentStore()->getCountries();
+
+        return reset($countryList);
     }
 
     /**

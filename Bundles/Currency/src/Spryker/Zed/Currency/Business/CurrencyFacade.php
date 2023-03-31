@@ -7,15 +7,20 @@
 
 namespace Spryker\Zed\Currency\Business;
 
+use Generated\Shared\Transfer\CurrencyCollectionTransfer;
+use Generated\Shared\Transfer\CurrencyCriteriaTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
+use Generated\Shared\Transfer\StoreResponseTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\StoreWithCurrencyTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\Currency\Business\CurrencyBusinessFactory getFactory()
  * @method \Spryker\Zed\Currency\Persistence\CurrencyRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Currency\Persistence\CurrencyEntityManagerInterface getEntityManager()
  */
 class CurrencyFacade extends AbstractFacade implements CurrencyFacadeInterface
 {
@@ -28,7 +33,7 @@ class CurrencyFacade extends AbstractFacade implements CurrencyFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function fromIsoCode($isoCode)
+    public function fromIsoCode(string $isoCode): CurrencyTransfer
     {
         return $this->getFactory()->createCurrencyReader()->getByIsoCode($isoCode);
     }
@@ -40,7 +45,7 @@ class CurrencyFacade extends AbstractFacade implements CurrencyFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function getCurrent()
+    public function getCurrent(): CurrencyTransfer
     {
         return $this->getFactory()->createCurrencyBuilder()->getCurrent();
     }
@@ -54,11 +59,41 @@ class CurrencyFacade extends AbstractFacade implements CurrencyFacadeInterface
      *
      * @return int
      */
-    public function createCurrency(CurrencyTransfer $currencyTransfer)
+    public function createCurrency(CurrencyTransfer $currencyTransfer): int
     {
-        return $this->getFactory()
-            ->createCurrencyWriter()
-            ->create($currencyTransfer);
+        return $this->getEntityManager()
+            ->createCurrency($currencyTransfer)
+            ->getIdCurrencyOrFail();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\StoreResponseTransfer
+     */
+    public function updateStoreCurrencies(StoreTransfer $storeTransfer): StoreResponseTransfer
+    {
+        return $this->getFactory()->createCurrencyStoreWriter()
+            ->updateStoreCurrencies($storeTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\StoreResponseTransfer
+     */
+    public function validateStoreCurrencies(StoreTransfer $storeTransfer): StoreResponseTransfer
+    {
+        return $this->getFactory()->createStoreCurrencyValidator()
+            ->validateStoreCurrencies($storeTransfer);
     }
 
     /**
@@ -72,7 +107,7 @@ class CurrencyFacade extends AbstractFacade implements CurrencyFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function getByIdCurrency($idCurrency)
+    public function getByIdCurrency(int $idCurrency): CurrencyTransfer
     {
         return $this->getFactory()->createCurrencyReader()->getByIdCurrency($idCurrency);
     }
@@ -86,7 +121,7 @@ class CurrencyFacade extends AbstractFacade implements CurrencyFacadeInterface
      *
      * @return \Generated\Shared\Transfer\StoreWithCurrencyTransfer
      */
-    public function getCurrentStoreWithCurrencies()
+    public function getCurrentStoreWithCurrencies(): StoreWithCurrencyTransfer
     {
         return $this->getFactory()->createCurrencyReader()->getCurrentStoreWithCurrencies();
     }
@@ -100,7 +135,7 @@ class CurrencyFacade extends AbstractFacade implements CurrencyFacadeInterface
      *
      * @return array<\Generated\Shared\Transfer\StoreWithCurrencyTransfer>
      */
-    public function getAllStoresWithCurrencies()
+    public function getAllStoresWithCurrencies(): array
     {
         return $this->getFactory()->createCurrencyReader()->getAllStoresWithCurrencies();
     }
@@ -112,7 +147,7 @@ class CurrencyFacade extends AbstractFacade implements CurrencyFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function getDefaultCurrencyForCurrentStore()
+    public function getDefaultCurrencyForCurrentStore(): CurrencyTransfer
     {
         return $this->getFactory()
             ->createCurrencyReader()
@@ -178,5 +213,36 @@ class CurrencyFacade extends AbstractFacade implements CurrencyFacadeInterface
         return $this->getFactory()
             ->createCurrencyReader()
             ->getStoreWithCurrenciesByIdStore($idStore);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array<\Generated\Shared\Transfer\StoreTransfer> $storeTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
+     */
+    public function expandStoreTransfersWithCurrencies(array $storeTransfers): array
+    {
+        return $this->getFactory()
+            ->createStoreExpander()
+            ->expandStoreTransfersWithCurrencies($storeTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CurrencyCriteriaTransfer $currencyCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\CurrencyCollectionTransfer
+     */
+    public function getCurrencyCollection(CurrencyCriteriaTransfer $currencyCriteriaTransfer): CurrencyCollectionTransfer
+    {
+        return $this->getRepository()
+            ->getCurrencyCollection($currencyCriteriaTransfer);
     }
 }

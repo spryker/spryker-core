@@ -20,6 +20,7 @@ use Spryker\Zed\Synchronization\Business\Message\QueueMessageProcessorInterface;
 use Spryker\Zed\Synchronization\Business\Search\SynchronizationSearch;
 use Spryker\Zed\Synchronization\Business\Storage\SynchronizationStorage;
 use Spryker\Zed\Synchronization\Business\Validation\OutdatedValidator;
+use Spryker\Zed\Synchronization\Dependency\Facade\SynchronizationToStoreFacadeInterface;
 use Spryker\Zed\Synchronization\SynchronizationDependencyProvider;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQueryExpanderStrategyPluginInterface;
 
@@ -48,6 +49,7 @@ class SynchronizationBusinessFactory extends AbstractBusinessFactory
         return new SynchronizationSearch(
             $this->getSearchClient(),
             $this->createOutdatedValidator(),
+            $this->getStoreFacade(),
         );
     }
 
@@ -58,6 +60,7 @@ class SynchronizationBusinessFactory extends AbstractBusinessFactory
     {
         return new RepositoryExporter(
             $this->getQueueClient(),
+            $this->getStoreFacade(),
             $this->createQueueMessageCreator(),
             $this->getUtilEncodingService(),
             $this->getConfig(),
@@ -71,6 +74,7 @@ class SynchronizationBusinessFactory extends AbstractBusinessFactory
     {
         return new QueryContainerExporter(
             $this->getQueueClient(),
+            $this->getStoreFacade(),
             $this->createQueueMessageCreator(),
             $this->getSynchronizationDataQueryExpanderStrategyPlugin(),
             $this->getConfig()->getSyncExportChunkSize(),
@@ -187,5 +191,13 @@ class SynchronizationBusinessFactory extends AbstractBusinessFactory
     public function getSynchronizationDataPlugins()
     {
         return $this->getProvidedDependency(SynchronizationDependencyProvider::PLUGINS_SYNCHRONIZATION_DATA);
+    }
+
+    /**
+     * @return \Spryker\Zed\Synchronization\Dependency\Facade\SynchronizationToStoreFacadeInterface
+     */
+    public function getStoreFacade(): SynchronizationToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(SynchronizationDependencyProvider::FACADE_STORE);
     }
 }

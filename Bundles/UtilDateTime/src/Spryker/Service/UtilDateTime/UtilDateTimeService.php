@@ -70,4 +70,21 @@ class UtilDateTimeService extends AbstractService implements UtilDateTimeService
     {
         return $this->getFactory()->createDateFormatter()->formatTime($date);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \DateTime|string $dateTime
+     * @param string $format
+     *
+     * @return string
+     */
+    public function formatDateTimeToCustomFormat($dateTime, string $format): string
+    {
+        return $this->getFactory()
+            ->createDateFormatter()
+            ->formatDateTimeToCustomFormat($dateTime, $format);
+    }
 }

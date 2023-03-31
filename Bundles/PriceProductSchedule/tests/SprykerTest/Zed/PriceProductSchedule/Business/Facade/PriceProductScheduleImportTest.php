@@ -21,6 +21,7 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceTypeTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Zed\Store\StoreDependencyProvider;
 
 /**
  * Auto-generated group annotations
@@ -116,6 +117,7 @@ class PriceProductScheduleImportTest extends Unit
         array $priceProductSchedulesImportData
     ): void {
         // Assign
+        $this->tester->setDependency(StoreDependencyProvider::PLUGINS_STORE_COLLECTION_EXPANDER, []);
         $priceProductScheduleImportRequest = $this->havePriceProductScheduledListImportRequest();
 
         foreach ($priceProductSchedulesImportData as $priceProductScheduleImportData) {

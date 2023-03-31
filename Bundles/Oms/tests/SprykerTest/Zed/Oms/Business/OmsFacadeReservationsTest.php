@@ -83,7 +83,7 @@ class OmsFacadeReservationsTest extends Unit
     public function testImportReservationShouldHaveAmountInReservationTotals(): void
     {
         // Origin store
-        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_AT]);
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_AT], false);
 
         $availabilityReservationRequestTransfer = (new OmsAvailabilityReservationRequestBuilder([
             OmsAvailabilityReservationRequestTransfer::SKU => 123,
@@ -215,7 +215,7 @@ class OmsFacadeReservationsTest extends Unit
      */
     public function testGetReservationsFromOtherStoresShouldReturnReservations(): void
     {
-        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_AT]);
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_AT], false);
 
         $availabilityReservationRequestTransfer = (new OmsAvailabilityReservationRequestBuilder([
             OmsAvailabilityReservationRequestTransfer::SKU => 123,

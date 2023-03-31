@@ -15,6 +15,10 @@ suites:
     Persistence:
         path: Persistence
         actor: ProductPersistenceTester
+        modules:
+            enabled:
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
     Business:
         path: Business
         actor: ProductBusinessTester
@@ -32,6 +36,8 @@ suites:
                 - \SprykerTest\Shared\Url\Helper\UrlDataHelper
                 - \SprykerTest\Zed\Locale\Helper\LocaleDataHelper
                 - \SprykerTest\Shared\Testify\Helper\TableRelationsCleanupHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
                 - \SprykerTest\Shared\Store\Helper\StoreDataHelper
                 - \SprykerTest\Shared\Store\Helper\StoreReferenceHelper
                 - \SprykerTest\Shared\Product\Helper\ProductDataHelper

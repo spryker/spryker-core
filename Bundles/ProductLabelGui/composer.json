@@ -8,7 +8,7 @@
         "spryker/category": "^3.2.0 || ^4.0.0 || ^5.0.0",
         "spryker/gui": "^3.45.0",
         "spryker/kernel": "^3.30.0",
-        "spryker/locale": "^3.0.0",
+        "spryker/locale": "^3.0.0 || ^4.0.0",
         "spryker/money": "^2.0.0",
         "spryker/price": "^5.0.0",
         "spryker/price-product": "^1.0.0 || ^2.0.0 || ^4.0.0",
@@ -16,7 +16,7 @@
         "spryker/product-category": "^4.0.0",
         "spryker/product-label": "^3.0.0",
         "spryker/propel-orm": "^1.1.0",
-        "spryker/store": "^1.9.0",
+        "spryker/store": "^1.19.0",
         "spryker/symfony": "^3.0.0",
         "spryker/twig": "^3.16.0",
         "spryker/util-text": "^1.1.0"

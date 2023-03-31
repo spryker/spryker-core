@@ -11,8 +11,11 @@ use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\StoreRelationBuilder;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
+use Spryker\Client\Store\StoreDependencyProvider;
+use Spryker\Client\StoreExtension\Dependency\Plugin\StoreExpanderPluginInterface;
 use Spryker\Zed\Merchant\Dependency\MerchantEvents;
 use Spryker\Zed\MerchantStorage\Communication\Plugin\Publisher\Merchant\MerchantStoragePublisherPlugin;
 
@@ -31,6 +34,16 @@ use Spryker\Zed\MerchantStorage\Communication\Plugin\Publisher\Merchant\Merchant
  */
 class MerchantStorageListenerTest extends Unit
 {
+    /**
+     * @var string
+     */
+    protected const DEFAULT_STORE = 'DE';
+
+    /**
+     * @var string
+     */
+    protected const CURRENCY_CODE = 'EUR';
+
     /**
      * @var \SprykerTest\Zed\MerchantStorage\MerchantStorageCommunicationTester
      */
@@ -55,6 +68,10 @@ class MerchantStorageListenerTest extends Unit
                 $container->getLocator()->rabbitMq()->client()->createQueueAdapter(),
             ];
         });
+
+        $this->tester->setDependency(StoreDependencyProvider::PLUGINS_STORE_EXPANDER, [
+             $this->createStoreStorageStoreExpanderPluginMock(),
+        ]);
     }
 
     /**
@@ -134,5 +151,19 @@ class MerchantStorageListenerTest extends Unit
 
         $this->assertCount(1, $merchantStorageEntities);
         $this->assertArrayHasKey('id_merchant', $merchantStorageEntities[0]->getData());
+    }
+
+    /**
+     * @return \Spryker\Client\StoreExtension\Dependency\Plugin\StoreExpanderPluginInterface
+     */
+    protected function createStoreStorageStoreExpanderPluginMock(): StoreExpanderPluginInterface
+    {
+        $storeStorageStoreExpanderPluginMock = $this->createMock(StoreExpanderPluginInterface::class);
+        $storeStorageStoreExpanderPluginMock->method('expand')
+            ->willReturn((new StoreTransfer())
+                ->setName(static::DEFAULT_STORE)
+                ->setDefaultCurrencyIsoCode(static::CURRENCY_CODE));
+
+        return $storeStorageStoreExpanderPluginMock;
     }
 }

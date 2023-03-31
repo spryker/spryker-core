@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\SearchElasticsearch\Communication\Console;
 
-use Spryker\Zed\Kernel\Communication\Console\Console;
+use Spryker\Zed\Kernel\Communication\Console\StoreAwareConsole;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-abstract class AbstractIndexNameAwareSearchIndexConsole extends Console
+abstract class AbstractIndexNameAwareSearchIndexConsole extends StoreAwareConsole
 {
     /**
      * @var string
@@ -33,7 +33,7 @@ abstract class AbstractIndexNameAwareSearchIndexConsole extends Console
             return $this->executeForSingleIndex($indexName);
         }
 
-        return $this->executeForAllIndexes();
+        return $this->executeForAllIndexes($input);
     }
 
     /**
@@ -44,7 +44,9 @@ abstract class AbstractIndexNameAwareSearchIndexConsole extends Console
     abstract protected function executeForSingleIndex(string $indexName): int;
 
     /**
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     *
      * @return int
      */
-    abstract protected function executeForAllIndexes(): int;
+    abstract protected function executeForAllIndexes(InputInterface $input): int;
 }

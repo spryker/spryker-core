@@ -91,12 +91,13 @@ class CurrentStoreReferenceMessageAttributeProviderPluginTest extends Unit
         $storeReaderMock = $this->getMockBuilder(StoreReader::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $storeReaderMock->method('getCurrentStore')->willReturn(
+        $storeReaderMock->method('getStoreByName')->willReturn(
             (new StoreTransfer())
                 ->setName($storeName)
                 ->setStoreReference($storeReference),
         );
 
         $this->tester->mockFactoryMethod('createStoreReader', $storeReaderMock);
+        $this->tester->mockFactoryMethod('getCurrentStore', static::STORE_NAME);
     }
 }

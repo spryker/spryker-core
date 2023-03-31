@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\ProductBundle\Business\ProductBundleFacade;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ProductBundleCriteriaFilterTransfer;
+use Spryker\Zed\Store\StoreDependencyProvider;
 
 /**
  * Auto-generated group annotations
@@ -30,9 +31,47 @@ class GetProductBundleCollectionByCriteriaFilterTest extends Unit
     protected const FAKE_ID_PRODUCT_CONCRETE = 6666;
 
     /**
+     * @var string
+     */
+    protected const STORE_NAME_DE = 'DE';
+
+    /**
+     * @var string
+     */
+    protected const SERVICE_CURRENCY = 'currency';
+
+    /**
+     * @var string
+     */
+    protected const SERVICE_LOCALE = 'locale';
+
+    /**
+     * @var string
+     */
+    protected const DEFAULT_LOCALE = 'en_US';
+
+    /**
+     * @var string
+     */
+    protected const EUR_ISO_CODE = 'EUR';
+
+    /**
      * @var \SprykerTest\Zed\ProductBundle\ProductBundleBusinessTester
      */
     protected $tester;
+
+    /**
+     * @return void
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->tester->setDependency(StoreDependencyProvider::STORE_CURRENT, static::STORE_NAME_DE);
+        $container = $this->tester->getContainer();
+        $container->set(static::SERVICE_CURRENCY, static::EUR_ISO_CODE);
+        $container->set(static::SERVICE_LOCALE, static::DEFAULT_LOCALE);
+    }
 
     /**
      * @return void

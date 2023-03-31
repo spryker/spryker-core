@@ -12,12 +12,12 @@ use Generated\Shared\Transfer\StoreTransfer;
 interface OfferGuiToStoreFacadeInterface
 {
     /**
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
+     */
+    public function getAllStores(): array;
+
+    /**
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
     public function getCurrentStore(): StoreTransfer;
-
-    /**
-     * @return array<string>
-     */
-    public function getCountries(): array;
 }

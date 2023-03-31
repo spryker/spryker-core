@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ZedRequest\Business;
 
+use Spryker\Shared\ZedRequest\Client\AbstractRequest;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -26,5 +27,17 @@ class ZedRequestFacade extends AbstractFacade implements ZedRequestFacadeInterfa
     public function getRepeatData($bundleControllerAction)
     {
         return $this->getFactory()->createRepeater()->getRepeatData($bundleControllerAction);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return \Spryker\Shared\ZedRequest\Client\AbstractRequest
+     */
+    public function getCurrentZedRequest(): AbstractRequest
+    {
+        return $this->getFactory()->createZedRequestReader()->getCurrentZedRequest();
     }
 }

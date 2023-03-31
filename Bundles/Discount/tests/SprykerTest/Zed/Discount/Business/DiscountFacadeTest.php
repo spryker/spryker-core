@@ -56,11 +56,6 @@ class DiscountFacadeTest extends Unit
     protected const STORE_NAME_AT = 'AT';
 
     /**
-     * @var string
-     */
-    protected const STORE_NAME_US = 'US';
-
-    /**
      * @uses \Spryker\Zed\Discount\Persistence\Propel\Mapper\DiscountMapper::DATE_TIME_FORMAT
      *
      * @var string
@@ -608,12 +603,11 @@ class DiscountFacadeTest extends Unit
     public function testUpdateDiscountPersistsStoreRelation(): void
     {
         // Arrange
-        $usIdStore = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE])->getIdStore();
         $atIdStore = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_AT])->getIdStore();
-        $deIdStore = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_US])->getIdStore();
+        $deIdStore = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE])->getIdStore();
 
         $originalIdStores = [$atIdStore];
-        $expectedIdStores = [$deIdStore, $usIdStore];
+        $expectedIdStores = [$deIdStore];
 
         $discountConfiguratorTransfer = $this->tester->createDiscountConfiguratorTransfer();
         $discountConfiguratorTransfer

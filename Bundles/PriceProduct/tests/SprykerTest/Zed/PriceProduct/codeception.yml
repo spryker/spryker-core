@@ -25,6 +25,8 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Shared\Product\Helper\ProductDataHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
                 - \SprykerTest\Shared\Currency\Helper\CurrencyDataHelper
                 - \SprykerTest\Shared\PriceProduct\Helper\PriceProductDataHelper
 

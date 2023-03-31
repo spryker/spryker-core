@@ -15,7 +15,7 @@ interface CurrencyToSessionInterface
      *
      * @return void
      */
-    public function set($name, $value);
+    public function set(string $name, mixed $value): void;
 
     /**
      * @param string $name The attribute name
@@ -23,5 +23,5 @@ interface CurrencyToSessionInterface
      *
      * @return mixed
      */
-    public function get($name, $default = null);
+    public function get(string $name, mixed $default = null): mixed;
 }

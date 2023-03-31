@@ -19,7 +19,6 @@ use Symfony\Component\HttpKernel\KernelEvents;
  * @method \Spryker\Zed\Locale\Business\LocaleFacadeInterface getFacade()
  * @method \Spryker\Zed\Locale\Communication\LocaleCommunicationFactory getFactory()
  * @method \Spryker\Zed\Locale\LocaleConfig getConfig()
- * @method \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface getQueryContainer()
  */
 class LocaleEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
 {

@@ -57,9 +57,11 @@ class IndexMapInstaller implements SearchInstallerInterface
     }
 
     /**
+     * @param string|null $storeName
+     *
      * @return void
      */
-    public function install()
+    public function install(?string $storeName = null): void
     {
         $this->indexMapCleaner->cleanDirectory();
 

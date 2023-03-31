@@ -58,7 +58,7 @@ class PersistentQuoteHelper extends Module
             $currencyTransfer = $this->getLocator()
                 ->currency()
                 ->facade()
-                ->getCurrent();
+                ->fromIsoCode('EUR');
 
             $quoteTransfer->setCurrency($currencyTransfer);
         }
@@ -75,7 +75,9 @@ class PersistentQuoteHelper extends Module
             $storeTransfer = $this->getLocator()
                 ->store()
                 ->facade()
-                ->getStoreByName('DE');
+                ->getStoreByName('DE')
+                ->setDefaultLocaleIsoCode('en_US')
+                ->setDefaultCurrencyIsoCode('EUR');
 
             $quoteTransfer->setStore($storeTransfer);
         }

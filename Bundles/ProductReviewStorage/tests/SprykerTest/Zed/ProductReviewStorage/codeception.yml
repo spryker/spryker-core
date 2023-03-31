@@ -27,6 +27,8 @@ suites:
                 - \SprykerTest\Shared\Propel\Helper\ConnectionHelper
                 - \SprykerTest\Shared\ProductReview\Helper\ProductReviewDataHelper
                 - \SprykerTest\Shared\Product\Helper\ProductDataHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
                 - \SprykerTest\Zed\Locale\Helper\LocaleDataHelper
     Persistence:
         path: Persistence
@@ -43,4 +45,6 @@ suites:
                 - \SprykerTest\Shared\ProductReview\Helper\ProductReviewDataHelper
                 - \SprykerTest\Shared\Product\Helper\ProductDataHelper
                 - \SprykerTest\Shared\Customer\Helper\CustomerDataHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
                 - \SprykerTest\Zed\Locale\Helper\LocaleDataHelper

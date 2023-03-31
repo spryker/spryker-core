@@ -25,6 +25,8 @@ suites:
                 - \SprykerTest\Shared\Customer\Helper\CustomerDataHelper
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
                 - \SprykerTest\Glue\AuthRestApi\Helper\AuthRestApiHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
                 - \SprykerTest\Shared\Testify\Helper\ConfigHelper
                 - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper
 

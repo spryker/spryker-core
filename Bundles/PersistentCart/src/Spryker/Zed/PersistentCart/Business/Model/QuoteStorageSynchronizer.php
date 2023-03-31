@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\QuoteMergeRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteSyncRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Shared\Quote\QuoteConfig as SharedQuoteConfig;
 use Spryker\Zed\PersistentCart\Business\Exception\QuoteSynchronizationNotAvailable;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToCartFacadeInterface;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInterface;
@@ -19,6 +18,13 @@ use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToStoreFacadeInte
 
 class QuoteStorageSynchronizer implements QuoteStorageSynchronizerInterface
 {
+    /**
+     * @uses \Spryker\Shared\Quote\QuoteConfig::STORAGE_STRATEGY_DATABASE
+     *
+     * @var string
+     */
+    protected const STORAGE_STRATEGY_DATABASE = 'database';
+
     /**
      * @var \Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToCartFacadeInterface
      */
@@ -158,11 +164,11 @@ class QuoteStorageSynchronizer implements QuoteStorageSynchronizerInterface
      */
     protected function assertDatabaseStorageStrategy(): void
     {
-        if ($this->quoteFacade->getStorageStrategy() !== SharedQuoteConfig::STORAGE_STRATEGY_DATABASE) {
+        if ($this->quoteFacade->getStorageStrategy() !== static::STORAGE_STRATEGY_DATABASE) {
             throw new QuoteSynchronizationNotAvailable(
                 sprintf(
                     'Synchronization available for "%s" storage strategy only',
-                    SharedQuoteConfig::STORAGE_STRATEGY_DATABASE,
+                    static::STORAGE_STRATEGY_DATABASE,
                 ),
             );
         }

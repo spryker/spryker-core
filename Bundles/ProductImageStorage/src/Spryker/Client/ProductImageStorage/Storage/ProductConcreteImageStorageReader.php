@@ -86,7 +86,7 @@ class ProductConcreteImageStorageReader implements ProductConcreteImageStorageRe
     {
         $imageData = $this->storageClient->get($key);
 
-        if (!$imageData) {
+        if (!$imageData && !is_array($imageData)) {
             return null;
         }
 

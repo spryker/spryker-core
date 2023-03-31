@@ -13,15 +13,9 @@ use Spryker\Client\Currency\Dependency\Client\CurrencyToZedRequestClientBridge;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Shared\Currency\Dependency\Internationalization\CurrencyToInternationalizationBridge;
-use Spryker\Shared\Kernel\Store;
 
 class CurrencyDependencyProvider extends AbstractDependencyProvider
 {
-    /**
-     * @var string
-     */
-    public const STORE = 'store';
-
     /**
      * @var string
      */
@@ -52,10 +46,9 @@ class CurrencyDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    public function provideServiceLayerDependencies(Container $container)
+    public function provideServiceLayerDependencies(Container $container): Container
     {
         $container = $this->addCurrencyPostChangePlugins($container);
-        $container = $this->addStore($container);
         $container = $this->addInternationalization($container);
         $container = $this->addSessionClient($container);
         $container = $this->addZedRequestClient($container);
@@ -69,7 +62,7 @@ class CurrencyDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addSessionClient(Container $container)
+    protected function addSessionClient(Container $container): Container
     {
         $container->set(static::CLIENT_SESSION, function (Container $container) {
             return new CurrencyToSessionBridge($container->getLocator()->session()->client());
@@ -83,21 +76,7 @@ class CurrencyDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addStore(Container $container)
-    {
-        $container->set(static::STORE, function () {
-            return Store::getInstance();
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Client\Kernel\Container $container
-     *
-     * @return \Spryker\Client\Kernel\Container
-     */
-    protected function addInternationalization(Container $container)
+    protected function addInternationalization(Container $container): Container
     {
         $container->set(static::INTERNATIONALIZATION, function () {
             return new CurrencyToInternationalizationBridge();

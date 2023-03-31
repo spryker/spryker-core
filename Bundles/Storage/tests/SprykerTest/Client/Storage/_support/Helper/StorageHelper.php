@@ -16,6 +16,7 @@ use SprykerTest\Client\Storage\Redis\ServiceTest;
 use SprykerTest\Client\Testify\Helper\ClientHelperTrait;
 use SprykerTest\Client\Testify\Helper\DependencyProviderHelperTrait;
 use SprykerTest\Shared\Testify\Helper\AbstractHelper;
+use SprykerTest\Shared\Testify\Helper\DependencyHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 use SprykerTest\Shared\Testify\Helper\StaticVariablesHelper;
 
@@ -23,6 +24,7 @@ class StorageHelper extends AbstractHelper
 {
     use ClientHelperTrait;
     use LocatorHelperTrait;
+    use DependencyHelperTrait;
     use DependencyProviderHelperTrait;
     use StaticVariablesHelper;
 
@@ -139,7 +141,7 @@ class StorageHelper extends AbstractHelper
     /**
      * @return \SprykerTest\Client\Storage\Helper\InMemoryStoragePluginInterface
      */
-    protected function getInMemoryStoragePlugin(): InMemoryStoragePluginInterface
+    public function getInMemoryStoragePlugin(): InMemoryStoragePluginInterface
     {
         if ($this->inMemoryStoragePlugin === null) {
             $this->inMemoryStoragePlugin = new InMemoryStoragePlugin();

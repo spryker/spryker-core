@@ -28,7 +28,7 @@ class IdStoresDataTransformer implements DataTransformerInterface
     /**
      * @param array<mixed> $value Store IDs.
      *
-     * @return string|null
+     * @return mixed|string|null
      */
     public function transform($value)
     {
@@ -36,7 +36,7 @@ class IdStoresDataTransformer implements DataTransformerInterface
     }
 
     /**
-     * @param string $value Store IDs.
+     * @param mixed $value Store IDs.
      *
      * @return array<mixed>|null
      */

@@ -87,7 +87,7 @@ class StoreRelationDropdownType extends AbstractType
     protected const BLOCK_PREFIX = 'relation_dropdown';
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<string, \Symfony\Component\Form\FormBuilderInterface> $builder
      * @param array<string> $options
      *
      * @return void
@@ -100,7 +100,7 @@ class StoreRelationDropdownType extends AbstractType
 
         $builder->addEventListener(
             FormEvents::PRE_SET_DATA,
-            function (FormEvent $event) {
+            function (FormEvent $event): void {
                 $this->setInitialData($event);
             },
         );
@@ -145,7 +145,7 @@ class StoreRelationDropdownType extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<string, \Symfony\Component\Form\FormBuilderInterface> $builder
      *
      * @return $this
      */
@@ -157,7 +157,7 @@ class StoreRelationDropdownType extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<string, \Symfony\Component\Form\FormBuilderInterface> $builder
      * @param array<string, mixed> $options
      *
      * @return $this
@@ -176,7 +176,7 @@ class StoreRelationDropdownType extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<string, \Symfony\Component\Form\FormBuilderInterface> $builder
      * @param array<string, mixed> $options
      *
      * @return $this
@@ -208,7 +208,7 @@ class StoreRelationDropdownType extends AbstractType
     }
 
     /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param \Symfony\Component\Form\FormBuilderInterface<string, \Symfony\Component\Form\FormBuilderInterface> $builder
      * @param array<string, mixed> $options
      *
      * @return $this

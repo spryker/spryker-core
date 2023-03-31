@@ -14,6 +14,7 @@ use Spryker\Client\MultiCart\Dependency\Client\MultiCartToMessengerClientBridge;
 use Spryker\Client\MultiCart\Dependency\Client\MultiCartToPersistentCartClientBridge;
 use Spryker\Client\MultiCart\Dependency\Client\MultiCartToQuoteClientBridge;
 use Spryker\Client\MultiCart\Dependency\Client\MultiCartToSessionClientBridge;
+use Spryker\Client\MultiCart\Dependency\Client\MultiCartToStoreClientBridge;
 use Spryker\Client\MultiCart\Dependency\Client\MultiCartToZedRequestClientBridge;
 use Spryker\Client\MultiCart\Dependency\Service\MultiCartToUtilDateTimeServiceBridge;
 
@@ -58,6 +59,11 @@ class MultiCartDependencyProvider extends AbstractDependencyProvider
     public const SERVICE_DATETIME = 'SERVICE_DATETIME';
 
     /**
+     * @var string
+     */
+    public const CLIENT_STORE = 'CLIENT_STORE';
+
+    /**
      * @param \Spryker\Client\Kernel\Container $container
      *
      * @return \Spryker\Client\Kernel\Container
@@ -65,6 +71,7 @@ class MultiCartDependencyProvider extends AbstractDependencyProvider
     public function provideServiceLayerDependencies(Container $container): Container
     {
         $container = parent::provideServiceLayerDependencies($container);
+
         $container = $this->addCustomerClient($container);
         $container = $this->addMessengerClient($container);
         $container = $this->addPersistentCartClient($container);
@@ -72,6 +79,7 @@ class MultiCartDependencyProvider extends AbstractDependencyProvider
         $container = $this->addSessionClient($container);
         $container = $this->addZedRequestClient($container);
         $container = $this->addDateTimeService($container);
+        $container = $this->addStoreClient($container);
 
         return $container;
     }
@@ -171,6 +179,20 @@ class MultiCartDependencyProvider extends AbstractDependencyProvider
             return new MultiCartToUtilDateTimeServiceBridge(
                 $container->getLocator()->utilDateTime()->service(),
             );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addStoreClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_STORE, function (Container $container) {
+            return new MultiCartToStoreClientBridge($container->getLocator()->store()->client());
         });
 
         return $container;

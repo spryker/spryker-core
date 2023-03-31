@@ -29,7 +29,7 @@ class ProductOptionToCurrencyFacadeBridge implements ProductOptionToCurrencyFaca
      *
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function getByIdCurrency($idCurrency): CurrencyTransfer
+    public function getByIdCurrency(int $idCurrency): CurrencyTransfer
     {
         return $this->currencyFacade->getByIdCurrency($idCurrency);
     }
@@ -47,7 +47,7 @@ class ProductOptionToCurrencyFacadeBridge implements ProductOptionToCurrencyFaca
      *
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function fromIsoCode($isoCode): CurrencyTransfer
+    public function fromIsoCode(string $isoCode): CurrencyTransfer
     {
         return $this->currencyFacade->fromIsoCode($isoCode);
     }

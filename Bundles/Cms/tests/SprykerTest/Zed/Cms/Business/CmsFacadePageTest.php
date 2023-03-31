@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\CmsPageTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Spryker\Zed\Cms\Business\CmsFacade;
 use Spryker\Zed\Store\Business\StoreFacade;
+use Spryker\Zed\Store\StoreDependencyProvider;
 
 /**
  * Auto-generated group annotations
@@ -473,6 +474,8 @@ class CmsFacadePageTest extends Unit
     public function testUpdateCmsPageUpdatesStoreRelation(array $originalRelation, array $modifiedRelation): void
     {
         // Arrange
+        $this->tester->setDependency(StoreDependencyProvider::PLUGINS_STORE_COLLECTION_EXPANDER, []);
+
         $originalRelationStoreIds = $this->tester->createStoresByNames($originalRelation);
         $modifiedRelationStoreIds = $this->tester->createStoresByNames($modifiedRelation);
         $storeRelationSeed = [
@@ -621,13 +624,13 @@ class CmsFacadePageTest extends Unit
     {
         return [
             [
-                ['DE', 'AT', 'US'], ['AT'],
+                ['DE', 'AT'], ['AT'],
             ],
             [
                 ['DE'], ['DE', 'AT'],
             ],
             [
-                ['AT'], ['DE', 'US'],
+                ['AT'], ['DE', 'AT'],
             ],
         ];
     }

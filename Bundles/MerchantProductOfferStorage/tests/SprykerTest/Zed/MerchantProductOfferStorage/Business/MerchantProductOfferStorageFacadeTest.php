@@ -44,6 +44,8 @@ class MerchantProductOfferStorageFacadeTest extends Unit
                 $container->getLocator()->rabbitMq()->client()->createQueueAdapter(),
             ];
         });
+
+        $this->tester->addDependencies();
     }
 
     /**

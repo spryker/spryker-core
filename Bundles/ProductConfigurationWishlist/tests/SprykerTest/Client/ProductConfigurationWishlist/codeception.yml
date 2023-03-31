@@ -29,4 +29,6 @@ suites:
                 - \SprykerTest\Shared\Wishlist\Helper\WishlistHelper
                 - \SprykerTest\Shared\ProductConfiguration\Helper\ProductConfigurationHelper
                 - \SprykerTest\Shared\Customer\Helper\CustomerDataHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
                 - \SprykerTest\Shared\Product\Helper\ProductDataHelper

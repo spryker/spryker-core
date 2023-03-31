@@ -53,8 +53,8 @@ class EditController extends AbstractController
         $storeCurrencyRequestParam = $request->query->get(static::PARAM_STORE_CURRENCY_REQUEST);
         $idMerchantRelationship = $request->query->getInt(static::REQUEST_ID_MERCHANT_RELATIONSHIP);
 
-        $currencyTransfer = $this->getCurrencyTransferFromRequestParam($storeCurrencyRequestParam);
         $storeTransfer = $this->getStoreTransferFromRequestParam($storeCurrencyRequestParam);
+        $currencyTransfer = $this->getCurrencyTransferFromRequestParam($storeTransfer, $storeCurrencyRequestParam);
 
         $thresholdForm = $this->getFactory()->createThresholdForm(
             $idMerchantRelationship,
@@ -232,15 +232,16 @@ class EditController extends AbstractController
     }
 
     /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      * @param string|null $storeCurrencyRequestParam
      *
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    protected function getCurrencyTransferFromRequestParam(?string $storeCurrencyRequestParam): CurrencyTransfer
+    protected function getCurrencyTransferFromRequestParam(StoreTransfer $storeTransfer, ?string $storeCurrencyRequestParam): CurrencyTransfer
     {
         return $this->getFactory()
             ->createStoreCurrencyFinder()
-            ->getCurrencyTransferFromRequestParam($storeCurrencyRequestParam);
+            ->getCurrencyTransferFromRequestParam($storeTransfer, $storeCurrencyRequestParam);
     }
 
     /**

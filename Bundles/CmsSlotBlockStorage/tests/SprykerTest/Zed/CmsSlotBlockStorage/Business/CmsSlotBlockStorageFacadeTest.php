@@ -37,6 +37,16 @@ class CmsSlotBlockStorageFacadeTest extends Unit
     /**
      * @return void
      */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->tester->addDependencies();
+    }
+
+    /**
+     * @return void
+     */
     public function testGetSynchronizationDataTransfersByCmsSlotBlockStorageIdsReturnsCorrectNumberOfTransfers(): void
     {
         // Assign

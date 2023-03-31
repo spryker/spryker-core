@@ -25,18 +25,18 @@ class OfferGuiToStoreFacadeBridge implements OfferGuiToStoreFacadeInterface
     }
 
     /**
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
+     */
+    public function getAllStores(): array
+    {
+        return $this->storeFacade->getAllStores();
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
     public function getCurrentStore(): StoreTransfer
     {
         return $this->storeFacade->getCurrentStore();
-    }
-
-    /**
-     * @return array<string>
-     */
-    public function getCountries(): array
-    {
-        return $this->storeFacade->getCountries();
     }
 }

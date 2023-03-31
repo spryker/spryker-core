@@ -12,9 +12,16 @@ use Generated\Shared\Transfer\StoreTransfer;
 interface MerchantRelationshipSalesOrderThresholdGuiToStoreFacadeInterface
 {
     /**
+     * @param bool $fallbackToDefault
+     *
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getCurrentStore(): StoreTransfer;
+    public function getCurrentStore(bool $fallbackToDefault = false): StoreTransfer;
+
+    /**
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
+     */
+    public function getAllStores(): array;
 
     /**
      * @param string $storeName
@@ -22,4 +29,9 @@ interface MerchantRelationshipSalesOrderThresholdGuiToStoreFacadeInterface
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
     public function getStoreByName($storeName): StoreTransfer;
+
+    /**
+     * @return bool
+     */
+    public function isDynamicStoreEnabled(): bool;
 }

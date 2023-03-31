@@ -15,13 +15,6 @@
     },
     {
         "fileName": "src/Spryker/Zed/PriceProductSchedule/Dependency/Facade/PriceProductScheduleToPriceProductFacadeBridge.php",
-        "description": "Bridges: Method `removePriceProductDefaultForPriceProduct()` must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer` signature.",
-        "rule": "BridgeFacadeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/PriceProductSchedule/Dependency/Facade/PriceProductScheduleToPriceProductFacadeBridge.php",
         "description": "Bridges: Method `findProductAbstractPricesWithoutPriceExtraction()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
@@ -128,6 +121,13 @@
     {
         "fileName": "src/Spryker/Zed/PriceProductSchedule/Dependency/Facade/PriceProductScheduleToStoreFacadeBridge.php",
         "description": "Bridges: Method `findStoreByName()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/PriceProductSchedule/Dependency/Facade/PriceProductScheduleToStoreFacadeBridge.php",
+        "description": "Bridges: Method `getAllStores()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"

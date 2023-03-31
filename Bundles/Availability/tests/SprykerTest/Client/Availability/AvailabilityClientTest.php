@@ -39,6 +39,16 @@ class AvailabilityClientTest extends Unit
     /**
      * @return void
      */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->tester->addDependencies();
+    }
+
+    /**
+     * @return void
+     */
     public function testFindProductAvailabilityByIdProductAbstractReturnsProductAvailabilityTransferObject(): void
     {
         // Arrange

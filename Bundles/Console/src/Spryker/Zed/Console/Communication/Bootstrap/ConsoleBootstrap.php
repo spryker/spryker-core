@@ -99,7 +99,7 @@ class ConsoleBootstrap extends Application
         $this->setDecorated($output);
 
         if (!$input->hasParameterOption(['--format'], true) && !$input->hasParameterOption('--quiet-meta', true)) {
-            $output->writeln($this->getInfoText());
+            $output->writeln($this->getInfoText($input));
         }
 
         $this->printDevVmDeprecationInfoText($output);
@@ -122,15 +122,43 @@ class ConsoleBootstrap extends Application
     }
 
     /**
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     *
      * @return string
      */
-    protected function getInfoText()
+    protected function getInfoText(InputInterface $input): string
     {
-        return sprintf(
-            '<fg=yellow>Store</fg=yellow>: <info>%s</info> | <fg=yellow>Environment</fg=yellow>: <info>%s</info>',
-            APPLICATION_STORE,
+        $infoTextData = [];
+
+        if (defined('APPLICATION_REGION')) {
+            $infoTextData[] = sprintf(
+                '<fg=yellow>Region</fg=yellow>: <info>%s</info>',
+                APPLICATION_REGION,
+            );
+        }
+
+        $store = $this->getStore($input);
+
+        if ($store) {
+            $infoTextData[] = sprintf(
+                '<fg=yellow>Store</fg=yellow>: <info>%s</info>',
+                $store,
+            );
+        }
+
+        if (defined('APPLICATION_CODE_BUCKET') && APPLICATION_CODE_BUCKET) {
+            $infoTextData[] = sprintf(
+                '<fg=yellow>Code bucket</fg=yellow>: <info>%s</info>',
+                APPLICATION_CODE_BUCKET,
+            );
+        }
+
+        $infoTextData[] = sprintf(
+            '<fg=yellow>Environment</fg=yellow>: <info>%s</info>',
             APPLICATION_ENV,
         );
+
+        return implode(' | ', $infoTextData);
     }
 
     /**
@@ -173,5 +201,24 @@ class ConsoleBootstrap extends Application
     protected function isDevVmEnv(): bool
     {
         return getenv('USER') === 'vagrant';
+    }
+
+    /**
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     *
+     * @return string
+     */
+    protected function getStore(InputInterface $input): string
+    {
+        $store = '';
+        if ($input->hasParameterOption(['store'], true)) {
+            $store = $input->getParameterOption('store');
+        }
+
+        if (!$store && defined('APPLICATION_STORE')) {
+            $store = APPLICATION_STORE;
+        }
+
+        return $store;
     }
 }

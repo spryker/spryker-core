@@ -22,6 +22,7 @@ class Environment
 
         static::defineEnvironment();
         static::defineStore();
+        static::defineRegion();
         static::defineCodeBucket();
         static::defineApplication();
         static::defineApplicationRootDir();
@@ -30,10 +31,8 @@ class Environment
         static::defineApplicationVendorDir();
         static::defineApplicationDataDir();
 
-        $store = Store::getInstance();
-        $locale = current($store->getLocales());
+        static::defineLocale();
 
-        static::initializeLocale($locale);
         mb_internal_encoding('UTF-8');
         mb_regex_encoding('UTF-8');
     }
@@ -65,12 +64,11 @@ class Environment
      */
     protected static function defineStore()
     {
-        if (Store::isDynamicStoreMode()) {
-            return;
-        }
-
         if (!defined('APPLICATION_STORE')) {
             $store = getenv('APPLICATION_STORE', true) ?: getenv('APPLICATION_STORE');
+            if (!$store && Store::isDynamicStoreMode()) {
+                return;
+            }
             if (!$store) {
                 if (file_exists(APPLICATION_ROOT_DIR . '/config/Shared/default_store.php')) {
                     $store = require APPLICATION_ROOT_DIR . '/config/Shared/default_store.php';
@@ -82,6 +80,35 @@ class Environment
             }
             define('APPLICATION_STORE', $store);
         }
+    }
+
+    /**
+     * @return void
+     */
+    protected static function defineRegion()
+    {
+        if (!defined('APPLICATION_REGION') && getenv('SPRYKER_CURRENT_REGION')) {
+            $region = getenv('SPRYKER_CURRENT_REGION');
+
+            define('APPLICATION_REGION', $region);
+        }
+    }
+
+    /**
+     * @deprecated Dynamic stores are based on the Store context.
+     *
+     * @return void
+     */
+    private static function defineLocale()
+    {
+        if (Store::isDynamicStoreMode()) {
+            return;
+        }
+
+        $store = Store::getInstance();
+        $locale = current($store->getLocales());
+
+        static::initializeLocale($locale);
     }
 
     /**

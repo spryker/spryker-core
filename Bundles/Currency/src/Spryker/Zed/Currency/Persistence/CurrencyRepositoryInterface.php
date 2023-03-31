@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Currency\Persistence;
 
+use Generated\Shared\Transfer\CurrencyCollectionTransfer;
+use Generated\Shared\Transfer\CurrencyCriteriaTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
 
 interface CurrencyRepositoryInterface
@@ -24,4 +26,40 @@ interface CurrencyRepositoryInterface
      * @return array<\Generated\Shared\Transfer\CurrencyTransfer>
      */
     public function getCurrencyTransfersByIsoCodes(array $isoCodes): array;
+
+    /**
+     * Result format:
+     * [
+     *     $idStore => [$currencyCode, ...],
+     *     ...
+     * ]
+     *
+     * @phpstan-return array<int, array<int, string>>
+     *
+     * @param array<int> $storeIds
+     *
+     * @return array<int, array<string>>
+     */
+    public function getCurrencyCodesGroupedByIdStore(array $storeIds): array;
+
+    /**
+     * @param int $id
+     *
+     * @return \Generated\Shared\Transfer\CurrencyTransfer|null
+     */
+    public function findCurrencyById(int $id): ?CurrencyTransfer;
+
+    /**
+     * @param array<int> $storeIds
+     *
+     * @return array<int, string>
+     */
+    public function getStoreDefaultCurrencyCodes(array $storeIds): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\CurrencyCriteriaTransfer $currencyCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\CurrencyCollectionTransfer
+     */
+    public function getCurrencyCollection(CurrencyCriteriaTransfer $currencyCriteriaTransfer): CurrencyCollectionTransfer;
 }

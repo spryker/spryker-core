@@ -92,12 +92,15 @@ class TransferServer
     {
         if (!$this->request) {
             if ($this->repeatIsActive) {
-                $mvc = (string)$this->getHttpRequest()->query->get('mvc') ?: null;
+                /** @phpstan-var string|null */
+                $mvc = $this->getHttpRequest()->query->get('mvc');
                 $this->request = new Request(
                     $this->repeater->getRepeatData($mvc)['params'],
                 );
             } else {
-                $transferValues = json_decode((string)$this->getHttpRequest()->getContent(), true);
+                /** @phpstan-var string */
+                $content = $this->getHttpRequest()->getContent();
+                $transferValues = json_decode($content, true);
                 $this->request = new Request($transferValues);
                 $this->repeater->setRepeatData($this->request, $this->httpRequest);
             }

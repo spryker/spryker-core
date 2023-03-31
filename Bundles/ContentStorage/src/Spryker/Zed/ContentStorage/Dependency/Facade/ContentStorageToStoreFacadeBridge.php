@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ContentStorage\Dependency\Facade;
 
-use Generated\Shared\Transfer\StoreTransfer;
-
 class ContentStorageToStoreFacadeBridge implements ContentStorageToStoreFacadeInterface
 {
     /**
@@ -25,20 +23,10 @@ class ContentStorageToStoreFacadeBridge implements ContentStorageToStoreFacadeIn
     }
 
     /**
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
      * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
-    public function getStoresWithSharedPersistence(StoreTransfer $storeTransfer)
+    public function getAllStores(): array
     {
-        return $this->storeFacade->getStoresWithSharedPersistence($storeTransfer);
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\StoreTransfer
-     */
-    public function getCurrentStore()
-    {
-        return $this->storeFacade->getCurrentStore();
+        return $this->storeFacade->getAllStores();
     }
 }

@@ -13,12 +13,15 @@
         "spryker/oauth-client-extension": "^1.0.0",
         "spryker/propel-orm": "^1.0.0",
         "spryker/quote-extension": "^1.4.0",
+        "spryker/store-extension": "^1.0.0",
         "spryker/symfony": "^3.0.0",
-        "spryker/transfer": "^3.25.0"
+        "spryker/transfer": "^3.25.0",
+        "spryker/zed-request-extension": "^1.1.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*",
         "spryker/container": "*",
+        "spryker/locale": "*",
         "spryker/propel": "*",
         "spryker/quote": "*",
         "spryker/testify": "*"

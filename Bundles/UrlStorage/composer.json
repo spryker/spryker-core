@@ -7,7 +7,7 @@
         "php": ">=8.0",
         "spryker/event-behavior": "^1.1.0",
         "spryker/kernel": "^3.30.0",
-        "spryker/locale": "^3.0.0",
+        "spryker/locale": "^3.0.0 || ^4.0.0",
         "spryker/log": "^3.0.0",
         "spryker/propel-orm": "^1.5.0",
         "spryker/storage": "^3.4.0",
@@ -22,6 +22,7 @@
     },
     "require-dev": {
         "spryker/code-sniffer": "*",
+        "spryker/container": "*",
         "spryker/event": "*",
         "spryker/propel": "*",
         "spryker/testify": "*"

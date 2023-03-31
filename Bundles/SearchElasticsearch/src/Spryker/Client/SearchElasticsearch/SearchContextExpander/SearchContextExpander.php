@@ -34,7 +34,7 @@ class SearchContextExpander implements SearchContextExpanderInterface
     public function expandSearchContext(SearchContextTransfer $searchContextTransfer): SearchContextTransfer
     {
         $sourceIdentifier = $searchContextTransfer->requireSourceIdentifier()->getSourceIdentifier();
-        $indexName = $this->indexNameResolver->resolve($sourceIdentifier);
+        $indexName = $this->indexNameResolver->resolve($sourceIdentifier, $searchContextTransfer->getStoreName());
         $elasticsearchSearchContextTransfer = $this->createElasticsearchContext($indexName, $sourceIdentifier);
         $searchContextTransfer->setElasticsearchContext($elasticsearchSearchContextTransfer);
 

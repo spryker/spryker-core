@@ -27,6 +27,11 @@ use SprykerTest\Zed\Customer\CustomerCommunicationTester;
 class IndexControllerCest
 {
     /**
+     * @var string
+     */
+    protected const STORE_NAME = 'DE';
+
+    /**
      * @param \SprykerTest\Zed\Customer\CustomerCommunicationTester $i
      *
      * @return void
@@ -79,6 +84,10 @@ class IndexControllerCest
             ],
         ];
 
+        if ($this->isDynamicStoreEnabled()) {
+            $formData['customer']['store_name'] = static::STORE_NAME;
+        }
+
         $i->amOnPage('/customer/add?redirectUrl=' . urlencode('/customer'));
         $i->submitForm(['name' => 'customer'], $formData);
 
@@ -87,6 +96,7 @@ class IndexControllerCest
                 0 => ['dir' => 'desc'],
             ],
         ]);
+
         $i->seeInFirstRow([2 => $email]);
     }
 
@@ -125,5 +135,13 @@ class IndexControllerCest
         $customerBuilder = new CustomerBuilder();
 
         return $customerBuilder->build();
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isDynamicStoreEnabled(): bool
+    {
+        return (bool)getenv('DYNAMIC_STORE_ENABLED');
     }
 }

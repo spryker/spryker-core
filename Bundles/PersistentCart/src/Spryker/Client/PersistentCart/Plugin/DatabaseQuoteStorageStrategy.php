@@ -24,7 +24,6 @@ use Spryker\Client\CartExtension\Dependency\Plugin\QuoteResetLockQuoteStorageStr
 use Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface;
 use Spryker\Client\CartExtension\Dependency\Plugin\ReplaceableQuoteItemStorageStrategyPluginInterface;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Shared\Quote\QuoteConfig;
 
 /**
  * @method \Spryker\Client\PersistentCart\PersistentCartFactory getFactory()
@@ -33,11 +32,18 @@ use Spryker\Shared\Quote\QuoteConfig;
 class DatabaseQuoteStorageStrategy extends AbstractPlugin implements QuoteStorageStrategyPluginInterface, QuoteResetLockQuoteStorageStrategyPluginInterface, CartOperationQuoteStorageStrategyPluginInterface, ReplaceableQuoteItemStorageStrategyPluginInterface
 {
     /**
+     * @uses \Spryker\Shared\Quote\QuoteConfig::STORAGE_STRATEGY_DATABASE
+     *
+     * @var string
+     */
+    protected const STORAGE_STRATEGY_DATABASE = 'database';
+
+    /**
      * @return string
      */
     public function getStorageStrategy()
     {
-        return QuoteConfig::STORAGE_STRATEGY_DATABASE;
+        return static::STORAGE_STRATEGY_DATABASE;
     }
 
     /**

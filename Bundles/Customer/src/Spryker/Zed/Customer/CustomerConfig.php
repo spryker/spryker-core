@@ -78,6 +78,26 @@ class CustomerConfig extends AbstractBundleConfig
     protected const ERROR_CODE_CUSTOMER_INVALID_SALUTATION = 4003;
 
     /**
+     * @var string
+     */
+    protected const REGISTRATION_CONFIRMATION_TOKEN_URL_FALLBACK = '/register/confirm?token=%s&_store=%s';
+
+    /**
+     * @var string
+     */
+    protected const REGISTRATION_CONFIRMATION_TOKEN_URL_FALLBACK_WITHOUT_STORE = '/register/confirm?token=%s';
+
+    /**
+     * @var string
+     */
+    protected const PASSWORD_RESTORE_TOKEN_URL = '%s/password/restore?token=%s&_store=%s';
+
+    /**
+     * @var string
+     */
+    protected const PASSWORD_RESTORE_TOKEN_URL_WITHOUT_STORE = '%s/password/restore?token=%s';
+
+    /**
      * @api
      *
      * @return string
@@ -91,12 +111,17 @@ class CustomerConfig extends AbstractBundleConfig
      * @api
      *
      * @param string $token
+     * @param string|null $storeName
      *
      * @return string
      */
-    public function getCustomerPasswordRestoreTokenUrl($token)
+    public function getCustomerPasswordRestoreTokenUrl($token, ?string $storeName = null): string
     {
-        return $this->getHostYves() . '/password/restore?token=' . $token;
+        if ($storeName === null) {
+            return sprintf(static::PASSWORD_RESTORE_TOKEN_URL_WITHOUT_STORE, $this->getHostYves(), $token);
+        }
+
+        return sprintf(static::PASSWORD_RESTORE_TOKEN_URL, $this->getHostYves(), $token, $storeName);
     }
 
     /**
@@ -106,26 +131,33 @@ class CustomerConfig extends AbstractBundleConfig
      * @api
      *
      * @param string $token
+     * @param string|null $storeName
      *
      * @return string
      */
-    public function getRegisterConfirmTokenUrl($token)
+    public function getRegisterConfirmTokenUrl($token, ?string $storeName = null): string
     {
-        $fallback = $this->getHostYves() . '/register/confirm?token=%s';
+        if ($storeName === null) {
+            $fallback = $this->getHostYves() . static::REGISTRATION_CONFIRMATION_TOKEN_URL_FALLBACK_WITHOUT_STORE;
 
-        return sprintf($this->get(CustomerConstants::REGISTRATION_CONFIRMATION_TOKEN_URL, $fallback), $token);
+            return sprintf($this->get(CustomerConstants::REGISTRATION_CONFIRMATION_TOKEN_URL, $fallback), $token);
+        }
+
+        $fallback = $this->getHostYves() . static::REGISTRATION_CONFIRMATION_TOKEN_URL_FALLBACK;
+
+        return sprintf($this->get(CustomerConstants::REGISTRATION_CONFIRMATION_TOKEN_URL, $fallback), $token, $storeName);
     }
 
     /**
      * @api
      *
-     * @param string|null $storeName
+     * @param string|null $sequenceNumberPrefix
      *
      * @return \Generated\Shared\Transfer\SequenceNumberSettingsTransfer
      */
-    public function getCustomerReferenceDefaults(?string $storeName = null)
+    public function getCustomerReferenceDefaults(?string $sequenceNumberPrefix = null)
     {
-        if (!$storeName) {
+        if (!$sequenceNumberPrefix) {
             $storeName = $this->getStoreName();
         }
 
@@ -134,12 +166,25 @@ class CustomerConfig extends AbstractBundleConfig
         $sequenceNumberSettingsTransfer->setName(CustomerConstants::NAME_CUSTOMER_REFERENCE);
 
         $sequenceNumberPrefixParts = [];
-        $sequenceNumberPrefixParts[] = $storeName;
+        $sequenceNumberPrefixParts[] = $sequenceNumberPrefix;
         $sequenceNumberPrefixParts[] = $this->get(SequenceNumberConstants::ENVIRONMENT_PREFIX, '');
         $prefix = implode($this->getUniqueIdentifierSeparator(), $sequenceNumberPrefixParts) . $this->getUniqueIdentifierSeparator();
         $sequenceNumberSettingsTransfer->setPrefix($prefix);
 
         return $sequenceNumberSettingsTransfer;
+    }
+
+    /**
+     * Specification:
+     * - Provides a prefix used during customer reference generation.
+     *
+     * @api
+     *
+     * @return string|null
+     */
+    public function getCustomerSequenceNumberPrefix(): ?string
+    {
+        return null;
     }
 
     /**

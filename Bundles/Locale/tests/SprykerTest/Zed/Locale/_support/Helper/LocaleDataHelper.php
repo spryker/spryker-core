@@ -10,6 +10,8 @@ namespace SprykerTest\Zed\Locale\Helper;
 use Codeception\Module;
 use Generated\Shared\DataBuilder\LocaleBuilder;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Orm\Zed\Locale\Persistence\SpyLocaleStoreQuery;
+use Orm\Zed\Store\Persistence\SpyStoreQuery;
 use Spryker\Zed\Locale\Business\LocaleFacadeInterface;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
@@ -36,6 +38,111 @@ class LocaleDataHelper extends Module
         }
 
         return $this->getLocaleFacade()->createLocale($localeTransfer->getLocaleName());
+    }
+
+    /**
+     * @param int $idStore
+     * @param int $idLocale
+     *
+     * @return int
+     */
+    public function haveLocaleStore(int $idStore, int $idLocale): int
+    {
+        $localeStoreEntity = $this->createLocaleStorePropelQuery()
+            ->filterByFkStore($idStore)
+            ->filterByFkLocale($idLocale)
+            ->findOneOrCreate();
+
+        $localeStoreEntity->save();
+
+        return $localeStoreEntity->getIdLocaleStore();
+    }
+
+    /**
+     * @param int $idStore
+     * @param int $idLocale
+     *
+     * @return bool
+     */
+    public function localeStoreExists(int $idStore, int $idLocale): bool
+    {
+        return $this->createLocaleStorePropelQuery()
+            ->filterByFkStore($idStore)
+            ->filterByFkLocale($idLocale)
+            ->exists();
+    }
+
+    /**
+     * @param int $idStore
+     *
+     * @return void
+     */
+    public function deleteLocaleStore(int $idStore): void
+    {
+        $this->createLocaleStorePropelQuery()
+            ->filterByFkStore($idStore)
+            ->delete();
+    }
+
+    /**
+     * @param int $idStore
+     *
+     * @return int
+     */
+    public function getDefaultLocaleByIdStore(int $idStore): int
+    {
+        return $this->createStorePropelQuery()
+            ->findPk($idStore)
+            ->getFkLocale();
+    }
+
+    /**
+     * @return void
+     */
+    public function ensureStoreLocaleDatabaseTableIsEmpty(): void
+    {
+        $localeStoreQuery = $this->createLocaleStorePropelQuery();
+        $localeStoreQuery->deleteAll();
+    }
+
+    /**
+     * @param int $idLocale
+     *
+     * @return int
+     */
+    public function countLocaleStoreRelations(int $idLocale): int
+    {
+        return $this->createLocaleStorePropelQuery()
+            ->filterByFkLocale($idLocale)
+            ->count();
+    }
+
+    /**
+     * @param string $storeName
+     *
+     * @return int
+     */
+    public function getDefaultLocaleIdByStoreName(string $storeName): int
+    {
+        return $this->createStorePropelQuery()
+            ->findOneByName($storeName)
+            ->getFkLocale();
+    }
+
+    /**
+     * @return \Orm\Zed\Store\Persistence\SpyStoreQuery
+     */
+    protected function createStorePropelQuery(): SpyStoreQuery
+    {
+        return SpyStoreQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\Locale\Persistence\SpyLocaleStoreQuery
+     */
+    protected function createLocaleStorePropelQuery(): SpyLocaleStoreQuery
+    {
+        return SpyLocaleStoreQuery::create();
     }
 
     /**

@@ -19,6 +19,7 @@ use Spryker\Zed\Customer\Communication\Table\CustomerTable;
 use Spryker\Zed\Customer\Communication\Table\PluginExecutor\CustomerTableExpanderPluginExecutor;
 use Spryker\Zed\Customer\Communication\Table\PluginExecutor\CustomerTableExpanderPluginExecutorInterface;
 use Spryker\Zed\Customer\CustomerDependencyProvider;
+use Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryInterface;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToRouterFacadeInterface;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToStoreFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
@@ -79,7 +80,11 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCustomerFormDataProvider()
     {
-        return new CustomerFormDataProvider($this->getQueryContainer(), $this->getLocaleFacade());
+        return new CustomerFormDataProvider(
+            $this->getQueryContainer(),
+            $this->getLocaleFacade(),
+            $this->getStoreFacade(),
+        );
     }
 
     /**
@@ -98,7 +103,11 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createCustomerUpdateFormDataProvider()
     {
-        return new CustomerUpdateFormDataProvider($this->getQueryContainer(), $this->getLocaleFacade());
+        return new CustomerUpdateFormDataProvider(
+            $this->getQueryContainer(),
+            $this->getLocaleFacade(),
+            $this->getStoreFacade(),
+        );
     }
 
     /**
@@ -118,36 +127,16 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
     public function createAddressFormDataProvider()
     {
         return new AddressFormDataProvider(
-            $this->getProvidedDependency(CustomerDependencyProvider::FACADE_COUNTRY),
+            $this->getCountryFacade(),
             $this->getQueryContainer(),
             $this->getStoreFacade(),
         );
     }
 
     /**
-     * @return \Spryker\Zed\Customer\Dependency\Facade\CustomerToStoreFacadeInterface
-     */
-    protected function getStoreFacade(): CustomerToStoreFacadeInterface
-    {
-        return $this->getProvidedDependency(CustomerDependencyProvider::FACADE_STORE);
-    }
-
-    /**
-     * @deprecated Use {@link getLocaleFacadePublic()} instead.
-     *
      * @return \Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface
      */
-    protected function getLocaleFacade()
-    {
-        return $this->getLocaleFacadePublic();
-    }
-
-    /**
-     * Deprecated: This will be renamed to `getLocaleFacade()` in the next major.
-     *
-     * @return \Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface
-     */
-    public function getLocaleFacadePublic()
+    public function getLocaleFacade()
     {
         return $this->getProvidedDependency(CustomerDependencyProvider::FACADE_LOCALE);
     }
@@ -200,6 +189,22 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
         return new CustomerTableExpanderPluginExecutor(
             $this->getCustomerTableActionExpanderPlugins(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryInterface
+     */
+    public function getCountryFacade(): CustomerToCountryInterface
+    {
+        return $this->getProvidedDependency(CustomerDependencyProvider::FACADE_COUNTRY);
+    }
+
+    /**
+     * @return \Spryker\Zed\Customer\Dependency\Facade\CustomerToStoreFacadeInterface
+     */
+    public function getStoreFacade(): CustomerToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(CustomerDependencyProvider::FACADE_STORE);
     }
 
     /**

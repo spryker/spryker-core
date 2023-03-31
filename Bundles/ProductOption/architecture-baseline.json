@@ -29,13 +29,6 @@
     },
     {
         "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToCurrencyFacadeBridge.php",
-        "description": "Bridges: Type should be defined for param `idCurrency` in method `Spryker\\Zed\\ProductOption\\Dependency\\Facade\\ProductOptionToCurrencyFacadeBridge::getByIdCurrency()`.",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToCurrencyFacadeBridge.php",
         "description": "Bridges: Method `getByIdCurrency()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
@@ -45,13 +38,6 @@
         "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToCurrencyFacadeBridge.php",
         "description": "Bridges: Method `getCurrent()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToCurrencyFacadeBridge.php",
-        "description": "Bridges: Type should be defined for param `isoCode` in method `Spryker\\Zed\\ProductOption\\Dependency\\Facade\\ProductOptionToCurrencyFacadeBridge::fromIsoCode()`.",
-        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -183,35 +169,7 @@
     },
     {
         "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToLocaleFacadeBridge.php",
-        "description": "Bridges: Type should be defined for param `localeName` in method `Spryker\\Zed\\ProductOption\\Dependency\\Facade\\ProductOptionToLocaleFacadeBridge::hasLocale()`.",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToLocaleFacadeBridge.php",
-        "description": "Bridges: Type should be defined for param `localeName` in method `Spryker\\Zed\\ProductOption\\Dependency\\Facade\\ProductOptionToLocaleFacadeBridge::getLocale()`.",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToLocaleFacadeBridge.php",
         "description": "Bridges: Method `getLocale()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
-        "rule": "BridgeFacadeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToLocaleFacadeBridge.php",
-        "description": "Bridges: Type should be defined for param `localeCode` in method `Spryker\\Zed\\ProductOption\\Dependency\\Facade\\ProductOptionToLocaleFacadeBridge::getLocaleByCode()`.",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/ProductOption/Dependency/Facade/ProductOptionToLocaleFacadeBridge.php",
-        "description": "Bridges: Method `getLocaleByCode()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"

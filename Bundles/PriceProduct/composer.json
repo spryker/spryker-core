@@ -6,7 +6,7 @@
     "require": {
         "php": ">=8.0",
         "spryker/acl-merchant-portal-extension": "^1.0.0",
-        "spryker/currency": "^3.10.0",
+        "spryker/currency": "^3.10.0 || ^4.0.0",
         "spryker/event": "^1.0.0 || ^2.0.0",
         "spryker/kernel": "^3.33.0",
         "spryker/log": "^3.7.0",
@@ -31,6 +31,8 @@
         "spryker/price-product-storage": "*",
         "spryker/propel": "*",
         "spryker/session": "*",
+        "spryker/storage": "*",
+        "spryker/store-extension": "*",
         "spryker/testify": "*",
         "spryker/wishlist": "*"
     },

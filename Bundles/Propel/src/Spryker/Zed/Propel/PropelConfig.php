@@ -214,13 +214,17 @@ class PropelConfig extends AbstractBundleConfig
      */
     protected function getBCBaseLogPath(): string
     {
+        if ($this->isDynamicStoreEnabled()) {
+            return APPLICATION_ROOT_DIR . '/data/' . APPLICATION_CODE_BUCKET . '/logs/';
+        }
+
         return APPLICATION_ROOT_DIR . '/data/' . APPLICATION_STORE . '/logs/';
     }
 
     /**
      * @api
      *
-     * @return string
+     * @return class-string<\Propel\Runtime\Adapter\AdapterInterface>
      */
     public function getCurrentDatabaseEngine()
     {
@@ -320,5 +324,13 @@ class PropelConfig extends AbstractBundleConfig
     public function getCurrentZedDatabaseName(): string
     {
         return $this->get(PropelConstants::ZED_DB_DATABASE);
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isDynamicStoreEnabled(): bool
+    {
+        return (bool)getenv('SPRYKER_DYNAMIC_STORE_MODE');
     }
 }

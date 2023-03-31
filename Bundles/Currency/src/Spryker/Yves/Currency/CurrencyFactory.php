@@ -8,20 +8,27 @@
 namespace Spryker\Yves\Currency;
 
 use Spryker\Shared\Currency\Builder\CurrencyBuilder;
+use Spryker\Shared\Currency\Builder\CurrencyBuilderInterface;
+use Spryker\Shared\Currency\Dependency\Client\CurrencyToSessionInterface;
+use Spryker\Shared\Currency\Dependency\Internationalization\CurrencyToInternationalizationInterface;
 use Spryker\Shared\Currency\Persistence\CurrencyPersistence;
-use Spryker\Yves\Currency\CurrencyChange\CurrencyPostChangePluginExecutor;
+use Spryker\Shared\Currency\Persistence\CurrencyPersistenceInterface;
+use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\Kernel\AbstractFactory;
 
+/**
+ * @method \Spryker\Client\Currency\CurrencyClientInterface getClient()
+ */
 class CurrencyFactory extends AbstractFactory
 {
     /**
      * @return \Spryker\Shared\Currency\Builder\CurrencyBuilderInterface
      */
-    public function createCurrencyBuilder()
+    public function createCurrencyBuilder(): CurrencyBuilderInterface
     {
         return new CurrencyBuilder(
             $this->getInternationalization(),
-            $this->getStore()->getDefaultCurrencyCode(),
+            $this->getClient()->getCurrencyIsoCodes()[0],
             $this->createCurrencyPersistence()->getCurrentCurrencyIsoCode(),
         );
     }
@@ -29,36 +36,25 @@ class CurrencyFactory extends AbstractFactory
     /**
      * @return \Spryker\Shared\Currency\Persistence\CurrencyPersistenceInterface
      */
-    public function createCurrencyPersistence()
+    public function createCurrencyPersistence(): CurrencyPersistenceInterface
     {
-        return new CurrencyPersistence($this->getSessionClient(), $this->getStore());
-    }
-
-    /**
-     * @return \Spryker\Yves\Currency\CurrencyChange\CurrencyPostChangePluginExecutorInterface
-     */
-    public function createCurrencyPostChangePluginExecutor()
-    {
-        return new CurrencyPostChangePluginExecutor(
-            $this->getCurrencyPostChangePlugins(),
-            $this->createCurrencyPersistence(),
-            $this->getZedRequestClient(),
-            $this->getMessengerClient(),
-        );
+        return new CurrencyPersistence($this->getSessionClient(), $this->getClient()->getCurrencyIsoCodes()[0]);
     }
 
     /**
      * @return \Spryker\Shared\Currency\Dependency\Internationalization\CurrencyToInternationalizationInterface
      */
-    protected function getInternationalization()
+    public function getInternationalization(): CurrencyToInternationalizationInterface
     {
         return $this->getProvidedDependency(CurrencyDependencyProvider::INTERNATIONALIZATION);
     }
 
     /**
+     * @deprecated Will be removed after dynamic multi-store is always enabled.
+     *
      * @return \Spryker\Shared\Kernel\Store
      */
-    public function getStore()
+    public function getStore(): Store
     {
         return $this->getProvidedDependency(CurrencyDependencyProvider::STORE);
     }
@@ -66,32 +62,8 @@ class CurrencyFactory extends AbstractFactory
     /**
      * @return \Spryker\Shared\Currency\Dependency\Client\CurrencyToSessionInterface
      */
-    protected function getSessionClient()
+    public function getSessionClient(): CurrencyToSessionInterface
     {
         return $this->getProvidedDependency(CurrencyDependencyProvider::CLIENT_SESSION);
-    }
-
-    /**
-     * @return array<\Spryker\Yves\Currency\Dependency\CurrencyPostChangePluginInterface>
-     */
-    protected function getCurrencyPostChangePlugins()
-    {
-        return $this->getProvidedDependency(CurrencyDependencyProvider::PLUGINS_CURRENCY_POST_CHANGE);
-    }
-
-    /**
-     * @return \Spryker\Yves\Currency\Dependency\Client\CurrencyToZedRequestClientInterface
-     */
-    protected function getZedRequestClient()
-    {
-        return $this->getProvidedDependency(CurrencyDependencyProvider::CLIENT_ZED_REQUEST);
-    }
-
-    /**
-     * @return \Spryker\Yves\Currency\Dependency\Client\CurrencyToMessengerClientInterface
-     */
-    protected function getMessengerClient()
-    {
-        return $this->getProvidedDependency(CurrencyDependencyProvider::CLIENT_MESSENGER);
     }
 }

@@ -41,6 +41,10 @@ class LocalizedAttributesExtractorStep implements DataImportStepInterface
             $attributes = [];
 
             foreach ($this->attributeNames as $attributeName) {
+                if (!isset($dataSet[$attributeName . '.' . $localeName])) {
+                    continue;
+                }
+
                 $attributes[$attributeName] = $dataSet[$attributeName . '.' . $localeName];
             }
 

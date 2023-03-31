@@ -26,11 +26,23 @@ class ZedRequestCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Will be removed after dynamic multi-store is always enabled.
+     *
      * @return \Spryker\Zed\ZedRequest\Dependency\Facade\ZedRequestToStoreInterface
      */
     public function getStore()
     {
         return $this->getProvidedDependency(ZedRequestDependencyProvider::STORE);
+    }
+
+    /**
+     * @deprecated Will be removed after dynamic multi-store is always enabled.
+     *
+     * @return bool
+     */
+    public function getIsDynamicStoreModeEnabled(): bool
+    {
+        return $this->getProvidedDependency(ZedRequestDependencyProvider::DYNAMIC_STORE_MODE);
     }
 
     /**

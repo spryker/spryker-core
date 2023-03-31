@@ -15,10 +15,13 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 
 /**
  * @method \Spryker\Yves\Locale\LocaleFactory getFactory()
+ * @method \Spryker\Client\Locale\LocaleClientInterface getClient()
  */
 class LocaleApplicationPlugin extends AbstractPlugin implements ApplicationPluginInterface
 {
     /**
+     * @uses \Spryker\Client\Locale\LocaleDependencyProvider::SERVICE_LOCALE
+     *
      * @var string
      */
     protected const SERVICE_LOCALE = 'locale';
@@ -55,8 +58,8 @@ class LocaleApplicationPlugin extends AbstractPlugin implements ApplicationPlugi
     {
         $container->set(static::BC_FEATURE_FLAG_LOCALE_LISTENER, false);
         $container->set(static::SERVICE_LOCALE, function (ContainerInterface $container) {
-            $localeName = $this->getLocaleTransfer($container)->getLocaleName();
-            $this->getFactory()->getStore()->setCurrentLocale($localeName);
+            $localeName = $this->getLocaleTransfer($container)->getLocaleNameOrFail();
+            $this->setStoreCurrentLocale($localeName);
             ApplicationEnvironment::initializeLocale($localeName);
 
             return $localeName;
@@ -73,5 +76,21 @@ class LocaleApplicationPlugin extends AbstractPlugin implements ApplicationPlugi
     protected function getLocaleTransfer(ContainerInterface $container): LocaleTransfer
     {
         return $this->getFactory()->getLocalePlugin()->getLocaleTransfer($container);
+    }
+
+    /**
+     * @deprecated Will be removed after dynamic multi-store is always enabled.
+     *
+     * @param string $localeName
+     *
+     * @return void
+     */
+    protected function setStoreCurrentLocale(string $localeName): void
+    {
+        if ($this->getFactory()->getStoreClient()->isDynamicStoreEnabled()) {
+            return;
+        }
+
+        $this->getFactory()->getStore()->setCurrentLocale($localeName);
     }
 }

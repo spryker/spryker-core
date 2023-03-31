@@ -19,6 +19,7 @@ use Generated\Shared\Transfer\MailTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Orm\Zed\Customer\Persistence\SpyCustomerAddress;
+use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Service\UtilText\UtilTextService;
 use Spryker\Shared\Customer\Code\Messages;
@@ -32,7 +33,6 @@ use Spryker\Zed\Customer\CustomerConfig;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailInterface;
 use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
-use Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\NativePasswordEncoder;
@@ -91,9 +91,9 @@ class Customer implements CustomerInterface
     protected $mailFacade;
 
     /**
-     * @var \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface
+     * @var \Orm\Zed\Locale\Persistence\SpyLocaleQuery
      */
-    protected $localeQueryContainer;
+    protected $localePropelQuery;
 
     /**
      * @var \Spryker\Zed\Customer\Business\CustomerExpander\CustomerExpanderInterface
@@ -121,7 +121,7 @@ class Customer implements CustomerInterface
      * @param \Spryker\Zed\Customer\CustomerConfig $customerConfig
      * @param \Spryker\Zed\Customer\Business\Customer\EmailValidatorInterface $emailValidator
      * @param \Spryker\Zed\Customer\Dependency\Facade\CustomerToMailInterface $mailFacade
-     * @param \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface $localeQueryContainer
+     * @param \Orm\Zed\Locale\Persistence\SpyLocaleQuery $localePropelQuery $localePropelQuery
      * @param \Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface $localeFacade
      * @param \Spryker\Zed\Customer\Business\CustomerExpander\CustomerExpanderInterface $customerExpander
      * @param \Spryker\Zed\Customer\Business\CustomerPasswordPolicy\CustomerPasswordPolicyValidatorInterface $customerPasswordPolicyValidator
@@ -133,7 +133,7 @@ class Customer implements CustomerInterface
         CustomerConfig $customerConfig,
         EmailValidatorInterface $emailValidator,
         CustomerToMailInterface $mailFacade,
-        LocaleQueryContainerInterface $localeQueryContainer,
+        SpyLocaleQuery $localePropelQuery,
         CustomerToLocaleInterface $localeFacade,
         CustomerExpanderInterface $customerExpander,
         CustomerPasswordPolicyValidatorInterface $customerPasswordPolicyValidator,
@@ -144,7 +144,7 @@ class Customer implements CustomerInterface
         $this->customerConfig = $customerConfig;
         $this->emailValidator = $emailValidator;
         $this->mailFacade = $mailFacade;
-        $this->localeQueryContainer = $localeQueryContainer;
+        $this->localePropelQuery = $localePropelQuery;
         $this->customerExpander = $customerExpander;
         $this->customerPasswordPolicyValidator = $customerPasswordPolicyValidator;
         $this->postCustomerRegistrationPlugins = $postCustomerRegistrationPlugins;
@@ -294,7 +294,7 @@ class Customer implements CustomerInterface
         }
 
         $localeName = $this->localeFacade->getCurrentLocaleName();
-        $localeEntity = $this->localeQueryContainer->queryLocaleByName($localeName)->findOne();
+        $localeEntity = $this->localePropelQuery->findByLocaleName($localeName)->getFirst();
 
         if ($localeEntity) {
             $customerEntity->setLocale($localeEntity);
@@ -309,7 +309,7 @@ class Customer implements CustomerInterface
      */
     protected function addLocaleByLocaleName(SpyCustomer $customerEntity, $localeName)
     {
-        $localeEntity = $this->localeQueryContainer->queryLocaleByName($localeName)->findOne();
+        $localeEntity = $this->localePropelQuery->findByLocaleName($localeName)->getFirst();
 
         if ($localeEntity) {
             $customerEntity->setLocale($localeEntity);
@@ -335,7 +335,10 @@ class Customer implements CustomerInterface
     {
         $customerTransfer = $this->get($customerTransfer);
         $restorePasswordLink = $this->customerConfig
-            ->getCustomerPasswordRestoreTokenUrl($customerTransfer->getRestorePasswordKey());
+            ->getCustomerPasswordRestoreTokenUrl(
+                $customerTransfer->getRestorePasswordKey(),
+                $customerTransfer->getStoreName(),
+            );
 
         $customerTransfer->setRestorePasswordLink($restorePasswordLink);
 
@@ -343,6 +346,7 @@ class Customer implements CustomerInterface
         $mailTransfer->setType(CustomerRestorePasswordMailTypePlugin::MAIL_TYPE);
         $mailTransfer->setCustomer($customerTransfer);
         $mailTransfer->setLocale($customerTransfer->getLocale());
+        $mailTransfer->setStoreName($customerTransfer->getStoreName());
 
         $this->mailFacade->handleMail($mailTransfer);
     }
@@ -355,7 +359,10 @@ class Customer implements CustomerInterface
     protected function sendRegistrationToken(CustomerTransfer $customerTransfer)
     {
         $confirmationLink = $this->customerConfig
-            ->getRegisterConfirmTokenUrl($customerTransfer->getRegistrationKey());
+            ->getRegisterConfirmTokenUrl(
+                $customerTransfer->getRegistrationKey(),
+                $customerTransfer->getStoreName(),
+            );
 
         $customerTransfer->setConfirmationLink($confirmationLink);
 
@@ -367,6 +374,7 @@ class Customer implements CustomerInterface
         $mailTransfer->setType($mailType);
         $mailTransfer->setCustomer($customerTransfer);
         $mailTransfer->setLocale($customerTransfer->getLocale());
+        $mailTransfer->setStoreName($customerTransfer->getStoreName());
 
         $this->mailFacade->handleMail($mailTransfer);
 
@@ -386,6 +394,7 @@ class Customer implements CustomerInterface
         $mailTransfer->setType(CustomerRestoredPasswordConfirmationMailTypePlugin::MAIL_TYPE);
         $mailTransfer->setCustomer($customerTransfer);
         $mailTransfer->setLocale($customerTransfer->getLocale());
+        $mailTransfer->setStoreName($customerTransfer->getStoreName());
 
         $this->mailFacade->handleMail($mailTransfer);
     }

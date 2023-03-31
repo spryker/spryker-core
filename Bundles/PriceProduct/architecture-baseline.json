@@ -71,14 +71,14 @@
     },
     {
         "fileName": "src/Spryker/Zed/PriceProduct/Dependency/Facade/PriceProductToCurrencyFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `fromIsoCode()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "description": "Bridges: The bridge interface has incorrect method signature for `fromIsoCode()`. Got `$isoCode` but expected to be `string $isoCode`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
         "fileName": "src/Spryker/Zed/PriceProduct/Dependency/Facade/PriceProductToCurrencyFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `getByIdCurrency()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getByIdCurrency()`. Got `$idCurrency` but expected to be `int $idCurrency`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"

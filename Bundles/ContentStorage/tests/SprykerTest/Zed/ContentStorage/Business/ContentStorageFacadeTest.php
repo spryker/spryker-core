@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\StoreBuilder;
 use Generated\Shared\Transfer\ContentTransfer;
 use Generated\Shared\Transfer\LocalizedContentTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Shared\ContentStorage\ContentStorageConfig;
@@ -180,27 +181,26 @@ class ContentStorageFacadeTest extends Unit
      */
     protected function createContentStorageToStoreFacadeBridgeMock(): ContentStorageToStoreFacadeBridge
     {
-        $contentStorageToStoreFacadeBridgeMock = $this->createPartialMock(ContentStorageToStoreFacadeBridge::class, ['getCurrentStore', 'getStoresWithSharedPersistence']);
+        $contentStorageToStoreFacadeBridgeMock = $this->createPartialMock(ContentStorageToStoreFacadeBridge::class, ['getAllStores']);
 
         $storeBuilder = new StoreBuilder([
-            'availableLocaleIsoCodes' => [
+            StoreTransfer::AVAILABLE_LOCALE_ISO_CODES => [
                 static::DE_LOCALE_KEY => static::DE_LOCALE,
                 static::EN_LOCALE_NAME => static::EN_LOCALE,
                 static::FR_LOCALE_NAME => static::FR_LOCALE,
             ],
         ]);
         $store = $storeBuilder->build();
-        $contentStorageToStoreFacadeBridgeMock->method('getCurrentStore')->willReturn($store);
 
         $storeWithSharedPersistanceBuilder = new StoreBuilder([
-            'availableLocaleIsoCodes' => [
+            StoreTransfer::AVAILABLE_LOCALE_ISO_CODES => [
                 static::DE_LOCALE_KEY => static::DE_LOCALE,
                 static::EN_LOCALE_NAME => static::EN_LOCALE,
                 static::PL_LOCALE_NAME => static::PL_LOCALE,
             ],
         ]);
         $storeWithSharedPersistance = $storeWithSharedPersistanceBuilder->build();
-        $contentStorageToStoreFacadeBridgeMock->method('getStoresWithSharedPersistence')->willReturn([$storeWithSharedPersistance]);
+        $contentStorageToStoreFacadeBridgeMock->method('getAllStores')->willReturn([$store, $storeWithSharedPersistance]);
 
         return $contentStorageToStoreFacadeBridgeMock;
     }

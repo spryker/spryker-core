@@ -29,13 +29,15 @@ class PriceProductScheduleFacade extends AbstractFacade implements PriceProductS
      *
      * @api
      *
+     * @param string|null $storeName
+     *
      * @return void
      */
-    public function applyScheduledPrices(): void
+    public function applyScheduledPrices(?string $storeName = null): void
     {
         $this->getFactory()
             ->createPriceProductScheduleApplier()
-            ->applyScheduledPrices();
+            ->applyScheduledPrices($storeName);
     }
 
     /**

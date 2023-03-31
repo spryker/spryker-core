@@ -179,10 +179,12 @@ class DataImportBusinessFactory extends AbstractBusinessFactory implements DataI
     }
 
     /**
+     * @phpstan-return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface&\Spryker\Zed\DataImport\Business\Model\DataImporterBeforeImportAwareInterface&\Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportAwareInterface&\Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerAwareInterface
+     *
      * @param string $importType
      * @param \Spryker\Zed\DataImport\Business\Model\DataReader\DataReaderInterface $reader
      *
-     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface|\Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerAwareInterface
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterBeforeImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerAwareInterface
      */
     public function createDataImporter($importType, DataReaderInterface $reader)
     {
@@ -237,6 +239,8 @@ class DataImportBusinessFactory extends AbstractBusinessFactory implements DataI
     }
 
     /**
+     * @phpstan-return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface&\Spryker\Zed\DataImport\Business\Model\DataImporterBeforeImportAwareInterface&\Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportAwareInterface&\Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerAwareInterface
+     *
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer $dataImporterConfigurationTransfer
      *
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterBeforeImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataImporterAfterImportAwareInterface|\Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerAwareInterface
@@ -304,6 +308,8 @@ class DataImportBusinessFactory extends AbstractBusinessFactory implements DataI
     }
 
     /**
+     * @phpstan-return \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerInterface&\Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepAwareInterface
+     *
      * @param int|null $bulkSize
      *
      * @return \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerInterface|\Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepAwareInterface

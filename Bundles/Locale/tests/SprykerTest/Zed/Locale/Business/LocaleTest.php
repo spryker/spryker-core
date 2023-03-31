@@ -11,7 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Locale\Persistence\SpyLocale;
 use Spryker\Zed\Locale\Business\LocaleFacade;
-use Spryker\Zed\Locale\Persistence\LocaleQueryContainer;
+use Spryker\Zed\Locale\Persistence\LocaleRepository;
 
 /**
  * Auto-generated group annotations
@@ -26,14 +26,19 @@ use Spryker\Zed\Locale\Persistence\LocaleQueryContainer;
 class LocaleTest extends Unit
 {
     /**
+     * @var string
+     */
+    protected const TEST_LOCALE_NAME = 'xy_ab';
+
+    /**
      * @var \Spryker\Zed\Locale\Business\LocaleFacade
      */
     protected $localeFacade;
 
     /**
-     * @var \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface
+     * @var \Spryker\Zed\Locale\Persistence\LocaleRepositoryInterface
      */
-    protected $localeQueryContainer;
+    protected $localeRepository;
 
     /**
      * @return void
@@ -43,7 +48,7 @@ class LocaleTest extends Unit
         parent::setUp();
 
         $this->localeFacade = new LocaleFacade();
-        $this->localeQueryContainer = new LocaleQueryContainer();
+        $this->localeRepository = new LocaleRepository();
     }
 
     /**
@@ -53,12 +58,16 @@ class LocaleTest extends Unit
      */
     public function testCreateLocaleInsertsSomething(): void
     {
-        $localeQuery = $this->localeQueryContainer->queryLocaleByName('xy_ab');
-        $this->assertSame(0, $localeQuery->count());
+        //Arrange
+        $localesCount = $this->localeRepository->getLocalesCountByLocaleName(static::TEST_LOCALE_NAME);
+        $this->assertSame(0, $localesCount);
 
-        $this->localeFacade->createLocale('xy_ab');
+        //Act
+        $this->localeFacade->createLocale(static::TEST_LOCALE_NAME);
 
-        $this->assertSame(1, $localeQuery->count());
+        //Assert
+        $localesCount = $this->localeRepository->getLocalesCountByLocaleName(static::TEST_LOCALE_NAME);
+        $this->assertSame(1, $localesCount);
     }
 
     /**
@@ -68,12 +77,15 @@ class LocaleTest extends Unit
      */
     public function testDeleteLocaleDeletesSoftly(): void
     {
-        $localeQuery = $this->localeQueryContainer->queryLocaleByName('ab_xy');
-        $this->localeFacade->createLocale('ab_xy');
+        //Arrange
+        $this->localeFacade->createLocale(static::TEST_LOCALE_NAME);
+        $this->localeFacade->deleteLocale(static::TEST_LOCALE_NAME);
 
-        $this->assertTrue($localeQuery->findOne()->getIsActive());
-        $this->localeFacade->deleteLocale('ab_xy');
-        $this->assertFalse($localeQuery->findOne()->getIsActive());
+        //Act
+        $localeAfterDelete = $this->localeRepository->findLocaleByLocaleName(static::TEST_LOCALE_NAME);
+
+        //Assert
+        $this->assertFalse($localeAfterDelete->getIsActive());
     }
 
     /**

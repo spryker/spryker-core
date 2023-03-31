@@ -21,8 +21,22 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/SalesOrderThresholdGui/Dependency/Facade/SalesOrderThresholdGuiToCurrencyFacadeInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `fromIsoCode()`. Got `$isoCode` but expected to be `string $isoCode`. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/SalesOrderThresholdGui/Dependency/Facade/SalesOrderThresholdGuiToLocaleFacadeBridge.php",
         "description": "Bridges: Method `getLocaleCollection()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/SalesOrderThresholdGui/Dependency/Facade/SalesOrderThresholdGuiToLocaleFacadeBridge.php",
+        "description": "Bridges: Method `getCurrentLocaleName()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -98,15 +112,15 @@
         "priority": "2"
     },
     {
-        "fileName": "src/Spryker/Zed/SalesOrderThresholdGui/Dependency/Facade/SalesOrderThresholdGuiToTaxFacadeBridge.php",
-        "description": "Bridges: Method `getTaxSets()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "fileName": "src/Spryker/Zed/SalesOrderThresholdGui/Dependency/Facade/SalesOrderThresholdGuiToStoreFacadeBridge.php",
+        "description": "Bridges: Method `getAllStores()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
-        "fileName": "src/Spryker/Zed/SalesOrderThresholdGui/Dependency/Facade/SalesOrderThresholdGuiToLocaleFacadeBridge.php",
-        "description": "Bridges: Method `getCurrentLocaleName()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "fileName": "src/Spryker/Zed/SalesOrderThresholdGui/Dependency/Facade/SalesOrderThresholdGuiToTaxFacadeBridge.php",
+        "description": "Bridges: Method `getTaxSets()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"

@@ -55,9 +55,6 @@ class StockStoreDataImportPluginTest extends Unit
         $this->tester->haveStore([
             StoreTransfer::NAME => 'AT',
         ]);
-        $this->tester->haveStore([
-            StoreTransfer::NAME => 'US',
-        ]);
 
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
         $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/warehouse_store.csv');

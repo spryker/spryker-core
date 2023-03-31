@@ -26,4 +26,12 @@ use Codeception\Actor;
 class LocaleBusinessTester extends Actor
 {
     use _generated\LocaleBusinessTesterActions;
+
+    /**
+     * @return bool
+     */
+    public function isDynamicStoreEnabled(): bool
+    {
+        return (bool)getenv('DYNAMIC_STORE_MODE');
+    }
 }

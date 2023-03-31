@@ -8,12 +8,18 @@
 namespace SprykerTest\Zed\ConfigurableBundleStorage;
 
 use Codeception\Actor;
+use Codeception\Stub;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateTranslationTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\ConfigurableBundleStorage\Persistence\SpyConfigurableBundleTemplateImageStorage;
 use Orm\Zed\ConfigurableBundleStorage\Persistence\SpyConfigurableBundleTemplateImageStorageQuery;
 use Orm\Zed\ConfigurableBundleStorage\Persistence\SpyConfigurableBundleTemplateStorage;
 use Orm\Zed\ConfigurableBundleStorage\Persistence\SpyConfigurableBundleTemplateStorageQuery;
+use Spryker\Client\Kernel\Container;
+use Spryker\Client\Queue\QueueDependencyProvider;
+use Spryker\Client\Store\StoreDependencyProvider;
+use Spryker\Client\StoreExtension\Dependency\Plugin\StoreExpanderPluginInterface;
 
 /**
  * @method void wantToTest($text)
@@ -32,6 +38,32 @@ use Orm\Zed\ConfigurableBundleStorage\Persistence\SpyConfigurableBundleTemplateS
 class ConfigurableBundleStorageCommunicationTester extends Actor
 {
     use _generated\ConfigurableBundleStorageCommunicationTesterActions;
+
+    /**
+     * @var string
+     */
+    protected const DEFAULT_STORE = 'DE';
+
+    /**
+     * @var string
+     */
+    protected const DEFAULT_CURRENCY = 'EUR';
+
+    /**
+     * @return void
+     */
+    public function addDependencies(): void
+    {
+        $this->setDependency(QueueDependencyProvider::QUEUE_ADAPTERS, function (Container $container) {
+            return [
+                $container->getLocator()->rabbitMq()->client()->createQueueAdapter(),
+            ];
+        });
+
+        $this->setDependency(StoreDependencyProvider::PLUGINS_STORE_EXPANDER, [
+            $this->createStoreStorageStoreExpanderPluginMock(),
+        ]);
+    }
 
     /**
      * @param array<string, mixed> $data
@@ -111,5 +143,21 @@ class ConfigurableBundleStorageCommunicationTester extends Actor
         return SpyConfigurableBundleTemplateImageStorageQuery::create()
             ->filterByFkConfigurableBundleTemplate($idConfigurableBundleTemplateStorage)
             ->findOne();
+    }
+
+    /**
+     * @return \Spryker\Client\StoreExtension\Dependency\Plugin\StoreExpanderPluginInterface
+     */
+    protected function createStoreStorageStoreExpanderPluginMock(): StoreExpanderPluginInterface
+    {
+        $storeTransfer = (new StoreTransfer())
+            ->setName(static::DEFAULT_STORE)
+            ->setDefaultCurrencyIsoCode(static::DEFAULT_CURRENCY);
+
+        $storeStorageStoreExpanderPluginMock = Stub::makeEmpty(StoreExpanderPluginInterface::class, [
+            'expand' => $storeTransfer,
+        ]);
+
+        return $storeStorageStoreExpanderPluginMock;
     }
 }

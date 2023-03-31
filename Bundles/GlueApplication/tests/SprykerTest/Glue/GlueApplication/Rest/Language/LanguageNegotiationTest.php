@@ -97,13 +97,15 @@ class LanguageNegotiationTest extends Unit
     protected function createStoreClientMock(): GlueApplicationToStoreClientInterface
     {
         $storeClientMock = $this->getMockBuilder(GlueApplicationToStoreClientInterface::class)
-            ->setMethods(['getCurrentStore'])
+            ->setMethods(['getCurrentStore', 'isDynamicStoreEnabled'])
             ->getMock();
 
         $storeTransfer = (new StoreTransfer())->setAvailableLocaleIsoCodes($this->locales);
 
         $storeClientMock->method('getCurrentStore')
             ->willReturn($storeTransfer);
+        $storeClientMock->method('isDynamicStoreEnabled')
+            ->willReturn($this->isDynamicStoreEnabled());
 
         return $storeClientMock;
     }
@@ -114,5 +116,13 @@ class LanguageNegotiationTest extends Unit
     protected function createLanguageNegotiator(): LanguageNegotiator
     {
         return new LanguageNegotiator();
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isDynamicStoreEnabled(): bool
+    {
+        return (bool)getenv('DYNAMIC_STORE_ENABLED');
     }
 }

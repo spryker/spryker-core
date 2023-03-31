@@ -37,36 +37,38 @@ class SourceIdentifier implements SourceIdentifierInterface
 
     /**
      * @param string $sourceIdentifier
+     * @param string|null $storeName
      *
      * @throws \Spryker\Zed\SearchElasticsearch\Business\Exception\InvalidSourceIdentifierException
      *
      * @return string
      */
-    public function translateToIndexName(string $sourceIdentifier): string
+    public function translateToIndexName(string $sourceIdentifier, ?string $storeName): string
     {
-        if (!$this->isSupported($sourceIdentifier)) {
+        if (!$this->isSupported($sourceIdentifier, $storeName)) {
             throw new InvalidSourceIdentifierException(
                 sprintf(
                     static::INVALID_SOURCE_IDENTIFIER_MESSAGE_TEMPLATE,
                     $sourceIdentifier,
-                    $this->getCurrentStore(),
+                    $storeName,
                 ),
             );
         }
 
-        if ($this->isPrefixedWithStoreName($sourceIdentifier)) {
+        if ($this->isPrefixedWithStoreName($sourceIdentifier, $storeName)) {
             return $this->buildIndexName($sourceIdentifier);
         }
 
-        return $this->buildIndexName($sourceIdentifier, $this->getCurrentStore());
+        return $this->buildIndexName($sourceIdentifier, $storeName);
     }
 
     /**
      * @param string $sourceIdentifier
+     * @param string|null $storeName
      *
      * @return bool
      */
-    public function isSupported(string $sourceIdentifier): bool
+    public function isSupported(string $sourceIdentifier, ?string $storeName): bool
     {
         $configSourceIdentifier = $this->findMatchingConfigSourceIdentifier($sourceIdentifier);
 
@@ -78,8 +80,12 @@ class SourceIdentifier implements SourceIdentifierInterface
             return true;
         }
 
+        if (!$storeName) {
+            return false;
+        }
+
         return mb_strtolower(
-            $this->getCurrentStore() .
+            $storeName .
             static::STORE_PREFIX_DELIMITER .
             $configSourceIdentifier,
         ) === $sourceIdentifier;
@@ -87,12 +93,13 @@ class SourceIdentifier implements SourceIdentifierInterface
 
     /**
      * @param string $sourceIdentifier
+     * @param string|null $storeName
      *
      * @throws \Spryker\Zed\SearchElasticsearch\Business\Exception\InvalidSourceIdentifierException
      *
      * @return bool
      */
-    public function isPrefixedWithStoreName(string $sourceIdentifier): bool
+    public function isPrefixedWithStoreName(string $sourceIdentifier, ?string $storeName): bool
     {
         $configSourceIdentifier = $this->findMatchingConfigSourceIdentifier($sourceIdentifier);
 
@@ -101,7 +108,7 @@ class SourceIdentifier implements SourceIdentifierInterface
                 sprintf(
                     static::INVALID_SOURCE_IDENTIFIER_MESSAGE_TEMPLATE,
                     $sourceIdentifier,
-                    $this->getCurrentStore(),
+                    $storeName,
                 ),
             );
         }
@@ -142,13 +149,5 @@ class SourceIdentifier implements SourceIdentifierInterface
         }
 
         return null;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getCurrentStore(): string
-    {
-        return APPLICATION_STORE;
     }
 }

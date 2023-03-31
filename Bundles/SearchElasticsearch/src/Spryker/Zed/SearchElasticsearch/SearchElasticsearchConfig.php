@@ -192,4 +192,14 @@ class SearchElasticsearchConfig extends AbstractBundleConfig
     {
         return $this->getSharedConfig()->getIndexPrefix();
     }
+
+    /**
+     * @api
+     *
+     * @return array<string>
+     */
+    public function getAllowedStoresForSourceIdentifierPrefixing(): array
+    {
+        return [];
+    }
 }

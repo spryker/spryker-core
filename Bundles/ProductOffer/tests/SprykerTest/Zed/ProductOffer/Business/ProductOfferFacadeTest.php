@@ -85,6 +85,16 @@ class ProductOfferFacadeTest extends Unit
     protected const TEST_PRODUCT_REFERENCE_4 = 'product_reference_4';
 
     /**
+     * @var string
+     */
+    protected const STORE_NAME_DE = 'DE';
+
+    /**
+     * @var string
+     */
+    protected const STORE_NAME_AT = 'AT';
+
+    /**
      * @var \SprykerTest\Zed\ProductOffer\ProductOfferBusinessTester
      */
     protected $tester;
@@ -132,8 +142,8 @@ class ProductOfferFacadeTest extends Unit
         $productOfferTransfer = $this->tester->haveProductOffer([
             ProductOfferTransfer::ID_PRODUCT_CONCRETE => $productTransfer->getIdProductConcrete(),
         ]);
-        $storeTransfer1 = $this->tester->haveStore();
-        $storeTransfer2 = $this->tester->haveStore();
+        $storeTransfer1 = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE], false);
+        $storeTransfer2 = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_AT], false);
         $this->tester->haveProductOfferStore($productOfferTransfer, $storeTransfer1);
         $this->tester->haveProductOfferStore($productOfferTransfer, $storeTransfer2);
         $productOfferCriteriaTransfer = (new ProductOfferCriteriaTransfer())
@@ -202,8 +212,9 @@ class ProductOfferFacadeTest extends Unit
         $productOfferTransfer = $this->tester->haveProductOffer([
             ProductOfferTransfer::ID_PRODUCT_CONCRETE => $productTransfer->getIdProductConcrete(),
         ]);
-        $storeTransfer1 = $this->tester->haveStore();
-        $storeTransfer2 = $this->tester->haveStore();
+        $expandStore = false;
+        $storeTransfer1 = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE], $expandStore);
+        $storeTransfer2 = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_AT], $expandStore);
         $this->tester->haveProductOfferStore($productOfferTransfer, $storeTransfer1);
         $this->tester->haveProductOfferStore($productOfferTransfer, $storeTransfer2);
         $productOfferCriteriaTransfer = (new ProductOfferCriteriaTransfer())
@@ -214,7 +225,10 @@ class ProductOfferFacadeTest extends Unit
 
         // Assert
         $this->assertCount(2, $productOfferTransfer->getStores());
-        $this->assertEquals($productOfferTransfer->getStores(), new ArrayObject([$storeTransfer1, $storeTransfer2]));
+        $expectedStoreNames = array_map(function (StoreTransfer $storeTransfer) {
+            return $storeTransfer->getName();
+        }, $productOfferTransfer->getStores()->getArrayCopy());
+        $this->assertEquals([$storeTransfer1->getName(), $storeTransfer2->getName()], $expectedStoreNames);
     }
 
     /**
@@ -250,8 +264,8 @@ class ProductOfferFacadeTest extends Unit
             ProductOfferTransfer::ID_PRODUCT_CONCRETE => $productTransfer->getIdProductConcrete(),
             ProductOfferTransfer::ID_PRODUCT_OFFER => null,
         ]))->build();
-        $productOfferTransfer->addStore($this->tester->haveStore());
-        $productOfferTransfer->addStore($this->tester->haveStore());
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $productOfferTransfer->addStore($storeTransfer);
         $productOfferCriteriaTransfer = (new ProductOfferCriteriaTransfer())
             ->setIdProductOffer($productOfferTransfer->getIdProductOffer());
 
@@ -262,7 +276,11 @@ class ProductOfferFacadeTest extends Unit
             ->getStores();
 
         // Assert
-        $this->assertEquals($productOfferTransfer->getStores(), $storeTransfers);
+        $expectedStoreNames = array_map(function (StoreTransfer $storeTransfer) {
+            return $storeTransfer->getName();
+        }, $productOfferTransfer->getStores()->getArrayCopy());
+
+        $this->assertEquals([$storeTransfer->getName()], $expectedStoreNames);
     }
 
     /**
@@ -450,11 +468,12 @@ class ProductOfferFacadeTest extends Unit
         $productOfferTransfer = $this->tester->haveProductOffer([
             ProductOfferTransfer::ID_PRODUCT_CONCRETE => $productTransfer->getIdProductConcrete(),
         ]);
-        $storeTransfer = $this->tester->haveStore();
-        $this->tester->haveProductOfferStore($productOfferTransfer, $storeTransfer);
-        $productOfferTransfer->addStore($storeTransfer);
-        $productOfferTransfer->addStore($this->tester->haveStore());
-        $productOfferTransfer->addStore($this->tester->haveStore());
+        $expandStore = false;
+        $deStoreTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE], $expandStore);
+        $this->tester->haveProductOfferStore($productOfferTransfer, $deStoreTransfer);
+        $productOfferTransfer->addStore($deStoreTransfer);
+        $atStoreTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_AT], $expandStore);
+        $productOfferTransfer->addStore($atStoreTransfer);
         $productOfferCriteriaTransfer = (new ProductOfferCriteriaTransfer())
             ->setIdProductOffer($productOfferTransfer->getIdProductOffer());
 
@@ -465,8 +484,13 @@ class ProductOfferFacadeTest extends Unit
             ->getStores();
 
         // Assert
-        $this->assertCount(3, $storeTransfers);
-        $this->assertEquals($productOfferTransfer->getStores(), $storeTransfers);
+        $this->assertCount(2, $storeTransfers);
+
+        $expectedStoreNames = array_map(function (StoreTransfer $storeTransfer) {
+            return $storeTransfer->getName();
+        }, $storeTransfers->getArrayCopy());
+
+        $this->assertEquals([$deStoreTransfer->getName(), $atStoreTransfer->getName()], $expectedStoreNames);
     }
 
     /**
@@ -479,8 +503,9 @@ class ProductOfferFacadeTest extends Unit
         $productOfferTransfer = $this->tester->haveProductOffer([
             ProductOfferTransfer::ID_PRODUCT_CONCRETE => $productTransfer->getIdProductConcrete(),
         ]);
-        $storeTransfer1 = $this->tester->haveStore();
-        $storeTransfer2 = $this->tester->haveStore();
+        $expandStore = false;
+        $storeTransfer1 = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE], $expandStore);
+        $storeTransfer2 = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_AT], $expandStore);
         $this->tester->haveProductOfferStore($productOfferTransfer, $storeTransfer1);
         $this->tester->haveProductOfferStore($productOfferTransfer, $storeTransfer2);
         $productOfferTransfer->addStore($storeTransfer1);
@@ -495,7 +520,10 @@ class ProductOfferFacadeTest extends Unit
 
         // Assert
         $this->assertCount(1, $storeTransfers);
-        $this->assertEquals($productOfferTransfer->getStores(), $storeTransfers);
+        $expectedStoreNames = array_map(function (StoreTransfer $storeTransfer) {
+            return $storeTransfer->getName();
+        }, $storeTransfers->getArrayCopy());
+        $this->assertEquals([$storeTransfer1->getName()], $expectedStoreNames);
     }
 
     /**
@@ -751,6 +779,30 @@ class ProductOfferFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testGetProductOfferCollectionReturnsPaginatedProductOffers(): void
+    {
+        // Arrange
+        $this->tester->ensureDatabaseTableIsEmpty(SpyProductOfferQuery::create());
+        $this->tester->haveProductOffer();
+        $productOfferTransfer1 = $this->tester->haveProductOffer();
+        $productOfferTransfer2 = $this->tester->haveProductOffer();
+        $this->tester->haveProductOffer();
+        $productOfferCriteriaTransfer = (new ProductOfferCriteriaTransfer())
+            ->setPagination(
+                (new PaginationTransfer())->setOffset(0)->setLimit(4),
+            );
+
+        // Act
+        $productOfferCollectionTransfer = $this->tester->getFacade()->getProductOfferCollection($productOfferCriteriaTransfer);
+
+        // Assert
+        $this->assertTrue($this->productOfferCollectionTransferContainsProductOffer($productOfferCollectionTransfer, $productOfferTransfer1));
+        $this->assertTrue($this->productOfferCollectionTransferContainsProductOffer($productOfferCollectionTransfer, $productOfferTransfer2));
+    }
+
+    /**
+     * @return void
+     */
     public function testGetProductOfferCollectionReturnsPaginatedProductOffersWithLimitAndOffset(): void
     {
         // Arrange
@@ -770,8 +822,6 @@ class ProductOfferFacadeTest extends Unit
         // Assert
         $this->assertCount(2, $productOfferCollectionTransfer->getProductOffers());
         $this->assertSame(4, $productOfferCollectionTransfer->getPagination()->getNbResults());
-        $this->assertTrue($this->productOfferCollectionTransferContainsProductOffer($productOfferCollectionTransfer, $productOfferTransfer1));
-        $this->assertTrue($this->productOfferCollectionTransferContainsProductOffer($productOfferCollectionTransfer, $productOfferTransfer2));
     }
 
     /**

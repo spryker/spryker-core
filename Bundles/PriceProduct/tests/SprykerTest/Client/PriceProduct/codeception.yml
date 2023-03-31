@@ -22,3 +22,6 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\ConfigHelper
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
+                - \SprykerTest\Shared\Storage\Helper\StorageRedisConfigHelper

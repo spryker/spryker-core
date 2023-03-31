@@ -12,7 +12,7 @@ use Symfony\Component\Form\DataTransformerInterface;
 class IdStoresDataTransformer implements DataTransformerInterface
 {
     /**
-     * @param array|null $value Store IDs.
+     * @param array<mixed>|null $value Store IDs.
      *
      * @return string
      */
@@ -25,7 +25,7 @@ class IdStoresDataTransformer implements DataTransformerInterface
     /**
      * @param string $value JSON of Store IDs.
      *
-     * @return array|null
+     * @return array<mixed>|null
      */
     public function reverseTransform($value)
     {

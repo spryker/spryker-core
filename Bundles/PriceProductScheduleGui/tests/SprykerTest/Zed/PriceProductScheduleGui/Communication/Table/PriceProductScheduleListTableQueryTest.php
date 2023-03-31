@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceTypeTransfer;
 use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleListQuery;
-use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToStoreFacadeInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
@@ -112,7 +111,7 @@ class PriceProductScheduleListTableQueryTest extends Unit
 
         $priceProductScheduleListTableMock = new PriceProductScheduleListTableMock(
             SpyPriceProductScheduleListQuery::create(),
-            $this->getPriceProductScheduleGuiToStoreFacadeMock(),
+            $this->tester->getUtilDateTimeService(),
         );
         $priceProductScheduleListTableMock->setTwig($this->getTwigMock());
 
@@ -149,18 +148,6 @@ class PriceProductScheduleListTableQueryTest extends Unit
                 MoneyValueTransfer::FK_CURRENCY => $idCurrency,
             ],
         ];
-    }
-
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToStoreFacadeInterface
-     */
-    protected function getPriceProductScheduleGuiToStoreFacadeMock(): PriceProductScheduleGuiToStoreFacadeInterface
-    {
-        $storeFacadeMock = $this->getMockBuilder(PriceProductScheduleGuiToStoreFacadeInterface::class)->getMock();
-        $storeFacadeMock->method('getCurrentStore')
-            ->willReturn($this->tester->getCurrentStore());
-
-        return $storeFacadeMock;
     }
 
     /**

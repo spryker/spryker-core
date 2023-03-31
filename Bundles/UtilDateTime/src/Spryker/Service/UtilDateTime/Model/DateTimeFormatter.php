@@ -90,7 +90,18 @@ class DateTimeFormatter implements DateTimeFormatterInterface
 
     /**
      * @param \DateTime|string $dateTime
-     * @param string $formatConfigConstant
+     * @param string $format
+     *
+     * @return string
+     */
+    public function formatDateTimeToCustomFormat($dateTime, string $format): string
+    {
+        return $this->format($dateTime, null, $format);
+    }
+
+    /**
+     * @param \DateTime|string $dateTime
+     * @param string|null $formatConfigConstant
      * @param string $defaultFormat
      * @param string|null $timezone
      *
@@ -103,7 +114,11 @@ class DateTimeFormatter implements DateTimeFormatterInterface
         }
 
         $dateTimeZone = new DateTimeZone($timezone);
-        $configuredFormat = $this->config->get($formatConfigConstant, $defaultFormat);
+
+        $configuredFormat = $defaultFormat;
+        if ($formatConfigConstant) {
+            $configuredFormat = $this->config->get($formatConfigConstant, $defaultFormat);
+        }
 
         if (!($dateTime instanceof DateTime)) {
             $dateTime = new DateTime($dateTime);

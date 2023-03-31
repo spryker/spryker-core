@@ -27,6 +27,21 @@ use Spryker\Zed\CategoryPageSearch\Business\Search\DataMapper\CategoryNodePageSe
 class CategoryNodePageSearchDataMapperTest extends Unit
 {
     /**
+     * @var \SprykerTest\Zed\CategoryPageSearch\CategoryPageSearchBusinessTester
+     */
+    protected $tester;
+
+    /**
+     * @return void
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->tester->addDependencies();
+    }
+
+    /**
      * @dataProvider canMapRawDataToSearchDataProvider
      *
      * @param array $inputData

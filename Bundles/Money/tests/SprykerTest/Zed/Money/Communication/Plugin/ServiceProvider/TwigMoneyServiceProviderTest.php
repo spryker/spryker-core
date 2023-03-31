@@ -11,9 +11,13 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\MoneyTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Silex\Application;
-use Spryker\Zed\Locale\Business\LocaleFacadeInterface;
+use Spryker\Zed\Currency\CurrencyDependencyProvider;
+use Spryker\Zed\Currency\Dependency\Facade\CurrencyToStoreFacadeInterface;
 use Spryker\Zed\Money\Communication\Plugin\ServiceProvider\TwigMoneyServiceProvider;
+use Spryker\Zed\Money\Dependency\Facade\MoneyToLocaleFacadeInterface;
+use Spryker\Zed\Money\MoneyDependencyProvider;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
@@ -34,9 +38,29 @@ use Twig\Loader\FilesystemLoader;
 class TwigMoneyServiceProviderTest extends Unit
 {
     /**
+     * @var string
+     */
+    public const CURRENCY_EUR = 'EUR';
+
+    /**
+     * @var string
+     */
+    protected const DEFAULT_STORE = 'DE';
+
+    /**
      * @var \SprykerTest\Zed\Money\MoneyCommunicationTester
      */
     protected $tester;
+
+    /**
+     * @return void
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->tester->setDependency(CurrencyDependencyProvider::FACADE_STORE, $this->createCurrencyToStoreFacadeMock());
+    }
 
     /**
      * @return void
@@ -87,9 +111,9 @@ class TwigMoneyServiceProviderTest extends Unit
 
         $callable = $filter->getCallable();
 
-        $this->getLocaleFacade()->setCurrentLocale((new LocaleTransfer())->setLocaleName($locale));
+        $this->tester->setDependency(MoneyDependencyProvider::FACADE_LOCALE, $this->createLocaleFacadeMock($locale));
 
-        $result = $callable($input, $withSymbol);
+        $result = $callable($input, $withSymbol, static::CURRENCY_EUR);
         $this->assertSame($expected, $result);
     }
 
@@ -144,10 +168,33 @@ class TwigMoneyServiceProviderTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\Locale\Business\LocaleFacadeInterface
+     * @param $locale
+     *
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Money\Dependency\Facade\MoneyToLocaleFacadeInterface
      */
-    protected function getLocaleFacade(): LocaleFacadeInterface
+    protected function createLocaleFacadeMock(string $locale): MoneyToLocaleFacadeInterface
     {
-        return $this->tester->getLocator()->locale()->facade();
+        $localeFacadeMock = $this->createMock(MoneyToLocaleFacadeInterface::class);
+        $localeFacadeMock->method('getCurrentLocale')
+            ->willReturn(
+                (new LocaleTransfer())
+                    ->setLocaleName($locale),
+            );
+
+        return $localeFacadeMock;
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Currency\Dependency\Facade\CurrencyToStoreFacadeInterface
+     */
+    protected function createCurrencyToStoreFacadeMock(): CurrencyToStoreFacadeInterface
+    {
+        $currencyToStoreClientMock = $this->createMock(CurrencyToStoreFacadeInterface::class);
+        $currencyToStoreClientMock->method('getCurrentStore')
+            ->willReturn((new StoreTransfer())
+                ->setName(static::DEFAULT_STORE)
+                ->setDefaultCurrencyIsoCode(static::CURRENCY_EUR));
+
+        return $currencyToStoreClientMock;
     }
 }

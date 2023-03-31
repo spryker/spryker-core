@@ -8,7 +8,9 @@
 namespace SprykerTest\Zed\Discount;
 
 use Codeception\Actor;
+use Codeception\Stub;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
+use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\Store\Communication\Plugin\Form\StoreRelationToggleFormTypePlugin;
 
 /**
@@ -37,5 +39,17 @@ class DiscountCommunicationTester extends Actor
         $this->setDependency(DiscountDependencyProvider::PLUGIN_STORE_RELATION_FORM_TYPE, function () {
             return new StoreRelationToggleFormTypePlugin();
         });
+    }
+
+    /**
+     * @return void
+     */
+    public function registerMoneyCollectionFormTypePlugin(): void
+    {
+        $moneyCollectionTypeMock = Stub::makeEmpty(FormTypeInterface::class, [
+            'getType' => '\Spryker\Zed\MoneyGui\Communication\Form\Type\MoneyCollectionType',
+        ]);
+
+        $this->setDependency(DiscountDependencyProvider::PLUGIN_MONEY_COLLECTION_FORM_TYPE, $moneyCollectionTypeMock);
     }
 }

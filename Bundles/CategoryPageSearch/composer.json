@@ -18,12 +18,15 @@
     },
     "require-dev": {
         "spryker/code-sniffer": "*",
+        "spryker/container": "*",
         "spryker/event": "*",
         "spryker/propel": "*",
         "spryker/propel-orm": "*",
         "spryker/publisher": "*",
         "spryker/queue": "*",
         "spryker/search": "*",
+        "spryker/storage": "*",
+        "spryker/store-extension": "*",
         "spryker/testify": "*",
         "spryker/url": "*"
     },

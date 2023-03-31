@@ -8,39 +8,47 @@
 namespace Spryker\Zed\Country\Persistence;
 
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
+use Orm\Zed\Country\Persistence\SpyCountryStoreQuery;
 use Orm\Zed\Country\Persistence\SpyRegionQuery;
 use Spryker\Zed\Country\Persistence\Propel\Mapper\CountryMapper;
-use Spryker\Zed\Country\Persistence\Propel\Mapper\CountryMapperInterface;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\Country\CountryConfig getConfig()
- * @method \Spryker\Zed\Country\Persistence\CountryQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Country\Persistence\CountryRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Country\Persistence\CountryEntityManagerInterface getEntityManager()
  */
 class CountryPersistenceFactory extends AbstractPersistenceFactory
 {
     /**
-     * @return \Orm\Zed\Country\Persistence\SpyCountryQuery
+     * @return \Orm\Zed\Country\Persistence\SpyCountryQuery<mixed>
      */
-    public function createCountryQuery()
+    public function createCountryQuery(): SpyCountryQuery
     {
         return SpyCountryQuery::create();
     }
 
     /**
-     * @return \Orm\Zed\Country\Persistence\SpyRegionQuery
+     * @return \Orm\Zed\Country\Persistence\SpyRegionQuery<mixed>
      */
-    public function createRegionQuery()
+    public function createRegionQuery(): SpyRegionQuery
     {
         return SpyRegionQuery::create();
     }
 
     /**
-     * @return \Spryker\Zed\Country\Persistence\Propel\Mapper\CountryMapperInterface
+     * @return \Spryker\Zed\Country\Persistence\Propel\Mapper\CountryMapper
      */
-    public function createCountryMapper(): CountryMapperInterface
+    public function createCountryMapper(): CountryMapper
     {
         return new CountryMapper();
+    }
+
+    /**
+     * @return \Orm\Zed\Country\Persistence\SpyCountryStoreQuery<mixed>
+     */
+    public function createCountryStorePropelQuery(): SpyCountryStoreQuery
+    {
+        return SpyCountryStoreQuery::create();
     }
 }

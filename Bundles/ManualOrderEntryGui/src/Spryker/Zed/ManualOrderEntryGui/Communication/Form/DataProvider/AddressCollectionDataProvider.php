@@ -148,8 +148,10 @@ class AddressCollectionDataProvider implements FormDataProviderInterface
     {
         $countries = [];
 
-        foreach ($this->storeFacade->getCountries() as $iso2Code) {
-            $countries[$iso2Code] = $iso2Code;
+        foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
+            foreach ($storeTransfer->getCountries() as $iso2Code) {
+                $countries[$iso2Code] = $iso2Code;
+            }
         }
 
         return $countries;

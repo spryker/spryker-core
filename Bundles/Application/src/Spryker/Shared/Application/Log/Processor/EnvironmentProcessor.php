@@ -66,15 +66,20 @@ class EnvironmentProcessor
      */
     protected function getData()
     {
-        $store = $this->getStore();
-
-        return [
+        $data = [
             static::APPLICATION => APPLICATION,
             static::ENVIRONMENT => APPLICATION_ENV,
-            static::STORE => $store->getStoreName(),
             static::CODE_BUCKET => APPLICATION_CODE_BUCKET,
-            static::LOCALE => $store->getCurrentLocale(),
         ];
+
+        if (!Store::isDynamicStoreMode()) {
+            $store = $this->getStore();
+
+            $data[static::STORE] = $store->getStoreName();
+            $data[static::LOCALE] = $store->getCurrentLocale();
+        }
+
+        return $data;
     }
 
     /**

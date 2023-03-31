@@ -11,16 +11,27 @@ use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\LocaleExtension\Dependency\Plugin\LocalePluginInterface;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
+use Spryker\Yves\Locale\Dependency\Client\LocaleToStoreClientBridge;
 use Spryker\Yves\Locale\Plugin\Locale\LocaleLocalePlugin;
 
+/**
+ * @method \Spryker\Yves\Locale\LocaleConfig getConfig()
+ */
 class LocaleDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
+    public const CLIENT_STORE = 'CLIENT_STORE';
+
     /**
      * @var string
      */
     public const PLUGIN_LOCALE = 'PLUGIN_LOCALE';
 
     /**
+     * @deprecated Will be removed after dynamic multi-store is always enabled.
+     *
      * @var string
      */
     public const STORE = 'STORE';
@@ -34,6 +45,7 @@ class LocaleDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addLocalePlugin($container);
         $container = $this->addStore($container);
+        $container = $this->addStoreClient($container);
 
         return $container;
     }
@@ -65,6 +77,24 @@ class LocaleDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Yves\Kernel\Container
      */
+    protected function addStoreClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_STORE, function (Container $container) {
+            return new LocaleToStoreClientBridge(
+                $container->getLocator()->store()->client(),
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @deprecated Exists for BC-reasons only.
+     *
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
     public function addStore(Container $container): Container
     {
         $container->set(static::STORE, function () {
@@ -75,6 +105,8 @@ class LocaleDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Exists for BC-reasons only.
+     *
      * @return \Spryker\Shared\Kernel\Store
      */
     public function getStore(): Store

@@ -49,6 +49,7 @@ class AuthenticationOauthFacadeTest extends Unit
 
         $this->setUserProvider();
         $this->setUserPasswordOauthRequestGrantTypeConfigurationProvider();
+        $this->tester->addDependencies();
     }
 
     /**

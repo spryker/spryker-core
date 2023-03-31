@@ -14,6 +14,8 @@ use Twig\Environment;
 use Twig\TwigFunction;
 
 /**
+ * @deprecated Will be removed without replacement.
+ *
  * @method \Spryker\Yves\Currency\CurrencyFactory getFactory()
  * @method \Spryker\Client\Currency\CurrencyClientInterface getClient()
  */
@@ -59,7 +61,7 @@ class CurrencySwitcherServiceProvider extends AbstractPlugin implements ServiceP
      *
      * @return void
      */
-    public function boot(Application $app)
+    public function boot(Application $app): void
     {
     }
 
@@ -68,7 +70,7 @@ class CurrencySwitcherServiceProvider extends AbstractPlugin implements ServiceP
      *
      * @return \Twig\TwigFunction
      */
-    protected function getCurrencySwitcher(Environment $twig)
+    protected function getCurrencySwitcher(Environment $twig): TwigFunction
     {
         $options = ['is_safe' => ['html']];
 
@@ -86,9 +88,9 @@ class CurrencySwitcherServiceProvider extends AbstractPlugin implements ServiceP
     /**
      * @return array<\Generated\Shared\Transfer\CurrencyTransfer>
      */
-    protected function getCurrencies()
+    protected function getCurrencies(): array
     {
-        $availableCurrencyCodes = $this->getFactory()->getStore()->getCurrencyIsoCodes();
+        $availableCurrencyCodes = $this->getClient()->getCurrencyIsoCodes();
 
         $currencies = [];
         foreach ($availableCurrencyCodes as $currencyIsoCode) {
@@ -101,14 +103,24 @@ class CurrencySwitcherServiceProvider extends AbstractPlugin implements ServiceP
     /**
      * @return string
      */
-    protected function getCurrentCurrency()
+    protected function getCurrentCurrency(): string
     {
         $currentCurrencyIsoCode = $this->getClient()->getCurrent()->getCode();
 
         if (!$currentCurrencyIsoCode) {
-            return $this->getFactory()->getStore()->getCurrencyIsoCode();
+            return $this->getCurrencyIsoCode();
         }
 
         return $currentCurrencyIsoCode;
+    }
+
+    /**
+     * @deprecated Will be removed after dynamic multi-store is always enabled.
+     *
+     * @return string
+     */
+    protected function getCurrencyIsoCode(): string
+    {
+        return $this->getFactory()->getStore()->getCurrencyIsoCode();
     }
 }

@@ -43,7 +43,7 @@ class StoreRelationToggleDataProvider implements StoreRelationToggleDataProvider
 
         $idStores = [];
         foreach ($storeTransferCollection as $storeTransfer) {
-            $idStores[] = $storeTransfer->getIdStore();
+            $idStores[] = (int)$storeTransfer->getIdStore();
         }
 
         return $idStores;

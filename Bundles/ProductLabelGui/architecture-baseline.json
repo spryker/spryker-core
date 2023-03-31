@@ -56,6 +56,20 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/ProductLabelGui/Dependency/Facade/ProductLabelGuiToLocaleBridge.php",
+        "description": "Bridges: Method `getCurrentLocaleName()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ProductLabelGui/Dependency/Facade/ProductLabelGuiToLocaleInterface.php",
+        "description": "Bridges: The bridge interface has incorrect method signature for `getLocaleById()`. Got `$idLocale` but expected to be `int $idLocale`. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
+        "rule": "BridgeMethodsInterfaceRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/ProductLabelGui/Dependency/Facade/ProductLabelGuiToMoneyBridge.php",
         "description": "Bridges: Type should be defined for param `price` in method `Spryker\\Zed\\ProductLabelGui\\Dependency\\Facade\\ProductLabelGuiToMoneyBridge::fromInteger()`.",
         "rule": "BridgeMethodsRule",
@@ -171,13 +185,6 @@
         "fileName": "src/Spryker/Zed/ProductLabelGui/Dependency/Facade/ProductLabelGuiToProductLabelInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `removeAbstractProductRelationsForLabel()`. Method does not exist in parent. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/ProductLabelGui/Dependency/Facade/ProductLabelGuiToLocaleBridge.php",
-        "description": "Bridges: Method `getCurrentLocaleName()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
-        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     }

@@ -16,5 +16,5 @@ interface CategoryImageToLocaleInterface
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getLocaleById($idLocale): LocaleTransfer;
+    public function getLocaleById(int $idLocale): LocaleTransfer;
 }

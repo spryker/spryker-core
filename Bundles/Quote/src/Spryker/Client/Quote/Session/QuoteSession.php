@@ -10,6 +10,7 @@ namespace Spryker\Client\Quote\Session;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Quote\Dependency\Client\QuoteToCurrencyClientInterface;
+use Spryker\Client\Quote\Dependency\Client\QuoteToStoreClientInterface;
 use Spryker\Client\Session\SessionClientInterface;
 
 class QuoteSession implements QuoteSessionInterface
@@ -40,18 +41,26 @@ class QuoteSession implements QuoteSessionInterface
     protected static $currencyTransfer;
 
     /**
+     * @var \Spryker\Client\Quote\Dependency\Client\QuoteToStoreClientInterface
+     */
+    protected QuoteToStoreClientInterface $storeClient;
+
+    /**
      * @param \Spryker\Client\Session\SessionClientInterface $session
      * @param \Spryker\Client\Quote\Dependency\Client\QuoteToCurrencyClientInterface $currencyClient
+     * @param \Spryker\Client\Quote\Dependency\Client\QuoteToStoreClientInterface $storeClient
      * @param array<\Spryker\Client\Quote\Dependency\Plugin\QuoteTransferExpanderPluginInterface> $quoteTransferExpanderPlugins
      */
     public function __construct(
         SessionClientInterface $session,
         QuoteToCurrencyClientInterface $currencyClient,
+        QuoteToStoreClientInterface $storeClient,
         array $quoteTransferExpanderPlugins = []
     ) {
         $this->session = $session;
         $this->quoteTransferExpanderPlugins = $quoteTransferExpanderPlugins;
         $this->currencyClient = $currencyClient;
+        $this->storeClient = $storeClient;
     }
 
     /**
@@ -60,7 +69,7 @@ class QuoteSession implements QuoteSessionInterface
     public function getQuote()
     {
         $quoteTransfer = new QuoteTransfer();
-        $quoteTransfer = $this->session->get(static::QUOTE_SESSION_IDENTIFIER, $quoteTransfer);
+        $quoteTransfer = $this->session->get($this->getQuoteSessionIdentifier(), $quoteTransfer);
         $this->setCurrency($quoteTransfer);
 
         $quoteTransfer = $this->expandQuoteTransfer($quoteTransfer);
@@ -79,7 +88,7 @@ class QuoteSession implements QuoteSessionInterface
 
         $quoteTransfer = $this->expandQuoteTransfer($quoteTransfer);
 
-        $this->session->set(static::QUOTE_SESSION_IDENTIFIER, $quoteTransfer);
+        $this->session->set($this->getQuoteSessionIdentifier(), $quoteTransfer);
         $this->updateCurrency($quoteTransfer);
 
         return $this;
@@ -146,5 +155,21 @@ class QuoteSession implements QuoteSessionInterface
         if ($quoteTransfer->getCurrency()->getCode() !== $currencyTransfer->getCode()) {
             $this->currencyClient->setCurrentCurrencyIsoCode($quoteTransfer->getCurrency()->getCode());
         }
+    }
+
+    /**
+     * @return string
+     */
+    protected function getQuoteSessionIdentifier(): string
+    {
+        if (!$this->storeClient->isDynamicStoreEnabled()) {
+            return static::QUOTE_SESSION_IDENTIFIER;
+        }
+
+        return sprintf(
+            '%s %s',
+            $this->storeClient->getCurrentStore()->getNameOrFail(),
+            static::QUOTE_SESSION_IDENTIFIER,
+        );
     }
 }

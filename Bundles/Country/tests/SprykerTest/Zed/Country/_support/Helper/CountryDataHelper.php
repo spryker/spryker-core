@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\Country\Helper;
 use Codeception\Module;
 use Generated\Shared\DataBuilder\CountryBuilder;
 use Generated\Shared\Transfer\CountryTransfer;
+use Orm\Zed\Country\Persistence\SpyCountryStoreQuery;
 use Spryker\Zed\Country\Business\CountryFacadeInterface;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
@@ -33,10 +34,79 @@ class CountryDataHelper extends Module
     }
 
     /**
+     * @param int $idStore
+     * @param int $idCountry
+     *
+     * @return int
+     */
+    public function haveCountryStore(int $idStore, int $idCountry): int
+    {
+        $countryStoreEntity = $this->createCountryStorePropelQuery()
+            ->filterByFkStore($idStore)
+            ->filterByFkCountry($idCountry)
+            ->findOneOrCreate();
+
+        $countryStoreEntity->save();
+
+        return $countryStoreEntity->getIdCountryStore();
+    }
+
+    /**
+     * @param int $idStore
+     * @param int $idCountry
+     *
+     * @return bool
+     */
+    public function countryStoreExists(int $idStore, int $idCountry): bool
+    {
+        return $this->createCountryStorePropelQuery()
+            ->filterByFkStore($idStore)
+            ->filterByFkCountry($idCountry)
+            ->exists();
+    }
+
+    /**
+     * @param int $idStore
+     *
+     * @return void
+     */
+    public function deleteCountryStore(int $idStore): void
+    {
+        $this->createCountryStorePropelQuery()
+            ->filterByFkStore($idStore)
+            ->delete();
+    }
+
+    /**
+     * @return \Orm\Zed\Country\Persistence\SpyCountryStoreQuery
+     */
+    protected function createCountryStorePropelQuery(): SpyCountryStoreQuery
+    {
+        return SpyCountryStoreQuery::create();
+    }
+
+    /**
      * @return \Spryker\Zed\Country\Business\CountryFacadeInterface
      */
     protected function getCountryFacade(): CountryFacadeInterface
     {
         return $this->getLocator()->country()->facade();
+    }
+
+    /**
+     * @return void
+     */
+    public function ensureCountryStoreDatabaseTableIsEmpty(): void
+    {
+        $countryStoreQuery = $this->createCountryStorePropelQuery();
+        $countryStoreQuery->deleteAll();
+    }
+
+    /**
+     * @return int
+     */
+    public function getCountryStoreRelationsCount(): int
+    {
+        return $this->createCountryStorePropelQuery()->count();
     }
 }

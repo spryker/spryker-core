@@ -41,6 +41,7 @@ class IndexControllerCest
     public function testICanGoFromOverviewPageToCreatePage(DiscountCommunicationTester $i): void
     {
         $i->registerStoreRelationToggleFormTypePlugin();
+        $i->registerMoneyCollectionFormTypePlugin();
 
         $i->amOnPage('/discount/index/list');
         $i->click('Create new Discount');

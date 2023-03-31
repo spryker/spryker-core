@@ -16,7 +16,7 @@ interface ProductOptionToCurrencyFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function getByIdCurrency($idCurrency): CurrencyTransfer;
+    public function getByIdCurrency(int $idCurrency): CurrencyTransfer;
 
     /**
      * @return \Generated\Shared\Transfer\CurrencyTransfer
@@ -28,5 +28,5 @@ interface ProductOptionToCurrencyFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function fromIsoCode($isoCode): CurrencyTransfer;
+    public function fromIsoCode(string $isoCode): CurrencyTransfer;
 }

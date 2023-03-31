@@ -741,7 +741,16 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
         array $productAbstractLocalizedEntities,
         array $productAbstractIds
     ): array {
-        $productConcreteSkuMapByIdProductAbstract = $this->addToCartSkuReader->getProductAbstractAddToCartSkus($productAbstractIds);
+        $productAbstractStoreIds = [];
+        foreach ($productAbstractLocalizedEntities as $productAbstractLocalizedEntity) {
+            $productAbstractId = (int)$productAbstractLocalizedEntity['fk_product_abstract'];
+            foreach ($productAbstractLocalizedEntity['SpyProductAbstract']['SpyProductAbstractStores'] as $productAbstractStoreData) {
+                $storeId = (int)$productAbstractStoreData['SpyStore']['id_store'];
+                $productAbstractStoreIds[$productAbstractId][] = $storeId;
+            }
+        }
+
+        $productConcreteSkuMapByIdProductAbstract = $this->addToCartSkuReader->getProductAbstractAddToCartSkus($productAbstractIds, $productAbstractStoreIds);
 
         foreach ($productAbstractLocalizedEntities as &$productAbstractLocalizedEntity) {
             $productAbstractId = (int)$productAbstractLocalizedEntity['fk_product_abstract'];

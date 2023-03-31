@@ -12,6 +12,7 @@ use Spryker\Zed\Synchronization\Business\Export\ExporterInterface;
 use Spryker\Zed\Synchronization\Business\Export\RepositoryExporter;
 use Spryker\Zed\Synchronization\Business\Message\QueueMessageCreatorInterface;
 use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToQueueClientInterface;
+use Spryker\Zed\Synchronization\Dependency\Facade\SynchronizationToStoreFacadeInterface;
 use Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingServiceInterface;
 use Spryker\Zed\Synchronization\SynchronizationConfig;
 
@@ -70,6 +71,7 @@ class RepositoryExporterTest extends Unit
         return $this->getMockBuilder(RepositoryExporter::class)
             ->setConstructorArgs([
                     $this->getMockBuilder(SynchronizationToQueueClientInterface::class)->getMock(),
+                    $this->getMockBuilder(SynchronizationToStoreFacadeInterface::class)->getMock(),
                     $this->getMockBuilder(QueueMessageCreatorInterface::class)->getMock(),
                     $this->getMockBuilder(SynchronizationToUtilEncodingServiceInterface::class)->getMock(),
                     $synchronizationConfigStub,

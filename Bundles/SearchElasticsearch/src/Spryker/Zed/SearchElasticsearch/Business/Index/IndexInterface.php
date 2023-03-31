@@ -20,9 +20,11 @@ interface IndexInterface
     public function openIndex(SearchContextTransfer $searchContextTransfer): bool;
 
     /**
+     * @param string|null $storeName
+     *
      * @return bool
      */
-    public function openIndexes(): bool;
+    public function openIndexes(?string $storeName = null): bool;
 
     /**
      * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
@@ -32,9 +34,11 @@ interface IndexInterface
     public function closeIndex(SearchContextTransfer $searchContextTransfer): bool;
 
     /**
+     * @param string|null $storeName
+     *
      * @return bool
      */
-    public function closeIndexes(): bool;
+    public function closeIndexes(?string $storeName = null): bool;
 
     /**
      * @param \Generated\Shared\Transfer\SearchContextTransfer $searchContextTransfer
@@ -44,9 +48,11 @@ interface IndexInterface
     public function deleteIndex(SearchContextTransfer $searchContextTransfer): bool;
 
     /**
+     * @param string|null $storeName
+     *
      * @return bool
      */
-    public function deleteIndexes(): bool;
+    public function deleteIndexes(?string $storeName = null): bool;
 
     /**
      * @param \Generated\Shared\Transfer\SearchContextTransfer $sourceSearchContextTransfer
@@ -71,7 +77,9 @@ interface IndexInterface
     public function getIndexMetaData(ElasticsearchSearchContextTransfer $elasticsearchSearchContextTransfer): array;
 
     /**
+     * @param string|null $storeName
+     *
      * @return array<string>
      */
-    public function getIndexNames(): array;
+    public function getIndexNames(?string $storeName = null): array;
 }

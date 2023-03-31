@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\NavigationStorage\Persistence;
 
+use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
 use Orm\Zed\NavigationStorage\Persistence\SpyNavigationStorageQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\NavigationStorage\NavigationStorageDependencyProvider;
@@ -26,11 +27,11 @@ class NavigationStoragePersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\NavigationStorage\Dependency\QueryContainer\NavigationStorageToLocaleQueryContainerInterface
+     * @return \Orm\Zed\Locale\Persistence\SpyLocaleQuery
      */
-    public function getLocaleQueryContainer()
+    public function getLocalePropelQuery(): SpyLocaleQuery
     {
-        return $this->getProvidedDependency(NavigationStorageDependencyProvider::QUERY_CONTAINER_LOCALE);
+        return $this->getProvidedDependency(NavigationStorageDependencyProvider::PROPEL_QUERY_LOCALE);
     }
 
     /**

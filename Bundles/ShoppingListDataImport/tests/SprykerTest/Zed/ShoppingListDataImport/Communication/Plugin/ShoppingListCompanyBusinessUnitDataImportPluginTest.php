@@ -116,7 +116,6 @@ class ShoppingListCompanyBusinessUnitDataImportPluginTest extends Unit
         parent::setUp();
 
         $this->tester->deleteShoppingList($this->shoppingListTransfer);
-        $this->tester->deleteCompanyUser($this->companyUser);
     }
 
     /**

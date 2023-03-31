@@ -14,7 +14,10 @@
     },
     "require-dev": {
         "spryker/code-sniffer": "*",
+        "spryker/container": "*",
         "spryker/propel": "*",
+        "spryker/storage": "*",
+        "spryker/store": "*",
         "spryker/testify": "*"
     },
     "autoload": {

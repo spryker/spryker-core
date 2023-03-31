@@ -21,9 +21,11 @@
     },
     "require-dev": {
         "spryker/code-sniffer": "*",
+        "spryker/container": "*",
         "spryker/merchant-category": "*",
         "spryker/propel": "*",
         "spryker/queue": "*",
+        "spryker/store-extension": "*",
         "spryker/testify": "*",
         "spryker/url-storage": "*"
     },

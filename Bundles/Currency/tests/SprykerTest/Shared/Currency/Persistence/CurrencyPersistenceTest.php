@@ -10,7 +10,6 @@ namespace SprykerTest\Shared\Currency\Persistence;
 use Codeception\Test\Unit;
 use Spryker\Shared\Currency\Dependency\Client\CurrencyToSessionInterface;
 use Spryker\Shared\Currency\Persistence\CurrencyPersistence;
-use Spryker\Shared\Kernel\Store;
 
 /**
  * Auto-generated group annotations
@@ -34,10 +33,7 @@ class CurrencyPersistenceTest extends Unit
         $sessionClientMock = $this->createSessionClientMock();
         $sessionClientMock->method('get')->willReturn(null);
 
-        $storeMock = $this->createStoreMock();
-        $storeMock->method('getCurrencyIsoCode')->willReturn($defaultCurrency);
-
-        $currencyPersistence = $this->createCurrencyPersistence($sessionClientMock, $storeMock);
+        $currencyPersistence = $this->createCurrencyPersistence($sessionClientMock, $defaultCurrency);
 
         $this->assertSame($defaultCurrency, $currencyPersistence->getCurrentCurrencyIsoCode());
     }
@@ -53,23 +49,20 @@ class CurrencyPersistenceTest extends Unit
         $sessionClientMock = $this->createSessionClientMock();
         $sessionClientMock->method('get')->willReturn($sessionCurrency);
 
-        $storeMock = $this->createStoreMock();
-        $storeMock->method('getCurrencyIsoCode')->willReturn($storeCurrency);
-
-        $currencyPersistence = $this->createCurrencyPersistence($sessionClientMock, $storeMock);
+        $currencyPersistence = $this->createCurrencyPersistence($sessionClientMock, $storeCurrency);
 
         $this->assertSame($sessionCurrency, $currencyPersistence->getCurrentCurrencyIsoCode());
     }
 
     /**
      * @param \Spryker\Shared\Currency\Dependency\Client\CurrencyToSessionInterface $sessionClientMock
-     * @param \Spryker\Shared\Kernel\Store $storeMock
+     * @param string $defaultIsoCode
      *
      * @return \Spryker\Shared\Currency\Persistence\CurrencyPersistence
      */
-    protected function createCurrencyPersistence(CurrencyToSessionInterface $sessionClientMock, Store $storeMock): CurrencyPersistence
+    protected function createCurrencyPersistence(CurrencyToSessionInterface $sessionClientMock, string $defaultIsoCode): CurrencyPersistence
     {
-        return new CurrencyPersistence($sessionClientMock, $storeMock);
+        return new CurrencyPersistence($sessionClientMock, $defaultIsoCode);
     }
 
     /**
@@ -78,15 +71,5 @@ class CurrencyPersistenceTest extends Unit
     protected function createSessionClientMock(): CurrencyToSessionInterface
     {
         return $this->getMockBuilder(CurrencyToSessionInterface::class)->getMock();
-    }
-
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Kernel\Store
-     */
-    protected function createStoreMock(): Store
-    {
-        return $this->getMockBuilder(Store::class)
-            ->disableOriginalConstructor()
-            ->getMock();
     }
 }

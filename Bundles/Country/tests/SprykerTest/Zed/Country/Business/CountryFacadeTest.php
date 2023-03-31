@@ -15,12 +15,12 @@ use Generated\Shared\Transfer\CheckoutDataTransfer;
 use Generated\Shared\Transfer\CountryTransfer;
 use Generated\Shared\Transfer\RestAddressTransfer;
 use Generated\Shared\Transfer\RestShipmentsTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Country\Persistence\SpyCountry;
 use Orm\Zed\Country\Persistence\SpyRegion;
 use Psr\Log\LoggerInterface;
 use Spryker\Zed\Country\Business\CountryFacade;
 use Spryker\Zed\Country\Business\Exception\MissingCountryException;
-use Spryker\Zed\Country\Persistence\CountryQueryContainer;
 
 /**
  * Auto-generated group annotations
@@ -51,14 +51,39 @@ class CountryFacadeTest extends Unit
     protected const ISO2_COUNTRY_DE = 'DE';
 
     /**
+     * @var string
+     */
+    protected const ISO2_COUNTRY_AT = 'AT';
+
+    /**
+     * @var string
+     */
+    protected const ISO2_COUNTRY_US = 'US';
+
+    /**
+     * @var string
+     */
+    protected const ISO2_COUNTRY_CH = 'CH';
+
+    /**
+     * @var string
+     */
+    protected const COUNTRY_NAME_DE = 'Germany';
+
+    /**
+     * @var string
+     */
+    protected const COUNTRY_NAME_SW = 'Switzerland';
+
+    /**
+     * @var string
+     */
+    protected const STORE_NAME_DE = 'DE';
+
+    /**
      * @var \Spryker\Zed\Country\Business\CountryFacade
      */
     protected $countryFacade;
-
-    /**
-     * @var \Spryker\Zed\Country\Persistence\CountryQueryContainerInterface
-     */
-    protected $countryQueryContainer;
 
     /**
      * @var \SprykerTest\Zed\Country\CountryBusinessTester
@@ -73,7 +98,6 @@ class CountryFacadeTest extends Unit
         parent::setUp();
 
         $this->countryFacade = new CountryFacade();
-        $this->countryQueryContainer = new CountryQueryContainer();
     }
 
     /**
@@ -82,19 +106,6 @@ class CountryFacadeTest extends Unit
     protected function getMockLogger(): LoggerInterface
     {
         return $this->getMockBuilder(LoggerInterface::class)->getMock();
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetIdByIso2CodeReturnsRightValue(): void
-    {
-        $country = new SpyCountry();
-        $country->setIso2Code(static::ISO2_CODE);
-
-        $country->save();
-
-        $this->assertSame($country->getIdCountry(), $this->countryFacade->getIdCountryByIso2Code(static::ISO2_CODE));
     }
 
     /**
@@ -217,6 +228,94 @@ class CountryFacadeTest extends Unit
 
         $this->assertFalse($checkoutResponseTransfer->getIsSuccess());
         $this->assertGreaterThan(0, $checkoutResponseTransfer->getErrors()->count());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateStoreCountriesWithAddingNewAndRemovingOldRelations(): void
+    {
+        // Arrange
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $this->tester->deleteCountryStore($storeTransfer->getIdStoreOrFail());
+
+        $idCountryDe = $this->tester->haveCountry([CountryTransfer::ISO2_CODE => static::ISO2_COUNTRY_DE])->getIdCountryOrFail();
+        $idCountryUs = $this->tester->haveCountry([CountryTransfer::ISO2_CODE => static::ISO2_COUNTRY_US])->getIdCountryOrFail();
+        $idCountryAt = $this->tester->haveCountry([CountryTransfer::ISO2_CODE => static::ISO2_COUNTRY_AT])->getIdCountryOrFail();
+
+        $this->tester->haveCountryStore($storeTransfer->getIdStoreOrFail(), $idCountryDe);
+        $this->tester->haveCountryStore($storeTransfer->getIdStoreOrFail(), $idCountryAt);
+
+        $storeTransfer->setCountries([static::ISO2_COUNTRY_DE, static::ISO2_COUNTRY_AT]);
+
+        // Act
+        $storeResponseTransfer = $this->countryFacade->updateStoreCountries($storeTransfer);
+
+        // Assert
+        $this->assertTrue($storeResponseTransfer->getIsSuccessful());
+        $this->assertTrue($this->tester->countryStoreExists($storeTransfer->getIdStoreOrFail(), $idCountryDe));
+        $this->assertTrue($this->tester->countryStoreExists($storeTransfer->getIdStoreOrFail(), $idCountryAt));
+        $this->assertFalse($this->tester->countryStoreExists($storeTransfer->getIdStoreOrFail(), $idCountryUs));
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandStoreTransfersWithCountriesSuccessful(): void
+    {
+        if ($this->tester->isDynamicStoreEnabled() === false) {
+            $this->markTestSkipped('Test is valid for Dynamic Store on-mode only.');
+        }
+
+        // Arrange
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $idCountry = $this->tester->haveCountry([CountryTransfer::ISO2_CODE => static::ISO2_COUNTRY_DE])->getIdCountryOrFail();
+        $this->tester->haveCountryStore($storeTransfer->getIdStoreOrFail(), $idCountry);
+
+        // Act
+        $storeTransfers = $this->countryFacade->expandStoreTransfersWithCountries([
+            $storeTransfer->getIdStoreOrFail() => $storeTransfer,
+        ]);
+
+        // Assert
+        $this->assertEqualsCanonicalizing(
+            [static::COUNTRY_NAME_DE, static::COUNTRY_NAME_SW],
+            array_values($storeTransfers[$storeTransfer->getIdStoreOrFail()]->getCountryNames()),
+        );
+        $this->assertEqualsCanonicalizing(
+            [static::ISO2_COUNTRY_DE, static::ISO2_COUNTRY_CH],
+            array_values($storeTransfers[$storeTransfer->getIdStoreOrFail()]->getCountries()),
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandStoreTransfersWithCountriesWithoutCountryStoreRelations(): void
+    {
+        if ($this->tester->isDynamicStoreEnabled() === false) {
+            $this->markTestSkipped('Test is valid for Dynamic Store on-mode only.');
+        }
+
+        // Arrange
+        $storeTransferEu = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+
+        $this->tester->deleteCountryStore($storeTransferEu->getIdStore());
+
+        // Act
+        $storeTransfers = $this->countryFacade->expandStoreTransfersWithCountries([
+            $storeTransferEu->getIdStoreOrFail() => $storeTransferEu,
+        ]);
+
+        // Assert
+        $this->assertSame(
+            [],
+            array_values($storeTransfers[$storeTransferEu->getIdStoreOrFail()]->getCountryNames()),
+        );
+        $this->assertSame(
+            [],
+            array_values($storeTransfers[$storeTransferEu->getIdStoreOrFail()]->getCountries()),
+        );
     }
 
     /**

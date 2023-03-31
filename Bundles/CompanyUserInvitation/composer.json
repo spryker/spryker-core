@@ -22,10 +22,12 @@
         "spryker/code-sniffer": "*",
         "spryker/company": "*",
         "spryker/company-role": "*",
+        "spryker/container": "*",
         "spryker/customer": "*",
         "spryker/installer": "*",
         "spryker/permission": "*",
         "spryker/propel": "*",
+        "spryker/store": "*",
         "spryker/testify": "*"
     },
     "suggest": {

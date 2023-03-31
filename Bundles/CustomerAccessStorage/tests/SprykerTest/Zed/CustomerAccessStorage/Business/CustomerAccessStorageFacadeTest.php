@@ -45,6 +45,8 @@ class CustomerAccessStorageFacadeTest extends Unit
                 $container->getLocator()->rabbitMq()->client()->createQueueAdapter(),
             ];
         });
+
+        $this->tester->addDependencies();
     }
 
     /**

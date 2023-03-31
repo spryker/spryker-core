@@ -67,6 +67,13 @@ class CalculatorForm extends AbstractType
     protected const OPTION_AMOUNT_PER_STORE = 'amount_per_store';
 
     /**
+     * @uses \Spryker\Zed\MoneyGui\Communication\Form\Type\MoneyCollectionType::OPTION_AMOUNT_PER_CURRENCY
+     *
+     * @var string
+     */
+    protected const OPTION_AMOUNT_PER_CURRENCY = 'amount_per_currency';
+
+    /**
      * @var string
      */
     protected const OPTION_LOCALE = 'locale';
@@ -212,15 +219,31 @@ class CalculatorForm extends AbstractType
      */
     protected function addMoneyValueCollectionType(FormBuilderInterface $builder)
     {
+        $options = [
+            static::OPTION_AMOUNT_PER_STORE => false,
+        ];
+
+        if ($this->getOptionAmountPerCurrencyValue()) {
+            $options += [
+                static::OPTION_AMOUNT_PER_CURRENCY => $this->getOptionAmountPerCurrencyValue(),
+            ];
+        }
+
         $builder->add(
             DiscountCalculatorTransfer::MONEY_VALUE_COLLECTION,
             $this->getMoneyValueCollectionType(),
-            [
-                static::OPTION_AMOUNT_PER_STORE => false,
-            ],
+            $options,
         );
 
         return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function getOptionAmountPerCurrencyValue(): bool
+    {
+        return $this->getFactory()->getStoreFacade()->isDynamicStoreEnabled();
     }
 
     /**
@@ -334,7 +357,7 @@ class CalculatorForm extends AbstractType
      */
     protected function getMoneyValueCollectionType(): string
     {
-        if ($this->getConfig()->isMoneyCollectionFormTypePluginEnabled()) {
+        if ($this->getConfig()->isMoneyCollectionFormTypePluginEnabled() || $this->getOptionAmountPerCurrencyValue()) {
             return $this->getFactory()->getMoneyCollectionFormTypePlugin()->getType();
         }
 

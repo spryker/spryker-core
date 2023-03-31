@@ -14,10 +14,12 @@
     },
     "require-dev": {
         "spryker/code-sniffer": "*",
+        "spryker/container": "*",
         "spryker/customer": "*",
         "spryker/product": "*",
         "spryker/product-configuration-wishlist": "*",
         "spryker/propel": "*",
+        "spryker/store": "*",
         "spryker/testify": "*"
     },
     "autoload": {

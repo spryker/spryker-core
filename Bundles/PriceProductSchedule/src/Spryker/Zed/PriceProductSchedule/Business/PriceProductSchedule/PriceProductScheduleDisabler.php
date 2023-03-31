@@ -156,7 +156,10 @@ class PriceProductScheduleDisabler implements PriceProductScheduleDisablerInterf
 
         $priceProductTransfer = $priceProductScheduleTransfer->getPriceProduct();
 
-        $fallbackPriceProduct = $this->priceProductFallbackFinder->findFallbackPriceProduct($priceProductTransfer);
+        $fallbackPriceProduct = $this->priceProductFallbackFinder->findFallbackPriceProduct(
+            $priceProductTransfer,
+            $priceProductScheduleTransfer->getStore(),
+        );
 
         $priceProductScheduleTransfer->setIsCurrent(false);
 
@@ -182,6 +185,10 @@ class PriceProductScheduleDisabler implements PriceProductScheduleDisablerInterf
         $priceProductFilterTransfer = (new PriceProductFilterTransfer())
             ->setPriceTypeName($priceProductTransfer->getPriceTypeName())
             ->setCurrencyIsoCode($priceProductTransfer->getMoneyValue()->getCurrency()->getCode());
+
+        if ($priceProductScheduleTransfer->getStore()) {
+            $priceProductFilterTransfer->setStoreName($priceProductScheduleTransfer->getStore()->getNameOrFail());
+        }
 
         if ($priceProductTransfer->getSkuProductAbstract() !== null) {
             $priceProductFilterTransfer->setSku($priceProductTransfer->getSkuProductAbstract());

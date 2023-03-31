@@ -12,5 +12,5 @@ interface CategoryStorageToStoreFacadeInterface
     /**
      * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
-    public function getStoresAvailableForCurrentPersistence(): array;
+    public function getAllStores(): array;
 }

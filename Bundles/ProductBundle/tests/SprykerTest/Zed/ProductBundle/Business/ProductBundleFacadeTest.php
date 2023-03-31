@@ -43,7 +43,7 @@ class ProductBundleFacadeTest extends Unit
     /**
      * @var int
      */
-    public const ID_STORE = 1;
+    protected const ID_STORE = 1;
 
     /**
      * @uses \Spryker\Shared\Price\PriceConfig::PRICE_MODE_GROSS
@@ -383,7 +383,7 @@ class ProductBundleFacadeTest extends Unit
 
         $storeTransfer = (new StoreTransfer())->setIdStore(static::ID_STORE);
 
-        $this->tester->haveAvailabilityAbstract($productConcreteTransferToAssign1, new Decimal(0));
+        $this->tester->haveAvailabilityAbstract($productConcreteTransferToAssign1, new Decimal(0), static::ID_STORE);
 
         // Act
         $this->getProductBundleFacade()

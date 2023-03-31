@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MoneyGui\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\MoneyGui\Communication\Form\DataProvider\MoneyCollectionTypeAllStoreCurrenciesDataProvider;
 use Spryker\Zed\MoneyGui\Communication\Form\DataProvider\MoneyCollectionTypeDataProviderInterface;
 use Spryker\Zed\MoneyGui\Communication\Form\DataProvider\MoneyCollectionTypeMultiStoreCollectionDataProvider;
 use Spryker\Zed\MoneyGui\Communication\Form\DataProvider\MoneyCollectionTypeSingleStoreDataProvider;
@@ -48,6 +49,17 @@ class MoneyGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createMoneyCollectionTypeMultiStoreCollectionDataProvider(): MoneyCollectionTypeDataProviderInterface
     {
         return new MoneyCollectionTypeMultiStoreCollectionDataProvider(
+            $this->getCurrencyFacade(),
+            $this->createMoneyValueMapper(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\MoneyGui\Communication\Form\DataProvider\MoneyCollectionTypeDataProviderInterface
+     */
+    public function createMoneyCollectionTypeAllStoreCurrenciesDataProvider(): MoneyCollectionTypeDataProviderInterface
+    {
+        return new MoneyCollectionTypeAllStoreCurrenciesDataProvider(
             $this->getCurrencyFacade(),
             $this->createMoneyValueMapper(),
         );

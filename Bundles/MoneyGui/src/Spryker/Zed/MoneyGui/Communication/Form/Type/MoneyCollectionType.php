@@ -32,6 +32,13 @@ class MoneyCollectionType extends AbstractCollectionType
     protected const OPTION_AMOUNT_PER_STORE = 'amount_per_store';
 
     /**
+     * Available if static::OPTION_AMOUNT_PER_STORE value is false.
+     *
+     * @var string
+     */
+    protected const OPTION_AMOUNT_PER_CURRENCY = 'amount_per_currency';
+
+    /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array<string> $options
      *
@@ -65,7 +72,8 @@ class MoneyCollectionType extends AbstractCollectionType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-           static::OPTION_AMOUNT_PER_STORE => true,
+            static::OPTION_AMOUNT_PER_STORE => true,
+            static::OPTION_AMOUNT_PER_CURRENCY => false,
         ]);
 
         parent::configureOptions($resolver);
@@ -131,7 +139,9 @@ class MoneyCollectionType extends AbstractCollectionType
             return $this->getFactory()->createMoneyCollectionTypeMultiStoreCollectionDataProvider();
         }
 
-        return $this->getFactory()->createMoneyCollectionTypeSingleStoreDataProvider();
+        return (!empty($options[static::OPTION_AMOUNT_PER_CURRENCY]))
+            ? $this->getFactory()->createMoneyCollectionTypeAllStoreCurrenciesDataProvider()
+            : $this->getFactory()->createMoneyCollectionTypeSingleStoreDataProvider();
     }
 
     /**

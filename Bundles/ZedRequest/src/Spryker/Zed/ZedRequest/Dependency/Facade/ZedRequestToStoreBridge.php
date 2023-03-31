@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\ZedRequest\Dependency\Facade;
 
+/**
+ * @deprecated Will be removed after dynamic multi-store is always enabled.
+ */
 class ZedRequestToStoreBridge implements ZedRequestToStoreInterface
 {
     /**

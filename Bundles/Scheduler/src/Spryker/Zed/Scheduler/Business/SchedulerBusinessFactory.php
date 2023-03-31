@@ -98,6 +98,7 @@ class SchedulerBusinessFactory extends AbstractBusinessFactory
     {
         return new PhpScheduleMapper(
             $this->createJobsFilter(),
+            $this->getConfig(),
         );
     }
 

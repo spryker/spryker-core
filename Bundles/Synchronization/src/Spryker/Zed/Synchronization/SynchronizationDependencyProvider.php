@@ -13,6 +13,7 @@ use Spryker\Zed\Synchronization\Communication\Plugin\Synchronization\Synchroniza
 use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToQueueClientBridge;
 use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToSearchClientBridge;
 use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToStorageClientBridge;
+use Spryker\Zed\Synchronization\Dependency\Facade\SynchronizationToStoreFacadeBridge;
 use Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingServiceBridge;
 
 /**
@@ -20,6 +21,11 @@ use Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncoding
  */
 class SynchronizationDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @var string
+     */
+    public const FACADE_STORE = 'FACADE_STORE';
+
     /**
      * @var string
      */
@@ -63,6 +69,7 @@ class SynchronizationDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addUtilEncodingService($container);
         $container = $this->addSynchronizationDataPlugins($container);
         $container = $this->addSynchronizationDataQueryExpanderStrategyPlugin($container);
+        $container = $this->addStoreFacade($container);
 
         return $container;
     }
@@ -177,5 +184,21 @@ class SynchronizationDependencyProvider extends AbstractBundleDependencyProvider
     protected function getSynchronizationDataQueryExpanderStrategyPlugin()
     {
         return new SynchronizationDataQueryExpanderOffsetLimitStrategyPlugin();
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_STORE, function (Container $container) {
+            return new SynchronizationToStoreFacadeBridge(
+                $container->getLocator()->store()->facade(),
+            );
+        });
+
+        return $container;
     }
 }

@@ -8,7 +8,6 @@
 namespace Spryker\Shared\Currency\Dependency\Internationalization;
 
 use Symfony\Component\Intl\Currencies;
-use Symfony\Component\Intl\Intl;
 
 class CurrencyToInternationalizationBridge implements CurrencyToInternationalizationInterface
 {
@@ -17,12 +16,8 @@ class CurrencyToInternationalizationBridge implements CurrencyToInternationaliza
      *
      * @return string
      */
-    public function getSymbolByIsoCode($isoCode)
+    public function getSymbolByIsoCode(string $isoCode): string
     {
-        if (method_exists(Intl::class, 'getCurrencyBundle')) {
-            return Intl::getCurrencyBundle()->getCurrencySymbol($isoCode);
-        }
-
         return Currencies::getSymbol($isoCode);
     }
 
@@ -31,12 +26,8 @@ class CurrencyToInternationalizationBridge implements CurrencyToInternationaliza
      *
      * @return string
      */
-    public function getNameByIsoCode($isoCode)
+    public function getNameByIsoCode(string $isoCode): string
     {
-        if (method_exists(Intl::class, 'getCurrencyBundle')) {
-            return Intl::getCurrencyBundle()->getCurrencyName($isoCode);
-        }
-
         return Currencies::getName($isoCode);
     }
 
@@ -45,12 +36,8 @@ class CurrencyToInternationalizationBridge implements CurrencyToInternationaliza
      *
      * @return int|null
      */
-    public function getFractionDigits($isoCode)
+    public function getFractionDigits(string $isoCode): ?int
     {
-        if (method_exists(Intl::class, 'getCurrencyBundle')) {
-            return Intl::getCurrencyBundle()->getFractionDigits($isoCode);
-        }
-
         return Currencies::getFractionDigits($isoCode);
     }
 }

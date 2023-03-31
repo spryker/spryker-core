@@ -33,16 +33,32 @@ class MoneyBuilder implements MoneyBuilderInterface
     /**
      * @param \Spryker\Shared\Money\Mapper\MoneyToTransferMapperInterface $moneyToTransferConverter
      * @param \Spryker\Shared\Money\Converter\DecimalToIntegerConverterInterface $decimalToIntegerConverter
-     * @param string $defaultIsoCode
+     * @param string|null $defaultIsoCode
      */
     public function __construct(
         MoneyToTransferMapperInterface $moneyToTransferConverter,
         DecimalToIntegerConverterInterface $decimalToIntegerConverter,
-        $defaultIsoCode
+        ?string $defaultIsoCode = null
     ) {
         $this->dataMapper = $moneyToTransferConverter;
         $this->decimalToIntegerConverter = $decimalToIntegerConverter;
         $this->defaultIsoCode = $defaultIsoCode;
+    }
+
+    /**
+     * @param string|null $defaultIsoCode
+     *
+     * @return $this
+     */
+    public function setDefaultIsoCode(?string $defaultIsoCode = null)
+    {
+        if ($defaultIsoCode === null) {
+            return $this;
+        }
+
+        $this->defaultIsoCode = $defaultIsoCode;
+
+        return $this;
     }
 
     /**

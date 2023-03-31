@@ -29,7 +29,7 @@ class ProductOptionToLocaleFacadeBridge implements ProductOptionToLocaleFacadeIn
      *
      * @return bool
      */
-    public function hasLocale($localeName): bool
+    public function hasLocale(string $localeName): bool
     {
         return $this->localeFacade->hasLocale($localeName);
     }
@@ -39,19 +39,9 @@ class ProductOptionToLocaleFacadeBridge implements ProductOptionToLocaleFacadeIn
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getLocale($localeName): LocaleTransfer
+    public function getLocale(string $localeName): LocaleTransfer
     {
         return $this->localeFacade->getLocale($localeName);
-    }
-
-    /**
-     * @param string $localeCode
-     *
-     * @return \Generated\Shared\Transfer\LocaleTransfer
-     */
-    public function getLocaleByCode($localeCode): LocaleTransfer
-    {
-        return $this->localeFacade->getLocaleByCode($localeCode);
     }
 
     /**

@@ -10,7 +10,7 @@ namespace Spryker\Zed\ManualOrderEntryGui\Dependency\Facade;
 interface ManualOrderEntryGuiToStoreFacadeInterface
 {
     /**
-     * @return array<string>
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
-    public function getCountries();
+    public function getAllStores(): array;
 }

@@ -53,6 +53,11 @@ class CustomerForm extends AbstractType
     /**
      * @var string
      */
+    public const OPTION_STORE_CHOICES = 'store_choices';
+
+    /**
+     * @var string
+     */
     public const FIELD_EMAIL = 'email';
 
     /**
@@ -106,6 +111,11 @@ class CustomerForm extends AbstractType
     public const FIELD_LOCALE = 'locale';
 
     /**
+     * @var string
+     */
+    protected const FIELD_STORE_NAME = 'store_name';
+
+    /**
      * @return string
      */
     public function getBlockPrefix()
@@ -123,6 +133,7 @@ class CustomerForm extends AbstractType
         $resolver->setRequired(static::OPTION_SALUTATION_CHOICES);
         $resolver->setRequired(static::OPTION_GENDER_CHOICES);
         $resolver->setRequired(static::OPTION_LOCALE_CHOICES);
+        $resolver->setRequired(static::OPTION_STORE_CHOICES);
     }
 
     /**
@@ -144,7 +155,8 @@ class CustomerForm extends AbstractType
             ->addPhoneField($builder)
             ->addCompanyField($builder)
             ->addLocaleField($builder, $options[static::OPTION_LOCALE_CHOICES])
-            ->addSendPasswordField($builder);
+            ->addSendPasswordField($builder)
+            ->addStoreField($builder, $options[static::OPTION_STORE_CHOICES]);
     }
 
     /**
@@ -311,6 +323,38 @@ class CustomerForm extends AbstractType
      *
      * @return $this
      */
+    protected function addStoreField(FormBuilderInterface $builder, array $choices)
+    {
+        if (!$this->getFactory()->getStoreFacade()->isDynamicStoreEnabled()) {
+            return $this;
+        }
+
+        $builder->add(static::FIELD_STORE_NAME, ChoiceType::class, [
+            'label' => 'Store',
+            'placeholder' => 'Select one',
+            'choices' => $choices,
+            'help' => 'Used to provide context in email templates.',
+            'constraints' => [
+                new Callback([
+                    'callback' => function ($object, ExecutionContextInterface $context) {
+                        $form = $context->getRoot();
+                        if ($form[self::FIELD_SEND_PASSWORD_TOKEN]->getData() === true && !$object) {
+                            $context->buildViolation('This field is required.')->addViolation();
+                        }
+                    },
+                ]),
+            ],
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $choices
+     *
+     * @return $this
+     */
     protected function addLocaleField(FormBuilderInterface $builder, array $choices)
     {
         $builder->add(static::FIELD_LOCALE, ChoiceType::class, [
@@ -439,7 +483,7 @@ class CustomerForm extends AbstractType
             },
             function ($localeAsInt) {
                 if ($localeAsInt !== null) {
-                    return $this->getFactory()->getLocaleFacadePublic()->getLocaleById($localeAsInt);
+                    return $this->getFactory()->getLocaleFacade()->getLocaleById($localeAsInt);
                 }
             },
         );

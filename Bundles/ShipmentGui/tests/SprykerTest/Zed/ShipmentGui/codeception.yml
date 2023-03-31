@@ -28,7 +28,9 @@ suites:
                 - \SprykerTest\Zed\Testify\Helper\Communication\DependencyProviderHelper
                 - \SprykerTest\Zed\Testify\Helper\Communication\CommunicationHelper
                 - \SprykerTest\Zed\Testify\Helper\Communication\Table\TableHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
                 - \SprykerTest\Zed\Validator\Helper\ValidatorHelper
                 - \SprykerTest\Zed\Form\Helper\FormHelper:
                       formPlugins:

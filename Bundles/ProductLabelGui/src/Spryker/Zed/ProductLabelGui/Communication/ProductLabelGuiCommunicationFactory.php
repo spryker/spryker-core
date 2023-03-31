@@ -24,6 +24,7 @@ use Spryker\Zed\ProductLabelGui\Communication\Table\ProductLabelTable;
 use Spryker\Zed\ProductLabelGui\Communication\Table\RelatedProductOverviewTable;
 use Spryker\Zed\ProductLabelGui\Communication\Table\RelatedProductTableQueryBuilder;
 use Spryker\Zed\ProductLabelGui\Communication\Tabs\ProductLabelFormTabs;
+use Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToStoreFacadeInterface;
 use Spryker\Zed\ProductLabelGui\ProductLabelGuiDependencyProvider;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Validator\Constraint;
@@ -159,6 +160,7 @@ class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
             $this->getPriceProductFacade(),
             $this->getLocaleFacade(),
             $this->getRepository(),
+            $this->getStoreFacade(),
             $idProductLabel,
         );
     }
@@ -176,6 +178,7 @@ class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
             $this->getPriceProductFacade(),
             $this->getLocaleFacade(),
             $this->getRepository(),
+            $this->getStoreFacade(),
             $idProductLabel,
         );
     }
@@ -193,6 +196,7 @@ class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
             $this->getPriceProductFacade(),
             $this->getLocaleFacade(),
             $this->getRepository(),
+            $this->getStoreFacade(),
             $idProductLabel,
         );
     }
@@ -240,5 +244,13 @@ class ProductLabelGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getPriceProductFacade()
     {
         return $this->getProvidedDependency(ProductLabelGuiDependencyProvider::FACADE_PRICE_PRODUCT);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToStoreFacadeInterface
+     */
+    public function getStoreFacade(): ProductLabelGuiToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductLabelGuiDependencyProvider::FACADE_STORE);
     }
 }

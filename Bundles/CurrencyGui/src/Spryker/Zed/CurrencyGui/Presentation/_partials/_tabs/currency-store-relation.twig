@@ -1,0 +1,19 @@
+{{ form_row(form.defaultCurrencyIsoCode) }}
+{{ form_row(form.currencyCodesToBeAssigned) }}
+{{ form_row(form.currencyCodesToBeDeAssigned) }}
+
+{{ tabs(
+    form.vars.availableCurrencyRelationTabs,
+    {
+        'availableCurrencyTable': form.vars.availableCurrencyTable
+    }
+) }}
+<hr/>
+{{ tabs(
+    form.vars.assignedCurrencyRelationTabs,
+    {
+        'assignedCurrencyTable': form.vars.assignedCurrencyTable
+    }
+) }}
+
+<script src="{{ assetsPath('js/spryker-zed-currency-assign.js') }}" defer></script>

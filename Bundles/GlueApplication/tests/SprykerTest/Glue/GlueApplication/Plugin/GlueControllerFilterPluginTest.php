@@ -8,6 +8,9 @@
 namespace SprykerTest\Glue\GlueApplication\Plugin;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Glue\GlueApplication\Dependency\Client\GlueApplicationToStoreClientBridge;
+use Spryker\Glue\GlueApplication\GlueApplicationDependencyProvider;
 use Spryker\Glue\GlueApplication\Plugin\Rest\GlueControllerListenerPlugin;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
@@ -15,6 +18,7 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\RequestConstantsInterface;
 use SprykerTest\Glue\GlueApplication\Stub\RestTestAttributesTransfer;
 use SprykerTest\Glue\GlueApplication\Stub\TestsResourceController;
+use SprykerTest\Service\Container\Helper\ContainerHelperTrait;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -32,6 +36,18 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class GlueControllerFilterPluginTest extends Unit
 {
+    use ContainerHelperTrait;
+
+    /**
+     * @var \SprykerTest\Glue\GlueApplication\GlueApplicationTester
+     */
+    protected $tester;
+
+    /**
+     * @var string
+     */
+    protected const LOCALE_DE = 'de_DE';
+
     /**
      * @return void
      *
@@ -93,7 +109,9 @@ class GlueControllerFilterPluginTest extends Unit
             [],
             $this->headers,
         );
-
+        if ($this->isDynamicStoreEnabled()) {
+            $this->mockDinamicStore();
+        }
         $response = $this->createGlueControllerListenerPlugin()
             ->filter(
                 new TestsResourceController(),
@@ -120,6 +138,9 @@ class GlueControllerFilterPluginTest extends Unit
         );
 
         $request->attributes->add($this->attributes);
+        if ($this->isDynamicStoreEnabled()) {
+            $this->mockDinamicStore();
+        }
 
         $response = $this->createGlueControllerListenerPlugin()
             ->filter(
@@ -153,7 +174,9 @@ class GlueControllerFilterPluginTest extends Unit
         );
 
         $request->attributes->add($this->attributes);
-
+        if ($this->isDynamicStoreEnabled()) {
+            $this->mockDinamicStore();
+        }
         $response = $this->createGlueControllerListenerPlugin()
             ->filter(
                 new TestsResourceController(),
@@ -187,7 +210,9 @@ class GlueControllerFilterPluginTest extends Unit
         );
 
         $request->attributes->add($this->attributes);
-
+        if ($this->isDynamicStoreEnabled()) {
+            $this->mockDinamicStore();
+        }
         $response = $this->createGlueControllerListenerPlugin()
             ->filter(
                 new TestsResourceController(),
@@ -215,6 +240,9 @@ class GlueControllerFilterPluginTest extends Unit
 
         $request->attributes->add($this->attributes + [RequestConstantsInterface::ATTRIBUTE_ID => '1']);
 
+        if ($this->isDynamicStoreEnabled()) {
+            $this->mockDinamicStore();
+        }
         $response = $this->createGlueControllerListenerPlugin()
             ->filter(
                 new TestsResourceController(),
@@ -250,7 +278,9 @@ class GlueControllerFilterPluginTest extends Unit
         );
 
         $request->attributes->add($this->attributes);
-
+        if ($this->isDynamicStoreEnabled()) {
+            $this->mockDinamicStore();
+        }
         $response = $this->createGlueControllerListenerPlugin()
             ->filter(
                 new TestsResourceController(),
@@ -305,5 +335,28 @@ class GlueControllerFilterPluginTest extends Unit
         parse_str($link['query'], $queryParts);
         $this->assertSame($limit, $queryParts['page']['limit']);
         $this->assertSame($offset, $queryParts['page']['offset']);
+    }
+
+    /**
+     * @return void
+     */
+    protected function mockDinamicStore(): void
+    {
+        $glueApplicationToStoreClientBridge = $this->createMock(GlueApplicationToStoreClientBridge::class);
+        $storeTransfer = new StoreTransfer();
+        $storeTransfer->setName('DE')
+            ->setAvailableLocaleIsoCodes([static::LOCALE_DE]);
+        $glueApplicationToStoreClientBridge
+            ->method('getCurrentStore')
+            ->willReturn($storeTransfer);
+        $this->tester->setDependency(GlueApplicationDependencyProvider::CLIENT_STORE, $glueApplicationToStoreClientBridge);
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isDynamicStoreEnabled(): bool
+    {
+        return (bool)getenv('SPRYKER_DYNAMIC_STORE_MODE');
     }
 }

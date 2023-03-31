@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\CmsStorage;
 
+use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
 use Spryker\Zed\CmsStorage\Dependency\Facade\CmsStorageToCmsBridge;
 use Spryker\Zed\CmsStorage\Dependency\Facade\CmsStorageToEventBehaviorFacadeBridge;
 use Spryker\Zed\CmsStorage\Dependency\Facade\CmsStorageToStoreFacadeBridge;
 use Spryker\Zed\CmsStorage\Dependency\QueryContainer\CmsStorageToCmsQueryContainerBridge;
-use Spryker\Zed\CmsStorage\Dependency\QueryContainer\CmsStorageToLocaleQueryContainerBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -28,7 +28,7 @@ class CmsStorageDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
-    public const QUERY_CONTAINER_LOCALE = 'QUERY_CONTAINER_LOCALE';
+    public const PROPEL_QUERY_LOCALE = 'PROPEL_QUERY_LOCALE';
 
     /**
      * @var string
@@ -95,9 +95,7 @@ class CmsStorageDependencyProvider extends AbstractBundleDependencyProvider
             return new CmsStorageToCmsQueryContainerBridge($container->getLocator()->cms()->queryContainer());
         });
 
-        $container->set(static::QUERY_CONTAINER_LOCALE, function (Container $container) {
-            return new CmsStorageToLocaleQueryContainerBridge($container->getLocator()->locale()->queryContainer());
-        });
+        $container = $this->addLocalePropelQuery($container);
 
         return $container;
     }
@@ -122,5 +120,19 @@ class CmsStorageDependencyProvider extends AbstractBundleDependencyProvider
     protected function getContentWidgetDataExpander()
     {
         return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addLocalePropelQuery(Container $container)
+    {
+        $container->set(static::PROPEL_QUERY_LOCALE, $container->factory(function (Container $container) {
+            return SpyLocaleQuery::create();
+        }));
+
+        return $container;
     }
 }

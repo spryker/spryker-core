@@ -16,12 +16,14 @@
         "spryker/company": "*",
         "spryker/company-business-unit": "*",
         "spryker/company-user": "*",
+        "spryker/container": "*",
         "spryker/customer": "*",
         "spryker/permission": "*",
         "spryker/product": "*",
         "spryker/propel": "*",
         "spryker/quote": "*",
         "spryker/stock": "*",
+        "spryker/store": "*",
         "spryker/testify": "*"
     },
     "autoload": {

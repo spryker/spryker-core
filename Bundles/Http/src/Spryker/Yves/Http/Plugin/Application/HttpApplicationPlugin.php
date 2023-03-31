@@ -146,7 +146,12 @@ class HttpApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
     protected function addRequestStack(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_REQUEST_STACK, function () {
-            return new RequestStack();
+            $stack = new RequestStack();
+            $stack->push(
+                Request::createFromGlobals(),
+            );
+
+            return $stack;
         });
 
         return $container;

@@ -18,9 +18,9 @@ suites:
         modules:
             enabled:
                 - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
                 - \SprykerTest\Shared\Testify\Helper\ConfigHelper
                 - \SprykerTest\Client\Testify\Helper\ClientHelper
-                - \SprykerTest\Shared\Testify\Helper\Environment
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
                 - \SprykerTest\Shared\Asset\Helper\AssetDataHelper

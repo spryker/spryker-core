@@ -199,7 +199,7 @@ function loadForm(idCategoryNode) {
         'id-category-node': idCategoryNode,
     };
     var uri = config.productCategoryFilterUrl;
-    var url = uri + '?' + $.param(data);
+    var url = uri + '?' + $.param(data) + '&' + window.location.search.substring(1);
 
     $iframe.addClass('hidden');
     $formProgressBar.removeClass('hidden');

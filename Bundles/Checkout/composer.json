@@ -19,6 +19,7 @@
     "require-dev": {
         "spryker/availability": "*",
         "spryker/code-sniffer": "*",
+        "spryker/container": "*",
         "spryker/country": "*",
         "spryker/customer": "*",
         "spryker/product": "*",

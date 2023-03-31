@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Locale\Business\Reader;
 
+use Generated\Shared\Transfer\LocaleCriteriaTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 
 interface LocaleReaderInterface
@@ -26,4 +27,23 @@ interface LocaleReaderInterface
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
     public function getLocaleById(int $idLocale): LocaleTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\LocaleCriteriaTransfer|null $localeCriteriaTransfer
+     *
+     * @return array<\Generated\Shared\Transfer\LocaleTransfer>
+     */
+    public function getLocaleCollection(?LocaleCriteriaTransfer $localeCriteriaTransfer = null): array;
+
+    /**
+     * @param string $localeName
+     *
+     * @return bool
+     */
+    public function localeExists(string $localeName): bool;
+
+    /**
+     * @return array<string>
+     */
+    public function getAvailableLocales(): array;
 }

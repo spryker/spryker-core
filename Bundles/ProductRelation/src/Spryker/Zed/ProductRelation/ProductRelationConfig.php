@@ -24,6 +24,11 @@ class ProductRelationConfig extends AbstractBundleConfig
     protected const PRODUCT_RELATION_UPDATE_CHUNK_SIZE_DEFAULT = 1000;
 
     /**
+     * @var string
+     */
+    protected const LOCALE_FALLBACK = 'en_US';
+
+    /**
      * @api
      *
      * @return int
@@ -63,5 +68,15 @@ class ProductRelationConfig extends AbstractBundleConfig
         }
 
         return null;
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getFallbackLocale(): string
+    {
+        return static::LOCALE_FALLBACK;
     }
 }

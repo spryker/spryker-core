@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Store\Business;
 
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Store\Reader\StoreReader as SharedStoreReader;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -16,19 +17,27 @@ use Spryker\Zed\Store\Business\Expander\CurrentStoreReferenceAccessTokenRequestE
 use Spryker\Zed\Store\Business\Expander\CurrentStoreReferenceAccessTokenRequestExpanderInterface;
 use Spryker\Zed\Store\Business\Expander\CurrentStoreReferenceMessageAttributesExpander;
 use Spryker\Zed\Store\Business\Expander\CurrentStoreReferenceMessageAttributesExpanderInterface;
+use Spryker\Zed\Store\Business\Expander\DynamicStoreExpander;
+use Spryker\Zed\Store\Business\Expander\StoreExpander;
+use Spryker\Zed\Store\Business\Expander\StoreExpanderInterface;
 use Spryker\Zed\Store\Business\Model\Configuration\StoreConfigurationProvider;
-use Spryker\Zed\Store\Business\Model\StoreMapper;
 use Spryker\Zed\Store\Business\Model\StoreReader;
+use Spryker\Zed\Store\Business\Model\StoreReaderInterface;
 use Spryker\Zed\Store\Business\Model\StoreValidator;
 use Spryker\Zed\Store\Business\Model\StoreValidatorInterface;
 use Spryker\Zed\Store\Business\Reader\StoreReferenceReader;
 use Spryker\Zed\Store\Business\Reader\StoreReferenceReaderInterface;
 use Spryker\Zed\Store\Business\Validator\MessageValidator;
 use Spryker\Zed\Store\Business\Validator\MessageValidatorInterface;
+use Spryker\Zed\Store\Business\Validator\StoreValidator as StoreDataValidator;
+use Spryker\Zed\Store\Business\Validator\StoreValidatorInterface as StoreDataValidatorInterface;
+use Spryker\Zed\Store\Business\Writer\StoreWriter;
+use Spryker\Zed\Store\Business\Writer\StoreWriterInterface;
 use Spryker\Zed\Store\StoreDependencyProvider;
 
 /**
  * @method \Spryker\Zed\Store\StoreConfig getConfig()
+ * @method \Spryker\Zed\Store\Persistence\StoreEntityManagerInterface getEntityManager()
  * @method \Spryker\Zed\Store\Persistence\StoreRepositoryInterface getRepository()
  * @method \Spryker\Zed\Store\Persistence\StoreQueryContainerInterface getQueryContainer()
  */
@@ -37,15 +46,65 @@ class StoreBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\Store\Business\Model\StoreReaderInterface
      */
-    public function createStoreReader()
+    public function createStoreReader(): StoreReaderInterface
     {
         return new StoreReader(
-            $this->getSharedStore(),
-            $this->getQueryContainer(),
             $this->getRepository(),
-            $this->createStoreMapper(),
             $this->createStoreCache(),
             $this->createStoreReferenceReader(),
+            $this->createStoreExpander(),
+            $this->getIsDynamicStoreModeEnabled(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Store\Business\Writer\StoreWriterInterface
+     */
+    public function createStoreWriter(): StoreWriterInterface
+    {
+        return new StoreWriter(
+            $this->getRepository(),
+            $this->getEntityManager(),
+            $this->createStoreDataValidator(),
+            $this->getStorePostCreatePlugins(),
+            $this->getStorePostUpdatePlugins(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Store\Business\Validator\StoreValidatorInterface
+     */
+    public function createStoreDataValidator(): StoreDataValidatorInterface
+    {
+        return new StoreDataValidator(
+            $this->getRepository(),
+            $this->getStorePreCreateValidationPlugins(),
+            $this->getStorePreUpdateValidationPlugins(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Store\Business\Expander\StoreExpanderInterface
+     */
+    public function createStoreExpander(): StoreExpanderInterface
+    {
+        if ($this->getIsDynamicStoreModeEnabled()) {
+            return $this->createDynamicStoreExpander();
+        }
+
+        return new StoreExpander(
+            $this->createSharedStoreReader(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Store\Business\Expander\StoreExpanderInterface
+     */
+    public function createDynamicStoreExpander(): StoreExpanderInterface
+    {
+        return new DynamicStoreExpander(
+            $this->getStoreCollectionExpanderPlugins(),
+            $this->getConfig(),
         );
     }
 
@@ -66,14 +125,8 @@ class StoreBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Store\Business\Model\StoreMapperInterface
-     */
-    protected function createStoreMapper()
-    {
-        return new StoreMapper($this->createSharedStoreReader());
-    }
-
-    /**
+     * @deprecated Will be removed after dynamic multi-store is always enabled.
+     *
      * @return \Spryker\Shared\Store\Reader\StoreReaderInterface
      */
     protected function createSharedStoreReader()
@@ -82,11 +135,98 @@ class StoreBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed after dynamic multi-store is always enabled.
+     *
      * @return \Spryker\Shared\Store\Dependency\Adapter\StoreToStoreInterface
      */
-    protected function getSharedStore()
+    public function getSharedStore()
     {
         return $this->getProvidedDependency(StoreDependencyProvider::STORE);
+    }
+
+    /**
+     * @param bool $fallbackToDefault
+     *
+     * @return string
+     */
+    public function getCurrentStore(bool $fallbackToDefault = false): string
+    {
+        if ($fallbackToDefault === true && !$this->getCurrentStoreDefinedFlag()) {
+            /** @var \Generated\Shared\Transfer\StoreTransfer $storeTransfer */
+            $storeTransfer = current($this->createStoreReader()->getAllStores());
+
+            return $storeTransfer->getNameOrFail();
+        }
+
+        return $this->getProvidedDependency(StoreDependencyProvider::STORE_CURRENT);
+    }
+
+    /**
+     * @param bool $fallbackToDefault
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    public function getCurrentStoreTransfer(bool $fallbackToDefault = false): StoreTransfer
+    {
+        return $this->createStoreReader()->getStoreByName(
+            $this->getCurrentStore($fallbackToDefault),
+        );
+    }
+
+    /**
+     * @return bool
+     */
+    public function getIsDynamicStoreModeEnabled(): bool
+    {
+        return $this->getProvidedDependency(StoreDependencyProvider::DYNAMIC_STORE_MODE);
+    }
+
+    /**
+     * @return array<\Spryker\Zed\StoreExtension\Dependency\Plugin\StorePreCreateValidationPluginInterface>
+     */
+    public function getStorePreCreateValidationPlugins(): array
+    {
+        return $this->getProvidedDependency(StoreDependencyProvider::PLUGINS_STORE_PRE_CREATE_VALIDATION);
+    }
+
+    /**
+     * @return array<\Spryker\Zed\StoreExtension\Dependency\Plugin\StorePreUpdateValidationPluginInterface>
+     */
+    public function getStorePreUpdateValidationPlugins(): array
+    {
+        return $this->getProvidedDependency(StoreDependencyProvider::PLUGINS_STORE_PRE_UPDATE_VALIDATION);
+    }
+
+    /**
+     * @return array<\Spryker\Zed\StoreExtension\Dependency\Plugin\StorePostCreatePluginInterface>
+     */
+    public function getStorePostCreatePlugins(): array
+    {
+        return $this->getProvidedDependency(StoreDependencyProvider::PLUGINS_STORE_POST_CREATE);
+    }
+
+    /**
+     * @return array<\Spryker\Zed\StoreExtension\Dependency\Plugin\StorePostUpdatePluginInterface>
+     */
+    public function getStorePostUpdatePlugins(): array
+    {
+        return $this->getProvidedDependency(StoreDependencyProvider::PLUGINS_STORE_POST_UPDATE);
+    }
+
+    /**
+     * @return array<\Spryker\Zed\StoreExtension\Dependency\Plugin\StoreCollectionExpanderPluginInterface>
+     */
+    public function getStoreCollectionExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(StoreDependencyProvider::PLUGINS_STORE_COLLECTION_EXPANDER);
+    }
+
+    /**
+     * @return bool
+     */
+    public function getCurrentStoreDefinedFlag(): bool
+    {
+        return $this->getProvidedDependency(StoreDependencyProvider::CURRENT_STORE_PROVIDED_FLAG);
     }
 
     /**
@@ -124,6 +264,7 @@ class StoreBusinessFactory extends AbstractBusinessFactory
     {
         return new CurrentStoreReferenceAccessTokenRequestExpander(
             $this->createStoreReader(),
+            $this->getCurrentStore(),
         );
     }
 
@@ -132,7 +273,10 @@ class StoreBusinessFactory extends AbstractBusinessFactory
      */
     public function createMessageTransferValidator(): MessageValidatorInterface
     {
-        return new MessageValidator($this->createStoreReader());
+        return new MessageValidator(
+            $this->createStoreReader(),
+            $this->getCurrentStore(),
+        );
     }
 
     /**
@@ -140,6 +284,9 @@ class StoreBusinessFactory extends AbstractBusinessFactory
      */
     public function createCurrentStoreReferenceMessageAttributesExpander(): CurrentStoreReferenceMessageAttributesExpanderInterface
     {
-        return new CurrentStoreReferenceMessageAttributesExpander($this->createStoreReader());
+        return new CurrentStoreReferenceMessageAttributesExpander(
+            $this->createStoreReader(),
+            $this->getCurrentStore(),
+        );
     }
 }

@@ -23,6 +23,21 @@ class StoreConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - Returns default timezone as UTC.
+     *
+     * @api
+     *
+     * @deprecated Exists for BC reasons only.
+     *
+     * @return string
+     */
+    public function getDefaultTimezone(): string
+    {
+        return 'UTC';
+    }
+
+    /**
      * @api
      *
      * @example

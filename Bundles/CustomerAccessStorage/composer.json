@@ -17,8 +17,12 @@
     "require-dev": {
         "spryker/code-sniffer": "*",
         "spryker/event": "*",
+        "spryker/event-behavior": "*",
         "spryker/propel": "*",
+        "spryker/publisher": "*",
         "spryker/queue": "*",
+        "spryker/store": "*",
+        "spryker/store-extension": "*",
         "spryker/testify": "*"
     },
     "suggest": {

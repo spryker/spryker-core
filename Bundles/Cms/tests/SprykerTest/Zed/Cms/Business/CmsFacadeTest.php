@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageKeyMappingTransfer;
 use Generated\Shared\Transfer\PageTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
+use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
 use Spryker\Zed\Cms\Business\CmsFacade;
 use Spryker\Zed\Cms\Business\Page\LocaleCmsPageDataExpander;
 use Spryker\Zed\Cms\CmsDependencyProvider;
@@ -29,7 +30,6 @@ use Spryker\Zed\Glossary\GlossaryDependencyProvider;
 use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainer;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Locale\Business\LocaleFacade;
-use Spryker\Zed\Locale\Persistence\LocaleQueryContainer;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
 use Spryker\Zed\Url\Business\UrlFacade;
 
@@ -512,7 +512,7 @@ class CmsFacadeTest extends Unit
     protected function getUrlTransfer(): UrlTransfer
     {
         $urlTransfer = new UrlTransfer();
-        $localeEntity = (new LocaleQueryContainer())->queryLocales()->findOne();
+        $localeEntity = (SpyLocaleQuery::create())->findOne();
 
         $urlTransfer
             ->setFkLocale($localeEntity->getIdLocale())

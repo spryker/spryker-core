@@ -22,6 +22,8 @@
         "spryker/code-sniffer": "*",
         "spryker/event": "*",
         "spryker/propel": "*",
+        "spryker/store": "*",
+        "spryker/store-extension": "*",
         "spryker/testify": "*"
     },
     "suggest": {

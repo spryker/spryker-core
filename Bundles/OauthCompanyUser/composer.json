@@ -19,9 +19,11 @@
     "require-dev": {
         "spryker/code-sniffer": "*",
         "spryker/company": "*",
+        "spryker/container": "*",
         "spryker/installer": "*",
         "spryker/oauth-customer-connector": "*",
         "spryker/propel": "*",
+        "spryker/store": "*",
         "spryker/testify": "*"
     },
     "suggest": {

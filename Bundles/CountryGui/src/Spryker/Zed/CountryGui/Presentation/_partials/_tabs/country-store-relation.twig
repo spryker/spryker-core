@@ -1,0 +1,18 @@
+{{ form_row(form.countryCodesToBeAssigned) }}
+{{ form_row(form.countryCodesToBeDeAssigned) }}
+
+{{ tabs(
+    form.vars.availableCountryRelationTabs,
+    {
+        'availableCountryTable': form.vars.availableCountryTable
+    }
+) }}
+<hr/>
+{{ tabs(
+    form.vars.assignedCountryRelationTabs,
+    {
+        'assignedCountryTable': form.vars.assignedCountryTable
+    }
+) }}
+
+<script src="{{ assetsPath('js/spryker-zed-country-assign.js') }}" defer></script>

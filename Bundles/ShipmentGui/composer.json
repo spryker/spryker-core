@@ -8,7 +8,7 @@
         "spryker/customer": "^7.23.0",
         "spryker/gui": "^3.31.0",
         "spryker/kernel": "^3.33.0",
-        "spryker/locale": "^3.0.0",
+        "spryker/locale": "^3.0.0 || ^4.0.0",
         "spryker/sales": "^11.4.0",
         "spryker/shipment": "^8.0.0",
         "spryker/shipment-gui-extension": "^0.1.0 || ^1.0.0",

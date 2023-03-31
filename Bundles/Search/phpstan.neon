@@ -7,6 +7,9 @@ parameters:
         - '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Plugin/Elasticsearch/QueryExpander/IsActiveQueryExpanderPlugin.php'
         - '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Plugin/Elasticsearch/QueryExpander/LocalizedQueryExpanderPlugin.php'
         - '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Plugin/Elasticsearch/QueryExpander/StoreQueryExpanderPlugin.php'
+        - '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Plugin/Elasticsearch/QueryExpander/CompletionQueryExpanderPlugin.php'
+        - '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Plugin/Elasticsearch/QueryExpander/FacetQueryExpanderPlugin.php'
+        - '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Plugin/Elasticsearch/QueryExpander/IsActiveInDateRangeQueryExpanderPlugin.php'
     ignoreErrors:
         - '#Parameter \#2 \$callback of function array_filter expects callable\(mixed, mixed\): bool, ''strlen'' given.#'
         - '#Parameter \#2 \$callback of function array_filter expects \(callable\(mixed, mixed\): bool\)\|null, ''strlen'' given.#'
@@ -31,5 +34,10 @@ parameters:
         - { message: '#Call to method setParam\(\) on an unknown class Elastica\\Type\\Mapping.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Zed/Search/Business/Model/Elasticsearch/IndexInstaller.php' }
         - { message: '#Call to an undefined method Elastica\\Index::getType\(\).#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Zed/Search/Business/Model/Elasticsearch/SearchIndexManager.php' }
         - '#Property .+::\$underscoreToDashFilter with generic class Laminas\\Filter\\Word\\UnderscoreToDash does not specify its types\: TOptions#'
+        - { message: '#Parameter \#1 \$searchQuery of method .+SearchAdapterPluginInterface::search\(\) expects .+QueryInterface.+ given.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Delegator/SearchDelegator.php' }
+        - { message: '#Parameter \#1 \$searchAdapterPlugins .+SearchDelegator constructor.+ given.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/SearchFactory.php' }
+        - { message: '#Parameter \#1 \$connectionAdapterPlugins .+ConnectionDelegator constructor.+ given.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/SearchFactory.php' }
+        - { message: '#Call to an undefined method object::getIndex\(\).#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Shared/Search/Provider/AbstractIndexClientProvider.php' }
+        - { message: '#Method Spryker\\Zed\\SearchExtension\\Dependency\\Plugin\\InstallPluginInterface::install\(\) invoked with 2 parameters, 1 required.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Zed/Search/Business/Model/SearchInstaller.php' }
         - { message: '#If condition is always false.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Dependency/Plugin/SearchStringSetterInterface.php' }
     reportUnmatchedIgnoredErrors: false

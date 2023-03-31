@@ -71,7 +71,7 @@
     },
     {
         "fileName": "src/Spryker/Zed/DataImport/Dependency/Facade/DataImportToStoreFacadeBridge.php",
-        "description": "Bridges: Method `getStoresAvailableForCurrentPersistence()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "description": "Bridges: Method `getAllStores()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"

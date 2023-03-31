@@ -42,6 +42,10 @@ class CategoryNodeDataPageMapBuilderTest extends Unit
      */
     public function testBuildPageMapWillReturnCorrectTransfer(): void
     {
+        if ($this->isDynamicStoreEnabled()) {
+            $this->markTestSkipped('Test is valid for Dynamic Store mode OFF only.');
+        }
+
         // Arrange
         $categoryNodeDataPageMapBuilder = new CategoryNodeDataPageMapBuilder();
         $categoryNode = $this->getCategoryNodeTreeByIdCategoryTreeForLocaleAndStore(1, 46, Store::getInstance()->getStoreName());
@@ -83,5 +87,13 @@ class CategoryNodeDataPageMapBuilderTest extends Unit
             ->orderByIdCategoryNode()
             ->find()
             ->getFirst();
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isDynamicStoreEnabled(): bool
+    {
+        return (bool)getenv('SPRYKER_DYNAMIC_STORE_MODE');
     }
 }

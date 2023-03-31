@@ -29,6 +29,11 @@ use SprykerTest\Zed\ProductOption\Business\MockProvider;
 class TranslationSaverTest extends MockProvider
 {
     /**
+     * @var string
+     */
+    protected const DEFAULT_LOCALE_CODE = 'en_US';
+
+    /**
      * @return void
      */
     public function testAddValueTranslationsShouldTranslateProvidedValues(): void
@@ -37,10 +42,8 @@ class TranslationSaverTest extends MockProvider
 
         $productOptionGroupTransfer = new ProductOptionGroupTransfer();
 
-        $productOptionTranslationTransfer = new ProductOptionTranslationTransfer();
+        $productOptionTranslationTransfer = (new ProductOptionTranslationTransfer())->setLocaleCode(static::DEFAULT_LOCALE_CODE);
         $productOptionGroupTransfer->addProductOptionValueTranslation($productOptionTranslationTransfer);
-
-        $productOptionTranslationTransfer = new ProductOptionTranslationTransfer();
         $productOptionGroupTransfer->addProductOptionValueTranslation($productOptionTranslationTransfer);
 
         $translationSaver->addValueTranslations($productOptionGroupTransfer);
@@ -56,10 +59,8 @@ class TranslationSaverTest extends MockProvider
         $productOptionGroupTransfer = new ProductOptionGroupTransfer();
         $productOptionGroupTransfer->setName('name');
 
-        $productOptionTranslationTransfer = new ProductOptionTranslationTransfer();
+        $productOptionTranslationTransfer = (new ProductOptionTranslationTransfer())->setLocaleCode(static::DEFAULT_LOCALE_CODE);
         $productOptionGroupTransfer->addGroupNameTranslation($productOptionTranslationTransfer);
-
-        $productOptionTranslationTransfer = new ProductOptionTranslationTransfer();
         $productOptionGroupTransfer->addGroupNameTranslation($productOptionTranslationTransfer);
 
         $translationSaver->addGroupNameTranslations($productOptionGroupTransfer);
@@ -123,7 +124,7 @@ class TranslationSaverTest extends MockProvider
 
         $localeFacadeMock = $this->createLocaleFacadeMock();
         $localeFacadeMock->expects($this->exactly(2))
-            ->method('getLocaleByCode')
+            ->method('getLocale')
             ->willReturn(new LocaleTransfer());
 
         $translationSaver = $this->createTranslationSaver($glossaryFacadeMock, $localeFacadeMock);

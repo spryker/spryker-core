@@ -161,6 +161,14 @@ class PriceProductCriteriaBuilder implements PriceProductCriteriaBuilderInterfac
             return $this->currencyReader->getCurrencyTransferFromIsoCode($currencyIsoCode);
         }
 
+        if ($priceFilterTransfer->getStoreName()) {
+            $storeTransfer = $this->storeFacade->getStoreByName($priceFilterTransfer->getStoreNameOrFail());
+
+            return $this->currencyReader->getCurrencyTransferFromIsoCode(
+                $storeTransfer->getDefaultCurrencyIsoCodeOrFail(),
+            );
+        }
+
         return $this->currencyReader->getDefaultCurrencyTransfer();
     }
 

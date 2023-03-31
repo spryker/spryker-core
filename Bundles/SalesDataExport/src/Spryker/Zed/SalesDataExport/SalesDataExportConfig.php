@@ -12,6 +12,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class SalesDataExportConfig extends AbstractBundleConfig
 {
     /**
+     * @phpstan-var positive-int
+     *
      * @var int
      */
     protected const MODULE_ROOT_DIRECTORY_LEVEL = 4;
@@ -34,7 +36,7 @@ class SalesDataExportConfig extends AbstractBundleConfig
      */
     protected function getModuleDataExportConfigurationPath(): string
     {
-        $moduleRoot = realpath(
+        $moduleRoot = (string)realpath(
             dirname(__DIR__, static::MODULE_ROOT_DIRECTORY_LEVEL),
         );
 

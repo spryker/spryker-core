@@ -31,4 +31,12 @@ class ProductManagementToStoreFacadeBridge implements ProductManagementToStoreFa
     {
         return $this->storeFacade->getCurrentStore();
     }
+
+    /**
+     * @return bool
+     */
+    public function isDynamicStoreEnabled(): bool
+    {
+        return $this->storeFacade->isDynamicStoreEnabled();
+    }
 }

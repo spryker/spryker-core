@@ -61,9 +61,11 @@ class ProductPackagingUnitAvailabilityHandler implements ProductPackagingUnitAva
             return;
         }
 
-        $this->availabilityFacade->updateAvailabilityForStore(
-            $productPackagingLeadProductTransfer->getSku(),
-            $this->storeFacade->getCurrentStore(),
-        );
+        foreach ($this->storeFacade->getAllStores() as $storeTransfers) {
+            $this->availabilityFacade->updateAvailabilityForStore(
+                $productPackagingLeadProductTransfer->getSku(),
+                $storeTransfers,
+            );
+        }
     }
 }

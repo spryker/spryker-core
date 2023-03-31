@@ -10,4 +10,26 @@
         <property name="name" type="string"/>
     </transfer>
 
+    <transfer name="StoreResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
+    <transfer name="TabItem">
+        <property name="name" type="string"/>
+        <property name="title" type="string"/>
+        <property name="template" type="string"/>
+    </transfer>
+
+    <transfer name="TabsView">
+        <property name="tabs" type="TabItem[]" singular="tab"/>
+        <property name="footerTemplate" type="string"/>
+        <property name="isNavigable" type="bool"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
+        <property name="parameters" type="array" singular="parameters"/>
+    </transfer>
+
 </transfers>

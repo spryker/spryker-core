@@ -9,8 +9,6 @@ namespace SprykerTest\Zed\CompanyUserStorage\Communication\Plugin\Event\Listener
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
-use Spryker\Client\Kernel\Container;
-use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Zed\CompanyUser\Dependency\CompanyUserEvents;
 use Spryker\Zed\CompanyUserStorage\Communication\Plugin\Event\Listener\CompanyUserStoragePublishListener;
 use Spryker\Zed\CompanyUserStorage\Communication\Plugin\Event\Listener\CompanyUserStorageUnpublishListener;
@@ -63,11 +61,7 @@ class CompanyUserStorageUnpublishListenerTest extends Unit
     {
         parent::setUp();
 
-        $this->tester->setDependency(QueueDependencyProvider::QUEUE_ADAPTERS, function (Container $container) {
-            return [
-                $container->getLocator()->rabbitMq()->client()->createQueueAdapter(),
-            ];
-        });
+        $this->tester->addDependencies();
 
         $this->companyUserTransfer = $this->tester->haveCompanyUserTransfer();
         $this->companyUserStorageRepository = new CompanyUserStorageRepository();

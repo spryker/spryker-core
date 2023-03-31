@@ -6,6 +6,33 @@
         <property name="isActive" type="bool"/>
     </transfer>
 
+    <transfer name="LocaleCriteria">
+        <property name="localeConditions" type="LocaleConditions"/>
+    </transfer>
+
+    <transfer name="LocaleConditions">
+        <property name="localeNames" type="string[]" singular="localeName"/>
+        <property name="storeNames" type="string[]" singular="storeName"/>
+        <property name="assignedToStore" type="bool"/>
+        <property name="isActive" type="bool"/>
+    </transfer>
+
+    <transfer name="StoreResponse">
+        <property name="store" type="Store"/>
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="idStore" type="int"/>
+        <property name="defaultLocaleIsoCode" type="string"/>
+        <property name="availableLocaleIsoCodes" type="array" singular="availableLocaleCode"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
+    </transfer>
+
     <transfer name="AclEntityMetadataConfig">
         <property name="aclEntityMetadataCollection" type="AclEntityMetadataCollection"/>
     </transfer>

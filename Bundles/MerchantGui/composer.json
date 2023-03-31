@@ -8,7 +8,7 @@
         "spryker/availability-gui-extension": "^1.0.0",
         "spryker/gui": "^3.45.0",
         "spryker/kernel": "^3.52.0",
-        "spryker/locale": "^3.0.0",
+        "spryker/locale": "^3.0.0 || ^4.0.0",
         "spryker/merchant": "^3.0.0",
         "spryker/merchant-gui-extension": "^1.1.0",
         "spryker/product-management-extension": "^1.4.0",

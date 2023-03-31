@@ -21,10 +21,16 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\Environment
                 - \SprykerTest\Shared\Testify\Helper\ConfigHelper
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Client\Testify\Helper\ClientHelper
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Zed\CmsSlot\Helper\CmsSlotHelper
+                - \SprykerTest\Zed\Publisher\Helper\PublishAndSynchronizeHelper
+                - \SprykerTest\Zed\Event\Helper\EventHelper
+                - \SprykerTest\Client\Queue\Helper\QueueHelper
+                - \SprykerTest\Zed\EventBehavior\Helper\EventBehaviorHelper
+                - \SprykerTest\Zed\Testify\Helper\Business\DependencyProviderHelper
 
     Business:
         path: Business
@@ -32,5 +38,13 @@ suites:
         modules:
             enabled:
                 - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Client\Testify\Helper\ClientHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Zed\Publisher\Helper\PublishAndSynchronizeHelper
+                - \SprykerTest\Zed\Event\Helper\EventHelper
+                - \SprykerTest\Client\Queue\Helper\QueueHelper
+                - \SprykerTest\Zed\EventBehavior\Helper\EventBehaviorHelper
+                - \SprykerTest\Zed\Testify\Helper\Business\DependencyProviderHelper

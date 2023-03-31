@@ -88,6 +88,8 @@ class ProductPageSearchFacadeTest extends Unit
     }
 
     /**
+     * @group testPublishProductConcretePageSearchesByProductAbstractIds
+     *
      * @return void
      */
     public function testPublishProductConcretePageSearchesByProductAbstractIds(): void

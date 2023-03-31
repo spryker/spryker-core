@@ -89,7 +89,7 @@ class ProductOptionEditCest
         $i->assertGreaterThan(0, (int)$idsPersisted[1]);
 
         $i->waitAndClick('//*[@id="page-wrapper"]/div[2]/div[2]/div/form/button');
-        $i->waitForElement('//*[@id="page-wrapper"]/div[3]/div[1]/div[1]/div');
+        $i->waitForElement('//*[@id="page-wrapper"]/div[3]/div[1]/div[1]/div', 40);
 
         $i->canSee(ProductOptionEditPage::PRODUCT_GROUP_EDIT_ACTIVATE_SUCCESS_MESSAGE);
     }

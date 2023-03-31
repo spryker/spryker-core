@@ -8,7 +8,7 @@
         "spryker/customer": "^7.0.0",
         "spryker/glossary": "^3.0.0",
         "spryker/kernel": "^3.33.0",
-        "spryker/locale": "^3.0.0",
+        "spryker/locale": "^3.0.0 || ^4.0.0",
         "spryker/oms": "^11.21.0",
         "spryker/propel-orm": "^1.0.0",
         "spryker/sales": "^11.7.0",
@@ -22,6 +22,7 @@
     },
     "require-dev": {
         "spryker/code-sniffer": "*",
+        "spryker/container": "*",
         "spryker/propel": "*",
         "spryker/testify": "*"
     },

@@ -8,9 +8,12 @@
 namespace Spryker\Zed\Country\Business\Internal;
 
 use Exception;
+use Generated\Shared\Transfer\CountryTransfer;
 use Spryker\Zed\Country\Business\Cldr\CldrDataProviderInterface;
-use Spryker\Zed\Country\Business\CountryManagerInterface;
-use Spryker\Zed\Country\Business\RegionManagerInterface;
+use Spryker\Zed\Country\Business\Country\CountryReaderInterface;
+use Spryker\Zed\Country\Business\Country\CountryWriterInterface;
+use Spryker\Zed\Country\Business\Region\RegionReaderInterface;
+use Spryker\Zed\Country\Business\Region\RegionWriterInterface;
 use Spryker\Zed\Country\CountryConfig;
 
 class Install implements InstallInterface
@@ -41,59 +44,74 @@ class Install implements InstallInterface
     protected $postalCodeDataProvider;
 
     /**
-     * @var \Spryker\Zed\Country\Business\CountryManagerInterface
+     * @var \Spryker\Zed\Country\Business\Country\CountryReaderInterface
      */
-    protected $countryManager;
+    protected $countryReader;
 
     /**
-     * @var \Spryker\Zed\Country\Business\RegionManagerInterface
+     * @var \Spryker\Zed\Country\Business\Region\RegionReaderInterface
      */
-    protected $regionManager;
+    protected $regionReader;
 
     /**
-     * @var array
+     * @var \Spryker\Zed\Country\Business\Country\CountryWriterInterface
+     */
+    protected $countryWriter;
+
+    /**
+     * @var \Spryker\Zed\Country\Business\Region\RegionWriterInterface
+     */
+    protected $regionWriter;
+
+    /**
+     * @var array<mixed>
      */
     protected $cldrData;
 
     /**
-     * @var array
+     * @var array<mixed>
      */
     protected $codeMappings;
 
     /**
-     * @var array
+     * @var array<mixed>
      */
     protected $postalCodes;
 
     /**
-     * @param \Spryker\Zed\Country\Business\CountryManagerInterface $countryManager
-     * @param \Spryker\Zed\Country\Business\RegionManagerInterface $regionManager
+     * @param \Spryker\Zed\Country\Business\Country\CountryReaderInterface $countryReader
+     * @param \Spryker\Zed\Country\Business\Region\RegionReaderInterface $regionReader
+     * @param \Spryker\Zed\Country\Business\Country\CountryWriterInterface $countryWriter
+     * @param \Spryker\Zed\Country\Business\Region\RegionWriterInterface $regionWriter
      * @param \Spryker\Zed\Country\Business\Cldr\CldrDataProviderInterface $cldrDataProvider
      * @param \Spryker\Zed\Country\Business\Cldr\CldrDataProviderInterface $codeMappingsProvider
      * @param \Spryker\Zed\Country\Business\Cldr\CldrDataProviderInterface $postalCodeDataProvider
      * @param \Spryker\Zed\Country\CountryConfig $countrySettings
      */
     public function __construct(
-        CountryManagerInterface $countryManager,
-        RegionManagerInterface $regionManager,
+        CountryReaderInterface $countryReader,
+        RegionReaderInterface $regionReader,
+        CountryWriterInterface $countryWriter,
+        RegionWriterInterface $regionWriter,
         CldrDataProviderInterface $cldrDataProvider,
         CldrDataProviderInterface $codeMappingsProvider,
         CldrDataProviderInterface $postalCodeDataProvider,
         CountryConfig $countrySettings
     ) {
-        //parent::__construct();
         $this->countrySettings = $countrySettings;
         $this->cldrDataProvider = $cldrDataProvider;
         $this->codeMappingsProvider = $codeMappingsProvider;
         $this->postalCodeDataProvider = $postalCodeDataProvider;
-        $this->countryManager = $countryManager;
-        $this->regionManager = $regionManager;
+        $this->countryReader = $countryReader;
+        $this->regionReader = $regionReader;
+        $this->countryWriter = $countryWriter;
+        $this->regionWriter = $regionWriter;
     }
 
     /**
      * @return void
      */
-    public function install()
+    public function install(): void
     {
         $this->init();
         $this->installCldrData();
@@ -103,7 +121,7 @@ class Install implements InstallInterface
     /**
      * @return void
      */
-    protected function init()
+    protected function init(): void
     {
         $this->cldrData = $this->cldrDataProvider->getCldrData();
         $this->version = $this->cldrData['main']['en']['identity']['version']['_cldrVersion'];
@@ -114,19 +132,28 @@ class Install implements InstallInterface
     /**
      * @return void
      */
-    protected function installCldrData()
+    protected function installCldrData(): void
     {
         foreach ($this->getCountryList() as $iso2 => $countryData) {
-            if (!$this->countryManager->hasCountry($iso2)) {
-                $this->countryManager->createCountry($iso2, $countryData);
+            if ($this->countryReader->countryExists($iso2)) {
+                continue;
             }
+
+            $countryTransfer = (new CountryTransfer())
+                ->setIso2Code($iso2)
+                ->setIso3Code($countryData['iso3_code'])
+                ->setName($countryData['name'])
+                ->setPostalCodeMandatory($countryData['postal_code_mandatory'])
+                ->setPostalCodeRegex($countryData['postal_code_regex']);
+
+            $this->countryWriter->createCountry($countryTransfer);
         }
     }
 
     /**
-     * @return array
+     * @return array<mixed>
      */
-    protected function getCountryList()
+    protected function getCountryList(): array
     {
         $json = $this->cldrData;
 
@@ -155,13 +182,13 @@ class Install implements InstallInterface
     }
 
     /**
-     * @param array $countries
+     * @param array<mixed> $countries
      *
      * @throws \Exception
      *
-     * @return array
+     * @return array<mixed>
      */
-    protected function addIso3Code(array $countries)
+    protected function addIso3Code(array $countries): array
     {
         $json = $this->codeMappings;
 
@@ -183,13 +210,13 @@ class Install implements InstallInterface
     }
 
     /**
-     * @param array $countries
+     * @param array<mixed> $countries
      *
      * @throws \Exception
      *
-     * @return array
+     * @return array<mixed>
      */
-    protected function addPostalCodeData(array $countries)
+    protected function addPostalCodeData(array $countries): array
     {
         $json = $this->postalCodes;
 
@@ -221,13 +248,14 @@ class Install implements InstallInterface
     /**
      * @return void
      */
-    protected function installRegions()
+    protected function installRegions(): void
     {
         foreach ($this->getCountriesToInstallRegionsFor() as $regionInstaller) {
-            $fkCountry = $this->countryManager->getIdCountryByIso2Code($regionInstaller->getCountryIso());
+            $fkCountry = $this->countryReader->getCountryByIso2Code($regionInstaller->getCountryIso())
+                ->getIdCountryOrFail();
 
             foreach ($regionInstaller->getCodeArray() as $isoCode => $regionName) {
-                $this->regionManager->createRegion($isoCode, $fkCountry, $regionName);
+                $this->regionWriter->createRegion($isoCode, $fkCountry, $regionName);
             }
         }
     }
@@ -235,7 +263,7 @@ class Install implements InstallInterface
     /**
      * @return array<\Spryker\Zed\Country\Business\Internal\Regions\RegionInstallInterface>
      */
-    protected function getCountriesToInstallRegionsFor()
+    protected function getCountriesToInstallRegionsFor(): array
     {
         return [];
     }

@@ -10,6 +10,7 @@ namespace Spryker\Client\Search;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Money\Plugin\MoneyPlugin;
+use Spryker\Client\Search\Dependency\Facade\SearchToLocaleClientBridge;
 use Spryker\Client\Search\Dependency\Plugin\SearchConfigBuilderInterface;
 use Spryker\Client\Search\Exception\MissingSearchConfigPluginException;
 use Spryker\Shared\Kernel\Store;
@@ -37,6 +38,8 @@ class SearchDependencyProvider extends AbstractDependencyProvider
     public const SEARCH_CONFIG_EXPANDER_PLUGINS = 'search config expander plugins';
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @var string
      */
     public const STORE = 'store';
@@ -50,6 +53,11 @@ class SearchDependencyProvider extends AbstractDependencyProvider
      * @var string
      */
     public const PLUGINS_SEARCH_CONTEXT_EXPANDER = 'PLUGINS_SOURCE_IDENTIFIER_MAPPER';
+
+    /**
+     * @var string
+     */
+    public const CLIENT_LOCALE = 'CLIENT_LOCALE';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -71,6 +79,7 @@ class SearchDependencyProvider extends AbstractDependencyProvider
 
         $container = $this->addMoneyPlugin($container);
         $container = $this->addSearchContextExpanderPlugins($container);
+        $container = $this->addLocaleClient($container);
 
         return $container;
     }
@@ -115,6 +124,8 @@ class SearchDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Spryker\Client\Kernel\Container $container
      *
      * @return \Spryker\Client\Kernel\Container
@@ -183,6 +194,22 @@ class SearchDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::SEARCH_CONFIG_BUILDER, function (Container $container) {
             return $this->createSearchConfigBuilderPlugin($container);
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addLocaleClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_LOCALE, function (Container $container) {
+            return new SearchToLocaleClientBridge(
+                $container->getLocator()->locale()->client(),
+            );
         });
 
         return $container;

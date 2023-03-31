@@ -182,6 +182,7 @@ class PriceForm extends AbstractType
 
         $divisor = 1;
         if ($fractionDigits) {
+            /** @var int $divisor */
             $divisor = pow(10, $fractionDigits);
         }
 

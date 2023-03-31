@@ -1,0 +1,20 @@
+{{ form_row(form.defaultLocaleIsoCode) }}
+<hr/>
+{{ form_row(form.localeCodesToBeAssigned) }}
+{{ form_row(form.localeCodesToBeDeAssigned) }}
+
+{{ tabs(
+    form.vars.availableLocaleRelationTabs,
+    {
+        'availableLocaleTable': form.vars.availableLocaleTable
+    }
+) }}
+<hr/>
+{{ tabs(
+    form.vars.assignedLocaleRelationTabs,
+    {
+        'assignedLocaleTable': form.vars.assignedLocaleTable
+    }
+) }}
+
+<script src="{{ assetsPath('js/spryker-zed-locale-assign.js') }}" defer></script>

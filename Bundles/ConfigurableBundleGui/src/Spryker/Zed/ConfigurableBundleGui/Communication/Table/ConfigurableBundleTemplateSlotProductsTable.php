@@ -115,7 +115,7 @@ class ConfigurableBundleTemplateSlotProductsTable extends AbstractTable
     /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
-     * @return array<int, array<string, string>>
+     * @return array<int|string, array<string, string>>
      */
     protected function prepareData(TableConfiguration $config): array
     {
@@ -133,9 +133,9 @@ class ConfigurableBundleTemplateSlotProductsTable extends AbstractTable
     }
 
     /**
-     * @param array<int, array<string, mixed>> $productEntityCollection
+     * @param array<int|string, array<string, mixed>> $productEntityCollection
      *
-     * @return array<int, array<string, string>>
+     * @return array<int|string, array<string, string>>
      */
     protected function mapProductEntityCollectionToTableData(array $productEntityCollection): array
     {

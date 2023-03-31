@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Customer;
 
+use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
 use Spryker\Service\Customer\CustomerServiceInterface;
 use Spryker\Shared\Kernel\ContainerInterface;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryBridge;
@@ -93,7 +94,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
-    public const QUERY_CONTAINER_LOCALE = 'QUERY_CONTAINER_LOCALE';
+    public const PROPEL_QUERY_LOCALE = 'PROPEL_QUERY_LOCALE';
 
     /**
      * @var string
@@ -130,7 +131,7 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addSequenceNumberFacade($container);
         $container = $this->addCountryFacade($container);
         $container = $this->addMailFacade($container);
-        $container = $this->addLocaleQueryConainer($container);
+        $container = $this->addPropelQueryLocale($container);
         $container = $this->addStoreFacade($container);
         $container = $this->addCustomerAnonymizerPlugins($container);
         $container = $this->addUtilValidateService($container);
@@ -309,11 +310,11 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addLocaleQueryConainer(Container $container): Container
+    protected function addPropelQueryLocale(Container $container): Container
     {
-        $container->set(static::QUERY_CONTAINER_LOCALE, function (Container $container) {
-            return $container->getLocator()->locale()->queryContainer();
-        });
+        $container->set(static::PROPEL_QUERY_LOCALE, $container->factory(function (Container $container) {
+            return SpyLocaleQuery::create();
+        }));
 
         return $container;
     }

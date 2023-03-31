@@ -83,6 +83,7 @@ class AvailabilityNotificationSubscriptionSender implements AvailabilityNotifica
         $mailTransfer = (new MailTransfer())
             ->setType(AvailabilityNotificationSubscriptionMailTypePlugin::AVAILABILITY_NOTIFICATION_SUBSCRIPTION_MAIL)
             ->setLocale($availabilityNotificationSubscriptionTransfer->getLocale())
+            ->setStoreName($availabilityNotificationSubscriptionTransfer->getStoreOrFail()->getNameOrFail())
             ->setAvailabilityNotificationSubscriptionMailData($mailData);
 
         $this->mailFacade->handleMail($mailTransfer);

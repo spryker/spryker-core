@@ -24,7 +24,7 @@ class RequireUpdater implements UpdaterInterface
     /**
      * @var string
      */
-    public const PHP_MINIMUM = '>=7.4';
+    public const PHP_MINIMUM = '>=8.0';
 
     /**
      * @param array $composerJson

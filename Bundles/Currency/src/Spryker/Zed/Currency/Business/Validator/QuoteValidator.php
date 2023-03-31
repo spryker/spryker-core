@@ -67,7 +67,7 @@ class QuoteValidator implements QuoteValidatorInterface
         }
 
         $currencyCode = $currencyTransfer->getCode();
-        $storeTransfer = $this->storeFacade->findStoreByName($quoteTransfer->getStore()->getName());
+        $storeTransfer = $this->storeFacade->findStoreByName($quoteTransfer->getStoreOrFail()->getNameOrFail());
 
         if (!$storeTransfer) {
             return $this->addValidationError($quoteValidationResponseTransfer, static::ERROR_MESSAGE_STORE_NOT_FOUND);
@@ -87,7 +87,7 @@ class QuoteValidator implements QuoteValidatorInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteValidationResponseTransfer $quoteValidationResponseTransfer
      * @param string $errorMessage
-     * @param array $parameters
+     * @param array<mixed> $parameters
      *
      * @return \Generated\Shared\Transfer\QuoteValidationResponseTransfer
      */

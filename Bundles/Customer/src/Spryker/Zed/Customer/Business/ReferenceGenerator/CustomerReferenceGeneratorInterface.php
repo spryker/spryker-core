@@ -12,9 +12,9 @@ use Generated\Shared\Transfer\CustomerTransfer;
 interface CustomerReferenceGeneratorInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\CustomerTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return string
      */
-    public function generateCustomerReference(CustomerTransfer $orderTransfer);
+    public function generateCustomerReference(CustomerTransfer $customerTransfer);
 }

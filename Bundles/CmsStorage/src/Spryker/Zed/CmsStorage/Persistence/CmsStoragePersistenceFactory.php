@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CmsStorage\Persistence;
 
 use Orm\Zed\CmsStorage\Persistence\SpyCmsPageStorageQuery;
+use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
 use Spryker\Zed\CmsStorage\CmsStorageDependencyProvider;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
@@ -26,11 +27,11 @@ class CmsStoragePersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\CmsStorage\Dependency\QueryContainer\CmsStorageToLocaleQueryContainerInterface
+     * @return \Orm\Zed\Locale\Persistence\SpyLocaleQuery
      */
-    public function getLocaleQueryContainer()
+    public function getLocalePropelQuery(): SpyLocaleQuery
     {
-        return $this->getProvidedDependency(CmsStorageDependencyProvider::QUERY_CONTAINER_LOCALE);
+        return $this->getProvidedDependency(CmsStorageDependencyProvider::PROPEL_QUERY_LOCALE);
     }
 
     /**

@@ -39,4 +39,6 @@ suites:
                 - \SprykerTest\Shared\ProductReview\Helper\ProductReviewDataHelper
                 - \SprykerTest\Shared\Product\Helper\ProductDataHelper
                 - \SprykerTest\Shared\Customer\Helper\CustomerDataHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
                 - \SprykerTest\Zed\Locale\Helper\LocaleDataHelper

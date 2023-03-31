@@ -65,6 +65,11 @@ class ProductLabelStorageListenerTest extends Unit
     protected const LOCALE_NAME_EN = 'en_US';
 
     /**
+     * @var string
+     */
+    protected const LOCALE_NAME_DE = 'de_DE';
+
+    /**
      * @var \SprykerTest\Zed\ProductLabelStorage\ProductLabelStorageCommunicationTester
      */
     protected $tester;
@@ -163,7 +168,12 @@ class ProductLabelStorageListenerTest extends Unit
         $productLabelDictionaryStorageListener = new ProductLabelDictionaryStorageListener();
         $productLabelDictionaryStorageListener->setFacade($this->getProductLabelStorageFacade());
 
-        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $storeTransfer = $this->tester->haveStore(
+            [
+                StoreTransfer::NAME => static::STORE_NAME_DE,
+                StoreTransfer::AVAILABLE_LOCALE_ISO_CODES => [static::LOCALE_NAME_DE, static::LOCALE_NAME_EN],
+            ],
+        );
         $storeRelationSeedData = [
             StoreRelationTransfer::ID_STORES => [
                 $storeTransfer->getIdStore(),
@@ -193,6 +203,7 @@ class ProductLabelStorageListenerTest extends Unit
             $storeTransfer->getName(),
             $localeName,
         );
+
         $this->assertCount($labelsCount, $data['items'], 'Number of items does not equals to an expected value.');
     }
 
@@ -207,17 +218,17 @@ class ProductLabelStorageListenerTest extends Unit
         $productLabelDictionaryStoragePublishListener->setFacade($this->getProductLabelStorageFacade());
 
         //Arrange
-        $storeTransferDE = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
-        $storeTransferAT = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_AT]);
+        $storeTransferDE = $this->tester->haveStore([
+            StoreTransfer::NAME => static::STORE_NAME_DE,
+            StoreTransfer::AVAILABLE_LOCALE_ISO_CODES => [static::LOCALE_NAME_DE, static::LOCALE_NAME_EN],
+        ]);
+
         $storeRelationSeedData = [
             StoreRelationTransfer::ID_STORES => [
                 $storeTransferDE->getIdStore(),
-                $storeTransferAT->getIdStore(),
             ],
             StoreRelationTransfer::STORES => [
                 $storeTransferDE,
-                $storeTransferAT,
-
             ],
         ];
 
@@ -253,7 +264,10 @@ class ProductLabelStorageListenerTest extends Unit
         $productLabelDictionaryStorageUnpublishListener = new ProductLabelDictionaryStorageUnpublishListener();
         $productLabelDictionaryStorageUnpublishListener->setFacade($this->getProductLabelStorageFacade());
 
-        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $storeTransfer = $this->tester->haveStore([
+            StoreTransfer::NAME => static::STORE_NAME_DE,
+            StoreTransfer::AVAILABLE_LOCALE_ISO_CODES => [static::LOCALE_NAME_EN],
+        ]);
         $localeTransfer = $this->tester->haveLocale([LocaleTransfer::LOCALE_NAME => static::LOCALE_NAME_EN]);
 
         $this->tester->haveProductLabelDictionaryStorage([

@@ -26,6 +26,8 @@ suites:
                 - \SprykerTest\Shared\Customer\Helper\CustomerDataHelper
                 - \SprykerTest\Shared\Quote\Helper\PersistentQuoteHelper
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
     Persistence:
         path: Persistence
         actor: QuotePersistenceTester

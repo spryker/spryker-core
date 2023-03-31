@@ -13,7 +13,10 @@ use Elastica\Query\Range;
 use Elastica\Query\Term;
 use Elastica\Query\Terms;
 use Generated\Shared\Search\PageIndexMap;
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\FacetConfigTransfer;
+use Spryker\Client\Money\Dependency\Client\MoneyToCurrencyClientInterface;
+use Spryker\Client\Money\MoneyDependencyProvider;
 use Spryker\Shared\SearchElasticsearch\SearchElasticsearchConfig;
 
 /**
@@ -29,6 +32,26 @@ use Spryker\Shared\SearchElasticsearch\SearchElasticsearchConfig;
  */
 class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpanderPluginQueryTest
 {
+    /**
+     * @var string
+     */
+    protected const DEFAULT_CURRENCY = 'EUR';
+
+    /**
+     * @var \SprykerTest\Client\SearchElasticsearch\SearchElasticsearchClientTester
+     */
+    protected $tester;
+
+    /**
+     * @return void
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->createCurrencyClientMock();
+    }
+
     /**
      * @return array
      */
@@ -561,5 +584,21 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
         ];
 
         return [$searchConfigMock, $expectedQuery, $parameters];
+    }
+
+    /**
+     * @return void
+     */
+    protected function createCurrencyClientMock(): void
+    {
+        $currencyTransfer = (new CurrencyTransfer())->setCode(static::DEFAULT_CURRENCY);
+
+        $currencyClientMock = $this->createMock(MoneyToCurrencyClientInterface::class);
+        $currencyClientMock->method('getCurrent')
+            ->willReturn($currencyTransfer);
+        $currencyClientMock->method('fromIsoCode')
+            ->willReturn($currencyTransfer);
+
+        $this->tester->setDependency(MoneyDependencyProvider::CLIENT_CURRENCY, $currencyClientMock);
     }
 }

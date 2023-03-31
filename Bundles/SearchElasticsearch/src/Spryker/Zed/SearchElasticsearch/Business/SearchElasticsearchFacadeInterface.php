@@ -21,10 +21,11 @@ interface SearchElasticsearchFacadeInterface
      * @api
      *
      * @param \Psr\Log\LoggerInterface $logger
+     * @param string|null $storeName
      *
      * @return void
      */
-    public function install(LoggerInterface $logger): void;
+    public function install(LoggerInterface $logger, ?string $storeName = null): void;
 
     /**
      * Specification:
@@ -58,9 +59,11 @@ interface SearchElasticsearchFacadeInterface
      *
      * @api
      *
+     * @param string|null $storeName
+     *
      * @return bool
      */
-    public function openIndexes(): bool;
+    public function openIndexes(?string $storeName = null): bool;
 
     /**
      * Specification:
@@ -81,9 +84,11 @@ interface SearchElasticsearchFacadeInterface
      *
      * @api
      *
+     * @param string|null $storeName
+     *
      * @return bool
      */
-    public function closeIndexes(): bool;
+    public function closeIndexes(?string $storeName = null): bool;
 
     /**
      * Specification:
@@ -105,9 +110,11 @@ interface SearchElasticsearchFacadeInterface
      *
      * @api
      *
+     * @param string|null $storeName
+     *
      * @return bool
      */
-    public function deleteIndexes(): bool;
+    public function deleteIndexes(?string $storeName = null): bool;
 
     /**
      * Specification:
@@ -156,9 +163,11 @@ interface SearchElasticsearchFacadeInterface
      *
      * @api
      *
+     * @param string|null $storeName
+     *
      * @return array<string>
      */
-    public function getIndexNames(): array;
+    public function getIndexNames(?string $storeName = null): array;
 
     /**
      * Specification:

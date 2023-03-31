@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\ElasticsearchSearchContextTransfer;
 use Generated\Shared\Transfer\SearchContextTransfer;
 use Spryker\Zed\SearchElasticsearch\Business\Index\Index;
 use Spryker\Zed\SearchElasticsearch\Business\SourceIdentifier\SourceIdentifierInterface;
+use Spryker\Zed\SearchElasticsearch\Dependency\Facade\SearchElasticsearchToStoreFacadeInterface;
 use Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig;
 
 /**
@@ -80,6 +81,7 @@ class IndexTest extends Unit
             $this->elasticaClientMock,
             $this->sourceIdentifier,
             $this->configMock,
+            $this->createStoreFacade(),
         );
     }
 
@@ -215,5 +217,13 @@ class IndexTest extends Unit
         $elasticaClientMock->method('getCluster')->willReturn($this->clusterMock);
 
         return $elasticaClientMock;
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\SearchElasticsearch\Dependency\Facade\SearchElasticsearchToStoreFacadeInterface
+     */
+    protected function createStoreFacade(): SearchElasticsearchToStoreFacadeInterface
+    {
+        return $this->getMockBuilder(SearchElasticsearchToStoreFacadeInterface::class)->getMock();
     }
 }

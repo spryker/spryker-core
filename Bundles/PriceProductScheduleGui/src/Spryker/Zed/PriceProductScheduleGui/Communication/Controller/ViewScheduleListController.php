@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\PriceProductScheduleGui\Communication\Controller;
 
-use DateTime;
-use DateTimeZone;
 use Generated\Shared\Transfer\PriceProductScheduleListResponseTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
@@ -76,15 +74,12 @@ class ViewScheduleListController extends AbstractController
      */
     protected function formatCreatedAt(PriceProductScheduleListTransfer $priceProductScheduleListTransfer): PriceProductScheduleListTransfer
     {
-        $createdAt = $priceProductScheduleListTransfer->getCreatedAt();
-        $dateTime = new DateTime($createdAt);
-        $storeTransfer = $this->getFactory()
-            ->getStoreFacade()
-            ->getCurrentStore();
-        $timezone = new DateTimeZone($storeTransfer->getTimezone());
-        $dateTime->setTimezone($timezone);
-
-        return $priceProductScheduleListTransfer->setCreatedAt($dateTime->format(static::FORMAT_DATE_TIME));
+        return $priceProductScheduleListTransfer->setCreatedAt(
+            $this->getFactory()->getUtilDateTimeService()->formatDateTimeToCustomFormat(
+                $priceProductScheduleListTransfer->getCreatedAt(),
+                static::FORMAT_DATE_TIME,
+            ),
+        );
     }
 
     /**

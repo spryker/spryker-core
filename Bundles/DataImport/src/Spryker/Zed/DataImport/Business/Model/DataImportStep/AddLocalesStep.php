@@ -64,7 +64,7 @@ class AddLocalesStep implements DataImportStepInterface
     {
         $locales = [];
 
-        foreach ($this->storeFacade->getStoresAvailableForCurrentPersistence() as $storeTransfers) {
+        foreach ($this->storeFacade->getAllStores() as $storeTransfers) {
             $locales = array_merge($locales, $storeTransfers->getAvailableLocaleIsoCodes());
         }
 

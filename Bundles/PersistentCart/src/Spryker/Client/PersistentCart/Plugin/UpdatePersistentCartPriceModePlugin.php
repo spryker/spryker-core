@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\QuoteUpdateRequestAttributesTransfer;
 use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\PriceExtension\Dependency\Plugin\PriceModePostUpdatePluginInterface;
-use Spryker\Shared\Quote\QuoteConfig;
 
 /**
  * @method \Spryker\Client\PersistentCart\PersistentCartClientInterface getClient()
@@ -19,6 +18,13 @@ use Spryker\Shared\Quote\QuoteConfig;
  */
 class UpdatePersistentCartPriceModePlugin extends AbstractPlugin implements PriceModePostUpdatePluginInterface
 {
+    /**
+     * @uses \Spryker\Shared\Quote\QuoteConfig::STORAGE_STRATEGY_DATABASE
+     *
+     * @var string
+     */
+    protected const STORAGE_STRATEGY_DATABASE = 'database';
+
     /**
      *  Specification:
      *   - Plugin executed after price mode is changed.
@@ -31,7 +37,7 @@ class UpdatePersistentCartPriceModePlugin extends AbstractPlugin implements Pric
      */
     public function execute(string $priceMode): void
     {
-        if ($this->getFactory()->getQuoteClient()->getStorageStrategy() !== QuoteConfig::STORAGE_STRATEGY_DATABASE) {
+        if ($this->getFactory()->getQuoteClient()->getStorageStrategy() !== static::STORAGE_STRATEGY_DATABASE) {
             return;
         }
         $quoteUpdateRequestAttributesTransfer = (new QuoteUpdateRequestAttributesTransfer())

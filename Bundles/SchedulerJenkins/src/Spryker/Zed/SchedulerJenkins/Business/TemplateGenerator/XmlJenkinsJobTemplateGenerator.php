@@ -59,8 +59,7 @@ class XmlJenkinsJobTemplateGenerator implements JenkinsJobTemplateGeneratorInter
     {
         $jobTransfer
             ->requireRepeatPattern()
-            ->requireCommand()
-            ->requireStore();
+            ->requireCommand();
 
         $jobTransfer = $this->extendSchedulerJobTransferWithLogRotateValue($jobTransfer);
 

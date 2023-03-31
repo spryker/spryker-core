@@ -8,7 +8,7 @@
 namespace Spryker\Client\Currency\Plugin;
 
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\ZedRequest\Dependency\Plugin\MetaDataProviderPluginInterface;
+use Spryker\Client\ZedRequestExtension\Dependency\Plugin\MetaDataProviderPluginInterface;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
 /**
@@ -25,7 +25,7 @@ class ZedRequestMetaDataProviderPlugin extends AbstractPlugin implements MetaDat
      *
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
-    public function getRequestMetaData(TransferInterface $transfer)
+    public function getRequestMetaData(TransferInterface $transfer): TransferInterface
     {
         return $this->getFactory()->createCurrencyBuilder()->getCurrent();
     }

@@ -17,7 +17,7 @@ interface LocaleClientInterface
      *
      * @return string
      */
-    public function getCurrentLocale();
+    public function getCurrentLocale(): string;
 
     /**
      * Specification:
@@ -35,7 +35,17 @@ interface LocaleClientInterface
      *
      * @api
      *
-     * @return array<string>
+     * @return array<string, string>
      */
     public function getLocales(): array;
+
+    /**
+     * Specification:
+     * - Returns list of languages based on locales available for the current store.
+     *
+     * @api
+     *
+     * @return array<string>
+     */
+    public function getAllowedLanguages(): array;
 }

@@ -17,6 +17,9 @@ class SchedulerJenkinsConfig extends AbstractBundleConfig
      */
     protected const DEFAULT_AMOUNT_OF_DAYS_FOR_LOGFILE_ROTATION = 7;
 
+    /**
+     * @var string
+     */
     protected const DEFAULT_JENKINS_TEMPLATE_PATH = __DIR__ . '/Business/TemplateGenerator/Template/jenkins-job.default.xml.twig';
 
     /**

@@ -18,6 +18,7 @@ use Spryker\Zed\AvailabilityNotification\Business\Resolver\BaseUrlGetStrategyRes
 use Spryker\Zed\AvailabilityNotification\Business\Strategy\StoreYvesBaseUrlGetStrategy;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\UrlGenerator;
 use Spryker\Zed\AvailabilityNotification\Business\Subscription\UrlGeneratorInterface;
+use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToStoreFacadeInterface;
 use SprykerTest\Zed\AvailabilityNotification\AvailabilityNotificationBusinessTester;
 
 /**
@@ -231,7 +232,18 @@ class UrlGeneratorTest extends Unit
     protected function createBaseUrlGetStrategyResolver(AvailabilityNotificationConfig $availabilityNotificationConfig): BaseUrlGetStrategyResolverInterface
     {
         return new BaseUrlGetStrategyResolver([
-            new StoreYvesBaseUrlGetStrategy($availabilityNotificationConfig),
+            new StoreYvesBaseUrlGetStrategy(
+                $availabilityNotificationConfig,
+                $this->createStoreFacadeMock(),
+            ),
         ]);
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToStoreFacadeInterface
+     */
+    protected function createStoreFacadeMock(): AvailabilityNotificationToStoreFacadeInterface
+    {
+        return $this->createMock(AvailabilityNotificationToStoreFacadeInterface::class);
     }
 }

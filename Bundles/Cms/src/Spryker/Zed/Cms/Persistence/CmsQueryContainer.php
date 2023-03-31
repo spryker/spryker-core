@@ -696,7 +696,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
      */
     public function queryLocaleById(int $idLocale): SpyLocaleQuery
     {
-        return $this->getFactory()->getLocaleQuery()->queryLocales()->filterByIdLocale($idLocale);
+        return $this->getFactory()->getLocalePropelQuery()->filterByIdLocale($idLocale);
     }
 
     /**

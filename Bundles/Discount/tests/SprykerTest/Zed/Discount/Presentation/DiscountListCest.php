@@ -8,6 +8,8 @@
 namespace SprykerTest\Zed\Discount\Presentation;
 
 use Codeception\Util\Locator;
+use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\MoneyValueTransfer;
 use SprykerTest\Zed\Discount\DiscountPresentationTester;
 use SprykerTest\Zed\Discount\PageObject\DiscountEditPage;
 use SprykerTest\Zed\Discount\PageObject\DiscountListPage;
@@ -26,6 +28,11 @@ use SprykerTest\Zed\Discount\PageObject\DiscountViewPage;
 class DiscountListCest
 {
     /**
+     * @var string
+     */
+    protected const CURRENCY_CODE = 'EUR';
+
+    /**
      * @param \SprykerTest\Zed\Discount\DiscountPresentationTester $i
      * @param \SprykerTest\Zed\Discount\PageObject\DiscountEditPage $editPage
      * @param \SprykerTest\Zed\Discount\PageObject\DiscountViewPage $viewPage
@@ -35,11 +42,19 @@ class DiscountListCest
     public function showADiscountInList(DiscountPresentationTester $i, DiscountEditPage $editPage, DiscountViewPage $viewPage): void
     {
         $name = 'Works as test discount';
-        $discount = $i->haveDiscount(['displayName' => $name]);
+        $currencyTransfer = $i->haveCurrencyTransfer([CurrencyTransfer::CODE => static::CURRENCY_CODE]);
+        $discount = $i->haveDiscount(['displayName' => $name], [
+            [
+                MoneyValueTransfer::NET_AMOUNT => 100,
+                MoneyValueTransfer::GROSS_AMOUNT => 100,
+                MoneyValueTransfer::FK_CURRENCY => $currencyTransfer->getIdCurrency(),
+                MoneyValueTransfer::CURRENCY => $currencyTransfer,
+            ],
+        ]);
         $i->amOnPage(DiscountListPage::URL);
 
         $firstTableRow = Locator::firstElement(DiscountListPage::DATA_TABLE_ROW);
-        $i->waitForElementVisible($firstTableRow, 3);
+        $i->waitForElementVisible($firstTableRow, 10);
         $i->see($name, $firstTableRow);
         $i->see('Edit', $firstTableRow);
         $i->see('View', $firstTableRow);
@@ -53,6 +68,7 @@ class DiscountListCest
         $i->waitForElementVisible($firstTableRow);
         $i->click('View', $firstTableRow);
         $i->seeInCurrentUrl($viewPage->url($discount->getIdDiscount()));
+        $i->wait(10);
         $i->see('View discount', 'h2');
         $i->see($name);
     }

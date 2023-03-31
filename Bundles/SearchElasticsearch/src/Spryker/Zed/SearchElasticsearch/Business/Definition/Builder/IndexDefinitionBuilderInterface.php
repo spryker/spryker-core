@@ -10,7 +10,9 @@ namespace Spryker\Zed\SearchElasticsearch\Business\Definition\Builder;
 interface IndexDefinitionBuilderInterface
 {
     /**
+     * @param string|null $storeName
+     *
      * @return array<\Generated\Shared\Transfer\IndexDefinitionTransfer>
      */
-    public function build(): array;
+    public function build(?string $storeName = null): array;
 }

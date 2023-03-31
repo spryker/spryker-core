@@ -9,7 +9,7 @@ namespace Spryker\Zed\RestRequestValidator\Business\Collector\SchemaFinder;
 
 use Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFinderAdapterInterface;
 use Spryker\Zed\RestRequestValidator\Dependency\Facade\RestRequestValidatorToKernelFacadeInterface;
-use Spryker\Zed\RestRequestValidator\Dependency\Store\RestRequestValidatorToStoreInterface;
+use Spryker\Zed\RestRequestValidator\Dependency\Facade\RestRequestValidatorToStoreFacadeInterface;
 use Spryker\Zed\RestRequestValidator\RestRequestValidatorConfig;
 
 class RestRequestValidatorSchemaFinder implements RestRequestValidatorSchemaFinderInterface
@@ -30,26 +30,26 @@ class RestRequestValidatorSchemaFinder implements RestRequestValidatorSchemaFind
     protected $kernelFacade;
 
     /**
-     * @var \Spryker\Zed\RestRequestValidator\Dependency\Store\RestRequestValidatorToStoreInterface
+     * @var \Spryker\Zed\RestRequestValidator\Dependency\Facade\RestRequestValidatorToStoreFacadeInterface
      */
-    protected $store;
+    protected RestRequestValidatorToStoreFacadeInterface $storeFacade;
 
     /**
      * @param \Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFinderAdapterInterface $finder
      * @param \Spryker\Zed\RestRequestValidator\RestRequestValidatorConfig $config
      * @param \Spryker\Zed\RestRequestValidator\Dependency\Facade\RestRequestValidatorToKernelFacadeInterface $kernelFacade
-     * @param \Spryker\Zed\RestRequestValidator\Dependency\Store\RestRequestValidatorToStoreInterface $store
+     * @param \Spryker\Zed\RestRequestValidator\Dependency\Facade\RestRequestValidatorToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         RestRequestValidatorToFinderAdapterInterface $finder,
         RestRequestValidatorConfig $config,
         RestRequestValidatorToKernelFacadeInterface $kernelFacade,
-        RestRequestValidatorToStoreInterface $store
+        RestRequestValidatorToStoreFacadeInterface $storeFacade
     ) {
         $this->finder = $finder;
         $this->config = $config;
         $this->kernelFacade = $kernelFacade;
-        $this->store = $store;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -139,8 +139,8 @@ class RestRequestValidatorSchemaFinder implements RestRequestValidatorSchemaFind
     protected function addStoreCodesToPath(string $pathPattern): string
     {
         $excludedStoreCodes = [];
-        foreach ($this->store->getAllowedStores() as $storeName) {
-            $excludedStoreCodes[] = $storeName;
+        foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
+            $excludedStoreCodes[] = $storeTransfer->getName();
         }
 
         return sprintf($pathPattern, implode('|', $excludedStoreCodes));

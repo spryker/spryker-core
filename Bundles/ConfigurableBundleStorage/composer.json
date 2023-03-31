@@ -8,7 +8,7 @@
         "spryker/configurable-bundle": "^2.1.0",
         "spryker/event-behavior": "^1.0.0",
         "spryker/kernel": "^3.33.0",
-        "spryker/locale": "^3.0.0",
+        "spryker/locale": "^3.0.0 || ^4.0.0",
         "spryker/product-image": "^3.8.0",
         "spryker/product-storage": "^1.7.0",
         "spryker/storage": "^3.0.0",
@@ -19,10 +19,13 @@
     },
     "require-dev": {
         "spryker/code-sniffer": "*",
+        "spryker/container": "*",
         "spryker/event": "*",
         "spryker/glossary": "*",
         "spryker/propel": "*",
         "spryker/queue": "*",
+        "spryker/store": "*",
+        "spryker/store-extension": "*",
         "spryker/testify": "*"
     },
     "suggest": {

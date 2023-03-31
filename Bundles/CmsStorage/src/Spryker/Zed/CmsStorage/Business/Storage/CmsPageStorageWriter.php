@@ -407,12 +407,9 @@ class CmsPageStorageWriter implements CmsPageStorageWriterInterface
      */
     protected function getStoreRelations(): array
     {
-        $storeTransfer = $this->storeFacade->getCurrentStore();
-        $storesWithSharedPersistence = $this->storeFacade->getStoresWithSharedPersistence($storeTransfer);
+        $storeRelations = [];
 
-        $storeRelations = [$storeTransfer->getNameOrFail()];
-
-        foreach ($storesWithSharedPersistence as $storeTransfer) {
+        foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
             $storeRelations[] = $storeTransfer->getNameOrFail();
         }
 

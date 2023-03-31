@@ -14,13 +14,14 @@
         "spryker/quote": "^2.7.0",
         "spryker/quote-extension": "^1.1.0",
         "spryker/session": "^3.0.0 || ^4.0.0",
-        "spryker/store": "^1.0.0",
+        "spryker/store": "^1.19.0",
         "spryker/transfer": "^3.25.0",
         "spryker/util-date-time": "^1.0.0",
         "spryker/zed-request": "^3.6.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*",
+        "spryker/container": "*",
         "spryker/propel": "*",
         "spryker/testify": "*"
     },

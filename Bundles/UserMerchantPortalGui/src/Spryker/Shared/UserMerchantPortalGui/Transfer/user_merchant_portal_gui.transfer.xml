@@ -48,6 +48,14 @@
         <property name="users" type="User[]" singular="user"/>
     </transfer>
 
+    <transfer name="LocaleCriteria">
+        <property name="localeConditions" type="LocaleConditions"/>
+    </transfer>
+
+    <transfer name="LocaleConditions">
+        <property name="localeNames" type="string[]" singular="localeName"/>
+    </transfer>
+
     <transfer name="Rule">
         <property name="bundle" type="string"/>
         <property name="controller" type="string"/>

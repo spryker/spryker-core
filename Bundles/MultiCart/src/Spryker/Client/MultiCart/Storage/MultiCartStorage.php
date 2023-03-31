@@ -11,6 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\MultiCart\Dependency\Client\MultiCartToSessionClientInterface;
+use Spryker\Client\MultiCart\Dependency\Client\MultiCartToStoreClientInterface;
 use Spryker\Client\MultiCart\MultiCartConfig;
 
 class MultiCartStorage implements MultiCartStorageInterface
@@ -31,12 +32,22 @@ class MultiCartStorage implements MultiCartStorageInterface
     protected MultiCartConfig $multiCartConfig;
 
     /**
+     * @var \Spryker\Client\MultiCart\Dependency\Client\MultiCartToStoreClientInterface
+     */
+    protected MultiCartToStoreClientInterface $storeClient;
+
+    /**
      * @param \Spryker\Client\MultiCart\Dependency\Client\MultiCartToSessionClientInterface $sessionClient
+     * @param \Spryker\Client\MultiCart\Dependency\Client\MultiCartToStoreClientInterface $storeClient
      * @param \Spryker\Client\MultiCart\MultiCartConfig $multiCartConfig
      */
-    public function __construct(MultiCartToSessionClientInterface $sessionClient, MultiCartConfig $multiCartConfig)
-    {
+    public function __construct(
+        MultiCartToSessionClientInterface $sessionClient,
+        MultiCartToStoreClientInterface $storeClient,
+        MultiCartConfig $multiCartConfig
+    ) {
         $this->sessionClient = $sessionClient;
+        $this->storeClient = $storeClient;
         $this->multiCartConfig = $multiCartConfig;
     }
 
@@ -49,7 +60,7 @@ class MultiCartStorage implements MultiCartStorageInterface
     {
         $quoteCollectionTransfer = $this->filterQuoteCollectionByAllowedInSessionQuoteFieldsConfiguration($quoteCollectionTransfer);
 
-        $this->sessionClient->set(static::SESSION_KEY_QUOTE_COLLECTION, $quoteCollectionTransfer);
+        $this->sessionClient->set($this->getQuoteCollectionKey(), $quoteCollectionTransfer);
     }
 
     /**
@@ -57,7 +68,7 @@ class MultiCartStorage implements MultiCartStorageInterface
      */
     public function getQuoteCollection(): QuoteCollectionTransfer
     {
-        return $this->sessionClient->get(static::SESSION_KEY_QUOTE_COLLECTION, new QuoteCollectionTransfer());
+        return $this->sessionClient->get($this->getQuoteCollectionKey(), new QuoteCollectionTransfer());
     }
 
     /**
@@ -75,6 +86,22 @@ class MultiCartStorage implements MultiCartStorageInterface
         }
 
         return null;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getQuoteCollectionKey(): string
+    {
+        if (!$this->storeClient->isDynamicStoreEnabled()) {
+            return static::SESSION_KEY_QUOTE_COLLECTION;
+        }
+
+        return sprintf(
+            '%s_%s',
+            $this->storeClient->getCurrentStore()->getNameOrFail(),
+            static::SESSION_KEY_QUOTE_COLLECTION,
+        );
     }
 
     /**

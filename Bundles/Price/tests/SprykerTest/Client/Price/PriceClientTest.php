@@ -8,7 +8,13 @@
 namespace SprykerTest\Client\Price;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Client\Price\PriceConfig;
+use Spryker\Client\Session\SessionClient;
+use Spryker\Client\Store\StoreDependencyProvider;
+use Spryker\Client\StoreExtension\Dependency\Plugin\StoreExpanderPluginInterface;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 
 /**
  * Auto-generated group annotations
@@ -27,6 +33,16 @@ class PriceClientTest extends Unit
     protected const CACHED_PRICE_MODE = 'CACHED_PRICE_MODE';
 
     /**
+     * @var string
+     */
+    protected const DEFAULT_STORE = 'DE';
+
+    /**
+     * @var string
+     */
+    protected const DEFAULT_CURRENCY = 'EUR';
+
+    /**
      * @var \SprykerTest\Client\Price\PriceClientTester
      */
     protected $tester;
@@ -38,6 +54,11 @@ class PriceClientTest extends Unit
     {
         parent::setUp();
         $this->tester->createPriceModeCache()->invalidate();
+        $this->setupSession();
+
+        $this->tester->setDependency(StoreDependencyProvider::PLUGINS_STORE_EXPANDER, [
+            $this->createStoreStorageStoreExpanderPluginMock(),
+        ]);
     }
 
     /**
@@ -105,5 +126,29 @@ class PriceClientTest extends Unit
     protected function createPriceConfig(): PriceConfig
     {
         return new PriceConfig();
+    }
+
+    /**
+     * @return void
+     */
+    protected function setupSession(): void
+    {
+        $sessionContainer = new Session(new MockArraySessionStorage());
+        $sessionClient = new SessionClient();
+        $sessionClient->setContainer($sessionContainer);
+    }
+
+    /**
+     * @return \Spryker\Client\StoreExtension\Dependency\Plugin\StoreExpanderPluginInterface
+     */
+    protected function createStoreStorageStoreExpanderPluginMock(): StoreExpanderPluginInterface
+    {
+        $storeStorageStoreExpanderPluginMock = $this->createMock(StoreExpanderPluginInterface::class);
+        $storeStorageStoreExpanderPluginMock->method('expand')
+            ->willReturn((new StoreTransfer())
+                ->setName(static::DEFAULT_STORE)
+                ->setDefaultCurrencyIsoCode(static::DEFAULT_CURRENCY));
+
+        return $storeStorageStoreExpanderPluginMock;
     }
 }

@@ -146,6 +146,7 @@ class PersistentCartFactory extends AbstractFactory
             $this->getQuoteClient(),
             $this->createQuoteUpdatePluginExecutor(),
             $this->getZedRequestClient(),
+            $this->getCustomerClient(),
         );
     }
 

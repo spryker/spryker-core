@@ -16,8 +16,11 @@
     "require-dev": {
         "spryker/code-sniffer": "*",
         "spryker/company": "*",
+        "spryker/container": "*",
         "spryker/permission": "*",
+        "spryker/propel": "*",
         "spryker/propel-orm": "*",
+        "spryker/store": "*",
         "spryker/testify": "*"
     },
     "autoload": {

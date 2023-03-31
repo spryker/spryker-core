@@ -7,21 +7,11 @@
 
 namespace Spryker\Client\ZedRequest\Dependency\Plugin;
 
-use Spryker\Shared\Kernel\Transfer\TransferInterface;
+use Spryker\Client\ZedRequestExtension\Dependency\Plugin\MetaDataProviderPluginInterface as SprykerMetaDataProviderPluginInterface;
 
-interface MetaDataProviderPluginInterface
+/**
+ * @deprecated Use {@link \Spryker\Client\ZedRequestExtension\Dependency\Plugin\MetaDataProviderPluginInterface} instead.
+ */
+interface MetaDataProviderPluginInterface extends SprykerMetaDataProviderPluginInterface
 {
-    /**
-     * Specification:
-     *  - Provide additional data to Zed request which will be send with which yves to zed.
-     *  - The meta data is part of Spryker\Shared\ZedRequest\Client\AbstractRequest request object
-     *  - The first parameter is request transfer as provided by high level client code (cart, calculation, sales)
-     *
-     * @api
-     *
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $transfer
-     *
-     * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
-     */
-    public function getRequestMetaData(TransferInterface $transfer);
 }

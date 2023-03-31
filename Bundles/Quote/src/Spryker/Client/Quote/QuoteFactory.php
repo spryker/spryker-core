@@ -9,6 +9,7 @@ namespace Spryker\Client\Quote;
 
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Quote\Dependency\Client\QuoteToCurrencyClientInterface;
+use Spryker\Client\Quote\Dependency\Client\QuoteToStoreClientInterface;
 use Spryker\Client\Quote\QuoteLocker\QuoteLocker;
 use Spryker\Client\Quote\QuoteLocker\QuoteLockerInterface;
 use Spryker\Client\Quote\QuoteValidator\QuoteEditStatusValidator;
@@ -34,6 +35,7 @@ class QuoteFactory extends AbstractFactory
         return new QuoteSession(
             $this->getSessionClient(),
             $this->getCurrencyClient(),
+            $this->getStoreClient(),
             $this->getQuoteTransferExpanderPlugins(),
         );
     }
@@ -58,7 +60,7 @@ class QuoteFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\Quote\StorageStrategy\StorageStrategyProviderInterface
      */
-    protected function createStorageStrategyProvider()
+    public function createStorageStrategyProvider()
     {
         return new StorageStrategyProvider(
             $this->getConfig(),
@@ -69,7 +71,7 @@ class QuoteFactory extends AbstractFactory
     /**
      * @return array<\Spryker\Client\Quote\StorageStrategy\StorageStrategyInterface>
      */
-    protected function getStorageStrategyList()
+    public function getStorageStrategyList()
     {
         return [
             $this->createSessionStorageStrategy(),
@@ -80,7 +82,7 @@ class QuoteFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\Quote\StorageStrategy\StorageStrategyInterface
      */
-    protected function createSessionStorageStrategy()
+    public function createSessionStorageStrategy()
     {
         return new SessionStorageStrategy(
             $this->createSession(),
@@ -93,7 +95,7 @@ class QuoteFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\Quote\StorageStrategy\StorageStrategyInterface
      */
-    protected function createDatabaseStorageStrategy()
+    public function createDatabaseStorageStrategy()
     {
         return new DatabaseStorageStrategy(
             $this->getCustomerClient(),
@@ -103,6 +105,7 @@ class QuoteFactory extends AbstractFactory
             $this->createQuoteEditStatusValidator(),
             $this->createQuoteLocker(),
             $this->getDatabaseStrategyPreCheckPlugins(),
+            $this->getDatabaseStrategyReaderPlugins(),
         );
     }
 
@@ -135,25 +138,15 @@ class QuoteFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\Session\SessionClientInterface
      */
-    protected function getSessionClient()
+    public function getSessionClient()
     {
         return $this->getProvidedDependency(QuoteDependencyProvider::CLIENT_SESSION);
     }
 
     /**
-     * @deprecated Use {@link getCurrencyClient()} instead due to CurrencyPlugin is deprecated.
-     *
-     * @return \Spryker\Client\Currency\Plugin\CurrencyPluginInterface
-     */
-    protected function getCurrencyPlugin()
-    {
-        return $this->getProvidedDependency(QuoteDependencyProvider::CURRENCY_PLUGIN);
-    }
-
-    /**
      * @return array<\Spryker\Client\Quote\Dependency\Plugin\QuoteTransferExpanderPluginInterface>
      */
-    protected function getQuoteTransferExpanderPlugins()
+    public function getQuoteTransferExpanderPlugins()
     {
         return $this->getProvidedDependency(QuoteDependencyProvider::QUOTE_TRANSFER_EXPANDER_PLUGINS);
     }
@@ -169,7 +162,7 @@ class QuoteFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\Quote\Dependency\Client\QuoteToCustomerClientInterface
      */
-    protected function getCustomerClient()
+    public function getCustomerClient()
     {
         return $this->getProvidedDependency(QuoteDependencyProvider::CLIENT_CUSTOMER);
     }
@@ -177,7 +170,7 @@ class QuoteFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ZedRequest\ZedRequestClientInterface
      */
-    protected function getZedService()
+    public function getZedService()
     {
         return $this->getProvidedDependency(QuoteDependencyProvider::SERVICE_ZED);
     }
@@ -185,8 +178,24 @@ class QuoteFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\Quote\Dependency\Client\QuoteToCurrencyClientInterface
      */
-    protected function getCurrencyClient(): QuoteToCurrencyClientInterface
+    public function getCurrencyClient(): QuoteToCurrencyClientInterface
     {
         return $this->getProvidedDependency(QuoteDependencyProvider::CLIENT_CURRENCY);
+    }
+
+    /**
+     * @return \Spryker\Client\Quote\Dependency\Client\QuoteToStoreClientInterface
+     */
+    public function getStoreClient(): QuoteToStoreClientInterface
+    {
+        return $this->getProvidedDependency(QuoteDependencyProvider::CLIENT_STORE);
+    }
+
+    /**
+     * @return array<\Spryker\Client\QuoteExtension\Dependency\Plugin\DatabaseStrategyReaderPluginInterface>
+     */
+    public function getDatabaseStrategyReaderPlugins(): array
+    {
+        return $this->getProvidedDependency(QuoteDependencyProvider::PLUGINS_DATABASE_STRATEGY_READER_PLUGINS);
     }
 }

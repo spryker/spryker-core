@@ -41,6 +41,21 @@ use Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryTree
 class CategoryStorageListenerTest extends Unit
 {
     /**
+     * @var \SprykerTest\Zed\CategoryStorage\CategoryStorageCommunicationTester
+     */
+    protected $tester;
+
+    /**
+     * @return void
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->tester->addDependencies();
+    }
+
+    /**
      * @return void
      */
     public function testCategoryNodeStoragePublishListener(): void

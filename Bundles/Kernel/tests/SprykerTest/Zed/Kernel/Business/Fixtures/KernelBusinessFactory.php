@@ -9,6 +9,9 @@ namespace SprykerTest\Zed\Kernel\Business\Fixtures;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
+/**
+ * @method \Spryker\Zed\Kernel\KernelConfig getConfig()
+ */
 class KernelBusinessFactory extends AbstractBusinessFactory
 {
 }

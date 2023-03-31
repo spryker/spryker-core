@@ -8,10 +8,13 @@
 namespace SprykerTest\Zed\CategoryPageSearch;
 
 use Codeception\Actor;
+use Codeception\Stub;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\CategoryPageSearch\Persistence\SpyCategoryNodePageSearch;
 use Orm\Zed\CategoryPageSearch\Persistence\SpyCategoryNodePageSearchQuery;
+use Spryker\Client\Store\StoreDependencyProvider as ClientStoreDependencyProvider;
+use Spryker\Client\StoreExtension\Dependency\Plugin\StoreExpanderPluginInterface;
 use Spryker\Service\UtilEncoding\UtilEncodingServiceInterface;
 
 /**
@@ -39,6 +42,31 @@ class CategoryPageSearchBusinessTester extends Actor
     protected const DEFAULT_STORE_NAME = 'DE';
 
     /**
+     * @var string
+     */
+    protected const DEFAULT_CURRENCY = 'EUR';
+
+    /**
+     * @var string
+     */
+    protected const LOCALE_NAME_EN = 'en_US';
+
+    /**
+     * @var string
+     */
+    protected const LOCALE_NAME_DE = 'de_DE';
+
+    /**
+     * @return void
+     */
+    public function addDependencies(): void
+    {
+        $this->setDependency(ClientStoreDependencyProvider::PLUGINS_STORE_EXPANDER, [
+            $this->createStoreStorageStoreExpanderPluginMock(),
+        ]);
+    }
+
+    /**
      * @param array $categoryData
      * @param array $storeData
      *
@@ -50,6 +78,7 @@ class CategoryPageSearchBusinessTester extends Actor
 
         $storeData += [
             StoreTransfer::NAME => static::DEFAULT_STORE_NAME,
+            StoreTransfer::AVAILABLE_LOCALE_ISO_CODES => [static::LOCALE_NAME_DE, static::LOCALE_NAME_EN],
         ];
         $storeTransfer = $this->haveStore($storeData);
         $this->haveCategoryStoreRelation($categoryTransfer->getIdCategory(), $storeTransfer->getIdStore());
@@ -113,5 +142,21 @@ class CategoryPageSearchBusinessTester extends Actor
     protected function getUtilEncodingService(): UtilEncodingServiceInterface
     {
         return $this->getLocator()->utilEncoding()->service();
+    }
+
+    /**
+     * @return \Spryker\Client\StoreExtension\Dependency\Plugin\StoreExpanderPluginInterface
+     */
+    protected function createStoreStorageStoreExpanderPluginMock(): StoreExpanderPluginInterface
+    {
+        $storeTransfer = (new StoreTransfer())
+            ->setName(static::DEFAULT_STORE_NAME)
+            ->setDefaultCurrencyIsoCode(static::DEFAULT_CURRENCY);
+
+        $storeStorageStoreExpanderPluginMock = Stub::makeEmpty(StoreExpanderPluginInterface::class, [
+            'expand' => $storeTransfer,
+        ]);
+
+        return $storeStorageStoreExpanderPluginMock;
     }
 }

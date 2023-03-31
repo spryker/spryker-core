@@ -8,12 +8,18 @@
 namespace SprykerTest\Client\AuthenticationOauth;
 
 use Codeception\Actor;
+use Codeception\Stub;
 use Generated\Shared\DataBuilder\GlueAuthenticationRequestBuilder;
 use Generated\Shared\DataBuilder\OauthRequestBuilder;
 use Generated\Shared\Transfer\ApiTokenAttributesTransfer;
 use Generated\Shared\Transfer\GlueAuthenticationRequestContextTransfer;
 use Generated\Shared\Transfer\GlueAuthenticationRequestTransfer;
 use Generated\Shared\Transfer\OauthRequestTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Client\Store\StoreDependencyProvider as ClientStoreDependencyProvider;
+use Spryker\Client\StoreExtension\Dependency\Plugin\StoreExpanderPluginInterface;
+use Spryker\Client\ZedRequest\ZedRequestDependencyProvider;
+use Spryker\Client\ZedRequestExtension\Dependency\Plugin\MetaDataProviderPluginInterface;
 
 /**
  * Inherited Methods
@@ -51,6 +57,29 @@ class AuthenticationOauthClientTester extends Actor
     protected const TEST_PASSWORD = 'change123';
 
     /**
+     * @var string
+     */
+    protected const DEFAULT_STORE_NAME = 'DE';
+
+    /**
+     * @var string
+     */
+    protected const DEFAULT_CURRENCY = 'EUR';
+
+    /**
+     * @return void
+     */
+    public function addDependencies(): void
+    {
+        $this->setDependency(ClientStoreDependencyProvider::PLUGINS_STORE_EXPANDER, [
+            $this->createStoreStorageStoreExpanderPluginMock(),
+        ]);
+        $this->setDependency(ZedRequestDependencyProvider::META_DATA_PROVIDER_PLUGINS, [
+            'store' => $this->createStoreMetadataProviderPluginMock(),
+        ]);
+    }
+
+    /**
      * @param string $username
      *
      * @return \Generated\Shared\Transfer\GlueAuthenticationRequestTransfer
@@ -82,5 +111,35 @@ class AuthenticationOauthClientTester extends Actor
                 ApiTokenAttributesTransfer::PASSWORD => static::TEST_PASSWORD,
             ],
         ))->build();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    protected function getStoreTransfer(): StoreTransfer
+    {
+        return (new StoreTransfer())
+            ->setName(static::DEFAULT_STORE_NAME)
+            ->setDefaultCurrencyIsoCode(static::DEFAULT_CURRENCY);
+    }
+
+    /**
+     * @return \Spryker\Client\StoreExtension\Dependency\Plugin\StoreExpanderPluginInterface
+     */
+    protected function createStoreStorageStoreExpanderPluginMock(): StoreExpanderPluginInterface
+    {
+        return Stub::makeEmpty(StoreExpanderPluginInterface::class, [
+            'expand' => $this->getStoreTransfer(),
+        ]);
+    }
+
+    /**
+     * @return \Spryker\Client\ZedRequestExtension\Dependency\Plugin\MetaDataProviderPluginInterface
+     */
+    protected function createStoreMetadataProviderPluginMock(): MetaDataProviderPluginInterface
+    {
+        return Stub::makeEmpty(MetaDataProviderPluginInterface::class, [
+            'getRequestMetaData' => $this->getStoreTransfer(),
+        ]);
     }
 }

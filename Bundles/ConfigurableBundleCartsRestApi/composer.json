@@ -22,6 +22,7 @@
         "spryker/cart": "*",
         "spryker/code-sniffer": "*",
         "spryker/configurable-bundle": "*",
+        "spryker/container": "*",
         "spryker/customer": "*",
         "spryker/product": "*",
         "spryker/propel": "*",

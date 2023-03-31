@@ -12,6 +12,7 @@ use Generated\Shared\DataBuilder\CustomerBuilder;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\Store\StoreDependencyProvider;
 use SprykerTest\Zed\Sales\Helper\BusinessHelper;
 
 /**
@@ -31,6 +32,21 @@ class ExpandItemsWithProductBundlesTest extends Unit
      * @var string
      */
     protected const STORE_NAME_DE = 'DE';
+
+    /**
+     * @var string
+     */
+    protected const SERVICE_CURRENCY = 'currency';
+
+    /**
+     * @var string
+     */
+    protected const SERVICE_LOCALE = 'locale';
+
+    /**
+     * @var string
+     */
+    protected const DEFAULT_LOCALE = 'en_US';
 
     /**
      * @var string
@@ -63,6 +79,11 @@ class ExpandItemsWithProductBundlesTest extends Unit
     protected const CURRENCY_ISO_CODE = 'CODE';
 
     /**
+     * @var string
+     */
+    protected const EUR_ISO_CODE = 'EUR';
+
+    /**
      * @var \SprykerTest\Zed\ProductBundle\ProductBundleBusinessTester
      */
     protected $tester;
@@ -75,6 +96,11 @@ class ExpandItemsWithProductBundlesTest extends Unit
         parent::setUp();
 
         $this->tester->configureTestStateMachine([BusinessHelper::DEFAULT_OMS_PROCESS_NAME]);
+
+        $this->tester->setDependency(StoreDependencyProvider::STORE_CURRENT, static::STORE_NAME_DE);
+        $container = $this->tester->getContainer();
+        $container->set(static::SERVICE_CURRENCY, static::EUR_ISO_CODE);
+        $container->set(static::SERVICE_LOCALE, static::DEFAULT_LOCALE);
     }
 
     /**

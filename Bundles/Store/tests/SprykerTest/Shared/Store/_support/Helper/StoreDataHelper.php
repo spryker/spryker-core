@@ -8,8 +8,14 @@
 namespace SprykerTest\Shared\Store\Helper;
 
 use Codeception\Module;
+use Codeception\TestInterface;
 use Generated\Shared\DataBuilder\StoreBuilder;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Store\Persistence\SpyStoreQuery;
+use ReflectionProperty;
+use Spryker\Zed\Store\Business\Cache\StoreCache;
+use Spryker\Zed\Store\Business\Expander\StoreExpanderInterface;
+use Spryker\Zed\Store\Business\StoreBusinessFactory;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 
 class StoreDataHelper extends Module
@@ -17,20 +23,112 @@ class StoreDataHelper extends Module
     use DataCleanupHelperTrait;
 
     /**
+     * @var string
+     */
+    protected const DEFAULT_STORE = 'DE';
+
+    /**
+     * @param \Codeception\TestInterface $test
+     *
+     * @return void
+     */
+    public function _before(TestInterface $test)
+    {
+        parent::_before($test);
+
+        $this->clearStoreCache();
+    }
+
+    /**
      * @param array $storeOverride
+     * @param bool $expandStore
      *
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function haveStore(array $storeOverride = [])
+    public function haveStore(array $storeOverride = [], bool $expandStore = true)
     {
+        if ($storeOverride === []) {
+            $storeOverride = [StoreTransfer::NAME => static::DEFAULT_STORE];
+        }
+
         $storeTransfer = (new StoreBuilder($storeOverride))->build();
-        $storeEntity = SpyStoreQuery::create()
+        $storeEntity = $this->getStorePropelQuery()
             ->filterByName($storeTransfer->getName())
             ->findOneOrCreate();
         $storeEntity->save();
 
-        $storeTransfer->fromArray($storeEntity->toArray());
+        $storeTransfer->setIdStore($storeEntity->getIdStore());
+
+        if ($this->isDynamicStoreEnabled() && $expandStore) {
+            $storeTransfer = $this->createStoreExpander()->expandStore($storeTransfer);
+
+            (new StoreCache())->cacheStore($storeTransfer);
+        }
+
+        $this->getDataCleanupHelper()->addCleanup(function (): void {
+            $this->clearStoreCache();
+        });
 
         return $storeTransfer;
+    }
+
+    /**
+     * @return \Spryker\Zed\Store\Business\Expander\StoreExpanderInterface
+     */
+    protected function createStoreExpander(): StoreExpanderInterface
+    {
+        return (new StoreBusinessFactory())->createStoreExpander();
+    }
+
+    /**
+     * @return void
+     */
+    protected function clearStoreCache(): void
+    {
+        $reflectionProperty = new ReflectionProperty(StoreCache::class, 'storeTransfersCacheByStoreId');
+        $reflectionProperty->setAccessible(true);
+        $reflectionProperty->setValue(null, []);
+
+        $reflectionProperty = new ReflectionProperty(StoreCache::class, 'storeTransferCacheByStoreName');
+        $reflectionProperty->setAccessible(true);
+        ($reflectionProperty)->setValue(null, []);
+    }
+
+    /**
+     * @return int
+     */
+    public function countStores(): int
+    {
+        return $this->getStorePropelQuery()
+            ->filterByFkLocale()
+            ->count();
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return bool
+     */
+    public function storeWithNameExists(string $name): bool
+    {
+        return $this->getStorePropelQuery()
+            ->filterByName($name)
+            ->exists();
+    }
+
+    /**
+     * @return \Orm\Zed\Store\Persistence\SpyStoreQuery
+     */
+    protected function getStorePropelQuery(): SpyStoreQuery
+    {
+        return SpyStoreQuery::create();
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isDynamicStoreEnabled(): bool
+    {
+        return (bool)getenv('SPRYKER_DYNAMIC_STORE_MODE');
     }
 }

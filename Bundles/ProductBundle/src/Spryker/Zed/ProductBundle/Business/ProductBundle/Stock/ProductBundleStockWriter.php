@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductBundle\Business\ProductBundle\Stock;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Stock\Persistence\SpyStockProduct;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\DecimalObject\Decimal;
@@ -328,10 +327,7 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
             $productConcreteTransfer->addStock($stockTransfer);
         }
 
-        $currentStoreTransfer = $this->storeFacade->getCurrentStore();
-        $this->productBundleAvailabilityHandler->removeBundleAvailability($productConcreteTransfer->getSku(), $currentStoreTransfer);
-
-        $this->removeBundleStockFromSharedStores($productConcreteTransfer, $currentStoreTransfer);
+        $this->removeBundleStockFromSharedStores($productConcreteTransfer);
     }
 
     /**
@@ -361,15 +357,12 @@ class ProductBundleStockWriter implements ProductBundleStockWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     * @param \Generated\Shared\Transfer\StoreTransfer $currentStoreTransfer
      *
      * @return void
      */
-    protected function removeBundleStockFromSharedStores(
-        ProductConcreteTransfer $productConcreteTransfer,
-        StoreTransfer $currentStoreTransfer
-    ) {
-        foreach ($this->storeFacade->getStoresWithSharedPersistence($currentStoreTransfer) as $storeTransfer) {
+    protected function removeBundleStockFromSharedStores(ProductConcreteTransfer $productConcreteTransfer): void
+    {
+        foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
             $this->productBundleAvailabilityHandler->removeBundleAvailability(
                 $productConcreteTransfer->getSku(),
                 $storeTransfer,

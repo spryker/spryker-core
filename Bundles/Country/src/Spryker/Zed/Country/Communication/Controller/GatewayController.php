@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
  * @method \Spryker\Zed\Country\Business\CountryFacadeInterface getFacade()
- * @method \Spryker\Zed\Country\Persistence\CountryQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Country\Persistence\CountryRepositoryInterface getRepository()
  * @method \Spryker\Zed\Country\Communication\CountryCommunicationFactory getFactory()
  */

@@ -102,6 +102,7 @@ class ProductBecomeAvailableNotificationSender implements ProductBecomeAvailable
             $mailTransfer = (new MailTransfer())
                 ->setType(AvailabilityNotificationMailTypePlugin::AVAILABILITY_NOTIFICATION_MAIL)
                 ->setLocale($availabilityNotificationSubscriptionTransfer->getLocale())
+                ->setStoreName($availabilityNotificationSubscriptionTransfer->getStoreOrFail()->getNameOrFail())
                 ->setAvailabilityNotificationSubscriptionMailData($mailData);
 
             $this->mailFacade->handleMail($mailTransfer);

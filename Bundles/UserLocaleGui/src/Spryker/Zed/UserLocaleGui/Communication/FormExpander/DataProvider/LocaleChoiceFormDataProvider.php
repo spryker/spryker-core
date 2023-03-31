@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\UserLocaleGui\Communication\FormExpander\DataProvider;
 
+use Generated\Shared\Transfer\LocaleConditionsTransfer;
+use Generated\Shared\Transfer\LocaleCriteriaTransfer;
 use Spryker\Zed\UserLocaleGui\Communication\FormExpander\UserLocaleFormExpander;
 use Spryker\Zed\UserLocaleGui\Dependency\Facade\UserLocaleGuiToLocaleFacadeBridgeInterface;
 
@@ -40,7 +42,14 @@ class LocaleChoiceFormDataProvider
      */
     protected function getLocales(): array
     {
-        $localeTransfers = $this->localeFacade->getLocaleCollection();
+        $localeCriteriaTransfer = (new LocaleCriteriaTransfer())
+            ->setLocaleConditions(
+                (new LocaleConditionsTransfer())
+                    ->setLocaleNames($this->localeFacade->getSupportedLocaleCodes()),
+            );
+
+        $localeTransfers = $this->localeFacade->getLocaleCollection($localeCriteriaTransfer);
+
         $options = [];
 
         foreach ($localeTransfers as $localeTransfer) {

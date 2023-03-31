@@ -22,6 +22,7 @@
         "spryker/form": "*",
         "spryker/propel": "*",
         "spryker/router": "*",
+        "spryker/store": "*",
         "spryker/testify": "*",
         "spryker/twig": "*",
         "spryker/validator": "*",

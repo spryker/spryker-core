@@ -40,7 +40,7 @@ class LanguageNegotiation implements LanguageNegotiationInterface
      */
     public function getLanguageIsoCode(string $acceptLanguage): string
     {
-        $storeTransfer = $this->storeFacade->getCurrentStore();
+        $storeTransfer = $this->storeFacade->getCurrentStore(true);
         $storeLocaleCodes = $storeTransfer->getAvailableLocaleIsoCodes();
 
         if (!$acceptLanguage) {

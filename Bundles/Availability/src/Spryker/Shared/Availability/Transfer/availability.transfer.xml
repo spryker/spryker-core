@@ -102,6 +102,7 @@
 
     <transfer name="ProductConcrete">
         <property name="idProductConcrete" type="int"/>
+        <property name="stores" type="Store[]" singular="stores"/>
     </transfer>
 
     <transfer name="CartItemQuantity">

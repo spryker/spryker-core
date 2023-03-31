@@ -173,4 +173,12 @@ class ProductCategoryFilterGuiCommunicationFactory extends AbstractCommunication
     {
         return $this->getProvidedDependency(ProductCategoryFilterGuiDependencyProvider::SERVICE_UTIL_ENCODING);
     }
+
+    /**
+     * @return array<\Spryker\Zed\ProductCategoryFilterGuiExtension\Dependency\Plugin\ProductCategoryListActionViewDataExpanderPluginInterface>
+     */
+    public function getProductCategoryListActionViewDataExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductCategoryFilterGuiDependencyProvider::PLUGINS_PRODUCT_CATEGORY_LIST_ACTION_VIEW_DATA_EXPANDER);
+    }
 }

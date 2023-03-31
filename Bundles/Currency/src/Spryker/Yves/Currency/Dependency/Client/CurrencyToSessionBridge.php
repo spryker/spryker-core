@@ -30,7 +30,7 @@ class CurrencyToSessionBridge implements CurrencyToSessionInterface
      *
      * @return void
      */
-    public function set($name, $value)
+    public function set(string $name, mixed $value): void
     {
         $this->sessionClient->set($name, $value);
     }
@@ -41,7 +41,7 @@ class CurrencyToSessionBridge implements CurrencyToSessionInterface
      *
      * @return mixed
      */
-    public function get($name, $default = null)
+    public function get(string $name, mixed $default = null): mixed
     {
         return $this->sessionClient->get($name, $default);
     }

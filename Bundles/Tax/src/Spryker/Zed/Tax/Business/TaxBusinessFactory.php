@@ -16,6 +16,7 @@ use Spryker\Zed\Tax\Business\Model\PriceCalculationHelper;
 use Spryker\Zed\Tax\Business\Model\TaxDefault;
 use Spryker\Zed\Tax\Business\Model\TaxReader;
 use Spryker\Zed\Tax\Business\Model\TaxWriter;
+use Spryker\Zed\Tax\Dependency\Facade\TaxToStoreFacadeInterface;
 use Spryker\Zed\Tax\TaxDependencyProvider;
 
 /**
@@ -77,15 +78,7 @@ class TaxBusinessFactory extends AbstractBusinessFactory
      */
     public function createTaxDefault()
     {
-        return new TaxDefault($this->getStore(), $this->getConfig());
-    }
-
-    /**
-     * @return \Spryker\Shared\Kernel\Store
-     */
-    public function getStore()
-    {
-        return $this->getProvidedDependency(TaxDependencyProvider::STORE_CONFIG);
+        return new TaxDefault($this->getStoreFacade(), $this->getConfig());
     }
 
     /**
@@ -110,5 +103,13 @@ class TaxBusinessFactory extends AbstractBusinessFactory
     public function createTaxAmountCalculator()
     {
         return new TaxAmountCalculator($this->createAccruedTaxCalculator());
+    }
+
+    /**
+     * @return \Spryker\Zed\Tax\Dependency\Facade\TaxToStoreFacadeInterface
+     */
+    public function getStoreFacade(): TaxToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(TaxDependencyProvider::FACADE_STORE);
     }
 }

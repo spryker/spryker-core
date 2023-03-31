@@ -82,11 +82,6 @@ class ProductPageSearchListenerTest extends Unit
     protected const NUMBER_OF_LOCALES = 1;
 
     /**
-     * @var int
-     */
-    protected const NUMBER_OF_STORES = 3;
-
-    /**
      * @var \SprykerTest\Zed\ProductPageSearch\ProductPageSearchCommunicationTester
      */
     protected $tester;
@@ -123,7 +118,7 @@ class ProductPageSearchListenerTest extends Unit
     {
         parent::setUp();
 
-        $this->productConcreteTransfer = $this->tester->haveProduct();
+        $this->productConcreteTransfer = $this->tester->haveFullProduct();
         $this->productAbstractTransfer = $this->tester->getProductFacade()->findProductAbstractById(
             $this->productConcreteTransfer->getFkProductAbstract(),
         );
@@ -190,6 +185,7 @@ class ProductPageSearchListenerTest extends Unit
 
         // Assert
         $afterCount = SpyProductAbstractPageSearchQuery::create()->count();
+
         $this->assertSame($beforeCount + count($productAbstractStoreNames) * static::NUMBER_OF_LOCALES, $afterCount);
         $this->assertProductPageAbstractSearch();
     }

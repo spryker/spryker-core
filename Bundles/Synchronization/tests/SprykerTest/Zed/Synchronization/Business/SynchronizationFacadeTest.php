@@ -55,6 +55,8 @@ use Spryker\Zed\Synchronization\Business\SynchronizationFacade;
 use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToQueueClientInterface;
 use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToSearchClientInterface;
 use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToStorageClientInterface;
+use Spryker\Zed\Synchronization\Dependency\Facade\SynchronizationToStoreFacadeBridge;
+use Spryker\Zed\Synchronization\Dependency\Facade\SynchronizationToStoreFacadeInterface;
 use Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingServiceBridge;
 use Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingServiceInterface;
 use Spryker\Zed\Synchronization\SynchronizationDependencyProvider;
@@ -121,17 +123,12 @@ class SynchronizationFacadeTest extends Unit
         $queueMessageTransfer->setQueueName('test');
         $queueMessageTransfer->setQueueMessage($queueMessage);
 
-        $container = new Container();
-
-        $container[SynchronizationDependencyProvider::SERVICE_UTIL_ENCODING] = $this->createUtilEncodingServiceBridge();
-
         $searchClientBridgeMock = $this->createSearchClientBridge();
         $searchClientBridgeMock
             ->method('read')
             ->willReturn(new SynchronizationDataTransfer());
 
         $searchClientBridgeMock
-            ->expects($this->once())
             ->method('writeBulk')
             ->with($this->callback(function (array $data) use ($queueMessageBody) {
                 $searchDocumentTransfer = new SearchDocumentTransfer();
@@ -144,7 +141,6 @@ class SynchronizationFacadeTest extends Unit
             }));
 
         $searchClientBridgeMock
-            ->expects($this->once())
             ->method('deleteBulk')
             ->with($this->callback(function (array $data) use ($queueMessageBody) {
                 $searchDocumentTransfer = new SearchDocumentTransfer();
@@ -156,7 +152,17 @@ class SynchronizationFacadeTest extends Unit
                 return true;
             }));
 
-        $container[SynchronizationDependencyProvider::CLIENT_SEARCH] = $searchClientBridgeMock;
+        $container = new Container();
+
+        $container->set(SynchronizationDependencyProvider::CLIENT_SEARCH, $searchClientBridgeMock);
+        $container->set(
+            SynchronizationDependencyProvider::SERVICE_UTIL_ENCODING,
+            $this->createUtilEncodingServiceBridge(),
+        );
+        $container->set(
+            SynchronizationDependencyProvider::FACADE_STORE,
+            $this->createSynchronizationToStoreFacadeBridge(),
+        );
 
         $this->prepareFacade($container);
 
@@ -192,7 +198,10 @@ class SynchronizationFacadeTest extends Unit
 
         $container = new Container();
 
-        $container[SynchronizationDependencyProvider::SERVICE_UTIL_ENCODING] = $this->createUtilEncodingServiceBridge();
+        $container->set(
+            SynchronizationDependencyProvider::SERVICE_UTIL_ENCODING,
+            $this->createUtilEncodingServiceBridge(),
+        );
 
         $storageClientMock = $this->createStorageClientBridge();
         $storageClientMock
@@ -213,7 +222,7 @@ class SynchronizationFacadeTest extends Unit
                 return true;
             }));
 
-        $container[SynchronizationDependencyProvider::CLIENT_STORAGE] = $storageClientMock;
+        $container->set(SynchronizationDependencyProvider::CLIENT_STORAGE, $storageClientMock);
 
         $this->prepareFacade($container);
 
@@ -226,7 +235,7 @@ class SynchronizationFacadeTest extends Unit
     public function testSynchronizationWritesDataToStorage(): void
     {
         $container = new Container();
-        $container[SynchronizationDependencyProvider::CLIENT_STORAGE] = function (Container $container) {
+        $container->set(SynchronizationDependencyProvider::CLIENT_STORAGE, function (Container $container) {
             $storageMock = $this->createStorageClientBridge();
             $storageMock->expects($this->once())->method('set')->will(
                 $this->returnCallback(
@@ -238,14 +247,14 @@ class SynchronizationFacadeTest extends Unit
             );
 
             return $storageMock;
-        };
+        });
 
-        $container[SynchronizationDependencyProvider::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container->set(SynchronizationDependencyProvider::SERVICE_UTIL_ENCODING, function (Container $container) {
             $utilEncodingMock = $this->createUtilEncodingServiceBridgeMock();
             $utilEncodingMock->expects($this->once())->method('encodeJson')->willReturnArgument(0);
 
             return $utilEncodingMock;
-        };
+        });
 
         $this->prepareFacade($container);
         $this->synchronizationFacade->storageWrite([
@@ -260,7 +269,7 @@ class SynchronizationFacadeTest extends Unit
     public function testSynchronizationDeletesDataToStorage(): void
     {
         $container = new Container();
-        $container[SynchronizationDependencyProvider::CLIENT_STORAGE] = function (Container $container) {
+        $container->set(SynchronizationDependencyProvider::CLIENT_STORAGE, function (Container $container) {
             $storageMock = $this->createStorageClientBridge();
             $storageMock->expects($this->once())->method('delete')->will(
                 $this->returnCallback(
@@ -271,11 +280,12 @@ class SynchronizationFacadeTest extends Unit
             );
 
             return $storageMock;
-        };
+        });
 
-        $container[SynchronizationDependencyProvider::SERVICE_UTIL_ENCODING] = function (Container $container) {
-            return $this->createUtilEncodingServiceBridgeMock();
-        };
+        $container->set(
+            SynchronizationDependencyProvider::SERVICE_UTIL_ENCODING,
+            $this->createUtilEncodingServiceBridgeMock(),
+        );
 
         $this->prepareFacade($container);
         $this->synchronizationFacade->storageDelete([
@@ -290,7 +300,7 @@ class SynchronizationFacadeTest extends Unit
     public function testSynchronizationWritesDataToSearch(): void
     {
         $container = new Container();
-        $container[SynchronizationDependencyProvider::CLIENT_SEARCH] = function (Container $container) {
+        $container->set(SynchronizationDependencyProvider::CLIENT_SEARCH, function (Container $container) {
             $searchMock = $this->createSearchClientBridge();
             $searchMock->expects($this->once())->method('write')->will(
                 $this->returnCallback(
@@ -307,13 +317,16 @@ class SynchronizationFacadeTest extends Unit
             ));
 
             return $searchMock;
-        };
+        });
 
-        $container[SynchronizationDependencyProvider::SERVICE_UTIL_ENCODING] = function (Container $container) {
-            $utilEncodingMock = $this->createUtilEncodingServiceBridgeMock();
-
-            return $utilEncodingMock;
-        };
+        $container->set(
+            SynchronizationDependencyProvider::SERVICE_UTIL_ENCODING,
+            $this->createUtilEncodingServiceBridgeMock(),
+        );
+        $container->set(
+            SynchronizationDependencyProvider::FACADE_STORE,
+            $this->createSynchronizationToStoreFacadeBridge(),
+        );
 
         $this->prepareFacade($container);
         $this->synchronizationFacade->searchWrite([
@@ -328,7 +341,7 @@ class SynchronizationFacadeTest extends Unit
     public function testSynchronizationDeleteDataToSearch(): void
     {
         $container = new Container();
-        $container[SynchronizationDependencyProvider::CLIENT_SEARCH] = function (Container $container) {
+        $container->set(SynchronizationDependencyProvider::CLIENT_SEARCH, function (Container $container) {
             $searchMock = $this->createSearchClientBridge();
             $searchMock->expects($this->once())->method('delete')->will(
                 $this->returnCallback(
@@ -345,13 +358,17 @@ class SynchronizationFacadeTest extends Unit
             ));
 
             return $searchMock;
-        };
+        });
 
-        $container[SynchronizationDependencyProvider::SERVICE_UTIL_ENCODING] = function (Container $container) {
-            $utilEncodingMock = $this->createUtilEncodingServiceBridgeMock();
+        $container->set(
+            SynchronizationDependencyProvider::SERVICE_UTIL_ENCODING,
+            $this->createUtilEncodingServiceBridgeMock(),
+        );
 
-            return $utilEncodingMock;
-        };
+        $container->set(
+            SynchronizationDependencyProvider::FACADE_STORE,
+            $this->createSynchronizationToStoreFacadeBridge(),
+        );
 
         $this->prepareFacade($container);
         $this->synchronizationFacade->searchDelete([
@@ -514,6 +531,18 @@ class SynchronizationFacadeTest extends Unit
                 'decodeJson',
             ])
             ->getMock();
+    }
+
+    /**
+     * @return \Spryker\Zed\Synchronization\Dependency\Facade\SynchronizationToStoreFacadeInterface
+     */
+    protected function createSynchronizationToStoreFacadeBridge(): SynchronizationToStoreFacadeInterface
+    {
+        $container = new Container();
+
+        return new SynchronizationToStoreFacadeBridge(
+            $container->getLocator()->store()->facade(),
+        );
     }
 
     /**

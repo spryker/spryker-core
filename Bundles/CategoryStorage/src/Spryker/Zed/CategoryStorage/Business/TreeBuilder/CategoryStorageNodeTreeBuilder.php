@@ -88,7 +88,7 @@ class CategoryStorageNodeTreeBuilder implements CategoryStorageNodeTreeBuilderIn
     protected function getLocaleNameMapByStoreName(): array
     {
         $localeNameMapByStoreName = [];
-        foreach ($this->storeFacade->getStoresAvailableForCurrentPersistence() as $storeTransfer) {
+        foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
             $localeNameMapByStoreName[$storeTransfer->getName()] = $storeTransfer->getAvailableLocaleIsoCodes();
         }
 

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductOption\Persistence;
 
+use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\ProductOption\Persistence\SpyProductAbstractProductOptionGroupQuery;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionGroupQuery;
@@ -92,11 +93,11 @@ class ProductOptionPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\ProductOption\Dependency\QueryContainer\ProductOptionToCountryQueryContainerInterface
+     * @return \Orm\Zed\Country\Persistence\SpyCountryQuery
      */
-    public function getCountryQueryContainer()
+    public function getCountryQuery(): SpyCountryQuery
     {
-        return $this->getProvidedDependency(ProductOptionDependencyProvider::QUERY_CONTAINER_COUNTRY);
+        return $this->getProvidedDependency(ProductOptionDependencyProvider::QUERY_COUNTRY);
     }
 
     /**

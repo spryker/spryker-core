@@ -14,6 +14,7 @@ use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductSetGui\Communication\Controller\AbstractProductSetController;
 use Spryker\Zed\ProductSetGui\Communication\Table\Helper\ProductAbstractTableHelperInterface;
+use Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToStoreFacadeInterface;
 use Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainer;
 use Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface;
 
@@ -39,8 +40,14 @@ class ProductAbstractSetViewTable extends AbstractTable
      */
     public const COL_DETAILS = 'details';
 
+    /**
+     * @var string
+     */
     public const COL_NAME = ProductSetGuiQueryContainer::COL_ALIAS_NAME;
 
+    /**
+     * @var string
+     */
     public const COL_POSITION = ProductSetGuiQueryContainer::COL_ALIAS_POSITION;
 
     /**
@@ -64,14 +71,21 @@ class ProductAbstractSetViewTable extends AbstractTable
     protected $localeTransfer;
 
     /**
+     * @var \Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToStoreFacadeInterface
+     */
+    protected $storeFacade;
+
+    /**
      * @param \Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface $productSetGuiQueryContainer
      * @param \Spryker\Zed\ProductSetGui\Communication\Table\Helper\ProductAbstractTableHelperInterface $productAbstractTableHelper
+     * @param \Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToStoreFacadeInterface $storeFacade
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param int $idProductSet
      */
     public function __construct(
         ProductSetGuiQueryContainerInterface $productSetGuiQueryContainer,
         ProductAbstractTableHelperInterface $productAbstractTableHelper,
+        ProductSetGuiToStoreFacadeInterface $storeFacade,
         LocaleTransfer $localeTransfer,
         $idProductSet
     ) {
@@ -79,6 +93,7 @@ class ProductAbstractSetViewTable extends AbstractTable
         $this->localeTransfer = $localeTransfer;
         $this->idProductSet = $idProductSet;
         $this->productAbstractTableHelper = $productAbstractTableHelper;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -86,7 +101,7 @@ class ProductAbstractSetViewTable extends AbstractTable
      *
      * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
-    protected function configure(TableConfiguration $config)
+    protected function configure(TableConfiguration $config): TableConfiguration
     {
         $urlSuffix = sprintf('?%s=%d', AbstractProductSetController::PARAM_ID, $this->idProductSet);
         $this->defaultUrl = static::TABLE_IDENTIFIER . $urlSuffix;
@@ -122,7 +137,7 @@ class ProductAbstractSetViewTable extends AbstractTable
      *
      * @return array
      */
-    protected function prepareData(TableConfiguration $config)
+    protected function prepareData(TableConfiguration $config): array
     {
         $query = $this->productSetGuiQueryContainer->queryProductAbstractByIdProductSet($this->idProductSet, $this->localeTransfer);
 
@@ -141,7 +156,7 @@ class ProductAbstractSetViewTable extends AbstractTable
      *
      * @return array
      */
-    protected function formatRow(SpyProductAbstract $productAbstractEntity)
+    protected function formatRow(SpyProductAbstract $productAbstractEntity): array
     {
         return [
             static::COL_ID_PRODUCT_ABSTRACT => $this->formatInt($productAbstractEntity->getIdProductAbstract()),
@@ -156,23 +171,27 @@ class ProductAbstractSetViewTable extends AbstractTable
      *
      * @return string
      */
-    protected function generateDetailsColumn(SpyProductAbstract $productAbstractEntity)
+    protected function generateDetailsColumn(SpyProductAbstract $productAbstractEntity): string
     {
-        $rawContent = '<p>' .
-            '<strong><a href="%s">%s</a></strong><br />' .
-            '<small>SKU: %s</small><br/>' .
-            '<small>Price: %s</small>' .
-            '</p> %s';
-
-        $content = sprintf(
-            $rawContent,
+        $rawContentParts = [];
+        $rawContentParts[] = sprintf(
+            '<strong><a href="%s">%s</a></strong>',
             Url::generate('/product-management/view', ['id-product-abstract' => $productAbstractEntity->getIdProductAbstract()])->build(),
             $productAbstractEntity->getVirtualColumn(static::COL_NAME),
+        );
+        $rawContentParts[] = sprintf(
+            '<small>SKU: %s</small><br/>',
             $productAbstractEntity->getSku(),
-            $this->productAbstractTableHelper->getProductPrice($productAbstractEntity),
-            $this->productAbstractTableHelper->getAbstractProductStatusLabel($productAbstractEntity),
         );
 
-        return $content;
+        if (!$this->storeFacade->isDynamicStoreEnabled()) {
+            $rawContentParts[] = sprintf(
+                '<small>Price: %s</small>',
+                $this->productAbstractTableHelper->getProductPrice($productAbstractEntity),
+            );
+        }
+
+        return '<p>' . implode('<br>', $rawContentParts) . '</p>'
+            . $this->productAbstractTableHelper->getAbstractProductStatusLabel($productAbstractEntity);
     }
 }

@@ -12,7 +12,7 @@
         "spryker/event": "^1.0.0 || ^2.3.0",
         "spryker/gui": "^3.45.0",
         "spryker/kernel": "^3.30.0",
-        "spryker/locale": "^3.0.0",
+        "spryker/locale": "^3.0.0 || ^4.0.0",
         "spryker/product": "^5.0.0 || ^6.0.0",
         "spryker/product-extension": "^1.3.0",
         "spryker/propel-orm": "^1.0.0",
@@ -24,7 +24,9 @@
         "spryker/application": "*",
         "spryker/code-sniffer": "*",
         "spryker/config": "*",
+        "spryker/container": "*",
         "spryker/propel": "^3.0.0",
+        "spryker/store": "*",
         "spryker/testify": "*",
         "spryker/zed-navigation": "*"
     },

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CategoryGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+
 class CategoryGuiToLocaleFacadeBridge implements CategoryGuiToLocaleFacadeInterface
 {
     /**
@@ -25,7 +27,7 @@ class CategoryGuiToLocaleFacadeBridge implements CategoryGuiToLocaleFacadeInterf
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getCurrentLocale()
+    public function getCurrentLocale(): LocaleTransfer
     {
         return $this->localeFacade->getCurrentLocale();
     }
@@ -35,7 +37,7 @@ class CategoryGuiToLocaleFacadeBridge implements CategoryGuiToLocaleFacadeInterf
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getLocale($localeName)
+    public function getLocale(string $localeName): LocaleTransfer
     {
         return $this->localeFacade->getLocale($localeName);
     }
@@ -43,7 +45,7 @@ class CategoryGuiToLocaleFacadeBridge implements CategoryGuiToLocaleFacadeInterf
     /**
      * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
-    public function getLocaleCollection()
+    public function getLocaleCollection(): array
     {
         return $this->localeFacade->getLocaleCollection();
     }

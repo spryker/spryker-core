@@ -9,6 +9,10 @@ namespace SprykerTest\Zed\Kernel\Communication\Controller\Fixtures;
 
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 
+/**
+ * @method \Spryker\Zed\Kernel\Communication\KernelCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Kernel\Business\KernelFacadeInterface getFacade()
+ */
 class MockController extends AbstractController
 {
     /**

@@ -24,9 +24,11 @@ class IndexController extends AbstractController
             ->getFactory()
             ->createCategoryRootNodeTable($this->getCurrentLocale()->getIdLocaleOrFail());
 
-        return $this->viewResponse([
+        $viewData = $this->executeProductCategoryListActionViewDataExpanderPlugins([
             'RootCategoriesTable' => $rootCategoriesTable->render(),
         ]);
+
+        return $this->viewResponse($viewData);
     }
 
     /**
@@ -51,5 +53,19 @@ class IndexController extends AbstractController
         return $this->getFactory()
             ->getLocaleFacade()
             ->getCurrentLocale();
+    }
+
+    /**
+     * @param array<string, mixed> $viewData
+     *
+     * @return array<string, mixed>
+     */
+    protected function executeProductCategoryListActionViewDataExpanderPlugins(array $viewData): array
+    {
+        foreach ($this->getFactory()->getProductCategoryListActionViewDataExpanderPlugins() as $productCategoryListActionViewDataExpanderPlugin) {
+            $viewData = $productCategoryListActionViewDataExpanderPlugin->expand($viewData);
+        }
+
+        return $viewData;
     }
 }

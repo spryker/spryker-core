@@ -23,12 +23,13 @@ class SearchElasticsearchFacade extends AbstractFacade implements SearchElastics
      * @api
      *
      * @param \Psr\Log\LoggerInterface $logger
+     * @param string|null $storeName
      *
      * @return void
      */
-    public function install(LoggerInterface $logger): void
+    public function install(LoggerInterface $logger, ?string $storeName = null): void
     {
-        $this->getFactory()->createIndexInstallBroker()->install($logger);
+        $this->getFactory()->createIndexInstallBroker()->install($logger, $storeName);
     }
 
     /**
@@ -64,11 +65,13 @@ class SearchElasticsearchFacade extends AbstractFacade implements SearchElastics
      *
      * @api
      *
+     * @param string|null $storeName
+     *
      * @return bool
      */
-    public function openIndexes(): bool
+    public function openIndexes(?string $storeName = null): bool
     {
-        return $this->getFactory()->createIndex()->openIndexes();
+        return $this->getFactory()->createIndex()->openIndexes($storeName);
     }
 
     /**
@@ -90,11 +93,13 @@ class SearchElasticsearchFacade extends AbstractFacade implements SearchElastics
      *
      * @api
      *
+     * @param string|null $storeName
+     *
      * @return bool
      */
-    public function closeIndexes(): bool
+    public function closeIndexes(?string $storeName = null): bool
     {
-        return $this->getFactory()->createIndex()->closeIndexes();
+        return $this->getFactory()->createIndex()->closeIndexes($storeName);
     }
 
     /**
@@ -116,11 +121,13 @@ class SearchElasticsearchFacade extends AbstractFacade implements SearchElastics
      *
      * @api
      *
+     * @param string|null $storeName
+     *
      * @return bool
      */
-    public function deleteIndexes(): bool
+    public function deleteIndexes(?string $storeName = null): bool
     {
-        return $this->getFactory()->createIndex()->deleteIndexes();
+        return $this->getFactory()->createIndex()->deleteIndexes($storeName);
     }
 
     /**
@@ -171,11 +178,13 @@ class SearchElasticsearchFacade extends AbstractFacade implements SearchElastics
      *
      * @api
      *
+     * @param string|null $storeName
+     *
      * @return array<string>
      */
-    public function getIndexNames(): array
+    public function getIndexNames(?string $storeName = null): array
     {
-        return $this->getFactory()->createIndex()->getIndexNames();
+        return $this->getFactory()->createIndex()->getIndexNames($storeName);
     }
 
     /**

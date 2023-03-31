@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ZedRequest\Business;
 
+use Spryker\Shared\ZedRequest\Client\AbstractRequest;
+
 /**
  * @method \Spryker\Zed\ZedRequest\Business\ZedRequestBusinessFactory getFactory()
  */
@@ -26,4 +28,14 @@ interface ZedRequestFacadeInterface
      * @return array
      */
     public function getRepeatData($bundleControllerAction);
+
+    /**
+     * Specification:
+     * - Returns current zed request.
+     *
+     * @api
+     *
+     * @return \Spryker\Shared\ZedRequest\Client\AbstractRequest
+     */
+    public function getCurrentZedRequest(): AbstractRequest;
 }

@@ -50,6 +50,17 @@
         <property name="iso2Code" type="string"/>
     </transfer>
 
+    <transfer name="Store">
+        <property name="idStore" type="int"/>
+        <property name="countryNames" type="string[]" singular="countryName"/>
+        <property name="countries" type="array" singular="country"/>
+    </transfer>
+
+    <transfer name="StoreResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="store" type="Store"/>
+    </transfer>
+
     <transfer name="AclEntityRule">
         <property name="entity" type="string"/>
         <property name="scope" type="string"/>

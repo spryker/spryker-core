@@ -72,16 +72,37 @@ class AddressFormDataProvider extends AbstractCustomerDataProvider
     }
 
     /**
-     * @return array
+     * @return array<int|string, string|null>
      */
-    protected function getCountryChoices()
+    protected function getCountryChoices(): array
     {
         $result = [];
-        foreach ($this->storeFacade->getCurrentStore()->getCountries() as $iso2Code) {
-            $countryTransfer = $this->countryFacade->getCountryByIso2Code($iso2Code);
+
+        foreach ($this->getContries() as $countryTransfer) {
             $result[$countryTransfer->getIdCountry()] = $countryTransfer->getName();
         }
 
         return $result;
+    }
+
+    /**
+     * @return array<\Generated\Shared\Transfer\CountryTransfer>
+     */
+    protected function getContries(): array
+    {
+        if ($this->storeFacade->isDynamicStoreEnabled()) {
+            return $this->countryFacade->getAvailableCountries()
+                ->getCountries()
+                ->getIterator()
+                ->getArrayCopy();
+        }
+
+        $countryTransfers = [];
+
+        foreach ($this->storeFacade->getCurrentStore()->getCountries() as $iso2Code) {
+            $countryTransfers[] = $this->countryFacade->getCountryByIso2Code($iso2Code);
+        }
+
+        return $countryTransfers;
     }
 }

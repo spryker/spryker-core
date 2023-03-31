@@ -15,6 +15,7 @@
     },
     "require-dev": {
         "spryker/code-sniffer": "*",
+        "spryker/container": "*",
         "spryker/customer": "*",
         "spryker/decimal-object": "*",
         "spryker/event": "*",
@@ -22,6 +23,7 @@
         "spryker/product": "*",
         "spryker/propel": "*",
         "spryker/propel-orm": "*",
+        "spryker/store": "*",
         "spryker/testify": "*"
     },
     "suggest": {

@@ -9,6 +9,7 @@ namespace Spryker\Zed\AvailabilityNotification\Business\Strategy;
 
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\AvailabilityNotification\AvailabilityNotificationConfig;
+use Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToStoreFacadeInterface;
 
 class StoreYvesBaseUrlGetStrategy implements BaseUrlGetStrategyInterface
 {
@@ -23,11 +24,20 @@ class StoreYvesBaseUrlGetStrategy implements BaseUrlGetStrategyInterface
     protected AvailabilityNotificationConfig $availabilityNotificationConfig;
 
     /**
-     * @param \Spryker\Zed\AvailabilityNotification\AvailabilityNotificationConfig $availabilityNotificationConfig
+     * @var \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToStoreFacadeInterface
      */
-    public function __construct(AvailabilityNotificationConfig $availabilityNotificationConfig)
-    {
+    protected AvailabilityNotificationToStoreFacadeInterface $storeFacade;
+
+    /**
+     * @param \Spryker\Zed\AvailabilityNotification\AvailabilityNotificationConfig $availabilityNotificationConfig
+     * @param \Spryker\Zed\AvailabilityNotification\Dependency\Facade\AvailabilityNotificationToStoreFacadeInterface $storeFacade
+     */
+    public function __construct(
+        AvailabilityNotificationConfig $availabilityNotificationConfig,
+        AvailabilityNotificationToStoreFacadeInterface $storeFacade
+    ) {
         $this->availabilityNotificationConfig = $availabilityNotificationConfig;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -41,7 +51,11 @@ class StoreYvesBaseUrlGetStrategy implements BaseUrlGetStrategyInterface
             return false;
         }
 
-        return isset($this->availabilityNotificationConfig->getStoreToYvesHostMapping()[$storeTransfer->getNameOrFail()]);
+        if ($this->storeFacade->isDynamicStoreEnabled() === false) {
+            return isset($this->availabilityNotificationConfig->getStoreToYvesHostMapping()[$storeTransfer->getNameOrFail()]);
+        }
+
+        return isset($this->availabilityNotificationConfig->getRegionToYvesHostMapping()[$this->availabilityNotificationConfig->getCurrentRegion()]);
     }
 
     /**
@@ -55,8 +69,24 @@ class StoreYvesBaseUrlGetStrategy implements BaseUrlGetStrategyInterface
             return '';
         }
 
-        $yvesHost = $this->availabilityNotificationConfig->getStoreToYvesHostMapping()[$storeTransfer->getNameOrFail()];
+        if ($this->storeFacade->isDynamicStoreEnabled() === false) {
+            $yvesHost = $this->availabilityNotificationConfig->getStoreToYvesHostMapping()[$storeTransfer->getNameOrFail()];
 
+            return $this->generateBaseUrl($yvesHost);
+        }
+
+        $yvesHost = $this->availabilityNotificationConfig->getRegionToYvesHostMapping()[$this->availabilityNotificationConfig->getCurrentRegion()];
+
+        return $this->generateBaseUrl($yvesHost);
+    }
+
+    /**
+     * @param string $yvesHost
+     *
+     * @return string
+     */
+    protected function generateBaseUrl(string $yvesHost): string
+    {
         return sprintf(
             '%s://%s',
             $this->availabilityNotificationConfig->getBaseUrlYvesPort() === static::PORT_HTTPS ? 'https' : 'http',

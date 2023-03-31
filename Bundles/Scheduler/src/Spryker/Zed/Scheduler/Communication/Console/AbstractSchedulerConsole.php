@@ -10,14 +10,14 @@ namespace Spryker\Zed\Scheduler\Communication\Console;
 use Generated\Shared\Transfer\SchedulerFilterTransfer;
 use Generated\Shared\Transfer\SchedulerResponseCollectionTransfer;
 use Generated\Shared\Transfer\SchedulerResponseTransfer;
-use Spryker\Zed\Kernel\Communication\Console\Console;
+use Spryker\Zed\Kernel\Communication\Console\StoreAwareConsole;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Scheduler\Business\SchedulerFacadeInterface getFacade()
  * @method \Spryker\Zed\Scheduler\Communication\SchedulerCommunicationFactory getFactory()
  */
-class AbstractSchedulerConsole extends Console
+class AbstractSchedulerConsole extends StoreAwareConsole
 {
     /**
      * @var string
@@ -108,6 +108,6 @@ class AbstractSchedulerConsole extends Console
             ->setRoles($roles)
             ->setSchedulers($schedulers)
             ->setJobs($jobNames)
-            ->setStore(APPLICATION_STORE);
+            ->setStore($this->getStore($this->input));
     }
 }

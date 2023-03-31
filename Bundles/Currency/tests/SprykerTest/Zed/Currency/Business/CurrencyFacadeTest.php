@@ -13,8 +13,10 @@ use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\QuoteValidationResponseTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Orm\Zed\Store\Persistence\SpyStoreQuery;
 use Spryker\Zed\Currency\Business\CurrencyFacade;
 use Spryker\Zed\Currency\Business\CurrencyFacadeInterface;
+use Spryker\Zed\Currency\CurrencyDependencyProvider;
 
 /**
  * Auto-generated group annotations
@@ -47,12 +49,32 @@ class CurrencyFacadeTest extends Unit
     /**
      * @var string
      */
-    protected const STORE_NAME = 'DE';
+    protected const STORE_NAME_DE = 'DE';
+
+    /**
+     * @var int
+     */
+    protected const STORE_ID_DE = 1;
+
+    /**
+     * @var string
+     */
+    protected const STORE_NAME_US = 'US';
 
     /**
      * @var string
      */
     protected const EUR_ISO_CODE = 'EUR';
+
+    /**
+     * @var string
+     */
+    protected const USD_ISO_CODE = 'USD';
+
+    /**
+     * @var string
+     */
+    protected const GBP_ISO_CODE = 'GBP';
 
     /**
      * @var \SprykerTest\Zed\Currency\CurrencyBusinessTester
@@ -62,10 +84,23 @@ class CurrencyFacadeTest extends Unit
     /**
      * @return void
      */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $spyStoreQueryMock = $this->getMockBuilder(SpyStoreQuery::class)
+            ->setMethods(['findOneByIdStore'])
+            ->getMock();
+        $this->tester->setDependency(CurrencyDependencyProvider::PROPEL_QUERY_STORE, $spyStoreQueryMock);
+    }
+
+    /**
+     * @return void
+     */
     public function testGetByIdCurrencyShouldReturnCurrencyTransfer(): void
     {
         $idCurrency = $this->tester->haveCurrency();
-        $currencyTransfer = $this->createCurrencyFacade()->getByIdCurrency($idCurrency);
+        $currencyTransfer = $this->tester->getFacade()->getByIdCurrency($idCurrency);
 
         $this->assertNotNull($currencyTransfer);
     }
@@ -77,7 +112,7 @@ class CurrencyFacadeTest extends Unit
     {
         $currencyTransfer = (new CurrencyBuilder())->build();
 
-        $idCurrency = $this->createCurrencyFacade()->createCurrency($currencyTransfer);
+        $idCurrency = $this->tester->getFacade()->createCurrency($currencyTransfer);
 
         $this->assertNotNull($idCurrency);
     }
@@ -87,7 +122,7 @@ class CurrencyFacadeTest extends Unit
      */
     public function testGetByIdCurrencyShouldReturnCurrencyFromPersistence(): void
     {
-        $currencyTransfer = $this->createCurrencyFacade()->getByIdCurrency(1);
+        $currencyTransfer = $this->tester->getFacade()->getByIdCurrency(1);
 
         $this->assertInstanceOf(CurrencyTransfer::class, $currencyTransfer);
     }
@@ -133,20 +168,23 @@ class CurrencyFacadeTest extends Unit
      */
     public function testValidateCurrencyInQuoteWithWrongCurrencyIsoCode(): void
     {
+        // Arrange
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+
         $currencyTransfer = (new CurrencyTransfer())
             ->setCode(static::WRONG_ISO_CODE);
-        $storeTransfer = (new StoreTransfer())
-            ->setName(static::STORE_NAME);
         $quoteTransfer = (new QuoteTransfer())
             ->setCurrency($currencyTransfer)
             ->setStore($storeTransfer);
+
+        // Act
         $quoteValidationResponseTransfer = $this->getQuoteValidationResponseTransfer($quoteTransfer);
 
+        // Assert
         $errors = array_map(function ($quoteErrorTransfer) {
             return $quoteErrorTransfer->getMessage();
         }, (array)$quoteValidationResponseTransfer->getErrors());
 
-        //Act
         $this->assertFalse($quoteValidationResponseTransfer->getIsSuccessful());
         $this->assertContains(static::ERROR_MESSAGE_CURRENCY_DATA_IS_INCORRECT, $errors);
     }
@@ -156,19 +194,116 @@ class CurrencyFacadeTest extends Unit
      */
     public function testValidateCurrencyInQuoteWithCorrectIsoCode(): void
     {
+        // Arrange
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $storeTransfer->addAvailableCurrencyIsoCode(static::EUR_ISO_CODE);
+
         $currencyTransfer = (new CurrencyTransfer())
             ->setCode(static::EUR_ISO_CODE);
         $storeTransfer = (new StoreTransfer())
-            ->setName(static::STORE_NAME);
+            ->setName(static::STORE_NAME_DE);
         $quoteTransfer = (new QuoteTransfer())
             ->setCurrency($currencyTransfer)
             ->setStore($storeTransfer);
+
+        // Act
         $quoteValidationResponseTransfer = $this->getQuoteValidationResponseTransfer($quoteTransfer);
 
-        //Act
-
+        // Assert
         $this->assertTrue($quoteValidationResponseTransfer->getIsSuccessful());
         $this->assertEmpty($quoteValidationResponseTransfer->getErrors());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateStoreCountriesWithAddingNewAndRemovingOldRelations(): void
+    {
+        if ($this->tester->isDynamicStoreEnabled() === false) {
+            $this->markTestSkipped('Test is valid for Dynamic Store on-mode only.');
+        }
+
+        // Arrange
+        $storeTransfer = $this->tester->haveStore([
+            StoreTransfer::NAME => static::STORE_NAME_DE,
+        ]);
+        $this->tester->deleteCurrencyStore($storeTransfer->getIdStoreOrFail());
+
+        $idCurrencyEur = $this->tester->haveCurrency([CurrencyTransfer::CODE => static::EUR_ISO_CODE]);
+        $idCurrencyGbp = $this->tester->haveCurrency([CurrencyTransfer::CODE => static::GBP_ISO_CODE]);
+        $idCurrencyUsd = $this->tester->haveCurrency([CurrencyTransfer::CODE => static::USD_ISO_CODE]);
+
+        $this->tester->haveCurrencyStore($storeTransfer->getIdStoreOrFail(), $idCurrencyEur);
+        $this->tester->haveCurrencyStore($storeTransfer->getIdStoreOrFail(), $idCurrencyGbp);
+
+        $storeTransfer->setDefaultCurrencyIsoCode(static::EUR_ISO_CODE);
+        $storeTransfer->setAvailableCurrencyIsoCodes([static::EUR_ISO_CODE, static::USD_ISO_CODE]);
+
+        // Act
+        $storeResponseTransfer = $this->createCurrencyFacade()->updateStoreCurrencies($storeTransfer);
+
+        // Assert
+        $this->assertTrue($storeResponseTransfer->getIsSuccessful());
+        $this->assertTrue($this->tester->currencyStoreExists($storeTransfer->getIdStoreOrFail(), $idCurrencyEur));
+        $this->assertTrue($this->tester->currencyStoreExists($storeTransfer->getIdStoreOrFail(), $idCurrencyUsd));
+        $this->assertFalse($this->tester->currencyStoreExists($storeTransfer->getIdStoreOrFail(), $idCurrencyGbp));
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandStoreTransfersWithCurrenciesSuccessful(): void
+    {
+        if ($this->tester->isDynamicStoreEnabled() === false) {
+            $this->markTestSkipped('Test is valid for Dynamic Store on-mode only.');
+        }
+
+        // Arrange
+        $storeTransferEu = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+
+        $this->tester->deleteCurrencyStore($storeTransferEu->getIdStore());
+
+        $idCurrencyEur = $this->tester->haveCurrency([CurrencyTransfer::CODE => static::EUR_ISO_CODE]);
+        $idCurrencyUsd = $this->tester->haveCurrency([CurrencyTransfer::CODE => static::USD_ISO_CODE]);
+
+        $this->tester->haveCurrencyStore($storeTransferEu->getIdStoreOrFail(), $idCurrencyEur);
+
+        // Act
+        $storeTransfers = $this->createCurrencyFacade()->expandStoreTransfersWithCurrencies([
+            $storeTransferEu->getIdStoreOrFail() => $storeTransferEu,
+        ]);
+
+        // Assert
+        $this->assertSame(
+            [static::EUR_ISO_CODE],
+            array_values($storeTransfers[$storeTransferEu->getIdStoreOrFail()]->getAvailableCurrencyIsoCodes()),
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandStoreTransfersWithCurrenciesSuccessfulWithoutCurrencyStoreRelations(): void
+    {
+        if ($this->tester->isDynamicStoreEnabled() === false) {
+            $this->markTestSkipped('Test is valid for Dynamic Store on-mode only.');
+        }
+
+        // Arrange
+        $storeTransferEu = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+
+        $this->tester->deleteCurrencyStore($storeTransferEu->getIdStoreOrFail());
+
+        // Act
+        $storeTransfers = $this->createCurrencyFacade()->expandStoreTransfersWithCurrencies([
+            $storeTransferEu->getIdStoreOrFail() => $storeTransferEu,
+        ]);
+
+        // Assert
+        $this->assertSame(
+            [],
+            array_values($storeTransfers[$storeTransferEu->getIdStoreOrFail()]->getAvailableCurrencyIsoCodes()),
+        );
     }
 
     /**
@@ -186,9 +321,6 @@ class CurrencyFacadeTest extends Unit
      */
     protected function getQuoteValidationResponseTransfer(QuoteTransfer $quoteTransfer): QuoteValidationResponseTransfer
     {
-        /** @var \Spryker\Zed\Currency\Business\CurrencyFacade $currencyFacade */
-        $currencyFacade = $this->tester->getFacade();
-
-        return $currencyFacade->validateCurrencyInQuote($quoteTransfer);
+        return $this->tester->getFacade()->validateCurrencyInQuote($quoteTransfer);
     }
 }

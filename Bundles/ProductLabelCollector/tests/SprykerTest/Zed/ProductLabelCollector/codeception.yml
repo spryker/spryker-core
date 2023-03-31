@@ -27,6 +27,8 @@ suites:
                 - \SprykerTest\Shared\Collector\Helper\CollectorDataHelper
                 - \SprykerTest\Zed\ProductLabel\Helper\ProductLabelDataHelper
                 - \SprykerTest\Shared\Product\Helper\ProductDataHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
     Persistence:
         path: Persistence
         actor: ProductLabelCollectorPersistenceTester

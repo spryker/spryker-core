@@ -7,42 +7,23 @@
 
 namespace Spryker\Zed\Store\Business\Model;
 
+use ArrayObject;
+use Generated\Shared\Transfer\StoreCollectionTransfer;
+use Generated\Shared\Transfer\StoreCriteriaTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Spryker\Shared\Store\Dependency\Adapter\StoreToStoreInterface;
+use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Store\Business\Cache\StoreCacheInterface;
+use Spryker\Zed\Store\Business\Expander\StoreExpanderInterface;
 use Spryker\Zed\Store\Business\Model\Exception\StoreNotFoundException;
 use Spryker\Zed\Store\Business\Reader\StoreReferenceReaderInterface;
-use Spryker\Zed\Store\Persistence\StoreQueryContainerInterface;
 use Spryker\Zed\Store\Persistence\StoreRepositoryInterface;
 
 class StoreReader implements StoreReaderInterface
 {
     /**
-     * @var \Spryker\Shared\Store\Dependency\Adapter\StoreToStoreInterface
-     */
-    protected $store;
-
-    /**
-     * @deprecated Use {@link store} instead.
-     *
-     * @var \Spryker\Shared\Store\Dependency\Adapter\StoreToStoreInterface
-     */
-    protected $storeConfigurationProvider;
-
-    /**
-     * @var \Spryker\Zed\Store\Persistence\StoreQueryContainerInterface
-     */
-    protected $storeQueryContainer;
-
-    /**
      * @var \Spryker\Zed\Store\Persistence\StoreRepositoryInterface
      */
     protected $storeRepository;
-
-    /**
-     * @var \Spryker\Zed\Store\Business\Model\StoreMapperInterface
-     */
-    protected $storeMapper;
 
     /**
      * @var \Spryker\Zed\Store\Business\Cache\StoreCacheInterface
@@ -50,53 +31,60 @@ class StoreReader implements StoreReaderInterface
     protected $storeCache;
 
     /**
+     * @var \Spryker\Zed\Store\Business\Expander\StoreExpanderInterface
+     */
+    protected $storeExpander;
+
+    /**
+     * @deprecated Will be removed after dynamic multi-store is always enabled.
+     *
+     * @var bool
+     */
+    protected $isDynamicMultiStoreEnabled;
+
+    /**
      * @var \Spryker\Zed\Store\Business\Reader\StoreReferenceReaderInterface
      */
     protected $storeReferenceReader;
 
     /**
-     * @param \Spryker\Shared\Store\Dependency\Adapter\StoreToStoreInterface $store
-     * @param \Spryker\Zed\Store\Persistence\StoreQueryContainerInterface $storeQueryContainer
      * @param \Spryker\Zed\Store\Persistence\StoreRepositoryInterface $storeRepository
-     * @param \Spryker\Zed\Store\Business\Model\StoreMapperInterface $storeMapper
      * @param \Spryker\Zed\Store\Business\Cache\StoreCacheInterface $storeCache
      * @param \Spryker\Zed\Store\Business\Reader\StoreReferenceReaderInterface $storeReferenceReader
+     * @param \Spryker\Zed\Store\Business\Expander\StoreExpanderInterface $storeExpander
+     * @param bool $isDynamicMultiStoreEnabled
      */
     public function __construct(
-        StoreToStoreInterface $store,
-        StoreQueryContainerInterface $storeQueryContainer,
         StoreRepositoryInterface $storeRepository,
-        StoreMapperInterface $storeMapper,
         StoreCacheInterface $storeCache,
-        StoreReferenceReaderInterface $storeReferenceReader
+        StoreReferenceReaderInterface $storeReferenceReader,
+        StoreExpanderInterface $storeExpander,
+        bool $isDynamicMultiStoreEnabled
     ) {
-        $this->store = $store;
-        $this->storeConfigurationProvider = $store;
-        $this->storeQueryContainer = $storeQueryContainer;
         $this->storeRepository = $storeRepository;
-        $this->storeMapper = $storeMapper;
         $this->storeCache = $storeCache;
+        $this->storeExpander = $storeExpander;
+        $this->isDynamicMultiStoreEnabled = $isDynamicMultiStoreEnabled;
         $this->storeReferenceReader = $storeReferenceReader;
     }
 
     /**
-     * @return array
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     public function getAllStores()
     {
-        $stores = $this->store->getAllStoreNames();
+        if (!$this->isDynamicMultiStoreEnabled) {
+            return $this->getStoreTransfersByStoreNames($this->getAllStoreNames());
+        }
 
-        return $this->getStoreTransfersByStoreNames($stores);
-    }
+        $storeTransfers = $this->getStoreTransfersByStoreNames(
+            $this->storeRepository->getStoreNamesByCriteria(new StoreCriteriaTransfer()),
+        );
+        $stores = $this->storeExpander->expandStores($storeTransfers);
 
-    /**
-     * @return \Generated\Shared\Transfer\StoreTransfer
-     */
-    public function getCurrentStore()
-    {
-        $currentStore = $this->store->getCurrentStoreName();
+        $this->cacheStoreTransfers($stores);
 
-        return $this->getStoreByName($currentStore);
+        return $stores;
     }
 
     /**
@@ -112,17 +100,16 @@ class StoreReader implements StoreReaderInterface
             return $this->storeCache->getStoreByStoreId($idStore);
         }
 
-        $storeEntity = $this->storeQueryContainer
-            ->queryStoreById($idStore)
-            ->findOne();
+        $storeTransfer = $this->storeRepository
+            ->findStoreById($idStore);
 
-        if (!$storeEntity) {
+        if (!$storeTransfer) {
             throw new StoreNotFoundException(
                 sprintf('Store with id "%s" not found!', $idStore),
             );
         }
 
-        $storeTransfer = $this->storeMapper->mapEntityToTransfer($storeEntity);
+        $storeTransfer = $this->storeExpander->expandStore($storeTransfer);
         $storeTransfer = $this->storeReferenceReader->extendStoreByStoreReference($storeTransfer);
 
         $this->storeCache->cacheStore($storeTransfer);
@@ -143,17 +130,16 @@ class StoreReader implements StoreReaderInterface
             return $this->storeCache->getStoreByStoreName($storeName);
         }
 
-        $storeEntity = $this->storeQueryContainer
-            ->queryStoreByName($storeName)
-            ->findOne();
+        $storeTransfer = $this->storeRepository
+            ->findStoreByName($storeName);
 
-        if (!$storeEntity) {
+        if (!$storeTransfer) {
             throw new StoreNotFoundException(
                 sprintf('Store with name "%s" not found!', $storeName),
             );
         }
 
-        $storeTransfer = $this->storeMapper->mapEntityToTransfer($storeEntity);
+        $storeTransfer = $this->storeExpander->expandStore($storeTransfer);
         $storeTransfer = $this->storeReferenceReader->extendStoreByStoreReference($storeTransfer);
 
         $this->storeCache->cacheStore($storeTransfer);
@@ -180,6 +166,8 @@ class StoreReader implements StoreReaderInterface
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Store\Business\Model\StoreReader::getAllStores()} instead.
+     *
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
      * @return array<\Generated\Shared\Transfer\StoreTransfer>
@@ -192,14 +180,6 @@ class StoreReader implements StoreReaderInterface
         }
 
         return $stores;
-    }
-
-    /**
-     * @return array<string>
-     */
-    public function getCountries()
-    {
-        return $this->store->getCountries();
     }
 
     /**
@@ -216,6 +196,8 @@ class StoreReader implements StoreReaderInterface
         if ($unresolvedStoreNames) {
             $storeTransfers = $this->storeRepository->getStoreTransfersByStoreNames($unresolvedStoreNames);
 
+            $storeTransfers = $this->storeExpander->expandStores($storeTransfers);
+
             $resolvedStoreTransfers = array_merge($resolvedStoreTransfers, $storeTransfers);
             $resolvedStoreTransfers = array_map(function (StoreTransfer $storeTransfer) {
                 return $this->storeReferenceReader->extendStoreByStoreReference($storeTransfer);
@@ -228,11 +210,17 @@ class StoreReader implements StoreReaderInterface
     }
 
     /**
+     * @deprecated Will be removed after dynamic multi-store is always enabled.
+     *
+     * @param \Generated\Shared\Transfer\StoreTransfer $currentStoreTransfer
+     *
      * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
-    public function getStoresAvailableForCurrentPersistence(): array
+    public function getStoresAvailableForCurrentPersistence(StoreTransfer $currentStoreTransfer): array
     {
-        $currentStoreTransfer = $this->getCurrentStore();
+        if ($this->isDynamicMultiStoreEnabled) {
+            return $this->getAllStores();
+        }
 
         return array_merge([
             $currentStoreTransfer,
@@ -301,5 +289,29 @@ class StoreReader implements StoreReaderInterface
         }
 
         return $resolvedStoreTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreCriteriaTransfer $storeCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\StoreCollectionTransfer
+     */
+    public function getStoreCollection(StoreCriteriaTransfer $storeCriteriaTransfer): StoreCollectionTransfer
+    {
+        return (new StoreCollectionTransfer())->setStores(new ArrayObject(
+            $this->getStoreTransfersByStoreNames(
+                $this->storeRepository->getStoreNamesByCriteria($storeCriteriaTransfer),
+            ),
+        ));
+    }
+
+    /**
+     * @deprecated Will be removed after dynamic multi-store is always enabled.
+     *
+     * @return array<string>
+     */
+    protected function getAllStoreNames(): array
+    {
+        return Store::getInstance()->getAllowedStores();
     }
 }

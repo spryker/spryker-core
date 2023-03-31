@@ -15,6 +15,7 @@ use Spryker\Client\Search\Delegator\ConnectionDelegator;
 use Spryker\Client\Search\Delegator\ConnectionDelegatorInterface;
 use Spryker\Client\Search\Delegator\SearchDelegator;
 use Spryker\Client\Search\Delegator\SearchDelegatorInterface;
+use Spryker\Client\Search\Dependency\Facade\SearchToLocaleClientInterface;
 use Spryker\Client\Search\Model\Elasticsearch\Aggregation\AggregationBuilder;
 use Spryker\Client\Search\Model\Elasticsearch\Aggregation\FacetAggregationFactory;
 use Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor\AggregationExtractorFactory;
@@ -56,11 +57,8 @@ class SearchFactory extends AbstractFactory
      */
     public function createSearchDelegator(): SearchDelegatorInterface
     {
-        /** @var array<\Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterface> $searchAdapterPlugins */
-        $searchAdapterPlugins = $this->getClientAdapterPlugins();
-
         return new SearchDelegator(
-            $searchAdapterPlugins,
+            $this->getClientAdapterPlugins(),
             $this->createSearchContextExpander(),
         );
     }
@@ -70,11 +68,8 @@ class SearchFactory extends AbstractFactory
      */
     public function createConnectionDelegator(): ConnectionDelegatorInterface
     {
-        /** @var array<\Spryker\Client\SearchExtension\Dependency\Plugin\ConnectionCheckerAdapterPluginInterface> $connectionCheckerAdapterPlugins */
-        $connectionCheckerAdapterPlugins = $this->getClientAdapterPlugins();
-
         return new ConnectionDelegator(
-            $connectionCheckerAdapterPlugins,
+            $this->getClientAdapterPlugins(),
         );
     }
 
@@ -420,5 +415,13 @@ class SearchFactory extends AbstractFactory
         }
 
         return static::$searchClient;
+    }
+
+    /**
+     * @return \Spryker\Client\Search\Dependency\Facade\SearchToLocaleClientInterface
+     */
+    public function getLocaleClient(): SearchToLocaleClientInterface
+    {
+        return $this->getProvidedDependency(SearchDependencyProvider::CLIENT_LOCALE);
     }
 }

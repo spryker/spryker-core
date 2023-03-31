@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\UserLocaleGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\LocaleCriteriaTransfer;
+
 class UserLocaleGuiToLocaleFacadeBridge implements UserLocaleGuiToLocaleFacadeBridgeInterface
 {
     /**
@@ -23,10 +25,20 @@ class UserLocaleGuiToLocaleFacadeBridge implements UserLocaleGuiToLocaleFacadeBr
     }
 
     /**
+     * @param \Generated\Shared\Transfer\LocaleCriteriaTransfer|null $localeCriteriaTransfer
+     *
      * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
-    public function getLocaleCollection(): array
+    public function getLocaleCollection(?LocaleCriteriaTransfer $localeCriteriaTransfer = null): array
     {
-        return $this->localeFacade->getLocaleCollection();
+        return $this->localeFacade->getLocaleCollection($localeCriteriaTransfer);
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    public function getSupportedLocaleCodes(): array
+    {
+        return $this->localeFacade->getSupportedLocaleCodes();
     }
 }

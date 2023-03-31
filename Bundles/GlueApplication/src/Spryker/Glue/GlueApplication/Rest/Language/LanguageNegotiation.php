@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\GlueApplication\Rest\Language;
 
+use Generated\Shared\Transfer\StoreTransfer;
 use Negotiation\AcceptLanguage;
 use Negotiation\LanguageNegotiator;
 use Spryker\Glue\GlueApplication\Dependency\Client\GlueApplicationToStoreClientInterface;
@@ -47,15 +48,30 @@ class LanguageNegotiation implements LanguageNegotiationInterface
         $storeLocaleCodes = $storeTransfer->getAvailableLocaleIsoCodes();
 
         if (!$acceptLanguage) {
-            return array_shift($storeLocaleCodes);
+            return $this->getDefaultLocaleCode($storeTransfer, $storeLocaleCodes);
         }
 
         $language = $this->findAcceptedLanguage($acceptLanguage, $storeLocaleCodes);
         if (!$language) {
-            return array_shift($storeLocaleCodes);
+            return $this->getDefaultLocaleCode($storeTransfer, $storeLocaleCodes);
         }
 
         return $storeLocaleCodes[$language->getType()];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param array<string> $storeLocaleCodes
+     *
+     * @return string
+     */
+    protected function getDefaultLocaleCode(StoreTransfer $storeTransfer, array $storeLocaleCodes): string
+    {
+        if (!$this->storeClient->isDynamicStoreEnabled()) {
+            return array_shift($storeLocaleCodes);
+        }
+
+        return $storeTransfer->getDefaultLocaleIsoCode();
     }
 
     /**

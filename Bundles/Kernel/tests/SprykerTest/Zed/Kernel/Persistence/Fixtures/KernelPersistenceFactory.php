@@ -9,6 +9,9 @@ namespace SprykerTest\Zed\Kernel\Persistence\Fixtures;
 
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
+/**
+ * @method \Spryker\Zed\Kernel\KernelConfig getConfig()
+ */
 class KernelPersistenceFactory extends AbstractPersistenceFactory
 {
 }

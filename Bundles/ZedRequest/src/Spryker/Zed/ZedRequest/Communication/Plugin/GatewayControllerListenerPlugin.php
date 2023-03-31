@@ -72,6 +72,8 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
     }
 
     /**
+     * @deprecated Will be removed after dynamic multi-store is always enabled.
+     *
      * @param \Spryker\Zed\ZedRequest\Business\Client\Request $request
      *
      * @return void
@@ -79,12 +81,14 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
     protected function setCustomersLocaleIfPresent(Request $request)
     {
         $localeTransfer = $this->getLocaleMetaTransfer($request);
-        if ($localeTransfer) {
+        if ($localeTransfer && !$this->getFactory()->getIsDynamicStoreModeEnabled()) {
             $this->getFactory()->getStore()->setCurrentLocale($localeTransfer->getLocaleName());
         }
     }
 
     /**
+     * @deprecated Will be removed after dynamic multi-store is always enabled.
+     *
      * @param \Spryker\Zed\ZedRequest\Business\Client\Request $request
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer|null
@@ -98,6 +102,8 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
     }
 
     /**
+     * @deprecated Will be removed after dynamic multi-store is always enabled.
+     *
      * @param \Spryker\Zed\ZedRequest\Business\Client\Request $request
      *
      * @return void
@@ -105,12 +111,14 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
     protected function setCustomersCurrencyIfPresent(Request $request)
     {
         $currencyTransfer = $this->getCurrencyMetaTransfer($request);
-        if ($currencyTransfer) {
+        if ($currencyTransfer && !$this->getFactory()->getIsDynamicStoreModeEnabled()) {
             $this->getFactory()->getStore()->setCurrencyIsoCode($currencyTransfer->getCode());
         }
     }
 
     /**
+     * @deprecated Will be removed after dynamic multi-store is always enabled.
+     *
      * @param \Spryker\Zed\ZedRequest\Business\Client\Request $request
      *
      * @return \Generated\Shared\Transfer\CurrencyTransfer|null

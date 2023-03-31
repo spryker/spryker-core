@@ -7,12 +7,12 @@
 
 namespace Spryker\Zed\CmsPageSearch;
 
+use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
 use Spryker\Zed\CmsPageSearch\Dependency\Facade\CmsPageSearchToCmsBridge;
 use Spryker\Zed\CmsPageSearch\Dependency\Facade\CmsPageSearchToEventBehaviorFacadeBridge;
 use Spryker\Zed\CmsPageSearch\Dependency\Facade\CmsPageSearchToLocaleFacadeBridge;
 use Spryker\Zed\CmsPageSearch\Dependency\Facade\CmsPageSearchToStoreFacadeBridge;
 use Spryker\Zed\CmsPageSearch\Dependency\QueryContainer\CmsPageSearchToCmsQueryContainerBridge;
-use Spryker\Zed\CmsPageSearch\Dependency\QueryContainer\CmsPageSearchToLocaleQueryContainerBridge;
 use Spryker\Zed\CmsPageSearch\Dependency\Service\CmsPageSearchToUtilEncodingBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -35,7 +35,7 @@ class CmsPageSearchDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
-    public const QUERY_CONTAINER_LOCALE = 'QUERY_CONTAINER_LOCALE';
+    public const PROPEL_QUERY_LOCALE = 'PROPEL_QUERY_LOCALE';
 
     /**
      * @var string
@@ -113,9 +113,7 @@ class CmsPageSearchDependencyProvider extends AbstractBundleDependencyProvider
             return new CmsPageSearchToCmsQueryContainerBridge($container->getLocator()->cms()->queryContainer());
         });
 
-        $container->set(static::QUERY_CONTAINER_LOCALE, function (Container $container) {
-            return new CmsPageSearchToLocaleQueryContainerBridge($container->getLocator()->locale()->queryContainer());
-        });
+        $container = $this->addLocalePropelQuery($container);
 
         return $container;
     }
@@ -148,6 +146,20 @@ class CmsPageSearchDependencyProvider extends AbstractBundleDependencyProvider
                 $container->getLocator()->store()->facade(),
             );
         });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addLocalePropelQuery(Container $container)
+    {
+        $container->set(static::PROPEL_QUERY_LOCALE, $container->factory(function (Container $container) {
+            return SpyLocaleQuery::create();
+        }));
 
         return $container;
     }

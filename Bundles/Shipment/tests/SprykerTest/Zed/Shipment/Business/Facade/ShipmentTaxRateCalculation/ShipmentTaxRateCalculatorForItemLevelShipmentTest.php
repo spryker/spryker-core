@@ -18,13 +18,11 @@ use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Shipment\ShipmentConfig;
 use Spryker\Zed\Product\ProductDependencyProvider;
 use Spryker\Zed\Shipment\Dependency\ShipmentToTaxBridge;
 use Spryker\Zed\Shipment\Dependency\ShipmentToTaxInterface;
 use Spryker\Zed\Shipment\ShipmentDependencyProvider;
-use Spryker\Zed\Tax\TaxDependencyProvider;
 use Spryker\Zed\TaxProductConnector\Communication\Plugin\TaxSetProductAbstractAfterCreatePlugin;
 
 /**
@@ -68,11 +66,6 @@ class ShipmentTaxRateCalculatorForItemLevelShipmentTest extends Unit
         $this->tester->setDependency(
             ProductDependencyProvider::PRODUCT_ABSTRACT_PLUGINS_AFTER_CREATE,
             [new TaxSetProductAbstractAfterCreatePlugin()],
-        );
-
-        $this->tester->setDependency(
-            TaxDependencyProvider::STORE_CONFIG,
-            $this->createTaxStoreMock('MOON'),
         );
 
         $this->shipmentMethodTransferList = [];
@@ -230,25 +223,6 @@ class ShipmentTaxRateCalculatorForItemLevelShipmentTest extends Unit
             ->willReturn($defaultTaxRate);
 
         return $bridgeMock;
-    }
-
-    /**
-     * @param string $defaultCountryIso2Code
-     *
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Kernel\Store
-     */
-    protected function createTaxStoreMock(string $defaultCountryIso2Code): Store
-    {
-        $storeMock = $this->getMockBuilder(Store::class)
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $storeMock
-            ->expects($this->any())
-            ->method('getCurrentCountry')
-            ->willReturn($defaultCountryIso2Code);
-
-        return $storeMock;
     }
 
     /**

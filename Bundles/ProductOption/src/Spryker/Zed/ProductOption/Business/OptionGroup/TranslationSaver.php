@@ -105,7 +105,7 @@ class TranslationSaver implements TranslationSaverInterface
             $this->glossaryFacade->createKey($key);
         }
 
-        $localeTransfer = $this->localeFacade->getLocaleByCode($localeCode);
+        $localeTransfer = $this->localeFacade->getLocale($localeCode);
         if (!$this->glossaryFacade->hasTranslation($key, $localeTransfer)) {
             $this->glossaryFacade->createAndTouchTranslation($key, $localeTransfer, $value);
         } else {

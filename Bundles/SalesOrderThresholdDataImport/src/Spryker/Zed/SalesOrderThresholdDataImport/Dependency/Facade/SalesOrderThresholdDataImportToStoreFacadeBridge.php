@@ -27,9 +27,9 @@ class SalesOrderThresholdDataImportToStoreFacadeBridge implements SalesOrderThre
     /**
      * @param string $storeName
      *
-     * @return \Generated\Shared\Transfer\StoreTransfer
+     * @return \Generated\Shared\Transfer\StoreTransfer|null
      */
-    public function getStoreByName($storeName): StoreTransfer
+    public function findStoreByName(string $storeName): ?StoreTransfer
     {
         return $this->storeFacade->getStoreByName($storeName);
     }

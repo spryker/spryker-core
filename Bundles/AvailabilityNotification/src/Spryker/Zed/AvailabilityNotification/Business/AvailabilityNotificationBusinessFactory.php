@@ -243,7 +243,10 @@ class AvailabilityNotificationBusinessFactory extends AbstractBusinessFactory
      */
     public function createStoreYvesBaseUrlGetStrategy(): BaseUrlGetStrategyInterface
     {
-        return new StoreYvesBaseUrlGetStrategy($this->getConfig());
+        return new StoreYvesBaseUrlGetStrategy(
+            $this->getConfig(),
+            $this->getStoreFacade(),
+        );
     }
 
     /**

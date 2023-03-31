@@ -13,6 +13,7 @@ use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductSetGui\Communication\Controller\AbstractProductSetController;
 use Spryker\Zed\ProductSetGui\Communication\Table\Helper\ProductAbstractTableHelperInterface;
+use Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToStoreFacadeInterface;
 use Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainer;
 use Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface;
 
@@ -38,6 +39,9 @@ class ProductAbstractSetUpdateTable extends AbstractTable
      */
     public const COL_SKU = 'sku';
 
+    /**
+     * @var string
+     */
     public const COL_NAME = ProductSetGuiQueryContainer::COL_ALIAS_NAME;
 
     /**
@@ -50,6 +54,9 @@ class ProductAbstractSetUpdateTable extends AbstractTable
      */
     public const COL_STATUS = 'status';
 
+    /**
+     * @var string
+     */
     public const COL_POSITION = ProductSetGuiQueryContainer::COL_ALIAS_POSITION;
 
     /**
@@ -78,14 +85,21 @@ class ProductAbstractSetUpdateTable extends AbstractTable
     protected $localeTransfer;
 
     /**
+     * @var \Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToStoreFacadeInterface
+     */
+    protected ProductSetGuiToStoreFacadeInterface $storeFacade;
+
+    /**
      * @param \Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface $productSetGuiQueryContainer
      * @param \Spryker\Zed\ProductSetGui\Communication\Table\Helper\ProductAbstractTableHelperInterface $productAbstractTableHelper
+     * @param \Spryker\Zed\ProductSetGui\Dependency\Facade\ProductSetGuiToStoreFacadeInterface $storeFacade
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param int $idProductSet
      */
     public function __construct(
         ProductSetGuiQueryContainerInterface $productSetGuiQueryContainer,
         ProductAbstractTableHelperInterface $productAbstractTableHelper,
+        ProductSetGuiToStoreFacadeInterface $storeFacade,
         LocaleTransfer $localeTransfer,
         $idProductSet
     ) {
@@ -93,6 +107,7 @@ class ProductAbstractSetUpdateTable extends AbstractTable
         $this->productAbstractTableHelper = $productAbstractTableHelper;
         $this->localeTransfer = $localeTransfer;
         $this->idProductSet = $idProductSet;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -100,22 +115,30 @@ class ProductAbstractSetUpdateTable extends AbstractTable
      *
      * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
-    protected function configure(TableConfiguration $config)
+    protected function configure(TableConfiguration $config): TableConfiguration
     {
         $urlSuffix = sprintf('?%s=%d', AbstractProductSetController::PARAM_ID, $this->idProductSet);
         $this->defaultUrl = static::TABLE_IDENTIFIER . $urlSuffix;
         $this->setTableIdentifier(static::TABLE_IDENTIFIER);
 
-        $config->setHeader([
+        $header = [
             static::COL_ID_PRODUCT_ABSTRACT => 'ID',
             static::COL_PREVIEW => 'Preview',
             static::COL_SKU => 'SKU',
             static::COL_NAME => 'Name',
-            static::COL_PRICE => 'Price',
+        ];
+
+        if (!$this->storeFacade->isDynamicStoreEnabled()) {
+            $header[static::COL_PRICE] = 'Price';
+        }
+
+        $header = array_merge($header, [
             static::COL_STATUS => 'Status',
             static::COL_POSITION => 'Position',
             static::COL_CHECKBOX => 'Selected',
         ]);
+
+        $config->setHeader($header);
 
         $config->setSortable([
             static::COL_ID_PRODUCT_ABSTRACT,
@@ -148,7 +171,7 @@ class ProductAbstractSetUpdateTable extends AbstractTable
      *
      * @return array
      */
-    protected function prepareData(TableConfiguration $config)
+    protected function prepareData(TableConfiguration $config): array
     {
         $query = $this->productSetGuiQueryContainer->queryProductAbstractByIdProductSet($this->idProductSet, $this->localeTransfer);
 
@@ -167,18 +190,23 @@ class ProductAbstractSetUpdateTable extends AbstractTable
      *
      * @return array
      */
-    protected function formatRow(SpyProductAbstract $productAbstractEntity)
+    protected function formatRow(SpyProductAbstract $productAbstractEntity): array
     {
-        return [
+        $row = [
             static::COL_ID_PRODUCT_ABSTRACT => $this->formatInt($productAbstractEntity->getIdProductAbstract()),
             static::COL_PREVIEW => $this->productAbstractTableHelper->getProductPreview($productAbstractEntity),
             static::COL_SKU => $productAbstractEntity->getSku(),
             static::COL_NAME => $productAbstractEntity->getVirtualColumn(static::COL_NAME),
-            static::COL_PRICE => $this->productAbstractTableHelper->getProductPrice($productAbstractEntity),
             static::COL_STATUS => $this->productAbstractTableHelper->getAbstractProductStatusLabel($productAbstractEntity),
             static::COL_POSITION => $this->getPositionField($productAbstractEntity),
             static::COL_CHECKBOX => $this->getSelectField($productAbstractEntity),
         ];
+
+        if (!$this->storeFacade->isDynamicStoreEnabled()) {
+            $row[static::COL_PRICE] = $this->productAbstractTableHelper->getProductPrice($productAbstractEntity);
+        }
+
+        return $row;
     }
 
     /**
@@ -186,7 +214,7 @@ class ProductAbstractSetUpdateTable extends AbstractTable
      *
      * @return string
      */
-    protected function getPositionField(SpyProductAbstract $productAbstractEntity)
+    protected function getPositionField(SpyProductAbstract $productAbstractEntity): string
     {
         return sprintf(
             '<input type="text" value="%2$d" id="product_position_%1$d" class="product_position" size="4" data-id="%1$s">',
@@ -200,7 +228,7 @@ class ProductAbstractSetUpdateTable extends AbstractTable
      *
      * @return string
      */
-    protected function getSelectField(SpyProductAbstract $productAbstractEntity)
+    protected function getSelectField(SpyProductAbstract $productAbstractEntity): string
     {
         return sprintf(
             '<input id="product_checkbox_%1$d" class="product_checkbox" type="checkbox" checked="checked" data-id="%1$s">',

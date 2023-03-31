@@ -13,4 +13,14 @@ interface ProductReviewSearchToStoreFacadeInterface
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
     public function getCurrentStore();
+
+    /**
+     * @return bool
+     */
+    public function isDynamicStoreEnabled(): bool;
+
+    /**
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
+     */
+    public function getAllStores(): array;
 }

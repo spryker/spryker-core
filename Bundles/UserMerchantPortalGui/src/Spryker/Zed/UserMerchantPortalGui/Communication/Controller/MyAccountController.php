@@ -126,12 +126,11 @@ class MyAccountController extends AbstractController
         MerchantUserTransfer $merchantUserTransfer
     ): MerchantUserTransfer {
         if ($this->getIsFkLocaleChanged($merchantAccountForm)) {
-            $localeFacade = $this->getFactory()->getLocaleFacade();
-            $localeTransfer = $localeFacade->getLocaleById(
-                $merchantUserTransfer->getUserOrFail()->getFkLocaleOrFail(),
-            );
-
-            $localeFacade->setCurrentLocale($localeTransfer);
+            $localeTransfer = $this->getFactory()
+                ->getLocaleFacade()
+                ->getLocaleById(
+                    $merchantUserTransfer->getUserOrFail()->getFkLocaleOrFail(),
+                );
 
             $merchantUserTransfer->getUserOrFail()
                 ->setFkLocale($localeTransfer->getIdLocale())

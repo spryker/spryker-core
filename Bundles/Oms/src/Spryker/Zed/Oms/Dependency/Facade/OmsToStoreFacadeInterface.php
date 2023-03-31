@@ -7,19 +7,12 @@
 
 namespace Spryker\Zed\Oms\Dependency\Facade;
 
-use Generated\Shared\Transfer\StoreTransfer;
-
 interface OmsToStoreFacadeInterface
 {
     /**
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
     public function getCurrentStore();
-
-    /**
-     * @return array<\Generated\Shared\Transfer\StoreTransfer>
-     */
-    public function getAllStores();
 
     /**
      * @param string $storeName
@@ -29,9 +22,7 @@ interface OmsToStoreFacadeInterface
     public function getStoreByName($storeName);
 
     /**
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
      * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
-    public function getStoresWithSharedPersistence(StoreTransfer $storeTransfer);
+    public function getAllStores(): array;
 }

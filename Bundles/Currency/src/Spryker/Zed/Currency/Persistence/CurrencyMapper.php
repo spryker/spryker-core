@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\CurrencyTransfer;
 use Orm\Zed\Currency\Persistence\SpyCurrency;
 use Spryker\Shared\Currency\Dependency\Internationalization\CurrencyToInternationalizationInterface;
 
-class CurrencyMapper implements CurrencyMapperInterface
+class CurrencyMapper
 {
     /**
      * @var \Spryker\Shared\Currency\Dependency\Internationalization\CurrencyToInternationalizationInterface
@@ -36,10 +36,31 @@ class CurrencyMapper implements CurrencyMapperInterface
         SpyCurrency $currencyEntity,
         CurrencyTransfer $currencyTransfer
     ): CurrencyTransfer {
-        $fractionDigits = $this->currencyInternationalization->getFractionDigits($currencyEntity->getCode());
+        $currencyTransfer->fromArray($currencyEntity->toArray(), true);
 
-        return $currencyTransfer
-            ->fromArray($currencyEntity->toArray(), true)
-            ->setFractionDigits($fractionDigits);
+        $code = $currencyEntity->getCode();
+
+        if ($code === null) {
+            return $currencyTransfer;
+        }
+
+        $fractionDigits = $this->currencyInternationalization->getFractionDigits($code);
+
+        return $currencyTransfer->setFractionDigits($fractionDigits);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
+     * @param \Orm\Zed\Currency\Persistence\SpyCurrency $currencyEntity
+     *
+     * @return \Orm\Zed\Currency\Persistence\SpyCurrency
+     */
+    public function mapCurrencyTransferToCurrencyEntity(
+        CurrencyTransfer $currencyTransfer,
+        SpyCurrency $currencyEntity
+    ): SpyCurrency {
+        $currencyEntity->fromArray($currencyTransfer->toArray());
+
+        return $currencyEntity;
     }
 }

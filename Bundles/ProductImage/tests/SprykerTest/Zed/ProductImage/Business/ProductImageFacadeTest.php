@@ -175,6 +175,11 @@ class ProductImageFacadeTest extends Unit
     public const LOCALE_DE_DE = 'de_DE';
 
     /**
+     * @var string
+     */
+    protected const SERVICE_LOCALE = 'locale';
+
+    /**
      * @return void
      */
     protected function setUp(): void
@@ -186,6 +191,8 @@ class ProductImageFacadeTest extends Unit
 
         $this->setupProducts();
         $this->setupImages();
+
+        $this->tester->getContainer()->set(static::SERVICE_LOCALE, static::LOCALE_DE_DE);
     }
 
     /**
@@ -495,7 +502,9 @@ class ProductImageFacadeTest extends Unit
             static::ID_LOCALE_DE,
         );
 
-        Store::getInstance()->setCurrentLocale(static::LOCALE_DE_DE);
+        if ($this->tester->isDynamicStoreEnabled() === false) {
+            Store::getInstance()->setCurrentLocale(static::LOCALE_DE_DE);
+        }
 
         // Act
         $productImageSetCollection = $this->productImageFacade->getProductImagesSetCollectionByProductIdForCurrentLocale(
@@ -504,7 +513,7 @@ class ProductImageFacadeTest extends Unit
 
         // Assign
         foreach ($productImageSetCollection as $productImageSetTransfer) {
-            static::assertTrue($productImageSetTransfer->getLocale()->getLocaleName() === static::LOCALE_DE_DE);
+            $this->assertTrue($productImageSetTransfer->getLocale()->getLocaleName() === static::LOCALE_DE_DE);
         }
     }
 
@@ -521,7 +530,9 @@ class ProductImageFacadeTest extends Unit
             static::ID_LOCALE_EN,
         );
 
-        Store::getInstance()->setCurrentLocale(static::LOCALE_DE_DE);
+        if ($this->tester->isDynamicStoreEnabled() === false) {
+            Store::getInstance()->setCurrentLocale(static::LOCALE_DE_DE);
+        }
 
         // Act
         $productImageSetCollection = $this->productImageFacade->getProductImagesSetCollectionByProductIdForCurrentLocale(
@@ -530,7 +541,7 @@ class ProductImageFacadeTest extends Unit
 
         // Assign
         foreach ($productImageSetCollection as $productImageSetTransfer) {
-            static::assertNull($productImageSetTransfer->getLocale());
+            $this->assertNull($productImageSetTransfer->getLocale());
         }
     }
 

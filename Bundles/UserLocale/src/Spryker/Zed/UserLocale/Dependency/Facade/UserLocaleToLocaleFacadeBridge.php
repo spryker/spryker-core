@@ -29,7 +29,7 @@ class UserLocaleToLocaleFacadeBridge implements UserLocaleToLocaleFacadeBridgeIn
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getLocaleById($idLocale): LocaleTransfer
+    public function getLocaleById(int $idLocale): LocaleTransfer
     {
         return $this->localeFacade->getLocaleById($idLocale);
     }
@@ -39,9 +39,17 @@ class UserLocaleToLocaleFacadeBridge implements UserLocaleToLocaleFacadeBridgeIn
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getLocale($localeName): LocaleTransfer
+    public function getLocale(string $localeName): LocaleTransfer
     {
         return $this->localeFacade->getLocale($localeName);
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    public function getSupportedLocaleCodes(): array
+    {
+        return $this->localeFacade->getSupportedLocaleCodes();
     }
 
     /**

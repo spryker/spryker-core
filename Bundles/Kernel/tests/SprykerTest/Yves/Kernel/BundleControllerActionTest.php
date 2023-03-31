@@ -37,7 +37,7 @@ class BundleControllerActionTest extends Unit
      */
     public function testGetBundleShouldStripStoreName(): void
     {
-        $bundleControllerAction = $this->getBundleControllerAction('fooDE', 'bar', 'baz', 'DE');
+        $bundleControllerAction = $this->getBundleControllerAction('foo' . APPLICATION_CODE_BUCKET, 'bar', 'baz', 'DE');
 
         $this->assertSame('foo', $bundleControllerAction->getBundle());
     }

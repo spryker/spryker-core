@@ -106,42 +106,14 @@
     },
     {
         "fileName": "src/Spryker/Zed/CmsStorage/Dependency/Facade/CmsStorageToStoreFacadeBridge.php",
-        "description": "Bridges: Method `getCurrentStore()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
-        "rule": "BridgeFacadeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/CmsStorage/Dependency/Facade/CmsStorageToStoreFacadeBridge.php",
         "description": "Bridges: Method `getAllStores()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
-        "fileName": "src/Spryker/Zed/CmsStorage/Dependency/Facade/CmsStorageToStoreFacadeBridge.php",
-        "description": "Bridges: Method `getStoresWithSharedPersistence()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
-        "rule": "BridgeFacadeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/CmsStorage/Dependency/Facade/CmsStorageToStoreFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `getCurrentStore()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
         "fileName": "src/Spryker/Zed/CmsStorage/Dependency/Facade/CmsStorageToStoreFacadeInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `getAllStores()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/CmsStorage/Dependency/Facade/CmsStorageToStoreFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `getStoresWithSharedPersistence()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -156,13 +128,6 @@
     {
         "fileName": "src/Spryker/Zed/CmsStorage/Dependency/QueryContainer/CmsStorageToCmsQueryContainerInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `queryPages()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/CmsStorage/Dependency/QueryContainer/CmsStorageToLocaleQueryContainerInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `queryLocales()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"

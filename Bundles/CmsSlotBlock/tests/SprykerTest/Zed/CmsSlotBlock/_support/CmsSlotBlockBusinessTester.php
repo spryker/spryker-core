@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\CmsSlotBlockTransfer;
 use Generated\Shared\Transfer\CmsSlotTemplateTransfer;
 use Generated\Shared\Transfer\CmsSlotTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery;
 use Spryker\Zed\CmsSlotBlock\Business\CmsSlotBlockFacade;
 use Spryker\Zed\CmsSlotBlock\Business\CmsSlotBlockFacadeInterface;
@@ -39,6 +40,11 @@ class CmsSlotBlockBusinessTester extends Actor
     use _generated\CmsSlotBlockBusinessTesterActions;
 
     /**
+     * @var string
+     */
+    protected const STORE_NAME = 'DE';
+
+    /**
      * @param int $blocksNumber
      * @param string $blockNamePattern
      *
@@ -46,7 +52,7 @@ class CmsSlotBlockBusinessTester extends Actor
      */
     public function createCmsBlocksInDb(int $blocksNumber = 1, string $blockNamePattern = ''): array
     {
-        $storeTransfer = $this->haveStore();
+        $storeTransfer = $this->haveStore([StoreTransfer::NAME => static::STORE_NAME]);
         $cmsBlockTransfers = [];
 
         $cmsBlockData = [

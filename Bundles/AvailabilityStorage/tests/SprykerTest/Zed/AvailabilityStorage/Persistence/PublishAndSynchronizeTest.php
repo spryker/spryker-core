@@ -9,6 +9,8 @@ namespace SprykerTest\Zed\AvailabilityStorage\Persistence;
 
 use Codeception\Test\Unit;
 use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery;
+use Spryker\Client\Storage\StorageDependencyProvider;
+use Spryker\DecimalObject\Decimal;
 use Spryker\Shared\AvailabilityStorage\AvailabilityStorageConfig;
 use Spryker\Shared\AvailabilityStorage\AvailabilityStorageConstants;
 use Spryker\Zed\Availability\Dependency\AvailabilityEvents;
@@ -29,6 +31,16 @@ use Spryker\Zed\Synchronization\Communication\Plugin\Queue\SynchronizationStorag
  */
 class PublishAndSynchronizeTest extends Unit
 {
+    /**
+     * @var int
+     */
+    protected const ID_STORE = 1;
+
+    /**
+     * @var string
+     */
+    protected const STORAGE_KEY = 'availability:de:%d';
+
     /**
      * @var \SprykerTest\Zed\AvailabilityStorage\AvailabilityStoragePersistenceTester
      */
@@ -65,8 +77,17 @@ class PublishAndSynchronizeTest extends Unit
             AvailabilityStorageConstants::AVAILABILITY_SYNC_STORAGE_QUEUE => new SynchronizationStorageQueueMessageProcessorPlugin(),
         ]);
 
+        $this->tester->setDependency(
+            StorageDependencyProvider::PLUGIN_STORAGE,
+            $this->tester->getInMemoryStoragePlugin(),
+        );
+
         $this->productConcreteTransfer = $this->tester->haveProduct();
-        $this->productAbstractAvailabilityEntity = $this->tester->haveAvailabilityAbstract($this->productConcreteTransfer);
+        $this->productAbstractAvailabilityEntity = $this->tester->haveAvailabilityAbstract(
+            $this->productConcreteTransfer,
+            new Decimal(2),
+            static::ID_STORE,
+        );
 
         $this->tester->haveAvailabilityConcrete($this->productConcreteTransfer->getSku());
     }
@@ -134,6 +155,6 @@ class PublishAndSynchronizeTest extends Unit
      */
     protected function getExpectedStorageKey(): string
     {
-        return sprintf('availability:de:%d', $this->productConcreteTransfer->getFkProductAbstractOrFail());
+        return sprintf(static::STORAGE_KEY, $this->productConcreteTransfer->getFkProductAbstractOrFail());
     }
 }

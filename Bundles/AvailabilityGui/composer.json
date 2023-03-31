@@ -10,7 +10,7 @@
         "spryker/decimal-object": "^1.0.0",
         "spryker/gui": "^3.45.0",
         "spryker/kernel": "^3.30.0",
-        "spryker/locale": "^3.0.0",
+        "spryker/locale": "^3.0.0 || ^4.0.0",
         "spryker/oms": "^11.0.0",
         "spryker/product": "^5.0.0 || ^6.0.0",
         "spryker/product-bundle": "^7.0.0",
@@ -18,7 +18,7 @@
         "spryker/stock": "^8.0.0",
         "spryker/store": "^1.5.0",
         "spryker/symfony": "^3.0.0",
-        "spryker/transfer": "^3.18.0",
+        "spryker/transfer": "^3.25.0",
         "spryker/twig": "^3.16.0",
         "spryker/util-text": "^1.1.0"
     },

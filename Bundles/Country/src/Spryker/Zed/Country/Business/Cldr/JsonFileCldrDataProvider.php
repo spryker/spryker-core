@@ -19,7 +19,7 @@ class JsonFileCldrDataProvider implements CldrDataProviderInterface
     /**
      * @param string $cldrFilePath
      */
-    public function __construct($cldrFilePath)
+    public function __construct(string $cldrFilePath)
     {
         $this->cldrFilePath = $cldrFilePath;
     }
@@ -27,9 +27,9 @@ class JsonFileCldrDataProvider implements CldrDataProviderInterface
     /**
      * @throws \RuntimeException
      *
-     * @return array
+     * @return array<mixed>
      */
-    public function getCldrData()
+    public function getCldrData(): array
     {
         $rawFileInput = file_get_contents(
             $this->cldrFilePath,

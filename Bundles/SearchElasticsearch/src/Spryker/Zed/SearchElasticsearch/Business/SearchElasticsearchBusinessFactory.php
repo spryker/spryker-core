@@ -49,6 +49,7 @@ use Spryker\Zed\SearchElasticsearch\Business\Snapshot\Snapshot;
 use Spryker\Zed\SearchElasticsearch\Business\Snapshot\SnapshotInterface;
 use Spryker\Zed\SearchElasticsearch\Business\SourceIdentifier\SourceIdentifier;
 use Spryker\Zed\SearchElasticsearch\Business\SourceIdentifier\SourceIdentifierInterface;
+use Spryker\Zed\SearchElasticsearch\Dependency\Facade\SearchElasticsearchToStoreFacadeInterface;
 use Spryker\Zed\SearchElasticsearch\Dependency\Service\SearchElasticsearchToUtilSanitizeServiceInterface;
 use Spryker\Zed\SearchElasticsearch\SearchElasticsearchDependencyProvider;
 use Twig\Environment;
@@ -135,6 +136,7 @@ class SearchElasticsearchBusinessFactory extends AbstractBusinessFactory
         return new IndexInstallBroker(
             $this->createIndexDefinitionBuilder(),
             $this->getInstaller(),
+            $this->getStoreFacade(),
         );
     }
 
@@ -237,6 +239,8 @@ class SearchElasticsearchBusinessFactory extends AbstractBusinessFactory
             $this->createIndexDefinitionBuilder(),
             $this->createIndexMapCleaner(),
             $this->createIndexMapGenerator(),
+            $this->getStoreFacade(),
+            $this->getConfig(),
         );
     }
 
@@ -304,6 +308,7 @@ class SearchElasticsearchBusinessFactory extends AbstractBusinessFactory
             $this->getElasticsearchClient(),
             $this->createSourceIdentifier(),
             $this->getConfig(),
+            $this->getStoreFacade(),
         );
     }
 
@@ -341,5 +346,13 @@ class SearchElasticsearchBusinessFactory extends AbstractBusinessFactory
     public function createMappingTypeSupportDetector(): MappingTypeSupportDetectorInterface
     {
         return new MappingTypeSupportDetector();
+    }
+
+    /**
+     * @return \Spryker\Zed\SearchElasticsearch\Dependency\Facade\SearchElasticsearchToStoreFacadeInterface
+     */
+    public function getStoreFacade(): SearchElasticsearchToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(SearchElasticsearchDependencyProvider::FACADE_STORE);
     }
 }

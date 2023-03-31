@@ -52,6 +52,11 @@ class PriceProductDataHelper extends Module
     protected const GROSS_PRICE = 9;
 
     /**
+     * @var string
+     */
+    protected const DEFAULT_CURRENT_STORE = 'DE';
+
+    /**
      * @param array $priceProductOverride
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
@@ -205,7 +210,7 @@ class PriceProductDataHelper extends Module
             ->seed($priceProductOverride)
             ->build();
 
-        $storeTransfer = $this->getStoreFacade()->getCurrentStore();
+        $storeTransfer = $this->getStoreFacade()->getStoreByName(static::DEFAULT_CURRENT_STORE);
 
         $moneyValueTransfer = $this->createMoneyValueTransfer(
             $grossPrice,

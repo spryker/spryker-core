@@ -23,20 +23,10 @@ class ProductPackagingUnitToStoreFacadeBridge implements ProductPackagingUnitToS
     }
 
     /**
-     * @return \Generated\Shared\Transfer\StoreTransfer
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
-    public function getCurrentStore()
+    public function getAllStores(): array
     {
-        return $this->storeFacade->getCurrentStore();
-    }
-
-    /**
-     * @param string $storeName
-     *
-     * @return \Generated\Shared\Transfer\StoreTransfer
-     */
-    public function getStoreByName($storeName)
-    {
-        return $this->storeFacade->getStoreByName($storeName);
+        return $this->storeFacade->getAllStores();
     }
 }

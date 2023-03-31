@@ -59,14 +59,4 @@ class AvailabilityToStoreFacadeBridge implements AvailabilityToStoreFacadeInterf
     {
         return $this->storeFacade->getStoreByName($storeName);
     }
-
-    /**
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
-     * @return array<\Generated\Shared\Transfer\StoreTransfer>
-     */
-    public function getStoresWithSharedPersistence(StoreTransfer $storeTransfer): array
-    {
-        return $this->storeFacade->getStoresWithSharedPersistence($storeTransfer);
-    }
 }

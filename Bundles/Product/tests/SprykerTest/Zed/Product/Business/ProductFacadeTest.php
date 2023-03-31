@@ -29,6 +29,7 @@ use Spryker\Zed\Product\Dependency\Facade\ProductToEventInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToMessageBrokerInterfrace;
 use Spryker\Zed\Product\Dependency\ProductEvents;
 use Spryker\Zed\Product\ProductDependencyProvider;
+use Spryker\Zed\Store\StoreDependencyProvider;
 
 /**
  * Auto-generated group annotations
@@ -454,6 +455,7 @@ class ProductFacadeTest extends Unit
     public function testProductsSuccessfullyPublishedToMessageBroker(): void
     {
         // Arrange
+        $this->tester->setDependency(StoreDependencyProvider::PLUGINS_STORE_COLLECTION_EXPANDER, []);
         $concreteProduct = $this->tester->haveFullProduct();
 
         $productPublisherConfigTransfer = (new ProductPublisherConfigTransfer())
@@ -477,6 +479,7 @@ class ProductFacadeTest extends Unit
     public function testProductCreatedEventSuccessfullyPublishedToMessageBroker(): void
     {
         // Arrange
+        $this->tester->setDependency(StoreDependencyProvider::PLUGINS_STORE_COLLECTION_EXPANDER, []);
         $concreteProduct = $this->tester->haveFullProduct();
 
         $productPublisherConfigTransfer = (new ProductPublisherConfigTransfer())
@@ -500,6 +503,7 @@ class ProductFacadeTest extends Unit
     public function testProductUpdatedEventSuccessfullyPublishedToMessageBroker(): void
     {
         // Arrange
+        $this->tester->setDependency(StoreDependencyProvider::PLUGINS_STORE_COLLECTION_EXPANDER, []);
         $concreteProduct = $this->tester->haveFullProduct();
 
         $productPublisherConfigTransfer = (new ProductPublisherConfigTransfer())

@@ -12,7 +12,7 @@ class UnitedStatesRegionInstaller implements RegionInstallInterface
     /**
      * @return array<string>
      */
-    public function getCodeArray()
+    public function getCodeArray(): array
     {
         return [
             'US-AL' => 'Alabama',
@@ -72,7 +72,7 @@ class UnitedStatesRegionInstaller implements RegionInstallInterface
     /**
      * @return string
      */
-    public function getCountryIso()
+    public function getCountryIso(): string
     {
         return 'US';
     }

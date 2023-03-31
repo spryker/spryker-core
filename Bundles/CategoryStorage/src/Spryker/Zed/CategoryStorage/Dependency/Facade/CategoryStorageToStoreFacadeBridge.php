@@ -25,8 +25,8 @@ class CategoryStorageToStoreFacadeBridge implements CategoryStorageToStoreFacade
     /**
      * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
-    public function getStoresAvailableForCurrentPersistence(): array
+    public function getAllStores(): array
     {
-        return $this->storeFacade->getStoresAvailableForCurrentPersistence();
+        return $this->storeFacade->getAllStores();
     }
 }

@@ -17,6 +17,7 @@
     "require-dev": {
         "spryker/application": "*",
         "spryker/code-sniffer": "*",
+        "spryker/container": "*",
         "spryker/customer": "*",
         "spryker/price-cart-connector": "*",
         "spryker/price-product": "*",
@@ -24,6 +25,8 @@
         "spryker/product": "*",
         "spryker/product-cart-connector": "*",
         "spryker/propel": "*",
+        "spryker/store": "*",
+        "spryker/store-storage": "*",
         "spryker/testify": "*"
     },
     "suggest": {

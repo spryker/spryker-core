@@ -9,9 +9,14 @@ namespace SprykerTest\Zed\Store\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\StoreCollectionTransfer;
+use Generated\Shared\Transfer\StoreConditionsTransfer;
+use Generated\Shared\Transfer\StoreCriteriaTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Shared\Store\Dependency\Adapter\StoreToStoreInterface;
 use Spryker\Zed\Store\Business\Exception\StoreReferenceNotFoundException;
 use Spryker\Zed\Store\Business\StoreFacade;
+use Spryker\Zed\Store\StoreDependencyProvider;
 
 /**
  * Auto-generated group annotations
@@ -30,6 +35,18 @@ class StoreFacadeTest extends Unit
      * @var string
      */
     public const DEFAULT_STORE_NAME = 'DE';
+
+    /**
+     * @var string
+     */
+    protected const US_STORE_NAME = 'US';
+
+    /**
+     * @uses \Spryker\Zed\Store\Business\Writer\StoreWriter::ERROR_MESSAGE_NAME_IS_NOT_UNIQUE
+     *
+     * @var string
+     */
+    protected const ERROR_MESSAGE_NAME_IS_NOT_UNIQUE = 'A store with the same name already exists.';
 
     /**
      * @var string
@@ -57,6 +74,10 @@ class StoreFacadeTest extends Unit
             'DE' => 'dev-DE',
             'AT' => 'dev-AT',
         ]);
+        $this->tester->setDependency(
+            StoreDependencyProvider::STORE_CURRENT,
+            static::DEFAULT_STORE_NAME,
+        );
     }
 
     /**
@@ -64,14 +85,17 @@ class StoreFacadeTest extends Unit
      */
     public function testGetCurrentStoreShouldReturnCurrentStoreTransfer(): void
     {
-        $storeFacade = $this->createStoreFacade();
+        // Arrange
+        $this->tester->haveStore([StoreTransfer::NAME => static::DEFAULT_STORE_NAME]);
+        $this->tester->setDependency(StoreDependencyProvider::STORE_CURRENT, static::DEFAULT_STORE_NAME);
 
-        $storeTransfer = $storeFacade->getCurrentStore();
+        // Act
+        $storeTransfer = $this->createStoreFacade()->getCurrentStore();
 
+        // Assert
         $this->assertInstanceOf(StoreTransfer::class, $storeTransfer);
         $this->assertNotEmpty($storeTransfer->getName());
         $this->assertNotEmpty($storeTransfer->getIdStore());
-        $this->assertNotEmpty($storeTransfer->getStoreReference());
     }
 
     /**
@@ -79,10 +103,13 @@ class StoreFacadeTest extends Unit
      */
     public function testGetAllStoresShouldReturnAllStore(): void
     {
+        //Arrange
         $storeFacade = $this->createStoreFacade();
 
+        //Act
         $stores = $storeFacade->getAllStores();
 
+        //Assert
         $this->assertIsArray($stores);
     }
 
@@ -91,10 +118,13 @@ class StoreFacadeTest extends Unit
      */
     public function testGetStoreByIdShouldReturnStoreFromPersistence(): void
     {
+        //Arrange
         $storeFacade = $this->createStoreFacade();
 
+        //Act
         $storeTransfer = $storeFacade->getStoreById(1);
 
+        //Assert
         $this->assertInstanceOf(StoreTransfer::class, $storeTransfer);
         $this->assertNotEmpty($storeTransfer->getName());
         $this->assertNotEmpty($storeTransfer->getIdStore());
@@ -106,14 +136,185 @@ class StoreFacadeTest extends Unit
      */
     public function testGetStoreByNameShouldReturnStore(): void
     {
+        //Arrange
         $storeFacade = $this->createStoreFacade();
+
+        //Act
         $storeTransfer = $storeFacade->getStoreByName(static::DEFAULT_STORE_NAME);
 
+        //Assert
         $this->assertInstanceOf(StoreTransfer::class, $storeTransfer);
-
         $this->assertSame(static::DEFAULT_STORE_NAME, $storeTransfer->getName());
         $this->assertSame(static::DEFAULT_STORE_REFERENCE, $storeTransfer->getStoreReference());
         $this->assertNotEmpty($storeTransfer->getIdStore());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindStoreByNameShouldReturnStore(): void
+    {
+        //Arrange
+        $storeFacade = $this->createStoreFacade();
+
+        //Act
+        $storeTransfer = $storeFacade->findStoreByName(static::DEFAULT_STORE_NAME);
+
+        //Assert
+        $this->assertInstanceOf(StoreTransfer::class, $storeTransfer);
+        $this->assertSame(static::DEFAULT_STORE_NAME, $storeTransfer->getName());
+        $this->assertNotEmpty($storeTransfer->getIdStore());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindStoreByWrongNameShouldReturnNull(): void
+    {
+        //Arrange
+        $storeFacade = $this->createStoreFacade();
+
+        //Act
+        $storeTransfer = $storeFacade->findStoreByName('NullName');
+
+        //Assert
+        $this->assertNull($storeTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetStoreTransfersByStoreNamesReturnStores(): void
+    {
+        //Arrange
+        $this->tester->setDependency(StoreDependencyProvider::PLUGINS_STORE_COLLECTION_EXPANDER, []);
+        $storeFacade = $this->createStoreFacade();
+        $storeNames = [
+            static::DEFAULT_STORE_NAME,
+            static::ALTERNATIVE_STORE_NAME,
+        ];
+
+        //Act
+        $storeTransfers = $storeFacade->getStoreTransfersByStoreNames($storeNames);
+
+        //Assert
+        $this->assertEquals(static::DEFAULT_STORE_NAME, $storeTransfers[0]->getName());
+        $this->assertEquals(static::ALTERNATIVE_STORE_NAME, $storeTransfers[1]->getName());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateStoreShouldReturnCreatedStore(): void
+    {
+        //Arrange
+        $storeFacade = $this->createStoreFacade();
+        $storeTransfer = (new StoreTransfer())->setName('NEW_NAME');
+        $storeTransfer->setAvailableCurrencyIsoCodes([
+            'EUR',
+            'USD',
+        ]);
+        $storeTransfer->setAvailableLocaleIsoCodes([
+            'de_DE',
+            'en_US',
+        ]);
+
+        //Act
+        $storeResponseTransfer = $storeFacade->createStore($storeTransfer);
+
+        //Assert
+        $this->assertTrue($storeResponseTransfer->getIsSuccessful());
+        $this->assertNotNull($storeResponseTransfer->getStoreOrFail()->getAvailableCurrencyIsoCodes());
+        $this->assertNotNull($storeResponseTransfer->getStoreOrFail()->getAvailableLocaleIsoCodes());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateStoreCurrencyShouldReturnUpdatedData(): void
+    {
+        //Arrange
+        $storeFacade = $this->createStoreFacade();
+        $storeTransfer = $storeFacade->getStoreByName(static::DEFAULT_STORE_NAME);
+
+        $currencies = [
+            'EUR',
+            'USD',
+        ];
+        $storeTransfer->setAvailableCurrencyIsoCodes($currencies);
+
+        //Act
+        $storeResponseTransfer = $storeFacade->updateStore($storeTransfer);
+
+        //Assert
+        $this->assertTrue($storeResponseTransfer->getIsSuccessful());
+        $this->assertSame($currencies, $storeResponseTransfer->getStoreOrFail()->getAvailableCurrencyIsoCodes());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateStoreLocaleShouldReturnUpdatedData(): void
+    {
+        //Arrange
+        $storeFacade = $this->createStoreFacade();
+        $storeTransfer = $storeFacade->getStoreByName(static::DEFAULT_STORE_NAME);
+
+        $locales = [
+            'en_GB',
+            'de_AT',
+        ];
+        $storeTransfer->setAvailableLocaleIsoCodes($locales);
+
+        //Act
+        $storeResponseTransfer = $storeFacade->updateStore($storeTransfer);
+
+        //Assert
+        $this->assertTrue($storeResponseTransfer->getIsSuccessful());
+        $this->assertSame($locales, $storeResponseTransfer->getStoreOrFail()->getAvailableLocaleIsoCodes());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateStoreShouldReturnUpdatedStore(): void
+    {
+        //Arrange
+        $storeFacade = $this->createStoreFacade();
+        $storeTransfer = $storeFacade->getStoreByName(static::DEFAULT_STORE_NAME);
+
+        //Act
+        $storeResponseTransfer = $storeFacade->updateStore($storeTransfer);
+
+        //Assert
+        $resultStore = $storeResponseTransfer->getStore();
+        $this->assertTrue($storeResponseTransfer->getIsSuccessful());
+        $this->assertSame($storeTransfer->getIdStore(), $resultStore->getIdStore());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetStoreCollectionByCriteriaShouldReturnStore(): void
+    {
+        //Arrange
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::DEFAULT_STORE_NAME]);
+        $this->tester->setDependency(StoreDependencyProvider::STORE, $this->getStoreToStoreInterface());
+        $storeFacade = $this->createStoreFacade();
+        $storeCriteriaTransfer = (new StoreCriteriaTransfer())
+            ->setStoreConditions((new StoreConditionsTransfer())
+                ->setStoreIds([$storeTransfer->getIdStoreOrFail()]));
+
+        //Act
+        $storeCollectionTransfer = $storeFacade->getStoreCollection($storeCriteriaTransfer);
+
+        //Assert
+        $this->assertInstanceOf(StoreCollectionTransfer::class, $storeCollectionTransfer);
+        $foundStoreTransfers = $storeCollectionTransfer->getStores()->getArrayCopy();
+
+        $this->assertCount(1, $foundStoreTransfers);
+        $this->assertSame($storeTransfer->getNameOrFail(), $foundStoreTransfers[0]->getName());
+        $this->assertSame($storeTransfer->getIdStoreOrFail(), $foundStoreTransfers[0]->getIdStore());
     }
 
     /**
@@ -185,10 +386,16 @@ class StoreFacadeTest extends Unit
     }
 
     /**
+     * @deprecated Will be removed after dynamic multi-store is always enabled.
+     *
      * @return void
      */
     public function testGetStoresAvailableForCurrentPersistenceWillReturnCurrentStoreWithSharedStores(): void
     {
+        if ($this->isDynamicStoreEnabled()) {
+            $this->markTestSkipped('Test is not applicable for dynamic store due to different store configuration.');
+        }
+
         // Arrange
         $storeFacade = $this->createStoreFacade();
 
@@ -209,6 +416,25 @@ class StoreFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testCreateStoreWithNotUniqueName(): void
+    {
+        // Arrange
+        $storeTransfer = (new StoreTransfer())->setName(static::DEFAULT_STORE_NAME);
+
+        // Act
+        $storeResponseTransfer = $this->createStoreFacade()->createStore($storeTransfer);
+
+        // Assert
+        $this->assertFalse($storeResponseTransfer->getIsSuccessful());
+        $this->assertSame(
+            static::ERROR_MESSAGE_NAME_IS_NOT_UNIQUE,
+            $storeResponseTransfer->getMessages()[0]->getValue(),
+        );
+    }
+
+    /**
+     * @return void
+     */
     public function testGetStoreByStoreReferenceReturnsExpectedTransferWhenInputArgumentIsCorrect(): void
     {
         // Arrange
@@ -220,6 +446,23 @@ class StoreFacadeTest extends Unit
         // Assert
         $this->assertSame(static::DEFAULT_STORE_REFERENCE, $storeTransfer->getStoreReference());
         $this->assertSame(static::DEFAULT_STORE_NAME, $storeTransfer->getName());
+    }
+
+    /**
+     * @return void
+     */
+    public function testStoreNameIsReadOnlyAndCannotBeUpdated(): void
+    {
+        // Arrange
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::DEFAULT_STORE_NAME]);
+        $storeTransfer->setName(static::US_STORE_NAME);
+
+        // Act
+        $storeResponseTransfer = $this->createStoreFacade()->updateStore($storeTransfer);
+
+        // Assert
+        $this->assertTrue($storeResponseTransfer->getIsSuccessful());
+        $this->assertSame($storeTransfer->getName(), static::DEFAULT_STORE_NAME);
     }
 
     /**
@@ -275,6 +518,8 @@ class StoreFacadeTest extends Unit
     public function testMessageTransferValidationFailsWhenStoreReferenceMismatch(): void
     {
         // Arrange
+        $this->tester->setDependency(StoreDependencyProvider::PLUGINS_STORE_COLLECTION_EXPANDER, []);
+
         $storeFacade = $this->createStoreFacade();
         $storeTransfer = $storeFacade->getStoreByName(static::ALTERNATIVE_STORE_NAME);
         $messageTransfer = $this->tester->createMessageBrokerTestMessageTransfer($storeTransfer->getStoreReference());
@@ -326,14 +571,6 @@ class StoreFacadeTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\Store\Business\StoreFacade
-     */
-    protected function createStoreFacade(): StoreFacade
-    {
-        return new StoreFacade();
-    }
-
-    /**
      * @return void
      */
     public function testAccessTokenRequestNotExpandedWithStoreReferenceWhenItsMissing(): void
@@ -371,5 +608,29 @@ class StoreFacadeTest extends Unit
         // Assert
         $this->assertNotNull($accessTokenRequestTransfer->getAccessTokenRequestOptions()->getStoreReference());
         $this->assertEquals($storeReference, $accessTokenRequestTransfer->getAccessTokenRequestOptions()->getStoreReference());
+    }
+
+    /**
+     * @return \Spryker\Zed\Store\Business\StoreFacade
+     */
+    protected function createStoreFacade(): StoreFacade
+    {
+        return new StoreFacade();
+    }
+
+    /**
+     * @return \Spryker\Shared\Store\Dependency\Adapter\StoreToStoreInterface
+     */
+    protected function getStoreToStoreInterface(): StoreToStoreInterface
+    {
+        return $this->getMockBuilder(StoreToStoreInterface::class)->getMock();
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isDynamicStoreEnabled(): bool
+    {
+        return (bool)getenv('SPRYKER_DYNAMIC_STORE_MODE');
     }
 }

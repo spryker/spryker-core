@@ -8,6 +8,7 @@
         <property name="subject" type="string"/>
         <property name="templates" type="MailTemplate[]" singular="template"/>
         <property name="recipients" type="MailRecipient[]" singular="recipient"/>
+        <property name="storeName" type="string"/>
     </transfer>
 
     <transfer name="Address">
@@ -84,6 +85,7 @@
         <property name="username" type="string"/>
         <property name="phone" type="string"/>
         <property name="isDirty" type="bool"/>
+        <property name="storeName" type="string"/>
     </transfer>
 
     <transfer name="CustomerError">

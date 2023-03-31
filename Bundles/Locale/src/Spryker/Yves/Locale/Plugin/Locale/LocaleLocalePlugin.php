@@ -25,6 +25,11 @@ class LocaleLocalePlugin extends AbstractPlugin implements LocalePluginInterface
     public const REQUEST_URI = 'REQUEST_URI';
 
     /**
+     * @var string
+     */
+    protected const STORE = 'store';
+
+    /**
      * {@inheritDoc}
      *
      * @api
@@ -35,38 +40,44 @@ class LocaleLocalePlugin extends AbstractPlugin implements LocalePluginInterface
      */
     public function getLocaleTransfer(ContainerInterface $container): LocaleTransfer
     {
-        return $this->buildLocaleTransfer();
+        return $this->buildLocaleTransfer($container->get(static::STORE));
     }
 
     /**
+     * @param string|null $storeName
+     *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    protected function buildLocaleTransfer(): LocaleTransfer
+    protected function buildLocaleTransfer(?string $storeName = null): LocaleTransfer
     {
         $localeTransfer = new LocaleTransfer();
-        $localeTransfer->setLocaleName($this->getLocaleName());
+        $localeTransfer->setLocaleName($this->getLocaleName($storeName));
 
         return $localeTransfer;
     }
 
     /**
+     * @param string|null $storeName
+     *
      * @return string
      */
-    protected function getLocaleName(): string
+    protected function getLocaleName(?string $storeName = null): string
     {
-        $currentLocale = $this->getClient()->getCurrentLocale();
-
         $requestUri = $this->getRequestUri();
-
+        $locales = $this->getClient()->getLocales();
         if ($requestUri) {
-            $locales = $this->getFactory()->getStore()->getLocales();
             $localeCode = $this->extractLocaleCode($requestUri);
-            if ($localeCode !== false && isset($locales[$localeCode])) {
+            if (isset($locales[$localeCode])) {
                 return $locales[$localeCode];
             }
         }
+        if ($storeName !== null && $this->getFactory()->getStoreClient()->isDynamicStoreEnabled()) {
+            $storeTransfer = $this->getFactory()->getStoreClient()->getStoreByName($storeName);
 
-        return $currentLocale;
+            return $storeTransfer->getDefaultLocaleIsoCodeOrFail();
+        }
+
+        return (string)current($locales);
     }
 
     /**

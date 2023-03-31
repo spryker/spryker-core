@@ -8,7 +8,6 @@
 namespace Spryker\Shared\Currency\Persistence;
 
 use Spryker\Shared\Currency\Dependency\Client\CurrencyToSessionInterface;
-use Spryker\Shared\Kernel\Store;
 
 class CurrencyPersistence implements CurrencyPersistenceInterface
 {
@@ -23,18 +22,18 @@ class CurrencyPersistence implements CurrencyPersistenceInterface
     protected $sessionClient;
 
     /**
-     * @var \Spryker\Shared\Kernel\Store
+     * @var string
      */
-    protected $store;
+    protected $defaultIsoCode;
 
     /**
      * @param \Spryker\Shared\Currency\Dependency\Client\CurrencyToSessionInterface $sessionClient
-     * @param \Spryker\Shared\Kernel\Store $store
+     * @param string $defaultIsoCode
      */
-    public function __construct(CurrencyToSessionInterface $sessionClient, Store $store)
+    public function __construct(CurrencyToSessionInterface $sessionClient, string $defaultIsoCode)
     {
         $this->sessionClient = $sessionClient;
-        $this->store = $store;
+        $this->defaultIsoCode = $defaultIsoCode;
     }
 
     /**
@@ -42,7 +41,7 @@ class CurrencyPersistence implements CurrencyPersistenceInterface
      *
      * @return void
      */
-    public function setCurrentCurrencyIsoCode($currencyIsoCode)
+    public function setCurrentCurrencyIsoCode(string $currencyIsoCode): void
     {
         $this->sessionClient->set(static::CURRENT_CURRENCY_ISO_CODE, $currencyIsoCode);
     }
@@ -50,11 +49,11 @@ class CurrencyPersistence implements CurrencyPersistenceInterface
     /**
      * @return string
      */
-    public function getCurrentCurrencyIsoCode()
+    public function getCurrentCurrencyIsoCode(): string
     {
         $currentCurrencyIsoCode = $this->sessionClient->get(static::CURRENT_CURRENCY_ISO_CODE);
         if (!$currentCurrencyIsoCode) {
-            return $this->store->getCurrencyIsoCode();
+            return $this->defaultIsoCode;
         }
 
         return $currentCurrencyIsoCode;

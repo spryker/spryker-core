@@ -1,6 +1,5 @@
 parameters:
-    level: 7
-    checkMissingIterableValueType: false
+    level: 8
+    checkMissingIterableValueType: true
     ignoreErrors:
-        - '#Cannot access offset string on Spryker\\Service\\Container\\ContainerInterface.#'
-        - '#Call to an undefined method Spryker\\Shared\\Kernel\\Transfer\\TransferInterface::getMessageAttributes\(\).#'
+        - '#Method Spryker\\Zed\\Store\\Communication\\Plugin\\MessageBroker\\StoreReferenceMessageValidatorPlugin::isValid\(\) should return bool but returns bool\|null.#'

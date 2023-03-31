@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\PriceProductScheduleGui\Communication\Table;
 
-use DateTimeZone;
 use Orm\Zed\PriceProductSchedule\Persistence\Map\SpyPriceProductScheduleListTableMap;
 use Orm\Zed\PriceProductSchedule\Persistence\Map\SpyPriceProductScheduleTableMap;
 use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleList;
@@ -17,7 +16,7 @@ use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToStoreFacadeInterface;
+use Spryker\Zed\PriceProductScheduleGui\Dependency\Service\PriceProductScheduleGuiToUtilDateTimeServiceInterface;
 
 class PriceProductScheduleListTable extends AbstractTable
 {
@@ -187,20 +186,20 @@ class PriceProductScheduleListTable extends AbstractTable
     protected $priceProductScheduleListQuery;
 
     /**
-     * @var \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToStoreFacadeInterface
+     * @var \Spryker\Zed\PriceProductScheduleGui\Dependency\Service\PriceProductScheduleGuiToUtilDateTimeServiceInterface
      */
-    protected $storeFacade;
+    protected $utilDateTimeService;
 
     /**
      * @param \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleListQuery $priceProductScheduleListQuery
-     * @param \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToStoreFacadeInterface $storeFacade
+     * @param \Spryker\Zed\PriceProductScheduleGui\Dependency\Service\PriceProductScheduleGuiToUtilDateTimeServiceInterface $utilDateTimeService
      */
     public function __construct(
         SpyPriceProductScheduleListQuery $priceProductScheduleListQuery,
-        PriceProductScheduleGuiToStoreFacadeInterface $storeFacade
+        PriceProductScheduleGuiToUtilDateTimeServiceInterface $utilDateTimeService
     ) {
         $this->priceProductScheduleListQuery = $priceProductScheduleListQuery;
-        $this->storeFacade = $storeFacade;
+        $this->utilDateTimeService = $utilDateTimeService;
     }
 
     /**
@@ -318,12 +317,10 @@ class PriceProductScheduleListTable extends AbstractTable
      */
     protected function prepareImportedByField(SpyPriceProductScheduleList $priceProductScheduleListEntity): string
     {
-        $storeTransfer = $this->storeFacade->getCurrentStore();
-        $defaultStoreTimezone = new DateTimeZone($storeTransfer->getTimezone());
-        /** @var \DateTime $createdAt */
-        $createdAt = $priceProductScheduleListEntity->getCreatedAt();
-        $createdAtString = $createdAt->setTimezone($defaultStoreTimezone)
-            ->format(static::PATTERN_DATE_TIME);
+        $createdAtString = $this->utilDateTimeService->formatDateTimeToCustomFormat(
+            $priceProductScheduleListEntity->getCreatedAt(),
+            static::PATTERN_DATE_TIME,
+        );
         $userFullName = static::DEFAULT_IMPORTED_BY_VALUE;
 
         $userEntity = $priceProductScheduleListEntity->getUser();

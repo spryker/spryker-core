@@ -73,7 +73,7 @@ class StorageHelperTest extends Unit
     {
         $storageKey = $this->getStorageKey();
 
-        $this->getStorageHelper()->getStorageClient()->set($storageKey, static::STORAGE_VALUE);
+        $this->getStorageHelper()->mockStorageData($storageKey, static::STORAGE_VALUE);
         $this->getStorageHelper()->assertStorageHasKey($storageKey);
     }
 

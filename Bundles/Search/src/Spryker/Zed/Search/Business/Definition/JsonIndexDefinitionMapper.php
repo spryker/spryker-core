@@ -71,13 +71,11 @@ class JsonIndexDefinitionMapper implements IndexDefinitionMapperInterface
     ): IndexDefinitionFileTransfer {
         $decodedContent = $this->utilEncodingService->decodeJson($splFileInfo->getContents(), true);
         $storePrefix = $this->getFileNameStorePrefix($splFileInfo->getFilename(), $storePrefixes);
-        /** @var string $realPath */
-        $realPath = $splFileInfo->getRealPath();
 
         return $indexDefinitionFileTransfer
             ->setFileName($splFileInfo->getFilename())
             ->setContent($decodedContent)
-            ->setRealPath($realPath)
+            ->setRealPath($splFileInfo->getRealPath())
             ->setStorePrefix($storePrefix);
     }
 

@@ -15,7 +15,6 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\Locale\Communication\LocaleCommunicationFactory getFactory()
  * @method \Spryker\Zed\Locale\LocaleConfig getConfig()
  * @method \Spryker\Zed\Locale\Business\LocaleFacadeInterface getFacade()
- * @method \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface getQueryContainer()
  */
 class LocaleApplicationPlugin extends AbstractPlugin implements ApplicationPluginInterface
 {
@@ -47,9 +46,7 @@ class LocaleApplicationPlugin extends AbstractPlugin implements ApplicationPlugi
         $container->set(static::SERVICE_LOCALE, function (ContainerInterface $container): string {
             $localeTransfer = $this->getFactory()->getLocalePlugin()->getLocaleTransfer($container);
 
-            $this->getFacade()->setCurrentLocale($localeTransfer);
-
-            return $localeTransfer->getLocaleName();
+            return $localeTransfer->getLocaleNameOrFail();
         });
 
         return $container;

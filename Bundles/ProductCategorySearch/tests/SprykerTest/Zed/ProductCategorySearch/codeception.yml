@@ -28,6 +28,8 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
                 - \SprykerTest\Shared\Product\Helper\ProductDataHelper
                 - \SprykerTest\Zed\Category\Helper\CategoryDataHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
                 - \SprykerTest\Shared\Store\Helper\StoreDataHelper
                 - \SprykerTest\Zed\ProductCategory\Helper\AssignHelper
                 - \SprykerTest\Zed\Locale\Helper\LocaleDataHelper

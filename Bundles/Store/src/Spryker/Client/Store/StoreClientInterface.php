@@ -24,6 +24,7 @@ interface StoreClientInterface
     /**
      * Specification:
      * - Retrieves a Store as a transfer object.
+     * - Executes stack of {@link \Spryker\Client\StoreExtension\Dependency\Plugin\StoreExpanderPluginInterface} plugins.
      *
      * @api
      *
@@ -32,4 +33,24 @@ interface StoreClientInterface
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
     public function getStoreByName(string $storeName): StoreTransfer;
+
+    /**
+     * Specification:
+     * - Returns true if dynamic store functionality enabled.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isDynamicStoreEnabled(): bool;
+
+    /**
+     * Specification:
+     * - Returns true if the current store is provided in the application.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isCurrentStoreDefined(): bool;
 }

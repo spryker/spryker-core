@@ -21,7 +21,9 @@
     },
     "require-dev": {
         "spryker/code-sniffer": "*",
+        "spryker/event": "*",
         "spryker/propel": "*",
+        "spryker/publisher": "*",
         "spryker/queue": "*",
         "spryker/testify": "*"
     },

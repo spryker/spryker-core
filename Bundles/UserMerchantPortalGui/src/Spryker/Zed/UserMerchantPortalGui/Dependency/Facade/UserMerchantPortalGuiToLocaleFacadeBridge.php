@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\UserMerchantPortalGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\LocaleCriteriaTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 
 class UserMerchantPortalGuiToLocaleFacadeBridge implements UserMerchantPortalGuiToLocaleFacadeInterface
@@ -25,6 +26,24 @@ class UserMerchantPortalGuiToLocaleFacadeBridge implements UserMerchantPortalGui
     }
 
     /**
+     * @param \Generated\Shared\Transfer\LocaleCriteriaTransfer|null $localeCriteriaTransfer
+     *
+     * @return array<\Generated\Shared\Transfer\LocaleTransfer>
+     */
+    public function getLocaleCollection(?LocaleCriteriaTransfer $localeCriteriaTransfer = null): array
+    {
+        return $this->localeFacade->getLocaleCollection($localeCriteriaTransfer);
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    public function getSupportedLocaleCodes(): array
+    {
+        return $this->localeFacade->getSupportedLocaleCodes();
+    }
+
+    /**
      * @return array<string>
      */
     public function getAvailableLocales(): array
@@ -40,15 +59,5 @@ class UserMerchantPortalGuiToLocaleFacadeBridge implements UserMerchantPortalGui
     public function getLocaleById(int $idLocale): LocaleTransfer
     {
         return $this->localeFacade->getLocaleById($idLocale);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return \Generated\Shared\Transfer\LocaleTransfer
-     */
-    public function setCurrentLocale(LocaleTransfer $localeTransfer): LocaleTransfer
-    {
-        return $this->localeFacade->setCurrentLocale($localeTransfer);
     }
 }

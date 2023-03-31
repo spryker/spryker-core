@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\Store\Reader;
 
+/**
+ * @deprecated Will be removed after dynamic multi-store is always enabled.
+ */
 interface StoreReaderInterface
 {
     /**
@@ -15,9 +18,4 @@ interface StoreReaderInterface
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
     public function getStoreByName($storeName);
-
-    /**
-     * @return \Generated\Shared\Transfer\StoreTransfer
-     */
-    public function getCurrentStore();
 }

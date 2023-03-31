@@ -11,6 +11,8 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
+ * @deprecated Will be removed without replacement.
+ *
  * @method \Spryker\Zed\Store\Persistence\StorePersistenceFactory getFactory()
  */
 class StoreQueryContainer extends AbstractQueryContainer implements StoreQueryContainerInterface
@@ -36,7 +38,7 @@ class StoreQueryContainer extends AbstractQueryContainer implements StoreQueryCo
      *
      * @api
      *
-     * @param array $stores
+     * @param array<string> $stores
      *
      * @return \Orm\Zed\Store\Persistence\SpyStoreQuery
      */

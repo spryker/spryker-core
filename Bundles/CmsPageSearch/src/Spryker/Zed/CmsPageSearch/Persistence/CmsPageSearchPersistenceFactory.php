@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CmsPageSearch\Persistence;
 
 use Orm\Zed\CmsPageSearch\Persistence\SpyCmsPageSearchQuery;
+use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
 use Spryker\Zed\CmsPageSearch\CmsPageSearchDependencyProvider;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
@@ -26,11 +27,11 @@ class CmsPageSearchPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @return \Spryker\Zed\CmsPageSearch\Dependency\QueryContainer\CmsPageSearchToLocaleQueryContainerInterface
+     * @return \Orm\Zed\Locale\Persistence\SpyLocaleQuery
      */
-    public function getLocaleQueryContainer()
+    public function getLocalePropelQuery(): SpyLocaleQuery
     {
-        return $this->getProvidedDependency(CmsPageSearchDependencyProvider::QUERY_CONTAINER_LOCALE);
+        return $this->getProvidedDependency(CmsPageSearchDependencyProvider::PROPEL_QUERY_LOCALE);
     }
 
     /**

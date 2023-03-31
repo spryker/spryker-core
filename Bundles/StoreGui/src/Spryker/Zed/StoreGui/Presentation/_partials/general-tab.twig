@@ -1,0 +1,9 @@
+{% block content %}
+
+    <div class="well">
+            <h3>{{ 'Important' | trans }}</h3>
+            <p>{{ 'Store Name is not editable after creation. Store is not deletable after creation, please refer to Spryker documentation.' | trans }}</p>
+    </div>
+
+    {{ form_row(form.name) }}
+{% endblock %}

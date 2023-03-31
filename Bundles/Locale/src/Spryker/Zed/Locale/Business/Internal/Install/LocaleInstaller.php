@@ -7,9 +7,10 @@
 
 namespace Spryker\Zed\Locale\Business\Internal\Install;
 
-use Orm\Zed\Locale\Persistence\SpyLocale;
+use LogicException;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
-use Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface;
+use Spryker\Zed\Locale\Persistence\LocaleEntityManagerInterface;
+use Spryker\Zed\Locale\Persistence\LocaleRepositoryInterface;
 
 class LocaleInstaller implements LocaleInstallerInterface
 {
@@ -21,32 +22,34 @@ class LocaleInstaller implements LocaleInstallerInterface
     protected $localeFile;
 
     /**
-     * @var \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface
+     * @var \Spryker\Zed\Locale\Persistence\LocaleRepositoryInterface
      */
-    protected $localeQueryContainer;
+    protected $localeRepository;
 
     /**
-     * @param \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface $localeQueryContainer
+     * @var \Spryker\Zed\Locale\Persistence\LocaleEntityManagerInterface
+     */
+    protected $localeEntityManager;
+
+    /**
      * @param string $localeFile
+     * @param \Spryker\Zed\Locale\Persistence\LocaleRepositoryInterface $localeRepository
+     * @param \Spryker\Zed\Locale\Persistence\LocaleEntityManagerInterface $localeEntityManager
      */
-    public function __construct(LocaleQueryContainerInterface $localeQueryContainer, $localeFile)
-    {
+    public function __construct(
+        string $localeFile,
+        LocaleRepositoryInterface $localeRepository,
+        LocaleEntityManagerInterface $localeEntityManager
+    ) {
         $this->localeFile = $localeFile;
-        $this->localeQueryContainer = $localeQueryContainer;
+        $this->localeRepository = $localeRepository;
+        $this->localeEntityManager = $localeEntityManager;
     }
 
     /**
      * @return void
      */
-    public function install()
-    {
-        $this->installLocales();
-    }
-
-    /**
-     * @return void
-     */
-    protected function installLocales()
+    public function install(): void
     {
         $this->getTransactionHandler()->handleTransaction(function (): void {
             $this->executeInstallLocalesTransaction();
@@ -54,25 +57,31 @@ class LocaleInstaller implements LocaleInstallerInterface
     }
 
     /**
+     * @throws \LogicException
+     *
      * @return void
      */
     protected function executeInstallLocalesTransaction(): void
     {
-        /** @var resource $localeFile */
         $localeFile = fopen($this->localeFile, 'r');
 
+        if ($localeFile === false) {
+            throw new LogicException('Could not open file: ' . $this->localeFile);
+        }
+
         while (!feof($localeFile)) {
-            /** @var string $locale */
-            $locale = fgets($localeFile);
-            $locale = trim($locale);
+            $localeString = fgets($localeFile);
 
-            $query = $this->localeQueryContainer->queryLocaleByName($locale);
+            if ($localeString === false) {
+                throw new LogicException('Could not read from file: ' . $this->localeFile);
+            }
 
-            if (!$query->count()) {
-                $entity = new SpyLocale();
-                $entity->setLocaleName($locale);
-                $entity->setIsActive(1);
-                $entity->save();
+            $locale = trim($localeString);
+
+            $localesCount = $this->localeRepository->getLocalesCountByLocaleName($locale);
+
+            if (!$localesCount) {
+                $this->localeEntityManager->createLocale($locale);
             }
         }
     }

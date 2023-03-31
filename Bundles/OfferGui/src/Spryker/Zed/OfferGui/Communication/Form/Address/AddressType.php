@@ -328,13 +328,14 @@ class AddressType extends AbstractType
     /**
      * @return array
      */
-    protected function getCountryChoiceList()
+    protected function getCountryChoiceList(): array
     {
-        $sourceCountries = $this->getFactory()->getStoreFacade()->getCountries();
         $countries = [];
 
-        foreach ($sourceCountries as $iso2Code) {
-            $countries[$iso2Code] = $iso2Code;
+        foreach ($this->getFactory()->getStoreFacade()->getAllStores() as $storeTransfer) {
+            foreach ($storeTransfer->getCountries() as $iso2Code) {
+                $countries[$iso2Code] = $iso2Code;
+            }
         }
 
         return $countries;

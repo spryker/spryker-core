@@ -46,4 +46,12 @@ class ProductImageBusinessTester extends Actor
             ->setFkLocale($fkLocale)
             ->save();
     }
+
+    /**
+     * @return bool
+     */
+    public function isDynamicStoreEnabled(): bool
+    {
+        return (bool)getenv('SPRYKER_DYNAMIC_STORE_MODE');
+    }
 }

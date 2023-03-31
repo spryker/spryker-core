@@ -79,7 +79,7 @@ class AssetStoragePublishListenerTest extends Unit
                     'assetContent' => $this->assetTransfer->getAssetContent(),
                 ]],
             ],
-            'asset_slot:en:header-test' => [
+            'asset_slot:at:header-test' => [
                 'assetSlot' => AssetStorageCommunicationTester::ASSET_SLOT_DEFAULT,
                 'assets' => [[
                     'assetId' => $this->assetTransfer->getIdAsset(),

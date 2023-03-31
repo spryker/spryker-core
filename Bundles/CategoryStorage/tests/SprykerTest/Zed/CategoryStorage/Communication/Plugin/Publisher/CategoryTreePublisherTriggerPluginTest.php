@@ -25,6 +25,21 @@ use Spryker\Zed\CategoryStorage\Communication\Plugin\Publisher\CategoryTreePubli
 class CategoryTreePublisherTriggerPluginTest extends Unit
 {
     /**
+     * @var \SprykerTest\Zed\CategoryStorage\CategoryStorageCommunicationTester
+     */
+    protected $tester;
+
+    /**
+     * @return void
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->tester->addDependencies();
+    }
+
+    /**
      * @return void
      */
     public function testGetDataReturnsNotEmptyArrayWithZeroOffset(): void

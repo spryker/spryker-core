@@ -4,3 +4,5 @@ parameters:
     reportUnmatchedIgnoredErrors: false
     ignoreErrors:
         - '#Strict comparison using !== between null and null will always evaluate to false.#'
+        - '#Call to an undefined method Orm\\.+\\SpyProductGroupQuery::useSpyProductAbstractLocalizedAttributesQuery\(\)#'
+        - '#Call to an undefined method Orm\\.+\\SpyProductQuery::filterByFkProductAbstract\(\)#'

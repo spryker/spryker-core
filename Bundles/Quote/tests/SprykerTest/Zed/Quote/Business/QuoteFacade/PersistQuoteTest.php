@@ -13,6 +13,7 @@ use Generated\Shared\DataBuilder\DiscountBuilder;
 use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\TotalsBuilder;
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
@@ -63,10 +64,9 @@ class PersistQuoteTest extends Unit
     {
         // Arrange
         $customerTransfer = $this->tester->haveCustomer();
-        $currencyTransfer = $this->tester->getLocator()
-            ->currency()
-            ->facade()
-            ->getCurrent();
+        $currencyTransfer = (new CurrencyTransfer())
+            ->setCode('EUR');
+
         $storeTransfer = $this->tester->getLocator()
             ->store()
             ->facade()

@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\NavigationStorage\Dependency\Facade;
 
-use Generated\Shared\Transfer\StoreTransfer;
-
 class NavigationStorageToStoreFacadeBridge implements NavigationStorageToStoreFacadeInterface
 {
     /**
@@ -25,20 +23,10 @@ class NavigationStorageToStoreFacadeBridge implements NavigationStorageToStoreFa
     }
 
     /**
-     * @return \Generated\Shared\Transfer\StoreTransfer
-     */
-    public function getCurrentStore(): StoreTransfer
-    {
-        return $this->storeFacade->getCurrentStore();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
-     *
      * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
-    public function getStoresWithSharedPersistence(StoreTransfer $storeTransfer): array
+    public function getAllStores(): array
     {
-        return $this->storeFacade->getStoresWithSharedPersistence($storeTransfer);
+        return $this->storeFacade->getAllStores();
     }
 }

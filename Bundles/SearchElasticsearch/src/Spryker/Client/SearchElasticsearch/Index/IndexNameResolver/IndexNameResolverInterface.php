@@ -11,8 +11,9 @@ interface IndexNameResolverInterface
 {
     /**
      * @param string $sourceIdentifier
+     * @param string|null $storeName
      *
      * @return string
      */
-    public function resolve(string $sourceIdentifier): string;
+    public function resolve(string $sourceIdentifier, ?string $storeName = null): string;
 }

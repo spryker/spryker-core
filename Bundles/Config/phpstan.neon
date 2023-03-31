@@ -10,3 +10,4 @@ parameters:
         - '#Unsafe access to private property Spryker\\Shared\\Config\\Config::\$instance through static::.#'
         - '#Unsafe access to private property Spryker\\Shared\\Config\\Config::\$profiler through static::.#'
         - '#Unsafe call to private method Spryker\\Shared\\Config\\Config::getEnvironmentName\(\) through static::.#'
+        - '#Unsafe call to private method Spryker\\Shared\\Config\\Application\\Environment::defineLocale\(\) through static::.#'

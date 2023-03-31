@@ -45,9 +45,11 @@ class IndexDefinitionLoader implements IndexDefinitionLoaderInterface
     }
 
     /**
+     * @param string|null $storeName
+     *
      * @return array
      */
-    public function load(): array
+    public function load(?string $storeName = null): array
     {
         $indexDefinitions = [];
         $storePrefixedIndexDefinitions = [];
@@ -55,16 +57,17 @@ class IndexDefinitionLoader implements IndexDefinitionLoaderInterface
         foreach ($this->schemaDefinitionFinder->find() as $schemaDefinitionFile) {
             $sourceIdentifier = $this->getSourceIdentifierFromFile($schemaDefinitionFile);
 
-            if (!$this->sourceIdentifier->isSupported($sourceIdentifier)) {
+            if (!$this->sourceIdentifier->isSupported($sourceIdentifier, $storeName)) {
                 continue;
             }
 
             $indexDefinition = $this->buildIndexDefinition(
                 $sourceIdentifier,
                 $schemaDefinitionFile,
+                $storeName,
             );
 
-            if ($this->sourceIdentifier->isPrefixedWithStoreName($sourceIdentifier)) {
+            if ($this->sourceIdentifier->isPrefixedWithStoreName($sourceIdentifier, $storeName)) {
                  $storePrefixedIndexDefinitions[] = $indexDefinition;
 
                 continue;
@@ -92,13 +95,14 @@ class IndexDefinitionLoader implements IndexDefinitionLoaderInterface
     /**
      * @param string $sourceIdentifier
      * @param \Symfony\Component\Finder\SplFileInfo $schemaDefinitionFile
+     * @param string|null $storeName
      *
      * @return array
      */
-    protected function buildIndexDefinition(string $sourceIdentifier, SplFileInfo $schemaDefinitionFile): array
+    protected function buildIndexDefinition(string $sourceIdentifier, SplFileInfo $schemaDefinitionFile, ?string $storeName): array
     {
         return [
-            'name' => $this->sourceIdentifier->translateToIndexName($sourceIdentifier),
+            'name' => $this->sourceIdentifier->translateToIndexName($sourceIdentifier, $storeName),
             'definition' => $this->indexDefinitionReader->read($schemaDefinitionFile),
         ];
     }

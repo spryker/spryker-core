@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\PriceProductScheduleListTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceTypeTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Applier\AbstractProductPriceProductScheduleApplier;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule\Applier\ConcreteProductPriceProductScheduleApplier;
 use Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleBusinessFactory;
@@ -39,6 +40,11 @@ use Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig;
 class RemovePriceProductScheduleListTest extends Unit
 {
     /**
+     * @var string
+     */
+    protected const STORE_NAME_DE = 'DE';
+
+    /**
      * @var \SprykerTest\Zed\PriceProductSchedule\PriceProductScheduleBusinessTester
      */
     protected $tester;
@@ -60,7 +66,7 @@ class RemovePriceProductScheduleListTest extends Unit
         // Assign
         $productConcreteTransfer = $this->tester->haveProduct();
         $defaultPriceTypeTransfer = $this->tester->havePriceType();
-        $storeTransfer = $this->tester->haveStore();
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
 
         $currencyTransfer = $this->tester->haveCurrencyTransfer([CurrencyTransfer::CODE => 'test1']);
 
@@ -166,7 +172,7 @@ class RemovePriceProductScheduleListTest extends Unit
         // Assign
         $productConcreteTransfer = $this->tester->haveProduct();
         $defaultPriceTypeTransfer = $this->tester->havePriceType();
-        $storeTransfer = $this->tester->haveStore();
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
 
         $currencyTransfer = $this->tester->haveCurrencyTransfer([CurrencyTransfer::CODE => 'test1']);
 
@@ -273,7 +279,7 @@ class RemovePriceProductScheduleListTest extends Unit
         // Assign
         $productConcreteTransfer = $this->tester->haveProduct();
         $defaultPriceTypeTransfer = $this->tester->havePriceType();
-        $storeTransfer = $this->tester->haveStore();
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
 
         $currencyTransfer = $this->tester->haveCurrencyTransfer([CurrencyTransfer::CODE => 'test1']);
 
@@ -380,7 +386,7 @@ class RemovePriceProductScheduleListTest extends Unit
         // Assign
         $productConcreteTransfer = $this->tester->haveProduct();
         $defaultPriceTypeTransfer = $this->tester->havePriceType();
-        $storeTransfer = $this->tester->haveStore();
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
 
         $currencyTransfer = $this->tester->haveCurrencyTransfer([CurrencyTransfer::CODE => 'test1']);
 
@@ -485,7 +491,7 @@ class RemovePriceProductScheduleListTest extends Unit
         // Assign
         $productConcreteTransfer = $this->tester->haveProduct();
         $defaultPriceTypeTransfer = $this->tester->havePriceType();
-        $storeTransfer = $this->tester->haveStore();
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
 
         $currencyTransfer = $this->tester->haveCurrencyTransfer([CurrencyTransfer::CODE => 'test1']);
 

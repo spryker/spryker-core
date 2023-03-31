@@ -40,6 +40,10 @@ class ProductLabelCollectorFacadeTest extends Unit
      */
     public function testCollectRelationShouldWhenDeactivatedShouldRemoveInactiveRelations(): void
     {
+        if ($this->isDynamicStoreEnabled()) {
+            $this->markTestSkipped('Deprecated - Dynamic store mode enabled.');
+        }
+
         $productTransfer = $this->tester->haveProduct();
         $idProductAbstract = $productTransfer->getFkProductAbstract();
         $productLabelTransfer = $this->tester->haveProductLabel();
@@ -77,7 +81,7 @@ class ProductLabelCollectorFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\ProductLabel\Business\ProductLabelFacadeInterface
      */
-    public function getProductLabelFacade(): ProductLabelFacadeInterface
+    protected function getProductLabelFacade(): ProductLabelFacadeInterface
     {
         return $this->tester->getLocator()->productLabel()->facade();
     }
@@ -85,8 +89,18 @@ class ProductLabelCollectorFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\ProductLabelCollector\Business\ProductLabelCollectorFacadeInterface
      */
-    public function getProductLabelCollectorFacade(): ProductLabelCollectorFacadeInterface
+    protected function getProductLabelCollectorFacade(): ProductLabelCollectorFacadeInterface
     {
         return $this->tester->getLocator()->productLabelCollector()->facade();
+    }
+
+    /**
+     * @api
+     *
+     * @return bool
+     */
+    protected function isDynamicStoreEnabled(): bool
+    {
+        return (bool)getenv('SPRYKER_DYNAMIC_STORE_MODE');
     }
 }

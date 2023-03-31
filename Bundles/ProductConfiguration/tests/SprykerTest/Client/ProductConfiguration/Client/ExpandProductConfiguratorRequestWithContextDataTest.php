@@ -8,10 +8,18 @@
 namespace SprykerTest\Client\ProductConfiguration\Client;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorRequestDataTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorRequestTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Client\Price\Dependency\Client\PriceToQuoteClientInterface;
+use Spryker\Client\Price\PriceDependencyProvider;
+use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToCurrencyClientInterface;
 use Spryker\Client\ProductConfiguration\ProductConfigurationDependencyProvider;
 use Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestExpanderPluginInterface;
+use Spryker\Client\StoreExtension\Dependency\Plugin\StoreExpanderPluginInterface;
+use Spryker\Client\StoreStorage\Plugin\Store\StoreStorageStoreExpanderPlugin;
 use Spryker\Shared\Kernel\Transfer\Exception\NullValueException;
 
 /**
@@ -27,9 +35,28 @@ use Spryker\Shared\Kernel\Transfer\Exception\NullValueException;
 class ExpandProductConfiguratorRequestWithContextDataTest extends Unit
 {
     /**
+     * @var string
+     */
+    protected const CURRENCY_CODE = 'EUR';
+
+    /**
+     * @var string
+     */
+    protected const DEFAULT_STORE = 'DE';
+
+    /**
      * @var \SprykerTest\Client\ProductConfiguration\ProductConfigurationClientTester
      */
     protected $tester;
+
+    /**
+     * @return void
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->addDependencies();
+    }
 
     /**
      * @return void
@@ -68,7 +95,7 @@ class ExpandProductConfiguratorRequestWithContextDataTest extends Unit
 
         $this->assertSame(
             $productConfiguratorRequestDataTransfer->getCurrencyCode(),
-            $this->tester->getLocator()->currency()->client()->getCurrent()->getCode(),
+            $this->isDynamicStoreEnabled() ? static::CURRENCY_CODE : $this->tester->getLocator()->currency()->client()->getCurrent()->getCode(),
             'Expects currency code to be equal to current one.',
         );
 
@@ -108,5 +135,44 @@ class ExpandProductConfiguratorRequestWithContextDataTest extends Unit
         );
 
         $this->tester->getClient()->expandProductConfiguratorRequestWithContextData($productConfiguratorRequestTransfer);
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\SprykerTest\Client\ProductConfiguration\Client\Spryker\Client\StoreExtension\Dependency\Plugin\StoreExpanderPluginInterface
+     */
+    protected function createStoreStorageStoreExpanderPluginMock(): StoreExpanderPluginInterface
+    {
+        $storeStorageStoreExpanderPluginMock = $this->createMock(StoreStorageStoreExpanderPlugin::class);
+        $storeStorageStoreExpanderPluginMock->method('expand')
+            ->willReturn((new StoreTransfer())
+                ->setName(static::DEFAULT_STORE)
+                ->setDefaultCurrencyIsoCode(static::CURRENCY_CODE));
+
+        return $storeStorageStoreExpanderPluginMock;
+    }
+
+    /**
+     * @return void
+     */
+    protected function addDependencies(): void
+    {
+        $currencyClientMock = $this->createMock(ProductConfigurationToCurrencyClientInterface::class);
+        $currencyClientMock->method('getCurrent')
+            ->willReturn((new CurrencyTransfer())
+                ->setCode(static::CURRENCY_CODE));
+        $this->tester->setDependency(ProductConfigurationDependencyProvider::CLIENT_CURRENCY, $currencyClientMock);
+
+        $quoteClientMock = $this->createMock(PriceToQuoteClientInterface::class);
+        $quoteClientMock->method('getQuote')
+            ->willReturn((new QuoteTransfer()));
+        $this->tester->setDependency(PriceDependencyProvider::CLIENT_QUOTE, $quoteClientMock);
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isDynamicStoreEnabled(): bool
+    {
+        return (bool)getenv('SPRYKER_DYNAMIC_STORE_MODE');
     }
 }

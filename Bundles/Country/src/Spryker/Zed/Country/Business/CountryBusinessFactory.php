@@ -7,29 +7,43 @@
 
 namespace Spryker\Zed\Country\Business;
 
+use Spryker\Zed\Country\Business\Cldr\CldrDataProviderInterface;
 use Spryker\Zed\Country\Business\Cldr\JsonFileCldrDataProvider;
 use Spryker\Zed\Country\Business\Country\CountryReader;
 use Spryker\Zed\Country\Business\Country\CountryReaderInterface;
+use Spryker\Zed\Country\Business\Country\CountryWriter;
+use Spryker\Zed\Country\Business\Country\CountryWriterInterface;
+use Spryker\Zed\Country\Business\Expander\StoreExpander;
+use Spryker\Zed\Country\Business\Expander\StoreExpanderInterface;
 use Spryker\Zed\Country\Business\Internal\Install;
+use Spryker\Zed\Country\Business\Internal\InstallInterface;
+use Spryker\Zed\Country\Business\Region\RegionReader;
+use Spryker\Zed\Country\Business\Region\RegionReaderInterface;
+use Spryker\Zed\Country\Business\Region\RegionWriter;
+use Spryker\Zed\Country\Business\Region\RegionWriterInterface;
 use Spryker\Zed\Country\Business\Validator\CountryCheckoutDataValidator;
 use Spryker\Zed\Country\Business\Validator\CountryCheckoutDataValidatorInterface;
+use Spryker\Zed\Country\CountryDependencyProvider;
+use Spryker\Zed\Country\Dependency\Facade\CountryToStoreFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
  * @method \Spryker\Zed\Country\CountryConfig getConfig()
  * @method \Spryker\Zed\Country\Persistence\CountryRepositoryInterface getRepository()
- * @method \Spryker\Zed\Country\Persistence\CountryQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Country\Persistence\CountryEntityManagerInterface getEntityManager()
  */
 class CountryBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\Country\Business\Internal\Install
+     * @return \Spryker\Zed\Country\Business\Internal\InstallInterface
      */
-    public function createInstaller()
+    public function createInstaller(): InstallInterface
     {
-        $installer = new Install(
-            $this->createCountryManager(),
-            $this->createRegionManager(),
+        return new Install(
+            $this->createCountryReader(),
+            $this->createRegionReader(),
+            $this->createCountryWriter(),
+            $this->createRegionWriter(),
             $this->createCldrDataProvider(
                 $this->getConfig()->getCldrDir() . '/en/territories.json',
             ),
@@ -40,28 +54,6 @@ class CountryBusinessFactory extends AbstractBusinessFactory
                 $this->getConfig()->getCldrDir() . '/supplemental/postalCodeData.json',
             ),
             $this->getConfig(),
-        );
-
-        return $installer;
-    }
-
-    /**
-     * @return \Spryker\Zed\Country\Business\CountryManagerInterface
-     */
-    public function createCountryManager()
-    {
-        return new CountryManager(
-            $this->getQueryContainer(),
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\Country\Business\RegionManagerInterface
-     */
-    protected function createRegionManager()
-    {
-        return new RegionManager(
-            $this->getQueryContainer(),
         );
     }
 
@@ -76,12 +68,45 @@ class CountryBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Country\Business\Country\CountryWriterInterface
+     */
+    public function createCountryWriter(): CountryWriterInterface
+    {
+        return new CountryWriter(
+            $this->getEntityManager(),
+            $this->createCountryReader(),
+            $this->getStoreFacade(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Country\Business\Region\RegionReaderInterface
+     */
+    public function createRegionReader(): RegionReaderInterface
+    {
+        return new RegionReader(
+            $this->getRepository(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Country\Business\Region\RegionWriterInterface
+     */
+    public function createRegionWriter(): RegionWriterInterface
+    {
+        return new RegionWriter(
+            $this->getEntityManager(),
+            $this->createRegionReader(),
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\Country\Business\Validator\CountryCheckoutDataValidatorInterface
      */
     public function createCountryCheckoutDataValidator(): CountryCheckoutDataValidatorInterface
     {
         return new CountryCheckoutDataValidator(
-            $this->createCountryManager(),
+            $this->createCountryReader(),
             $this->getRepository(),
         );
     }
@@ -91,10 +116,26 @@ class CountryBusinessFactory extends AbstractBusinessFactory
      *
      * @return \Spryker\Zed\Country\Business\Cldr\CldrDataProviderInterface
      */
-    protected function createCldrDataProvider($filePath)
+    public function createCldrDataProvider(string $filePath): CldrDataProviderInterface
     {
         return new JsonFileCldrDataProvider(
             $filePath,
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Country\Business\Expander\StoreExpanderInterface
+     */
+    public function createStoreExpander(): StoreExpanderInterface
+    {
+        return new StoreExpander($this->getRepository(), $this->getStoreFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\Country\Dependency\Facade\CountryToStoreFacadeInterface
+     */
+    public function getStoreFacade(): CountryToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(CountryDependencyProvider::FACADE_STORE);
     }
 }

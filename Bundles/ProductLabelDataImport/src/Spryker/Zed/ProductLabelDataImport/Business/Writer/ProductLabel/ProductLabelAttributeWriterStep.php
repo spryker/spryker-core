@@ -28,6 +28,10 @@ class ProductLabelAttributeWriterStep extends PublishAwareStep implements DataIm
         }
 
         foreach ($dataSet[LocalizedAttributesExtractorStep::KEY_LOCALIZED_ATTRIBUTES] as $idLocale => $localizedAttributes) {
+            if ($localizedAttributes === []) {
+                continue;
+            }
+
             $productLabelLocalizedAttributesEntity = SpyProductLabelLocalizedAttributesQuery::create()
                 ->filterByFkProductLabel($dataSet[ProductLabelDataSetInterface::COL_ID_PRODUCT_LABEL])
                 ->filterByFkLocale($idLocale)

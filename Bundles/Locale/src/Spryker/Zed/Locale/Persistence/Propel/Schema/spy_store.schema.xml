@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Store\Persistence" package="src.Orm.Zed.Store.Persistence">
+
+    <table name="spy_store">
+        <column name="fk_locale" type="INTEGER" description="Default locale of the store."/>
+
+        <index name="index-spy_store-fk_locale">
+            <index-column name="fk_locale"/>
+        </index>
+
+        <foreign-key name="spy_store-fk_locale" foreignTable="spy_locale" phpName="DefaultLocale" refPhpName="StoreDefault">
+            <reference local="fk_locale" foreign="id_locale"/>
+        </foreign-key>
+    </table>
+
+</database>

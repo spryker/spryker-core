@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductPageSearch\Business\Reader;
 
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchRepositoryInterface;
 
 class AddToCartSkuReader implements AddToCartSkuReaderInterface
@@ -35,10 +36,11 @@ class AddToCartSkuReader implements AddToCartSkuReaderInterface
 
     /**
      * @param array<int> $productAbstractIds
+     * @param array<array<int>> $productAbstractStoreIds
      *
      * @return array<string>
      */
-    public function getProductAbstractAddToCartSkus(array $productAbstractIds): array
+    public function getProductAbstractAddToCartSkus(array $productAbstractIds, array $productAbstractStoreIds): array
     {
         $productAbstractIds = $this->productPageSearchRepository->getEligibleForAddToCartProductAbstractsIds($productAbstractIds);
 
@@ -51,6 +53,14 @@ class AddToCartSkuReader implements AddToCartSkuReaderInterface
         }
 
         $productConcreteTransfers = $this->productPageSearchRepository->getConcreteProductsByProductAbstractIds($productAbstractIds);
+        foreach ($productConcreteTransfers as $productConcreteTransfer) {
+            foreach ($productAbstractStoreIds[$productConcreteTransfer->getFkProductAbstract()] as $storeId) {
+                $productConcreteTransfer->addStores(
+                    (new StoreTransfer())
+                        ->setIdStore($storeId),
+                );
+            }
+        }
         $productConcreteTransfers = $this->executeProductAbstractAddToCartPlugins($productConcreteTransfers);
 
         return $this->mapProductConcreteTransfersToProductConcreteSkus($productConcreteTransfers);

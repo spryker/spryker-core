@@ -10,6 +10,7 @@ namespace SprykerTest\Glue\CartsRestApi\Plugin\GlueApplication;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\RestCheckoutDataTransfer;
 use Spryker\Glue\CartsRestApi\Plugin\GlueApplication\GuestCartByRestCheckoutDataResourceRelationshipPlugin;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilder;
 use SprykerTest\Glue\CartsRestApi\CartRestApiGlueTester;
 
 /**
@@ -33,6 +34,13 @@ class GuestCartByRestCheckoutDataResourceRelationshipPluginTest extends Unit
     protected const RESOURCE_GUEST_CARTS = 'guest-carts';
 
     /**
+     * @uses \Spryker\Glue\GlueApplication\Plugin\Application\GlueApplicationApplicationPlugin::SERVICE_RESOURCE_BUILDER
+     *
+     * @var string
+     */
+    protected const SERVICE_RESOURCE_BUILDER = 'resource_builder';
+
+    /**
      * @var string
      */
     protected const CART_UUID = 'cart_uuid';
@@ -41,6 +49,19 @@ class GuestCartByRestCheckoutDataResourceRelationshipPluginTest extends Unit
      * @var \SprykerTest\Glue\CartsRestApi\CartRestApiGlueTester
      */
     protected CartRestApiGlueTester $tester;
+
+    /**
+     * @return void
+     */
+    public function _before(): void
+    {
+        parent::_before();
+
+        $this->tester->getContainer()->set(
+            static::SERVICE_RESOURCE_BUILDER,
+            new RestResourceBuilder(),
+        );
+    }
 
     /**
      * @return void

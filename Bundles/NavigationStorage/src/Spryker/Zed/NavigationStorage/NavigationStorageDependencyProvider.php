@@ -7,12 +7,12 @@
 
 namespace Spryker\Zed\NavigationStorage;
 
+use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\NavigationStorage\Dependency\Facade\NavigationStorageToEventBehaviorFacadeBridge;
 use Spryker\Zed\NavigationStorage\Dependency\Facade\NavigationStorageToNavigationBridge;
 use Spryker\Zed\NavigationStorage\Dependency\Facade\NavigationStorageToStoreFacadeBridge;
-use Spryker\Zed\NavigationStorage\Dependency\QueryContainer\NavigationStorageToLocaleQueryContainerBridge;
 use Spryker\Zed\NavigationStorage\Dependency\QueryContainer\NavigationStorageToNavigationQueryContainerBridge;
 use Spryker\Zed\NavigationStorage\Dependency\Service\NavigationStorageToUtilSanitizeServiceBridge;
 
@@ -34,7 +34,7 @@ class NavigationStorageDependencyProvider extends AbstractBundleDependencyProvid
     /**
      * @var string
      */
-    public const QUERY_CONTAINER_LOCALE = 'QUERY_CONTAINER_LOCALE';
+    public const PROPEL_QUERY_LOCALE = 'PROPEL_QUERY_LOCALE';
 
     /**
      * @var string
@@ -96,9 +96,7 @@ class NavigationStorageDependencyProvider extends AbstractBundleDependencyProvid
             return new NavigationStorageToNavigationQueryContainerBridge($container->getLocator()->navigation()->queryContainer());
         });
 
-        $container->set(static::QUERY_CONTAINER_LOCALE, function (Container $container) {
-            return new NavigationStorageToLocaleQueryContainerBridge($container->getLocator()->locale()->queryContainer());
-        });
+        $container = $this->addLocalePropelQuery($container);
 
         return $container;
     }
@@ -115,6 +113,20 @@ class NavigationStorageDependencyProvider extends AbstractBundleDependencyProvid
                 $container->getLocator()->store()->facade(),
             );
         });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addLocalePropelQuery(Container $container)
+    {
+        $container->set(static::PROPEL_QUERY_LOCALE, $container->factory(function (Container $container) {
+            return SpyLocaleQuery::create();
+        }));
 
         return $container;
     }

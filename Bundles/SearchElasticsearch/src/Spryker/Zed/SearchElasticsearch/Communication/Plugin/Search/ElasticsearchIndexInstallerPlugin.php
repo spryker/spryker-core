@@ -10,13 +10,14 @@ namespace Spryker\Zed\SearchElasticsearch\Communication\Plugin\Search;
 use Psr\Log\LoggerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SearchExtension\Dependency\Plugin\InstallPluginInterface;
+use Spryker\Zed\SearchExtension\Dependency\Plugin\StoreAwareInstallPluginInterface;
 
 /**
  * @method \Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface getFacade()
  * @method \Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig getConfig()
  * @method \Spryker\Zed\SearchElasticsearch\Communication\SearchElasticsearchCommunicationFactory getFactory()
  */
-class ElasticsearchIndexInstallerPlugin extends AbstractPlugin implements InstallPluginInterface
+class ElasticsearchIndexInstallerPlugin extends AbstractPlugin implements InstallPluginInterface, StoreAwareInstallPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -26,11 +27,12 @@ class ElasticsearchIndexInstallerPlugin extends AbstractPlugin implements Instal
      * @api
      *
      * @param \Psr\Log\LoggerInterface $logger
+     * @param string|null $storeName
      *
      * @return void
      */
-    public function install(LoggerInterface $logger): void
+    public function install(LoggerInterface $logger, ?string $storeName = null): void
     {
-        $this->getFacade()->install($logger);
+        $this->getFacade()->install($logger, $storeName);
     }
 }

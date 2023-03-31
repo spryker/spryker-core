@@ -32,3 +32,5 @@ suites:
                 - \SprykerTest\Zed\CompanyRole\Helper\CompanyRoleHelper
                 - \SprykerTest\Zed\Permission\Helper\PermissionHelper
                 - \SprykerTest\Zed\Oms\Helper\OmsHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper

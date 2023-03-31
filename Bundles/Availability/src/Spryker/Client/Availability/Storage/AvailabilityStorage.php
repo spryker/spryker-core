@@ -9,6 +9,7 @@ namespace Spryker\Client\Availability\Storage;
 
 use Generated\Shared\Transfer\StorageAvailabilityTransfer;
 use Spryker\Client\Availability\Dependency\Client\AvailabilityToStorageInterface;
+use Spryker\Client\Availability\Dependency\Client\AvailabilityToStoreClientInterface;
 use Spryker\Client\Availability\Exception\ProductAvailabilityNotFoundException;
 use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
 
@@ -30,15 +31,26 @@ class AvailabilityStorage implements AvailabilityStorageInterface
     protected $locale;
 
     /**
+     * @var \Spryker\Client\Availability\Dependency\Client\AvailabilityToStoreClientInterface
+     */
+    protected AvailabilityToStoreClientInterface $storeClient;
+
+    /**
      * @param \Spryker\Client\Availability\Dependency\Client\AvailabilityToStorageInterface $storage
      * @param \Spryker\Shared\KeyBuilder\KeyBuilderInterface $keyBuilder
      * @param string $localeName
+     * @param \Spryker\Client\Availability\Dependency\Client\AvailabilityToStoreClientInterface $storeClient
      */
-    public function __construct(AvailabilityToStorageInterface $storage, KeyBuilderInterface $keyBuilder, $localeName)
-    {
+    public function __construct(
+        AvailabilityToStorageInterface $storage,
+        KeyBuilderInterface $keyBuilder,
+        $localeName,
+        AvailabilityToStoreClientInterface $storeClient
+    ) {
         $this->storageClient = $storage;
         $this->keyBuilder = $keyBuilder;
         $this->locale = $localeName;
+        $this->storeClient = $storeClient;
     }
 
     /**
@@ -50,7 +62,12 @@ class AvailabilityStorage implements AvailabilityStorageInterface
      */
     public function getProductAvailability($idProductAbstract)
     {
-        $key = $this->keyBuilder->generateKey($idProductAbstract, $this->locale);
+        $storeName = null;
+        if ($this->storeClient->isDynamicStoreEnabled()) {
+            $storeName = $this->storeClient->getCurrentStore()->getNameOrFail();
+        }
+
+        $key = $this->keyBuilder->generateKey($idProductAbstract, $this->locale, $storeName);
         $availability = $this->storageClient->get($key);
         if ($availability === null) {
             throw new ProductAvailabilityNotFoundException(
@@ -83,7 +100,12 @@ class AvailabilityStorage implements AvailabilityStorageInterface
      */
     protected function getProductAvailabilityFromStorage($idProductAbstract)
     {
-        $key = $this->keyBuilder->generateKey($idProductAbstract, $this->locale);
+        $storeName = null;
+        if ($this->storeClient->isDynamicStoreEnabled()) {
+            $storeName = $this->storeClient->getCurrentStore()->getNameOrFail();
+        }
+
+        $key = $this->keyBuilder->generateKey($idProductAbstract, $this->locale, $storeName);
         $availability = $this->storageClient->get($key);
 
         return $availability;

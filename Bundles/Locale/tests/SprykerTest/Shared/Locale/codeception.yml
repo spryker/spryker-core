@@ -1,0 +1,6 @@
+namespace: SprykerTest\Shared\Locale
+paths:
+    tests: .
+    data: ../../../_data
+    support: _support
+    output: ../../../_output

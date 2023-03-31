@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductDiscontinuedProductLabelConnector\Dependency\Facade;
 
+use Generated\Shared\Transfer\LocaleCriteriaTransfer;
+
 class ProductDiscontinuedProductLabelConnectorToLocaleFacadeBridge implements ProductDiscontinuedProductLabelConnectorToLocaleFacadeInterface
 {
     /**
@@ -23,10 +25,12 @@ class ProductDiscontinuedProductLabelConnectorToLocaleFacadeBridge implements Pr
     }
 
     /**
+     * @param \Generated\Shared\Transfer\LocaleCriteriaTransfer|null $localeCriteriaTransfer
+     *
      * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
-    public function getLocaleCollection()
+    public function getLocaleCollection(?LocaleCriteriaTransfer $localeCriteriaTransfer = null): array
     {
-        return $this->localeFacade->getLocaleCollection();
+        return $this->localeFacade->getLocaleCollection($localeCriteriaTransfer);
     }
 }

@@ -14,7 +14,7 @@ use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderExpanderPluginInterface;
 /**
  * @method \Spryker\Zed\Currency\Business\CurrencyFacadeInterface getFacade()
  * @method \Spryker\Zed\Currency\CurrencyConfig getConfig()
- * @method \Spryker\Zed\Currency\Persistence\CurrencyQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\Currency\Communication\CurrencyCommunicationFactory getFactory()
  */
 class CurrencyOrderExpanderPlugin extends AbstractPlugin implements OrderExpanderPluginInterface
 {
@@ -30,7 +30,7 @@ class CurrencyOrderExpanderPlugin extends AbstractPlugin implements OrderExpande
      */
     public function hydrate(OrderTransfer $orderTransfer): OrderTransfer
     {
-        $currencyTransfer = $this->getFacade()->findCurrencyByIsoCode($orderTransfer->getCurrencyIsoCode());
+        $currencyTransfer = $this->getFacade()->findCurrencyByIsoCode($orderTransfer->getCurrencyIsoCodeOrFail());
 
         $orderTransfer->setCurrency($currencyTransfer);
 

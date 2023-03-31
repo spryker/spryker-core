@@ -8,7 +8,6 @@
 namespace Spryker\Client\Locale;
 
 use Spryker\Client\Kernel\AbstractClient;
-use Spryker\Shared\Kernel\Store;
 
 /**
  * @method \Spryker\Client\Locale\LocaleFactory getFactory()
@@ -22,9 +21,9 @@ class LocaleClient extends AbstractClient implements LocaleClientInterface
      *
      * @return string
      */
-    public function getCurrentLocale()
+    public function getCurrentLocale(): string
     {
-        return Store::getInstance()->getCurrentLocale();
+        return $this->getFactory()->getLocaleCurrent();
     }
 
     /**
@@ -48,10 +47,24 @@ class LocaleClient extends AbstractClient implements LocaleClientInterface
      *
      * @api
      *
-     * @return array<string>
+     * @return array<string, string>
      */
     public function getLocales(): array
     {
-        return Store::getInstance()->getLocales();
+        return $this->getFactory()->createLocaleReader()->getLocaleList();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return array<string>
+     */
+    public function getAllowedLanguages(): array
+    {
+        return $this->getFactory()
+            ->createLanguageReader()
+            ->getAllowedLanguagesByLocaleList($this->getLocales());
     }
 }

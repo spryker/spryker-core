@@ -54,7 +54,7 @@ class DependencyInjectorResolverTest extends Unit
     /**
      * @var string
      */
-    protected $storeClass = 'ProjectNamespace\\Zed\\KernelDE\\ClassResolver\\FooDependencyInjector';
+    protected $storeClass = 'ProjectNamespace\\Zed\\Kernel' . APPLICATION_CODE_BUCKET . '\\ClassResolver\\FooDependencyInjector';
 
     /**
      * @var string

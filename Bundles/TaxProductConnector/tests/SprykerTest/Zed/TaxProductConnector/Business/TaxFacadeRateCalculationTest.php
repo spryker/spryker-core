@@ -10,12 +10,15 @@ namespace SprykerTest\Zed\TaxProductConnector\Business;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Tax\Persistence\SpyTaxRate;
 use Orm\Zed\Tax\Persistence\SpyTaxSet;
 use Orm\Zed\Tax\Persistence\SpyTaxSetTax;
 use Spryker\Shared\Tax\TaxConstants;
+use Spryker\Zed\Tax\Dependency\Facade\TaxToStoreFacadeInterface;
+use Spryker\Zed\Tax\TaxDependencyProvider;
 use Spryker\Zed\TaxProductConnector\Business\TaxProductConnectorFacade;
 
 /**
@@ -31,6 +34,16 @@ use Spryker\Zed\TaxProductConnector\Business\TaxProductConnectorFacade;
  */
 class TaxFacadeRateCalculationTest extends Unit
 {
+    /**
+     * @var string
+     */
+    protected const DE_ISO_CODE = 'DE';
+
+    /**
+     * @var \SprykerTest\Zed\TaxProductConnector\TaxProductConnectorBusinessTester
+     */
+    protected $tester;
+
     /**
      * @return void
      */
@@ -55,7 +68,9 @@ class TaxFacadeRateCalculationTest extends Unit
      */
     public function testSetTaxRateWhenExemptTaxRateUsedAndCountryMatchingShouldUseCountryRate(): void
     {
-        $abstractProductEntity = $this->createAbstractProductWithTaxSet(20, 'DE');
+        //Arrange
+        $this->tester->setDependency(TaxDependencyProvider::FACADE_STORE, $this->createTaxToStoreFacadeMock());
+        $abstractProductEntity = $this->createAbstractProductWithTaxSet(20, static::DE_ISO_CODE);
 
         $quoteTransfer = new QuoteTransfer();
 
@@ -63,9 +78,11 @@ class TaxFacadeRateCalculationTest extends Unit
         $itemTransfer->setIdProductAbstract($abstractProductEntity->getIdProductAbstract());
         $quoteTransfer->addItem($itemTransfer);
 
+        //Act
         $taxFacadeTest = $this->createTaxProductConnectorFacade();
         $taxFacadeTest->calculateProductItemTaxRate($quoteTransfer);
 
+        //Assert
         $this->assertSame(20.00, $itemTransfer->getTaxRate());
     }
 
@@ -130,5 +147,18 @@ class TaxFacadeRateCalculationTest extends Unit
     protected function createTaxProductConnectorFacade(): TaxProductConnectorFacade
     {
         return new TaxProductConnectorFacade();
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Tax\Dependency\Facade\TaxToStoreFacadeInterface
+     */
+    protected function createTaxToStoreFacadeMock(): TaxToStoreFacadeInterface
+    {
+        $taxToStoreFacadeMock = $this->createMock(TaxToStoreFacadeInterface::class);
+        $taxToStoreFacadeMock
+            ->method('getCurrentStore')
+            ->willReturn((new StoreTransfer())->setName(static::DE_ISO_CODE)->addCountry(static::DE_ISO_CODE));
+
+        return $taxToStoreFacadeMock;
     }
 }

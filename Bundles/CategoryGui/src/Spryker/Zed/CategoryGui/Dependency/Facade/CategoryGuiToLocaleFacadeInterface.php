@@ -7,22 +7,24 @@
 
 namespace Spryker\Zed\CategoryGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+
 interface CategoryGuiToLocaleFacadeInterface
 {
     /**
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getCurrentLocale();
+    public function getCurrentLocale(): LocaleTransfer;
 
     /**
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getLocale($localeName);
+    public function getLocale(string $localeName): LocaleTransfer;
 
     /**
      * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
-    public function getLocaleCollection();
+    public function getLocaleCollection(): array;
 }

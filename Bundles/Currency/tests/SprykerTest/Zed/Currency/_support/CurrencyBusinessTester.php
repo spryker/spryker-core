@@ -26,4 +26,12 @@ use Codeception\Actor;
 class CurrencyBusinessTester extends Actor
 {
     use _generated\CurrencyBusinessTesterActions;
+
+    /**
+     * @return bool
+     */
+    public function isDynamicStoreEnabled(): bool
+    {
+        return (bool)getenv('SPRYKER_DYNAMIC_STORE_MODE');
+    }
 }

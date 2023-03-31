@@ -30,6 +30,8 @@ suites:
                 - \SprykerTest\Zed\ProductAttribute\Helper\ProductAttributeDataHelper
                 - \SprykerTest\Shared\Store\Helper\StoreDataHelper
                 - \SprykerTest\Zed\MerchantProduct\Helper\MerchantProductHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
     Business:
         path: Business
         actor: MerchantProductSearchBusinessTester

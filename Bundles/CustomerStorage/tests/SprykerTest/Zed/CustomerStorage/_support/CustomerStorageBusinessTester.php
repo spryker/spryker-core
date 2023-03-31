@@ -8,12 +8,16 @@
 namespace SprykerTest\Zed\CustomerStorage;
 
 use Codeception\Actor;
+use Codeception\Stub;
 use DateTime;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\InvalidatedCustomerTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\CustomerStorage\Persistence\SpyCustomerInvalidatedStorageQuery;
+use Spryker\Client\Store\StoreDependencyProvider;
+use Spryker\Client\StoreExtension\Dependency\Plugin\StoreExpanderPluginInterface;
 use Spryker\Zed\CustomerStorage\CustomerStorageConfig;
 
 /**
@@ -43,6 +47,26 @@ class CustomerStorageBusinessTester extends Actor
      * @var string
      */
     protected const COL_PASSWORD = 'spy_customer.password';
+
+    /**
+     * @var string
+     */
+    protected const DEFAULT_STORE = 'DE';
+
+    /**
+     * @var string
+     */
+    protected const DEFAULT_CURRENCY = 'EUR';
+
+    /**
+     * @return void
+     */
+    public function addDependencies(): void
+    {
+        $this->setDependency(StoreDependencyProvider::PLUGINS_STORE_EXPANDER, [
+            $this->createStoreStorageStoreExpanderPluginMock(),
+        ]);
+    }
 
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
@@ -108,5 +132,21 @@ class CustomerStorageBusinessTester extends Actor
         return (new PaginationTransfer())
             ->setOffset(0)
             ->setLimit(10);
+    }
+
+    /**
+     * @return \Spryker\Client\StoreExtension\Dependency\Plugin\StoreExpanderPluginInterface
+     */
+    protected function createStoreStorageStoreExpanderPluginMock(): StoreExpanderPluginInterface
+    {
+        $storeTransfer = (new StoreTransfer())
+            ->setName(static::DEFAULT_STORE)
+            ->setDefaultCurrencyIsoCode(static::DEFAULT_CURRENCY);
+
+        $storeStorageStoreExpanderPluginMock = Stub::makeEmpty(StoreExpanderPluginInterface::class, [
+            'expand' => $storeTransfer,
+        ]);
+
+        return $storeStorageStoreExpanderPluginMock;
     }
 }

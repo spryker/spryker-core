@@ -21,14 +21,30 @@ use Spryker\Zed\ZedRequest\Dependency\Facade\ZedRequestToStoreBridge;
 class ZedRequestDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**
+     * @deprecated Will be removed after dynamic multi-store is always enabled.
+     *
+     * @var string
+     */
+    public const DYNAMIC_STORE_MODE = 'DYNAMIC_STORE_MODE';
+
+    /**
      * @var string
      */
     public const FACADE_MESSENGER = 'messenger facade';
 
     /**
+     * @deprecated Will be removed after dynamic multi-store is always enabled.
+     *
      * @var string
      */
     public const STORE = 'STORE';
+
+    /**
+     * @uses \Spryker\Zed\Http\Communication\Plugin\Application\HttpApplicationPlugin::SERVICE_REQUEST_STACK
+     *
+     * @var string
+     */
+    public const SERVICE_REQUEST_STACK = 'request_stack';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -39,6 +55,20 @@ class ZedRequestDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addMessengerFacade($container);
         $container = $this->addStore($container);
+        $container = $this->addDynamicStoreMode($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideBusinessLayerDependencies(Container $container): Container
+    {
+        $container = parent::provideBusinessLayerDependencies($container);
+        $container = $this->addRequestStack($container);
 
         return $container;
     }
@@ -66,6 +96,8 @@ class ZedRequestDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated will be removed in next major.
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -77,5 +109,45 @@ class ZedRequestDependencyProvider extends AbstractBundleDependencyProvider
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addRequestStack(Container $container): Container
+    {
+        $container->set(static::SERVICE_REQUEST_STACK, function (Container $container) {
+            return $container->getApplicationService(static::SERVICE_REQUEST_STACK);
+        });
+
+        return $container;
+    }
+
+    /**
+     * @deprecated Will be removed after dynamic multi-store is always enabled.
+     *
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addDynamicStoreMode(Container $container): Container
+    {
+        $container->set(static::DYNAMIC_STORE_MODE, function () {
+            return $this->isDynamicStoreModeEnabled();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @deprecated Will be removed after dynamic multi-store is always enabled.
+     *
+     * @return bool
+     */
+    protected function isDynamicStoreModeEnabled(): bool
+    {
+        return Store::isDynamicStoreMode();
     }
 }

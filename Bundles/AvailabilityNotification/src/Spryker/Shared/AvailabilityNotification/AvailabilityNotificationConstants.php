@@ -30,6 +30,22 @@ interface AvailabilityNotificationConstants
 
     /**
      * Specification:
+     * - Defines regions to Yves host mapping.
+     *
+     * @api
+     *
+     * @example The format of returned array is:
+     * [
+     *    'EU' => 'yves.eu.spryker.local',
+     *    'US' => 'yves.us.spryker.local',
+     * ]
+     *
+     * @var string
+     */
+    public const REGION_TO_YVES_HOST_MAPPING = 'AVAILABILITY_NOTIFICATION:REGION_TO_YVES_HOST_MAPPING';
+
+    /**
+     * Specification:
      * - Defines base URL Yves port.
      *
      * @api

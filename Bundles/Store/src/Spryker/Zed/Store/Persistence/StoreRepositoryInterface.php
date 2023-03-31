@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\Store\Persistence;
 
+use Generated\Shared\Transfer\StoreCriteriaTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
+
 interface StoreRepositoryInterface
 {
     /**
@@ -17,9 +20,30 @@ interface StoreRepositoryInterface
     public function storeExists(string $name): bool;
 
     /**
+     * @param string $storeName
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer|null
+     */
+    public function findStoreByName(string $storeName): ?StoreTransfer;
+
+    /**
+     * @param int $idStore
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer|null
+     */
+    public function findStoreById(int $idStore): ?StoreTransfer;
+
+    /**
      * @param array<string> $storeNames
      *
      * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     public function getStoreTransfersByStoreNames(array $storeNames): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreCriteriaTransfer $storeCriteriaTransfer
+     *
+     * @return array<string>
+     */
+    public function getStoreNamesByCriteria(StoreCriteriaTransfer $storeCriteriaTransfer): array;
 }

@@ -47,7 +47,7 @@ class DeleteController extends AbstractController
         $customerTransfer->setIdCustomer($idCustomer);
 
         try {
-            $customerTransfer = $this->getFacade()->getCustomer($customerTransfer);
+            $customerTransfer = $this->getFacade()->findCustomerById($customerTransfer);
         } catch (CustomerNotFoundException $exception) {
             $this->addErrorMessage('Customer does not exist');
 

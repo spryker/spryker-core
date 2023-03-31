@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\UserMerchantPortalGui\Communication\Form\DataProvider;
 
+use Generated\Shared\Transfer\LocaleConditionsTransfer;
+use Generated\Shared\Transfer\LocaleCriteriaTransfer;
 use Spryker\Zed\UserMerchantPortalGui\Communication\Form\MerchantAccountForm;
 use Spryker\Zed\UserMerchantPortalGui\Dependency\Facade\UserMerchantPortalGuiToLocaleFacadeInterface;
 use Spryker\Zed\UserMerchantPortalGui\Dependency\Facade\UserMerchantPortalGuiToMerchantUserFacadeInterface;
@@ -41,9 +43,7 @@ class MerchantAccountFormDataProvider implements MerchantAccountFormDataProvider
     public function getOptions(): array
     {
         return [
-            MerchantAccountForm::OPTIONS_LOCALE => array_flip(
-                $this->localeFacade->getAvailableLocales(),
-            ),
+            MerchantAccountForm::OPTIONS_LOCALE => $this->getLocales(),
         ];
     }
 
@@ -56,5 +56,27 @@ class MerchantAccountFormDataProvider implements MerchantAccountFormDataProvider
             ->getCurrentMerchantUser()
             ->getUserOrFail()
             ->toArray();
+    }
+
+    /**
+     * @return array
+     */
+    protected function getLocales(): array
+    {
+        $localeCriteriaTransfer = (new LocaleCriteriaTransfer())
+            ->setLocaleConditions(
+                (new LocaleConditionsTransfer())
+                    ->setLocaleNames($this->localeFacade->getSupportedLocaleCodes()),
+            );
+
+        $localeTransfers = $this->localeFacade->getLocaleCollection($localeCriteriaTransfer);
+
+        $options = [];
+
+        foreach ($localeTransfers as $localeTransfer) {
+            $options[$localeTransfer->getLocaleName()] = $localeTransfer->getIdLocale();
+        }
+
+        return $options;
     }
 }

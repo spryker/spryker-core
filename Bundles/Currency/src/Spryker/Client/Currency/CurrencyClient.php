@@ -8,7 +8,6 @@
 namespace Spryker\Client\Currency;
 
 use Spryker\Client\Kernel\AbstractClient;
-use Spryker\Shared\Kernel\Store;
 
 /**
  * @method \Spryker\Client\Currency\CurrencyFactory getFactory()
@@ -66,6 +65,9 @@ class CurrencyClient extends AbstractClient implements CurrencyClientInterface
      */
     public function getCurrencyIsoCodes(): array
     {
-        return Store::getInstance()->getCurrencyIsoCodes();
+        return $this->getFactory()
+            ->getStoreClient()
+            ->getCurrentStore()
+            ->getAvailableCurrencyIsoCodes();
     }
 }

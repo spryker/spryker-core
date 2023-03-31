@@ -181,11 +181,11 @@ class CategoryFacadeTest extends Unit
         $categoryTransferRoot = $this->tester->haveCategory();
         $storeTransferDE = $this->tester->haveStore([
             StoreTransfer::NAME => static::TEST_STORE_DE,
-        ]);
+        ], false);
 
         $storeTransferAT = $this->tester->haveStore([
             StoreTransfer::NAME => static::TEST_STORE_AT,
-        ]);
+        ], false);
 
         $this->tester->haveCategoryStoreRelation($categoryTransferRoot->getIdCategory(), $storeTransferDE->getIdStore());
         $this->tester->haveCategoryStoreRelation($categoryTransferRoot->getIdCategory(), $storeTransferAT->getIdStore());
@@ -535,8 +535,8 @@ class CategoryFacadeTest extends Unit
     {
         // Arrange
         $expectedStoreIds = [
-            $this->tester->haveStore([StoreTransfer::NAME => static::TEST_STORE_DE])->getIdStore(),
-            $this->tester->haveStore([StoreTransfer::NAME => static::TEST_STORE_AT])->getIdStore(),
+            $this->tester->haveStore([StoreTransfer::NAME => static::TEST_STORE_DE], false)->getIdStore(),
+            $this->tester->haveStore([StoreTransfer::NAME => static::TEST_STORE_AT], false)->getIdStore(),
         ];
 
         $localeTransfers = [
@@ -680,8 +680,8 @@ class CategoryFacadeTest extends Unit
     public function testUpdateCategoryStoreRelationWithMainChildrenPropagationWillAddOnlyNewStoreRelation(): void
     {
         // Arrange
-        $deStoreTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::TEST_STORE_DE]);
-        $atStoreTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::TEST_STORE_AT]);
+        $deStoreTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::TEST_STORE_DE], false);
+        $atStoreTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::TEST_STORE_AT], false);
 
         $parentCategoryTransfer = $this->tester->haveCategory();
         $this->tester->haveCategoryStoreRelation($parentCategoryTransfer->getIdCategory(), $deStoreTransfer->getIdStore());
@@ -818,8 +818,8 @@ class CategoryFacadeTest extends Unit
     public function testUpdateCategoryWhenParentCategoryIsChangedWillRemoveStoreRelationsMissingForParentCategory(): void
     {
         // Arrange
-        $deStoreTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::TEST_STORE_DE]);
-        $atStoreTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::TEST_STORE_AT]);
+        $deStoreTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::TEST_STORE_DE], false);
+        $atStoreTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::TEST_STORE_AT], false);
 
         $firstParentCategoryTransfer = $this->tester->haveCategory();
         $this->tester->haveCategoryStoreRelation($firstParentCategoryTransfer->getIdCategory(), $deStoreTransfer->getIdStore());

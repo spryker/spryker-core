@@ -20,9 +20,11 @@
         "spryker/application": "*",
         "spryker/code-sniffer": "*",
         "spryker/config": "*",
+        "spryker/container": "*",
         "spryker/oms": "*",
         "spryker/propel": "^3.0.0",
         "spryker/propel-orm": "^1.0.0",
+        "spryker/store": "*",
         "spryker/testify": "*",
         "spryker/zed-navigation": "*"
     },

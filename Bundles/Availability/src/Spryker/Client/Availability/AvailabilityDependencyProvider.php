@@ -9,6 +9,7 @@ namespace Spryker\Client\Availability;
 
 use Spryker\Client\Availability\Dependency\Client\AvailabilityToLocaleBridge;
 use Spryker\Client\Availability\Dependency\Client\AvailabilityToStorageBridge;
+use Spryker\Client\Availability\Dependency\Client\AvailabilityToStoreClientBridge;
 use Spryker\Client\Availability\Dependency\Client\AvailabilityToZedRequestClientBridge;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
@@ -19,6 +20,11 @@ class AvailabilityDependencyProvider extends AbstractDependencyProvider
      * @var string
      */
     public const CLIENT_LOCALE = 'CLIENT_LOCALE';
+
+    /**
+     * @var string
+     */
+    public const CLIENT_STORE = 'CLIENT_STORE';
 
     /**
      * @var string
@@ -40,6 +46,7 @@ class AvailabilityDependencyProvider extends AbstractDependencyProvider
         $container = $this->addStorageClient($container);
         $container = $this->addLocaleClient($container);
         $container = $this->addZedRequestClient($container);
+        $container = $this->addStoreClient($container);
 
         return $container;
     }
@@ -67,6 +74,20 @@ class AvailabilityDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::CLIENT_LOCALE, function (Container $container) {
             return new AvailabilityToLocaleBridge($container->getLocator()->locale()->client());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addStoreClient(Container $container)
+    {
+        $container->set(static::CLIENT_STORE, function (Container $container) {
+            return new AvailabilityToStoreClientBridge($container->getLocator()->store()->client());
         });
 
         return $container;

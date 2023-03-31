@@ -13,9 +13,12 @@ use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearchQuery;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
+use Spryker\Client\Store\StoreDependencyProvider as ClientStoreDependencyProvider;
+use Spryker\Client\StoreExtension\Dependency\Plugin\StoreExpanderPluginInterface;
 use Spryker\Shared\MerchantProductOfferSearch\MerchantProductOfferSearchConfig;
 use Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\ProductPageSearch\MerchantNamesProductAbstractMapExpanderPlugin;
 use Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\ProductPageSearch\MerchantProductPageDataExpanderPlugin;
@@ -42,6 +45,16 @@ class MerchantProductOfferSearchCommunicationTester extends Actor
     use _generated\MerchantProductOfferSearchCommunicationTesterActions;
 
     /**
+     * @var string
+     */
+    protected const DEFAULT_STORE = 'DE';
+
+    /**
+     * @var string
+     */
+    protected const DEFAULT_CURRENCY = 'EUR';
+
+    /**
      * @return void
      */
     public function addDependencies(): void
@@ -49,6 +62,7 @@ class MerchantProductOfferSearchCommunicationTester extends Actor
         $this->addRabbitMqDependency();
         $this->addProductPageSearchDependencies();
         $this->mockSearchFacade();
+        $this->addStoreClientMock();
     }
 
     /**
@@ -162,6 +176,32 @@ class MerchantProductOfferSearchCommunicationTester extends Actor
                 },
             ],
         ));
+    }
+
+    /**
+     * @return void
+     */
+    protected function addStoreClientMock(): void
+    {
+        $this->setDependency(ClientStoreDependencyProvider::PLUGINS_STORE_EXPANDER, [
+            $this->createStoreStorageStoreExpanderPluginMock(),
+        ]);
+    }
+
+    /**
+     * @return \Spryker\Client\StoreExtension\Dependency\Plugin\StoreExpanderPluginInterface
+     */
+    protected function createStoreStorageStoreExpanderPluginMock(): StoreExpanderPluginInterface
+    {
+        $storeTransfer = (new StoreTransfer())
+            ->setName(static::DEFAULT_STORE)
+            ->setDefaultCurrencyIsoCode(static::DEFAULT_CURRENCY);
+
+        $storeStorageStoreExpanderPluginMock = Stub::makeEmpty(StoreExpanderPluginInterface::class, [
+            'expand' => $storeTransfer,
+        ]);
+
+        return $storeStorageStoreExpanderPluginMock;
     }
 
     /**

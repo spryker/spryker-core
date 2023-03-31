@@ -10,10 +10,10 @@
         "spryker/gui": "^3.0.0",
         "spryker/health-check-extension": "^1.0.0",
         "spryker/kernel": "^3.41.0",
-        "spryker/locale": "^3.0.0",
+        "spryker/locale": "^3.0.0 || ^4.0.0",
         "spryker/redis": "^2.2.0",
         "spryker/storage-extension": "^1.1.0",
-        "spryker/store": "^1.4.0",
+        "spryker/store": "^1.19.0",
         "spryker/symfony": "^3.5.0",
         "spryker/util-sanitize": "^2.0.0",
         "spryker/util-text": "^1.1.0"
@@ -35,7 +35,8 @@
     "autoload": {
         "psr-4": {
             "Spryker\\": "src/Spryker/",
-            "SprykerTest\\Client\\Storage\\Helper\\": "tests/SprykerTest/Client/Storage/_support/Helper/"
+            "SprykerTest\\Client\\Storage\\Helper\\": "tests/SprykerTest/Client/Storage/_support/Helper/",
+            "SprykerTest\\Shared\\Storage\\Helper\\": "tests/SprykerTest/Shared/Storage/_support/Helper/"
         }
     },
     "autoload-dev": {

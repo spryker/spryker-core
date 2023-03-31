@@ -8,6 +8,7 @@
 namespace Spryker\Client\Availability;
 
 use Spryker\Client\Availability\Dependency\Client\AvailabilityToLocaleInterface;
+use Spryker\Client\Availability\Dependency\Client\AvailabilityToStoreClientInterface;
 use Spryker\Client\Availability\Dependency\Client\AvailabilityToZedRequestClientInterface;
 use Spryker\Client\Availability\KeyBuilder\AvailabilityResourceKeyBuilder;
 use Spryker\Client\Availability\Storage\AvailabilityStorage;
@@ -28,6 +29,7 @@ class AvailabilityFactory extends AbstractFactory
             $this->getStorage(),
             $this->createKeyBuilder(),
             $this->getLocaleClient()->getCurrentLocale(),
+            $this->getStoreClient(),
         );
     }
 
@@ -71,5 +73,13 @@ class AvailabilityFactory extends AbstractFactory
     public function getLocaleClient(): AvailabilityToLocaleInterface
     {
         return $this->getProvidedDependency(AvailabilityDependencyProvider::CLIENT_LOCALE);
+    }
+
+    /**
+     * @return \Spryker\Client\Availability\Dependency\Client\AvailabilityToStoreClientInterface
+     */
+    public function getStoreClient(): AvailabilityToStoreClientInterface
+    {
+        return $this->getProvidedDependency(AvailabilityDependencyProvider::CLIENT_STORE);
     }
 }

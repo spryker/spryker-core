@@ -24,6 +24,7 @@ use Spryker\Zed\Permission\PermissionDependencyProvider;
 use Spryker\Zed\ShoppingList\Communication\Plugin\ReadShoppingListPermissionPlugin;
 use Spryker\Zed\ShoppingList\Communication\Plugin\ShoppingListPermissionStoragePlugin;
 use Spryker\Zed\ShoppingList\Communication\Plugin\WriteShoppingListPermissionPlugin;
+use Spryker\Zed\Store\StoreDependencyProvider;
 
 /**
  * Auto-generated group annotations
@@ -832,10 +833,12 @@ class ShoppingListItemTest extends Unit
     public function testCheckShoppingListItemWithInvalidStoreFails(): void
     {
         // Arrange
+        $this->tester->setDependency(StoreDependencyProvider::PLUGINS_STORE_COLLECTION_EXPANDER, []);
+
         $shoppingListItemTransfer = new ShoppingListItemTransfer();
 
         $storeTransfer = $this->tester->haveStore([
-            StoreTransfer::NAME => 'AU',
+            StoreTransfer::NAME => 'AT',
         ]);
         $storeRelationTransfer = (new StoreRelationTransfer())
             ->addIdStores($storeTransfer->getIdStore())

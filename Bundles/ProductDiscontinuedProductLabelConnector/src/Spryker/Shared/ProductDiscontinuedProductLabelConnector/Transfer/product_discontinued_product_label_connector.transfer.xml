@@ -38,4 +38,12 @@
         <property name="discontinuedProducts" type="ProductDiscontinued[]" singular="discontinuedProduct"/>
     </transfer>
 
+    <transfer name="LocaleConditions">
+        <property name="isActive" type="bool"/>
+    </transfer>
+
+    <transfer name="LocaleCriteria">
+        <property name="localeConditions" type="LocaleConditions"/>
+    </transfer>
+
 </transfers>

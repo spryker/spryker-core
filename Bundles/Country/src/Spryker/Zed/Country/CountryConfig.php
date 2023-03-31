@@ -16,7 +16,7 @@ class CountryConfig extends AbstractBundleConfig
      *
      * @return array<string>
      */
-    public function getTerritoriesBlacklist()
+    public function getTerritoriesBlacklist(): array
     {
         return [
             'EU', // Europe
@@ -28,7 +28,7 @@ class CountryConfig extends AbstractBundleConfig
     /**
      * @return array<\Spryker\Zed\Country\Business\Internal\Regions\RegionInstallInterface>
      */
-    protected function getCountriesToInstallRegionsFor()
+    protected function getCountriesToInstallRegionsFor(): array
     {
         return [];
     }
@@ -38,8 +38,8 @@ class CountryConfig extends AbstractBundleConfig
      *
      * @return string
      */
-    public function getCldrDir()
+    public function getCldrDir(): string
     {
-        return __DIR__ . '/Business/File/cldr';
+        return __DIR__ . '/../../../../data/cldr';
     }
 }

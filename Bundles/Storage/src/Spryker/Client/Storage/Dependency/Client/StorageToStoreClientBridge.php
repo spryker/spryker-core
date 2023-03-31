@@ -31,4 +31,12 @@ class StorageToStoreClientBridge implements StorageToStoreClientInterface
     {
         return $this->storeClient->getCurrentStore();
     }
+
+    /**
+     * @return bool
+     */
+    public function isCurrentStoreDefined(): bool
+    {
+        return $this->storeClient->isCurrentStoreDefined();
+    }
 }

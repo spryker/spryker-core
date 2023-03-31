@@ -2,5 +2,4 @@ parameters:
     level: 7
     checkMissingIterableValueType: false
     ignoreErrors:
-        - '#Call to an undefined method .+PropelConditionalProxy::filterByFkStore\(\).#'
-        - '#Call to an undefined method .+PropelConditionalProxy::filterByFkCurrency\(\).#'
+        - '#Call to an undefined method Propel\\Runtime\\ActiveQuery\\Criteria\|Propel\\Runtime\\Util\\PropelConditionalProxy::filterBy.+\(\).#'

@@ -10,7 +10,9 @@ namespace Spryker\Zed\PriceProductSchedule\Business\PriceProductSchedule;
 interface PriceProductScheduleApplierInterface
 {
     /**
+     * @param string|null $storeName
+     *
      * @return void
      */
-    public function applyScheduledPrices(): void;
+    public function applyScheduledPrices(?string $storeName = null): void;
 }

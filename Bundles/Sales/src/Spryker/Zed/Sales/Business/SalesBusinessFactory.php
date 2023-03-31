@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Sales\Business;
 
+use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Sales\Business\Address\OrderAddressWriter;
 use Spryker\Zed\Sales\Business\Address\OrderAddressWriterInterface;
@@ -154,7 +155,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->getOmsFacade(),
             $this->createReferenceGenerator(),
             $this->getConfig(),
-            $this->getLocaleQueryContainer(),
+            $this->getLocalePropelQuery(),
             $this->getOrderExpanderPreSavePlugins(),
             $this->createSalesOrderSaverPluginExecutor(),
             $this->createSalesOrderItemMapper(),
@@ -175,7 +176,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->getOmsFacade(),
             $this->createReferenceGenerator(),
             $this->getConfig(),
-            $this->getLocaleQueryContainer(),
+            $this->getLocalePropelQuery(),
             $this->getOrderExpanderPreSavePlugins(),
             $this->createSalesOrderSaverPluginExecutor(),
             $this->createSalesOrderItemMapper(),
@@ -490,11 +491,11 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface
+     * @return \Orm\Zed\Locale\Persistence\SpyLocaleQuery
      */
-    public function getLocaleQueryContainer()
+    public function getLocalePropelQuery(): SpyLocaleQuery
     {
-        return $this->getProvidedDependency(SalesDependencyProvider::QUERY_CONTAINER_LOCALE);
+        return $this->getProvidedDependency(SalesDependencyProvider::PROPEL_QUERY_LOCALE);
     }
 
     /**

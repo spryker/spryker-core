@@ -84,6 +84,13 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/OfferGui/Dependency/Facade/OfferGuiToLocaleFacadeBridge.php",
+        "description": "Bridges: Method `getCurrentLocaleName()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/OfferGui/Dependency/Facade/OfferGuiToMessengerFacadeBridge.php",
         "description": "Bridges: Method `getStoredMessages()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
@@ -169,14 +176,14 @@
     },
     {
         "fileName": "src/Spryker/Zed/OfferGui/Dependency/Facade/OfferGuiToStoreFacadeBridge.php",
-        "description": "Bridges: Method `getCurrentStore()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "description": "Bridges: Method `getAllStores()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
     {
         "fileName": "src/Spryker/Zed/OfferGui/Dependency/Facade/OfferGuiToStoreFacadeBridge.php",
-        "description": "Bridges: Method `getCountries()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "description": "Bridges: Method `getCurrentStore()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -248,13 +255,6 @@
         "fileName": "src/Spryker/Zed/OfferGui/Dependency/Service/OfferGuiToUtilSanitizeServiceBridge.php",
         "description": "Bridges: Type should be defined for param `charset` in method `Spryker\\Zed\\OfferGui\\Dependency\\Service\\OfferGuiToUtilSanitizeServiceBridge::escapeHtml()`.",
         "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/OfferGui/Dependency/Facade/OfferGuiToLocaleFacadeBridge.php",
-        "description": "Bridges: Method `getCurrentLocaleName()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
-        "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     }

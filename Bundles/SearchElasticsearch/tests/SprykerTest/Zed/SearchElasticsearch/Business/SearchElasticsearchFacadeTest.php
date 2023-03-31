@@ -10,10 +10,12 @@ namespace SprykerTest\Zed\SearchElasticsearch\Business;
 use Codeception\Test\Unit;
 use Elastica\Index;
 use Elastica\Request;
+use Generated\Shared\Transfer\StoreTransfer;
 use Psr\Log\NullLogger;
 use Spryker\Zed\SearchElasticsearch\Business\Snapshot\Repository;
 use Spryker\Zed\SearchElasticsearch\Business\Snapshot\RepositoryInterface;
 use Spryker\Zed\SearchElasticsearch\Business\SourceIdentifier\SourceIdentifierInterface;
+use Spryker\Zed\SearchElasticsearch\Dependency\Facade\SearchElasticsearchToStoreFacadeInterface;
 use Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig;
 use SprykerTest\Shared\SearchElasticsearch\Helper\ElasticsearchHelper;
 
@@ -168,6 +170,7 @@ class SearchElasticsearchFacadeTest extends Unit
         $index = $this->tester->haveIndex('dummy_index_name');
         $anotherIndex = $this->tester->haveIndex('another_dummy_index_name');
         $this->arrangeEnvironmentForMultiIndexTest([$index, $anotherIndex]);
+
         $this->tester->getFacade()->closeIndexes();
 
         // Act
@@ -460,5 +463,11 @@ class SearchElasticsearchFacadeTest extends Unit
         $this->tester->mockConfigMethod('getSupportedSourceIdentifiers', array_unique($indexNames));
         $this->tester->mockFactoryMethod('createSourceIdentifier', $sourceIdentifierMock);
         $this->tester->mockFactoryMethod('getConfig', $this->tester->getModuleConfig());
+
+        $storeFacadeMock = $this->createMock(SearchElasticsearchToStoreFacadeInterface::class);
+        $storeFacadeMock->method('getAllStores')->willReturn([
+            (new StoreTransfer())->setName(static::CURRENT_STORE),
+        ]);
+        $this->tester->mockFactoryMethod('getStoreFacade', $storeFacadeMock);
     }
 }

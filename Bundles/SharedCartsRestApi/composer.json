@@ -21,9 +21,11 @@
         "spryker/company": "*",
         "spryker/company-business-unit": "*",
         "spryker/company-user": "*",
+        "spryker/container": "*",
         "spryker/customer": "*",
         "spryker/permission": "*",
         "spryker/propel": "*",
+        "spryker/store": "*",
         "spryker/testify": "*"
     },
     "autoload": {

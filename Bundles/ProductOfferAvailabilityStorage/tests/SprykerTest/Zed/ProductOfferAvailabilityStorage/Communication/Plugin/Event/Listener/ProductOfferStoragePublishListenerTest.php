@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\ProductOfferStockTransfer;
 use Generated\Shared\Transfer\StockTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Zed\Oms\OmsDependencyProvider;
@@ -34,6 +35,11 @@ use Spryker\Zed\ProductOfferAvailabilityStorage\Communication\Plugin\Event\Liste
  */
 class ProductOfferStoragePublishListenerTest extends Unit
 {
+    /**
+     * @var string
+     */
+    protected const STORE_NAME = 'DE';
+
     /**
      * @var \SprykerTest\Zed\ProductOfferAvailabilityStorage\ProductOfferAvailabilityStorageCommunicationTester
      */
@@ -66,7 +72,7 @@ class ProductOfferStoragePublishListenerTest extends Unit
         $stockQuantity = 5;
         $expectedAvailability = $stockQuantity;
 
-        $storeTransfer = $this->tester->haveStore();
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME]);
         $productOfferTransfer = $this->tester->haveProductOffer();
         $this->tester->haveProductOfferStock([
             ProductOfferStockTransfer::ID_PRODUCT_OFFER => $productOfferTransfer->getIdProductOffer(),

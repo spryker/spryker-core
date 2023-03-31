@@ -21,10 +21,12 @@
         "spryker/auth-rest-api": "*",
         "spryker/code-sniffer": "*",
         "spryker/console": "*",
+        "spryker/container": "*",
         "spryker/customer": "*",
         "spryker/installer": "*",
         "spryker/oauth-revoke": "*",
         "spryker/propel": "*",
+        "spryker/store": "*",
         "spryker/testify": "*"
     },
     "suggest": {

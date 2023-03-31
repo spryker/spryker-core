@@ -205,10 +205,9 @@ class UpdateDiscountWithValidationTest extends Unit
         // Arrange
         $storeAtTransfer = $this->tester->haveStore([StoreTransfer::NAME => 'AT']);
         $storeDeTransfer = $this->tester->haveStore([StoreTransfer::NAME => 'DE']);
-        $storeUsTransfer = $this->tester->haveStore([StoreTransfer::NAME => 'US']);
 
         $originalIdStores = [$storeDeTransfer->getIdStore()];
-        $expectedIdStores = [$storeAtTransfer->getIdStore(), $storeUsTransfer->getIdStore()];
+        $expectedIdStores = [$storeAtTransfer->getIdStore()];
 
         $discountConfiguratorTransfer = $this->tester->createDiscountConfiguratorTransfer($originalIdStores);
         $discountGeneralTransfer = $this->tester->haveDiscount($discountConfiguratorTransfer->toArray());
@@ -230,7 +229,7 @@ class UpdateDiscountWithValidationTest extends Unit
 
         // Assert
         $discountStoreEntityCollection = $this->tester->getDiscountStoreEntityCollectionByIdDiscount($idDiscount);
-        $this->assertCount(2, $discountStoreEntityCollection);
+        $this->assertCount(1, $discountStoreEntityCollection);
 
         $persistedStoreIds = $this->extractStoreIdsFromDiscountStoreEntityCollection($discountStoreEntityCollection);
         $this->assertSame($expectedIdStores, $persistedStoreIds);

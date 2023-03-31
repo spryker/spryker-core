@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\PriceProductSchedule\Communication\Console;
 
-use Spryker\Zed\Kernel\Communication\Console\Console;
+use Spryker\Zed\Kernel\Communication\Console\StoreAwareConsole;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -15,7 +15,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @method \Spryker\Zed\PriceProductSchedule\Business\PriceProductScheduleFacadeInterface getFacade()
  * @method \Spryker\Zed\PriceProductSchedule\Persistence\PriceProductScheduleRepositoryInterface getRepository()
  */
-class PriceProductScheduleApplyConsole extends Console
+class PriceProductScheduleApplyConsole extends StoreAwareConsole
 {
     /**
      * @var string
@@ -44,7 +44,7 @@ class PriceProductScheduleApplyConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $this->getFacade()->applyScheduledPrices();
+        $this->getFacade()->applyScheduledPrices($this->getStore($input));
 
         return static::CODE_SUCCESS;
     }

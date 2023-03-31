@@ -12,6 +12,7 @@ use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
 use Spryker\Glue\CartsRestApi\CartsRestApiDependencyProvider;
 use Spryker\Glue\CartsRestApi\Dependency\Client\CartsRestApiToPersistentCartClientInterface;
 use Spryker\Glue\CartsRestApi\Plugin\GlueApplication\ExpandRequestWithCustomerReferenceFormattedControllerBeforeActionPlugin;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilder;
 use SprykerTest\Glue\CartsRestApi\CartRestApiGlueTester;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -36,6 +37,13 @@ class ExpandRequestWithCustomerReferenceFormattedControllerBeforeActionPluginTes
     protected const REQUEST_KEY_CUSTOMER_REFERENCE = 'customerReference';
 
     /**
+     * @uses \Spryker\Glue\GlueApplication\Plugin\Application\GlueApplicationApplicationPlugin::SERVICE_RESOURCE_BUILDER
+     *
+     * @var string
+     */
+    protected const SERVICE_RESOURCE_BUILDER = 'resource_builder';
+
+    /**
      * @var string
      */
     protected const TEST_CUSTOMER_REFERENCE = 'testCustomerReference';
@@ -51,6 +59,19 @@ class ExpandRequestWithCustomerReferenceFormattedControllerBeforeActionPluginTes
      * @var \SprykerTest\Glue\CartsRestApi\CartRestApiGlueTester
      */
     protected CartRestApiGlueTester $tester;
+
+    /**
+     * @return void
+     */
+    public function _before(): void
+    {
+        parent::_before();
+
+        $this->tester->getContainer()->set(
+            static::SERVICE_RESOURCE_BUILDER,
+            new RestResourceBuilder(),
+        );
+    }
 
     /**
      * @return void

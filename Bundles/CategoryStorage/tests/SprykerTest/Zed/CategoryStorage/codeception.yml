@@ -27,7 +27,10 @@ suites:
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper
                 - \SprykerTest\Zed\Category\Helper\CategoryDataHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
                 - \SprykerTest\Shared\Store\Helper\StoreDataHelper
+                - \SprykerTest\Shared\Storage\Helper\StorageRedisConfigHelper
 
     Communication:
         path: Communication
@@ -42,3 +45,6 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Shared\Propel\Helper\ConnectionHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
+                - \SprykerTest\Shared\Storage\Helper\StorageRedisConfigHelper

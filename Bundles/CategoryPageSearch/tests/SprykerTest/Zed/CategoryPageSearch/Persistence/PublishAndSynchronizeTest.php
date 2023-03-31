@@ -58,7 +58,7 @@ class PublishAndSynchronizeTest extends Unit
         $this->tester->setDependency(CategoryDependencyProvider::PLUGIN_CATEGORY_STORE_ASSIGNER, new MainChildrenPropagationCategoryStoreAssignerPlugin());
 
         $this->categoryTransfer = $this->tester->haveCategory();
-        $storeTransfer = $this->tester->haveStore(['name' => 'DE']);
+        $storeTransfer = $this->tester->haveStore();
         $this->tester->haveUrl(['fkResourceCategoryNode' => $this->categoryTransfer->getCategoryNode()->getIdCategoryNode()]);
         $this->tester->haveCategoryStoreRelation($this->categoryTransfer->getIdCategory(), $storeTransfer->getIdStore());
     }

@@ -18,6 +18,7 @@ use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToLocaleInterface;
+use Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToStoreInterface;
 use Spryker\Zed\ProductRelation\Dependency\QueryContainer\ProductRelationToProductInterface;
 
 class ProductQuery implements QueryInterface
@@ -40,18 +41,34 @@ class ProductQuery implements QueryInterface
     /**
      * @var \Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToLocaleInterface
      */
-    protected $localeFacade;
+    protected ProductRelationToLocaleInterface $localeFacade;
+
+    /**
+     * @var \Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToStoreInterface
+     */
+    protected ProductRelationToStoreInterface $storeFacade;
+
+    /**
+     * @var string
+     */
+    protected $fallbackLocale;
 
     /**
      * @param \Spryker\Zed\ProductRelation\Dependency\QueryContainer\ProductRelationToProductInterface $productQueryContainer
      * @param \Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToLocaleInterface $localeFacade
+     * @param \Spryker\Zed\ProductRelation\Dependency\Facade\ProductRelationToStoreInterface $storeFacade
+     * @param string $fallbackLocale
      */
     public function __construct(
         ProductRelationToProductInterface $productQueryContainer,
-        ProductRelationToLocaleInterface $localeFacade
+        ProductRelationToLocaleInterface $localeFacade,
+        ProductRelationToStoreInterface $storeFacade,
+        string $fallbackLocale
     ) {
         $this->productQueryContainer = $productQueryContainer;
         $this->localeFacade = $localeFacade;
+        $this->storeFacade = $storeFacade;
+        $this->fallbackLocale = $fallbackLocale;
     }
 
     /**
@@ -133,9 +150,13 @@ class ProductQuery implements QueryInterface
      */
     public function prepareQuery(?RuleQueryDataProviderTransfer $dataProviderTransfer = null)
     {
-        $idLocale = $this->localeFacade
-            ->getCurrentLocale()
-            ->getIdLocale();
+        $localeName = $this->fallbackLocale;
+
+        if (!$this->storeFacade->isDynamicStoreEnabled()) {
+            $localeName = $this->localeFacade->getCurrentLocale()->getLocaleName();
+        }
+
+        $idLocale = $this->localeFacade->getLocale($localeName)->getIdLocale();
 
         $query = $this->productQueryContainer
             ->queryProductAbstract();

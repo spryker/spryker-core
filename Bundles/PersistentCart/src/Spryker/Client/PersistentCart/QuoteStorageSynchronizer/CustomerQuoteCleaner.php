@@ -14,10 +14,16 @@ use Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToQuoteClientI
 use Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToZedRequestClientInterface;
 use Spryker\Client\PersistentCart\QuoteUpdatePluginExecutor\QuoteUpdatePluginExecutorInterface;
 use Spryker\Client\PersistentCart\Zed\PersistentCartStubInterface;
-use Spryker\Shared\Quote\QuoteConfig;
 
 class CustomerQuoteCleaner implements CustomerQuoteCleanerInterface
 {
+    /**
+     * @uses \Spryker\Shared\Quote\QuoteConfig::STORAGE_STRATEGY_DATABASE
+     *
+     * @var string
+     */
+    protected const STORAGE_STRATEGY_DATABASE = 'database';
+
     /**
      * @var \Spryker\Client\PersistentCart\Dependency\Client\PersistentCartToQuoteClientInterface
      */
@@ -65,7 +71,7 @@ class CustomerQuoteCleaner implements CustomerQuoteCleanerInterface
     {
         $this->quoteClient->setQuote(new QuoteTransfer());
 
-        if ($this->quoteClient->getStorageStrategy() !== QuoteConfig::STORAGE_STRATEGY_DATABASE) {
+        if ($this->quoteClient->getStorageStrategy() !== static::STORAGE_STRATEGY_DATABASE) {
             return;
         }
 

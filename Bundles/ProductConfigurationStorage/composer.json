@@ -8,7 +8,7 @@
         "spryker/availability-storage-extension": "^1.0.0",
         "spryker/event-behavior": "^1.0.0",
         "spryker/kernel": "^3.30.0",
-        "spryker/locale": "^3.0.0",
+        "spryker/locale": "^3.0.0 || ^4.0.0",
         "spryker/price-product-storage-extension": "^1.2.0",
         "spryker/product-configuration": "^1.0.0",
         "spryker/product-storage": "^1.1.0",
@@ -25,9 +25,13 @@
     "require-dev": {
         "spryker/code-sniffer": "*",
         "spryker/config": "*",
+        "spryker/container": "*",
+        "spryker/event": "*",
         "spryker/product": "*",
         "spryker/propel": "*",
+        "spryker/publisher": "*",
         "spryker/queue": "*",
+        "spryker/store": "*",
         "spryker/testify": "*"
     },
     "autoload": {

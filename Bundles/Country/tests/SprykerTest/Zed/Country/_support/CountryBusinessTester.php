@@ -26,4 +26,12 @@ use Codeception\Actor;
 class CountryBusinessTester extends Actor
 {
     use _generated\CountryBusinessTesterActions;
+
+    /**
+     * @return bool
+     */
+    public function isDynamicStoreEnabled(): bool
+    {
+        return (bool)getenv('SPRYKER_DYNAMIC_STORE_MODE');
+    }
 }

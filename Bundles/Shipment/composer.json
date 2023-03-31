@@ -8,8 +8,8 @@
         "spryker/acl-merchant-portal-extension": "^1.0.0",
         "spryker/calculation": "^4.8.0",
         "spryker/calculation-extension": "^1.0.0",
-        "spryker/country": "^3.0.0",
-        "spryker/currency": "^3.1.0",
+        "spryker/country": "^3.0.0 || ^4.0.0",
+        "spryker/currency": "^3.1.0 || ^4.0.0",
         "spryker/customer": "^7.25.0",
         "spryker/gui": "^3.17.0",
         "spryker/kernel": "^3.30.0",
@@ -30,6 +30,7 @@
     "require-dev": {
         "spryker/checkout": "*",
         "spryker/code-sniffer": "*",
+        "spryker/container": "*",
         "spryker/product": "*",
         "spryker/propel": "*",
         "spryker/tax-product-connector": "*",

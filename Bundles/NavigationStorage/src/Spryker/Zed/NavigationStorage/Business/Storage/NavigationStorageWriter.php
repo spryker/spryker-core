@@ -178,9 +178,8 @@ class NavigationStorageWriter implements NavigationStorageWriterInterface
      */
     protected function getSharedPersistenceLocaleNames(): array
     {
-        $currentStoreTransfer = $this->storeFacade->getCurrentStore();
-        $localeNames = $currentStoreTransfer->getAvailableLocaleIsoCodes();
-        foreach ($this->storeFacade->getStoresWithSharedPersistence($currentStoreTransfer) as $storeTransfer) {
+        $localeNames = [];
+        foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
             $localeNames = array_merge($localeNames, $storeTransfer->getAvailableLocaleIsoCodes());
         }
 

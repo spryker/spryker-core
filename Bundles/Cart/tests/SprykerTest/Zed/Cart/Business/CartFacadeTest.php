@@ -25,6 +25,8 @@ use Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceTypeQuery;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
+use Spryker\Client\Store\StoreDependencyProvider as ClientStoreDependencyProvider;
+use Spryker\Client\StoreStorage\Plugin\Store\StoreStorageStoreExpanderPlugin;
 use Spryker\Service\PriceProduct\PriceProductDependencyProvider as ServicePriceProductDependencyProvider;
 use Spryker\Service\PriceProductVolume\Plugin\PriceProductExtension\PriceProductVolumeFilterPlugin;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
@@ -98,6 +100,11 @@ class CartFacadeTest extends Unit
     public function setUp(): void
     {
         parent::setUp();
+
+        $this->tester->setDependency(ClientStoreDependencyProvider::PLUGINS_STORE_EXPANDER, [
+            new StoreStorageStoreExpanderPlugin(),
+        ]);
+        $this->tester->addDependencies();
 
         $this->setTestData();
     }

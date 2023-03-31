@@ -78,6 +78,6 @@ class LocalizedQueryExpanderPlugin extends AbstractPlugin implements QueryExpand
      */
     protected function getCurrentLocale()
     {
-        return $this->getFactory()->getStore()->getCurrentLocale();
+        return $this->getFactory()->getLocaleClient()->getCurrentLocale();
     }
 }

@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductScheduleTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\PriceTypeTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 
 /**
  * Auto-generated group annotations
@@ -51,6 +52,11 @@ class PriceProductScheduleApplyTest extends Unit
      * @var string
      */
     public const KEY_PRICE_PRODUCT_SCHEDULE_DATA = 'priceProductScheduleData';
+
+    /**
+     * @var string
+     */
+    protected const STORE_NAME_AT = 'AT';
 
     /**
      * @var \SprykerTest\Zed\PriceProductSchedule\PriceProductScheduleBusinessTester
@@ -382,7 +388,7 @@ class PriceProductScheduleApplyTest extends Unit
     public function testPriceProductScheduleInTheDifferentStoreShouldNotApply(): void
     {
         // Assign
-        $otherStore = $this->tester->haveStore();
+        $otherStore = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_AT], false);
         $currencyId = $this->tester->haveCurrency();
         $priceType = $this->tester->havePriceType();
         $productConcreteTransfer = $this->tester->haveProduct();

@@ -13,8 +13,11 @@ use Generated\Shared\Transfer\CurrentProductPriceTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Client\PriceProduct\PriceProductClient;
 use Spryker\Client\Session\SessionClient;
+use Spryker\Client\Store\StoreDependencyProvider;
+use Spryker\Client\StoreExtension\Dependency\Plugin\StoreExpanderPluginInterface;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 
@@ -85,9 +88,24 @@ class PriceProductClientTest extends Unit
     protected const CURRENCY_CODE = 'EUR';
 
     /**
+     * @var string
+     */
+    protected const DEFAULT_STORE = 'DE';
+
+    /**
      * @var \SprykerTest\Client\PriceProduct\PriceProductTester
      */
     protected $tester;
+
+    /**
+     * @return void
+     */
+    protected function _before(): void
+    {
+        $this->tester->setDependency(StoreDependencyProvider::PLUGINS_STORE_EXPANDER, [
+            $this->createStoreStorageStoreExpanderPluginMock(),
+        ]);
+    }
 
     /**
      * @return void
@@ -245,5 +263,19 @@ class PriceProductClientTest extends Unit
                 static::VOLUME_PRICE_GROSS_PRICE => 105,
             ],
         ];
+    }
+
+    /**
+     * @return \Spryker\Client\StoreExtension\Dependency\Plugin\StoreExpanderPluginInterface
+     */
+    protected function createStoreStorageStoreExpanderPluginMock(): StoreExpanderPluginInterface
+    {
+        $storeStorageStoreExpanderPluginMock = $this->createMock(StoreExpanderPluginInterface::class);
+        $storeStorageStoreExpanderPluginMock->method('expand')
+            ->willReturn((new StoreTransfer())
+                ->setName(static::DEFAULT_STORE)
+                ->setDefaultCurrencyIsoCode(static::CURRENCY_CODE));
+
+        return $storeStorageStoreExpanderPluginMock;
     }
 }

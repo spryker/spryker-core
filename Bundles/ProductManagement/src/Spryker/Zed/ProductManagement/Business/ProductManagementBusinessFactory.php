@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductManagement\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreFacadeInterface;
 use Spryker\Zed\ProductManagement\ProductManagementDependencyProvider;
 
 /**
@@ -95,5 +96,13 @@ class ProductManagementBusinessFactory extends AbstractBusinessFactory
     protected function getCurrentLocale()
     {
         return $this->getLocaleFacade()->getCurrentLocale();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToStoreFacadeInterface
+     */
+    public function getStoreFacade(): ProductManagementToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::FACADE_STORE);
     }
 }

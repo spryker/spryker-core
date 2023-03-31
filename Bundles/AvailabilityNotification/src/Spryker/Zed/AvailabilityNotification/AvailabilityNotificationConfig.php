@@ -84,6 +84,19 @@ class AvailabilityNotificationConfig extends AbstractBundleConfig
 
     /**
      * Specification:
+     * - Returns regions to Yves host mapping.
+     *
+     * @api
+     *
+     * @return array<string, string>
+     */
+    public function getRegionToYvesHostMapping(): array
+    {
+        return $this->get(AvailabilityNotificationConstants::REGION_TO_YVES_HOST_MAPPING, []);
+    }
+
+    /**
+     * Specification:
      * - Returns base URL Yves port.
      *
      * @api
@@ -93,5 +106,22 @@ class AvailabilityNotificationConfig extends AbstractBundleConfig
     public function getBaseUrlYvesPort(): int
     {
         return $this->get(AvailabilityNotificationConstants::BASE_URL_YVES_PORT, static::DEFAULT_BASE_URL_YVES_PORT);
+    }
+
+    /**
+     * Specification:
+     * - Returns current region if defined.
+     *
+     * @api
+     *
+     * @return string|null
+     */
+    public function getCurrentRegion(): ?string
+    {
+        if (defined('APPLICATION_REGION')) {
+            return APPLICATION_REGION;
+        }
+
+        return null;
     }
 }

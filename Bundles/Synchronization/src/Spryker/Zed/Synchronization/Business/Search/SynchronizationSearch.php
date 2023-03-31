@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\SearchDocumentTransfer;
 use Spryker\Zed\Synchronization\Business\Synchronization\SynchronizationInterface;
 use Spryker\Zed\Synchronization\Business\Validation\OutdatedValidatorInterface;
 use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToSearchClientInterface;
+use Spryker\Zed\Synchronization\Dependency\Facade\SynchronizationToStoreFacadeInterface;
 
 class SynchronizationSearch implements SynchronizationInterface
 {
@@ -41,6 +42,11 @@ class SynchronizationSearch implements SynchronizationInterface
     public const TIMESTAMP = '_timestamp';
 
     /**
+     * @var string
+     */
+    protected const STORE = 'store';
+
+    /**
      * @var \Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToSearchClientInterface
      */
     protected $searchClient;
@@ -51,15 +57,23 @@ class SynchronizationSearch implements SynchronizationInterface
     protected $outdatedValidator;
 
     /**
+     * @var \Spryker\Zed\Synchronization\Dependency\Facade\SynchronizationToStoreFacadeInterface
+     */
+    protected $storeFacade;
+
+    /**
      * @param \Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToSearchClientInterface $searchClient
      * @param \Spryker\Zed\Synchronization\Business\Validation\OutdatedValidatorInterface $outdatedValidator
+     * @param \Spryker\Zed\Synchronization\Dependency\Facade\SynchronizationToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         SynchronizationToSearchClientInterface $searchClient,
-        OutdatedValidatorInterface $outdatedValidator
+        OutdatedValidatorInterface $outdatedValidator,
+        SynchronizationToStoreFacadeInterface $storeFacade
     ) {
         $this->searchClient = $searchClient;
         $this->outdatedValidator = $outdatedValidator;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -169,6 +183,9 @@ class SynchronizationSearch implements SynchronizationInterface
      */
     public function writeBulk(array $data): void
     {
+        if ($this->storeFacade->isDynamicStoreEnabled()) {
+            $data = $this->expandWithStoreNames($data);
+        }
         $dataSets = $this->prepareSearchDocumentTransfers($data);
 
         if ($dataSets === []) {
@@ -199,6 +216,11 @@ class SynchronizationSearch implements SynchronizationInterface
             $searchDocumentTransfer->setId($key);
             $searchDocumentTransfer->setData($value);
 
+            if ($this->storeFacade->isDynamicStoreEnabled()) {
+                $store = $datum[static::STORE];
+                $searchDocumentTransfer->setStoreName($store);
+            }
+
             $searchDocumentTransfers[] = $searchDocumentTransfer;
         }
 
@@ -212,6 +234,9 @@ class SynchronizationSearch implements SynchronizationInterface
      */
     public function deleteBulk(array $data): void
     {
+        if ($this->storeFacade->isDynamicStoreEnabled()) {
+            $data = $this->expandWithStoreNames($data);
+        }
         $searchDocumentTransfers = $this->prepareSearchDocumentTransfers($data);
 
         if ($searchDocumentTransfers === []) {
@@ -238,5 +263,30 @@ class SynchronizationSearch implements SynchronizationInterface
         }
 
         return $dataSets;
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return array
+     */
+    protected function expandWithStoreNames(array $data): array
+    {
+        $expandedData = [];
+        foreach ($data as $datum) {
+            if (isset($datum[static::STORE]) && $datum[static::STORE] !== '') {
+                $expandedData[] = $datum;
+
+                continue;
+            }
+
+            foreach ($this->storeFacade->getAllStores() as $storeTransfer) {
+                $storeSpecificData = $datum;
+                $storeSpecificData[static::STORE] = $storeTransfer->getName();
+                $expandedData[] = $storeSpecificData;
+            }
+        }
+
+        return $expandedData;
     }
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Cms;
 
+use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryFacadeBridge;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleFacadeBridge;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchFacadeBridge;
@@ -58,7 +59,7 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
-    public const QUERY_CONTAINER_LOCALE = 'QUERY_CONTAINER_LOCALE';
+    public const PROPEL_QUERY_LOCALE = 'PROPEL_QUERY_LOCALE';
 
     /**
      * @var string
@@ -135,7 +136,7 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
         $this->addUrlQueryContainer($container);
         $this->addGlossaryQueryContainer($container);
         $this->addCategoryQueryContainer($container);
-        $this->addLocaleQueryContainer($container);
+        $this->addLocalePropelQuery($container);
 
         return $container;
     }
@@ -309,11 +310,11 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return void
      */
-    protected function addLocaleQueryContainer(Container $container): void
+    protected function addLocalePropelQuery(Container $container): void
     {
-        $container->set(static::QUERY_CONTAINER_LOCALE, function (Container $container) {
-            return $container->getLocator()->locale()->queryContainer();
-        });
+        $container->set(static::PROPEL_QUERY_LOCALE, $container->factory(function (Container $container) {
+            return SpyLocaleQuery::create();
+        }));
     }
 
     /**

@@ -12,6 +12,10 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
+/**
+ * @method \Spryker\Zed\Console\Business\ConsoleBusinessFactory getFactory()
+ * @method \Spryker\Zed\Console\Business\ConsoleFacadeInterface getFacade()
+ */
 class ConsoleMock extends Console
 {
     /**

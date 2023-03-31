@@ -63,8 +63,19 @@ class CreatePaymentProviderCollectionTest extends Unit
     protected function setUp(): void
     {
         parent::setUp();
+        $this->tester->ensurePaymentProviderTableIsEmpty();
 
         $this->paymentFacade = $this->tester->getFacade();
+    }
+
+    /**
+     * @return void
+     */
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        $this->tester->ensurePaymentProviderTableIsEmpty();
     }
 
     /**
@@ -73,8 +84,6 @@ class CreatePaymentProviderCollectionTest extends Unit
     public function testCreatePaymentProviderCollectionReturnsCollectionWithPersistedPaymentProvidersHavingAssociatedPaymentMethodsAndNoErrors(): void
     {
         // Arrange
-        $this->tester->ensurePaymentProviderTableIsEmpty();
-        $this->tester->ensurePaymentMethodTableIsEmpty();
         $paymentProviderCollectionRequestTransfer = (new PaymentProviderCollectionRequestTransfer())
             ->addPaymentProvider((new PaymentProviderBuilder([
                 PaymentProviderTransfer::ID_PAYMENT_PROVIDER => null,
@@ -115,8 +124,6 @@ class CreatePaymentProviderCollectionTest extends Unit
     public function testCreatePaymentProviderCollectionTransactionalReturnsCollectionWithPersistedPaymentProvidersHavingAssociatedPaymentMethodsAndNoErrors(): void
     {
         // Arrange
-        $this->tester->ensurePaymentProviderTableIsEmpty();
-        $this->tester->ensurePaymentMethodTableIsEmpty();
         $paymentProviderCollectionRequestTransfer = (new PaymentProviderCollectionRequestTransfer())
             ->addPaymentProvider((new PaymentProviderBuilder(['idPaymentProvider' => null]))
                 ->withPaymentMethod()
@@ -143,10 +150,8 @@ class CreatePaymentProviderCollectionTest extends Unit
     public function testCreatePaymentProviderCollectionTransactionalReturnsCollectionWithErrorsAndPaymentProvidersFromRequest(): void
     {
         // Arrange
-        $this->tester->ensurePaymentProviderTableIsEmpty();
-        $this->tester->ensurePaymentMethodTableIsEmpty();
         $paymentProviderTransfer = $this->tester->havePaymentProvider([
-            PaymentProviderTransfer::PAYMENT_PROVIDER_KEY => static::PAYMENT_PROVIDER_KEY,
+            PaymentProviderTransfer::PAYMENT_PROVIDER_KEY => static::PAYMENT_PROVIDER_KEY . 3,
         ]);
         $paymentProviderCollectionRequestTransfer = (new PaymentProviderCollectionRequestTransfer())
             ->addPaymentProvider(
@@ -156,7 +161,7 @@ class CreatePaymentProviderCollectionTest extends Unit
             )->addPaymentProvider(
                 (new PaymentProviderBuilder([
                     PaymentProviderTransfer::ID_PAYMENT_PROVIDER => null,
-                    PaymentProviderTransfer::PAYMENT_PROVIDER_KEY => static::PAYMENT_PROVIDER_KEY,
+                    PaymentProviderTransfer::PAYMENT_PROVIDER_KEY => static::PAYMENT_PROVIDER_KEY . 3,
                 ]))->build(),
             )->setIsTransactional(true);
 
@@ -175,9 +180,6 @@ class CreatePaymentProviderCollectionTest extends Unit
     public function testCreatePaymentProviderCollectionReturnsCollectionWithPaymentProviderHavingCorrectProperties(): void
     {
         // Arrange
-        $this->tester->ensurePaymentProviderTableIsEmpty();
-        $this->tester->ensurePaymentMethodTableIsEmpty();
-
         $paymentProviderTransfer = (new PaymentProviderBuilder())->withPaymentMethod()
             ->build();
 
@@ -205,8 +207,6 @@ class CreatePaymentProviderCollectionTest extends Unit
     public function testCreatePaymentProviderCollectionReturnsCollectionWithErrorWhilePaymentProviderAlreadyExists(): void
     {
         // Arrange
-        $this->tester->ensurePaymentProviderTableIsEmpty();
-        $this->tester->ensurePaymentMethodTableIsEmpty();
         $paymentProviderTransfer = $this->tester->havePaymentProvider();
         $paymentProviderCollectionRequestTransfer = (new PaymentProviderCollectionRequestTransfer())
             ->setIsTransactional(false)
@@ -236,8 +236,6 @@ class CreatePaymentProviderCollectionTest extends Unit
     public function testCreatePaymentProviderCollectionReturnsCollectionWithErrorWhilePaymentProviderMethodAlreadyExists(): void
     {
         // Arrange
-        $this->tester->ensurePaymentProviderTableIsEmpty();
-        $this->tester->ensurePaymentMethodTableIsEmpty();
         $paymentProviderTransfer = $this->tester->havePaymentProvider();
         $paymentMethodTransfer = $this->tester->havePaymentMethod([
             PaymentMethodTransfer::ID_PAYMENT_PROVIDER => $paymentProviderTransfer->getIdPaymentProviderOrFail(),
@@ -269,7 +267,6 @@ class CreatePaymentProviderCollectionTest extends Unit
     public function testCreatePaymentProviderCollectionThrowsRequiredTransferPropertyExceptionWhileRequiredPropertyPaymentProvidersIsMissing(): void
     {
         // Arrange
-        $this->tester->ensurePaymentProviderTableIsEmpty();
         $paymentProviderCollectionRequestTransfer = (new PaymentProviderCollectionRequestTransfer())->setIsTransactional(false);
 
         // Assert
@@ -286,7 +283,6 @@ class CreatePaymentProviderCollectionTest extends Unit
     public function testCreatePaymentProviderCollectionThrowsRequiredTransferPropertyExceptionWhileRequiredPropertyIsTransactionalIsMissing(): void
     {
         // Arrange
-        $this->tester->ensurePaymentProviderTableIsEmpty();
         $paymentProviderTransfer = (new PaymentProviderBuilder())->build();
         $paymentProviderCollectionRequestTransfer = (new PaymentProviderCollectionRequestTransfer())
             ->addPaymentProvider($paymentProviderTransfer);
@@ -305,7 +301,6 @@ class CreatePaymentProviderCollectionTest extends Unit
     public function testCreatePaymentProviderCollectionThrowsRequiredTransferPropertyExceptionWhileRequiredPaymentProviderNameIsMissing(): void
     {
         // Arrange
-        $this->tester->ensurePaymentProviderTableIsEmpty();
         $paymentProviderTransfer = (new PaymentProviderBuilder([
             PaymentProviderTransfer::NAME => null,
         ]))->build();
@@ -327,7 +322,6 @@ class CreatePaymentProviderCollectionTest extends Unit
     public function testCreatePaymentProviderCollectionThrowsRequiredTransferPropertyExceptionWhileRequiredPaymentProviderKeyIsMissing(): void
     {
         // Arrange
-        $this->tester->ensurePaymentProviderTableIsEmpty();
         $paymentProviderTransfer = (new PaymentProviderBuilder([
             PaymentProviderTransfer::PAYMENT_PROVIDER_KEY => null,
         ]))->build();
@@ -349,7 +343,6 @@ class CreatePaymentProviderCollectionTest extends Unit
     public function testCreatePaymentProviderCollectionThrowsRequiredTransferPropertyExceptionWhileRequiredPaymentMethodNameIsMissing(): void
     {
         // Arrange
-        $this->tester->ensurePaymentProviderTableIsEmpty();
         $paymentProviderTransfer = (new PaymentProviderBuilder())
             ->withAnotherPaymentMethod()
             ->withAnotherPaymentMethod([
@@ -373,7 +366,6 @@ class CreatePaymentProviderCollectionTest extends Unit
     public function testCreatePaymentProviderCollectionThrowsRequiredTransferPropertyExceptionWhileRequiredPaymentMethodKeyIsMissing(): void
     {
         // Arrange
-        $this->tester->ensurePaymentProviderTableIsEmpty();
         $paymentProviderTransfer = (new PaymentProviderBuilder())
             ->withAnotherPaymentMethod()
             ->withAnotherPaymentMethod([
@@ -397,8 +389,6 @@ class CreatePaymentProviderCollectionTest extends Unit
     public function testCreatePaymentProviderCollectionReturnsCollectionWithErrorWhilePaymentProviderNameIsUsedMoreThanOnce(): void
     {
         // Arrange
-        $this->tester->ensurePaymentProviderTableIsEmpty();
-        $this->tester->ensurePaymentMethodTableIsEmpty();
         $paymentProviderCollectionRequestTransfer = (new PaymentProviderCollectionRequestTransfer())
             ->setIsTransactional(false)
             ->addPaymentProvider((new PaymentProviderBuilder([
@@ -427,15 +417,13 @@ class CreatePaymentProviderCollectionTest extends Unit
     public function testCreatePaymentProviderCollectionReturnsCollectionWithErrorWhilePaymentProviderKeyIsUsedMoreThanOnce(): void
     {
         // Arrange
-        $this->tester->ensurePaymentProviderTableIsEmpty();
-        $this->tester->ensurePaymentMethodTableIsEmpty();
         $paymentProviderCollectionRequestTransfer = (new PaymentProviderCollectionRequestTransfer())
             ->setIsTransactional(false)
             ->addPaymentProvider((new PaymentProviderBuilder([
-                PaymentProviderTransfer::PAYMENT_PROVIDER_KEY => static::PAYMENT_PROVIDER_KEY,
+                PaymentProviderTransfer::PAYMENT_PROVIDER_KEY => static::PAYMENT_PROVIDER_KEY . 4,
             ]))->build())
             ->addPaymentProvider((new PaymentProviderBuilder([
-                PaymentProviderTransfer::PAYMENT_PROVIDER_KEY => static::PAYMENT_PROVIDER_KEY,
+                PaymentProviderTransfer::PAYMENT_PROVIDER_KEY => static::PAYMENT_PROVIDER_KEY . 4,
             ]))->build());
 
         // Act
@@ -457,16 +445,14 @@ class CreatePaymentProviderCollectionTest extends Unit
     public function testCreatePaymentProviderCollectionReturnsCollectionWithErrorWhilePaymentMethodNameIsUsedMoreThanOnce(): void
     {
         // Arrange
-        $this->tester->ensurePaymentProviderTableIsEmpty();
-        $this->tester->ensurePaymentMethodTableIsEmpty();
         $paymentProviderCollectionRequestTransfer = (new PaymentProviderCollectionRequestTransfer())
             ->setIsTransactional(false)
             ->addPaymentProvider((new PaymentProviderBuilder())
                 ->withAnotherPaymentMethod([
-                    PaymentMethodTransfer::NAME => static::PAYMENT_METHOD_NAME,
+                    PaymentMethodTransfer::NAME => static::PAYMENT_METHOD_NAME . 4,
                 ])
                 ->withAnotherPaymentMethod([
-                    PaymentMethodTransfer::NAME => static::PAYMENT_METHOD_NAME,
+                    PaymentMethodTransfer::NAME => static::PAYMENT_METHOD_NAME . 4,
                 ])->build());
 
         // Act
@@ -490,16 +476,14 @@ class CreatePaymentProviderCollectionTest extends Unit
     public function testCreatePaymentProviderCollectionReturnsCollectionWithErrorWhilePaymentMethodKeyIsUsedMoreThanOnce(): void
     {
         // Arrange
-        $this->tester->ensurePaymentProviderTableIsEmpty();
-        $this->tester->ensurePaymentMethodTableIsEmpty();
         $paymentProviderCollectionRequestTransfer = (new PaymentProviderCollectionRequestTransfer())
             ->setIsTransactional(false)
             ->addPaymentProvider((new PaymentProviderBuilder())
                 ->withAnotherPaymentMethod([
-                    PaymentMethodTransfer::PAYMENT_METHOD_KEY => static::PAYMENT_METHOD_KEY,
+                    PaymentMethodTransfer::PAYMENT_METHOD_KEY => static::PAYMENT_METHOD_KEY . 3,
                 ])
                 ->withAnotherPaymentMethod([
-                    PaymentMethodTransfer::PAYMENT_METHOD_KEY => static::PAYMENT_METHOD_KEY,
+                    PaymentMethodTransfer::PAYMENT_METHOD_KEY => static::PAYMENT_METHOD_KEY . 3,
                 ])->build());
 
         // Act

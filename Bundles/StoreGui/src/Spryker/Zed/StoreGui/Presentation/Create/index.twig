@@ -1,0 +1,28 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Create Store' | trans %}
+
+{% block head_title widget_title | trans %}
+{% block section_title widget_title | trans %}
+
+{% block action %}
+    {{ backActionButton(url('/store-gui/list'), 'Back to Stores' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' %}
+
+        {% block widget_content %}
+
+            {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+            {{ tabs(storeFormTabs, {'form': form}) }}
+
+            {{ form_end(form) }}
+
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}

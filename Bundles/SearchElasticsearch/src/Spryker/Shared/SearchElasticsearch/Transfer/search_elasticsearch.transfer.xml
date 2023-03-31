@@ -15,6 +15,7 @@
     <transfer name="SearchContext">
         <property name="elasticsearchContext" type="ElasticsearchSearchContext"/>
         <property name="sourceIdentifier" type="string"/>
+        <property name="storeName" type="string"/>
     </transfer>
 
     <transfer name="FacetConfig">

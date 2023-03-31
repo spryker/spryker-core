@@ -11,8 +11,10 @@
     "require-dev": {
         "spryker/cart": "*",
         "spryker/code-sniffer": "*",
+        "spryker/container": "*",
         "spryker/product": "*",
         "spryker/propel": "*",
+        "spryker/store": "*",
         "spryker/testify": "*"
     },
     "suggest": {

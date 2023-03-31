@@ -17,4 +17,9 @@ interface MoneyToStoreInterface
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
     public function getStoreById($idStore);
+
+    /**
+     * @return bool
+     */
+    public function isDynamicStoreEnabled(): bool;
 }

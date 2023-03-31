@@ -48,6 +48,11 @@ class QuoteShareTest extends Unit
     protected const STORE_NAME_DE = 'DE';
 
     /**
+     * @var string
+     */
+    protected const CURRENCY_EUR = 'EUR';
+
+    /**
      * @var \SprykerTest\Zed\SharedCart\SharedCartBusinessTester
      */
     protected $tester;
@@ -177,6 +182,7 @@ class QuoteShareTest extends Unit
         ]);
         $storeTransfer = $this->tester->haveStore([
             StoreTransfer::NAME => static::STORE_NAME_DE,
+            StoreTransfer::DEFAULT_CURRENCY_ISO_CODE => static::CURRENCY_EUR,
         ]);
         $quoteTransfer = $this->tester->havePersistentQuote([
             QuoteTransfer::CUSTOMER_REFERENCE => $ownerCustomerTransfer->getCustomerReference(),

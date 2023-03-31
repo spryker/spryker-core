@@ -9,6 +9,7 @@ namespace Spryker\Zed\AvailabilityGui\Communication\Controller;
 
 use Generated\Shared\Transfer\AvailabilityStockTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\AvailabilityGui\Communication\Table\AvailabilityAbstractTable;
 use Spryker\Zed\AvailabilityGui\Communication\Table\AvailabilityTable;
 use Spryker\Zed\AvailabilityGui\Communication\Table\BundledProductAvailabilityTable;
@@ -38,17 +39,15 @@ class IndexController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idStore = $this->extractStoreId($request);
+        $storeTransfers = $this->getFactory()->getStoreFacade()->getAllStores();
+
+        $idStore = $this->extractStoreId($request, $storeTransfers[0]);
 
         $availabilityAbstractTable = $this->getAvailabilityAbstractTable($idStore);
 
-        $storeTransfer = $this->getFactory()->getStoreFacade()->getCurrentStore();
-        $stores = $this->getFactory()->getStoreFacade()->getStoresWithSharedPersistence($storeTransfer);
-        $stores[] = $storeTransfer;
-
         return $this->executeAvailabilityListActionViewDataExpanderPlugins([
             'indexTable' => $availabilityAbstractTable->render(),
-            'stores' => $stores,
+            'stores' => $storeTransfers,
             'idStore' => $idStore,
         ]);
     }
@@ -62,7 +61,9 @@ class IndexController extends AbstractController
     {
         $idProductAbstract = $this->castId($request->query->getInt(AvailabilityAbstractTable::URL_PARAM_ID_PRODUCT_ABSTRACT));
 
-        $idStore = $this->extractStoreId($request);
+        $storeTransfers = $this->getFactory()->getStoreFacade()->getAllStores();
+
+        $idStore = $this->extractStoreId($request, $storeTransfers[0]);
 
         $availabilityTable = $this->getAvailabilityTable($idProductAbstract, $idStore);
 
@@ -80,14 +81,10 @@ class IndexController extends AbstractController
             return $this->redirectResponse(static::AVAILABILITY_LIST_URL);
         }
 
-        $storeTransfer = $this->getFactory()->getStoreFacade()->getCurrentStore();
-        $stores = $this->getFactory()->getStoreFacade()->getStoresWithSharedPersistence($storeTransfer);
-        $stores[] = $storeTransfer;
-
         return $this->executeAvailabilityViewActionViewDataExpanderPlugins([
             'productAbstractAvailability' => $productAbstractAvailabilityTransfer,
             'indexTable' => $availabilityTable->render(),
-            'stores' => $stores,
+            'stores' => $storeTransfers,
             'idStore' => $idStore,
             'idProduct' => $idProductAbstract,
         ]);
@@ -132,7 +129,9 @@ class IndexController extends AbstractController
      */
     public function availabilityAbstractTableAction(Request $request)
     {
-        $idStore = $this->extractStoreId($request);
+        $storeTransfers = $this->getFactory()->getStoreFacade()->getAllStores();
+
+        $idStore = $this->extractStoreId($request, $storeTransfers[0]);
 
         $availabilityAbstractTable = $this->getAvailabilityAbstractTable($idStore);
 
@@ -150,6 +149,12 @@ class IndexController extends AbstractController
     {
         $idProductAbstract = $this->castId($request->query->getInt(AvailabilityAbstractTable::URL_PARAM_ID_PRODUCT_ABSTRACT));
         $idStore = $this->castId($request->query->getInt(static::URL_PARAM_ID_STORE));
+        if (!$idStore) {
+            $storeTransfers = $this->getFactory()->getStoreFacade()->getAllStores();
+
+            $idStore = $this->extractStoreId($request, $storeTransfers[0]);
+        }
+
         $availabilityTable = $this->getAvailabilityTable($idProductAbstract, $idStore);
 
         return $this->jsonResponse(
@@ -211,10 +216,6 @@ class IndexController extends AbstractController
     protected function getAvailabilityTable($idProductAbstract, $idStore)
     {
         $localeTransfer = $this->getCurrentLocaleTransfer();
-
-        if (!$idStore) {
-            $idStore = $this->getFactory()->getStoreFacade()->getCurrentStore()->getIdStore();
-        }
 
         return $this->getFactory()->createAvailabilityTable(
             $idProductAbstract,
@@ -279,14 +280,15 @@ class IndexController extends AbstractController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Generated\Shared\Transfer\StoreTransfer $fallbackStoreTransfer
      *
-     * @return mixed|int
+     * @return int
      */
-    protected function extractStoreId(Request $request)
+    protected function extractStoreId(Request $request, StoreTransfer $fallbackStoreTransfer): int
     {
         $idStore = $request->query->getInt(static::URL_PARAM_ID_STORE);
         if (!$idStore) {
-            $idStore = $this->getFactory()->getStoreFacade()->getCurrentStore()->getIdStore();
+            $idStore = $fallbackStoreTransfer->getIdStoreOrFail();
         }
 
         return $this->castId($idStore);

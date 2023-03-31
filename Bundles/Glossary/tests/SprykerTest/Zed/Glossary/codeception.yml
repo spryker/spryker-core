@@ -24,6 +24,8 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Shared\Glossary\Helper\TranslationHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
 
     Communication:
         path: Communication
@@ -45,6 +47,7 @@ suites:
                 - \SprykerTest\Zed\Testify\Helper\Communication\CommunicationHelper
                 - \SprykerTest\Zed\Testify\Helper\Communication\Table\TableHelper
                 - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
                 - \SprykerTest\Zed\Validator\Helper\ValidatorHelper
                 - \SprykerTest\Zed\Form\Helper\FormHelper:
                       formPlugins:

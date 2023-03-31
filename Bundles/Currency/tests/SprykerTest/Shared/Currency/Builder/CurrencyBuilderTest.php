@@ -11,7 +11,6 @@ use Codeception\Test\Unit;
 use Spryker\Shared\Currency\Builder\CurrencyBuilder;
 use Spryker\Shared\Currency\Builder\CurrencyBuilderInterface;
 use Spryker\Shared\Currency\Dependency\Internationalization\CurrencyToInternationalizationBridge;
-use Spryker\Shared\Kernel\Store;
 
 /**
  * Auto-generated group annotations
@@ -29,6 +28,11 @@ class CurrencyBuilderTest extends Unit
      * @var string
      */
     public const DEFAULT_CURRENCY = 'EUR';
+
+    /**
+     * @var string
+     */
+    public const CURRENT_CURRENCY = 'USD';
 
     /**
      * @return void
@@ -59,8 +63,8 @@ class CurrencyBuilderTest extends Unit
 
         return new CurrencyBuilder(
             $currencyRepository,
-            'EUR',
-            Store::getInstance()->getCurrencyIsoCode(),
+            static::DEFAULT_CURRENCY,
+            static::CURRENT_CURRENCY,
         );
     }
 }

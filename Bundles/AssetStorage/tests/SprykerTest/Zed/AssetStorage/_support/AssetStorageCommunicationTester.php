@@ -48,14 +48,14 @@ class AssetStorageCommunicationTester extends Actor
     /**
      * @var string
      */
-    public const STORE_NAME_EN = 'EN';
+    public const STORE_NAME_AT = 'AT';
 
     /**
      * @var array<string>
      */
     public const STORE_NAMES_DEFAULT = [
         self::STORE_NAME_DE,
-        self::STORE_NAME_EN,
+        self::STORE_NAME_AT,
     ];
 
     /**

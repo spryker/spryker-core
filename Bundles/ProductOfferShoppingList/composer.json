@@ -12,6 +12,7 @@
     },
     "require-dev": {
         "spryker/code-sniffer": "*",
+        "spryker/container": "*",
         "spryker/product": "*",
         "spryker/propel": "*",
         "spryker/testify": "*"

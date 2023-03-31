@@ -7,7 +7,10 @@
 
 namespace Spryker\Zed\Locale\Business;
 
+use Generated\Shared\Transfer\LocaleCriteriaTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\StoreResponseTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 
 interface LocaleFacadeInterface
 {
@@ -22,7 +25,7 @@ interface LocaleFacadeInterface
      *
      * @return bool
      */
-    public function hasLocale($localeName);
+    public function hasLocale(string $localeName): bool;
 
     /**
      * Specification:
@@ -37,27 +40,11 @@ interface LocaleFacadeInterface
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getLocale($localeName);
+    public function getLocale(string $localeName): LocaleTransfer;
 
     /**
      * Specification:
-     * - Returns a LocaleTransfer with the data of the currently used locale.
-     *
-     * @api
-     *
-     * @deprecated Use {@link \Spryker\Zed\Locale\Business\LocaleFacadeInterface::getLocale()} instead.
-     *
-     * @param string $localeCode
-     *
-     * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
-     *
-     * @return \Generated\Shared\Transfer\LocaleTransfer
-     */
-    public function getLocaleByCode($localeCode);
-
-    /**
-     * Specification:
-     * - Reads persisted locale by given locale id
+     * - Reads persisted locale by given locale id.
      * - Returns a LocaleTransfer if it's found, throws exception otherwise.
      *
      * @api
@@ -68,7 +55,7 @@ interface LocaleFacadeInterface
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getLocaleById($idLocale);
+    public function getLocaleById(int $idLocale): LocaleTransfer;
 
     /**
      * Specification:
@@ -78,7 +65,7 @@ interface LocaleFacadeInterface
      *
      * @return string
      */
-    public function getCurrentLocaleName();
+    public function getCurrentLocaleName(): string;
 
     /**
      * Specification:
@@ -89,7 +76,7 @@ interface LocaleFacadeInterface
      *
      * @return array<string>
      */
-    public function getAvailableLocales();
+    public function getAvailableLocales(): array;
 
     /**
      * Specification:
@@ -99,7 +86,7 @@ interface LocaleFacadeInterface
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function getCurrentLocale();
+    public function getCurrentLocale(): LocaleTransfer;
 
     /**
      * Specification:
@@ -115,7 +102,7 @@ interface LocaleFacadeInterface
      *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    public function createLocale($localeName);
+    public function createLocale(string $localeName): LocaleTransfer;
 
     /**
      * Specification:
@@ -127,7 +114,7 @@ interface LocaleFacadeInterface
      *
      * @return void
      */
-    public function deleteLocale($localeName);
+    public function deleteLocale(string $localeName): void;
 
     /**
      * Specification:
@@ -138,39 +125,81 @@ interface LocaleFacadeInterface
      *
      * @return void
      */
-    public function install();
+    public function install(): void;
 
     /**
      * Specification:
-     * - Returns an associative array of [locale_name => LocaleTransfer] pairs.
-     * - The locales returned are read from the store configuration and their data is read from database.
+     * - Returns an associative array of [locale_name => `LocaleTransfer`] pairs.
+     * - The locales returned are read from the store configuration and their data is read from database if LocaleCriteria is not provided.
+     * - Returns locales from DB filtered by `LocaleCriteriaTransfer` if it is provided.
      *
      * @api
+     *
+     * @param \Generated\Shared\Transfer\LocaleCriteriaTransfer|null $localeCriteriaTransfer
      *
      * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
-    public function getLocaleCollection();
+    public function getLocaleCollection(?LocaleCriteriaTransfer $localeCriteriaTransfer = null): array;
 
     /**
      * Specification:
-     * - Sets current locale;
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return \Generated\Shared\Transfer\LocaleTransfer
-     */
-    public function setCurrentLocale(LocaleTransfer $localeTransfer): LocaleTransfer;
-
-    /**
-     * Specification:
-     * - Returns an array of locale ISO codes.
+     * - Provides list of locale ISO codes available for Backoffice UI.
      * - The list of locales is read from the configuration.
      *
      * @api
      *
-     * @return array<string>
+     * @return array<int, string>
      */
     public function getSupportedLocaleCodes(): array;
+
+    /**
+     * Specification:
+     * - Expands collection of store transfers with available locale codes.
+     * - Expands collection only if `Dynamic Store` is enabled
+     *
+     * @api
+     *
+     * @param array<\Generated\Shared\Transfer\StoreTransfer> $storeTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
+     */
+    public function expandStoreTransfersWithLocales(array $storeTransfers): array;
+
+    /**
+     * Specification:
+     * - Updates default locale for store.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\StoreResponseTransfer
+     */
+    public function updateStoreDefaultLocale(StoreTransfer $storeTransfer): StoreResponseTransfer;
+
+    /**
+     * Specification:
+     * - Validates whether default locale is available for store.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\StoreResponseTransfer
+     */
+    public function validateStoreLocale(StoreTransfer $storeTransfer): StoreResponseTransfer;
+
+    /**
+     * Specification:
+     * - Drops all relation of between store and locales.
+     * - Persists new `LocaleStore` entities to a database.
+     * - Returns a `StoreResponseTransfer` with the data of the store and its locales.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\StoreResponseTransfer
+     */
+    public function updateStoreLocales(StoreTransfer $storeTransfer): StoreResponseTransfer;
 }

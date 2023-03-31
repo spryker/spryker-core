@@ -20,6 +20,9 @@ class IndexController extends AbstractController
      */
     public function indexAction(): array
     {
+        if (!$this->getFactory()->getStoreFacade()->isCurrentStoreDefined()) {
+            return $this->viewResponse();
+        }
         $localeTransfer = $this->getFactory()->getLocaleFacade()->getCurrentLocale();
         $storeTransfer = $this->getFactory()->getStoreFacade()->getCurrentStore();
 

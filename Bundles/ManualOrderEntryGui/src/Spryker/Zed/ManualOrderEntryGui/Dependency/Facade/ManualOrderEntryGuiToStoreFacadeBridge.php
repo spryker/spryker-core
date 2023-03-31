@@ -23,10 +23,10 @@ class ManualOrderEntryGuiToStoreFacadeBridge implements ManualOrderEntryGuiToSto
     }
 
     /**
-     * @return array<string>
+     * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
-    public function getCountries()
+    public function getAllStores(): array
     {
-        return $this->storeFacade->getCountries();
+        return $this->storeFacade->getAllStores();
     }
 }

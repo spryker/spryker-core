@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductOption;
 
+use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\Kernel\Container;
@@ -19,7 +20,6 @@ use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToPriceFacadeBridge
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToStoreFacadeBridge;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTaxFacadeBridge;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToTouchFacadeBridge;
-use Spryker\Zed\ProductOption\Dependency\QueryContainer\ProductOptionToCountryQueryContainerBridge;
 use Spryker\Zed\ProductOption\Dependency\QueryContainer\ProductOptionToSalesQueryContainerBridge;
 use Spryker\Zed\ProductOption\Dependency\Service\ProductOptionToUtilEncodingServiceBridge;
 use Spryker\Zed\ProductOption\Exception\MissingMoneyCollectionFormTypePluginException;
@@ -87,7 +87,7 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
-    public const QUERY_CONTAINER_COUNTRY = 'QUERY_CONTAINER_COUNTRY';
+    public const QUERY_COUNTRY = 'QUERY_COUNTRY';
 
     /**
      * @var string
@@ -214,11 +214,22 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
             return new ProductOptionToSalesQueryContainerBridge($container->getLocator()->sales()->queryContainer());
         });
 
-        $container->set(static::QUERY_CONTAINER_COUNTRY, function (Container $container) {
-            return new ProductOptionToCountryQueryContainerBridge($container->getLocator()->country()->queryContainer());
-        });
-
+        $container = $this->addCountryQuery($container);
         $container = $this->addProductOptionListTableQueryCriteriaExpanderPlugins($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCountryQuery(Container $container): Container
+    {
+        $container->set(static::QUERY_COUNTRY, $container->factory(function (Container $container) {
+            return new SpyCountryQuery();
+        }));
 
         return $container;
     }

@@ -89,16 +89,25 @@ class SchedulerFacadeTest extends Unit
      */
     public function testSchedulerConfigurationReaderWithoutReadersForTheCurrentStore(): void
     {
+        //Arrange
         $filterTransfer = $this->createSchedulerFilterTransfer();
         $scheduleTransfer = $this->createSchedulerSchedulerTransfer();
+
+        //Act
         $scheduleTransfer = $this->getSchedulerFacade()->readScheduleFromPhpSource($filterTransfer, $scheduleTransfer);
 
+        //Assert
         $this->assertInstanceOf(SchedulerScheduleTransfer::class, $scheduleTransfer);
-
-        $this->assertSame(1, $scheduleTransfer->getJobs()->count());
+        $this->assertSame(2, $scheduleTransfer->getJobs()->count());
 
         foreach ($scheduleTransfer->getJobs() as $jobTransfer) {
-            $this->assertStringContainsString(static::STORE_NAME, $jobTransfer->getName());
+            $storeName = $jobTransfer->getStore();
+
+            //Empty store for job means that job is created for a whole region.
+            if ($storeName === null) {
+                continue;
+            }
+            $this->assertStringContainsString(static::STORE_NAME, $storeName);
         }
     }
 
@@ -107,9 +116,13 @@ class SchedulerFacadeTest extends Unit
      */
     public function testSchedulerSetup(): void
     {
+        //Arrange
         $filterTransfer = $this->createSchedulerFilterTransfer();
+
+        //Act
         $responseCollectionTransfer = $this->getSchedulerFacade()->setup($filterTransfer);
 
+        //Assert
         $this->assertNotEmpty($responseCollectionTransfer->getResponses());
 
         foreach ($responseCollectionTransfer->getResponses() as $responseTransfer) {
@@ -122,9 +135,13 @@ class SchedulerFacadeTest extends Unit
      */
     public function testSchedulerClean(): void
     {
+        //Arrange
         $filterTransfer = $this->createSchedulerFilterTransfer();
+
+        //Act
         $responseCollectionTransfer = $this->getSchedulerFacade()->clean($filterTransfer);
 
+        //Assert
         $this->assertNotEmpty($responseCollectionTransfer->getResponses());
 
         foreach ($responseCollectionTransfer->getResponses() as $responseTransfer) {
@@ -137,9 +154,13 @@ class SchedulerFacadeTest extends Unit
      */
     public function testSchedulerResume(): void
     {
+        //Arrange
         $filterTransfer = $this->createSchedulerFilterTransfer();
+
+        //Act
         $responseCollectionTransfer = $this->getSchedulerFacade()->resume($filterTransfer);
 
+        //Assert
         $this->assertNotEmpty($responseCollectionTransfer->getResponses());
 
         foreach ($responseCollectionTransfer->getResponses() as $responseTransfer) {
@@ -152,9 +173,13 @@ class SchedulerFacadeTest extends Unit
      */
     public function testSchedulerSuspend(): void
     {
+        //Arrange
         $requestTransfer = $this->createSchedulerFilterTransfer();
+
+        //Act
         $responseCollectionTransfer = $this->getSchedulerFacade()->suspend($requestTransfer);
 
+        //Assert
         $this->assertNotEmpty($responseCollectionTransfer->getResponses());
 
         foreach ($responseCollectionTransfer->getResponses() as $responseTransfer) {

@@ -97,7 +97,7 @@ class AssetStoreStorageUnpublishListenerTest extends Unit
 
         // Assert
         $this->tester->assertAssetStorage([
-            'asset_slot:en:header-test' => [
+            'asset_slot:at:header-test' => [
                 'assetSlot' => AssetStorageCommunicationTester::ASSET_SLOT_DEFAULT,
                 'assets' => [[
                     'assetId' => $this->assetTransfer->getIdAsset(),

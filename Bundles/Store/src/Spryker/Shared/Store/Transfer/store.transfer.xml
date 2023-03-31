@@ -5,14 +5,25 @@
         <property name="idStore" type="int"/>
         <property name="name" type="string"/>
         <property name="selectedCurrencyIsoCode" type="string"/>
-        <property name="defaultCurrencyIsoCode" type="string"/>
+        <property name="defaultCurrencyIsoCode" type="string" deprecated="Will be empty after dynamic store enablement"/>
+        <property name="defaultLocaleIsoCode" type="string"/>
         <property name="availableCurrencyIsoCodes" type="array" singular="availableCurrencyIsoCode"/>
         <property name="availableLocaleIsoCodes" type="array" singular="availableLocaleCode"/>
-        <property name="queuePools" type="array" singular="queuePools"/>
-        <property name="storesWithSharedPersistence" type="array" singular="storeWithSharedPersistence"/>
+        <property name="queuePools" type="array" singular="queuePools" deprecated="Will be empty after dynamic store enablement"/>
+        <property name="storesWithSharedPersistence" type="array" singular="storeWithSharedPersistence" deprecated="Will be empty after dynamic store enablement"/>
         <property name="countries" type="array" singular="country"/>
-        <property name="timezone" type="string"/>
+        <property name="timezone" type="string" deprecated="Will be empty after dynamic store enablement"/>
         <property name="storeReference" type="string"/>
+    </transfer>
+
+    <transfer name="StoreResponse">
+        <property name="store" type="Store"/>
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
     </transfer>
 
     <transfer name="StoreRelation">
@@ -31,6 +42,34 @@
 
     <transfer name="QuoteError">
         <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="StoreCriteria">
+        <property name="storeConditions" type="StoreConditions"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="StoreConditions">
+        <property name="storeIds" type="array" singular="storeId"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
+        <property name="page" type="int"/>
+        <property name="maxPerPage" type="int"/>
+        <property name="nbResults" type="int"/>
+        <property name="firstIndex" type="int"/>
+        <property name="lastIndex" type="int"/>
+        <property name="firstPage" type="int"/>
+        <property name="lastPage" type="int"/>
+        <property name="nextPage" type="int"/>
+        <property name="previousPage" type="int"/>
+    </transfer>
+
+    <transfer name="StoreCollection">
+        <property name="stores" type="Store[]" singular="store"/>
+        <property name="pagination" type="Pagination"/>
     </transfer>
 
     <transfer name="MessageBrokerTestMessage">

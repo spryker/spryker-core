@@ -27,3 +27,6 @@ suites:
                 - \SprykerTest\Shared\CompanyUser\Helper\CompanyUserHelper
                 - \SprykerTest\Zed\Company\Helper\CompanyHelper
                 - \SprykerTest\Shared\Customer\Helper\CustomerDataHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
+                - \SprykerTest\Shared\Storage\Helper\StorageRedisConfigHelper

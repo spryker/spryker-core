@@ -12,6 +12,9 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Orm\Zed\ProductOffer\Persistence\SpyProductOfferStoreQuery;
+use Orm\Zed\Store\Persistence\SpyStoreQuery;
+use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 
 /**
  * Auto-generated group annotations
@@ -26,6 +29,8 @@ use Generated\Shared\Transfer\StoreTransfer;
  */
 class ProductOfferShoppingListFacadeTest extends Unit
 {
+    use DataCleanupHelperTrait;
+
     /**
      * @var string
      */
@@ -125,7 +130,7 @@ class ProductOfferShoppingListFacadeTest extends Unit
     public function testShoppingListItemWithInvalidStoreFails(): void
     {
         // Arrange
-        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => 'AU']);
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => 'AU'], false);
 
         $productOfferTransfer = $this->tester->haveProductOffer([
             ProductOfferTransfer::IS_ACTIVE => true,
@@ -143,6 +148,45 @@ class ProductOfferShoppingListFacadeTest extends Unit
         // Assert
         $this->assertFalse($shoppingListPreAddItemCheckResponseTransfer->getIsSuccess());
         $this->assertCount(1, $shoppingListPreAddItemCheckResponseTransfer->getMessages());
+    }
+
+    /**
+     * @return void
+     */
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        $this->getDataCleanupHelper()->_addCleanup(function (): void {
+            $this->cleanUpStoresData();
+        });
+    }
+
+    /**
+     * @return void
+     */
+    protected function cleanUpStoresData(): void
+    {
+        $spyProductOfferStoreEntity = SpyProductOfferStoreQuery::create()
+            ->innerJoinSpyStore()
+                ->useSpyStoreQuery()
+                    ->filterByName('AU')
+            ->endUse()
+            ->find();
+
+        if ($spyProductOfferStoreEntity === null) {
+            return;
+        }
+
+        $spyProductOfferStoreEntity->delete();
+
+        $storeEntity = SpyStoreQuery::create()->filterByName('AU')->find();
+
+        if ($storeEntity === null) {
+            return;
+        }
+
+        $storeEntity->delete();
     }
 
     /**
