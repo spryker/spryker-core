@@ -48,6 +48,8 @@ class ProductConcreteMerger implements ProductConcreteMergerInterface
 
         $this->mergeLocalizedAttributes($productConcreteTransfer, $productAbstractTransfer);
 
+        $this->mergeSearchMetadata($productConcreteTransfer, $productAbstractTransfer);
+
         return $this->executeMergerPlugins($productConcreteTransfer, $productAbstractTransfer);
     }
 
@@ -174,5 +176,20 @@ class ProductConcreteMerger implements ProductConcreteMergerInterface
         }
 
         return $productConcreteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return void
+     */
+    protected function mergeSearchMetadata(
+        ProductConcreteTransfer $productConcreteTransfer,
+        ProductAbstractTransfer $productAbstractTransfer
+    ): void {
+        if (!$productConcreteTransfer->getSearchMetadata()) {
+            $productConcreteTransfer->setSearchMetadata($productAbstractTransfer->getSearchMetadata());
+        }
     }
 }

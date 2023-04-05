@@ -288,4 +288,42 @@ class ProductConcreteMergerTest extends Unit
         // Assert
         $this->assertNull($productConcreteResult->getRating());
     }
+
+    /**
+     * @return void
+     */
+    public function testProductConcreteSearchMetadataNotTakenFromProductAbstractIfNotEmpty(): void
+    {
+        // Arrange
+        $productConcrete = (new ProductConcreteTransfer())->fromArray(['searchMetadata' => ['color' => ['red', 'green']]]);
+        $productAbstract = (new ProductAbstractTransfer())->fromArray(['searchMetadata' => ['color' => ['white', 'black']]]);
+
+        // Act
+        $productConcreteResult = $this->productConcreteMerger->mergeProductConcreteWithProductAbstract(
+            $productConcrete,
+            $productAbstract,
+        );
+
+        // Assert
+        $this->assertEquals(['color' => ['red', 'green']], $productConcreteResult->getSearchMetadata());
+    }
+
+    /**
+     * @return void
+     */
+    public function testProductConcreteSearchMetadataTakenFromProductAbstractIfEmpty(): void
+    {
+        // Arrange
+        $productConcrete = (new ProductConcreteTransfer())->fromArray(['searchMetadata' => []]);
+        $productAbstract = (new ProductAbstractTransfer())->fromArray(['searchMetadata' => ['color' => ['white', 'black']]]);
+
+        // Act
+        $productConcreteResult = $this->productConcreteMerger->mergeProductConcreteWithProductAbstract(
+            $productConcrete,
+            $productAbstract,
+        );
+
+        // Assert
+        $this->assertEquals(['color' => ['white', 'black']], $productConcreteResult->getSearchMetadata());
+    }
 }
