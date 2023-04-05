@@ -27,11 +27,6 @@ class SearchHttpConfig extends AbstractBundleConfig
     /**
      * @var string
      */
-    public const FACET_TYPE_RANGE = 'range';
-
-    /**
-     * @var string
-     */
     public const FACET_TYPE_PRICE_RANGE = 'price-range';
 
     /**
@@ -63,4 +58,18 @@ class SearchHttpConfig extends AbstractBundleConfig
      * @var string
      */
     public const SEARCH_HTTP_METHOD = 'GET';
+
+    /**
+     * @uses \Spryker\Shared\Search\SearchConfig::FACET_TYPE_ENUMERATION
+     *
+     * @var string
+     */
+    public const FACET_TYPE_ENUMERATION = 'enumeration';
+
+    /**
+     * @uses \Spryker\Shared\Search\SearchConfig::FACET_TYPE_RANGE
+     *
+     * @var string
+     */
+    public const FACET_TYPE_RANGE = 'range';
 }

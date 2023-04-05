@@ -233,21 +233,21 @@ class SearchHttpClientTester extends Actor
         $facetConfig->addFacet(
             (new FacetConfigTransfer())
                 ->setName('range')
-                ->setParameterName('range-param')
+                ->setParameterName('range')
                 ->setFieldName('field-name')
                 ->setType(SearchHttpConfig::FACET_TYPE_RANGE),
         );
         $facetConfig->addFacet(
             (new FacetConfigTransfer())
-                ->setName('pricerange')
-                ->setParameterName('pricerange-param')
+                ->setName('price')
+                ->setParameterName('price')
                 ->setFieldName('field-name')
                 ->setType(SearchHttpConfig::FACET_TYPE_PRICE_RANGE),
         );
         $facetConfig->addFacet(
             (new FacetConfigTransfer())
                 ->setName('category')
-                ->setParameterName('category-param')
+                ->setParameterName('category')
                 ->setFieldName('field-name')
                 ->setType(SearchHttpConfig::FACET_TYPE_CATEGORY),
         );
@@ -300,13 +300,22 @@ class SearchHttpClientTester extends Actor
                         'Category_2' => 10,
                         'Category_3' => 100,
                     ],
-                    'pricerange' => [
+                    'price' => [
                         'from' => 1000,
                         'to' => 10000,
                     ],
                     'range' => [
                         'from' => 200,
                         'to' => 2000,
+                    ],
+                    'custom_configured_range_facet' => [
+                        'from' => 1,
+                        'to' => 5,
+                    ],
+                    'custom_configured_values_facet' => [
+                        'value1' => 5,
+                        'value2' => 15,
+                        'value3' => 20,
                     ],
                 ],
             )

@@ -65,6 +65,7 @@ class CategoryExtractor implements AggregationExtractorInterface
     public function extractDataFromAggregations(array $aggregations, array $requestParameters): TransferInterface
     {
         $name = $this->facetConfigTransfer->getName();
+        $parameterName = $this->facetConfigTransfer->getParameterName();
 
         $categoryNodeStorageTransfers = $this->categoryStorageClient->getCategories(
             $this->localeClient->getCurrentLocale(),
@@ -79,8 +80,8 @@ class CategoryExtractor implements AggregationExtractorInterface
             ->setValues($facetResultValueTransfers)
             ->setConfig(clone $this->facetConfigTransfer);
 
-        if (isset($requestParameters[$name])) {
-            $facetResultTransfer->setActiveValue($requestParameters[$name]);
+        if (isset($requestParameters[$parameterName])) {
+            $facetResultTransfer->setActiveValue($requestParameters[$parameterName]);
         }
 
         return $facetResultTransfer;

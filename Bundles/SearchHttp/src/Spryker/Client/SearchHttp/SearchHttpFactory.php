@@ -28,6 +28,8 @@ use Spryker\Client\SearchHttp\ApplicabilityChecker\QueryApplicabilityChecker;
 use Spryker\Client\SearchHttp\ApplicabilityChecker\QueryApplicabilityCheckerInterface;
 use Spryker\Client\SearchHttp\Builder\ConfigKeyBuilder;
 use Spryker\Client\SearchHttp\Builder\ConfigKeyBuilderInterface;
+use Spryker\Client\SearchHttp\Builder\FacetConfigBuilder;
+use Spryker\Client\SearchHttp\Builder\FacetConfigBuilderInterface;
 use Spryker\Client\SearchHttp\Config\FacetConfig;
 use Spryker\Client\SearchHttp\Config\FacetConfigInterface;
 use Spryker\Client\SearchHttp\Config\PaginationConfig;
@@ -322,5 +324,13 @@ class SearchHttpFactory extends AbstractFactory
     public function createResultProductMapper(): ResultProductMapperInterface
     {
         return new ResultProductMapper();
+    }
+
+    /**
+     * @return \Spryker\Client\SearchHttp\Builder\FacetConfigBuilderInterface
+     */
+    public function createFacetConfigBuilder(): FacetConfigBuilderInterface
+    {
+        return new FacetConfigBuilder();
     }
 }

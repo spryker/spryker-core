@@ -60,11 +60,11 @@ class FacetSearchHttpResultFormatterPluginTest extends Unit
         $facetSearchHttpResultFormatterPlugin = new FacetSearchHttpResultFormatterPlugin();
         $facetSearchHttpResultFormatterPlugin->setFactory($this->tester->getFactory());
         $requestParameters = [
-            'range-param' => [
+            'range' => [
                 'min' => 150,
                 'max' => 2500,
             ],
-            'pricerange-param' => [
+            'price' => [
                 'min' => 5,
                 'max' => 500,
             ],
@@ -74,16 +74,17 @@ class FacetSearchHttpResultFormatterPluginTest extends Unit
         $formattedResult = $facetSearchHttpResultFormatterPlugin->formatResult($searchResult, $requestParameters);
 
         // Assert
+        $this->assertEquals(5, count($formattedResult));
         $this->assertEquals('range', $formattedResult['range']->getName());
         $this->assertEquals(200, $formattedResult['range']->getMin());
         $this->assertEquals(2000, $formattedResult['range']->getMax());
         $this->assertEquals(150, $formattedResult['range']->getActiveMin());
         $this->assertEquals(2500, $formattedResult['range']->getActiveMax());
-        $this->assertEquals('pricerange', $formattedResult['pricerange']->getName());
-        $this->assertEquals(1000, $formattedResult['pricerange']->getMin());
-        $this->assertEquals(10000, $formattedResult['pricerange']->getMax());
-        $this->assertEquals(500, $formattedResult['pricerange']->getActiveMin());
-        $this->assertEquals(50000, $formattedResult['pricerange']->getActiveMax());
+        $this->assertEquals('price', $formattedResult['price']->getName());
+        $this->assertEquals(1000, $formattedResult['price']->getMin());
+        $this->assertEquals(10000, $formattedResult['price']->getMax());
+        $this->assertEquals(500, $formattedResult['price']->getActiveMin());
+        $this->assertEquals(50000, $formattedResult['price']->getActiveMax());
         $this->assertEquals('category', $formattedResult['category']->getName());
         $this->assertEquals('1', $formattedResult['category']->getValues()->offsetGet(0)->getValue());
         $this->assertEquals(1, $formattedResult['category']->getValues()->offsetGet(0)->getDocCount());
@@ -91,5 +92,15 @@ class FacetSearchHttpResultFormatterPluginTest extends Unit
         $this->assertEquals(10, $formattedResult['category']->getValues()->offsetGet(1)->getDocCount());
         $this->assertEquals('3', $formattedResult['category']->getValues()->offsetGet(2)->getValue());
         $this->assertEquals(100, $formattedResult['category']->getValues()->offsetGet(2)->getDocCount());
+        $this->assertEquals(1, $formattedResult['custom_configured_range_facet']->getMin());
+        $this->assertEquals(5, $formattedResult['custom_configured_range_facet']->getMax());
+        $this->assertEquals(1, $formattedResult['custom_configured_range_facet']->getActiveMin());
+        $this->assertEquals(5, $formattedResult['custom_configured_range_facet']->getActiveMax());
+        $this->assertEquals('value1', $formattedResult['custom_configured_values_facet']->getValues()->offsetGet(0)->getValue());
+        $this->assertEquals(5, $formattedResult['custom_configured_values_facet']->getValues()->offsetGet(0)->getDocCount());
+        $this->assertEquals('value2', $formattedResult['custom_configured_values_facet']->getValues()->offsetGet(1)->getValue());
+        $this->assertEquals(15, $formattedResult['custom_configured_values_facet']->getValues()->offsetGet(1)->getDocCount());
+        $this->assertEquals('value3', $formattedResult['custom_configured_values_facet']->getValues()->offsetGet(2)->getValue());
+        $this->assertEquals(20, $formattedResult['custom_configured_values_facet']->getValues()->offsetGet(2)->getDocCount());
     }
 }

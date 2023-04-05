@@ -37,6 +37,7 @@ class FacetExtractor implements AggregationExtractorInterface
     public function extractDataFromAggregations(array $aggregations, array $requestParameters): TransferInterface
     {
         $name = $this->facetConfigTransfer->getName();
+        $parameterName = $this->facetConfigTransfer->getParameterName();
 
         $facetResultValueTransfers = $this->extractFacetData($aggregations);
 
@@ -46,8 +47,8 @@ class FacetExtractor implements AggregationExtractorInterface
             ->setValues($facetResultValueTransfers)
             ->setConfig(clone $this->facetConfigTransfer);
 
-        if (isset($requestParameters[$name])) {
-            $facetResultTransfer->setActiveValue($requestParameters[$name]);
+        if (isset($requestParameters[$parameterName])) {
+            $facetResultTransfer->setActiveValue($requestParameters[$parameterName]);
         }
 
         return $facetResultTransfer;

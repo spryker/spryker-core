@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\SearchHttp\Plugin\Catalog\ResultFormatter;
 
+use Generated\Shared\Transfer\FacetConfigTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface;
 
@@ -28,7 +29,17 @@ class FacetSearchHttpResultFormatterPlugin extends AbstractPlugin implements Res
     /**
      * @var string
      */
-    protected const HTTP_FACET_NAME_PRICE = 'price';
+    protected const AGGREGATION_NAME_PRICE = 'price';
+
+    /**
+     * @var string
+     */
+    protected const KEY_FROM = 'from';
+
+    /**
+     * @var string
+     */
+    protected const KEY_TO = 'to';
 
     /**
      * {@inheritDoc}
@@ -57,53 +68,68 @@ class FacetSearchHttpResultFormatterPlugin extends AbstractPlugin implements Res
     {
         $facetData = [];
 
-        $facetConfig = $this->getFactory()->getSearchConfig()->getFacetConfig();
-        $facetAggregations = $searchResult->getFacets();
+        foreach ($searchResult->getFacets() as $aggregationName => $aggregation) {
+            $facetConfigTransfer = $this->getFacetConfig($aggregationName, $aggregation);
 
-        foreach ($facetConfig->getAll() as $facetName => $facetConfigTransfer) {
             $extractor = $this
                 ->getFactory()
                 ->createAggregationExtractorFactory()
                 ->create($facetConfigTransfer);
 
-            $aggregation = $this->getAggregationData($facetAggregations, $facetName);
-
-            if ($aggregation) {
-                $facetData[$facetName] = $extractor->extractDataFromAggregations($aggregation, $requestParameters);
-            }
+            $facetData[$facetConfigTransfer->getName()] = $extractor->extractDataFromAggregations($aggregation, $requestParameters);
         }
 
         return $facetData;
     }
 
     /**
-     * @param array<string, mixed> $facetAggregations
-     * @param string $facetName
+     * @param string $aggregationName
+     * @param array<mixed> $aggregation
      *
-     * @return array<string, mixed>
+     * @return \Generated\Shared\Transfer\FacetConfigTransfer
      */
-    protected function getAggregationData(array $facetAggregations, string $facetName): array
+    protected function getFacetConfig(string $aggregationName, array $aggregation): FacetConfigTransfer
     {
-        if ($this->isPriceFacet($facetName, $facetAggregations)) {
-            return $facetAggregations[static::HTTP_FACET_NAME_PRICE];
+        $facetConfigTransfers = $this->getFactory()->getSearchConfig()->getFacetConfig()->getAll();
+
+        if ($aggregationName === static::AGGREGATION_NAME_PRICE) {
+            foreach ($facetConfigTransfers as $facetConfigTransfer) {
+                if ($this->isPriceFacet($facetConfigTransfer->getNameOrFail())) {
+                    return $facetConfigTransfer;
+                }
+            }
         }
 
-        if (isset($facetAggregations[$facetName])) {
-            return $facetAggregations[$facetName];
+        foreach ($facetConfigTransfers as $facetConfigTransfer) {
+            if ($facetConfigTransfer->getName() === $aggregationName) {
+                return $facetConfigTransfer;
+            }
         }
 
-        return [];
+        if ($this->isRangeAggregation($aggregation)) {
+            return $this->getFactory()->createFacetConfigBuilder()->buildRangeFacetConfigTransfer($aggregationName);
+        }
+
+        return $this->getFactory()->createFacetConfigBuilder()->buildValueFacetConfigTransfer($aggregationName);
     }
 
     /**
      * @param string $facetName
-     * @param array<string, mixed> $facetAggregations
      *
      * @return bool
      */
-    protected function isPriceFacet(string $facetName, array $facetAggregations): bool
+    protected function isPriceFacet(string $facetName): bool
     {
-        return (preg_match(static::PATTERN_FACET_NAME_PRICE, $facetName)
-            && isset($facetAggregations[static::HTTP_FACET_NAME_PRICE]));
+        return (bool)preg_match(static::PATTERN_FACET_NAME_PRICE, $facetName);
+    }
+
+    /**
+     * @param array<mixed> $aggregation
+     *
+     * @return bool
+     */
+    protected function isRangeAggregation(array $aggregation): bool
+    {
+        return isset($aggregation[static::KEY_FROM]) || isset($aggregation[static::KEY_TO]);
     }
 }

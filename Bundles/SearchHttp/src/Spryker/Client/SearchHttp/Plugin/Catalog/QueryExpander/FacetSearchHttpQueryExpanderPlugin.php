@@ -22,6 +22,37 @@ use Spryker\Shared\SearchHttp\SearchHttpConfig as SharedSearchHttpConfig;
 class FacetSearchHttpQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
     /**
+     * @var string
+     */
+    protected const KEY_MIN = 'min';
+
+    /**
+     * @var string
+     */
+    protected const KEY_MAX = 'max';
+
+    /**
+     * @var array<string>
+     */
+    protected const NON_FILTERING_GLUE_REQUEST_PARAMS = [
+        'include',
+        'q',
+        'sort',
+        'page',
+        'ipp',
+        'priceMode',
+        'currency',
+    ];
+
+    /**
+     * @var array<string>
+     */
+    protected const ALLOWED_DEFAULT_FACET_CONFIGS = [
+        'category',
+        'price',
+    ];
+
+    /**
      * {@inheritDoc}
      * - Applies facet filters to query
      * - Facet filter values that equal null, empty string or false are dropped other values are kept including 0(zero)
@@ -48,12 +79,73 @@ class FacetSearchHttpQueryExpanderPlugin extends AbstractPlugin implements Query
     {
         $activeFacetConfigTransfers = $this->getFactory()->getSearchConfig()->getFacetConfig()->getActive($requestParameters);
 
-        foreach ($activeFacetConfigTransfers as $facetConfigTransfer) {
-            $filterValue = $requestParameters[$facetConfigTransfer->getParameterName()] ?? null;
-            $this->addFacetFilterToQuery($searchQuery, $facetConfigTransfer, $filterValue);
+        $activeFacetConfigTransfers = array_filter($activeFacetConfigTransfers, [$this, 'isAllowedActiveFacetConfig']);
+
+        foreach ($requestParameters as $requestParameterName => $requestParameterValue) {
+            if ($this->isFacetParameter($requestParameterName)) {
+                $facetConfigTransfer = $this->getFacetConfigTransfer($requestParameterName, $requestParameterValue, $activeFacetConfigTransfers);
+
+                $this->addFacetFilterToQuery($searchQuery, $facetConfigTransfer, $requestParameterValue);
+            }
         }
 
         return $searchQuery;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
+     *
+     * @return bool
+     */
+    protected function isAllowedActiveFacetConfig(FacetConfigTransfer $facetConfigTransfer): bool
+    {
+        return in_array($facetConfigTransfer->getParameterName(), static::ALLOWED_DEFAULT_FACET_CONFIGS);
+    }
+
+    /**
+     * @param string $requestParameterName
+     *
+     * @return bool
+     */
+    protected function isFacetParameter(string $requestParameterName): bool
+    {
+        return !in_array($requestParameterName, static::NON_FILTERING_GLUE_REQUEST_PARAMS, true);
+    }
+
+    /**
+     * @param string $requestParameterName
+     * @param mixed $requestParameterValue
+     * @param array<\Generated\Shared\Transfer\FacetConfigTransfer> $activeFacetConfigTransfers
+     *
+     * @return \Generated\Shared\Transfer\FacetConfigTransfer
+     */
+    protected function getFacetConfigTransfer(
+        string $requestParameterName,
+        mixed $requestParameterValue,
+        array $activeFacetConfigTransfers
+    ): FacetConfigTransfer {
+        foreach ($activeFacetConfigTransfers as $activeFacetConfigTransfer) {
+            if ($activeFacetConfigTransfer->getParameterName() === $requestParameterName) {
+                return $activeFacetConfigTransfer;
+            }
+        }
+
+        if ($this->isRangeRequestParameter($requestParameterValue)) {
+            return $this->getFactory()->createFacetConfigBuilder()->buildRangeFacetConfigTransfer($requestParameterName);
+        }
+
+        return $this->getFactory()->createFacetConfigBuilder()->buildValueFacetConfigTransfer($requestParameterName);
+    }
+
+    /**
+     * @param mixed $requestParameterValue
+     *
+     * @return bool
+     */
+    protected function isRangeRequestParameter(mixed $requestParameterValue): bool
+    {
+        return isset($requestParameterValue[static::KEY_MIN])
+            || isset($requestParameterValue[static::KEY_MAX]);
     }
 
     /**

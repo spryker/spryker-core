@@ -45,23 +45,32 @@ class FacetSearchHttpQueryExpanderPluginTest extends Unit
         $facetSearchHttpQueryExpanderPlugin->setFactory($this->tester->getFactory());
 
         $requestData = [
-            'range-param' => [
+            'range' => [
                 'min' => 10,
                 'max' => 100,
             ],
-            'pricerange-param' => [
+            'price' => [
                 'min' => 10,
                 'max' => 100,
             ],
-            'category-param' => 6,
+            'category' => 6,
+            'custom-configured-range' => [
+                'min' => 1,
+                'max' => 5,
+            ],
+            'custom-configured-values' => [1, 2, 3],
         ];
 
         // Act
         $expandedSearchHttpQueryPlugin = $facetSearchHttpQueryExpanderPlugin->expandQuery($searchHttpQueryPlugin, $requestData);
 
         // Assert
+        $this->assertEquals(
+            5,
+            count($expandedSearchHttpQueryPlugin->getSearchQuery()->getSearchQueryFacetFilters()),
+        );
         $this->assertSame(
-            'range-param',
+            'range',
             $expandedSearchHttpQueryPlugin->getSearchQuery()->getSearchQueryFacetFilters()[0]->getFieldName(),
         );
         $this->assertSame(
@@ -73,7 +82,7 @@ class FacetSearchHttpQueryExpanderPluginTest extends Unit
             $expandedSearchHttpQueryPlugin->getSearchQuery()->getSearchQueryFacetFilters()[0]->getTo(),
         );
         $this->assertSame(
-            'pricerange-param',
+            'price',
             $expandedSearchHttpQueryPlugin->getSearchQuery()->getSearchQueryFacetFilters()[1]->getFieldName(),
         );
         $this->assertSame(
@@ -85,12 +94,36 @@ class FacetSearchHttpQueryExpanderPluginTest extends Unit
             (int)$expandedSearchHttpQueryPlugin->getSearchQuery()->getSearchQueryFacetFilters()[1]->getTo(),
         );
         $this->assertSame(
-            'category-param',
+            'category',
             $expandedSearchHttpQueryPlugin->getSearchQuery()->getSearchQueryFacetFilters()[2]->getFieldName(),
         );
         $this->assertSame(
             [0 => 'Category_3'],
             $expandedSearchHttpQueryPlugin->getSearchQuery()->getSearchQueryFacetFilters()[2]->getValues(),
+        );
+        $this->assertSame(
+            'custom-configured-range',
+            $expandedSearchHttpQueryPlugin->getSearchQuery()->getSearchQueryFacetFilters()[3]->getFieldName(),
+        );
+        $this->assertSame(
+            1,
+            (int)$expandedSearchHttpQueryPlugin->getSearchQuery()->getSearchQueryFacetFilters()[3]->getFrom(),
+        );
+        $this->assertSame(
+            5,
+            (int)$expandedSearchHttpQueryPlugin->getSearchQuery()->getSearchQueryFacetFilters()[3]->getTo(),
+        );
+        $this->assertSame(
+            'custom-configured-values',
+            $expandedSearchHttpQueryPlugin->getSearchQuery()->getSearchQueryFacetFilters()[4]->getFieldName(),
+        );
+        $this->assertSame(
+            [
+                0 => 1,
+                1 => 2,
+                2 => 3,
+            ],
+            $expandedSearchHttpQueryPlugin->getSearchQuery()->getSearchQueryFacetFilters()[4]->getValues(),
         );
     }
 }
