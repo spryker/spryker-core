@@ -10,11 +10,6 @@ namespace Spryker\Client\CategoryImageStorage\Dependency;
 interface CategoryImageStorageToStorageClientInterface
 {
     /**
-     * Specification:
-     *  - Get data from storage by string key.
-     *
-     * @api
-     *
      * @param string $key
      *
      * @return mixed

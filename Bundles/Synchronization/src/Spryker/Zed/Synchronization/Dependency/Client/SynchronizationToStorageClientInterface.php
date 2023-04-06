@@ -28,7 +28,7 @@ interface SynchronizationToStorageClientInterface
     /**
      * @param string $key
      *
-     * @return array|null
+     * @return mixed
      */
     public function get($key);
 

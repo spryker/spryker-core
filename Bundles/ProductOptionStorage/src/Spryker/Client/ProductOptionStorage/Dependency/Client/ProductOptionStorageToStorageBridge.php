@@ -25,7 +25,7 @@ class ProductOptionStorageToStorageBridge implements ProductOptionStorageToStora
     /**
      * @param string $key
      *
-     * @return array
+     * @return mixed
      */
     public function get($key)
     {

@@ -25,9 +25,9 @@ class SearchHttpToStorageClientBridge implements SearchHttpToStorageClientInterf
     /**
      * @param string $key
      *
-     * @return array<string, mixed>|null
+     * @return mixed
      */
-    public function get(string $key): ?array
+    public function get(string $key): mixed
     {
         return $this->storageClient->get($key);
     }

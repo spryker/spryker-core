@@ -12,7 +12,7 @@ interface PriceProductOfferStorageToStorageClientInterface
     /**
      * @param string $key
      *
-     * @return array|null
+     * @return mixed
      */
-    public function get($key): ?array;
+    public function get($key): mixed;
 }

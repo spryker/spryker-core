@@ -25,7 +25,7 @@ class ProductLabelStorageToStorageClientBridge implements ProductLabelStorageToS
     /**
      * @param string $key
      *
-     * @return array
+     * @return mixed
      */
     public function get($key)
     {

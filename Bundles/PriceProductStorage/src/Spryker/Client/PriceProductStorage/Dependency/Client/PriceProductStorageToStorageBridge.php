@@ -25,7 +25,7 @@ class PriceProductStorageToStorageBridge implements PriceProductStorageToStorage
     /**
      * @param string $key
      *
-     * @return array
+     * @return mixed
      */
     public function get($key)
     {

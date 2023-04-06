@@ -37,7 +37,7 @@ class SynchronizationToStorageClientBridge implements SynchronizationToStorageCl
     /**
      * @param string $key
      *
-     * @return array|null
+     * @return mixed
      */
     public function get($key)
     {

@@ -25,7 +25,7 @@ class ProductRelationToStorageBridge implements ProductRelationToStorageInterfac
     /**
      * @param string $key
      *
-     * @return array
+     * @return mixed
      */
     public function get($key)
     {

@@ -25,7 +25,7 @@ class ProductCategoryStorageToStorageClientBridge implements ProductCategoryStor
     /**
      * @param string $key
      *
-     * @return array
+     * @return mixed
      */
     public function get($key)
     {

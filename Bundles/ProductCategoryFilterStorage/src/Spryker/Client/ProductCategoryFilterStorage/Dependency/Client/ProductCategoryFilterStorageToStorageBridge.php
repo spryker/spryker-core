@@ -25,7 +25,7 @@ class ProductCategoryFilterStorageToStorageBridge implements ProductCategoryFilt
     /**
      * @param string $key
      *
-     * @return array
+     * @return mixed
      */
     public function get($key)
     {

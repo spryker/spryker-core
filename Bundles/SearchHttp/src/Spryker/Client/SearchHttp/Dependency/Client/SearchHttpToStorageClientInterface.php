@@ -12,7 +12,7 @@ interface SearchHttpToStorageClientInterface
     /**
      * @param string $key
      *
-     * @return array<string, mixed>|null
+     * @return mixed
      */
-    public function get(string $key): ?array;
+    public function get(string $key): mixed;
 }
