@@ -14,12 +14,14 @@ use Spryker\Glue\GlueApplication\ApiApplication\Type\RequestFlowAgnosticApiAppli
 use Spryker\Glue\GlueApplication\ApiApplication\Type\RequestFlowAwareApiApplication;
 use Spryker\Glue\GlueApplication\ContentNegotiator\ContentNegotiatorInterface;
 use Spryker\Glue\GlueApplication\Exception\UnknownRequestFlowImplementationException;
+use Spryker\Glue\GlueApplication\GlueApplicationConfig;
 use Spryker\Glue\GlueApplication\Http\Request\RequestBuilderInterface;
 use Spryker\Glue\GlueApplication\Http\Response\HttpSenderInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\CommunicationProtocolPluginInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ConventionPluginInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\GlueApplicationBootstrapPluginInterface;
 use Spryker\Shared\Application\ApplicationInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Auto-generated group annotations
@@ -63,6 +65,10 @@ class ApiApplicationProxyTest extends Unit
             ->expects($this->never())
             ->method('sendResponse');
 
+        $configMock = $this->createMock(GlueApplicationConfig::class);
+        $configMock->method('isTerminationEnabled')
+            ->willReturn(true);
+
         $apiApplicationProxy = new ApiApplicationProxy(
             $bootstrapPluginMock,
             $requestFlowExecutorMock,
@@ -71,6 +77,8 @@ class ApiApplicationProxyTest extends Unit
             $requestBuilderMock,
             $httpSenderMock,
             $this->createContentNegotiatorMock(),
+            $this->createMock(Request::class),
+            $configMock,
         );
         $apiApplicationProxy->boot();
     }
@@ -91,6 +99,9 @@ class ApiApplicationProxyTest extends Unit
         $applicationMock
             ->expects($this->once())
             ->method('run');
+        $applicationMock
+            ->expects($this->never())
+            ->method('terminate');
 
         $bootstrapPluginMock = $this->createMock(GlueApplicationBootstrapPluginInterface::class);
         $bootstrapPluginMock
@@ -108,6 +119,10 @@ class ApiApplicationProxyTest extends Unit
             ->expects($this->never())
             ->method('sendResponse');
 
+        $configMock = $this->createMock(GlueApplicationConfig::class);
+        $configMock->method('isTerminationEnabled')
+            ->willReturn(true);
+
         $apiApplicationProxy = new ApiApplicationProxy(
             $bootstrapPluginMock,
             $requestFlowExecutorMock,
@@ -116,6 +131,8 @@ class ApiApplicationProxyTest extends Unit
             $requestBuilderMock,
             $httpSenderMock,
             $this->createContentNegotiatorMock(),
+            $this->createMock(Request::class),
+            $configMock,
         );
         $apiApplicationProxy->run();
     }
@@ -157,11 +174,17 @@ class ApiApplicationProxyTest extends Unit
         $requestBuilderMock
             ->expects($this->never())
             ->method('extract');
+        $applicationMock->expects($this->never())
+            ->method('terminate');
 
         $httpSenderMock = $this->createMock(HttpSenderInterface::class);
         $httpSenderMock
             ->expects($this->never())
             ->method('sendResponse');
+
+        $configMock = $this->createMock(GlueApplicationConfig::class);
+        $configMock->method('isTerminationEnabled')
+            ->willReturn(true);
 
         $apiApplicationProxy = new ApiApplicationProxy(
             $bootstrapPluginMock,
@@ -171,6 +194,8 @@ class ApiApplicationProxyTest extends Unit
             $requestBuilderMock,
             $httpSenderMock,
             $this->createContentNegotiatorMock(),
+            $this->createMock(Request::class),
+            $configMock,
         );
         $apiApplicationProxy->run();
     }
@@ -208,11 +233,17 @@ class ApiApplicationProxyTest extends Unit
         $requestBuilderMock
             ->expects($this->once())
             ->method('extract');
+        $applicationMock->expects($this->once())
+            ->method('terminate');
 
         $httpSenderMock = $this->createMock(HttpSenderInterface::class);
         $httpSenderMock
             ->expects($this->once())
             ->method('sendResponse');
+
+        $configMock = $this->createMock(GlueApplicationConfig::class);
+        $configMock->method('isTerminationEnabled')
+            ->willReturn(true);
 
         $apiApplicationProxy = new ApiApplicationProxy(
             $bootstrapPluginMock,
@@ -222,6 +253,8 @@ class ApiApplicationProxyTest extends Unit
             $requestBuilderMock,
             $httpSenderMock,
             $this->createContentNegotiatorMock(),
+            $this->createMock(Request::class),
+            $configMock,
         );
         $apiApplicationProxy->run();
     }
@@ -246,6 +279,8 @@ class ApiApplicationProxyTest extends Unit
         $applicationMock
             ->expects($this->never())
             ->method('run');
+        $applicationMock->expects($this->once())
+            ->method('terminate');
 
         $bootstrapPluginMock = $this->createMock(GlueApplicationBootstrapPluginInterface::class);
         $bootstrapPluginMock
@@ -263,6 +298,10 @@ class ApiApplicationProxyTest extends Unit
             ->expects($this->once())
             ->method('sendResponse');
 
+        $configMock = $this->createMock(GlueApplicationConfig::class);
+        $configMock->method('isTerminationEnabled')
+            ->willReturn(true);
+
         $apiApplicationProxy = new ApiApplicationProxy(
             $bootstrapPluginMock,
             $requestFlowExecutorMock,
@@ -271,6 +310,8 @@ class ApiApplicationProxyTest extends Unit
             $requestBuilderMock,
             $httpSenderMock,
             $this->createContentNegotiatorMock(),
+            $this->createMock(Request::class),
+            $configMock,
         );
         $apiApplicationProxy->run();
     }
@@ -285,6 +326,9 @@ class ApiApplicationProxyTest extends Unit
         $requestFlowExecutorMock = $this->createMock(RequestFlowExecutorInterface::class);
         $requestBuilderMock = $this->createMock(RequestBuilderInterface::class);
         $httpSenderMock = $this->createMock(HttpSenderInterface::class);
+        $configMock = $this->createMock(GlueApplicationConfig::class);
+        $configMock->method('isTerminationEnabled')
+            ->willReturn(true);
 
         $this->expectException(UnknownRequestFlowImplementationException::class);
 
@@ -296,6 +340,8 @@ class ApiApplicationProxyTest extends Unit
             $requestBuilderMock,
             $httpSenderMock,
             $this->createContentNegotiatorMock(),
+            $this->createMock(Request::class),
+            $configMock,
         );
         $apiApplicationProxy->run();
     }

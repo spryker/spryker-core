@@ -338,6 +338,21 @@ class GlueApplicationConfig extends AbstractBundleConfig
 
     /**
      * Specification:
+     * - Returns if current application should call terminate method at the end of the execution flow.
+     *
+     * @api
+     *
+     * @deprecated Will be removed without replacement.
+     *
+     * @return bool
+     */
+    public function isTerminationEnabled(): bool
+    {
+        return false;
+    }
+
+    /**
+     * Specification:
      * - Lists the route matchers that will run for each ApiApplication.
      *
      * @api

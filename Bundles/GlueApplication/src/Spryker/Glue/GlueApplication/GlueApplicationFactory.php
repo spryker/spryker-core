@@ -773,6 +773,8 @@ class GlueApplicationFactory extends AbstractFactory
             $this->createHttpRequestBuilder(),
             $this->createHttpSender(),
             $this->createContentNegotiator(),
+            $this->createRequest(),
+            $this->getConfig(),
         );
     }
 

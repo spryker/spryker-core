@@ -28,9 +28,9 @@ class HttpSender implements HttpSenderInterface
     /**
      * @param \Generated\Shared\Transfer\GlueResponseTransfer $glueResponseTransfer
      *
-     * @return void
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function sendResponse(GlueResponseTransfer $glueResponseTransfer): void
+    public function sendResponse(GlueResponseTransfer $glueResponseTransfer): Response
     {
         $this->response->setContent($glueResponseTransfer->getContent());
         $this->response->headers->add($glueResponseTransfer->getMeta());
@@ -39,6 +39,6 @@ class HttpSender implements HttpSenderInterface
             $this->response->headers->set('Content-Type', $glueResponseTransfer->getFormat());
         }
 
-        $this->response->send();
+        return $this->response->send();
     }
 }

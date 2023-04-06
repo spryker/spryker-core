@@ -8,17 +8,20 @@
 namespace Spryker\Glue\GlueApplication\ApiApplication;
 
 use Generated\Shared\Transfer\GlueRequestTransfer;
-use Generated\Shared\Transfer\GlueResponseTransfer;
 use Spryker\Glue\GlueApplication\ApiApplication\Type\RequestFlowAgnosticApiApplication;
 use Spryker\Glue\GlueApplication\ApiApplication\Type\RequestFlowAwareApiApplication;
 use Spryker\Glue\GlueApplication\ContentNegotiator\ContentNegotiatorInterface;
 use Spryker\Glue\GlueApplication\Exception\UnknownRequestFlowImplementationException;
+use Spryker\Glue\GlueApplication\GlueApplicationConfig;
 use Spryker\Glue\GlueApplication\Http\Request\RequestBuilderInterface;
 use Spryker\Glue\GlueApplication\Http\Response\HttpSenderInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\CommunicationProtocolPluginInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ConventionPluginInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\GlueApplicationBootstrapPluginInterface;
 use Spryker\Shared\Application\ApplicationInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\TerminableInterface;
 
 class ApiApplicationProxy implements ApplicationInterface
 {
@@ -58,6 +61,16 @@ class ApiApplicationProxy implements ApplicationInterface
     protected ContentNegotiatorInterface $contentNegotiator;
 
     /**
+     * @var \Symfony\Component\HttpFoundation\Request
+     */
+    protected Request $request;
+
+    /**
+     * @var \Spryker\Glue\GlueApplication\GlueApplicationConfig
+     */
+    protected GlueApplicationConfig $config;
+
+    /**
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\GlueApplicationBootstrapPluginInterface $glueApplicationBootstrapPlugin
      * @param \Spryker\Glue\GlueApplication\ApiApplication\RequestFlowExecutorInterface $requestFlowExecutor
      * @param array<\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\CommunicationProtocolPluginInterface> $communicationProtocolPlugins
@@ -65,6 +78,8 @@ class ApiApplicationProxy implements ApplicationInterface
      * @param \Spryker\Glue\GlueApplication\Http\Request\RequestBuilderInterface $requestBuilder
      * @param \Spryker\Glue\GlueApplication\Http\Response\HttpSenderInterface $httpSender
      * @param \Spryker\Glue\GlueApplication\ContentNegotiator\ContentNegotiatorInterface $contentNegotiator
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Spryker\Glue\GlueApplication\GlueApplicationConfig $glueApplicationConfig
      */
     public function __construct(
         GlueApplicationBootstrapPluginInterface $glueApplicationBootstrapPlugin,
@@ -73,7 +88,9 @@ class ApiApplicationProxy implements ApplicationInterface
         array $apiConventionPlugins,
         RequestBuilderInterface $requestBuilder,
         HttpSenderInterface $httpSender,
-        ContentNegotiatorInterface $contentNegotiator
+        ContentNegotiatorInterface $contentNegotiator,
+        Request $request,
+        GlueApplicationConfig $glueApplicationConfig
     ) {
         $this->glueApplicationBootstrapPlugin = $glueApplicationBootstrapPlugin;
         $this->communicationProtocolPlugins = $communicationProtocolPlugins;
@@ -82,6 +99,8 @@ class ApiApplicationProxy implements ApplicationInterface
         $this->requestBuilder = $requestBuilder;
         $this->httpSender = $httpSender;
         $this->contentNegotiator = $contentNegotiator;
+        $this->request = $request;
+        $this->config = $glueApplicationConfig;
     }
 
     /**
@@ -125,7 +144,21 @@ class ApiApplicationProxy implements ApplicationInterface
                 $apiConventionPlugin,
             );
 
-            $this->sendResponse($glueResponseTransfer, $communicationProtocolPlugin);
+            /**
+             * @deprecated Will be removed in the next major. Exists for BC-reason only.
+             */
+            if ($communicationProtocolPlugin !== null) {
+                $communicationProtocolPlugin->sendResponse($glueResponseTransfer);
+
+                return;
+            }
+
+            $response = $this->httpSender->sendResponse($glueResponseTransfer);
+
+            $this->terminateApplication(
+                $bootstrapApplication,
+                $response,
+            );
 
             return;
         }
@@ -136,6 +169,25 @@ class ApiApplicationProxy implements ApplicationInterface
             RequestFlowAgnosticApiApplication::class,
             RequestFlowAwareApiApplication::class,
         ));
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\ApiApplication\Type\RequestFlowAwareApiApplication $bootstrapApplication
+     * @param \Symfony\Component\HttpFoundation\Response $response
+     *
+     * @return void
+     */
+    protected function terminateApplication(RequestFlowAwareApiApplication $bootstrapApplication, Response $response): void
+    {
+        if (!$bootstrapApplication instanceof TerminableInterface) {
+            return;
+        }
+
+        if (!$this->config->isTerminationEnabled()) {
+            return;
+        }
+
+        $bootstrapApplication->terminate($this->request, $response);
     }
 
     /**
@@ -185,24 +237,5 @@ class ApiApplicationProxy implements ApplicationInterface
         }
 
         return $this->requestBuilder->extract(new GlueRequestTransfer());
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\GlueResponseTransfer $glueResponseTransfer
-     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\CommunicationProtocolPluginInterface|null $communicationProtocolPlugin
-     *
-     * @return void
-     */
-    protected function sendResponse(
-        GlueResponseTransfer $glueResponseTransfer,
-        ?CommunicationProtocolPluginInterface $communicationProtocolPlugin
-    ): void {
-        if ($communicationProtocolPlugin !== null) {
-            $communicationProtocolPlugin->sendResponse($glueResponseTransfer);
-
-            return;
-        }
-
-        $this->httpSender->sendResponse($glueResponseTransfer);
     }
 }
