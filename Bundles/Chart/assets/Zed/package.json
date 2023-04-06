@@ -4,5 +4,8 @@
     "version": "1.0.0",
     "dependencies": {
         "plotly.js": "~1.54.5"
+    },
+    "devDependencies": {
+        "buffer": "~5.7.1"
     }
 }
