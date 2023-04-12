@@ -9,6 +9,7 @@ namespace Spryker\Glue\GlueApplication\Resource;
 
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResourceMethodCollectionTransfer;
+use Generated\Shared\Transfer\GlueResourceMethodConfigurationTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
 use Spryker\Glue\GlueApplication\Plugin\GlueApplication\AbstractResourcePlugin;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface;
@@ -33,12 +34,12 @@ class PreFlightResource extends AbstractResourcePlugin implements ResourceInterf
     /**
      * @var \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface
      */
-    protected ResourceInterface $resource;
+    protected ResourceInterface|null $resource;
 
     /**
-     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface $resource
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface|null $resource
      */
-    public function __construct(ResourceInterface $resource)
+    public function __construct(?ResourceInterface $resource = null)
     {
         $this->resource = $resource;
     }
@@ -50,11 +51,9 @@ class PreFlightResource extends AbstractResourcePlugin implements ResourceInterf
      */
     public function getResource(GlueRequestTransfer $glueRequestTransfer): callable
     {
-        $resource = $this->resource;
+        $declaredMethods = array_keys(array_filter($this->getDeclaredMethods()->toArray()));
 
-        return function () use ($resource): GlueResponseTransfer {
-            $declaredMethods = array_keys(array_filter($resource->getDeclaredMethods()->toArray()));
-
+        return function () use ($declaredMethods): GlueResponseTransfer {
             foreach ($declaredMethods as $methodIndex => $declaredMethod) {
                 if ($declaredMethod === 'get_collection') {
                     unset($declaredMethods[$methodIndex]);
@@ -62,7 +61,7 @@ class PreFlightResource extends AbstractResourcePlugin implements ResourceInterf
                 }
             }
 
-            $declaredMethods[] = Request::METHOD_OPTIONS;
+            $declaredMethods[] = strtolower(Request::METHOD_OPTIONS);
 
             return (new GlueResponseTransfer())
                 ->setHttpStatus(Response::HTTP_NO_CONTENT)
@@ -76,7 +75,7 @@ class PreFlightResource extends AbstractResourcePlugin implements ResourceInterf
      */
     public function getController(): string
     {
-        return $this->resource->getController();
+        return $this->resource ? $this->resource->getController() : '';
     }
 
     /**
@@ -84,7 +83,7 @@ class PreFlightResource extends AbstractResourcePlugin implements ResourceInterf
      */
     public function getType(): string
     {
-        return $this->resource->getType();
+        return $this->resource ? $this->resource->getType() : '';
     }
 
     /**
@@ -92,6 +91,20 @@ class PreFlightResource extends AbstractResourcePlugin implements ResourceInterf
      */
     public function getDeclaredMethods(): GlueResourceMethodCollectionTransfer
     {
-        return $this->resource->getDeclaredMethods();
+        return $this->resource ? $this->resource->getDeclaredMethods() : $this->getDeclaredMethodsForEmptyResource();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\GlueResourceMethodCollectionTransfer
+     */
+    protected function getDeclaredMethodsForEmptyResource(): GlueResourceMethodCollectionTransfer
+    {
+        $glueResourceMethodConfigurationTransfer = new GlueResourceMethodConfigurationTransfer();
+
+        return (new GlueResourceMethodCollectionTransfer())
+            ->setPost($glueResourceMethodConfigurationTransfer)
+            ->setDelete($glueResourceMethodConfigurationTransfer)
+            ->setPatch($glueResourceMethodConfigurationTransfer)
+            ->setGet($glueResourceMethodConfigurationTransfer);
     }
 }

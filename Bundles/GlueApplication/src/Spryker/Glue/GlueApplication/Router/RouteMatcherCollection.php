@@ -66,6 +66,10 @@ class RouteMatcherCollection implements RouteMatcherInterface
 
             $resourcePlugin = $routeMatcher->route($glueRequestTransfer);
 
+            if ($resourcePlugin instanceof PreFlightResource) {
+                return $resourcePlugin;
+            }
+
             if (!$resourcePlugin instanceof MissingResourceInterface) {
                 if (
                     $glueRequestTransfer->getMethod() === Request::METHOD_OPTIONS &&

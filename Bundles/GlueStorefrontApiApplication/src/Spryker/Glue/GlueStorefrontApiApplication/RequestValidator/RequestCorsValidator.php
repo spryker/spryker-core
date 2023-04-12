@@ -104,7 +104,8 @@ class RequestCorsValidator implements RequestValidatorInterface
             return (new GlueRequestValidationTransfer())->setIsValid(true);
         }
 
-        $requestedHeaders = explode(', ', (string)current($headers[static::HEADER_ACCESS_CONTROL_REQUEST_HEADERS]));
+        $requestedHeaders = explode(',', (string)current($headers[static::HEADER_ACCESS_CONTROL_REQUEST_HEADERS]));
+        $requestedHeaders = array_map('trim', $requestedHeaders);
         $requestedHeaders = array_map('strtolower', $requestedHeaders);
         $allowedHeaders = array_map('strtolower', $this->config->getCorsAllowedHeaders());
 

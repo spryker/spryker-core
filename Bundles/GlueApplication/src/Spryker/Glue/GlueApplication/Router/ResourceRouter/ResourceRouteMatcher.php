@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResourceTransfer;
 use Spryker\Glue\GlueApplication\GlueApplicationConfig;
 use Spryker\Glue\GlueApplication\Resource\MissingResource;
+use Spryker\Glue\GlueApplication\Resource\PreFlightResource;
 use Spryker\Glue\GlueApplication\Router\ResourceRouter\Uri\UriParserInterface;
 use Spryker\Glue\GlueApplication\Router\RouteMatcherInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface;
@@ -170,6 +171,10 @@ class ResourceRouteMatcher implements RouteMatcherInterface
         $resourcePlugin = $this->requestResourcePluginFilter->filterResourcePlugins($glueRequestTransfer, $resourcePlugins, $glueResourceTransfer);
 
         if (!$resourcePlugin) {
+            if ($glueRequestTransfer->getMethod() === Request::METHOD_OPTIONS) {
+                return new PreFlightResource();
+            }
+
             return new MissingResource(
                 GlueApplicationConfig::ERROR_CODE_RESOURCE_NOT_FOUND,
                 GlueApplicationConfig::ERROR_MESSAGE_RESOURCE_NOT_FOUND,

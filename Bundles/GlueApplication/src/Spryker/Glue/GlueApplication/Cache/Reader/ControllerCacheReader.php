@@ -10,6 +10,7 @@ namespace Spryker\Glue\GlueApplication\Cache\Reader;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Spryker\Glue\GlueApplication\Cache\Writer\ControllerCacheWriterInterface;
 use Spryker\Glue\GlueApplication\GlueApplicationConfig;
+use Spryker\Glue\GlueApplication\Resource\PreFlightResource;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\MissingResourceInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface;
 
@@ -56,7 +57,7 @@ class ControllerCacheReader implements ControllerCacheReaderInterface
      */
     public function getActionParameters($executableResource, ResourceInterface $resource, GlueRequestTransfer $glueRequestTransfer): ?array
     {
-        if ($resource instanceof MissingResourceInterface) {
+        if (!$this->isCacheable($resource)) {
             return [];
         }
 
@@ -105,5 +106,22 @@ class ControllerCacheReader implements ControllerCacheReaderInterface
         }
 
         return sprintf('%s:%s:%s', $resource->getController(), $resource->getType(), $action);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface $resource
+     *
+     * @return bool
+     */
+    protected function isCacheable(ResourceInterface $resource): bool
+    {
+        if (
+            $resource instanceof MissingResourceInterface ||
+            $resource instanceof PreFlightResource
+        ) {
+            return false;
+        }
+
+        return true;
     }
 }

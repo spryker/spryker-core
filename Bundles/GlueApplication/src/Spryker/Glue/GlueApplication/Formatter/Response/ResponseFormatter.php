@@ -8,6 +8,7 @@
 namespace Spryker\Glue\GlueApplication\Formatter\Response;
 
 use Generated\Shared\Transfer\GlueRequestTransfer;
+use Generated\Shared\Transfer\GlueResourceMethodCollectionTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
 use Spryker\Glue\GlueApplication\Encoder\Response\ResponseEncoderStrategyInterface;
 use Spryker\Glue\GlueApplication\GlueApplicationConfig;
@@ -154,13 +155,33 @@ class ResponseFormatter implements ResponseFormatterInterface
         if ($glueRequestTransfer->getResource() === null) {
             return false;
         }
-        $method = $glueRequestTransfer->getResource()->getMethod();
+        $method = $glueRequestTransfer->getResourceOrFail()->getMethodOrFail();
         $declaredMethods = $resource->getDeclaredMethods();
 
-        if (!$declaredMethods->offsetExists($method)) {
+        if (!$this->hasDeclaredMethods($declaredMethods, $method)) {
             return false;
         }
 
         return (bool)$declaredMethods->offsetGet($method)->getIsSnakeCased();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GlueResourceMethodCollectionTransfer $declaredMethods
+     * @param string $method
+     *
+     * @return bool
+     */
+    protected function hasDeclaredMethods(
+        GlueResourceMethodCollectionTransfer $declaredMethods,
+        string $method
+    ): bool {
+        if (
+            !$declaredMethods->offsetExists($method) ||
+            $declaredMethods->offsetGet($method) === null
+        ) {
+            return false;
+        }
+
+        return true;
     }
 }
