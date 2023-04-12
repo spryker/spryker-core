@@ -142,9 +142,22 @@ class MultiCartStorage implements MultiCartStorageInterface
                 continue;
             }
 
-            if (is_array($allowedQuoteField) && isset($quoteData[$key])) {
-                foreach ($quoteData[$key] as $quoteFieldData) {
-                    $filteredQuoteData[$key][] = $this->filterOutNotAllowedQuoteFields($quoteFieldData, $allowedQuoteField);
+            if (!(is_array($allowedQuoteField) && isset($quoteData[$key]) && is_array($quoteData[$key]))) {
+                continue;
+            }
+
+            foreach ($quoteData[$key] as $quoteFieldKey => $quoteFieldData) {
+                if (in_array($quoteFieldKey, $allowedQuoteField, true) && !is_array($quoteFieldData)) {
+                    $filteredQuoteData[$key][$quoteFieldKey] = $quoteFieldData;
+                }
+
+                if (!is_array($quoteFieldData)) {
+                    continue;
+                }
+
+                $allowedQuoteFields = $this->filterOutNotAllowedQuoteFields($quoteFieldData, $allowedQuoteField);
+                if ($allowedQuoteFields) {
+                    $filteredQuoteData[$key][] = $allowedQuoteFields;
                 }
             }
         }

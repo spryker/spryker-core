@@ -9,6 +9,7 @@ namespace SprykerTest\Client\MultiCart;
 
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\QuoteBuilder;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -132,6 +133,64 @@ class MultiCartClientTest extends Unit
         $this->assertCount(1, $quoteData[QuoteTransfer::ITEMS]);
         $this->assertArrayHasKey(ItemTransfer::GROUP_KEY, $itemData);
         $this->assertSame(static::ITEM_GROUP_KEY, $itemData[ItemTransfer::GROUP_KEY]);
+    }
+
+    /**
+     * @return void
+     */
+    public function testSetQuoteCollectionShouldFilterOutAllQuoteDataExceptAllowedFieldsWhenConfiguredFieldIsObject(): void
+    {
+        // Arrange
+        $this->tester->mockConfigMethod('getQuoteFieldsAllowedForCustomerQuoteCollectionInSession', [
+            QuoteTransfer::CUSTOMER,
+        ]);
+        $quoteTransfer = (new QuoteBuilder([QuoteTransfer::NAME => static::QUOTE_NAME]))
+            ->withCustomer()
+            ->build();
+        $quoteCollectionTransfer = (new QuoteCollectionTransfer())->addQuote($quoteTransfer);
+
+        // Act
+        $this->tester->getClient()->setQuoteCollection($quoteCollectionTransfer);
+
+        // Assert
+        $quoteData = $quoteCollectionTransfer->getQuotes()->getIterator()->current()->toArray(true, true);
+        $this->assertCount(1, array_filter($quoteData));
+        $this->assertArrayHasKey(QuoteTransfer::CUSTOMER, $quoteData);
+        $this->assertSame(
+            array_filter($quoteTransfer->getCustomer()->toArray(true, true)),
+            array_filter($quoteData[QuoteTransfer::CUSTOMER]),
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testSetQuoteCollectionShouldFilterOutAllNestedFieldsExceptAllowedFieldsWhenConfiguredFieldIsObject(): void
+    {
+        // Arrange
+        $this->tester->mockConfigMethod('getQuoteFieldsAllowedForCustomerQuoteCollectionInSession', [
+            QuoteTransfer::CUSTOMER => [
+                CustomerTransfer::CUSTOMER_REFERENCE,
+            ],
+        ]);
+
+        $quoteTransfer = (new QuoteBuilder([QuoteTransfer::NAME => static::QUOTE_NAME]))
+            ->withCustomer([CustomerTransfer::CUSTOMER_REFERENCE => 'testCustomerReference'])
+            ->build();
+        $quoteCollectionTransfer = (new QuoteCollectionTransfer())->addQuote($quoteTransfer);
+
+        // Act
+        $this->tester->getClient()->setQuoteCollection($quoteCollectionTransfer);
+
+        // Assert
+        $quoteData = $quoteCollectionTransfer->getQuotes()->getIterator()->current()->toArray(true, true);
+        $this->assertCount(1, array_filter($quoteData));
+        $this->assertArrayHasKey(QuoteTransfer::CUSTOMER, $quoteData);
+        $this->assertCount(1, array_filter($quoteData[QuoteTransfer::CUSTOMER]));
+        $this->assertSame(
+            $quoteTransfer->getCustomer()->getCustomerReference(),
+            $quoteData[QuoteTransfer::CUSTOMER][CustomerTransfer::CUSTOMER_REFERENCE],
+        );
     }
 
     /**
