@@ -113,7 +113,7 @@ class CollectedDiscountItemFilter implements CollectedDiscountItemFilterInterfac
         }
 
         if (!isset($this->remainingUnitPricesByItemIds[$originalItemId])) {
-            $this->remainingUnitPricesByItemIds[$originalItemId] = $discountableItemTransfer->getUnitPrice();
+            $this->remainingUnitPricesByItemIds[$originalItemId] = $discountableItemTransfer->getUnitPrice() * $discountableItemTransfer->getQuantity();
         }
 
         foreach ($discountableItemTransfer->getOriginalItemCalculatedDiscounts() as $originalItemCalculatedDiscountTransfer) {
