@@ -132,6 +132,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->createCustomerOrderOverviewHydrator(),
             $this->getOmsFacade(),
             $this->getSearchOrderExpanderPlugins(),
+            $this->getCustomerFacade(),
         );
     }
 

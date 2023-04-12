@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Spryker\Zed\Sales\SalesDependencyProvider;
 use Spryker\Zed\SalesExtension\Dependency\Plugin\SearchOrderExpanderPluginInterface;
+use SprykerTest\Zed\Sales\SalesBusinessTester;
 
 /**
  * Auto-generated group annotations
@@ -32,9 +33,14 @@ class GetPaginatedCustomerOrdersOverviewTest extends Unit
     protected const DEFAULT_OMS_PROCESS_NAME = 'Test01';
 
     /**
+     * @var int
+     */
+    protected const TEST_NON_EXISTING_CUSTOMER_ID = -1;
+
+    /**
      * @var \SprykerTest\Zed\Sales\SalesBusinessTester
      */
-    protected $tester;
+    protected SalesBusinessTester $tester;
 
     /**
      * @return void
@@ -77,6 +83,22 @@ class GetPaginatedCustomerOrdersOverviewTest extends Unit
 
         // Assert
         $this->assertTrue($orderTransfers->getIterator()->current()->getIsCancellable());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetPaginatedCustomerOrdersOverviewShouldNotThrowAnExceptionWhenCustomerIsNotFound(): void
+    {
+        // Arrange
+        $this->tester->createOrderByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME);
+
+        // Act
+        $orderListTransfer = $this->tester->getFacade()
+            ->getPaginatedCustomerOrdersOverview(new OrderListTransfer(), static::TEST_NON_EXISTING_CUSTOMER_ID);
+
+        // Assert
+        $this->assertCount(0, $orderListTransfer->getOrders());
     }
 
     /**

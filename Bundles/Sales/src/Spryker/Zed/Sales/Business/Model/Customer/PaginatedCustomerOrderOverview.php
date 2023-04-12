@@ -8,11 +8,13 @@
 namespace Spryker\Zed\Sales\Business\Model\Customer;
 
 use ArrayObject;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Spryker\Zed\Sales\Business\Model\Order\CustomerOrderOverviewHydratorInterface;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToCustomerInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
@@ -21,39 +23,47 @@ class PaginatedCustomerOrderOverview implements CustomerOrderOverviewInterface
     /**
      * @var \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
      */
-    protected $queryContainer;
+    protected SalesQueryContainerInterface $queryContainer;
 
     /**
      * @var \Spryker\Zed\Sales\Business\Model\Order\CustomerOrderOverviewHydratorInterface
      */
-    protected $customerOrderOverviewHydrator;
+    protected CustomerOrderOverviewHydratorInterface $customerOrderOverviewHydrator;
 
     /**
      * @var \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface
      */
-    protected $omsFacade;
+    protected SalesToOmsInterface $omsFacade;
 
     /**
      * @var array<\Spryker\Zed\SalesExtension\Dependency\Plugin\SearchOrderExpanderPluginInterface>
      */
-    protected $searchOrderExpanderPlugins;
+    protected array $searchOrderExpanderPlugins;
+
+    /**
+     * @var \Spryker\Zed\Sales\Dependency\Facade\SalesToCustomerInterface
+     */
+    protected SalesToCustomerInterface $customerFacade;
 
     /**
      * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Sales\Business\Model\Order\CustomerOrderOverviewHydratorInterface $customerOrderOverviewHydrator
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface $omsFacade
      * @param array<\Spryker\Zed\SalesExtension\Dependency\Plugin\SearchOrderExpanderPluginInterface> $searchOrderExpanderPlugins
+     * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToCustomerInterface $customerFacade
      */
     public function __construct(
         SalesQueryContainerInterface $queryContainer,
         CustomerOrderOverviewHydratorInterface $customerOrderOverviewHydrator,
         SalesToOmsInterface $omsFacade,
-        array $searchOrderExpanderPlugins
+        array $searchOrderExpanderPlugins,
+        SalesToCustomerInterface $customerFacade
     ) {
         $this->queryContainer = $queryContainer;
         $this->customerOrderOverviewHydrator = $customerOrderOverviewHydrator;
         $this->omsFacade = $omsFacade;
         $this->searchOrderExpanderPlugins = $searchOrderExpanderPlugins;
+        $this->customerFacade = $customerFacade;
     }
 
     /**
@@ -64,6 +74,10 @@ class PaginatedCustomerOrderOverview implements CustomerOrderOverviewInterface
      */
     public function getOrdersOverview(OrderListTransfer $orderListTransfer, $idCustomer): OrderListTransfer
     {
+        if (!$this->hasCustomer((int)$idCustomer)) {
+            return $orderListTransfer;
+        }
+
         $ordersQuery = $this->queryContainer->queryCustomerOrders(
             $idCustomer,
             $orderListTransfer->getFilter(),
@@ -172,5 +186,17 @@ class PaginatedCustomerOrderOverview implements CustomerOrderOverviewInterface
         $collection = $paginationModel->getResults();
 
         return $collection;
+    }
+
+    /**
+     * @param int $idCustomer
+     *
+     * @return bool
+     */
+    protected function hasCustomer(int $idCustomer): bool
+    {
+        $customerTransfer = (new CustomerTransfer())->setIdCustomer($idCustomer);
+
+        return $this->customerFacade->findCustomerById($customerTransfer) !== null;
     }
 }
