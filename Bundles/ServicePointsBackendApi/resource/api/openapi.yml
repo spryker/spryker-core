@@ -1,0 +1,356 @@
+openapi: 3.0.3
+info:
+    title: Service Point BAPI - OpenAPI 3.0
+    description: |-
+        This is a OpenAPI specification of Service Point BAPI.
+    version: 0.1.0
+tags:
+    - name: service-point
+      description: Service Point endpoints.
+security:
+    - BearerAuth: []
+paths:
+    /service-points:
+        get:
+            tags:
+                - service-point
+            summary: Service Points list
+            description: Returns list of all Service Points in the system
+            operationId: getServicePoints
+            parameters:
+                - $ref: '#/components/parameters/Page'
+                - $ref: '#/components/parameters/Sort'
+                - $ref: '#/components/parameters/Fields'
+                - $ref: '#/components/parameters/AcceptLanguage'
+                - $ref: '#/components/parameters/ContentType'
+            responses:
+                '200':
+                    description: Successful operation
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ApiServicePointAttributesCollection'
+                '403':
+                    description: Not authorized
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/responses/ApiErrorResponse'
+                '4XX':
+                    description: Bad request
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/responses/ApiErrorResponse'
+
+        post:
+            tags:
+                - service-point
+            summary: Create Service Point
+            description: Create Service Point
+            operationId: createServicePoint
+            parameters:
+                - $ref: '#/components/parameters/AcceptLanguage'
+                - $ref: '#/components/parameters/ContentType'
+            requestBody:
+                $ref: '#/components/requestBodies/ApiServicePointPostRequestPayload'
+            responses:
+                '201':
+                    description: Successful operation
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ApiServicePointResponse'
+                '403':
+                    description: Not authorized
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/responses/ApiErrorResponse'
+                '4XX':
+                    description: Bad request
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/responses/ApiErrorResponse'
+
+    /service-points/{servicePointUuid}:
+        parameters:
+            - name: servicePointUuid
+              in: path
+              required: true
+              description: Service Point UUID
+              schema:
+                  type: string
+            - $ref: '#/components/parameters/AcceptLanguage'
+            - $ref: '#/components/parameters/ContentType'
+            - $ref: '#/components/parameters/Fields'
+        patch:
+            summary: Update Service Point
+            tags:
+                - service-point
+            requestBody:
+                $ref: '#/components/requestBodies/ApiServicePointPatchRequestPayload'
+            operationId: updateServicePoint
+            responses:
+                200:
+                    description: Successful operation
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ApiServicePointResponse'
+                '403':
+                    description: Not authorized
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/responses/ApiErrorResponse'
+                '4XX':
+                    description: Bad request
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/responses/ApiErrorResponse'
+
+        get:
+            tags:
+                - service-point
+            summary: Find Service Point by ID
+            description: Returns a single Service Point
+            operationId: getServicePointById
+            responses:
+                '200':
+                    description: successful operation
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ApiServicePointResponse'
+                '403':
+                    description: Not authorized
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/responses/ApiErrorResponse'
+                '4XX':
+                    description: Bad request
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/responses/ApiErrorResponse'
+
+components:
+    requestBodies:
+        ApiServicePointPostRequestPayload:
+            description: Represents create Service Point request
+            content:
+                application/vnd.api+json:
+                    schema:
+                        $ref: '#/components/schemas/ApiServicePointRequestBody'
+        ApiServicePointPatchRequestPayload:
+            description: Represents update Service Point request
+            content:
+                application/vnd.api+json:
+                    schema:
+                        $ref: '#/components/schemas/ApiServicePointRequestBody'
+
+    responses:
+        ApiServicePointAttributesCollection:
+            description: Listing of Service Points
+            content:
+                application/vnd.api+json:
+                    schema:
+                        $ref: '#/components/schemas/ApiServicePointAttributesCollection'
+        ApiServicePointResponse:
+            description: Representation of Service Point
+            content:
+                application/vnd.api+json:
+                    schema:
+                        $ref: '#/components/schemas/ApiServicePointResponse'
+        ApiErrorResponse:
+            description: Error response
+            content:
+                application/vnd.api+json:
+                    schema:
+                        properties:
+                            errors:
+                                $ref: '#/components/schemas/JsonApiErrorMessageCollection'
+
+    parameters:
+        Page:
+            name: page
+            in: query
+            description: 'Parameter is used to limit requested items.'
+            required: false
+            style: deepObject
+            explode: true
+            schema:
+                type: object
+                properties:
+                    offset:
+                        type: integer
+                        description: 'The number of items to skip before starting to collect the result set.'
+                    limit:
+                        type: integer
+                        description: 'The numbers of items to return.'
+                example:
+                    offset: 0
+                    limit: 10
+        Sort:
+            name: page
+            in: query
+            description: 'Parameter is used to sort items. Use dash `-` for DESC direction.'
+            required: false
+            style: form
+            explode: false
+            schema:
+                type: string
+                example: -sku
+        ContentType:
+            name: Content-Type
+            in: header
+            description: 'Content-Type header required for all the requests.'
+            required: true
+            schema:
+                type: string
+                example: application/vnd.api+json
+        AcceptLanguage:
+            name: Accept-Language
+            in: header
+            description: 'Locale value relevant for the store.'
+            schema:
+                type: string
+            required: false
+        Fields:
+            name: fields
+            in: query
+            description: 'Parameter is used to extract specified items\` fields.'
+            required: false
+            style: deepObject
+            explode: true
+            schema:
+                type: object
+                properties:
+                    resourceName:
+                        type: array
+                        items:
+                            type: string
+                        description: 'The name of resource.'
+                example:
+                    people: 'name,last-name'
+
+    schemas:
+        ApiServicePointAttributesCollection:
+            properties:
+                data:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ApiServicePointResponseData'
+        ApiServicePointResponse:
+            type: object
+            properties:
+                data:
+                    $ref: '#/components/schemas/ApiServicePointResponseData'
+        ApiServicePointResponseData:
+            type: object
+            properties:
+                type:
+                    type: string
+                    example: service-points
+                id:
+                    type: string
+                    format: uuid
+                    example: 518409fa-a5c2-4b52-8ac9-a382ebdc6084
+                attributes:
+                    $ref: '#/components/schemas/ApiServicePointsAttributes'
+                links:
+                    $ref: '#/components/schemas/ApiLinks'
+        ApiServicePointRequestBody:
+            type: object
+            properties:
+                data:
+                    $ref: '#/components/schemas/ApiServicePointRequestData'
+        ApiServicePointRequestData:
+            type: object
+            properties:
+                type:
+                    type: string
+                    example: 'service-points'
+                attributes:
+                    $ref: '#/components/schemas/ApiServicePointsRequestAttributes'
+        ApiServicePointsRequestAttributes:
+            required:
+                - name
+                - key
+                - isActive
+                - isShared
+                - stores
+            type: object
+            properties:
+                name:
+                    type: string
+                    example: My Service Point
+                key:
+                    type: string
+                    example: my_service_point
+                isActive:
+                    type: boolean
+                    example: true
+                stores:
+                    type: array
+                    items:
+                        type: string
+                    example:
+                        - DE
+                        - AT
+        ApiServicePointsAttributes:
+            type: object
+            properties:
+                name:
+                    type: string
+                    example: My Service Point
+                key:
+                    type: string
+                    example: my_service_point
+                isActive:
+                    type: boolean
+                    example: true
+                stores:
+                    type: array
+                    items:
+                        type: string
+                    example:
+                        - DE
+                        - AT
+        ApiLinks:
+            properties:
+                self:
+                    type: string
+        JsonApiErrorMessageCollection:
+            type: array
+            items:
+                $ref: '#/components/schemas/JsonApiErrorMessage'
+        JsonApiErrorMessage:
+            type: object
+            properties:
+                status:
+                    type: integer
+                code:
+                    type: string
+                message:
+                    type: string

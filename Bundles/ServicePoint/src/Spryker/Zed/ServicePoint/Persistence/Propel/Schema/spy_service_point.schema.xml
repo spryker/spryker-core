@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\ServicePoint\Persistence" package="src.Orm.Zed.ServicePoint.Persistence">
+
+    <table name="spy_service_point" idMethod="native" allowPkInsert="true" identifierQuoting="true">
+        <column name="id_service_point" type="INTEGER" required="true" autoIncrement="true" primaryKey="true"/>
+        <column name="uuid" type="VARCHAR" required="false" size="36"/>
+        <column name="name" type="VARCHAR" required="true" size="255"/>
+        <column name="key" type="VARCHAR" required="true" size="255"/>
+        <column name="is_active" type="BOOLEAN" required="true"/>
+
+        <unique name="spy_service_point-key">
+            <unique-column name="key"/>
+        </unique>
+
+        <unique name="spy_service_point-unique-uuid">
+            <unique-column name="uuid"/>
+        </unique>
+
+        <id-method-parameter value="spy_service_point_pk_seq"/>
+
+        <behavior name="uuid">
+            <parameter name="key_columns" value="id_service_point"/>
+        </behavior>
+
+        <behavior name="timestampable"/>
+    </table>
+
+    <table name="spy_service_point_store" idMethod="native" allowPkInsert="true">
+        <column name="id_service_point_store" type="INTEGER" required="true" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_service_point" type="INTEGER" required="true"/>
+        <column name="fk_store" type="INTEGER" required="true"/>
+
+        <foreign-key name="spy_service_point_store-fk_service_point" foreignTable="spy_service_point" phpName="ServicePoint" refPhpName="ServicePointStore">
+            <reference local="fk_service_point" foreign="id_service_point"/>
+        </foreign-key>
+
+        <foreign-key name="spy_service_point_store-fk_store" foreignTable="spy_store" phpName="Store" refPhpName="ServicePointStore">
+            <reference local="fk_store" foreign="id_store"/>
+        </foreign-key>
+
+        <unique name="spy_service_point_store-fk_service_point-fk_store">
+            <unique-column name="fk_service_point"/>
+            <unique-column name="fk_store"/>
+        </unique>
+
+        <id-method-parameter value="spy_service_point_store_pk_seq"/>
+    </table>
+
+</database>

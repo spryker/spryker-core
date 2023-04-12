@@ -1,0 +1,9 @@
+[
+    {
+        "fileName": "src/Spryker/Zed/ServicePoint/Dependency/Facade/ServicePointToStoreFacadeBridge.php",
+        "description": "Bridges: Method `getStoreTransfersByStoreNames()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]
