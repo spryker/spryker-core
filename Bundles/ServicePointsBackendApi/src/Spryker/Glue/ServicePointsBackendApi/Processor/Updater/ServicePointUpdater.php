@@ -12,6 +12,8 @@ use Generated\Shared\Transfer\ErrorTransfer;
 use Generated\Shared\Transfer\GlueRequestTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
 use Generated\Shared\Transfer\ServicePointCollectionRequestTransfer;
+use Generated\Shared\Transfer\ServicePointConditionsTransfer;
+use Generated\Shared\Transfer\ServicePointCriteriaTransfer;
 use Generated\Shared\Transfer\ServicePointTransfer;
 use Spryker\Glue\ServicePointsBackendApi\Dependency\Facade\ServicePointsBackendApiToServicePointFacadeInterface;
 use Spryker\Glue\ServicePointsBackendApi\Processor\Mapper\ServicePointMapperInterface;
@@ -57,27 +59,33 @@ class ServicePointUpdater implements ServicePointUpdaterInterface
      */
     public function updateServicePoint(GlueRequestTransfer $glueRequestTransfer): GlueResponseTransfer
     {
-        $resourceTransfer = $glueRequestTransfer->getResourceOrFail();
+        if (!$this->isRequestedEntityValid($glueRequestTransfer)) {
+            return $this->createErrorResponse(
+                $glueRequestTransfer,
+                ServicePointsBackendApiConfig::GLOSSARY_KEY_VALIDATION_WRONG_REQUEST_BODY,
+            );
+        }
+
+        $glueResourceTransfer = $glueRequestTransfer->getResourceOrFail();
 
         /**
-         * @var \Generated\Shared\Transfer\ApiServicePointsAttributesTransfer|null $apiServicePointsAttributesTransfer
+         * @var \Generated\Shared\Transfer\ApiServicePointsAttributesTransfer $apiServicePointsAttributesTransfer
          */
-        $apiServicePointsAttributesTransfer = $resourceTransfer->getAttributes();
+        $apiServicePointsAttributesTransfer = $glueResourceTransfer->getAttributes();
 
-        if (!$resourceTransfer->getId() || !$apiServicePointsAttributesTransfer) {
-            $errorTransfer = (new ErrorTransfer())->setMessage(ServicePointsBackendApiConfig::GLOSSARY_KEY_VALIDATION_WRONG_REQUEST_BODY);
+        $servicePointTransfer = $this->findServicePoint($glueResourceTransfer->getIdOrFail());
 
-            return $this->servicePointResponseBuilder->createServicePointErrorResponse(
-                new ArrayObject([$errorTransfer]),
-                $glueRequestTransfer->getLocale(),
+        if (!$servicePointTransfer) {
+            return $this->createErrorResponse(
+                $glueRequestTransfer,
+                ServicePointsBackendApiConfig::GLOSSARY_KEY_VALIDATION_SERVICE_POINT_ENTITY_NOT_FOUND,
             );
         }
 
         $servicePointTransfer = $this->servicePointMapper->mapApiServicePointsAttributesTransferToServicePointTransfer(
             $apiServicePointsAttributesTransfer,
-            new ServicePointTransfer(),
+            $servicePointTransfer,
         );
-        $servicePointTransfer->setUuid($resourceTransfer->getIdOrFail());
 
         $servicePointCollectionRequestTransfer = $this->createServicePointCollectionRequestTransfer($servicePointTransfer);
         $servicePointCollectionResponseTransfer = $this->servicePointFacade->updateServicePointCollection($servicePointCollectionRequestTransfer);
@@ -93,6 +101,58 @@ class ServicePointUpdater implements ServicePointUpdaterInterface
 
         return $this->servicePointResponseBuilder->createServicePointResponse(
             $servicePointCollectionResponseTransfer->getServicePoints(),
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
+     *
+     * @return bool
+     */
+    protected function isRequestedEntityValid(GlueRequestTransfer $glueRequestTransfer): bool
+    {
+        $glueResourceTransfer = $glueRequestTransfer->getResourceOrFail();
+
+        return $glueResourceTransfer->getId()
+            && $glueResourceTransfer->getAttributes()
+            && array_filter($glueResourceTransfer->getAttributes()->modifiedToArray());
+    }
+
+    /**
+     * @param string $uuid
+     *
+     * @return \Generated\Shared\Transfer\ServicePointTransfer|null
+     */
+    protected function findServicePoint(string $uuid): ?ServicePointTransfer
+    {
+        $servicePointConditionsTransfer = (new ServicePointConditionsTransfer())
+            ->addUuid($uuid)
+            ->setWithStoreRelations(true);
+        $servicePointCriteriaTransfer = (new ServicePointCriteriaTransfer())
+            ->setServicePointConditions($servicePointConditionsTransfer);
+
+        $servicePointTransfers = $this->servicePointFacade
+            ->getServicePointCollection($servicePointCriteriaTransfer)
+            ->getServicePoints();
+
+        return $servicePointTransfers->getIterator()->current();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
+     * @param string $errorMessage
+     *
+     * @return \Generated\Shared\Transfer\GlueResponseTransfer
+     */
+    protected function createErrorResponse(
+        GlueRequestTransfer $glueRequestTransfer,
+        string $errorMessage
+    ): GlueResponseTransfer {
+        $errorTransfer = (new ErrorTransfer())->setMessage($errorMessage);
+
+        return $this->servicePointResponseBuilder->createServicePointErrorResponse(
+            new ArrayObject([$errorTransfer]),
+            $glueRequestTransfer->getLocale(),
         );
     }
 

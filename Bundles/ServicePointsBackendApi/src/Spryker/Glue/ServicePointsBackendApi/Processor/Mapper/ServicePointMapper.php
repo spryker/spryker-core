@@ -46,17 +46,43 @@ class ServicePointMapper implements ServicePointMapperInterface
         ApiServicePointsAttributesTransfer $apiServicePointsAttributesTransfer,
         ServicePointTransfer $servicePointTransfer
     ): ServicePointTransfer {
-        $servicePointTransfer->fromArray(
-            $apiServicePointsAttributesTransfer->toArray(),
-            true,
+        $apiServicePointsAttributesData = array_filter(
+            $apiServicePointsAttributesTransfer->modifiedToArray(),
+            function ($value) {
+                return $value !== null;
+            },
         );
 
-        $storeRelationTransfer = new StoreRelationTransfer();
+        $servicePointTransfer->fromArray($apiServicePointsAttributesData, true);
 
-        foreach ($apiServicePointsAttributesTransfer->getStores() as $storeName) {
-            $storeRelationTransfer->addStores((new StoreTransfer())->setName($storeName));
+        if ($apiServicePointsAttributesTransfer->getStores()) {
+            $servicePointTransfer->setStoreRelation(
+                $this->mapStoreNamesToStoreRelationTransfer(
+                    $apiServicePointsAttributesTransfer->getStores(),
+                    new StoreRelationTransfer(),
+                ),
+            );
         }
 
-        return $servicePointTransfer->setStoreRelation($storeRelationTransfer);
+        return $servicePointTransfer;
+    }
+
+    /**
+     * @param list<string> $storeNames
+     * @param \Generated\Shared\Transfer\StoreRelationTransfer $storeRelationTransfer
+     *
+     * @return \Generated\Shared\Transfer\StoreRelationTransfer
+     */
+    protected function mapStoreNamesToStoreRelationTransfer(
+        array $storeNames,
+        StoreRelationTransfer $storeRelationTransfer
+    ): StoreRelationTransfer {
+        foreach ($storeNames as $storeName) {
+            $storeRelationTransfer->addStores(
+                (new StoreTransfer())->setName($storeName),
+            );
+        }
+
+        return $storeRelationTransfer;
     }
 }
