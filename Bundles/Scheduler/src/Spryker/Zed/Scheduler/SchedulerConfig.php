@@ -98,4 +98,17 @@ class SchedulerConfig extends AbstractBundleConfig
 
         return null;
     }
+
+    /**
+     * Specification:
+     * - Checks if job region is required.
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isJobRegionRequired(): bool
+    {
+        return (bool)getenv('SPRYKER_DYNAMIC_STORE_MODE');
+    }
 }

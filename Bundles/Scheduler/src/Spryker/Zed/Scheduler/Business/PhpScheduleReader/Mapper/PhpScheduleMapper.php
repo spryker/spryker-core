@@ -128,14 +128,19 @@ class PhpScheduleMapper implements PhpScheduleMapperInterface
      */
     protected function mapJobFromArrayBasedOnStore(array $job, ?string $storeName = null): SchedulerJobTransfer
     {
-        return (new SchedulerJobTransfer())
+        $schedulerJobTransfer = (new SchedulerJobTransfer())
             ->setName($this->getJobName($job, $storeName))
             ->setCommand($job[static::KEY_COMMAND] ?? null)
             ->setEnable($job[static::KEY_ENABLE] ?? false)
             ->setRepeatPattern($job[static::KEY_SCHEDULE] ?? null)
             ->setStore($storeName)
-            ->setRegion($this->schedulerConfig->getCurrentRegion())
             ->setPayload($this->mapPayloadFromArray($job));
+
+        if ($this->schedulerConfig->isJobRegionRequired()) {
+            $schedulerJobTransfer->setRegion($this->schedulerConfig->getCurrentRegion());
+        }
+
+        return $schedulerJobTransfer;
     }
 
     /**
@@ -164,7 +169,9 @@ class PhpScheduleMapper implements PhpScheduleMapperInterface
     protected function getJobName(array $job, ?string $currentStoreName): string
     {
         $jobNameParts = [];
-        $jobNameParts[] = $this->schedulerConfig->getCurrentRegion();
+        if ($this->schedulerConfig->isJobRegionRequired()) {
+            $jobNameParts[] = $this->schedulerConfig->getCurrentRegion();
+        }
         $jobNameParts[] = $currentStoreName;
         $jobNameParts[] = $job[static::KEY_NAME] ?? '';
 
