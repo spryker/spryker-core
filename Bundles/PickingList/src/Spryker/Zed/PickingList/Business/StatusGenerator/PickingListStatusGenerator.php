@@ -191,10 +191,6 @@ class PickingListStatusGenerator implements PickingListStatusGeneratorInterface
         $numberOfNotPicked = $pickingListItemTransfer->getNumberOfNotPickedOrFail();
         $numberOfPicked = $pickingListItemTransfer->getNumberOfPickedOrFail();
 
-        if ($quantity === 0 || $quantity !== $numberOfNotPicked + $numberOfPicked) {
-            return false;
-        }
-
-        return true;
+        return $quantity !== 0 && $quantity === $numberOfPicked && !$numberOfNotPicked;
     }
 }

@@ -23,6 +23,13 @@ class ProductsBackendApiConfig extends AbstractBundleConfig
      *
      * @var string
      */
+    public const RESOURCE_CONCRETE_PRODUCTS = 'concrete-products';
+
+    /**
+     * @api
+     *
+     * @var string
+     */
     public const RESPONSE_CODE_PRODUCT_EXISTS = '315';
 
     /**

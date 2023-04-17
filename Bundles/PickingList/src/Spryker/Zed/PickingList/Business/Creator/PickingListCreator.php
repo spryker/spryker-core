@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\PickingListCollectionResponseTransfer;
 use Generated\Shared\Transfer\PickingListCollectionTransfer;
 use Generated\Shared\Transfer\PickingListItemTransfer;
 use Generated\Shared\Transfer\PickingListTransfer;
+use Spryker\Zed\PickingList\Business\Distinguisher\PickingListDistinguisherInterface;
 use Spryker\Zed\PickingList\Business\Filter\PickingListFilterInterface;
 use Spryker\Zed\PickingList\Business\StatusGenerator\PickingListStatusGeneratorInterface;
 use Spryker\Zed\PickingList\Business\Validator\PickingListValidatorCompositeInterface;
@@ -47,6 +48,11 @@ class PickingListCreator implements PickingListCreatorInterface
     protected PickingListToDatabaseConnectionInterface $databaseConnection;
 
     /**
+     * @var \Spryker\Zed\PickingList\Business\Distinguisher\PickingListDistinguisherInterface
+     */
+    protected PickingListDistinguisherInterface $pickingListDistinguisher;
+
+    /**
      * @var list<\Spryker\Zed\PickingListExtension\Dependency\Plugin\PickingListPostCreatePluginInterface>
      */
     protected array $pickingListPostCreatePlugins;
@@ -57,7 +63,8 @@ class PickingListCreator implements PickingListCreatorInterface
      * @param \Spryker\Zed\PickingList\Persistence\PickingListEntityManagerInterface $pickingListEntityManager
      * @param \Spryker\Zed\PickingList\Business\StatusGenerator\PickingListStatusGeneratorInterface $pickingListStatusGenerator
      * @param \Spryker\Zed\PickingList\Dependency\External\PickingListToDatabaseConnectionInterface $databaseConnection
-     * @param list<\Spryker\Zed\PickingListExtension\Dependency\Plugin\PickingListPostCreatePluginInterface> $pickingListPostCreatePlugins
+     * @param \Spryker\Zed\PickingList\Business\Distinguisher\PickingListDistinguisherInterface $pickingListDistinguisher
+     * @param array<\Spryker\Zed\PickingListExtension\Dependency\Plugin\PickingListPostCreatePluginInterface> $pickingListPostCreatePlugins
      */
     public function __construct(
         PickingListFilterInterface $pickingListFilter,
@@ -65,6 +72,7 @@ class PickingListCreator implements PickingListCreatorInterface
         PickingListEntityManagerInterface $pickingListEntityManager,
         PickingListStatusGeneratorInterface $pickingListStatusGenerator,
         PickingListToDatabaseConnectionInterface $databaseConnection,
+        PickingListDistinguisherInterface $pickingListDistinguisher,
         array $pickingListPostCreatePlugins
     ) {
         $this->pickingListFilter = $pickingListFilter;
@@ -72,6 +80,7 @@ class PickingListCreator implements PickingListCreatorInterface
         $this->pickingListEntityManager = $pickingListEntityManager;
         $this->pickingListStatusGenerator = $pickingListStatusGenerator;
         $this->databaseConnection = $databaseConnection;
+        $this->pickingListDistinguisher = $pickingListDistinguisher;
         $this->pickingListPostCreatePlugins = $pickingListPostCreatePlugins;
     }
 
@@ -154,6 +163,8 @@ class PickingListCreator implements PickingListCreatorInterface
     protected function executeCreatePickingListCollectionTransaction(
         PickingListCollectionTransfer $pickingListCollectionTransfer
     ): PickingListCollectionResponseTransfer {
+        $this->pickingListDistinguisher->setModifiedAttributes($pickingListCollectionTransfer->getPickingLists());
+
         $this->databaseConnection->beginTransaction();
 
         $pickingListTransfers = new ArrayObject();

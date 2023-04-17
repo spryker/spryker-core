@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductPackagingUnit\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\TranslationTransfer;
 
 class ProductPackagingUnitToGlossaryFacadeBridge implements ProductPackagingUnitToGlossaryFacadeInterface
 {
@@ -30,7 +31,7 @@ class ProductPackagingUnitToGlossaryFacadeBridge implements ProductPackagingUnit
      *
      * @return bool
      */
-    public function hasTranslation($keyName, ?LocaleTransfer $localeTransfer = null)
+    public function hasTranslation(string $keyName, ?LocaleTransfer $localeTransfer = null): bool
     {
         return $this->glossaryFacade->hasTranslation($keyName, $localeTransfer);
     }
@@ -41,7 +42,7 @@ class ProductPackagingUnitToGlossaryFacadeBridge implements ProductPackagingUnit
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function getTranslation($keyName, LocaleTransfer $localeTransfer)
+    public function getTranslation(string $keyName, LocaleTransfer $localeTransfer): TranslationTransfer
     {
         return $this->glossaryFacade->getTranslation($keyName, $localeTransfer);
     }
@@ -54,7 +55,7 @@ class ProductPackagingUnitToGlossaryFacadeBridge implements ProductPackagingUnit
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function createTranslation($keyName, LocaleTransfer $localeTransfer, $value, $isActive = true)
+    public function createTranslation(string $keyName, LocaleTransfer $localeTransfer, string $value, bool $isActive = true): TranslationTransfer
     {
         return $this->glossaryFacade->createTranslation($keyName, $localeTransfer, $value);
     }
@@ -67,7 +68,7 @@ class ProductPackagingUnitToGlossaryFacadeBridge implements ProductPackagingUnit
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function updateTranslation($keyName, $localeTransfer, $value, $isActive = true)
+    public function updateTranslation(string $keyName, LocaleTransfer $localeTransfer, string $value, bool $isActive = true): TranslationTransfer
     {
         return $this->glossaryFacade->updateTranslation($keyName, $localeTransfer, $value);
     }
@@ -77,7 +78,7 @@ class ProductPackagingUnitToGlossaryFacadeBridge implements ProductPackagingUnit
      *
      * @return bool
      */
-    public function hasKey($keyName)
+    public function hasKey(string $keyName): bool
     {
         return $this->glossaryFacade->hasKey($keyName);
     }
@@ -87,7 +88,7 @@ class ProductPackagingUnitToGlossaryFacadeBridge implements ProductPackagingUnit
      *
      * @return int
      */
-    public function createKey($keyName)
+    public function createKey(string $keyName): int
     {
         return $this->glossaryFacade->createKey($keyName);
     }
@@ -97,7 +98,7 @@ class ProductPackagingUnitToGlossaryFacadeBridge implements ProductPackagingUnit
      *
      * @return bool
      */
-    public function deleteKey($keyName)
+    public function deleteKey(string $keyName): bool
     {
         return $this->glossaryFacade->deleteKey($keyName);
     }
@@ -109,7 +110,7 @@ class ProductPackagingUnitToGlossaryFacadeBridge implements ProductPackagingUnit
      *
      * @return string
      */
-    public function translate($keyName, array $data = [], ?LocaleTransfer $localeTransfer = null)
+    public function translate(string $keyName, array $data = [], ?LocaleTransfer $localeTransfer = null): string
     {
         return $this->glossaryFacade->translate($keyName, $data, $localeTransfer);
     }

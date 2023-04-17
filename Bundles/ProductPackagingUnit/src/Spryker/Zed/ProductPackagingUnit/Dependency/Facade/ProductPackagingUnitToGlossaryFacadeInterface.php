@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductPackagingUnit\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\TranslationTransfer;
 
 interface ProductPackagingUnitToGlossaryFacadeInterface
 {
@@ -17,7 +18,7 @@ interface ProductPackagingUnitToGlossaryFacadeInterface
      *
      * @return bool
      */
-    public function hasTranslation($keyName, ?LocaleTransfer $localeTransfer = null);
+    public function hasTranslation(string $keyName, ?LocaleTransfer $localeTransfer = null): bool;
 
     /**
      * @param string $keyName
@@ -25,17 +26,7 @@ interface ProductPackagingUnitToGlossaryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function getTranslation($keyName, LocaleTransfer $localeTransfer);
-
-    /**
-     * @param string $keyName
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     * @param string $value
-     * @param bool $isActive
-     *
-     * @return \Generated\Shared\Transfer\TranslationTransfer
-     */
-    public function createTranslation($keyName, LocaleTransfer $localeTransfer, $value, $isActive = true);
+    public function getTranslation(string $keyName, LocaleTransfer $localeTransfer): TranslationTransfer;
 
     /**
      * @param string $keyName
@@ -45,14 +36,24 @@ interface ProductPackagingUnitToGlossaryFacadeInterface
      *
      * @return \Generated\Shared\Transfer\TranslationTransfer
      */
-    public function updateTranslation($keyName, $localeTransfer, $value, $isActive = true);
+    public function createTranslation(string $keyName, LocaleTransfer $localeTransfer, string $value, bool $isActive = true): TranslationTransfer;
+
+    /**
+     * @param string $keyName
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param string $value
+     * @param bool $isActive
+     *
+     * @return \Generated\Shared\Transfer\TranslationTransfer
+     */
+    public function updateTranslation(string $keyName, LocaleTransfer $localeTransfer, string $value, bool $isActive = true): TranslationTransfer;
 
     /**
      * @param string $keyName
      *
      * @return bool
      */
-    public function hasKey($keyName);
+    public function hasKey(string $keyName): bool;
 
     /**
      * @param string $keyName
@@ -61,14 +62,14 @@ interface ProductPackagingUnitToGlossaryFacadeInterface
      *
      * @return int
      */
-    public function createKey($keyName);
+    public function createKey(string $keyName): int;
 
     /**
      * @param string $keyName
      *
      * @return bool
      */
-    public function deleteKey($keyName);
+    public function deleteKey(string $keyName): bool;
 
     /**
      * @param string $keyName
@@ -79,5 +80,5 @@ interface ProductPackagingUnitToGlossaryFacadeInterface
      *
      * @return string
      */
-    public function translate($keyName, array $data = [], ?LocaleTransfer $localeTransfer = null);
+    public function translate(string $keyName, array $data = [], ?LocaleTransfer $localeTransfer = null): string;
 }

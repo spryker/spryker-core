@@ -25,6 +25,8 @@ class UserMapper
     ): SpyPickingList {
         $userTransfer = $pickingListTransfer->getUser();
         if ($userTransfer === null || $userTransfer->getUuid() === null) {
+            $pickingListEntity->setUserUuid(null);
+
             return $pickingListEntity;
         }
 

@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="SalesShipmentCriteria" strict="true">
+        <property name="salesShipmentConditions" type="SalesShipmentConditions"/>
+    </transfer>
+
+    <transfer name="SalesShipmentConditions" strict="true">
+        <property name="orderItemUuids" type="string[]" singular="orderItemUuid"/>
+        <property name="withOrderItems" type="bool"/>
+    </transfer>
+
+    <transfer name="SalesShipmentResourceCollection" strict="true">
+        <property name="salesShipmentResources" type="GlueResource[]" singular="salesShipmentResource"/>
+        <property name="shipments" type="Shipment[]" singular="shipment"/>
+    </transfer>
+
+    <transfer name="ApiSalesShipmentsAttributes" strict="true">
+        <property name="requestedDeliveryDate" type="string" strict="true"/>
+    </transfer>
+
+    <transfer name="Shipment">
+        <property name="uuid" type="string" strict="true"/>
+    </transfer>
+
+    <transfer name="SalesShipmentCollection" strict="true">
+        <property name="shipments" type="Shipment[]" singular="shipment"/>
+    </transfer>
+
+    <transfer name="GlueResource">
+        <property name="type" type="string"/>
+        <property name="id" type="string"/>
+        <property name="attributes" type="AbstractAttributes"/>
+    </transfer>
+
+</transfers>

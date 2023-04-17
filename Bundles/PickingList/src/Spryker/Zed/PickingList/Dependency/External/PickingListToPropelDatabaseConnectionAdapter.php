@@ -7,17 +7,19 @@
 
 namespace Spryker\Zed\PickingList\Dependency\External;
 
+use Propel\Runtime\Connection\ConnectionInterface;
+
 class PickingListToPropelDatabaseConnectionAdapter implements PickingListToDatabaseConnectionInterface
 {
     /**
      * @var \Propel\Runtime\Connection\ConnectionInterface
      */
-    protected $propelConnection;
+    protected ConnectionInterface $propelConnection;
 
     /**
      * @param \Propel\Runtime\Connection\ConnectionInterface $propelConnection
      */
-    public function __construct($propelConnection)
+    public function __construct(ConnectionInterface $propelConnection)
     {
         $this->propelConnection = $propelConnection;
     }

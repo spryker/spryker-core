@@ -8,8 +8,12 @@
 namespace Spryker\Zed\PickingList\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\PickingList\Business\Assigner\PickingListUserAssigner;
+use Spryker\Zed\PickingList\Business\Assigner\PickingListUserAssignerInterface;
 use Spryker\Zed\PickingList\Business\Creator\PickingListCreator;
 use Spryker\Zed\PickingList\Business\Creator\PickingListCreatorInterface;
+use Spryker\Zed\PickingList\Business\Distinguisher\PickingListDistinguisher;
+use Spryker\Zed\PickingList\Business\Distinguisher\PickingListDistinguisherInterface;
 use Spryker\Zed\PickingList\Business\Expander\PickingListExpander;
 use Spryker\Zed\PickingList\Business\Expander\PickingListExpanderInterface;
 use Spryker\Zed\PickingList\Business\Extractor\PickingListExtractor;
@@ -92,6 +96,7 @@ class PickingListBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->createPickingListStatusGenerator(),
             $this->getDatabaseConnection(),
+            $this->createPickingListDistinguisher(),
             $this->getPickingListPostCreatePlugins(),
         );
     }
@@ -107,6 +112,7 @@ class PickingListBusinessFactory extends AbstractBusinessFactory
             $this->createPickingListStatusGenerator(),
             $this->createPickingListUpdaterValidator(),
             $this->getDatabaseConnection(),
+            $this->createPickingListDistinguisher(),
             $this->getPickingListPostUpdatePlugins(),
         );
     }
@@ -313,6 +319,18 @@ class PickingListBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\PickingList\Business\Distinguisher\PickingListDistinguisherInterface
+     */
+    public function createPickingListDistinguisher(): PickingListDistinguisherInterface
+    {
+        return new PickingListDistinguisher(
+            $this->createPickingListExtractor(),
+            $this->getRepository(),
+            $this->createPickingListGrouper(),
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\PickingList\Dependency\Facade\PickingListToSalesFacadeInterface
      */
     public function getSalesFacade(): PickingListToSalesFacadeInterface
@@ -334,6 +352,18 @@ class PickingListBusinessFactory extends AbstractBusinessFactory
     public function getWarehouseUserAssignmentFacade(): PickingListToWarehouseUserInterface
     {
         return $this->getProvidedDependency(PickingListDependencyProvider::FACADE_WAREHOUSE_USER);
+    }
+
+    /**
+     * @return \Spryker\Zed\PickingList\Business\Assigner\PickingListUserAssignerInterface
+     */
+    public function createPickingListUserAssigner(): PickingListUserAssignerInterface
+    {
+        return new PickingListUserAssigner(
+            $this->createPickingListReader(),
+            $this->createPickingListUpdater(),
+            $this->getConfig(),
+        );
     }
 
     /**

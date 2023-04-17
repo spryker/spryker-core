@@ -16,11 +16,15 @@ use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
+use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SalesShipmentConditionsTransfer;
+use Generated\Shared\Transfer\SalesShipmentCriteriaTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierRequestTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
+use Generated\Shared\Transfer\SortTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodPrice;
@@ -108,6 +112,11 @@ class ShipmentFacadeTest extends Unit
      * @var int
      */
     protected const FK_SHIPMENT_METHOD = 1;
+
+    /**
+     * @var string
+     */
+    protected const DUMMY_PAYMENT_STATE_MACHINE_PROCESS_NAME = 'DummyPayment01';
 
     /**
      * @var \SprykerTest\Zed\Shipment\ShipmentBusinessTester
@@ -710,5 +719,158 @@ class ShipmentFacadeTest extends Unit
             ->willReturn($pluginPrice);
 
         return $shipmentMethodPricePluginMock;
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetSalesShipmentCollectionShouldReturnSalesShipmentCollection(): void
+    {
+        // Arrange
+        $saveOrderTransfer = $this->tester->haveOrder([], static::DUMMY_PAYMENT_STATE_MACHINE_PROCESS_NAME);
+        $this->tester->haveShipment($saveOrderTransfer->getIdSalesOrder());
+        $this->tester->haveShipment($saveOrderTransfer->getIdSalesOrder());
+
+        $salesShipmentConditionsTransfer = new SalesShipmentConditionsTransfer();
+        $salesShipmentCriteriaTransfer = (new SalesShipmentCriteriaTransfer())->setSalesShipmentConditions($salesShipmentConditionsTransfer);
+
+        // Act
+        $salesShipmentCollectionTransfer = $this->tester->getFacade()->getSalesShipmentCollection($salesShipmentCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(2, $salesShipmentCollectionTransfer->getShipments());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetSalesShipmentCollectionShouldReturnSalesShipmentCollectionFilteredByIdSalesShipment(): void
+    {
+        // Arrange
+        $saveOrderTransfer = $this->tester->haveOrder([], static::DUMMY_PAYMENT_STATE_MACHINE_PROCESS_NAME);
+        $shipmentTransfer = $this->tester->haveShipment($saveOrderTransfer->getIdSalesOrder());
+        $this->tester->haveShipment($saveOrderTransfer->getIdSalesOrder());
+
+        $salesShipmentConditionsTransfer = (new SalesShipmentConditionsTransfer())->addIdSalesShipment($shipmentTransfer->getIdSalesShipment());
+        $salesShipmentCriteriaTransfer = (new SalesShipmentCriteriaTransfer())->setSalesShipmentConditions($salesShipmentConditionsTransfer);
+
+        // Act
+        $salesShipmentCollectionTransfer = $this->tester->getFacade()->getSalesShipmentCollection($salesShipmentCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(1, $salesShipmentCollectionTransfer->getShipments());
+        $this->assertSame(
+            $shipmentTransfer->getIdSalesShipmentOrFail(),
+            $salesShipmentCollectionTransfer->getShipments()->getIterator()->current()->getIdSalesShipment(),
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetSalesShipmentCollectionShouldReturnSalesShipmentCollectionWithOrderItemsWithCorrespondingSalesShipmentConditionsFlag(): void
+    {
+        // Arrange
+        $itemTransfer = (new ItemBuilder())->build();
+        $saveOrderTransfer = $this->tester->haveOrder($itemTransfer->toArray(), static::DUMMY_PAYMENT_STATE_MACHINE_PROCESS_NAME);
+        $shipmentTransfer = $this->tester->haveShipment($saveOrderTransfer->getIdSalesOrder());
+        $this->tester->updateSalesOrderItemsWithIdSalesShipmentForOrder(
+            $saveOrderTransfer->getIdSalesOrderOrFail(),
+            $shipmentTransfer->getIdSalesShipmentOrFail(),
+        );
+
+        $salesShipmentConditionsTransfer = (new SalesShipmentConditionsTransfer())
+            ->addIdSalesShipment($shipmentTransfer->getIdSalesShipment())
+            ->setWithOrderItems(true);
+        $salesShipmentCriteriaTransfer = (new SalesShipmentCriteriaTransfer())->setSalesShipmentConditions($salesShipmentConditionsTransfer);
+
+        // Act
+        $salesShipmentCollectionTransfer = $this->tester->getFacade()->getSalesShipmentCollection($salesShipmentCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(1, $salesShipmentCollectionTransfer->getShipments());
+
+        /** @var \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer */
+        $shipmentTransfer = $salesShipmentCollectionTransfer->getShipments()->getIterator()->current();
+        $this->assertCount(1, $shipmentTransfer->getOrderItems());
+
+        /** @var \Generated\Shared\Transfer\ItemTransfer $orderItemTransfer */
+        $orderItemTransfer = $shipmentTransfer->getOrderItems()->getIterator()->current();
+        $this->assertSame($itemTransfer->getGroupKeyOrFail(), $orderItemTransfer->getGroupKey());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetSalesShipmentCollectionShouldReturnSalesShipmentCollectionSorted(): void
+    {
+        // Arrange
+        $saveOrderTransfer1 = $this->tester->haveOrder([], static::DUMMY_PAYMENT_STATE_MACHINE_PROCESS_NAME);
+        $shipmentTransfer1 = $this->tester->haveShipment($saveOrderTransfer1->getIdSalesOrder());
+        $saveOrderTransfer2 = $this->tester->haveOrder([], static::DUMMY_PAYMENT_STATE_MACHINE_PROCESS_NAME);
+        $shipmentTransfer2 = $this->tester->haveShipment($saveOrderTransfer2->getIdSalesOrder());
+
+        $sortTransfer = (new SortTransfer())
+            ->setField(ShipmentTransfer::ID_SALES_SHIPMENT)
+            ->setIsAscending(false);
+
+        $salesShipmentCriteriaTransfer = (new SalesShipmentCriteriaTransfer())->addSort($sortTransfer);
+
+        // Act
+        $salesShipmentCollectionTransfer = $this->tester->getFacade()->getSalesShipmentCollection($salesShipmentCriteriaTransfer);
+
+        // Assert
+        $shipmentCollectionIterator = $salesShipmentCollectionTransfer->getShipments()->getIterator();
+        $this->assertSame($shipmentTransfer2->getIdSalesShipmentOrFail(), $shipmentCollectionIterator->current()->getIdSalesShipment());
+        $shipmentCollectionIterator->next();
+        $this->assertSame($shipmentTransfer1->getIdSalesShipmentOrFail(), $shipmentCollectionIterator->current()->getIdSalesShipment());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetSalesShipmentCollectionShouldReturnSalesShipmentCollectionPaginatedByLimitAndOffset(): void
+    {
+        // Arrange
+        $saveOrderTransfer1 = $this->tester->haveOrder([], static::DUMMY_PAYMENT_STATE_MACHINE_PROCESS_NAME);
+        $this->tester->haveShipment($saveOrderTransfer1->getIdSalesOrder());
+
+        $saveOrderTransfer2 = $this->tester->haveOrder([], static::DUMMY_PAYMENT_STATE_MACHINE_PROCESS_NAME);
+        $this->tester->haveShipment($saveOrderTransfer2->getIdSalesOrder());
+
+        $paginationTransfer = (new PaginationTransfer())
+            ->setLimit(1)
+            ->setOffset(1);
+        $salesShipmentCriteriaTransfer = (new SalesShipmentCriteriaTransfer())->setPagination($paginationTransfer);
+
+        // Act
+        $salesShipmentCollectionTransfer = $this->tester->getFacade()->getSalesShipmentCollection($salesShipmentCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(1, $salesShipmentCollectionTransfer->getShipments());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetSalesShipmentCollectionShouldReturnsalesShipmentCollectionPaginatedByPageAndMaxPerPage(): void
+    {
+        // Arrange
+        $saveOrderTransfer1 = $this->tester->haveOrder([], static::DUMMY_PAYMENT_STATE_MACHINE_PROCESS_NAME);
+        $this->tester->haveShipment($saveOrderTransfer1->getIdSalesOrder());
+
+        $saveOrderTransfer2 = $this->tester->haveOrder([], static::DUMMY_PAYMENT_STATE_MACHINE_PROCESS_NAME);
+        $this->tester->haveShipment($saveOrderTransfer2->getIdSalesOrder());
+
+        $paginationTransfer = (new PaginationTransfer())
+            ->setPage(2)
+            ->setMaxPerPage(1);
+        $salesShipmentCriteriaTransfer = (new SalesShipmentCriteriaTransfer())->setPagination($paginationTransfer);
+
+        // Act
+        $salesShipmentCollectionTransfer = $this->tester->getFacade()->getSalesShipmentCollection($salesShipmentCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(1, $salesShipmentCollectionTransfer->getShipments());
     }
 }

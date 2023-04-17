@@ -51,6 +51,11 @@ class PickingListsBackendApiDependencyProvider extends AbstractBundleDependencyP
     public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_API_PICKING_LIST_ITEMS_ATTRIBUTES_MAPPER = 'PLUGINS_API_PICKING_LIST_ITEMS_ATTRIBUTES_MAPPER';
+
+    /**
      * @param \Spryker\Glue\Kernel\Backend\Container $container
      *
      * @return \Spryker\Glue\Kernel\Backend\Container
@@ -63,6 +68,7 @@ class PickingListsBackendApiDependencyProvider extends AbstractBundleDependencyP
         $container = $this->addStockFacade($container);
         $container = $this->addUtilEncodingService($container);
         $container = $this->addGlossaryStorageClient($container);
+        $container = $this->addApiPickingListItemsAttributesMapperPlugins($container);
 
         return $container;
     }
@@ -145,5 +151,27 @@ class PickingListsBackendApiDependencyProvider extends AbstractBundleDependencyP
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Backend\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Backend\Container
+     */
+    protected function addApiPickingListItemsAttributesMapperPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_API_PICKING_LIST_ITEMS_ATTRIBUTES_MAPPER, function () {
+            return $this->getApiPickingListItemsAttributesMapperPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return list<\Spryker\Glue\PickingListsBackendApiExtension\Dependency\Plugin\ApiPickingListItemsAttributesMapperPluginInterface>
+     */
+    protected function getApiPickingListItemsAttributesMapperPlugins(): array
+    {
+        return [];
     }
 }

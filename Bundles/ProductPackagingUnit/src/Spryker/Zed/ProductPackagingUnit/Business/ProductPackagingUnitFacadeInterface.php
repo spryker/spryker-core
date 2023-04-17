@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OmsStateCollectionTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\PickingListCollectionTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
@@ -494,4 +495,20 @@ interface ProductPackagingUnitFacadeInterface
      * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     public function filterProductsWithoutPackagingUnit(array $productConcreteTransfers): array;
+
+    /**
+     * Specification:
+     * - Requires `PickingListCollectionTransfer.pickingList.pickingListItem.orderItem` transfer property to be set.
+     * - Expands `PickingListCollectionTransfer.pickingList.pickingListItem.orderItem` transfer objects with `amountSalesUnit` property.
+     * - Returns expanded `PickingListCollectionTransfer` transfer object with amount sales unit.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PickingListCollectionTransfer $pickingListCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\PickingListCollectionTransfer
+     */
+    public function expandPickingListCollection(
+        PickingListCollectionTransfer $pickingListCollectionTransfer
+    ): PickingListCollectionTransfer;
 }

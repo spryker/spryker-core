@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PickingList\Business\Extractor;
 
+use ArrayObject;
 use Generated\Shared\Transfer\PickingListCollectionTransfer;
 
 class PickingListExtractor implements PickingListExtractorInterface
@@ -14,7 +15,7 @@ class PickingListExtractor implements PickingListExtractorInterface
     /**
      * @param \Generated\Shared\Transfer\PickingListCollectionTransfer $pickingListCollectionTransfer
      *
-     * @return array<string>
+     * @return list<string>
      */
     public function extraWarehouseUuidsFromPickingListCollection(
         PickingListCollectionTransfer $pickingListCollectionTransfer
@@ -34,7 +35,7 @@ class PickingListExtractor implements PickingListExtractorInterface
     /**
      * @param \Generated\Shared\Transfer\PickingListCollectionTransfer $pickingListCollectionTransfer
      *
-     * @return array<string>
+     * @return list<string>
      */
     public function extraUserUuidsFromPickingListCollection(
         PickingListCollectionTransfer $pickingListCollectionTransfer
@@ -49,5 +50,24 @@ class PickingListExtractor implements PickingListExtractorInterface
         }
 
         return array_filter(array_unique($userUuids));
+    }
+
+    /**
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PickingListTransfer> $pickingListTransfers
+     *
+     * @return list<string>
+     */
+    public function extractPickingListUuids(ArrayObject $pickingListTransfers): array
+    {
+        $pickingListUuids = [];
+        /** @var \Generated\Shared\Transfer\PickingListTransfer $pickingListTransfer */
+        foreach ($pickingListTransfers as $pickingListTransfer) {
+            if (!$pickingListTransfer->getUuid()) {
+                continue;
+            }
+            $pickingListUuids[] = $pickingListTransfer->getUuidOrFail();
+        }
+
+        return $pickingListUuids;
     }
 }

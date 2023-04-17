@@ -682,6 +682,8 @@ class ProductBusinessFactory extends AbstractBusinessFactory
             $this->createProductAbstractManager(),
             $this->createProductUrlManager(),
             $this->createProductConcreteMerger(),
+            $this->getRepository(),
+            $this->getProductConcreteExpanderPlugins(),
         );
     }
 

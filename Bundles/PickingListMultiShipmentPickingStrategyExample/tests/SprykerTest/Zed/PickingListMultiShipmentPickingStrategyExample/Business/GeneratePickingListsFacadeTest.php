@@ -8,9 +8,7 @@
 namespace SprykerTest\Zed\PickingListMultiShipmentPickingStrategyExample\Business;
 
 use Codeception\Test\Unit;
-use DateTime;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PickingListOrderItemGroupTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\NullValueException;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
@@ -88,8 +86,10 @@ class GeneratePickingListsFacadeTest extends Unit
         // Arrange
         $quoteTransfer = $this->tester->createQuoteTransferWithThreeItems();
         $orderTransfer = $this->tester->createPersistedOrderTransferFromQuote($quoteTransfer);
-        $orderTransfer = $this->tester->expandOrderItemsWithShipment($orderTransfer);
-        $orderTransfer = $this->changeShipmentForFirstPickingListItem($orderTransfer);
+        $shipmentTransfer1 = $this->tester->haveShipment($orderTransfer->getIdSalesOrder(), $this->tester->getShipmentTransfer()->toArray());
+        $shipmentTransfer2 = $this->tester->haveShipment($orderTransfer->getIdSalesOrder(), $this->tester->getShipmentTransfer()->toArray());
+        $this->tester->expandOrderItemsWithShipments($orderTransfer, $shipmentTransfer1, $shipmentTransfer2);
+
         $stockTransfer = $this->tester->createStockTransfer();
 
         $pickingListOrderItemGroupTransfer = (new PickingListOrderItemGroupTransfer())
@@ -97,8 +97,7 @@ class GeneratePickingListsFacadeTest extends Unit
             ->setOrderItems($orderTransfer->getItems());
 
         // Act
-        $pickingListCollectionTransfer = $this->tester->getFacade()
-            ->generatePickingLists($pickingListOrderItemGroupTransfer);
+        $pickingListCollectionTransfer = $this->tester->getFacade()->generatePickingLists($pickingListOrderItemGroupTransfer);
 
         // Assert
         /** @var \ArrayObject<\Generated\Shared\Transfer\PickingListTransfer> $pickingListTransferCollection */
@@ -165,27 +164,5 @@ class GeneratePickingListsFacadeTest extends Unit
 
         // Act
         $this->tester->getFacade()->generatePickingLists($pickingListOrderItemGroupTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer
-     */
-    protected function changeShipmentForFirstPickingListItem(OrderTransfer $orderTransfer): OrderTransfer
-    {
-        /** @var \ArrayObject<\Generated\Shared\Transfer\ItemTransfer> $itemTransferCollection */
-        $itemTransferCollection = $orderTransfer->getItems();
-        $firstItemTransfer = $itemTransferCollection->getIterator()->current();
-        if ($firstItemTransfer !== null) {
-            $shipmentTransfer = $this->tester
-                ->createShipmentTransfer()
-                ->setRequestedDeliveryDate(
-                    (new DateTime('tomorrow'))->format('Y-m-d'),
-                );
-            $firstItemTransfer->setShipment($shipmentTransfer);
-        }
-
-        return $orderTransfer;
     }
 }

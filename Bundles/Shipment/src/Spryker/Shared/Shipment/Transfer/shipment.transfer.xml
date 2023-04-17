@@ -55,6 +55,24 @@
         <property name="shipments" type="Shipment[]" singular="shipment"/>
     </transfer>
 
+    <transfer name="SalesShipmentCriteria" strict="true">
+        <property name="salesShipmentConditions" type="SalesShipmentConditions"/>
+        <property name="sortCollection" type="Sort[]" singular="sort"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="SalesShipmentConditions" strict="true">
+        <property name="salesOrderItemIds" type="int[]" singular="idSalesOrderItem"/>
+        <property name="salesShipmentIds" type="int[]" singular="idSalesShipment"/>
+        <property name="orderItemUuids" type="string[]" singular="orderItemUuid"/>
+        <property name="withOrderItems" type="bool"/>
+    </transfer>
+
+    <transfer name="SalesShipmentCollection" strict="true">
+        <property name="shipments" type="Shipment[]" singular="shipment"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
     <transfer name="Order">
         <property name="idShipmentMethod" type="int" deprecated="Use item level shipment method (item.shipment.method.idShipmentMethod) instead."/>
         <property name="shipmentDeliveryTime" type="int" deprecated="Use item level shipment method delivery time (item.shipment.method.deliveryTime) instead."/>
@@ -99,6 +117,7 @@
         <property name="shipmentSelection" type="string"/>
         <property name="shippingAddress" type="Address"/>
         <property name="requestedDeliveryDate" type="string"/>
+        <property name="orderItems" type="Item[]" singular="orderItem"/>
     </transfer>
 
     <transfer name="Quote">
@@ -255,6 +274,25 @@
 
     <transfer name="OrderFilter">
         <property name="salesOrderId" type="int"/>
+    </transfer>
+
+    <transfer name="Sort">
+        <property name="field" type="string"/>
+        <property name="isAscending" type="bool"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
+        <property name="page" type="int"/>
+        <property name="maxPerPage" type="int"/>
+        <property name="nbResults" type="int"/>
+        <property name="firstIndex" type="int"/>
+        <property name="lastIndex" type="int"/>
+        <property name="firstPage" type="int"/>
+        <property name="lastPage" type="int"/>
+        <property name="nextPage" type="int"/>
+        <property name="previousPage" type="int"/>
     </transfer>
 
     <transfer name="AclEntityMetadataConfig">

@@ -37,6 +37,10 @@
     <transfer name="UserCriteria">
         <property name="userConditions" type="UserConditions" strict="true"/>
     </transfer>
+    
+    <transfer name="UserResourceCollection" strict="true">
+        <property name="userResources" type="GlueResource[]" singular="userResource"/>
+    </transfer>
 
     <transfer name="GlueRequest">
     </transfer>

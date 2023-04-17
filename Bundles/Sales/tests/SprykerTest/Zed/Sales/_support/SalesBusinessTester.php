@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\OrderListRequestTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 
 /**
  * @method void wantToTest($text)
@@ -71,7 +72,6 @@ class SalesBusinessTester extends Actor
         /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */
         $quoteTransfer = (new QuoteBuilder())
             ->withItem()
-            ->withItem()
             ->withTotals()
             ->withShippingAddress()
             ->withBillingAddress()
@@ -115,5 +115,15 @@ class SalesBusinessTester extends Actor
             ->build();
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @deprecated Will be removed in the next major without replacement.
+     *
+     * @return bool
+     */
+    public function hasItemUuidField(): bool
+    {
+        return property_exists(SpySalesOrderItem::class, 'uuid');
     }
 }

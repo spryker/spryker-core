@@ -17,8 +17,8 @@
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 118,
-            "line_to": 118,
+            "line_from": 106,
+            "line_to": 106,
             "type": "DeprecatedMethod",
             "message": "The method Spryker\\Glue\\PickingListsBackendApi\\Processor\\Mapper\\PickingListRequestMapperInterface::mapRequestBodyToGlueResourceTransferCollection has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/PickingListsBackendApi/src/Spryker/Glue/PickingListsBackendApi/Processor/Updater/PickingListItemUpdater.php",

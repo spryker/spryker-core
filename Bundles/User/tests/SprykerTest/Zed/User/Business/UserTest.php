@@ -24,6 +24,7 @@ use Spryker\Zed\User\Persistence\UserQueryContainerInterface;
 use Spryker\Zed\User\UserConfig;
 use Spryker\Zed\User\UserDependencyProvider;
 use Spryker\Zed\UserExtension\Dependency\Plugin\UserExpanderPluginInterface;
+use Spryker\Zed\UserExtension\Dependency\Plugin\UserPostSavePluginInterface;
 use Spryker\Zed\UserExtension\Dependency\Plugin\UserTransferExpanderPluginInterface;
 
 /**
@@ -633,6 +634,89 @@ class UserTest extends Unit
 
         // Act
         $this->getUserFacade()->getUserCollection($userCriteriaTransfer);
+    }
+
+    /**
+     * @dataProvider isPostSavePluginsEnabledAfterUserStatusChangeDataProvider
+     *
+     * @param bool $isPostSavePluginsEnabledAfterUserStatusChange
+     *
+     * @return void
+     */
+    public function testActivateUserExecutesUserPostSavePluginsDependingOnConfiguration(
+        bool $isPostSavePluginsEnabledAfterUserStatusChange
+    ): void {
+        // Arrange, Assert
+        $userTransfer = $this->prepareUserStatusChangingDataAndDependencies($isPostSavePluginsEnabledAfterUserStatusChange);
+
+        // Act
+        $this->tester->getFacade()->activateUser($userTransfer->getIdUser());
+    }
+
+    /**
+     * @dataProvider isPostSavePluginsEnabledAfterUserStatusChangeDataProvider
+     *
+     * @param bool $isPostSavePluginsEnabledAfterUserStatusChange
+     *
+     * @return void
+     */
+    public function testDeactivateUserExecutesUserPostSavePluginsDependingOnConfiguration(
+        bool $isPostSavePluginsEnabledAfterUserStatusChange
+    ): void {
+        // Arrange, Assert
+        $userTransfer = $this->prepareUserStatusChangingDataAndDependencies($isPostSavePluginsEnabledAfterUserStatusChange);
+
+        // Act
+        $this->tester->getFacade()->deactivateUser($userTransfer->getIdUser());
+    }
+
+    /**
+     * @param bool $isPostSavePluginsEnabledAfterUserStatusChange
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer
+     */
+    protected function prepareUserStatusChangingDataAndDependencies(
+        bool $isPostSavePluginsEnabledAfterUserStatusChange
+    ): UserTransfer {
+        $userTransfer = $this->tester->haveUser();
+
+        $this->tester->setDependency(
+            UserDependencyProvider::PLUGINS_POST_SAVE,
+            [$this->getUserPostSavePluginMock($isPostSavePluginsEnabledAfterUserStatusChange)],
+        );
+
+        $this->tester->mockConfigMethod('isPostSavePluginsEnabledAfterUserStatusChange', $isPostSavePluginsEnabledAfterUserStatusChange);
+
+        return $userTransfer;
+    }
+
+    /**
+     * @return array<list<bool>>
+     */
+    protected function isPostSavePluginsEnabledAfterUserStatusChangeDataProvider(): array
+    {
+        return [
+            [true],
+            [false],
+        ];
+    }
+
+    /**
+     * @param bool $isPluginExecutionExpected
+     *
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\UserExtension\Dependency\Plugin\UserPostSavePluginInterface
+     */
+    protected function getUserPostSavePluginMock(bool $isPluginExecutionExpected): UserPostSavePluginInterface
+    {
+        $userPostSavePluginMock = $this
+            ->getMockBuilder(UserPostSavePluginInterface::class)
+            ->getMock();
+
+        $userPostSavePluginMock
+            ->expects($isPluginExecutionExpected ? $this->once() : $this->never())
+            ->method('postSave');
+
+        return $userPostSavePluginMock;
     }
 
     /**

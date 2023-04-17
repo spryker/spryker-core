@@ -9,13 +9,14 @@ namespace Spryker\Zed\ShipmentGui\Dependency\Facade;
 
 use ArrayObject;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\SalesShipmentCollectionTransfer;
+use Generated\Shared\Transfer\SalesShipmentCriteriaTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierRequestTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Generated\Shared\Transfer\ShipmentGroupResponseTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentMethodPluginCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
-use Generated\Shared\Transfer\ShipmentTransfer;
 
 class ShipmentGuiToShipmentFacadeBridge implements ShipmentGuiToShipmentFacadeInterface
 {
@@ -45,19 +46,9 @@ class ShipmentGuiToShipmentFacadeBridge implements ShipmentGuiToShipmentFacadeIn
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
-    public function findMethodById($idShipmentMethod): ?ShipmentMethodTransfer
+    public function findMethodById(int $idShipmentMethod): ?ShipmentMethodTransfer
     {
         return $this->shipmentFacade->findMethodById($idShipmentMethod);
-    }
-
-    /**
-     * @param int $idSalesShipment
-     *
-     * @return \Generated\Shared\Transfer\ShipmentTransfer|null
-     */
-    public function findShipmentById(int $idSalesShipment): ?ShipmentTransfer
-    {
-        return $this->shipmentFacade->findShipmentById($idSalesShipment);
     }
 
     /**
@@ -163,7 +154,7 @@ class ShipmentGuiToShipmentFacadeBridge implements ShipmentGuiToShipmentFacadeIn
      *
      * @return bool
      */
-    public function deleteMethod($idMethod): bool
+    public function deleteMethod(int $idMethod): bool
     {
         return $this->shipmentFacade->deleteMethod($idMethod);
     }
@@ -182,5 +173,16 @@ class ShipmentGuiToShipmentFacadeBridge implements ShipmentGuiToShipmentFacadeIn
     public function getActiveShipmentCarriers(): array
     {
         return $this->shipmentFacade->getActiveShipmentCarriers();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SalesShipmentCriteriaTransfer $salesShipmentCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesShipmentCollectionTransfer
+     */
+    public function getSalesShipmentCollection(
+        SalesShipmentCriteriaTransfer $salesShipmentCriteriaTransfer
+    ): SalesShipmentCollectionTransfer {
+        return $this->shipmentFacade->getSalesShipmentCollection($salesShipmentCriteriaTransfer);
     }
 }

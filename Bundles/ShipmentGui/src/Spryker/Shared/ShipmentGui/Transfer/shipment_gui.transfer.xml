@@ -157,4 +157,16 @@
 
     <transfer name="SalesOrderConfiguredBundle">
     </transfer>
+
+    <transfer name="SalesShipmentCollection" strict="true">
+        <property name="shipments" type="Shipment[]" singular="shipment"/>
+    </transfer>
+
+    <transfer name="SalesShipmentCriteria" strict="true">
+        <property name="salesShipmentConditions" type="SalesShipmentConditions"/>
+    </transfer>
+
+    <transfer name="SalesShipmentConditions" strict="true">
+        <property name="salesShipmentIds" type="int[]" singular="idSalesShipment"/>
+    </transfer>
 </transfers>

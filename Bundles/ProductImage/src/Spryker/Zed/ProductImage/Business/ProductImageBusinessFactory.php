@@ -13,6 +13,8 @@ use Spryker\Zed\ProductImage\Business\Model\Reader;
 use Spryker\Zed\ProductImage\Business\Model\Writer;
 use Spryker\Zed\ProductImage\Business\Reader\ProductImageBulkReader;
 use Spryker\Zed\ProductImage\Business\Reader\ProductImageBulkReaderInterface;
+use Spryker\Zed\ProductImage\Business\Reader\ProductImageSetReader;
+use Spryker\Zed\ProductImage\Business\Reader\ProductImageSetReaderInterface;
 use Spryker\Zed\ProductImage\Business\Resolver\ProductImageSetResolver;
 use Spryker\Zed\ProductImage\Business\Resolver\ProductImageSetResolverInterface;
 use Spryker\Zed\ProductImage\Business\Transfer\ProductImageTransferMapper;
@@ -83,6 +85,16 @@ class ProductImageBusinessFactory extends AbstractBusinessFactory
     public function createProductImageSetResolver(): ProductImageSetResolverInterface
     {
         return new ProductImageSetResolver();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductImage\Business\Reader\ProductImageSetReaderInterface
+     */
+    public function createProductImageSetReader(): ProductImageSetReaderInterface
+    {
+        return new ProductImageSetReader(
+            $this->getRepository(),
+        );
     }
 
     /**

@@ -237,8 +237,10 @@ class UpdatePickingListCollectionFacadeTest extends Unit
     {
         // Arrange
         $this->mockPickingListAlwaysFailingValidatorRule();
+        $pickingListTransfer = $this->tester->createPickingListTransfer([PickingListTransfer::UUID => static::FAKE_UUID]);
+
         $pickingListCollectionRequestTransfer = (new PickingListCollectionRequestTransfer())
-            ->addPickingList($this->tester->createPickingListTransfer())
+            ->addPickingList($pickingListTransfer)
             ->setIsTransactional(true);
 
         // Act
@@ -405,6 +407,7 @@ class UpdatePickingListCollectionFacadeTest extends Unit
     {
         // Arrange
         $pickingListTransfer = $this->tester->createPickingListTransfer([
+            PickingListTransfer::UUID => static::FAKE_UUID,
             PickingListTransfer::WAREHOUSE => $this->tester->haveStock(),
         ]);
 
@@ -434,7 +437,7 @@ class UpdatePickingListCollectionFacadeTest extends Unit
             $this->tester->createPickingListItemTransferWithOrder(),
         ]);
         $pickingListTransfer->addPickingListItem(
-            $this->tester->createPickingListItemTransferWithOrder(),
+            $this->tester->createPickingListItemTransferWithOrder([PickingListItemTransfer::UUID => static::FAKE_UUID]),
         );
 
         $pickingListCollectionRequestTransfer = (new PickingListCollectionRequestTransfer())

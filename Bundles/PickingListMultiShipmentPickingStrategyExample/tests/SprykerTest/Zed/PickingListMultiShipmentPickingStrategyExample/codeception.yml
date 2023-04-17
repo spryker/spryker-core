@@ -17,17 +17,21 @@ suites:
         modules:
             enabled:
                 - Asserts
-                - \SprykerTest\Zed\Oms\Helper\OmsHelper
-                - \SprykerTest\Shared\Sales\Helper\SalesDataHelper
                 - \SprykerTest\Shared\Testify\Helper\Environment
                 - \SprykerTest\Shared\Testify\Helper\ConfigHelper
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
-                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
-                - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
-    Plugin:
-        path: Plugin
-        actor: PickingListMultiShipmentPickingStrategyExampleBusinessTester
+                - \SprykerTest\Zed\Testify\Helper\BusinessHelper
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Shared\Sales\Helper\SalesDataHelper
+                - \SprykerTest\Zed\Oms\Helper\OmsHelper
+                - \SprykerTest\Shared\Shipment\Helper\ShipmentDataHelper
+                - \SprykerTest\Shared\Sales\Helper\SalesHelper
+                - \SprykerTest\Zed\Country\Helper\CountryDataHelper
+    Communication:
+        path: Communication
+        actor: PickingListMultiShipmentPickingStrategyExampleCommunicationTester
         modules:
             enabled:
                 - Asserts

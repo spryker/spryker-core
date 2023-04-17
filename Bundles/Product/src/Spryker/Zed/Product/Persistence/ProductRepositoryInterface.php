@@ -13,6 +13,8 @@ use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ProductAbstractCollectionTransfer;
 use Generated\Shared\Transfer\ProductAbstractCriteriaTransfer;
 use Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer;
+use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
+use Generated\Shared\Transfer\ProductConcreteCriteriaTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductCriteriaTransfer;
 use Generated\Shared\Transfer\ProductUrlCriteriaFilterTransfer;
@@ -237,4 +239,13 @@ interface ProductRepositoryInterface
      * @return array<int, array<\Generated\Shared\Transfer\LocalizedAttributesTransfer>>
      */
     public function getProductAbstractLocalizedAttributes(array $productAbstractIds): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteCriteriaTransfer $productConcreteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteCollectionTransfer
+     */
+    public function getProductConcreteCollection(
+        ProductConcreteCriteriaTransfer $productConcreteCriteriaTransfer
+    ): ProductConcreteCollectionTransfer;
 }

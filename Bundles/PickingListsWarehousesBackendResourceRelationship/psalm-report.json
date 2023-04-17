@@ -1,0 +1,19 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 92,
+            "line_to": 92,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $warehouseRelationshipTransfersIndexedByPickingListUuids using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/PickingListsWarehousesBackendResourceRelationship/src/Spryker/Glue/PickingListsWarehousesBackendResourceRelationship/Processor/Expander/PickingListWarehouseResourceRelationshipExpander.php",
+            "snippet": "            $glueResourceTransfer->addRelationship($warehouseRelationshipTransfersIndexedByPickingListUuids[$pickingListUuid]);",
+            "selected_text": "$warehouseRelationshipTransfersIndexedByPickingListUuids",
+            "error_level": 3,
+            "shortcode": 125
+        }
+    ],
+    "deprecation": [],
+    "count": 1
+}

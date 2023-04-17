@@ -7,11 +7,17 @@
 
 namespace Spryker\Zed\ProductImage\Persistence;
 
+use ArrayObject;
+use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ProductImageFilterTransfer;
+use Generated\Shared\Transfer\ProductImageSetCollectionTransfer;
+use Generated\Shared\Transfer\ProductImageSetCriteriaTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
 use Orm\Zed\ProductImage\Persistence\Map\SpyProductImageSetTableMap;
+use Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -69,9 +75,9 @@ class ProductImageRepository extends AbstractRepository implements ProductImageR
     }
 
     /**
-     * @param array<int> $productSetIds
+     * @param list<int> $productSetIds
      *
-     * @return array<array<\Generated\Shared\Transfer\ProductImageTransfer>>
+     * @return array<int, list<\Generated\Shared\Transfer\ProductImageTransfer>>
      */
     public function getProductImagesByProductSetIds(array $productSetIds): array
     {
@@ -161,5 +167,143 @@ class ProductImageRepository extends AbstractRepository implements ProductImageR
             ->select([static::FK_PRODUCT_CONCRETE])
             ->find()
             ->getData();
+    }
+
+    /**
+     * @module Locale
+     * @module Product
+     *
+     * @param \Generated\Shared\Transfer\ProductImageSetCriteriaTransfer $productImageSetCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductImageSetCollectionTransfer
+     */
+    public function getConcreteProductImageSetCollection(
+        ProductImageSetCriteriaTransfer $productImageSetCriteriaTransfer
+    ): ProductImageSetCollectionTransfer {
+        $productImageSetCollectionTransfer = new ProductImageSetCollectionTransfer();
+        /** @var \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery $productImageSetQuery */
+        $productImageSetQuery = $this->getFactory()
+            ->createProductImageSetQuery()
+            ->joinWithSpyLocale()
+            ->joinWithSpyProduct();
+
+        $productImageSetQuery = $this->applyProductImageSetCriteriaFilters(
+            $productImageSetQuery,
+            $productImageSetCriteriaTransfer,
+        );
+
+        $productImageSetQuery = $this->applyProductImageSetSorting(
+            $productImageSetQuery,
+            $productImageSetCriteriaTransfer->getSortCollection(),
+        );
+
+        $paginationTransfer = $productImageSetCriteriaTransfer->getPagination();
+        if ($paginationTransfer !== null) {
+            $productImageSetQuery = $this->applyProductImageSetPagination($productImageSetQuery, $paginationTransfer);
+            $productImageSetCollectionTransfer->setPagination($paginationTransfer);
+        }
+
+        $productImageSetEntityCollection = $productImageSetQuery->find();
+        if ($productImageSetEntityCollection->count() === 0) {
+            return $productImageSetCollectionTransfer;
+        }
+
+        return $this->getFactory()
+            ->createProductImageSetMapper()
+            ->mapConcreteProductImageSetEntityCollectionToProductImageSetCollectionTransfer(
+                $productImageSetEntityCollection,
+                $productImageSetCollectionTransfer,
+            );
+    }
+
+    /**
+     * @param \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery $productImageSetQuery
+     * @param \Generated\Shared\Transfer\ProductImageSetCriteriaTransfer $productImageSetCriteriaTransfer
+     *
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
+     */
+    protected function applyProductImageSetCriteriaFilters(
+        SpyProductImageSetQuery $productImageSetQuery,
+        ProductImageSetCriteriaTransfer $productImageSetCriteriaTransfer
+    ): SpyProductImageSetQuery {
+        $productImageSetConditionsTransfer = $productImageSetCriteriaTransfer->getProductImageSetConditions();
+        if (!$productImageSetConditionsTransfer) {
+            return $productImageSetQuery;
+        }
+
+        if ($productImageSetConditionsTransfer->getSkus()) {
+            $productImageSetQuery
+                ->useSpyProductQuery()
+                    ->filterBySku_In($productImageSetConditionsTransfer->getSkus())
+                ->endUse();
+        }
+
+        if ($productImageSetConditionsTransfer->getLocaleNames()) {
+            $productImageSetQuery
+                ->useSpyLocaleQuery()
+                    ->filterByLocaleName_In($productImageSetConditionsTransfer->getLocaleNames())
+                ->endUse();
+        }
+
+        return $productImageSetQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery $productImageSetQuery
+     * @param \ArrayObject<\Generated\Shared\Transfer\SortTransfer> $sortTransfers
+     *
+     * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
+     */
+    protected function applyProductImageSetSorting(
+        SpyProductImageSetQuery $productImageSetQuery,
+        ArrayObject $sortTransfers
+    ): SpyProductImageSetQuery {
+        foreach ($sortTransfers as $sortTransfer) {
+            $productImageSetQuery->orderBy(
+                $sortTransfer->getFieldOrFail(),
+                $sortTransfer->getIsAscending() ? Criteria::ASC : Criteria::DESC,
+            );
+        }
+
+        return $productImageSetQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery $productImageSetQuery
+     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    protected function applyProductImageSetPagination(
+        SpyProductImageSetQuery $productImageSetQuery,
+        PaginationTransfer $paginationTransfer
+    ): ModelCriteria {
+        if ($paginationTransfer->getOffset() !== null && $paginationTransfer->getLimit() !== null) {
+            $paginationTransfer->setNbResults($productImageSetQuery->count());
+
+            $productImageSetQuery->offset($paginationTransfer->getOffsetOrFail())
+                ->setLimit($paginationTransfer->getLimitOrFail());
+
+            return $productImageSetQuery;
+        }
+
+        if ($paginationTransfer->getPage() !== null && $paginationTransfer->getMaxPerPage()) {
+            $paginationModel = $productImageSetQuery->paginate(
+                $paginationTransfer->getPage(),
+                $paginationTransfer->getMaxPerPage(),
+            );
+
+            $paginationTransfer->setNbResults($paginationModel->getNbResults())
+                ->setFirstIndex($paginationModel->getFirstIndex())
+                ->setLastIndex($paginationModel->getLastIndex())
+                ->setFirstPage($paginationModel->getFirstPage())
+                ->setLastPage($paginationModel->getLastPage())
+                ->setNextPage($paginationModel->getNextPage())
+                ->setPreviousPage($paginationModel->getPreviousPage());
+
+            return $paginationModel->getQuery();
+        }
+
+        return $productImageSetQuery;
     }
 }

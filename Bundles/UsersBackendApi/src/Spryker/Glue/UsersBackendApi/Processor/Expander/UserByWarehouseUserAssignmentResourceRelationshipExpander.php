@@ -7,76 +7,62 @@
 
 namespace Spryker\Glue\UsersBackendApi\Processor\Expander;
 
-use Generated\Shared\Transfer\GlueRelationshipTransfer;
-use Generated\Shared\Transfer\GlueResourceTransfer;
-use Generated\Shared\Transfer\UserCollectionTransfer;
-use Generated\Shared\Transfer\UsersRestAttributesTransfer;
-use Generated\Shared\Transfer\UserTransfer;
-use Generated\Shared\Transfer\WarehouseUserAssignmentsRestAttributesTransfer;
-use Spryker\Glue\UsersBackendApi\Processor\Reader\UserReaderInterface;
-use Spryker\Glue\UsersBackendApi\UsersBackendApiConfig;
+use Spryker\Glue\UsersBackendApi\Processor\Filter\WarehouseUserAssignmentResourceFilterInterface;
+use Spryker\Glue\UsersBackendApi\Processor\Reader\UserResourceRelationshipReaderInterface;
 
 class UserByWarehouseUserAssignmentResourceRelationshipExpander implements UserByWarehouseUserAssignmentResourceRelationshipExpanderInterface
 {
     /**
-     * @var \Spryker\Glue\UsersBackendApi\Processor\Reader\UserReaderInterface
+     * @var \Spryker\Glue\UsersBackendApi\Processor\Filter\WarehouseUserAssignmentResourceFilterInterface
      */
-    protected UserReaderInterface $userReader;
+    protected WarehouseUserAssignmentResourceFilterInterface $warehouseUserAssignmentResourceFilter;
 
     /**
-     * @param \Spryker\Glue\UsersBackendApi\Processor\Reader\UserReaderInterface $userReader
+     * @var \Spryker\Glue\UsersBackendApi\Processor\Reader\UserResourceRelationshipReaderInterface
      */
-    public function __construct(UserReaderInterface $userReader)
+    protected UserResourceRelationshipReaderInterface $userResourceRelationshipReader;
+
+    /**
+     * @param \Spryker\Glue\UsersBackendApi\Processor\Filter\WarehouseUserAssignmentResourceFilterInterface $warehouseUserAssignmentResourceFilter
+     * @param \Spryker\Glue\UsersBackendApi\Processor\Reader\UserResourceRelationshipReaderInterface $userResourceRelationshipReader
+     */
+    public function __construct(
+        WarehouseUserAssignmentResourceFilterInterface $warehouseUserAssignmentResourceFilter,
+        UserResourceRelationshipReaderInterface $userResourceRelationshipReader
+    ) {
+        $this->warehouseUserAssignmentResourceFilter = $warehouseUserAssignmentResourceFilter;
+        $this->userResourceRelationshipReader = $userResourceRelationshipReader;
+    }
+
+    /**
+     * @param list<\Generated\Shared\Transfer\GlueResourceTransfer> $glueResourceTransfers
+     *
+     * @return void
+     */
+    public function addUserRelationships(array $glueResourceTransfers): void
     {
-        $this->userReader = $userReader;
+        $warehouseUserAssignmentsResources = $this->warehouseUserAssignmentResourceFilter->filterWarehouseUserAssignmentResources($glueResourceTransfers);
+        $userUuids = $this->extractUserUuids($warehouseUserAssignmentsResources);
+
+        $userGlueRelationshipTransfersIndexedByUserUuid = $this->userResourceRelationshipReader->getUserRelationshipsIndexedByUserUuid($userUuids);
+
+        $this->addUserRelationshipsToGlueResourceTransfers(
+            $warehouseUserAssignmentsResources,
+            $userGlueRelationshipTransfersIndexedByUserUuid,
+        );
     }
 
     /**
-     * @param array<\Generated\Shared\Transfer\GlueResourceTransfer> $warehouseUserAssignmentsResources
+     * @param list<\Generated\Shared\Transfer\GlueResourceTransfer> $warehouseUserAssignmentsResources
      *
-     * @return array<\Generated\Shared\Transfer\GlueResourceTransfer>
+     * @return array<int, string>
      */
-    public function expandWarehouseUserAssignmentsResourcesWithUsersResourceRelationships(
-        array $warehouseUserAssignmentsResources
-    ): array {
-        $userUuids = $this->getUserUuids($warehouseUserAssignmentsResources);
-        $userCollectionTransfer = $this->userReader->getUserCollectionTransferByUuids($userUuids);
-        $indexedUserTransfers = $this->getUserTransfersIndexedByUuid($userCollectionTransfer);
-
-        foreach ($warehouseUserAssignmentsResources as $warehouseUserAssignmentsResource) {
-            /** @var \Generated\Shared\Transfer\WarehouseUserAssignmentsRestAttributesTransfer $warehouseUserAssignmentsRestAttributeTransfer */
-            $warehouseUserAssignmentsRestAttributeTransfer = $warehouseUserAssignmentsResource->getAttributes();
-            if (
-                !$warehouseUserAssignmentsRestAttributeTransfer instanceof WarehouseUserAssignmentsRestAttributesTransfer
-                || !isset($indexedUserTransfers[$warehouseUserAssignmentsRestAttributeTransfer->getUserUuidOrFail()])
-            ) {
-                continue;
-            }
-
-            $userTransfer = $indexedUserTransfers[$warehouseUserAssignmentsRestAttributeTransfer->getUserUuidOrFail()];
-            $usersRestAttributesTransfer = (new UsersRestAttributesTransfer())->fromArray($userTransfer->toArray(), true);
-            $usersRestAttributesResourceTransfer = $this->createRestUsersResource($userTransfer, $usersRestAttributesTransfer);
-            $warehouseUserAssignmentsResource->addRelationship(
-                (new GlueRelationshipTransfer())->addResource($usersRestAttributesResourceTransfer),
-            );
-        }
-
-        return $warehouseUserAssignmentsResources;
-    }
-
-    /**
-     * @param array<\Generated\Shared\Transfer\GlueResourceTransfer> $warehouseUserAssignmentsResources
-     *
-     * @return array<string>
-     */
-    protected function getUserUuids(array $warehouseUserAssignmentsResources): array
+    protected function extractUserUuids(array $warehouseUserAssignmentsResources): array
     {
         $userUuids = [];
         foreach ($warehouseUserAssignmentsResources as $warehouseUserAssignmentsResource) {
+            /** @var \Generated\Shared\Transfer\WarehouseUserAssignmentsRestAttributesTransfer $warehouseUserAssignmentsRestAttributeTransfer */
             $warehouseUserAssignmentsRestAttributeTransfer = $warehouseUserAssignmentsResource->getAttributes();
-            if (!$warehouseUserAssignmentsRestAttributeTransfer instanceof WarehouseUserAssignmentsRestAttributesTransfer) {
-                continue;
-            }
             $userUuids[] = $warehouseUserAssignmentsRestAttributeTransfer->getUserUuidOrFail();
         }
 
@@ -84,31 +70,25 @@ class UserByWarehouseUserAssignmentResourceRelationshipExpander implements UserB
     }
 
     /**
-     * @param \Generated\Shared\Transfer\UserCollectionTransfer $userCollectionTransfer
+     * @param list<\Generated\Shared\Transfer\GlueResourceTransfer> $warehouseUserAssignmentsResources
+     * @param array<string, \Generated\Shared\Transfer\GlueRelationshipTransfer> $userGlueRelationshipTransfersIndexedByUserUuid
      *
-     * @return array<\Generated\Shared\Transfer\UserTransfer>
+     * @return void
      */
-    protected function getUserTransfersIndexedByUuid(UserCollectionTransfer $userCollectionTransfer): array
-    {
-        $indexedUserTransfers = [];
-        foreach ($userCollectionTransfer->getUsers() as $userTransfer) {
-            $indexedUserTransfers[$userTransfer->getUuidOrFail()] = $userTransfer;
+    protected function addUserRelationshipsToGlueResourceTransfers(
+        array $warehouseUserAssignmentsResources,
+        array $userGlueRelationshipTransfersIndexedByUserUuid
+    ): void {
+        foreach ($warehouseUserAssignmentsResources as $warehouseUserAssignmentsResource) {
+            /** @var \Generated\Shared\Transfer\WarehouseUserAssignmentsRestAttributesTransfer $warehouseUserAssignmentsRestAttributeTransfer */
+            $warehouseUserAssignmentsRestAttributeTransfer = $warehouseUserAssignmentsResource->getAttributes();
+            $userGlueRelationshipTransfer = $userGlueRelationshipTransfersIndexedByUserUuid[$warehouseUserAssignmentsRestAttributeTransfer->getUserUuidOrFail()] ?? null;
+
+            if (!$userGlueRelationshipTransfer) {
+                continue;
+            }
+
+            $warehouseUserAssignmentsResource->addRelationship($userGlueRelationshipTransfer);
         }
-
-        return $indexedUserTransfers;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
-     * @param \Generated\Shared\Transfer\UsersRestAttributesTransfer $usersRestAttributesTransfer
-     *
-     * @return \Generated\Shared\Transfer\GlueResourceTransfer
-     */
-    protected function createRestUsersResource(UserTransfer $userTransfer, UsersRestAttributesTransfer $usersRestAttributesTransfer): GlueResourceTransfer
-    {
-        return (new GlueResourceTransfer())
-            ->setType(UsersBackendApiConfig::RESOURCE_TYPE_USERS)
-            ->setId($userTransfer->getUuidOrFail())
-            ->setAttributes($usersRestAttributesTransfer);
     }
 }

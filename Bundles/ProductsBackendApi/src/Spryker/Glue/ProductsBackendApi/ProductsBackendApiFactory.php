@@ -21,8 +21,12 @@ use Spryker\Glue\ProductsBackendApi\Processor\Creator\ProductAbstractCreator;
 use Spryker\Glue\ProductsBackendApi\Processor\Creator\ProductAbstractCreatorInterface;
 use Spryker\Glue\ProductsBackendApi\Processor\Mapper\ProductAbstractMapper;
 use Spryker\Glue\ProductsBackendApi\Processor\Mapper\ProductAbstractMapperInterface;
+use Spryker\Glue\ProductsBackendApi\Processor\Mapper\ProductConcreteResourceMapper;
+use Spryker\Glue\ProductsBackendApi\Processor\Mapper\ProductConcreteResourceMapperInterface;
 use Spryker\Glue\ProductsBackendApi\Processor\Reader\ProductAbstractReader;
 use Spryker\Glue\ProductsBackendApi\Processor\Reader\ProductAbstractReaderInterface;
+use Spryker\Glue\ProductsBackendApi\Processor\Reader\ProductConcreteResourceReader;
+use Spryker\Glue\ProductsBackendApi\Processor\Reader\ProductConcreteResourceReaderInterface;
 use Spryker\Glue\ProductsBackendApi\Processor\Updater\CategoryUpdater;
 use Spryker\Glue\ProductsBackendApi\Processor\Updater\CategoryUpdaterInterface;
 use Spryker\Glue\ProductsBackendApi\Processor\Updater\ProductAbstractUpdater;
@@ -109,6 +113,25 @@ class ProductsBackendApiFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Glue\ProductsBackendApi\Processor\Reader\ProductConcreteResourceReaderInterface
+     */
+    public function createProductConcreteResourceReader(): ProductConcreteResourceReaderInterface
+    {
+        return new ProductConcreteResourceReader(
+            $this->getProductFacade(),
+            $this->createProductConcreteResourceMapper(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductsBackendApi\Processor\Mapper\ProductConcreteResourceMapperInterface
+     */
+    public function createProductConcreteResourceMapper(): ProductConcreteResourceMapperInterface
+    {
+        return new ProductConcreteResourceMapper();
+    }
+
+    /**
      * @return \Spryker\Glue\ProductsBackendApi\Dependency\Facade\ProductsBackendApiToProductFacadeInterface
      */
     public function getProductFacade(): ProductsBackendApiToProductFacadeInterface
@@ -143,7 +166,7 @@ class ProductsBackendApiFactory extends AbstractFactory
     /**
      * @return \Spryker\Glue\ProductsBackendApi\Dependency\Facade\ProductsBackendApiToStoreFacadeInterface
      */
-    protected function getStoreFacade(): ProductsBackendApiToStoreFacadeInterface
+    public function getStoreFacade(): ProductsBackendApiToStoreFacadeInterface
     {
         return $this->getProvidedDependency(ProductsBackendApiDependencyProvider::FACADE_STORE);
     }
@@ -151,7 +174,7 @@ class ProductsBackendApiFactory extends AbstractFactory
     /**
      * @return \Spryker\Glue\ProductsBackendApi\Dependency\Facade\ProductsBackendApiToCategoryFacadeInterface
      */
-    protected function getCategoryFacade(): ProductsBackendApiToCategoryFacadeInterface
+    public function getCategoryFacade(): ProductsBackendApiToCategoryFacadeInterface
     {
         return $this->getProvidedDependency(ProductsBackendApiDependencyProvider::FACADE_CATEGORY);
     }
@@ -159,7 +182,7 @@ class ProductsBackendApiFactory extends AbstractFactory
     /**
      * @return \Spryker\Glue\ProductsBackendApi\Dependency\Facade\ProductsBackendApiToProductCategoryFacadeInterface
      */
-    protected function getProductCategoryFacade(): ProductsBackendApiToProductCategoryFacadeInterface
+    public function getProductCategoryFacade(): ProductsBackendApiToProductCategoryFacadeInterface
     {
         return $this->getProvidedDependency(ProductsBackendApiDependencyProvider::FACADE_PRODUCT_CATEGORY);
     }
@@ -167,7 +190,7 @@ class ProductsBackendApiFactory extends AbstractFactory
     /**
      * @return \Spryker\Glue\ProductsBackendApi\Dependency\Facade\ProductsBackendApiToProductImageFacadeInterface
      */
-    protected function getProductImageFacade(): ProductsBackendApiToProductImageFacadeInterface
+    public function getProductImageFacade(): ProductsBackendApiToProductImageFacadeInterface
     {
         return $this->getProvidedDependency(ProductsBackendApiDependencyProvider::FACADE_PRODUCT_IMAGE);
     }
@@ -175,7 +198,7 @@ class ProductsBackendApiFactory extends AbstractFactory
     /**
      * @return \Spryker\Glue\ProductsBackendApi\Dependency\Facade\ProductsBackendApiToUrlFacadeInterface
      */
-    protected function getUrlFacade(): ProductsBackendApiToUrlFacadeInterface
+    public function getUrlFacade(): ProductsBackendApiToUrlFacadeInterface
     {
         return $this->getProvidedDependency(ProductsBackendApiDependencyProvider::FACADE_URL);
     }

@@ -12,6 +12,7 @@ use Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery;
 use Orm\Zed\ProductImage\Persistence\SpyProductImageSetToProductImageQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\ProductImage\Persistence\Propel\Mapper\ProductImageMapper;
+use Spryker\Zed\ProductImage\Persistence\Propel\Mapper\ProductImageSetMapper;
 
 /**
  * @method \Spryker\Zed\ProductImage\ProductImageConfig getConfig()
@@ -50,5 +51,13 @@ class ProductImagePersistenceFactory extends AbstractPersistenceFactory
     public function createProductImageMapper(): ProductImageMapper
     {
         return new ProductImageMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductImage\Persistence\Propel\Mapper\ProductImageSetMapper
+     */
+    public function createProductImageSetMapper(): ProductImageSetMapper
+    {
+        return new ProductImageSetMapper();
     }
 }

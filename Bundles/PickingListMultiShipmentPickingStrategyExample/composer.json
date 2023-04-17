@@ -6,12 +6,13 @@
     "require": {
         "php": ">=8.0",
         "spryker/kernel": "^3.30.0",
-        "spryker/picking-list-extension": "^0.1.0",
-        "spryker/shipment": "^8.0.0",
+        "spryker/picking-list-extension": "^1.0.0",
+        "spryker/shipment": "^8.13.0",
         "spryker/transfer": "^3.27.0"
     },
     "require-dev": {
         "spryker/code-sniffer": "*",
+        "spryker/country": "*",
         "spryker/oms": "*",
         "spryker/propel": "*",
         "spryker/sales": "*",

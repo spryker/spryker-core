@@ -131,7 +131,7 @@ class PickingListsBackendApiFactory extends AbstractBackendApiFactory
      */
     public function createPickingListItemMapper(): PickingListItemMapperInterface
     {
-        return new PickingListItemMapper();
+        return new PickingListItemMapper($this->getApiPickingListItemAttributesMapperPlugins());
     }
 
     /**
@@ -290,5 +290,13 @@ class PickingListsBackendApiFactory extends AbstractBackendApiFactory
     public function getGlossaryStorageClient(): PickingListsBackendApiToGlossaryStorageClientInterface
     {
         return $this->getProvidedDependency(PickingListsBackendApiDependencyProvider::CLIENT_GLOSSARY_STORAGE);
+    }
+
+    /**
+     * @return list<\Spryker\Glue\PickingListsBackendApiExtension\Dependency\Plugin\ApiPickingListItemsAttributesMapperPluginInterface>
+     */
+    public function getApiPickingListItemAttributesMapperPlugins(): array
+    {
+        return $this->getProvidedDependency(PickingListsBackendApiDependencyProvider::PLUGINS_API_PICKING_LIST_ITEMS_ATTRIBUTES_MAPPER);
     }
 }

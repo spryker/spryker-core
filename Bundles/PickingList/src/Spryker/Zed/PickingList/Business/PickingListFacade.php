@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\PickingListCollectionRequestTransfer;
 use Generated\Shared\Transfer\PickingListCollectionResponseTransfer;
 use Generated\Shared\Transfer\PickingListCollectionTransfer;
 use Generated\Shared\Transfer\PickingListCriteriaTransfer;
+use Generated\Shared\Transfer\UserCollectionTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -136,5 +137,21 @@ class PickingListFacade extends AbstractFacade implements PickingListFacadeInter
         return $this->getFactory()
             ->createPickingListStatusValidator()
             ->isPickingFinishedForOrder($orderTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UserCollectionTransfer $userCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\UserCollectionTransfer
+     */
+    public function unassignPickingListsFromUsers(UserCollectionTransfer $userCollectionTransfer): UserCollectionTransfer
+    {
+        return $this->getFactory()
+            ->createPickingListUserAssigner()
+            ->unassignPickingListsFromUsers($userCollectionTransfer);
     }
 }

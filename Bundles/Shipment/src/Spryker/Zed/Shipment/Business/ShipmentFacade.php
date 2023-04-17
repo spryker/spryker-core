@@ -12,6 +12,8 @@ use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\MailTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SalesShipmentCollectionTransfer;
+use Generated\Shared\Transfer\SalesShipmentCriteriaTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierRequestTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
@@ -315,6 +317,8 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\Shipment\Business\ShipmentFacade::getSalesShipmentCollection()} instead.
+     *
      * @param int $idSalesShipment
      *
      * @return \Generated\Shared\Transfer\ShipmentTransfer|null
@@ -562,5 +566,20 @@ class ShipmentFacade extends AbstractFacade implements ShipmentFacadeInterface
         $this->getFactory()
             ->createShipmentTotalCalculator()
             ->calculateShipmentTotal($calculableObjectTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SalesShipmentCriteriaTransfer $salesShipmentCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesShipmentCollectionTransfer
+     */
+    public function getSalesShipmentCollection(
+        SalesShipmentCriteriaTransfer $salesShipmentCriteriaTransfer
+    ): SalesShipmentCollectionTransfer {
+        return $this->getRepository()->getSalesShipmentCollection($salesShipmentCriteriaTransfer);
     }
 }

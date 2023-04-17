@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\FilterFieldTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 
@@ -62,6 +63,11 @@ class OrderSearchFilterFieldQueryBuilder implements OrderSearchFilterFieldQueryB
     protected const SEARCH_TYPE_DATE_TO = 'dateTo';
 
     /**
+     * @var string
+     */
+    protected const SEARCH_TYPE_ITEM_UUIDS = 'itemUuids';
+
+    /**
      * @var array<string, string>
      */
     protected const ORDER_SEARCH_TYPE_MAPPING = [
@@ -94,6 +100,13 @@ class OrderSearchFilterFieldQueryBuilder implements OrderSearchFilterFieldQueryB
      * @var string
      */
     protected const DELIMITER_ORDER_BY = '::';
+
+    /**
+     * @phpstan-var non-empty-string
+     *
+     * @var string
+     */
+    protected const DELIMITER_COLLECTION_TYPE_VALUE = ',';
 
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $salesOrderQuery
@@ -140,6 +153,13 @@ class OrderSearchFilterFieldQueryBuilder implements OrderSearchFilterFieldQueryB
 
         if ($filterFieldType === static::FILTER_FIELD_TYPE_ORDER_BY) {
             return $this->addOrderByFilter(
+                $salesOrderQuery,
+                $filterFieldTransfer,
+            );
+        }
+
+        if ($filterFieldType === static::SEARCH_TYPE_ITEM_UUIDS && $this->hasItemUuidField()) {
+            return $this->addItemUuidsFilter(
                 $salesOrderQuery,
                 $filterFieldTransfer,
             );
@@ -259,6 +279,29 @@ class OrderSearchFilterFieldQueryBuilder implements OrderSearchFilterFieldQueryB
     }
 
     /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $salesOrderQuery
+     * @param \Generated\Shared\Transfer\FilterFieldTransfer $filterFieldTransfer
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
+     */
+    protected function addItemUuidsFilter(
+        SpySalesOrderQuery $salesOrderQuery,
+        FilterFieldTransfer $filterFieldTransfer
+    ): SpySalesOrderQuery {
+        if (!$filterFieldTransfer->getValue()) {
+            return $salesOrderQuery;
+        }
+
+        $itemUuids = explode(static::DELIMITER_COLLECTION_TYPE_VALUE, $filterFieldTransfer->getValueOrFail());
+
+        $salesOrderQuery->useItemQuery()
+            ->filterByUuid_In($itemUuids)
+            ->endUse();
+
+        return $salesOrderQuery;
+    }
+
+    /**
      * @return array<string>
      */
     protected function getMappedSearchTypes(): array
@@ -274,5 +317,15 @@ class OrderSearchFilterFieldQueryBuilder implements OrderSearchFilterFieldQueryB
     protected function generateLikePattern(string $value): string
     {
         return sprintf('%%%s%%', $value);
+    }
+
+    /**
+     * @deprecated Will be removed in the next major without replacement.
+     *
+     * @return bool
+     */
+    protected function hasItemUuidField(): bool
+    {
+        return property_exists(SpySalesOrderItem::class, 'uuid');
     }
 }

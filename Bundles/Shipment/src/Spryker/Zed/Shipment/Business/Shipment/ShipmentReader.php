@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Zed\Shipment\Dependency\Facade\ShipmentToSalesFacadeInterface;
 use Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class ShipmentReader implements ShipmentReaderInterface
 {
     /**

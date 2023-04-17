@@ -14,7 +14,7 @@ interface ProductPackagingUnitToLocaleFacadeInterface
     /**
      * @return array<\Generated\Shared\Transfer\LocaleTransfer>
      */
-    public function getLocaleCollection();
+    public function getLocaleCollection(): array;
 
     /**
      * @param string $localeName

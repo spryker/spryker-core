@@ -9,13 +9,14 @@ namespace Spryker\Zed\ShipmentGui\Dependency\Facade;
 
 use ArrayObject;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\SalesShipmentCollectionTransfer;
+use Generated\Shared\Transfer\SalesShipmentCriteriaTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierRequestTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
 use Generated\Shared\Transfer\ShipmentGroupResponseTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentMethodPluginCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
-use Generated\Shared\Transfer\ShipmentTransfer;
 
 interface ShipmentGuiToShipmentFacadeInterface
 {
@@ -29,14 +30,7 @@ interface ShipmentGuiToShipmentFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer|null
      */
-    public function findMethodById($idShipmentMethod): ?ShipmentMethodTransfer;
-
-    /**
-     * @param int $idSalesShipment
-     *
-     * @return \Generated\Shared\Transfer\ShipmentTransfer|null
-     */
-    public function findShipmentById(int $idSalesShipment): ?ShipmentTransfer;
+    public function findMethodById(int $idShipmentMethod): ?ShipmentMethodTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
@@ -115,7 +109,7 @@ interface ShipmentGuiToShipmentFacadeInterface
      *
      * @return bool
      */
-    public function deleteMethod($idMethod): bool;
+    public function deleteMethod(int $idMethod): bool;
 
     /**
      * @return \Generated\Shared\Transfer\ShipmentMethodPluginCollectionTransfer
@@ -126,4 +120,13 @@ interface ShipmentGuiToShipmentFacadeInterface
      * @return array<\Generated\Shared\Transfer\ShipmentCarrierTransfer>
      */
     public function getActiveShipmentCarriers(): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\SalesShipmentCriteriaTransfer $salesShipmentCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesShipmentCollectionTransfer
+     */
+    public function getSalesShipmentCollection(
+        SalesShipmentCriteriaTransfer $salesShipmentCriteriaTransfer
+    ): SalesShipmentCollectionTransfer;
 }

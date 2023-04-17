@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OmsStateCollectionTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\PickingListCollectionTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
@@ -578,5 +579,22 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
         return $this->getFactory()
             ->createProductPackagingUnitReader()
             ->filterProductsWithoutPackagingUnit($productConcreteTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PickingListCollectionTransfer $pickingListCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\PickingListCollectionTransfer
+     */
+    public function expandPickingListCollection(
+        PickingListCollectionTransfer $pickingListCollectionTransfer
+    ): PickingListCollectionTransfer {
+        return $this->getFactory()
+            ->createProductPackagingUnitPickingListExpander()
+            ->expandPickingListCollection($pickingListCollectionTransfer);
     }
 }

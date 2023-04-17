@@ -10,9 +10,9 @@ namespace Spryker\Zed\Shipment\Business\Expander;
 interface OrderItemShipmentExpanderInterface
 {
     /**
-     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
+     * @param list<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return array<\Generated\Shared\Transfer\ItemTransfer>
+     * @return list<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function expandOrderItemsWithShipment(array $itemTransfers): array;
 }

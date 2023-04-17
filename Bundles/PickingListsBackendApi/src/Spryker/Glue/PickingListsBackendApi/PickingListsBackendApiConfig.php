@@ -144,6 +144,11 @@ class PickingListsBackendApiConfig extends AbstractBundleConfig
     protected const RESPONSE_CODE_WRONG_PROPERTY_PICKING_LIST_ITEM_NUMBER_OF_NOT_PICKED = '5309';
 
     /**
+     * @var string
+     */
+    protected const RESPONSE_CODE_PICKED_BY_ANOTHER_USER = '5310';
+
+    /**
      * @uses \Spryker\Zed\PickingList\Business\Validator\Rules\PickingList\PickingListPickedByAnotherUserPickingListValidatorCompositeRule::GLOSSARY_KEY_VALIDATION_PICKED_BY_ANOTHER_USER
      *
      * @var string
@@ -173,6 +178,18 @@ class PickingListsBackendApiConfig extends AbstractBundleConfig
      * @var string
      */
     protected const RESPONSE_CODE_PICKING_LIST_ITEM_DUPLICATED = '5312';
+
+    /**
+     * @uses \Spryker\Zed\PickingListPushNotification\Business\Validator\PushNotificationSubscriptionWarehouseUserAssignmentValidator::GLOSSARY_KEY_VALIDATION_WAREHOUSE_NOT_FOUND
+     *
+     * @var string
+     */
+    protected const GLOSSARY_KEY_VALIDATION_WAREHOUSE_NOT_FOUND = 'picking_list_push_notification.validation.warehouse_entity_not_found';
+
+    /**
+     * @var string
+     */
+    protected const RESPONSE_CODE_WAREHOUSE_NOT_FOUND = '5313';
 
     /**
      * Specification:
@@ -226,9 +243,9 @@ class PickingListsBackendApiConfig extends AbstractBundleConfig
                 GlueErrorTransfer::MESSAGE => static::GLOSSARY_KEY_VALIDATION_WRONG_PROPERTY_PICKING_LIST_ITEM_NUMBER_OF_NOT_PICKED,
             ],
             static::GLOSSARY_KEY_VALIDATION_PICKED_BY_ANOTHER_USER => [
-                GlueErrorTransfer::CODE => static::RESPONSE_CODE_ENTITY_NOT_FOUND,
-                GlueErrorTransfer::STATUS => Response::HTTP_NOT_FOUND,
-                GlueErrorTransfer::MESSAGE => static::GLOSSARY_KEY_VALIDATION_ENTITY_NOT_FOUND,
+                GlueErrorTransfer::CODE => static::RESPONSE_CODE_PICKED_BY_ANOTHER_USER,
+                GlueErrorTransfer::STATUS => Response::HTTP_CONFLICT,
+                GlueErrorTransfer::MESSAGE => static::GLOSSARY_KEY_VALIDATION_PICKED_BY_ANOTHER_USER,
             ],
             static::GLOSSARY_KEY_VALIDATION_PICKING_LIST_DUPLICATED => [
                 GlueErrorTransfer::CODE => static::RESPONSE_CODE_PICKING_LIST_DUPLICATED,
@@ -239,6 +256,11 @@ class PickingListsBackendApiConfig extends AbstractBundleConfig
                 GlueErrorTransfer::CODE => static::RESPONSE_CODE_PICKING_LIST_ITEM_DUPLICATED,
                 GlueErrorTransfer::STATUS => Response::HTTP_BAD_REQUEST,
                 GlueErrorTransfer::MESSAGE => static::GLOSSARY_KEY_VALIDATION_PICKING_LIST_ITEM_DUPLICATED,
+            ],
+            static::GLOSSARY_KEY_VALIDATION_WAREHOUSE_NOT_FOUND => [
+                GlueErrorTransfer::CODE => static::RESPONSE_CODE_WAREHOUSE_NOT_FOUND,
+                GlueErrorTransfer::STATUS => Response::HTTP_NOT_FOUND,
+                GlueErrorTransfer::MESSAGE => static::GLOSSARY_KEY_VALIDATION_WAREHOUSE_NOT_FOUND,
             ],
         ];
     }

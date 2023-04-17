@@ -7,7 +7,7 @@
         "php": ">=8.0",
         "spryker/glue-json-api-convention-extension": "^1.0.0",
         "spryker/kernel": "^3.30.0",
-        "spryker/transfer": "^3.27.0",
+        "spryker/transfer": "^3.31.0",
         "spryker/user": "^3.17.0",
         "spryker/uuid-behavior": "^1.0.0"
     },

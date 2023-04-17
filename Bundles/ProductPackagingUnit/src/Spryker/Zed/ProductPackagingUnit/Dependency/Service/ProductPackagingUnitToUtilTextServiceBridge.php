@@ -27,7 +27,7 @@ class ProductPackagingUnitToUtilTextServiceBridge implements ProductPackagingUni
      *
      * @return string
      */
-    public function generateSlug($value): string
+    public function generateSlug(string $value): string
     {
         return $this->utilTextService->generateSlug($value);
     }

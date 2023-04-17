@@ -12,9 +12,9 @@ coverage:
     whitelist: { include: ['../../../../src/*'] }
 
 suites:
-    Communication:
-        path: /
-        actor: UsersBackendApiTester
+    Plugin:
+        path: Plugin
+        actor: UsersBackendApiPluginTester
         modules:
             enabled:
                 - Asserts
@@ -27,3 +27,16 @@ suites:
                 - \SprykerTest\Shared\Stock\Helper\StockDataHelper
                 - \SprykerTest\Shared\User\Helper\UserDataHelper
                 - \SprykerTest\Zed\WarehouseUser\Helper\WarehouseUserHelper
+    Resource:
+        path: Resource
+        actor: UsersBackendApiResourceTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Shared\User\Helper\UserDataHelper

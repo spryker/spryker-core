@@ -21,7 +21,7 @@ interface ShipmentToSalesFacadeInterface
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    public function getOrderByIdSalesOrder($idSalesOrder);
+    public function getOrderByIdSalesOrder(int $idSalesOrder): OrderTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\OrderFilterTransfer $orderFilterTransfer

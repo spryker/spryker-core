@@ -47,12 +47,11 @@ class OmsEventTriggerer implements OmsEventTriggererInterface
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
-     * @return array<int>
+     * @return list<int>
      */
     protected function extractSalesOrderItemIds(OrderTransfer $orderTransfer): array
     {
         $salesOrderItemIds = [];
-
         foreach ($orderTransfer->getItems() as $itemTransfer) {
             $salesOrderItemIds[] = $itemTransfer->requireIdSalesOrderItem()->getIdSalesOrderItem();
         }

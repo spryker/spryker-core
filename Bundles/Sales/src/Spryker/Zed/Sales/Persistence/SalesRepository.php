@@ -144,8 +144,7 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
     public function searchOrders(OrderListTransfer $orderListTransfer): OrderListTransfer
     {
         $orderListTransfer
-            ->requireFormat()
-            ->requirePagination();
+            ->requireFormat();
 
         $salesOrderQuery = $this->getFactory()
             ->createSalesOrderQuery()
@@ -153,7 +152,10 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
             ->setIgnoreCase(true);
 
         $salesOrderQuery = $this->buildSearchOrdersQuery($salesOrderQuery, $orderListTransfer);
-        $salesOrderQuery = $this->preparePagination($salesOrderQuery, $orderListTransfer->getPagination());
+
+        if ($orderListTransfer->getPagination()) {
+            $salesOrderQuery = $this->preparePagination($salesOrderQuery, $orderListTransfer->getPaginationOrFail());
+        }
 
         $orderTransfers = $this->getFactory()
             ->createSalesOrderMapper()
@@ -401,7 +403,7 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
      */
     public function getSalesOrderDetails(OrderFilterTransfer $orderFilterTransfer): OrderTransfer
     {
-        $orderEntity = $this->getSalesOrderEnity($orderFilterTransfer);
+        $orderEntity = $this->getSalesOrderEntity($orderFilterTransfer);
 
         $orderTransfer = $this->getFactory()->createSalesOrderMapper()->mapSalesOrderEntityToSalesOrderTransfer($orderEntity, new OrderTransfer());
         $orderTransfer = $this->setOrderTotals($orderEntity, $orderTransfer);
@@ -456,7 +458,7 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
      */
-    protected function getSalesOrderEnity(OrderFilterTransfer $orderFilterTransfer): SpySalesOrder
+    protected function getSalesOrderEntity(OrderFilterTransfer $orderFilterTransfer): SpySalesOrder
     {
         $salesOrderQuery = $this->getFactory()->createSalesOrderQuery()
             ->setModelAlias('order')

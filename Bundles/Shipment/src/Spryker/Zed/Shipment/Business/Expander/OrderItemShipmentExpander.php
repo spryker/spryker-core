@@ -9,8 +9,8 @@ namespace Spryker\Zed\Shipment\Business\Expander;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\ShipmentConditionsTransfer;
-use Generated\Shared\Transfer\ShipmentCriteriaTransfer;
+use Generated\Shared\Transfer\SalesShipmentConditionsTransfer;
+use Generated\Shared\Transfer\SalesShipmentCriteriaTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Zed\Shipment\Business\Grouper\ItemGrouperInterface;
 use Spryker\Zed\Shipment\Business\Grouper\ShipmentGrouperInterface;
@@ -21,17 +21,17 @@ class OrderItemShipmentExpander implements OrderItemShipmentExpanderInterface
     /**
      * @var \Spryker\Zed\Shipment\Business\Grouper\ItemGrouperInterface
      */
-    protected $itemGrouper;
+    protected ItemGrouperInterface $itemGrouper;
 
     /**
      * @var \Spryker\Zed\Shipment\Business\Grouper\ShipmentGrouperInterface
      */
-    protected $shipmentGrouper;
+    protected ShipmentGrouperInterface $shipmentGrouper;
 
     /**
      * @var \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface
      */
-    protected $shipmentRepository;
+    protected ShipmentRepositoryInterface $shipmentRepository;
 
     /**
      * @param \Spryker\Zed\Shipment\Business\Grouper\ItemGrouperInterface $itemGrouper
@@ -49,15 +49,15 @@ class OrderItemShipmentExpander implements OrderItemShipmentExpanderInterface
     }
 
     /**
-     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
+     * @param list<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return array<\Generated\Shared\Transfer\ItemTransfer>
+     * @return list<\Generated\Shared\Transfer\ItemTransfer>
      */
     public function expandOrderItemsWithShipment(array $itemTransfers): array
     {
-        $shipmentCollectionTransfer = $this->shipmentRepository
+        $salesShipmentCollectionTransfer = $this->shipmentRepository
             ->getSalesShipmentCollection(
-                $this->createShipmentCriteriaTransfer($itemTransfers),
+                $this->createSalesShipmentCriteriaTransfer($itemTransfers),
             );
 
         $itemTransferCollectionIndexedByIdSalesOrderItem = $this->itemGrouper
@@ -66,15 +66,15 @@ class OrderItemShipmentExpander implements OrderItemShipmentExpanderInterface
             );
 
         $shipmentTransferCollectionIndexedByIdSalesShipment = $this->shipmentGrouper
-            ->getShipmentTransferCollectionIndexedByIdSalesShipment(
-                $shipmentCollectionTransfer,
+            ->getShipmentTransfersIndexedByIdSalesShipment(
+                $salesShipmentCollectionTransfer->getShipments(),
             );
 
         if (
             $itemTransferCollectionIndexedByIdSalesOrderItem === [] ||
             $shipmentTransferCollectionIndexedByIdSalesShipment === []
         ) {
-                return $itemTransfers;
+            return $itemTransfers;
         }
 
         $itemIdsGroupedByShipmentIds = $this->shipmentRepository
@@ -90,7 +90,7 @@ class OrderItemShipmentExpander implements OrderItemShipmentExpanderInterface
     }
 
     /**
-     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
+     * @param list<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
@@ -108,20 +108,18 @@ class OrderItemShipmentExpander implements OrderItemShipmentExpanderInterface
     }
 
     /**
-     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
+     * @param list<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\ShipmentCriteriaTransfer
+     * @return \Generated\Shared\Transfer\SalesShipmentCriteriaTransfer
      */
-    protected function createShipmentCriteriaTransfer(array $itemTransfers): ShipmentCriteriaTransfer
+    protected function createSalesShipmentCriteriaTransfer(array $itemTransfers): SalesShipmentCriteriaTransfer
     {
-        $shipmentConditionsTransfer = new ShipmentConditionsTransfer();
+        $salesShipmentConditionsTransfer = new SalesShipmentConditionsTransfer();
         foreach ($itemTransfers as $itemTransfer) {
-            $shipmentConditionsTransfer->addIdSalesOrderItem(
-                $itemTransfer->getIdSalesOrderItem(),
-            );
+            $salesShipmentConditionsTransfer->addIdSalesOrderItem($itemTransfer->getIdSalesOrderItem());
         }
 
-        return (new ShipmentCriteriaTransfer())->setShipmentConditions($shipmentConditionsTransfer);
+        return (new SalesShipmentCriteriaTransfer())->setSalesShipmentConditions($salesShipmentConditionsTransfer);
     }
 
     /**

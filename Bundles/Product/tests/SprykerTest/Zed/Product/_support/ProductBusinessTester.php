@@ -277,13 +277,42 @@ class ProductBusinessTester extends Actor
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
+     */
+    public function createProductTransferCollection(ProductAbstractTransfer $productAbstractTransfer): array
+    {
+        $productConcreteTransfers = [];
+        $localeEN = $this->haveLocale([LocaleTransfer::LOCALE_NAME => 'en_US']);
+        $localeDE = $this->haveLocale([LocaleTransfer::LOCALE_NAME => 'de_DE']);
+
+        for ($i = 0; $i < 2; $i++) {
+            $productConcreteTransfer = (new ProductConcreteTransfer())
+                ->setFkProductAbstract($productAbstractTransfer->getIdProductAbstract())
+                ->setSku('concrete_sku_' . md5(uniqid()))
+                ->setLocalizedAttributes(new ArrayObject([
+                    $this->createLocalizedAttributeTransfer($localeEN),
+                    $this->createLocalizedAttributeTransfer($localeDE),
+                ]))
+                ->setIsActive(true);
+
+            $productConcreteTransfers[] = $productConcreteTransfer;
+        }
+
+        return $productConcreteTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\LocaleTransfer|null $localeTransfer
+     *
      * @return \Generated\Shared\Transfer\LocalizedAttributesTransfer
      */
-    protected function createLocalizedAttributeTransfer(): LocalizedAttributesTransfer
+    protected function createLocalizedAttributeTransfer(?LocaleTransfer $localeTransfer = null): LocalizedAttributesTransfer
     {
         $localizedAttributeTransfer = new LocalizedAttributesTransfer();
         $localizedAttributeTransfer->setName('concrete name');
-        $localizedAttributeTransfer->setLocale($this->getLocaleFacade()->getCurrentLocale());
+        $localizedAttributeTransfer->setLocale($localeTransfer ?? $this->getLocaleFacade()->getCurrentLocale());
 
         return $localizedAttributeTransfer;
     }

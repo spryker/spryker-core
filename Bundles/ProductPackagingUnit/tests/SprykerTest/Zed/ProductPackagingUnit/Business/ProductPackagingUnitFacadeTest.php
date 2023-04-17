@@ -7,12 +7,16 @@
 
 namespace SprykerTest\Zed\ProductPackagingUnit\Business;
 
+use ArrayObject;
 use Codeception\Stub;
 use Generated\Shared\DataBuilder\ProductPackagingUnitTypeBuilder;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\PickingListCollectionTransfer;
+use Generated\Shared\Transfer\PickingListItemTransfer;
+use Generated\Shared\Transfer\PickingListTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
 use Generated\Shared\Transfer\ProductPackagingUnitAmountTransfer;
@@ -1315,6 +1319,48 @@ class ProductPackagingUnitFacadeTest extends ProductPackagingUnitMocks
         // Assert
         $this->assertFalse($cartPreCheckResponseTransfer->getIsSuccess());
         $this->assertCount(1, $cartPreCheckResponseTransfer->getMessages());
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandPickingListCollectionShouldReturnPickingListCollectionWithAmountSalesUnits(): void
+    {
+        // Arrange
+        $salesOrderEntity = $this->tester->haveSalesOrderEntity();
+        $productMeasurementUnit = $this->tester->haveProductMeasurementUnit();
+
+        $pickingListItemTransfers = new ArrayObject();
+        foreach ($salesOrderEntity->getItems() as $salesOrderItemEntity) {
+            $salesOrderItemEntity->setAmountMeasurementUnitName($productMeasurementUnit->getNameOrFail());
+            $salesOrderItemEntity->save();
+
+            $pickingListItemTransfers->append(
+                (new PickingListItemTransfer())->setOrderItem(
+                    (new ItemTransfer())->fromArray($salesOrderItemEntity->toArray(), true),
+                ),
+            );
+        }
+
+        $pickingListTransfer = (new PickingListTransfer())->setPickingListItems($pickingListItemTransfers);
+        $pickingListCollectionTransfer = (new PickingListCollectionTransfer())->addPickingList($pickingListTransfer);
+
+        // Act
+        $pickingListCollectionTransfer = $this->getFacade()->expandPickingListCollection($pickingListCollectionTransfer);
+
+        // Assert
+        $this->assertCount(1, $pickingListCollectionTransfer->getPickingLists());
+
+        /** @var \Generated\Shared\Transfer\PickingListTransfer $pickingListTransfer */
+        $pickingListTransfer = $pickingListCollectionTransfer->getPickingLists()->getIterator()->current();
+        $this->assertCount($salesOrderEntity->getItems()->count(), $pickingListTransfer->getPickingListItems());
+
+        /** @var \Generated\Shared\Transfer\PickingListItemTransfer $pickingListItemTransfer */
+        $pickingListItemTransfer = $pickingListTransfer->getPickingListItems()->getIterator()->current();
+        $this->assertNotEmpty($pickingListItemTransfer->getOrderItem());
+        $this->assertNotEmpty($pickingListItemTransfer->getOrderItem()->getAmountSalesUnit());
+        $this->assertNotEmpty($pickingListItemTransfer->getOrderItem()->getAmountSalesUnit()->getProductMeasurementUnit());
+        $this->assertSame($productMeasurementUnit->getNameOrFail(), $pickingListItemTransfer->getOrderItem()->getAmountSalesUnit()->getProductMeasurementUnit()->getName());
     }
 
     /**

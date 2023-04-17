@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\PickingListCollectionRequestTransfer;
 use Generated\Shared\Transfer\PickingListCollectionResponseTransfer;
 use Generated\Shared\Transfer\PickingListCollectionTransfer;
 use Generated\Shared\Transfer\PickingListCriteriaTransfer;
+use Generated\Shared\Transfer\UserCollectionTransfer;
 
 interface PickingListFacadeInterface
 {
@@ -48,6 +49,7 @@ interface PickingListFacadeInterface
      * - Requires `PickingListItemTransfer.orderItem.uuid` to be set.
      * - Requires `PickingListItemTransfer.quantity` to be greater than zero.
      * - Requires `PickingListItemTransfer.numberOfPicked` and `PickingListItemTransfer.numberOfNotPicked` to be equal to zero.
+     * - Fills `PickingList.modifiedAttributes` with the whole picking list attributes collection.
      * - Creates picking list entities in Persistence.
      * - Uses `PickingListCollectionRequestTransfer.isTransactional` to make transactional creation.
      * - Executes the stack of {@link \Spryker\Zed\PickingListExtension\Dependency\Plugin\PickingListPostCreatePluginInterface} plugins.
@@ -78,6 +80,7 @@ interface PickingListFacadeInterface
      * - Requires one of `PickingListItemTransfer.numberOfPicked` or `PickingListItemTransfer.numberOfNotPicked` to be equal to zero.
      * - Requires `PickingListItemTransfer.numberOfPicked` to be equal to `PickingListItemTransfer.quantity` if not zero.
      * - Requires `PickingListItemTransfer.numberOfNotPicked` to be equal to `PickingListItemTransfer.quantity` if not zero.
+     * - Compares picking list with a persisted version and fills `PickingList.modifiedAttributes`.
      * - Updates picking list entities in Persistence.
      * - Updates picking list item entities in Persistence.
      * - Uses `PickingListCollectionRequestTransfer.isTransactional` to make transactional update.
@@ -154,4 +157,22 @@ interface PickingListFacadeInterface
      * @return bool
      */
     public function isPickingFinishedForOrder(OrderTransfer $orderTransfer): bool;
+
+    /**
+     * Specification:
+     * - Does nothing if `UserCollectionTransfer.user.isWarehouseUser` transfer property is not set to `true`.
+     * - Does nothing if `UserCollectionTransfer.user.status` property is not `blocked` or `deleted`.
+     * - Requires `UserCollectionTransfer.user.uuid` transfer property to be set.
+     * - Finds picking lists assigned to provided user by `UserCollectionTransfer.user.uuid` transfer property.
+     * - Removes user assignment from found picking lists.
+     * - Persists updated picking lists.
+     * - Returns unmodified `UserCollectionTransfer` object.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UserCollectionTransfer $userCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\UserCollectionTransfer
+     */
+    public function unassignPickingListsFromUsers(UserCollectionTransfer $userCollectionTransfer): UserCollectionTransfer;
 }

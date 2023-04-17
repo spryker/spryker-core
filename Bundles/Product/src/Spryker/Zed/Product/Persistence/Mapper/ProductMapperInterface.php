@@ -105,4 +105,15 @@ interface ProductMapperInterface
         ObjectCollection $productAbstractCollection,
         ProductAbstractCollectionTransfer $productAbstractCollectionTransfer
     ): ProductAbstractCollectionTransfer;
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection<array-key, \Orm\Zed\Product\Persistence\SpyProduct> $productEntities
+     * @param \Generated\Shared\Transfer\ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteCollectionTransfer
+     */
+    public function mapProductEntitiesToProductConcreteCollection(
+        ObjectCollection $productEntities,
+        ProductConcreteCollectionTransfer $productConcreteCollectionTransfer
+    ): ProductConcreteCollectionTransfer;
 }

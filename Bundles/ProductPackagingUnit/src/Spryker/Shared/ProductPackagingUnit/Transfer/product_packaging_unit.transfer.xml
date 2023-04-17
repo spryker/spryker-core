@@ -158,4 +158,13 @@
         <property name="store" type="Store"/>
     </transfer>
 
+    <transfer name="PickingListCollection" strict="true">
+    </transfer>
+
+    <transfer name="PickingListItem" strict="true">
+    </transfer>
+
+    <transfer name="PickingList" strict="true">
+    </transfer>
+
 </transfers>

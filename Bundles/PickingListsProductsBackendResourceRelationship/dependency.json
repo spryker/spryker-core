@@ -1,0 +1,6 @@
+{
+    "include": {
+        "spryker/transfer": "Provides transfer objects `AbstractAttributes` property type functionality.",
+        "spryker/picking-lists-backend-api": "Defined for forward-compatibility reasons."
+    }
+}

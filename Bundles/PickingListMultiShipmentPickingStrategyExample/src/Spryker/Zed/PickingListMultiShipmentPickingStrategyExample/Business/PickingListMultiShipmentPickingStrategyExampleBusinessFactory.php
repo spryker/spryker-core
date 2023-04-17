@@ -7,10 +7,11 @@
 
 namespace Spryker\Zed\PickingListMultiShipmentPickingStrategyExample\Business;
 
-use Spryker\Service\Shipment\ShipmentServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\PickingListMultiShipmentPickingStrategyExample\Business\Generator\MultiShipmentPickingListGenerator;
 use Spryker\Zed\PickingListMultiShipmentPickingStrategyExample\Business\Generator\MultiShipmentPickingListGeneratorInterface;
+use Spryker\Zed\PickingListMultiShipmentPickingStrategyExample\Dependency\Facade\PickingListMultiShipmentPickingStrategyExampleToShipmentFacadeInterface;
+use Spryker\Zed\PickingListMultiShipmentPickingStrategyExample\Dependency\Service\PickingListMultiShipmentPickingStrategyExampleToShipmentServiceInterface;
 use Spryker\Zed\PickingListMultiShipmentPickingStrategyExample\PickingListMultiShipmentPickingStrategyExampleDependencyProvider;
 
 /**
@@ -23,13 +24,24 @@ class PickingListMultiShipmentPickingStrategyExampleBusinessFactory extends Abst
      */
     public function createMultiShipmentPickingListGenerator(): MultiShipmentPickingListGeneratorInterface
     {
-        return new MultiShipmentPickingListGenerator($this->getShipmentService());
+        return new MultiShipmentPickingListGenerator(
+            $this->getShipmentFacade(),
+            $this->getShipmentService(),
+        );
     }
 
     /**
-     * @return \Spryker\Service\Shipment\ShipmentServiceInterface
+     * @return \Spryker\Zed\PickingListMultiShipmentPickingStrategyExample\Dependency\Facade\PickingListMultiShipmentPickingStrategyExampleToShipmentFacadeInterface
      */
-    public function getShipmentService(): ShipmentServiceInterface
+    public function getShipmentFacade(): PickingListMultiShipmentPickingStrategyExampleToShipmentFacadeInterface
+    {
+        return $this->getProvidedDependency(PickingListMultiShipmentPickingStrategyExampleDependencyProvider::FACADE_SHIPMENT);
+    }
+
+    /**
+     * @return \Spryker\Zed\PickingListMultiShipmentPickingStrategyExample\Dependency\Service\PickingListMultiShipmentPickingStrategyExampleToShipmentServiceInterface
+     */
+    public function getShipmentService(): PickingListMultiShipmentPickingStrategyExampleToShipmentServiceInterface
     {
         return $this->getProvidedDependency(PickingListMultiShipmentPickingStrategyExampleDependencyProvider::SERVICE_SHIPMENT);
     }

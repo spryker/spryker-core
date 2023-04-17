@@ -2,10 +2,10 @@
     "error": [
         {
             "severity": "error",
-            "line_from": 99,
-            "line_to": 99,
+            "line_from": 102,
+            "line_to": 102,
             "type": "InvalidReturnType",
-            "message": "The declared return type 'array<array-key, string>' for Spryker\\Zed\\ShipmentGui\\Communication\\Form\\DataProvider\\ShipmentMethodFormDataProvider::getCarrierOptions is incorrect, got 'array<int, null|string>'",
+            "message": "The declared return type 'array<array-key, string>' for Spryker\\Zed\\ShipmentGui\\Communication\\Form\\DataProvider\\ShipmentMethodFormDataProvider::getCarrierOptions is incorrect, got 'array<\"\"|int, null|string>'",
             "file_name": "vendor/spryker/spryker/Bundles/ShipmentGui/src/Spryker/Zed/ShipmentGui/Communication/Form/DataProvider/ShipmentMethodFormDataProvider.php",
             "snippet": "     * @return array<string>",
             "selected_text": "array<string>",
@@ -14,10 +14,10 @@
         },
         {
             "severity": "error",
-            "line_from": 110,
-            "line_to": 110,
+            "line_from": 113,
+            "line_to": 113,
             "type": "InvalidReturnStatement",
-            "message": "The inferred type 'array<int, null|string>' does not match the declared return type 'array<array-key, string>' for Spryker\\Zed\\ShipmentGui\\Communication\\Form\\DataProvider\\ShipmentMethodFormDataProvider::getCarrierOptions",
+            "message": "The inferred type 'array<\"\"|int, null|string>' does not match the declared return type 'array<array-key, string>' for Spryker\\Zed\\ShipmentGui\\Communication\\Form\\DataProvider\\ShipmentMethodFormDataProvider::getCarrierOptions",
             "file_name": "vendor/spryker/spryker/Bundles/ShipmentGui/src/Spryker/Zed/ShipmentGui/Communication/Form/DataProvider/ShipmentMethodFormDataProvider.php",
             "snippet": "        return $result;",
             "selected_text": "$result",
@@ -40,8 +40,20 @@
         },
         {
             "severity": "info",
-            "line_from": 144,
-            "line_to": 144,
+            "line_from": 91,
+            "line_to": 91,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ShipmentTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/ShipmentGui/src/Spryker/Zed/ShipmentGui/Communication/Controller/EditController.php",
+            "snippet": "        $shipmentTransfer = $shipmentCollectionTransfer->getShipments()->getIterator()->current();",
+            "selected_text": "getIterator",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 148,
+            "line_to": 148,
             "type": "PossiblyNullArrayOffset",
             "message": "Cannot access value on variable $requestedItems[int|null] using possibly null offset int|null",
             "file_name": "vendor/spryker/spryker/Bundles/ShipmentGui/src/Spryker/Zed/ShipmentGui/Communication/Controller/EditController.php",
@@ -55,7 +67,7 @@
             "line_from": 54,
             "line_to": 54,
             "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of Spryker\\Zed\\ShipmentGui\\Communication\\Provider\\ShipmentOrderItemTemplateProviderInterface::provide expects ArrayObject<int, Generated\\Shared\\Transfer\\ItemTransfer>, possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ItemTransfer> provided",
+            "message": "Argument 1 of Spryker\\Zed\\ShipmentGui\\Communication\\Provider\\ShipmentOrderItemTemplateProviderInterface::provide expects ArrayObject<int, Generated\\Shared\\Transfer\\ItemTransfer>, but possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ItemTransfer> provided",
             "file_name": "vendor/spryker/spryker/Bundles/ShipmentGui/src/Spryker/Zed/ShipmentGui/Communication/Controller/SalesController.php",
             "snippet": "            'templates' => $this->getFactory()->createShipmentOrderItemTemplateProvider()->provide($orderTransfer->getItems()),",
             "selected_text": "$orderTransfer->getItems()",
@@ -85,6 +97,18 @@
             "selected_text": "$shipmentTransfer->getIdSalesShipment()",
             "error_level": 3,
             "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 212,
+            "line_to": 212,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ShipmentGui\\Communication\\Form\\DataProvider\\ShipmentFormDataProvider::getCustomerAddressChoices expects iterable<int, Generated\\Shared\\Transfer\\AddressTransfer>, but possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\AddressTransfer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ShipmentGui/src/Spryker/Zed/ShipmentGui/Communication/Form/DataProvider/ShipmentFormDataProvider.php",
+            "snippet": "        $addresses = $this->getCustomerAddressChoices($addressesTransfer->getAddresses());",
+            "selected_text": "$addressesTransfer->getAddresses()",
+            "error_level": 3,
+            "shortcode": 92
         },
         {
             "severity": "info",
@@ -220,8 +244,8 @@
         },
         {
             "severity": "info",
-            "line_from": 107,
-            "line_to": 107,
+            "line_from": 110,
+            "line_to": 110,
             "type": "PossiblyNullArrayOffset",
             "message": "Cannot access value on variable $result[int|null] using possibly null offset int|null",
             "file_name": "vendor/spryker/spryker/Bundles/ShipmentGui/src/Spryker/Zed/ShipmentGui/Communication/Form/DataProvider/ShipmentMethodFormDataProvider.php",
@@ -232,8 +256,8 @@
         },
         {
             "severity": "info",
-            "line_from": 80,
-            "line_to": 80,
+            "line_from": 96,
+            "line_to": 96,
             "type": "PossiblyNullArrayOffset",
             "message": "Cannot access value on variable $taxSetList[int|mixed|null] using possibly null offset int|mixed|null",
             "file_name": "vendor/spryker/spryker/Bundles/ShipmentGui/src/Spryker/Zed/ShipmentGui/Communication/Form/DataProvider/ViewShipmentMethodFormDataProvider.php",
@@ -247,7 +271,7 @@
             "line_from": 25,
             "line_to": 25,
             "type": "PossiblyInvalidArgument",
-            "message": "Argument 1 of Spryker\\Zed\\ShipmentGui\\Communication\\Grouper\\ProductBundleGrouper::indexProductBundleGroupItemsByItemGroupKey expects ArrayObject<int, Generated\\Shared\\Transfer\\ProductBundleGroupTransfer>, possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ProductBundleGroupTransfer> provided",
+            "message": "Argument 1 of Spryker\\Zed\\ShipmentGui\\Communication\\Grouper\\ProductBundleGrouper::indexProductBundleGroupItemsByItemGroupKey expects ArrayObject<int, Generated\\Shared\\Transfer\\ProductBundleGroupTransfer>, but possibly different type ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ProductBundleGroupTransfer> provided",
             "file_name": "vendor/spryker/spryker/Bundles/ShipmentGui/src/Spryker/Zed/ShipmentGui/Communication/Grouper/ProductBundleGrouper.php",
             "snippet": "        $indexedProductBundleGroupTransfers = $this->indexProductBundleGroupItemsByItemGroupKey($orderTransfer->getItemGroups());",
             "selected_text": "$orderTransfer->getItemGroups()",
@@ -315,5 +339,6 @@
             "shortcode": 125
         }
     ],
-    "deprecation": []
+    "deprecation": [],
+    "count": 28
 }

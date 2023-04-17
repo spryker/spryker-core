@@ -55,7 +55,7 @@ class ProductPackagingUnitToAvailabilityFacadeBridge implements ProductPackaging
      *
      * @return void
      */
-    public function updateAvailabilityForStore($sku, StoreTransfer $storeTransfer)
+    public function updateAvailabilityForStore(string $sku, StoreTransfer $storeTransfer): void
     {
         $this->availabilityFacade->updateAvailabilityForStore($sku, $storeTransfer);
     }

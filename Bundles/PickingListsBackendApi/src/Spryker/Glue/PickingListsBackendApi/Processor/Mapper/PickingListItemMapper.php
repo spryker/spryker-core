@@ -18,6 +18,19 @@ use Spryker\Glue\PickingListsBackendApi\PickingListsBackendApiConfig;
 class PickingListItemMapper implements PickingListItemMapperInterface
 {
     /**
+     * @var list<\Spryker\Glue\PickingListsBackendApiExtension\Dependency\Plugin\ApiPickingListItemsAttributesMapperPluginInterface>
+     */
+    protected array $apiPickingListItemsAttributesMapperPlugins;
+
+    /**
+     * @param list<\Spryker\Glue\PickingListsBackendApiExtension\Dependency\Plugin\ApiPickingListItemsAttributesMapperPluginInterface> $apiPickingListItemsAttributesMapperPlugins
+     */
+    public function __construct(array $apiPickingListItemsAttributesMapperPlugins)
+    {
+        $this->apiPickingListItemsAttributesMapperPlugins = $apiPickingListItemsAttributesMapperPlugins;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\GlueResourceTransfer $glueResourceTransfer
      * @param \Generated\Shared\Transfer\PickingListItemTransfer $pickingListItemTransfer
      *
@@ -61,6 +74,11 @@ class PickingListItemMapper implements PickingListItemMapperInterface
                 new ApiPickingListItemsAttributesTransfer(),
             );
         }
+
+        $apiPickingListItemsAttributesTransfers = $this->executeApiPickingListItemsAttributesMapperPlugins(
+            $pickingListItemTransfers,
+            $apiPickingListItemsAttributesTransfers,
+        );
 
         foreach ($apiPickingListItemsAttributesTransfers as $uuid => $apiPickingListItemsAttributesTransfer) {
             $glueResourceTransfer = (new GlueResourceTransfer())
@@ -109,5 +127,25 @@ class PickingListItemMapper implements PickingListItemMapperInterface
         ApiOrderItemsAttributesTransfer $apiOrderItemsAttributesTransfer
     ): ApiOrderItemsAttributesTransfer {
         return $apiOrderItemsAttributesTransfer->fromArray($itemTransfer->toArray(), true);
+    }
+
+    /**
+     * @param list<\Generated\Shared\Transfer\PickingListItemTransfer> $pickingListItemTransfers
+     * @param array<string, \Generated\Shared\Transfer\ApiPickingListItemsAttributesTransfer> $apiPickingListItemsAttributesTransfers
+     *
+     * @return array<string, \Generated\Shared\Transfer\ApiPickingListItemsAttributesTransfer>
+     */
+    protected function executeApiPickingListItemsAttributesMapperPlugins(
+        array $pickingListItemTransfers,
+        array $apiPickingListItemsAttributesTransfers
+    ): array {
+        foreach ($this->apiPickingListItemsAttributesMapperPlugins as $apiPickingListItemsAttributesMapperPlugin) {
+            $apiPickingListItemsAttributesTransfers = $apiPickingListItemsAttributesMapperPlugin->mapPickingListItemTransfersToApiPickingListItemsAttributesTransfers(
+                $pickingListItemTransfers,
+                $apiPickingListItemsAttributesTransfers,
+            );
+        }
+
+        return $apiPickingListItemsAttributesTransfers;
     }
 }

@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
+use Generated\Shared\Transfer\ProductConcreteCriteriaTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductCriteriaTransfer;
 use Generated\Shared\Transfer\ProductExportCriteriaTransfer;
@@ -1239,6 +1240,23 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     public function triggerProductExportEvents(ProductExportCriteriaTransfer $productExportCriteriaTransfer): void
     {
         $this->getFactory()->createProductEventBusExporter()->export($productExportCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteCriteriaTransfer $productConcreteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteCollectionTransfer
+     */
+    public function getProductConcreteCollection(
+        ProductConcreteCriteriaTransfer $productConcreteCriteriaTransfer
+    ): ProductConcreteCollectionTransfer {
+        return $this->getFactory()
+            ->createProductConcreteReader()
+            ->getProductConcreteCollection($productConcreteCriteriaTransfer);
     }
 
     /**

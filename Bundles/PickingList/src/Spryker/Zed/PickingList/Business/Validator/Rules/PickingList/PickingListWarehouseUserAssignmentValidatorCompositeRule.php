@@ -66,8 +66,13 @@ class PickingListWarehouseUserAssignmentValidatorCompositeRule extends AbstractP
         array $existingPickingListTransferCollectionIndexedByUuid,
         array $existingPickingListItemTransferCollectionIndexedByUuid
     ): ErrorCollectionTransfer {
+        $errorCollectionTransfer = new ErrorCollectionTransfer();
+
         $warehouseUuids = $this->pickingListExtractor->extraWarehouseUuidsFromPickingListCollection($pickingListCollectionTransfer);
         $userUuids = $this->pickingListExtractor->extraUserUuidsFromPickingListCollection($pickingListCollectionTransfer);
+        if ($userUuids === []) {
+            return $errorCollectionTransfer;
+        }
 
         $warehouseUserAssignmentCriteriaTransfer = $this->createWarehouseUserAssignmentCriteriaTransfer(
             $warehouseUuids,
@@ -80,7 +85,6 @@ class PickingListWarehouseUserAssignmentValidatorCompositeRule extends AbstractP
             ->warehouseUserAssignmentGrouper
             ->groupWarehouseUserAssignmentCollectionByUserUuidAndWarehouseUuid($warehouseUserAssignmentCollectionTransfer);
 
-        $errorCollectionTransfer = new ErrorCollectionTransfer();
         foreach ($pickingListCollectionTransfer->getPickingLists() as $i => $pickingListTransfer) {
             $errorCollectionTransfer = $this->executePickingListValidation(
                 $pickingListTransfer,
@@ -94,8 +98,8 @@ class PickingListWarehouseUserAssignmentValidatorCompositeRule extends AbstractP
     }
 
     /**
-     * @param array<string> $warehouseUuids
-     * @param array<string> $userUuids
+     * @param list<string> $warehouseUuids
+     * @param list<string> $userUuids
      *
      * @return \Generated\Shared\Transfer\WarehouseUserAssignmentCriteriaTransfer
      */

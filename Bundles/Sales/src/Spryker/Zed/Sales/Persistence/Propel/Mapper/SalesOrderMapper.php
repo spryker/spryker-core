@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Sales\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\SpySalesOrderAddressEntityTransfer;
@@ -14,6 +15,7 @@ use Generated\Shared\Transfer\SpySalesOrderEntityTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Propel\Runtime\Collection\Collection;
 use Propel\Runtime\Collection\ObjectCollection;
 
@@ -139,6 +141,24 @@ class SalesOrderMapper
     ): OrderTransfer {
         $orderTransfer->fromArray((array)$salesOrderEntity->toArray(), true);
 
+        foreach ($salesOrderEntity->getItems() as $salesOrderItemEntity) {
+            $iteTransfer = $this->mapSalesOrderItemEntityToItemTransfer($salesOrderItemEntity, new ItemTransfer());
+            $orderTransfer->addItem($iteTransfer);
+        }
+
         return $orderTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItemEntity
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function mapSalesOrderItemEntityToItemTransfer(
+        SpySalesOrderItem $salesOrderItemEntity,
+        ItemTransfer $itemTransfer
+    ): ItemTransfer {
+        return $itemTransfer->fromArray($salesOrderItemEntity->toArray(), true);
     }
 }

@@ -30,7 +30,7 @@ class SalesToCountryBridge implements SalesToCountryInterface
      *
      * @return \Generated\Shared\Transfer\CountryTransfer
      */
-    public function getCountryByIso2Code($iso2Code): CountryTransfer
+    public function getCountryByIso2Code(string $iso2Code): CountryTransfer
     {
         return $this->countryFacade->getCountryByIso2Code($iso2Code);
     }

@@ -27,6 +27,7 @@ use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\TaxRateTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 use Spryker\Service\Shipment\ShipmentServiceInterface;
 use Spryker\Shared\Price\PriceConfig;
@@ -380,6 +381,32 @@ class ShipmentBusinessTester extends Actor
             ->withTotals()
             ->withCurrency()
             ->build();
+    }
+
+    /**
+     * @param int $idSalesOrder
+     * @param int $idSalesShipment
+     *
+     * @return void
+     */
+    public function updateSalesOrderItemsWithIdSalesShipmentForOrder(int $idSalesOrder, int $idSalesShipment): void
+    {
+        $salesOrderItemEntities = $this->getSalesOrderItemQuery()
+            ->filterByFkSalesOrder($idSalesOrder)
+            ->find();
+
+        foreach ($salesOrderItemEntities as $salesOrderItemEntity) {
+            $salesOrderItemEntity->setFkSalesShipment($idSalesShipment);
+            $salesOrderItemEntity->save();
+        }
+    }
+
+    /**
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     */
+    protected function getSalesOrderItemQuery(): SpySalesOrderItemQuery
+    {
+        return SpySalesOrderItemQuery::create();
     }
 
     /**

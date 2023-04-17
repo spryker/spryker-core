@@ -86,6 +86,9 @@ class PushNotificationSubscriptionResourceMapper implements PushNotificationSubs
         $pushNotificationSubscriptionTransfer->getUserOrFail()->setReference(
             (string)$glueRequestTransfer->getRequestUserOrFail()->getSurrogateIdentifierOrFail(),
         );
+        $pushNotificationSubscriptionTransfer->getUserOrFail()->setUuid(
+            $glueRequestTransfer->getRequestUserOrFail()->getNaturalIdentifierOrFail(),
+        );
         if ($glueRequestTransfer->getRequestUserOrFail()->getScopes()) {
             $scope = current($glueRequestTransfer->getRequestUserOrFail()->getScopes());
             $pushNotificationSubscriptionTransfer->getUserOrFail()->setType($scope);

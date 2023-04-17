@@ -167,11 +167,10 @@ class PickingListMapper implements PickingListMapperInterface
         array $pickingListItemTransferCollectionIndexedByUuid,
         GlueResourceTransfer $glueResourceTransfer
     ): PickingListItemTransfer {
-        $pickingListItemUuid = $glueResourceTransfer->getId();
-        if (!$pickingListItemUuid || !isset($pickingListItemTransferCollectionIndexedByUuid[$pickingListItemUuid])) {
+        if (!isset($pickingListItemTransferCollectionIndexedByUuid[$glueResourceTransfer->getIdOrFail()])) {
             return new PickingListItemTransfer();
         }
 
-        return $pickingListItemTransferCollectionIndexedByUuid[$pickingListItemUuid];
+        return $pickingListItemTransferCollectionIndexedByUuid[$glueResourceTransfer->getIdOrFail()];
     }
 }

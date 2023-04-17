@@ -270,15 +270,12 @@ class GeneratePickingListsFacadeTest extends Unit
     ): PickingListTransfer {
         $pickingListTransfer = $this->tester
             ->createPickingListTransfer([
-                PickingListTransfer::UUID => null,
-                PickingListTransfer::USER => null,
                 PickingListTransfer::WAREHOUSE => $stockTransfer,
             ]);
 
         foreach ($orderTransfer->getItems() as $itemTransfer) {
             $pickingListItemTransfer = $this->tester
                 ->createPickingListItemTransfer([
-                    PickingListItemTransfer::UUID => null,
                     PickingListItemTransfer::ORDER_ITEM => $itemTransfer,
                 ]);
 

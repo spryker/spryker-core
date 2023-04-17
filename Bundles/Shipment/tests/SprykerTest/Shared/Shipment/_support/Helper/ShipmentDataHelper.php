@@ -30,7 +30,8 @@ class ShipmentDataHelper extends Module
     public function haveShipment(int $idSalesOrder, array $overrideShipment = []): ShipmentTransfer
     {
         $shipmentTransfer = (new ShipmentBuilder($overrideShipment))->build();
-        $shipmentTransfer->setIdSalesShipment($this->saveShipment($shipmentTransfer, $idSalesOrder));
+        $salesShipmentEntity = $this->saveShipment($shipmentTransfer, $idSalesOrder);
+        $shipmentTransfer->fromArray($salesShipmentEntity->toArray(), true);
 
         $this->debug(sprintf(
             'Inserted Sales shipment: %d for sales order: %d',
@@ -49,16 +50,21 @@ class ShipmentDataHelper extends Module
      * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
      * @param int $idSalesOrder
      *
-     * @return int
+     * @return \Orm\Zed\Sales\Persistence\SpySalesShipment
      */
-    protected function saveShipment(ShipmentTransfer $shipmentTransfer, int $idSalesOrder): int
+    protected function saveShipment(ShipmentTransfer $shipmentTransfer, int $idSalesOrder): SpySalesShipment
     {
         $shipmentEntity = new SpySalesShipment();
         $shipmentEntity->fromArray($shipmentTransfer->toArray());
         $shipmentEntity->setFkSalesOrder($idSalesOrder);
+
+        if ($shipmentTransfer->getShippingAddress()) {
+            $shipmentEntity->setFkSalesOrderAddress($shipmentTransfer->getShippingAddress()->getIdSalesOrderAddress());
+        }
+
         $shipmentEntity->save();
 
-        return $shipmentEntity->getIdSalesShipment();
+        return $shipmentEntity;
     }
 
     /**

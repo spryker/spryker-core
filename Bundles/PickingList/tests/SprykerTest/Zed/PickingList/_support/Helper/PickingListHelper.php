@@ -13,13 +13,12 @@ use Generated\Shared\Transfer\PickingListCollectionResponseTransfer;
 use Generated\Shared\Transfer\PickingListTransfer;
 use Orm\Zed\PickingList\Persistence\SpyPickingListItemQuery;
 use Orm\Zed\PickingList\Persistence\SpyPickingListQuery;
-use Spryker\Zed\PickingList\Business\PickingListFacadeInterface;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
-use SprykerTest\Zed\Testify\Helper\Business\BusinessHelperTrait;
+use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class PickingListHelper extends Module
 {
-    use BusinessHelperTrait;
+    use LocatorHelperTrait;
     use DataCleanupHelperTrait;
 
     /**
@@ -33,7 +32,9 @@ class PickingListHelper extends Module
             ->addPickingList($pickingListTransfer)
             ->setIsTransactional(true);
 
-        $pickingListCollectionResponseTransfer = $this->getFacade()
+        $pickingListCollectionResponseTransfer = $this->getLocator()
+            ->pickingList()
+            ->facade()
             ->createPickingListCollection($pickingListCollectionRequestTransfer);
 
         $this->getDataCleanupHelper()->_addCleanup(function () use ($pickingListCollectionResponseTransfer): void {
@@ -92,18 +93,5 @@ class PickingListHelper extends Module
                 ->findByIdPickingListItem($pickingListItemTransfer->getIdPickingListItem())
                 ->delete();
         }
-    }
-
-    /**
-     * @return \Spryker\Zed\PickingList\Business\PickingListFacadeInterface
-     */
-    protected function getFacade(): PickingListFacadeInterface
-    {
-        /**
-         * @var \Spryker\Zed\PickingList\Business\PickingListFacadeInterface $pickingListFacade
-         */
-        $pickingListFacade = $this->getBusinessHelper()->getFacade('PickingList');
-
-        return $pickingListFacade;
     }
 }

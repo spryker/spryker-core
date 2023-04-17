@@ -274,4 +274,17 @@
         <property name="taxSet" type="TaxSet"/>
     </transfer>
 
+    <transfer name="ProductConcreteResourceCollection" strict="true">
+        <property name="productConcreteResources" type="GlueResource[]" singular="productConcreteResource"/>
+    </transfer>
+
+    <transfer name="ProductConcreteCollection">
+        <property name="products" type="ProductConcrete[]" singular="product"/>
+    </transfer>
+
+    <transfer name="ProductConcreteCriteria" strict="true">
+    </transfer>
+
+    <transfer name="GlueRelationship">
+    </transfer>
 </transfers>

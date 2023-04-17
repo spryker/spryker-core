@@ -17,6 +17,9 @@ use Generated\Shared\Transfer\PickingListItemTransfer;
 use Generated\Shared\Transfer\PickingListTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StockTransfer;
+use Generated\Shared\Transfer\UserTransfer;
+use Orm\Zed\PickingList\Persistence\SpyPickingListQuery;
+use Propel\Runtime\Collection\ObjectCollection;
 
 /**
  * Inherited Methods
@@ -186,5 +189,17 @@ class PickingListBusinessTester extends Actor
         return $this->createPickingListItemTransfer($seed + [
             PickingListItemTransfer::ORDER_ITEM => $saveOrderTransfer->getOrderItems()->getIterator()->current(),
         ]);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
+     *
+     * @return \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\PickingList\Persistence\SpyPickingList>
+     */
+    public function getPickingListsAssignedToUser(UserTransfer $userTransfer): ObjectCollection
+    {
+        return SpyPickingListQuery::create()
+            ->filterByUserUuid($userTransfer->getUuidOrFail())
+            ->find();
     }
 }

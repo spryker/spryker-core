@@ -111,15 +111,7 @@ class PickingListRelationshipExpander implements PickingListRelationshipExpander
     protected function isApplicablePickingListResource(
         GlueResourceTransfer $glueResourceTransfer
     ): bool {
-        if ($glueResourceTransfer->getType() !== PickingListsBackendApiConfig::RESOURCE_PICKING_LISTS) {
-            return false;
-        }
-
-        if (!$glueResourceTransfer->getId()) {
-            return false;
-        }
-
-        return true;
+        return $glueResourceTransfer->getType() === PickingListsBackendApiConfig::RESOURCE_PICKING_LISTS;
     }
 
     /**

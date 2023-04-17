@@ -9,10 +9,10 @@ namespace Spryker\Zed\Shipment\Persistence;
 
 use ArrayObject;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\SalesShipmentCollectionTransfer;
+use Generated\Shared\Transfer\SalesShipmentCriteriaTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierRequestTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
-use Generated\Shared\Transfer\ShipmentCollectionTransfer;
-use Generated\Shared\Transfer\ShipmentCriteriaTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentPriceTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
@@ -119,6 +119,8 @@ interface ShipmentRepositoryInterface
     public function findShipmentMethodByIdWithPricesAndCarrier(int $idShipmentMethod): ?ShipmentMethodTransfer;
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface::getSalesShipmentCollection()} instead.
+     *
      * @param int $idShipmentMethod
      *
      * @return \Generated\Shared\Transfer\ShipmentTransfer|null
@@ -174,11 +176,11 @@ interface ShipmentRepositoryInterface
     public function getActiveShipmentCarriers(): array;
 
     /**
-     * @param \Generated\Shared\Transfer\ShipmentCriteriaTransfer $shipmentCriteriaTransfer
+     * @param \Generated\Shared\Transfer\SalesShipmentCriteriaTransfer $salesShipmentCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\ShipmentCollectionTransfer
+     * @return \Generated\Shared\Transfer\SalesShipmentCollectionTransfer
      */
     public function getSalesShipmentCollection(
-        ShipmentCriteriaTransfer $shipmentCriteriaTransfer
-    ): ShipmentCollectionTransfer;
+        SalesShipmentCriteriaTransfer $salesShipmentCriteriaTransfer
+    ): SalesShipmentCollectionTransfer;
 }

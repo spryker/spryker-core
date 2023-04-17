@@ -1,40 +1,5 @@
 [
     {
-        "fileName": "src/Spryker/Service/Shipment/Dependency/Service/ShipmentToUtilEncodingServiceBridge.php",
-        "description": "Bridges: Type should be defined for param `value` in method `Spryker\\Service\\Shipment\\Dependency\\Service\\ShipmentToUtilEncodingServiceBridge::encodeJson()`.",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Service/Shipment/Dependency/Service/ShipmentToUtilEncodingServiceBridge.php",
-        "description": "Bridges: Type should be defined for param `options` in method `Spryker\\Service\\Shipment\\Dependency\\Service\\ShipmentToUtilEncodingServiceBridge::encodeJson()`.",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Service/Shipment/Dependency/Service/ShipmentToUtilEncodingServiceBridge.php",
-        "description": "Bridges: Type should be defined for param `depth` in method `Spryker\\Service\\Shipment\\Dependency\\Service\\ShipmentToUtilEncodingServiceBridge::encodeJson()`.",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Service/Shipment/Dependency/Service/ShipmentToUtilEncodingServiceInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `encodeJson()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/Shipment/Dependency/Facade/ShipmentToCalculationFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `recalculateQuote()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
         "fileName": "src/Spryker/Zed/Shipment/Dependency/Facade/ShipmentToCurrencyBridge.php",
         "description": "Bridges: Method `getByIdCurrency()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
@@ -45,13 +10,6 @@
         "fileName": "src/Spryker/Zed/Shipment/Dependency/Facade/ShipmentToPriceFacadeBridge.php",
         "description": "Bridges: Method `getNetPriceModeIdentifier()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/Shipment/Dependency/Facade/ShipmentToSalesFacadeBridge.php",
-        "description": "Bridges: Type should be defined for param `idSalesOrder` in method `Spryker\\Zed\\Shipment\\Dependency\\Facade\\ShipmentToSalesFacadeBridge::getOrderByIdSalesOrder()`.",
-        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -87,13 +45,6 @@
         "fileName": "src/Spryker/Zed/Shipment/Dependency/Facade/ShipmentToSalesFacadeBridge.php",
         "description": "Bridges: Method `updateSalesExpense()` must have `public function update<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/Shipment/Dependency/Facade/ShipmentToSalesFacadeInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `getOrderByIdSalesOrder()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
     },

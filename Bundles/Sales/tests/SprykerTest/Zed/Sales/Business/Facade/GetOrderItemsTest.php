@@ -103,7 +103,7 @@ class GetOrderItemsTest extends Unit
             ->getItems();
 
         // Assert
-        $this->assertCount(4, $itemTransfers);
+        $this->assertCount(2, $itemTransfers);
     }
 
     /**

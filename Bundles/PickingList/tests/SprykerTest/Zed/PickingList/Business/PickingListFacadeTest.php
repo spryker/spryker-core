@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\PickingList\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\PickingListCollectionRequestTransfer;
 use Generated\Shared\Transfer\PickingListItemTransfer;
 use Generated\Shared\Transfer\PickingListTransfer;
 use SprykerTest\Zed\PickingList\PickingListBusinessTester;
@@ -155,12 +156,69 @@ class PickingListFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testIsPickingFinishedForOrderShouldReturnTrueWhenAllPickingListsFinishedForOrder(): void
+    public function testIsPickingFinishedForOrderShouldReturnFalseWhenNotAllPickingListsFinishedForOrder(): void
     {
         // Arrange
         $orderTransfer = $this->tester->createPersistedOrderTransfer();
         $this->createPickingListWithOnePickedAndOneNotPickedItems($orderTransfer);
-        $this->createPickingListWithOnePickedAndOneNotPickedItems($orderTransfer);
+
+        // Act
+        $status = $this->tester->getFacade()->isPickingFinishedForOrder($orderTransfer);
+
+        // Assert
+        $this->assertFalse($status);
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsPickingFinishedForOrderShouldReturnFalseWhenQuantityLessThenNumberOfPickedAndNotPicked(): void
+    {
+        // Arrange
+        $orderTransfer = $this->tester->createPersistedOrderTransfer();
+        /** @var \ArrayObject<\Generated\Shared\Transfer\ItemTransfer> $itemTransferCollection */
+        $itemTransferCollection = $orderTransfer->getItems();
+
+        $this->createPickingListWithItems([
+            $this->tester->createPickingListItemTransfer([
+                PickingListItemTransfer::ORDER_ITEM => $itemTransferCollection->getIterator()->current(),
+                PickingListItemTransfer::QUANTITY => 5,
+                PickingListItemTransfer::NUMBER_OF_NOT_PICKED => 1,
+                PickingListItemTransfer::NUMBER_OF_PICKED => 5,
+            ]),
+        ]);
+
+        // Act
+        $status = $this->tester->getFacade()->isPickingFinishedForOrder($orderTransfer);
+
+        // Assert
+        $this->assertFalse($status);
+    }
+
+    /**
+     * @return void
+     */
+    public function testIsPickingFinishedForOrderShouldReturnTrueWhenAllPickingListsFinishedForOrder(): void
+    {
+        // Arrange
+        $orderTransfer = $this->tester->createPersistedOrderTransfer();
+        /** @var \ArrayObject<\Generated\Shared\Transfer\ItemTransfer> $itemTransferCollection */
+        $itemTransferCollection = $orderTransfer->getItems();
+
+        $this->createPickingListWithItems([
+            $this->tester->createPickingListItemTransfer([
+                PickingListItemTransfer::ORDER_ITEM => $itemTransferCollection->getIterator()->current(),
+                PickingListItemTransfer::QUANTITY => 5,
+                PickingListItemTransfer::NUMBER_OF_NOT_PICKED => 0,
+                PickingListItemTransfer::NUMBER_OF_PICKED => 5,
+            ]),
+            $this->tester->createPickingListItemTransfer([
+                PickingListItemTransfer::ORDER_ITEM => $itemTransferCollection->getIterator()->current(),
+                PickingListItemTransfer::QUANTITY => 3,
+                PickingListItemTransfer::NUMBER_OF_PICKED => 3,
+                PickingListItemTransfer::NUMBER_OF_NOT_PICKED => 0,
+            ]),
+        ]);
 
         // Act
         $status = $this->tester->getFacade()->isPickingFinishedForOrder($orderTransfer);
@@ -288,11 +346,6 @@ class PickingListFacadeTest extends Unit
      */
     protected function createPickingListWithOnePickedAndOneNotPickedItems(OrderTransfer $orderTransfer): void
     {
-        $this->tester->mockFactoryMethod(
-            'getCreatePickingListValidatorCompositeRules',
-            [],
-        );
-
         /** @var \ArrayObject<\Generated\Shared\Transfer\ItemTransfer> $itemTransferCollection */
         $itemTransferCollection = $orderTransfer->getItems();
 
@@ -302,20 +355,40 @@ class PickingListFacadeTest extends Unit
             PickingListItemTransfer::NUMBER_OF_PICKED => 5,
         ]);
 
-        $notPickedPickingListItemTransfer1 = $this->tester->createPickingListItemTransfer([
+        $notPickedPickingListItemTransfer = $this->tester->createPickingListItemTransfer([
             PickingListItemTransfer::ORDER_ITEM => $itemTransferCollection->getIterator()->current(),
             PickingListItemTransfer::QUANTITY => 3,
             PickingListItemTransfer::NUMBER_OF_NOT_PICKED => 3,
         ]);
 
+        $this->createPickingListWithItems([$pickedPickingListItemTransfer, $notPickedPickingListItemTransfer]);
+    }
+
+    /**
+     * @param list<\Generated\Shared\Transfer\PickingListItemTransfer> $pickingListItems
+     *
+     * @return void
+     */
+    protected function createPickingListWithItems(array $pickingListItems): void
+    {
+        $pickingListBusinessFactory = $this->tester->mockFactoryMethod(
+            'getCreatePickingListValidatorCompositeRules',
+            [],
+        );
+
+        $pickingListFacade = $this->tester->getFacade();
+        $pickingListFacade->setFactory($pickingListBusinessFactory);
+
         $pickingListTransfer = $this->tester->createPickingListTransfer([
             PickingListTransfer::USER => $this->tester->haveUser(),
             PickingListTransfer::WAREHOUSE => $this->tester->haveStock(),
-            PickingListTransfer::PICKING_LIST_ITEMS => [
-                $pickedPickingListItemTransfer,
-                $notPickedPickingListItemTransfer1,
-            ],
+            PickingListTransfer::PICKING_LIST_ITEMS => $pickingListItems,
         ]);
-        $this->tester->havePickingList($pickingListTransfer);
+
+        $pickingListCollectionRequestTransfer = (new PickingListCollectionRequestTransfer())
+            ->addPickingList($pickingListTransfer)
+            ->setIsTransactional(true);
+
+        $pickingListFacade->createPickingListCollection($pickingListCollectionRequestTransfer);
     }
 }

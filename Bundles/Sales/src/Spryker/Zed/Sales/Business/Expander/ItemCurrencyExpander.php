@@ -55,7 +55,7 @@ class ItemCurrencyExpander implements ItemCurrencyExpanderInterface
 
         foreach ($itemTransfers as $itemTransfer) {
             if ($itemTransfer->getFkSalesOrder()) {
-                $salesOrderIds[] = $itemTransfer->getFkSalesOrder();
+                $salesOrderIds[] = $itemTransfer->getFkSalesOrderOrFail();
             }
         }
 

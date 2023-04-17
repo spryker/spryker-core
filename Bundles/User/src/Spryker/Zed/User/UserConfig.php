@@ -28,6 +28,11 @@ class UserConfig extends AbstractBundleConfig
     protected const MAX_LENGTH_USER_PASSWORD = 72;
 
     /**
+     * @var bool
+     */
+    protected const IS_POST_SAVE_PLUGINS_ENABLED_AFTER_USER_STATUS_CHANGE = false;
+
+    /**
      * @api
      *
      * @return array<string>
@@ -79,6 +84,21 @@ class UserConfig extends AbstractBundleConfig
     public function getUserPasswordMaxLength(): int
     {
         return static::MAX_LENGTH_USER_PASSWORD;
+    }
+
+    /**
+     * Specification:
+     * - Defines if post save plugins will be executed after user status updating.
+     *
+     * @api
+     *
+     * @see {@link \Spryker\Zed\UserExtension\Dependency\Plugin\UserPostSavePluginInterface}
+     *
+     * @return bool
+     */
+    public function isPostSavePluginsEnabledAfterUserStatusChange(): bool
+    {
+        return static::IS_POST_SAVE_PLUGINS_ENABLED_AFTER_USER_STATUS_CHANGE;
     }
 
     /**

@@ -10,19 +10,23 @@ namespace SprykerTest\Shared\Sales\Helper;
 use Codeception\Module;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\DataBuilder\SaveOrderBuilder;
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
+use Orm\Zed\Sales\Persistence\SpySalesOrderAddressQuery;
 use ReflectionClass;
 use Spryker\Zed\Oms\Business\OrderStateMachine\PersistenceManager;
 use Spryker\Zed\Sales\Business\SalesBusinessFactory;
 use Spryker\Zed\Sales\Business\SalesFacadeInterface;
 use SprykerTest\Shared\Sales\Helper\Config\TesterSalesConfig;
+use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 use SprykerTest\Zed\Oms\Helper\OmsHelper;
 
 class SalesDataHelper extends Module
 {
     use LocatorHelperTrait;
+    use DataCleanupHelperTrait;
 
     /**
      * @var string
@@ -67,6 +71,22 @@ class SalesDataHelper extends Module
         $this->saveOrderStack = $checkoutDoSaveOrderPlugins;
 
         return $this->persistOrder($quoteTransfer, $stateMachineProcessName);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    public function haveSalesOrderAddress(AddressTransfer $addressTransfer): AddressTransfer
+    {
+        $addressTransfer = $this->saveSalesOrderAddress($addressTransfer);
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($addressTransfer): void {
+            $this->cleanupSalesOrderAddress($addressTransfer);
+        });
+
+        return $addressTransfer;
     }
 
     /**
@@ -213,5 +233,42 @@ class SalesDataHelper extends Module
         $processCache = $reflectedClass->getProperty('processCache');
         $processCache->setAccessible(true);
         $processCache->setValue(null);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer
+     */
+    protected function saveSalesOrderAddress(AddressTransfer $addressTransfer): AddressTransfer
+    {
+        $salesOrderAddressEntity = $this->createSalesOrderAddressQuery()
+            ->filterByIdSalesOrderAddress($addressTransfer->getIdSalesOrderAddress())
+            ->findOneOrCreate();
+
+        $salesOrderAddressEntity->fromArray($addressTransfer->toArray());
+        $salesOrderAddressEntity->save();
+
+        return $addressTransfer->fromArray($salesOrderAddressEntity->toArray(), true);
+    }
+
+    /**
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderAddressQuery
+     */
+    protected function createSalesOrderAddressQuery(): SpySalesOrderAddressQuery
+    {
+        return SpySalesOrderAddressQuery::create();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return void
+     */
+    protected function cleanupSalesOrderAddress(AddressTransfer $addressTransfer): void
+    {
+        $this->createSalesOrderAddressQuery()
+            ->findByIdSalesOrderAddress($addressTransfer->getIdSalesOrderAddress())
+            ->delete();
     }
 }

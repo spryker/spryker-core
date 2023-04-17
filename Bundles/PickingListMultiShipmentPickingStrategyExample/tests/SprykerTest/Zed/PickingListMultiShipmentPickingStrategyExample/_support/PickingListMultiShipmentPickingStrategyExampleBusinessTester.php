@@ -5,20 +5,19 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
-declare(strict_types=1);
-
 namespace SprykerTest\Zed\PickingListMultiShipmentPickingStrategyExample;
 
 use Codeception\Actor;
 use DateTime;
 use Generated\Shared\DataBuilder\QuoteBuilder;
+use Generated\Shared\DataBuilder\ShipmentBuilder;
 use Generated\Shared\DataBuilder\StockBuilder;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Generated\Shared\Transfer\StockTransfer;
-use Spryker\Zed\PickingListExtension\Dependency\Plugin\PickingListGeneratorStrategyPluginInterface;
-use Spryker\Zed\PickingListMultiShipmentPickingStrategyExample\Communication\Plugin\PickingList\MultiShipmentPickingListGeneratorStrategyPlugin;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 
 /**
  * Inherited Methods
@@ -46,27 +45,16 @@ class PickingListMultiShipmentPickingStrategyExampleBusinessTester extends Actor
     public const DEFAULT_OMS_PROCESS_NAME = 'Test01';
 
     /**
-     * @param int $idSalesOrder
-     *
-     * @return \Generated\Shared\Transfer\OrderTransfer
-     */
-    public function getOrderTransfer(int $idSalesOrder): OrderTransfer
-    {
-        return $this->getLocator()
-            ->sales()
-            ->facade()
-            ->findOrderByIdSalesOrder($idSalesOrder);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\ShipmentTransfer|null $shipmentTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function expandOrderItemsWithShipment(
-        OrderTransfer $orderTransfer
+        OrderTransfer $orderTransfer,
+        ?ShipmentTransfer $shipmentTransfer = null
     ): OrderTransfer {
-        $shipmentTransfer = $this->createShipmentTransfer();
+        $shipmentTransfer = $shipmentTransfer ?? $this->createShipmentTransfer();
         foreach ($orderTransfer->getItems() as $itemTransfer) {
             $itemTransfer->setShipment($shipmentTransfer);
         }
@@ -84,12 +72,7 @@ class PickingListMultiShipmentPickingStrategyExampleBusinessTester extends Actor
             static::DEFAULT_OMS_PROCESS_NAME,
         );
 
-        return $this->getLocator()
-            ->sales()
-            ->facade()
-            ->findOrderByIdSalesOrder(
-                $saveOrderTransfer->getIdSalesOrder(),
-            );
+        return $this->getOrderTransfer($saveOrderTransfer->getIdSalesOrder());
     }
 
     /**
@@ -149,10 +132,95 @@ class PickingListMultiShipmentPickingStrategyExampleBusinessTester extends Actor
     }
 
     /**
-     * @return \Spryker\Zed\PickingListExtension\Dependency\Plugin\PickingListGeneratorStrategyPluginInterface
+     * @param int $idSalesOrderItem
+     * @param int $idSalesShipment
+     *
+     * @return void
      */
-    public function createMultiShipmentPickingListGeneratorStrategyPlugin(): PickingListGeneratorStrategyPluginInterface
+    public function updateSalesOrderItemWithIdSalesShipment(int $idSalesOrderItem, int $idSalesShipment): void
     {
-        return new MultiShipmentPickingListGeneratorStrategyPlugin();
+        $salesOrderItemEntity = $this->getSalesOrderItemQuery()
+            ->filterByIdSalesOrderItem($idSalesOrderItem)
+            ->findOne();
+
+        $salesOrderItemEntity->setFkSalesShipment($idSalesShipment);
+        $salesOrderItemEntity->save();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ShipmentTransfer
+     */
+    public function getShipmentTransfer(): ShipmentTransfer
+    {
+        $shipmentTransfer = (new ShipmentBuilder())
+            ->withShippingAddress()
+            ->withCarrier()
+            ->withMethod()
+            ->build();
+
+        $countryTransfer = $this->haveCountry();
+        $addressTransfer = $shipmentTransfer->getShippingAddress()
+            ->setCountry($countryTransfer)
+            ->setFkCountry($countryTransfer->getIdCountry());
+
+        $addressTransfer = $this->haveSalesOrderAddress($addressTransfer);
+
+        return $shipmentTransfer->setShippingAddress($addressTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer1
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer2
+     *
+     * @return void
+     */
+    public function expandOrderItemsWithShipments(
+        OrderTransfer $orderTransfer,
+        ShipmentTransfer $shipmentTransfer1,
+        ShipmentTransfer $shipmentTransfer2
+    ): void {
+        $itemsIterator = $orderTransfer->getItems()->getIterator();
+
+        $this->expandItemTransferWithPersistedShipment($itemsIterator->current(), $shipmentTransfer1);
+        $itemsIterator->next();
+        $this->expandItemTransferWithPersistedShipment($itemsIterator->current(), $shipmentTransfer2);
+        $itemsIterator->next();
+        $this->expandItemTransferWithPersistedShipment($itemsIterator->current(), $shipmentTransfer2);
+    }
+
+    /**
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     */
+    protected function getSalesOrderItemQuery(): SpySalesOrderItemQuery
+    {
+        return SpySalesOrderItemQuery::create();
+    }
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected function getOrderTransfer(int $idSalesOrder): OrderTransfer
+    {
+        return $this->getLocator()->sales()->facade()->findOrderByIdSalesOrder($idSalesOrder);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ShipmentTransfer $shipmentTransfer
+     *
+     * @return void
+     */
+    protected function expandItemTransferWithPersistedShipment(ItemTransfer $itemTransfer, ShipmentTransfer $shipmentTransfer): void
+    {
+        $this->updateSalesOrderItemWithIdSalesShipment(
+            $itemTransfer->getIdSalesOrderItemOrFail(),
+            $shipmentTransfer->getIdSalesShipmentOrFail(),
+        );
+        $itemTransfer->setShipment(
+            (new ShipmentTransfer())->setIdSalesShipment($shipmentTransfer->getIdSalesShipmentOrFail()),
+        );
     }
 }

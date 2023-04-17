@@ -11,8 +11,14 @@ use Spryker\Glue\Kernel\Backend\AbstractFactory;
 use Spryker\Glue\UsersBackendApi\Dependency\Facade\UsersBackendApiToUserFacadeInterface;
 use Spryker\Glue\UsersBackendApi\Processor\Expander\UserByWarehouseUserAssignmentResourceRelationshipExpander;
 use Spryker\Glue\UsersBackendApi\Processor\Expander\UserByWarehouseUserAssignmentResourceRelationshipExpanderInterface;
-use Spryker\Glue\UsersBackendApi\Processor\Reader\UserReader;
-use Spryker\Glue\UsersBackendApi\Processor\Reader\UserReaderInterface;
+use Spryker\Glue\UsersBackendApi\Processor\Filter\WarehouseUserAssignmentResourceFilter;
+use Spryker\Glue\UsersBackendApi\Processor\Filter\WarehouseUserAssignmentResourceFilterInterface;
+use Spryker\Glue\UsersBackendApi\Processor\Mapper\UserResourceMapper;
+use Spryker\Glue\UsersBackendApi\Processor\Mapper\UserResourceMapperInterface;
+use Spryker\Glue\UsersBackendApi\Processor\Reader\UserResourceReader;
+use Spryker\Glue\UsersBackendApi\Processor\Reader\UserResourceReaderInterface;
+use Spryker\Glue\UsersBackendApi\Processor\Reader\UserResourceRelationshipReader;
+use Spryker\Glue\UsersBackendApi\Processor\Reader\UserResourceRelationshipReaderInterface;
 
 class UsersBackendApiFactory extends AbstractFactory
 {
@@ -21,15 +27,47 @@ class UsersBackendApiFactory extends AbstractFactory
      */
     public function createUserByWarehouseUserAssignmentResourceRelationshipExpander(): UserByWarehouseUserAssignmentResourceRelationshipExpanderInterface
     {
-        return new UserByWarehouseUserAssignmentResourceRelationshipExpander($this->createUserReader());
+        return new UserByWarehouseUserAssignmentResourceRelationshipExpander(
+            $this->createWarehouseUserAssignmentResourceFilter(),
+            $this->createUserResourceRelationshipReader(),
+        );
     }
 
     /**
-     * @return \Spryker\Glue\UsersBackendApi\Processor\Reader\UserReaderInterface
+     * @return \Spryker\Glue\UsersBackendApi\Processor\Filter\WarehouseUserAssignmentResourceFilterInterface
      */
-    public function createUserReader(): UserReaderInterface
+    public function createWarehouseUserAssignmentResourceFilter(): WarehouseUserAssignmentResourceFilterInterface
     {
-        return new UserReader($this->getUserFacade());
+        return new WarehouseUserAssignmentResourceFilter();
+    }
+
+    /**
+     * @return \Spryker\Glue\UsersBackendApi\Processor\Reader\UserResourceRelationshipReaderInterface
+     */
+    public function createUserResourceRelationshipReader(): UserResourceRelationshipReaderInterface
+    {
+        return new UserResourceRelationshipReader(
+            $this->createUserResourceReader(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\UsersBackendApi\Processor\Reader\UserResourceReaderInterface
+     */
+    public function createUserResourceReader(): UserResourceReaderInterface
+    {
+        return new UserResourceReader(
+            $this->createUserResourceMapper(),
+            $this->getUserFacade(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\UsersBackendApi\Processor\Mapper\UserResourceMapperInterface
+     */
+    public function createUserResourceMapper(): UserResourceMapperInterface
+    {
+        return new UserResourceMapper();
     }
 
     /**

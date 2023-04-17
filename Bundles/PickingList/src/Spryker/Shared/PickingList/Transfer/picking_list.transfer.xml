@@ -40,6 +40,7 @@
         <property name="user" type="User"/>
         <property name="status" type="string"/>
         <property name="pickingListItems" type="PickingListItem[]" singular="pickingListItem"/>
+        <property name="modifiedAttributes" type="string[]" singular="modifiedAttribute"/>
         <property name="createdAt" type="string"/>
         <property name="updatedAt" type="string"/>
     </transfer>
@@ -149,28 +150,20 @@
 
     <transfer name="User">
         <property name="uuid" type="string" strict="true"/>
+        <property name="isWarehouseUser" type="bool" strict="true"/>
+        <property name="status" type="string"/>
     </transfer>
 
     <transfer name="ItemCollection">
         <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
-    <transfer name="OrderConditions" strict="true">
-        <property name="salesOrderItemIds" type="int[]" singular="salesOrderItemId"/>
-        <property name="withItems" type="bool"/>
-        <property name="itemUuids" type="string[]" singular="itemUuid"/>
-    </transfer>
-
-    <transfer name="OrderCollection">
-        <property name="orders" type="Order[]" singular="order"/>
-    </transfer>
-
-    <transfer name="OrderCriteria" strict="true">
-        <property name="orderConditions" type="OrderConditions"/>
-    </transfer>
-
     <transfer name="OrderItemFilter">
         <property name="salesOrderItemIds" type="int[]" singular="salesOrderItemId"/>
         <property name="salesOrderItemUuids" type="string[]" singular="salesOrderItemUuid"/>
+    </transfer>
+
+    <transfer name="UserCollection" strict="true">
+        <property name="users" type="User[]" singular="user"/>
     </transfer>
 </transfers>

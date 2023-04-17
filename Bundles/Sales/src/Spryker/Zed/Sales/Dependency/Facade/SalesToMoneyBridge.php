@@ -30,7 +30,7 @@ class SalesToMoneyBridge implements SalesToMoneyInterface
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */
-    public function fromInteger($amount, $isoCode = null): MoneyTransfer
+    public function fromInteger(int $amount, ?string $isoCode = null): MoneyTransfer
     {
         return $this->moneyFacade->fromInteger($amount, $isoCode);
     }

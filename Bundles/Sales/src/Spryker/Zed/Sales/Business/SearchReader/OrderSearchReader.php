@@ -186,7 +186,9 @@ class OrderSearchReader implements OrderSearchReaderInterface
         $salesOrderIds = [];
 
         foreach ($orderTransfers as $orderTransfer) {
-            $salesOrderIds[] = $orderTransfer->getIdSalesOrder();
+            if ($orderTransfer->getIdSalesOrder()) {
+                $salesOrderIds[] = $orderTransfer->getIdSalesOrderOrFail();
+            }
         }
 
         return $salesOrderIds;

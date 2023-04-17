@@ -10,6 +10,8 @@ namespace Spryker\Zed\ProductPackagingUnit\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductPackagingUnit\Business\Checker\CartItemProductPackagingUnitChecker;
 use Spryker\Zed\ProductPackagingUnit\Business\Checker\CartItemProductPackagingUnitCheckerInterface;
+use Spryker\Zed\ProductPackagingUnit\Business\Expander\PickingList\ProductPackagingUnitPickingListExpander;
+use Spryker\Zed\ProductPackagingUnit\Business\Expander\PickingList\ProductPackagingUnitPickingListExpanderInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Availability\PreCheck\ProductPackagingUnitCartPreCheck;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Availability\PreCheck\ProductPackagingUnitCartPreCheckInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Availability\PreCheck\ProductPackagingUnitCheckoutPreCheck;
@@ -207,6 +209,16 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     public function createProductPackagingUnitCartOperation(): ProductPackagingUnitCartOperationInterface
     {
         return new ProductPackagingUnitCartOperation();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPackagingUnit\Business\Expander\PickingList\ProductPackagingUnitPickingListExpanderInterface
+     */
+    public function createProductPackagingUnitPickingListExpander(): ProductPackagingUnitPickingListExpanderInterface
+    {
+        return new ProductPackagingUnitPickingListExpander(
+            $this->createOrderItemExpander(),
+        );
     }
 
     /**

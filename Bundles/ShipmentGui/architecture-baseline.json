@@ -1,12 +1,5 @@
 [
     {
-        "fileName": "src/Spryker/Zed/ShipmentGui/Communication/Form/Item/ItemFormType.php",
-        "description": "Method `Spryker\\Zed\\ShipmentGui\\Communication\\Form\\Item\\ItemFormType::getBlockPrefix()` must have return type.",
-        "rule": "ExternalMethodExtensionReturnTypeRule",
-        "ruleset": "Spryker",
-        "priority": "1"
-    },
-    {
         "fileName": "src/Spryker/Zed/ShipmentGui/Dependency/Facade/ShipmentGuiToCustomerFacadeBridge.php",
         "description": "Bridges: Method `getAddresses()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
@@ -35,6 +28,13 @@
         "priority": "2"
     },
     {
+        "fileName": "src/Spryker/Zed/ShipmentGui/Dependency/Facade/ShipmentGuiToLocaleFacadeBridge.php",
+        "description": "Bridges: Method `getCurrentLocaleName()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
         "fileName": "src/Spryker/Zed/ShipmentGui/Dependency/Facade/ShipmentGuiToSalesFacadeBridge.php",
         "description": "Bridges: Method `findOrderByIdSalesOrder()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
@@ -50,21 +50,7 @@
     },
     {
         "fileName": "src/Spryker/Zed/ShipmentGui/Dependency/Facade/ShipmentGuiToShipmentFacadeBridge.php",
-        "description": "Bridges: Type should be defined for param `idShipmentMethod` in method `Spryker\\Zed\\ShipmentGui\\Dependency\\Facade\\ShipmentGuiToShipmentFacadeBridge::findMethodById()`.",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/ShipmentGui/Dependency/Facade/ShipmentGuiToShipmentFacadeBridge.php",
         "description": "Bridges: Method `findMethodById()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
-        "rule": "BridgeFacadeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/ShipmentGui/Dependency/Facade/ShipmentGuiToShipmentFacadeBridge.php",
-        "description": "Bridges: Method `findShipmentById()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -134,13 +120,6 @@
     },
     {
         "fileName": "src/Spryker/Zed/ShipmentGui/Dependency/Facade/ShipmentGuiToShipmentFacadeBridge.php",
-        "description": "Bridges: Type should be defined for param `idMethod` in method `Spryker\\Zed\\ShipmentGui\\Dependency\\Facade\\ShipmentGuiToShipmentFacadeBridge::deleteMethod()`.",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/ShipmentGui/Dependency/Facade/ShipmentGuiToShipmentFacadeBridge.php",
         "description": "Bridges: Method `deleteMethod()` must have `public function delete<DomainEntity>Collection(<DomainEntity>CollectionDeleteCriteriaTransfer): <DomainEntity>CollectionResponseTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
@@ -163,13 +142,6 @@
     {
         "fileName": "src/Spryker/Zed/ShipmentGui/Dependency/Facade/ShipmentGuiToTaxFacadeBridge.php",
         "description": "Bridges: Method `getTaxSets()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
-        "rule": "BridgeFacadeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/ShipmentGui/Dependency/Facade/ShipmentGuiToLocaleFacadeBridge.php",
-        "description": "Bridges: Method `getCurrentLocaleName()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"

@@ -12,6 +12,8 @@ use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\MailTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SalesShipmentCollectionTransfer;
+use Generated\Shared\Transfer\SalesShipmentCriteriaTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierRequestTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
@@ -301,6 +303,8 @@ interface ShipmentFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\Shipment\Business\ShipmentFacadeInterface::getSalesShipmentCollection()} instead.
+     *
      * @param int $idSalesShipment
      *
      * @return \Generated\Shared\Transfer\ShipmentTransfer|null
@@ -488,4 +492,25 @@ interface ShipmentFacadeInterface
      * @return void
      */
     public function calculateShipmentTotal(CalculableObjectTransfer $calculableObjectTransfer): void;
+
+    /**
+     * Specification:
+     * - Retrieves shipment entities filtered by the criteria.
+     * - Uses `SalesShipmentCriteriaTransfer.salesShipmentConditions.salesShipmentIds` to filter shipments by `idSalesShipment`.
+     * - Uses `SalesShipmentCriteriaTransfer.salesShipmentConditions.orderItemUuids` to filter shipments by order item uuids.
+     * - Uses `SalesShipmentCriteriaTransfer.salesShipmentConditions.salesOrderItemIds` to filter shipments by `idSalesOrderItem`.
+     * - Uses `SalesShipmentCriteriaTransfer.sort.field` to set the `order by` field.
+     * - Uses `SalesShipmentCriteriaTransfer.sort.isAscending` to set ascending order otherwise will be used descending order.
+     * - Uses `SalesShipmentCriteriaTransfer.pagination.{limit, offset}` to paginate result with `limit` and `offset`.
+     * - Uses `SalesShipmentCriteriaTransfer.pagination.{page, maxPerPage}` to paginate result with `page` and `maxPerPage`.
+     * - Uses `SalesShipmentCriteriaTransfer.salesShipmentConditions.withOrderItems` to expand shipments with order items.
+     * - Returns `SalesShipmentCollectionTransfer` filled with found sales shipments.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\SalesShipmentCriteriaTransfer $salesShipmentCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\SalesShipmentCollectionTransfer
+     */
+    public function getSalesShipmentCollection(SalesShipmentCriteriaTransfer $salesShipmentCriteriaTransfer): SalesShipmentCollectionTransfer;
 }

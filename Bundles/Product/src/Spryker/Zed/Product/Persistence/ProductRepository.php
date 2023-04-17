@@ -16,6 +16,8 @@ use Generated\Shared\Transfer\ProductAbstractCollectionTransfer;
 use Generated\Shared\Transfer\ProductAbstractCriteriaTransfer;
 use Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
+use Generated\Shared\Transfer\ProductConcreteCriteriaTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductCriteriaTransfer;
 use Generated\Shared\Transfer\ProductUrlCriteriaFilterTransfer;
@@ -950,5 +952,206 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
         }
 
         return $productAbstractQuery;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteCriteriaTransfer $productConcreteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteCollectionTransfer
+     */
+    public function getProductConcreteCollection(
+        ProductConcreteCriteriaTransfer $productConcreteCriteriaTransfer
+    ): ProductConcreteCollectionTransfer {
+        $productConcreteCollectionTransfer = new ProductConcreteCollectionTransfer();
+
+        $productConcreteQuery = $this->getFactory()->createProductQuery();
+        $productConcreteQuery = $this->applyProductConcreteFilters($productConcreteQuery, $productConcreteCriteriaTransfer);
+
+        $paginationTransfer = $productConcreteCriteriaTransfer->getPagination();
+        if ($paginationTransfer !== null) {
+            $productConcreteQuery = $this->applyProductConcretePagination($productConcreteQuery, $paginationTransfer);
+            $productConcreteCollectionTransfer->setPagination($paginationTransfer);
+        }
+
+        $productConcreteQuery = $this->expandProductConcreteQueryWithProductLocalizedAttributes($productConcreteQuery, $productConcreteCriteriaTransfer);
+        $productConcreteQuery = $this->applyProductConcreteSorting($productConcreteQuery, $productConcreteCriteriaTransfer);
+
+        return $this->getFactory()
+            ->createProductMapper()
+            ->mapProductEntitiesToProductConcreteCollection(
+                $productConcreteQuery->find(),
+                $productConcreteCollectionTransfer,
+            );
+    }
+
+    /**
+     * @module Locale
+     *
+     * @param \Orm\Zed\Product\Persistence\SpyProductQuery $productConcreteQuery
+     * @param \Generated\Shared\Transfer\ProductConcreteCriteriaTransfer $productConcreteCriteriaTransfer
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     */
+    protected function expandProductConcreteQueryWithProductLocalizedAttributes(
+        SpyProductQuery $productConcreteQuery,
+        ProductConcreteCriteriaTransfer $productConcreteCriteriaTransfer
+    ): SpyProductQuery {
+        if (!$productConcreteQuery->count()) {
+            return $productConcreteQuery;
+        }
+
+        $productConcreteIds = $productConcreteQuery
+            ->groupByIdProduct()
+            ->select([SpyProductTableMap::COL_ID_PRODUCT])
+            ->find()
+            ->toArray();
+
+        /** @var \Orm\Zed\Product\Persistence\SpyProductQuery $productConcreteQuery */
+        $productConcreteQuery = $this->getFactory()
+            ->createProductQuery()
+            ->filterByIdProduct_In($productConcreteIds)
+            ->joinWithSpyProductAbstract()
+            ->joinWithSpyProductLocalizedAttributes()
+            ->useSpyProductLocalizedAttributesQuery()
+                ->joinWithLocale()
+            ->endUse();
+
+        $productConcreteConditionsTransfer = $productConcreteCriteriaTransfer->getProductConcreteConditions();
+
+        if ($productConcreteConditionsTransfer && $productConcreteConditionsTransfer->getLocaleNames()) {
+            $productConcreteQuery = $productConcreteQuery
+                ->useSpyProductLocalizedAttributesQuery()
+                    ->useLocaleQuery()
+                        ->filterByLocaleName_In($productConcreteConditionsTransfer->getLocaleNames())
+                    ->endUse()
+                ->endUse();
+        }
+
+        /** @phpstan-var \Orm\Zed\Product\Persistence\SpyProductQuery */
+        return $productConcreteQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProductQuery $productConcreteQuery
+     * @param \Generated\Shared\Transfer\ProductConcreteCriteriaTransfer $productConcreteCriteriaTransfer
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     */
+    protected function applyProductConcreteFilters(
+        SpyProductQuery $productConcreteQuery,
+        ProductConcreteCriteriaTransfer $productConcreteCriteriaTransfer
+    ): SpyProductQuery {
+        $productConcreteConditionsTransfer = $productConcreteCriteriaTransfer->getProductConcreteConditions();
+        if ($productConcreteConditionsTransfer === null) {
+            return $productConcreteQuery;
+        }
+
+        if ($productConcreteConditionsTransfer->getSkus()) {
+            $productConcreteQuery->filterBySku_In($productConcreteConditionsTransfer->getSkus());
+        }
+
+        if ($productConcreteConditionsTransfer->getLocaleNames()) {
+            $productConcreteQuery = $this->filterProductConcretesByLocaleName(
+                $productConcreteQuery,
+                $productConcreteConditionsTransfer->getLocaleNames(),
+            );
+        }
+
+        return $productConcreteQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProductQuery $productConcreteQuery
+     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     */
+    protected function applyProductConcretePagination(
+        SpyProductQuery $productConcreteQuery,
+        PaginationTransfer $paginationTransfer
+    ): SpyProductQuery {
+        if ($paginationTransfer->getOffset() !== null && $paginationTransfer->getLimit() !== null) {
+            $paginationTransfer->setNbResults($productConcreteQuery->count());
+
+            $productConcreteQuery->offset($paginationTransfer->getOffsetOrFail())
+                ->setLimit($paginationTransfer->getLimitOrFail());
+
+            return $productConcreteQuery;
+        }
+
+        if ($paginationTransfer->getPage() !== null && $paginationTransfer->getMaxPerPage()) {
+            $paginationModel = $productConcreteQuery->paginate(
+                $paginationTransfer->getPage(),
+                $paginationTransfer->getMaxPerPage(),
+            );
+
+            $paginationTransfer->setNbResults($paginationModel->getNbResults())
+                ->setFirstIndex($paginationModel->getFirstIndex())
+                ->setLastIndex($paginationModel->getLastIndex())
+                ->setFirstPage($paginationModel->getFirstPage())
+                ->setLastPage($paginationModel->getLastPage())
+                ->setNextPage($paginationModel->getNextPage())
+                ->setPreviousPage($paginationModel->getPreviousPage());
+
+            /** @var \Orm\Zed\Product\Persistence\SpyProductQuery $productConcreteQuery */
+            $productConcreteQuery = $paginationModel->getQuery();
+
+            return $productConcreteQuery;
+        }
+
+        return $productConcreteQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\SpyProductQuery $productConcreteQuery
+     * @param \Generated\Shared\Transfer\ProductConcreteCriteriaTransfer $productConcreteCriteriaTransfer
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     */
+    protected function applyProductConcreteSorting(
+        SpyProductQuery $productConcreteQuery,
+        ProductConcreteCriteriaTransfer $productConcreteCriteriaTransfer
+    ): SpyProductQuery {
+        $sortCollection = $productConcreteCriteriaTransfer->getSortCollection();
+        foreach ($sortCollection as $sortTransfer) {
+            $productConcreteQuery->orderBy(
+                $sortTransfer->getFieldOrFail(),
+                $sortTransfer->getIsAscending() ? Criteria::ASC : Criteria::DESC,
+            );
+        }
+
+        return $productConcreteQuery;
+    }
+
+    /**
+     * Provided query can not contain group by, offset, or limit directives otherwise it will alter the results.
+     *
+     * @param \Orm\Zed\Product\Persistence\SpyProductQuery $productConcreteQuery
+     * @param list<string> $localeNames
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     */
+    protected function filterProductConcretesByLocaleName(SpyProductQuery $productConcreteQuery, array $localeNames): SpyProductQuery
+    {
+        $localizedProductConcreteQuery = clone $productConcreteQuery;
+
+        $hiddenProductConcreteIds = $localizedProductConcreteQuery
+            ->groupByIdProduct()
+            ->joinWithSpyProductLocalizedAttributes()
+            ->useSpyProductLocalizedAttributesQuery()
+                ->joinWithLocale()
+                ->useLocaleQuery()
+                    ->filterByLocaleName_In($localeNames)
+                ->endUse()
+            ->endUse()
+            ->select([SpyProductTableMap::COL_ID_PRODUCT])
+            ->find()
+            ->toArray();
+
+        if (!$hiddenProductConcreteIds) {
+            return $productConcreteQuery->filterByIdProduct();
+        }
+
+        return $productConcreteQuery->filterByIdProduct_In($hiddenProductConcreteIds);
     }
 }

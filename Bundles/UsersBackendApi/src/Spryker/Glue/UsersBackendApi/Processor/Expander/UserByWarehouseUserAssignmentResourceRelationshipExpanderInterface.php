@@ -10,11 +10,9 @@ namespace Spryker\Glue\UsersBackendApi\Processor\Expander;
 interface UserByWarehouseUserAssignmentResourceRelationshipExpanderInterface
 {
     /**
-     * @param array<\Generated\Shared\Transfer\GlueResourceTransfer> $warehouseUserAssignmentsResources
+     * @param list<\Generated\Shared\Transfer\GlueResourceTransfer> $glueResourceTransfers
      *
-     * @return array<\Generated\Shared\Transfer\GlueResourceTransfer>
+     * @return void
      */
-    public function expandWarehouseUserAssignmentsResourcesWithUsersResourceRelationships(
-        array $warehouseUserAssignmentsResources
-    ): array;
+    public function addUserRelationships(array $glueResourceTransfers): void;
 }

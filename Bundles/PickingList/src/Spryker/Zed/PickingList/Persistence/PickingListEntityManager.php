@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PickingList\Persistence;
 
+use ArrayObject;
 use Generated\Shared\Transfer\PickingListItemTransfer;
 use Generated\Shared\Transfer\PickingListTransfer;
 use Orm\Zed\PickingList\Persistence\SpyPickingList;
@@ -79,7 +80,7 @@ class PickingListEntityManager extends AbstractEntityManager implements PickingL
 
         return $pickingListMapper->mapPickingListEntityToPickingListTransfer(
             $pickingListEntity,
-            new PickingListTransfer(),
+            $pickingListTransfer,
         );
     }
 
@@ -115,16 +116,17 @@ class PickingListEntityManager extends AbstractEntityManager implements PickingL
         PickingListTransfer $pickingListTransfer,
         PickingListTransfer $persistedPickingListTransfer
     ): PickingListTransfer {
+        $persistedPickingListItems = new ArrayObject();
         foreach ($pickingListTransfer->getPickingListItems() as $pickingListItemTransfer) {
             $persistedPickingListItemTransfer = $this->createPickingListItem(
                 $pickingListItemTransfer,
                 $persistedPickingListTransfer,
             );
 
-            $persistedPickingListTransfer->addPickingListItem($persistedPickingListItemTransfer);
+            $persistedPickingListItems->append($persistedPickingListItemTransfer);
         }
 
-        return $persistedPickingListTransfer;
+        return $persistedPickingListTransfer->setPickingListItems($persistedPickingListItems);
     }
 
     /**
@@ -140,12 +142,7 @@ class PickingListEntityManager extends AbstractEntityManager implements PickingL
         /** @var \ArrayObject<int, \Generated\Shared\Transfer\PickingListItemTransfer> $pickingListItemCollection */
         $pickingListItemCollection = $pickingListTransfer->getPickingListItems();
         foreach ($pickingListItemCollection as $pickingListItemTransfer) {
-            $persistedPickingListItemTransfer = $this->updatePickingListItem($pickingListItemTransfer);
-            if (!$persistedPickingListItemTransfer) {
-                continue;
-            }
-
-            $persistedPickingListTransfer->addPickingListItem($persistedPickingListItemTransfer);
+            $this->updatePickingListItem($pickingListItemTransfer);
         }
 
         return $persistedPickingListTransfer;
@@ -174,7 +171,7 @@ class PickingListEntityManager extends AbstractEntityManager implements PickingL
 
         return $pickingListItemMapper->mapPickingListItemEntityToPickingListItemTransfer(
             $pickingListItemEntity,
-            new PickingListItemTransfer(),
+            $pickingListItemTransfer,
         );
     }
 
@@ -206,7 +203,7 @@ class PickingListEntityManager extends AbstractEntityManager implements PickingL
 
         return $pickingListItemMapper->mapPickingListItemEntityToPickingListItemTransfer(
             $pickingListItemEntity,
-            new PickingListItemTransfer(),
+            $pickingListItemTransfer,
         );
     }
 }

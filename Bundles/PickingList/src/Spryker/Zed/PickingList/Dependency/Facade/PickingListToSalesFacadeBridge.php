@@ -26,8 +26,6 @@ class PickingListToSalesFacadeBridge implements PickingListToSalesFacadeInterfac
     }
 
     /**
-     * TODO: Replace with RFC compatible method `SalesFacade::getOrderCollection()`.
-     *
      * @param \Generated\Shared\Transfer\OrderItemFilterTransfer $orderItemFilterTransfer
      *
      * @return \Generated\Shared\Transfer\ItemCollectionTransfer

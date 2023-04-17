@@ -62,6 +62,20 @@ class SearchOrdersTest extends Unit
     protected const COLUMN_FULL_NAME = "CONCAT(first_name, ' ', last_name)";
 
     /**
+     * @uses \Spryker\Zed\Sales\Persistence\Propel\QueryBuilder\OrderSearchFilterFieldQueryBuilder::SEARCH_TYPE_ITEM_UUIDS
+     *
+     * @var string
+     */
+    protected const SEARCH_TYPE_ITEM_UUIDS = 'itemUuids';
+
+    /**
+     * @uses \Spryker\Zed\Sales\Persistence\Propel\QueryBuilder\OrderSearchFilterFieldQueryBuilder::DELIMITER_COLLECTION_TYPE_VALUE
+     *
+     * @var string
+     */
+    protected const DELIMITER_COLLECTION_TYPE_VALUE = ',';
+
+    /**
      * @var \SprykerTest\Zed\Sales\SalesBusinessTester
      */
     protected SalesBusinessTester $tester;
@@ -186,6 +200,55 @@ class SearchOrdersTest extends Unit
 
         // Assert
         $this->assertCount(1, $storedOrderListTransfer->getOrders());
+    }
+
+    /**
+     * @return void
+     */
+    public function testSearchOrdersShouldFilterByItemUuidsField(): void
+    {
+        // Arrange
+        if (!$this->tester->hasItemUuidField()) {
+            $this->markTestSkipped('This test is not suitable for order items without UUID');
+        }
+
+        $customerTransfer = $this->tester->haveCustomer();
+
+        $orderTransfer = $this->tester->createOrderByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME, $customerTransfer);
+        /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
+        $itemTransfer = $orderTransfer->getItems()->getIterator()->current();
+
+        $secondOrderTransfer = $this->tester->createOrderByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME, $customerTransfer);
+        /** @var \Generated\Shared\Transfer\ItemTransfer $secondItemTransfer */
+        $secondItemTransfer = $secondOrderTransfer->getItems()->getIterator()->current();
+
+        $this->tester->createOrderByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME, $customerTransfer);
+
+        $expectedSalesOrderIds = [$orderTransfer->getIdSalesOrder(), $secondOrderTransfer->getIdSalesOrder()];
+
+        $filterTransfer = (new FilterFieldTransfer())
+            ->setType(static::SEARCH_TYPE_ITEM_UUIDS)
+            ->setValue(implode(static::DELIMITER_COLLECTION_TYPE_VALUE, [$itemTransfer->getUuid(), $secondItemTransfer->getUuid()]));
+
+        $orderListTransfer = (new OrderListTransfer())
+            ->setFormat((new OrderListFormatTransfer()))
+            ->addFilterField($filterTransfer);
+
+        // Act
+        $resultOrderListTransfer = $this->tester
+            ->getFacade()
+            ->searchOrders($orderListTransfer);
+
+        // Assert
+        $this->assertCount(2, $resultOrderListTransfer->getOrders());
+
+        /** @var \Generated\Shared\Transfer\OrderTransfer $resultOrderTransfer */
+        $resultOrderTransfer = $resultOrderListTransfer->getOrders()->getIterator()->offsetGet(0);
+        $this->assertTrue(in_array($resultOrderTransfer->getIdSalesOrder(), $expectedSalesOrderIds));
+
+        /** @var \Generated\Shared\Transfer\OrderTransfer $secondResultOrderTransfer */
+        $secondResultOrderTransfer = $resultOrderListTransfer->getOrders()->getIterator()->offsetGet(0);
+        $this->assertTrue(in_array($secondResultOrderTransfer->getIdSalesOrder(), $expectedSalesOrderIds));
     }
 
     /**

@@ -296,13 +296,14 @@ class GetPickingListCollectionFacadeTest extends Unit
             PickingListConditionsTransfer::WAREHOUSE_UUIDS => [
                 $pickingListTransfer->getWarehouse()->getUuid(),
             ],
-            PickingListConditionsTransfer::USER_UUIDS => [
-                $pickingListTransfer->getUser()->getUuid(),
-            ],
             PickingListConditionsTransfer::STATUSES => [
                 $pickingListTransfer->getStatus(),
             ],
         ];
+
+        if ($pickingListTransfer->getUser()->getUuid()) {
+            $seed[PickingListConditionsTransfer::USER_UUIDS][] = $pickingListTransfer->getUser()->getUuid();
+        }
 
         return (new PickingListCriteriaBuilder())->withPickingListConditions($seed)->build();
     }

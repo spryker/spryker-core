@@ -250,7 +250,12 @@ interface UserFacadeInterface
 
     /**
      * Specification:
-     * - TODO: Add method specification.
+     * - Finds user by provided ID.
+     * - Throws {@link \Spryker\Zed\User\Business\Exception\UserNotFoundException} in case user was not found by provided ID.
+     * - Sets `active` status to a user.
+     * - Persists updated user.
+     * - If enabled by configuration, executes {@link \Spryker\Zed\UserExtension\Dependency\Plugin\UserPostSavePluginInterface} plugin stack.
+     * - Returns `true` in case user was successfully persisted, `false` otherwise.
      *
      * @api
      *
@@ -262,7 +267,12 @@ interface UserFacadeInterface
 
     /**
      * Specification:
-     * - TODO: Add method specification.
+     * - Finds user by provided ID.
+     * - Throws {@link \Spryker\Zed\User\Business\Exception\UserNotFoundException} in case user was not found by provided ID.
+     * - Sets `blocked` status to a user.
+     * - Persists updated user.
+     * - If enabled by configuration, executes {@link \Spryker\Zed\UserExtension\Dependency\Plugin\UserPostSavePluginInterface} plugin stack.
+     * - Returns `true` in case user was successfully persisted, `false` otherwise.
      *
      * @api
      *

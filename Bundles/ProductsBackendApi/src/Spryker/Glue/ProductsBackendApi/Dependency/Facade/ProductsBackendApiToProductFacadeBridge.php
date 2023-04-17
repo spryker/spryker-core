@@ -10,6 +10,8 @@ namespace Spryker\Glue\ProductsBackendApi\Dependency\Facade;
 use Generated\Shared\Transfer\ProductAbstractCollectionTransfer;
 use Generated\Shared\Transfer\ProductAbstractCriteriaTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
+use Generated\Shared\Transfer\ProductConcreteCriteriaTransfer;
 use Generated\Shared\Transfer\ProductCriteriaTransfer;
 use Generated\Shared\Transfer\ProductUrlCriteriaFilterTransfer;
 
@@ -88,5 +90,16 @@ class ProductsBackendApiToProductFacadeBridge implements ProductsBackendApiToPro
     public function saveProduct(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteCollection): int
     {
         return $this->productFacade->saveProduct($productAbstractTransfer, $productConcreteCollection);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteCriteriaTransfer $productConcreteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteCollectionTransfer
+     */
+    public function getProductConcreteCollection(
+        ProductConcreteCriteriaTransfer $productConcreteCriteriaTransfer
+    ): ProductConcreteCollectionTransfer {
+        return $this->productFacade->getProductConcreteCollection($productConcreteCriteriaTransfer);
     }
 }

@@ -15,6 +15,17 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class PickingListConfig extends AbstractBundleConfig
 {
     /**
+     * @uses {@link \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS_DELETED}
+     * @uses {@link \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS_BLOCKED}
+     *
+     * @var list<string>
+     */
+    protected const USER_STATUSES_APPLICABLE_FOR_PICKING_LIST_UNASSIGNMENT = [
+        'deleted',
+        'blocked',
+    ];
+
+    /**
      * Specification:
      * - Returns the list of statuses when order picking list is started.
      *
@@ -25,5 +36,18 @@ class PickingListConfig extends AbstractBundleConfig
     public function getOrderPickingListStartedStatuses(): array
     {
         return $this->getSharedConfig()->getOrderPickingListStartedStatuses();
+    }
+
+    /**
+     * Specification:
+     * - Defines the list of user statuses that lead to picking lists unassignment from the user.
+     *
+     * @api
+     *
+     * @return list<string>
+     */
+    public function getUserStatusesApplicableForPickingListUnassignment(): array
+    {
+        return static::USER_STATUSES_APPLICABLE_FOR_PICKING_LIST_UNASSIGNMENT;
     }
 }

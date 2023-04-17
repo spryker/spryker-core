@@ -19,7 +19,7 @@ class UserByWarehouseUserAssignmentBackendResourceRelationshipPlugin extends Abs
 {
     /**
      * {@inheritDoc}
-     * - Adds relationship between `warehouse-user-assignments` and `users` resources.
+     * - Adds `users` resources as a relationship to `warehouse-user-assignments` resources.
      *
      * @api
      *
@@ -32,7 +32,7 @@ class UserByWarehouseUserAssignmentBackendResourceRelationshipPlugin extends Abs
     {
         $this->getFactory()
             ->createUserByWarehouseUserAssignmentResourceRelationshipExpander()
-            ->expandWarehouseUserAssignmentsResourcesWithUsersResourceRelationships($resources);
+            ->addUserRelationships($resources);
     }
 
     /**

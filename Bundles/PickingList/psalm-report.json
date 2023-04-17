@@ -1,6 +1,115 @@
 {
     "error": [],
-    "warning": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 96,
+            "line_to": 96,
+            "type": "MoreSpecificReturnType",
+            "message": "The declared return type 'list<string>' for Spryker\\Zed\\PickingList\\Business\\Assigner\\PickingListUserAssigner::extractUserUuidsApplicableForPickingListUnassignment is more specific than the inferred return type 'array<int, string>'",
+            "file_name": "vendor/spryker/spryker/Bundles/PickingList/src/Spryker/Zed/PickingList/Business/Assigner/PickingListUserAssigner.php",
+            "snippet": "     * @return list<string>",
+            "selected_text": "list<string>",
+            "error_level": 3,
+            "shortcode": 70
+        },
+        {
+            "severity": "info",
+            "line_from": 107,
+            "line_to": 107,
+            "type": "LessSpecificReturnStatement",
+            "message": "The type 'array<int, string>' is more general than the declared return type 'list<string>' for Spryker\\Zed\\PickingList\\Business\\Assigner\\PickingListUserAssigner::extractUserUuidsApplicableForPickingListUnassignment",
+            "file_name": "vendor/spryker/spryker/Bundles/PickingList/src/Spryker/Zed/PickingList/Business/Assigner/PickingListUserAssigner.php",
+            "snippet": "        return array_unique($userUuids);",
+            "selected_text": "array_unique($userUuids)",
+            "error_level": 3,
+            "shortcode": 129
+        },
+        {
+            "severity": "info",
+            "line_from": 109,
+            "line_to": 109,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ErrorTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/PickingList/src/Spryker/Zed/PickingList/Business/Creator/PickingListCreator.php",
+            "snippet": "        if ($persistedPickingListCollectionResponseTransfer->getErrors()->count() > 0) {",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 169,
+            "line_to": 169,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ErrorTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/PickingList/src/Spryker/Zed/PickingList/Business/Creator/PickingListCreator.php",
+            "snippet": "        if ($pickingListCollectionResponseTransfer->getErrors()->count() > 0) {",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 209,
+            "line_to": 209,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ErrorTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/PickingList/src/Spryker/Zed/PickingList/Business/Creator/PickingListCreator.php",
+            "snippet": "            if ($pluginPickingListCollectionResponseTransfer->getErrors()->count() > 0) {",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 109,
+            "line_to": 109,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ErrorTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/PickingList/src/Spryker/Zed/PickingList/Business/Updater/PickingListUpdater.php",
+            "snippet": "        if ($persistedPickingListCollectionResponseTransfer->getErrors()->count() > 0) {",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 169,
+            "line_to": 169,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ErrorTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/PickingList/src/Spryker/Zed/PickingList/Business/Updater/PickingListUpdater.php",
+            "snippet": "        if ($pickingListCollectionResponseTransfer->getErrors()->count() > 0) {",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 207,
+            "line_to": 207,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ErrorTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/PickingList/src/Spryker/Zed/PickingList/Business/Updater/PickingListUpdater.php",
+            "snippet": "            if ($pluginPickingListCollectionResponseTransfer->getErrors()->count() > 0) {",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 43,
+            "line_to": 43,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\UserTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/PickingList/src/Spryker/Zed/PickingList/Communication/Plugin/User/UnassignPickingListUserPostSavePlugin.php",
+            "snippet": "        return $userCollectionTransfer->getUsers()->getIterator()->current();",
+            "selected_text": "getIterator",
+            "error_level": 3,
+            "shortcode": 113
+        }
+    ],
     "deprecation": [],
-    "count": 0
+    "count": 9
 }

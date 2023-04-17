@@ -14,20 +14,30 @@ use Generated\Shared\Transfer\PickingListOrderItemGroupTransfer;
 use Generated\Shared\Transfer\PickingListTransfer;
 use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\StockTransfer;
-use Spryker\Service\Shipment\ShipmentServiceInterface;
+use Spryker\Zed\PickingListMultiShipmentPickingStrategyExample\Dependency\Facade\PickingListMultiShipmentPickingStrategyExampleToShipmentFacadeInterface;
+use Spryker\Zed\PickingListMultiShipmentPickingStrategyExample\Dependency\Service\PickingListMultiShipmentPickingStrategyExampleToShipmentServiceInterface;
 
 class MultiShipmentPickingListGenerator implements MultiShipmentPickingListGeneratorInterface
 {
     /**
-     * @var \Spryker\Service\Shipment\ShipmentServiceInterface
+     * @var \Spryker\Zed\PickingListMultiShipmentPickingStrategyExample\Dependency\Facade\PickingListMultiShipmentPickingStrategyExampleToShipmentFacadeInterface
      */
-    protected ShipmentServiceInterface $shipmentService;
+    protected PickingListMultiShipmentPickingStrategyExampleToShipmentFacadeInterface $shipmentFacade;
 
     /**
-     * @param \Spryker\Service\Shipment\ShipmentServiceInterface $shipmentService
+     * @var \Spryker\Zed\PickingListMultiShipmentPickingStrategyExample\Dependency\Service\PickingListMultiShipmentPickingStrategyExampleToShipmentServiceInterface
      */
-    public function __construct(ShipmentServiceInterface $shipmentService)
-    {
+    protected PickingListMultiShipmentPickingStrategyExampleToShipmentServiceInterface $shipmentService;
+
+    /**
+     * @param \Spryker\Zed\PickingListMultiShipmentPickingStrategyExample\Dependency\Facade\PickingListMultiShipmentPickingStrategyExampleToShipmentFacadeInterface $shipmentFacade
+     * @param \Spryker\Zed\PickingListMultiShipmentPickingStrategyExample\Dependency\Service\PickingListMultiShipmentPickingStrategyExampleToShipmentServiceInterface $shipmentService
+     */
+    public function __construct(
+        PickingListMultiShipmentPickingStrategyExampleToShipmentFacadeInterface $shipmentFacade,
+        PickingListMultiShipmentPickingStrategyExampleToShipmentServiceInterface $shipmentService
+    ) {
+        $this->shipmentFacade = $shipmentFacade;
         $this->shipmentService = $shipmentService;
     }
 
@@ -38,12 +48,13 @@ class MultiShipmentPickingListGenerator implements MultiShipmentPickingListGener
      */
     public function generatePickingLists(PickingListOrderItemGroupTransfer $pickingListOrderItemGroupTransfer): PickingListCollectionTransfer
     {
-        $shipmentGroupTransfers = $this->shipmentService->groupItemsByShipment(
-            $pickingListOrderItemGroupTransfer->getOrderItems(),
+        $itemTransfers = $this->shipmentFacade->expandOrderItemsWithShipment(
+            $pickingListOrderItemGroupTransfer->getOrderItems()->getArrayCopy(),
         );
 
-        $pickingListCollectionTransfer = new PickingListCollectionTransfer();
+        $shipmentGroupTransfers = $this->shipmentService->groupItemsByShipment($itemTransfers);
 
+        $pickingListCollectionTransfer = new PickingListCollectionTransfer();
         foreach ($shipmentGroupTransfers as $shipmentGroupTransfer) {
             $pickingLists = $this->generatePickingListForShipmentGroup(
                 $shipmentGroupTransfer,

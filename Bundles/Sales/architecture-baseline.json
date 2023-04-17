@@ -7,39 +7,11 @@
         "priority": "1"
     },
     {
-        "fileName": "src/Spryker/Zed/Sales/Communication/Form/AddressForm.php",
-        "description": "Method `Spryker\\Zed\\Sales\\Communication\\Form\\AddressForm::getBlockPrefix()` must have return type.",
-        "rule": "ExternalMethodExtensionReturnTypeRule",
-        "ruleset": "Spryker",
-        "priority": "1"
-    },
-    {
-        "fileName": "src/Spryker/Zed/Sales/Communication/Form/CommentForm.php",
-        "description": "Method `Spryker\\Zed\\Sales\\Communication\\Form\\CommentForm::getBlockPrefix()` must have return type.",
-        "rule": "ExternalMethodExtensionReturnTypeRule",
-        "ruleset": "Spryker",
-        "priority": "1"
-    },
-    {
-        "fileName": "src/Spryker/Zed/Sales/Communication/Form/CustomerForm.php",
-        "description": "Method `Spryker\\Zed\\Sales\\Communication\\Form\\CustomerForm::getBlockPrefix()` must have return type.",
-        "rule": "ExternalMethodExtensionReturnTypeRule",
-        "ruleset": "Spryker",
-        "priority": "1"
-    },
-    {
         "fileName": "src/Spryker/Zed/Sales/Communication/SalesCommunicationFactory.php",
         "description": "Factories: The method `Spryker\\Zed\\Sales\\Communication\\SalesCommunicationFactory::createOrderItemSplitFormCollection()()` contains a `foreach` statement which violates rule \"Factory methods should not contain loops.\"",
         "rule": "FactoryNoLoopsRule",
         "ruleset": "Spryker",
         "priority": "1"
-    },
-    {
-        "fileName": "src/Spryker/Zed/Sales/Dependency/Facade/SalesToCountryBridge.php",
-        "description": "Bridges: Type should be defined for param `iso2Code` in method `Spryker\\Zed\\Sales\\Dependency\\Facade\\SalesToCountryBridge::getCountryByIso2Code()`.",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
     },
     {
         "fileName": "src/Spryker/Zed/Sales/Dependency/Facade/SalesToCountryBridge.php",
@@ -52,20 +24,6 @@
         "fileName": "src/Spryker/Zed/Sales/Dependency/Facade/SalesToCountryBridge.php",
         "description": "Bridges: Method `getAvailableCountries()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/Sales/Dependency/Facade/SalesToCountryInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `getCountryByIso2Code()`. Got `$iso2Code` but expected to be `string $iso2Code`. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/Sales/Dependency/Facade/SalesToCustomerBridge.php",
-        "description": "Bridges: Type should be defined for param `customerReference` in method `Spryker\\Zed\\Sales\\Dependency\\Facade\\SalesToCustomerBridge::findByReference()`.",
-        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -98,30 +56,9 @@
         "priority": "2"
     },
     {
-        "fileName": "src/Spryker/Zed/Sales/Dependency/Facade/SalesToMoneyBridge.php",
-        "description": "Bridges: Type should be defined for param `amount` in method `Spryker\\Zed\\Sales\\Dependency\\Facade\\SalesToMoneyBridge::fromInteger()`.",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/Sales/Dependency/Facade/SalesToMoneyBridge.php",
-        "description": "Bridges: Type should be defined for param `isoCode` in method `Spryker\\Zed\\Sales\\Dependency\\Facade\\SalesToMoneyBridge::fromInteger()`.",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
         "fileName": "src/Spryker/Zed/Sales/Dependency/Facade/SalesToOmsBridge.php",
         "description": "Bridges: Method `getInitialStateEntity()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/Sales/Dependency/Facade/SalesToOmsBridge.php",
-        "description": "Bridges: Type should be defined for param `processName` in method `Spryker\\Zed\\Sales\\Dependency\\Facade\\SalesToOmsBridge::getProcessEntity()`.",
-        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -141,22 +78,8 @@
     },
     {
         "fileName": "src/Spryker/Zed/Sales/Dependency/Facade/SalesToOmsBridge.php",
-        "description": "Bridges: Type should be defined for param `idOrderItem` in method `Spryker\\Zed\\Sales\\Dependency\\Facade\\SalesToOmsBridge::getManualEvents()`.",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/Sales/Dependency/Facade/SalesToOmsBridge.php",
         "description": "Bridges: Method `getManualEvents()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/Sales/Dependency/Facade/SalesToOmsBridge.php",
-        "description": "Bridges: Type should be defined for param `flag` in method `Spryker\\Zed\\Sales\\Dependency\\Facade\\SalesToOmsBridge::getItemsWithFlag()`.",
-        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -169,22 +92,8 @@
     },
     {
         "fileName": "src/Spryker/Zed/Sales/Dependency/Facade/SalesToOmsBridge.php",
-        "description": "Bridges: Type should be defined for param `idSalesOrder` in method `Spryker\\Zed\\Sales\\Dependency\\Facade\\SalesToOmsBridge::getManualEventsByIdSalesOrder()`.",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/Sales/Dependency/Facade/SalesToOmsBridge.php",
         "description": "Bridges: Method `getManualEventsByIdSalesOrder()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/Sales/Dependency/Facade/SalesToOmsBridge.php",
-        "description": "Bridges: Type should be defined for param `idSalesOrder` in method `Spryker\\Zed\\Sales\\Dependency\\Facade\\SalesToOmsBridge::getDistinctManualEventsByIdSalesOrder()`.",
-        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -203,20 +112,6 @@
         "priority": "2"
     },
     {
-        "fileName": "src/Spryker/Zed/Sales/Dependency/Facade/SalesToOmsBridge.php",
-        "description": "Bridges: Type should be defined for param `idOrder` in method `Spryker\\Zed\\Sales\\Dependency\\Facade\\SalesToOmsBridge::isOrderFlaggedExcludeFromCustomer()`.",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/Sales/Dependency/Facade/SalesToOmsBridge.php",
-        "description": "Bridges: Type should be defined for param `eventId` in method `Spryker\\Zed\\Sales\\Dependency\\Facade\\SalesToOmsBridge::triggerEventForOrderItems()`.",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
         "fileName": "src/Spryker/Zed/Sales/Dependency/Facade/SalesToStoreBridge.php",
         "description": "Bridges: Method `getCurrentStore()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
@@ -227,27 +122,6 @@
         "fileName": "src/Spryker/Zed/Sales/Dependency/Facade/SalesToUserBridge.php",
         "description": "Bridges: Method `getCurrentUser()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/Sales/Dependency/Service/SalesToUtilSanitizeBridge.php",
-        "description": "Bridges: Type should be defined for param `text` in method `Spryker\\Zed\\Sales\\Dependency\\Service\\SalesToUtilSanitizeBridge::escapeHtml()`.",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/Sales/Dependency/Service/SalesToUtilSanitizeBridge.php",
-        "description": "Bridges: Type should be defined for param `double` in method `Spryker\\Zed\\Sales\\Dependency\\Service\\SalesToUtilSanitizeBridge::escapeHtml()`.",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/Sales/Dependency/Service/SalesToUtilSanitizeBridge.php",
-        "description": "Bridges: Type should be defined for param `charset` in method `Spryker\\Zed\\Sales\\Dependency\\Service\\SalesToUtilSanitizeBridge::escapeHtml()`.",
-        "rule": "BridgeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
     }

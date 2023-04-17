@@ -17,7 +17,7 @@ interface SalesToMoneyInterface
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */
-    public function fromInteger($amount, $isoCode = null): MoneyTransfer;
+    public function fromInteger(int $amount, ?string $isoCode = null): MoneyTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\MoneyTransfer $moneyTransfer

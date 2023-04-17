@@ -7,13 +7,17 @@
 
 namespace Spryker\Zed\Shipment\Persistence\Propel\Mapper;
 
+use ArrayObject;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CountryTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\SalesShipmentCollectionTransfer;
+use Generated\Shared\Transfer\SalesShipmentConditionsTransfer;
 use Generated\Shared\Transfer\ShipmentCarrierTransfer;
-use Generated\Shared\Transfer\ShipmentCollectionTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Orm\Zed\Country\Persistence\SpyCountry;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesShipment;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -208,24 +212,59 @@ class ShipmentMapper implements ShipmentMapperInterface
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Sales\Persistence\SpySalesShipmentQuery> $shipmentEntityCollection
-     * @param \Generated\Shared\Transfer\ShipmentCollectionTransfer $shipmentCollectionTransfer
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Sales\Persistence\SpySalesShipment> $salesShipmentEntityCollection
+     * @param \Generated\Shared\Transfer\SalesShipmentCollectionTransfer $salesShipmentCollectionTransfer
+     * @param \Generated\Shared\Transfer\SalesShipmentConditionsTransfer|null $salesShipmentConditionsTransfer
      *
-     * @return \Generated\Shared\Transfer\ShipmentCollectionTransfer
+     * @return \Generated\Shared\Transfer\SalesShipmentCollectionTransfer
      */
-    public function mapSalesShipmentEntityCollectionToShipmentCollectionTransfer(
-        ObjectCollection $shipmentEntityCollection,
-        ShipmentCollectionTransfer $shipmentCollectionTransfer
-    ): ShipmentCollectionTransfer {
-        foreach ($shipmentEntityCollection->getData() as $shipmentEntity) {
-            $shipmentTransfer = $this->mapShipmentEntityToShipmentTransfer(
-                $shipmentEntity,
+    public function mapSalesShipmentEntityCollectionToSalesShipmentCollectionTransfer(
+        ObjectCollection $salesShipmentEntityCollection,
+        SalesShipmentCollectionTransfer $salesShipmentCollectionTransfer,
+        ?SalesShipmentConditionsTransfer $salesShipmentConditionsTransfer = null
+    ): SalesShipmentCollectionTransfer {
+        $withItems = $salesShipmentConditionsTransfer && $salesShipmentConditionsTransfer->getWithOrderItems();
+
+        foreach ($salesShipmentEntityCollection as $salesShipmentEntity) {
+            $shipmentTransfer = $this->mapShipmentEntityToShipmentTransferWithDetails(
+                $salesShipmentEntity,
                 new ShipmentTransfer(),
             );
 
-            $shipmentCollectionTransfer->addShipment($shipmentTransfer);
+            if ($withItems) {
+                $itemTransfers = $this->mapSalesOrderItemEntitiesToItemTransfers($salesShipmentEntity->getSpySalesOrderItems(), []);
+                $shipmentTransfer->setOrderItems(new ArrayObject($itemTransfers));
+            }
+
+            $salesShipmentCollectionTransfer->addShipment($shipmentTransfer);
         }
 
-        return $shipmentCollectionTransfer;
+        return $salesShipmentCollectionTransfer;
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection<array-key, \Orm\Zed\Sales\Persistence\SpySalesOrderItem> $salesOrderItemEntities
+     * @param array<\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\ItemTransfer>
+     */
+    protected function mapSalesOrderItemEntitiesToItemTransfers(ObjectCollection $salesOrderItemEntities, array $itemTransfers): array
+    {
+        foreach ($salesOrderItemEntities as $salesOrderItemEntity) {
+            $itemTransfers[] = $this->mapSalesOrderItemEntityToItemTransfer($salesOrderItemEntity, new ItemTransfer());
+        }
+
+        return $itemTransfers;
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItemEntity
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function mapSalesOrderItemEntityToItemTransfer(SpySalesOrderItem $salesOrderItemEntity, ItemTransfer $itemTransfer): ItemTransfer
+    {
+        return $itemTransfer->fromArray($salesOrderItemEntity->toArray(), true);
     }
 }

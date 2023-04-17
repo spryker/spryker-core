@@ -77,8 +77,8 @@
         "priority": "2"
     },
     {
-        "fileName": "src/Spryker/Glue/ProductsBackendApi/Dependency/Facade/ProductsBackendApiToTaxProductConnectorFacadeBridge.php",
-        "description": "Bridges: Method `getTaxSetForProductAbstract()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "fileName": "src/Spryker/Glue/ProductsBackendApi/Dependency/Facade/ProductsBackendApiToUrlFacadeBridge.php",
+        "description": "Bridges: Method `updateUrl()` must have `public function update<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"
@@ -86,13 +86,6 @@
     {
         "fileName": "src/Spryker/Glue/ProductsBackendApi/Dependency/Facade/ProductsBackendApiToUrlFacadeBridge.php",
         "description": "Bridges: Method `createUrl()` must have `public function create<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer` signature.",
-        "rule": "BridgeFacadeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Glue/ProductsBackendApi/Dependency/Facade/ProductsBackendApiToUrlFacadeBridge.php",
-        "description": "Bridges: Method `updateUrl()` must have `public function update<DomainEntity>Collection(<DomainEntity>CollectionRequestTransfer): <DomainEntity>CollectionResponseTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
         "priority": "2"

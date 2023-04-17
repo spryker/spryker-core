@@ -122,8 +122,8 @@
         },
         {
             "severity": "error",
-            "line_from": 522,
-            "line_to": 522,
+            "line_from": 524,
+            "line_to": 524,
             "type": "NullArgument",
             "message": "Argument 1 of ArrayObject::offsetSet cannot be null, null value provided to parameter with type int",
             "file_name": "vendor/spryker/spryker/Bundles/Product/src/Spryker/Zed/Product/Persistence/ProductRepository.php",
@@ -244,8 +244,8 @@
         },
         {
             "severity": "info",
-            "line_from": 106,
-            "line_to": 106,
+            "line_from": 108,
+            "line_to": 108,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getIdLocale on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/Product/src/Spryker/Zed/Product/Business/Product/Merger/ProductConcreteMerger.php",
@@ -256,8 +256,8 @@
         },
         {
             "severity": "info",
-            "line_from": 107,
-            "line_to": 107,
+            "line_from": 109,
+            "line_to": 109,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getIdLocale on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/Product/src/Spryker/Zed/Product/Business/Product/Merger/ProductConcreteMerger.php",
@@ -1132,8 +1132,8 @@
         },
         {
             "severity": "info",
-            "line_from": 65,
-            "line_to": 65,
+            "line_from": 85,
+            "line_to": 85,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\Product\\Business\\Product\\ProductAbstractManagerInterface::findProductAbstractById cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Product/src/Spryker/Zed/Product/Business/Reader/ProductConcreteReader.php",
@@ -1144,8 +1144,8 @@
         },
         {
             "severity": "info",
-            "line_from": 65,
-            "line_to": 65,
+            "line_from": 85,
+            "line_to": 85,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getFkProductAbstract on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/Product/src/Spryker/Zed/Product/Business/Reader/ProductConcreteReader.php",
@@ -1156,8 +1156,8 @@
         },
         {
             "severity": "info",
-            "line_from": 67,
-            "line_to": 67,
+            "line_from": 87,
+            "line_to": 87,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\Product\\Business\\Product\\Url\\ProductUrlManagerInterface::getProductUrl cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Product/src/Spryker/Zed/Product/Business/Reader/ProductConcreteReader.php",
@@ -1216,8 +1216,8 @@
         },
         {
             "severity": "info",
-            "line_from": 201,
-            "line_to": 201,
+            "line_from": 187,
+            "line_to": 187,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Orm\\Zed\\Product\\Persistence\\SpyProduct::setAttributes cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Product/src/Spryker/Zed/Product/Persistence/Mapper/ProductMapper.php",
@@ -1228,8 +1228,8 @@
         },
         {
             "severity": "info",
-            "line_from": 221,
-            "line_to": 221,
+            "line_from": 207,
+            "line_to": 207,
             "type": "PossiblyNullArrayOffset",
             "message": "Cannot access value on variable $productEntitiesIndexedBySku using possibly null offset mixed|null|string",
             "file_name": "vendor/spryker/spryker/Bundles/Product/src/Spryker/Zed/Product/Persistence/Mapper/ProductMapper.php",
@@ -1240,8 +1240,8 @@
         },
         {
             "severity": "info",
-            "line_from": 103,
-            "line_to": 103,
+            "line_from": 105,
+            "line_to": 105,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Product/src/Spryker/Zed/Product/Persistence/ProductRepository.php",
@@ -1252,8 +1252,8 @@
         },
         {
             "severity": "info",
-            "line_from": 141,
-            "line_to": 141,
+            "line_from": 143,
+            "line_to": 143,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Product/src/Spryker/Zed/Product/Persistence/ProductRepository.php",
@@ -1264,8 +1264,8 @@
         },
         {
             "severity": "info",
-            "line_from": 241,
-            "line_to": 241,
+            "line_from": 243,
+            "line_to": 243,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of findOneBySku cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Product/src/Spryker/Zed/Product/Persistence/ProductRepository.php",
@@ -1276,8 +1276,8 @@
         },
         {
             "severity": "info",
-            "line_from": 242,
-            "line_to": 242,
+            "line_from": 244,
+            "line_to": 244,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getIsActive on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/Product/src/Spryker/Zed/Product/Persistence/ProductRepository.php",
@@ -1288,8 +1288,8 @@
         },
         {
             "severity": "info",
-            "line_from": 346,
-            "line_to": 346,
+            "line_from": 348,
+            "line_to": 348,
             "type": "ArgumentTypeCoercion",
             "message": "Argument 1 of Spryker\\Zed\\Product\\Persistence\\ProductRepository::getProductConcreteTransfersMappedFromProductConcreteEntities expects Propel\\Runtime\\Collection\\ObjectCollection, but parent type Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\Product\\Persistence\\SpyProduct> provided",
             "file_name": "vendor/spryker/spryker/Bundles/Product/src/Spryker/Zed/Product/Persistence/ProductRepository.php",
@@ -1300,8 +1300,8 @@
         },
         {
             "severity": "info",
-            "line_from": 366,
-            "line_to": 366,
+            "line_from": 368,
+            "line_to": 368,
             "type": "ArgumentTypeCoercion",
             "message": "Argument 1 of Spryker\\Zed\\Product\\Persistence\\ProductRepository::getProductConcreteTransfersMappedFromProductConcreteEntities expects Propel\\Runtime\\Collection\\ObjectCollection, but parent type Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\Product\\Persistence\\SpyProduct> provided",
             "file_name": "vendor/spryker/spryker/Bundles/Product/src/Spryker/Zed/Product/Persistence/ProductRepository.php",
@@ -1312,8 +1312,8 @@
         },
         {
             "severity": "info",
-            "line_from": 489,
-            "line_to": 489,
+            "line_from": 491,
+            "line_to": 491,
             "type": "ArgumentTypeCoercion",
             "message": "Argument 1 of Spryker\\Zed\\Product\\Persistence\\ProductRepository::mapProductEntitiesToProductConcreteTransfersWithoutStores expects Propel\\Runtime\\Collection\\ObjectCollection, but parent type Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\Locale\\Persistence\\SpyLocale>|Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\Product\\Persistence\\SpyProduct> provided",
             "file_name": "vendor/spryker/spryker/Bundles/Product/src/Spryker/Zed/Product/Persistence/ProductRepository.php",
@@ -1324,8 +1324,8 @@
         },
         {
             "severity": "info",
-            "line_from": 622,
-            "line_to": 622,
+            "line_from": 624,
+            "line_to": 624,
             "type": "ArgumentTypeCoercion",
             "message": "Argument 1 of Spryker\\Zed\\Product\\Persistence\\ProductRepository::mapProductAbstractEntitiesToProductAbstractTransfersWithoutRelations expects Propel\\Runtime\\Collection\\ObjectCollection<Orm\\Zed\\Product\\Persistence\\SpyProductAbstract>, but parent type Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\Product\\Persistence\\SpyProductAbstract> provided",
             "file_name": "vendor/spryker/spryker/Bundles/Product/src/Spryker/Zed/Product/Persistence/ProductRepository.php",
@@ -1336,8 +1336,8 @@
         },
         {
             "severity": "info",
-            "line_from": 656,
-            "line_to": 656,
+            "line_from": 658,
+            "line_to": 658,
             "type": "ArgumentTypeCoercion",
             "message": "Argument 1 of Spryker\\Zed\\Product\\Persistence\\ProductRepository::mapProductAbstractEntitiesToProductAbstractTransfersWithoutRelations expects Propel\\Runtime\\Collection\\ObjectCollection<Orm\\Zed\\Product\\Persistence\\SpyProductAbstract>, but parent type Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\Product\\Persistence\\SpyProductAbstract> provided",
             "file_name": "vendor/spryker/spryker/Bundles/Product/src/Spryker/Zed/Product/Persistence/ProductRepository.php",
@@ -1348,8 +1348,8 @@
         },
         {
             "severity": "info",
-            "line_from": 707,
-            "line_to": 707,
+            "line_from": 709,
+            "line_to": 709,
             "type": "ArgumentTypeCoercion",
             "message": "Argument 1 of Spryker\\Zed\\Product\\Persistence\\ProductRepository::mapProductEntitiesToProductConcreteTransfersWithoutStores expects Propel\\Runtime\\Collection\\ObjectCollection, but parent type Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\Product\\Persistence\\SpyProduct> provided",
             "file_name": "vendor/spryker/spryker/Bundles/Product/src/Spryker/Zed/Product/Persistence/ProductRepository.php",
@@ -1360,8 +1360,8 @@
         },
         {
             "severity": "info",
-            "line_from": 855,
-            "line_to": 855,
+            "line_from": 857,
+            "line_to": 857,
             "type": "ArgumentTypeCoercion",
             "message": "Argument 1 of Spryker\\Zed\\Product\\Persistence\\Mapper\\ProductMapperInterface::mapProductAbstractEntitiesToProductAbstractCollectionTransfer expects Propel\\Runtime\\Collection\\ObjectCollection<Orm\\Zed\\Product\\Persistence\\SpyProductAbstract>, but parent type Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\Product\\Persistence\\SpyProductAbstract> provided",
             "file_name": "vendor/spryker/spryker/Bundles/Product/src/Spryker/Zed/Product/Persistence/ProductRepository.php",
@@ -1372,8 +1372,8 @@
         },
         {
             "severity": "info",
-            "line_from": 876,
-            "line_to": 876,
+            "line_from": 878,
+            "line_to": 878,
             "type": "ArgumentTypeCoercion",
             "message": "Argument 1 of Spryker\\Zed\\Product\\Persistence\\Mapper\\ProductAbstractStoreMapper::mapProductAbstractStoreEntitiesToStoreRelationTransfers expects Propel\\Runtime\\Collection\\ObjectCollection<Orm\\Zed\\Product\\Persistence\\SpyProductAbstractStore>, but parent type Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\Product\\Persistence\\SpyProductAbstractStore> provided",
             "file_name": "vendor/spryker/spryker/Bundles/Product/src/Spryker/Zed/Product/Persistence/ProductRepository.php",
@@ -1384,8 +1384,8 @@
         },
         {
             "severity": "info",
-            "line_from": 892,
-            "line_to": 892,
+            "line_from": 894,
+            "line_to": 894,
             "type": "ArgumentTypeCoercion",
             "message": "Argument 1 of Spryker\\Zed\\Product\\Persistence\\Mapper\\LocalizedAttributesMapper::mapProductLocalizedAttributesEntitiesToLocalizedAttributesTransfers expects Propel\\Runtime\\Collection\\ObjectCollection<Orm\\Zed\\Product\\Persistence\\SpyProductAbstractLocalizedAttributes>, but parent type Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\Product\\Persistence\\SpyProductAbstractLocalizedAttributes> provided",
             "file_name": "vendor/spryker/spryker/Bundles/Product/src/Spryker/Zed/Product/Persistence/ProductRepository.php",
@@ -1396,8 +1396,8 @@
         },
         {
             "severity": "info",
-            "line_from": 906,
-            "line_to": 906,
+            "line_from": 908,
+            "line_to": 908,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getSkus on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/Product/src/Spryker/Zed/Product/Persistence/ProductRepository.php",
@@ -1408,8 +1408,8 @@
         },
         {
             "severity": "info",
-            "line_from": 907,
-            "line_to": 907,
+            "line_from": 909,
+            "line_to": 909,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getSkus on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/Product/src/Spryker/Zed/Product/Persistence/ProductRepository.php",
@@ -1420,8 +1420,8 @@
         },
         {
             "severity": "info",
-            "line_from": 926,
-            "line_to": 926,
+            "line_from": 928,
+            "line_to": 928,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Orm\\Zed\\Product\\Persistence\\SpyProductAbstractQuery::orderBy cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Product/src/Spryker/Zed/Product/Persistence/ProductRepository.php",
@@ -1432,8 +1432,8 @@
         },
         {
             "severity": "info",
-            "line_from": 945,
-            "line_to": 945,
+            "line_from": 947,
+            "line_to": 947,
             "type": "PossiblyNullReference",
             "message": "Cannot call method setNbResults on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/Product/src/Spryker/Zed/Product/Persistence/ProductRepository.php",
@@ -1444,8 +1444,8 @@
         },
         {
             "severity": "info",
-            "line_from": 948,
-            "line_to": 948,
+            "line_from": 950,
+            "line_to": 950,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Orm\\Zed\\Product\\Persistence\\SpyProductAbstractQuery::setLimit cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Product/src/Spryker/Zed/Product/Persistence/ProductRepository.php",
@@ -1456,8 +1456,8 @@
         },
         {
             "severity": "info",
-            "line_from": 948,
-            "line_to": 948,
+            "line_from": 950,
+            "line_to": 950,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getLimit on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/Product/src/Spryker/Zed/Product/Persistence/ProductRepository.php",
@@ -1468,8 +1468,8 @@
         },
         {
             "severity": "info",
-            "line_from": 949,
-            "line_to": 949,
+            "line_from": 951,
+            "line_to": 951,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Orm\\Zed\\Product\\Persistence\\SpyProductAbstractQuery::setOffset cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/Product/src/Spryker/Zed/Product/Persistence/ProductRepository.php",
@@ -1480,8 +1480,8 @@
         },
         {
             "severity": "info",
-            "line_from": 949,
-            "line_to": 949,
+            "line_from": 951,
+            "line_to": 951,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getOffset on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/Product/src/Spryker/Zed/Product/Persistence/ProductRepository.php",
@@ -1489,6 +1489,18 @@
             "selected_text": "getOffset",
             "error_level": 3,
             "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 982,
+            "line_to": 982,
+            "type": "ArgumentTypeCoercion",
+            "message": "Argument 1 of Spryker\\Zed\\Product\\Persistence\\Mapper\\ProductMapperInterface::mapProductEntitiesToProductConcreteCollection expects Propel\\Runtime\\Collection\\ObjectCollection<array-key, Orm\\Zed\\Product\\Persistence\\SpyProduct>, but parent type Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\Product\\Persistence\\SpyProduct> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Product/src/Spryker/Zed/Product/Persistence/ProductRepository.php",
+            "snippet": "                $productConcreteQuery->find(),",
+            "selected_text": "$productConcreteQuery->find()",
+            "error_level": 3,
+            "shortcode": 193
         }
     ],
     "deprecation": [
@@ -1733,5 +1745,5 @@
             "shortcode": 1
         }
     ],
-    "count": 144
+    "count": 145
 }

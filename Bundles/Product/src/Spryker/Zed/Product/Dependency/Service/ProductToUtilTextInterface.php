@@ -14,5 +14,5 @@ interface ProductToUtilTextInterface
      *
      * @return string
      */
-    public function generateSlug($value);
+    public function generateSlug(string $value): string;
 }

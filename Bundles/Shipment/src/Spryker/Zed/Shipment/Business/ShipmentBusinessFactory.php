@@ -448,6 +448,8 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Zed\Shipment\Business\Shipment\ShipmentReaderInterface
      */
     public function createShipmentReader(): ShipmentReaderInterface

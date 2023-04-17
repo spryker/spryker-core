@@ -36,5 +36,5 @@ interface ProductPackagingUnitToAvailabilityFacadeInterface
      *
      * @return void
      */
-    public function updateAvailabilityForStore($sku, StoreTransfer $storeTransfer);
+    public function updateAvailabilityForStore(string $sku, StoreTransfer $storeTransfer): void;
 }

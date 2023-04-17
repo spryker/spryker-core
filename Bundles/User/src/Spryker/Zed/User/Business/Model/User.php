@@ -43,7 +43,7 @@ class User implements UserInterface
     /**
      * @var \Spryker\Zed\User\UserConfig
      */
-    protected $settings;
+    protected $userConfig;
 
     /**
      * @var array<\Spryker\Zed\UserExtension\Dependency\Plugin\UserPostSavePluginInterface>
@@ -70,7 +70,7 @@ class User implements UserInterface
     /**
      * @param \Spryker\Zed\User\Persistence\UserQueryContainerInterface $queryContainer
      * @param \Spryker\Client\Session\SessionClientInterface $session
-     * @param \Spryker\Zed\User\UserConfig $settings
+     * @param \Spryker\Zed\User\UserConfig $userConfig
      * @param array<\Spryker\Zed\UserExtension\Dependency\Plugin\UserPostSavePluginInterface> $userPostSavePlugins
      * @param array<\Spryker\Zed\UserExtension\Dependency\Plugin\UserPreSavePluginInterface> $userPreSavePlugins
      * @param array<\Spryker\Zed\UserExtension\Dependency\Plugin\UserTransferExpanderPluginInterface> $userTransferExpanderPlugins
@@ -79,7 +79,7 @@ class User implements UserInterface
     public function __construct(
         UserQueryContainerInterface $queryContainer,
         SessionClientInterface $session,
-        UserConfig $settings,
+        UserConfig $userConfig,
         array $userPostSavePlugins = [],
         array $userPreSavePlugins = [],
         array $userTransferExpanderPlugins = [],
@@ -87,7 +87,7 @@ class User implements UserInterface
     ) {
         $this->queryContainer = $queryContainer;
         $this->session = $session;
-        $this->settings = $settings;
+        $this->userConfig = $userConfig;
         $this->userPostSavePlugins = $userPostSavePlugins;
         $this->userPreSavePlugins = $userPreSavePlugins;
         $this->userTransferExpanderPlugins = $userTransferExpanderPlugins;
@@ -497,7 +497,7 @@ class User implements UserInterface
      */
     public function isSystemUser(UserTransfer $user)
     {
-        $systemUsers = $this->settings->getSystemUsers();
+        $systemUsers = $this->userConfig->getSystemUsers();
 
         return in_array($user->getUsername(), $systemUsers);
     }
@@ -507,7 +507,7 @@ class User implements UserInterface
      */
     public function getSystemUsers()
     {
-        $systemUser = $this->settings->getSystemUsers();
+        $systemUser = $this->userConfig->getSystemUsers();
         $collection = new CollectionTransfer();
 
         foreach ($systemUser as $username) {
@@ -601,6 +601,11 @@ class User implements UserInterface
         $userEntity->setStatus(SpyUserTableMap::COL_STATUS_ACTIVE);
         $rowsAffected = $userEntity->save();
 
+        if ($this->userConfig->isPostSavePluginsEnabledAfterUserStatusChange()) {
+            $userTransfer = $this->entityToTransfer($userEntity);
+            $this->executePostSavePlugins($userTransfer);
+        }
+
         return $rowsAffected > 0;
     }
 
@@ -614,6 +619,11 @@ class User implements UserInterface
         $userEntity = $this->queryUserById($idUser);
         $userEntity->setStatus(SpyUserTableMap::COL_STATUS_BLOCKED);
         $rowsAffected = $userEntity->save();
+
+        if ($this->userConfig->isPostSavePluginsEnabledAfterUserStatusChange()) {
+            $userTransfer = $this->entityToTransfer($userEntity);
+            $this->executePostSavePlugins($userTransfer);
+        }
 
         return $rowsAffected > 0;
     }

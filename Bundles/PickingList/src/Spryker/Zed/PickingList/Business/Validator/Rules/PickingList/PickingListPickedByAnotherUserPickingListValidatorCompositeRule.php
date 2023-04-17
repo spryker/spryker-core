@@ -74,6 +74,10 @@ class PickingListPickedByAnotherUserPickingListValidatorCompositeRule extends Ab
         }
 
         $pickingListUserUuid = $this->getUserUuid($pickingListTransfer);
+        if ($pickingListUserUuid === null) {
+            return $errorCollectionTransfer;
+        }
+
         $existingPickingListUserUuid = $this->getUserUuid($existingPickingListTransfer);
         if ($pickingListUserUuid === $existingPickingListUserUuid) {
             return $errorCollectionTransfer;

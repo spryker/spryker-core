@@ -27,7 +27,7 @@ class ProductToUtilTextBridge implements ProductToUtilTextInterface
      *
      * @return string
      */
-    public function generateSlug($value)
+    public function generateSlug(string $value): string
     {
         return $this->utilTextService->generateSlug($value);
     }

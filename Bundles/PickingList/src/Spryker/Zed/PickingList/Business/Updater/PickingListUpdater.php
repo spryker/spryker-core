@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\PickingListCollectionResponseTransfer;
 use Generated\Shared\Transfer\PickingListCollectionTransfer;
 use Generated\Shared\Transfer\PickingListItemTransfer;
 use Generated\Shared\Transfer\PickingListTransfer;
+use Spryker\Zed\PickingList\Business\Distinguisher\PickingListDistinguisherInterface;
 use Spryker\Zed\PickingList\Business\Filter\PickingListFilterInterface;
 use Spryker\Zed\PickingList\Business\StatusGenerator\PickingListStatusGeneratorInterface;
 use Spryker\Zed\PickingList\Business\Validator\PickingListValidatorCompositeInterface;
@@ -47,6 +48,11 @@ class PickingListUpdater implements PickingListUpdaterInterface
     protected PickingListToDatabaseConnectionInterface $databaseConnection;
 
     /**
+     * @var \Spryker\Zed\PickingList\Business\Distinguisher\PickingListDistinguisherInterface
+     */
+    protected PickingListDistinguisherInterface $pickingListDistinguisher;
+
+    /**
      * @var list<\Spryker\Zed\PickingListExtension\Dependency\Plugin\PickingListPostUpdatePluginInterface>
      */
     protected array $pickingListPostUpdatePlugins;
@@ -57,6 +63,7 @@ class PickingListUpdater implements PickingListUpdaterInterface
      * @param \Spryker\Zed\PickingList\Business\StatusGenerator\PickingListStatusGeneratorInterface $pickingListStatusGenerator
      * @param \Spryker\Zed\PickingList\Business\Validator\PickingListValidatorCompositeInterface $pickingListValidatorComposite
      * @param \Spryker\Zed\PickingList\Dependency\External\PickingListToDatabaseConnectionInterface $databaseConnection
+     * @param \Spryker\Zed\PickingList\Business\Distinguisher\PickingListDistinguisherInterface $pickingListDistinguisher
      * @param list<\Spryker\Zed\PickingListExtension\Dependency\Plugin\PickingListPostUpdatePluginInterface> $pickingListPostUpdatePlugins
      */
     public function __construct(
@@ -65,6 +72,7 @@ class PickingListUpdater implements PickingListUpdaterInterface
         PickingListStatusGeneratorInterface $pickingListStatusGenerator,
         PickingListValidatorCompositeInterface $pickingListValidatorComposite,
         PickingListToDatabaseConnectionInterface $databaseConnection,
+        PickingListDistinguisherInterface $pickingListDistinguisher,
         array $pickingListPostUpdatePlugins
     ) {
         $this->pickingListFilter = $pickingListFilter;
@@ -72,6 +80,7 @@ class PickingListUpdater implements PickingListUpdaterInterface
         $this->pickingListStatusGenerator = $pickingListStatusGenerator;
         $this->pickingListValidatorComposite = $pickingListValidatorComposite;
         $this->databaseConnection = $databaseConnection;
+        $this->pickingListDistinguisher = $pickingListDistinguisher;
         $this->pickingListPostUpdatePlugins = $pickingListPostUpdatePlugins;
     }
 
@@ -154,17 +163,22 @@ class PickingListUpdater implements PickingListUpdaterInterface
     protected function executeUpdatePickingListCollectionTransaction(
         PickingListCollectionTransfer $pickingListCollectionTransfer
     ): PickingListCollectionResponseTransfer {
+        $pickingListCollectionTransfer = $this->updatePickingListStatuses($pickingListCollectionTransfer);
+        $this->pickingListDistinguisher->setModifiedAttributes($pickingListCollectionTransfer->getPickingLists());
+
         $this->databaseConnection->beginTransaction();
 
         $pickingListTransfers = new ArrayObject();
         foreach ($pickingListCollectionTransfer->getPickingLists() as $pickingListTransfer) {
             $pickingListTransfers->append(
-                $this->executeUpdatePickingList($pickingListTransfer),
+                $this->pickingListEntityManager->updatePickingList($pickingListTransfer),
             );
         }
 
         $pickingListCollectionResponseTransfer = $this->executePickingListPostUpdatePlugins(
-            $pickingListCollectionTransfer->setPickingLists($pickingListTransfers),
+            $pickingListCollectionTransfer->setPickingLists(
+                $pickingListTransfers,
+            ),
         );
         if ($pickingListCollectionResponseTransfer->getErrors()->count() > 0) {
             $this->databaseConnection->rollBack();
@@ -177,17 +191,19 @@ class PickingListUpdater implements PickingListUpdaterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PickingListTransfer $pickingListTransfer
+     * @param \Generated\Shared\Transfer\PickingListCollectionTransfer $pickingListCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\PickingListTransfer
+     * @return \Generated\Shared\Transfer\PickingListCollectionTransfer
      */
-    protected function executeUpdatePickingList(PickingListTransfer $pickingListTransfer): PickingListTransfer
-    {
-        $pickingListTransfer->setStatus(
-            $this->pickingListStatusGenerator->generatePickingListStatus($pickingListTransfer),
-        );
+    protected function updatePickingListStatuses(
+        PickingListCollectionTransfer $pickingListCollectionTransfer
+    ): PickingListCollectionTransfer {
+        foreach ($pickingListCollectionTransfer->getPickingLists() as $pickingListTransfer) {
+            $pickingListStatus = $this->pickingListStatusGenerator->generatePickingListStatus($pickingListTransfer);
+            $pickingListTransfer->setStatus($pickingListStatus);
+        }
 
-        return $this->pickingListEntityManager->updatePickingList($pickingListTransfer);
+        return $pickingListCollectionTransfer;
     }
 
     /**

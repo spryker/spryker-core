@@ -23,4 +23,9 @@
         <property name="sku" dataBuilderRule="isbn10()"/>
     </transfer>
 
+    <transfer name="Sort">
+        <property name="field" dataBuilderRule="word()"/>
+        <property name="isAscending" dataBuilderRule="=1"/>
+    </transfer>
+
 </transfers>

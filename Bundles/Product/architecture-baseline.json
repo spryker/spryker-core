@@ -113,13 +113,6 @@
     },
     {
         "fileName": "src/Spryker/Zed/Product/Dependency/Facade/ProductToLocaleBridge.php",
-        "description": "Bridges: Type should be defined for param `localeName` in method `Spryker\\Zed\\Product\\Dependency\\Facade\\ProductToLocaleBridge::getLocale()`.",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/Product/Dependency/Facade/ProductToLocaleBridge.php",
         "description": "Bridges: Method `getLocale()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
         "ruleset": "Spryker",
@@ -127,43 +120,8 @@
     },
     {
         "fileName": "src/Spryker/Zed/Product/Dependency/Facade/ProductToLocaleBridge.php",
-        "description": "Bridges: Type should be defined for param `idLocale` in method `Spryker\\Zed\\Product\\Dependency\\Facade\\ProductToLocaleBridge::getLocaleById()`.",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/Product/Dependency/Facade/ProductToLocaleBridge.php",
         "description": "Bridges: Method `getLocaleById()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
         "rule": "BridgeFacadeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/Product/Dependency/Facade/ProductToLocaleInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `getCurrentLocale()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/Product/Dependency/Facade/ProductToLocaleInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `getLocaleCollection()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/Product/Dependency/Facade/ProductToLocaleInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `getLocale()`. Got `$localeName` but expected to be `string $localeName`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/Product/Dependency/Facade/ProductToLocaleInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `getLocaleById()`. Got `$idLocale` but expected to be `int $idLocale`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"
     },
@@ -380,20 +338,6 @@
     {
         "fileName": "src/Spryker/Zed/Product/Dependency/Service/ProductToUtilEncodingInterface.php",
         "description": "Bridges: The bridge interface has incorrect method signature for `decodeJson()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
-        "rule": "BridgeMethodsInterfaceRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/Product/Dependency/Service/ProductToUtilTextBridge.php",
-        "description": "Bridges: Type should be defined for param `value` in method `Spryker\\Zed\\Product\\Dependency\\Service\\ProductToUtilTextBridge::generateSlug()`.",
-        "rule": "BridgeMethodsRule",
-        "ruleset": "Spryker",
-        "priority": "2"
-    },
-    {
-        "fileName": "src/Spryker/Zed/Product/Dependency/Service/ProductToUtilTextInterface.php",
-        "description": "Bridges: The bridge interface has incorrect method signature for `generateSlug()`. Missed return type. That violates the rule \"All bridge interface methods must have exactly the same or more strict signature as their parent\"",
         "rule": "BridgeMethodsInterfaceRule",
         "ruleset": "Spryker",
         "priority": "2"

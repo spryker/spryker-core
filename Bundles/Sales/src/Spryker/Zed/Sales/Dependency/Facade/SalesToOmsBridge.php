@@ -39,7 +39,7 @@ class SalesToOmsBridge implements SalesToOmsInterface
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderProcess
      */
-    public function getProcessEntity($processName): SpyOmsOrderProcess
+    public function getProcessEntity(string $processName): SpyOmsOrderProcess
     {
         return $this->omsFacade->getProcessEntity($processName);
     }
@@ -57,7 +57,7 @@ class SalesToOmsBridge implements SalesToOmsInterface
      *
      * @return array<string>
      */
-    public function getManualEvents($idOrderItem): array
+    public function getManualEvents(int $idOrderItem): array
     {
         return $this->omsFacade->getManualEvents($idOrderItem);
     }
@@ -68,7 +68,7 @@ class SalesToOmsBridge implements SalesToOmsInterface
      *
      * @return array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem>
      */
-    public function getItemsWithFlag(SpySalesOrder $order, $flag): array
+    public function getItemsWithFlag(SpySalesOrder $order, string $flag): array
     {
         return $this->omsFacade->getItemsWithFlag($order, $flag);
     }
@@ -78,7 +78,7 @@ class SalesToOmsBridge implements SalesToOmsInterface
      *
      * @return array<array<string>>
      */
-    public function getManualEventsByIdSalesOrder($idSalesOrder): array
+    public function getManualEventsByIdSalesOrder(int $idSalesOrder): array
     {
         return $this->omsFacade->getManualEventsByIdSalesOrder($idSalesOrder);
     }
@@ -88,7 +88,7 @@ class SalesToOmsBridge implements SalesToOmsInterface
      *
      * @return array
      */
-    public function getDistinctManualEventsByIdSalesOrder($idSalesOrder): array
+    public function getDistinctManualEventsByIdSalesOrder(int $idSalesOrder): array
     {
         return $this->omsFacade->getDistinctManualEventsByIdSalesOrder($idSalesOrder);
     }
@@ -108,7 +108,7 @@ class SalesToOmsBridge implements SalesToOmsInterface
      *
      * @return bool
      */
-    public function isOrderFlaggedExcludeFromCustomer($idOrder): bool
+    public function isOrderFlaggedExcludeFromCustomer(int $idOrder): bool
     {
         return $this->omsFacade->isOrderFlaggedExcludeFromCustomer($idOrder);
     }
@@ -120,7 +120,7 @@ class SalesToOmsBridge implements SalesToOmsInterface
      *
      * @return array|null
      */
-    public function triggerEventForOrderItems($eventId, array $orderItemIds, array $data = []): ?array
+    public function triggerEventForOrderItems(string $eventId, array $orderItemIds, array $data = []): ?array
     {
         return $this->omsFacade->triggerEventForOrderItems($eventId, $orderItemIds, $data);
     }

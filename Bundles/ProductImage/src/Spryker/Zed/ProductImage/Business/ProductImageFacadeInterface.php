@@ -11,6 +11,8 @@ use ArrayObject;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductImageFilterTransfer;
+use Generated\Shared\Transfer\ProductImageSetCollectionTransfer;
+use Generated\Shared\Transfer\ProductImageSetCriteriaTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
 
@@ -282,4 +284,26 @@ interface ProductImageFacadeInterface
         ProductConcreteTransfer $productConcreteTransfer,
         ProductAbstractTransfer $productAbstractTransfer
     ): ProductConcreteTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves concrete product image set entities filtered by criteria.
+     * - Retrieves ONLY product image sets with defined `fk_product` field inside `spy_product_image_set` table.
+     * - Uses `ProductImageSetCriteriaTransfer.ProductImageSetConditions.skus` to filter productImageSets by product skus.
+     * - Uses `ProductImageSetCriteriaTransfer.ProductImageSetConditions.localeNames` to filter productImageSets by localeNames.
+     * - Uses `ProductImageSetCriteriaTransfer.SortTransfer.field` to set the `order by` field.
+     * - Uses `ProductImageSetCriteriaTransfer.SortTransfer.isAscending` to set ascending order otherwise will be used descending order.
+     * - Uses `ProductImageSetCriteriaTransfer.PaginationTransfer.{limit, offset}` to paginate result with limit and offset.
+     * - Uses `ProductImageSetCriteriaTransfer.PaginationTransfer.{page, maxPerPage}` to paginate result with page and maxPerPage.
+     * - Returns `ProductImageSetCollectionTransfer` filled with found productImageSets.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductImageSetCriteriaTransfer $productImageSetCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductImageSetCollectionTransfer
+     */
+    public function getConcreteProductImageSetCollection(
+        ProductImageSetCriteriaTransfer $productImageSetCriteriaTransfer
+    ): ProductImageSetCollectionTransfer;
 }

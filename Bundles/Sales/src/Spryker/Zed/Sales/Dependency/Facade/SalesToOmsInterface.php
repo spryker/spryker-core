@@ -23,14 +23,14 @@ interface SalesToOmsInterface
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderProcess
      */
-    public function getProcessEntity($processName): SpyOmsOrderProcess;
+    public function getProcessEntity(string $processName): SpyOmsOrderProcess;
 
     /**
      * @param int $idOrderItem
      *
      * @return array<string>
      */
-    public function getManualEvents($idOrderItem): array;
+    public function getManualEvents(int $idOrderItem): array;
 
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $order
@@ -38,21 +38,21 @@ interface SalesToOmsInterface
      *
      * @return array<\Orm\Zed\Sales\Persistence\SpySalesOrderItem>
      */
-    public function getItemsWithFlag(SpySalesOrder $order, $flag): array;
+    public function getItemsWithFlag(SpySalesOrder $order, string $flag): array;
 
     /**
      * @param int $idSalesOrder
      *
      * @return array<array<string>>
      */
-    public function getManualEventsByIdSalesOrder($idSalesOrder): array;
+    public function getManualEventsByIdSalesOrder(int $idSalesOrder): array;
 
     /**
      * @param int $idSalesOrder
      *
      * @return array
      */
-    public function getDistinctManualEventsByIdSalesOrder($idSalesOrder): array;
+    public function getDistinctManualEventsByIdSalesOrder(int $idSalesOrder): array;
 
     /**
      * @param int $idSalesOrder
@@ -71,7 +71,7 @@ interface SalesToOmsInterface
      *
      * @return bool
      */
-    public function isOrderFlaggedExcludeFromCustomer($idOrder): bool;
+    public function isOrderFlaggedExcludeFromCustomer(int $idOrder): bool;
 
     /**
      * @param string $eventId
@@ -80,5 +80,5 @@ interface SalesToOmsInterface
      *
      * @return array|null
      */
-    public function triggerEventForOrderItems($eventId, array $orderItemIds, array $data = []): ?array;
+    public function triggerEventForOrderItems(string $eventId, array $orderItemIds, array $data = []): ?array;
 }

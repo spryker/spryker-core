@@ -88,9 +88,17 @@
     </transfer>
 
     <transfer name="Pagination">
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
         <property name="page" type="int"/>
         <property name="maxPerPage" type="int"/>
+        <property name="nbResults" type="int"/>
+        <property name="firstIndex" type="int"/>
+        <property name="lastIndex" type="int"/>
+        <property name="firstPage" type="int"/>
         <property name="lastPage" type="int"/>
+        <property name="nextPage" type="int"/>
+        <property name="previousPage" type="int"/>
     </transfer>
 
     <transfer name="Store">
@@ -165,6 +173,17 @@
         <property name="storeReference" type="string"/>
     </transfer>
 
+    <transfer name="ProductConcreteCriteria" strict="true">
+        <property name="productConcreteConditions" type="ProductConcreteConditions"/>
+        <property name="sortCollection" type="Sort[]" singular="sort"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="ProductConcreteConditions" strict="true">
+        <property name="skus" type="string[]" singular="sku"/>
+        <property name="localeNames" type="string[]" singular="localeName"/>
+    </transfer>
+
     <transfer name="MessageAttributes">
     </transfer>
 
@@ -186,7 +205,10 @@
         <property name="skus" type="string[]" singular="sku"/>
     </transfer>
 
-    <transfer name="Sort"/>
+    <transfer name="Sort">
+        <property name="field" type="string"/>
+        <property name="isAscending" type="bool"/>
+    </transfer>
 
     <transfer name="ProductAbstractRelations" strict="true">
         <property name="withStoreRelations" type="bool"/>

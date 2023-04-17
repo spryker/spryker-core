@@ -7,20 +7,19 @@
 
 namespace Spryker\Zed\Shipment\Business\Grouper;
 
-use Generated\Shared\Transfer\ShipmentCollectionTransfer;
+use ArrayObject;
 
 class ShipmentGrouper implements ShipmentGrouperInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ShipmentCollectionTransfer $shipmentCollectionTransfer
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\ShipmentTransfer> $shipmentTransfers
      *
      * @return array<int, \Generated\Shared\Transfer\ShipmentTransfer>
      */
-    public function getShipmentTransferCollectionIndexedByIdSalesShipment(
-        ShipmentCollectionTransfer $shipmentCollectionTransfer
-    ): array {
+    public function getShipmentTransfersIndexedByIdSalesShipment(ArrayObject $shipmentTransfers): array
+    {
         $shipmentTransferCollectionIndexedByIdSalesShipment = [];
-        foreach ($shipmentCollectionTransfer->getShipments() as $shipmentTransfer) {
+        foreach ($shipmentTransfers as $shipmentTransfer) {
             $idSalesShipment = $shipmentTransfer->getIdSalesShipment();
             if (!$idSalesShipment) {
                 continue;

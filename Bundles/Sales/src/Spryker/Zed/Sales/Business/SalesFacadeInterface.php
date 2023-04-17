@@ -441,12 +441,12 @@ interface SalesFacadeInterface
 
     /**
      * Specification:
-     * - Requires OrderListTransfer::pagination to be set.
-     * - Requires OrderListTransfer::format to be set.
-     * - Filters orders by OrderListTransfer::filterFields if provided.
-     * - Filters orders by OrderListTransfer::filter if provided.
-     * - Executes SearchOrderQueryExpanderPluginInterface plugin stack.
-     * - Finds orders by criteria from OrderListTransfer.
+     * - Requires `OrderListTransfer.format` to be set.
+     * - Expects `OrderListTransfer.pagination` to be set.
+     * - Filters orders by `OrderListTransfer.filterFields` if provided.
+     * - Filters orders by `OrderListTransfer.filter` if provided.
+     * - Executes {@link \Spryker\Zed\SalesExtension\Dependency\Plugin\SearchOrderQueryExpanderPluginInterface} plugin stack.
+     * - Finds orders by criteria from `OrderListTransfer`.
      *
      * @api
      *

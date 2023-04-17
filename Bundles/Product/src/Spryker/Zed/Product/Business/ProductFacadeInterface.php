@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
+use Generated\Shared\Transfer\ProductConcreteCriteriaTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductCriteriaTransfer;
 use Generated\Shared\Transfer\ProductExportCriteriaTransfer;
@@ -1085,6 +1086,28 @@ interface ProductFacadeInterface
      * @return void
      */
     public function triggerProductExportEvents(ProductExportCriteriaTransfer $productExportCriteriaTransfer): void;
+
+    /**
+     * Specification:
+     * - Retrieves product concrete entities filtered by criteria.
+     * - Uses `ProductConcreteCriteriaTransfer.productConcreteConditions.skus` to filter products by `skus`.
+     * - Uses `ProductConcreteCriteriaTransfer.productConcreteConditions.localeNames` to filter products by `localeNames`.
+     * - Uses `ProductConcreteCriteriaTransfer.SortTransfer.field` to set the `order by` field.
+     * - Uses `ProductConcreteCriteriaTransfer.SortTransfer.isAscending` to set ascending order otherwise will be used descending order.
+     * - Uses `ProductConcreteCriteriaTransfer.PaginationTransfer.{limit, offset}` to paginate result with limit and offset.
+     * - Uses `ProductConcreteCriteriaTransfer.PaginationTransfer.{page, maxPerPage}` to paginate result with page and maxPerPage.
+     * - Executes the stack of {@link \Spryker\Zed\ProductExtension\Dependency\Plugin\ProductConcreteExpanderPluginInterface} plugins.
+     * - Returns `ProductConcreteCollectionTransfer` filled with found products.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteCriteriaTransfer $productConcreteCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteCollectionTransfer
+     */
+    public function getProductConcreteCollection(
+        ProductConcreteCriteriaTransfer $productConcreteCriteriaTransfer
+    ): ProductConcreteCollectionTransfer;
 
     /**
      * Specification:

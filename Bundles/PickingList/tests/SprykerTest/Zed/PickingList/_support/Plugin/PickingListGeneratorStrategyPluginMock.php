@@ -54,6 +54,6 @@ class PickingListGeneratorStrategyPluginMock implements PickingListGeneratorStra
     public function generatePickingLists(PickingListOrderItemGroupTransfer $pickingListOrderItemGroupTransfer): PickingListCollectionTransfer
     {
         return (new PickingListCollectionTransfer())
-            ->addPickingList($this->pickingListTransfer);
+            ->addPickingList((new PickingListTransfer())->fromArray($this->pickingListTransfer->toArray(), true));
     }
 }

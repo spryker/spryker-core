@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ShipmentGui\Communication\Controller;
 
+use Generated\Shared\Transfer\SalesShipmentConditionsTransfer;
+use Generated\Shared\Transfer\SalesShipmentCriteriaTransfer;
 use Generated\Shared\Transfer\ShipmentGroupResponseTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
@@ -81,10 +83,12 @@ class EditController extends AbstractController
             return $this->redirectResponse($redirectUrl);
         }
 
-        $shipmentTransfer = $this->getFactory()
+        $salesShipmentCriteriaTransfer = $this->createSalesShipmentCriteriaTransfer($idSalesShipment);
+        $salesShipmentCollectionTransfer = $this->getFactory()
             ->getShipmentFacade()
-            ->findShipmentById($idSalesShipment);
+            ->getSalesShipmentCollection($salesShipmentCriteriaTransfer);
 
+        $shipmentTransfer = $salesShipmentCollectionTransfer->getShipments()->getIterator()->current();
         if ($shipmentTransfer === null) {
             $this->addErrorMessage(static::MESSAGE_ORDER_SHIPMENT_NOT_FOUND_ERROR, ['%d' => $idSalesShipment]);
             $redirectUrl = Url::generate(static::REDIRECT_URL_DEFAULT)->build();
@@ -161,5 +165,17 @@ class EditController extends AbstractController
         }
 
         $this->addErrorMessage(static::MESSAGE_SHIPMENT_EDIT_FAIL);
+    }
+
+    /**
+     * @param int $idSalesShipment
+     *
+     * @return \Generated\Shared\Transfer\SalesShipmentCriteriaTransfer
+     */
+    protected function createSalesShipmentCriteriaTransfer(int $idSalesShipment): SalesShipmentCriteriaTransfer
+    {
+        $shipmentConditionsTransfer = (new SalesShipmentConditionsTransfer())->addIdSalesShipment($idSalesShipment);
+
+        return (new SalesShipmentCriteriaTransfer())->setSalesShipmentConditions($shipmentConditionsTransfer);
     }
 }

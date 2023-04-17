@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PickingList\Business\Extractor;
 
+use ArrayObject;
 use Generated\Shared\Transfer\PickingListCollectionTransfer;
 
 interface PickingListExtractorInterface
@@ -14,7 +15,7 @@ interface PickingListExtractorInterface
     /**
      * @param \Generated\Shared\Transfer\PickingListCollectionTransfer $pickingListCollectionTransfer
      *
-     * @return array<string>
+     * @return list<string>
      */
     public function extraWarehouseUuidsFromPickingListCollection(
         PickingListCollectionTransfer $pickingListCollectionTransfer
@@ -23,9 +24,16 @@ interface PickingListExtractorInterface
     /**
      * @param \Generated\Shared\Transfer\PickingListCollectionTransfer $pickingListCollectionTransfer
      *
-     * @return array<string>
+     * @return list<string>
      */
     public function extraUserUuidsFromPickingListCollection(
         PickingListCollectionTransfer $pickingListCollectionTransfer
     ): array;
+
+    /**
+     * @param \ArrayObject<int, \Generated\Shared\Transfer\PickingListTransfer> $pickingListTransfers
+     *
+     * @return list<string>
+     */
+    public function extractPickingListUuids(ArrayObject $pickingListTransfers): array;
 }

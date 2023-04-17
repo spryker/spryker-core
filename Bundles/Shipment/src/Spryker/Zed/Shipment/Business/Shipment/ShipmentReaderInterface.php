@@ -9,6 +9,9 @@ namespace Spryker\Zed\Shipment\Business\Shipment;
 
 use Generated\Shared\Transfer\ShipmentTransfer;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 interface ShipmentReaderInterface
 {
     /**
