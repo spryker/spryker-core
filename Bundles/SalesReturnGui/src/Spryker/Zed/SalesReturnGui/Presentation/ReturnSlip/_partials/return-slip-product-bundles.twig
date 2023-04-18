@@ -17,26 +17,34 @@
 
 {% for productBundle in productBundles %}
     {% set hasBundleOptions = productBundle.productOptions | length %}
+    {% set isBundleDiscount = productBundle.sumDiscountAmountFullAggregation is defined and productBundle.sumDiscountAmountFullAggregation is not null %}
 
     <tr>
-        <td class="no-bottom-border">{{ barcode(productBundle.sku) }}</td>
+        <td class="no-bottom-border return-slip-barcode-image">{{ barcode(productBundle.sku) }}</td>
         <td class="no-bottom-border">{{ productBundle.sku }}</td>
         <td class="no-bottom-border"><strong>{{ productBundle.name }}</strong></td>
-        <td class="no-bottom-border">{{ (productBundle.sumPrice - productBundle.sumDiscountAmountFullAggregation) | money(true, currencyIsoCode) }}</td>
+        <td class="no-bottom-border">
+            {% include '@SalesReturnGui/ReturnSlip/_partials/return-slip-price.twig' with {
+                isDiscount: isBundleDiscount,
+                orderItem: productBundle,
+                currencyIsoCode: currencyIsoCode,
+            } only %}
+        </td>
         <td class="no-bottom-border">{{ productBundle.quantity | executeFilterIfExists('formatInt', app.locale) }}</td>
         <td class="no-bottom-border">{{ productBundle.sumPriceToPayAggregation | money(true, currencyIsoCode) }}</td>
         <td class="no-bottom-border">{{ (mappedReturnItems['_' ~ productBundle.bundleItemIdentifier] | first).reason ?? '--' }}</td>
     </tr>
 
     {% for returnItem in mappedReturnItems['_' ~ productBundle.bundleItemIdentifier] %}
+        {% set orderItem = returnItem.orderItem %}
         {% set noBottomBorderClass = not loop.last or hasBundleOptions ? 'no-bottom-border' %}
 
         <tr>
             <td class="no-top-border {{ noBottomBorderClass }}"></td>
             <td class="no-top-border {{ noBottomBorderClass }}"></td>
-            <td class="no-top-border {{ noBottomBorderClass }}">{{ returnItem.orderItem.name }}</td>
+            <td class="no-top-border {{ noBottomBorderClass }}">{{ orderItem.name }}</td>
             <td class="no-top-border {{ noBottomBorderClass }}"></td>
-            <td class="no-top-border {{ noBottomBorderClass }}">{{ returnItem.orderItem.quantity | executeFilterIfExists('formatInt', app.locale) }}</td>
+            <td class="no-top-border {{ noBottomBorderClass }}">{{ orderItem.quantity | executeFilterIfExists('formatInt', app.locale) }}</td>
             <td class="no-top-border {{ noBottomBorderClass }}"></td>
             <td class="no-top-border {{ noBottomBorderClass }}"></td>
         </tr>
@@ -44,18 +52,18 @@
 
     {% for productOption in productBundle.productOptions %}
         {% set noBottomBorderClass = not loop.last ? 'no-bottom-border' %}
-        {% set firstProductOptionClass = loop.first ? 'product-option--first' %}
+        {% set firstProductOptionClass = loop.first ? 'return-slip-product-option--first' %}
 
         <tr>
             <td class="no-top-border {{ noBottomBorderClass }}"></td>
             <td class="no-top-border {{ noBottomBorderClass }}"></td>
-            <td class="no-top-border {{ noBottomBorderClass }} product-option {{ firstProductOptionClass }}">
+            <td class="no-top-border {{ noBottomBorderClass }} return-slip-product-option {{ firstProductOptionClass }}">
                 {% if loop.first %}
                     <hr>
                 {% endif %}
                 {{ productOption.value }}
             </td>
-            <td class="no-top-border {{ noBottomBorderClass }} product-option {{ firstProductOptionClass }}">
+            <td class="no-top-border {{ noBottomBorderClass }} return-slip-product-option {{ firstProductOptionClass }}">
                 {% if loop.first %}
                     <hr>
                 {% endif %}

@@ -4,38 +4,45 @@
     {% set orderItem = returnItem.orderItem %}
     {% set hasProductOptions = orderItem.productOptions | length %}
     {% set noBottomBorderClass = hasProductOptions ? 'no-bottom-border' %}
+    {% set isItemDiscount = orderItem.sumDiscountAmountFullAggregation is defined and orderItem.sumDiscountAmountFullAggregation is not null %}
 
     <tr>
-        <td class="{{ noBottomBorderClass }}">{{ barcode(returnItem.orderItem.sku) }}</td>
-        <td class="{{ noBottomBorderClass }}">{{ returnItem.orderItem.sku }}</td>
+        <td class="{{ noBottomBorderClass }} return-slip-barcode-image">{{ barcode(orderItem.sku) }}</td>
+        <td class="{{ noBottomBorderClass }}">{{ orderItem.sku }}</td>
         <td class="{{ noBottomBorderClass }}">
-            {{ returnItem.orderItem.name }}
+            {{ orderItem.name }}
             <div>
                 {% include '@SalesProductConfigurationGui/Sales/Partials/order-item-product-configuration.twig' ignore missing with {
                     orderItem: orderItem,
                 } %}
             </div>
         </td>
-        <td class="{{ noBottomBorderClass }}">{{ (returnItem.orderItem.sumPrice - returnItem.orderItem.sumDiscountAmountFullAggregation) | money(true, currencyIsoCode) }}</td>
-        <td class="{{ noBottomBorderClass }}">{{ returnItem.orderItem.quantity | executeFilterIfExists('formatInt', app.locale) }}</td>
-        <td class="{{ noBottomBorderClass }}">{{ returnItem.orderItem.sumPriceToPayAggregation | money(true, currencyIsoCode) }}</td>
+        <td class="{{ noBottomBorderClass }}">
+            {% include '@SalesReturnGui/ReturnSlip/_partials/return-slip-price.twig' with {
+                isDiscount: isItemDiscount,
+                orderItem: orderItem,
+                currencyIsoCode: currencyIsoCode,
+            } only %}
+        </td>
+        <td class="{{ noBottomBorderClass }}">{{ orderItem.quantity | executeFilterIfExists('formatInt', app.locale) }}</td>
+        <td class="{{ noBottomBorderClass }}">{{ orderItem.sumPriceToPayAggregation | money(true, currencyIsoCode) }}</td>
         <td class="{{ noBottomBorderClass }}">{{ returnItem.reason ?? '--' }}</td>
     </tr>
 
     {% for productOption in orderItem.productOptions %}
         {% set noBottomBorderClass = not loop.last ? 'no-bottom-border' %}
-        {% set firstProductOptionClass = loop.first ? 'product-option--first' %}
+        {% set firstProductOptionClass = loop.first ? 'return-slip-product-option--first' %}
 
         <tr>
             <td class="no-top-border {{ noBottomBorderClass }}"></td>
             <td class="no-top-border {{ noBottomBorderClass }}"></td>
-            <td class="no-top-border {{ noBottomBorderClass }} product-option {{ firstProductOptionClass }}">
+            <td class="no-top-border {{ noBottomBorderClass }} return-slip-product-option {{ firstProductOptionClass }}">
                 {% if loop.first %}
                     <hr>
                 {% endif %}
                 {{ productOption.value }}
             </td>
-            <td class="no-top-border {{ noBottomBorderClass }} product-option {{ firstProductOptionClass }}">
+            <td class="no-top-border {{ noBottomBorderClass }} return-slip-product-option {{ firstProductOptionClass }}">
                 {% if loop.first %}
                     <hr>
                 {% endif %}

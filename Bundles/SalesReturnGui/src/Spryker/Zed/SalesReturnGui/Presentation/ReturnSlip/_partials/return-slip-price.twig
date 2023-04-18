@@ -1,0 +1,12 @@
+{% if isDiscount %}
+    <div>
+        {{ (orderItem.sumPrice - orderItem.sumDiscountAmountFullAggregation) | money(true, currencyIsoCode) }}
+    </div>
+    <div>
+        <del class="text-secondary">{{ orderItem.sumPrice | money(true, currencyIsoCode) }}</del>
+    </div>
+{% else %}
+    <div>
+        {{ orderItem.sumPrice | money(true, currencyIsoCode) }}
+    </div>
+{% endif %}
