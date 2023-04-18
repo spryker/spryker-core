@@ -13,6 +13,11 @@ use Propel\Runtime\ActiveQuery\Criteria;
 class PropelFilterCriteria implements PropelFilterCriteriaInterface
 {
     /**
+     * @var string
+     */
+    protected const PATTERN_VALID_COLUMN_NAME = '/^[a-zA-Z0-9_.]+$/';
+
+    /**
      * @var \Generated\Shared\Transfer\FilterTransfer
      */
     protected $filterTransfer;
@@ -47,23 +52,63 @@ class PropelFilterCriteria implements PropelFilterCriteriaInterface
     public function toCriteria()
     {
         $criteria = new Criteria();
+        $criteria = $this->addPaginationToCriteria($criteria);
+        $criteria = $this->addSortingToCriteria($criteria);
 
-        if ($this->filterTransfer->getLimit() !== null) {
-            $criteria->setLimit($this->filterTransfer->getLimit());
+        return $criteria;
+    }
+
+    /**
+     * @param \Propel\Runtime\ActiveQuery\Criteria $criteria
+     *
+     * @return \Propel\Runtime\ActiveQuery\Criteria
+     */
+    protected function addPaginationToCriteria(Criteria $criteria): Criteria
+    {
+        $limit = $this->filterTransfer->getLimit();
+        if ($limit !== null) {
+            $criteria->setLimit($limit);
         }
 
-        if ($this->filterTransfer->getOffset() !== null) {
-            $criteria->setOffset($this->filterTransfer->getOffset());
-        }
-
-        if ($this->filterTransfer->getOrderBy() !== null) {
-            if ($this->filterTransfer->getOrderDirection() === 'ASC') {
-                $criteria->addAscendingOrderByColumn($this->filterTransfer->getOrderBy());
-            } elseif ($this->filterTransfer->getOrderDirection() === 'DESC') {
-                $criteria->addDescendingOrderByColumn($this->filterTransfer->getOrderBy());
-            }
+        $offset = $this->filterTransfer->getOffset();
+        if ($offset !== null) {
+            $criteria->setOffset($offset);
         }
 
         return $criteria;
+    }
+
+    /**
+     * @param \Propel\Runtime\ActiveQuery\Criteria $criteria
+     *
+     * @return \Propel\Runtime\ActiveQuery\Criteria
+     */
+    protected function addSortingToCriteria(Criteria $criteria): Criteria
+    {
+        $orderByColumnName = $this->filterTransfer->getOrderBy();
+        if ($orderByColumnName === null || !$this->isColumnNameValid($orderByColumnName)) {
+            return $criteria;
+        }
+
+        $orderDirection = $this->filterTransfer->getOrderDirection();
+        if ($orderDirection === Criteria::ASC) {
+            $criteria->addAscendingOrderByColumn($orderByColumnName);
+        }
+
+        if ($orderDirection === Criteria::DESC) {
+            $criteria->addDescendingOrderByColumn($orderByColumnName);
+        }
+
+        return $criteria;
+    }
+
+    /**
+     * @param string $orderByColumnName
+     *
+     * @return bool
+     */
+    protected function isColumnNameValid(string $orderByColumnName): bool
+    {
+        return (bool)preg_match(static::PATTERN_VALID_COLUMN_NAME, $orderByColumnName);
     }
 }
