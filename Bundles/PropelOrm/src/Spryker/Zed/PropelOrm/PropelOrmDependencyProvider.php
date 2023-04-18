@@ -10,6 +10,9 @@ namespace Spryker\Zed\PropelOrm;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
+/**
+ * @method \Spryker\Zed\PropelOrm\PropelOrmConfig getConfig()
+ */
 class PropelOrmDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**

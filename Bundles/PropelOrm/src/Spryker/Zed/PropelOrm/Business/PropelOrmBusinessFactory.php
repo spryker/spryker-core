@@ -12,6 +12,9 @@ use Spryker\Zed\PropelOrm\Business\Builder\Collector\ClassNamespacesCollector;
 use Spryker\Zed\PropelOrm\Business\Builder\Collector\ClassNamespacesCollectorInterface;
 use Spryker\Zed\PropelOrm\PropelOrmDependencyProvider;
 
+/**
+ * @method \Spryker\Zed\PropelOrm\PropelOrmConfig getConfig()
+ */
 class PropelOrmBusinessFactory extends AbstractBusinessFactory
 {
     /**

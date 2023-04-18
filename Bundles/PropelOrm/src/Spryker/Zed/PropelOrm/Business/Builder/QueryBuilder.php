@@ -16,15 +16,19 @@ use Propel\Common\Util\SetColumnConverter;
 use Propel\Generator\Builder\Om\QueryBuilder as PropelQueryBuilder;
 use Propel\Generator\Model\Column;
 use Propel\Generator\Model\PropelTypes;
+use Spryker\Zed\Kernel\BundleConfigResolverAwareTrait;
 use Spryker\Zed\Kernel\Business\FactoryResolverAwareTrait as BusinessFactoryResolverAwareTrait;
 use Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException;
+use Spryker\Zed\PropelOrm\Business\Model\Formatter\TypeAwareSimpleArrayFormatter;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
+ * @method \Spryker\Zed\PropelOrm\PropelOrmConfig getConfig()
  * @method \Spryker\Zed\PropelOrm\Business\PropelOrmBusinessFactory getFactory()
  */
 class QueryBuilder extends PropelQueryBuilder
 {
+    use BundleConfigResolverAwareTrait;
     use BusinessFactoryResolverAwareTrait;
 
     /**
@@ -429,6 +433,7 @@ SCRIPT;
         $this->addFind($script);
         $this->addFindOne($script);
         $this->addExists($script);
+        $this->addConfigureSelectColumns($script);
 
         parent::addClassBody($script);
     }
@@ -819,6 +824,43 @@ SCRIPT;
         $script .= "
         return parent::exists(\$con);
     }
+    ";
+    }
+
+    /**
+     * Specification:
+     * - Overrides configureSelectColumns() method of parent class.
+     * - Uses TypeAwareSimpleArrayFormatter class to cast boolean values.
+     *
+     * @param string $script
+     *
+     * @return void
+     */
+    protected function addConfigureSelectColumns(string &$script): void
+    {
+        if (!$this->getConfig()->isBooleanCastingEnabled()) {
+            return;
+        }
+        $this->declareClass(TypeAwareSimpleArrayFormatter::class);
+
+        $script .= "
+    /**
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return void
+     */
+    public function configureSelectColumns(): void
+    {
+        if (!\$this->select) {
+            return;
+        }
+
+        if (\$this->formatter === null) {
+            \$this->setFormatter(new TypeAwareSimpleArrayFormatter());
+        }
+
+        parent::configureSelectColumns();
+     }
     ";
     }
 }
