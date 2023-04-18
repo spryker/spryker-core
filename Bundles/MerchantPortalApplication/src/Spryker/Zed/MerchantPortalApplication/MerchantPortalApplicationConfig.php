@@ -16,6 +16,45 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class MerchantPortalApplicationConfig extends AbstractBundleConfig
 {
     /**
+     * @var string
+     */
+    protected const HEADER_X_FRAME_OPTIONS_VALUE = 'SAMEORIGIN';
+
+    /**
+     * @var string
+     */
+    protected const HEADER_CONTENT_SECURITY_POLICY_VALUE = 'frame-ancestors \'self\'';
+
+    /**
+     * @var string
+     */
+    protected const HEADER_X_CONTENT_TYPE_OPTIONS_VALUE = 'nosniff';
+
+    /**
+     * @var string
+     */
+    protected const HEADER_X_XSS_PROTECTION_VALUE = '1; mode=block';
+
+    /**
+     * @var string
+     */
+    protected const HEADER_REFERRER_POLICY_VALUE = 'same-origin';
+
+    /**
+     * @var string
+     */
+    protected const HEADER_PERMISSIONS_POLICY_VALUE = '';
+
+    /**
+     * @var string
+     */
+    protected const HEADER_PERMISSION_POLICY_VALUE = '';
+
+    /**
+     * Specification:
+     * - Enables/disables global setting for merchant portal debug mode.
+     * - Defaults to false.
+     *
      * @api
      *
      * @return bool
@@ -23,5 +62,25 @@ class MerchantPortalApplicationConfig extends AbstractBundleConfig
     public function isDebugModeEnabled(): bool
     {
         return (bool)$this->get(MerchantPortalConstants::ENABLE_APPLICATION_DEBUG, false);
+    }
+
+    /**
+     * Specification:
+     * - Returns array of security headers for server response.
+     *
+     * @api
+     *
+     * @return array<string, string>
+     */
+    public function getSecurityHeaders(): array
+    {
+        return [
+            'X-Frame-Options' => static::HEADER_X_FRAME_OPTIONS_VALUE,
+            'Content-Security-Policy' => static::HEADER_CONTENT_SECURITY_POLICY_VALUE,
+            'X-Content-Type-Options' => static::HEADER_X_CONTENT_TYPE_OPTIONS_VALUE,
+            'X-XSS-Protection' => static::HEADER_X_XSS_PROTECTION_VALUE,
+            'Referrer-Policy' => static::HEADER_REFERRER_POLICY_VALUE,
+            'Permissions-Policy' => static::HEADER_PERMISSION_POLICY_VALUE,
+        ];
     }
 }

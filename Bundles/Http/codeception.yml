@@ -1,6 +1,8 @@
 namespace: Http
 include:
     - tests/SprykerTest/Zed/Http
+    - tests/SprykerTest/Glue/Http
+    - tests/SprykerTest/Yves/Http
 paths:
     tests: tests
     output: tests/_output

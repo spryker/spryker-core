@@ -15,17 +15,34 @@ use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
- * @deprecated Use {@link \Spryker\Yves\Http\Plugin\EventDispatcher\EnvironmentInfoHeaderEventDispatcherPlugin} and {@link \Spryker\Yves\Http\Plugin\EventDispatcher\CacheControlHeaderEventDispatcherPlugin} instead.
- *
  * @method \Spryker\Yves\Http\HttpConfig getConfig()
  * @method \Spryker\Yves\Http\HttpFactory getFactory()
  */
-class HeaderEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
+class EnvironmentInfoHeaderEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
 {
     /**
+     * @var string
+     */
+    protected const HEADER_X_CODE_BUCKET_NAME = 'X-CodeBucket';
+
+    /**
+     * @var string
+     */
+    protected const HEADER_X_STORE_NAME = 'X-Store';
+
+    /**
+     * @var string
+     */
+    protected const HEADER_X_ENV_NAME = 'X-Env';
+
+    /**
+     * @var string
+     */
+    protected const HEADER_X_LOCALE_NAME = 'X-Locale';
+
+    /**
      * {@inheritDoc}
-     * - Sets environment main information in headers.
-     * - Sets cache control.
+     * - Sets store main information in headers.
      *
      * @api
      *
@@ -37,25 +54,7 @@ class HeaderEventDispatcherPlugin extends AbstractPlugin implements EventDispatc
     public function extend(EventDispatcherInterface $eventDispatcher, ContainerInterface $container): EventDispatcherInterface
     {
         $eventDispatcher->addListener(KernelEvents::RESPONSE, function (ResponseEvent $event): void {
-            if (!$this->isMainRequest($event)) {
-                return;
-            }
-
-            $response = $event->getResponse();
-
-            $localeClient = $this->getFactory()->getLocaleClient();
-            $storeClient = $this->getFactory()->getStoreClient();
-
-            $response->headers->set('X-CodeBucket', APPLICATION_CODE_BUCKET);
-            $response->headers->set('X-Store', $storeClient->getCurrentStore()->getNameOrFail());
-            $response->headers->set('X-Env', APPLICATION_ENV);
-            $response->headers->set('X-Locale', $localeClient->getCurrentLocale());
-
-            $response->setPrivate()->setMaxAge(0);
-
-            $response->headers->addCacheControlDirective('no-cache', true);
-            $response->headers->addCacheControlDirective('no-store', true);
-            $response->headers->addCacheControlDirective('must-revalidate', true);
+            $this->onKernelResponse($event);
         });
 
         return $eventDispatcher;
@@ -73,5 +72,27 @@ class HeaderEventDispatcherPlugin extends AbstractPlugin implements EventDispatc
         }
 
         return $event->isMainRequest();
+    }
+
+    /**
+     * @param \Symfony\Component\HttpKernel\Event\ResponseEvent $event
+     *
+     * @return void
+     */
+    protected function onKernelResponse(ResponseEvent $event): void
+    {
+        if (!$this->isMainRequest($event)) {
+            return;
+        }
+
+        $response = $event->getResponse();
+
+        $localeClient = $this->getFactory()->getLocaleClient();
+        $storeClient = $this->getFactory()->getStoreClient();
+
+        $response->headers->set(static::HEADER_X_CODE_BUCKET_NAME, APPLICATION_CODE_BUCKET);
+        $response->headers->set(static::HEADER_X_STORE_NAME, $storeClient->getCurrentStore()->getNameOrFail());
+        $response->headers->set(static::HEADER_X_ENV_NAME, APPLICATION_ENV);
+        $response->headers->set(static::HEADER_X_LOCALE_NAME, $localeClient->getCurrentLocale());
     }
 }

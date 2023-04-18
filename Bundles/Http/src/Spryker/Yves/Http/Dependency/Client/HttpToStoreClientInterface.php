@@ -7,10 +7,12 @@
 
 namespace Spryker\Yves\Http\Dependency\Client;
 
+use Generated\Shared\Transfer\StoreTransfer;
+
 interface HttpToStoreClientInterface
 {
     /**
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getCurrentStore();
+    public function getCurrentStore(): StoreTransfer;
 }

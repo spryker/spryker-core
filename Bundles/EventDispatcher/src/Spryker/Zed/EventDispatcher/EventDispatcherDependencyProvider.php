@@ -31,6 +31,11 @@ class EventDispatcherDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_BACKEND_API_EVENT_DISPATCHER_PLUGINS = 'PLUGINS_BACKEND_API_EVENT_DISPATCHER_PLUGINS';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_MP_EVENT_DISPATCHER_PLUGINS = 'PLUGINS_MP_EVENT_DISPATCHER_PLUGINS';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -40,6 +45,7 @@ class EventDispatcherDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addEventDispatcherPlugins($container);
         $container = $this->addBackendGatewayEventDispatcherPlugins($container);
         $container = $this->addBackendApiEventDispatcherPlugins($container);
+        $container = $this->addMerchantPortalEventDispatcherPlugins($container);
 
         return $container;
     }
@@ -106,6 +112,28 @@ class EventDispatcherDependencyProvider extends AbstractBundleDependencyProvider
      * @return array<\Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface>
      */
     protected function getBackendApiEventDispatcherPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMerchantPortalEventDispatcherPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_MP_EVENT_DISPATCHER_PLUGINS, function (Container $container) {
+            return $this->getMerchantPortalEventDispatcherPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return array<\Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface>
+     */
+    protected function getMerchantPortalEventDispatcherPlugins(): array
     {
         return [];
     }

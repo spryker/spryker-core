@@ -5,7 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\Http;
+declare(strict_types=1);
+
+namespace SprykerTest\Yves\Http;
 
 use Codeception\Actor;
 use Codeception\Stub;
@@ -16,8 +18,10 @@ use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 /**
- * @method void wantToTest($text)
+ * Inherited Methods
+ *
  * @method void wantTo($text)
+ * @method void wantToTest($text)
  * @method void execute($callable)
  * @method void expectTo($prediction)
  * @method void expect($prediction)
@@ -25,13 +29,13 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method void pause()
+ * @method void pause($vars = [])
  *
  * @SuppressWarnings(PHPMD)
  */
-class HttpCommunicationTester extends Actor
+class HttpYvesTester extends Actor
 {
-    use _generated\HttpCommunicationTesterActions;
+    use _generated\HttpYvesTesterActions;
 
     /**
      * @return \Symfony\Component\HttpKernel\Event\ResponseEvent

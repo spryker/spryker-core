@@ -10,9 +10,11 @@ namespace Spryker\Zed\Http\Dependency\Facade;
 interface HttpToStoreFacadeInterface
 {
     /**
+     * @param bool $fallbackToDefault
+     *
      * @return \Generated\Shared\Transfer\StoreTransfer
      */
-    public function getCurrentStore();
+    public function getCurrentStore(bool $fallbackToDefault = false);
 
     /**
      * @return bool

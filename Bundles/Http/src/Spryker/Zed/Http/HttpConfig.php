@@ -124,4 +124,23 @@ class HttpConfig extends AbstractBundleConfig
     {
         return $this->getSharedConfig()->getHIncludeRendererGlobalTemplate();
     }
+
+    /**
+     * Specification:
+     *  - Defines Cache-Control directives.
+     *
+     * Example:
+     * [
+     *      'public' = true,
+     *      'max-age' = 3600,
+     * ]
+     *
+     * @api
+     *
+     * @return array<string, mixed>
+     */
+    public function getCacheControlConfig(): array
+    {
+        return $this->get(HttpConstants::ZED_HTTP_CACHE_CONTROL_CONFIG, []);
+    }
 }

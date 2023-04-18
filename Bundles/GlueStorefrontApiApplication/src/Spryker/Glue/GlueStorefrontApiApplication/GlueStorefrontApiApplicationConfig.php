@@ -54,6 +54,11 @@ class GlueStorefrontApiApplicationConfig extends AbstractBundleConfig
     /**
      * @var string
      */
+    protected const HEADER_STRICT_TRANSPORT_SECURITY_VALUE = 'max-age=31536000; includeSubDomains; preload';
+
+    /**
+     * @var string
+     */
     protected const HEADER_ACCEPT = 'accept';
 
     /**
@@ -168,6 +173,19 @@ class GlueStorefrontApiApplicationConfig extends AbstractBundleConfig
             'generator_class' => CompiledUrlGenerator::class,
             'matcher_class' => CompiledUrlMatcher::class,
         ];
+    }
+
+    /**
+     * Specification:
+     * - Returns `Strict-Transport-Security` header value.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getStrictTransportSecurityHeader(): string
+    {
+        return static::HEADER_STRICT_TRANSPORT_SECURITY_VALUE;
     }
 
     /**

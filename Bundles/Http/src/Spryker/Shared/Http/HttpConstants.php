@@ -85,6 +85,16 @@ interface HttpConstants
 
     /**
      * Specification:
+     * - HTTP Cache-Control header body.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const YVES_HTTP_CACHE_CONTROL_CONFIG = 'HTTP:YVES_HTTP_CACHE_CONTROL_CONFIG';
+
+    /**
+     * Specification:
      *  - HTTP port for Zed.
      *
      * @api
@@ -146,6 +156,16 @@ interface HttpConstants
 
     /**
      * Specification:
+     * - HTTP Cache-Control header body.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const ZED_HTTP_CACHE_CONTROL_CONFIG = 'HTTP:ZED_HTTP_CACHE_CONTROL_CONFIG';
+
+    /**
+     * Specification:
      *  - HTTP port for Glue.
      *
      * @api
@@ -204,6 +224,16 @@ interface HttpConstants
      * @var string
      */
     public const GLUE_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG = 'HTTP:GLUE_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG';
+
+    /**
+     * Specification:
+     * - HTTP Cache-Control header body.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const GLUE_HTTP_CACHE_CONTROL_CONFIG = 'HTTP:GLUE_HTTP_CACHE_CONTROL_CONFIG';
 
     /**
      * Specification:

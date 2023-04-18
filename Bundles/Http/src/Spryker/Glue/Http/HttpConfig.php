@@ -94,4 +94,23 @@ class HttpConfig extends AbstractBundleConfig
     {
         return $this->get(HttpConstants::GLUE_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG, []);
     }
+
+    /**
+     * Specification:
+     *  - Defines Cache-Control directives.
+     *
+     * Example:
+     * [
+     *      'public' = true,
+     *      'max-age' = 3600,
+     * ]
+     *
+     * @api
+     *
+     * @return array<string, mixed>
+     */
+    public function getCacheControlConfig(): array
+    {
+        return $this->get(HttpConstants::GLUE_HTTP_CACHE_CONTROL_CONFIG, []);
+    }
 }

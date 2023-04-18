@@ -42,6 +42,14 @@ class EventDispatcherCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return array<\Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface>
+     */
+    public function getMerchantPortalEventDispatcherPlugins(): array
+    {
+        return $this->getProvidedDependency(EventDispatcherDependencyProvider::PLUGINS_MP_EVENT_DISPATCHER_PLUGINS);
+    }
+
+    /**
      * @return \Spryker\Shared\EventDispatcher\EventDispatcherInterface
      */
     public function createEventDispatcher(): EventDispatcherInterface
