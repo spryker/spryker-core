@@ -221,6 +221,7 @@ class ImageCollectionForm extends AbstractSubForm
                         'max' => 2048,
                     ]),
                 ],
+                'sanitize_xss' => true,
             ]);
 
         return $this;
@@ -245,6 +246,7 @@ class ImageCollectionForm extends AbstractSubForm
                         'max' => 2048,
                     ]),
                 ],
+                'sanitize_xss' => true,
             ]);
 
         return $this;

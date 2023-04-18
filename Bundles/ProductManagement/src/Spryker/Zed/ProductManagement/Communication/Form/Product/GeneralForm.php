@@ -67,6 +67,7 @@ class GeneralForm extends AbstractSubForm
                 'attr' => [
                     'data-translation-key' => static::FIELD_NAME,
                 ],
+                'sanitize_xss' => true,
             ]);
 
         return $this;
@@ -83,7 +84,7 @@ class GeneralForm extends AbstractSubForm
         $builder
             ->add(static::FIELD_DESCRIPTION, TextareaType::class, [
                 'required' => false,
-                'sanitize_xss' => false,
+                'sanitize_xss' => true,
             ]);
 
         return $this;
