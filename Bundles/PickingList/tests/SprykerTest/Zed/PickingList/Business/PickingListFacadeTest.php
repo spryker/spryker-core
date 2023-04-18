@@ -156,7 +156,7 @@ class PickingListFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testIsPickingFinishedForOrderShouldReturnFalseWhenNotAllPickingListsFinishedForOrder(): void
+    public function testIsPickingFinishedForOrderShouldReturnTrueWhenNotAllPickingListItemsWerePicked(): void
     {
         // Arrange
         $orderTransfer = $this->tester->createPersistedOrderTransfer();
@@ -166,7 +166,7 @@ class PickingListFacadeTest extends Unit
         $status = $this->tester->getFacade()->isPickingFinishedForOrder($orderTransfer);
 
         // Assert
-        $this->assertFalse($status);
+        $this->assertTrue($status);
     }
 
     /**
