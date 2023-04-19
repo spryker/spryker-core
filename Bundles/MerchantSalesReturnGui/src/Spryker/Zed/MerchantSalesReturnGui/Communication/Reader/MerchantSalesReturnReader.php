@@ -12,6 +12,9 @@ use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\MerchantSalesReturnGui\Dependency\Facade\MerchantSalesReturnGuiToMerchantSalesOrderFacadeInterface;
 
+/**
+ * @deprecated Will be removed without replacement. Exists only for BC reasons.
+ */
 class MerchantSalesReturnReader implements MerchantSalesReturnReaderInterface
 {
     /**

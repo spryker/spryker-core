@@ -10,6 +10,9 @@ namespace Spryker\Zed\MerchantSalesReturnGui\Communication\Reader;
 use ArrayObject;
 use Generated\Shared\Transfer\OrderTransfer;
 
+/**
+ * @deprecated Will be removed without replacement. Exists only for BC reasons.
+ */
 interface MerchantSalesReturnReaderInterface
 {
     /**

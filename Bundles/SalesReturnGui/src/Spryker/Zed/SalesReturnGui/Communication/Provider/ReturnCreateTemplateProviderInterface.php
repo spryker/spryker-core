@@ -10,6 +10,9 @@ namespace Spryker\Zed\SalesReturnGui\Communication\Provider;
 use Generated\Shared\Transfer\OrderTransfer;
 use Symfony\Component\Form\FormInterface;
 
+/**
+ * @deprecated Will be removed without replacement. Exists only for BC reasons.
+ */
 interface ReturnCreateTemplateProviderInterface
 {
     /**

@@ -66,6 +66,8 @@ class SalesReturnGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Zed\SalesReturnGui\Communication\Provider\ReturnCreateTemplateProviderInterface
      */
     public function createReturnCreateTemplateProvider(): ReturnCreateTemplateProviderInterface
@@ -204,6 +206,8 @@ class SalesReturnGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return array<\Spryker\Zed\SalesReturnGuiExtension\Dependency\Plugin\ReturnCreateTemplatePluginInterface>
      */
     public function getReturnCreateTemplatePlugins(): array

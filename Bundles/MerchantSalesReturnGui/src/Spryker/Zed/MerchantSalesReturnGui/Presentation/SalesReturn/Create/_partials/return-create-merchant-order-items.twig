@@ -1,0 +1,14 @@
+{# @var orderItem \Generated\Shared\Transfer\ItemTransfer #}
+{# @var merchant \Generated\Shared\Transfer\MerchantTransfer #}
+{# @var order \Generated\Shared\Transfer\OrderTransfer #}
+
+{% for returnMerchantOrderItem in form.returnMerchantOrderItems %}
+    {% if returnMerchantOrderItem.vars.value.orderItem.merchantReference == merchant.merchantReference %}
+        {% include '@SalesReturnGui/Create/_partials/return-create-item.twig' with {
+            returnItem: returnMerchantOrderItem,
+            orderItem: returnMerchantOrderItem.vars.value.orderItem,
+            order: order,
+            isBundleProduct: false,
+        } only %}
+    {% endif %}
+{% endfor %}

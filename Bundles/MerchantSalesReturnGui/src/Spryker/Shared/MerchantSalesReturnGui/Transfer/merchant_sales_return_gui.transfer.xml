@@ -4,10 +4,14 @@
     <transfer name="MerchantOrderCriteria">
         <property name="idOrder" type="int"/>
         <property name="withMerchant" type="bool"/>
+        <property name="withOrder" type="bool"/>
+        <property name="withItems" type="bool"/>
+        <property name="merchantOrderReferences" type="string[]" singular="merchantOrderReference" strict="true"/>
     </transfer>
 
     <transfer name="Order">
         <property name="idSalesOrder" type="int"/>
+        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
     <transfer name="MerchantOrderCollection">
@@ -15,6 +19,34 @@
     </transfer>
 
     <transfer name="MerchantOrder">
+        <property name="merchant" type="Merchant"/>
+        <property name="order" type="Order"/>
+        <property name="merchantOrderReference" type="string"/>
+        <property name="merchantOrderItems" type="MerchantOrderItem[]" singular="merchantOrderItem"/>
+    </transfer>
+
+    <transfer name="ReturnItem">
+        <property name="orderItem" type="Item"/>
+        <property name="reason" type="string"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="merchantOrderReference" type="string"/>
+        <property name="isReturnable" type="bool"/>
+    </transfer>
+
+    <transfer name="MerchantOrderItem">
+        <property name="orderItem" type="Item"/>
+    </transfer>
+
+    <transfer name="ReturnCreateRequest">
+        <property name="returnItems" type="ReturnItem[]" singular="returnItem"/>
+    </transfer>
+
+    <transfer name="Merchant">
+        <property name="merchantReference" type="string"/>
+        <property name="idMerchant" type="int"/>
+        <property name="name" type="string"/>
     </transfer>
 
 </transfers>

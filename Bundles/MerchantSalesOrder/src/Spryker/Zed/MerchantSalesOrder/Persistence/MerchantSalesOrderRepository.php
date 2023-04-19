@@ -221,6 +221,12 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
             );
         }
 
+        if ($merchantOrderCriteriaTransfer->getMerchantOrderReferences()) {
+            $merchantSalesOrderQuery->filterByMerchantSalesOrderReference_In(
+                $merchantOrderCriteriaTransfer->getMerchantOrderReferences(),
+            );
+        }
+
         if ($merchantOrderCriteriaTransfer->getMerchantReference() !== null) {
             $merchantSalesOrderQuery->filterByMerchantReference(
                 $merchantOrderCriteriaTransfer->getMerchantReference(),
@@ -264,7 +270,8 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
         }
 
         if ($merchantOrderCriteriaTransfer->getCustomerReference()) {
-            $merchantSalesOrderQuery->useOrderQuery()
+            $merchantSalesOrderQuery
+                ->useOrderQuery()
                     ->filterByCustomerReference($merchantOrderCriteriaTransfer->getCustomerReference())
                 ->endUse();
         }

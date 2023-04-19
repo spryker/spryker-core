@@ -204,7 +204,7 @@ class TriggerController extends AbstractController
      */
     protected function getRequestIdSalesOrderItems(Request $request): array
     {
-        $idOrderItems = $request->query->all()[static::REQUEST_PARAMETER_ITEMS] ?? [];
+        $idOrderItems = $request->query->all(static::REQUEST_PARAMETER_ITEMS);
 
         // Exists for Backward Compatibility reasons only.
         $idOrderItem = $request->query->get(static::REQUEST_PARAMETER_ID_SALES_ORDER_ITEM);

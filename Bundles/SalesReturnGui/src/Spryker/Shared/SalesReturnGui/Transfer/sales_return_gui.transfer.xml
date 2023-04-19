@@ -9,6 +9,7 @@
         <property name="email" type="string"/>
         <property name="firstName" type="string"/>
         <property name="lastName" type="string"/>
+        <property name="orderReference" type="string"/>
     </transfer>
 
     <transfer name="Money">

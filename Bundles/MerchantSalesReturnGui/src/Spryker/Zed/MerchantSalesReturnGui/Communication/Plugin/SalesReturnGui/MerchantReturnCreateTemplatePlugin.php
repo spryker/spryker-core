@@ -12,6 +12,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SalesReturnGuiExtension\Dependency\Plugin\ReturnCreateTemplatePluginInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\MerchantSalesReturnGui\Communication\Plugin\SalesReturnGui\MerchantSalesReturnCreateFormHandlerPlugin} to get template data and handle subform.
+ *
  * @method \Spryker\Zed\MerchantSalesReturnGui\MerchantSalesReturnGuiConfig getConfig()
  * @method \Spryker\Zed\MerchantSalesReturnGui\Communication\MerchantSalesReturnGuiCommunicationFactory getFactory()
  */

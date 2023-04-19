@@ -1,0 +1,70 @@
+{# @var merchant \Generated\Shared\Transfer\MerchantTransfer #}
+{# @var order \Generated\Shared\Transfer\OrderTransfer #}
+{# @var orderItem \Generated\Shared\Transfer\ItemTransfer #}
+
+{% set returnMerchantOrders = form.returnMerchantOrders | default([]) %}
+
+{% if returnMerchantOrders | length > 1 %}
+    <div class="alert alert-info">
+        <p>
+            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+            {{ 'You can only return products from one merchant at a time.' | trans }}
+        </p>
+    </div>
+{% endif %}
+
+{% for returnMerchantOrder in returnMerchantOrders %}
+    {% set merchant = returnMerchantOrder.vars.value.merchant %}
+
+    <div class="row">
+        <div class="col-lg-12 font-bold">
+            {{ 'Merchant Order %row% of %length%' | trans({'%row%': loop.index, '%length%': loop.length}) }}
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 font-bold">
+            {{ 'Fullfilled by merchant' | trans }}:
+            <a target="_blank" href="{{ url('/merchant-gui/edit-merchant', {'id-merchant': merchant.idMerchant}) }}">
+                {{ merchant.name }}
+            </a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12 font-bold">
+            {{ 'Merchant Order Reference' | trans }}:
+            <a target="_blank" href="{{ url('/sales/detail', {'id-sales-order' : order.idSalesOrder}) }}">
+                {{ returnMerchantOrder.vars.value.returnMerchantOrderItems | first.orderItem.merchantReference }}
+            </a>
+        </div>
+    </div>
+
+    <br>
+
+    <div class="table-responsive">
+        <table class="table js-return-items-table" data-qa="order-item-list">
+            <thead>
+                <tr class="text-left">
+                    <th><input type="checkbox" class="js-check-all-items"></th>
+                    <th colspan="2">{{ 'Product' | trans }}</th>
+                    <th>{{ 'Quantity' | trans }}</th>
+                    <th>{{ 'Price' | trans }}</th>
+                    <th>{{ 'Total' | trans }}</th>
+                    <th>{{ 'Return policy' | trans }}</th>
+                    <th>{{ 'State' | trans }}</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% include '@MerchantSalesReturnGui/SalesReturn/Create/_partials/return-create-merchant-order-items.twig' with {
+                    form: returnMerchantOrder,
+                    order: returnMerchantOrder.vars.value.order,
+                    merchant: merchant,
+                } only %}
+            </tbody>
+        </table>
+    </div>
+
+    <hr>
+{% endfor %}

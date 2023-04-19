@@ -891,10 +891,6 @@ class CategoryRepository extends AbstractRepository implements CategoryRepositor
             $categoryQuery->filterByIdCategory_In($categoryConditionsTransfer->getCategoryIds());
         }
 
-        if ($categoryConditionsTransfer->getCategoryKeys()) {
-            $categoryQuery->filterByCategoryKey_In($categoryConditionsTransfer->getCategoryKeys());
-        }
-
         if ($categoryConditionsTransfer->getIsMain() !== null) {
             $categoryQuery
                 ->useNodeQuery('node', Criteria::LEFT_JOIN)

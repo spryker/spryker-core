@@ -60,8 +60,20 @@ interface MerchantSalesOrderFacadeInterface
 
     /**
      * Specification:
-     * - Finds all the merchant orders using MerchantOrderCriteriaTransfer.
-     * - Returns a collection of found merchant orders.
+     * - Gets `MerchantOrderCollection` filtered by `MerchantOrderCriteria`.
+     * - Uses `MerchantOrderCriteria.idMerchantOrder` to filter merchant orders by merchant order ID.
+     * - Uses `MerchantOrderCriteria.merchantOrderReference` to filter merchant orders by merchant order reference.
+     * - Uses `MerchantOrderCriteria.merchantOrderReferences` to filter merchant orders by merchant order references.
+     * - Uses `MerchantOrderCriteria.merchantReference` to filter merchant orders by merchant reference.
+     * - Uses `MerchantOrderCriteria.idOrder` to filter merchant orders by order ID.
+     * - Uses `MerchantOrderCriteria.idMerchant` to filter merchant orders by merchant ID.
+     * - Uses `MerchantOrderCriteria.orderItemUuids` to filter merchant orders by order item UUIDs.
+     * - Uses `MerchantOrderCriteria.customerReference` to filter merchant orders by customer reference.
+     * - Uses `MerchantOrderCriteria.merchantReferences` to filter merchant orders by merchant references.
+     * - If `MerchantOrderCriteria.withMerchant` == `true` expands each item of `MerchantOrderCollection` with merchant.
+     * - If `MerchantOrderCriteria.withOrder` == `true` expands each item of `MerchantOrderCollection` with order and expenses.
+     * - If `MerchantOrderCriteria.withItems` == `true` expands each item of `MerchantOrder.merchantOrderItems`
+     *   for `MerchantOrderCollection` with order item.
      *
      * @api
      *

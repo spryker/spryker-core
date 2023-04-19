@@ -77,6 +77,7 @@
         <property name="orderItemUuids" type="string[]" singular="orderItemUuid"/>
         <property name="withMerchant" type="bool"/>
         <property name="merchantReferences" type="string[]" singular="merchantReference"/>
+        <property name="merchantOrderReferences" type="string[]" singular="merchantOrderReference" strict="true"/>
     </transfer>
 
     <transfer name="MerchantOrderItemResponse">

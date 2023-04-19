@@ -225,7 +225,34 @@ class MerchantSalesOrderReader implements MerchantSalesOrderReaderInterface
             $merchantOrderCollectionTransfer = $this->addMerchantToMerchantOrders($merchantOrderCollectionTransfer);
         }
 
+        if ($merchantOrderCriteriaTransfer->getWithOrder()) {
+            $merchantOrderCollectionTransfer = $this->expandMerchantOrdersWithSalesOrder(
+                $merchantOrderCollectionTransfer,
+                $merchantOrderCriteriaTransfer,
+            );
+        }
+
         return $merchantOrderCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantOrderCollectionTransfer $merchantOrderCollectionTransfer
+     * @param \Generated\Shared\Transfer\MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderCollectionTransfer
+     */
+    protected function expandMerchantOrdersWithSalesOrder(
+        MerchantOrderCollectionTransfer $merchantOrderCollectionTransfer,
+        MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer
+    ): MerchantOrderCollectionTransfer {
+        $merchantOrderTransfersWithOrders = new ArrayObject();
+        foreach ($merchantOrderCollectionTransfer->getMerchantOrders() as $merchantOrderTransfer) {
+            $merchantOrderTransfer = $this->addSalesOrder($merchantOrderTransfer, $merchantOrderCriteriaTransfer);
+            $merchantOrderTransfer = $this->executeSalesOrderFilterPlugins($merchantOrderTransfer);
+            $merchantOrderTransfersWithOrders->append($merchantOrderTransfer);
+        }
+
+        return $merchantOrderCollectionTransfer->setMerchantOrders($merchantOrderTransfersWithOrders);
     }
 
     /**

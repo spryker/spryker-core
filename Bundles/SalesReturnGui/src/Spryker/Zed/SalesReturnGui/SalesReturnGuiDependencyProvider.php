@@ -59,6 +59,8 @@ class SalesReturnGuiDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_RETURN_CREATE_FORM_HANDLER = 'PLUGINS_RETURN_CREATE_FORM_HANDLER';
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @var string
      */
     public const PLUGINS_RETURN_CREATE_TEMPLATE = 'PLUGINS_RETURN_CREATE_TEMPLATE';
@@ -230,6 +232,8 @@ class SalesReturnGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -252,6 +256,8 @@ class SalesReturnGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return array<\Spryker\Zed\SalesReturnGuiExtension\Dependency\Plugin\ReturnCreateTemplatePluginInterface>
      */
     protected function getReturnCreateTemplatePlugins(): array

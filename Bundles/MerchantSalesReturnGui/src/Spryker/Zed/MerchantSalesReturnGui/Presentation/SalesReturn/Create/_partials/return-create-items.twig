@@ -1,3 +1,4 @@
+{# @deprecated this file is deprecated, please use @MerchantSalesReturnGui/Create/_partials/return-create-merchant-order-items.twig' instead. #}
 {% set returnItems = form.returnItems | filter(returnItem => returnItem.vars.value.orderItem.salesOrderConfiguredBundle is empty) %}
 
 {% for returnItem in returnItems %}

@@ -9,6 +9,7 @@
 {% endblock %}
 
 {% block content %}
+    {# @deprecated property "templates" is deprecated: use the "template_path" child attribute of the "returnCreateForm" property in the "@SalesReturnGui/Create/default.twig" template instead. #}
     {% if templates %}
         {% for templatePath, templateData in templates %}
             {% include templatePath with templateData %}

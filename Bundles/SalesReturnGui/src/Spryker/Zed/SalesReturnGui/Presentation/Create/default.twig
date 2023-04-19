@@ -1,3 +1,5 @@
+{# @var order \Generated\Shared\Transfer\OrderTransfer #}
+
 {% embed '@Gui/Partials/widget.twig' with { widget_title: 'General information' } %}
     {% block widget_content %}
         <div class="row">
@@ -18,38 +20,53 @@
         {{ form_start(returnCreateForm) }}
         {{ form_errors(returnCreateForm) }}
 
-        <div class="table-responsive">
-            <table class="table js-return-items-table" data-qa="order-item-list">
-                <thead>
-                <tr class="text-left">
-                    <th><input type="checkbox" class="js-check-all-items"></th>
-                    <th colspan="2">{{ 'Product' | trans }}</th>
-                    <th>{{ 'Quantity' | trans }}</th>
-                    <th>{{ 'Price' | trans }}</th>
-                    <th>{{ 'Total' | trans }}</th>
-                    <th>{{ 'Return policy' | trans }}</th>
-                    <th>{{ 'State' | trans }}</th>
-                </tr>
-                </thead>
+        {% for child in returnCreateForm %}
+            {% if child.vars.attr.template_path is defined %}
+                <div class="form-group">
+                    {% if 'hidden' not in child.vars.block_prefixes %}
+                        {{ form_label(child) }}
+                        {{ form_errors(child) }}
+                    {% endif %}
 
-                <tbody>
-                {% include '@SalesReturnGui/Create/_partials/return-create-items.twig' with {
-                    form: returnCreateForm,
-                    order: order,
-                } only %}
+                    {% include child.vars.attr.template_path with { form: returnCreateForm, order: order } only %}
+                </div>
+            {% endif %}
+        {% endfor %}
 
-                {% include '@SalesReturnGui/Create/_partials/return-create-configured-bundles.twig' with {
-                    form: returnCreateForm,
-                    order: order,
-                } only %}
+        {% if returnCreateForm.returnItems.vars.value or returnCreateForm.returnBundleItems.vars.value %}
+            <div class="table-responsive">
+                <table class="table js-return-items-table" data-qa="order-item-list">
+                    <thead>
+                        <tr class="text-left">
+                            <th><input type="checkbox" class="js-check-all-items"></th>
+                            <th colspan="2">{{ 'Product' | trans }}</th>
+                            <th>{{ 'Quantity' | trans }}</th>
+                            <th>{{ 'Price' | trans }}</th>
+                            <th>{{ 'Total' | trans }}</th>
+                            <th>{{ 'Return policy' | trans }}</th>
+                            <th>{{ 'State' | trans }}</th>
+                        </tr>
+                    </thead>
 
-                {% include '@SalesReturnGui/Create/_partials/return-create-product-bundles.twig' with {
-                    form: returnCreateForm,
-                    order: order,
-                } only %}
-                </tbody>
-            </table>
-        </div>
+                    <tbody>
+                        {% include '@SalesReturnGui/Create/_partials/return-create-items.twig' with {
+                            form: returnCreateForm,
+                            order: order,
+                        } only %}
+
+                        {% include '@SalesReturnGui/Create/_partials/return-create-configured-bundles.twig' with {
+                            form: returnCreateForm,
+                            order: order,
+                        } only %}
+
+                        {% include '@SalesReturnGui/Create/_partials/return-create-product-bundles.twig' with {
+                            form: returnCreateForm,
+                            order: order,
+                        } only %}
+                    </tbody>
+                </table>
+            </div>
+        {% endif %}
 
         <button class="btn btn-primary safe-submit js-create-return-submit" disabled>{{ 'Create return' | trans }}</button>
 
