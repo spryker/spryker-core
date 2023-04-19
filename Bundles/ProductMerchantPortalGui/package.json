@@ -27,7 +27,7 @@
         "@spryker/radio": "^1.0.1",
         "@spryker/select": "^1.0.1",
         "@spryker/styles": "^1.0.1",
-        "@spryker/table": "^1.0.2",
+        "@spryker/table": "^1.0.3",
         "@spryker/tabs": "^1.0.1",
         "@spryker/textarea": "^1.0.1",
         "@spryker/toggle": "^1.0.1",
