@@ -8,6 +8,10 @@
 namespace Spryker\Client\ProductCategoryStorage;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\ProductCategoryStorage\Filter\ProductCategoryStorageFilter;
+use Spryker\Client\ProductCategoryStorage\Filter\ProductCategoryStorageFilterInterface;
+use Spryker\Client\ProductCategoryStorage\Sorter\ProductCategoryStorageSorter;
+use Spryker\Client\ProductCategoryStorage\Sorter\ProductCategoryStorageSorterInterface;
 use Spryker\Client\ProductCategoryStorage\Storage\ProductAbstractCategoryStorageReader;
 
 class ProductCategoryStorageFactory extends AbstractFactory
@@ -17,13 +21,33 @@ class ProductCategoryStorageFactory extends AbstractFactory
      */
     public function createProductCategoryStorageReader()
     {
-        return new ProductAbstractCategoryStorageReader($this->getStorage(), $this->getSynchronizationService());
+        return new ProductAbstractCategoryStorageReader(
+            $this->getStorage(),
+            $this->getSynchronizationService(),
+            $this->getProductAbstractCategoryStorageCollectionExpanderPlugins(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\ProductCategoryStorage\Filter\ProductCategoryStorageFilterInterface
+     */
+    public function createProductCategoryStorageFilter(): ProductCategoryStorageFilterInterface
+    {
+        return new ProductCategoryStorageFilter();
+    }
+
+    /**
+     * @return \Spryker\Client\ProductCategoryStorage\Sorter\ProductCategoryStorageSorterInterface
+     */
+    public function createProductCategoryStorageSorter(): ProductCategoryStorageSorterInterface
+    {
+        return new ProductCategoryStorageSorter();
     }
 
     /**
      * @return \Spryker\Client\ProductCategoryStorage\Dependency\Client\ProductCategoryStorageToStorageClientInterface
      */
-    protected function getStorage()
+    public function getStorage()
     {
         return $this->getProvidedDependency(ProductCategoryStorageDependencyProvider::CLIENT_STORAGE);
     }
@@ -31,8 +55,16 @@ class ProductCategoryStorageFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ProductCategoryStorage\Dependency\Service\ProductCategoryStorageToSynchronizationServiceBridge
      */
-    protected function getSynchronizationService()
+    public function getSynchronizationService()
     {
         return $this->getProvidedDependency(ProductCategoryStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
+    }
+
+    /**
+     * @return list<\Spryker\Client\ProductCategoryStorageExtension\Dependency\Plugin\ProductAbstractCategoryStorageCollectionExpanderPluginInterface>
+     */
+    public function getProductAbstractCategoryStorageCollectionExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductCategoryStorageDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_CATEGORY_STORAGE_COLLECTION_EXPANDER);
     }
 }

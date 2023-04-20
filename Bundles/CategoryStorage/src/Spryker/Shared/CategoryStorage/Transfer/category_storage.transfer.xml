@@ -130,6 +130,19 @@
         <property name="orderBy" type="string"/>
     </transfer>
 
+    <transfer name="ProductAbstractCategoryStorage">
+        <property name="categories" type="ProductCategoryStorage[]" singular="category"/>
+    </transfer>
+
+    <transfer name="ProductCategoryStorage">
+        <property name="parentCategoryIds" type="int[]" singular="idParentCategory" strict="true"/>
+        <property name="categoryNodeId" type="int"/>
+    </transfer>
+
+    <transfer name="ProductAbstractCategoryStorageCollection" strict="true">
+        <property name="productAbstractCategories" type="ProductAbstractCategoryStorage[]" singular="productAbstractCategory"/>
+    </transfer>
+
     <transfer name="SearchHttpResponse">
         <property name="facets" type="array" singular="facet"/>
     </transfer>

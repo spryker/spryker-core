@@ -92,7 +92,9 @@ class CategoryNodeStorage implements CategoryNodeStorageInterface
             );
         }
 
-        return array_merge($cachedCategoryNodeStorageData, $categoryNodeStorageTransfers);
+        $categoryNodeStorageTransfers = array_merge($cachedCategoryNodeStorageData, $categoryNodeStorageTransfers);
+
+        return $this->getCategoryNodeStorageTransfersIndexedByNodeId($categoryNodeStorageTransfers);
     }
 
     /**
@@ -319,5 +321,25 @@ class CategoryNodeStorage implements CategoryNodeStorageInterface
         }
 
         return $cachedCategoryNodeData;
+    }
+
+    /**
+     * @param list<\Generated\Shared\Transfer\CategoryNodeStorageTransfer> $categoryNodeStorageTransfers
+     *
+     * @return array<int, \Generated\Shared\Transfer\CategoryNodeStorageTransfer>
+     */
+    protected function getCategoryNodeStorageTransfersIndexedByNodeId(array $categoryNodeStorageTransfers): array
+    {
+        $indexedCategoryNodeStorageTransfers = [];
+
+        foreach ($categoryNodeStorageTransfers as $categoryNodeStorageTransfer) {
+            if (!$categoryNodeStorageTransfer->getNodeId()) {
+                continue;
+            }
+
+            $indexedCategoryNodeStorageTransfers[$categoryNodeStorageTransfer->getNodeIdOrFail()] = $categoryNodeStorageTransfer;
+        }
+
+        return $indexedCategoryNodeStorageTransfers;
     }
 }

@@ -218,8 +218,8 @@ class CmsSlotBlockProductCategoryConnectorClientTest extends Unit
             ->getMockBuilder(CmsSlotBlockProductCategoryConnectorToProductCategoryStorageClientInterface::class)
             ->getMock();
         $productCategoryStorageClientMock->expects($this->once())
-            ->method('findProductAbstractCategory')
-            ->willReturn($productAbstractCategoryStorageTransfer);
+            ->method('findBulkProductAbstractCategory')
+            ->willReturn([$productAbstractCategoryStorageTransfer]);
         $this->tester->setDependency(
             CmsSlotBlockProductCategoryConnectorDependencyProvider::CLIENT_PRODUCT_CATEGORY_STORAGE,
             $productCategoryStorageClientMock,

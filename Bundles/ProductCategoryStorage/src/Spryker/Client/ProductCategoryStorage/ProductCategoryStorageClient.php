@@ -20,6 +20,8 @@ class ProductCategoryStorageClient extends AbstractClient implements ProductCate
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Client\ProductCategoryStorage\ProductCategoryStorageClient::findBulkProductAbstractCategory()} instead.
+     *
      * @param int $idProductAbstract
      * @param string $localeName
      * @param string $storeName
@@ -52,5 +54,38 @@ class ProductCategoryStorageClient extends AbstractClient implements ProductCate
         return $this->getFactory()
             ->createProductCategoryStorageReader()
             ->findBulkProductAbstractCategory($productAbstractIds, $localeName, $storeName);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array<int, \Generated\Shared\Transfer\ProductCategoryStorageTransfer> $productCategoryStorageTransfers
+     * @param string $httpReferer
+     *
+     * @return list<\Generated\Shared\Transfer\ProductCategoryStorageTransfer>
+     */
+    public function filterProductCategoriesByHttpReferer(array $productCategoryStorageTransfers, string $httpReferer): array
+    {
+        return $this->getFactory()
+            ->createProductCategoryStorageFilter()
+            ->filterProductCategoriesByHttpReferer($productCategoryStorageTransfers, $httpReferer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array<int, \Generated\Shared\Transfer\ProductCategoryStorageTransfer> $productCategoryStorageTransfers
+     *
+     * @return list<\Generated\Shared\Transfer\ProductCategoryStorageTransfer>
+     */
+    public function sortProductCategories(array $productCategoryStorageTransfers): array
+    {
+        return $this->getFactory()
+            ->createProductCategoryStorageSorter()
+            ->sortProductCategories($productCategoryStorageTransfers);
     }
 }

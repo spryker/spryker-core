@@ -28,6 +28,11 @@ class ProductCategoryStorageDependencyProvider extends AbstractDependencyProvide
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
 
     /**
+     * @var string
+     */
+    public const PLUGINS_PRODUCT_ABSTRACT_CATEGORY_STORAGE_COLLECTION_EXPANDER = 'PLUGINS_PRODUCT_ABSTRACT_CATEGORY_STORAGE_COLLECTION_EXPANDER';
+
+    /**
      * @param \Spryker\Client\Kernel\Container $container
      *
      * @return \Spryker\Client\Kernel\Container
@@ -36,6 +41,7 @@ class ProductCategoryStorageDependencyProvider extends AbstractDependencyProvide
     {
         $container = $this->addStorageClient($container);
         $container = $this->addSynchronizationService($container);
+        $container = $this->addProductAbstractCategoryStorageCollectionExpanderPlugins($container);
 
         return $container;
     }
@@ -66,5 +72,27 @@ class ProductCategoryStorageDependencyProvider extends AbstractDependencyProvide
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addProductAbstractCategoryStorageCollectionExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRODUCT_ABSTRACT_CATEGORY_STORAGE_COLLECTION_EXPANDER, function () {
+            return $this->getProductAbstractCategoryStorageCollectionExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return list<\Spryker\Client\ProductCategoryStorageExtension\Dependency\Plugin\ProductAbstractCategoryStorageCollectionExpanderPluginInterface>
+     */
+    protected function getProductAbstractCategoryStorageCollectionExpanderPlugins(): array
+    {
+        return [];
     }
 }

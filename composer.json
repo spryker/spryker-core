@@ -616,6 +616,7 @@
         "spryker/product-category-filter-storage": "*",
         "spryker/product-category-search": "*",
         "spryker/product-category-storage": "*",
+        "spryker/product-category-storage-extension": "*",
         "spryker/product-configuration": "*",
         "spryker/product-configuration-cart": "*",
         "spryker/product-configuration-data-import": "*",

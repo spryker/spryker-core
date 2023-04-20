@@ -7,8 +7,6 @@
 
 namespace Spryker\Glue\ProductsCategoriesResourceRelationship\Dependency\Client;
 
-use Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer;
-
 class ProductsCategoriesResourceRelationshipToProductCategoryStorageClientBridge implements ProductsCategoriesResourceRelationshipToProductCategoryStorageClientInterface
 {
     /**
@@ -22,21 +20,6 @@ class ProductsCategoriesResourceRelationshipToProductCategoryStorageClientBridge
     public function __construct($productCategoryStorageClient)
     {
         $this->productCategoryStorageClient = $productCategoryStorageClient;
-    }
-
-    /**
-     * @param int $idProductAbstract
-     * @param string $localeName
-     * @param string $storeName
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer|null
-     */
-    public function findProductAbstractCategory(
-        int $idProductAbstract,
-        string $localeName,
-        string $storeName
-    ): ?ProductAbstractCategoryStorageTransfer {
-        return $this->productCategoryStorageClient->findProductAbstractCategory($idProductAbstract, $localeName, $storeName);
     }
 
     /**

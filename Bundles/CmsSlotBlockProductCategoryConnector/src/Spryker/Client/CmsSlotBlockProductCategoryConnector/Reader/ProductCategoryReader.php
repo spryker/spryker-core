@@ -52,12 +52,14 @@ class ProductCategoryReader implements ProductCategoryReaderInterface
     public function getAbstractProductCategoryIds(int $idProductAbstract): array
     {
         $localeName = $this->localeClient->getCurrentLocale();
-        $productAbstractCategoryStorageTransfer = $this->productCategoryStorageClient->findProductAbstractCategory(
-            $idProductAbstract,
+        $productAbstractCategoryStorageTransfers = $this->productCategoryStorageClient->findBulkProductAbstractCategory(
+            [$idProductAbstract],
             $localeName,
             $this->storeClient->getCurrentStore()->getNameOrFail(),
         );
 
+        /** @var \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer|false $productAbstractCategoryStorageTransfer */
+        $productAbstractCategoryStorageTransfer = reset($productAbstractCategoryStorageTransfers);
         if (!$productAbstractCategoryStorageTransfer) {
             return [];
         }

@@ -9,6 +9,7 @@ namespace Spryker\Client\CategoryStorage;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CategoryNodeStorageTransfer;
+use Generated\Shared\Transfer\ProductAbstractCategoryStorageCollectionTransfer;
 use Generated\Shared\Transfer\SearchHttpResponseTransfer;
 
 interface CategoryStorageClientInterface
@@ -42,7 +43,8 @@ interface CategoryStorageClientInterface
 
     /**
      * Specification:
-     * - Returns category nodes storage data by array of id category node, locale name and store name.
+     * - Retrieves category nodes storage data by array of id category node, locale name and store name.
+     * - Returns category nodes indexed by node ids.
      *
      * @api
      *
@@ -69,6 +71,25 @@ interface CategoryStorageClientInterface
      * @return \ArrayObject<int, \Generated\Shared\Transfer\CategoryNodeSearchResultTransfer>
      */
     public function formatCategoryTreeFilter(array $docCountAggregation, string $localeName, string $storeName): ArrayObject;
+
+    /**
+     * Specification:
+     * - Requires `ProductAbstractCategoryStorageCollectionTransfer.productAbstractCategory.category.categoryNodeId` to be set.
+     * - Expands product categories with their parent category ids.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractCategoryStorageCollectionTransfer $productAbstractCategoryStorageCollectionTransfer
+     * @param string $localeName
+     * @param string $storeName
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractCategoryStorageCollectionTransfer
+     */
+    public function expandProductCategoriesWithParentIds(
+        ProductAbstractCategoryStorageCollectionTransfer $productAbstractCategoryStorageCollectionTransfer,
+        string $localeName,
+        string $storeName
+    ): ProductAbstractCategoryStorageCollectionTransfer;
 
     /**
      * Specification:

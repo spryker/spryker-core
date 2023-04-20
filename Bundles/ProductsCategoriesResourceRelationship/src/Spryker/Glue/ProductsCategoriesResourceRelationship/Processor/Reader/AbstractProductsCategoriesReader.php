@@ -110,14 +110,16 @@ class AbstractProductsCategoriesReader implements AbstractProductsCategoriesRead
     {
         $productCategoryNodeIds = [];
         $idProductAbstract = $abstractProductData[static::KEY_ID_PRODUCT_ABSTRACT];
-        $productCategories = $this->productCategoryStorageClient->findProductAbstractCategory(
-            $idProductAbstract,
+        $productAbstractCategoryStorageTransfers = $this->productCategoryStorageClient->findBulkProductAbstractCategory(
+            [$idProductAbstract],
             $locale,
             $this->storeClient->getCurrentStore()->getName(),
         );
 
-        if ($productCategories) {
-            foreach ($productCategories->getCategories() as $productCategory) {
+        /** @var \Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer|false $productAbstractCategoryStorageTransfer */
+        $productAbstractCategoryStorageTransfer = reset($productAbstractCategoryStorageTransfers);
+        if ($productAbstractCategoryStorageTransfer) {
+            foreach ($productAbstractCategoryStorageTransfer->getCategories() as $productCategory) {
                 $productCategoryNodeIds[] = $productCategory->getCategoryNodeId();
             }
         }

@@ -11,6 +11,8 @@ use Spryker\Client\CategoryStorage\Dependency\Client\CategoryStorageToLocaleClie
 use Spryker\Client\CategoryStorage\Dependency\Client\CategoryStorageToStorageInterface;
 use Spryker\Client\CategoryStorage\Dependency\Client\CategoryStorageToStoreClientInterface;
 use Spryker\Client\CategoryStorage\Dependency\Service\CategoryStorageToSynchronizationServiceInterface;
+use Spryker\Client\CategoryStorage\Expander\ProductCategoryStorageExpander;
+use Spryker\Client\CategoryStorage\Expander\ProductCategoryStorageExpanderInterface;
 use Spryker\Client\CategoryStorage\Formatter\CategoryTreeFilterFormatter;
 use Spryker\Client\CategoryStorage\Formatter\CategoryTreeFilterFormatterInterface;
 use Spryker\Client\CategoryStorage\Formatter\CategoryTreeSearchHttpFormatter;
@@ -80,6 +82,16 @@ class CategoryStorageFactory extends AbstractFactory
             $this->getSynchronizationService(),
             $this->getStoreClient(),
             $this->getLocaleClient(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\CategoryStorage\Expander\ProductCategoryStorageExpanderInterface
+     */
+    public function createProductCategoryStorageExpander(): ProductCategoryStorageExpanderInterface
+    {
+        return new ProductCategoryStorageExpander(
+            $this->createCategoryNodeStorage(),
         );
     }
 

@@ -9,6 +9,7 @@ namespace Spryker\Client\CategoryStorage;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CategoryNodeStorageTransfer;
+use Generated\Shared\Transfer\ProductAbstractCategoryStorageCollectionTransfer;
 use Generated\Shared\Transfer\SearchHttpResponseTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
@@ -86,6 +87,27 @@ class CategoryStorageClient extends AbstractClient implements CategoryStorageCli
         return $this->getFactory()
             ->createCategoryTreeFilterFormatter()
             ->formatCategoryTreeFilter($docCountAggregation, $localeName, $storeName);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductAbstractCategoryStorageCollectionTransfer $productAbstractCategoryStorageCollectionTransfer
+     * @param string $localeName
+     * @param string $storeName
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractCategoryStorageCollectionTransfer
+     */
+    public function expandProductCategoriesWithParentIds(
+        ProductAbstractCategoryStorageCollectionTransfer $productAbstractCategoryStorageCollectionTransfer,
+        string $localeName,
+        string $storeName
+    ): ProductAbstractCategoryStorageCollectionTransfer {
+        return $this->getFactory()
+            ->createProductCategoryStorageExpander()
+            ->expandProductCategoriesWithParentIds($productAbstractCategoryStorageCollectionTransfer, $localeName, $storeName);
     }
 
     /**
