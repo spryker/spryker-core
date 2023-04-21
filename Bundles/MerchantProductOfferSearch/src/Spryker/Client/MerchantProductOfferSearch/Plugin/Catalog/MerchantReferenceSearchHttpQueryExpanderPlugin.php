@@ -12,6 +12,9 @@ use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 
+/**
+ * @deprecated Will be removed without replacement. Exists only for BC reasons.
+ */
 class MerchantReferenceSearchHttpQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
     /**
