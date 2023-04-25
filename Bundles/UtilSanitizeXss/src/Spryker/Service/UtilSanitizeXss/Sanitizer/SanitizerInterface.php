@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Service\UtilSanitizeXss\Dependency\External;
+namespace Spryker\Service\UtilSanitizeXss\Sanitizer;
 
-interface UtilSanitizeToXssSanitizeInterface
+interface SanitizerInterface
 {
     /**
      * @param string $text

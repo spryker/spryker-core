@@ -20,15 +20,15 @@ class UtilSanitizeXssService extends AbstractService implements UtilSanitizeXssS
      * @api
      *
      * @param string $text
-     * @param array<string> $allowedAttributes
-     * @param array<string> $allowedHtmlTags
+     * @param list<string> $allowedAttributes
+     * @param list<string> $allowedHtmlTags
      *
      * @return string
      */
     public function sanitizeXss(string $text, array $allowedAttributes = [], array $allowedHtmlTags = []): string
     {
         return $this->getFactory()
-            ->getXssSanitizer()
+            ->createSanitizer()
             ->sanitize($text, $allowedAttributes, $allowedHtmlTags);
     }
 }

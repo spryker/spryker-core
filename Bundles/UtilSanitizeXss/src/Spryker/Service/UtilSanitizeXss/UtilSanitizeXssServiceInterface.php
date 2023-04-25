@@ -16,8 +16,8 @@ interface UtilSanitizeXssServiceInterface
      * @api
      *
      * @param string $text
-     * @param array<string> $allowedAttributes
-     * @param array<string> $allowedHtmlTags
+     * @param list<string> $allowedAttributes
+     * @param list<string> $allowedHtmlTags
      *
      * @return string
      */

@@ -151,6 +151,14 @@ class UtilSanitizeXssServiceTest extends Unit
                 '{{twig-function(<script>alert("Hack");</script>)}}{{ twig_function(<span style="font-size: 36px;"><b>&lt;script&gt;alert("Hack");&lt;/script&gt;</b></span>) }}{{ twig_file(<script>alert("Hack");</script>) }} {{ twigFile(<img SRC=&#x6A&#x61&#x76&#x61&#x73&#x63&#x72&#x69&#x70&#x74&#x3A&#x61&#x6C&#x65&#x72&#x74&#x28&#x27&#x58&#x53&#x53&#x27&#x29 />) }}',
                 '{{twig-function()}}{{ twig_function(<span ><b>alert&#40;"Hack"&#41;;</b></span>) }}{{ twig_file&#40;&#41; }} {{ twigFile(<img  />) }}',
             ],
+            'Should not remove valid functions in comments.' => [
+                '<!-- function() --> <!-- {{twig_file([1, 2, 3])}} --> <!-- <p>comment</p> -->',
+                '<!-- function() --> <!-- {{twig_file([1, 2, 3])}} --> <!-- <p>comment</p> -->',
+            ],
+            'Should sanitize invalid comments.' => [
+                '<!-- <script>alert("Hack");</script> --> <!-- <span style="font-size: 36px;"><b>&lt;script&gt;alert("Hack");&lt;/script&gt;</b></span> --> <!-- <img SRC=&#x6A&#x61&#x76&#x61&#x73&#x63&#x72&#x69&#x70&#x74&#x3A&#x61&#x6C&#x65&#x72&#x74&#x28&#x27&#x58&#x53&#x53&#x27&#x29 /> -->',
+                '<!--  --> <!-- <span ><b>alert&#40;"Hack"&#41;;</b></span> --> <!-- <img  /> -->',
+            ],
         ];
     }
 
