@@ -43,6 +43,7 @@
         <property name="idUser" type="int"/>
         <property name="isAgent" type="bool"/>
         <property name="password" type="string"/>
+        <property name="status" type="string"/>
     </transfer>
 
 </transfers>

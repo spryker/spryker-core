@@ -36,6 +36,7 @@ class AgentOauthUserProviderPlugin extends AbstractPlugin implements OauthUserPr
     /**
      * {@inheritDoc}
      * - Authenticates an agent.
+     * - Does not authenticate inactive agent.
      * - Reads agent data and provides it for access token.
      *
      * @api

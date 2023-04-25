@@ -9,12 +9,20 @@ namespace Spryker\Zed\OauthAgentConnector\Business\OauthUserProvider;
 
 use Generated\Shared\Transfer\CustomerIdentifierTransfer;
 use Generated\Shared\Transfer\OauthUserTransfer;
+use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\OauthAgentConnector\Business\Adapter\PasswordEncoderAdapterInterface;
 use Spryker\Zed\OauthAgentConnector\Dependency\Facade\OauthAgentConnectorToAgentFacadeInterface;
 use Spryker\Zed\OauthAgentConnector\Dependency\Service\OauthAgentConnectorToUtilEncodingServiceInterface;
 
 class AgentOauthUserProvider implements AgentOauthUserProviderInterface
 {
+    /**
+     * @uses \Orm\Zed\User\Persistence\Map\SpyUserTableMap::COL_STATUS_ACTIVE
+     *
+     * @var string
+     */
+    protected const COL_STATUS_ACTIVE = 'active';
+
     /**
      * @var \Spryker\Zed\OauthAgentConnector\Dependency\Facade\OauthAgentConnectorToAgentFacadeInterface
      */
@@ -54,13 +62,13 @@ class AgentOauthUserProvider implements AgentOauthUserProviderInterface
     {
         $oauthUserTransfer->setIsSuccess(false);
 
-        $findAgentResponseTransfer = $this->agentFacade->findAgentByUsername($oauthUserTransfer->getUsername());
-        if (!$findAgentResponseTransfer->getIsAgentFound()) {
+        $userTransfer = $this->findActiveAgentByUsername($oauthUserTransfer->getUsername());
+        if (!$userTransfer) {
             return $oauthUserTransfer;
         }
 
         $isAuthorized = $this->passwordEncoderAdapter->isPasswordValid(
-            $findAgentResponseTransfer->getAgent()->getPassword(),
+            $userTransfer->getPassword(),
             $oauthUserTransfer->getPassword(),
             null,
         );
@@ -70,12 +78,33 @@ class AgentOauthUserProvider implements AgentOauthUserProviderInterface
         }
 
         $customerIdentifierTransfer = (new CustomerIdentifierTransfer())
-            ->setIdAgent($findAgentResponseTransfer->getAgent()->getIdUser());
+            ->setIdAgent($userTransfer->getIdUser());
 
         $oauthUserTransfer
             ->setUserIdentifier($this->utilEncodingService->encodeJson($customerIdentifierTransfer->toArray()))
             ->setIsSuccess(true);
 
         return $oauthUserTransfer;
+    }
+
+    /**
+     * @param string $username
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer|null
+     */
+    protected function findActiveAgentByUsername(string $username): ?UserTransfer
+    {
+        $findAgentResponseTransfer = $this->agentFacade->findAgentByUsername($username);
+        $userTransfer = $findAgentResponseTransfer->getAgent();
+
+        if (!$findAgentResponseTransfer->getIsAgentFound()) {
+            return null;
+        }
+
+        if ($userTransfer && $userTransfer->getStatus() === static::COL_STATUS_ACTIVE) {
+            return $userTransfer;
+        }
+
+        return null;
     }
 }

@@ -96,7 +96,7 @@ class GetAgentOauthUserTest extends Unit
     {
         // Arrange
         $oauthUserTransfer = (new OauthUserTransfer())
-            ->setUsername('admin@spryker.com')
+            ->setUsername($this->userTransfer->getUsername())
             ->setPassword('change1233');
 
         // Act
@@ -104,5 +104,24 @@ class GetAgentOauthUserTest extends Unit
 
         // Assert
         $this->assertFalse($resultingOauthUserTransfer->getIsSuccess(), 'Agent should not be able to authorize with wrong credentials.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetAgentOauthUserWillNotAuthorizeAnAgentWithInactiveStatus(): void
+    {
+        // Arrange
+        $this->tester->getUserFacade()->deactivateUser($this->userTransfer->getIdUser());
+
+        $oauthUserTransfer = (new OauthUserTransfer())
+            ->setUsername($this->userTransfer->getUsername())
+            ->setPassword(static::USER_PASSWORD_VALUE);
+
+        // Act
+        $resultingOauthUserTransfer = $this->tester->getFacade()->getAgentOauthUser($oauthUserTransfer);
+
+        // Assert
+        $this->assertFalse($resultingOauthUserTransfer->getIsSuccess(), 'Agent should not be able to authorize with inactive account.');
     }
 }
