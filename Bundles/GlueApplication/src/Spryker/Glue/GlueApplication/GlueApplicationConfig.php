@@ -392,4 +392,20 @@ class GlueApplicationConfig extends AbstractBundleConfig
     {
         return static::DEFAULT_RESPONSE_FORMAT;
     }
+
+    /**
+     * Specification:
+     * - If true returns a response in format `{...}` according to REST API convention.
+     * - If false returns a response in format `[{...}]` not following to REST API convention.
+     *
+     * @api
+     *
+     * @deprecated Exists for Backward Compatibility reasons only.
+     *
+     * @return bool
+     */
+    public function isConfigurableResponseEnabled(): bool
+    {
+        return false;
+    }
 }

@@ -9,12 +9,16 @@ namespace SprykerTest\Glue\GlueApplication\ResponseBuilder;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\GlueRequestTransfer;
+use Generated\Shared\Transfer\GlueResourceMethodCollectionTransfer;
+use Generated\Shared\Transfer\GlueResourceMethodConfigurationTransfer;
 use Generated\Shared\Transfer\GlueResourceTransfer;
 use Generated\Shared\Transfer\GlueResponseTransfer;
 use Spryker\Glue\GlueApplication\Encoder\Response\ResponseEncoderStrategyInterface;
 use Spryker\Glue\GlueApplication\Formatter\Response\ResponseFormatter;
 use Spryker\Glue\GlueApplication\GlueApplicationConfig;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface;
 use SprykerTest\Glue\GlueApplication\Stub\AttributesTransfer;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Auto-generated group annotations
@@ -119,6 +123,60 @@ class ResponseFormatterTest extends Unit
     /**
      * @return void
      */
+    public function testResponseExpanderFollowsConventionWithEnabledSingleResponseProperty(): void
+    {
+        //Arrange
+        $glueRequest = (new GlueRequestTransfer())
+            ->setAcceptedFormat('application/json')
+            ->setRequestedFormat('application/json')
+            ->setResource($this->createGlueResourceTransfer(Request::METHOD_GET));
+
+        $glueResponse = new GlueResponseTransfer();
+        $glueResponse->addResource(
+            (new GlueResourceTransfer())->setAttributes(
+                (new AttributesTransfer())->setAttribute1('Foo')->setAttribute2('Bar'),
+            ),
+        );
+
+        //Act
+        $responseBuilder = new ResponseFormatter([$this->createJsonEncoderMock()], $this->getGlueApplicationConfigMock(true));
+        $result = $responseBuilder->format($glueResponse, $glueRequest, $this->createResourceInterfaceMock(true));
+
+        //Assert
+        $this->assertSame(200, $result->getHttpStatus());
+        $this->assertSame('{"attribute1":"Foo","attribute2":"Bar"}', $glueResponse->getContent());
+    }
+
+    /**
+     * @return void
+     */
+    public function testResponseExpanderDoesNotFollowConventionWithDisabledSingleResponseProperty(): void
+    {
+        //Arrange
+        $glueRequest = (new GlueRequestTransfer())
+            ->setAcceptedFormat('application/json')
+            ->setRequestedFormat('application/json')
+            ->setResource($this->createGlueResourceTransfer(Request::METHOD_GET));
+
+        $glueResponse = new GlueResponseTransfer();
+        $glueResponse->addResource(
+            (new GlueResourceTransfer())->setAttributes(
+                (new AttributesTransfer())->setAttribute1('Foo')->setAttribute2('Bar'),
+            ),
+        );
+
+        //Act
+        $responseBuilder = new ResponseFormatter([$this->createJsonEncoderMock()], $this->getGlueApplicationConfigMock(true));
+        $result = $responseBuilder->format($glueResponse, $glueRequest, $this->createResourceInterfaceMock());
+
+        //Assert
+        $this->assertSame(200, $result->getHttpStatus());
+        $this->assertSame('[{"attribute1":"Foo","attribute2":"Bar"}]', $glueResponse->getContent());
+    }
+
+    /**
+     * @return void
+     */
     public function testEmptyResponse(): void
     {
         //Arrange
@@ -176,15 +234,52 @@ class ResponseFormatterTest extends Unit
     }
 
     /**
+     * @param bool $isConfigurableResponseEnabled
+     *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Glue\GlueApplication\GlueApplicationConfig|mixed
      */
-    protected function getGlueApplicationConfigMock()
+    protected function getGlueApplicationConfigMock(bool $isConfigurableResponseEnabled = false)
     {
         $configMock = $this->createMock(GlueApplicationConfig::class);
         $configMock->expects($this->any())
             ->method('getDefaultResponseFormat')
             ->willReturn(static::DEFAULT_FORMAT);
+        $configMock->expects($this->any())
+            ->method('isConfigurableResponseEnabled')
+            ->willReturn($isConfigurableResponseEnabled);
 
         return $configMock;
+    }
+
+    /**
+     * @param string $method
+     *
+     * @return \Generated\Shared\Transfer\GlueResourceTransfer
+     */
+    protected function createGlueResourceTransfer(string $method): GlueResourceTransfer
+    {
+        return (new GlueResourceTransfer())
+            ->setMethod(strtolower($method));
+    }
+
+    /**
+     * @param bool $isSingularResponse
+     *
+     * @return \PHPUnit\Framework\MockObject\MockObject|\SprykerTest\Glue\GlueApplication\ResponseBuilder\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface
+     */
+    protected function createResourceInterfaceMock(bool $isSingularResponse = false): ResourceInterface
+    {
+        $glueResourceMethodCollectionTransfer = (new GlueResourceMethodCollectionTransfer())
+            ->setGet((new GlueResourceMethodConfigurationTransfer())
+                ->setAction('getAction')
+                ->setIsSnakeCased(true)
+                ->setIsSingularResponse($isSingularResponse));
+
+        $resourceInterfaceMock = $this->createMock(ResourceInterface::class);
+        $resourceInterfaceMock->expects($this->exactly(2))
+            ->method('getDeclaredMethods')
+            ->willReturn($glueResourceMethodCollectionTransfer);
+
+        return $resourceInterfaceMock;
     }
 }

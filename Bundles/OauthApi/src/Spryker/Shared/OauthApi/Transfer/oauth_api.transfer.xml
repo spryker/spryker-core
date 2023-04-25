@@ -72,6 +72,7 @@
         <property name="action" type="string"/>
         <property name="attributes" type="string"/>
         <property name="isSnakeCased" type="bool"/>
+        <property name="isSingularResponse" type="bool"/>
     </transfer>
 
     <transfer name="GlueResource">

@@ -56,7 +56,8 @@ class OauthApiTokenResource extends AbstractResourcePlugin implements ResourceIn
                 (new GlueResourceMethodConfigurationTransfer())
                     ->setAction('postAction')
                     ->setAttributes('\Generated\Shared\Transfer\ApiTokenAttributesTransfer')
-                    ->setIsSnakeCased(true),
+                    ->setIsSnakeCased(true)
+                    ->setIsSingularResponse(true),
             );
     }
 }

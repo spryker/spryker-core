@@ -68,8 +68,10 @@ class ResponseFormatter implements ResponseFormatterInterface
                 $this->glueApplicationConfig->getDefaultResponseFormat(),
             );
         }
+
         $isSnakeCased = $this->getIsSnakeCased($glueRequestTransfer, $resource);
-        $data = $this->expandData($glueResponseTransfer, $isSnakeCased);
+        $isSingularResponse = $this->getIsSingularResponse($glueRequestTransfer, $resource);
+        $data = $this->expandData($glueResponseTransfer, $isSnakeCased, $isSingularResponse);
 
         return $this->formatResponse($glueResponseTransfer, $glueRequestTransfer->getAcceptedFormat(), $data);
     }
@@ -96,12 +98,17 @@ class ResponseFormatter implements ResponseFormatterInterface
     /**
      * @param \Generated\Shared\Transfer\GlueResponseTransfer $glueResponseTransfer
      * @param bool $isSnakeCased
+     * @param bool $isSingularResponse
      *
      * @return array<mixed>
      */
-    protected function expandData(GlueResponseTransfer $glueResponseTransfer, bool $isSnakeCased): array
-    {
+    protected function expandData(
+        GlueResponseTransfer $glueResponseTransfer,
+        bool $isSnakeCased,
+        bool $isSingularResponse
+    ): array {
         $data = [];
+
         if ($glueResponseTransfer->getErrors()->count()) {
             foreach ($glueResponseTransfer->getErrors() as $glueErrorTransfer) {
                 $data[] = $glueErrorTransfer->toArray(true, !$isSnakeCased);
@@ -110,10 +117,32 @@ class ResponseFormatter implements ResponseFormatterInterface
             return $data;
         }
 
-        if ($glueResponseTransfer->getResources()->count() !== 0) {
-            foreach ($glueResponseTransfer->getResources() as $resource) {
-                $data[] = $resource->getAttributesOrFail()->toArray(true, !$isSnakeCased);
-            }
+        if ($this->glueApplicationConfig->isConfigurableResponseEnabled() === true && $isSingularResponse === true) {
+            return $glueResponseTransfer->getResources()
+                ->offsetGet(0)
+                ->getAttributesOrFail()
+                ->toArray(true, !$isSnakeCased);
+        }
+
+        return $this->getDataWithMultiResources($glueResponseTransfer, $isSnakeCased);
+    }
+
+    /**
+     * @deprecated Exists for BC reasons. Will be removed in the next major release.
+     *
+     * @param \Generated\Shared\Transfer\GlueResponseTransfer $glueResponseTransfer
+     * @param bool $isSnakeCased
+     *
+     * @return array<mixed>
+     */
+    protected function getDataWithMultiResources(
+        GlueResponseTransfer $glueResponseTransfer,
+        bool $isSnakeCased
+    ): array {
+        $data = [];
+
+        foreach ($glueResponseTransfer->getResources() as $resource) {
+            $data[] = $resource->getAttributesOrFail()->toArray(true, !$isSnakeCased);
         }
 
         return $data;
@@ -142,19 +171,23 @@ class ResponseFormatter implements ResponseFormatterInterface
     /**
      * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
      * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface|null $resource
+     * @param string $propertyName
      *
      * @return bool
      */
-    protected function getIsSnakeCased(
+    protected function getMethodProperty(
         GlueRequestTransfer $glueRequestTransfer,
-        ?ResourceInterface $resource = null
+        ?ResourceInterface $resource,
+        string $propertyName
     ): bool {
         if ($resource === null) {
             return false;
         }
+
         if ($glueRequestTransfer->getResource() === null) {
             return false;
         }
+
         $method = $glueRequestTransfer->getResourceOrFail()->getMethodOrFail();
         $declaredMethods = $resource->getDeclaredMethods();
 
@@ -162,7 +195,33 @@ class ResponseFormatter implements ResponseFormatterInterface
             return false;
         }
 
-        return (bool)$declaredMethods->offsetGet($method)->getIsSnakeCased();
+        return (bool)$declaredMethods->offsetGet($method)->$propertyName();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface|null $resource
+     *
+     * @return bool
+     */
+    protected function getIsSnakeCased(
+        GlueRequestTransfer $glueRequestTransfer,
+        ?ResourceInterface $resource = null
+    ): bool {
+        return $this->getMethodProperty($glueRequestTransfer, $resource, 'getIsSnakeCased');
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GlueRequestTransfer $glueRequestTransfer
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceInterface|null $resource
+     *
+     * @return bool
+     */
+    protected function getIsSingularResponse(
+        GlueRequestTransfer $glueRequestTransfer,
+        ?ResourceInterface $resource = null
+    ): bool {
+        return $this->getMethodProperty($glueRequestTransfer, $resource, 'getIsSingularResponse');
     }
 
     /**
