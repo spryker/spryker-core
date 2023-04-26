@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ShoppingList\Communication\Plugin\CompanyUserExtension;
+namespace Spryker\Zed\ShoppingList\Communication\Plugin\CompanyUser;
 
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\ShoppingListShareRequestTransfer;
@@ -13,8 +13,6 @@ use Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPreDeletePlugi
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\ShoppingList\Communication\Plugin\CompanyUser\ShoppingListCompanyUserPreDeletePlugin} instead.
- *
  * @method \Spryker\Zed\ShoppingList\Business\ShoppingListFacadeInterface getFacade()
  * @method \Spryker\Zed\ShoppingList\Communication\ShoppingListCommunicationFactory getFactory()
  * @method \Spryker\Zed\ShoppingList\ShoppingListConfig getConfig()
@@ -23,7 +21,9 @@ class ShoppingListCompanyUserPreDeletePlugin extends AbstractPlugin implements C
 {
     /**
      * {@inheritDoc}
-     * - Un-shares shopping lists of company user.
+     * - Removes company user relations from shared shopping lists.
+     * - Removes company user relations from company business unit blacklists.
+     * - Requires `CompanyUserTransfer.idCompanyUser` to be set.
      *
      * @api
      *
@@ -34,7 +34,8 @@ class ShoppingListCompanyUserPreDeletePlugin extends AbstractPlugin implements C
     public function preDelete(CompanyUserTransfer $companyUserTransfer): void
     {
         $shoppingListShareRequestTransfer = (new ShoppingListShareRequestTransfer())
-            ->setIdCompanyUser($companyUserTransfer->getIdCompanyUser());
+            ->setIdCompanyUser($companyUserTransfer->getIdCompanyUserOrFail())
+            ->setWithCompanyBusinessUnitBlacklists(true);
 
         $this->getFacade()->unShareCompanyUserShoppingLists($shoppingListShareRequestTransfer);
     }

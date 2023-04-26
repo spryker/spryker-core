@@ -464,6 +464,20 @@ class ShoppingListEntityManager extends AbstractEntityManager implements Shoppin
     }
 
     /**
+     * @param int $idCompanyUser
+     *
+     * @return void
+     */
+    public function deleteShoppingListCompanyBusinessUnitBlacklistsByIdCompanyUser(int $idCompanyUser): void
+    {
+        $shoppingListCompanyBusinessUnitBlacklistEntities = $this->getFactory()
+            ->createShoppingListCompanyBusinessUnitBlacklistPropelQuery()
+                ->filterByFkCompanyUser($idCompanyUser)
+            ->find()
+            ->delete();
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
      * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
      *

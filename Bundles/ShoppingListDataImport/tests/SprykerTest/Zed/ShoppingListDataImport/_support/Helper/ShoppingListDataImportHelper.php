@@ -73,11 +73,15 @@ class ShoppingListDataImportHelper extends Module
     }
 
     /**
+     * @deprecated Use TableRelationsCleanupHelper::ensureDatabaseTableIsEmpty() instead.
+     *
+     * @see \SprykerTest\Shared\Testify\Helper\TableRelationsCleanupHelper::ensureDatabaseTableIsEmpty()
+     *
      * @return void
      */
     public function ensureShoppingListCompanyBusinessUnitDatabaseTableIsEmpty(): void
     {
-        $this->getShoppingListCompanyBusinessUnitQuery()->deleteAll();
+        $this->cleanTableRelations($this->getShoppingListCompanyBusinessUnitQuery());
     }
 
     /**

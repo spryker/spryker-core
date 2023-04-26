@@ -98,6 +98,7 @@
         <property name="idCompanyBusinessUnit" type="int"/>
         <property name="idShoppingListPermissionGroup" type="int"/>
         <property name="shoppingListOwnerId" type="int"/>
+        <property name="withCompanyBusinessUnitBlacklists" type="bool" strict="true"/>
     </transfer>
 
     <transfer name="ShoppingListDismissRequest">

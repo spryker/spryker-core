@@ -348,7 +348,8 @@ interface ShoppingListFacadeInterface
 
     /**
      * Specification:
-     *  - Remove company user relation from shared shopping lists.
+     *  - Removes company user relations from shared shopping lists.
+     *  - Removes company user relations from company business unit blacklists if `ShoppingListShareRequest.withCompanyBusinessUnitBlacklists` is set to `true`.
      *
      * @api
      *

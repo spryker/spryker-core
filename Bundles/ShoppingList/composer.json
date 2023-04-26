@@ -23,7 +23,7 @@
         "spryker/session": "^4.0.0",
         "spryker/shopping-list-extension": "^1.5.0",
         "spryker/store": "^1.1.0",
-        "spryker/transfer": "^3.25.0",
+        "spryker/transfer": "^3.27.0",
         "spryker/zed-request": "^3.6.0"
     },
     "require-dev": {

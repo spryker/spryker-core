@@ -327,6 +327,10 @@ class ShoppingListSharer implements ShoppingListSharerInterface
 
         $this->shoppingListEntityManager->deleteShoppingListsCompanyUserByCompanyUserId($idCompanyUser);
 
+        if ($shoppingListShareRequestTransfer->getWithCompanyBusinessUnitBlacklists()) {
+            $this->shoppingListEntityManager->deleteShoppingListCompanyBusinessUnitBlacklistsByIdCompanyUser($idCompanyUser);
+        }
+
         return (new ShoppingListShareResponseTransfer())->setIsSuccess(true);
     }
 
