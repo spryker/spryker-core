@@ -72,11 +72,13 @@ class TokenDataExtractor implements TokenDataExtractorInterface
      */
     protected function createJwtTokenToOauthTokenDataTransfer(JwtTokenTransfer $jwtTokenTransfer): OauthAccessTokenDataTransfer
     {
+        $claims = $jwtTokenTransfer->getClaims();
+
         return (new OauthAccessTokenDataTransfer())
-            ->setOauthIssuedAt($jwtTokenTransfer->getClaims()[static::JWT_CLAIM_IAT] ?? null)
-            ->setOauthAccessTokenId($jwtTokenTransfer->getClaims()[static::JWT_CLAIM_JTI] ?? null)
-            ->setOauthClientId($jwtTokenTransfer->getClaims()[static::JWT_CLAIM_AUD] ?? null)
-            ->setOauthUserId($jwtTokenTransfer->getClaims()[static::JWT_CLAIM_SUB] ?? null)
-            ->setOauthScopes($jwtTokenTransfer->getClaims()[static::JWT_CLAIM_SCOPES] ?? null);
+            ->setOauthIssuedAt(isset($claims[static::JWT_CLAIM_IAT]) ? (int)$claims[static::JWT_CLAIM_IAT] : null)
+            ->setOauthAccessTokenId($claims[static::JWT_CLAIM_JTI] ?? null)
+            ->setOauthClientId($claims[static::JWT_CLAIM_AUD] ?? null)
+            ->setOauthUserId($claims[static::JWT_CLAIM_SUB] ?? null)
+            ->setOauthScopes($claims[static::JWT_CLAIM_SCOPES] ?? null);
     }
 }

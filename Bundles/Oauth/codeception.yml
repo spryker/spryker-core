@@ -1,6 +1,7 @@
 namespace: Oauth
 include:
     - tests/SprykerTest/Zed/Oauth
+    - tests/SprykerTest/Service/Oauth
 paths:
     tests: tests
     support: .
