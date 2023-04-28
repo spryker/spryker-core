@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\MessageBroker\Communication\Plugin\MessageBroker;
 
 use Codeception\Test\Unit;
+use DateTime;
 use Generated\Shared\Transfer\MessageAttributesTransfer;
 use Spryker\Zed\MessageBroker\Communication\Plugin\MessageBroker\TimestampMessageAttributeProviderPlugin;
 
@@ -39,5 +40,23 @@ class TimestampMessageAttributeProviderPluginTest extends Unit
 
         // Assert
         $this->assertNotNull($messageAttributesTransfer->getTimestamp());
+    }
+
+    /**
+     * @return void
+     */
+    public function testProvideMessageAttributesAddsValidTimestampWithAdequatePrecision(): void
+    {
+        // Arrange
+        $messageAttributesTransfer1 = new MessageAttributesTransfer();
+        $messageAttributesTransfer2 = new MessageAttributesTransfer();
+        $timestampMessageAttributeProviderPlugin = new TimestampMessageAttributeProviderPlugin();
+
+        // Act
+        $messageAttributesTransfer1 = $timestampMessageAttributeProviderPlugin->provideMessageAttributes($messageAttributesTransfer1);
+        $messageAttributesTransfer2 = $timestampMessageAttributeProviderPlugin->provideMessageAttributes($messageAttributesTransfer2);
+
+        // Assert
+        $this->assertGreaterThan(new DateTime($messageAttributesTransfer1->getTimestamp()), new DateTime($messageAttributesTransfer2->getTimestamp()));
     }
 }

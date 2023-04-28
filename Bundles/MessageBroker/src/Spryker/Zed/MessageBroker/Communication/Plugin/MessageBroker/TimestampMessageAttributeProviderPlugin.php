@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\MessageBroker\Communication\Plugin\MessageBroker;
 
+use DateTime;
+use DateTimeZone;
 use Generated\Shared\Transfer\MessageAttributesTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\MessageBrokerExtension\Dependency\Plugin\MessageAttributeProviderPluginInterface;
@@ -28,7 +30,8 @@ class TimestampMessageAttributeProviderPlugin extends AbstractPlugin implements 
      */
     public function provideMessageAttributes(MessageAttributesTransfer $messageAttributesTransfer): MessageAttributesTransfer
     {
-        $messageAttributesTransfer->setTimestamp(gmdate("Y-m-d\TH:i:s"));
+        $date = new DateTime('now', new DateTimeZone('UTC'));
+        $messageAttributesTransfer->setTimestamp($date->format('Y-m-d\TH:i:s.u'));
 
         return $messageAttributesTransfer;
     }
