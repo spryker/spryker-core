@@ -23,7 +23,6 @@
         "spryker/cart": "*",
         "spryker/code-sniffer": "*",
         "spryker/container": "*",
-        "spryker/merchant": "*",
         "spryker/propel": "*",
         "spryker/testify": "*"
     },

@@ -65,15 +65,11 @@ class ProductOfferValidityFacadeTest extends Unit
     public function testUpdateProductOfferStatusByValidityDate(): void
     {
         // Arrange
-        $merchant = $this->tester->haveMerchant();
-
         $productOfferValid = $this->tester->haveProductOffer([
-            ProductOfferTransfer::FK_MERCHANT => $merchant->getIdMerchant(),
             ProductOfferTransfer::IS_ACTIVE => false,
         ]);
 
         $productOfferInvalid = $this->tester->haveProductOffer([
-            ProductOfferTransfer::FK_MERCHANT => $merchant->getIdMerchant(),
             ProductOfferTransfer::IS_ACTIVE => true,
         ]);
 

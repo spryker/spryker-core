@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
+use Orm\Zed\ProductOffer\Persistence\SpyProductOffer;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -187,7 +188,7 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
             $productOfferQuery->filterByIdProductOffer($productOfferCriteria->getIdProductOffer());
         }
 
-        if ($productOfferCriteria->getMerchantReferences()) {
+        if ($productOfferCriteria->getMerchantReferences() && $this->hasMerchantReferenceField()) {
             $productOfferQuery->filterByMerchantReference_In($productOfferCriteria->getMerchantReferences());
         }
 
@@ -295,5 +296,15 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
         }
 
         return $result;
+    }
+
+    /**
+     * @deprecated Will be removed in the next major without replacement.
+     *
+     * @return bool
+     */
+    protected function hasMerchantReferenceField(): bool
+    {
+        return property_exists(SpyProductOffer::class, 'merchant_reference');
     }
 }

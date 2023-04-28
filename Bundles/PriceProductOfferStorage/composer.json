@@ -30,7 +30,6 @@
     "require-dev": {
         "spryker/code-sniffer": "*",
         "spryker/container": "*",
-        "spryker/merchant": "*",
         "spryker/propel": "*",
         "spryker/queue": "*",
         "spryker/testify": "*"

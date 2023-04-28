@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductOffer;
 
-use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
 use Orm\Zed\Store\Persistence\SpyStoreQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -43,11 +42,6 @@ class ProductOfferDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @var string
      */
-    public const PROPEL_QUERY_MERCHANT = 'PROPEL_QUERY_MERCHANT';
-
-    /**
-     * @var string
-     */
     public const PLUGINS_PRODUCT_OFFER_POST_CREATE = 'PLUGINS_PRODUCT_OFFER_POST_CREATE';
 
     /**
@@ -70,7 +64,6 @@ class ProductOfferDependencyProvider extends AbstractBundleDependencyProvider
         $container = parent::providePersistenceLayerDependencies($container);
 
         $container = $this->addStorePropelQuery($container);
-        $container = $this->addMerchantPropelQuery($container);
 
         return $container;
     }
@@ -103,20 +96,6 @@ class ProductOfferDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::PROPEL_QUERY_STORE, $container->factory(function () {
             return SpyStoreQuery::create();
-        }));
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addMerchantPropelQuery(Container $container): Container
-    {
-        $container->set(static::PROPEL_QUERY_MERCHANT, $container->factory(function () {
-            return SpyMerchantQuery::create();
         }));
 
         return $container;

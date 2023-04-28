@@ -78,7 +78,6 @@ class ProductPublishListenerTest extends Unit
 
         $this->productConcreteTransfer = $this->tester->haveProduct([ProductConcreteTransfer::IS_ACTIVE => false]);
         $productOfferTransfer = $this->tester->haveProductOffer([
-            ProductOfferTransfer::FK_MERCHANT => $this->tester->haveMerchant()->getIdMerchant(),
             ProductOfferTransfer::CONCRETE_SKU => $this->productConcreteTransfer->getSku(),
         ]);
 

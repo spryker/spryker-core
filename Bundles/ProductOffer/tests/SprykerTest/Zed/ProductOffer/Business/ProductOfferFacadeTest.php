@@ -117,7 +117,6 @@ class ProductOfferFacadeTest extends Unit
         // Arrange
         $productTransfer = $this->tester->haveFullProduct();
         $productOfferTransfer = $this->tester->haveProductOffer([
-            ProductOfferTransfer::FK_MERCHANT => $this->tester->haveMerchant()->getIdMerchant(),
             ProductOfferTransfer::ID_PRODUCT_CONCRETE => $productTransfer->getIdProductConcrete(),
         ]);
         $productOfferCriteriaTransfer = new ProductOfferCriteriaTransfer();
@@ -238,9 +237,7 @@ class ProductOfferFacadeTest extends Unit
     {
         // Arrange
         $productTransfer = $this->tester->haveFullProduct();
-        $merchantTransfer = $this->tester->haveMerchant();
         $productOfferTransfer = (new ProductOfferBuilder([
-            ProductOfferTransfer::FK_MERCHANT => $merchantTransfer->getIdMerchant(),
             ProductOfferTransfer::ID_PRODUCT_CONCRETE => $productTransfer->getIdProductConcrete(),
         ]))->build();
         $productOfferTransfer->setIdProductOffer(null);
@@ -260,7 +257,6 @@ class ProductOfferFacadeTest extends Unit
         // Arrange
         $productTransfer = $this->tester->haveFullProduct();
         $productOfferTransfer = (new ProductOfferBuilder([
-            ProductOfferTransfer::FK_MERCHANT => $this->tester->haveMerchant()->getIdMerchant(),
             ProductOfferTransfer::ID_PRODUCT_CONCRETE => $productTransfer->getIdProductConcrete(),
             ProductOfferTransfer::ID_PRODUCT_OFFER => null,
         ]))->build();
@@ -290,10 +286,8 @@ class ProductOfferFacadeTest extends Unit
     {
         // Arrange
         $productTransfer = $this->tester->haveFullProduct();
-        $merchantTransfer = $this->tester->haveMerchant();
         $productOfferTransfer = $this->tester->haveProductOffer([
             ProductOfferTransfer::IS_ACTIVE => false,
-            ProductOfferTransfer::FK_MERCHANT => $merchantTransfer->getIdMerchant(),
             ProductOfferTransfer::ID_PRODUCT_CONCRETE => $productTransfer->getIdProductConcrete(),
         ]);
 
@@ -313,10 +307,8 @@ class ProductOfferFacadeTest extends Unit
     {
         // Arrange
         $productTransfer = $this->tester->haveFullProduct();
-        $merchantTransfer = $this->tester->haveMerchant();
         $productOfferTransfer = $this->tester->haveProductOffer([
             ProductOfferTransfer::IS_ACTIVE => true,
-            ProductOfferTransfer::FK_MERCHANT => $merchantTransfer->getIdMerchant(),
             ProductOfferTransfer::ID_PRODUCT_CONCRETE => $productTransfer->getIdProductConcrete(),
         ]);
 

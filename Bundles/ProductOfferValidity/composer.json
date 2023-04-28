@@ -15,7 +15,6 @@
     },
     "require-dev": {
         "spryker/code-sniffer": "*",
-        "spryker/merchant": "*",
         "spryker/product": "*",
         "spryker/propel": "*",
         "spryker/testify": "*"
