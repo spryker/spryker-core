@@ -35,6 +35,11 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
     public const PRICE_PRODUCT_RELATION_NAME = 'PriceProduct';
 
     /**
+     * @var string
+     */
+    public const CURRENCY_RELATION_NAME = 'Currency';
+
+    /**
      * @param string $concreteSku
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
@@ -96,7 +101,8 @@ class PriceProductRepository extends AbstractRepository implements PriceProductR
                 static::PRICE_PRODUCT_RELATION_NAME,
                 SpyPriceProductTableMap::COL_FK_PRODUCT . ' = ?',
                 $idProductConcrete,
-            );
+            )
+            ->joinWith(static::CURRENCY_RELATION_NAME);
 
         $priceProductStoreEntities = $this->getPriceProductStoreEntitiesPerDimension(
             $priceProductCriteriaTransfer,

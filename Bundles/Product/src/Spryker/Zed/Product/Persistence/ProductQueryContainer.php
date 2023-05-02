@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Product\Persistence;
 
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
+use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -79,6 +80,23 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     {
         $query = $this->getFactory()->createProductAbstractLocalizedAttributesQuery();
         $query->filterByFkProductAbstract($idProductAbstract);
+
+        return $query;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array<int> $productAbstractIds
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
+     */
+    public function queryProductAbstractLocalizedAttributesBatch(array $productAbstractIds): SpyProductAbstractLocalizedAttributesQuery
+    {
+        $query = $this->getFactory()->createProductAbstractLocalizedAttributesQuery();
+        $query->filterByFkProductAbstract_In($productAbstractIds);
 
         return $query;
     }

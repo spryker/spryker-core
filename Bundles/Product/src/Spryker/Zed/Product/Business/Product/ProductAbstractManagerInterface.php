@@ -51,6 +51,13 @@ interface ProductAbstractManagerInterface
     public function findProductAbstractById($idProductAbstract);
 
     /**
+     * @param array<int> $productAbstractIds
+     *
+     * @return array<\Generated\Shared\Transfer\ProductAbstractTransfer>
+     */
+    public function findProductAbstractByIdsIndexedByProductAbstractIds(array $productAbstractIds): array;
+
+    /**
      * @param string $sku
      *
      * @throws \Spryker\Zed\Product\Business\Exception\MissingProductException

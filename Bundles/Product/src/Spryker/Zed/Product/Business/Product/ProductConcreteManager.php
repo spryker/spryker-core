@@ -171,6 +171,18 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     }
 
     /**
+     * @param array<int> $productIds
+     *
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
+     */
+    public function findProductConcreteByIds(array $productIds): array
+    {
+        $productEntityTransfers = $this->productRepository->findProductConcreteByIds($productIds);
+
+        return $this->loadProductTransfers($productEntityTransfers);
+    }
+
+    /**
      * @param string $productConcreteSku
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer|null
@@ -529,6 +541,22 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
         $productTransfer = $this->productTransferMapper->mapSpyProductEntityTransferToProductConcreteTransfer($productEntityTransfer);
 
         return $this->loadProductData([$productTransfer])[0];
+    }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\SpyProductEntityTransfer> $productEntityTransfers
+     *
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
+     */
+    protected function loadProductTransfers(array $productEntityTransfers): array
+    {
+        $productConcreteTransfers = [];
+
+        foreach ($productEntityTransfers as $productEntityTransfer) {
+            $productConcreteTransfers[] = $this->productTransferMapper->mapSpyProductEntityTransferToProductConcreteTransfer($productEntityTransfer);
+        }
+
+        return $this->loadProductData($productConcreteTransfers);
     }
 
     /**

@@ -46,6 +46,13 @@ interface ProductConcreteManagerInterface
     public function findProductConcreteById($idProduct);
 
     /**
+     * @param array<int> $productIds
+     *
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
+     */
+    public function findProductConcreteByIds(array $productIds): array;
+
+    /**
      * @param string $sku
      *
      * @return int|null

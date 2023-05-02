@@ -37,6 +37,13 @@ interface ProductRepositoryInterface
     public function findProductConcreteById(int $idProductConcrete): ?SpyProductEntityTransfer;
 
     /**
+     * @param array<int> $productIds
+     *
+     * @return array<\Generated\Shared\Transfer\SpyProductEntityTransfer>
+     */
+    public function findProductConcreteByIds(array $productIds);
+
+    /**
      * @param string $search
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param int $limit

@@ -10,7 +10,6 @@ namespace Spryker\Zed\Product\Business\Reader;
 use ArrayObject;
 use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteCriteriaTransfer;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\Product\Business\Product\Merger\ProductConcreteMergerInterface;
 use Spryker\Zed\Product\Business\Product\ProductAbstractManagerInterface;
 use Spryker\Zed\Product\Business\Product\ProductConcreteManagerInterface;
@@ -74,21 +73,23 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
     }
 
     /**
-     * @param int $productConcreteId
+     * @param array<int> $productConcreteIds
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
-    public function readProductConcreteMergedWithProductAbstractById(int $productConcreteId): ProductConcreteTransfer
+    public function readProductConcreteMergedWithProductAbstractByIds(array $productConcreteIds): array
     {
-        $productConcreteTransfer = $this->productConcreteManager->findProductConcreteById($productConcreteId);
+        $productConcreteTransfers = $this->productConcreteManager->findProductConcreteByIds($productConcreteIds);
 
-        $productAbstractTransfer = $this->productAbstractManager->findProductAbstractById($productConcreteTransfer->getFkProductAbstract());
+        $productAbstractIds = $this->extractProductAbstractIds($productConcreteTransfers);
 
-        $productConcreteTransfer->setUrl($this->productUrlManager->getProductUrl($productAbstractTransfer));
+        $productAbstractTransfersIndexedByProductAbstractIds = $this->productAbstractManager->findProductAbstractByIdsIndexedByProductAbstractIds($productAbstractIds);
 
-        return $this->productConcreteMerger->mergeProductConcreteWithProductAbstract(
-            $productConcreteTransfer,
-            $productAbstractTransfer,
+        $this->setProductUrls($productConcreteTransfers, $productAbstractTransfersIndexedByProductAbstractIds);
+
+        return $this->productConcreteMerger->mergeProductConcreteTransfersWithProductAbstractTransfers(
+            $productConcreteTransfers,
+            $productAbstractTransfersIndexedByProductAbstractIds,
         );
     }
 
@@ -115,6 +116,47 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
     {
         foreach ($this->productConcreteExpanderPlugins as $productConcreteExpanderPlugin) {
             $productConcreteTransfers = $productConcreteExpanderPlugin->expand($productConcreteTransfers);
+        }
+
+        return $productConcreteTransfers;
+    }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
+     *
+     * @return array<int>
+     */
+    protected function extractProductAbstractIds(array $productConcreteTransfers): array
+    {
+        $productAbstractIds = [];
+
+        foreach ($productConcreteTransfers as $productConcreteTransfer) {
+            $productAbstractIds[] = $productConcreteTransfer->getFkProductAbstractOrFail();
+        }
+
+        return array_unique($productAbstractIds);
+    }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
+     * @param array<int, \Generated\Shared\Transfer\ProductAbstractTransfer> $productAbstractTransfersIndexedByAbstractProductIds
+     *
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
+     */
+    protected function setProductUrls(
+        array $productConcreteTransfers,
+        array $productAbstractTransfersIndexedByAbstractProductIds
+    ): array {
+        foreach ($productConcreteTransfers as $key => $productConcreteTransfer) {
+            if (isset($productAbstractTransfersIndexedByAbstractProductIds[$productConcreteTransfer->getFkProductAbstract()])) {
+                $productConcreteTransfer->setUrl(
+                    $this->productUrlManager->getProductUrl(
+                        $productAbstractTransfersIndexedByAbstractProductIds[$productConcreteTransfer->getFkProductAbstract()],
+                    ),
+                );
+
+                $productConcreteTransfers[$key] = $productConcreteTransfer;
+            }
         }
 
         return $productConcreteTransfers;

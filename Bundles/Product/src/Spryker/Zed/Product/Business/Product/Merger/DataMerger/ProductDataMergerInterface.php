@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Product\Business\Product\Merger;
+namespace Spryker\Zed\Product\Business\Product\Merger\DataMerger;
 
-interface ProductConcreteMergerInterface
+interface ProductDataMergerInterface
 {
     /**
      * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
@@ -15,7 +15,7 @@ interface ProductConcreteMergerInterface
      *
      * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
-    public function mergeProductConcreteTransfersWithProductAbstractTransfers(
+    public function merge(
         array $productConcreteTransfers,
         array $productAbstractTransfersIndexedByProductAbstractId
     ): array;

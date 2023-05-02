@@ -9,16 +9,15 @@ namespace Spryker\Zed\Product\Business\Reader;
 
 use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteCriteriaTransfer;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 interface ProductConcreteReaderInterface
 {
     /**
-     * @param int $productConcreteId
+     * @param array<int> $productConcreteIds
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
-    public function readProductConcreteMergedWithProductAbstractById(int $productConcreteId): ProductConcreteTransfer;
+    public function readProductConcreteMergedWithProductAbstractByIds(array $productConcreteIds): array;
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteCriteriaTransfer $productConcreteCriteriaTransfer

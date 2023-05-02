@@ -130,37 +130,58 @@ class ProductMessageBrokerPublisher implements ProductPublisherInterface
     /**
      * @param \Generated\Shared\Transfer\ProductPublisherConfigTransfer $productPublisherConfigTransfer
      *
-     * @throws \Spryker\Zed\Product\Business\Exception\ProductPublisherWrongChunkSizeException
-     *
      * @return void
      */
     protected function performProductsConcretePublish(ProductPublisherConfigTransfer $productPublisherConfigTransfer): void
     {
+        $productConcreteIds = $this->getProductConcreteIds($productPublisherConfigTransfer);
+
+        $productsConcreteTransfers = $this->readProductsConcreteByIdsIndexedByStoreReference($productConcreteIds);
+
+        if (!count($productsConcreteTransfers)) {
+            return;
+        }
+
+        foreach ($productsConcreteTransfers as $storeReference => $productConcreteTransfers) {
+            $this->publishProductsConcreteTransfersByStoreReference(
+                $storeReference,
+                $productConcreteTransfers,
+                $productPublisherConfigTransfer,
+            );
+        }
+    }
+
+    /**
+     * @param string $storeReference
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
+     * @param \Generated\Shared\Transfer\ProductPublisherConfigTransfer $productPublisherConfigTransfer
+     *
+     * @throws \Spryker\Zed\Product\Business\Exception\ProductPublisherWrongChunkSizeException
+     *
+     * @return void
+     */
+    protected function publishProductsConcreteTransfersByStoreReference(
+        string $storeReference,
+        array $productConcreteTransfers,
+        ProductPublisherConfigTransfer $productPublisherConfigTransfer
+    ): void {
         if ($this->productConfig->getProductPublishToMessageBrokerChunkSize() < 1) {
             throw new ProductPublisherWrongChunkSizeException('Chunk size must be greater than 0');
         }
 
-        $productConcreteIdsChunks = array_chunk(
-            $this->getProductConcreteIds($productPublisherConfigTransfer),
+        $productConcreteTransferChunks = array_chunk(
+            $productConcreteTransfers,
             $this->productConfig->getProductPublishToMessageBrokerChunkSize(),
         );
 
-        foreach ($productConcreteIdsChunks as $productConcreteIdsChunk) {
-            $productsConcrete = $this->readProductsConcreteByIdsIndexedByStoreReference($productConcreteIdsChunk);
+        foreach ($productConcreteTransferChunks as $productConcreteTransferChunk) {
+            $publishTransfer = $this->createPublishTransfer(
+                $productPublisherConfigTransfer->getEventName(),
+                $productConcreteTransferChunk,
+                $storeReference,
+            );
 
-            if (!count($productsConcrete)) {
-                continue;
-            }
-
-            foreach ($productsConcrete as $storeReference => $productConcreteTransfers) {
-                $publishTransfer = $this->createPublishTransfer(
-                    $productPublisherConfigTransfer->getEventName(),
-                    $productConcreteTransfers,
-                    $storeReference,
-                );
-
-                $this->messageBrokerFacade->sendMessage($publishTransfer);
-            }
+            $this->messageBrokerFacade->sendMessage($publishTransfer);
         }
     }
 
@@ -197,26 +218,16 @@ class ProductMessageBrokerPublisher implements ProductPublisherInterface
      */
     protected function readProductsConcreteByIdsIndexedByStoreReference(array $productConcreteIds): array
     {
-        $productsConcrete = [];
+        try {
+            $productConcreteTransfers = $this->productConcreteReader
+                ->readProductConcreteMergedWithProductAbstractByIds($productConcreteIds);
 
-        foreach ($productConcreteIds as $productConcreteId) {
-            try {
-                $productConcreteTransfer = $this->productConcreteReader
-                    ->readProductConcreteMergedWithProductAbstractById($productConcreteId);
-
-                foreach ($productConcreteTransfer->getStores() as $storeTransfer) {
-                    if (!$storeTransfer->getStoreReference()) {
-                        continue;
-                    }
-
-                    $productsConcrete[$storeTransfer->getStoreReference()][] = $productConcreteTransfer;
-                }
-            } catch (Throwable $throwable) {
-                $this->getLogger()->error('Read product error: ' . $throwable->getMessage(), $throwable->getTrace());
-            }
+            return $this->groupProductsByStoreReference($productConcreteTransfers);
+        } catch (Throwable $throwable) {
+            $this->getLogger()->error('Read product error: ' . $throwable->getMessage(), ['exception' => $throwable]);
         }
 
-        return $productsConcrete;
+        return [];
     }
 
     /**
@@ -261,5 +272,27 @@ class ProductMessageBrokerPublisher implements ProductPublisherInterface
         }
 
         return $publishTransfer;
+    }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
+     *
+     * @return array<string, array<\Generated\Shared\Transfer\ProductConcreteTransfer>>
+     */
+    protected function groupProductsByStoreReference(array $productConcreteTransfers): array
+    {
+        $productConcreteTransfersGrouperByStoreReference = [];
+
+        foreach ($productConcreteTransfers as $productConcreteTransfer) {
+            foreach ($productConcreteTransfer->getStores() as $storeTransfer) {
+                if (!$storeTransfer->getStoreReference()) {
+                    continue;
+                }
+
+                $productConcreteTransfersGrouperByStoreReference[$storeTransfer->getStoreReference()][] = $productConcreteTransfer;
+            }
+        }
+
+        return $productConcreteTransfersGrouperByStoreReference;
     }
 }

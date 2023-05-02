@@ -203,11 +203,44 @@ class ConcreteManagementTest extends FacadeTestAbstract
     /**
      * @return void
      */
+    public function testGetProductConcreteCollectionByIdsShouldReturnConcreteTransfers(): void
+    {
+        // Arrange
+        $this->setupDefaultProducts();
+
+        // Act
+        $productConcreteTransferCollection = $this->productConcreteManager->findProductConcreteByIds(
+            [$this->productConcreteTransfer->getIdProductConcrete()],
+        );
+
+        // Assert
+        $this->assertIsArray($productConcreteTransferCollection);
+        $this->assertNotEmpty($productConcreteTransferCollection);
+        $this->assertCreateProductConcrete($productConcreteTransferCollection[0]);
+        $this->assertInstanceOf(ProductConcreteTransfer::class, $productConcreteTransferCollection[0]);
+    }
+
+    /**
+     * @return void
+     */
     public function testGetProductConcreteByIdShouldReturnNull(): void
     {
         $productConcreteTransfer = $this->productFacade->findProductConcreteById(101001);
 
         $this->assertNull($productConcreteTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductConcreteCollectionByIdsShouldReturnEmptyArray(): void
+    {
+        // Act
+        $productConcreteTransferCollection = $this->productConcreteManager->findProductConcreteByIds([101001]);
+
+        // Assert
+        $this->assertIsArray($productConcreteTransferCollection);
+        $this->assertEmpty($productConcreteTransferCollection);
     }
 
     /**

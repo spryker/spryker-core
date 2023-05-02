@@ -16,6 +16,14 @@ use Spryker\Zed\Product\Business\Exporter\ProductEventBusExporter;
 use Spryker\Zed\Product\Business\Exporter\ProductExporterInterface;
 use Spryker\Zed\Product\Business\Product\Assertion\ProductAbstractAssertion;
 use Spryker\Zed\Product\Business\Product\Assertion\ProductConcreteAssertion;
+use Spryker\Zed\Product\Business\Product\Mapper\ProductAttributeMapper;
+use Spryker\Zed\Product\Business\Product\Mapper\ProductAttributeMapperInterface;
+use Spryker\Zed\Product\Business\Product\Merger\DataMerger\ProductAbstractLocalizedAttributesDataMerger;
+use Spryker\Zed\Product\Business\Product\Merger\DataMerger\ProductAttributesDataMerger;
+use Spryker\Zed\Product\Business\Product\Merger\DataMerger\ProductDataMergerInterface;
+use Spryker\Zed\Product\Business\Product\Merger\DataMerger\ProductLocalizedAttributesDataMerger;
+use Spryker\Zed\Product\Business\Product\Merger\DataMerger\ProductSearchMetadataMerger;
+use Spryker\Zed\Product\Business\Product\Merger\DataMerger\ProductStoreDataMerger;
 use Spryker\Zed\Product\Business\Product\Merger\ProductConcreteMerger;
 use Spryker\Zed\Product\Business\Product\Merger\ProductConcreteMergerInterface;
 use Spryker\Zed\Product\Business\Product\NameGenerator\ProductAbstractNameGenerator;
@@ -102,6 +110,8 @@ class ProductBusinessFactory extends AbstractBusinessFactory
             $this->createProductAbstractStoreRelationWriter(),
             $this->getProductAbstractPreCreatePlugins(),
             $this->createProductEventTrigger(),
+            $this->getRepository(),
+            $this->createProductAttributesMapper(),
         );
 
         $productAbstractManager->setEventFacade($this->getEventFacade());
@@ -713,7 +723,10 @@ class ProductBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductConcreteMerger(): ProductConcreteMergerInterface
     {
-        return new ProductConcreteMerger($this->getProductConcreteMergerPlugins());
+        return new ProductConcreteMerger(
+            $this->getProductDataMergers(),
+            $this->getProductConcreteMergerPlugins(),
+        );
     }
 
     /**
@@ -751,5 +764,69 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     public function getProductAbstractCollectionPlugins(): array
     {
         return $this->getProvidedDependency(ProductDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_COLLECTION_EXPANDER);
+    }
+
+    /**
+     * @return array<\Spryker\Zed\Product\Business\Product\Merger\DataMerger\ProductDataMergerInterface>
+     */
+    public function getProductDataMergers(): array
+    {
+        return [
+            $this->createProductAbstractLocalizedAttributesDataMerger(),
+            $this->createProductAttributesDataMerger(),
+            $this->createProductLocalizedAttributesDataMerger(),
+            $this->createProductSearchMetadataMerger(),
+            $this->createProductStoreDataMerger(),
+        ];
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\Merger\DataMerger\ProductDataMergerInterface
+     */
+    public function createProductAbstractLocalizedAttributesDataMerger(): ProductDataMergerInterface
+    {
+        return new ProductAbstractLocalizedAttributesDataMerger();
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\Merger\DataMerger\ProductDataMergerInterface
+     */
+    public function createProductAttributesDataMerger(): ProductDataMergerInterface
+    {
+        return new ProductAttributesDataMerger();
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\Merger\DataMerger\ProductDataMergerInterface
+     */
+    public function createProductLocalizedAttributesDataMerger(): ProductDataMergerInterface
+    {
+        return new ProductLocalizedAttributesDataMerger();
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\Merger\DataMerger\ProductDataMergerInterface
+     */
+    public function createProductSearchMetadataMerger(): ProductDataMergerInterface
+    {
+        return new ProductSearchMetadataMerger();
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\Merger\DataMerger\ProductDataMergerInterface
+     */
+    public function createProductStoreDataMerger(): ProductDataMergerInterface
+    {
+        return new ProductStoreDataMerger();
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\Product\Mapper\ProductAttributeMapperInterface
+     */
+    public function createProductAttributesMapper(): ProductAttributeMapperInterface
+    {
+        return new ProductAttributeMapper(
+            $this->createAttributeEncoder(),
+        );
     }
 }

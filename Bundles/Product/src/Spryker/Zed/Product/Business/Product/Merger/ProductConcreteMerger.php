@@ -7,189 +7,91 @@
 
 namespace Spryker\Zed\Product\Business\Product\Merger;
 
-use Generated\Shared\Transfer\LocalizedAttributesTransfer;
-use Generated\Shared\Transfer\ProductAbstractTransfer;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
-
 class ProductConcreteMerger implements ProductConcreteMergerInterface
 {
+    /**
+     * @var array<\Spryker\Zed\Product\Business\Product\Merger\DataMerger\ProductDataMergerInterface>
+     */
+    protected array $productDataMergers;
+
     /**
      * @var array<\Spryker\Zed\ProductExtension\Dependency\Plugin\ProductConcreteMergerPluginInterface>
      */
     protected array $productMergerPlugins;
 
     /**
+     * @param array<\Spryker\Zed\Product\Business\Product\Merger\DataMerger\ProductDataMergerInterface> $productDataMergers
      * @param array<\Spryker\Zed\ProductExtension\Dependency\Plugin\ProductConcreteMergerPluginInterface> $productMergerPlugins
      */
-    public function __construct(array $productMergerPlugins)
-    {
+    public function __construct(
+        array $productDataMergers,
+        array $productMergerPlugins
+    ) {
+        $this->productDataMergers = $productDataMergers;
         $this->productMergerPlugins = $productMergerPlugins;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
+     * @param array<int, \Generated\Shared\Transfer\ProductAbstractTransfer> $productAbstractTransfersIndexedByProductAbstractId
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
-    public function mergeProductConcreteWithProductAbstract(
-        ProductConcreteTransfer $productConcreteTransfer,
-        ProductAbstractTransfer $productAbstractTransfer
-    ): ProductConcreteTransfer {
-        if ($productConcreteTransfer->getStores()->count() === 0 && $productAbstractTransfer->getStoreRelation()) {
-            $productConcreteTransfer->setStores($productAbstractTransfer->getStoreRelation()->getStores());
-        }
-
-        $productConcreteTransfer->setAttributes(
-            $this->getMergedAttributes($productConcreteTransfer, $productAbstractTransfer),
-        );
-
-        $productConcreteTransfer->setAbstractLocalizedAttributes($productAbstractTransfer->getLocalizedAttributes());
-
-        $this->mergeLocalizedAttributes($productConcreteTransfer, $productAbstractTransfer);
-
-        $this->mergeSearchMetadata($productConcreteTransfer, $productAbstractTransfer);
-
-        return $this->executeMergerPlugins($productConcreteTransfer, $productAbstractTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @return array
-     */
-    protected function getMergedAttributes(
-        ProductConcreteTransfer $productConcreteTransfer,
-        ProductAbstractTransfer $productAbstractTransfer
+    public function mergeProductConcreteTransfersWithProductAbstractTransfers(
+        array $productConcreteTransfers,
+        array $productAbstractTransfersIndexedByProductAbstractId
     ): array {
-        return array_unique(
-            array_merge(
-                $productAbstractTransfer->getAttributes(),
-                $productConcreteTransfer->getAttributes(),
-            ),
-        );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @return void
-     */
-    protected function mergeLocalizedAttributes(
-        ProductConcreteTransfer $productConcreteTransfer,
-        ProductAbstractTransfer $productAbstractTransfer
-    ): void {
-        foreach ($productAbstractTransfer->getLocalizedAttributes() as $localizedAttributesTransfer) {
-            $productConcreteLocalizedAttributesTransfer = $this->getProductConcreteLocalizedAttributesByLocale(
-                $productConcreteTransfer,
-                $localizedAttributesTransfer,
-            );
-
-            if ($productConcreteLocalizedAttributesTransfer !== null) {
-                $this->mergeLocalizedAttributesData($productConcreteLocalizedAttributesTransfer, $localizedAttributesTransfer);
-            } else {
-                $productConcreteTransfer->addLocalizedAttributes($localizedAttributesTransfer);
-            }
-        }
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     * @param \Generated\Shared\Transfer\LocalizedAttributesTransfer $localizedAttributesTransfer
-     *
-     * @return \Generated\Shared\Transfer\LocalizedAttributesTransfer|null
-     */
-    protected function getProductConcreteLocalizedAttributesByLocale(
-        ProductConcreteTransfer $productConcreteTransfer,
-        LocalizedAttributesTransfer $localizedAttributesTransfer
-    ): ?LocalizedAttributesTransfer {
-        foreach ($productConcreteTransfer->getLocalizedAttributes() as $productConcreteLocalizedAttributeTransfer) {
-            if (
-                $productConcreteLocalizedAttributeTransfer->getLocale()->getIdLocale()
-                === $localizedAttributesTransfer->getLocale()->getIdLocale()
-            ) {
-                return $productConcreteLocalizedAttributeTransfer;
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\LocalizedAttributesTransfer $productConcreteLocalizedAttributesTransfer
-     * @param \Generated\Shared\Transfer\LocalizedAttributesTransfer $productAbstractLocalizedAttributesTransfer
-     *
-     * @return void
-     */
-    protected function mergeLocalizedAttributesData(
-        LocalizedAttributesTransfer $productConcreteLocalizedAttributesTransfer,
-        LocalizedAttributesTransfer $productAbstractLocalizedAttributesTransfer
-    ): void {
-        if (!$productConcreteLocalizedAttributesTransfer->getName()) {
-            $productConcreteLocalizedAttributesTransfer->setName($productAbstractLocalizedAttributesTransfer->getName());
-        }
-
-        if (!$productConcreteLocalizedAttributesTransfer->getDescription()) {
-            $productConcreteLocalizedAttributesTransfer->setDescription($productAbstractLocalizedAttributesTransfer->getDescription());
-        }
-
-        if (!$productConcreteLocalizedAttributesTransfer->getMetaTitle()) {
-            $productConcreteLocalizedAttributesTransfer->setMetaTitle($productAbstractLocalizedAttributesTransfer->getMetaTitle());
-        }
-
-        if (!$productConcreteLocalizedAttributesTransfer->getMetaDescription()) {
-            $productConcreteLocalizedAttributesTransfer->setMetaDescription($productAbstractLocalizedAttributesTransfer->getMetaDescription());
-        }
-
-        if (!$productConcreteLocalizedAttributesTransfer->getMetaKeywords()) {
-            $productConcreteLocalizedAttributesTransfer->setMetaKeywords($productAbstractLocalizedAttributesTransfer->getMetaKeywords());
-        }
-
-        $productConcreteLocalizedAttributesTransfer->setAttributes(
-            array_unique(
-                array_merge(
-                    $productAbstractLocalizedAttributesTransfer->getAttributes(),
-                    $productConcreteLocalizedAttributesTransfer->getAttributes(),
-                ),
-            ),
+        $productConcreteTransfers = $this->mergeProductData(
+            $productConcreteTransfers,
+            $productAbstractTransfersIndexedByProductAbstractId,
         );
 
-        if ($productConcreteLocalizedAttributesTransfer->getIsSearchable() === null) {
-            $productConcreteLocalizedAttributesTransfer->setIsSearchable($productAbstractLocalizedAttributesTransfer->getIsSearchable());
-        }
+        return $this->executeMergerPlugins($productConcreteTransfers, $productAbstractTransfersIndexedByProductAbstractId);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
+     * @param array<int, \Generated\Shared\Transfer\ProductAbstractTransfer> $productAbstractTransfersIndexedByProductAbstractId
      *
-     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
+     */
+    protected function mergeProductData(
+        array $productConcreteTransfers,
+        array $productAbstractTransfersIndexedByProductAbstractId
+    ): array {
+        foreach ($this->productDataMergers as $productDataMerger) {
+            $productConcreteTransfers = $productDataMerger
+                ->merge(
+                    $productConcreteTransfers,
+                    $productAbstractTransfersIndexedByProductAbstractId,
+                );
+        }
+
+        return $productConcreteTransfers;
+    }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\ProductConcreteTransfer> $productConcreteTransfers
+     * @param array<int, \Generated\Shared\Transfer\ProductAbstractTransfer> $productAbstractTransfersIndexedByProductAbstractId
+     *
+     * @return array<\Generated\Shared\Transfer\ProductConcreteTransfer>
      */
     protected function executeMergerPlugins(
-        ProductConcreteTransfer $productConcreteTransfer,
-        ProductAbstractTransfer $productAbstractTransfer
-    ): ProductConcreteTransfer {
+        array $productConcreteTransfers,
+        array $productAbstractTransfersIndexedByProductAbstractId
+    ): array {
         foreach ($this->productMergerPlugins as $productMergerPlugin) {
-            $productConcreteTransfer = $productMergerPlugin->merge($productConcreteTransfer, $productAbstractTransfer);
+            foreach ($productConcreteTransfers as $key => $productConcreteTransfer) {
+                if (isset($productAbstractTransfersIndexedByProductAbstractId[$productConcreteTransfer->getFkProductAbstract()])) {
+                    $productConcreteTransfers[$key] = $productMergerPlugin
+                        ->merge(
+                            $productConcreteTransfer,
+                            $productAbstractTransfersIndexedByProductAbstractId[$productConcreteTransfer->getFkProductAbstract()],
+                        );
+                }
+            }
         }
 
-        return $productConcreteTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
-     *
-     * @return void
-     */
-    protected function mergeSearchMetadata(
-        ProductConcreteTransfer $productConcreteTransfer,
-        ProductAbstractTransfer $productAbstractTransfer
-    ): void {
-        if (!$productConcreteTransfer->getSearchMetadata()) {
-            $productConcreteTransfer->setSearchMetadata($productAbstractTransfer->getSearchMetadata());
-        }
+        return $productConcreteTransfers;
     }
 }

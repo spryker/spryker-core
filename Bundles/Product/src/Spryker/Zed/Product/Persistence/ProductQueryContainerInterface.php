@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Product\Persistence;
 
+use Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
 interface ProductQueryContainerInterface extends QueryContainerInterface
@@ -55,6 +56,18 @@ interface ProductQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
      */
     public function queryProductAbstractLocalizedAttributes($idProductAbstract);
+
+    /**
+     * Specification:
+     * - Returns Localized Attributes query to retrieve a batch of Localized Attributes by given product abstract ids.
+     *
+     * @api
+     *
+     * @param array<int> $productAbstractIds
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
+     */
+    public function queryProductAbstractLocalizedAttributesBatch(array $productAbstractIds): SpyProductAbstractLocalizedAttributesQuery;
 
     /**
      * Specification:

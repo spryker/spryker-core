@@ -117,11 +117,43 @@ class AbstractManagementTest extends FacadeTestAbstract
     /**
      * @return void
      */
+    public function testGetProductAbstractCollectionByIdsIndexedByIdsReturnsAProductCollectionWithMergedAttributesWhenProductsByIdAreFound(): void
+    {
+        // Arrange
+        $idProductAbstract = $this->createNewProductAbstractAndAssertNoTouchExists();
+
+        // Act
+        $productAbstractCollection = $this->productAbstractManager->findProductAbstractByIdsIndexedByProductAbstractIds([$idProductAbstract]);
+
+        // Assert
+        $this->assertIsArray($productAbstractCollection);
+        $this->assertNotEmpty($productAbstractCollection);
+        $this->assertNotEmpty($productAbstractCollection[$idProductAbstract]);
+        $this->assertInstanceOf(ProductAbstractTransfer::class, $productAbstractCollection[$idProductAbstract]);
+        $this->assertSame(static::ABSTRACT_SKU, $productAbstractCollection[$idProductAbstract]->getSku());
+    }
+
+    /**
+     * @return void
+     */
     public function testGetProductAbstractByIdShouldReturnNull(): void
     {
         $productAbstract = $this->productFacade->findProductAbstractById(1010001);
 
         $this->assertNull($productAbstract);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductAbstractCollectionByIdsIndexedByIdsReturnsAnEmptyProductCollectionWhenProductsByIdsAreNotFound(): void
+    {
+        // Act
+        $productAbstractCollection = $this->productAbstractManager->findProductAbstractByIdsIndexedByProductAbstractIds([1010001]);
+
+        // Assert
+        $this->assertIsArray($productAbstractCollection);
+        $this->assertEmpty($productAbstractCollection);
     }
 
     /**

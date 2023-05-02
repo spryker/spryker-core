@@ -454,4 +454,23 @@ class ProductBusinessTester extends Actor
                 return true;
             }));
     }
+
+    /**
+     * @param int $idLocale
+     * @param string $dataPrefix
+     *
+     * @return array<string, mixed>
+     */
+    public function createProductLocalizedAttribute(int $idLocale, string $dataPrefix): array
+    {
+        return (new LocalizedAttributesTransfer())
+            ->setLocale((new LocaleTransfer())->setIdLocale($idLocale))
+            ->setName($dataPrefix . 'LocalizedAttributeName')
+            ->setDescription($dataPrefix . 'LocalizedAttributeDescription')
+            ->setIsSearchable(true)
+            ->setMetaDescription($dataPrefix . 'LocalizedAttributeMetaDescription')
+            ->setMetaKeywords($dataPrefix . 'LocalizedAttributeMetaKeywords')
+            ->setMetaTitle($dataPrefix . 'LocalizedAttributeMetaTitle')
+            ->toArray();
+    }
 }

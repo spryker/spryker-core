@@ -82,6 +82,21 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
     }
 
     /**
+     * @param array<int> $productIds
+     *
+     * @return array<\Generated\Shared\Transfer\SpyProductEntityTransfer>
+     */
+    public function findProductConcreteByIds(array $productIds): array
+    {
+        $productQuery = $this->getFactory()
+            ->createProductQuery()
+            ->joinWithSpyProductAbstract()
+            ->filterByIdProduct_In($productIds);
+
+        return $this->buildQueryFromCriteria($productQuery)->find();
+    }
+
+    /**
      * @param string $search
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param int $limit

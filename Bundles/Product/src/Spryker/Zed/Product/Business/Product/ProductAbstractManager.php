@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
 use Spryker\Zed\Product\Business\Product\Assertion\ProductAbstractAssertionInterface;
+use Spryker\Zed\Product\Business\Product\Mapper\ProductAttributeMapperInterface;
 use Spryker\Zed\Product\Business\Product\Observer\AbstractProductAbstractManagerSubject;
 use Spryker\Zed\Product\Business\Product\Sku\SkuGeneratorInterface;
 use Spryker\Zed\Product\Business\Product\StoreRelation\ProductAbstractStoreRelationReaderInterface;
@@ -23,6 +24,7 @@ use Spryker\Zed\Product\Business\Transfer\ProductTransferMapperInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
+use Spryker\Zed\Product\Persistence\ProductRepositoryInterface;
 
 class ProductAbstractManager extends AbstractProductAbstractManagerSubject implements ProductAbstractManagerInterface
 {
@@ -84,6 +86,16 @@ class ProductAbstractManager extends AbstractProductAbstractManagerSubject imple
     protected $productEventTrigger;
 
     /**
+     * @var \Spryker\Zed\Product\Persistence\ProductRepositoryInterface
+     */
+    protected ProductRepositoryInterface $productRepository;
+
+    /**
+     * @var \Spryker\Zed\Product\Business\Product\Mapper\ProductAttributeMapperInterface
+     */
+    protected ProductAttributeMapperInterface $productAttributeMapper;
+
+    /**
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      * @param \Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface $touchFacade
      * @param \Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface $localeFacade
@@ -95,6 +107,8 @@ class ProductAbstractManager extends AbstractProductAbstractManagerSubject imple
      * @param \Spryker\Zed\Product\Business\Product\StoreRelation\ProductAbstractStoreRelationWriterInterface $productAbstractStoreRelationWriter
      * @param array<\Spryker\Zed\ProductExtension\Dependency\Plugin\ProductAbstractPreCreatePluginInterface> $productAbstractPreCreatePlugins
      * @param \Spryker\Zed\Product\Business\Product\Trigger\ProductEventTriggerInterface $productEventTrigger
+     * @param \Spryker\Zed\Product\Persistence\ProductRepositoryInterface $productRepository
+     * @param \Spryker\Zed\Product\Business\Product\Mapper\ProductAttributeMapperInterface $productAttributeMapper
      */
     public function __construct(
         ProductQueryContainerInterface $productQueryContainer,
@@ -107,7 +121,9 @@ class ProductAbstractManager extends AbstractProductAbstractManagerSubject imple
         ProductAbstractStoreRelationReaderInterface $productAbstractStoreRelationReader,
         ProductAbstractStoreRelationWriterInterface $productAbstractStoreRelationWriter,
         array $productAbstractPreCreatePlugins,
-        ProductEventTriggerInterface $productEventTrigger
+        ProductEventTriggerInterface $productEventTrigger,
+        ProductRepositoryInterface $productRepository,
+        ProductAttributeMapperInterface $productAttributeMapper
     ) {
         $this->productQueryContainer = $productQueryContainer;
         $this->touchFacade = $touchFacade;
@@ -120,6 +136,8 @@ class ProductAbstractManager extends AbstractProductAbstractManagerSubject imple
         $this->productAbstractStoreRelationWriter = $productAbstractStoreRelationWriter;
         $this->productAbstractPreCreatePlugins = $productAbstractPreCreatePlugins;
         $this->productEventTrigger = $productEventTrigger;
+        $this->productRepository = $productRepository;
+        $this->productAttributeMapper = $productAttributeMapper;
     }
 
     /**
@@ -217,6 +235,53 @@ class ProductAbstractManager extends AbstractProductAbstractManagerSubject imple
         $productAbstractTransfer = $this->notifyReadObservers($productAbstractTransfer);
 
         return $productAbstractTransfer;
+    }
+
+    /**
+     * @param array<int> $productAbstractIds
+     *
+     * @return array<\Generated\Shared\Transfer\ProductAbstractTransfer>
+     */
+    public function findProductAbstractByIdsIndexedByProductAbstractIds(array $productAbstractIds): array
+    {
+        $productAbstractEntities = $this->productQueryContainer
+            ->queryProductAbstract()
+            ->filterByIdProductAbstract_In($productAbstractIds)
+            ->find();
+
+        $productAbstractTransfersIndexedByAbstractProductId = [];
+
+        foreach ($productAbstractEntities as $productAbstractEntity) {
+            $productAbstractTransfersIndexedByAbstractProductId[$productAbstractEntity->getIdProductAbstract()]
+                = $this->productTransferMapper->convertProductAbstract($productAbstractEntity);
+        }
+
+        $productAbstractTransfersIndexedByAbstractProductId = $this->expandProductAbstractTransfersWithLocalizedAttributes($productAbstractTransfersIndexedByAbstractProductId);
+        $productAbstractTransfersIndexedByAbstractProductId = $this->expandProductAbstractTransfersWithStoreRelationBatch($productAbstractTransfersIndexedByAbstractProductId);
+
+        foreach ($productAbstractTransfersIndexedByAbstractProductId as $idProductAbstract => $productAbstractTransfer) {
+            $productAbstractTransfersIndexedByAbstractProductId[$idProductAbstract] = $this->notifyReadObservers($productAbstractTransfer);
+        }
+
+        return $productAbstractTransfersIndexedByAbstractProductId;
+    }
+
+    /**
+     * @param array<int, \Generated\Shared\Transfer\ProductAbstractTransfer> $productAbstractTransfersIndexedByAbstractProductId
+     *
+     * @return array<int, \Generated\Shared\Transfer\ProductAbstractTransfer>
+     */
+    protected function expandProductAbstractTransfersWithStoreRelationBatch(array $productAbstractTransfersIndexedByAbstractProductId): array
+    {
+        foreach ($productAbstractTransfersIndexedByAbstractProductId as $idProductAbstract => $productAbstractTransfer) {
+            $productAbstractTransfer->setStoreRelation(
+                $this->getStoreRelation($idProductAbstract),
+            );
+
+            $productAbstractTransfersIndexedByAbstractProductId[$idProductAbstract] = $productAbstractTransfer;
+        }
+
+        return $productAbstractTransfersIndexedByAbstractProductId;
     }
 
     /**
@@ -353,22 +418,62 @@ class ProductAbstractManager extends AbstractProductAbstractManagerSubject imple
             ->find();
 
         foreach ($productAttributeCollection as $attributeEntity) {
-            $localeTransfer = $this->localeFacade->getLocaleById($attributeEntity->getFkLocale());
+            $localizedAttributesTransfer = $this->productAttributeMapper->mapProductAttributeEntityToProductAbstractTransfer(
+                $attributeEntity,
+                new LocalizedAttributesTransfer(),
+            );
 
-            $localizedAttributesData = $attributeEntity->toArray();
-            if (isset($localizedAttributesData[LocalizedAttributesTransfer::ATTRIBUTES])) {
-                unset($localizedAttributesData[LocalizedAttributesTransfer::ATTRIBUTES]);
-            }
-
-            $localizedAttributesTransfer = (new LocalizedAttributesTransfer())
-                ->fromArray($localizedAttributesData, true)
-                ->setAttributes($this->attributeEncoder->decodeAttributes($attributeEntity->getAttributes()))
-                ->setLocale($localeTransfer);
+            $localizedAttributesTransfer->setLocale($this->localeFacade->getLocaleById($attributeEntity->getFkLocale()));
 
             $productAbstractTransfer->addLocalizedAttributes($localizedAttributesTransfer);
         }
 
         return $productAbstractTransfer;
+    }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\ProductAbstractTransfer> $productAbstractTransfersIndexedByAbstractProductId
+     *
+     * @return array<\Generated\Shared\Transfer\ProductAbstractTransfer>
+     */
+    protected function expandProductAbstractTransfersWithLocalizedAttributes(array $productAbstractTransfersIndexedByAbstractProductId): array
+    {
+        $productAbstractIds = array_keys($productAbstractTransfersIndexedByAbstractProductId);
+
+        $productAttributeCollection = $this->productQueryContainer
+            ->queryProductAbstractLocalizedAttributesBatch($productAbstractIds)
+            ->find();
+
+        $localeTransfersIndexedByIdLocaleId = $this->indexLocalesByIdLocale($this->localeFacade->getLocaleCollection());
+
+        foreach ($productAttributeCollection as $attributeEntity) {
+            $localizedAttributesTransfer = $this->productAttributeMapper->mapProductAttributeEntityToProductAbstractTransfer(
+                $attributeEntity,
+                new LocalizedAttributesTransfer(),
+            );
+
+            $localizedAttributesTransfer->setLocale($localeTransfersIndexedByIdLocaleId[$attributeEntity->getFkLocale()] ?? null);
+
+            $productAbstractTransfersIndexedByAbstractProductId[$attributeEntity->getFkProductAbstract()]->addLocalizedAttributes($localizedAttributesTransfer);
+        }
+
+        return $productAbstractTransfersIndexedByAbstractProductId;
+    }
+
+    /**
+     * @param array<\Generated\Shared\Transfer\LocaleTransfer> $localeTransfers
+     *
+     * @return array<int, \Generated\Shared\Transfer\LocaleTransfer>
+     */
+    protected function indexLocalesByIdLocale(array $localeTransfers): array
+    {
+        $localeTransfersIndexedByIdLocaleId = [];
+
+        foreach ($localeTransfers as $localeTransfer) {
+            $localeTransfersIndexedByIdLocaleId[(int)$localeTransfer->getIdLocale()] = $localeTransfer;
+        }
+
+        return $localeTransfersIndexedByIdLocaleId;
     }
 
     /**
