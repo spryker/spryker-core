@@ -80,4 +80,13 @@
         <property name="defaultGlobalOperationMask" type="int"/>
     </transfer>
 
+    <transfer name="CountryCriteria" strict="true">
+        <property name="countryConditions" type="CountryConditions"/>
+    </transfer>
+
+    <transfer name="CountryConditions" strict="true">
+        <property name="iso2Codes" type="string[]" singular="iso2Code"/>
+        <property name="withRegions" type="bool"/>
+    </transfer>
+
 </transfers>

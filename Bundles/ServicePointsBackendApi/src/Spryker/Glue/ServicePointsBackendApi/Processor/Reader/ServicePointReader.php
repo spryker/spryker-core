@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\GlueResponseTransfer;
 use Generated\Shared\Transfer\ServicePointConditionsTransfer;
 use Generated\Shared\Transfer\ServicePointCriteriaTransfer;
 use Spryker\Glue\ServicePointsBackendApi\Dependency\Facade\ServicePointsBackendApiToServicePointFacadeInterface;
+use Spryker\Glue\ServicePointsBackendApi\Processor\ResponseBuilder\ErrorResponseBuilderInterface;
 use Spryker\Glue\ServicePointsBackendApi\Processor\ResponseBuilder\ServicePointResponseBuilderInterface;
 use Spryker\Glue\ServicePointsBackendApi\ServicePointsBackendApiConfig;
 
@@ -30,15 +31,23 @@ class ServicePointReader implements ServicePointReaderInterface
     protected ServicePointResponseBuilderInterface $servicePointResponseBuilder;
 
     /**
+     * @var \Spryker\Glue\ServicePointsBackendApi\Processor\ResponseBuilder\ErrorResponseBuilderInterface
+     */
+    protected ErrorResponseBuilderInterface $errorResponseBuilder;
+
+    /**
      * @param \Spryker\Glue\ServicePointsBackendApi\Dependency\Facade\ServicePointsBackendApiToServicePointFacadeInterface $servicePointFacade
      * @param \Spryker\Glue\ServicePointsBackendApi\Processor\ResponseBuilder\ServicePointResponseBuilderInterface $servicePointResponseBuilder
+     * @param \Spryker\Glue\ServicePointsBackendApi\Processor\ResponseBuilder\ErrorResponseBuilderInterface $errorResponseBuilder
      */
     public function __construct(
         ServicePointsBackendApiToServicePointFacadeInterface $servicePointFacade,
-        ServicePointResponseBuilderInterface $servicePointResponseBuilder
+        ServicePointResponseBuilderInterface $servicePointResponseBuilder,
+        ErrorResponseBuilderInterface $errorResponseBuilder
     ) {
         $this->servicePointFacade = $servicePointFacade;
         $this->servicePointResponseBuilder = $servicePointResponseBuilder;
+        $this->errorResponseBuilder = $errorResponseBuilder;
     }
 
     /**
@@ -86,7 +95,7 @@ class ServicePointReader implements ServicePointReaderInterface
 
         $errorTransfer = (new ErrorTransfer())->setMessage(ServicePointsBackendApiConfig::GLOSSARY_KEY_VALIDATION_SERVICE_POINT_ENTITY_NOT_FOUND);
 
-        return $this->servicePointResponseBuilder->createServicePointErrorResponse(
+        return $this->errorResponseBuilder->createErrorResponse(
             new ArrayObject([$errorTransfer]),
             $glueRequestTransfer->getLocale(),
         );

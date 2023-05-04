@@ -11,6 +11,10 @@ use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
 use Spryker\Zed\DataImport\Business\Model\DataImporterInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\ServicePointDataImport\Business\DataImportStep\ServicePoint\ServicePointWriteDataImportStep;
+use Spryker\Zed\ServicePointDataImport\Business\DataImportStep\ServicePointAddress\CountryIso2CodeToIdCountryStep;
+use Spryker\Zed\ServicePointDataImport\Business\DataImportStep\ServicePointAddress\RegionBelongsToCountryStep;
+use Spryker\Zed\ServicePointDataImport\Business\DataImportStep\ServicePointAddress\RegionIso2CodeToIdRegionStep;
+use Spryker\Zed\ServicePointDataImport\Business\DataImportStep\ServicePointAddress\ServicePointAddressWriteDataImportStep;
 use Spryker\Zed\ServicePointDataImport\Business\DataImportStep\ServicePointStore\ServicePointKeyToIdServicePointStep;
 use Spryker\Zed\ServicePointDataImport\Business\DataImportStep\ServicePointStore\ServicePointStoreWriteDataImportStep;
 use Spryker\Zed\ServicePointDataImport\Business\DataImportStep\ServicePointStore\StoreNameToIdStoreStep;
@@ -54,6 +58,60 @@ class ServicePointDataImportBusinessFactory extends DataImportBusinessFactory
         $dataImporter->addDataSetStepBroker($dataSetStepBroker);
 
         return $dataImporter;
+    }
+
+    /**
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
+     */
+    public function getServicePointAddressDataImporter(): DataImporterInterface
+    {
+        $dataImporter = $this->getCsvDataImporterFromConfig(
+            $this->getConfig()->getServicePointAddressDataImporterConfiguration(),
+        );
+
+        $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
+
+        $dataSetStepBroker->addStep($this->createServicePointKeyToIdServicePointStep());
+        $dataSetStepBroker->addStep($this->createCountryIso2CodeToIdCountryStep());
+        $dataSetStepBroker->addStep($this->createRegionIso2CodeToIdRegionStep());
+        $dataSetStepBroker->addStep($this->createRegionBelongsToCountryStep());
+        $dataSetStepBroker->addStep($this->createServicePointAddressWriteDataImportStep());
+
+        $dataImporter->addDataSetStepBroker($dataSetStepBroker);
+
+        return $dataImporter;
+    }
+
+    /**
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
+     */
+    public function createServicePointAddressWriteDataImportStep(): DataImportStepInterface
+    {
+        return new ServicePointAddressWriteDataImportStep();
+    }
+
+    /**
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
+     */
+    public function createRegionIso2CodeToIdRegionStep(): DataImportStepInterface
+    {
+        return new RegionIso2CodeToIdRegionStep();
+    }
+
+    /**
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
+     */
+    public function createRegionBelongsToCountryStep(): DataImportStepInterface
+    {
+        return new RegionBelongsToCountryStep();
+    }
+
+    /**
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
+     */
+    public function createCountryIso2CodeToIdCountryStep(): DataImportStepInterface
+    {
+        return new CountryIso2CodeToIdCountryStep();
     }
 
     /**

@@ -10,13 +10,16 @@ namespace SprykerTest\Zed\Country\Helper;
 use Codeception\Module;
 use Generated\Shared\DataBuilder\CountryBuilder;
 use Generated\Shared\Transfer\CountryTransfer;
+use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Orm\Zed\Country\Persistence\SpyCountryStoreQuery;
 use Spryker\Zed\Country\Business\CountryFacadeInterface;
+use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class CountryDataHelper extends Module
 {
     use LocatorHelperTrait;
+    use DataCleanupHelperTrait;
 
     /**
      * @param array $seed
@@ -31,6 +34,28 @@ class CountryDataHelper extends Module
         return $this->getCountryFacade()->getCountryByIso2Code(
             $countryTransfer->getIso2Code(),
         );
+    }
+
+    /**
+     * @param array<string, mixed> $seed
+     *
+     * @return \Generated\Shared\Transfer\CountryTransfer
+     */
+    public function haveCountryTransfer(array $seed = []): CountryTransfer
+    {
+        $countryTransfer = (new CountryBuilder($seed))->build();
+
+        $countryEntity = SpyCountryQuery::create()
+            ->filterByIso2Code($countryTransfer->getIso2Code())
+            ->findOneOrCreate();
+        $countryEntity->fromArray($countryTransfer->modifiedToArray());
+        $countryEntity->save();
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($countryEntity): void {
+            $this->deleteCountry($countryEntity->getIdCountry());
+        });
+
+        return $countryTransfer->fromArray($countryEntity->toArray());
     }
 
     /**
@@ -83,6 +108,28 @@ class CountryDataHelper extends Module
     protected function createCountryStorePropelQuery(): SpyCountryStoreQuery
     {
         return SpyCountryStoreQuery::create();
+    }
+
+    /**
+     * @param int $idCountry
+     *
+     * @return void
+     */
+    protected function deleteCountry(int $idCountry): void
+    {
+        $countryEntity = $this->getCountryQuery()->findOneByIdCountry($idCountry);
+
+        if ($countryEntity) {
+            $countryEntity->delete();
+        }
+    }
+
+    /**
+     * @return \Orm\Zed\Country\Persistence\SpyCountryQuery
+     */
+    protected function getCountryQuery(): SpyCountryQuery
+    {
+        return SpyCountryQuery::create();
     }
 
     /**

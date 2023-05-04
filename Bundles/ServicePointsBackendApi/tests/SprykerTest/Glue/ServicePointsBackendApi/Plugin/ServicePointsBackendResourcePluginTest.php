@@ -8,7 +8,7 @@
 namespace SprykerTest\Glue\ServicePointsBackendApi\Plugin;
 
 use Codeception\Test\Unit;
-use Spryker\Glue\ServicePointsBackendApi\Plugin\GlueBackendApiApplicationGlueJsonApiConventionConnector\ServicePointsBackendResourcePlugin;
+use Spryker\Glue\ServicePointsBackendApi\Plugin\GlueBackendApiApplication\ServicePointsBackendResourcePlugin;
 use SprykerTest\Glue\ServicePointsBackendApi\ServicePointsBackendApiTester;
 
 /**

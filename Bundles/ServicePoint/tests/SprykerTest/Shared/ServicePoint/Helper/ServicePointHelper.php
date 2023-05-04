@@ -9,10 +9,14 @@ namespace SprykerTest\Shared\ServicePoint\Helper;
 
 use ArrayObject;
 use Codeception\Module;
+use Generated\Shared\DataBuilder\ServicePointAddressBuilder;
 use Generated\Shared\DataBuilder\ServicePointBuilder;
+use Generated\Shared\Transfer\ServicePointAddressTransfer;
 use Generated\Shared\Transfer\ServicePointTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\ServicePoint\Persistence\SpyServicePoint;
+use Orm\Zed\ServicePoint\Persistence\SpyServicePointAddress;
+use Orm\Zed\ServicePoint\Persistence\SpyServicePointAddressQuery;
 use Orm\Zed\ServicePoint\Persistence\SpyServicePointQuery;
 use Orm\Zed\ServicePoint\Persistence\SpyServicePointStore;
 use Orm\Zed\ServicePoint\Persistence\SpyServicePointStoreQuery;
@@ -60,6 +64,34 @@ class ServicePointHelper extends Module
     }
 
     /**
+     * @param array<string, mixed> $seed
+     *
+     * @return \Generated\Shared\Transfer\ServicePointAddressTransfer
+     */
+    public function haveServicePointAddress(array $seed = []): ServicePointAddressTransfer
+    {
+        $servicePointAddressTransfer = (new ServicePointAddressBuilder($seed))->build();
+
+        $servicePointAddressEntity = (new SpyServicePointAddress())
+            ->setFkServicePoint($servicePointAddressTransfer->getServicePointOrFail()->getIdServicePointOrFail())
+            ->setFkCountry($servicePointAddressTransfer->getCountryOrFail()->getIdCountryOrFail())
+            ->fromArray($servicePointAddressTransfer->modifiedToArray());
+
+        if ($servicePointAddressTransfer->getRegion()) {
+            $servicePointAddressEntity->setFkRegion($servicePointAddressTransfer->getRegionOrFail()->getIdRegionOrFail());
+        }
+
+        $servicePointAddressEntity->save();
+        $servicePointAddressTransfer->fromArray($servicePointAddressEntity->toArray(), true);
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($servicePointAddressEntity): void {
+            $this->deleteServicePointAddress($servicePointAddressEntity->getIdServicePointAddress());
+        });
+
+        return $servicePointAddressTransfer;
+    }
+
+    /**
      * @param int $idServicePoint
      * @param int $idStore
      *
@@ -102,6 +134,20 @@ class ServicePointHelper extends Module
     }
 
     /**
+     * @param int $idServicePointAddress
+     *
+     * @return void
+     */
+    protected function deleteServicePointAddress(int $idServicePointAddress): void
+    {
+        $servicePointAddressEntity = $this->getServicePointAddressQuery()->findOneByIdServicePointAddress($idServicePointAddress);
+
+        if ($servicePointAddressEntity) {
+            $servicePointAddressEntity->delete();
+        }
+    }
+
+    /**
      * @param int $idServicePointStore
      *
      * @return void
@@ -121,6 +167,14 @@ class ServicePointHelper extends Module
     protected function getServicePointQuery(): SpyServicePointQuery
     {
         return SpyServicePointQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\ServicePoint\Persistence\SpyServicePointAddressQuery
+     */
+    protected function getServicePointAddressQuery(): SpyServicePointAddressQuery
+    {
+        return SpyServicePointAddressQuery::create();
     }
 
     /**

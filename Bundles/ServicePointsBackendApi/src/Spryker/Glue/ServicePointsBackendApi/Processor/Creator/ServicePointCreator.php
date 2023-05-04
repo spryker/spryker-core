@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\ServicePointCollectionRequestTransfer;
 use Generated\Shared\Transfer\ServicePointTransfer;
 use Spryker\Glue\ServicePointsBackendApi\Dependency\Facade\ServicePointsBackendApiToServicePointFacadeInterface;
 use Spryker\Glue\ServicePointsBackendApi\Processor\Mapper\ServicePointMapperInterface;
+use Spryker\Glue\ServicePointsBackendApi\Processor\ResponseBuilder\ErrorResponseBuilderInterface;
 use Spryker\Glue\ServicePointsBackendApi\Processor\ResponseBuilder\ServicePointResponseBuilderInterface;
 use Spryker\Glue\ServicePointsBackendApi\ServicePointsBackendApiConfig;
 
@@ -36,18 +37,26 @@ class ServicePointCreator implements ServicePointCreatorInterface
     protected ServicePointMapperInterface $servicePointMapper;
 
     /**
+     * @var \Spryker\Glue\ServicePointsBackendApi\Processor\ResponseBuilder\ErrorResponseBuilderInterface
+     */
+    protected ErrorResponseBuilderInterface $errorResponseBuilder;
+
+    /**
      * @param \Spryker\Glue\ServicePointsBackendApi\Dependency\Facade\ServicePointsBackendApiToServicePointFacadeInterface $servicePointFacade
      * @param \Spryker\Glue\ServicePointsBackendApi\Processor\Mapper\ServicePointMapperInterface $servicePointMapper
      * @param \Spryker\Glue\ServicePointsBackendApi\Processor\ResponseBuilder\ServicePointResponseBuilderInterface $servicePointResponseBuilder
+     * @param \Spryker\Glue\ServicePointsBackendApi\Processor\ResponseBuilder\ErrorResponseBuilderInterface $errorResponseBuilder
      */
     public function __construct(
         ServicePointsBackendApiToServicePointFacadeInterface $servicePointFacade,
         ServicePointMapperInterface $servicePointMapper,
-        ServicePointResponseBuilderInterface $servicePointResponseBuilder
+        ServicePointResponseBuilderInterface $servicePointResponseBuilder,
+        ErrorResponseBuilderInterface $errorResponseBuilder
     ) {
         $this->servicePointFacade = $servicePointFacade;
         $this->servicePointMapper = $servicePointMapper;
         $this->servicePointResponseBuilder = $servicePointResponseBuilder;
+        $this->errorResponseBuilder = $errorResponseBuilder;
     }
 
     /**
@@ -63,7 +72,7 @@ class ServicePointCreator implements ServicePointCreatorInterface
         if (!$apiServicePointsAttributesTransfer) {
             $errorTransfer = (new ErrorTransfer())->setMessage(ServicePointsBackendApiConfig::GLOSSARY_KEY_VALIDATION_WRONG_REQUEST_BODY);
 
-            return $this->servicePointResponseBuilder->createServicePointErrorResponse(
+            return $this->errorResponseBuilder->createErrorResponse(
                 new ArrayObject([$errorTransfer]),
                 $glueRequestTransfer->getLocale(),
             );
@@ -80,7 +89,7 @@ class ServicePointCreator implements ServicePointCreatorInterface
         $errorTransfers = $servicePointCollectionResponseTransfer->getErrors();
 
         if ($errorTransfers->count()) {
-            return $this->servicePointResponseBuilder->createServicePointErrorResponse(
+            return $this->errorResponseBuilder->createErrorResponse(
                 $errorTransfers,
                 $glueRequestTransfer->getLocale(),
             );

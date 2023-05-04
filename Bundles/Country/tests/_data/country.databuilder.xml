@@ -11,4 +11,9 @@
         <property name="name" dataBuilderRule="=Germany"/>
     </transfer>
 
+    <transfer name="Region">
+        <property name="iso2Code" dataBuilderRule="=DE"/>
+        <property name="name" dataBuilderRule="=word(1)"/>
+    </transfer>
+
 </transfers>

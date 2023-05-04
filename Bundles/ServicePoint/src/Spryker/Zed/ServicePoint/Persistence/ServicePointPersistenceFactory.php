@@ -7,9 +7,12 @@
 
 namespace Spryker\Zed\ServicePoint\Persistence;
 
+use Orm\Zed\ServicePoint\Persistence\SpyServicePointAddressQuery;
 use Orm\Zed\ServicePoint\Persistence\SpyServicePointQuery;
 use Orm\Zed\ServicePoint\Persistence\SpyServicePointStoreQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\ServicePoint\Persistence\Propel\Mapper\CountryMapper;
+use Spryker\Zed\ServicePoint\Persistence\Propel\Mapper\ServicePointAddressMapper;
 use Spryker\Zed\ServicePoint\Persistence\Propel\Mapper\ServicePointMapper;
 
 /**
@@ -36,10 +39,36 @@ class ServicePointPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
+     * @return \Orm\Zed\ServicePoint\Persistence\SpyServicePointAddressQuery
+     */
+    public function getServicePointAddressQuery(): SpyServicePointAddressQuery
+    {
+        return SpyServicePointAddressQuery::create();
+    }
+
+    /**
      * @return \Spryker\Zed\ServicePoint\Persistence\Propel\Mapper\ServicePointMapper
      */
     public function createServicePointMapper(): ServicePointMapper
     {
         return new ServicePointMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\ServicePoint\Persistence\Propel\Mapper\ServicePointAddressMapper
+     */
+    public function createServicePointAddressMapper(): ServicePointAddressMapper
+    {
+        return new ServicePointAddressMapper(
+            $this->createCountryMapper(),
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ServicePoint\Persistence\Propel\Mapper\CountryMapper
+     */
+    public function createCountryMapper(): CountryMapper
+    {
+        return new CountryMapper();
     }
 }

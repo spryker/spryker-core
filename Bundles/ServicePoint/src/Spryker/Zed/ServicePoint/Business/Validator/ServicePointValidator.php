@@ -10,18 +10,18 @@ namespace Spryker\Zed\ServicePoint\Business\Validator;
 use ArrayObject;
 use Generated\Shared\Transfer\ErrorCollectionTransfer;
 use Generated\Shared\Transfer\ServicePointCollectionResponseTransfer;
-use Spryker\Zed\ServicePoint\Business\Validator\Rule\ServicePointValidatorRuleInterface;
+use Spryker\Zed\ServicePoint\Business\Validator\Rule\ServicePoint\ServicePointValidatorRuleInterface;
 use Spryker\Zed\ServicePoint\Business\Validator\Rule\TerminationAwareValidatorRuleInterface;
 
 class ServicePointValidator implements ServicePointValidatorInterface
 {
     /**
-     * @var list<\Spryker\Zed\ServicePoint\Business\Validator\Rule\ServicePointValidatorRuleInterface>
+     * @var list<\Spryker\Zed\ServicePoint\Business\Validator\Rule\ServicePoint\ServicePointValidatorRuleInterface>
      */
     protected array $servicePointValidatorRules;
 
     /**
-     * @param array<\Spryker\Zed\ServicePoint\Business\Validator\Rule\ServicePointValidatorRuleInterface> $servicePointValidatorRules
+     * @param list<\Spryker\Zed\ServicePoint\Business\Validator\Rule\ServicePoint\ServicePointValidatorRuleInterface> $servicePointValidatorRules
      */
     public function __construct(array $servicePointValidatorRules)
     {
@@ -58,7 +58,7 @@ class ServicePointValidator implements ServicePointValidatorInterface
     }
 
     /**
-     * @param \Spryker\Zed\ServicePoint\Business\Validator\Rule\ServicePointValidatorRuleInterface $servicePointValidatorRule
+     * @param \Spryker\Zed\ServicePoint\Business\Validator\Rule\ServicePoint\ServicePointValidatorRuleInterface $servicePointValidatorRule
      * @param \ArrayObject<array-key, \Generated\Shared\Transfer\ErrorTransfer> $initialErrorTransfers
      * @param \ArrayObject<array-key, \Generated\Shared\Transfer\ErrorTransfer> $postValidationErrorTransfers
      *

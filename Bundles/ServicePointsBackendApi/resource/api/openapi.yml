@@ -154,6 +154,132 @@ paths:
                                 items:
                                     $ref: '#/components/responses/ApiErrorResponse'
 
+    /service-points/{servicePointUuid}/service-point-addresses:
+        parameters:
+            - name: servicePointUuid
+              in: path
+              required: true
+              description: Service Point UUID
+              schema:
+                  type: string
+            - $ref: '#/components/parameters/AcceptLanguage'
+            - $ref: '#/components/parameters/ContentType'
+            - $ref: '#/components/parameters/Fields'
+        get:
+            tags:
+                - service-point-address
+            summary: Service Point Addresses list
+            description: Returns list of all Service Point Addresses in the system
+            operationId: getServicePointAddresses
+            parameters:
+                - $ref: '#/components/parameters/AcceptLanguage'
+                - $ref: '#/components/parameters/ContentType'
+            responses:
+                '200':
+                    description: Successful operation
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ApiServicePointAddressAttributesCollection'
+                '403':
+                    description: Not authorized
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/responses/ApiErrorResponse'
+                '4XX':
+                    description: Bad request
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/responses/ApiErrorResponse'
+
+        post:
+            tags:
+                - service-point-address
+            summary: Create Service Point Address
+            description: Create Service Point Address
+            operationId: createServicePointAddress
+            parameters:
+                - $ref: '#/components/parameters/AcceptLanguage'
+                - $ref: '#/components/parameters/ContentType'
+            requestBody:
+                $ref: '#/components/requestBodies/ApiServicePointAddressPostRequestPayload'
+            responses:
+                '201':
+                    description: Successful operation
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ApiServicePointAddressResponse'
+                '403':
+                    description: Not authorized
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/responses/ApiErrorResponse'
+                '4XX':
+                    description: Bad request
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/responses/ApiErrorResponse'
+
+    /service-points/{servicePointUuid}/service-point-addresses/{servicePointAddressUuid}:
+        parameters:
+            - name: servicePointUuid
+              in: path
+              required: true
+              description: Service Point UUID
+              schema:
+                  type: string
+            - name: servicePointAddressUuid
+              in: path
+              required: true
+              description: Service Point Address UUID
+              schema:
+                  type: string
+            - $ref: '#/components/parameters/AcceptLanguage'
+            - $ref: '#/components/parameters/ContentType'
+        patch:
+            summary: Update Service Point Address
+            tags:
+                - service-point-address
+            requestBody:
+                $ref: '#/components/requestBodies/ApiServicePointAddressPatchRequestPayload'
+            operationId: updateServicePointAddress
+            responses:
+                200:
+                    description: Successful operation
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/ApiServicePointAddressResponse'
+                '403':
+                    description: Not authorized
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/responses/ApiErrorResponse'
+                '4XX':
+                    description: Bad request
+                    content:
+                        application/vnd.api+json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/responses/ApiErrorResponse'
+
 components:
     requestBodies:
         ApiServicePointPostRequestPayload:
@@ -168,6 +294,18 @@ components:
                 application/vnd.api+json:
                     schema:
                         $ref: '#/components/schemas/ApiServicePointPatchRequestBody'
+        ApiServicePointAddressPatchRequestPayload:
+            description: Represents update Service Point Address request
+            content:
+                application/vnd.api+json:
+                    schema:
+                        $ref: '#/components/schemas/ApiServicePointAddressPatchRequestBody'
+        ApiServicePointAddressPostRequestPayload:
+            description: Represents create Service Point Address request
+            content:
+                application/vnd.api+json:
+                    schema:
+                        $ref: '#/components/schemas/ApiServicePointAddressPostRequestBody'
 
     responses:
         ApiServicePointAttributesCollection:
@@ -182,6 +320,12 @@ components:
                 application/vnd.api+json:
                     schema:
                         $ref: '#/components/schemas/ApiServicePointResponse'
+        ApiServicePointAddressAttributesCollection:
+            description: Listing of Service Point Addresses
+            content:
+                application/vnd.api+json:
+                    schema:
+                        $ref: '#/components/schemas/ApiServicePointAddressAttributesCollection'
         ApiErrorResponse:
             description: Error response
             content:
@@ -311,7 +455,6 @@ components:
                 - name
                 - key
                 - isActive
-                - isShared
                 - stores
             type: object
             properties:
@@ -369,6 +512,135 @@ components:
                     example:
                         - DE
                         - AT
+        ApiServicePointAddressPostRequestBody:
+            type: object
+            properties:
+                data:
+                    $ref: '#/components/schemas/ApiServicePointAddressPostRequestData'
+        ApiServicePointAddressPatchRequestBody:
+            type: object
+            properties:
+                data:
+                    $ref: '#/components/schemas/ApiServicePointAddressPatchRequestData'
+        ApiServicePointAddressPostRequestData:
+            type: object
+            properties:
+                type:
+                    type: string
+                    example: 'service-point-addresses'
+                attributes:
+                    $ref: '#/components/schemas/ApiServicePointAddressesPostRequestAttributes'
+        ApiServicePointAddressPatchRequestData:
+            type: object
+            properties:
+                type:
+                    type: string
+                    example: 'service-point-addresses'
+                attributes:
+                    $ref: '#/components/schemas/ApiServicePointAddressesPatchRequestAttributes'
+        ApiServicePointAddressesPostRequestAttributes:
+            required:
+                - countryIso2Code
+                - address1
+                - address2
+                - zipCode
+                - city
+            type: object
+            properties:
+                regionUuid:
+                    type: string
+                    example: 518409fa-a5c2-4b52-8ac9-a382ebdc6084
+                countryIso2Code:
+                    type: string
+                    example: DE
+                address1:
+                    type: string
+                    example: Park Avenue
+                address2:
+                    type: string
+                    example: Building №2
+                address3:
+                    type: string
+                    example: 7th floor
+                zipCode:
+                    type: string
+                    example: 30-221
+                city:
+                    type: string
+                    example: Dreamtown
+        ApiServicePointAddressesPatchRequestAttributes:
+            type: object
+            properties:
+                regionUuid:
+                    type: string
+                    example: 518409fa-a5c2-4b52-8ac9-a382ebdc6084
+                countryIso2Code:
+                    type: string
+                    example: DE
+                address1:
+                    type: string
+                    example: Park Avenue
+                address2:
+                    type: string
+                    example: Building №2
+                address3:
+                    type: string
+                    example: 7th floor
+                zipCode:
+                    type: string
+                    example: 30-221
+                city:
+                    type: string
+                    example: Dreamtown
+        ApiServicePointAddressAttributesCollection:
+            properties:
+                data:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ApiServicePointAddressResponseData'
+        ApiServicePointAddressResponseData:
+            type: object
+            properties:
+                type:
+                    type: string
+                    example: service-point-addresses
+                id:
+                    type: string
+                    format: uuid
+                    example: 518409fa-a5c2-4b52-8ac9-a382ebdc6084
+                attributes:
+                    $ref: '#/components/schemas/ApiServicePointAddressesAttributes'
+                links:
+                    $ref: '#/components/schemas/ApiLinks'
+        ApiServicePointAddressResponse:
+            type: object
+            properties:
+                data:
+                    $ref: '#/components/schemas/ApiServicePointAddressResponseData'
+        ApiServicePointAddressesAttributes:
+            type: object
+            properties:
+                regionUuid:
+                    type: string
+                    example: 518409fa-a5c2-4b52-8ac9-a382ebdc6084
+                countryIso2Code:
+                    type: string
+                    example: DE
+                address1:
+                    type: string
+                    example: Park Avenue
+                address2:
+                    type: string
+                    example: Building №2
+                address3:
+                    type: string
+                    example: 7th floor
+                zipCode:
+                    type: string
+                    example: 30-221
+                city:
+                    type: string
+                    example: Dreamtown
         ApiLinks:
             properties:
                 self:

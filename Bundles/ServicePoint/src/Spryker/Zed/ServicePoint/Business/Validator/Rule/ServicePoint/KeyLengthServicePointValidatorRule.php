@@ -5,13 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ServicePoint\Business\Validator\Rule;
+namespace Spryker\Zed\ServicePoint\Business\Validator\Rule\ServicePoint;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ErrorCollectionTransfer;
+use Spryker\Zed\ServicePoint\Business\Validator\Rule\TerminationAwareValidatorRuleInterface;
 use Spryker\Zed\ServicePoint\Business\Validator\Util\ErrorAdderInterface;
 
-class ServicePointKeyLengthServicePointValidatorRule implements ServicePointValidatorRuleInterface, TerminationAwareValidatorRuleInterface
+class KeyLengthServicePointValidatorRule implements ServicePointValidatorRuleInterface, TerminationAwareValidatorRuleInterface
 {
     /**
      * @var int

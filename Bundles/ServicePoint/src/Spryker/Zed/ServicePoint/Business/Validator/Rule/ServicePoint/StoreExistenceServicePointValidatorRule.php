@@ -5,12 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ServicePoint\Business\Validator\Rule;
+namespace Spryker\Zed\ServicePoint\Business\Validator\Rule\ServicePoint;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ErrorCollectionTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Spryker\Zed\ServicePoint\Business\Extractor\ServicePointStoreExtractorInterface;
+use Spryker\Zed\ServicePoint\Business\Validator\Rule\TerminationAwareValidatorRuleInterface;
 use Spryker\Zed\ServicePoint\Business\Validator\Util\ErrorAdderInterface;
 use Spryker\Zed\ServicePoint\Dependency\Facade\ServicePointToStoreFacadeInterface;
 

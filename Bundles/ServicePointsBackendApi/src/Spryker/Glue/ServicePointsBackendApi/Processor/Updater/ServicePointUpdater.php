@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\ServicePointCriteriaTransfer;
 use Generated\Shared\Transfer\ServicePointTransfer;
 use Spryker\Glue\ServicePointsBackendApi\Dependency\Facade\ServicePointsBackendApiToServicePointFacadeInterface;
 use Spryker\Glue\ServicePointsBackendApi\Processor\Mapper\ServicePointMapperInterface;
+use Spryker\Glue\ServicePointsBackendApi\Processor\ResponseBuilder\ErrorResponseBuilderInterface;
 use Spryker\Glue\ServicePointsBackendApi\Processor\ResponseBuilder\ServicePointResponseBuilderInterface;
 use Spryker\Glue\ServicePointsBackendApi\ServicePointsBackendApiConfig;
 
@@ -38,18 +39,26 @@ class ServicePointUpdater implements ServicePointUpdaterInterface
     protected ServicePointMapperInterface $servicePointMapper;
 
     /**
+     * @var \Spryker\Glue\ServicePointsBackendApi\Processor\ResponseBuilder\ErrorResponseBuilderInterface
+     */
+    protected ErrorResponseBuilderInterface $errorResponseBuilder;
+
+    /**
      * @param \Spryker\Glue\ServicePointsBackendApi\Dependency\Facade\ServicePointsBackendApiToServicePointFacadeInterface $servicePointFacade
      * @param \Spryker\Glue\ServicePointsBackendApi\Processor\Mapper\ServicePointMapperInterface $servicePointMapper
      * @param \Spryker\Glue\ServicePointsBackendApi\Processor\ResponseBuilder\ServicePointResponseBuilderInterface $servicePointResponseBuilder
+     * @param \Spryker\Glue\ServicePointsBackendApi\Processor\ResponseBuilder\ErrorResponseBuilderInterface $errorResponseBuilder
      */
     public function __construct(
         ServicePointsBackendApiToServicePointFacadeInterface $servicePointFacade,
         ServicePointMapperInterface $servicePointMapper,
-        ServicePointResponseBuilderInterface $servicePointResponseBuilder
+        ServicePointResponseBuilderInterface $servicePointResponseBuilder,
+        ErrorResponseBuilderInterface $errorResponseBuilder
     ) {
         $this->servicePointFacade = $servicePointFacade;
         $this->servicePointMapper = $servicePointMapper;
         $this->servicePointResponseBuilder = $servicePointResponseBuilder;
+        $this->errorResponseBuilder = $errorResponseBuilder;
     }
 
     /**
@@ -71,7 +80,7 @@ class ServicePointUpdater implements ServicePointUpdaterInterface
         /**
          * @var \Generated\Shared\Transfer\ApiServicePointsAttributesTransfer $apiServicePointsAttributesTransfer
          */
-        $apiServicePointsAttributesTransfer = $glueResourceTransfer->getAttributes();
+        $apiServicePointsAttributesTransfer = $glueResourceTransfer->getAttributesOrFail();
 
         $servicePointTransfer = $this->findServicePoint($glueResourceTransfer->getIdOrFail());
 
@@ -93,7 +102,7 @@ class ServicePointUpdater implements ServicePointUpdaterInterface
         $errorTransfers = $servicePointCollectionResponseTransfer->getErrors();
 
         if ($errorTransfers->count()) {
-            return $this->servicePointResponseBuilder->createServicePointErrorResponse(
+            return $this->errorResponseBuilder->createErrorResponse(
                 $errorTransfers,
                 $glueRequestTransfer->getLocale(),
             );
@@ -115,7 +124,7 @@ class ServicePointUpdater implements ServicePointUpdaterInterface
 
         return $glueResourceTransfer->getId()
             && $glueResourceTransfer->getAttributes()
-            && array_filter($glueResourceTransfer->getAttributes()->modifiedToArray());
+            && array_filter($glueResourceTransfer->getAttributesOrFail()->modifiedToArray());
     }
 
     /**
@@ -150,7 +159,7 @@ class ServicePointUpdater implements ServicePointUpdaterInterface
     ): GlueResponseTransfer {
         $errorTransfer = (new ErrorTransfer())->setMessage($errorMessage);
 
-        return $this->servicePointResponseBuilder->createServicePointErrorResponse(
+        return $this->errorResponseBuilder->createErrorResponse(
             new ArrayObject([$errorTransfer]),
             $glueRequestTransfer->getLocale(),
         );

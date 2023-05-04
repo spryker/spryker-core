@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Country\Business\Country;
 
 use Generated\Shared\Transfer\CountryCollectionTransfer;
+use Generated\Shared\Transfer\CountryCriteriaTransfer;
 use Generated\Shared\Transfer\CountryTransfer;
 
 interface CountryReaderInterface
@@ -52,14 +53,18 @@ interface CountryReaderInterface
     public function countryExists(string $iso2code): bool;
 
     /**
-     * @return \Generated\Shared\Transfer\CountryCollectionTransfer
-     */
-    public function getCountryCollection(): CountryCollectionTransfer;
-
-    /**
      * @param string $countryName
      *
      * @return \Generated\Shared\Transfer\CountryTransfer
      */
     public function getPreferredCountryByName(string $countryName): CountryTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CountryCriteriaTransfer $countryCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\CountryCollectionTransfer
+     */
+    public function getCountryCollection(
+        CountryCriteriaTransfer $countryCriteriaTransfer
+    ): CountryCollectionTransfer;
 }

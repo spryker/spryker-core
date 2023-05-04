@@ -8,9 +8,11 @@
 namespace Spryker\Zed\Country\Persistence;
 
 use Generated\Shared\Transfer\CountryCollectionTransfer;
+use Generated\Shared\Transfer\CountryCriteriaTransfer;
 use Generated\Shared\Transfer\CountryTransfer;
 use Orm\Zed\Country\Persistence\Map\SpyCountryStoreTableMap;
 use Orm\Zed\Country\Persistence\Map\SpyCountryTableMap;
+use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -117,7 +119,7 @@ class CountryRepository extends AbstractRepository implements CountryRepositoryI
     /**
      * @return \Generated\Shared\Transfer\CountryCollectionTransfer
      */
-    public function getCountryCollection(): CountryCollectionTransfer
+    public function getAvailableCountries(): CountryCollectionTransfer
     {
         $countryEntities = $this->getFactory()
             ->createCountryQuery()
@@ -192,5 +194,65 @@ class CountryRepository extends AbstractRepository implements CountryRepositoryI
         return $this->getFactory()
             ->createCountryMapper()
             ->mapCountryTransfer($countryEntity, new CountryTransfer());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CountryCriteriaTransfer $countryCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\CountryCollectionTransfer
+     */
+    public function getCountryCollection(
+        CountryCriteriaTransfer $countryCriteriaTransfer
+    ): CountryCollectionTransfer {
+        $countryQuery = $this->getFactory()->createCountryQuery();
+
+        $countryQuery = $this->applyCountryFilters($countryQuery, $countryCriteriaTransfer);
+
+        return $this->getFactory()
+            ->createCountryMapper()
+            ->mapCountryEntitiesToCountryCollectionTransfer(
+                $countryQuery->find(),
+                new CountryCollectionTransfer(),
+            );
+    }
+
+    /**
+     * @param list<int> $countryIds
+     *
+     * @return array<int, list<\Generated\Shared\Transfer\RegionTransfer>>
+     */
+    public function getRegionsGroupedByIdCountry(array $countryIds): array
+    {
+        $regionEntities = $this->getFactory()
+            ->createRegionQuery()
+            ->filterByFkCountry_In($countryIds)
+            ->find();
+
+        return $this->getFactory()
+            ->createCountryMapper()
+            ->mapRegionEntitiesToRegionTransfersGroupedByIdCountry($regionEntities);
+    }
+
+    /**
+     * @param \Orm\Zed\Country\Persistence\SpyCountryQuery $countryQuery
+     * @param \Generated\Shared\Transfer\CountryCriteriaTransfer $countryCriteriaTransfer
+     *
+     * @return \Orm\Zed\Country\Persistence\SpyCountryQuery
+     */
+    protected function applyCountryFilters(
+        SpyCountryQuery $countryQuery,
+        CountryCriteriaTransfer $countryCriteriaTransfer
+    ): SpyCountryQuery {
+        $countryConditionsTransfer = $countryCriteriaTransfer->getCountryConditions();
+
+        if (!$countryConditionsTransfer) {
+            return $countryQuery;
+        }
+
+        if ($countryConditionsTransfer->getIso2Codes()) {
+            $countryQuery->filterByIso2Code_In($countryConditionsTransfer->getIso2Codes());
+        }
+
+        return $countryQuery;
     }
 }

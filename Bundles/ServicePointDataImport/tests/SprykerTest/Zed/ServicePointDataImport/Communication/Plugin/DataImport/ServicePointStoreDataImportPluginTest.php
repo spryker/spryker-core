@@ -59,12 +59,12 @@ class ServicePointStoreDataImportPluginTest extends Unit
         $dataImporterReaderConfigurationTransfer = (new DataImporterReaderConfigurationTransfer())
             ->setFileName(codecept_data_dir() . 'import/service_point_store.csv');
 
-        $dataImportConfigurationTransfer = (new DataImporterConfigurationTransfer())
+        $dataImporterConfigurationTransfer = (new DataImporterConfigurationTransfer())
             ->setReaderConfiguration($dataImporterReaderConfigurationTransfer);
 
         // Act
         $servicePointStoreDataImportPlugin = new ServicePointStoreDataImportPlugin();
-        $dataImporterReportTransfer = $servicePointStoreDataImportPlugin->import($dataImportConfigurationTransfer);
+        $dataImporterReportTransfer = $servicePointStoreDataImportPlugin->import($dataImporterConfigurationTransfer);
 
         // Assert
         $this->assertTrue($dataImporterReportTransfer->getIsSuccess());

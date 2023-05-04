@@ -10,6 +10,7 @@ namespace Spryker\Zed\Country\Business;
 use Generated\Shared\Transfer\CheckoutDataTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CountryCollectionTransfer;
+use Generated\Shared\Transfer\CountryCriteriaTransfer;
 use Generated\Shared\Transfer\CountryTransfer;
 use Generated\Shared\Transfer\StoreResponseTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -99,9 +100,8 @@ class CountryFacade extends AbstractFacade implements CountryFacadeInterface
      */
     public function getAvailableCountries(): CountryCollectionTransfer
     {
-        return $this->getFactory()
-            ->createCountryReader()
-            ->getCountryCollection();
+        return $this->getRepository()
+            ->getAvailableCountries();
     }
 
     /**
@@ -166,5 +166,22 @@ class CountryFacade extends AbstractFacade implements CountryFacadeInterface
         return $this->getFactory()
             ->createStoreExpander()
             ->expandStoreTransfersWithCountries($storeTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CountryCriteriaTransfer $countryCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\CountryCollectionTransfer
+     */
+    public function getCountryCollection(
+        CountryCriteriaTransfer $countryCriteriaTransfer
+    ): CountryCollectionTransfer {
+        return $this->getFactory()
+            ->createCountryReader()
+            ->getCountryCollection($countryCriteriaTransfer);
     }
 }

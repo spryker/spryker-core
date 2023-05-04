@@ -5,18 +5,39 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ServicePoint\Business\Validator\Rule;
+namespace Spryker\Zed\ServicePoint\Business\Validator\Rule\ServicePoint;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ErrorCollectionTransfer;
+use Spryker\Zed\ServicePoint\Business\Validator\Rule\TerminationAwareValidatorRuleInterface;
 use Spryker\Zed\ServicePoint\Business\Validator\Util\ErrorAdderInterface;
 
-class ServicePointKeyUniquenessServicePointValidatorRule implements ServicePointValidatorRuleInterface, TerminationAwareValidatorRuleInterface
+class NameLengthServicePointValidatorRule implements ServicePointValidatorRuleInterface, TerminationAwareValidatorRuleInterface
 {
+    /**
+     * @var int
+     */
+    protected const SERVICE_POINT_NAME_MIN_LENGTH = 1;
+
+    /**
+     * @var int
+     */
+    protected const SERVICE_POINT_NAME_MAX_LENGTH = 255;
+
     /**
      * @var string
      */
-    protected const GLOSSARY_KEY_VALIDATION_SERVICE_POINT_KEY_IS_NOT_UNIQUE = 'service_point.validation.service_point_key_is_not_unique';
+    protected const GLOSSARY_KEY_VALIDATION_SERVICE_POINT_NAME_WRONG_LENGTH = 'service_point.validation.service_point_name_wrong_length';
+
+    /**
+     * @var string
+     */
+    protected const GLOSSARY_KEY_PARAMETER_MIN = '%min%';
+
+    /**
+     * @var string
+     */
+    protected const GLOSSARY_KEY_PARAMETER_MAX = '%max%';
 
     /**
      * @var \Spryker\Zed\ServicePoint\Business\Validator\Util\ErrorAdderInterface
@@ -39,22 +60,19 @@ class ServicePointKeyUniquenessServicePointValidatorRule implements ServicePoint
     public function validate(ArrayObject $servicePointTransfers): ErrorCollectionTransfer
     {
         $errorCollectionTransfer = new ErrorCollectionTransfer();
-        $keysIndex = [];
 
         foreach ($servicePointTransfers as $entityIdentifier => $servicePointTransfer) {
-            $key = $servicePointTransfer->getKeyOrFail();
-
-            if (!isset($keysIndex[$key])) {
-                $keysIndex[$key] = true;
-
-                continue;
+            if (!$this->isServicePointNameLengthValid($servicePointTransfer->getNameOrFail())) {
+                $this->errorAdder->addError(
+                    $errorCollectionTransfer,
+                    $entityIdentifier,
+                    static::GLOSSARY_KEY_VALIDATION_SERVICE_POINT_NAME_WRONG_LENGTH,
+                    [
+                        static::GLOSSARY_KEY_PARAMETER_MIN => static::SERVICE_POINT_NAME_MIN_LENGTH,
+                        static::GLOSSARY_KEY_PARAMETER_MAX => static::SERVICE_POINT_NAME_MAX_LENGTH,
+                    ],
+                );
             }
-
-            $this->errorAdder->addError(
-                $errorCollectionTransfer,
-                $entityIdentifier,
-                static::GLOSSARY_KEY_VALIDATION_SERVICE_POINT_KEY_IS_NOT_UNIQUE,
-            );
         }
 
         return $errorCollectionTransfer;
@@ -71,5 +89,16 @@ class ServicePointKeyUniquenessServicePointValidatorRule implements ServicePoint
         ArrayObject $postValidationErrorTransfers
     ): bool {
         return $postValidationErrorTransfers->count() > $initialErrorTransfers->count();
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return bool
+     */
+    protected function isServicePointNameLengthValid(string $name): bool
+    {
+        return mb_strlen($name) >= static::SERVICE_POINT_NAME_MIN_LENGTH
+            && mb_strlen($name) <= static::SERVICE_POINT_NAME_MAX_LENGTH;
     }
 }

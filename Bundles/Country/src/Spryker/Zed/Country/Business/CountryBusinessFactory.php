@@ -13,6 +13,8 @@ use Spryker\Zed\Country\Business\Country\CountryReader;
 use Spryker\Zed\Country\Business\Country\CountryReaderInterface;
 use Spryker\Zed\Country\Business\Country\CountryWriter;
 use Spryker\Zed\Country\Business\Country\CountryWriterInterface;
+use Spryker\Zed\Country\Business\Expander\RegionExpander;
+use Spryker\Zed\Country\Business\Expander\RegionExpanderInterface;
 use Spryker\Zed\Country\Business\Expander\StoreExpander;
 use Spryker\Zed\Country\Business\Expander\StoreExpanderInterface;
 use Spryker\Zed\Country\Business\Internal\Install;
@@ -64,7 +66,16 @@ class CountryBusinessFactory extends AbstractBusinessFactory
     {
         return new CountryReader(
             $this->getRepository(),
+            $this->createRegionExpander(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Country\Business\Expander\RegionExpanderInterface
+     */
+    public function createRegionExpander(): RegionExpanderInterface
+    {
+        return new RegionExpander($this->getRepository());
     }
 
     /**

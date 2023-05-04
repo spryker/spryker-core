@@ -9,9 +9,23 @@ namespace Spryker\Zed\ServicePoint\Business\Filter;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ServicePointCollectionResponseTransfer;
+use Spryker\Zed\ServicePoint\Business\Extractor\ErrorExtractorInterface;
 
 class ServicePointFilter implements ServicePointFilterInterface
 {
+    /**
+     * @var \Spryker\Zed\ServicePoint\Business\Extractor\ErrorExtractorInterface
+     */
+    protected ErrorExtractorInterface $errorExtractor;
+
+    /**
+     * @param \Spryker\Zed\ServicePoint\Business\Extractor\ErrorExtractorInterface $errorExtractor
+     */
+    public function __construct(ErrorExtractorInterface $errorExtractor)
+    {
+        $this->errorExtractor = $errorExtractor;
+    }
+
     /**
      * @param \ArrayObject<array-key, \Generated\Shared\Transfer\ServicePointTransfer> $validServicePointTransfers
      * @param \ArrayObject<array-key, \Generated\Shared\Transfer\ServicePointTransfer> $invalidServicePointTransfers
@@ -37,7 +51,7 @@ class ServicePointFilter implements ServicePointFilterInterface
     public function filterServicePointsByValidity(
         ServicePointCollectionResponseTransfer $servicePointCollectionResponseTransfer
     ): array {
-        $erroredEntityIdentifiers = $this->extractEntityIdentifiersFromErrorTransfers(
+        $erroredEntityIdentifiers = $this->errorExtractor->extractEntityIdentifiersFromErrorTransfers(
             $servicePointCollectionResponseTransfer->getErrors(),
         );
 
@@ -55,21 +69,5 @@ class ServicePointFilter implements ServicePointFilterInterface
         }
 
         return [$validServicePointTransfers, $invalidServicePointTransfers];
-    }
-
-    /**
-     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\ErrorTransfer> $errorTransfers
-     *
-     * @return array<string, string>
-     */
-    protected function extractEntityIdentifiersFromErrorTransfers(ArrayObject $errorTransfers): array
-    {
-        $entityIdentifiers = [];
-
-        foreach ($errorTransfers as $errorTransfer) {
-            $entityIdentifiers[$errorTransfer->getEntityIdentifierOrFail()] = $errorTransfer->getEntityIdentifierOrFail();
-        }
-
-        return $entityIdentifiers;
     }
 }

@@ -8,6 +8,17 @@
         <property name="stores" type="string[]" singular="store"/>
     </transfer>
 
+    <transfer name="ApiServicePointAddressesAttributes" strict="true">
+        <property name="uuid" type="string"/>
+        <property name="regionUuid" type="string"/>
+        <property name="countryIso2Code" type="string"/>
+        <property name="address1" type="string"/>
+        <property name="address2" type="string"/>
+        <property name="address3" type="string"/>
+        <property name="city" type="string"/>
+        <property name="zipCode" type="string"/>
+    </transfer>
+
     <transfer name="ServicePoint" strict="true">
         <property name="storeRelation" type="StoreRelation"/>
         <property name="uuid" type="string"/>
@@ -62,6 +73,8 @@
         <property name="locale" type="string"/>
         <property name="pagination" type="Pagination"/>
         <property name="sortings" type="Sort[]" singular="sorting"/>
+        <property name="parentResources" type="GlueResource[]" singular="parentResource" associative="true"/>
+        <property name="attributes" type="array" singular="attribute"/>
     </transfer>
 
     <transfer name="GlueResponse">
@@ -74,6 +87,7 @@
         <property name="id" type="string"/>
         <property name="attributes" type="AbstractAttributes"/>
         <property name="type" type="string"/>
+        <property name="relationships" type="GlueRelationship[]" singular="relationship"/>
     </transfer>
 
     <transfer name="GlueError">
@@ -87,17 +101,52 @@
         <property name="parameters" type="array" singular="parameter"/>
     </transfer>
 
-    <transfer name="RouteAuthorizationConfig">
-        <property name="apiCode" type="string"/>
-        <property name="httpStatusCode" type="int"/>
-        <property name="apiMessage" type="string"/>
-        <property name="strategies" type="string[]" singular="strategy"/>
+    <transfer name="Region">
+        <property name="uuid" type="string" strict="true"/>
     </transfer>
 
     <transfer name="Pagination">
     </transfer>
 
     <transfer name="Sort">
+    </transfer>
+
+    <transfer name="ServicePointAddress" strict="true">
+        <property name="servicePoint" type="ServicePoint"/>
+        <property name="country" type="Country"/>
+        <property name="region" type="Region"/>
+        <property name="uuid" type="string"/>
+    </transfer>
+
+    <transfer name="ServicePointAddressCollectionResponse" strict="true">
+        <property name="errors" type="Error[]" singular="error"/>
+        <property name="servicePointAddresses" type="ServicePointAddress[]" singular="servicePointAddress"/>
+    </transfer>
+
+    <transfer name="ServicePointAddressCollectionRequest" strict="true">
+        <property name="servicePointAddresses" type="ServicePointAddress[]" singular="servicePointAddress"/>
+        <property name="isTransactional" type="bool"/>
+    </transfer>
+
+    <transfer name="ServicePointAddressConditions" strict="true">
+        <property name="servicePointUuids" type="string[]" singular="servicePointUuid"/>
+        <property name="uuids" type="string[]" singular="uuid"/>
+    </transfer>
+
+    <transfer name="ServicePointAddressCriteria" strict="true">
+        <property name="servicePointAddressConditions" type="ServicePointAddressConditions"/>
+    </transfer>
+
+    <transfer name="ServicePointAddressCollection" strict="true">
+        <property name="servicePointAddresses" type="ServicePointAddress[]" singular="servicePointAddress"/>
+    </transfer>
+
+    <transfer name="GlueRelationship">
+        <property name="resources" type="GlueResource[]" singular="resource"/>
+    </transfer>
+
+    <transfer name="Country">
+        <property name="iso2Code" type="string"/>
     </transfer>
 
 </transfers>

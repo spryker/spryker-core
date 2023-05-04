@@ -5,17 +5,17 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ServicePoint\Business\Validator\Rule;
+namespace Spryker\Zed\ServicePoint\Business\Validator\Rule\ServicePointAddress;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ErrorCollectionTransfer;
 
-interface ServicePointValidatorRuleInterface
+interface ServicePointAddressValidatorRuleInterface
 {
     /**
-     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\ServicePointTransfer> $servicePointTransfers
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\ServicePointAddressTransfer> $servicePointAddressTransfers
      *
      * @return \Generated\Shared\Transfer\ErrorCollectionTransfer
      */
-    public function validate(ArrayObject $servicePointTransfers): ErrorCollectionTransfer;
+    public function validate(ArrayObject $servicePointAddressTransfers): ErrorCollectionTransfer;
 }

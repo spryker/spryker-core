@@ -7,6 +7,10 @@
 
 namespace Spryker\Zed\ServicePoint\Business;
 
+use Generated\Shared\Transfer\ServicePointAddressCollectionRequestTransfer;
+use Generated\Shared\Transfer\ServicePointAddressCollectionResponseTransfer;
+use Generated\Shared\Transfer\ServicePointAddressCollectionTransfer;
+use Generated\Shared\Transfer\ServicePointAddressCriteriaTransfer;
 use Generated\Shared\Transfer\ServicePointCollectionRequestTransfer;
 use Generated\Shared\Transfer\ServicePointCollectionResponseTransfer;
 use Generated\Shared\Transfer\ServicePointCollectionTransfer;
@@ -94,4 +98,95 @@ interface ServicePointFacadeInterface
     public function updateServicePointCollection(
         ServicePointCollectionRequestTransfer $servicePointCollectionRequestTransfer
     ): ServicePointCollectionResponseTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves service point address entities filtered by criteria from Persistence.
+     * - Uses `ServicePointAddressCriteriaTransfer.servicePointAddressConditions.servicePointUuids` to filter by service point uuids.
+     * - Uses `ServicePointAddressCriteriaTransfer.servicePointAddressConditions.uuids` to filter by service point address uuids.
+     * - Uses `ServicePointAddressCriteriaTransfer.sort.field` to set the 'order by' field.
+     * - Uses `ServicePointAddressCriteriaTransfer.sort.isAscending` to set ascending/descending order.
+     * - Uses `ServicePointAddressCriteriaTransfer.pagination.{limit, offset}` to paginate results with limit and offset.
+     * - Uses `ServicePointAddressCriteriaTransfer.pagination.{page, maxPerPage}` to paginate results with page and maxPerPage.
+     * - Returns `ServicePointAddressCollectionTransfer` filled with found service point addresses.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ServicePointAddressCriteriaTransfer $servicePointAddressCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ServicePointAddressCollectionTransfer
+     */
+    public function getServicePointAddressCollection(
+        ServicePointAddressCriteriaTransfer $servicePointAddressCriteriaTransfer
+    ): ServicePointAddressCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Requires `ServicePointAddressCollectionRequestTransfer.isTransactional` to be set.
+     * - Requires `ServicePointAddressCollectionRequestTransfer.servicePointAddresses` to be set.
+     * - Requires `ServicePointAddressTransfer.servicePoint.uuid` to be set.
+     * - Requires `ServicePointAddressTransfer.country.iso2Code` to be set.
+     * - Requires `ServicePointAddressTransfer.address1` to be set.
+     * - Requires `ServicePointAddressTransfer.address2` to be set.
+     * - Requires `ServicePointAddressTransfer.zipCode` to be set.
+     * - Requires `ServicePointAddressTransfer.city` to be set.
+     * - Validates service point existence using `ServicePointAddressTransfer.servicePoint.uuid`.
+     * - Validates region existence using `ServicePointAddressTransfer.region.uuid`.
+     * - Validates country existence using `ServicePointAddressTransfer.country.iso2Code`.
+     * - Validates region matches country using `RegionTransfer.uuid` and `ServicePointAddressTransfer.country.iso2Code`.
+     * - Validates service point address address1 length.
+     * - Validates service point address address2 length.
+     * - Validates service point address address3 length.
+     * - Validates service point address zip code length.
+     * - Validates service point address city length.
+     * - Validates service point has single address using `ServicePointAddressTransfer.servicePoint.uuid`.
+     * - Uses `ServicePointAddressCollectionRequestTransfer.isTransactional` for transactional operation.
+     * - Stores service point addresses at Persistence.
+     * - Returns `ServicePointAddressCollectionRequestTransfer` with persisted service point addresses and errors if any occurred.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ServicePointAddressCollectionRequestTransfer $servicePointAddressCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ServicePointAddressCollectionResponseTransfer
+     */
+    public function createServicePointAddressCollection(
+        ServicePointAddressCollectionRequestTransfer $servicePointAddressCollectionRequestTransfer
+    ): ServicePointAddressCollectionResponseTransfer;
+
+    /**
+     * Specification:
+     * - Requires `ServicePointAddressCollectionRequestTransfer.isTransactional` to be set.
+     * - Requires `ServicePointAddressCollectionRequestTransfer.servicePointAddresses` to be set.
+     * - Requires `ServicePointAddressTransfer.servicePoint.uuid` to be set.
+     * - Requires `ServicePointAddressTransfer.country.iso2Code` to be set.
+     * - Requires `ServicePointAddressTransfer.uuid` to be set.
+     * - Requires `ServicePointAddressTransfer.address1` to be set.
+     * - Requires `ServicePointAddressTransfer.address2` to be set.
+     * - Requires `ServicePointAddressTransfer.zipCode` to be set.
+     * - Requires `ServicePointAddressTransfer.city` to be set.
+     * - Validates service point address existence using `ServicePointAddressTransfer.uuid`.
+     * - Validates service point existence using `ServicePointAddressTransfer.servicePoint.uuid`.
+     * - Validates region existence using `ServicePointAddressTransfer.region.uuid`.
+     * - Validates country existence using `ServicePointAddressTransfer.country.iso2Code`.
+     * - Validates region matches country using `RegionTransfer.uuid` and `ServicePointAddressTransfer.country.iso2Code`.
+     * - Validates service point address address1 length.
+     * - Validates service point address address2 length.
+     * - Validates service point address address3 length.
+     * - Validates service point address zip code length.
+     * - Validates service point address city length.
+     * - Validates service point has single address using `ServicePointAddressTransfer.servicePoint.uuid`.
+     * - Uses `ServicePointAddressCollectionRequestTransfer.isTransactional` for transactional operation.
+     * - Updates service point addresses at Persistence.
+     * - Returns `ServicePointAddressCollectionRequestTransfer` with persisted service point addresses and errors if any occurred.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ServicePointAddressCollectionRequestTransfer $servicePointAddressCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ServicePointAddressCollectionResponseTransfer
+     */
+    public function updateServicePointAddressCollection(
+        ServicePointAddressCollectionRequestTransfer $servicePointAddressCollectionRequestTransfer
+    ): ServicePointAddressCollectionResponseTransfer;
 }

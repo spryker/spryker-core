@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\ServicePoint\Persistence;
 
+use Generated\Shared\Transfer\ServicePointAddressTransfer;
 use Generated\Shared\Transfer\ServicePointTransfer;
 use Orm\Zed\ServicePoint\Persistence\SpyServicePoint;
+use Orm\Zed\ServicePoint\Persistence\SpyServicePointAddress;
 use Orm\Zed\ServicePoint\Persistence\SpyServicePointStore;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
@@ -36,6 +38,24 @@ class ServicePointEntityManager extends AbstractEntityManager implements Service
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ServicePointAddressTransfer $servicePointAddressTransfer
+     *
+     * @return \Generated\Shared\Transfer\ServicePointAddressTransfer
+     */
+    public function createServicePointAddress(ServicePointAddressTransfer $servicePointAddressTransfer): ServicePointAddressTransfer
+    {
+        $servicePointAddressEntity = $this->getFactory()
+            ->createServicePointAddressMapper()
+            ->mapServicePointAddressTransferToServicePointAddressEntity($servicePointAddressTransfer, new SpyServicePointAddress());
+
+        $servicePointAddressEntity->save();
+
+        return $this->getFactory()
+            ->createServicePointAddressMapper()
+            ->mapServicePointAddressEntityToServicePointAddressTransfer($servicePointAddressEntity, $servicePointAddressTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ServicePointTransfer $servicePointTransfer
      *
      * @return \Generated\Shared\Transfer\ServicePointTransfer
@@ -56,6 +76,29 @@ class ServicePointEntityManager extends AbstractEntityManager implements Service
         return $this->getFactory()
             ->createServicePointMapper()
             ->mapServicePointEntityToServicePointTransfer($servicePointEntity, $servicePointTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ServicePointAddressTransfer $servicePointAddressTransfer
+     *
+     * @return \Generated\Shared\Transfer\ServicePointAddressTransfer
+     */
+    public function updateServicePointAddress(ServicePointAddressTransfer $servicePointAddressTransfer): ServicePointAddressTransfer
+    {
+        $servicePointAddressEntity = $this->getFactory()
+            ->getServicePointAddressQuery()
+            ->filterByUuid($servicePointAddressTransfer->getUuidOrFail())
+            ->findOne();
+
+        $servicePointAddressEntity = $this->getFactory()
+            ->createServicePointAddressMapper()
+            ->mapServicePointAddressTransferToServicePointAddressEntity($servicePointAddressTransfer, $servicePointAddressEntity);
+
+        $servicePointAddressEntity->save();
+
+        return $this->getFactory()
+            ->createServicePointAddressMapper()
+            ->mapServicePointAddressEntityToServicePointAddressTransfer($servicePointAddressEntity, $servicePointAddressTransfer);
     }
 
     /**

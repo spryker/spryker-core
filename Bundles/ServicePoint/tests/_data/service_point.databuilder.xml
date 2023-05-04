@@ -11,4 +11,12 @@
         <property name="isActive" dataBuilderRule="boolean()"/>
     </transfer>
 
+    <transfer name="ServicePointAddress" strict="true">
+        <property name="address1" dataBuilderRule="address()"/>
+        <property name="address2" dataBuilderRule="numberBetween(1, 100)"/>
+        <property name="address3" dataBuilderRule="numberBetween(1, 100)"/>
+        <property name="zipCode" dataBuilderRule="postcode()"/>
+        <property name="city" dataBuilderRule="city()"/>
+    </transfer>
+
 </transfers>

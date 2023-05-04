@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace SprykerTest\Zed\ServicePointDataImport;
 
 use Codeception\Actor;
+use Orm\Zed\ServicePoint\Persistence\Base\SpyServicePointAddressQuery;
 use Orm\Zed\ServicePoint\Persistence\SpyServicePointQuery;
 use Orm\Zed\ServicePoint\Persistence\SpyServicePointStoreQuery;
 
@@ -56,5 +57,13 @@ class ServicePointDataImportCommunicationTester extends Actor
     public function getServicePointStoreQuery(): SpyServicePointStoreQuery
     {
         return SpyServicePointStoreQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\ServicePoint\Persistence\Base\SpyServicePointAddressQuery
+     */
+    public function getServicePointAddressQuery(): SpyServicePointAddressQuery
+    {
+        return SpyServicePointAddressQuery::create();
     }
 }

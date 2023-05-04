@@ -5,22 +5,23 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ServicePoint\Business\Validator\Rule;
+namespace Spryker\Zed\ServicePoint\Business\Validator\Rule\ServicePointAddress;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ErrorCollectionTransfer;
-use Generated\Shared\Transfer\ServicePointConditionsTransfer;
-use Generated\Shared\Transfer\ServicePointCriteriaTransfer;
-use Generated\Shared\Transfer\ServicePointTransfer;
+use Generated\Shared\Transfer\ServicePointAddressConditionsTransfer;
+use Generated\Shared\Transfer\ServicePointAddressCriteriaTransfer;
+use Generated\Shared\Transfer\ServicePointAddressTransfer;
+use Spryker\Zed\ServicePoint\Business\Validator\Rule\TerminationAwareValidatorRuleInterface;
 use Spryker\Zed\ServicePoint\Business\Validator\Util\ErrorAdderInterface;
 use Spryker\Zed\ServicePoint\Persistence\ServicePointRepositoryInterface;
 
-class ServicePointExistenceByUuidServicePointValidatorRule implements ServicePointValidatorRuleInterface, TerminationAwareValidatorRuleInterface
+class ExistenceByUuidServicePointAddressValidatorRule implements ServicePointAddressValidatorRuleInterface, TerminationAwareValidatorRuleInterface
 {
     /**
      * @var string
      */
-    protected const GLOSSARY_KEY_VALIDATION_SERVICE_POINT_ENTITY_NOT_FOUND = 'service_point.validation.service_point_entity_not_found';
+    protected const GLOSSARY_KEY_VALIDATION_SERVICE_POINT_ADDRESS_ENTITY_NOT_FOUND = 'service_point.validation.service_point_address_entity_not_found';
 
     /**
      * @var \Spryker\Zed\ServicePoint\Persistence\ServicePointRepositoryInterface
@@ -45,43 +46,25 @@ class ServicePointExistenceByUuidServicePointValidatorRule implements ServicePoi
     }
 
     /**
-     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\ServicePointTransfer> $servicePointTransfers
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\ServicePointAddressTransfer> $servicePointAddressTransfers
      *
      * @return \Generated\Shared\Transfer\ErrorCollectionTransfer
      */
-    public function validate(ArrayObject $servicePointTransfers): ErrorCollectionTransfer
+    public function validate(ArrayObject $servicePointAddressTransfers): ErrorCollectionTransfer
     {
         $errorCollectionTransfer = new ErrorCollectionTransfer();
 
-        foreach ($servicePointTransfers as $entityIdentifier => $servicePointTransfer) {
-            if (!$this->hasServicePoint($servicePointTransfer)) {
+        foreach ($servicePointAddressTransfers as $entityIdentifier => $servicePointAddressTransfer) {
+            if (!$this->hasServicePointAddress($servicePointAddressTransfer)) {
                 $this->errorAdder->addError(
                     $errorCollectionTransfer,
                     $entityIdentifier,
-                    static::GLOSSARY_KEY_VALIDATION_SERVICE_POINT_ENTITY_NOT_FOUND,
+                    static::GLOSSARY_KEY_VALIDATION_SERVICE_POINT_ADDRESS_ENTITY_NOT_FOUND,
                 );
             }
         }
 
         return $errorCollectionTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ServicePointTransfer $servicePointTransfer
-     *
-     * @return bool
-     */
-    protected function hasServicePoint(ServicePointTransfer $servicePointTransfer): bool
-    {
-        $servicePointConditionsTransfer = (new ServicePointConditionsTransfer())
-            ->addUuid($servicePointTransfer->getUuidOrFail());
-
-        $servicePointCriteriaTransfer = (new ServicePointCriteriaTransfer())
-            ->setServicePointConditions($servicePointConditionsTransfer);
-
-        return $this->servicePointRepository->getServicePointCollection($servicePointCriteriaTransfer)
-                ->getServicePoints()
-                ->count() === 1;
     }
 
     /**
@@ -95,5 +78,23 @@ class ServicePointExistenceByUuidServicePointValidatorRule implements ServicePoi
         ArrayObject $postValidationErrorTransfers
     ): bool {
         return $postValidationErrorTransfers->count() > $initialErrorTransfers->count();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ServicePointAddressTransfer $servicePointAddressTransfer
+     *
+     * @return bool
+     */
+    protected function hasServicePointAddress(ServicePointAddressTransfer $servicePointAddressTransfer): bool
+    {
+        $servicePointAddressConditionsTransfer = (new ServicePointAddressConditionsTransfer())
+            ->addUuid($servicePointAddressTransfer->getUuidOrFail());
+
+        $servicePointAddressCriteriaTransfer = (new ServicePointAddressCriteriaTransfer())
+            ->setServicePointAddressConditions($servicePointAddressConditionsTransfer);
+
+        return $this->servicePointRepository->getServicePointAddressCollection($servicePointAddressCriteriaTransfer)
+                ->getServicePointAddresses()
+                ->count() === 1;
     }
 }

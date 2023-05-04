@@ -20,15 +20,4 @@ interface ServicePointResponseBuilderInterface
     public function createServicePointResponse(
         ArrayObject $servicePointTransfers
     ): GlueResponseTransfer;
-
-    /**
-     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\ErrorTransfer> $errorTransfers
-     * @param string|null $localeName
-     *
-     * @return \Generated\Shared\Transfer\GlueResponseTransfer
-     */
-    public function createServicePointErrorResponse(
-        ArrayObject $errorTransfers,
-        ?string $localeName
-    ): GlueResponseTransfer;
 }

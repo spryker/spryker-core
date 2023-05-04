@@ -8,8 +8,10 @@
 namespace Spryker\Zed\Country\Business\Country;
 
 use Generated\Shared\Transfer\CountryCollectionTransfer;
+use Generated\Shared\Transfer\CountryCriteriaTransfer;
 use Generated\Shared\Transfer\CountryTransfer;
 use Spryker\Zed\Country\Business\Exception\MissingCountryException;
+use Spryker\Zed\Country\Business\Expander\RegionExpanderInterface;
 use Spryker\Zed\Country\Persistence\CountryRepositoryInterface;
 
 class CountryReader implements CountryReaderInterface
@@ -17,15 +19,23 @@ class CountryReader implements CountryReaderInterface
     /**
      * @var \Spryker\Zed\Country\Persistence\CountryRepositoryInterface
      */
-    protected $countryRepository;
+    protected CountryRepositoryInterface $countryRepository;
+
+    /**
+     * @var \Spryker\Zed\Country\Business\Expander\RegionExpanderInterface
+     */
+    protected RegionExpanderInterface $regionExpander;
 
     /**
      * @param \Spryker\Zed\Country\Persistence\CountryRepositoryInterface $countryRepository
+     * @param \Spryker\Zed\Country\Business\Expander\RegionExpanderInterface $regionExpander
      */
     public function __construct(
-        CountryRepositoryInterface $countryRepository
+        CountryRepositoryInterface $countryRepository,
+        RegionExpanderInterface $regionExpander
     ) {
         $this->countryRepository = $countryRepository;
+        $this->regionExpander = $regionExpander;
     }
 
     /**
@@ -100,14 +110,6 @@ class CountryReader implements CountryReaderInterface
     }
 
     /**
-     * @return \Generated\Shared\Transfer\CountryCollectionTransfer
-     */
-    public function getCountryCollection(): CountryCollectionTransfer
-    {
-        return $this->countryRepository->getCountryCollection();
-    }
-
-    /**
      * @param string $countryName
      *
      * @return \Generated\Shared\Transfer\CountryTransfer
@@ -117,5 +119,26 @@ class CountryReader implements CountryReaderInterface
         $countryTransfer = $this->countryRepository->findCountryByName($countryName);
 
         return $countryTransfer ?? new CountryTransfer();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CountryCriteriaTransfer $countryCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\CountryCollectionTransfer
+     */
+    public function getCountryCollection(
+        CountryCriteriaTransfer $countryCriteriaTransfer
+    ): CountryCollectionTransfer {
+        $countryCollectionTransfer = $this->countryRepository->getCountryCollection($countryCriteriaTransfer);
+
+        $countryConditionsTransfer = $countryCriteriaTransfer->getCountryConditions();
+
+        if ($countryConditionsTransfer && $countryConditionsTransfer->getWithRegions()) {
+            return $this->regionExpander->expandCountryCollectionWithRegions(
+                $countryCollectionTransfer,
+            );
+        }
+
+        return $countryCollectionTransfer;
     }
 }

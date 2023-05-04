@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Country\Persistence;
 
 use Generated\Shared\Transfer\CountryCollectionTransfer;
+use Generated\Shared\Transfer\CountryCriteriaTransfer;
 use Generated\Shared\Transfer\CountryTransfer;
 
 interface CountryRepositoryInterface
@@ -54,7 +55,7 @@ interface CountryRepositoryInterface
     /**
      * @return \Generated\Shared\Transfer\CountryCollectionTransfer
      */
-    public function getCountryCollection(): CountryCollectionTransfer;
+    public function getAvailableCountries(): CountryCollectionTransfer;
 
     /**
      * @param string $countryName
@@ -76,4 +77,20 @@ interface CountryRepositoryInterface
      * @return \Generated\Shared\Transfer\CountryTransfer|null
      */
     public function findCountryByIso3Code(string $iso3Code): ?CountryTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CountryCriteriaTransfer $countryCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\CountryCollectionTransfer
+     */
+    public function getCountryCollection(
+        CountryCriteriaTransfer $countryCriteriaTransfer
+    ): CountryCollectionTransfer;
+
+    /**
+     * @param list<int> $countryIds
+     *
+     * @return array<int, list<\Generated\Shared\Transfer\RegionTransfer>>
+     */
+    public function getRegionsGroupedByIdCountry(array $countryIds): array;
 }

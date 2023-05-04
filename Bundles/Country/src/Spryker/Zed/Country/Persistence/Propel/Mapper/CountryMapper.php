@@ -12,9 +12,29 @@ use Generated\Shared\Transfer\CountryTransfer;
 use Generated\Shared\Transfer\RegionTransfer;
 use Orm\Zed\Country\Persistence\SpyCountry;
 use Orm\Zed\Country\Persistence\SpyRegion;
+use Propel\Runtime\Collection\ObjectCollection;
 
 class CountryMapper
 {
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Country\Persistence\SpyRegion> $regionEntities
+     *
+     * @return array<int, list<\Generated\Shared\Transfer\RegionTransfer>>
+     */
+    public function mapRegionEntitiesToRegionTransfersGroupedByIdCountry(ObjectCollection $regionEntities): array
+    {
+        $regionTransfersGroupedByIdCountry = [];
+
+        foreach ($regionEntities as $regionEntity) {
+            $regionTransfersGroupedByIdCountry[(int)$regionEntity->getFkCountry()][] = $this->mapRegionEntityToRegionTransfer(
+                $regionEntity,
+                new RegionTransfer(),
+            );
+        }
+
+        return $regionTransfersGroupedByIdCountry;
+    }
+
     /**
      * @param \Orm\Zed\Country\Persistence\SpyRegion $regionEntity
      * @param \Generated\Shared\Transfer\RegionTransfer $regionTransfer
@@ -104,5 +124,24 @@ class CountryMapper
             ->setIso2Code($regionTransfer->getIso2CodeOrFail())
             ->setFkCountry($regionTransfer->getFkCountryOrFail())
             ->setName($regionTransfer->getNameOrFail());
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\Country\Persistence\SpyCountry> $countryEntities
+     * @param \Generated\Shared\Transfer\CountryCollectionTransfer $countryCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\CountryCollectionTransfer
+     */
+    public function mapCountryEntitiesToCountryCollectionTransfer(
+        ObjectCollection $countryEntities,
+        CountryCollectionTransfer $countryCollectionTransfer
+    ): CountryCollectionTransfer {
+        foreach ($countryEntities as $countryEntity) {
+            $countryCollectionTransfer->addCountries(
+                $this->mapCountryEntityToCountryTransfer($countryEntity, new CountryTransfer()),
+            );
+        }
+
+        return $countryCollectionTransfer;
     }
 }

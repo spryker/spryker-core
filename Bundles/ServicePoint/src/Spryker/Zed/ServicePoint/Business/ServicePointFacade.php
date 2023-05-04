@@ -7,6 +7,10 @@
 
 namespace Spryker\Zed\ServicePoint\Business;
 
+use Generated\Shared\Transfer\ServicePointAddressCollectionRequestTransfer;
+use Generated\Shared\Transfer\ServicePointAddressCollectionResponseTransfer;
+use Generated\Shared\Transfer\ServicePointAddressCollectionTransfer;
+use Generated\Shared\Transfer\ServicePointAddressCriteriaTransfer;
 use Generated\Shared\Transfer\ServicePointCollectionRequestTransfer;
 use Generated\Shared\Transfer\ServicePointCollectionResponseTransfer;
 use Generated\Shared\Transfer\ServicePointCollectionTransfer;
@@ -69,5 +73,54 @@ class ServicePointFacade extends AbstractFacade implements ServicePointFacadeInt
         return $this->getFactory()
             ->createServicePointUpdater()
             ->updateServicePointCollection($servicePointCollectionRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ServicePointAddressCriteriaTransfer $servicePointAddressCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ServicePointAddressCollectionTransfer
+     */
+    public function getServicePointAddressCollection(
+        ServicePointAddressCriteriaTransfer $servicePointAddressCriteriaTransfer
+    ): ServicePointAddressCollectionTransfer {
+        return $this->getRepository()->getServicePointAddressCollection($servicePointAddressCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ServicePointAddressCollectionRequestTransfer $servicePointAddressCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ServicePointAddressCollectionResponseTransfer
+     */
+    public function createServicePointAddressCollection(
+        ServicePointAddressCollectionRequestTransfer $servicePointAddressCollectionRequestTransfer
+    ): ServicePointAddressCollectionResponseTransfer {
+        return $this->getFactory()
+            ->createServicePointAddressCreator()
+            ->createServicePointAddressCollection($servicePointAddressCollectionRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ServicePointAddressCollectionRequestTransfer $servicePointAddressCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ServicePointAddressCollectionResponseTransfer
+     */
+    public function updateServicePointAddressCollection(
+        ServicePointAddressCollectionRequestTransfer $servicePointAddressCollectionRequestTransfer
+    ): ServicePointAddressCollectionResponseTransfer {
+        return $this->getFactory()
+            ->createServicePointAddressUpdater()
+            ->updateServicePointAddressCollection($servicePointAddressCollectionRequestTransfer);
     }
 }

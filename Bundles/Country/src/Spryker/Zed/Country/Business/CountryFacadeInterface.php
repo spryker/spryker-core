@@ -10,6 +10,7 @@ namespace Spryker\Zed\Country\Business;
 use Generated\Shared\Transfer\CheckoutDataTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CountryCollectionTransfer;
+use Generated\Shared\Transfer\CountryCriteriaTransfer;
 use Generated\Shared\Transfer\CountryTransfer;
 use Generated\Shared\Transfer\StoreResponseTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -135,4 +136,21 @@ interface CountryFacadeInterface
      * @return array<\Generated\Shared\Transfer\StoreTransfer>
      */
     public function expandStoreTransfersWithCountries(array $storeTransfers): array;
+
+    /**
+     * Specification:
+     * - Retrieves country entities filtered by criteria from Persistence.
+     * - Uses `CountryCriteriaTransfer.countryConditions.iso2Codes` to filter by country ISO2 codes.
+     * - Uses `CountryCriteriaTransfer.countryConditions.withRegions` to load regions.
+     * - Returns `CountryCollectionTransfer` filled with found countries.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CountryCriteriaTransfer $countryCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\CountryCollectionTransfer
+     */
+    public function getCountryCollection(
+        CountryCriteriaTransfer $countryCriteriaTransfer
+    ): CountryCollectionTransfer;
 }

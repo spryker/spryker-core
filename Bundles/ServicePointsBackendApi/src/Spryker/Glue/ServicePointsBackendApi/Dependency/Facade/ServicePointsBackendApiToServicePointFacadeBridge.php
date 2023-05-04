@@ -7,6 +7,10 @@
 
 namespace Spryker\Glue\ServicePointsBackendApi\Dependency\Facade;
 
+use Generated\Shared\Transfer\ServicePointAddressCollectionRequestTransfer;
+use Generated\Shared\Transfer\ServicePointAddressCollectionResponseTransfer;
+use Generated\Shared\Transfer\ServicePointAddressCollectionTransfer;
+use Generated\Shared\Transfer\ServicePointAddressCriteriaTransfer;
 use Generated\Shared\Transfer\ServicePointCollectionRequestTransfer;
 use Generated\Shared\Transfer\ServicePointCollectionResponseTransfer;
 use Generated\Shared\Transfer\ServicePointCollectionTransfer;
@@ -58,5 +62,38 @@ class ServicePointsBackendApiToServicePointFacadeBridge implements ServicePoints
         ServicePointCollectionRequestTransfer $servicePointCollectionRequestTransfer
     ): ServicePointCollectionResponseTransfer {
         return $this->servicePointFacade->updateServicePointCollection($servicePointCollectionRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ServicePointAddressCriteriaTransfer $servicePointAddressCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ServicePointAddressCollectionTransfer
+     */
+    public function getServicePointAddressCollection(
+        ServicePointAddressCriteriaTransfer $servicePointAddressCriteriaTransfer
+    ): ServicePointAddressCollectionTransfer {
+        return $this->servicePointFacade->getServicePointAddressCollection($servicePointAddressCriteriaTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ServicePointAddressCollectionRequestTransfer $servicePointAddressCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ServicePointAddressCollectionResponseTransfer
+     */
+    public function createServicePointAddressCollection(
+        ServicePointAddressCollectionRequestTransfer $servicePointAddressCollectionRequestTransfer
+    ): ServicePointAddressCollectionResponseTransfer {
+        return $this->servicePointFacade->createServicePointAddressCollection($servicePointAddressCollectionRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ServicePointAddressCollectionRequestTransfer $servicePointAddressCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ServicePointAddressCollectionResponseTransfer
+     */
+    public function updateServicePointAddressCollection(
+        ServicePointAddressCollectionRequestTransfer $servicePointAddressCollectionRequestTransfer
+    ): ServicePointAddressCollectionResponseTransfer {
+        return $this->servicePointFacade->updateServicePointAddressCollection($servicePointAddressCollectionRequestTransfer);
     }
 }

@@ -5,28 +5,28 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ServicePoint\Business\Validator\Rule;
+namespace Spryker\Zed\ServicePoint\Business\Validator\Rule\ServicePointAddress;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ErrorCollectionTransfer;
 use Spryker\Zed\ServicePoint\Business\Validator\Util\ErrorAdderInterface;
 
-class ServicePointNameLengthServicePointValidatorRule implements ServicePointValidatorRuleInterface, TerminationAwareValidatorRuleInterface
+class ZipCodeLengthServicePointAddressValidatorRule implements ServicePointAddressValidatorRuleInterface
 {
     /**
      * @var int
      */
-    protected const SERVICE_POINT_NAME_MIN_LENGTH = 1;
+    protected const SERVICE_POINT_ADDRESS_ZIP_CODE_MIN_LENGTH = 4;
 
     /**
      * @var int
      */
-    protected const SERVICE_POINT_NAME_MAX_LENGTH = 255;
+    protected const SERVICE_POINT_ADDRESS_ZIP_CODE_MAX_LENGTH = 15;
 
     /**
      * @var string
      */
-    protected const GLOSSARY_KEY_VALIDATION_SERVICE_POINT_NAME_WRONG_LENGTH = 'service_point.validation.service_point_name_wrong_length';
+    protected const GLOSSARY_KEY_VALIDATION_SERVICE_POINT_ADDRESS_ZIP_CODE_WRONG_LENGTH = 'service_point.validation.service_point_address_zip_code_wrong_length';
 
     /**
      * @var string
@@ -52,23 +52,23 @@ class ServicePointNameLengthServicePointValidatorRule implements ServicePointVal
     }
 
     /**
-     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\ServicePointTransfer> $servicePointTransfers
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\ServicePointAddressTransfer> $servicePointAddressTransfers
      *
      * @return \Generated\Shared\Transfer\ErrorCollectionTransfer
      */
-    public function validate(ArrayObject $servicePointTransfers): ErrorCollectionTransfer
+    public function validate(ArrayObject $servicePointAddressTransfers): ErrorCollectionTransfer
     {
         $errorCollectionTransfer = new ErrorCollectionTransfer();
 
-        foreach ($servicePointTransfers as $entityIdentifier => $servicePointTransfer) {
-            if (!$this->isServicePointNameLengthValid($servicePointTransfer->getNameOrFail())) {
+        foreach ($servicePointAddressTransfers as $entityIdentifier => $servicePointAddressTransfer) {
+            if (!$this->isServicePointAddressZipCodeLengthValid($servicePointAddressTransfer->getZipCodeOrFail())) {
                 $this->errorAdder->addError(
                     $errorCollectionTransfer,
                     $entityIdentifier,
-                    static::GLOSSARY_KEY_VALIDATION_SERVICE_POINT_NAME_WRONG_LENGTH,
+                    static::GLOSSARY_KEY_VALIDATION_SERVICE_POINT_ADDRESS_ZIP_CODE_WRONG_LENGTH,
                     [
-                        static::GLOSSARY_KEY_PARAMETER_MIN => static::SERVICE_POINT_NAME_MIN_LENGTH,
-                        static::GLOSSARY_KEY_PARAMETER_MAX => static::SERVICE_POINT_NAME_MAX_LENGTH,
+                        static::GLOSSARY_KEY_PARAMETER_MIN => static::SERVICE_POINT_ADDRESS_ZIP_CODE_MIN_LENGTH,
+                        static::GLOSSARY_KEY_PARAMETER_MAX => static::SERVICE_POINT_ADDRESS_ZIP_CODE_MAX_LENGTH,
                     ],
                 );
             }
@@ -91,13 +91,13 @@ class ServicePointNameLengthServicePointValidatorRule implements ServicePointVal
     }
 
     /**
-     * @param string $name
+     * @param string $zipCode
      *
      * @return bool
      */
-    protected function isServicePointNameLengthValid(string $name): bool
+    protected function isServicePointAddressZipCodeLengthValid(string $zipCode): bool
     {
-        return mb_strlen($name) >= static::SERVICE_POINT_NAME_MIN_LENGTH
-            && mb_strlen($name) <= static::SERVICE_POINT_NAME_MAX_LENGTH;
+        return mb_strlen($zipCode) >= static::SERVICE_POINT_ADDRESS_ZIP_CODE_MIN_LENGTH
+            && mb_strlen($zipCode) <= static::SERVICE_POINT_ADDRESS_ZIP_CODE_MAX_LENGTH;
     }
 }

@@ -10,10 +10,15 @@ declare(strict_types=1);
 namespace SprykerTest\Zed\ServicePoint;
 
 use Codeception\Actor;
+use Generated\Shared\DataBuilder\ServicePointAddressBuilder;
 use Generated\Shared\DataBuilder\ServicePointBuilder;
+use Generated\Shared\Transfer\CountryTransfer;
+use Generated\Shared\Transfer\RegionTransfer;
+use Generated\Shared\Transfer\ServicePointAddressTransfer;
 use Generated\Shared\Transfer\ServicePointTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Orm\Zed\ServicePoint\Persistence\SpyServicePointAddressQuery;
 use Orm\Zed\ServicePoint\Persistence\SpyServicePointQuery;
 
 /**
@@ -36,6 +41,16 @@ use Orm\Zed\ServicePoint\Persistence\SpyServicePointQuery;
 class ServicePointBusinessTester extends Actor
 {
     use _generated\ServicePointBusinessTesterActions;
+
+    /**
+     * @var string
+     */
+    protected const COUNTRY_ISO2_CODE = '00';
+
+    /**
+     * @var string
+     */
+    protected const COUNTRY_ISO3_CODE = '000';
 
     /**
      * @return void
@@ -76,6 +91,49 @@ class ServicePointBusinessTester extends Actor
             ])->build();
 
         return $servicePointTransfer;
+    }
+
+    /**
+     * @param array<string, mixed> $seed
+     *
+     * @return \Generated\Shared\Transfer\ServicePointAddressTransfer
+     */
+    public function createServicePointAddressTransferWithRelations(array $seed = []): ServicePointAddressTransfer
+    {
+        $servicePointAddressTransfer = (new ServicePointAddressBuilder($seed))->build();
+
+        $countryTransfer = $this->haveCountryTransfer([
+            CountryTransfer::ISO2_CODE => static::COUNTRY_ISO2_CODE,
+            CountryTransfer::ISO3_CODE => static::COUNTRY_ISO3_CODE,
+        ]);
+
+        if (!$servicePointAddressTransfer->getServicePoint()) {
+            $storeTransfer = $this->haveStore();
+            $servicePointTransfer = $this->createServicePointTransferWithStoreRelation($storeTransfer->getName());
+            $servicePointTransfer = $this->haveServicePoint($servicePointTransfer->toArray());
+            $servicePointAddressTransfer->setServicePoint($servicePointTransfer);
+        }
+
+        if (!$servicePointAddressTransfer->getCountry()) {
+            $servicePointAddressTransfer->setCountry($countryTransfer);
+        }
+
+        if (!$servicePointAddressTransfer->getRegion()) {
+            $regionTransfer = $this->haveRegion([
+                RegionTransfer::FK_COUNTRY => $countryTransfer->getIdCountry(),
+            ]);
+            $servicePointAddressTransfer->setRegion($regionTransfer);
+        }
+
+        return $servicePointAddressTransfer;
+    }
+
+    /**
+     * @return \Orm\Zed\ServicePoint\Persistence\SpyServicePointAddressQuery
+     */
+    public function getServicePointAddressQuery(): SpyServicePointAddressQuery
+    {
+        return SpyServicePointAddressQuery::create();
     }
 
     /**

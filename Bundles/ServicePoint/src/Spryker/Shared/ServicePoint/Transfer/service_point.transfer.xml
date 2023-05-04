@@ -10,8 +10,26 @@
         <property name="storeRelation" type="StoreRelation"/>
     </transfer>
 
+    <transfer name="ServicePointAddress" strict="true">
+        <property name="idServicePointAddress" type="int"/>
+        <property name="uuid" type="string"/>
+        <property name="address1" type="string"/>
+        <property name="address2" type="string"/>
+        <property name="address3" type="string"/>
+        <property name="zipCode" type="string"/>
+        <property name="city" type="string"/>
+        <property name="country" type="Country"/>
+        <property name="region" type="Region"/>
+        <property name="servicePoint" type="ServicePoint"/>
+    </transfer>
+
     <transfer name="ServicePointCollection" strict="true">
         <property name="servicePoints" type="ServicePoint[]" singular="servicePoint"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="ServicePointAddressCollection" strict="true">
+        <property name="servicePointAddresses" type="ServicePointAddress[]" singular="servicePointAddress"/>
         <property name="pagination" type="Pagination"/>
     </transfer>
 
@@ -25,6 +43,16 @@
         <property name="servicePoints" type="ServicePoint[]" singular="servicePoint"/>
     </transfer>
 
+    <transfer name="ServicePointAddressCollectionRequest" strict="true">
+        <property name="isTransactional" type="bool"/>
+        <property name="servicePointAddresses" type="ServicePointAddress[]" singular="servicePointAddress"/>
+    </transfer>
+
+    <transfer name="ServicePointAddressCollectionResponse" strict="true">
+        <property name="errors" type="Error[]" singular="error"/>
+        <property name="servicePointAddresses" type="ServicePointAddress[]" singular="servicePointAddress"/>
+    </transfer>
+
     <transfer name="ServicePointCriteria" strict="true">
         <property name="servicePointConditions" type="ServicePointConditions"/>
         <property name="sortCollection" type="Sort[]" singular="sort"/>
@@ -36,6 +64,17 @@
         <property name="uuids" type="string[]" singular="uuid"/>
         <property name="withStoreRelations" type="bool"/>
         <property name="isUuidsConditionInversed" type="bool"/>
+    </transfer>
+
+    <transfer name="ServicePointAddressCriteria" strict="true">
+        <property name="servicePointAddressConditions" type="ServicePointAddressConditions"/>
+        <property name="sortCollection" type="Sort[]" singular="sort"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="ServicePointAddressConditions" strict="true">
+        <property name="servicePointUuids" type="string[]" singular="servicePointUuid"/>
+        <property name="uuids" type="string[]" singular="uuid"/>
     </transfer>
 
     <transfer name="StoreRelation">
@@ -74,6 +113,30 @@
 
     <transfer name="ErrorCollection" strict="true">
         <property name="errors" type="Error[]" singular="error"/>
+    </transfer>
+
+    <transfer name="Country">
+        <property name="iso2Code" type="string"/>
+        <property name="regions" type="Region[]" singular="region"/>
+        <property name="idCountry" type="int"/>
+    </transfer>
+
+    <transfer name="CountryCollection">
+        <property name="countries" type="Country[]" singular="countries"/>
+    </transfer>
+
+    <transfer name="Region">
+        <property name="uuid" type="string" strict="true"/>
+        <property name="idRegion" type="int"/>
+    </transfer>
+
+    <transfer name="CountryConditions" strict="true">
+        <property name="iso2Codes" type="string[]" singular="iso2Code"/>
+        <property name="withRegions" type="bool"/>
+    </transfer>
+
+    <transfer name="CountryCriteria" strict="true">
+        <property name="countryConditions" type="CountryConditions"/>
     </transfer>
 
 </transfers>

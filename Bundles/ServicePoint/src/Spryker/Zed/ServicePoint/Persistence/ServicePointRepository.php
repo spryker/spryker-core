@@ -8,8 +8,12 @@
 namespace Spryker\Zed\ServicePoint\Persistence;
 
 use Generated\Shared\Transfer\PaginationTransfer;
+use Generated\Shared\Transfer\ServicePointAddressCollectionTransfer;
+use Generated\Shared\Transfer\ServicePointAddressCriteriaTransfer;
 use Generated\Shared\Transfer\ServicePointCollectionTransfer;
 use Generated\Shared\Transfer\ServicePointCriteriaTransfer;
+use Orm\Zed\ServicePoint\Persistence\Map\SpyServicePointTableMap;
+use Orm\Zed\ServicePoint\Persistence\SpyServicePointAddressQuery;
 use Orm\Zed\ServicePoint\Persistence\SpyServicePointQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -37,7 +41,7 @@ class ServicePointRepository extends AbstractRepository implements ServicePointR
         $paginationTransfer = $servicePointCriteriaTransfer->getPagination();
 
         if ($paginationTransfer) {
-            $servicePointQuery = $this->applyServicePointPagination($servicePointQuery, $paginationTransfer);
+            $servicePointQuery = $this->applyModelCriteriaPagination($servicePointQuery, $paginationTransfer);
             $servicePointCollectionTransfer->setPagination($paginationTransfer);
         }
 
@@ -47,6 +51,20 @@ class ServicePointRepository extends AbstractRepository implements ServicePointR
                 $servicePointQuery->find(),
                 $servicePointCollectionTransfer,
             );
+    }
+
+    /**
+     * @param list<string> $servicePointUuids
+     *
+     * @return array<string, int>
+     */
+    public function getServicePointIdsIndexedByServicePointUuid(array $servicePointUuids): array
+    {
+        return $this->getFactory()->getServicePointQuery()
+            ->select([SpyServicePointTableMap::COL_ID_SERVICE_POINT, SpyServicePointTableMap::COL_UUID])
+            ->filterByUuid_In($servicePointUuids)
+            ->find()
+            ->toKeyValue(SpyServicePointTableMap::COL_UUID, SpyServicePointTableMap::COL_ID_SERVICE_POINT);
     }
 
     /**
@@ -66,6 +84,40 @@ class ServicePointRepository extends AbstractRepository implements ServicePointR
         return $this->getFactory()
             ->createServicePointMapper()
             ->mapServicePointStoreEntitiesToStoreTransfers($servicePointStoreEntities);
+    }
+
+    /**
+     * @module Country
+     *
+     * @param \Generated\Shared\Transfer\ServicePointAddressCriteriaTransfer $servicePointAddressCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ServicePointAddressCollectionTransfer
+     */
+    public function getServicePointAddressCollection(
+        ServicePointAddressCriteriaTransfer $servicePointAddressCriteriaTransfer
+    ): ServicePointAddressCollectionTransfer {
+        $servicePointAddressQuery = $this->getFactory()->getServicePointAddressQuery()
+            ->joinWithCountry()
+            ->joinWithServicePoint()
+            ->leftJoinWithRegion();
+
+        $servicePointAddressQuery = $this->applyServicePointAddressFilters($servicePointAddressQuery, $servicePointAddressCriteriaTransfer);
+        $servicePointAddressQuery = $this->applyServicePointAddressSorting($servicePointAddressQuery, $servicePointAddressCriteriaTransfer);
+
+        $servicePointAddressCollectionTransfer = new ServicePointAddressCollectionTransfer();
+        $paginationTransfer = $servicePointAddressCriteriaTransfer->getPagination();
+
+        if ($paginationTransfer) {
+            $servicePointAddressQuery = $this->applyModelCriteriaPagination($servicePointAddressQuery, $paginationTransfer);
+            $servicePointAddressCollectionTransfer->setPagination($paginationTransfer);
+        }
+
+        return $this->getFactory()
+            ->createServicePointAddressMapper()
+            ->mapServicePointAddressEntitiesToServicePointAddressCollectionTransfer(
+                $servicePointAddressQuery->find(),
+                $servicePointAddressCollectionTransfer,
+            );
     }
 
     /**
@@ -99,27 +151,57 @@ class ServicePointRepository extends AbstractRepository implements ServicePointR
     }
 
     /**
-     * @param \Orm\Zed\ServicePoint\Persistence\SpyServicePointQuery $servicePointQuery
+     * @param \Orm\Zed\ServicePoint\Persistence\SpyServicePointAddressQuery $servicePointAddressQuery
+     * @param \Generated\Shared\Transfer\ServicePointAddressCriteriaTransfer $servicePointAddressCriteriaTransfer
+     *
+     * @return \Orm\Zed\ServicePoint\Persistence\SpyServicePointAddressQuery
+     */
+    protected function applyServicePointAddressFilters(
+        SpyServicePointAddressQuery $servicePointAddressQuery,
+        ServicePointAddressCriteriaTransfer $servicePointAddressCriteriaTransfer
+    ): SpyServicePointAddressQuery {
+        $servicePointAddressConditionsTransfer = $servicePointAddressCriteriaTransfer->getServicePointAddressConditions();
+
+        if (!$servicePointAddressConditionsTransfer) {
+            return $servicePointAddressQuery;
+        }
+
+        if ($servicePointAddressConditionsTransfer->getServicePointUuids()) {
+            $servicePointAddressQuery
+                ->useServicePointQuery()
+                    ->filterByUuid_In($servicePointAddressConditionsTransfer->getServicePointUuids())
+                ->endUse();
+        }
+
+        if ($servicePointAddressConditionsTransfer->getUuids()) {
+            $servicePointAddressQuery->filterByUuid_In($servicePointAddressConditionsTransfer->getUuids());
+        }
+
+        return $servicePointAddressQuery;
+    }
+
+    /**
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $modelCriteria
      * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    protected function applyServicePointPagination(
-        SpyServicePointQuery $servicePointQuery,
+    protected function applyModelCriteriaPagination(
+        ModelCriteria $modelCriteria,
         PaginationTransfer $paginationTransfer
     ): ModelCriteria {
         if ($paginationTransfer->getOffset() !== null && $paginationTransfer->getLimit() !== null) {
-            $paginationTransfer->setNbResults($servicePointQuery->count());
+            $paginationTransfer->setNbResults($modelCriteria->count());
 
-            $servicePointQuery
+            $modelCriteria
                 ->offset($paginationTransfer->getOffsetOrFail())
                 ->setLimit($paginationTransfer->getLimitOrFail());
 
-            return $servicePointQuery;
+            return $modelCriteria;
         }
 
         if ($paginationTransfer->getPage() !== null && $paginationTransfer->getMaxPerPage()) {
-            $propelModelPager = $servicePointQuery->paginate(
+            $propelModelPager = $modelCriteria->paginate(
                 $paginationTransfer->getPage(),
                 $paginationTransfer->getMaxPerPage(),
             );
@@ -135,7 +217,7 @@ class ServicePointRepository extends AbstractRepository implements ServicePointR
             return $propelModelPager->getQuery();
         }
 
-        return $servicePointQuery;
+        return $modelCriteria;
     }
 
     /**
@@ -157,5 +239,26 @@ class ServicePointRepository extends AbstractRepository implements ServicePointR
         }
 
         return $servicePointQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\ServicePoint\Persistence\SpyServicePointAddressQuery $servicePointAddressQuery
+     * @param \Generated\Shared\Transfer\ServicePointAddressCriteriaTransfer $servicePointAddressCriteriaTransfer
+     *
+     * @return \Orm\Zed\ServicePoint\Persistence\SpyServicePointAddressQuery
+     */
+    protected function applyServicePointAddressSorting(
+        SpyServicePointAddressQuery $servicePointAddressQuery,
+        ServicePointAddressCriteriaTransfer $servicePointAddressCriteriaTransfer
+    ): SpyServicePointAddressQuery {
+        $sortCollection = $servicePointAddressCriteriaTransfer->getSortCollection();
+        foreach ($sortCollection as $sortTransfer) {
+            $servicePointAddressQuery->orderBy(
+                $sortTransfer->getFieldOrFail(),
+                $sortTransfer->getIsAscending() ? Criteria::ASC : Criteria::DESC,
+            );
+        }
+
+        return $servicePointAddressQuery;
     }
 }

@@ -46,28 +46,28 @@ class UpdateServicePointCollectionTest extends Unit
     protected ServicePointBusinessTester $tester;
 
     /**
-     * @uses \Spryker\Zed\ServicePoint\Business\Validator\Rule\ServicePointKeyExistenceServicePointValidatorRule::GLOSSARY_KEY_VALIDATION_SERVICE_POINT_KEY_EXISTS
+     * @uses \Spryker\Zed\ServicePoint\Business\Validator\Rule\KeyExistenceServicePointValidatorRule::GLOSSARY_KEY_VALIDATION_SERVICE_POINT_KEY_EXISTS
      *
      * @var string
      */
     protected const GLOSSARY_KEY_VALIDATION_SERVICE_POINT_KEY_EXISTS = 'service_point.validation.service_point_key_exists';
 
     /**
-     * @uses \Spryker\Zed\ServicePoint\Business\Validator\Rule\ServicePointKeyUniquenessServicePointValidatorRule::GLOSSARY_KEY_VALIDATION_SERVICE_POINT_KEY_IS_NOT_UNIQUE
+     * @uses \Spryker\Zed\ServicePoint\Business\Validator\Rule\KeyUniquenessServicePointValidatorRule::GLOSSARY_KEY_VALIDATION_SERVICE_POINT_KEY_IS_NOT_UNIQUE
      *
      * @var string
      */
     protected const GLOSSARY_KEY_VALIDATION_SERVICE_POINT_KEY_IS_NOT_UNIQUE = 'service_point.validation.service_point_key_is_not_unique';
 
     /**
-     * @uses \Spryker\Zed\ServicePoint\Business\Validator\Rule\ServicePointKeyLengthServicePointValidatorRule::GLOSSARY_KEY_VALIDATION_SERVICE_POINT_KEY_WRONG_LENGTH
+     * @uses \Spryker\Zed\ServicePoint\Business\Validator\Rule\KeyLengthServicePointValidatorRule::GLOSSARY_KEY_VALIDATION_SERVICE_POINT_KEY_WRONG_LENGTH
      *
      * @var string
      */
     protected const GLOSSARY_KEY_VALIDATION_SERVICE_POINT_KEY_WRONG_LENGTH = 'service_point.validation.service_point_key_wrong_length';
 
     /**
-     * @uses \Spryker\Zed\ServicePoint\Business\Validator\Rule\ServicePointNameLengthServicePointValidatorRule::GLOSSARY_KEY_VALIDATION_SERVICE_POINT_NAME_WRONG_LENGTH
+     * @uses \Spryker\Zed\ServicePoint\Business\Validator\Rule\NameLengthServicePointValidatorRule::GLOSSARY_KEY_VALIDATION_SERVICE_POINT_NAME_WRONG_LENGTH
      *
      * @var string
      */

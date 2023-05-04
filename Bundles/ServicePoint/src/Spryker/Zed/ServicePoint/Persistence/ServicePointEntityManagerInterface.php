@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ServicePoint\Persistence;
 
+use Generated\Shared\Transfer\ServicePointAddressTransfer;
 use Generated\Shared\Transfer\ServicePointTransfer;
 
 interface ServicePointEntityManagerInterface
@@ -19,11 +20,25 @@ interface ServicePointEntityManagerInterface
     public function createServicePoint(ServicePointTransfer $servicePointTransfer): ServicePointTransfer;
 
     /**
+     * @param \Generated\Shared\Transfer\ServicePointAddressTransfer $servicePointAddressTransfer
+     *
+     * @return \Generated\Shared\Transfer\ServicePointAddressTransfer
+     */
+    public function createServicePointAddress(ServicePointAddressTransfer $servicePointAddressTransfer): ServicePointAddressTransfer;
+
+    /**
      * @param \Generated\Shared\Transfer\ServicePointTransfer $servicePointTransfer
      *
      * @return \Generated\Shared\Transfer\ServicePointTransfer
      */
     public function updateServicePoint(ServicePointTransfer $servicePointTransfer): ServicePointTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ServicePointAddressTransfer $servicePointAddressTransfer
+     *
+     * @return \Generated\Shared\Transfer\ServicePointAddressTransfer
+     */
+    public function updateServicePointAddress(ServicePointAddressTransfer $servicePointAddressTransfer): ServicePointAddressTransfer;
 
     /**
      * @param int $idServicePoint
