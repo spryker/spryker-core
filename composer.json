@@ -863,6 +863,7 @@
         "spryker/sequence-number": "*",
         "spryker/service-point": "*",
         "spryker/service-point-data-import": "*",
+        "spryker/service-point-search": "*",
         "spryker/service-points-backend-api": "*",
         "spryker/session": "*",
         "spryker/session-customer-validation-extension": "*",

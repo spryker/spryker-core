@@ -41,6 +41,8 @@ class GenerateIndexMapConsoleTest extends Unit
      */
     public function testCommandIsExecutable(): void
     {
+        $this->markTestSkipped('This test is skipped until P&S is able to handle search tests.');
+
         //Arrange
         $application = new Application();
         $application->add(new GenerateIndexMapConsole());

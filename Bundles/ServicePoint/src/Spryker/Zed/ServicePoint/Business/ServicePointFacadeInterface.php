@@ -23,7 +23,9 @@ interface ServicePointFacadeInterface
      * - Retrieves service point entities filtered by criteria from Persistence.
      * - Uses `ServicePointCriteriaTransfer.servicePointConditions.uuids` to filter by service point uuids.
      * - Uses `ServicePointCriteriaTransfer.servicePointConditions.keys` to filter by service point keys.
+     * - Uses `ServicePointCriteriaTransfer.servicePointConditions.servicePointIds` to filter by service point ids.
      * - Uses `ServicePointCriteriaTransfer.servicePointConditions.withStoreRelations` to load store relations.
+     * - Uses `ServicePointCriteriaTransfer.servicePointConditions.withAddressRelation` to load address relation.
      * - Inverses uuids filtering in case `ServicePointCriteriaTransfer.servicePointConditions.isUuidsConditionInversed` is set to `true`.
      * - Uses `ServicePointCriteriaTransfer.sort.field` to set the 'order by' field.
      * - Uses `ServicePointCriteriaTransfer.sort.isAscending` to set ascending/descending order.

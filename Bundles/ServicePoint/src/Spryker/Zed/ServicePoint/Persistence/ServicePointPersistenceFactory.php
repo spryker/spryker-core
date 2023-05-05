@@ -51,7 +51,9 @@ class ServicePointPersistenceFactory extends AbstractPersistenceFactory
      */
     public function createServicePointMapper(): ServicePointMapper
     {
-        return new ServicePointMapper();
+        return new ServicePointMapper(
+            $this->createServicePointAddressMapper(),
+        );
     }
 
     /**

@@ -1,0 +1,23 @@
+[
+    {
+        "fileName": "src/Spryker/Zed/ServicePointSearch/Dependency/Facade/ServicePointSearchToEventBehaviorFacadeBridge.php",
+        "description": "Bridges: Method `getEventTransferIds()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ServicePointSearch/Dependency/Facade/ServicePointSearchToEventBehaviorFacadeBridge.php",
+        "description": "Bridges: Method `getEventTransferForeignKeys()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    },
+    {
+        "fileName": "src/Spryker/Zed/ServicePointSearch/Dependency/Facade/ServicePointSearchToStoreFacadeBridge.php",
+        "description": "Bridges: Method `getAllStores()` must have `public function get<DomainEntity>Collection(<DomainEntity>CriteriaTransfer): <DomainEntity>CollectionTransfer` signature.",
+        "rule": "BridgeFacadeMethodsRule",
+        "ruleset": "Spryker",
+        "priority": "2"
+    }
+]

@@ -10,11 +10,19 @@ namespace Spryker\Zed\ServicePointDataImport\Business\DataImportStep\ServicePoin
 use Orm\Zed\ServicePoint\Persistence\Base\SpyServicePointAddressQuery;
 use Spryker\Zed\DataImport\Business\Exception\InvalidDataException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
+use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\ServicePointDataImport\Business\DataSet\ServicePointAddressDataSetInterface;
 
-class ServicePointAddressWriteDataImportStep implements DataImportStepInterface
+class ServicePointAddressWriteDataImportStep extends PublishAwareStep implements DataImportStepInterface
 {
+    /**
+     * @uses \Spryker\Shared\ServicePointSearch\ServicePointSearchConfig::SERVICE_POINT_PUBLISH
+     *
+     * @var string
+     */
+    protected const SERVICE_POINT_PUBLISH = 'ServicePoint.service_point.publish';
+
     /**
      * @var list<string>
      */
@@ -43,6 +51,8 @@ class ServicePointAddressWriteDataImportStep implements DataImportStepInterface
             ->setFkCountry($dataSet[ServicePointAddressDataSetInterface::COLUMN_ID_COUNTRY])
             ->setFkRegion($dataSet[ServicePointAddressDataSetInterface::COLUMN_ID_REGION] ?? null)
             ->save();
+
+        $this->addPublishEvents(static::SERVICE_POINT_PUBLISH, $dataSet[ServicePointAddressDataSetInterface::COLUMN_ID_SERVICE_POINT]);
     }
 
     /**

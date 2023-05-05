@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ServicePoint\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\ServicePointAddressTransfer;
 use Generated\Shared\Transfer\ServicePointCollectionTransfer;
 use Generated\Shared\Transfer\ServicePointTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -15,6 +16,19 @@ use Propel\Runtime\Collection\ObjectCollection;
 
 class ServicePointMapper
 {
+    /**
+     * @var \Spryker\Zed\ServicePoint\Persistence\Propel\Mapper\ServicePointAddressMapper
+     */
+    protected ServicePointAddressMapper $servicePointAddressMapper;
+
+    /**
+     * @param \Spryker\Zed\ServicePoint\Persistence\Propel\Mapper\ServicePointAddressMapper $servicePointAddressMapper
+     */
+    public function __construct(ServicePointAddressMapper $servicePointAddressMapper)
+    {
+        $this->servicePointAddressMapper = $servicePointAddressMapper;
+    }
+
     /**
      * @param \Generated\Shared\Transfer\ServicePointTransfer $servicePointTransfer
      * @param \Orm\Zed\ServicePoint\Persistence\SpyServicePoint $servicePointEntity
@@ -38,10 +52,19 @@ class ServicePointMapper
         SpyServicePoint $servicePointEntity,
         ServicePointTransfer $servicePointTransfer
     ): ServicePointTransfer {
-        return $servicePointTransfer->fromArray(
-            $servicePointEntity->toArray(),
-            true,
-        );
+        $servicePointTransfer = $servicePointTransfer->fromArray($servicePointEntity->toArray(), true);
+
+        $servicePointEntity->initServicePointAddresses(false);
+        if ($servicePointEntity->getServicePointAddresses()->getIterator()->current()) {
+            $servicePointAddressTransfer = $this->servicePointAddressMapper->mapServicePointAddressEntityToServicePointAddressTransfer(
+                $servicePointEntity->getServicePointAddresses()->getIterator()->current(),
+                new ServicePointAddressTransfer(),
+            );
+
+            $servicePointTransfer->setAddress($servicePointAddressTransfer);
+        }
+
+        return $servicePointTransfer;
     }
 
     /**

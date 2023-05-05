@@ -61,6 +61,10 @@ class ServicePointStoreRelationExpander implements ServicePointStoreRelationExpa
         array $storeTransfersGroupedByIdServicePoint
     ): ArrayObject {
         foreach ($servicePointTransfers as $servicePointTransfer) {
+            if (!isset($storeTransfersGroupedByIdServicePoint[$servicePointTransfer->getIdServicePointOrFail()])) {
+                continue;
+            }
+
             $storeTransfers = new ArrayObject(
                 $storeTransfersGroupedByIdServicePoint[$servicePointTransfer->getIdServicePointOrFail()],
             );

@@ -148,6 +148,40 @@ class GetServicePointCollectionTest extends Unit
     /**
      * @return void
      */
+    public function testReturnsServicePointsByServicePointIds(): void
+    {
+        // Arrange
+        $storeTransfer = $this->tester->haveStore();
+        $this->createServicePointWithStoreRelation([$storeTransfer->getIdStoreOrFail()]);
+        $servicePointTransfer = $this->createServicePointWithStoreRelation(
+            [$storeTransfer->getIdStoreOrFail()],
+        );
+
+        $servicePointConditionsTransfer = (new ServicePointConditionsTransfer())
+            ->addIdServicePoint($servicePointTransfer->getIdServicePoint());
+        $servicePointCriteriaTransfer = (new ServicePointCriteriaTransfer())
+            ->setServicePointConditions($servicePointConditionsTransfer);
+
+        // Act
+        $servicePointCollectionTransfer = $this->tester->getFacade()
+            ->getServicePointCollection($servicePointCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(1, $servicePointCollectionTransfer->getServicePoints());
+        /**
+         * @var \Generated\Shared\Transfer\ServicePointTransfer $retrievedServicePointTransfer
+         */
+        $retrievedServicePointTransfer = $servicePointCollectionTransfer->getServicePoints()->getIterator()->current();
+        $this->assertSame(
+            $servicePointTransfer->getKeyOrFail(),
+            $retrievedServicePointTransfer->getKeyOrFail(),
+        );
+        $this->assertNull($servicePointCollectionTransfer->getPagination());
+    }
+
+    /**
+     * @return void
+     */
     public function testReturnsServicePointsWithStoreRelations(): void
     {
         // Arrange
@@ -336,6 +370,98 @@ class GetServicePointCollectionTest extends Unit
         $this->assertSame('abc', $servicePointTransfers->getIterator()->offsetGet(0)->getKeyOrFail());
         $this->assertSame('bac', $servicePointTransfers->getIterator()->offsetGet(1)->getKeyOrFail());
         $this->assertSame('cab', $servicePointTransfers->getIterator()->offsetGet(2)->getKeyOrFail());
+    }
+
+    /**
+     * @return void
+     */
+    public function testReturnsServicePointsWithoutAddressRelation(): void
+    {
+        // Arrange
+        $storeTransfer = $this->tester->haveStore();
+        $servicePointTransfer = $this->createServicePointWithStoreRelation([$storeTransfer->getIdStoreOrFail()]);
+
+        $servicePointConditionsTransfer = (new ServicePointConditionsTransfer())
+            ->addUuid($servicePointTransfer->getUuid())
+            ->setWithAddressRelation(true);
+
+        $servicePointCriteriaTransfer = (new ServicePointCriteriaTransfer())
+            ->setServicePointConditions($servicePointConditionsTransfer);
+
+        // Act
+        $servicePointCollectionTransfer = $this->tester->getFacade()
+            ->getServicePointCollection($servicePointCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(1, $servicePointCollectionTransfer->getServicePoints());
+        $this->assertNull($servicePointCollectionTransfer->getServicePoints()->getIterator()->current()->getAddress());
+    }
+
+    /**
+     * @return void
+     */
+    public function testReturnsServicePointsWithAddressRelation(): void
+    {
+        // Arrange
+        $servicePointAddressTransfer = $this->tester->createServicePointAddressTransferWithRelations();
+        $servicePointAddressTransfer = $this->tester->haveServicePointAddress($servicePointAddressTransfer->toArray());
+
+        $servicePointConditionsTransfer = (new ServicePointConditionsTransfer())
+            ->addUuid($servicePointAddressTransfer->getServicePoint()->getUuid())
+            ->setWithAddressRelation(true);
+
+        $servicePointCriteriaTransfer = (new ServicePointCriteriaTransfer())
+            ->setServicePointConditions($servicePointConditionsTransfer);
+
+        // Act
+        $servicePointCollectionTransfer = $this->tester->getFacade()
+            ->getServicePointCollection($servicePointCriteriaTransfer);
+
+        // Assert
+        /** @var \Generated\Shared\Transfer\ServicePointAddressTransfer $retrievedServicePointAddressTransfer */
+        $retrievedServicePointAddressTransfer = $servicePointCollectionTransfer->getServicePoints()->getIterator()->current()->getAddress();
+
+        $this->assertSame($servicePointAddressTransfer->getIdServicePointAddress(), $retrievedServicePointAddressTransfer->getIdServicePointAddress());
+        $this->assertSame($servicePointAddressTransfer->getUuid(), $retrievedServicePointAddressTransfer->getUuid());
+        $this->assertSame($servicePointAddressTransfer->getCity(), $retrievedServicePointAddressTransfer->getCity());
+        $this->assertSame($servicePointAddressTransfer->getAddress1(), $retrievedServicePointAddressTransfer->getAddress1());
+        $this->assertSame($servicePointAddressTransfer->getAddress2(), $retrievedServicePointAddressTransfer->getAddress2());
+        $this->assertSame($servicePointAddressTransfer->getAddress3(), $retrievedServicePointAddressTransfer->getAddress3());
+        $this->assertSame($servicePointAddressTransfer->getServicePoint()->getUuid(), $retrievedServicePointAddressTransfer->getServicePoint()->getUuid());
+    }
+
+    /**
+     * @return void
+     */
+    public function testReturnsOneServicePointWithAddressRelationAndOneServicePointWithoutAddressRelation(): void
+    {
+        // Arrange
+        $storeTransfer = $this->tester->haveStore();
+        $firstServicePointTransfer = $this->createServicePointWithStoreRelation([$storeTransfer->getIdStoreOrFail()]);
+
+        $servicePointAddressTransfer = $this->tester->createServicePointAddressTransferWithRelations();
+        $secondServicePointTransfer = $this->tester->haveServicePointAddress($servicePointAddressTransfer->toArray())->getServicePoint();
+
+        $servicePointConditionsTransfer = (new ServicePointConditionsTransfer())
+            ->addUuid($firstServicePointTransfer->getUuid())
+            ->addUuid($secondServicePointTransfer->getUuid())
+            ->setWithAddressRelation(true);
+
+        $sortTransfer = (new SortTransfer())
+            ->setField(ServicePointTransfer::ID_SERVICE_POINT)
+            ->setIsAscending(true);
+
+        $servicePointCriteriaTransfer = (new ServicePointCriteriaTransfer())
+            ->setServicePointConditions($servicePointConditionsTransfer)
+            ->addSort($sortTransfer);
+
+        // Act
+        $servicePointCollectionTransfer = $this->tester->getFacade()
+            ->getServicePointCollection($servicePointCriteriaTransfer);
+
+        // Assert
+        $this->assertNull($servicePointCollectionTransfer->getServicePoints()->offsetGet(0)->getAddress());
+        $this->assertNotNull($servicePointCollectionTransfer->getServicePoints()->offsetGet(1)->getAddress());
     }
 
     /**

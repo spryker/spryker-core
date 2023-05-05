@@ -136,6 +136,14 @@ class ServicePointRepository extends AbstractRepository implements ServicePointR
             return $servicePointQuery;
         }
 
+        if ($servicePointConditionsTransfer->getWithAddressRelation()) {
+            $servicePointQuery->leftJoinWithServicePointAddress();
+        }
+
+        if ($servicePointConditionsTransfer->getServicePointIds()) {
+            $servicePointQuery->filterByIdServicePoint_In($servicePointConditionsTransfer->getServicePointIds());
+        }
+
         if ($servicePointConditionsTransfer->getKeys()) {
             $servicePointQuery->filterByKey_In($servicePointConditionsTransfer->getKeys());
         }
