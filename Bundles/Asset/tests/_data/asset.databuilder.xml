@@ -6,9 +6,9 @@
 >
 <transfer name="Asset" strict="true">
         <property name="assetUuid" dataBuilderRule="uuid()"/>
-        <property name="assetName" type="string" dataBuilderRule="word()"/>
+        <property name="assetName" type="string" dataBuilderRule="lexify('??????????')"/>
         <property name="assetSlot" type="string" dataBuilderRule="=header-test"/>
-        <property name="assetContent" type="string" dataBuilderRule="word()"/>
+        <property name="assetContent" type="string" dataBuilderRule="lexify('??????????')"/>
         <property name="stores" type="string[]" dataBuilderRule="shuffle(array('DE', 'EN'))"/>
     </transfer>
 </transfers>

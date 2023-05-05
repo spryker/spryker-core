@@ -29,9 +29,9 @@ use Spryker\Zed\ProductOfferShoppingListDataImport\ProductOfferShoppingListDataI
 class ProductOfferShoppingListItemDataImportPluginTest extends Unit
 {
     /**
-     * @var string
+     * @var string This is from the _data/import/product-offer-shopping-list-item.csv file
      */
-    protected const TEST_SHOPPING_LIST_KEY = 'test-shopping-list';
+    protected const TEST_SHOPPING_LIST_ITEM_KEY = 'test-shopping-list-879512';
 
     /**
      * @var string
@@ -50,9 +50,23 @@ class ProductOfferShoppingListItemDataImportPluginTest extends Unit
     {
         // Arrange
         $this->tester->ensureShoppingListProductOfferDatabaseTableIsEmpty();
-        $this->tester->haveShoppingList([
-            ShoppingListTransfer::CUSTOMER_REFERENCE => 'test_customer',
-            ShoppingListTransfer::KEY => static::TEST_SHOPPING_LIST_KEY,
+        $companyTransfer = $this->tester->haveCompany();
+        $customerTransfer = $this->tester->haveCustomer();
+        $companyUserTransfer = $this->tester->haveCompanyUser([
+            'customer' => $customerTransfer,
+            'fkCompany' => $companyTransfer->getIdCompany(),
+        ]);
+        $productOfferTransfer = $this->tester->haveProductOffer(['productOfferReference' => 'test-offer-127386']);
+        $shoppingListTransfer = $this->tester->haveShoppingList([
+            ShoppingListTransfer::CUSTOMER_REFERENCE => $customerTransfer->getCustomerReference(),
+            ShoppingListTransfer::ID_COMPANY_USER => $companyUserTransfer->getIdCompanyUser(),
+        ]);
+        $this->tester->haveShoppingListItem([
+            'quantity' => 1,
+            'fkShoppingList' => $shoppingListTransfer->getIdShoppingList(),
+            'idCompanyUser' => $companyUserTransfer->getIdCompanyUser(),
+            'sku' => $productOfferTransfer->getConcreteSku(),
+            'key' => static::TEST_SHOPPING_LIST_ITEM_KEY,
         ]);
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
         $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/product-offer-shopping-list-item.csv');

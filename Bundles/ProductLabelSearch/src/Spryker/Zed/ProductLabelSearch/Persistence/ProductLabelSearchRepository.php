@@ -40,12 +40,13 @@ class ProductLabelSearchRepository extends AbstractRepository implements Product
      */
     public function getProductAbstractIdsByProductLabelIds(array $productLabelIds): array
     {
-        return $this->getFactory()
+        $productAbstractIds = $this->getFactory()
             ->createSpyProductLabelProductAbstractQuery()
             ->filterByFkProductLabel_In($productLabelIds)
             ->select(SpyProductLabelProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT)
-            ->distinct()
             ->find()
             ->getData();
+
+        return array_unique($productAbstractIds);
     }
 }

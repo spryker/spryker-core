@@ -6,7 +6,7 @@
 >
     <transfer name="MerchantProductOptionGroup">
         <property name="fkProductOptionGroup" dataBuilderRule="randomNumber(5)" type="int"/>
-        <property name="approvalStatus" dataBuilderRule="=word()" type="string"/>
+        <property name="approvalStatus" dataBuilderRule="=lexify('??????????')" type="string"/>
         <property name="merchantReference" dataBuilderRule="=unique()->sentence()" type="string"/>
     </transfer>
 

@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\ProductMeasurementUnitDataImport\Communication\Plugin;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Spryker\Zed\DataImport\DataImportDependencyProvider;
+use Spryker\Zed\Product\Business\ProductFacadeInterface;
 use Spryker\Zed\ProductMeasurementUnitDataImport\Communication\Plugin\ProductMeasurementBaseUnitDataImportPlugin;
 use Spryker\Zed\ProductMeasurementUnitDataImport\Communication\Plugin\ProductMeasurementSalesUnitDataImportPlugin;
 use Spryker\Zed\ProductMeasurementUnitDataImport\Communication\Plugin\ProductMeasurementSalesUnitStoreDataImportPlugin;
@@ -35,6 +36,11 @@ class ProductMeasurementBaseUnitDataImportPluginTest extends Unit
     protected $tester;
 
     /**
+     * @var bool
+     */
+    protected static $neededDataAdded = false;
+
+    /**
      * @return void
      */
     protected function setUp(): void
@@ -50,6 +56,15 @@ class ProductMeasurementBaseUnitDataImportPluginTest extends Unit
                 new ProductMeasurementSalesUnitStoreDataImportPlugin(),
             ],
         );
+
+        if (!static::$neededDataAdded) {
+            $idProductAbstract = $this->getProductFacade()->findProductAbstractIdBySku('testing-sku-197888');
+            if (!$idProductAbstract) {
+                $idProductAbstract = ($this->tester->haveProductAbstract(['sku' => 'testing-sku-197888']))
+                    ->getIdProductAbstract();
+            }
+            static::$neededDataAdded = true;
+        }
     }
 
     /**
@@ -80,5 +95,13 @@ class ProductMeasurementBaseUnitDataImportPluginTest extends Unit
             ProductMeasurementUnitDataImportConfig::IMPORT_TYPE_PRODUCT_MEASUREMENT_BASE_UNIT,
             $productMeasurementBaseUnitDataImportPlugin->getImportType(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\ProductFacadeInterface
+     */
+    protected function getProductFacade(): ProductFacadeInterface
+    {
+        return $this->tester->getLocator()->product()->facade();
     }
 }

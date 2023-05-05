@@ -6,10 +6,10 @@
 >
     <transfer name="Merchant">
         <property name="merchantReference" dataBuilderRule="unique()->sentence()"/>
-        <property name="name" dataBuilderRule="word()"/>
-        <property name="registrationNumber" dataBuilderRule="word()"/>
+        <property name="name" dataBuilderRule="lexify('??????????')"/>
+        <property name="registrationNumber" dataBuilderRule="lexify('??????????')"/>
         <property name="status" dataBuilderRule="=waiting-for-approval"/>
-        <property name="email" dataBuilderRule="email()"/>
+        <property name="email" dataBuilderRule="unique->email()"/>
         <property name="isActive" dataBuilderRule="boolean(100)"/>
     </transfer>
 </transfers>

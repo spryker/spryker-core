@@ -38,6 +38,49 @@ class PriceProductDataImportPluginTest extends Unit
     protected $tester;
 
     /**
+     * @var bool
+     */
+    protected static $neededDataAdded = false;
+
+    /**
+     * @return void
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        if (!static::$neededDataAdded) {
+            $concreteSkus = [
+                '167254716',
+                '65741521',
+                '67512741',
+                '678235723',
+                '425124211',
+            ];
+
+            foreach ($concreteSkus as $concreteSku) {
+                $this->tester->haveProduct(['sku' => $concreteSku]);
+            }
+
+            $abstractSkus = [
+                '8761248',
+                '1872641',
+                '164167',
+                '67154175',
+                '16754172',
+                '12531757',
+                '12475162',
+                '2475128',
+            ];
+            foreach ($abstractSkus as $abstractSku) {
+                $this->tester->haveProductAbstract(['sku' => $abstractSku]);
+            }
+
+            static::$neededDataAdded = true;
+        }
+    }
+
+    /**
      * @return void
      */
     public function testImportImportsPriceProduct(): void

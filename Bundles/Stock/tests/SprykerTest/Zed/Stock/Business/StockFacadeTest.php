@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\Stock\Business;
 
 use ArrayObject;
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\StockBuilder;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StockCriteriaFilterTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
@@ -717,8 +718,7 @@ class StockFacadeTest extends Unit
     public function testCreateStockWillCreateStock(): void
     {
         //Arrange
-        $originStockTransfer = (new StockTransfer())
-            ->setName(static::STOCK_NAME)
+        $originStockTransfer = ((new StockBuilder())->build())
             ->setIsActive(false);
 
         //Act
@@ -740,8 +740,7 @@ class StockFacadeTest extends Unit
         //Arrange
         $storeRelationTransfer = (new StoreRelationTransfer())
             ->setIdStores([$this->storeTransfer->getIdStore()]);
-        $originStockTransfer = (new StockTransfer())
-            ->setName(static::STOCK_NAME)
+        $originStockTransfer = ((new StockBuilder())->build())
             ->setIsActive(false)
             ->setStoreRelation($storeRelationTransfer);
 
@@ -796,8 +795,9 @@ class StockFacadeTest extends Unit
     public function testUpdateStockShouldUpdateStockName(): void
     {
         //Arrange
-        $originStockTransfer = $this->stockTransfer1;
-        $originStockTransfer->setName(static::STOCK_NAME);
+        $newStockName = 'new name';
+        $originStockTransfer = $this->tester->haveStock();
+        $originStockTransfer->setName($newStockName);
 
         //Act
         $stockResponseTransfer = $this->stockFacade->updateStock($originStockTransfer);
@@ -805,7 +805,7 @@ class StockFacadeTest extends Unit
         //Assert
         $this->assertTrue($stockResponseTransfer->getIsSuccessful(), 'Stock response should be successful.');
         $stockTransfer = $stockResponseTransfer->getStock();
-        $this->assertSame($originStockTransfer->getName(), $stockTransfer->getName(), 'Stock name does not match expected value.');
+        $this->assertSame($newStockName, $stockTransfer->getName(), 'Stock name does not match expected value.');
     }
 
     /**

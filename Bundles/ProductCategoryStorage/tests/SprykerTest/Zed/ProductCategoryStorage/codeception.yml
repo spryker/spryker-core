@@ -48,6 +48,10 @@ suites:
                 - \SprykerTest\Shared\Propel\Helper\ConnectionHelper
                 - \SprykerTest\Service\Container\Helper\ContainerHelper
                 - \SprykerTest\Shared\Store\Helper\StoreDependencyHelper
+                - \SprykerTest\Zed\ProductCategory\Helper\ProductCategoryDataHelper
+                - \SprykerTest\Zed\Category\Helper\CategoryDataHelper
+                - \SprykerTest\Shared\Product\Helper\ProductDataHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDataHelper
 
     Persistence:
         path: Persistence

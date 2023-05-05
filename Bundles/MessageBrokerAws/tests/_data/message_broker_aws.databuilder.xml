@@ -6,13 +6,13 @@
 >
 
     <transfer name="MessageAttributes">
-        <property name="emitter" dataBuilderRule="word()"/>
-        <property name="transferName" dataBuilderRule="word()"/>
+        <property name="emitter" dataBuilderRule="lexify('??????????')"/>
+        <property name="transferName" dataBuilderRule="lexify('??????????')"/>
     </transfer>
 
     <transfer name="MessageBrokerTestMessage">
-        <property name="key" dataBuilderRule="word()"/>
-        <property name="empty" dataBuilderRule="word()"/>
+        <property name="key" dataBuilderRule="lexify('??????????')"/>
+        <property name="empty" dataBuilderRule="lexify('??????????')"/>
     </transfer>
 
 </transfers>

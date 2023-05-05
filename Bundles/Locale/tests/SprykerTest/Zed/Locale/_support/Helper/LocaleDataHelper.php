@@ -12,6 +12,8 @@ use Generated\Shared\DataBuilder\LocaleBuilder;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Locale\Persistence\SpyLocaleStoreQuery;
 use Orm\Zed\Store\Persistence\SpyStoreQuery;
+use ReflectionClass;
+use Spryker\Zed\Locale\Business\Cache\LocaleCache;
 use Spryker\Zed\Locale\Business\LocaleFacadeInterface;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
@@ -34,6 +36,8 @@ class LocaleDataHelper extends Module
         $localeTransfer = $this->generateLocaleTransfer($seedData);
 
         if ($this->getLocaleFacade()->hasLocale($localeTransfer->getLocaleName())) {
+            $this->resetLocaleCacheClass();
+
             return $this->getLocaleFacade()->getLocale($localeTransfer->getLocaleName());
         }
 
@@ -167,5 +171,20 @@ class LocaleDataHelper extends Module
         }
 
         return $localeTransfer;
+    }
+
+    /**
+     * @return void
+     */
+    protected function resetLocaleCacheClass(): void
+    {
+        $class = new ReflectionClass(LocaleCache::class);
+        $localeCache = $class->getProperty('localeCache');
+        $localeCache->setAccessible(true);
+        $localeCache->setValue([]);
+
+        $localeCacheById = $class->getProperty('localeCacheById');
+        $localeCacheById->setAccessible(true);
+        $localeCacheById->setValue([]);
     }
 }

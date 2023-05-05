@@ -38,14 +38,33 @@ class MerchantProductOfferDataImportPluginTest extends Unit
     protected $tester;
 
     /**
+     * @var bool
+     */
+    protected static $isProductOfferDataCreated = false;
+
+    /**
+     * @return void
+     */
+    protected function _before(): void
+    {
+        $this->tester->truncateProductOffers();
+        if (!static::$isProductOfferDataCreated) {
+            //these values come from the .csv files tested in this data import
+            $this->tester->haveProduct(['sku' => '671261249'], []);
+            $this->tester->haveProduct(['sku' => '171261249'], []);
+            $this->tester->haveProduct(['sku' => '271261249'], []);
+            $this->tester->haveProduct(['sku' => '371261249'], []);
+            $this->tester->haveProduct(['sku' => '471261249'], []);
+        }
+        static::$isProductOfferDataCreated = true;
+    }
+
+    /**
      * @return void
      */
     public function testImportImportsData(): void
     {
         // Arrange
-        $this->tester->truncateProductOffers();
-        $this->tester->assertProductOfferDatabaseTableIsEmpty();
-
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
         $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/merchant_product_offer.csv');
 

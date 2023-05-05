@@ -6,7 +6,7 @@
 >
     <transfer name="Merchant">
         <property name="merchantReference" dataBuilderRule="unique()->sentence()"/>
-        <property name="name" dataBuilderRule="word()"/>
+        <property name="name" dataBuilderRule="lexify('??????????')"/>
     </transfer>
 
     <transfer name="User">

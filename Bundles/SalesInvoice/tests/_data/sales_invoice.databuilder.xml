@@ -6,7 +6,7 @@
 >
 
     <transfer name="OrderInvoice">
-        <property name="reference" dataBuilderRule="unique()->word()"/>
+        <property name="reference" dataBuilderRule="unique()->lexify('??????????')"/>
         <property name="issueDate" dataBuilderRule="date('Y-m-d H:i:s')"/>
     </transfer>
 

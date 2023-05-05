@@ -15,6 +15,7 @@
     "require-dev": {
         "spryker/code-sniffer": "*",
         "spryker/container": "*",
+        "spryker/locale": "*",
         "spryker/propel": "*",
         "spryker/storage": "*",
         "spryker/store": "*",

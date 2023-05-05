@@ -42,11 +42,12 @@ class ProductRelationDataImportPluginTest extends Unit
     public function testImportImportsProductRelations(): void
     {
         //Arrange
+        //these SKUs come from _data/import/product_relation.csv
         $this->tester->haveProductAbstract([
-            ProductAbstractTransfer::SKU => '999',
+            ProductAbstractTransfer::SKU => '651235',
         ]);
         $this->tester->haveProductAbstract([
-            ProductAbstractTransfer::SKU => '998',
+            ProductAbstractTransfer::SKU => '651238',
         ]);
         $this->tester->ensureProductRelationTableIsEmpty();
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();

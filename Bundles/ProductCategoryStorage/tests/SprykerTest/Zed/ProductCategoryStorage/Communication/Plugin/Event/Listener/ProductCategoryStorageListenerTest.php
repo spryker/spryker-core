@@ -9,12 +9,14 @@ namespace SprykerTest\Zed\ProductCategoryStorage\Communication\Plugin\Event\List
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
+use Generated\Shared\Transfer\ProductAbstractCategoryStorageTransfer;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
 use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
 use Orm\Zed\ProductCategoryStorage\Persistence\SpyProductAbstractCategoryStorageQuery;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Zed\Category\Dependency\CategoryEvents;
@@ -27,7 +29,6 @@ use Spryker\Zed\ProductCategoryStorage\Communication\Plugin\Event\Listener\Categ
 use Spryker\Zed\ProductCategoryStorage\Communication\Plugin\Event\Listener\CategoryUrlStorageListener;
 use Spryker\Zed\ProductCategoryStorage\Communication\Plugin\Event\Listener\ProductCategoryPublishStorageListener;
 use Spryker\Zed\ProductCategoryStorage\Communication\Plugin\Event\Listener\ProductCategoryStorageListener;
-use Spryker\Zed\ProductCategoryStorage\Persistence\ProductCategoryStorageQueryContainer;
 use Spryker\Zed\Url\Dependency\UrlEvents;
 use SprykerTest\Zed\ProductCategoryStorage\ProductCategoryStorageConfigMock;
 
@@ -52,6 +53,16 @@ class ProductCategoryStorageListenerTest extends Unit
     protected $tester;
 
     /**
+     * @var \Generated\Shared\Transfer\ProductCategoryTransfer
+     */
+    protected static $productCategoryTransfer;
+
+    /**
+     * @var int
+     */
+    protected static $categoryNodeId;
+
+    /**
      * @return void
      */
     public function setUp(): void
@@ -63,6 +74,27 @@ class ProductCategoryStorageListenerTest extends Unit
                 $container->getLocator()->rabbitMq()->client()->createQueueAdapter(),
             ];
         });
+
+        if (!static::$productCategoryTransfer) {
+            $categoryTransfer = $this->tester->haveLocalizedCategory();
+            $categoryTransfer2 = $this->tester->haveLocalizedCategory();
+            static::$categoryNodeId = $categoryTransfer->getCategoryNode()->getIdCategoryNode();
+            $store = $this->tester->getAllowedStore();
+            $this->tester->haveCategoryStoreRelation($categoryTransfer->getIdCategory(), $store->getIdStore());
+            $productAbstractTransfer = $this->tester->haveProductAbstract([], true);
+            static::$productCategoryTransfer = $this->tester->haveProductCategoryForCategory(
+                $categoryTransfer->getIdCategory(),
+                [
+                    'fkProductAbstract' => $productAbstractTransfer->getIdProductAbstract(),
+                ],
+            );
+            $this->tester->haveProductCategoryForCategory(
+                $categoryTransfer2->getIdCategory(),
+                [
+                    'fkProductAbstract' => $productAbstractTransfer->getIdProductAbstract(),
+                ],
+            );
+        }
     }
 
     /**
@@ -70,19 +102,17 @@ class ProductCategoryStorageListenerTest extends Unit
      */
     public function testProductCategoryPublishStorageListenerStoreData(): void
     {
-        SpyProductAbstractCategoryStorageQuery::create()->filterByFkProductAbstract(1)->delete();
-        $beforeCount = SpyProductAbstractCategoryStorageQuery::create()->count();
-
+        $this->removeEntryFromProductAbstractCategoryStorageTable();
         $productCategoryPublishStorageListener = new ProductCategoryPublishStorageListener();
         $productCategoryPublishStorageListener->setFacade($this->getProductCategoryStorageFacade());
 
         $eventTransfers = [
-            (new EventEntityTransfer())->setId(1),
+            (new EventEntityTransfer())->setId(static::$productCategoryTransfer->getFkProductAbstract()),
         ];
         $productCategoryPublishStorageListener->handleBulk($eventTransfers, ProductCategoryEvents::PRODUCT_CATEGORY_PUBLISH);
 
         // Assert
-        $this->assertProductAbstractCategoryStorage($beforeCount);
+        $this->assertProductCategoryDatabaseEntriesAreCorrect();
     }
 
     /**
@@ -90,21 +120,19 @@ class ProductCategoryStorageListenerTest extends Unit
      */
     public function testProductCategoryStorageListenerStoreData(): void
     {
-        SpyProductAbstractCategoryStorageQuery::create()->filterByFkProductAbstract(1)->delete();
-        $beforeCount = SpyProductAbstractCategoryStorageQuery::create()->count();
-
+        $this->removeEntryFromProductAbstractCategoryStorageTable();
         $productCategoryStorageListener = new ProductCategoryStorageListener();
         $productCategoryStorageListener->setFacade($this->getProductCategoryStorageFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
-                SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT => 1,
+                SpyProductCategoryTableMap::COL_FK_PRODUCT_ABSTRACT => static::$productCategoryTransfer->getFkProductAbstract(),
             ]),
         ];
         $productCategoryStorageListener->handleBulk($eventTransfers, ProductCategoryEvents::ENTITY_SPY_PRODUCT_CATEGORY_CREATE);
 
         // Assert
-        $this->assertProductAbstractCategoryStorage($beforeCount);
+        $this->assertProductCategoryDatabaseEntriesAreCorrect();
     }
 
     /**
@@ -112,22 +140,19 @@ class ProductCategoryStorageListenerTest extends Unit
      */
     public function testCategoryNodeStorageListenerStoreData(): void
     {
-        $productAbstractIds = $this->findProductAbstractIdsByIdCategory(1);
-        SpyProductAbstractCategoryStorageQuery::create()->filterByFkProductAbstract_In($productAbstractIds)->delete();
-        $beforeCount = SpyProductAbstractCategoryStorageQuery::create()->count();
-
+        $this->removeEntryFromProductAbstractCategoryStorageTable();
         $categoryNodeStorageListener = new CategoryNodeStorageListener();
         $categoryNodeStorageListener->setFacade($this->getProductCategoryStorageFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
-                SpyCategoryNodeTableMap::COL_FK_CATEGORY => 7,
+                SpyCategoryNodeTableMap::COL_FK_CATEGORY => static::$productCategoryTransfer->getFkCategory(),
             ]),
         ];
         $categoryNodeStorageListener->handleBulk($eventTransfers, CategoryEvents::ENTITY_SPY_CATEGORY_NODE_CREATE);
 
         // Assert
-        $this->assertProductAbstractStorage($beforeCount);
+        $this->assertProductCategoryDatabaseEntriesAreCorrect();
     }
 
     /**
@@ -135,16 +160,13 @@ class ProductCategoryStorageListenerTest extends Unit
      */
     public function testCategoryUrlStorageListenerStoreData(): void
     {
-        $productAbstractIds = $this->findProductAbstractIdsByIdCategory(1);
-        SpyProductAbstractCategoryStorageQuery::create()->filterByFkProductAbstract_In($productAbstractIds)->delete();
-        $beforeCount = SpyProductAbstractCategoryStorageQuery::create()->count();
-
+        $this->removeEntryFromProductAbstractCategoryStorageTable();
         $categoryUrlStorageListener = new CategoryUrlStorageListener();
         $categoryUrlStorageListener->setFacade($this->getProductCategoryStorageFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
-                SpyUrlTableMap::COL_FK_RESOURCE_CATEGORYNODE => 7,
+                SpyUrlTableMap::COL_FK_RESOURCE_CATEGORYNODE => static::$categoryNodeId,
             ])
                 ->setModifiedColumns([
                     SpyUrlTableMap::COL_URL,
@@ -153,7 +175,7 @@ class ProductCategoryStorageListenerTest extends Unit
         $categoryUrlStorageListener->handleBulk($eventTransfers, UrlEvents::ENTITY_SPY_URL_CREATE);
 
         // Assert
-        $this->assertProductAbstractStorage($beforeCount);
+        $this->assertProductCategoryDatabaseEntriesAreCorrect();
     }
 
     /**
@@ -161,16 +183,14 @@ class ProductCategoryStorageListenerTest extends Unit
      */
     public function testCategoryAttributeStorageListenerStoreData(): void
     {
-        $productAbstractIds = $this->findProductAbstractIdsByIdCategory(1);
-        SpyProductAbstractCategoryStorageQuery::create()->filterByFkProductAbstract_In($productAbstractIds)->delete();
-        $beforeCount = SpyProductAbstractCategoryStorageQuery::create()->count();
+        $this->removeEntryFromProductAbstractCategoryStorageTable();
 
         $categoryAttributeStorageListener = new CategoryAttributeStorageListener();
         $categoryAttributeStorageListener->setFacade($this->getProductCategoryStorageFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
-                SpyCategoryAttributeTableMap::COL_FK_CATEGORY => 7,
+                SpyCategoryAttributeTableMap::COL_FK_CATEGORY => static::$productCategoryTransfer->getFkCategory(),
             ])
                 ->setModifiedColumns([
                     SpyCategoryAttributeTableMap::COL_NAME,
@@ -179,7 +199,7 @@ class ProductCategoryStorageListenerTest extends Unit
         $categoryAttributeStorageListener->handleBulk($eventTransfers, CategoryEvents::ENTITY_SPY_CATEGORY_ATTRIBUTE_CREATE);
 
         // Assert
-        $this->assertProductAbstractStorage($beforeCount);
+        $this->assertProductCategoryDatabaseEntriesAreCorrect();
     }
 
     /**
@@ -187,15 +207,13 @@ class ProductCategoryStorageListenerTest extends Unit
      */
     public function testCategoryStorageListenerStoreData(): void
     {
-        $productAbstractIds = $this->findProductAbstractIdsByIdCategory(1);
-        SpyProductAbstractCategoryStorageQuery::create()->filterByFkProductAbstract_In($productAbstractIds)->delete();
-        $beforeCount = SpyProductAbstractCategoryStorageQuery::create()->count();
+        $this->removeEntryFromProductAbstractCategoryStorageTable();
 
         $categoryStorageListener = new CategoryStorageListener();
         $categoryStorageListener->setFacade($this->getProductCategoryStorageFacade());
 
         $eventTransfers = [
-            (new EventEntityTransfer())->setId(7)
+            (new EventEntityTransfer())->setId(static::$productCategoryTransfer->getFkCategory())
                 ->setModifiedColumns([
                     SpyCategoryTableMap::COL_IS_ACTIVE,
                 ]),
@@ -203,7 +221,7 @@ class ProductCategoryStorageListenerTest extends Unit
         $categoryStorageListener->handleBulk($eventTransfers, CategoryEvents::ENTITY_SPY_CATEGORY_CREATE);
 
         // Assert
-        $this->assertProductAbstractStorage($beforeCount);
+        $this->assertProductCategoryDatabaseEntriesAreCorrect();
     }
 
     /**
@@ -221,43 +239,49 @@ class ProductCategoryStorageListenerTest extends Unit
     }
 
     /**
-     * @param int $beforeCount
-     *
      * @return void
      */
-    protected function assertProductAbstractStorage(int $beforeCount): void
+    protected function assertProductCategoryDatabaseEntriesAreCorrect(): void
     {
-        $productCategoryStorageCount = SpyProductAbstractCategoryStorageQuery::create()->count();
-        $this->assertGreaterThan($beforeCount, $productCategoryStorageCount);
-    }
-
-    /**
-     * @param int $beforeCount
-     *
-     * @return void
-     */
-    protected function assertProductAbstractCategoryStorage(int $beforeCount): void
-    {
-        $productCategoryStorageCount = SpyProductAbstractCategoryStorageQuery::create()->count();
-        $this->assertGreaterThan($beforeCount, $productCategoryStorageCount);
-        $spyProductAbstractCategoryStorage = SpyProductAbstractCategoryStorageQuery::create()->orderByIdProductAbstractCategoryStorage()->findOneByFkProductAbstract(1);
+        $spyProductAbstractCategoryStorage = SpyProductAbstractCategoryStorageQuery::create()
+            ->orderByIdProductAbstractCategoryStorage()
+            ->findByFkProductAbstract(static::$productCategoryTransfer->getFkProductAbstract());
         $this->assertNotNull($spyProductAbstractCategoryStorage);
-        $data = $spyProductAbstractCategoryStorage->getData();
-        $this->assertSame(2, count($data['categories']));
+        $this->assertExpectedDatabaseEntryExists($spyProductAbstractCategoryStorage);
     }
 
     /**
-     * @param int $idCategory
+     * @param \Propel\Runtime\Collection\ObjectCollection|array<\Orm\Zed\ProductCategoryStorage\Persistence\SpyProductAbstractCategoryStorage> $databaseEntries
      *
-     * @return array
+     * @return void
      */
-    protected function findProductAbstractIdsByIdCategory(int $idCategory): array
-    {
-        $productCategoryQueryContainer = new ProductCategoryStorageQueryContainer();
-        $productCategoryFacade = $this->getProductCategoryStorageFacade();
-        $categoryIds = $productCategoryQueryContainer->queryCategoryIdsByNodeIds([$idCategory])->find()->getData();
-        $relatedCategoryIds = $productCategoryFacade->getRelatedCategoryIds($categoryIds);
+    protected function assertExpectedDatabaseEntryExists(
+        ObjectCollection $databaseEntries
+    ): void {
+        foreach ($databaseEntries as $databaseEntry) {
+            $productAbstractCategoryStorageTransfer = (new ProductAbstractCategoryStorageTransfer())
+                ->fromArray($databaseEntry->getData());
+            foreach ($productAbstractCategoryStorageTransfer->getCategories() as $category) {
+                if ($category->getCategoryId() === static::$productCategoryTransfer->getFkCategory()) {
+                    return;
+                }
+            }
+        }
 
-        return $productCategoryQueryContainer->queryProductAbstractIdsByCategoryIds($relatedCategoryIds)->find()->getData();
+        $this->fail(
+            sprintf(
+                'Category id %d was not found in database entry for product category storage',
+                static::$productCategoryTransfer->getFkCategory(),
+            ),
+        );
+    }
+
+    /**
+     * @return void
+     */
+    protected function removeEntryFromProductAbstractCategoryStorageTable(): void
+    {
+        SpyProductAbstractCategoryStorageQuery::create()
+            ->filterByFkProductAbstract(static::$productCategoryTransfer->getFkProductAbstract())->delete();
     }
 }

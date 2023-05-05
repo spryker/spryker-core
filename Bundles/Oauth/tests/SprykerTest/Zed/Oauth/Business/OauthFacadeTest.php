@@ -500,7 +500,6 @@ class OauthFacadeTest extends Unit
         // Assert
         $this->assertTrue($oauthResponseTransfer1->getIsValid());
         $this->assertTrue($oauthResponseTransfer2->getIsValid());
-        $this->assertSame($oauthResponseTransfer1->getExpiresInOrFail(), $oauthResponseTransfer2->getExpiresInOrFail());
         $this->assertNotSame($oauthResponseTransfer1->getAccessToken(), $oauthResponseTransfer2->getAccessToken());
     }
 

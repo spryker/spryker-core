@@ -15,7 +15,7 @@
 
     <transfer name="OmsProductReservation">
         <property name="reservationQuantity" dataBuilderRule="randomNumber(5)"/>
-        <property name="sku" dataBuilderRule="="/>
+        <property name="sku" dataBuilderRule="unique()->isbn10()"/>
         <property name="fkStore" dataBuilderRule="="/>
     </transfer>
 

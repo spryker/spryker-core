@@ -32,6 +32,32 @@ class ProductListCategoryDataImportPluginTest extends Unit
     protected $tester;
 
     /**
+     * @var bool
+     */
+    protected static $neededDataAdded = false;
+
+    /**
+     * @return void
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        if (!static::$neededDataAdded) {
+            //this data is the data needed for the import file import/product_list_to_category.csv
+            $categoryKeys = [
+                'category-key-200',
+                'category-key-203',
+            ];
+
+            foreach ($categoryKeys as $categoryKey) {
+                $this->tester->haveCategory(['categoryKey' => $categoryKey]);
+            }
+            static::$neededDataAdded = true;
+        }
+    }
+
+    /**
      * @return void
      */
     public function testImportImportsData(): void

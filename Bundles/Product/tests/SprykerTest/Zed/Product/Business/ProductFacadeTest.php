@@ -334,8 +334,8 @@ class ProductFacadeTest extends Unit
     public function testCreateProductConcreteCollectionCreatesLocalizedAttributes(): void
     {
         // Arrange
-        $localeTransfer1 = $this->tester->haveLocale();
-        $localeTransfer2 = $this->tester->haveLocale();
+        $localeTransfer1 = $this->tester->haveLocale(['localeName' => 'aa_AA']);
+        $localeTransfer2 = $this->tester->haveLocale(['localeName' => 'bb_BB']);
         $productAbstractTransfer = $this->tester->haveProductAbstract();
         $expectedLocalizedAttributesNumber = $this->tester->countProductLocalizedAttributesByProductBySkus([static::SKU_1]) + 2;
         $productConcreteCollectionTransfer = (new ProductConcreteCollectionTransfer())

@@ -199,19 +199,19 @@ class AclTest extends Unit
      */
     public function testUpdateGroup(): void
     {
-        $groupData = $this->mockGroupData();
-        $groupData2 = $this->mockGroupData();
+        $groupName1 = 'test-group-19998';
+        $groupName2 = 'test-group-19999';
 
-        $groupDto = $this->facade->addGroup($groupData['name'], $this->rolesTransfer);
+        $groupDto = $this->facade->addGroup($groupName1, $this->rolesTransfer);
 
         $dto2 = clone $groupDto;
-        $dto2->setName($groupData2['name']);
+        $dto2->setName($groupName2);
         $this->facade->updateGroup($dto2, $this->rolesTransfer);
 
         $this->assertInstanceOf(GroupTransfer::class, $dto2);
         $this->assertNotNull($groupDto->getIdAclGroup());
-        $this->assertNotEquals($groupData2['name'], $groupDto->getName());
-        $this->assertSame($groupData2['name'], $dto2->getName());
+        $this->assertNotEquals($groupName2, $groupDto->getName());
+        $this->assertSame($groupName2, $dto2->getName());
     }
 
     /**

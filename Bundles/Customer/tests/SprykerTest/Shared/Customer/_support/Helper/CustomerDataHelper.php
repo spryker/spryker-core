@@ -48,7 +48,18 @@ class CustomerDataHelper extends Module
         $customerResponseTransfer = $this->getCustomerFacade()->registerCustomer($customerTransfer);
 
         if (!$customerResponseTransfer->getIsSuccess() || $customerResponseTransfer->getCustomerTransfer() === null) {
-            throw new TestRuntimeException(sprintf('Could not create customer %s', $customerTransfer->getEmail()));
+            $errorString = '';
+            foreach ($customerResponseTransfer->getErrors() as $error) {
+                $errorString .= $error->getMessage() . ', ';
+            }
+
+            throw new TestRuntimeException(
+                sprintf(
+                    'Could not create customer %s due to the following errors: %s',
+                    $customerTransfer->getEmail(),
+                    $errorString,
+                ),
+            );
         }
 
         $this->getDataCleanupHelper()->_addCleanup(function () use ($customerResponseTransfer): void {

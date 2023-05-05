@@ -7,6 +7,7 @@
 
 namespace SprykerTest\Zed\ProductBundleStorage\Communication\Plugin\Publisher\ProductBundle;
 
+use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Orm\Zed\ProductBundle\Persistence\Map\SpyProductBundleTableMap;
@@ -85,22 +86,46 @@ class ProductBundleWritePublisherPluginTest extends Unit
             $productConcreteTransfer->getIdProductConcrete(),
             $productBundleStorageTransfer->getIdProductConcreteBundle(),
         );
-        $this->assertSame(
-            $productForBundleTransfers->offsetGet(2)->getIdProductConcrete(),
-            $productForBundleStorageTransfers->offsetGet(2)->getIdProductConcrete(),
-        );
-        $this->assertSame(
-            $productForBundleTransfers->offsetGet(2)->getQuantity(),
-            $productForBundleStorageTransfers->offsetGet(2)->getQuantity(),
-        );
-        $this->assertSame(
-            $productForBundleTransfers->offsetGet(1)->getIdProductConcrete(),
-            $productForBundleStorageTransfers->offsetGet(1)->getIdProductConcrete(),
-        );
-        $this->assertSame(
-            $productForBundleTransfers->offsetGet(0)->getIdProductConcrete(),
-            $productForBundleStorageTransfers->offsetGet(0)->getIdProductConcrete(),
-        );
+        $this->assertAllProductBundlesExistInStorage($productForBundleTransfers, $productForBundleStorageTransfers);
+    }
+
+    /**
+     * @param \ArrayObject|array<\Generated\Shared\Transfer\ProductForBundleTransfer> $productForBundleTransfers
+     * @param \ArrayObject|array<\Generated\Shared\Transfer\ProductForProductBundleStorageTransfer> $productForBundleStorageTransfers
+     *
+     * @return void
+     */
+    protected function assertAllProductBundlesExistInStorage(
+        ArrayObject $productForBundleTransfers,
+        ArrayObject $productForBundleStorageTransfers
+    ): void {
+        $foundTransfers = 0;
+        foreach ($productForBundleTransfers as $productForBundleTransfer) {
+            foreach ($productForBundleStorageTransfers as $productForBundleStorageTransfer) {
+                if (
+                    $productForBundleTransfer->getIdProductConcrete()
+                    === $productForBundleStorageTransfer->getIdProductConcrete()
+                ) {
+                    $this->assertEquals(
+                        $productForBundleStorageTransfer->getQuantity(),
+                        $productForBundleTransfer->getQuantity(),
+                        sprintf(
+                            'The full product bundle data in database %s does not align with the full data in storage %s',
+                            json_encode((array)$productForBundleTransfers),
+                            json_encode((array)$productForBundleStorageTransfer),
+                        ),
+                    );
+
+                    $foundTransfers++;
+
+                    break;
+                }
+            }
+        }
+
+        if ($foundTransfers !== count($productForBundleStorageTransfers)) {
+            $this->fail('Not all product bundles were found in storage');
+        }
     }
 
     /**

@@ -29,6 +29,11 @@ use Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainer;
 class ProductImageWriterTest extends Unit
 {
     /**
+     * @var \SprykerTest\Zed\ProductImage\ProductImageBusinessTester
+     */
+    protected $tester;
+
+    /**
      * @var \Spryker\Zed\ProductImage\Persistence\ProductImageQueryContainerInterface
      */
     protected $queryContainer;
@@ -53,6 +58,7 @@ class ProductImageWriterTest extends Unit
      */
     protected function setUp(): void
     {
+        parent::setUp();
         $this->writer = new Writer(
             new ProductImageQueryContainer(),
         );
@@ -84,6 +90,7 @@ class ProductImageWriterTest extends Unit
      */
     public function testPersistProductImageSet(): void
     {
+        $productAbstractTransfer = $this->tester->haveProductAbstract();
         $imageTransfer = new ProductImageTransfer();
         $imageTransfer
             ->setSortOrder(7)
@@ -94,7 +101,7 @@ class ProductImageWriterTest extends Unit
 
         $imageSetTransfer = new ProductImageSetTransfer();
         $imageSetTransfer
-            ->setIdProductAbstract(1)
+            ->setIdProductAbstract($productAbstractTransfer->getIdProductAbstract())
             ->setName('Foo')
             ->setProductImages($imageCollection);
 

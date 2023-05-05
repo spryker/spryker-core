@@ -84,11 +84,29 @@ class PriceProductMerchantRelationshipDataImportPluginTest extends Unit
      */
     protected function createRelatedData(): void
     {
+        //this data is the data needed for the import files under _data/import
+        $abstractSkus = [
+            '353241',
+            '49872',
+        ];
+        foreach ($abstractSkus as $abstractSku) {
+            $this->tester->haveProductAbstract(['sku' => $abstractSku]);
+        }
+
+        $concreteSkus = [
+            '12512412',
+            '12421512214',
+            '4523424',
+            '51242135',
+        ];
+        foreach ($concreteSkus as $sku) {
+            $this->tester->haveProduct(['sku' => $sku]);
+        }
         $idMerchant = $this->tester->haveMerchant()->getIdMerchant();
 
-        $this->createMerchantRelationship($idMerchant, 'mr-test-001');
-        $this->createMerchantRelationship($idMerchant, 'mr-test-002');
-        $this->createMerchantRelationship($idMerchant, 'mr-test-003');
+        $this->createMerchantRelationship($idMerchant, 'mr-test-12001');
+        $this->createMerchantRelationship($idMerchant, 'mr-test-12002');
+        $this->createMerchantRelationship($idMerchant, 'mr-test-12003');
     }
 
     /**

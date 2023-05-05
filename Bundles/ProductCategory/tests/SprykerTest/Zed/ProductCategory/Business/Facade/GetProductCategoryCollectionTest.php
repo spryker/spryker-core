@@ -7,11 +7,14 @@
 
 namespace SprykerTest\Zed\ProductCategory\Business\Facade;
 
+use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\CategoryLocalizedAttributesBuilder;
+use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductCategoryConditionsTransfer;
 use Generated\Shared\Transfer\ProductCategoryCriteriaTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 /**
  * Auto-generated group annotations
@@ -99,11 +102,34 @@ class GetProductCategoryCollectionTest extends Unit
         // Assert
         $this->assertCount(2, $productCategoryTransfers);
 
-        $this->assertSame($firstProductTransfer->getFkProductAbstract(), $productCategoryTransfers->offsetGet(0)->getFkProductAbstract());
-        $this->assertSame($categoryTransfer->getIdCategory(), $productCategoryTransfers->offsetGet(0)->getFkCategory());
+        $this->assertProductAssignedToCategoryInProductCategoryList($firstProductTransfer, $categoryTransfer, $productCategoryTransfers);
+        $this->assertProductAssignedToCategoryInProductCategoryList($secondProductTransfer, $categoryTransfer, $productCategoryTransfers);
+    }
 
-        $this->assertSame($secondProductTransfer->getFkProductAbstract(), $productCategoryTransfers->offsetGet(1)->getFkProductAbstract());
-        $this->assertSame($categoryTransfer->getIdCategory(), $productCategoryTransfers->offsetGet(1)->getFkCategory());
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer
+     * @param \ArrayObject<\Generated\Shared\Transfer\ProductCategoryTransfer> $productCategoryTransfers
+     *
+     * @return void
+     */
+    protected function assertProductAssignedToCategoryInProductCategoryList(
+        ProductConcreteTransfer $productConcreteTransfer,
+        CategoryTransfer $categoryTransfer,
+        ArrayObject $productCategoryTransfers
+    ): void {
+        foreach ($productCategoryTransfers as $productCategoryTransfer) {
+            if ($productCategoryTransfer->getFkProductAbstract() === $productConcreteTransfer->getFkProductAbstract()) {
+                $this->assertSame(
+                    $categoryTransfer->getIdCategory(),
+                    $productCategoryTransfer->getFkCategory(),
+                );
+
+                return;
+            }
+        }
+
+        $this->fail('Unable to find linked product to product category');
     }
 
     /**

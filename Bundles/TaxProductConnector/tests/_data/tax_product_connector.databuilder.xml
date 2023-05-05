@@ -6,7 +6,7 @@
 >
 
     <transfer name="Item">
-        <property name="sku" dataBuilderRule="isbn10()"/>
+        <property name="sku" dataBuilderRule="unique()->isbn10()"/>
     </transfer>
 
     <transfer name="Address">

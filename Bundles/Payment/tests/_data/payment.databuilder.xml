@@ -6,8 +6,8 @@
 >
 
     <transfer name="PaymentMethod">
-        <property name="paymentMethodKey" strict="true" dataBuilderRule="unique()->word(3)"/>
-        <property name="name" dataBuilderRule="unique()->word(1)"/>
+        <property name="paymentMethodKey" strict="true" dataBuilderRule="unique()->lexify('??????????')"/>
+        <property name="name" dataBuilderRule="lexify('??????????')"/>
         <property name="isActive" dataBuilderRule="boolean()"/>
     </transfer>
 

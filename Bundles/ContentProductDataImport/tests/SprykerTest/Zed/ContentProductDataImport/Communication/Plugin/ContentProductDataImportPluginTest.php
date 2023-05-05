@@ -15,6 +15,8 @@ use Spryker\Service\UtilEncoding\UtilEncodingService;
 use Spryker\Zed\ContentProductDataImport\Communication\Plugin\ContentProductAbstractListDataImportPlugin;
 use Spryker\Zed\ContentProductDataImport\ContentProductDataImportConfig;
 use Spryker\Zed\DataImport\Business\Exception\DataImportException;
+use Spryker\Zed\Locale\Business\LocaleFacadeInterface;
+use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 /**
  * Auto-generated group annotations
@@ -29,6 +31,8 @@ use Spryker\Zed\DataImport\Business\Exception\DataImportException;
  */
 class ContentProductDataImportPluginTest extends Unit
 {
+    use LocatorHelperTrait;
+
     /**
      * @var string
      */
@@ -38,6 +42,16 @@ class ContentProductDataImportPluginTest extends Unit
      * @var \SprykerTest\Zed\ContentProductDataImport\ContentProductDataImportCommunicationTester
      */
     protected $tester;
+
+    /**
+     * @var bool
+     */
+    protected static $productAbstractsAdded = false;
+
+    /**
+     * @var array<string>
+     */
+    protected static $productAbstractSkuIds = [];
 
     /**
      * @return void
@@ -51,8 +65,38 @@ class ContentProductDataImportPluginTest extends Unit
     /**
      * @return void
      */
+    protected function addNeededProductAbstract(): void
+    {
+        if (!static::$productAbstractsAdded) {
+            //these values come from the csv files that are tested in this data import
+            $skus = [
+                '12314204',
+                '12314205',
+                '12314156',
+                '12314154',
+                '12314152',
+                '12314151',
+                '12314191',
+                '12314190',
+                '12314180',
+                '12314171',
+            ];
+
+            foreach ($skus as $sku) {
+                static::$productAbstractSkuIds[$sku] =
+                    $this->tester->haveProductAbstract(['sku' => $sku])->getIdProductAbstract();
+            }
+
+            static::$productAbstractsAdded = true;
+        }
+    }
+
+    /**
+     * @return void
+     */
     public function testImportProductAbstractListsData(): void
     {
+        $this->addNeededProductAbstract();
         $dataImportConfigurationTransfer = $this->createConfigurationTransfer(
             'import/content_product_abstract_list.csv',
         );
@@ -101,6 +145,10 @@ class ContentProductDataImportPluginTest extends Unit
      */
     public function testUpdateLocale(): void
     {
+        $this->addNeededProductAbstract();
+        //these locale values come from import/content_product_abstract_list(update).csv
+        $enLocaleTransfer = $this->getLocaleFacade()->getLocale('en_US');
+        $deLocaleTransfer = $this->getLocaleFacade()->getLocale('de_DE');
         $dataImportConfigurationTransfer = $this->createConfigurationTransfer(
             'import/content_product_abstract_list(update).csv',
         );
@@ -112,8 +160,18 @@ class ContentProductDataImportPluginTest extends Unit
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
         $this->assertTrue($dataImporterReportTransfer->getIsSuccess());
 
-        $this->tester->assertContentLocalizedHasProducts(66, $this->createUtilEncodingService()->encodeJson([152, 151]));
-        $this->tester->assertContentLocalizedHasProducts(46, $this->createUtilEncodingService()->encodeJson([152, 151]));
+        $this->tester->assertContentLocalizedHasProducts(
+            $enLocaleTransfer->getIdLocale(),
+            $this->createUtilEncodingService()->encodeJson([
+                static::$productAbstractSkuIds['12314152'],
+                static::$productAbstractSkuIds['12314151']]),
+        );
+        $this->tester->assertContentLocalizedHasProducts(
+            $deLocaleTransfer->getIdLocale(),
+            $this->createUtilEncodingService()->encodeJson([
+                static::$productAbstractSkuIds['12314156'],
+                static::$productAbstractSkuIds['12314154']]),
+        );
     }
 
     /**
@@ -121,9 +179,13 @@ class ContentProductDataImportPluginTest extends Unit
      */
     public function testUpdateLocaleFromDefault(): void
     {
+        $this->addNeededProductAbstract();
         $dataImportConfigurationTransfer = $this->createConfigurationTransfer(
             'import/content_product_abstract_list(update_locale_from_default).csv',
         );
+        //these locale values come from import/content_product_abstract_list(update).csv
+        $enLocaleTransfer = $this->getLocaleFacade()->getLocale('en_US');
+        $deLocaleTransfer = $this->getLocaleFacade()->getLocale('de_DE');
 
         // Act
         $dataImporterReportTransfer = (new ContentProductAbstractListDataImportPlugin())->import($dataImportConfigurationTransfer);
@@ -132,8 +194,18 @@ class ContentProductDataImportPluginTest extends Unit
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
         $this->assertTrue($dataImporterReportTransfer->getIsSuccess());
 
-        $this->tester->assertContentLocalizedHasProducts(66, $this->createUtilEncodingService()->encodeJson([152, 151]));
-        $this->tester->assertContentLocalizedHasProducts(46, $this->createUtilEncodingService()->encodeJson([152, 151]));
+        $this->tester->assertContentLocalizedHasProducts(
+            $enLocaleTransfer->getIdLocale(),
+            $this->createUtilEncodingService()->encodeJson([
+                static::$productAbstractSkuIds['12314152'],
+                static::$productAbstractSkuIds['12314151']]),
+        );
+        $this->tester->assertContentLocalizedHasProducts(
+            $deLocaleTransfer->getIdLocale(),
+            $this->createUtilEncodingService()->encodeJson([
+                    static::$productAbstractSkuIds['12314152'],
+                    static::$productAbstractSkuIds['12314151']]),
+        );
     }
 
     /**
@@ -141,9 +213,13 @@ class ContentProductDataImportPluginTest extends Unit
      */
     public function testUpdateLocaleToDefault(): void
     {
+        $this->addNeededProductAbstract();
         $dataImportConfigurationTransfer = $this->createConfigurationTransfer(
             'import/content_product_abstract_list(update_locale_to_default).csv',
         );
+        //these locale values come from import/content_product_abstract_list(update).csv
+        $enLocaleTransfer = $this->getLocaleFacade()->getLocale('en_US');
+        $deLocaleTransfer = $this->getLocaleFacade()->getLocale('de_DE');
 
         // Act
         $dataImporterReportTransfer = (new ContentProductAbstractListDataImportPlugin())->import($dataImportConfigurationTransfer);
@@ -152,8 +228,14 @@ class ContentProductDataImportPluginTest extends Unit
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
         $this->assertTrue($dataImporterReportTransfer->getIsSuccess());
 
-        $this->tester->assertContentLocalizedHasProducts(66, $this->createUtilEncodingService()->encodeJson([152, 151]));
-        $this->tester->assertContentLocalizedDoesNotExist(46);
+        $this->tester->assertContentLocalizedHasProducts(
+            $enLocaleTransfer->getIdLocale(),
+            $this->createUtilEncodingService()->encodeJson([
+                    static::$productAbstractSkuIds['12314152'],
+                    static::$productAbstractSkuIds['12314151']]),
+        );
+
+        $this->tester->assertContentLocalizedDoesNotExist($deLocaleTransfer->getIdLocale());
     }
 
     /**
@@ -177,5 +259,13 @@ class ContentProductDataImportPluginTest extends Unit
     protected function createUtilEncodingService(): UtilEncodingService
     {
         return new UtilEncodingService();
+    }
+
+    /**
+     * @return \Spryker\Zed\Locale\Business\LocaleFacadeInterface
+     */
+    protected function getLocaleFacade(): LocaleFacadeInterface
+    {
+        return $this->getLocator()->locale()->facade();
     }
 }

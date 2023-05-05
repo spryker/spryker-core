@@ -32,3 +32,6 @@ suites:
                 - \SprykerTest\Client\Queue\Helper\QueueHelper
                 - \SprykerTest\Zed\EventBehavior\Helper\EventBehaviorHelper
                 - \SprykerTest\Zed\Testify\Helper\Business\DependencyProviderHelper
+                - \SprykerTest\Zed\Navigation\Helper\NavigationDataHelper
+                - \SprykerTest\Zed\Locale\Helper\LocaleDataHelper
+                - \SprykerTest\Shared\Url\Helper\UrlHelper

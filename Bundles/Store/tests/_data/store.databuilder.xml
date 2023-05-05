@@ -14,9 +14,9 @@
     </transfer>
 
     <transfer name="MessageAttributes">
-        <property name="storeReference" dataBuilderRule="word()"/>
-        <property name="emitter" dataBuilderRule="word()"/>
-        <!-- word instead of word() due to compitability with existed modules -->
+        <property name="storeReference" dataBuilderRule="lexify('??????????')"/>
+        <property name="emitter" dataBuilderRule="lexify('??????????')"/>
+        <!-- word instead of lexify('??????????') due to compitability with existed modules -->
     </transfer>
 
     <transfer name="AccessTokenRequest">
@@ -24,6 +24,6 @@
     </transfer>
 
     <transfer name="AccessTokenRequestOptions">
-        <property name="storeReference" dataBuilderRule="word()"/>
+        <property name="storeReference" dataBuilderRule="lexify('??????????')"/>
     </transfer>
 </transfers>

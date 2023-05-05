@@ -166,11 +166,14 @@ class ProductPageSearchFacadeTest extends Unit
     public function testExpandProductConcretePageSearchTransferWithProductImagesExpandsProductWithoutLocale(): void
     {
         // Arrange
-        $localeTransfer = $this->tester->haveLocale();
+        $localeTransfer = $this->tester->haveLocale(['localeName' => 'de_DE']);
+        $localeTransfer2 = $this->tester->haveLocale(['localeName' => 'en_US']);
+
         $productConcreteTransfer = $this->tester->haveProduct();
         $this->tester->haveProductImageSet([
             ProductImageSetTransfer::ID_PRODUCT_ABSTRACT => $productConcreteTransfer->getFkProductAbstract(),
             ProductImageSetTransfer::ID_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
+            ProductImageSetTransfer::LOCALE => $localeTransfer2,
         ]);
 
         $productConcretePageSearchTransfer = (new ProductConcretePageSearchTransfer())

@@ -10,7 +10,7 @@
     </transfer>
 
     <transfer name="ShoppingListItem">
-        <property name="sku" dataBuilderRule="unique()->sentence(2)"/>
+        <property name="sku" dataBuilderRule="unique()->isbn10()"/>
     </transfer>
 
 </transfers>

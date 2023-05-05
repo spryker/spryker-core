@@ -6,8 +6,8 @@
 >
 
     <transfer name="MerchantRelationship">
-        <property name="merchantRelationshipKey" dataBuilderRule="unique()->word()"/>
-        <property name="name" dataBuilderRule="word()"/>
+        <property name="merchantRelationshipKey" dataBuilderRule="unique()->lexify('??????????')"/>
+        <property name="name" dataBuilderRule="lexify('??????????')"/>
     </transfer>
 
 </transfers>

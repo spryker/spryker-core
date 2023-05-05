@@ -43,7 +43,7 @@
 
     <transfer name="DiscountVoucher">
         <property name="quantity" dataBuilderRule="=1"/>
-        <property name="code" dataBuilderRule="unique()->word()"/>
+        <property name="code" dataBuilderRule="unique()->lexify('??????????')"/>
         <property name="randomGeneratedCodeLength" dataBuilderRule="=5"/>
     </transfer>
 

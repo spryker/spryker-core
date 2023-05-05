@@ -9,6 +9,8 @@ namespace SprykerTest\Zed\NavigationStorage\Communication\Plugin\Event\Listener;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
+use Generated\Shared\Transfer\NavigationNodeTransfer;
+use Generated\Shared\Transfer\NavigationTransfer;
 use Orm\Zed\Navigation\Persistence\Map\SpyNavigationNodeLocalizedAttributesTableMap;
 use Orm\Zed\Navigation\Persistence\Map\SpyNavigationNodeTableMap;
 use Orm\Zed\NavigationStorage\Persistence\SpyNavigationStorageQuery;
@@ -40,23 +42,29 @@ use SprykerTest\Zed\NavigationStorage\NavigationStorageConfigMock;
 class NavigationStorageListenerTest extends Unit
 {
     /**
+     * @var \SprykerTest\Zed\NavigationStorage\NavigationStorageCommunicationTester
+     */
+    protected $tester;
+
+    /**
      * @return void
      */
     public function testNavigationStorageListenerStoreData(): void
     {
-        SpyNavigationStorageQuery::create()->filterByFkNavigation(1)->delete();
         $beforeCount = SpyNavigationStorageQuery::create()->count();
 
         $navigationStorageListener = new NavigationStorageListener();
         $navigationStorageListener->setFacade($this->getNavigationStorageFacade());
 
+        $navigationTransfer = $this->tester->haveNavigation();
+
         $eventTransfers = [
-            (new EventEntityTransfer())->setId(1),
+            (new EventEntityTransfer())->setId($navigationTransfer->getIdNavigation()),
         ];
         $navigationStorageListener->handleBulk($eventTransfers, NavigationEvents::NAVIGATION_KEY_PUBLISH);
 
         // Assert
-        $this->assertNavigationStorage($beforeCount);
+        $this->assertNavigationStorage($beforeCount, $navigationTransfer);
     }
 
     /**
@@ -64,19 +72,20 @@ class NavigationStorageListenerTest extends Unit
      */
     public function testNavigationStoragePublishListener(): void
     {
-        SpyNavigationStorageQuery::create()->filterByFkNavigation(1)->delete();
         $beforeCount = SpyNavigationStorageQuery::create()->count();
 
         $navigationStoragePublishListener = new NavigationStoragePublishListener();
         $navigationStoragePublishListener->setFacade($this->getNavigationStorageFacade());
 
+        $navigationTransfer = $this->tester->haveNavigation();
+
         $eventTransfers = [
-            (new EventEntityTransfer())->setId(1),
+            (new EventEntityTransfer())->setId($navigationTransfer->getIdNavigation()),
         ];
         $navigationStoragePublishListener->handleBulk($eventTransfers, NavigationEvents::NAVIGATION_KEY_PUBLISH);
 
         // Assert
-        $this->assertNavigationStorage($beforeCount);
+        $this->assertNavigationStorage($beforeCount, $navigationTransfer);
     }
 
     /**
@@ -87,13 +96,18 @@ class NavigationStorageListenerTest extends Unit
         $navigationStorageUnpublishListener = new NavigationStorageUnpublishListener();
         $navigationStorageUnpublishListener->setFacade($this->getNavigationStorageFacade());
 
+        $navigationTransfer = $this->tester->haveNavigation();
+
         $eventTransfers = [
-            (new EventEntityTransfer())->setId(1),
+            (new EventEntityTransfer())->setId($navigationTransfer->getIdNavigation()),
         ];
         $navigationStorageUnpublishListener->handleBulk($eventTransfers, NavigationEvents::NAVIGATION_KEY_UNPUBLISH);
 
         // Assert
-        $this->assertSame(0, SpyNavigationStorageQuery::create()->filterByFkNavigation(1)->count());
+        $this->assertSame(
+            0,
+            SpyNavigationStorageQuery::create()->filterByFkNavigation($navigationTransfer->getIdNavigation())->count(),
+        );
     }
 
     /**
@@ -101,21 +115,27 @@ class NavigationStorageListenerTest extends Unit
      */
     public function testNavigationNodeStorageListenerStoreData(): void
     {
-        SpyNavigationStorageQuery::create()->filterByFkNavigation(1)->delete();
         $beforeCount = SpyNavigationStorageQuery::create()->count();
 
         $navigationNodeStorageListener = new NavigationNodeStorageListener();
         $navigationNodeStorageListener->setFacade($this->getNavigationStorageFacade());
 
+        $navigationTransfer = $this->tester->haveNavigation();
+        $localeTransfer = $this->tester->haveLocale();
+        $navigationNodeTransfer = $this->tester->haveLocalizedNavigationNode([
+            'fkNavigation' => $navigationTransfer->getIdNavigation(),
+            'fkLocale' => $localeTransfer->getIdLocale(),
+        ]);
+
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
-                SpyNavigationNodeTableMap::COL_FK_NAVIGATION => 1,
+                SpyNavigationNodeTableMap::COL_FK_NAVIGATION => $navigationNodeTransfer->getFkNavigation(),
             ]),
         ];
         $navigationNodeStorageListener->handleBulk($eventTransfers, NavigationEvents::ENTITY_SPY_NAVIGATION_NODE_CREATE);
 
         // Assert
-        $this->assertNavigationStorage($beforeCount);
+        $this->assertNavigationNodeStorage($beforeCount, $navigationNodeTransfer);
     }
 
     /**
@@ -123,21 +143,28 @@ class NavigationStorageListenerTest extends Unit
      */
     public function testNavigationNodeLocalizedAttributeStorageListenerStoreData(): void
     {
-        SpyNavigationStorageQuery::create()->filterByFkNavigation(1)->delete();
         $beforeCount = SpyNavigationStorageQuery::create()->count();
 
         $navigationNodeLocalizedAttributeStorageListener = new NavigationNodeLocalizedAttributeStorageListener();
         $navigationNodeLocalizedAttributeStorageListener->setFacade($this->getNavigationStorageFacade());
 
+        $navigationTransfer = $this->tester->haveNavigation();
+        $localeTransfer = $this->tester->haveLocale();
+        $navigationNodeTransfer = $this->tester->haveLocalizedNavigationNode([
+            'fkNavigation' => $navigationTransfer->getIdNavigation(),
+            'fkLocale' => $localeTransfer->getIdLocale(),
+        ]);
+
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
-                SpyNavigationNodeLocalizedAttributesTableMap::COL_FK_NAVIGATION_NODE => 1,
+                SpyNavigationNodeLocalizedAttributesTableMap::COL_FK_NAVIGATION_NODE =>
+                    $navigationNodeTransfer->getIdNavigationNode(),
             ]),
         ];
         $navigationNodeLocalizedAttributeStorageListener->handleBulk($eventTransfers, NavigationEvents::ENTITY_SPY_NAVIGATION_NODE_LOCALIZED_ATTRIBUTE_CREATE);
 
         // Assert
-        $this->assertNavigationStorage($beforeCount);
+        $this->assertNavigationNodeStorage($beforeCount, $navigationNodeTransfer);
     }
 
     /**
@@ -145,19 +172,27 @@ class NavigationStorageListenerTest extends Unit
      */
     public function testNavigationUrlRelationStorageListenerStoreData(): void
     {
-        SpyNavigationStorageQuery::create()->filterByFkNavigation(1)->delete();
         $beforeCount = SpyNavigationStorageQuery::create()->count();
 
         $navigationUrlRelationStorageListener = new NavigationUrlRelationStorageListener();
         $navigationUrlRelationStorageListener->setFacade($this->getNavigationStorageFacade());
 
+        $urlTransfer = $this->tester->haveUrl();
+        $navigationTransfer = $this->tester->haveNavigation();
+        $localeTransfer = $this->tester->haveLocale();
+        $navigationNodeTransfer = $this->tester->haveLocalizedNavigationNode([
+            'fkNavigation' => $navigationTransfer->getIdNavigation(),
+            'fkLocale' => $localeTransfer->getIdLocale(),
+            'fkUrl' => $urlTransfer->getIdUrl(),
+        ]);
+
         $eventTransfers = [
-            (new EventEntityTransfer())->setId(11),
+            (new EventEntityTransfer())->setId($urlTransfer->getIdUrl()),
         ];
         $navigationUrlRelationStorageListener->handleBulk($eventTransfers, UrlEvents::ENTITY_SPY_URL_UPDATE);
 
         // Assert
-        $this->assertNavigationStorage($beforeCount);
+        $this->assertNavigationNodeStorage($beforeCount, $navigationNodeTransfer);
     }
 
     /**
@@ -176,21 +211,38 @@ class NavigationStorageListenerTest extends Unit
 
     /**
      * @param int $beforeCount
+     * @param \Generated\Shared\Transfer\NavigationTransfer $navigationTransfer
      *
      * @return void
      */
-    protected function assertNavigationStorage(int $beforeCount): void
+    protected function assertNavigationStorage(int $beforeCount, NavigationTransfer $navigationTransfer): void
     {
         $navigationStorageCount = SpyNavigationStorageQuery::create()->count();
 
         $this->assertGreaterThan($beforeCount, $navigationStorageCount);
         $spyNavigationStorage = SpyNavigationStorageQuery::create()
-            ->orderByIdNavigationStorage()
-            ->findOneByFkNavigation(1);
+            ->findOneByFkNavigation($navigationTransfer->getIdNavigation());
         $this->assertNotNull($spyNavigationStorage);
 
         $data = $spyNavigationStorage->getData();
-        $this->assertSame('MAIN_NAVIGATION', $data['key']);
-        $this->assertSame(8, count($data['nodes']));
+        $this->assertSame($navigationTransfer->getKey(), $data['key']);
+        $this->assertSame($navigationTransfer->getIdNavigation(), $data['id']);
+        $this->assertSame($navigationTransfer->getName(), $data['name']);
+    }
+
+    /**
+     * @param int $beforeCount
+     * @param \Generated\Shared\Transfer\NavigationNodeTransfer $navigationNodeTransfer
+     *
+     * @return void
+     */
+    protected function assertNavigationNodeStorage(int $beforeCount, NavigationNodeTransfer $navigationNodeTransfer): void
+    {
+        $navigationStorageCount = SpyNavigationStorageQuery::create()->count();
+
+        $this->assertGreaterThan($beforeCount, $navigationStorageCount);
+        $spyNavigationStorage = SpyNavigationStorageQuery::create()
+            ->findOneByFkNavigation($navigationNodeTransfer->getFkNavigation());
+        $this->assertNotNull($spyNavigationStorage);
     }
 }

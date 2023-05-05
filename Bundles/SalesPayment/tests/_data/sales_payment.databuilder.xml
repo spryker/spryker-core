@@ -17,7 +17,7 @@
     </transfer>
 
     <transfer name="ItemState">
-        <property name="name" dataBuilderRule="unique()->word()"/>
+        <property name="name" dataBuilderRule="unique()->lexify('??????????')"/>
     </transfer>
 
     <transfer name="Order">

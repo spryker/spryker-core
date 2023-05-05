@@ -35,9 +35,11 @@ class PriceProductMerchantRelationshipFacadeTest extends Unit
      */
     public function testDeletePriceProductMerchantRelationshipByIdPriceProductStore(): void
     {
+        $productAbstractTransfer = $this->tester->haveProductAbstract();
+        $this->tester->havePriceProductAbstract($productAbstractTransfer->getIdProductAbstract());
         $idPriceProductStore = $this
             ->tester
-            ->createPriceProductMerchantRelationship()
+            ->createPriceProductMerchantRelationship($productAbstractTransfer->getIdProductAbstract())
             ->getMoneyValue()
             ->getIdEntity();
 

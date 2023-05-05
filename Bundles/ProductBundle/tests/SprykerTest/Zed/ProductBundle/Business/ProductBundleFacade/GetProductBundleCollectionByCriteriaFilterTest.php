@@ -121,6 +121,8 @@ class GetProductBundleCollectionByCriteriaFilterTest extends Unit
     public function testGetProductBundleCollectionByCriteriaFilterWithLimit(): void
     {
         // Arrange
+        $productConcreteTransfer = $this->tester->haveProduct();
+        $this->tester->haveProductBundle($productConcreteTransfer);
         $productBundleCriteriaFilterTransfer = (new ProductBundleCriteriaFilterTransfer())
             ->setFilter((new FilterTransfer())->setLimit(1));
 

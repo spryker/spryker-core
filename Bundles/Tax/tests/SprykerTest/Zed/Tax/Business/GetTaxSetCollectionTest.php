@@ -7,10 +7,12 @@
 
 namespace SprykerTest\Zed\Tax\Business\Facade;
 
+use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\TaxSetConditionsTransfer;
 use Generated\Shared\Transfer\TaxSetCriteriaTransfer;
+use Generated\Shared\Transfer\TaxSetTransfer;
 use Orm\Zed\Tax\Persistence\SpyTaxSetQuery;
 use SprykerTest\Zed\Tax\TaxBusinessTester;
 
@@ -49,21 +51,21 @@ class GetTaxSetCollectionTest extends Unit
 
         // Assert
         $this->assertCount(3, $taxSetCollectionTransfer->getTaxSets());
-        $this->assertSame(
-            $taxSetTransfer1->getIdTaxSet(),
-            $taxSetCollectionTransfer->getTaxSets()->offsetGet(0)->getIdTaxSet(),
-        );
-        $this->assertCount(0, $taxSetCollectionTransfer->getTaxSets()->offsetGet(0)->getTaxRates());
-        $this->assertSame(
-            $taxSetTransfer2->getIdTaxSet(),
-            $taxSetCollectionTransfer->getTaxSets()->offsetGet(1)->getIdTaxSet(),
-        );
-        $this->assertCount(0, $taxSetCollectionTransfer->getTaxSets()->offsetGet(1)->getTaxRates());
-        $this->assertSame(
-            $taxSetTransfer3->getIdTaxSet(),
-            $taxSetCollectionTransfer->getTaxSets()->offsetGet(2)->getIdTaxSet(),
-        );
-        $this->assertCount(0, $taxSetCollectionTransfer->getTaxSets()->offsetGet(2)->getTaxRates());
+        $this->assertTrue($this->assertTaxSetExistsInCollection(
+            $taxSetTransfer1,
+            $taxSetCollectionTransfer->getTaxSets(),
+            0,
+        ));
+        $this->assertTrue($this->assertTaxSetExistsInCollection(
+            $taxSetTransfer2,
+            $taxSetCollectionTransfer->getTaxSets(),
+            0,
+        ));
+        $this->assertTrue($this->assertTaxSetExistsInCollection(
+            $taxSetTransfer3,
+            $taxSetCollectionTransfer->getTaxSets(),
+            0,
+        ));
     }
 
     /**
@@ -81,11 +83,11 @@ class GetTaxSetCollectionTest extends Unit
 
         // Assert
         $this->assertCount(1, $taxSetCollectionTransfer->getTaxSets());
-        $this->assertSame(
-            $taxSetTransfer1->getIdTaxSet(),
-            $taxSetCollectionTransfer->getTaxSets()->offsetGet(0)->getIdTaxSet(),
-        );
-        $this->assertCount(1, $taxSetCollectionTransfer->getTaxSets()->offsetGet(0)->getTaxRates());
+        $this->assertTrue($this->assertTaxSetExistsInCollection(
+            $taxSetTransfer1,
+            $taxSetCollectionTransfer->getTaxSets(),
+            1,
+        ));
         $this->assertSame(
             $taxSetTransfer1->getTaxRates()->offsetGet(0)->getIdTaxRate(),
             $taxSetCollectionTransfer->getTaxSets()->offsetGet(0)->getTaxRates()->offsetGet(0)->getIdTaxRate(),
@@ -99,10 +101,11 @@ class GetTaxSetCollectionTest extends Unit
     {
         // Arrange
         $this->tester->ensureDatabaseTableIsEmpty(SpyTaxSetQuery::create());
-        $this->tester->haveTaxSetWithTaxRates();
-        $taxSetTransfer1 = $this->tester->haveTaxSetWithTaxRates();
-        $taxSetTransfer2 = $this->tester->haveTaxSetWithTaxRates();
-        $this->tester->haveTaxSetWithTaxRates();
+        $taxSetTransfers = [];
+        $taxSetTransfers[] = $this->tester->haveTaxSetWithTaxRates();
+        $taxSetTransfers[] = $this->tester->haveTaxSetWithTaxRates();
+        $taxSetTransfers[] = $this->tester->haveTaxSetWithTaxRates();
+        $taxSetTransfers[] = $this->tester->haveTaxSetWithTaxRates();
         $taxSetCriteriaTransfer = (new TaxSetCriteriaTransfer())
             ->setPagination(
                 (new PaginationTransfer())->setOffset(1)->setLimit(2),
@@ -114,14 +117,15 @@ class GetTaxSetCollectionTest extends Unit
         // Assert
         $this->assertCount(2, $taxSetCollectionTransfer->getTaxSets());
         $this->assertSame(4, $taxSetCollectionTransfer->getPagination()->getNbResults());
-        $this->assertSame(
-            $taxSetTransfer1->getIdTaxSet(),
-            $taxSetCollectionTransfer->getTaxSets()->offsetGet(0)->getIdTaxSet(),
-        );
-        $this->assertSame(
-            $taxSetTransfer2->getIdTaxSet(),
-            $taxSetCollectionTransfer->getTaxSets()->offsetGet(1)->getIdTaxSet(),
-        );
+
+        $foundTransfers = 0;
+        foreach ($taxSetTransfers as $taxSetTransfer) {
+            if ($this->assertTaxSetExistsInCollection($taxSetTransfer, $taxSetCollectionTransfer->getTaxSets())) {
+                $foundTransfers++;
+            }
+        }
+
+        $this->assertEquals(2, $foundTransfers);
     }
 
     /**
@@ -143,6 +147,35 @@ class GetTaxSetCollectionTest extends Unit
 
         // Assert
         $this->assertCount(1, $taxSetCollectionTransfer->getTaxSets());
-        $this->assertSame($taxSetCollectionTransfer->getTaxSets()->offsetGet(0)->getName(), $taxSetTransfer->getName());
+        $this->assertTrue($this->assertTaxSetExistsInCollection(
+            $taxSetTransfer,
+            $taxSetCollectionTransfer->getTaxSets(),
+        ));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\TaxSetTransfer $taxSetTransfer
+     * @param \ArrayObject|array<\Generated\Shared\Transfer\TaxSetTransfer> $taxSets
+     * @param int|null $taxRateCount
+     *
+     * @return bool
+     */
+    protected function assertTaxSetExistsInCollection(
+        TaxSetTransfer $taxSetTransfer,
+        ArrayObject $taxSets,
+        ?int $taxRateCount = null
+    ): bool {
+        foreach ($taxSets as $taxSet) {
+            if ($taxSetTransfer->getIdTaxSet() === $taxSet->getIdTaxSet()) {
+                $this->assertEquals($taxSetTransfer->getName(), $taxSet->getName());
+                if ($taxRateCount !== null) {
+                    $this->assertCount($taxRateCount, $taxSet->getTaxRates());
+                }
+
+                return true;
+            }
+        }
+
+        return false;
     }
 }

@@ -33,6 +33,33 @@ class ProductQuantityDataImportPluginTest extends Unit
     protected $tester;
 
     /**
+     * @var bool
+     */
+    protected static $neededDataAdded = false;
+
+    /**
+     * @return void
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        if (!static::$neededDataAdded) {
+            $skus = [
+                '815714',
+                '815715',
+                '815716',
+                '815717',
+            ];
+
+            foreach ($skus as $sku) {
+                $this->tester->haveProduct(['sku' => $sku]);
+            }
+            static::$neededDataAdded = true;
+        }
+    }
+
+    /**
      * @return void
      */
     public function testImportImportsData(): void

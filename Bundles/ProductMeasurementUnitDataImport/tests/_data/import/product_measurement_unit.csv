@@ -1,7 +1,7 @@
 name,code,default_precision
-measurement_units.item.name,ITEM,1
-measurement_units.standard.weight.kilo.name,KILO,1000
-measurement_units.standard.weight.gram.name,GRAM,1
-measurement_units.standard.length.metre.name,METR,100
-measurement_units.standard.length.centimetre.name,CMET,1
-measurement_units.standard.length.foot.name,FOOT,10
+measurement_units.item.name2,ITEM,1
+measurement_units.standard.weight.kilo.name2,KILO,1000
+measurement_units.standard.weight.gram.name2,GRAM,1
+measurement_units.standard.length.metre.name2,METR,100
+measurement_units.standard.length.centimetre.name2,CMET,1
+measurement_units.standard.length.foot.name2,FOOT,10

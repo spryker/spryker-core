@@ -34,6 +34,49 @@ class ProductAlternativeDataImportPluginTest extends Unit
     protected $tester;
 
     /**
+     * @var bool
+     */
+    protected static $neededDataAdded = false;
+
+    /**
+     * @return void
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        //this data comes from the .csv files under _data/import folder
+        if (!static::$neededDataAdded) {
+            $concreteSkus = [
+                '12487612487',
+                '76345872652',
+                '215461275672',
+                '352786781124',
+                '627145124757',
+                '12754617625',
+                '63456457561',
+                '3523412312',
+                '61245676512',
+                '31248716241',
+            ];
+
+            foreach ($concreteSkus as $concreteSku) {
+                $this->tester->haveProduct(['sku' => $concreteSku]);
+            }
+
+            $abstractSkus = [
+                '541243122',
+                '4512645712',
+            ];
+            foreach ($abstractSkus as $abstractSku) {
+                $this->tester->haveProductAbstract(['sku' => $abstractSku]);
+            }
+
+            static::$neededDataAdded = true;
+        }
+    }
+
+    /**
      * @return void
      */
     public function testImportImportsProductAlternative(): void

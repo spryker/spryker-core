@@ -28,15 +28,28 @@ use Spryker\Zed\ProductLabelSearch\Persistence\ProductLabelSearchQueryContainer;
 class ProductLabelSearchListenerTest extends Unit
 {
     /**
+     * @var \SprykerTest\Zed\ProductLabelSearch\ProductLabelSearchCommunicationTester
+     */
+    protected $tester;
+
+    /**
      * @return void
      */
     public function testQueryProductLabelByProductLabelIds(): void
     {
-        $productLabelSearchQueryContainer = new ProductLabelSearchQueryContainer();
-        $labelId = $this->createProductLabelFacade()->findLabelByLabelName('Standard label')->getIdProductLabel();
-        $result = $productLabelSearchQueryContainer->queryProductLabelByProductLabelIds([$labelId])->count();
+        $productLabelTransfer = $this->tester->haveProductLabel();
+        $productAbstractTransfer = $this->tester->haveProductAbstract();
 
-        $this->assertSame(48, $result);
+        $this->tester->haveProductLabelToAbstractProductRelation(
+            $productLabelTransfer->getIdProductLabel(),
+            $productAbstractTransfer->getIdProductAbstract(),
+        );
+
+        $productLabelSearchQueryContainer = new ProductLabelSearchQueryContainer();
+        $result = $productLabelSearchQueryContainer
+            ->queryProductLabelByProductLabelIds([$productLabelTransfer->getIdProductLabel()])->count();
+
+        $this->assertSame(1, $result);
     }
 
     /**

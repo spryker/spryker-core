@@ -100,12 +100,25 @@ class ProductDataHelper extends Module
 
     /**
      * @param array $productAbstractOverride
+     * @param bool $localized
      *
      * @return \Generated\Shared\Transfer\ProductAbstractTransfer
      */
-    public function haveProductAbstract(array $productAbstractOverride = []): ProductAbstractTransfer
+    public function haveProductAbstract(array $productAbstractOverride = [], bool $localized = false): ProductAbstractTransfer
     {
-        $productAbstractTransfer = (new ProductAbstractBuilder($productAbstractOverride))->build();
+        $productAbstractTransfer = new ProductAbstractBuilder($productAbstractOverride);
+
+        if ($localized) {
+            $localizedAttributes = (new LocalizedAttributesBuilder([
+                LocalizedAttributesTransfer::NAME => uniqid('Product #', true),
+                LocalizedAttributesTransfer::LOCALE => $this->getCurrentLocale(),
+                LocalizedAttributesTransfer::ATTRIBUTES => $productConcreteOverride[ProductConcreteTransfer::ATTRIBUTES] ?? [],
+            ]))->build()->toArray();
+
+            $productAbstractTransfer->withLocalizedAttributes($localizedAttributes);
+        }
+
+        $productAbstractTransfer = $productAbstractTransfer->build();
 
         $productFacade = $this->getProductFacade();
         $abstractProductId = $productFacade->createProductAbstract($productAbstractTransfer);

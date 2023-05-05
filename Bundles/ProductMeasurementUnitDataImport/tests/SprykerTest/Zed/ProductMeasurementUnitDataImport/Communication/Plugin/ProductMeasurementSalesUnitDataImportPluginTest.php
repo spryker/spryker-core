@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\ProductMeasurementUnitDataImport\Communication\Plugin;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Spryker\Zed\DataImport\DataImportDependencyProvider;
+use Spryker\Zed\Product\Business\ProductFacadeInterface;
 use Spryker\Zed\ProductMeasurementUnitDataImport\Communication\Plugin\ProductMeasurementBaseUnitDataImportPlugin;
 use Spryker\Zed\ProductMeasurementUnitDataImport\Communication\Plugin\ProductMeasurementSalesUnitDataImportPlugin;
 use Spryker\Zed\ProductMeasurementUnitDataImport\Communication\Plugin\ProductMeasurementSalesUnitStoreDataImportPlugin;
@@ -35,6 +36,11 @@ class ProductMeasurementSalesUnitDataImportPluginTest extends Unit
     protected $tester;
 
     /**
+     * @var bool
+     */
+    protected static $neededDataAdded = false;
+
+    /**
      * @return void
      */
     protected function setUp(): void
@@ -50,6 +56,32 @@ class ProductMeasurementSalesUnitDataImportPluginTest extends Unit
                 new ProductMeasurementSalesUnitStoreDataImportPlugin(),
             ],
         );
+
+        if (!static::$neededDataAdded) {
+            $idProductAbstract = $this->getProductFacade()->findProductAbstractIdBySku('testing-sku-197888');
+            if (!$idProductAbstract) {
+                $idProductAbstract = ($this->tester->haveProductAbstract(['sku' => 'testing-sku-197888']))
+                    ->getIdProductAbstract();
+            }
+            $concreteSkus = [
+                'testing-sku-2289711',
+                'testing-sku-2289712',
+                'testing-sku-2289713',
+                'testing-sku-2289714',
+                'testing-sku-2289715',
+                'testing-sku-2289716',
+                'testing-sku-2289717',
+                'testing-sku-2289718',
+                'testing-sku-2289719',
+            ];
+
+            foreach ($concreteSkus as $concreteSku) {
+                $this->tester->haveProductConcrete(
+                    ['sku' => $concreteSku, 'fkProductAbstract' => $idProductAbstract],
+                );
+            }
+            static::$neededDataAdded = true;
+        }
     }
 
     /**
@@ -80,5 +112,13 @@ class ProductMeasurementSalesUnitDataImportPluginTest extends Unit
             ProductMeasurementUnitDataImportConfig::IMPORT_TYPE_PRODUCT_MEASUREMENT_SALES_UNIT,
             $productMeasurementSalesUnitDataImportPlugin->getImportType(),
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Product\Business\ProductFacadeInterface
+     */
+    protected function getProductFacade(): ProductFacadeInterface
+    {
+        return $this->tester->getLocator()->product()->facade();
     }
 }

@@ -8,7 +8,7 @@
     <transfer name="ProductLabelDictionaryStorage">
         <property name="store" dataBuilderRule="isbn10()"/>
         <property name="locale" dataBuilderRule="locale()"/>
-        <property name="key" dataBuilderRule="unique()->word()"/>
+        <property name="key" dataBuilderRule="unique()->lexify('??????????')"/>
     </transfer>
 
 </transfers>

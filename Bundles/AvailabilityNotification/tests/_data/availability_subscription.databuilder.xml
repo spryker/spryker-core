@@ -6,7 +6,7 @@
 >
 
     <transfer name="AvailabilityNotificationSubscription">
-        <property name="sku" dataBuilderRule="isbn10()"/>
+        <property name="sku" dataBuilderRule="unique()->isbn10()"/>
         <property name="email" dataBuilderRule="email()"/>
         <property name="customerReference" dataBuilderRule="unique()->sentence(4)"/>
         <property name="subscriptionKey" dataBuilderRule="unique()->sentence(10)"/>

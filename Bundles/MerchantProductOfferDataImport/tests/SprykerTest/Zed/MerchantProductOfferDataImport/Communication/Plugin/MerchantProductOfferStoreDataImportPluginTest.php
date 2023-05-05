@@ -33,6 +33,32 @@ class MerchantProductOfferStoreDataImportPluginTest extends Unit
     protected $tester;
 
     /**
+     * @var bool
+     */
+    protected static $isProductOfferDataCreated = false;
+
+    /**
+     * @return void
+     */
+    protected function _before(): void
+    {
+        if (!static::$isProductOfferDataCreated) {
+            $this->tester->truncateProductOffers();
+            $this->tester->assertProductOfferDatabaseTableIsEmpty();
+
+            //these values come from the .csv files tested in this data import
+            $this->tester->haveProductOffer(['productOfferReference' => 'offer171261249']);
+            $this->tester->haveProductOffer(['productOfferReference' => 'offer271261249']);
+            $this->tester->haveProductOffer(['productOfferReference' => 'offer371261249']);
+            $this->tester->haveProductOffer(['productOfferReference' => 'offer471261249']);
+            $this->tester->haveProductOffer(['productOfferReference' => 'offer571261249']);
+            $this->tester->haveProductOffer(['productOfferReference' => 'offer671261249']);
+            $this->tester->haveProductOffer(['productOfferReference' => 'offer771261249']);
+        }
+        static::$isProductOfferDataCreated = true;
+    }
+
+    /**
      * @return void
      */
     public function testImportImportsData(): void

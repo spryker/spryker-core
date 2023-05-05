@@ -38,13 +38,6 @@ class SharedCartFacadeTest extends Unit
     protected const GLOSSARY_KEY_CART_ACCESS_DENIED = 'shared_cart.resource_share.strategy.error.cart_access_denied';
 
     /**
-     * @uses \Spryker\Zed\SharedCart\Business\ResourceShare\ResourceShareQuoteShare::GLOSSARY_KEY_UNABLE_TO_SHARE_CART
-     *
-     * @var string
-     */
-    protected const GLOSSARY_KEY_UNABLE_TO_SHARE_CART = 'shared_cart.resource_share.strategy.error.unable_to_share_cart';
-
-    /**
      * @uses \Spryker\Zed\SharedCart\Business\ResourceShare\ResourceShareQuoteShare::GLOSSARY_KEY_QUOTE_IS_NOT_AVAILABLE
      *
      * @var string
@@ -144,10 +137,10 @@ class SharedCartFacadeTest extends Unit
 
         // Assert
         $this->assertFalse($resourceShareResponseTransfer->getIsSuccessful());
-        $this->hasResourceShareResponseTransferErrorMessage(
+        $this->assertTrue($this->hasResourceShareResponseTransferErrorMessage(
             $resourceShareResponseTransfer,
             static::GLOSSARY_KEY_CART_ACCESS_DENIED,
-        );
+        ));
     }
 
     /**
@@ -157,9 +150,7 @@ class SharedCartFacadeTest extends Unit
     {
         // Arrange
         $firstCompanyUserTransfer = $this->tester->createCompanyUserTransfer();
-        $secondCompanyUserTransfer = $this->tester->createCompanyUserTransfer([
-            ResourceShareDataTransfer::OWNER_COMPANY_USER_ID => static::VALUE_NOT_EXISTING_ID_COMPANY_USER,
-        ]);
+        $secondCompanyUserTransfer = $this->tester->createCompanyUserTransfer();
 
         $resourceShareTransfer = $this->tester->createResourceShare([
             ResourceShareDataTransfer::OWNER_COMPANY_USER_ID => $secondCompanyUserTransfer->getIdCompanyUser(),
@@ -175,10 +166,10 @@ class SharedCartFacadeTest extends Unit
 
         // Assert
         $this->assertFalse($resourceShareResponseTransfer->getIsSuccessful());
-        $this->hasResourceShareResponseTransferErrorMessage(
+        $this->assertTrue($this->hasResourceShareResponseTransferErrorMessage(
             $resourceShareResponseTransfer,
-            static::GLOSSARY_KEY_UNABLE_TO_SHARE_CART,
-        );
+            static::GLOSSARY_KEY_CART_ACCESS_DENIED,
+        ));
     }
 
     /**
@@ -206,10 +197,10 @@ class SharedCartFacadeTest extends Unit
 
         // Assert
         $this->assertFalse($resourceShareResponseTransfer->getIsSuccessful());
-        $this->hasResourceShareResponseTransferErrorMessage(
+        $this->assertTrue($this->hasResourceShareResponseTransferErrorMessage(
             $resourceShareResponseTransfer,
-            static::GLOSSARY_KEY_UNABLE_TO_SHARE_CART,
-        );
+            static::GLOSSARY_KEY_CART_ACCESS_DENIED,
+        ));
     }
 
     /**
@@ -313,10 +304,10 @@ class SharedCartFacadeTest extends Unit
 
         // Assert
         $this->assertFalse($resourceShareResponseTransfer->getIsSuccessful());
-        $this->hasResourceShareResponseTransferErrorMessage(
+        $this->assertTrue($this->hasResourceShareResponseTransferErrorMessage(
             $resourceShareResponseTransfer,
             static::GLOSSARY_KEY_QUOTE_IS_NOT_AVAILABLE,
-        );
+        ));
     }
 
     /**

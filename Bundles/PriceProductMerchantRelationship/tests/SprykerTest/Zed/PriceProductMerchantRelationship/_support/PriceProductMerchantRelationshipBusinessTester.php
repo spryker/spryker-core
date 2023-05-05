@@ -64,9 +64,11 @@ class PriceProductMerchantRelationshipBusinessTester extends Actor
     }
 
     /**
+     * @param int $idProductAbstract
+     *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
-    public function createPriceProductMerchantRelationship(): PriceProductTransfer
+    public function createPriceProductMerchantRelationship(int $idProductAbstract): PriceProductTransfer
     {
         $priceProductTransfer = (new PriceProductBuilder())
             ->withMoneyValue()
@@ -75,7 +77,7 @@ class PriceProductMerchantRelationshipBusinessTester extends Actor
             ->build();
 
         $priceProductTransfer->fromArray(
-            $this->getPriceProductFacade()->findProductAbstractPrice(1)->modifiedToArray(),
+            $this->getPriceProductFacade()->findProductAbstractPrice($idProductAbstract)->modifiedToArray(),
         );
 
         $merchantRelationshipTransfer = $this->createMerchantRelationship('key');

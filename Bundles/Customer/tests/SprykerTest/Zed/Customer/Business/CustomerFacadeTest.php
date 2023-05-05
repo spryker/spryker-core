@@ -1587,21 +1587,16 @@ class CustomerFacadeTest extends Unit
     public function testSendPasswordRestoreMailForCustomerCollectionShouldSetRestorePasswordKey(): void
     {
         // Arrange
-        (new SpyCustomer())
-            ->setEmail('customer2@shop.com')
-            ->setPassword(static::VALUE_VALID_PASSWORD)
-            ->setRestorePasswordKey(null)
-            ->setCustomerReference('DE--112')
-            ->save();
-
-        $customerResponseTransfer = $this->tester->getFacade()->findCustomerByReference('DE--112');
+        $customerTransfer = $this->tester->haveCustomer([
+            'password' => static::VALUE_VALID_PASSWORD,
+        ]);
 
         //Act
         $this->tester->getFacade()->sendPasswordRestoreMailForCustomerCollection(
-            (new CustomerCollectionTransfer())->addCustomer($customerResponseTransfer->getCustomerTransfer()),
+            (new CustomerCollectionTransfer())->addCustomer($customerTransfer),
         );
 
-        $customerResponseTransfer = $this->tester->getFacade()->findCustomerByReference('DE--112');
+        $customerResponseTransfer = $this->tester->getFacade()->findCustomerByReference($customerTransfer->getCustomerReference());
         // Assert
         $this->assertNotNull($customerResponseTransfer->getCustomerTransfer()->getRestorePasswordKey());
     }
@@ -1991,24 +1986,28 @@ class CustomerFacadeTest extends Unit
      */
     protected function getUsersData(): array
     {
+        $customer1 = (new CustomerBuilder())->build();
+        $customer2 = (new CustomerBuilder())->build();
+        $customer3 = (new CustomerBuilder())->build();
+
         return [
             [
-                'email' => 'customer1@shop.com',
+                'email' => $customer1->getEmail(),
                 'password' => null,
                 'passwordRestoreKey' => null,
-                'customerReference' => 'DE--111',
+                'customerReference' => '89712978124789',
             ],
             [
-                'email' => 'customer2@shop.com',
+                'email' => $customer2->getEmail(),
                 'password' => null,
                 'passwordRestoreKey' => 'fee0292350a14da40ac6f8f9d6cd26ad',
-                'customerReference' => 'DE--112',
+                'customerReference' => '12478124891512',
             ],
             [
-                'email' => 'customer3@shop.com',
+                'email' => $customer3->getEmail(),
                 'password' => static::VALUE_VALID_PASSWORD,
                 'passwordRestoreKey' => 'fee0292350a14da40ac6f8f9d6cd26ad',
-                'customerReference' => 'DE--113',
+                'customerReference' => 'y1247891249871',
             ],
         ];
     }

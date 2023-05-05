@@ -16,11 +16,14 @@ use ReflectionProperty;
 use Spryker\Zed\Store\Business\Cache\StoreCache;
 use Spryker\Zed\Store\Business\Expander\StoreExpanderInterface;
 use Spryker\Zed\Store\Business\StoreBusinessFactory;
+use Spryker\Zed\Store\Business\StoreFacadeInterface;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
+use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 class StoreDataHelper extends Module
 {
     use DataCleanupHelperTrait;
+    use LocatorHelperTrait;
 
     /**
      * @var string
@@ -70,6 +73,28 @@ class StoreDataHelper extends Module
         });
 
         return $storeTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\StoreTransfer
+     */
+    public function getAllowedStore(): StoreTransfer
+    {
+        $storeTransfers = $this->getStoreFacade()->getAllStores();
+
+        if ($storeTransfers) {
+            return $storeTransfers[0];
+        }
+
+        return new StoreTransfer();
+    }
+
+    /**
+     * @return \Spryker\Zed\Store\Business\StoreFacadeInterface
+     */
+    protected function getStoreFacade(): StoreFacadeInterface
+    {
+        return $this->getLocator()->store()->facade();
     }
 
     /**

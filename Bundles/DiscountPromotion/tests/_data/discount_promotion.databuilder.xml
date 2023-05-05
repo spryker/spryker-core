@@ -8,11 +8,11 @@
     <transfer name="DiscountPromotion">
         <property name="abstractSku" dataBuilderRule="isbn10()"/>
         <property name="quantity" dataBuilderRule="=1"/>
-        <property name="uuid" dataBuilderRule="word()"/>
+        <property name="uuid" dataBuilderRule="lexify('??????????')"/>
     </transfer>
 
     <transfer name="Item">
-        <property name="sku" dataBuilderRule="isbn10()"/>
+        <property name="sku" dataBuilderRule="unique()->isbn10()"/>
         <property name="unitGrossPrice" dataBuilderRule="randomNumber(5)"/>
         <property name="sumGrossPrice" dataBuilderRule="randomNumber(5)"/>
         <property name="quantity" dataBuilderRule="=1"/>

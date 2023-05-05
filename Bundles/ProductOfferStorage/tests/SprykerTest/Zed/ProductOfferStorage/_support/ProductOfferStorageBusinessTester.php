@@ -67,6 +67,7 @@ class ProductOfferStorageBusinessTester extends Actor
     {
         return $this->createProductConcreteProductOffersStorageQuery()
             ->filterByConcreteSku_In($productSkus)
+            ->orderByIdProductConcreteProductOffersStorage()
             ->find();
     }
 

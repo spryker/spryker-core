@@ -11,9 +11,9 @@
     </transfer>
 
     <transfer name="ProductSetData">
-        <property name="name" dataBuilderRule="word()"/>
+        <property name="name" dataBuilderRule="lexify('??????????')"/>
         <property name="description" dataBuilderRule="text(100)"/>
-        <property name="metaTitle" dataBuilderRule="word()"/>
+        <property name="metaTitle" dataBuilderRule="lexify('??????????')"/>
         <property name="metaDescription" dataBuilderRule="text(100)"/>
         <property name="metaKeywords" dataBuilderRule="words(5, true)"/>
     </transfer>

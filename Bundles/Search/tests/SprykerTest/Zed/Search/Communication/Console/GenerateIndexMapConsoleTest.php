@@ -7,9 +7,13 @@
 
 namespace SprykerTest\Zed\Search\Communication\Console;
 
+use Codeception\Stub;
 use Codeception\Test\Unit;
+use Spryker\Zed\Search\Business\Model\Elasticsearch\Generator\IndexMapCleaner;
+use Spryker\Zed\Search\Business\SearchBusinessFactory;
+use Spryker\Zed\Search\Business\SearchFacade;
 use Spryker\Zed\Search\Communication\Console\GenerateIndexMapConsole;
-use Spryker\Zed\Store\StoreDependencyProvider;
+use Spryker\Zed\Search\SearchConfig;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 
@@ -27,14 +31,14 @@ use Symfony\Component\Console\Tester\CommandTester;
 class GenerateIndexMapConsoleTest extends Unit
 {
     /**
+     * @var \SprykerTest\Zed\Search\SearchCommunicationTester
+     */
+    protected $tester;
+
+    /**
      * @var string
      */
     protected const STORE_NAME_DE = 'DE';
-
-    /**
-     * @var \SprykerTest\Zed\Search\SearchBusinessTester
-     */
-    protected $tester;
 
     /**
      * @return void
@@ -44,9 +48,24 @@ class GenerateIndexMapConsoleTest extends Unit
         $this->markTestSkipped('This test is skipped until P&S is able to handle search tests.');
 
         //Arrange
+        $generatedDirectory = __DIR__ . '/Generated/';
+        $configMock = Stub::make(SearchConfig::class, [
+            'getClassTargetDirectory' => function () use ($generatedDirectory) {
+                return $generatedDirectory;
+            },
+        ]);
+
+        $searchBusinessFactory = new SearchBusinessFactory();
+        $searchBusinessFactory->setConfig($configMock);
+
+        $searchFacade = new SearchFacade();
+        $searchFacade->setFactory($searchBusinessFactory);
+
+        $consoleCommand = new GenerateIndexMapConsole();
+        $consoleCommand->setFacade($searchFacade);
+
         $application = new Application();
-        $application->add(new GenerateIndexMapConsole());
-        $this->tester->setDependency(StoreDependencyProvider::STORE_CURRENT, static::STORE_NAME_DE);
+        $application->add($consoleCommand);
 
         //Act
         $command = $application->find(GenerateIndexMapConsole::COMMAND_NAME);
@@ -55,5 +74,7 @@ class GenerateIndexMapConsoleTest extends Unit
 
         //Assert
         $this->assertSame(GenerateIndexMapConsole::CODE_SUCCESS, $commandTester->getStatusCode());
+
+        (new IndexMapCleaner($generatedDirectory))->cleanDirectory();
     }
 }

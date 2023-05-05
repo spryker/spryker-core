@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\ProductReviewSearch\Communication\Plugin\Event\Listene
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
+use Orm\Zed\ProductReview\Persistence\Map\SpyProductReviewTableMap;
 use Orm\Zed\ProductReviewSearch\Persistence\SpyProductReviewSearchQuery;
 use Spryker\Zed\ProductReview\Dependency\ProductReviewEvents;
 use Spryker\Zed\ProductReviewSearch\Business\ProductReviewSearchBusinessFactory;
@@ -32,23 +33,58 @@ use SprykerTest\Zed\ProductReviewSearch\ProductReviewSearchConfigMock;
 class ProductReviewSearchListenerTest extends Unit
 {
     /**
+     * @var \SprykerTest\Zed\ProductReviewSearch\ProductReviewSearchCommunicationTester
+     */
+    protected $tester;
+
+    /**
      * @return void
      */
     public function testProductReviewSearchListenerStoreData(): void
     {
-        SpyProductReviewSearchQuery::create()->filterByFkProductReview(1)->delete();
         $beforeCount = SpyProductReviewSearchQuery::create()->count();
 
         $productReviewSearchListener = new ProductReviewSearchListener();
         $productReviewSearchListener->setFacade($this->getProductReviewSearchFacade());
 
+        $customerTransfer = $this->tester->haveCustomer();
+        $localeTransfer = $this->tester->haveLocale();
+        $productAbstract = $this->tester->haveProductAbstract();
+
+        $productReviewTransfer = $this->tester->haveApprovedCustomerReviewForAbstractProduct(
+            $localeTransfer->getIdLocale(),
+            $customerTransfer->getCustomerReference(),
+            $productAbstract->getIdProductAbstract(),
+            SpyProductReviewTableMap::COL_STATUS_APPROVED,
+            2,
+        );
+
         $eventTransfers = [
-            (new EventEntityTransfer())->setId(1),
+            (new EventEntityTransfer())->setId($productReviewTransfer->getIdProductReview()),
         ];
         $productReviewSearchListener->handleBulk($eventTransfers, ProductReviewEvents::PRODUCT_REVIEW_PUBLISH);
 
         // Assert
-        $this->assertProductReviewSearch($beforeCount);
+        $productSetStorageCount = SpyProductReviewSearchQuery::create()->count();
+        $this->assertEquals($beforeCount + 1, $productSetStorageCount);
+        $spyProductReviewSearch = SpyProductReviewSearchQuery::create()
+            ->orderByIdProductReviewSearch()
+            ->filterByFkProductReview($productReviewTransfer->getIdProductReview())
+            ->findOne();
+        $this->assertNotNull($spyProductReviewSearch);
+        $data = json_decode($spyProductReviewSearch->getStructuredData(), true);
+        $this->assertSame($productReviewTransfer->getNickname(), $data['nickname']);
+        $this->assertSame($productReviewTransfer->getIdProductReview(), $data['id_product_review']);
+        $this->assertSame($productReviewTransfer->getFkLocale(), $data['fk_locale']);
+        $this->assertSame($productReviewTransfer->getFkProductAbstract(), $data['fk_product_abstract']);
+        $this->assertSame($productReviewTransfer->getCustomerReference(), $data['customer_reference']);
+        $this->assertSame($productReviewTransfer->getDescription(), $data['description']);
+        $this->assertSame($productReviewTransfer->getRating(), $data['rating']);
+        $this->assertSame($productReviewTransfer->getSummary(), $data['summary']);
+        $this->assertSame(
+            $productReviewTransfer->getStatus(),
+            SpyProductReviewTableMap::COL_STATUS_APPROVED,
+        );
     }
 
     /**
@@ -63,20 +99,5 @@ class ProductReviewSearchListenerTest extends Unit
         $facade->setFactory($factory);
 
         return $facade;
-    }
-
-    /**
-     * @param int $beforeCount
-     *
-     * @return void
-     */
-    protected function assertProductReviewSearch(int $beforeCount): void
-    {
-        $productSetStorageCount = SpyProductReviewSearchQuery::create()->count();
-        $this->assertGreaterThan($beforeCount, $productSetStorageCount);
-        $spyProductReviewSearch = SpyProductReviewSearchQuery::create()->orderByIdProductReviewSearch()->filterByFkProductReview(1)->findOne();
-        $this->assertNotNull($spyProductReviewSearch);
-        $data = json_decode($spyProductReviewSearch->getStructuredData(), true);
-        $this->assertSame('Spencor', $data['nickname']);
     }
 }

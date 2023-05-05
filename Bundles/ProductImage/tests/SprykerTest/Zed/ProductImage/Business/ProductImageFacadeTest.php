@@ -1398,7 +1398,9 @@ class ProductImageFacadeTest extends Unit
     public function testGetConcreteProductImageSetCollectionRetrievesProductImageSetsFilteredByLocaleName(): void
     {
         // Arrange
-        $localeTransfer = $this->tester->haveLocale();
+        $localeTransfer = $this->tester->haveLocale(['localeName' => 'de_DE']);
+        $localeTransfer2 = $this->tester->haveLocale(['localeName' => 'en_US']);
+
         $firstProductConcreteTransfer = $this->tester->haveProduct();
         $this->tester->haveProductImageSet([
             ProductImageSetTransfer::ID_PRODUCT => $firstProductConcreteTransfer->getIdProductConcrete(),
@@ -1407,6 +1409,7 @@ class ProductImageFacadeTest extends Unit
         $secondProductConcreteTransfer = $this->tester->haveProduct();
         $this->tester->haveProductImageSet([
             ProductImageSetTransfer::ID_PRODUCT => $secondProductConcreteTransfer->getIdProductConcrete(),
+            ProductImageSetTransfer::LOCALE => $localeTransfer2,
         ]);
 
         $productImageSetConditionsTransfer = (new ProductImageSetConditionsTransfer())

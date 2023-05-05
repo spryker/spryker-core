@@ -6,8 +6,8 @@
 >
 
     <transfer name="SearchHttpConfig">
-        <property name="applicationId" dataBuilderRule="word()"/>
-        <property name="url" dataBuilderRule="word()"/>
+        <property name="applicationId" dataBuilderRule="lexify('??????????')"/>
+        <property name="url" dataBuilderRule="lexify('??????????')"/>
     </transfer>
 
     <transfer name="SearchHttpConfigCollection">
@@ -23,7 +23,7 @@
     <transfer name="SearchHttpResponsePagination">
         <property name="numFound" dataBuilderRule="randomNumber(3)"/>
         <property name="currentPage" dataBuilderRule="randomNumber(3)"/>
-        <property name="currentItemsPerPage" dataBuilderRule="randomNumber(3)"/>
+        <property name="currentItemsPerPage" dataBuilderRule="randomDigitNotNull()"/>
     </transfer>
 
     <transfer name="CategoryNodeStorage">
@@ -36,14 +36,14 @@
     </transfer>
 
     <transfer name="SearchQueryValueFacetFilter">
-        <property name="fieldName" dataBuilderRule="word()"/>
+        <property name="fieldName" dataBuilderRule="lexify('??????????')"/>
         <property name="values" dataBuilderRule="="/>
     </transfer>
 
     <transfer name="SearchQueryRangeFacetFilter">
-        <property name="fieldName" dataBuilderRule="word()"/>
-        <property name="from" dataBuilderRule="word()"/>
-        <property name="to" dataBuilderRule="word()"/>
+        <property name="fieldName" dataBuilderRule="lexify('??????????')"/>
+        <property name="from" dataBuilderRule="lexify('??????????')"/>
+        <property name="to" dataBuilderRule="lexify('??????????')"/>
     </transfer>
 
     <transfer name="SearchQueryPagination">
@@ -52,8 +52,8 @@
     </transfer>
 
     <transfer name="SearchQuerySorting">
-        <property name="fieldName" dataBuilderRule="word()"/>
-        <property name="sortDirection" dataBuilderRule="word()"/>
+        <property name="fieldName" dataBuilderRule="lexify('??????????')"/>
+        <property name="sortDirection" dataBuilderRule="lexify('??????????')"/>
     </transfer>
 
 </transfers>

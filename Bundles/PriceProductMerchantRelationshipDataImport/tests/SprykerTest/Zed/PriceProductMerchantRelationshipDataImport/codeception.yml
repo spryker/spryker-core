@@ -32,3 +32,8 @@ suites:
                 - \SprykerTest\Zed\PriceProductMerchantRelationshipDataImport\Helper\PriceProductMerchantRelationshipDataImportHelper
                 - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper
                 - \SprykerTest\Zed\Testify\Helper\Business\DependencyProviderHelper
+                - \SprykerTest\Shared\Product\Helper\ProductDataHelper
+                - \SprykerTest\Zed\MerchantRelationship\Helper\MerchantRelationshipHelper
+                - \SprykerTest\Zed\Merchant\Helper\MerchantHelper
+                - \SprykerTest\Zed\CompanyBusinessUnit\Helper\CompanyBusinessUnitHelper
+                - \SprykerTest\Zed\Company\Helper\CompanyHelper

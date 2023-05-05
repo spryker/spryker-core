@@ -6,7 +6,7 @@
 >
 
     <transfer name="KeyTranslation">
-        <property name="glossaryKey" dataBuilderRule="word()"/>
+        <property name="glossaryKey" dataBuilderRule="lexify('??????????')"/>
     </transfer>
 
 </transfers>

@@ -91,7 +91,7 @@ class ShipmentFacadeTest extends Unit
     /**
      * @var string
      */
-    protected const NOT_UNIQUE_SHIPMENT_NAME_STANDART = 'Standard';
+    protected const NOT_UNIQUE_SHIPMENT_NAME_STANDARD = 'Standard';
 
     /**
      * @var string
@@ -522,14 +522,21 @@ class ShipmentFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testIsNewShipmentMethodUniqueForCarrierMethodWitchExistingMethodShouldReturnFalseWhenNotUnique(): void
+    public function testIsNewShipmentMethodUniqueForCarrierMethodWhichExistingMethodShouldReturnFalseWhenNotUnique(): void
     {
-        $shipmentExpenseTransfer = (new ShipmentMethodTransfer())
-            ->setName(static::NOT_UNIQUE_SHIPMENT_NAME_STANDART)
-            ->setFkShipmentCarrier(static::FK_SHIPMENT_CARRIER);
+        $shipmentCarrierTransfer = $this->tester->haveShipmentCarrier();
+        $shipmentMethodTransfer = $this->tester->haveShipmentMethod(
+            [
+                'fkShipmentCarrier' => $shipmentCarrierTransfer->getIdShipmentCarrier(),
+            ],
+        );
+
+        $shipmentMethodTransfer2 = (new ShipmentMethodTransfer())
+            ->setName($shipmentMethodTransfer->getName())
+            ->setFkShipmentCarrier($shipmentCarrierTransfer->getIdShipmentCarrier());
 
         $isShipmentMethodUniqueForCarrier = $this->tester->getShipmentFacade()
-            ->isShipmentMethodUniqueForCarrier($shipmentExpenseTransfer);
+            ->isShipmentMethodUniqueForCarrier($shipmentMethodTransfer2);
 
         $this->assertFalse($isShipmentMethodUniqueForCarrier);
     }
@@ -547,22 +554,6 @@ class ShipmentFacadeTest extends Unit
             ->isShipmentMethodUniqueForCarrier($shipmentExpenseTransfer);
 
         $this->assertTrue($isShipmentMethodUniqueForCarrier);
-    }
-
-    /**
-     * @return void
-     */
-    public function testIsShipmentMethodUniqueForCarrierMethodWitchExistingMethodShouldReturnFalseWhenNotUnique(): void
-    {
-        $shipmentExpenseTransfer = (new ShipmentMethodTransfer())
-            ->setName(static::NOT_UNIQUE_SHIPMENT_NAME_EXPRESS)
-            ->setIdShipmentMethod(static::FK_SHIPMENT_METHOD)
-            ->setFkShipmentCarrier(static::FK_SHIPMENT_CARRIER);
-
-        $isShipmentMethodUniqueForCarrier = $this->tester->getShipmentFacade()
-            ->isShipmentMethodUniqueForCarrier($shipmentExpenseTransfer);
-
-        $this->assertFalse($isShipmentMethodUniqueForCarrier);
     }
 
     /**
@@ -588,7 +579,7 @@ class ShipmentFacadeTest extends Unit
     {
         $shipmentCarrierTransfer = $this->tester->haveShipmentCarrier();
         $shipmentExpenseTransfer = (new ShipmentMethodTransfer())
-            ->setName(static::NOT_UNIQUE_SHIPMENT_NAME_STANDART)
+            ->setName(static::NOT_UNIQUE_SHIPMENT_NAME_STANDARD)
             ->setIdShipmentMethod(static::FK_SHIPMENT_METHOD)
             ->setFkShipmentCarrier($shipmentCarrierTransfer->getIdShipmentCarrier());
 

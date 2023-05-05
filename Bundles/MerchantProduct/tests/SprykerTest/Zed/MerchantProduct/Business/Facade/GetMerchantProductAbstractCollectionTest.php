@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\MerchantProduct\Business\Facade;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\MerchantProductAbstractCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantProductTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use SprykerTest\Zed\MerchantProduct\MerchantProductBusinessTester;
 
@@ -38,7 +39,12 @@ class GetMerchantProductAbstractCollectionTest extends Unit
     {
         // Arrange
         for ($i = 0; $i < 15; $i++) {
-            $this->tester->haveProductAbstract([]);
+            $merchantTransfer = $this->tester->haveMerchant();
+            $productAbstractTransfer = $this->tester->haveProductAbstract();
+            $this->tester->haveMerchantProduct([
+                MerchantProductTransfer::ID_MERCHANT => $merchantTransfer->getIdMerchant(),
+                MerchantProductTransfer::ID_PRODUCT_ABSTRACT => $productAbstractTransfer->getIdProductAbstract(),
+            ]);
         }
         $merchantProductAbstractCriteriaTransfer = (new MerchantProductAbstractCriteriaTransfer())
             ->setPagination(
