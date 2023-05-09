@@ -10,6 +10,9 @@ namespace Spryker\Shared\Kernel\Validator;
 use Spryker\Shared\Kernel\Exception\ForbiddenExternalRedirectException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
+use Symfony\Component\Validator\Constraint;
+use Symfony\Component\Validator\Constraints\Url;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class RedirectUrlValidator implements RedirectUrlValidatorInterface
 {
@@ -19,21 +22,33 @@ class RedirectUrlValidator implements RedirectUrlValidatorInterface
     protected const HTTP_HEADER_LOCATION = 'Location';
 
     /**
-     * @var array<string>
+     * @var string
      */
-    protected $allowedDomains;
+    protected const RELATIVE_URL_PATTERN = '/^\/$|^\/[a-z0-9\-._~%!$&\'()*+,;=@]+(\/[a-zA-Z0-9\-._~%!$&\'()*+,;=:@]+)*/';
+
+    /**
+     * @var \Symfony\Component\Validator\Validator\ValidatorInterface
+     */
+    protected ValidatorInterface $validator;
+
+    /**
+     * @var list<string>
+     */
+    protected array $allowedDomains;
 
     /**
      * @var bool
      */
-    protected $isStrictDomainRedirectEnabled;
+    protected bool $isStrictDomainRedirectEnabled;
 
     /**
-     * @param array<string> $allowedDomains
+     * @param \Symfony\Component\Validator\Validator\ValidatorInterface $validator
+     * @param list<string> $allowedDomains
      * @param bool $isStrictDomainRedirectEnabled
      */
-    public function __construct(array $allowedDomains, bool $isStrictDomainRedirectEnabled)
+    public function __construct(ValidatorInterface $validator, array $allowedDomains, bool $isStrictDomainRedirectEnabled)
     {
+        $this->validator = $validator;
         $this->allowedDomains = $allowedDomains;
         $this->isStrictDomainRedirectEnabled = $isStrictDomainRedirectEnabled;
     }
@@ -55,6 +70,10 @@ class RedirectUrlValidator implements RedirectUrlValidatorInterface
         $redirectUrl = $response->headers->get(static::HTTP_HEADER_LOCATION);
         if (!$redirectUrl) {
             return;
+        }
+
+        if (!$this->isValidUrl($redirectUrl)) {
+            throw new ForbiddenExternalRedirectException(sprintf('URL %s is invalid', $redirectUrl));
         }
 
         $domain = (string)parse_url($redirectUrl, PHP_URL_HOST);
@@ -79,5 +98,39 @@ class RedirectUrlValidator implements RedirectUrlValidatorInterface
         }
 
         return in_array($domain, $this->allowedDomains, true);
+    }
+
+    /**
+     * @param string $url
+     *
+     * @return bool
+     */
+    protected function isValidUrl(string $url): bool
+    {
+        if ($this->isRelativeUrl($url)) {
+            return true;
+        }
+
+        return $this->validator->validate($url, $this->createUrlConstraint())->count() === 0;
+    }
+
+    /**
+     * @param string $url
+     *
+     * @return bool
+     */
+    protected function isRelativeUrl(string $url): bool
+    {
+        return preg_match(static::RELATIVE_URL_PATTERN, $url) === 1;
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Constraint
+     */
+    protected function createUrlConstraint(): Constraint
+    {
+        return new Url([
+            'relativeProtocol' => true,
+        ]);
     }
 }

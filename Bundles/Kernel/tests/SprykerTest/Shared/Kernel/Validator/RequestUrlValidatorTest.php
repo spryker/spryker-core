@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
+use Symfony\Component\Validator\Validation;
 
 /**
  * Auto-generated group annotations
@@ -57,6 +58,7 @@ class RequestUrlValidatorTest extends Unit
         bool $validationResult
     ): void {
         $redirectUrlValidator = new RedirectUrlValidator(
+            Validation::createValidator(),
             $allowedDomains,
             $isStrictDomainRedirectEnabled,
         );
@@ -113,6 +115,76 @@ class RequestUrlValidatorTest extends Unit
             'redirect to current domain' => [
                 'allowed domains' => ['alloweddomain.com'],
                 'url' => 'http://currentdomain.com',
+                'strict domain redirect enabled' => true,
+                'redirect request' => true,
+                'validation result' => true,
+            ],
+            'allowed domain without protocol' => [
+                'allowed domains' => ['alloweddomain.com'],
+                'url' => '//alloweddomain.com',
+                'strict domain redirect enabled' => true,
+                'redirect request' => true,
+                'validation result' => true,
+            ],
+            'domain without protocol with backslash' => [
+                'allowed domains' => ['alloweddomain.com'],
+                'url' => '/\invaliddomain.com',
+                'strict domain redirect enabled' => true,
+                'redirect request' => true,
+                'validation result' => false,
+            ],
+            'domain without protocol with backslash on first position' => [
+                'allowed domains' => ['alloweddomain.com'],
+                'url' => '\/invaliddomain.com',
+                'strict domain redirect enabled' => true,
+                'redirect request' => true,
+                'validation result' => false,
+            ],
+            'domain without protocol with two backslashes' => [
+                'allowed domains' => ['alloweddomain.com'],
+                'url' => '\\\\invaliddomain.com',
+                'strict domain redirect enabled' => true,
+                'redirect request' => true,
+                'validation result' => false,
+            ],
+            'domain without protocol with three slashes' => [
+                'allowed domains' => ['alloweddomain.com'],
+                'url' => '///invaliddomain.com',
+                'strict domain redirect enabled' => true,
+                'redirect request' => true,
+                'validation result' => false,
+            ],
+            'domain without protocol with four slashes' => [
+                'allowed domains' => ['alloweddomain.com'],
+                'url' => '////invaliddomain.com',
+                'strict domain redirect enabled' => true,
+                'redirect request' => true,
+                'validation result' => false,
+            ],
+            'relative url to root page' => [
+                'allowed domains' => ['alloweddomain.com'],
+                'url' => '/',
+                'strict domain redirect enabled' => true,
+                'redirect request' => true,
+                'validation result' => true,
+            ],
+            'relative url to some page' => [
+                'allowed domains' => ['alloweddomain.com'],
+                'url' => '/some-page',
+                'strict domain redirect enabled' => true,
+                'redirect request' => true,
+                'validation result' => true,
+            ],
+            'relative url to some page with child page' => [
+                'allowed domains' => ['alloweddomain.com'],
+                'url' => '/some-page/some-page-child',
+                'strict domain redirect enabled' => true,
+                'redirect request' => true,
+                'validation result' => true,
+            ],
+            'relative url to some page with non-alphabet name' => [
+                'allowed domains' => ['alloweddomain.com'],
+                'url' => '/0123-._~%!$&\'()*+,;=:@',
                 'strict domain redirect enabled' => true,
                 'redirect request' => true,
                 'validation result' => true,

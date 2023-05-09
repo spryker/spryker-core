@@ -11,6 +11,8 @@ use Spryker\Shared\Kernel\ClassResolver\ResolverCacheFactoryInterface;
 use Spryker\Shared\Kernel\ClassResolver\ResolverCacheManager;
 use Spryker\Shared\Kernel\Validator\RedirectUrlValidator;
 use Spryker\Shared\Kernel\Validator\RedirectUrlValidatorInterface;
+use Symfony\Component\Validator\Validation;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * @method \Spryker\Zed\Kernel\KernelConfig getConfig()
@@ -32,8 +34,17 @@ class KernelCommunicationFactory extends AbstractCommunicationFactory
     public function createRedirectUrlValidator(): RedirectUrlValidatorInterface
     {
         return new RedirectUrlValidator(
+            $this->getValidator(),
             $this->getConfig()->getDomainsAllowedForRedirect(),
             $this->getConfig()->isStrictDomainRedirectEnabled(),
         );
+    }
+
+    /**
+     * @return \Symfony\Component\Validator\Validator\ValidatorInterface
+     */
+    public function getValidator(): ValidatorInterface
+    {
+        return Validation::createValidator();
     }
 }
