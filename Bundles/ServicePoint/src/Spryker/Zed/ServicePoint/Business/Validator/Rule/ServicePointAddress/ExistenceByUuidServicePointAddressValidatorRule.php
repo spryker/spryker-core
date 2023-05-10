@@ -93,8 +93,11 @@ class ExistenceByUuidServicePointAddressValidatorRule implements ServicePointAdd
         $servicePointAddressCriteriaTransfer = (new ServicePointAddressCriteriaTransfer())
             ->setServicePointAddressConditions($servicePointAddressConditionsTransfer);
 
-        return $this->servicePointRepository->getServicePointAddressCollection($servicePointAddressCriteriaTransfer)
-                ->getServicePointAddresses()
-                ->count() === 1;
+        /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\ServicePointAddressTransfer> $servicePointAddressTransfers */
+        $servicePointAddressTransfers = $this->servicePointRepository
+            ->getServicePointAddressCollection($servicePointAddressCriteriaTransfer)
+            ->getServicePointAddresses();
+
+        return $servicePointAddressTransfers->count() === 1;
     }
 }

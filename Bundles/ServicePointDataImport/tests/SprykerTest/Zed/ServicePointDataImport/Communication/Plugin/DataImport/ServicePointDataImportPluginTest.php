@@ -28,6 +28,13 @@ use SprykerTest\Zed\ServicePointDataImport\ServicePointDataImportCommunicationTe
 class ServicePointDataImportPluginTest extends Unit
 {
     /**
+     * @uses \Spryker\Zed\ServicePointDataImport\ServicePointDataImportConfig::IMPORT_TYPE_SERVICE_POINT
+     *
+     * @var string
+     */
+    protected const IMPORT_TYPE_SERVICE_POINT = 'service-point';
+
+    /**
      * @var \SprykerTest\Zed\ServicePointDataImport\ServicePointDataImportCommunicationTester
      */
     protected ServicePointDataImportCommunicationTester $tester;
@@ -75,6 +82,6 @@ class ServicePointDataImportPluginTest extends Unit
         $importType = $servicePointDataImportPlugin->getImportType();
 
         // Assert
-        $this->assertSame('service-point', $importType);
+        $this->assertSame(static::IMPORT_TYPE_SERVICE_POINT, $importType);
     }
 }

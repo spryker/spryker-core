@@ -12,7 +12,9 @@ namespace SprykerTest\Zed\ServicePointDataImport;
 use Codeception\Actor;
 use Orm\Zed\ServicePoint\Persistence\Base\SpyServicePointAddressQuery;
 use Orm\Zed\ServicePoint\Persistence\SpyServicePointQuery;
+use Orm\Zed\ServicePoint\Persistence\SpyServicePointServiceQuery;
 use Orm\Zed\ServicePoint\Persistence\SpyServicePointStoreQuery;
+use Orm\Zed\ServicePoint\Persistence\SpyServiceTypeQuery;
 
 /**
  * Inherited Methods
@@ -39,6 +41,8 @@ class ServicePointDataImportCommunicationTester extends Actor
      */
     public function ensureServicePointTablesAreEmpty(): void
     {
+        $this->ensureDatabaseTableIsEmpty($this->getServicePointServiceQuery());
+        $this->ensureDatabaseTableIsEmpty($this->getServiceTypeQuery());
         $this->ensureDatabaseTableIsEmpty($this->getServicePointQuery());
         $this->ensureDatabaseTableIsEmpty($this->getServicePointStoreQuery());
     }
@@ -65,5 +69,21 @@ class ServicePointDataImportCommunicationTester extends Actor
     public function getServicePointAddressQuery(): SpyServicePointAddressQuery
     {
         return SpyServicePointAddressQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\ServicePoint\Persistence\SpyServiceTypeQuery
+     */
+    public function getServiceTypeQuery(): SpyServiceTypeQuery
+    {
+        return SpyServiceTypeQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\ServicePoint\Persistence\SpyServicePointServiceQuery
+     */
+    public function getServicePointServiceQuery(): SpyServicePointServiceQuery
+    {
+        return SpyServicePointServiceQuery::create();
     }
 }

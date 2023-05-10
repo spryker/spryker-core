@@ -35,15 +35,15 @@ class ServicePointStoreRelationExpander implements ServicePointStoreRelationExpa
     public function expandServicePointCollectionWithStoreRelations(
         ServicePointCollectionTransfer $servicePointCollectionTransfer
     ): ServicePointCollectionTransfer {
-        $servicePointIds = $this->extractServicePointIdsFromServicePointTransfers(
-            $servicePointCollectionTransfer->getServicePoints(),
-        );
+        /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\ServicePointTransfer> $servicePointTransfers */
+        $servicePointTransfers = $servicePointCollectionTransfer->getServicePoints();
+        $servicePointIds = $this->extractServicePointIdsFromServicePointTransfers($servicePointTransfers);
 
         $storeTransfersGroupedByIdServicePoint = $this->servicePointRepository
             ->getServicePointStoresGroupedByIdServicePoint($servicePointIds);
 
         $servicePointTransfers = $this->addStoreRelationsToServicePointTransfers(
-            $servicePointCollectionTransfer->getServicePoints(),
+            $servicePointTransfers,
             $storeTransfersGroupedByIdServicePoint,
         );
 

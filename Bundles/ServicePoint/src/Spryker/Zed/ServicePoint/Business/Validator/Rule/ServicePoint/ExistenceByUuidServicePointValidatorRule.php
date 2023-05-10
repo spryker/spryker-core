@@ -68,6 +68,19 @@ class ExistenceByUuidServicePointValidatorRule implements ServicePointValidatorR
     }
 
     /**
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\ErrorTransfer> $initialErrorTransfers
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\ErrorTransfer> $postValidationErrorTransfers
+     *
+     * @return bool
+     */
+    public function isTerminated(
+        ArrayObject $initialErrorTransfers,
+        ArrayObject $postValidationErrorTransfers
+    ): bool {
+        return $postValidationErrorTransfers->count() > $initialErrorTransfers->count();
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ServicePointTransfer $servicePointTransfer
      *
      * @return bool
@@ -80,21 +93,11 @@ class ExistenceByUuidServicePointValidatorRule implements ServicePointValidatorR
         $servicePointCriteriaTransfer = (new ServicePointCriteriaTransfer())
             ->setServicePointConditions($servicePointConditionsTransfer);
 
-        return $this->servicePointRepository->getServicePointCollection($servicePointCriteriaTransfer)
-                ->getServicePoints()
-                ->count() === 1;
-    }
+        /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\ServicePointTransfer> $servicePointTransfers */
+        $servicePointTransfers = $this->servicePointRepository
+            ->getServicePointCollection($servicePointCriteriaTransfer)
+            ->getServicePoints();
 
-    /**
-     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\ErrorTransfer> $initialErrorTransfers
-     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\ErrorTransfer> $postValidationErrorTransfers
-     *
-     * @return bool
-     */
-    public function isTerminated(
-        ArrayObject $initialErrorTransfers,
-        ArrayObject $postValidationErrorTransfers
-    ): bool {
-        return $postValidationErrorTransfers->count() > $initialErrorTransfers->count();
+        return $servicePointTransfers->count() === 1;
     }
 }

@@ -83,7 +83,10 @@ class ServicePointAddressUpdater implements ServicePointAddressUpdaterInterface
 
         $servicePointAddressCollectionResponseTransfer = $this->servicePointAddressValidator->validate($servicePointAddressCollectionResponseTransfer);
 
-        if ($servicePointAddressCollectionRequestTransfer->getIsTransactional() && $servicePointAddressCollectionResponseTransfer->getErrors()->count()) {
+        /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\ErrorTransfer> $errorTransfers */
+        $errorTransfers = $servicePointAddressCollectionResponseTransfer->getErrors();
+
+        if ($servicePointAddressCollectionRequestTransfer->getIsTransactional() && $errorTransfers->count()) {
             return $servicePointAddressCollectionResponseTransfer;
         }
 

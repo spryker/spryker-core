@@ -37,11 +37,14 @@ class ServicePointValidator implements ServicePointValidatorInterface
         ServicePointCollectionResponseTransfer $servicePointCollectionResponseTransfer
     ): ServicePointCollectionResponseTransfer {
         foreach ($this->servicePointValidatorRules as $servicePointValidatorRule) {
-            $errorCollectionTransfer = $servicePointValidatorRule->validate(
-                $servicePointCollectionResponseTransfer->getServicePoints(),
-            );
+            /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\ServicePointTransfer> $servicePointTransfers */
+            $servicePointTransfers = $servicePointCollectionResponseTransfer->getServicePoints();
+            $errorCollectionTransfer = $servicePointValidatorRule->validate($servicePointTransfers);
 
+            /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\ErrorTransfer> $initialErrorTransfers */
             $initialErrorTransfers = $servicePointCollectionResponseTransfer->getErrors();
+
+            /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\ErrorTransfer> $postValidationErrorTransfers */
             $postValidationErrorTransfers = $errorCollectionTransfer->getErrors();
 
             $servicePointCollectionResponseTransfer = $this->mergeErrors(
@@ -86,9 +89,15 @@ class ServicePointValidator implements ServicePointValidatorInterface
         ServicePointCollectionResponseTransfer $servicePointCollectionResponseTransfer,
         ErrorCollectionTransfer $errorCollectionTransfer
     ): ServicePointCollectionResponseTransfer {
+        /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\ErrorTransfer> $servicePointCollectionResponseErrorTransfers */
+        $servicePointCollectionResponseErrorTransfers = $servicePointCollectionResponseTransfer->getErrors();
+
+        /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\ErrorTransfer> $errorCollectionErrorTransfers */
+        $errorCollectionErrorTransfers = $errorCollectionTransfer->getErrors();
+
         $mergedErrorTransfers = array_merge(
-            $servicePointCollectionResponseTransfer->getErrors()->getArrayCopy(),
-            $errorCollectionTransfer->getErrors()->getArrayCopy(),
+            $servicePointCollectionResponseErrorTransfers->getArrayCopy(),
+            $errorCollectionErrorTransfers->getArrayCopy(),
         );
 
         return $servicePointCollectionResponseTransfer->setErrors(

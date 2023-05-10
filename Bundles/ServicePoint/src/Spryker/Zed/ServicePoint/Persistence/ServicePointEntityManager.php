@@ -8,10 +8,14 @@
 namespace Spryker\Zed\ServicePoint\Persistence;
 
 use Generated\Shared\Transfer\ServicePointAddressTransfer;
+use Generated\Shared\Transfer\ServicePointServiceTransfer;
 use Generated\Shared\Transfer\ServicePointTransfer;
+use Generated\Shared\Transfer\ServiceTypeTransfer;
 use Orm\Zed\ServicePoint\Persistence\SpyServicePoint;
 use Orm\Zed\ServicePoint\Persistence\SpyServicePointAddress;
+use Orm\Zed\ServicePoint\Persistence\SpyServicePointService;
 use Orm\Zed\ServicePoint\Persistence\SpyServicePointStore;
+use Orm\Zed\ServicePoint\Persistence\SpyServiceType;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -67,6 +71,10 @@ class ServicePointEntityManager extends AbstractEntityManager implements Service
             ->filterByUuid($servicePointTransfer->getUuidOrFail())
             ->findOne();
 
+        if (!$servicePointEntity) {
+            return $servicePointTransfer;
+        }
+
         $servicePointEntity = $this->getFactory()
             ->createServicePointMapper()
             ->mapServicePointTransferToServicePointEntity($servicePointTransfer, $servicePointEntity);
@@ -90,6 +98,10 @@ class ServicePointEntityManager extends AbstractEntityManager implements Service
             ->filterByUuid($servicePointAddressTransfer->getUuidOrFail())
             ->findOne();
 
+        if (!$servicePointAddressEntity) {
+            return $servicePointAddressTransfer;
+        }
+
         $servicePointAddressEntity = $this->getFactory()
             ->createServicePointAddressMapper()
             ->mapServicePointAddressTransferToServicePointAddressEntity($servicePointAddressTransfer, $servicePointAddressEntity);
@@ -103,7 +115,7 @@ class ServicePointEntityManager extends AbstractEntityManager implements Service
 
     /**
      * @param int $idServicePoint
-     * @param list<int> $storeIds
+     * @param array<int, int> $storeIds
      *
      * @return void
      */
@@ -119,7 +131,7 @@ class ServicePointEntityManager extends AbstractEntityManager implements Service
 
     /**
      * @param int $idServicePoint
-     * @param list<int> $storeIds
+     * @param array<int, int> $storeIds
      *
      * @return void
      */
@@ -131,5 +143,103 @@ class ServicePointEntityManager extends AbstractEntityManager implements Service
             ->filterByFkStore_In($storeIds)
             ->find()
             ->delete();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ServicePointServiceTransfer $servicePointServiceTransfer
+     *
+     * @return \Generated\Shared\Transfer\ServicePointServiceTransfer
+     */
+    public function createServicePointService(ServicePointServiceTransfer $servicePointServiceTransfer): ServicePointServiceTransfer
+    {
+        $servicePointServiceMapper = $this->getFactory()->createServicePointServiceMapper();
+        $servicePointServiceEntity = $servicePointServiceMapper->mapServicePointServiceTransferToServicePointServiceEntity(
+            $servicePointServiceTransfer,
+            new SpyServicePointService(),
+        );
+
+        $servicePointServiceEntity->save();
+
+        return $servicePointServiceMapper->mapServicePointServiceEntityToServicePointServiceTransfer(
+            $servicePointServiceEntity,
+            $servicePointServiceTransfer,
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ServicePointServiceTransfer $servicePointServiceTransfer
+     *
+     * @return \Generated\Shared\Transfer\ServicePointServiceTransfer
+     */
+    public function updateServicePointService(ServicePointServiceTransfer $servicePointServiceTransfer): ServicePointServiceTransfer
+    {
+        $servicePointServiceMapper = $this->getFactory()->createServicePointServiceMapper();
+        $servicePointServiceEntity = $this->getFactory()
+            ->getServicePointServiceQuery()
+            ->filterByUuid($servicePointServiceTransfer->getUuidOrFail())
+            ->findOne();
+
+        if (!$servicePointServiceEntity) {
+            return $servicePointServiceTransfer;
+        }
+
+        $servicePointServiceEntity->fromArray($servicePointServiceTransfer->modifiedToArray());
+        $servicePointServiceEntity->save();
+
+        return $servicePointServiceMapper->mapServicePointServiceEntityToServicePointServiceTransfer(
+            $servicePointServiceEntity,
+            $servicePointServiceTransfer,
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ServiceTypeTransfer $serviceTypeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ServiceTypeTransfer
+     */
+    public function createServiceType(ServiceTypeTransfer $serviceTypeTransfer): ServiceTypeTransfer
+    {
+        $serviceTypeMapper = $this->getFactory()->createServiceTypeMapper();
+        $serviceTypeEntity = $serviceTypeMapper->mapServiceTypeTransferToServiceTypeEntity(
+            $serviceTypeTransfer,
+            new SpyServiceType(),
+        );
+
+        $serviceTypeEntity->save();
+
+        return $serviceTypeMapper->mapServiceTypeEntityToServiceTypeTransfer(
+            $serviceTypeEntity,
+            $serviceTypeTransfer,
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ServiceTypeTransfer $serviceTypeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ServiceTypeTransfer
+     */
+    public function updateServiceType(ServiceTypeTransfer $serviceTypeTransfer): ServiceTypeTransfer
+    {
+        $serviceTypeMapper = $this->getFactory()->createServiceTypeMapper();
+        $serviceTypeEntity = $this->getFactory()
+            ->getServiceTypeQuery()
+            ->filterByUuid($serviceTypeTransfer->getUuidOrFail())
+            ->findOne();
+
+        if (!$serviceTypeEntity) {
+            return $serviceTypeTransfer;
+        }
+
+        $serviceTypeEntity = $serviceTypeMapper->mapServiceTypeTransferToServiceTypeEntity(
+            $serviceTypeTransfer,
+            $serviceTypeEntity,
+        );
+
+        $serviceTypeEntity->save();
+
+        return $serviceTypeMapper->mapServiceTypeEntityToServiceTypeTransfer(
+            $serviceTypeEntity,
+            $serviceTypeTransfer,
+        );
     }
 }

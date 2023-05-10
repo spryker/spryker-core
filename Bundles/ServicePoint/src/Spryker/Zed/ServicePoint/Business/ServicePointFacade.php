@@ -15,6 +15,14 @@ use Generated\Shared\Transfer\ServicePointCollectionRequestTransfer;
 use Generated\Shared\Transfer\ServicePointCollectionResponseTransfer;
 use Generated\Shared\Transfer\ServicePointCollectionTransfer;
 use Generated\Shared\Transfer\ServicePointCriteriaTransfer;
+use Generated\Shared\Transfer\ServicePointServiceCollectionRequestTransfer;
+use Generated\Shared\Transfer\ServicePointServiceCollectionResponseTransfer;
+use Generated\Shared\Transfer\ServicePointServiceCollectionTransfer;
+use Generated\Shared\Transfer\ServicePointServiceCriteriaTransfer;
+use Generated\Shared\Transfer\ServiceTypeCollectionRequestTransfer;
+use Generated\Shared\Transfer\ServiceTypeCollectionResponseTransfer;
+use Generated\Shared\Transfer\ServiceTypeCollectionTransfer;
+use Generated\Shared\Transfer\ServiceTypeCriteriaTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -122,5 +130,105 @@ class ServicePointFacade extends AbstractFacade implements ServicePointFacadeInt
         return $this->getFactory()
             ->createServicePointAddressUpdater()
             ->updateServicePointAddressCollection($servicePointAddressCollectionRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ServiceTypeCriteriaTransfer $serviceTypeCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ServiceTypeCollectionTransfer
+     */
+    public function getServiceTypeCollection(
+        ServiceTypeCriteriaTransfer $serviceTypeCriteriaTransfer
+    ): ServiceTypeCollectionTransfer {
+        return $this->getRepository()
+            ->getServiceTypeCollection($serviceTypeCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ServiceTypeCollectionRequestTransfer $serviceTypeCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ServiceTypeCollectionResponseTransfer
+     */
+    public function createServiceTypeCollection(
+        ServiceTypeCollectionRequestTransfer $serviceTypeCollectionRequestTransfer
+    ): ServiceTypeCollectionResponseTransfer {
+        return $this->getFactory()
+            ->createServiceTypeCreator()
+            ->createServiceTypeCollection($serviceTypeCollectionRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ServiceTypeCollectionRequestTransfer $serviceTypeCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ServiceTypeCollectionResponseTransfer
+     */
+    public function updateServiceTypeCollection(
+        ServiceTypeCollectionRequestTransfer $serviceTypeCollectionRequestTransfer
+    ): ServiceTypeCollectionResponseTransfer {
+        return $this->getFactory()
+            ->createServiceTypeUpdater()
+            ->updateServiceTypeCollection($serviceTypeCollectionRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ServicePointServiceCriteriaTransfer $servicePointServiceCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ServicePointServiceCollectionTransfer
+     */
+    public function getServicePointServiceCollection(
+        ServicePointServiceCriteriaTransfer $servicePointServiceCriteriaTransfer
+    ): ServicePointServiceCollectionTransfer {
+        return $this->getRepository()
+            ->getServicePointServiceCollection($servicePointServiceCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ServicePointServiceCollectionRequestTransfer $servicePointServiceCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ServicePointServiceCollectionResponseTransfer
+     */
+    public function createServicePointServiceCollection(
+        ServicePointServiceCollectionRequestTransfer $servicePointServiceCollectionRequestTransfer
+    ): ServicePointServiceCollectionResponseTransfer {
+        return $this->getFactory()
+            ->createServicePointServiceCreator()
+            ->createServicePointServiceCollection($servicePointServiceCollectionRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ServicePointServiceCollectionRequestTransfer $servicePointServiceCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ServicePointServiceCollectionResponseTransfer
+     */
+    public function updateServicePointServiceCollection(
+        ServicePointServiceCollectionRequestTransfer $servicePointServiceCollectionRequestTransfer
+    ): ServicePointServiceCollectionResponseTransfer {
+        return $this->getFactory()
+            ->createServicePointServiceUpdater()
+            ->updateServicePointServiceCollection($servicePointServiceCollectionRequestTransfer);
     }
 }

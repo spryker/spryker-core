@@ -8,7 +8,9 @@
 namespace Spryker\Zed\ServicePoint\Persistence;
 
 use Generated\Shared\Transfer\ServicePointAddressTransfer;
+use Generated\Shared\Transfer\ServicePointServiceTransfer;
 use Generated\Shared\Transfer\ServicePointTransfer;
+use Generated\Shared\Transfer\ServiceTypeTransfer;
 
 interface ServicePointEntityManagerInterface
 {
@@ -42,7 +44,7 @@ interface ServicePointEntityManagerInterface
 
     /**
      * @param int $idServicePoint
-     * @param list<int> $storeIds
+     * @param array<int, int> $storeIds
      *
      * @return void
      */
@@ -50,9 +52,37 @@ interface ServicePointEntityManagerInterface
 
     /**
      * @param int $idServicePoint
-     * @param list<int> $storeIds
+     * @param array<int, int> $storeIds
      *
      * @return void
      */
     public function deleteServicePointStores(int $idServicePoint, array $storeIds): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\ServicePointServiceTransfer $servicePointServiceTransfer
+     *
+     * @return \Generated\Shared\Transfer\ServicePointServiceTransfer
+     */
+    public function createServicePointService(ServicePointServiceTransfer $servicePointServiceTransfer): ServicePointServiceTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ServicePointServiceTransfer $servicePointServiceTransfer
+     *
+     * @return \Generated\Shared\Transfer\ServicePointServiceTransfer
+     */
+    public function updateServicePointService(ServicePointServiceTransfer $servicePointServiceTransfer): ServicePointServiceTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ServiceTypeTransfer $serviceTypeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ServiceTypeTransfer
+     */
+    public function createServiceType(ServiceTypeTransfer $serviceTypeTransfer): ServiceTypeTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ServiceTypeTransfer $serviceTypeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ServiceTypeTransfer
+     */
+    public function updateServiceType(ServiceTypeTransfer $serviceTypeTransfer): ServiceTypeTransfer;
 }

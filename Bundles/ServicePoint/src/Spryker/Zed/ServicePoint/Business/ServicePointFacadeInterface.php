@@ -15,6 +15,14 @@ use Generated\Shared\Transfer\ServicePointCollectionRequestTransfer;
 use Generated\Shared\Transfer\ServicePointCollectionResponseTransfer;
 use Generated\Shared\Transfer\ServicePointCollectionTransfer;
 use Generated\Shared\Transfer\ServicePointCriteriaTransfer;
+use Generated\Shared\Transfer\ServicePointServiceCollectionRequestTransfer;
+use Generated\Shared\Transfer\ServicePointServiceCollectionResponseTransfer;
+use Generated\Shared\Transfer\ServicePointServiceCollectionTransfer;
+use Generated\Shared\Transfer\ServicePointServiceCriteriaTransfer;
+use Generated\Shared\Transfer\ServiceTypeCollectionRequestTransfer;
+use Generated\Shared\Transfer\ServiceTypeCollectionResponseTransfer;
+use Generated\Shared\Transfer\ServiceTypeCollectionTransfer;
+use Generated\Shared\Transfer\ServiceTypeCriteriaTransfer;
 
 interface ServicePointFacadeInterface
 {
@@ -59,7 +67,7 @@ interface ServicePointFacadeInterface
      * - Uses `ServicePointCollectionRequestTransfer.isTransactional` for transactional operation.
      * - Stores service points at Persistence.
      * - Stores service point store relations at Persistence.
-     * - Returns `ServicePointCollectionRequestTransfer` with persisted service points and errors if any occurred.
+     * - Returns `ServicePointCollectionResponseTransfer` with persisted service points and errors if any occurred.
      *
      * @api
      *
@@ -89,7 +97,7 @@ interface ServicePointFacadeInterface
      * - Uses `ServicePointCollectionRequestTransfer.isTransactional` for transactional operation.
      * - Stores updated service points at Persistence.
      * - Stores updated service point store relations at Persistence.
-     * - Returns `ServicePointCollectionRequestTransfer` with persisted service points and errors if any occurred.
+     * - Returns `ServicePointCollectionResponseTransfer` with persisted service points and errors if any occurred.
      *
      * @api
      *
@@ -191,4 +199,157 @@ interface ServicePointFacadeInterface
     public function updateServicePointAddressCollection(
         ServicePointAddressCollectionRequestTransfer $servicePointAddressCollectionRequestTransfer
     ): ServicePointAddressCollectionResponseTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves service type entities filtered by criteria from Persistence.
+     * - Uses `ServiceTypeCriteriaTransfer.serviceTypeConditions.serviceTypeIds` to filter by service type ids.
+     * - Uses `ServiceTypeCriteriaTransfer.serviceTypeConditions.uuids` to filter by service type uuids.
+     * - Uses `ServiceTypeCriteriaTransfer.serviceTypeConditions.names` to filter by service type names.
+     * - Uses `ServiceTypeCriteriaTransfer.serviceTypeConditions.keys` to filter by service type keys.
+     * - Inverses uuids filtering in case `ServiceTypeCriteriaTransfer.serviceTypeConditions.isUuidsConditionInversed` is set to `true`.
+     * - Uses `ServiceTypeCriteriaTransfer.sort.field` to set the 'order by' field.
+     * - Uses `ServiceTypeCriteriaTransfer.sort.isAscending` to set ascending/descending order.
+     * - Uses `ServiceTypeCriteriaTransfer.pagination.{limit, offset}` to paginate results with limit and offset.
+     * - Uses `ServiceTypeCriteriaTransfer.pagination.{page, maxPerPage}` to paginate results with page and maxPerPage.
+     * - Returns `ServiceTypeCollectionTransfer` filled with found service types.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ServiceTypeCriteriaTransfer $serviceTypeCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ServiceTypeCollectionTransfer
+     */
+    public function getServiceTypeCollection(
+        ServiceTypeCriteriaTransfer $serviceTypeCriteriaTransfer
+    ): ServiceTypeCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Requires `ServiceTypeCollectionRequestTransfer.isTransactional` to be set.
+     * - Requires `ServiceTypeCollectionRequestTransfer.serviceTypes` to be set.
+     * - Requires `ServiceTypeTransfer.name` to be set.
+     * - Requires `ServiceTypeTransfer.key` to be set.
+     * - Validates service type name length.
+     * - Validates service type name uniqueness in scope of request collection.
+     * - Validates service type name uniqueness among already persisted service types.
+     * - Validates service type key length.
+     * - Validates service type key uniqueness in scope of request collection.
+     * - Validates service type key uniqueness among already persisted service types.
+     * - Uses `ServiceTypeCollectionRequestTransfer.isTransactional` for transactional operation.
+     * - Stores service types at Persistence.
+     * - Returns `ServiceTypeCollectionResponseTransfer` with persisted service types and errors if any occurred.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ServiceTypeCollectionRequestTransfer $serviceTypeCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ServiceTypeCollectionResponseTransfer
+     */
+    public function createServiceTypeCollection(
+        ServiceTypeCollectionRequestTransfer $serviceTypeCollectionRequestTransfer
+    ): ServiceTypeCollectionResponseTransfer;
+
+    /**
+     * Specification:
+     * - Requires `ServiceTypeCollectionRequestTransfer.isTransactional` to be set.
+     * - Requires `ServiceTypeCollectionRequestTransfer.serviceTypes` to be set.
+     * - Requires `ServiceTypeTransfer.uuid` to be set.
+     * - Requires `ServiceTypeTransfer.name` to be set.
+     * - Requires `ServiceTypeTransfer.key` to be set.
+     * - Validates service type existence using `ServiceTypeTransfer.uuid`.
+     * - Validates service type name length.
+     * - Validates service type name uniqueness in scope of request collection.
+     * - Validates service type name uniqueness among already persisted service types.
+     * - Validates service type key immutablility.
+     * - Uses `ServiceTypeCollectionRequestTransfer.isTransactional` for transactional operation.
+     * - Stores updated service types at Persistence.
+     * - Returns `ServiceTypeCollectionResponseTransfer` with persisted service types and errors if any occurred.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ServiceTypeCollectionRequestTransfer $serviceTypeCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ServiceTypeCollectionResponseTransfer
+     */
+    public function updateServiceTypeCollection(
+        ServiceTypeCollectionRequestTransfer $serviceTypeCollectionRequestTransfer
+    ): ServiceTypeCollectionResponseTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves service point service entities filtered by criteria from Persistence.
+     * - Uses `ServicePointServiceCriteriaTransfer.servicePointServiceConditions.servicePointServiceIds` to filter by service point service ids.
+     * - Uses `ServicePointServiceCriteriaTransfer.servicePointServiceConditions.uuids` to filter by service point service uuids.
+     * - Uses `ServicePointServiceCriteriaTransfer.servicePointServiceConditions.keys` to filter by service point service keys.
+     * - Uses `ServicePointServiceCriteriaTransfer.servicePointServiceConditions.serviceTypeUuids` to filter by service point service by service type uuids.
+     * - Uses `ServicePointServiceCriteriaTransfer.servicePointServiceConditions.servicePointUuids` to filter by service point service by service point uuids.
+     * - Inverses uuids filtering in case `ServicePointServiceCriteriaTransfer.servicePointServiceConditions.isUuidsConditionInversed` is set to `true`.
+     * - Uses `ServicePointServiceCriteriaTransfer.sort.field` to set the 'order by' field.
+     * - Uses `ServicePointServiceCriteriaTransfer.sort.isAscending` to set ascending/descending order.
+     * - Uses `ServicePointServiceCriteriaTransfer.pagination.{limit, offset}` to paginate results with limit and offset.
+     * - Uses `ServicePointServiceCriteriaTransfer.pagination.{page, maxPerPage}` to paginate results with page and maxPerPage.
+     * - Returns `ServicePointServiceCollectionTransfer` filled with found service point services.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ServicePointServiceCriteriaTransfer $servicePointServiceCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ServicePointServiceCollectionTransfer
+     */
+    public function getServicePointServiceCollection(
+        ServicePointServiceCriteriaTransfer $servicePointServiceCriteriaTransfer
+    ): ServicePointServiceCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Requires `ServicePointServiceCollectionRequestTransfer.isTransactional` to be set.
+     * - Requires `ServicePointServiceCollectionRequestTransfer.servicePointServices` to be set.
+     * - Requires `ServicePointServiceTransfer.isActive` to be set.
+     * - Requires `ServicePointServiceTransfer.key` to be set.
+     * - Requires `ServicePointServiceTransfer.serviceType.uuid` to be set.
+     * - Requires `ServicePointServiceTransfer.servicePoint.uuid` to be set.
+     * - Validates service point service key length.
+     * - Validates service point service key uniqueness in scope of request collection.
+     * - Validates service point service key uniqueness among already persisted service point services.
+     * - Validates service type existence using `ServicePointServiceTransfer.serviceType.uuid`.
+     * - Validates service point existence using `ServicePointServiceTransfer.servicePoint.uuid`.
+     * - Validates uniqueness of service point and service type relations for service point service in scope of request collection.
+     * - Validates uniqueness of service point and service type relations for service point service among already persisted service point services.
+     * - Uses `ServicePointServiceCollectionRequestTransfer.isTransactional` for transactional operation.
+     * - Stores service point services at Persistence.
+     * - Returns `ServicePointServiceCollectionResponseTransfer` with persisted service point services and errors if any occurred.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ServicePointServiceCollectionRequestTransfer $servicePointServiceCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ServicePointServiceCollectionResponseTransfer
+     */
+    public function createServicePointServiceCollection(
+        ServicePointServiceCollectionRequestTransfer $servicePointServiceCollectionRequestTransfer
+    ): ServicePointServiceCollectionResponseTransfer;
+
+    /**
+     * Specification:
+     * - Requires `ServicePointServiceCollectionRequestTransfer.isTransactional` to be set.
+     * - Requires `ServicePointServiceCollectionRequestTransfer.servicePointServices` to be set.
+     * - Requires `ServicePointServiceTransfer.uuid` to be set.
+     * - Requires `ServicePointServiceTransfer.key` to be set.
+     * - Requires `ServicePointServiceTransfer.isActive` to be set.
+     * - Validates service type key immutablility.
+     * - Validates service point service existence using `ServicePointServiceTransfer.uuid`.
+     * - Uses `ServicePointServiceCollectionRequestTransfer.isTransactional` for transactional operation.
+     * - Stores updated service point service at Persistence.
+     * - Returns `ServicePointServiceCollectionResponseTransfer` with persisted service point services and errors if any occurred.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ServicePointServiceCollectionRequestTransfer $servicePointServiceCollectionRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ServicePointServiceCollectionResponseTransfer
+     */
+    public function updateServicePointServiceCollection(
+        ServicePointServiceCollectionRequestTransfer $servicePointServiceCollectionRequestTransfer
+    ): ServicePointServiceCollectionResponseTransfer;
 }

@@ -51,9 +51,9 @@ class ServicePointAddressFilter implements ServicePointAddressFilterInterface
     public function filterServicePointAddressesByValidity(
         ServicePointAddressCollectionResponseTransfer $servicePointAddressCollectionResponseTransfer
     ): array {
-        $erroredEntityIdentifiers = $this->errorExtractor->extractEntityIdentifiersFromErrorTransfers(
-            $servicePointAddressCollectionResponseTransfer->getErrors(),
-        );
+        /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\ErrorTransfer> $errorTransfers */
+        $errorTransfers = $servicePointAddressCollectionResponseTransfer->getErrors();
+        $erroredEntityIdentifiers = $this->errorExtractor->extractEntityIdentifiersFromErrorTransfers($errorTransfers);
 
         $validServicePointAddressTransfers = new ArrayObject();
         $invalidServicePointAddressTransfers = new ArrayObject();

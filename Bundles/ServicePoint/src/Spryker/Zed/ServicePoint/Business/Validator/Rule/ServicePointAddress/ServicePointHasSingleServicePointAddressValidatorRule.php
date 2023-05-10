@@ -92,9 +92,12 @@ class ServicePointHasSingleServicePointAddressValidatorRule implements ServicePo
         $servicePointAddressCriteriaTransfer = (new ServicePointAddressCriteriaTransfer())
             ->setServicePointAddressConditions($servicePointAddressConditionsTransfer);
 
-        $servicePointAddressCollectionTransfer = $this->servicePointRepository->getServicePointAddressCollection($servicePointAddressCriteriaTransfer);
+        /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\ServicePointAddressTransfer> $servicePointAddressTransfers */
+        $servicePointAddressTransfers = $this->servicePointRepository
+            ->getServicePointAddressCollection($servicePointAddressCriteriaTransfer)
+            ->getServicePointAddresses();
 
-        if ($servicePointAddressCollectionTransfer->getServicePointAddresses()->count() === 0) {
+        if ($servicePointAddressTransfers->count() === 0) {
             return false;
         }
 
@@ -102,6 +105,6 @@ class ServicePointHasSingleServicePointAddressValidatorRule implements ServicePo
             return true;
         }
 
-        return $servicePointAddressCollectionTransfer->getServicePointAddresses()->getIterator()->current()->getUuidOrFail() !== $servicePointAddressTransfer->getUuidOrFail();
+        return $servicePointAddressTransfers->getIterator()->current()->getUuidOrFail() !== $servicePointAddressTransfer->getUuidOrFail();
     }
 }

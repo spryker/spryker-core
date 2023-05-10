@@ -73,7 +73,10 @@ class ServicePointUpdater implements ServicePointUpdaterInterface
 
         $servicePointCollectionResponseTransfer = $this->servicePointValidator->validate($servicePointCollectionResponseTransfer);
 
-        if ($servicePointCollectionRequestTransfer->getIsTransactional() && $servicePointCollectionResponseTransfer->getErrors()->count()) {
+        /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\ErrorTransfer> $errorTransfers */
+        $errorTransfers = $servicePointCollectionResponseTransfer->getErrors();
+
+        if ($servicePointCollectionRequestTransfer->getIsTransactional() && $errorTransfers->count()) {
             return $servicePointCollectionResponseTransfer;
         }
 

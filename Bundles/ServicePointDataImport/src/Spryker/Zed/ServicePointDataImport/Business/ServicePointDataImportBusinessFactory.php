@@ -15,9 +15,12 @@ use Spryker\Zed\ServicePointDataImport\Business\DataImportStep\ServicePointAddre
 use Spryker\Zed\ServicePointDataImport\Business\DataImportStep\ServicePointAddress\RegionBelongsToCountryStep;
 use Spryker\Zed\ServicePointDataImport\Business\DataImportStep\ServicePointAddress\RegionIso2CodeToIdRegionStep;
 use Spryker\Zed\ServicePointDataImport\Business\DataImportStep\ServicePointAddress\ServicePointAddressWriteDataImportStep;
+use Spryker\Zed\ServicePointDataImport\Business\DataImportStep\ServicePointService\ServicePointServiceWriteDataImportStep;
+use Spryker\Zed\ServicePointDataImport\Business\DataImportStep\ServicePointService\ServiceTypeKeyToIdServiceTypeStep;
 use Spryker\Zed\ServicePointDataImport\Business\DataImportStep\ServicePointStore\ServicePointKeyToIdServicePointStep;
 use Spryker\Zed\ServicePointDataImport\Business\DataImportStep\ServicePointStore\ServicePointStoreWriteDataImportStep;
 use Spryker\Zed\ServicePointDataImport\Business\DataImportStep\ServicePointStore\StoreNameToIdStoreStep;
+use Spryker\Zed\ServicePointDataImport\Business\DataImportStep\ServiceType\ServiceTypeWriteDataImportStep;
 
 /**
  * @method \Spryker\Zed\ServicePointDataImport\ServicePointDataImportConfig getConfig()
@@ -144,5 +147,65 @@ class ServicePointDataImportBusinessFactory extends DataImportBusinessFactory
     public function createServicePointStoreWriteDataImportStep(): DataImportStepInterface
     {
         return new ServicePointStoreWriteDataImportStep();
+    }
+
+    /**
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
+     */
+    public function getServiceTypeDataImporter(): DataImporterInterface
+    {
+        $dataImporter = $this->getCsvDataImporterFromConfig(
+            $this->getConfig()->getServiceTypeDataImporterConfiguration(),
+        );
+
+        $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
+        $dataSetStepBroker->addStep($this->createServiceTypeWriteDataImportStep());
+        $dataImporter->addDataSetStepBroker($dataSetStepBroker);
+
+        return $dataImporter;
+    }
+
+    /**
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
+     */
+    public function createServiceTypeWriteDataImportStep(): DataImportStepInterface
+    {
+        return new ServiceTypeWriteDataImportStep();
+    }
+
+    /**
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
+     */
+    public function getServicePointServiceDataImporter(): DataImporterInterface
+    {
+        $dataImporter = $this->getCsvDataImporterFromConfig(
+            $this->getConfig()->getServicePointServiceDataImporterConfiguration(),
+        );
+
+        $dataSetStepBroker = $this->createTransactionAwareDataSetStepBroker();
+
+        $dataSetStepBroker->addStep($this->createServicePointKeyToIdServicePointStep());
+        $dataSetStepBroker->addStep($this->createServiceTypeKeyToIdServiceTypeStep());
+        $dataSetStepBroker->addStep($this->createServicePointServiceWriteDataImportStep());
+
+        $dataImporter->addDataSetStepBroker($dataSetStepBroker);
+
+        return $dataImporter;
+    }
+
+    /**
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
+     */
+    public function createServicePointServiceWriteDataImportStep(): DataImportStepInterface
+    {
+        return new ServicePointServiceWriteDataImportStep();
+    }
+
+    /**
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
+     */
+    public function createServiceTypeKeyToIdServiceTypeStep(): DataImportStepInterface
+    {
+        return new ServiceTypeKeyToIdServiceTypeStep();
     }
 }

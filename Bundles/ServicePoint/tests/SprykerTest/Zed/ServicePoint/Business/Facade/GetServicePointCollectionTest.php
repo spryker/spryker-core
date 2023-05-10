@@ -67,10 +67,10 @@ class GetServicePointCollectionTest extends Unit
 
         // Assert
         $this->assertCount(1, $servicePointCollectionTransfer->getServicePoints());
-        /**
-         * @var \Generated\Shared\Transfer\ServicePointTransfer $retrievedServicePointTransfer
-         */
+
+        /** @var \Generated\Shared\Transfer\ServicePointTransfer $retrievedServicePointTransfer */
         $retrievedServicePointTransfer = $servicePointCollectionTransfer->getServicePoints()->getIterator()->current();
+
         $this->assertSame(
             $servicePointTransfer->getUuidOrFail(),
             $retrievedServicePointTransfer->getUuidOrFail(),
@@ -100,10 +100,10 @@ class GetServicePointCollectionTest extends Unit
 
         // Assert
         $this->assertCount(1, $servicePointCollectionTransfer->getServicePoints());
-        /**
-         * @var \Generated\Shared\Transfer\ServicePointTransfer $retrievedServicePointTransfer
-         */
+
+        /** @var \Generated\Shared\Transfer\ServicePointTransfer $retrievedServicePointTransfer */
         $retrievedServicePointTransfer = $servicePointCollectionTransfer->getServicePoints()->getIterator()->current();
+
         $this->assertSame(
             $servicePointTransfer->getUuidOrFail(),
             $retrievedServicePointTransfer->getUuidOrFail(),
@@ -134,10 +134,10 @@ class GetServicePointCollectionTest extends Unit
 
         // Assert
         $this->assertCount(1, $servicePointCollectionTransfer->getServicePoints());
-        /**
-         * @var \Generated\Shared\Transfer\ServicePointTransfer $retrievedServicePointTransfer
-         */
+
+        /** @var \Generated\Shared\Transfer\ServicePointTransfer $retrievedServicePointTransfer */
         $retrievedServicePointTransfer = $servicePointCollectionTransfer->getServicePoints()->getIterator()->current();
+
         $this->assertSame(
             $servicePointTransfer->getKeyOrFail(),
             $retrievedServicePointTransfer->getKeyOrFail(),
@@ -199,10 +199,10 @@ class GetServicePointCollectionTest extends Unit
 
         // Assert
         $this->assertCount(1, $servicePointCollectionTransfer->getServicePoints());
-        /**
-         * @var \Generated\Shared\Transfer\ServicePointTransfer $retrievedServicePointTransfer
-         */
+
+        /** @var \Generated\Shared\Transfer\ServicePointTransfer $retrievedServicePointTransfer */
         $retrievedServicePointTransfer = $servicePointCollectionTransfer->getServicePoints()->getIterator()->current();
+
         $this->assertSame(
             $servicePointTransfer->getUuidOrFail(),
             $retrievedServicePointTransfer->getUuidOrFail(),

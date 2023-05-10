@@ -7,10 +7,4 @@
     <transfer name="DataImporterReport">
     </transfer>
 
-    <transfer name="ServicePoint" strict="true">
-    </transfer>
-
-    <transfer name="Store">
-    </transfer>
-
 </transfers>

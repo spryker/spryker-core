@@ -12,14 +12,18 @@ namespace SprykerTest\Zed\ServicePoint;
 use Codeception\Actor;
 use Generated\Shared\DataBuilder\ServicePointAddressBuilder;
 use Generated\Shared\DataBuilder\ServicePointBuilder;
+use Generated\Shared\DataBuilder\ServicePointServiceBuilder;
 use Generated\Shared\Transfer\CountryTransfer;
 use Generated\Shared\Transfer\RegionTransfer;
 use Generated\Shared\Transfer\ServicePointAddressTransfer;
+use Generated\Shared\Transfer\ServicePointServiceTransfer;
 use Generated\Shared\Transfer\ServicePointTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\ServicePoint\Persistence\SpyServicePointAddressQuery;
 use Orm\Zed\ServicePoint\Persistence\SpyServicePointQuery;
+use Orm\Zed\ServicePoint\Persistence\SpyServicePointServiceQuery;
+use Orm\Zed\ServicePoint\Persistence\SpyServiceTypeQuery;
 
 /**
  * Inherited Methods
@@ -59,6 +63,14 @@ class ServicePointBusinessTester extends Actor
     {
         $this->ensureDatabaseTableIsEmpty(
             $this->getServicePointQuery(),
+        );
+
+        $this->ensureDatabaseTableIsEmpty(
+            $this->getServiceTypeQuery(),
+        );
+
+        $this->ensureDatabaseTableIsEmpty(
+            $this->getServicePointServiceQuery(),
         );
     }
 
@@ -137,10 +149,42 @@ class ServicePointBusinessTester extends Actor
     }
 
     /**
+     * @param array<string, mixed> $seed
+     *
+     * @return \Generated\Shared\Transfer\ServicePointServiceTransfer
+     */
+    public function createServicePointServiceTransferWithRelations(array $seed = []): ServicePointServiceTransfer
+    {
+        $servicePointTransfer = $this->haveServicePoint($seed[ServicePointServiceTransfer::SERVICE_POINT] ?? [])->toArray();
+        $serviceTypeTransfer = $this->haveServiceType($seed[ServicePointServiceTransfer::SERVICE_TYPE] ?? [])->toArray();
+
+        return (new ServicePointServiceBuilder($seed))
+            ->withServicePoint($servicePointTransfer)
+            ->withServiceType($serviceTypeTransfer)
+            ->build();
+    }
+
+    /**
      * @return \Orm\Zed\ServicePoint\Persistence\SpyServicePointQuery
      */
     public function getServicePointQuery(): SpyServicePointQuery
     {
         return SpyServicePointQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\ServicePoint\Persistence\SpyServiceTypeQuery
+     */
+    public function getServiceTypeQuery(): SpyServiceTypeQuery
+    {
+        return SpyServiceTypeQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\ServicePoint\Persistence\SpyServicePointServiceQuery
+     */
+    public function getServicePointServiceQuery(): SpyServicePointServiceQuery
+    {
+        return SpyServicePointServiceQuery::create();
     }
 }

@@ -50,4 +50,30 @@ interface ServicePointDataImportFacadeInterface
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
     public function importServicePointAddresses(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer;
+
+    /**
+     * Specification:
+     * - Imports service types data from the specified file.
+     * - Iterates over the data and stores the data at Persistence.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\DataImporterReportTransfer
+     */
+    public function importServiceTypes(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer;
+
+    /**
+     * Specification:
+     * - Imports service point services data from the specified file.
+     * - Iterates over the data and stores the data at Persistence.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\DataImporterReportTransfer
+     */
+    public function importServicePointServices(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer;
 }

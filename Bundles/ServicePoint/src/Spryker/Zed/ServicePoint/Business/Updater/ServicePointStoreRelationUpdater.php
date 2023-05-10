@@ -94,8 +94,8 @@ class ServicePointStoreRelationUpdater implements ServicePointStoreRelationUpdat
 
     /**
      * @param \Generated\Shared\Transfer\ServicePointTransfer $servicePointTransfer
-     * @param list<int> $storeIdsToAssign
-     * @param list<int> $storeIdsToUnassign
+     * @param array<int, int> $storeIdsToAssign
+     * @param array<int, int> $storeIdsToUnassign
      *
      * @return \Generated\Shared\Transfer\ServicePointTransfer
      */

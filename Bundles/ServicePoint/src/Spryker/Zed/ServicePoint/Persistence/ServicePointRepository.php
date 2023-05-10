@@ -7,14 +7,21 @@
 
 namespace Spryker\Zed\ServicePoint\Persistence;
 
+use ArrayObject;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ServicePointAddressCollectionTransfer;
 use Generated\Shared\Transfer\ServicePointAddressCriteriaTransfer;
 use Generated\Shared\Transfer\ServicePointCollectionTransfer;
 use Generated\Shared\Transfer\ServicePointCriteriaTransfer;
+use Generated\Shared\Transfer\ServicePointServiceCollectionTransfer;
+use Generated\Shared\Transfer\ServicePointServiceCriteriaTransfer;
+use Generated\Shared\Transfer\ServiceTypeCollectionTransfer;
+use Generated\Shared\Transfer\ServiceTypeCriteriaTransfer;
 use Orm\Zed\ServicePoint\Persistence\Map\SpyServicePointTableMap;
 use Orm\Zed\ServicePoint\Persistence\SpyServicePointAddressQuery;
 use Orm\Zed\ServicePoint\Persistence\SpyServicePointQuery;
+use Orm\Zed\ServicePoint\Persistence\SpyServicePointServiceQuery;
+use Orm\Zed\ServicePoint\Persistence\SpyServiceTypeQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -35,13 +42,15 @@ class ServicePointRepository extends AbstractRepository implements ServicePointR
         $servicePointQuery = $this->getFactory()->getServicePointQuery();
 
         $servicePointQuery = $this->applyServicePointFilters($servicePointQuery, $servicePointCriteriaTransfer);
-        $servicePointQuery = $this->applyServicePointSorting($servicePointQuery, $servicePointCriteriaTransfer);
 
+        /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\SortTransfer> $sortTransfers */
+        $sortTransfers = $servicePointCriteriaTransfer->getSortCollection();
+        $servicePointQuery = $this->applySorting($servicePointQuery, $sortTransfers);
         $servicePointCollectionTransfer = new ServicePointCollectionTransfer();
         $paginationTransfer = $servicePointCriteriaTransfer->getPagination();
 
         if ($paginationTransfer) {
-            $servicePointQuery = $this->applyModelCriteriaPagination($servicePointQuery, $paginationTransfer);
+            $servicePointQuery = $this->applyPagination($servicePointQuery, $paginationTransfer);
             $servicePointCollectionTransfer->setPagination($paginationTransfer);
         }
 
@@ -76,7 +85,9 @@ class ServicePointRepository extends AbstractRepository implements ServicePointR
      */
     public function getServicePointStoresGroupedByIdServicePoint(array $servicePointIds): array
     {
-        $servicePointStoreEntities = $this->getFactory()->getServicePointStoreQuery()
+        /** @var \Propel\Runtime\Collection\ObjectCollection<\Orm\Zed\ServicePoint\Persistence\SpyServicePointStore> $servicePointStoreEntities */
+        $servicePointStoreEntities = $this->getFactory()
+            ->getServicePointStoreQuery()
             ->filterByFkServicePoint_In($servicePointIds)
             ->joinWithStore()
             ->find();
@@ -102,13 +113,15 @@ class ServicePointRepository extends AbstractRepository implements ServicePointR
             ->leftJoinWithRegion();
 
         $servicePointAddressQuery = $this->applyServicePointAddressFilters($servicePointAddressQuery, $servicePointAddressCriteriaTransfer);
-        $servicePointAddressQuery = $this->applyServicePointAddressSorting($servicePointAddressQuery, $servicePointAddressCriteriaTransfer);
+        /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\SortTransfer> $sortTransfers */
+        $sortTransfers = $servicePointAddressCriteriaTransfer->getSortCollection();
+        $servicePointAddressQuery = $this->applySorting($servicePointAddressQuery, $sortTransfers);
 
         $servicePointAddressCollectionTransfer = new ServicePointAddressCollectionTransfer();
         $paginationTransfer = $servicePointAddressCriteriaTransfer->getPagination();
 
         if ($paginationTransfer) {
-            $servicePointAddressQuery = $this->applyModelCriteriaPagination($servicePointAddressQuery, $paginationTransfer);
+            $servicePointAddressQuery = $this->applyPagination($servicePointAddressQuery, $paginationTransfer);
             $servicePointAddressCollectionTransfer->setPagination($paginationTransfer);
         }
 
@@ -118,6 +131,130 @@ class ServicePointRepository extends AbstractRepository implements ServicePointR
                 $servicePointAddressQuery->find(),
                 $servicePointAddressCollectionTransfer,
             );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ServiceTypeCriteriaTransfer $serviceTypeCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ServiceTypeCollectionTransfer
+     */
+    public function getServiceTypeCollection(
+        ServiceTypeCriteriaTransfer $serviceTypeCriteriaTransfer
+    ): ServiceTypeCollectionTransfer {
+        $serviceTypeCollectionTransfer = new ServiceTypeCollectionTransfer();
+        $serviceTypeQuery = $this->getFactory()->getServiceTypeQuery();
+        $serviceTypeQuery = $this->applyServiceTypeFilters(
+            $serviceTypeQuery,
+            $serviceTypeCriteriaTransfer,
+        );
+
+        /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\SortTransfer> $sortTransfers */
+        $sortTransfers = $serviceTypeCriteriaTransfer->getSortCollection();
+        $serviceTypeQuery = $this->applySorting($serviceTypeQuery, $sortTransfers);
+        $paginationTransfer = $serviceTypeCriteriaTransfer->getPagination();
+
+        if ($paginationTransfer) {
+            $serviceTypeQuery = $this->applyPagination(
+                $serviceTypeQuery,
+                $paginationTransfer,
+            );
+
+            $serviceTypeCollectionTransfer->setPagination($paginationTransfer);
+        }
+
+        return $this->getFactory()
+            ->createServiceTypeMapper()
+            ->mapServiceTypeEntitiesToServiceTypeCollectionTransfer(
+                $serviceTypeQuery->find(),
+                $serviceTypeCollectionTransfer,
+            );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ServicePointServiceCriteriaTransfer $servicePointServiceCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ServicePointServiceCollectionTransfer
+     */
+    public function getServicePointServiceCollection(
+        ServicePointServiceCriteriaTransfer $servicePointServiceCriteriaTransfer
+    ): ServicePointServiceCollectionTransfer {
+        $servicePointServiceCollectionTransfer = new ServicePointServiceCollectionTransfer();
+        $servicePointServiceQuery = $this->getFactory()->getServicePointServiceQuery();
+        $servicePointServiceQuery = $this->applyServicePointServiceFilters(
+            $servicePointServiceQuery,
+            $servicePointServiceCriteriaTransfer,
+        );
+
+        /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\SortTransfer> $sortTransfers */
+        $sortTransfers = $servicePointServiceCriteriaTransfer->getSortCollection();
+        $servicePointServiceQuery = $this->applySorting($servicePointServiceQuery, $sortTransfers);
+        $paginationTransfer = $servicePointServiceCriteriaTransfer->getPagination();
+
+        if ($paginationTransfer) {
+            $servicePointServiceQuery = $this->applyPagination(
+                $servicePointServiceQuery,
+                $paginationTransfer,
+            );
+
+            $servicePointServiceCollectionTransfer->setPagination($paginationTransfer);
+        }
+
+        return $this->getFactory()
+            ->createServicePointServiceMapper()
+            ->mapServicePointServiceEntitiesToServicePointServiceCollectionTransfer(
+                $servicePointServiceQuery->find(),
+                $servicePointServiceCollectionTransfer,
+            );
+    }
+
+    /**
+     * @param \Orm\Zed\ServicePoint\Persistence\SpyServicePointServiceQuery $servicePointServiceQuery
+     * @param \Generated\Shared\Transfer\ServicePointServiceCriteriaTransfer $servicePointServiceCriteriaTransfer
+     *
+     * @return \Orm\Zed\ServicePoint\Persistence\SpyServicePointServiceQuery
+     */
+    protected function applyServicePointServiceFilters(
+        SpyServicePointServiceQuery $servicePointServiceQuery,
+        ServicePointServiceCriteriaTransfer $servicePointServiceCriteriaTransfer
+    ): SpyServicePointServiceQuery {
+        $servicePointServiceConditionsTransfer = $servicePointServiceCriteriaTransfer->getServicePointServiceConditions();
+
+        if (!$servicePointServiceConditionsTransfer) {
+            return $servicePointServiceQuery;
+        }
+
+        if ($servicePointServiceConditionsTransfer->getServicePointUuids()) {
+            $servicePointServiceQuery
+                ->joinWithServicePoint()
+                ->useServicePointQuery()
+                    ->filterByUuid_In($servicePointServiceConditionsTransfer->getServicePointUuids())
+                ->endUse();
+        }
+
+        if ($servicePointServiceConditionsTransfer->getServicePointServiceIds()) {
+            $servicePointServiceQuery->filterByIdServicePointService_In($servicePointServiceConditionsTransfer->getServicePointServiceIds());
+        }
+
+        if ($servicePointServiceConditionsTransfer->getUuids()) {
+            $servicePointServiceQuery->filterByUuid(
+                $servicePointServiceConditionsTransfer->getUuids(),
+                $servicePointServiceConditionsTransfer->getIsUuidsConditionInversed() ? Criteria::NOT_IN : Criteria::IN,
+            );
+        }
+
+        if ($servicePointServiceConditionsTransfer->getKeys()) {
+            $servicePointServiceQuery->filterByKey_In($servicePointServiceConditionsTransfer->getKeys());
+        }
+
+        if ($servicePointServiceConditionsTransfer->getServiceTypeUuids()) {
+            $servicePointServiceQuery
+                ->joinWithServiceType()
+                ->useServiceTypeQuery()
+                    ->filterByUuid_In($servicePointServiceConditionsTransfer->getServiceTypeUuids())
+                ->endUse();
+        }
+
+        return $servicePointServiceQuery;
     }
 
     /**
@@ -189,29 +326,65 @@ class ServicePointRepository extends AbstractRepository implements ServicePointR
     }
 
     /**
+     * @param \Orm\Zed\ServicePoint\Persistence\SpyServiceTypeQuery $serviceTypeQuery
+     * @param \Generated\Shared\Transfer\ServiceTypeCriteriaTransfer $serviceTypeCriteriaTransfer
+     *
+     * @return \Orm\Zed\ServicePoint\Persistence\SpyServiceTypeQuery
+     */
+    protected function applyServiceTypeFilters(
+        SpyServiceTypeQuery $serviceTypeQuery,
+        ServiceTypeCriteriaTransfer $serviceTypeCriteriaTransfer
+    ): SpyServiceTypeQuery {
+        $serviceTypeConditionsTransfer = $serviceTypeCriteriaTransfer->getServiceTypeConditions();
+
+        if (!$serviceTypeConditionsTransfer) {
+            return $serviceTypeQuery;
+        }
+
+        if ($serviceTypeConditionsTransfer->getServiceTypeIds()) {
+            $serviceTypeQuery->filterByIdServiceType_In($serviceTypeConditionsTransfer->getServiceTypeIds());
+        }
+
+        if ($serviceTypeConditionsTransfer->getUuids()) {
+            $serviceTypeQuery->filterByUuid(
+                $serviceTypeConditionsTransfer->getUuids(),
+                $serviceTypeConditionsTransfer->getIsUuidsConditionInversed() ? Criteria::NOT_IN : Criteria::IN,
+            );
+        }
+
+        if ($serviceTypeConditionsTransfer->getNames()) {
+            $serviceTypeQuery->filterByName_In($serviceTypeConditionsTransfer->getNames());
+        }
+
+        if ($serviceTypeConditionsTransfer->getKeys()) {
+            $serviceTypeQuery->filterByKey_In($serviceTypeConditionsTransfer->getKeys());
+        }
+
+        return $serviceTypeQuery;
+    }
+
+    /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $modelCriteria
      * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    protected function applyModelCriteriaPagination(
+    protected function applyPagination(
         ModelCriteria $modelCriteria,
         PaginationTransfer $paginationTransfer
     ): ModelCriteria {
         if ($paginationTransfer->getOffset() !== null && $paginationTransfer->getLimit() !== null) {
             $paginationTransfer->setNbResults($modelCriteria->count());
 
-            $modelCriteria
+            return $modelCriteria
                 ->offset($paginationTransfer->getOffsetOrFail())
                 ->setLimit($paginationTransfer->getLimitOrFail());
-
-            return $modelCriteria;
         }
 
         if ($paginationTransfer->getPage() !== null && $paginationTransfer->getMaxPerPage()) {
             $propelModelPager = $modelCriteria->paginate(
-                $paginationTransfer->getPage(),
-                $paginationTransfer->getMaxPerPage(),
+                $paginationTransfer->getPageOrFail(),
+                $paginationTransfer->getMaxPerPageOrFail(),
             );
 
             $paginationTransfer->setNbResults($propelModelPager->getNbResults())
@@ -229,44 +402,22 @@ class ServicePointRepository extends AbstractRepository implements ServicePointR
     }
 
     /**
-     * @param \Orm\Zed\ServicePoint\Persistence\SpyServicePointQuery $servicePointQuery
-     * @param \Generated\Shared\Transfer\ServicePointCriteriaTransfer $servicePointCriteriaTransfer
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $modelCriteria
+     * @param \ArrayObject<array-key, \Generated\Shared\Transfer\SortTransfer> $sortTransfers
      *
-     * @return \Orm\Zed\ServicePoint\Persistence\SpyServicePointQuery
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    protected function applyServicePointSorting(
-        SpyServicePointQuery $servicePointQuery,
-        ServicePointCriteriaTransfer $servicePointCriteriaTransfer
-    ): SpyServicePointQuery {
-        $sortCollection = $servicePointCriteriaTransfer->getSortCollection();
-        foreach ($sortCollection as $sortTransfer) {
-            $servicePointQuery->orderBy(
+    protected function applySorting(
+        ModelCriteria $modelCriteria,
+        ArrayObject $sortTransfers
+    ): ModelCriteria {
+        foreach ($sortTransfers as $sortTransfer) {
+            $modelCriteria->orderBy(
                 $sortTransfer->getFieldOrFail(),
                 $sortTransfer->getIsAscending() ? Criteria::ASC : Criteria::DESC,
             );
         }
 
-        return $servicePointQuery;
-    }
-
-    /**
-     * @param \Orm\Zed\ServicePoint\Persistence\SpyServicePointAddressQuery $servicePointAddressQuery
-     * @param \Generated\Shared\Transfer\ServicePointAddressCriteriaTransfer $servicePointAddressCriteriaTransfer
-     *
-     * @return \Orm\Zed\ServicePoint\Persistence\SpyServicePointAddressQuery
-     */
-    protected function applyServicePointAddressSorting(
-        SpyServicePointAddressQuery $servicePointAddressQuery,
-        ServicePointAddressCriteriaTransfer $servicePointAddressCriteriaTransfer
-    ): SpyServicePointAddressQuery {
-        $sortCollection = $servicePointAddressCriteriaTransfer->getSortCollection();
-        foreach ($sortCollection as $sortTransfer) {
-            $servicePointAddressQuery->orderBy(
-                $sortTransfer->getFieldOrFail(),
-                $sortTransfer->getIsAscending() ? Criteria::ASC : Criteria::DESC,
-            );
-        }
-
-        return $servicePointAddressQuery;
+        return $modelCriteria;
     }
 }

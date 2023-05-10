@@ -33,6 +33,16 @@ class UpdateServicePointCollectionTest extends Unit
     /**
      * @var string
      */
+    protected const SERVICE_POINT_NAME = 'service point name';
+
+    /**
+     * @var string
+     */
+    protected const SERVICE_POINT_KEY = 'service-point-key';
+
+    /**
+     * @var string
+     */
     protected const STORE_NAME_DE = 'DE';
 
     /**
@@ -41,9 +51,9 @@ class UpdateServicePointCollectionTest extends Unit
     protected const STORE_NAME_AT = 'AT';
 
     /**
-     * @var \SprykerTest\Zed\ServicePoint\ServicePointBusinessTester
+     * @var string
      */
-    protected ServicePointBusinessTester $tester;
+    protected const UNKOWN_STORE_NAME = 'non-existing-store';
 
     /**
      * @uses \Spryker\Zed\ServicePoint\Business\Validator\Rule\KeyExistenceServicePointValidatorRule::GLOSSARY_KEY_VALIDATION_SERVICE_POINT_KEY_EXISTS
@@ -81,6 +91,11 @@ class UpdateServicePointCollectionTest extends Unit
     protected const GLOSSARY_KEY_VALIDATION_STORE_DOES_NOT_EXIST = 'service_point.validation.store_does_not_exist';
 
     /**
+     * @var \SprykerTest\Zed\ServicePoint\ServicePointBusinessTester
+     */
+    protected ServicePointBusinessTester $tester;
+
+    /**
      * @return void
      */
     protected function setUp(): void
@@ -103,7 +118,7 @@ class UpdateServicePointCollectionTest extends Unit
             static::STORE_NAME_AT,
             [
                 ServicePointTransfer::UUID => $servicePointTransfer->getUuidOrFail(),
-                ServicePointTransfer::NAME => 'New name',
+                ServicePointTransfer::NAME => static::SERVICE_POINT_NAME,
             ],
         );
 
@@ -112,16 +127,17 @@ class UpdateServicePointCollectionTest extends Unit
             ->setIsTransactional(true);
 
         // Act
-        $servicePointCollectionResponseTransfer = $this->tester->getFacade()
+        $servicePointCollectionResponseTransfer = $this->tester
+            ->getFacade()
             ->updateServicePointCollection($servicePointCollectionRequestTransfer);
 
         // Assert
         $this->assertCount(0, $servicePointCollectionResponseTransfer->getErrors());
-        /**
-         * @var \Generated\Shared\Transfer\ServicePointTransfer $persistedServicePointTransfer
-         */
+
+        /** @var \Generated\Shared\Transfer\ServicePointTransfer $persistedServicePointTransfer */
         $persistedServicePointTransfer = $servicePointCollectionResponseTransfer->getServicePoints()->getIterator()->current();
-        $this->assertSame('New name', $persistedServicePointTransfer->getNameOrFail());
+
+        $this->assertSame(static::SERVICE_POINT_NAME, $persistedServicePointTransfer->getNameOrFail());
         $this->assertCount(1, $persistedServicePointTransfer->getStoreRelation()->getStores());
         $this->assertSame(
             static::STORE_NAME_AT,
@@ -136,7 +152,7 @@ class UpdateServicePointCollectionTest extends Unit
     {
         // Arrange
         $existingServicePointTransfer = $this->tester->haveServicePoint([
-            ServicePointTransfer::KEY => 'existing-key',
+            ServicePointTransfer::KEY => static::SERVICE_POINT_KEY,
         ]);
         $servicePointTransfer = $this->tester->createServicePointTransferWithStoreRelation(static::STORE_NAME_DE);
 
@@ -148,15 +164,16 @@ class UpdateServicePointCollectionTest extends Unit
             ->setIsTransactional(true);
 
         // Act
-        $servicePointCollectionResponseTransfer = $this->tester->getFacade()
+        $servicePointCollectionResponseTransfer = $this->tester
+            ->getFacade()
             ->updateServicePointCollection($servicePointCollectionRequestTransfer);
 
         // Assert
         $this->assertCount(1, $servicePointCollectionResponseTransfer->getErrors());
-        /**
-         * @var \Generated\Shared\Transfer\ErrorTransfer $errorTransfer
-         */
+
+        /** @var \Generated\Shared\Transfer\ErrorTransfer $errorTransfer */
         $errorTransfer = $servicePointCollectionResponseTransfer->getErrors()->getIterator()->current();
+
         $this->assertSame('0', $errorTransfer->getEntityIdentifierOrFail());
         $this->assertSame(static::GLOSSARY_KEY_VALIDATION_SERVICE_POINT_KEY_EXISTS, $errorTransfer->getMessageOrFail());
     }
@@ -174,20 +191,21 @@ class UpdateServicePointCollectionTest extends Unit
         $secondServicePointTransfer = $this->tester->haveServicePoint($secondServicePointTransfer->toArray());
 
         $servicePointCollectionRequestTransfer = (new ServicePointCollectionRequestTransfer())
-            ->addServicePoint($firstServicePointTransfer->setKey('non-unique'))
-            ->addServicePoint($secondServicePointTransfer->setKey('non-unique'))
+            ->addServicePoint($firstServicePointTransfer->setKey(static::SERVICE_POINT_KEY))
+            ->addServicePoint($secondServicePointTransfer->setKey(static::SERVICE_POINT_KEY))
             ->setIsTransactional(true);
 
         // Act
-        $servicePointCollectionResponseTransfer = $this->tester->getFacade()
-            ->createServicePointCollection($servicePointCollectionRequestTransfer);
+        $servicePointCollectionResponseTransfer = $this->tester
+            ->getFacade()
+            ->updateServicePointCollection($servicePointCollectionRequestTransfer);
 
         // Assert
         $this->assertCount(1, $servicePointCollectionResponseTransfer->getErrors());
-        /**
-         * @var \Generated\Shared\Transfer\ErrorTransfer $errorTransfer
-         */
+
+        /** @var \Generated\Shared\Transfer\ErrorTransfer $errorTransfer */
         $errorTransfer = $servicePointCollectionResponseTransfer->getErrors()->getIterator()->current();
+
         $this->assertSame('1', $errorTransfer->getEntityIdentifierOrFail());
         $this->assertSame(static::GLOSSARY_KEY_VALIDATION_SERVICE_POINT_KEY_IS_NOT_UNIQUE, $errorTransfer->getMessageOrFail());
     }
@@ -210,15 +228,16 @@ class UpdateServicePointCollectionTest extends Unit
             ->setIsTransactional(true);
 
         // Act
-        $servicePointCollectionResponseTransfer = $this->tester->getFacade()
+        $servicePointCollectionResponseTransfer = $this->tester
+            ->getFacade()
             ->updateServicePointCollection($servicePointCollectionRequestTransfer);
 
         // Assert
         $this->assertCount(1, $servicePointCollectionResponseTransfer->getErrors());
-        /**
-         * @var \Generated\Shared\Transfer\ErrorTransfer $errorTransfer
-         */
+
+        /** @var \Generated\Shared\Transfer\ErrorTransfer $errorTransfer */
         $errorTransfer = $servicePointCollectionResponseTransfer->getErrors()->getIterator()->current();
+
         $this->assertSame('0', $errorTransfer->getEntityIdentifierOrFail());
         $this->assertSame(static::GLOSSARY_KEY_VALIDATION_SERVICE_POINT_KEY_WRONG_LENGTH, $errorTransfer->getMessageOrFail());
     }
@@ -241,15 +260,16 @@ class UpdateServicePointCollectionTest extends Unit
             ->setIsTransactional(true);
 
         // Act
-        $servicePointCollectionResponseTransfer = $this->tester->getFacade()
-            ->createServicePointCollection($servicePointCollectionRequestTransfer);
+        $servicePointCollectionResponseTransfer = $this->tester
+            ->getFacade()
+            ->updateServicePointCollection($servicePointCollectionRequestTransfer);
 
         // Assert
         $this->assertCount(1, $servicePointCollectionResponseTransfer->getErrors());
-        /**
-         * @var \Generated\Shared\Transfer\ErrorTransfer $errorTransfer
-         */
+
+        /** @var \Generated\Shared\Transfer\ErrorTransfer $errorTransfer */
         $errorTransfer = $servicePointCollectionResponseTransfer->getErrors()->getIterator()->current();
+
         $this->assertSame('0', $errorTransfer->getEntityIdentifierOrFail());
         $this->assertSame(static::GLOSSARY_KEY_VALIDATION_SERVICE_POINT_NAME_WRONG_LENGTH, $errorTransfer->getMessageOrFail());
     }
@@ -263,7 +283,7 @@ class UpdateServicePointCollectionTest extends Unit
         $servicePointTransfer = $this->tester->haveServicePoint($servicePointTransfer->toArray());
 
         $servicePointTransfer->getStoreRelationOrFail()->setStores(
-            new ArrayObject([(new StoreTransfer())->setName('non-existing-store')]),
+            new ArrayObject([(new StoreTransfer())->setName(static::UNKOWN_STORE_NAME)]),
         );
 
         $servicePointCollectionRequestTransfer = (new ServicePointCollectionRequestTransfer())
@@ -271,15 +291,16 @@ class UpdateServicePointCollectionTest extends Unit
             ->setIsTransactional(true);
 
         // Act
-        $servicePointCollectionResponseTransfer = $this->tester->getFacade()
-            ->createServicePointCollection($servicePointCollectionRequestTransfer);
+        $servicePointCollectionResponseTransfer = $this->tester
+            ->getFacade()
+            ->updateServicePointCollection($servicePointCollectionRequestTransfer);
 
         // Assert
         $this->assertCount(1, $servicePointCollectionResponseTransfer->getErrors());
-        /**
-         * @var \Generated\Shared\Transfer\ErrorTransfer $errorTransfer
-         */
+
+        /** @var \Generated\Shared\Transfer\ErrorTransfer $errorTransfer */
         $errorTransfer = $servicePointCollectionResponseTransfer->getErrors()->getIterator()->current();
+
         $this->assertSame('0', $errorTransfer->getEntityIdentifierOrFail());
         $this->assertSame(static::GLOSSARY_KEY_VALIDATION_STORE_DOES_NOT_EXIST, $errorTransfer->getMessageOrFail());
     }
@@ -297,20 +318,21 @@ class UpdateServicePointCollectionTest extends Unit
         $secondServicePointTransfer = $this->tester->haveServicePoint($secondServicePointTransfer->toArray());
 
         $servicePointCollectionRequestTransfer = (new ServicePointCollectionRequestTransfer())
-            ->addServicePoint($firstServicePointTransfer->setName('Another name'))
+            ->addServicePoint($firstServicePointTransfer->setName(static::SERVICE_POINT_NAME))
             ->addServicePoint($secondServicePointTransfer->setName(''))
             ->setIsTransactional(false);
 
         // Act
-        $servicePointCollectionResponseTransfer = $this->tester->getFacade()
+        $servicePointCollectionResponseTransfer = $this->tester
+            ->getFacade()
             ->updateServicePointCollection($servicePointCollectionRequestTransfer);
 
         // Assert
         $this->assertCount(1, $servicePointCollectionResponseTransfer->getErrors());
-        /**
-         * @var \Generated\Shared\Transfer\ErrorTransfer $errorTransfer
-         */
+
+        /** @var \Generated\Shared\Transfer\ErrorTransfer $errorTransfer */
         $errorTransfer = $servicePointCollectionResponseTransfer->getErrors()->getIterator()->current();
+
         $this->assertSame('1', $errorTransfer->getEntityIdentifierOrFail());
         $this->assertSame(static::GLOSSARY_KEY_VALIDATION_SERVICE_POINT_NAME_WRONG_LENGTH, $errorTransfer->getMessageOrFail());
     }
@@ -329,7 +351,9 @@ class UpdateServicePointCollectionTest extends Unit
         $this->expectException(RequiredTransferPropertyException::class);
 
         // Act
-        $this->tester->getFacade()->createServicePointCollection($servicePointCollectionRequestTransfer);
+        $this->tester
+            ->getFacade()
+            ->updateServicePointCollection($servicePointCollectionRequestTransfer);
     }
 
     /**
@@ -345,7 +369,9 @@ class UpdateServicePointCollectionTest extends Unit
         $this->expectException(RequiredTransferPropertyException::class);
 
         // Act
-        $this->tester->getFacade()->createServicePointCollection($servicePointCollectionRequestTransfer);
+        $this->tester
+            ->getFacade()
+            ->updateServicePointCollection($servicePointCollectionRequestTransfer);
     }
 
     /**
@@ -365,7 +391,9 @@ class UpdateServicePointCollectionTest extends Unit
         $this->expectException(RequiredTransferPropertyException::class);
 
         // Act
-        $this->tester->getFacade()->createServicePointCollection($servicePointCollectionRequestTransfer);
+        $this->tester
+            ->getFacade()
+            ->updateServicePointCollection($servicePointCollectionRequestTransfer);
     }
 
     /**
@@ -385,7 +413,9 @@ class UpdateServicePointCollectionTest extends Unit
         $this->expectException(RequiredTransferPropertyException::class);
 
         // Act
-        $this->tester->getFacade()->createServicePointCollection($servicePointCollectionRequestTransfer);
+        $this->tester
+            ->getFacade()
+            ->updateServicePointCollection($servicePointCollectionRequestTransfer);
     }
 
     /**
@@ -405,7 +435,9 @@ class UpdateServicePointCollectionTest extends Unit
         $this->expectException(RequiredTransferPropertyException::class);
 
         // Act
-        $this->tester->getFacade()->createServicePointCollection($servicePointCollectionRequestTransfer);
+        $this->tester
+            ->getFacade()
+            ->updateServicePointCollection($servicePointCollectionRequestTransfer);
     }
 
     /**
@@ -425,7 +457,9 @@ class UpdateServicePointCollectionTest extends Unit
         $this->expectException(RequiredTransferPropertyException::class);
 
         // Act
-        $this->tester->getFacade()->createServicePointCollection($servicePointCollectionRequestTransfer);
+        $this->tester
+            ->getFacade()
+            ->updateServicePointCollection($servicePointCollectionRequestTransfer);
     }
 
     /**
@@ -443,7 +477,9 @@ class UpdateServicePointCollectionTest extends Unit
         $this->expectException(RequiredTransferPropertyException::class);
 
         // Act
-        $this->tester->getFacade()->createServicePointCollection($servicePointCollectionRequestTransfer);
+        $this->tester
+            ->getFacade()
+            ->updateServicePointCollection($servicePointCollectionRequestTransfer);
     }
 
     /**
@@ -463,7 +499,9 @@ class UpdateServicePointCollectionTest extends Unit
         $this->expectException(RequiredTransferPropertyException::class);
 
         // Act
-        $this->tester->getFacade()->createServicePointCollection($servicePointCollectionRequestTransfer);
+        $this->tester
+            ->getFacade()
+            ->updateServicePointCollection($servicePointCollectionRequestTransfer);
     }
 
     /**
@@ -485,7 +523,9 @@ class UpdateServicePointCollectionTest extends Unit
         $this->expectException(RequiredTransferPropertyException::class);
 
         // Act
-        $this->tester->getFacade()->createServicePointCollection($servicePointCollectionRequestTransfer);
+        $this->tester
+            ->getFacade()
+            ->updateServicePointCollection($servicePointCollectionRequestTransfer);
     }
 
     /**

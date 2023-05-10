@@ -11,15 +11,23 @@ use ArrayObject;
 use Codeception\Module;
 use Generated\Shared\DataBuilder\ServicePointAddressBuilder;
 use Generated\Shared\DataBuilder\ServicePointBuilder;
+use Generated\Shared\DataBuilder\ServicePointServiceBuilder;
+use Generated\Shared\DataBuilder\ServiceTypeBuilder;
 use Generated\Shared\Transfer\ServicePointAddressTransfer;
+use Generated\Shared\Transfer\ServicePointServiceTransfer;
 use Generated\Shared\Transfer\ServicePointTransfer;
+use Generated\Shared\Transfer\ServiceTypeTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\ServicePoint\Persistence\SpyServicePoint;
 use Orm\Zed\ServicePoint\Persistence\SpyServicePointAddress;
 use Orm\Zed\ServicePoint\Persistence\SpyServicePointAddressQuery;
 use Orm\Zed\ServicePoint\Persistence\SpyServicePointQuery;
+use Orm\Zed\ServicePoint\Persistence\SpyServicePointService;
+use Orm\Zed\ServicePoint\Persistence\SpyServicePointServiceQuery;
 use Orm\Zed\ServicePoint\Persistence\SpyServicePointStore;
 use Orm\Zed\ServicePoint\Persistence\SpyServicePointStoreQuery;
+use Orm\Zed\ServicePoint\Persistence\SpyServiceType;
+use Orm\Zed\ServicePoint\Persistence\SpyServiceTypeQuery;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 
 class ServicePointHelper extends Module
@@ -89,6 +97,66 @@ class ServicePointHelper extends Module
         });
 
         return $servicePointAddressTransfer;
+    }
+
+    /**
+     * @param array<string, mixed> $seed
+     *
+     * @return \Generated\Shared\Transfer\ServiceTypeTransfer
+     */
+    public function haveServiceType(array $seed = []): ServiceTypeTransfer
+    {
+        $serviceTypeTransfer = (new ServiceTypeBuilder($seed))->build();
+
+        $serviceTypeEntity = (new SpyServiceType())
+            ->fromArray($serviceTypeTransfer->toArray());
+
+        $serviceTypeEntity->save();
+
+        $serviceTypeTransfer->fromArray(
+            $serviceTypeEntity->toArray(),
+            true,
+        );
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($serviceTypeEntity): void {
+            $this->deleteServiceType($serviceTypeEntity->getIdServiceType());
+        });
+
+        return $serviceTypeTransfer;
+    }
+
+    /**
+     * @param array<string, mixed> $seed
+     *
+     * @return \Generated\Shared\Transfer\ServicePointServiceTransfer
+     */
+    public function haveServicePointService(array $seed = []): ServicePointServiceTransfer
+    {
+        $serviceTypeTransfer = $this->haveServiceType($seed[ServicePointServiceTransfer::SERVICE_TYPE] ?? []);
+        $servicePointTransfer = $this->haveServicePoint($seed[ServicePointServiceTransfer::SERVICE_POINT] ?? []);
+
+        $servicePointServiceTransfer = (new ServicePointServiceBuilder($seed))
+            ->withServicePoint($servicePointTransfer->toArray())
+            ->withServiceType($serviceTypeTransfer->toArray())
+            ->build();
+
+        $servicePointServiceEntity = (new SpyServicePointService())
+            ->fromArray($servicePointServiceTransfer->toArray())
+            ->setFkServicePoint($servicePointTransfer->getIdServicePointOrFail())
+            ->setFkServiceType($serviceTypeTransfer->getIdServiceTypeOrFail());
+
+        $servicePointServiceEntity->save();
+
+        $servicePointServiceTransfer->fromArray(
+            $servicePointServiceEntity->toArray(),
+            true,
+        );
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($servicePointServiceEntity): void {
+            $this->deleteServicePointService($servicePointServiceEntity->getIdServicePointService());
+        });
+
+        return $servicePointServiceTransfer;
     }
 
     /**
@@ -162,6 +230,36 @@ class ServicePointHelper extends Module
     }
 
     /**
+     * @param int $idServiceType
+     *
+     * @return void
+     */
+    protected function deleteServiceType(int $idServiceType): void
+    {
+        $serviceTypeEntity = $this->getServiceTypeQuery()
+            ->findOneByIdServiceType($idServiceType);
+
+        if ($serviceTypeEntity) {
+            $serviceTypeEntity->delete();
+        }
+    }
+
+    /**
+     * @param int $idServicePointService
+     *
+     * @return void
+     */
+    protected function deleteServicePointService(int $idServicePointService): void
+    {
+        $servicePointServiceEntity = $this->getServicePointServiceQuery()
+            ->findOneByIdServicePointService($idServicePointService);
+
+        if ($servicePointServiceEntity) {
+            $servicePointServiceEntity->delete();
+        }
+    }
+
+    /**
      * @return \Orm\Zed\ServicePoint\Persistence\SpyServicePointQuery
      */
     protected function getServicePointQuery(): SpyServicePointQuery
@@ -183,5 +281,21 @@ class ServicePointHelper extends Module
     protected function getServicePointStoreQuery(): SpyServicePointStoreQuery
     {
         return SpyServicePointStoreQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\ServicePoint\Persistence\SpyServiceTypeQuery
+     */
+    protected function getServiceTypeQuery(): SpyServiceTypeQuery
+    {
+        return SpyServiceTypeQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\ServicePoint\Persistence\SpyServicePointServiceQuery
+     */
+    protected function getServicePointServiceQuery(): SpyServicePointServiceQuery
+    {
+        return SpyServicePointServiceQuery::create();
     }
 }

@@ -85,8 +85,11 @@ class KeyExistenceServicePointValidatorRule implements ServicePointValidatorRule
         $servicePointCriteriaTransfer = (new ServicePointCriteriaTransfer())
             ->setServicePointConditions($servicePointConditionsTransfer);
 
-        return $this->servicePointRepository->getServicePointCollection($servicePointCriteriaTransfer)
-                ->getServicePoints()
-                ->count() > 0;
+        /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\ServicePointTransfer> $servicePointTransfers */
+        $servicePointTransfers = $this->servicePointRepository
+            ->getServicePointCollection($servicePointCriteriaTransfer)
+            ->getServicePoints();
+
+        return $servicePointTransfers->count() > 0;
     }
 }

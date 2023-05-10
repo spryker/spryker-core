@@ -9,11 +9,15 @@ namespace Spryker\Zed\ServicePoint\Persistence;
 
 use Orm\Zed\ServicePoint\Persistence\SpyServicePointAddressQuery;
 use Orm\Zed\ServicePoint\Persistence\SpyServicePointQuery;
+use Orm\Zed\ServicePoint\Persistence\SpyServicePointServiceQuery;
 use Orm\Zed\ServicePoint\Persistence\SpyServicePointStoreQuery;
+use Orm\Zed\ServicePoint\Persistence\SpyServiceTypeQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\ServicePoint\Persistence\Propel\Mapper\CountryMapper;
 use Spryker\Zed\ServicePoint\Persistence\Propel\Mapper\ServicePointAddressMapper;
 use Spryker\Zed\ServicePoint\Persistence\Propel\Mapper\ServicePointMapper;
+use Spryker\Zed\ServicePoint\Persistence\Propel\Mapper\ServicePointServiceMapper;
+use Spryker\Zed\ServicePoint\Persistence\Propel\Mapper\ServiceTypeMapper;
 
 /**
  * @method \Spryker\Zed\ServicePoint\ServicePointConfig getConfig()
@@ -47,6 +51,22 @@ class ServicePointPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
+     * @return \Orm\Zed\ServicePoint\Persistence\SpyServicePointServiceQuery
+     */
+    public function getServicePointServiceQuery(): SpyServicePointServiceQuery
+    {
+        return SpyServicePointServiceQuery::create();
+    }
+
+    /**
+     * @return \Orm\Zed\ServicePoint\Persistence\SpyServiceTypeQuery
+     */
+    public function getServiceTypeQuery(): SpyServiceTypeQuery
+    {
+        return SpyServiceTypeQuery::create();
+    }
+
+    /**
      * @return \Spryker\Zed\ServicePoint\Persistence\Propel\Mapper\ServicePointMapper
      */
     public function createServicePointMapper(): ServicePointMapper
@@ -72,5 +92,21 @@ class ServicePointPersistenceFactory extends AbstractPersistenceFactory
     public function createCountryMapper(): CountryMapper
     {
         return new CountryMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\ServicePoint\Persistence\Propel\Mapper\ServicePointServiceMapper
+     */
+    public function createServicePointServiceMapper(): ServicePointServiceMapper
+    {
+        return new ServicePointServiceMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\ServicePoint\Persistence\Propel\Mapper\ServiceTypeMapper
+     */
+    public function createServiceTypeMapper(): ServiceTypeMapper
+    {
+        return new ServiceTypeMapper();
     }
 }

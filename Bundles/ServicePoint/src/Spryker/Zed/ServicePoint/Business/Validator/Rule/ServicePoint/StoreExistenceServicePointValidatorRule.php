@@ -155,7 +155,7 @@ class StoreExistenceServicePointValidatorRule implements ServicePointValidatorRu
     /**
      * @param array<string|int, list<string>> $storeNamesGroupedByEntityIdentifier
      *
-     * @return list<string>
+     * @return array<int, string>
      */
     protected function extractUniqueStoreNames(array $storeNamesGroupedByEntityIdentifier): array
     {

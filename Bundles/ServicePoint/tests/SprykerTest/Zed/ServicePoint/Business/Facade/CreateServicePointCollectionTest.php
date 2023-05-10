@@ -35,44 +35,44 @@ class CreateServicePointCollectionTest extends Unit
     protected const STORE_NAME_DE = 'DE';
 
     /**
-     * @var \SprykerTest\Zed\ServicePoint\ServicePointBusinessTester
-     */
-    protected ServicePointBusinessTester $tester;
-
-    /**
-     * @uses \Spryker\Zed\ServicePoint\Business\Validator\Rule\KeyExistenceServicePointValidatorRule::GLOSSARY_KEY_VALIDATION_SERVICE_POINT_KEY_EXISTS
+     * @uses \Spryker\Zed\ServicePoint\Business\Validator\Rule\ServicePoint\KeyExistenceServicePointValidatorRule::GLOSSARY_KEY_VALIDATION_SERVICE_POINT_KEY_EXISTS
      *
      * @var string
      */
     protected const GLOSSARY_KEY_VALIDATION_SERVICE_POINT_KEY_EXISTS = 'service_point.validation.service_point_key_exists';
 
     /**
-     * @uses \Spryker\Zed\ServicePoint\Business\Validator\Rule\KeyUniquenessServicePointValidatorRule::GLOSSARY_KEY_VALIDATION_SERVICE_POINT_KEY_IS_NOT_UNIQUE
+     * @uses \Spryker\Zed\ServicePoint\Business\Validator\Rule\ServicePoint\KeyUniquenessServicePointValidatorRule::GLOSSARY_KEY_VALIDATION_SERVICE_POINT_KEY_IS_NOT_UNIQUE
      *
      * @var string
      */
     protected const GLOSSARY_KEY_VALIDATION_SERVICE_POINT_KEY_IS_NOT_UNIQUE = 'service_point.validation.service_point_key_is_not_unique';
 
     /**
-     * @uses \Spryker\Zed\ServicePoint\Business\Validator\Rule\KeyLengthServicePointValidatorRule::GLOSSARY_KEY_VALIDATION_SERVICE_POINT_KEY_WRONG_LENGTH
+     * @uses \Spryker\Zed\ServicePoint\Business\Validator\Rule\ServicePoint\KeyLengthServicePointValidatorRule::GLOSSARY_KEY_VALIDATION_SERVICE_POINT_KEY_WRONG_LENGTH
      *
      * @var string
      */
     protected const GLOSSARY_KEY_VALIDATION_SERVICE_POINT_KEY_WRONG_LENGTH = 'service_point.validation.service_point_key_wrong_length';
 
     /**
-     * @uses \Spryker\Zed\ServicePoint\Business\Validator\Rule\NameLengthServicePointValidatorRule::GLOSSARY_KEY_VALIDATION_SERVICE_POINT_NAME_WRONG_LENGTH
+     * @uses \Spryker\Zed\ServicePoint\Business\Validator\Rule\ServicePoint\NameLengthServicePointValidatorRule::GLOSSARY_KEY_VALIDATION_SERVICE_POINT_NAME_WRONG_LENGTH
      *
      * @var string
      */
     protected const GLOSSARY_KEY_VALIDATION_SERVICE_POINT_NAME_WRONG_LENGTH = 'service_point.validation.service_point_name_wrong_length';
 
     /**
-     * @uses \Spryker\Zed\ServicePoint\Business\Validator\Rule\StoreExistenceServicePointValidatorRule::GLOSSARY_KEY_VALIDATION_STORE_DOES_NOT_EXIST
+     * @uses \Spryker\Zed\ServicePoint\Business\Validator\Rule\ServicePoint\StoreExistenceServicePointValidatorRule::GLOSSARY_KEY_VALIDATION_STORE_DOES_NOT_EXIST
      *
      * @var string
      */
     protected const GLOSSARY_KEY_VALIDATION_STORE_DOES_NOT_EXIST = 'service_point.validation.store_does_not_exist';
+
+    /**
+     * @var \SprykerTest\Zed\ServicePoint\ServicePointBusinessTester
+     */
+    protected ServicePointBusinessTester $tester;
 
     /**
      * @return void
@@ -103,10 +103,10 @@ class CreateServicePointCollectionTest extends Unit
         // Assert
         $this->assertCount(0, $servicePointCollectionResponseTransfer->getErrors());
         $this->assertSame(1, $this->tester->getServicePointQuery()->count());
-        /**
-         * @var \Generated\Shared\Transfer\ServicePointTransfer $persistedServicePointTransfer
-         */
+
+        /** @var \Generated\Shared\Transfer\ServicePointTransfer $persistedServicePointTransfer */
         $persistedServicePointTransfer = $servicePointCollectionResponseTransfer->getServicePoints()->getIterator()->current();
+
         $this->assertEquals($servicePointTransfer, $persistedServicePointTransfer);
         $this->assertSame(
             static::STORE_NAME_DE,
@@ -137,10 +137,10 @@ class CreateServicePointCollectionTest extends Unit
 
         // Assert
         $this->assertCount(1, $servicePointCollectionResponseTransfer->getErrors());
-        /**
-         * @var \Generated\Shared\Transfer\ErrorTransfer $errorTransfer
-         */
+
+        /** @var \Generated\Shared\Transfer\ErrorTransfer $errorTransfer */
         $errorTransfer = $servicePointCollectionResponseTransfer->getErrors()->getIterator()->current();
+
         $this->assertSame('0', $errorTransfer->getEntityIdentifierOrFail());
         $this->assertSame(static::GLOSSARY_KEY_VALIDATION_SERVICE_POINT_KEY_EXISTS, $errorTransfer->getMessageOrFail());
         $this->assertSame(1, $this->tester->getServicePointQuery()->count());
@@ -173,10 +173,10 @@ class CreateServicePointCollectionTest extends Unit
 
         // Assert
         $this->assertCount(1, $servicePointCollectionResponseTransfer->getErrors());
-        /**
-         * @var \Generated\Shared\Transfer\ErrorTransfer $errorTransfer
-         */
+
+        /** @var \Generated\Shared\Transfer\ErrorTransfer $errorTransfer */
         $errorTransfer = $servicePointCollectionResponseTransfer->getErrors()->getIterator()->current();
+
         $this->assertSame('1', $errorTransfer->getEntityIdentifierOrFail());
         $this->assertSame(static::GLOSSARY_KEY_VALIDATION_SERVICE_POINT_KEY_IS_NOT_UNIQUE, $errorTransfer->getMessageOrFail());
         $this->assertSame(0, $this->tester->getServicePointQuery()->count());
@@ -207,10 +207,10 @@ class CreateServicePointCollectionTest extends Unit
 
         // Assert
         $this->assertCount(1, $servicePointCollectionResponseTransfer->getErrors());
-        /**
-         * @var \Generated\Shared\Transfer\ErrorTransfer $errorTransfer
-         */
+
+        /** @var \Generated\Shared\Transfer\ErrorTransfer $errorTransfer */
         $errorTransfer = $servicePointCollectionResponseTransfer->getErrors()->getIterator()->current();
+
         $this->assertSame('0', $errorTransfer->getEntityIdentifierOrFail());
         $this->assertSame(static::GLOSSARY_KEY_VALIDATION_SERVICE_POINT_KEY_WRONG_LENGTH, $errorTransfer->getMessageOrFail());
         $this->assertSame(0, $this->tester->getServicePointQuery()->count());
@@ -241,10 +241,10 @@ class CreateServicePointCollectionTest extends Unit
 
         // Assert
         $this->assertCount(1, $servicePointCollectionResponseTransfer->getErrors());
-        /**
-         * @var \Generated\Shared\Transfer\ErrorTransfer $errorTransfer
-         */
+
+        /** @var \Generated\Shared\Transfer\ErrorTransfer $errorTransfer */
         $errorTransfer = $servicePointCollectionResponseTransfer->getErrors()->getIterator()->current();
+
         $this->assertSame('0', $errorTransfer->getEntityIdentifierOrFail());
         $this->assertSame(static::GLOSSARY_KEY_VALIDATION_SERVICE_POINT_NAME_WRONG_LENGTH, $errorTransfer->getMessageOrFail());
         $this->assertSame(0, $this->tester->getServicePointQuery()->count());
@@ -272,10 +272,10 @@ class CreateServicePointCollectionTest extends Unit
 
         // Assert
         $this->assertCount(1, $servicePointCollectionResponseTransfer->getErrors());
-        /**
-         * @var \Generated\Shared\Transfer\ErrorTransfer $errorTransfer
-         */
+
+        /** @var \Generated\Shared\Transfer\ErrorTransfer $errorTransfer */
         $errorTransfer = $servicePointCollectionResponseTransfer->getErrors()->getIterator()->current();
+
         $this->assertSame('0', $errorTransfer->getEntityIdentifierOrFail());
         $this->assertSame(static::GLOSSARY_KEY_VALIDATION_STORE_DOES_NOT_EXIST, $errorTransfer->getMessageOrFail());
         $this->assertSame(0, $this->tester->getServicePointQuery()->count());
@@ -306,10 +306,10 @@ class CreateServicePointCollectionTest extends Unit
 
         // Assert
         $this->assertCount(1, $servicePointCollectionResponseTransfer->getErrors());
-        /**
-         * @var \Generated\Shared\Transfer\ErrorTransfer $errorTransfer
-         */
+
+        /** @var \Generated\Shared\Transfer\ErrorTransfer $errorTransfer */
         $errorTransfer = $servicePointCollectionResponseTransfer->getErrors()->getIterator()->current();
+
         $this->assertSame('1', $errorTransfer->getEntityIdentifierOrFail());
         $this->assertSame(static::GLOSSARY_KEY_VALIDATION_SERVICE_POINT_KEY_WRONG_LENGTH, $errorTransfer->getMessageOrFail());
         $this->assertSame(1, $this->tester->getServicePointQuery()->count());

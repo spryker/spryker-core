@@ -156,8 +156,11 @@ class CountryAndRegionExistenceByIso2CodeServicePointAddressValidatorRule implem
         $countryCriteriaTransfer = (new CountryCriteriaTransfer())
             ->setCountryConditions($countryConditionsTransfer);
 
-        $countryCollectionTransfer = $this->countryFacade->getCountryCollection($countryCriteriaTransfer);
+        /** @var \ArrayObject<array-key, \Generated\Shared\Transfer\CountryTransfer> $countryTransfers */
+        $countryTransfers = $this->countryFacade
+            ->getCountryCollection($countryCriteriaTransfer)
+            ->getCountries();
 
-        return $countryCollectionTransfer->getCountries()->getIterator()->current();
+        return $countryTransfers->getIterator()->current();
     }
 }

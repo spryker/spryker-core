@@ -32,7 +32,7 @@ class ServicePointWriteDataImportStep extends PublishAwareStep implements DataIm
     {
         $this->assertDataSet($dataSet);
 
-        $servicePointEntity = $this->getServicePointStoreQuery()
+        $servicePointEntity = $this->getServicePointQuery()
             ->filterByKey($dataSet[ServicePointDataSetInterface::COLUMN_KEY])
             ->findOneOrCreate();
 
@@ -64,7 +64,7 @@ class ServicePointWriteDataImportStep extends PublishAwareStep implements DataIm
     /**
      * @return \Orm\Zed\ServicePoint\Persistence\SpyServicePointQuery
      */
-    protected function getServicePointStoreQuery(): SpyServicePointQuery
+    protected function getServicePointQuery(): SpyServicePointQuery
     {
         return SpyServicePointQuery::create();
     }

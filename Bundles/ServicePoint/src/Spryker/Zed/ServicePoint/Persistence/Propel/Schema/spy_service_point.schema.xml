@@ -86,4 +86,69 @@
         <id-method-parameter value="spy_service_point_address_pk_seq"/>
     </table>
 
+    <table name="spy_service_point_service" idMethod="native" allowPkInsert="true" identifierQuoting="true">
+        <column name="id_service_point_service" type="INTEGER" required="true" autoIncrement="true" primaryKey="true"/>
+        <column name="uuid" type="VARCHAR" required="false" size="36"/>
+        <column name="fk_service_point" type="INTEGER" required="true"/>
+        <column name="fk_service_type" type="INTEGER" required="true"/>
+        <column name="key" type="VARCHAR" required="true" size="255"/>
+        <column name="is_active" type="BOOLEAN" required="true"/>
+
+        <foreign-key name="spy_service_point_service-fk_service_point" foreignTable="spy_service_point" phpName="ServicePoint" refPhpName="ServicePointService">
+            <reference local="fk_service_point" foreign="id_service_point"/>
+        </foreign-key>
+
+        <foreign-key name="spy_service_point_service-fk_service_type" foreignTable="spy_service_type" phpName="ServiceType" refPhpName="ServicePointService">
+            <reference local="fk_service_type" foreign="id_service_type"/>
+        </foreign-key>
+
+        <unique name="spy_service_point_service-unique-uuid">
+            <unique-column name="uuid"/>
+        </unique>
+
+        <unique name="spy_service_point_service-unique-key">
+            <unique-column name="key"/>
+        </unique>
+
+        <unique name="spy_service_point_service-unique-fk_sp-fk_st">
+            <unique-column name="fk_service_point"/>
+            <unique-column name="fk_service_type"/>
+        </unique>
+
+        <id-method-parameter value="spy_service_point_service_pk_seq"/>
+
+        <behavior name="uuid">
+            <parameter name="key_columns" value="id_service_point_service"/>
+        </behavior>
+
+        <behavior name="timestampable"/>
+    </table>
+
+    <table name="spy_service_type" idMethod="native" allowPkInsert="true" identifierQuoting="true">
+        <column name="id_service_type" type="INTEGER" required="true" autoIncrement="true" primaryKey="true"/>
+        <column name="uuid" type="VARCHAR" required="false" size="36"/>
+        <column name="name" type="VARCHAR" required="true" size="255"/>
+        <column name="key" type="VARCHAR" required="true" size="255"/>
+
+        <unique name="spy_service_type-unique-uuid">
+            <unique-column name="uuid"/>
+        </unique>
+
+        <unique name="spy_service_type-unique-name">
+            <unique-column name="name"/>
+        </unique>
+
+        <unique name="spy_service_type-unique-key">
+            <unique-column name="key"/>
+        </unique>
+
+        <id-method-parameter value="spy_service_type_pk_seq"/>
+
+        <behavior name="uuid">
+            <parameter name="key_columns" value="id_service_type"/>
+        </behavior>
+
+        <behavior name="timestampable"/>
+    </table>
+
 </database>
