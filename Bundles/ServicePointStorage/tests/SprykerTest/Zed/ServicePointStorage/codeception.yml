@@ -1,0 +1,42 @@
+namespace: SprykerTest\Zed\ServicePointStorage
+
+paths:
+    tests: .
+    data: ../../../_data
+    support: _support
+    output: ../../../_output
+
+coverage:
+    enabled: true
+    remote: false
+    whitelist: { include: ['../../../../src/*'] }
+
+suites:
+    Business:
+        path: Business
+        actor: ServicePointStorageBusinessTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper
+                - \SprykerTest\Shared\ServicePoint\Helper\ServicePointHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDataHelper
+                - \SprykerTest\Zed\Country\Helper\CountryDataHelper
+                - \SprykerTest\Shared\Country\Helper\RegionHelper
+                - \SprykerTest\Shared\Testify\Helper\TableRelationsCleanupHelper
+
+    Communication:
+        path: Communication
+        actor: ServicePointStorageCommunicationTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Shared\ServicePoint\Helper\ServicePointHelper

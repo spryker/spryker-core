@@ -864,6 +864,7 @@
         "spryker/service-point": "*",
         "spryker/service-point-data-import": "*",
         "spryker/service-point-search": "*",
+        "spryker/service-point-storage": "*",
         "spryker/service-points-backend-api": "*",
         "spryker/session": "*",
         "spryker/session-customer-validation-extension": "*",
