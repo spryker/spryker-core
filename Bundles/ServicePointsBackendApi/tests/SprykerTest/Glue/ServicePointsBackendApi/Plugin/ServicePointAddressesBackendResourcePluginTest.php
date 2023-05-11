@@ -31,6 +31,13 @@ class ServicePointAddressesBackendResourcePluginTest extends Unit
     protected const RESOURCE_SERVICE_POINT_ADDRESSES = 'service-point-addresses';
 
     /**
+     * @uses \Spryker\Glue\ServicePointsBackendApi\ServicePointsBackendApiConfig::RESOURCE_SERVICE_POINTS
+     *
+     * @var string
+     */
+    protected const RESOURCE_SERVICE_POINTS = 'service-points';
+
+    /**
      * @var \SprykerTest\Glue\ServicePointsBackendApi\ServicePointsBackendApiTester
      */
     protected ServicePointsBackendApiTester $tester;
@@ -48,6 +55,21 @@ class ServicePointAddressesBackendResourcePluginTest extends Unit
 
         // Assert
         $this->assertSame(static::RESOURCE_SERVICE_POINT_ADDRESSES, $type);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetParentResourceTypeShouldReturnCorrectType(): void
+    {
+        // Arrange
+        $servicePointAddressesBackendResourcePlugin = new ServicePointAddressesBackendResourcePlugin();
+
+        // Act
+        $parentResourceType = $servicePointAddressesBackendResourcePlugin->getParentResourceType();
+
+        // Assert
+        $this->assertSame(static::RESOURCE_SERVICE_POINTS, $parentResourceType);
     }
 
     /**

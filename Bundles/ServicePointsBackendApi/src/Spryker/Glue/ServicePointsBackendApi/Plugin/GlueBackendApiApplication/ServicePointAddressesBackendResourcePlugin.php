@@ -11,11 +11,12 @@ use Generated\Shared\Transfer\ApiServicePointAddressesAttributesTransfer;
 use Generated\Shared\Transfer\GlueResourceMethodCollectionTransfer;
 use Generated\Shared\Transfer\GlueResourceMethodConfigurationTransfer;
 use Spryker\Glue\GlueApplication\Plugin\GlueApplication\Backend\AbstractResourcePlugin;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPluginInterface;
 use Spryker\Glue\GlueJsonApiConventionExtension\Dependency\Plugin\JsonApiResourceInterface;
 use Spryker\Glue\ServicePointsBackendApi\Controller\ServicePointAddressesResourceController;
 use Spryker\Glue\ServicePointsBackendApi\ServicePointsBackendApiConfig;
 
-class ServicePointAddressesBackendResourcePlugin extends AbstractResourcePlugin implements JsonApiResourceInterface
+class ServicePointAddressesBackendResourcePlugin extends AbstractResourcePlugin implements JsonApiResourceInterface, ResourceWithParentPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -27,6 +28,18 @@ class ServicePointAddressesBackendResourcePlugin extends AbstractResourcePlugin 
     public function getType(): string
     {
         return ServicePointsBackendApiConfig::RESOURCE_SERVICE_POINT_ADDRESSES;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getParentResourceType(): string
+    {
+        return ServicePointsBackendApiConfig::RESOURCE_SERVICE_POINTS;
     }
 
     /**
