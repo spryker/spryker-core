@@ -46,7 +46,6 @@ class ServicePointDeletePublisherPlugin extends AbstractPlugin implements Publis
     {
         return [
             ServicePointSearchConfig::SERVICE_POINT_UNPUBLISH,
-            ServicePointSearchConfig::ENTITY_SPY_SERVICE_POINT_STORE_DELETE,
         ];
     }
 }
