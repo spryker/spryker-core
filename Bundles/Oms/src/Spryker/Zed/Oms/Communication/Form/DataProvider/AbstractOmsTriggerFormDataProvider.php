@@ -42,7 +42,7 @@ abstract class AbstractOmsTriggerFormDataProvider
     /**
      * @var string
      */
-    public const SUBMIT_BUTTON_CLASS = 'btn btn-primary btn-sm trigger-event';
+    public const SUBMIT_BUTTON_CLASS = 'btn btn-primary btn-sm trigger-event safe-submit';
 
     /**
      * @param string $redirectUrl
