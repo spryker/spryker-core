@@ -118,7 +118,7 @@ class AuthorizationValidator implements AuthorizationValidatorInterface
             }
         }
 
-        if ($this->glueStorefrontApiApplicationAuthorizationConfig->getProtectedPaths() !== null) {
+        if ($this->glueStorefrontApiApplicationAuthorizationConfig->getProtectedPaths() !== []) {
             $routeAuthorizationConfigTransfers[] = (new RouteAuthorizationConfigTransfer())
                 ->addStrategy(static::PROTECTED_PATH_STRATEGY_NAME)
                 ->setApiMessage(static::ERROR_MESSAGE_UNAUTHORIZED_REQUEST)

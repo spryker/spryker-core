@@ -40,7 +40,7 @@ class AuthorizationChecker implements AuthorizationCheckerInterface
         $authorizationResponseTransfer = new AuthorizationResponseTransfer();
 
         if (!$authorizationRequestTransfer->getStrategies()) {
-            throw new AuthorizationStrategyNotFoundException('Authorization strategy not found.');
+            return $authorizationResponseTransfer->setIsAuthorized(true);
         }
 
         foreach ($authorizationRequestTransfer->getStrategies() as $strategy) {
