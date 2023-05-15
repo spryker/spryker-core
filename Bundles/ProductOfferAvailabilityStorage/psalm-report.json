@@ -5,7 +5,7 @@
             "line_from": 128,
             "line_to": 129,
             "type": "InvalidReturnStatement",
-            "message": "The inferred type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed' does not match the declared return type 'array<array-key, Generated\\Shared\\Transfer\\SpyProductOfferAvailabilityStorageEntityTransfer>' for Spryker\\Zed\\ProductOfferAvailabilityStorage\\Persistence\\ProductOfferAvailabilityStorageRepository::getFilteredProductOfferAvailabilityStorageEntityTransfers",
+            "message": "The inferred type 'Propel\\Runtime\\Collection\\Collection<Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed' does not match the declared return type 'array<array-key, Generated\\Shared\\Transfer\\SpyProductOfferAvailabilityStorageEntityTransfer>' for Spryker\\Zed\\ProductOfferAvailabilityStorage\\Persistence\\ProductOfferAvailabilityStorageRepository::getFilteredProductOfferAvailabilityStorageEntityTransfers",
             "file_name": "vendor/spryker/spryker/Bundles/ProductOfferAvailabilityStorage/src/Spryker/Zed/ProductOfferAvailabilityStorage/Persistence/ProductOfferAvailabilityStorageRepository.php",
             "snippet": "        return $this->buildQueryFromCriteria($productOfferAvailabilityStoragePropelQuery, $filterTransfer)\n            ->find();",
             "selected_text": "$this->buildQueryFromCriteria($productOfferAvailabilityStoragePropelQuery, $filterTransfer)\n            ->find()",
@@ -40,8 +40,8 @@
         },
         {
             "severity": "info",
-            "line_from": 124,
-            "line_to": 124,
+            "line_from": 147,
+            "line_to": 147,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\ProductOfferAvailabilityStorage\\Persistence\\ProductOfferAvailabilityStorageRepositoryInterface::findProductOfferAvailabilityStorageByProductOfferReferenceAndStoreName cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductOfferAvailabilityStorage/src/Spryker/Zed/ProductOfferAvailabilityStorage/Business/Writer/ProductOfferAvailabilityStorageWriter.php",
@@ -52,8 +52,8 @@
         },
         {
             "severity": "info",
-            "line_from": 125,
-            "line_to": 125,
+            "line_from": 148,
+            "line_to": 148,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Spryker\\Zed\\ProductOfferAvailabilityStorage\\Persistence\\ProductOfferAvailabilityStorageRepositoryInterface::findProductOfferAvailabilityStorageByProductOfferReferenceAndStoreName cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductOfferAvailabilityStorage/src/Spryker/Zed/ProductOfferAvailabilityStorage/Business/Writer/ProductOfferAvailabilityStorageWriter.php",
@@ -64,8 +64,8 @@
         },
         {
             "severity": "info",
-            "line_from": 125,
-            "line_to": 125,
+            "line_from": 148,
+            "line_to": 148,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getName on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ProductOfferAvailabilityStorage/src/Spryker/Zed/ProductOfferAvailabilityStorage/Business/Writer/ProductOfferAvailabilityStorageWriter.php",
@@ -76,20 +76,8 @@
         },
         {
             "severity": "info",
-            "line_from": 140,
-            "line_to": 140,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 1 of Spryker\\Zed\\ProductOfferAvailabilityStorage\\Business\\Writer\\ProductOfferAvailabilityStorageWriter::mapProductConcreteAvailabilityTransferToProductOfferAvailabilityStorageTransfer cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferAvailabilityStorage/src/Spryker/Zed/ProductOfferAvailabilityStorage/Business/Writer/ProductOfferAvailabilityStorageWriter.php",
-            "snippet": "                $productOfferAvailabilityTransfer,",
-            "selected_text": "$productOfferAvailabilityTransfer",
-            "error_level": 3,
-            "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 147,
-            "line_to": 147,
+            "line_from": 172,
+            "line_to": 172,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Orm\\Zed\\ProductOfferAvailabilityStorage\\Persistence\\SpyProductOfferAvailabilityStorage::setProductOfferReference cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductOfferAvailabilityStorage/src/Spryker/Zed/ProductOfferAvailabilityStorage/Business/Writer/ProductOfferAvailabilityStorageWriter.php",
@@ -100,8 +88,8 @@
         },
         {
             "severity": "info",
-            "line_from": 151,
-            "line_to": 151,
+            "line_from": 176,
+            "line_to": 176,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Orm\\Zed\\ProductOfferAvailabilityStorage\\Persistence\\SpyProductOfferAvailabilityStorage::setStore cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductOfferAvailabilityStorage/src/Spryker/Zed/ProductOfferAvailabilityStorage/Business/Writer/ProductOfferAvailabilityStorageWriter.php",
@@ -112,8 +100,8 @@
         },
         {
             "severity": "info",
-            "line_from": 151,
-            "line_to": 151,
+            "line_from": 176,
+            "line_to": 176,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getName on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ProductOfferAvailabilityStorage/src/Spryker/Zed/ProductOfferAvailabilityStorage/Business/Writer/ProductOfferAvailabilityStorageWriter.php",
@@ -124,8 +112,8 @@
         },
         {
             "severity": "info",
-            "line_from": 183,
-            "line_to": 183,
+            "line_from": 208,
+            "line_to": 208,
             "type": "PossiblyNullReference",
             "message": "Cannot call method getName on possibly null value",
             "file_name": "vendor/spryker/spryker/Bundles/ProductOfferAvailabilityStorage/src/Spryker/Zed/ProductOfferAvailabilityStorage/Business/Writer/ProductOfferAvailabilityStorageWriter.php",
@@ -139,7 +127,7 @@
             "line_from": 53,
             "line_to": 53,
             "type": "InvalidScalarArgument",
-            "message": "Argument 1 of Generated\\Shared\\Transfer\\PaginationTransfer::setPage expects int|null, float|int provided",
+            "message": "Argument 1 of Generated\\Shared\\Transfer\\PaginationTransfer::setPage expects int|null, but float|int provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductOfferAvailabilityStorage/src/Spryker/Zed/ProductOfferAvailabilityStorage/Communication/Plugin/Event/ProductOfferAvailabilityEventResourceBulkRepositoryPlugin.php",
             "snippet": "                    ->setPage(($offset / $limit) + 1)",
             "selected_text": "($offset / $limit) + 1",
@@ -193,49 +181,13 @@
             "selected_text": "$paginationTransfer->getPage()",
             "error_level": 1,
             "shortcode": 80
-        },
-        {
-            "severity": "info",
-            "line_from": 45,
-            "line_to": 45,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferAvailabilityStorage/src/Spryker/Zed/ProductOfferAvailabilityStorage/Persistence/ProductOfferAvailabilityStorageRepository.php",
-            "snippet": "            ->getData();",
-            "selected_text": "getData",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 69,
-            "line_to": 69,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferAvailabilityStorage/src/Spryker/Zed/ProductOfferAvailabilityStorage/Persistence/ProductOfferAvailabilityStorageRepository.php",
-            "snippet": "            ->getData();",
-            "selected_text": "getData",
-            "error_level": 3,
-            "shortcode": 113
-        },
-        {
-            "severity": "info",
-            "line_from": 91,
-            "line_to": 91,
-            "type": "PossiblyInvalidMethodCall",
-            "message": "Cannot call method on possible array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface> variable ",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferAvailabilityStorage/src/Spryker/Zed/ProductOfferAvailabilityStorage/Persistence/ProductOfferAvailabilityStorageRepository.php",
-            "snippet": "            ->getData();",
-            "selected_text": "getData",
-            "error_level": 3,
-            "shortcode": 113
         }
     ],
     "deprecation": [
         {
             "severity": "info",
-            "line_from": 149,
-            "line_to": 149,
+            "line_from": 174,
+            "line_to": 174,
             "type": "DeprecatedMethod",
             "message": "The method Orm\\Zed\\ProductOfferAvailabilityStorage\\Persistence\\Base\\SpyProductOfferAvailabilityStorage::setIsSendingToQueue has been marked as deprecated",
             "file_name": "vendor/spryker/spryker/Bundles/ProductOfferAvailabilityStorage/src/Spryker/Zed/ProductOfferAvailabilityStorage/Business/Writer/ProductOfferAvailabilityStorageWriter.php",
@@ -244,5 +196,6 @@
             "error_level": 2,
             "shortcode": 1
         }
-    ]
+    ],
+    "count": 16
 }

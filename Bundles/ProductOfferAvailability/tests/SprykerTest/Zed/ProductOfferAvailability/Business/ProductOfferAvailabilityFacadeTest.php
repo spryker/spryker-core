@@ -50,6 +50,7 @@ class ProductOfferAvailabilityFacadeTest extends Unit
 
         $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME]);
         $productOfferTransfer = $this->tester->haveProductOffer();
+        $this->tester->haveProductOfferStore($productOfferTransfer, $storeTransfer);
         $this->tester->haveProductOfferStock([
             ProductOfferStockTransfer::ID_PRODUCT_OFFER => $productOfferTransfer->getIdProductOffer(),
             ProductOfferStockTransfer::QUANTITY => $stockQuantity,
@@ -80,5 +81,39 @@ class ProductOfferAvailabilityFacadeTest extends Unit
         // Assert
         $this->assertNotNull($productConcreteAvailabilityTransfer);
         $this->assertSame($expectedAvailability, $productConcreteAvailabilityTransfer->getAvailability()->toInt());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindProductConcreteAvailabilityReturnsAvailabilityZeroWhenProductOfferHasNoCurrentStore(): void
+    {
+        // Arrange
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME]);
+        $productOfferTransfer = $this->tester->haveProductOffer();
+        $this->tester->haveProductOfferStock([
+            ProductOfferStockTransfer::ID_PRODUCT_OFFER => $productOfferTransfer->getIdProductOffer(),
+            ProductOfferStockTransfer::QUANTITY => 5,
+            ProductOfferStockTransfer::STOCK => [
+                StockTransfer::STORE_RELATION => [
+                    StoreRelationTransfer::ID_STORES => [
+                        $storeTransfer->getIdStore(),
+                    ],
+                ],
+            ],
+        ]);
+
+        $productOfferAvailabilityRequestTransfer = (new ProductOfferAvailabilityRequestTransfer())
+            ->setStore($storeTransfer)
+            ->setProductOfferReference($productOfferTransfer->getProductOfferReference())
+            ->setSku($productOfferTransfer->getConcreteSku());
+
+        // Act
+        $productConcreteAvailabilityTransfer = $this->tester->getFacade()
+            ->findProductConcreteAvailability($productOfferAvailabilityRequestTransfer);
+
+        // Assert
+        $this->assertNotNull($productConcreteAvailabilityTransfer);
+        $this->assertSame(0, $productConcreteAvailabilityTransfer->getAvailability()->toInt());
     }
 }

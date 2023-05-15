@@ -47,16 +47,22 @@
     <transfer name="ProductOfferCriteria">
         <property name="idProductOffer" type="int"/>
         <property name="productOfferIds" type="int[]" singular="idProductOffer"/>
-        <property name="idStore" type="int"/>
+        <property name="idStore" type="int" deprecated="Use ProductOfferConditions.storeIds instead."/>
         <property name="concreteSku" type="string"/>
         <property name="productOfferReference" type="string"/>
         <property name="concreteSkus" type="string[]" singular="concreteSku"/>
-        <property name="productOfferReferences" type="string[]" singular="productOfferReference"/>
+        <property name="productOfferReferences" type="string[]" singular="productOfferReference" deprecated="Use ProductOfferConditions.productOfferReferences instead."/>
         <property name="isActive" type="bool"/>
         <property name="approvalStatuses" type="string[]" singular="approvalStatus"/>
         <property name="isActiveConcreteProduct" type="bool"/>
         <property name="pagination" type="Pagination"/>
         <property name="merchantReferences" type="string[]" singular="merchantReference"/>
+        <property name="productOfferConditions" type="ProductOfferConditions" strict="true"/>
+    </transfer>
+
+    <transfer name="ProductOfferConditions" strict="true">
+        <property name="productOfferReferences" type="string[]" singular="productOfferReference"/>
+        <property name="storeIds" type="int[]" singular="idStore"/>
     </transfer>
 
     <transfer name="Pagination">

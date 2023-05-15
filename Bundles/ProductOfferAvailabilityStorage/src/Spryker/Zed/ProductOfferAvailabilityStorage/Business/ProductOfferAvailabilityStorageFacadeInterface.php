@@ -39,6 +39,20 @@ interface ProductOfferAvailabilityStorageFacadeInterface
 
     /**
      * Specification:
+     * - Extracts product offer IDs from the `$eventEntityTransfers` created by product offer store entity events.
+     * - Stores data in storage table.
+     * - Sends a copy of data to the queue.
+     *
+     * @api
+     *
+     * @param list<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
+     *
+     * @return void
+     */
+    public function writeCollectionByProductOfferStoreEvents(array $eventTransfers): void;
+
+    /**
+     * Specification:
      * - Extracts product offer ids from event transfers.
      * - Gets product offer availability by product offer ids.
      * - Saves product offer availability to storage.

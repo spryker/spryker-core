@@ -232,8 +232,8 @@
         },
         {
             "severity": "info",
-            "line_from": 138,
-            "line_to": 138,
+            "line_from": 152,
+            "line_to": 152,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\ProductOffer\\Business\\Generator\\ProductOfferReferenceGeneratorInterface::generateProductOfferReferenceById cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductOffer/src/Spryker/Zed/ProductOffer/Business/Writer/ProductOfferWriter.php",
@@ -244,8 +244,8 @@
         },
         {
             "severity": "info",
-            "line_from": 174,
-            "line_to": 174,
+            "line_from": 188,
+            "line_to": 188,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\ProductOffer\\Persistence\\ProductOfferRepositoryInterface::getProductOfferStores cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductOffer/src/Spryker/Zed/ProductOffer/Business/Writer/ProductOfferWriter.php",
@@ -256,8 +256,8 @@
         },
         {
             "severity": "info",
-            "line_from": 176,
-            "line_to": 176,
+            "line_from": 190,
+            "line_to": 190,
             "type": "PossiblyInvalidMethodCall",
             "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\StoreTransfer> variable ",
             "file_name": "vendor/spryker/spryker/Bundles/ProductOffer/src/Spryker/Zed/ProductOffer/Business/Writer/ProductOfferWriter.php",
@@ -268,8 +268,8 @@
         },
         {
             "severity": "info",
-            "line_from": 179,
-            "line_to": 179,
+            "line_from": 193,
+            "line_to": 193,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\ProductOffer\\Persistence\\ProductOfferEntityManagerInterface::deleteProductOfferStores cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductOffer/src/Spryker/Zed/ProductOffer/Business/Writer/ProductOfferWriter.php",
@@ -280,8 +280,8 @@
         },
         {
             "severity": "info",
-            "line_from": 249,
-            "line_to": 249,
+            "line_from": 263,
+            "line_to": 263,
             "type": "PossiblyNullArrayOffset",
             "message": "Cannot access value on variable $indexedStoreTransfers[int|null] using possibly null offset int|null",
             "file_name": "vendor/spryker/spryker/Bundles/ProductOffer/src/Spryker/Zed/ProductOffer/Business/Writer/ProductOfferWriter.php",
@@ -352,8 +352,44 @@
         },
         {
             "severity": "info",
-            "line_from": 197,
-            "line_to": 197,
+            "line_from": 143,
+            "line_to": 143,
+            "type": "ArgumentTypeCoercion",
+            "message": "Argument 1 of Spryker\\Zed\\ProductOffer\\Persistence\\Propel\\Mapper\\ProductOfferMapper::mapProductOfferEntitiesToProductOfferCollectionTransfer expects Propel\\Runtime\\Collection\\ObjectCollection<Orm\\Zed\\ProductOffer\\Persistence\\SpyProductOffer>, but parent type Propel\\Runtime\\Collection\\Collection&Traversable<mixed, Orm\\Zed\\ProductOffer\\Persistence\\SpyProductOffer> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOffer/src/Spryker/Zed/ProductOffer/Persistence/ProductOfferRepository.php",
+            "snippet": "                $productOfferQuery->find(),",
+            "selected_text": "$productOfferQuery->find()",
+            "error_level": 3,
+            "shortcode": 193
+        },
+        {
+            "severity": "info",
+            "line_from": 162,
+            "line_to": 162,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Orm\\Zed\\ProductOffer\\Persistence\\SpyProductOfferQuery::limit cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOffer/src/Spryker/Zed/ProductOffer/Persistence/ProductOfferRepository.php",
+            "snippet": "                ->limit($paginationTransfer->getLimit())",
+            "selected_text": "$paginationTransfer->getLimit()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 163,
+            "line_to": 163,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Orm\\Zed\\ProductOffer\\Persistence\\SpyProductOfferQuery::offset cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOffer/src/Spryker/Zed/ProductOffer/Persistence/ProductOfferRepository.php",
+            "snippet": "                ->offset($paginationTransfer->getOffset());",
+            "selected_text": "$paginationTransfer->getOffset()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 281,
+            "line_to": 281,
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Propel\\Runtime\\ActiveQuery\\ModelCriteria::paginate cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductOffer/src/Spryker/Zed/ProductOffer/Persistence/ProductOfferRepository.php",
@@ -364,8 +400,8 @@
         },
         {
             "severity": "info",
-            "line_from": 197,
-            "line_to": 197,
+            "line_from": 281,
+            "line_to": 281,
             "type": "PossiblyNullArgument",
             "message": "Argument 2 of Propel\\Runtime\\ActiveQuery\\ModelCriteria::paginate cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductOffer/src/Spryker/Zed/ProductOffer/Persistence/ProductOfferRepository.php",
@@ -373,30 +409,6 @@
             "selected_text": "$maxPerPage",
             "error_level": 3,
             "shortcode": 78
-        },
-        {
-            "severity": "info",
-            "line_from": 210,
-            "line_to": 210,
-            "type": "LessSpecificReturnStatement",
-            "message": "The type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed' is more general than the declared return type 'Propel\\Runtime\\Collection\\Collection|Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\ProductOffer\\Persistence\\SpyProductOffer>' for Spryker\\Zed\\ProductOffer\\Persistence\\ProductOfferRepository::getPaginatedCollection",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductOffer/src/Spryker/Zed/ProductOffer/Persistence/ProductOfferRepository.php",
-            "snippet": "        return $query->find();",
-            "selected_text": "$query->find()",
-            "error_level": 3,
-            "shortcode": 129
-        },
-        {
-            "severity": "info",
-            "line_from": 67,
-            "line_to": 67,
-            "type": "MismatchingDocblockParamType",
-            "message": "Parameter $productOfferStoreEntities has wrong type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\ProductOffer\\Persistence\\SpyProductOfferStore>', should be 'Propel\\Runtime\\Collection\\ObjectCollection'",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductOffer/src/Spryker/Zed/ProductOffer/Persistence/Propel/Mapper/ProductOfferMapper.php",
-            "snippet": "     * @param \\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\ProductOffer\\Persistence\\SpyProductOfferStore[] $productOfferStoreEntities",
-            "selected_text": "\\Propel\\Runtime\\Collection\\ObjectCollection|\\Orm\\Zed\\ProductOffer\\Persistence\\SpyProductOfferStore[]",
-            "error_level": 4,
-            "shortcode": 141
         }
     ],
     "deprecation": [
@@ -411,6 +423,19 @@
             "selected_text": "ProductOfferGroupKeyItemExpanderPlugin",
             "error_level": 2,
             "shortcode": 152
+        },
+        {
+            "severity": "info",
+            "line_from": 222,
+            "line_to": 222,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Zed\\ProductOffer\\Persistence\\ProductOfferRepository::hasMerchantReferenceField has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOffer/src/Spryker/Zed/ProductOffer/Persistence/ProductOfferRepository.php",
+            "snippet": "        if ($productOfferCriteria->getMerchantReferences() && $this->hasMerchantReferenceField()) {",
+            "selected_text": "hasMerchantReferenceField",
+            "error_level": 2,
+            "shortcode": 1
         }
-    ]
+    ],
+    "count": 36
 }

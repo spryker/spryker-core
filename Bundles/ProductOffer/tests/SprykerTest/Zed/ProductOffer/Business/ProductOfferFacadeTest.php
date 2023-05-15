@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
+use Generated\Shared\Transfer\ProductOfferConditionsTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -814,6 +815,52 @@ class ProductOfferFacadeTest extends Unit
         // Assert
         $this->assertCount(2, $productOfferCollectionTransfer->getProductOffers());
         $this->assertSame(4, $productOfferCollectionTransfer->getPagination()->getNbResults());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductOfferCollectionReturnsCorrectProductOffersFilteredByStoreIds(): void
+    {
+        // Arrange
+        $this->tester->ensureDatabaseTableIsEmpty(SpyProductOfferQuery::create());
+        $storeTransfer = $this->tester->haveStore();
+        $this->tester->haveProductOffer();
+        $productOfferTransfer = $this->tester->haveProductOffer();
+        $productOfferStoreTransfer = $this->tester->haveProductOfferStore($productOfferTransfer, $storeTransfer);
+        $productOfferCriteriaTransfer = new ProductOfferCriteriaTransfer();
+        $productOfferCriteriaTransfer->setProductOfferConditions(
+            (new ProductOfferConditionsTransfer())->addIdStore($productOfferStoreTransfer->getFkStoreOrFail()),
+        );
+
+        // Act
+        $productOfferCollectionTransfer = $this->tester->getFacade()->getProductOfferCollection($productOfferCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(1, $productOfferCollectionTransfer->getProductOffers());
+        $this->assertTrue($this->productOfferCollectionTransferContainsProductOffer($productOfferCollectionTransfer, $productOfferTransfer));
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductOfferCollectionReturnsCorrectProductOffersFilteredByProductOfferReferences(): void
+    {
+        // Arrange
+        $this->tester->ensureDatabaseTableIsEmpty(SpyProductOfferQuery::create());
+        $this->tester->haveProductOffer();
+        $productOfferTransfer = $this->tester->haveProductOffer();
+        $productOfferCriteriaTransfer = new ProductOfferCriteriaTransfer();
+        $productOfferCriteriaTransfer->setProductOfferConditions(
+            (new ProductOfferConditionsTransfer())->addProductOfferReference($productOfferTransfer->getProductOfferReferenceOrFail()),
+        );
+
+        // Act
+        $productOfferCollectionTransfer = $this->tester->getFacade()->getProductOfferCollection($productOfferCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(1, $productOfferCollectionTransfer->getProductOffers());
+        $this->assertTrue($this->productOfferCollectionTransferContainsProductOffer($productOfferCollectionTransfer, $productOfferTransfer));
     }
 
     /**

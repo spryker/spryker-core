@@ -74,6 +74,7 @@ class ProductOfferStoragePublishListenerTest extends Unit
 
         $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME]);
         $productOfferTransfer = $this->tester->haveProductOffer();
+        $this->tester->haveProductOfferStore($productOfferTransfer, $storeTransfer);
         $this->tester->haveProductOfferStock([
             ProductOfferStockTransfer::ID_PRODUCT_OFFER => $productOfferTransfer->getIdProductOffer(),
             ProductOfferStockTransfer::QUANTITY => $stockQuantity,

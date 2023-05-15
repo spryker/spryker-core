@@ -24,6 +24,13 @@ interface ProductOfferAvailabilityStorageWriterInterface
     public function writeCollectionByProductOfferStockIdEvents(array $eventTransfers): void;
 
     /**
+     * @param list<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
+     *
+     * @return void
+     */
+    public function writeCollectionByProductOfferStoreEvents(array $eventTransfers): void;
+
+    /**
      * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void

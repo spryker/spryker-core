@@ -9,11 +9,14 @@ namespace Spryker\Zed\ProductOfferAvailability\Business\Availability;
 
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer;
+use Generated\Shared\Transfer\ProductOfferConditionsTransfer;
+use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferStockRequestTransfer;
 use Generated\Shared\Transfer\ProductOfferStockResultTransfer;
 use Generated\Shared\Transfer\ReservationRequestTransfer;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\ProductOfferAvailability\Dependency\Facade\ProductOfferAvailabilityToOmsFacadeInterface;
+use Spryker\Zed\ProductOfferAvailability\Dependency\Facade\ProductOfferAvailabilityToProductOfferFacadeInterface;
 use Spryker\Zed\ProductOfferAvailability\Dependency\Facade\ProductOfferAvailabilityToProductOfferStockFacadeInterface;
 
 class ProductOfferAvailabilityProvider implements ProductOfferAvailabilityProviderInterface
@@ -21,23 +24,31 @@ class ProductOfferAvailabilityProvider implements ProductOfferAvailabilityProvid
     /**
      * @var \Spryker\Zed\ProductOfferAvailability\Dependency\Facade\ProductOfferAvailabilityToOmsFacadeInterface
      */
-    protected $omsFacade;
+    protected ProductOfferAvailabilityToOmsFacadeInterface $omsFacade;
 
     /**
      * @var \Spryker\Zed\ProductOfferAvailability\Dependency\Facade\ProductOfferAvailabilityToProductOfferStockFacadeInterface
      */
-    protected $productOfferStockFacade;
+    protected ProductOfferAvailabilityToProductOfferStockFacadeInterface $productOfferStockFacade;
+
+    /**
+     * @var \Spryker\Zed\ProductOfferAvailability\Dependency\Facade\ProductOfferAvailabilityToProductOfferFacadeInterface
+     */
+    protected ProductOfferAvailabilityToProductOfferFacadeInterface $productOfferFacade;
 
     /**
      * @param \Spryker\Zed\ProductOfferAvailability\Dependency\Facade\ProductOfferAvailabilityToOmsFacadeInterface $omsFacade
      * @param \Spryker\Zed\ProductOfferAvailability\Dependency\Facade\ProductOfferAvailabilityToProductOfferStockFacadeInterface $productOfferStockFacade
+     * @param \Spryker\Zed\ProductOfferAvailability\Dependency\Facade\ProductOfferAvailabilityToProductOfferFacadeInterface $productOfferFacade
      */
     public function __construct(
         ProductOfferAvailabilityToOmsFacadeInterface $omsFacade,
-        ProductOfferAvailabilityToProductOfferStockFacadeInterface $productOfferStockFacade
+        ProductOfferAvailabilityToProductOfferStockFacadeInterface $productOfferStockFacade,
+        ProductOfferAvailabilityToProductOfferFacadeInterface $productOfferFacade
     ) {
         $this->omsFacade = $omsFacade;
         $this->productOfferStockFacade = $productOfferStockFacade;
+        $this->productOfferFacade = $productOfferFacade;
     }
 
     /**
@@ -48,6 +59,21 @@ class ProductOfferAvailabilityProvider implements ProductOfferAvailabilityProvid
     public function findProductConcreteAvailability(
         ProductOfferAvailabilityRequestTransfer $productOfferAvailabilityRequestTransfer
     ): ?ProductConcreteAvailabilityTransfer {
+        if (
+            !$productOfferAvailabilityRequestTransfer->getProductOfferReference()
+            || !$productOfferAvailabilityRequestTransfer->getStore()
+            || !$productOfferAvailabilityRequestTransfer->getStoreOrFail()->getIdStore()
+        ) {
+            return null;
+        }
+
+        if (!$this->hasProductOfferForStore($productOfferAvailabilityRequestTransfer)) {
+            return (new ProductConcreteAvailabilityTransfer())
+                ->setAvailability(new Decimal(0))
+                ->setSku($productOfferAvailabilityRequestTransfer->getSku())
+                ->setIsNeverOutOfStock(false);
+        }
+
         $productOfferStockResultTransfer = $this->findProductOfferStockResultTransfer($productOfferAvailabilityRequestTransfer);
 
         if (!$productOfferStockResultTransfer) {
@@ -92,6 +118,24 @@ class ProductOfferAvailabilityProvider implements ProductOfferAvailabilityProvid
         $availableQuantity = $quantity->subtract($reservationQuantity);
 
         return $availableQuantity;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer $productOfferAvailabilityRequestTransfer
+     *
+     * @return bool
+     */
+    protected function hasProductOfferForStore(ProductOfferAvailabilityRequestTransfer $productOfferAvailabilityRequestTransfer): bool
+    {
+        $productOfferConditionsTransfer = (new ProductOfferConditionsTransfer())
+            ->addProductOfferReference($productOfferAvailabilityRequestTransfer->getProductOfferReferenceOrFail())
+            ->addIdStore($productOfferAvailabilityRequestTransfer->getStoreOrFail()->getIdStoreOrFail());
+
+        $productOfferCollectionTransfer = $this->productOfferFacade->getProductOfferCollection(
+            (new ProductOfferCriteriaTransfer())->setProductOfferConditions($productOfferConditionsTransfer),
+        );
+
+        return $productOfferCollectionTransfer->getProductOffers()->count() > 0;
     }
 
     /**

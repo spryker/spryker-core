@@ -21,6 +21,13 @@ use Spryker\Zed\ProductOfferAvailabilityStorage\Persistence\ProductOfferAvailabi
 class ProductOfferAvailabilityStorageWriter implements ProductOfferAvailabilityStorageWriterInterface
 {
     /**
+     * @uses \Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferStoreTableMap::COL_FK_PRODUCT_OFFER
+     *
+     * @var string
+     */
+    protected const COL_FK_PRODUCT_OFFER = 'spy_product_offer_store.fk_product_offer';
+
+    /**
      * @var \Spryker\Zed\ProductOfferAvailabilityStorage\Dependency\Facade\ProductOfferAvailabilityStorageToEventBehaviorFacadeInterface
      */
     protected $eventBehaviorFacade;
@@ -97,6 +104,21 @@ class ProductOfferAvailabilityStorageWriter implements ProductOfferAvailabilityS
     }
 
     /**
+     * @param list<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
+     *
+     * @return void
+     */
+    public function writeCollectionByProductOfferStoreEvents(array $eventTransfers): void
+    {
+        $productOfferIds = $this->eventBehaviorFacade->getEventTransferForeignKeys($eventTransfers, static::COL_FK_PRODUCT_OFFER);
+
+        $productOfferAvailabilityRequestTransfers = $this->productOfferAvailabilityStorageRepository
+            ->getProductOfferAvailabilityRequestsByProductOfferIds($productOfferIds);
+
+        $this->writeProductOfferAvailabilityStorageForRequests($productOfferAvailabilityRequestTransfers);
+    }
+
+    /**
      * @param array<\Generated\Shared\Transfer\EventEntityTransfer> $eventTransfers
      *
      * @return void
@@ -112,7 +134,7 @@ class ProductOfferAvailabilityStorageWriter implements ProductOfferAvailabilityS
     }
 
     /**
-     * @param array<\Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer> $productOfferAvailabilityRequestTransfers
+     * @param list<\Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer> $productOfferAvailabilityRequestTransfers
      *
      * @return void
      */

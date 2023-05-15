@@ -14,10 +14,10 @@ interface ProductOfferAvailabilityFacadeInterface
 {
     /**
      * Specification:
-     * - Calculates product offer availability by product offer stock and concrete product reserved amount.
-     * - Expects ProductOfferAvailabilityFacadeInterface.sku to be provided.
-     * - Expects ProductOfferAvailabilityFacadeInterface.productOfferReference to be provided.
-     * - Expects ProductOfferAvailabilityFacadeInterface.store to be provided.
+     * - Calculates product offer availability by product offer store, product offer stock and concrete product reserved amount.
+     * - Expects `ProductOfferAvailabilityRequestTransfer.sku` to be provided.
+     * - Expects `ProductOfferAvailabilityRequestTransfer.productOfferReference` to be provided.
+     * - Expects `ProductOfferAvailabilityRequestTransfer.store.idStore` to be provided.
      *
      * @api
      *

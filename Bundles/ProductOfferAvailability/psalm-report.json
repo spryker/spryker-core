@@ -1,18 +1,6 @@
 {
     "error": [],
     "warning": [],
-    "deprecation": [
-        {
-            "severity": "info",
-            "line_from": 21,
-            "line_to": 21,
-            "type": "DeprecatedInterface",
-            "message": "Spryker\\Zed\\AvailabilityExtension\\Dependency\\Plugin\\AvailabilityStrategyPluginInterface is marked deprecated",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferAvailability/src/Spryker/Zed/ProductOfferAvailability/Communication/Plugin/Availability/ProductOfferAvailabilityStrategyPlugin.php",
-            "snippet": "class ProductOfferAvailabilityStrategyPlugin extends AbstractPlugin implements AvailabilityStrategyPluginInterface",
-            "selected_text": "ProductOfferAvailabilityStrategyPlugin",
-            "error_level": 2,
-            "shortcode": 152
-        }
-    ]
+    "deprecation": [],
+    "count": 0
 }

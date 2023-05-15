@@ -43,4 +43,20 @@
         <property name="reservationQuantity" type="decimal"/>
     </transfer>
 
+    <transfer name="ProductOfferCriteria">
+        <property name="productOfferConditions" type="ProductOfferConditions" strict="true"/>
+    </transfer>
+
+    <transfer name="ProductOfferConditions" strict="true">
+        <property name="productOfferReferences" type="string[]" singular="productOfferReference"/>
+        <property name="storeIds" type="int[]" singular="idStore"/>
+    </transfer>
+
+    <transfer name="ProductOfferCollection">
+        <property name="productOffers" type="ProductOffer[]" singular="productOffer"/>
+    </transfer>
+
+    <transfer name="ProductOffer">
+    </transfer>
+
 </transfers>

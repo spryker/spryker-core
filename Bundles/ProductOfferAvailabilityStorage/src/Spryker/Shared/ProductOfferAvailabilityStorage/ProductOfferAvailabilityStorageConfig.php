@@ -40,4 +40,40 @@ class ProductOfferAvailabilityStorageConfig extends AbstractBundleConfig
      * @var string
      */
     public const PRODUCT_OFFER_AVAILABILITY_RESOURCE_NAME = 'product_offer_availability';
+
+    /**
+     * Specification
+     * - This event will be used for `spy_product_offer_store` entity creation.
+     *
+     * @uses \Spryker\Shared\ProductOfferStorage\ProductOfferStorageConfig::ENTITY_SPY_PRODUCT_OFFER_STORE_CREATE
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const ENTITY_SPY_PRODUCT_OFFER_STORE_CREATE = 'Entity.spy_product_offer_store.create';
+
+    /**
+     * Specification
+     * - This event will be used for `spy_product_offer_store` entity changes.
+     *
+     * @uses \Spryker\Shared\ProductOfferStorage\ProductOfferStorageConfig::ENTITY_SPY_PRODUCT_OFFER_STORE_UPDATE
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const ENTITY_SPY_PRODUCT_OFFER_STORE_UPDATE = 'Entity.spy_product_offer_store.update';
+
+    /**
+     * Specification
+     * - This event will be used for `spy_product_offer_store` entity deletion.
+     *
+     * @uses \Spryker\Shared\ProductOfferStorage\ProductOfferStorageConfig::ENTITY_SPY_PRODUCT_OFFER_STORE_DELETE
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const ENTITY_SPY_PRODUCT_OFFER_STORE_DELETE = 'Entity.spy_product_offer_store.delete';
 }

@@ -11,6 +11,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductOfferAvailability\Business\Availability\ProductOfferAvailabilityProvider;
 use Spryker\Zed\ProductOfferAvailability\Business\Availability\ProductOfferAvailabilityProviderInterface;
 use Spryker\Zed\ProductOfferAvailability\Dependency\Facade\ProductOfferAvailabilityToOmsFacadeInterface;
+use Spryker\Zed\ProductOfferAvailability\Dependency\Facade\ProductOfferAvailabilityToProductOfferFacadeInterface;
 use Spryker\Zed\ProductOfferAvailability\Dependency\Facade\ProductOfferAvailabilityToProductOfferStockFacadeInterface;
 use Spryker\Zed\ProductOfferAvailability\ProductOfferAvailabilityDependencyProvider;
 
@@ -36,6 +37,14 @@ class ProductOfferAvailabilityBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\ProductOfferAvailability\Dependency\Facade\ProductOfferAvailabilityToProductOfferFacadeInterface
+     */
+    public function getProductOfferFacade(): ProductOfferAvailabilityToProductOfferFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductOfferAvailabilityDependencyProvider::FACADE_PRODUCT_OFFER);
+    }
+
+    /**
      * @return \Spryker\Zed\ProductOfferAvailability\Business\Availability\ProductOfferAvailabilityProviderInterface
      */
     public function createProductOfferAvailabilityProvider(): ProductOfferAvailabilityProviderInterface
@@ -43,6 +52,7 @@ class ProductOfferAvailabilityBusinessFactory extends AbstractBusinessFactory
         return new ProductOfferAvailabilityProvider(
             $this->getOmsFacade(),
             $this->getProductOfferStockFacade(),
+            $this->getProductOfferFacade(),
         );
     }
 }

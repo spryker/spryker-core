@@ -129,6 +129,8 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
         $productOfferCollectionTransfer = new ProductOfferCollectionTransfer();
         $productOfferQuery = $this->getFactory()->createProductOfferPropelQuery();
 
+        $productOfferQuery = $this->applyProductOfferFilters($productOfferQuery, $productOfferCriteriaTransfer);
+
         $paginationTransfer = $productOfferCriteriaTransfer->getPagination();
         if ($paginationTransfer) {
             $productOfferQuery = $this->applyProductOfferPagination($productOfferQuery, $paginationTransfer);
@@ -159,6 +161,36 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
             return $productOfferQuery
                 ->limit($paginationTransfer->getLimit())
                 ->offset($paginationTransfer->getOffset());
+        }
+
+        return $productOfferQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery $productOfferQuery
+     * @param \Generated\Shared\Transfer\ProductOfferCriteriaTransfer $productOfferCriteriaTransfer
+     *
+     * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery
+     */
+    protected function applyProductOfferFilters(
+        SpyProductOfferQuery $productOfferQuery,
+        ProductOfferCriteriaTransfer $productOfferCriteriaTransfer
+    ): SpyProductOfferQuery {
+        $productOfferConditionsTransfer = $productOfferCriteriaTransfer->getProductOfferConditions();
+
+        if (!$productOfferConditionsTransfer) {
+            return $productOfferQuery;
+        }
+
+        if ($productOfferConditionsTransfer->getProductOfferReferences()) {
+            $productOfferQuery->filterByProductOfferReference_In($productOfferConditionsTransfer->getProductOfferReferences());
+        }
+
+        if ($productOfferConditionsTransfer->getStoreIds()) {
+            $productOfferQuery
+                ->useSpyProductOfferStoreQuery()
+                    ->filterByFkStore_In($productOfferConditionsTransfer->getStoreIds())
+                ->endUse();
         }
 
         return $productOfferQuery;
