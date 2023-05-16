@@ -7,8 +7,10 @@
 
 namespace SprykerTest\Glue\GlueApplication\Plugin\Console;
 
+use Codeception\Configuration;
 use Codeception\Test\Unit;
 use Spryker\Glue\GlueApplication\Plugin\Console\ControllerCacheCollectorConsole;
+use SprykerTest\Glue\GlueApplication\GlueApplicationTester;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 
@@ -26,11 +28,20 @@ use Symfony\Component\Console\Tester\CommandTester;
 class ControllerCacheCollectorConsoleTest extends Unit
 {
     /**
+     * @var \SprykerTest\Glue\GlueApplication\GlueApplicationTester
+     */
+    protected GlueApplicationTester $tester;
+
+    /**
      * @return void
      */
     public function testCommandIsExecutable(): void
     {
+        // Arrange
+        $this->tester->mockConfigMethod('getControllerCachePath', Configuration::dataDir());
+
         $controllerCacheCollectorConsole = new ControllerCacheCollectorConsole();
+        $controllerCacheCollectorConsole->setFactory($this->tester->getFactory());
 
         $application = new Application();
         $application->add($controllerCacheCollectorConsole);
@@ -38,8 +49,20 @@ class ControllerCacheCollectorConsoleTest extends Unit
         $command = $application->find($controllerCacheCollectorConsole->getName());
         $commandTester = new CommandTester($command);
 
+        // Act
         $commandTester->execute([]);
 
+        // Assert
         $this->assertSame(ControllerCacheCollectorConsole::CODE_SUCCESS, $commandTester->getStatusCode());
+    }
+
+    /**
+     * @return void
+     */
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        $this->tester->removeCacheFile();
     }
 }

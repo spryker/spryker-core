@@ -124,7 +124,9 @@ class ServicePointUpdater implements ServicePointUpdaterInterface
 
         return $glueResourceTransfer->getId()
             && $glueResourceTransfer->getAttributes()
-            && array_filter($glueResourceTransfer->getAttributesOrFail()->modifiedToArray());
+            && array_filter($glueResourceTransfer->getAttributesOrFail()->modifiedToArray(), function ($value) {
+                return $value !== null;
+            });
     }
 
     /**
