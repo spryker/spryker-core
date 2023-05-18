@@ -37,6 +37,8 @@ interface OauthConstants
     public const ENCRYPTION_KEY = 'ENCRYPTION_KEY';
 
     /**
+     * @deprecated Use {@link \Spryker\Shared\Oauth\OauthConstants::OAUTH_CLIENT_CONFIGURATION} instead.
+     *
      * Specification:
      *  - The identifier of OAUTH client to use when requesting for access tokens.
      *
@@ -47,6 +49,8 @@ interface OauthConstants
     public const OAUTH_CLIENT_IDENTIFIER = 'OAUTH_CLIENT_IDENTIFIER';
 
     /**
+     * @deprecated Use {@link \Spryker\Shared\Oauth\OauthConstants::OAUTH_CLIENT_CONFIGURATION} instead.
+     *
      * Specification:
      *  - The secret of OAUTH client to use when requesting for access tokens.
      *
@@ -55,4 +59,14 @@ interface OauthConstants
      * @var string
      */
     public const OAUTH_CLIENT_SECRET = 'OAUTH_CLIENT_SECRET';
+
+    /**
+     * Specification:
+     *  - Configuration of OAuth client used while requesting access tokens.
+     *
+     * @api
+     *
+     * @var string
+     */
+    public const OAUTH_CLIENT_CONFIGURATION = 'OAUTH:OAUTH_CLIENT_CONFIGURATION';
 }

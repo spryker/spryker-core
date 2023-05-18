@@ -49,6 +49,51 @@ class OauthClientInstaller implements OauthClientInstallerInterface
      */
     public function install(): void
     {
+        if (!$this->oauthConfig->getClientConfiguration()) {
+            $this->saveClientFallback();
+
+            return;
+        }
+
+        foreach ($this->oauthConfig->getClientConfiguration() as $clientConfiguration) {
+            $this->saveClient($clientConfiguration);
+        }
+    }
+
+    /**
+     * @param array<string, mixed> $clientConfiguration
+     *
+     * @return void
+     */
+    protected function saveClient(array $clientConfiguration): void
+    {
+        $oauthClientTransfer = (new OauthClientTransfer())
+            ->fromArray($clientConfiguration, true);
+
+        if ($this->oauthClientReader->findClientByIdentifier($oauthClientTransfer)) {
+            return;
+        }
+
+        /** @var string $secret */
+        $secret = password_hash($oauthClientTransfer->getSecret(), PASSWORD_BCRYPT);
+
+        $oauthClientTransfer
+            ->setSecret($secret);
+
+        if ($oauthClientTransfer->getIsConfidential() === null) {
+            $oauthClientTransfer->setIsConfidential(true);
+        }
+
+        $this->oauthClientWriter->save($oauthClientTransfer);
+    }
+
+    /**
+     * @deprecated Exists for BC reasons. Will be removed in the next major release.
+     *
+     * @return void
+     */
+    protected function saveClientFallback(): void
+    {
         $oauthClientTransfer = (new OauthClientTransfer())
             ->setIdentifier($this->oauthConfig->getClientId());
 

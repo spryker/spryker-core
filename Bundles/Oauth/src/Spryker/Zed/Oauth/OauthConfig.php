@@ -101,9 +101,12 @@ class OauthConfig extends AbstractBundleConfig
     }
 
     /**
-     * The client secret used to authenticate Oauth client requests, to create use "password_hash('your password', PASSWORD_BCRYPT)".
+     * Specification:
+     * - The client secret used to authenticate Oauth client requests, to create use "password_hash('your password', PASSWORD_BCRYPT)".
      *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\Oauth\OauthConfig::getClientConfiguration()} instead.
      *
      * @return string
      */
@@ -113,14 +116,30 @@ class OauthConfig extends AbstractBundleConfig
     }
 
     /**
-     * The client id as is store in spy_oauth_client database table
+     * Specification:
+     * - The client id as is store in spy_oauth_client database table
      *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\Oauth\OauthConfig::getClientConfiguration()} instead.
      *
      * @return string
      */
     public function getClientId(): string
     {
         return $this->get(OauthConstants::OAUTH_CLIENT_IDENTIFIER);
+    }
+
+    /**
+     * Specification:
+     * - Configuration of OAuth client used while requesting access tokens.
+     *
+     * @api
+     *
+     * @return array<int, array<string, mixed>>
+     */
+    public function getClientConfiguration(): array
+    {
+        return $this->get(OauthConstants::OAUTH_CLIENT_CONFIGURATION);
     }
 }

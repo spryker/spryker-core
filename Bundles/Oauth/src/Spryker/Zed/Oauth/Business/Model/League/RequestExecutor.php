@@ -23,6 +23,21 @@ class RequestExecutor implements RequestExecutorInterface
     protected const ERROR_TYPE_UNSUPPORTED_GRANT_TYPE = 'unsupported_grant_type';
 
     /**
+     * @var string
+     */
+    protected const CLIENT_CONFIGURATION_KEY_IS_DEFAULT = 'isDefault';
+
+    /**
+     * @var string
+     */
+    protected const CLIENT_CONFIGURATION_KEY_IDENTIFIER = 'identifier';
+
+    /**
+     * @var string
+     */
+    protected const CLIENT_CONFIGURATION_KEY_SECRET = 'secret';
+
+    /**
      * @var \Spryker\Zed\Oauth\Business\Model\League\Grant\GrantTypeConfigurationLoaderInterface
      */
     protected $grantTypeConfigurationLoader;
@@ -105,13 +120,21 @@ class RequestExecutor implements RequestExecutorInterface
      */
     public function expandOauthRequestTransfer(OauthRequestTransfer $oauthRequestTransfer): OauthRequestTransfer
     {
-        if (!$oauthRequestTransfer->getClientId() && !$oauthRequestTransfer->getClientSecret()) {
-            $oauthRequestTransfer
-                ->setClientId($this->oauthConfig->getClientId())
-                ->setClientSecret($this->oauthConfig->getClientSecret());
+        if ($oauthRequestTransfer->getClientId() && $oauthRequestTransfer->getClientSecret()) {
+            return $oauthRequestTransfer;
         }
 
-        return $oauthRequestTransfer;
+        foreach ($this->oauthConfig->getClientConfiguration() as $clientConfiguration) {
+            if ($clientConfiguration[static::CLIENT_CONFIGURATION_KEY_IS_DEFAULT] === false) {
+                continue;
+            }
+
+            return $oauthRequestTransfer
+                ->setClientId($clientConfiguration[static::CLIENT_CONFIGURATION_KEY_IDENTIFIER])
+                ->setClientSecret($clientConfiguration[static::CLIENT_CONFIGURATION_KEY_SECRET]);
+        }
+
+        return $this->expandOauthRequestTransferFallback($oauthRequestTransfer);
     }
 
     /**
@@ -125,5 +148,19 @@ class RequestExecutor implements RequestExecutorInterface
         OauthRequestTransfer $oauthRequestTransfer
     ): ?OauthGrantTypeConfigurationTransfer {
         return $this->grantTypeConfigurationLoader->loadGrantTypeConfigurationByGrantType($oauthRequestTransfer);
+    }
+
+    /**
+     * @deprecated Exists for BC reasons. Will be removed in the next major release.
+     *
+     * @param \Generated\Shared\Transfer\OauthRequestTransfer $oauthRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\OauthRequestTransfer
+     */
+    protected function expandOauthRequestTransferFallback(OauthRequestTransfer $oauthRequestTransfer): OauthRequestTransfer
+    {
+        return $oauthRequestTransfer
+            ->setClientId($this->oauthConfig->getClientId())
+            ->setClientSecret($this->oauthConfig->getClientSecret());
     }
 }
