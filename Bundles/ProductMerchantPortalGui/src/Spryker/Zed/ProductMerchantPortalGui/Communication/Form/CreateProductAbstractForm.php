@@ -148,7 +148,7 @@ class CreateProductAbstractForm extends AbstractType
             'multiple' => false,
             'empty_data' => null,
             'constraints' => [
-                new NotNull(['groups' => static::ERROR_MESSAGE_IS_SINGLE_CONCRETE]),
+                new NotNull(['message' => static::ERROR_MESSAGE_IS_SINGLE_CONCRETE]),
             ],
         ]);
 

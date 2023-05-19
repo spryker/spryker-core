@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Form\DataProvider;
 
-use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\MerchantProductTransfer;
 
 interface ProductAbstractFormDataProviderInterface
 {
@@ -15,9 +15,9 @@ interface ProductAbstractFormDataProviderInterface
      * @param int $idProductAbstract
      * @param int $idMerchant
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
+     * @return \Generated\Shared\Transfer\MerchantProductTransfer|null
      */
-    public function findProductAbstract(int $idProductAbstract, int $idMerchant): ?ProductAbstractTransfer;
+    public function findMerchantProduct(int $idProductAbstract, int $idMerchant): ?MerchantProductTransfer;
 
     /**
      * @return array<array<int>>

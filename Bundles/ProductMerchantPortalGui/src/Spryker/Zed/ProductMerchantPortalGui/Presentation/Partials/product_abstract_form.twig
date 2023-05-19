@@ -326,15 +326,19 @@
                                     table-id="web-mp-edit-abstract-product-variants"
                                 >
                                     <span title>{{ 'Concrete Products' | trans }}</span>
-                                    <web-spy-button-action
-                                        type="button"
-                                        variant="outline"
-                                        size="md"
-                                        action="{{ actionConfig }}"
-                                    >
-                                        <web-spy-icon name="plus" icon></web-spy-icon>
-                                        {{ 'Add Concrete Products' | trans }}
-                                    </web-spy-button-action>
+                                    {% block addConcreteProductsButton %}
+                                        {% if superAttributes %}
+                                            <web-spy-button-action
+                                                type="button"
+                                                variant="outline"
+                                                size="md"
+                                                action="{{ actionConfig }}"
+                                            >
+                                                <web-spy-icon name="plus" icon></web-spy-icon>
+                                                {{ 'Add Concrete Products' | trans }}
+                                            </web-spy-button-action>
+                                        {% endif %}
+                                    {% endblock %}
                                 </web-mp-edit-abstract-product-variants>
                             {% endblock %}
                         </web-spy-tab>

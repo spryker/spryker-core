@@ -1,0 +1,39 @@
+@import '~@spryker/styles/src/lib/themes/default/variables/index.less';
+
+@create-abstract-product-concretes-list-notification-padding: var(
+    --spy-create-abstract-product-concretes-list-notification-padding,
+    15px 20px 0 20px
+);
+@create-abstract-product-concretes-list-notification-margin-top: var(
+    --spy-create-abstract-product-concretes-list-notification-margin-top,
+    20px
+);
+@create-abstract-product-concretes-list-notification-border-top: var(
+    --spy-create-abstract-product-concretes-list-notification-border-top,
+    1px solid @gray-light
+);
+@create-abstract-product-concretes-list-notification-icon-margin-right: var(
+    --spy-create-abstract-product-concretes-list-notification-icon-margin-right,
+    10px
+);
+
+.mp-create-abstract-product-concretes-list {
+    &__notification {
+        display: flex;
+        padding: @create-abstract-product-concretes-list-notification-padding;
+        margin-top: @create-abstract-product-concretes-list-notification-margin-top;
+        border-top: @create-abstract-product-concretes-list-notification-border-top;
+
+        &-message {
+            font-size: @spy-font-size-sm;
+            color: @gray-dark;
+        }
+
+        &-icon {
+            flex-shrink: 0;
+            margin-right: @create-abstract-product-concretes-list-notification-icon-margin-right;
+            font-size: @spy-font-size-base;
+            color: @blue;
+        }
+    }
+}

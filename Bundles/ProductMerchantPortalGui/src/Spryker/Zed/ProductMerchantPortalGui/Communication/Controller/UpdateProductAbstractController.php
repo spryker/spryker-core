@@ -67,14 +67,15 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
             ->getCurrentMerchantUser()
             ->getIdMerchantOrFail();
 
-        $productAbstractTransfer = $this->getFactory()
+        $merchantProductTransfer = $this->getFactory()
             ->createProductAbstractFormDataProvider()
-            ->findProductAbstract($idProductAbstract, $idMerchant);
+            ->findMerchantProduct($idProductAbstract, $idMerchant);
 
-        if (!$productAbstractTransfer) {
+        if (!$merchantProductTransfer) {
             throw new MerchantProductNotFoundException($idProductAbstract, $idMerchant);
         }
 
+        $productAbstractTransfer = $merchantProductTransfer->getProductAbstractOrFail();
         $initialCategoryIds = $productAbstractTransfer->getCategoryIds();
         $productAbstractForm = $this->getFactory()
             ->createProductAbstractForm(
@@ -110,6 +111,10 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
             );
         }
 
+        $productManagementAttributeTransfers = $this->getFactory()
+            ->getProductAttributeFacade()
+            ->getUniqueSuperAttributesFromConcreteProducts($merchantProductTransfer->getProducts()->getArrayCopy());
+
         return $this->getResponse(
             $productAbstractForm,
             $productAbstractTransfer,
@@ -117,6 +122,7 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
             $priceTableInitialData,
             $attributesTableInitialData,
             [],
+            $productManagementAttributeTransfers,
         );
     }
 
@@ -260,6 +266,7 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
      * @param array<string, array<string, mixed>> $priceInitialData
      * @param array<string, array<string, mixed>> $attributesInitialData
      * @param array<array<string>> $imageSetsErrors
+     * @param array<string, \Generated\Shared\Transfer\ProductManagementAttributeTransfer>|null $productManagementAttributeTransfers
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
@@ -269,7 +276,8 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
         ValidationResponseTransfer $validationResponseTransfer,
         array $priceInitialData,
         array $attributesInitialData,
-        array $imageSetsErrors
+        array $imageSetsErrors,
+        ?array $productManagementAttributeTransfers = []
     ): JsonResponse {
         $localeTransfer = $this->getFactory()
             ->getLocaleFacade()
@@ -312,6 +320,7 @@ class UpdateProductAbstractController extends AbstractUpdateProductController
                     'applicableUpdateApprovalStatuses' => $this->getFactory()
                         ->createApplicableApprovalStatusReader()
                         ->getApplicableUpdateApprovalStatuses($productAbstractTransfer->getApprovalStatus() ?? static::STATUS_DRAFT),
+                    'superAttributes' => $productManagementAttributeTransfers,
                 ],
             )->getContent(),
         ];

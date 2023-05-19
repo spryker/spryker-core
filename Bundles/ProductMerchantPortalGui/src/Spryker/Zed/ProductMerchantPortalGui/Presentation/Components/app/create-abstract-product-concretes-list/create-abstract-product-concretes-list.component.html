@@ -1,0 +1,16 @@
+<spy-form-item noSpaces noLabel [error]="form.errorMessage">
+    <spy-radio-group control [value]="form.value" [name]="form.name" (selected)="onChange($event)">
+        <spy-radio *ngFor="let choice of form.choices" [value]="choice.value" [hasError]="choice.hasError">
+            {{ choice.label }}
+        </spy-radio>
+    </spy-radio-group>
+</spy-form-item>
+
+<ng-content></ng-content>
+
+<div *ngIf="hasNotificationMessage" class="mp-create-abstract-product-concretes-list__notification">
+    <spy-icon [name]="infoIcon" class="mp-create-abstract-product-concretes-list__notification-icon"></spy-icon>
+    <div class="mp-create-abstract-product-concretes-list__notification-message">
+        {{ form.notificationMessage }}
+    </div>
+</div>

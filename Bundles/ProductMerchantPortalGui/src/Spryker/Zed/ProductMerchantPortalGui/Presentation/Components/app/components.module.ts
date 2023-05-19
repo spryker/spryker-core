@@ -5,7 +5,6 @@ import { TreeSelectComponent, TreeSelectModule } from '@spryker/tree-select';
 import { IconPlusModule } from '@spryker/icon/icons';
 import { IconGermanyModule, IconUnitedStatesModule, IconDeleteModule, IconNoDataModule } from '../icons';
 import { IconModule, IconComponent } from '@spryker/icon';
-import { RadioModule, RadioComponent, RadioGroupComponent } from '@spryker/radio';
 import { ButtonLinkComponent, ButtonLinkModule } from '@spryker/button';
 import { ButtonActionComponent, ButtonActionModule } from '@spryker/button.action';
 import { CardModule, CardComponent } from '@spryker/card';
@@ -35,6 +34,8 @@ import { EditConcreteProductComponent } from './edit-concrete-product/edit-concr
 import { EditConcreteProductModule } from './edit-concrete-product/edit-concrete-product.module';
 import { CreateAbstractProductComponent } from './create-abstract-product/create-abstract-product.component';
 import { CreateAbstractProductModule } from './create-abstract-product/create-abstract-product.module';
+import { CreateAbstractProductConcretesListComponent } from './create-abstract-product-concretes-list/create-abstract-product-concretes-list.component';
+import { CreateAbstractProductConcretesListModule } from './create-abstract-product-concretes-list/create-abstract-product-concretes-list.module';
 import { CreateSingleConcreteProductComponent } from './create-single-concrete-product/create-single-concrete-product.component';
 import { CreateSingleConcreteProductModule } from './create-single-concrete-product/create-single-concrete-product.module';
 import { AutogenerateInputComponent } from './autogenerate-input/autogenerate-input.component';
@@ -62,8 +63,6 @@ import { CreateConcreteProductsOverlayComponent } from './create-concrete-produc
             IconComponent,
             TreeSelectComponent,
             ChipsComponent,
-            RadioComponent,
-            RadioGroupComponent,
             ImageSetsComponent,
             ButtonLinkComponent,
             ButtonActionComponent,
@@ -78,6 +77,7 @@ import { CreateConcreteProductsOverlayComponent } from './create-concrete-produc
             BulkEditProductVariantsComponent,
             EditAbstractProductVariantsComponent,
             CreateAbstractProductComponent,
+            CreateAbstractProductConcretesListComponent,
             CreateSingleConcreteProductComponent,
             AutogenerateInputComponent,
             CreateMultiConcreteProductComponent,
@@ -98,7 +98,6 @@ import { CreateConcreteProductsOverlayComponent } from './create-concrete-produc
         IconDeleteModule,
         IconNoDataModule,
         IconPlusModule,
-        RadioModule,
         ButtonLinkModule,
         ButtonActionModule,
         ContentToggleModule,
@@ -115,6 +114,7 @@ import { CreateConcreteProductsOverlayComponent } from './create-concrete-produc
         BulkEditProductVariantsModule,
         EditAbstractProductVariantsModule,
         CreateAbstractProductModule,
+        CreateAbstractProductConcretesListModule,
         CreateSingleConcreteProductModule,
         AutogenerateInputModule,
         CreateMultiConcreteProductModule,

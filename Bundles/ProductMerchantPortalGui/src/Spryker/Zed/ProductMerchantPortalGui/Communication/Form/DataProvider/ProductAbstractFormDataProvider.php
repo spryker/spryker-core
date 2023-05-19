@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CategoryCollectionTransfer;
 use Generated\Shared\Transfer\CategoryCriteriaTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\MerchantProductCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantProductTransfer;
 use Generated\Shared\Transfer\NodeCollectionTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Spryker\Zed\ProductMerchantPortalGui\Communication\Form\ProductAbstractForm;
@@ -81,9 +82,9 @@ class ProductAbstractFormDataProvider implements ProductAbstractFormDataProvider
      * @param int $idProductAbstract
      * @param int $idMerchant
      *
-     * @return \Generated\Shared\Transfer\ProductAbstractTransfer|null
+     * @return \Generated\Shared\Transfer\MerchantProductTransfer|null
      */
-    public function findProductAbstract(int $idProductAbstract, int $idMerchant): ?ProductAbstractTransfer
+    public function findMerchantProduct(int $idProductAbstract, int $idMerchant): ?MerchantProductTransfer
     {
         $merchantProductTransfer = $this->merchantProductFacade->findMerchantProduct(
             (new MerchantProductCriteriaTransfer())
@@ -91,19 +92,15 @@ class ProductAbstractFormDataProvider implements ProductAbstractFormDataProvider
                 ->setIdProductAbstract($idProductAbstract),
         );
 
-        if (!$merchantProductTransfer) {
+        if (!$merchantProductTransfer || !$merchantProductTransfer->getProductAbstract()) {
             return null;
         }
 
-        $productAbstractTransfer = $merchantProductTransfer->getProductAbstract();
+        $productAbstractTransfer = $this->expandProductAbstractWithCategoryIds(
+            $merchantProductTransfer->getProductAbstractOrFail(),
+        );
 
-        if (!$productAbstractTransfer) {
-            return null;
-        }
-
-        $productAbstractTransfer = $this->expandProductAbstractWithCategoryIds($productAbstractTransfer);
-
-        return $productAbstractTransfer;
+        return $merchantProductTransfer->setProductAbstract($productAbstractTransfer);
     }
 
     /**

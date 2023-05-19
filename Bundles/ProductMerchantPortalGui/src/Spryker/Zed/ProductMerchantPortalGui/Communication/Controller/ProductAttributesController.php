@@ -353,9 +353,11 @@ class ProductAttributesController extends AbstractController
             ->getCurrentMerchantUser()
             ->getIdMerchantOrFail();
 
-        return $this->getFactory()
+        $merchantProductTransfer = $this->getFactory()
             ->createProductAbstractFormDataProvider()
-            ->findProductAbstract($idProductAbstract, $idMerchant);
+            ->findMerchantProduct($idProductAbstract, $idMerchant);
+
+        return $merchantProductTransfer ? $merchantProductTransfer->getProductAbstract() : null;
     }
 
     /**

@@ -35,7 +35,7 @@
                 {% block sku %}
                     <web-spy-card
                         cloak
-                        spy-title="{{ form.sku.vars.label | trans }} {{ form.sku.vars.required ? '*' }}"
+                        spy-title="{{ form.sku.vars.label | trans ~ (form.sku.vars.required ? ' *') }}"
                         class="{{ mainClass }}__card {{ mainClass }}__card--half-width">
                         {{ form_row(form.sku, { label: false, row_attr: { 'no-spaces': 'true' } }) }}
                     </web-spy-card>
@@ -44,7 +44,7 @@
                 {% block name %}
                     <web-spy-card
                         cloak
-                        spy-title="{{ form.name.vars.label | trans }} {{ form.name.vars.required ? '*' }}"
+                        spy-title="{{ form.name.vars.label | trans ~ (form.name.vars.required ? ' *') }}"
                         class="{{ mainClass }}__card">
                         <div class="{{ mainClass }}__card-name-input-header">
                             <web-spy-icon
@@ -64,32 +64,34 @@
                 {% endblock %}
 
                 {% block concreteProducts %}
+                    {% set concreteProductVars = form.isSingleConcrete.vars %}
+
                     <web-spy-card
                         cloak
-                        spy-title="{{ form.isSingleConcrete.vars.label | trans }} {{ form.isSingleConcrete.vars.required ? '*' }}"
+                        spy-title="{{ concreteProductVars.label | trans ~ (concreteProductVars.required ? ' *') }}"
                         class="{{ mainClass }}__card {{ mainClass }}__card-radios">
-                        <web-spy-form-item
-                            no-spaces="true"
-                            no-label="true"
-                            error="{{ (form.isSingleConcrete.vars.errors | length > 0) ? form.isSingleConcrete.vars.errors[0].message : '' }}"
-                        >
-                            <web-spy-radio-group
-                                cloak
-                                control
-                                value="{{ form.isSingleConcrete.vars.value }}"
-                                name="{{ form.isSingleConcrete.vars.full_name }}">
-                                {% for choice in form.isSingleConcrete.vars.choices %}
-                                    <web-spy-radio
-                                        cloak
-                                        value="{{ choice.value }}"
-                                        {% if form.isSingleConcrete.vars.errors | length > 0 %}has-error="true"{% endif %}>
-                                        {{ choice.label | trans }}
-                                    </web-spy-radio>
-                                {% endfor %}
+                        {% set concretesListFormChoices = [] %}
 
-                                {% do form.isSingleConcrete.setRendered %}
-                            </web-spy-radio-group>
-                        </web-spy-form-item>
+                        {% for choice in concreteProductVars.choices %}
+                            {% set concretesListFormChoices = concretesListFormChoices | merge([{
+                                label: choice.label | trans,
+                                value: choice.value,
+                                hasNotificationMessage: choice.data,
+                                hasError: concreteProductVars.errors | length > 0,
+                            }]) %}
+                        {% endfor %}
+
+                        {% set concretesListForm = {
+                            notificationMessage: 'Once this product is created, you will no longer be able to add additional concrete products.' | trans,
+                            errorMessage: concreteProductVars.errors | length ? concreteProductVars.errors[0].message | default | trans,
+                            value: concreteProductVars.value,
+                            name: concreteProductVars.full_name,
+                            choices: concretesListFormChoices,
+                        } %}
+
+                        <web-mp-create-abstract-product-concretes-list cloak form="{{ concretesListForm | json_encode }}">
+                            {% do form.isSingleConcrete.setRendered %}
+                        </web-mp-create-abstract-product-concretes-list>
                     </web-spy-card>
                 {% endblock %}
             {{ form_end(form) }}
